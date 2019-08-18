@@ -15,7 +15,16 @@ class CreateDigitalServicesTable extends Migration
     {
         Schema::create('digital_services', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title');
+            $table->text('description');
+            $table->string('image');
+            $table->string('price');
+            $table->string('google_play_logo');
+            $table->string('google_play_link');
+            $table->string('apple_store_logo');
+            $table->string('apple_store_link');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
