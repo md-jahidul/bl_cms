@@ -8,21 +8,59 @@ namespace App\Repositories;
 interface BaseRepositoryContract
 {
     /**
-     * Find resource
+     * Find a resource by id
      *
      * @param $id
-     * @return \Illuminate\Support\Collection|null|static
+     * @param $relation
+     * @return Model|null
      */
-    public function findOrFail($id);
+    public function findOne($id, $relation);
 
     /**
-     * Find resource
+     * Find a resource by criteria
      *
-     * @param $field
-     * @param $value
-     * @return \Illuminate\Support\Collection|null|static
+     * @param array $criteria
+     * @return Model|null
      */
-    public function findBy($field, $value);
+    public function findOneBy(array $criteria, $relation);
+
+
+    /**
+     * Search All resources by criteria
+     *
+     * @param array $searchCriteria
+     * @param null $relation
+     * @param array|null $orderBy
+     * @return Collection
+     */
+    public function findBy(array $searchCriteria = [], $relation = null, array $orderBy = null);
+
+    /**
+     * Search All resources by any values of a key
+     *
+     * @param string $key
+     * @param array $values
+     * @param null $relation
+     * @param array|null $orderBy
+     * @return Collection
+     */
+    public function findIn($key, array $values, $relation = null, array $orderBy = null);
+
+    /**
+     * @param null $perPage
+     * @param null $relation
+     * @param array|null $orderBy
+     * @return Collection
+     */
+    public function findAll($perPage = null, $relation = null, array $orderBy = null);
+
+    /**
+     * @param $id
+     * @param null $relation
+     * @param array|null $orderBy
+     * @return mixed
+     */
+    public function findOrFail($id, $relation = null, array $orderBy = null);
 
     /**
      * @param array $params
@@ -40,14 +78,7 @@ interface BaseRepositoryContract
      */
     public function findOneByProperties(array $params, array $fields = ['*']);
 
-    /**
-     * Find resource
-     *
-     * @param $field
-     * @param $value
-     * @return \Illuminate\Support\Collection|null|static
-     */
-    public function findOneBy($field, $value);
+
 
     /**
      * Find resources by ids
@@ -65,12 +96,12 @@ interface BaseRepositoryContract
     public function getAll();
 
     /**
-     * Save resource
+     * Save a resource
      *
-     * @param $resource
-     * @return \Illuminate\Support\Collection|null|static
+     * @param array $data
+     * @return Model
      */
-    public function save($resource);
+    public function save(array $data);
 
     /**
      * Save resources

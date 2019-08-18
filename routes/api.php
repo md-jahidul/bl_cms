@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/api', 'API\TestAPIController@index');
+
+Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');

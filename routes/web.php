@@ -17,3 +17,4 @@ Route::get('/', function () {
 
 
 Route::get('/cms', 'CMS\TestCMSController@index');
+
