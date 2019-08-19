@@ -19,9 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 trait CrudTrait
 {
     /**
-     * Instance that extends App\Repositories\AbstractBaseRepository;
-     *
-     * @var AbstractBaseRepository
+     * @var $actionRepository
      */
     private $actionRepository;
 

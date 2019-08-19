@@ -9,8 +9,6 @@ use Illuminate\Http\Response;
 
 class DigitalServiceController extends Controller
 {
-
-
     /*
      * @var $digitalService;
      */
@@ -34,7 +32,6 @@ class DigitalServiceController extends Controller
      */
     public function getDigitalServices()
     {
-        $digitalServices = $this->digitalService->findAll();
-        return Response()->json($digitalServices);
+        return Response()->json($this->digitalService->findAll());
     }
 }

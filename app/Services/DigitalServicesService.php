@@ -14,8 +14,8 @@ use App\Traits\CrudTrait;
 
 class DigitalServicesService
 {
-    use CrudTrait;
 
+    use CrudTrait;
     /**
      * @var DigitalServiceRepository
      */
