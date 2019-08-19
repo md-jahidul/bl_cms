@@ -15,21 +15,20 @@ class CreatePrizesTable extends Migration
     {
         Schema::create('prizes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('campaign_id')->unsigned();
-            $table->foreign('campaign_id')
-                    ->references('id')
-                    ->on('campaigns')
-                    ->onDelete('cascade')
-                    ->onUpdate('cascade');
-            
+            $table->unsignedBigInteger('campaign_id');
             $table->integer('product_id');
-
             $table->string('title');
             $table->string('position');
             $table->string('reword');
             $table->string('validity');
+
+            $table->foreign('campaign_id')
+                ->references('id')
+                ->on('campaigns')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

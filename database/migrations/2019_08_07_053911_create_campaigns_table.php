@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCustomerReviewsTable extends Migration
+class CreateCampaignsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateCustomerReviewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('customer_reviews', function (Blueprint $table) {
+        Schema::create('campaigns', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
             $table->string('title');
-            $table->mediumText('description');
-            $table->string('profile_image');
-            $table->string('rating');
-            $table->string('company');
+            $table->string('motivational_quote');
+            $table->string('start_date');
+            $table->string('end_date');
+            $table->string('is_enable');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateCustomerReviewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customer_reviews');
+        Schema::dropIfExists('campaigns');
     }
 }
