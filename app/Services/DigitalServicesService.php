@@ -15,8 +15,16 @@ use App\Traits\CrudTrait;
 class DigitalServicesService
 {
     use CrudTrait;
+
+    /**
+     * @var DigitalServiceRepository
+     */
     protected $digitalServiceRepository;
 
+    /**
+     * DigitalServicesService constructor.
+     * @param DigitalServiceRepository $digitalServiceRepository
+     */
     public function __construct(DigitalServiceRepository $digitalServiceRepository)
     {
         $this->digitalServiceRepository = $digitalServiceRepository;

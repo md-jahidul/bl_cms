@@ -34,6 +34,7 @@ class DigitalServiceController extends Controller
      */
     public function getDigitalServices()
     {
-        return Response()->json($this->digitalService->findAll());
+        $digitalServices = $this->digitalService->findAll();
+        return Response()->json($digitalServices);
     }
 }
