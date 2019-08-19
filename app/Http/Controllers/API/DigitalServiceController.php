@@ -21,7 +21,6 @@ class DigitalServiceController extends Controller
      */
     public function __construct(DigitalServicesService $digitalServicesService)
     {
-
         $this->digitalService = $digitalServicesService;
     }
 

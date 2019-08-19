@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCampaignsTable extends Migration
+class CreateSlidersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateCampaignsTable extends Migration
      */
     public function up()
     {
-        Schema::create('campaigns', function (Blueprint $table) {
+        Schema::create('sliders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->string('motivational_quote');
-            $table->string('start_date');
-            $table->string('end_date');
-            $table->tinyInteger('is_enable');
+            $table->mediumText('description');
+            $table->string('short_code');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateCampaignsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('campaigns');
+        Schema::dropIfExists('sliders');
     }
 }

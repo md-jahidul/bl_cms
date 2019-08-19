@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCampaignsTable extends Migration
+class CreateSliderImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateCampaignsTable extends Migration
      */
     public function up()
     {
-        Schema::create('campaigns', function (Blueprint $table) {
+        Schema::create('slider_images', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('slider_id');
             $table->string('title');
-            $table->string('motivational_quote');
-            $table->string('start_date');
-            $table->string('end_date');
-            $table->tinyInteger('is_enable');
+            $table->mediumText('description')->nullable();
+            $table->string('image_url');
+            $table->string('alt_text')->nullable();
+            $table->string('url_btn_label')->nullable();
+            $table->string('url')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +33,6 @@ class CreateCampaignsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('campaigns');
+        Schema::dropIfExists('slider_images');
     }
 }

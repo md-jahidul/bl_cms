@@ -11,6 +11,5 @@ class TestCMSController extends Controller
     public function index()
     {
         echo 'test';
-
     }
 }
