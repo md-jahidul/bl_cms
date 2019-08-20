@@ -15,9 +15,17 @@ class CreateSlidersTable extends Migration
     {
         Schema::create('sliders', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('slider_type_id');
             $table->string('title');
-            $table->mediumText('description');
+            $table->string('description');
             $table->string('short_code');
+
+            $table->foreign('slider_type_id')
+                ->references('id')
+                ->on('slider_types')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
             $table->timestamps();
         });
     }
