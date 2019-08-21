@@ -23,6 +23,13 @@ class CreateSliderImagesTable extends Migration
             $table->string('url_btn_label')->nullable();
             $table->string('url')->nullable();
             $table->timestamps();
+
+            $table->foreign('slider_id')
+                ->references('id')
+                ->on('sliders')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
         });
     }
 
