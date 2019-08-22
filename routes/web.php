@@ -53,3 +53,6 @@ Route::resource('campaign','CampaignController');
 Route::resource('prize','PrizeController');
 Route::resource('tag','TagController');
 Route::resource('digital_service','DigitalServiceController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
