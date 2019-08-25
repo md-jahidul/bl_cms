@@ -42,7 +42,7 @@ Route::group(['prefix'=>'page-builder'], function(){
 });
 
 
-Route::resource('sliders','CMS\SliderController');
+Route::resource('sliders','SliderController');
 Route::resource('slider_image','SliderImageController');
 Route::get('slider_image/destroy/{id}','SliderImageController@destroy');
 

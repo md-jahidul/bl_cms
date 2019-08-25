@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\SliderType;
 use Illuminate\Database\Eloquent\Model;
 
 class Slider extends Model

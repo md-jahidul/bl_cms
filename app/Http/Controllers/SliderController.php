@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
 use App\Services\SliderService;
 use Illuminate\Http\Request;
@@ -24,6 +24,13 @@ class SliderController extends Controller
     public function __construct(SliderService $sliderService)
     {
         $this->sliderService = $sliderService;
+    }
+
+    public function index()
+    {
+        $sliders = $this->sliderService->findAll();
+       return view('admin.slider.index', compact('sliders'));
+
     }
 
 

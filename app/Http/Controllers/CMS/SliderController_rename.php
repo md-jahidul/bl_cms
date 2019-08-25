@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 
-class SliderController extends Controller
+class SliderControllerRename extends Controller
 {
     public function index(){
         $sliders = Slider::with('sliderType')->get();

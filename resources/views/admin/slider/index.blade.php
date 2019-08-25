@@ -17,22 +17,21 @@
                         <table id="example1" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th># S.L</th>
+                                <th>SL</th>
                                 <th>Title</th>
                                 <th>Slider Type</th>
-                                <th>description</th>
+                                <th>Description</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @php($i = 0)
+
                             @foreach($sliders as $slider)
-                                @php($i++)
                                 <tr>
-                                    <td>{{ $i }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $slider->title }}</td>
+                                    <td>{{ $slider->sliderType->name }}</td>
                                     <td>{{ $slider->description }}</td>
-                                    <td>{{ $slider->slider_type['name'] }}</td>
                                     <td><a href="{{ url('sliders/'.$slider->id.'/edit') }}" class="mr-3"><i class="fas fa-edit text-primary"></i></a> <a href="#" ><i class="fas fa-trash text-danger"></i></a></td>
                                 </tr>
                             @endforeach
