@@ -3,7 +3,7 @@
     <a href="index3.html" class="brand-link">
         <img src="{{ asset('/back-end') }}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light">Bl Admin Panel</span>
+        <span class="brand-text font-weight-light">Asset lite Admin Panel</span>
     </a>
 
     <!-- Sidebar -->
@@ -24,7 +24,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link active">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -33,98 +33,94 @@
                     </a>
                 </li>
 
-                @if ( auth()->user()->role == 'admin' )
-                    
+                @if ( auth()->user()->role_id == 1 )
                     <li class="nav-item">
-                        <li class="nav-item">
-
-                            <a href="{{ url('users/') }}" class="nav-link">
-                                <i class="nav-icon fas fa-user-circle"></i>
-                                <p>Users List</p>
-                            </a>
-
-                        </li>
+                        <a href="{{ url('users/') }}" class="nav-link">
+                            <i class="nav-icon fas fa-user-circle"></i>
+                            <p>Users List</p>
+                        </a>
                     </li>
-
                 @endif
-                <li class="nav-item">
+
+                <li class="nav-item has-treeview menu-open">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-bars"></i>
+                        <p>
+                            Menu
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: block;">
+                        <li class="nav-item">
+                            <a href="{{ url('menu')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Menu</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Sub-menu</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="nav-item">
                     <a href="{{ url('sliders')}}" class="nav-link">
                         <i class="nav-icon fas fa-file"></i>
                         <p>Slider</p>
                     </a>
                 </li>
-                </li>
 
-                <li class="nav-item">
                 <li class="nav-item">
                     <a href="{{ url('slider_image')}}" class="nav-link">
                         <i class="nav-icon fas fa-file"></i>
                         <p>Slider Image</p>
                     </a>
                 </li>
-                </li>
-
 
                 <li class="nav-item">
-                    <li class="nav-item">
-                        <a href="{{ route('page.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-file"></i>
-                            <p>Page Builder</p>
-                        </a>
-                    </li>
+                    <a href="{{ route('page.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>Page Builder</p>
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <li class="nav-item">
-                        <a href="{{ route('campaign.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-copyright"></i>
-                            <p>Campaign</p>
-                        </a>
-
-                    </li>
+                    <a href="{{ route('campaign.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-copyright"></i>
+                        <p>Campaign</p>
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <li class="nav-item">
-
-                        <a href="{{ route('prize.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-trophy"></i>
-                            <p>Prize</p>
-                        </a>
-
-                    </li>
-                </li>
-                
-                <li class="nav-item">
-                    <li class="nav-item">
-                        <a href="{{ route('tag.index')}}" class="nav-link">
-                            
-                            <i class="nav-icon fas fa-user-circle"></i>
-                            <p>Tag List</p>
-                        </a>
-
-                    </li>
-                </li>
-                <li class="nav-item">
-                    <li class="nav-item">
-
-                        <a href="{{ route('digital_service.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-user-circle"></i>
-                            <p>Digital Service List</p>
-                        </a>
-                    </li>
+                    <a href="{{ route('prize.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-trophy"></i>
+                        <p>Prize</p>
+                    </a>
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{ route('tag.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>Tag List</p>
+                    </a>
+                </li>
+
                 <li class="nav-item">
 
+                    <a href="{{ route('digital_service.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>Digital Service List</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="{{ url('question')}}" class="nav-link">
                         <i class="nav-icon fas fa-question-circle"></i>
                         <p>Question</p>
                     </a>
-
-                </li>
                 </li>
 
             </ul>
