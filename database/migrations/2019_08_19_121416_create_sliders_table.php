@@ -17,7 +17,7 @@ class CreateSlidersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('slider_type_id');
             $table->string('title');
-            $table->mediumText('description');
+            $table->mediumText('description')->nullable();
             $table->string('short_code');
 
             $table->foreign('slider_type_id')

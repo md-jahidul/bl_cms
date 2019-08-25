@@ -24,8 +24,8 @@
                         <label>Slider Type</label>
                         <select class="form-control" name="slider_type_id">
                             <option>--Select slider type--</option>
-                            @if(isset($slider_types))
-                                @foreach($slider_types as $slider_type)
+                            @if(isset($sliderTypes))
+                                @foreach($sliderTypes as $slider_type)
                                     <option value="{{ $slider_type->id }}">{{ $slider_type->name }}</option>
                                 @endforeach
                             @endif
