@@ -13,7 +13,6 @@ class TestAPIController extends Controller
     public function index()
     {
         return 'api';
-
     }
 
 }
