@@ -16,7 +16,7 @@ class CreateSliderTypesTable extends Migration
         Schema::create('slider_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }

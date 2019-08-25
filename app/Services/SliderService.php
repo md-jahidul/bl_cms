@@ -11,6 +11,8 @@ namespace App\Services;
 
 use App\Repositories\SliderRepository;
 use App\Traits\CrudTrait;
+use Illuminate\Http\Response;
+
 
 class SliderService
 {
@@ -29,6 +31,20 @@ class SliderService
     {
         $this->sliderRepository = $sliderRepository;
         $this->setActionRepository($sliderRepository);
+    }
+
+    /*
+     * Storing the slider resource
+     * @return Response
+
+     */
+    public function storeSlider($data): string
+    {
+        //Todo:: Make the short code dynamic
+        $data['short_code'] = uniqid();
+        $this->save($data);
+        return new Response('Slider added successfully');
+
     }
 
 }
