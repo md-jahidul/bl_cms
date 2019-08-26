@@ -30,8 +30,7 @@ class SliderController extends Controller
     }
 
     /**
-     * Display the list of digitalService
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
 
     public function index()
@@ -42,7 +41,7 @@ class SliderController extends Controller
     }
 
     /**
-     * Display the slider create form
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -52,16 +51,15 @@ class SliderController extends Controller
     }
 
     /**
-     * Store the slider
-     * @return Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
 
     //TODO::Back-end validation required
     public function store(Request $request)
     {
         $response = $this->sliderService->storeSlider($request->all());
-
-        Session::flash('message', $response);
+        Session::flash('message', $response->getContent());
         return redirect('/sliders');
     }
 
@@ -78,17 +76,36 @@ class SliderController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function update(Request $request, $id)
     {
-        $slider = $this->sliderService->findOne($id);
-        $response = $slider->update($request->all());
+        $response = $this->sliderService->updateSlider($request->all(), $request->id);
+        Session::flash('message', $response->getContent());
         return redirect('/sliders');
     }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
+     */
+    public function destroy($id)
+    {
+        $response = $this->sliderService->deleteSlider($id);
+        Session::flash('message', $response->getContent());
+        return redirect('/sliders');
+    }
+
 
     /**
      * Display the list of digitalService
      * @return Response
      */
+
     public function get()
     {
         $data = [

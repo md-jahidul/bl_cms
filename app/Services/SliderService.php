@@ -33,18 +33,42 @@ class SliderService
         $this->setActionRepository($sliderRepository);
     }
 
-    /*
+    /**
      * Storing the slider resource
      * @return Response
-
      */
-    public function storeSlider($data): string
+    public function storeSlider($data)
     {
         //Todo:: Make the short code dynamic
         $data['short_code'] = uniqid();
         $this->save($data);
         return new Response('Slider added successfully');
 
+    }
+
+    /**
+     * Updating the slider
+     * @param $data
+     * @return Response
+     */
+    public function updateSlider($data, $id)
+    {
+        $slider = $this->findOne($id);
+        $slider->update($data);
+        return Response('Slider updated successfully !');
+
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @throws \Exception
+     */
+    public function deleteSlider($id)
+    {
+        $slider = $this->findOne($id);
+        $slider->delete();
+        return Response('Slider deleted successfully !');
     }
 
 }
