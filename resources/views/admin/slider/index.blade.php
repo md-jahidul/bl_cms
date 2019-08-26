@@ -34,18 +34,12 @@
                                     <td>{{ $slider->sliderType->name }}</td>
                                     <td>{{ $slider->description }}</td>
                                     <td>
-
-                                            <a href="{{ url('sliders/'.$slider->id.'/edit') }}" class="mr-3">
-                                                <button>   <i class="fas fa-edit text-primary"></i> </button>
-                                            </a>
-
-
-                                        {{--<a href="#">--}}
-                                            {{--<i class="fas fa-trash text-danger"></i>--}}
-                                        {{--</a>--}}
+                                        <a href="{{ url('sliders/'.$slider->id.'/edit') }}" class="mr-3">
+                                            <button><i class="fas fa-edit text-primary"></i></button>
+                                        </a>
                                         <form action="{{ url('/sliders', ['id' => $slider->id]) }}" method="post">
-                                            {{--<input class="btn btn-default" type="submit" value="Delete" />--}}
-                                            <button onclick="return confirm('Are you sure, you want to delete it?')"><i class="fas fa-trash text-danger"></i></button>
+                                            <button onclick="return confirm('Are you sure, you want to delete it?')"><i
+                                                        class="fas fa-trash text-danger"></i></button>
                                             @method('delete')
                                             @csrf
                                         </form>
