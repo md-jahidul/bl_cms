@@ -19,16 +19,18 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="q_name">Title</label>
-                        <input type="text" name="title" class="form-control" value="{{ $slider->title }}" id="q_name" placeholder="Enter question">
+                        <input type="text" name="title" class="form-control" value="{{ $slider->title }}" id="q_name"
+                               placeholder="Enter question">
                     </div>
 
                     <div class="form-group">
                         <label>Slider Type</label>
+
                         <select class="form-control" name="slider_type_id">
                             <option>--Select slider type--</option>
-                            @if(isset($slider_types))
-                                @foreach($slider_types as $slider_type)
-                                    <option value="{{ $slider_type->id }}" @if($slider_type->id == $slider->slider_type_id) {{'selected'}} @endif>{{ $slider_type->name }}</option>
+                            @if(isset($sliderTypes))
+                                @foreach($sliderTypes as $slider_type)
+                                    <option value="{{ $slider_type->id }}" {{  ($slider_type->id == $slider->slider_type_id) ? 'selected' : ''}} >{{ $slider_type->name }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -36,8 +38,10 @@
 
                     <div class="form-group">
                         <label for="exampleInputPassword1">Description</label>
-                        <textarea name="description" class="form-control" id="exampleInputPassword1" placeholder="Enter description">{{ $slider->description }}</textarea>
+                        <textarea name="description" class="form-control" id="exampleInputPassword1"
+                                  placeholder="Enter description">{{ $slider->description }}</textarea>
                     </div>
+                    <input type="hidden" name="id" value="{{ $slider->id }}"/>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

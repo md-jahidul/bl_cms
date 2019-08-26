@@ -52,7 +52,7 @@ class SliderController extends Controller
     }
 
     /**
-     * Store the resource
+     * Store the slider
      * @return Response
      */
 
@@ -62,6 +62,26 @@ class SliderController extends Controller
         $response = $this->sliderService->storeSlider($request->all());
 
         Session::flash('message', $response);
+        return redirect('/sliders');
+    }
+
+    /*
+     * Editing the slider
+     * @param $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        $slider = $this->sliderService->findOne($id);
+        $sliderTypes = $this->sliderTypeService->findAll();
+        return view('admin.slider.edit', compact('slider', 'sliderTypes'));
+
+    }
+
+    public function update(Request $request, $id)
+    {
+        $slider = $this->sliderService->findOne($id);
+        $response = $slider->update($request->all());
         return redirect('/sliders');
     }
 
