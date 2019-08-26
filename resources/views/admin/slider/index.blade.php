@@ -45,7 +45,7 @@
                                         {{--</a>--}}
                                         <form action="{{ url('/sliders', ['id' => $slider->id]) }}" method="post">
                                             {{--<input class="btn btn-default" type="submit" value="Delete" />--}}
-                                            <button><i class="fas fa-trash text-danger"></i></button>
+                                            <button onclick="return confirm('Are you sure, you want to delete it?')"><i class="fas fa-trash text-danger"></i></button>
                                             @method('delete')
                                             @csrf
                                         </form>

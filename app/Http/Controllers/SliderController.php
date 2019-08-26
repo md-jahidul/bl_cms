@@ -12,16 +12,24 @@ use Illuminate\Support\Facades\Session;
 
 class SliderController extends Controller
 {
-    /*
+    /**
      * @var SliderService
      */
     private $sliderService;
+    /**
+     * @var bool
+     */
     private $isAuthenticated = true;
+
+    /**
+     * @var SliderTypeService
+     */
     private $sliderTypeService;
 
     /**
-     * Create a new service instance.
+     * SliderController constructor.
      * @param SliderService $sliderService
+     * @param SliderTypeService $sliderTypeService
      */
     public function __construct(SliderService $sliderService, SliderTypeService $sliderTypeService)
     {
@@ -63,10 +71,9 @@ class SliderController extends Controller
         return redirect('/sliders');
     }
 
-    /*
-     * Editing the slider
+    /**
      * @param $id
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
