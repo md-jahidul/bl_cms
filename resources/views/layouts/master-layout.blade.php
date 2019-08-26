@@ -70,6 +70,7 @@
 
     <!-- Main Sidebar Container -->
     @include('admin.partials.left-sidebar')
+    {{--@include('admin.partials.left-sidebar')--}}
     <!-- End Sidebar Container -->
 
     <!-- Content Wrapper. Contains page content -->
