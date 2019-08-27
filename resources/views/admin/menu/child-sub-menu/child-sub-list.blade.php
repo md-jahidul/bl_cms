@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">
                         {{--<div class="col-md-12">--}}
-                        <h3 class="card-title float-left">Child List</h3>
+                        <h3 class="card-title float-left">Sub Child List</h3>
                         <a href="{{ url("menu/$parent_id/child_menu_create") }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add Child</a>
                         {{--</div>--}}
 
@@ -21,27 +21,25 @@
                                 <th>Name</th>
                                 <th>Parent</th>
                                 <th>URL</th>
-                                <th></th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @php($i = 0)
-                            @foreach($child_menus as $child_menu)
+                            @foreach($child_sub_lists as $child_sub_list)
                                 @php($i++)
                                 <tr>
                                     <td>{{ $i }}</td>
-                                    <td>{{ $child_menu->name }}</td>
-                                    <td>{{ $child_menu->parent['name'] }}</td>
-                                    <td>{{ $child_menu->url }}</td>
-                                    <td class="text-center"><a href="{{ url("menu/$child_menu->id/child_sub_menu") }}" class="btn btn-outline-success">Show Child Menu</a></td>
-                                    @if($child_menu->status == 1)
+                                    <td>{{ $child_sub_list->name }}</td>
+                                    <td>{{ $child_sub_list->parent['name'] }}</td>
+                                    <td>{{ $child_sub_list->url }}</td>
+                                    @if($child_sub_list->status == 1)
                                         <td><span class="badge bg-success">Active</span></td>
                                     @else
                                         <td><span class="badge bg-danger">Inactive</span></td>
                                     @endif
-                                    <td><a href="{{ url('menu/'.$child_menu->id.'/child_edit') }}" class="mr-3"><i class="fas fa-edit text-primary"></i></a> <a href="#" ><i data-id="{{$child_menu->id}}" class="fas fa-trash text-danger delete_btn"></i></a></td>
+                                    <td><a href="{{ url('menu/'.$child_sub_list->id.'/child_edit') }}" class="mr-3"><i class="fas fa-edit text-primary"></i></a> <a href="#" ><i data-id="{{$child_sub_list->id}}" class="fas fa-trash text-danger delete_btn"></i></a></td>
                                 </tr>
                             @endforeach
 

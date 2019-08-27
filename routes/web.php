@@ -53,22 +53,31 @@ Route::group(['prefix'=>'menu'], function(){
     Route::get('/{id}/edit', 'CMS\MenuController@edit');
     Route::put('{id}/', 'CMS\MenuController@update')->name('menu.update');
     Route::get('/destroy/{id}','CMS\MenuController@destroy');
+    Route::get('/parent_menu_sort','CMS\MenuController@parentMenuSortable');
 
     Route::get('/{id}/child_menu', 'CMS\MenuController@childList');
     Route::get('/{id}/child_menu_create', 'CMS\MenuController@childForm');
     Route::post('/{id}/child_menu_store', 'CMS\MenuController@childStore');
     Route::get('/{id}/child_edit', 'CMS\MenuController@childEdit');
     Route::put('/{id}/child_update', 'CMS\MenuController@childUpdate');
+
+    Route::get('/{id}/child_sub_menu', 'CMS\MenuController@childSubList');
+    Route::get('/{id}/child_sub_create', 'CMS\MenuController@childSubForm');
+    Route::post('/{id}/child_menu_store', 'CMS\MenuController@childStore');
+
 });
 
 //Route::resource('menu','CMS\MenuController');
 //Route::get('menu/child_menu/retret','CMS\MenuController@childList');
 //Route::get('menu/destroy/{id}','CMS\MenuController@destroy');
 
+Route::resource('tag','TagController');
+Route::get('tag/destroy/{id}','TagController@destroy');
+
 Route::resource('page','PageBuilderController');
 Route::resource('campaign','CampaignController');
 Route::resource('prize','PrizeController');
-Route::resource('tag','TagController');
+
 Route::resource('digital_service','DigitalServiceController');
 Auth::routes();
 

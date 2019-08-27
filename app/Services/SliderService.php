@@ -43,7 +43,6 @@ class SliderService
         $data['short_code'] = uniqid();
         $this->save($data);
         return new Response('Slider added successfully');
-
     }
 
     /**
@@ -56,7 +55,6 @@ class SliderService
         $slider = $this->findOne($id);
         $slider->update($data);
         return Response('Slider updated successfully !');
-
     }
 
     /**
