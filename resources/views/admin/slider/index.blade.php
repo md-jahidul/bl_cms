@@ -1,52 +1,53 @@
 @extends('layouts.admin')
+@section('title', 'Slider List')
 @section('card_name', 'Slider List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Slider List
-    </li>
+    <li class="breadcrumb-item active">Slider List</li>
 @endsection
 @section('action')
     <a href="{{ url('sliders/create') }}" class="btn btn-primary  round btn-glow px-2">Add Slider</a>
 @endsection
 @section('content')
-    <div class="content-body">
-        <section id="role-list">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        {{--<div class="card-header">--}}
-                           {{----}}
-                        {{--</div>--}}
-                        <div class="card-content collapse show">
-                            <div class="card-body card-dashboard">
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
 
-                                <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
-                                       id="Example1" role="grid" aria-describedby="Example1_info" style="">
-                                    <thead>
-                                    <tr>
-                                        <th>SL</th>
-                                        <th>Title</th>
-                                        <th>Slider Type</th>
-                                        <th>Description</th>
-                                        <th width="10%">Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($sliders as $slider)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $slider->title }}</td>
-                                            <td>{{ $slider->sliderType->name }}</td>
-                                            <td>{{ $slider->description }}</td>
-                                            <td>
+                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
+                           id="Example1" role="grid" aria-describedby="Example1_info" style="">
+                        <thead>
+                        <tr>
+                            <th>SL</th>
+                            <th>Title</th>
+                            <th>Slider Type</th>
+                            <th>Description</th>
+                            <th width="10%">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($sliders as $slider)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $slider->title }}</td>
+                                <td>{{ $slider->sliderType->name }}</td>
+                                <td>{{ $slider->description }}</td>
+                                <td>
                                             <span class="dropdown">
-                                            <button id="btnSearchDrop2" type="button" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false" class="btn btn-info dropdown-toggle"><i class="la la-cog"></i></button>
-                                              <span aria-labelledby="btnSearchDrop2" class="dropdown-menu mt-1 dropdown-menu-right">
-                                                <a href="{{ url('sliders/'.$slider->id.'/edit') }}" class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>
+                                            <button id="btnSearchDrop2" type="button" data-toggle="dropdown"
+                                                    aria-haspopup="true"
+                                                    aria-expanded="false" class="btn btn-info dropdown-toggle"><i
+                                                        class="la la-cog"></i></button>
+                                              <span aria-labelledby="btnSearchDrop2"
+                                                    class="dropdown-menu mt-1 dropdown-menu-right">
+                                                <a href="{{ url('sliders/'.$slider->id.'/edit') }}"
+                                                   class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>
                                                 <div class="dropdown-divider"></div>
 
-                                                  <form method="POST" action="{{ url('/sliders', ['id' => $slider->id]) }}" accept-charset="UTF-8" style="display:inline">
-                                                  <button type="submit" class="dropdown-item danger" title="Delete the user"
+                                                  <form method="POST"
+                                                        action="{{ url('/sliders', ['id' => $slider->id]) }}"
+                                                        accept-charset="UTF-8" style="display:inline">
+                                                  <button type="submit" class="dropdown-item danger"
+                                                          title="Delete the user"
                                                           onclick="return confirm('Are you sure?')"><i
                                                               class="ft-trash"></i> Delete</button>
                                                        @method('delete')
@@ -54,30 +55,20 @@
                                                   </form>
                                               </span>
                                             </span>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                </td>
+                            </tr>
+                        @endforeach
 
-                                    </tbody>
-                                    </tbody>
-                                </table>
+                        </tbody>
+                        </tbody>
+                    </table>
 
 
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
-        </section>
-    </div>
-    {{--<div class="card-body">--}}
-    {{--<table id="mytable" class="table table-bordered table-hover">--}}
+        </div>
 
-
-
-    {{--</table>--}}
-    {{--</div>--}}
-    <!-- /.card-body -->
+    </section>
 
 @stop
 

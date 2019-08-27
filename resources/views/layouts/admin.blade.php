@@ -67,7 +67,6 @@
                             <li class="breadcrumb-item"><a href="/">Admin</a>
                             </li>
                             @yield('breadcrumb')
-
                         </ol>
                     </div>
                 </div>
