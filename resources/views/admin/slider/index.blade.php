@@ -8,44 +8,116 @@
     <a href="{{ url('sliders/create') }}" class="btn btn-primary  round btn-glow px-2">Add Slider</a>
 @endsection
 @section('content')
+    <div class="content-body">
+        <section id="role-list">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        {{--<div class="card-header">--}}
+                           {{----}}
+                        {{--</div>--}}
+                        <div class="card-content collapse show">
+                            <div class="card-body card-dashboard">
 
-    <div class="card-body">
-        <table id="example1" class="table table-bordered table-hover">
-            <thead>
-            <tr>
-                <th>SL</th>
-                <th>Title</th>
-                <th>Slider Type</th>
-                <th>Description</th>
-                <th width="10%">Action</th>
-            </tr>
-            </thead>
-            <tbody>
+                                <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
+                                       id="Example1" role="grid" aria-describedby="Example1_info" style="">
+                                    <thead>
+                                    <tr>
+                                        <th>SL</th>
+                                        <th>Title</th>
+                                        <th>Slider Type</th>
+                                        <th>Description</th>
+                                        <th width="10%">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($sliders as $slider)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $slider->title }}</td>
+                                            <td>{{ $slider->sliderType->name }}</td>
+                                            <td>{{ $slider->description }}</td>
+                                            <td>
+                                            <span class="dropdown">
+                                            <button id="btnSearchDrop2" type="button" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false" class="btn btn-info dropdown-toggle"><i class="la la-cog"></i></button>
+                                              <span aria-labelledby="btnSearchDrop2" class="dropdown-menu mt-1 dropdown-menu-right">
+                                                <a href="{{ url('sliders/'.$slider->id.'/edit') }}" class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>
+                                                <div class="dropdown-divider"></div>
 
-            @foreach($sliders as $slider)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $slider->title }}</td>
-                    <td>{{ $slider->sliderType->name }}</td>
-                    <td>{{ $slider->description }}</td>
-                    <td>
-                        <a href="{{ url('sliders/'.$slider->id.'/edit') }}" class="mr-3">
-                            <button><i class="fas fa-edit text-primary"></i></button>
-                        </a>
-                        <form action="{{ url('/sliders', ['id' => $slider->id]) }}" method="post">
-                            <button onclick="return confirm('Are you sure, you want to delete it?')"><i
-                                        class="fas fa-trash text-danger"></i></button>
-                            @method('delete')
-                            @csrf
-                        </form>
+                                                  <form method="POST" action="{{ url('/sliders', ['id' => $slider->id]) }}" accept-charset="UTF-8" style="display:inline">
+                                                  <button type="submit" class="dropdown-item danger" title="Delete the user"
+                                                          onclick="return confirm('Are you sure?')"><i
+                                                              class="ft-trash"></i> Delete</button>
+                                                       @method('delete')
+                                                      @csrf
+                                                  </form>
+                                              </span>
+                                            </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
-                    </td>
-                </tr>
-            @endforeach
+                                    </tbody>
+                                    </tbody>
+                                </table>
 
-            </tbody>
-        </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
+    {{--<div class="card-body">--}}
+    {{--<table id="mytable" class="table table-bordered table-hover">--}}
+
+
+
+    {{--</table>--}}
+    {{--</div>--}}
     <!-- /.card-body -->
 
 @stop
+
+@push('page-js')
+    <script>
+        $(document).ready(function () {
+            $('#Example1').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copy', className: 'copyButton',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'excel', className: 'excel',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'pdf', className: 'pdf', "charset": "utf-8",
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'print', className: 'print',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                ],
+                paging: true,
+                searching: true,
+                "bDestroy": true,
+
+            });
+        });
+
+    </script>
+@endpush

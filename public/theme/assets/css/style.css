@@ -14,3 +14,8 @@ label.required:after {
     color: red;
     padding-left: 5px;
 }
+
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: right;
+    margin-top: -40px;
+}

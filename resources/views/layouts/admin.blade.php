@@ -9,9 +9,8 @@
     <meta name="keywords"
           content="">
     <meta name="author" content="">
-    <title>Dashboard sales - Modern Admin - Clean Bootstrap 4 Dashboard HTML Template + Bitcoin
-        Dashboard
-    </title>
+    <title>@yield('title') - AssetLite CMS</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="apple-touch-icon" href="{{asset('theme/assets/images/ico/apple-icon-120.png')}}">
     {{--fevicon--}}
     {{--    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('theme/images/ico/favicon.ico') }}">--}}
@@ -20,6 +19,11 @@
     <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css" rel="stylesheet">
     <!-- BEGIN VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('theme/css/vendors.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/vendors/css/tables/datatable/datatables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/vendors/css/forms/selects/select2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/vendors/css/forms/selects/selectize.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/selectize/selectize.css') }}">
     <!-- END VENDOR CSS-->
     <!-- BEGIN MODERN CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('theme/css/app.css')}}">
@@ -27,10 +31,20 @@
     <!-- BEGIN Page Level CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('theme/css/core/menu/menu-types/vertical-menu-modern.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('theme/css/core/colors/palette-gradient.css')}}">
+
     <link rel="stylesheet" type="text/css" href="{{asset('theme/vendors/css/charts/jquery-jvectormap-2.0.3.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('theme/vendors/css/charts/morris.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('theme/fonts/simple-line-icons/style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('theme/css/core/colors/palette-gradient.css')}}">
+
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/vendors/css/ui/jquery-ui.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/ui/jqueryui.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+
+    <!-- Begin File uploader dropzone CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/file-uploaders/dropzone.css') }}">
+
+
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('theme/assets/css/style.css')}}">
@@ -85,6 +99,7 @@
 <script src="{{ asset('theme/js/core/app-menu.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/core/app.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/scripts/tables/datatables/datatable-basic.js') }}" type="text/javascript"></script>
+<script src="{{ asset('theme/js/scripts/tables/datatables/datatable-advanced.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/core/libraries/jquery_ui/jquery-ui.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/scripts/ui/jquery-ui/date-pickers.js') }}" type="text/javascript"></script>
 
@@ -97,5 +112,6 @@
 <script src="{{ asset('theme/js/scripts/forms/validation/form-validation.js') }}" type="text/javascript"></script>
 
 <!-- END PAGE LEVEL JS-->
+@stack('page-js')
 </body>
 </html>
