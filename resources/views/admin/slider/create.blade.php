@@ -15,20 +15,29 @@
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('sliders.store') }}" method="POST">
                             <div class="row">
-                                <div class="form-group col-md-6 required">
+                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
                                     <label for="title" class="required">Title</label>
-                                    <input type="text" name="title" class="form-control" placeholder="Enter title">
+                                    <input type="text" name="title" class="form-control" placeholder="Enter title"
+                                           value="{{ old("title") ? old("title") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title'))
+                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @endif
                                 </div>
-                                <div class="col-md-6">
+                                <div class="form-group col-md-6 {{ $errors->has('slider_type_id') ? ' error' : '' }}">
                                     <label class="required">Slider Type</label>
-                                    <select class="form-control" name="slider_type_id">
-                                        <option>--Select slider type--</option>
+                                    <select class="form-control error" name="slider_type_id">
+                                        <option value="">--Select slider type--</option>
                                         @if(isset($sliderTypes))
                                             @foreach($sliderTypes as $slider_type)
-                                                <option value="{{ $slider_type->id }}">{{ $slider_type->name }}</option>
+                                                <option value="{{ $slider_type->id }}"{{ old('slider_type_id')== $slider_type->id ? 'selected' : ''}}>{{ $slider_type->name }}</option>
                                             @endforeach
                                         @endif
                                     </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('slider_type_id'))
+                                        <div class="help-block">  {{ $errors->first('slider_type_id') }}</div>
+                                    @endif
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -39,7 +48,8 @@
                                 </div>
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary"><i class="la la-check-square-o"></i> SAVE
+                                        <button type="submit" class="btn btn-primary"><i
+                                                    class="la la-check-square-o"></i> SAVE
                                         </button>
 
                                     </div>

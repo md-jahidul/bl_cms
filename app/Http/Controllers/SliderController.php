@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSliderRequest;
 use App\Services\SliderService;
 use App\Services\SliderTypeService;
 use App\SliderType;
@@ -63,7 +64,7 @@ class SliderController extends Controller
      */
 
     //TODO::Back-end validation required
-    public function store(Request $request)
+    public function store(StoreSliderRequest $request)
     {
         $response = $this->sliderService->storeSlider($request->all());
         Session::flash('message', $response->getContent());
