@@ -63,7 +63,6 @@ class SliderController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
 
-    //TODO::Back-end validation required
     public function store(StoreSliderRequest $request)
     {
         $response = $this->sliderService->storeSlider($request->all());
@@ -87,7 +86,7 @@ class SliderController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(StoreSliderRequest $request, $id)
     {
         $response = $this->sliderService->updateSlider($request->all(), $request->id);
         Session::flash('message', $response->getContent());
