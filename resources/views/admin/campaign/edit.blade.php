@@ -9,7 +9,7 @@
 
     <div class="card">
         <div class="card-header">
-            Create Campaign
+            Edit Campaign
         </div>
         <div class="card-body">
             <form action="{{route('campaign.update',$campaign->id)}}" method="post">
@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-group">
                     <label for="quote">Quote</label>
-                    <input value="{{$campaign->quote}}" type="text" id="quote" name="quote" class="form-control">
+                    <input value="{{$campaign->motivational_quote}}" type="text" id="quote" name="motivational_quote" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="start_date">Start date</label>
@@ -32,14 +32,14 @@
                     <input type="text" value="{{$campaign->end_date}}" id="end_date" name="end_date" class="form-control">
                 </div>
 
-                 <div class="form-group">
-                    <label for="tag">Tag</label>
-                    <select name="tags" class="form-control" id="tag">
-                        @foreach ($tags as $tag)
-                            <option value="{{$tag->id}}">{{$tag->title}}</option>
-                        @endforeach
-                    </select>
-                </div>
+                 {{--<div class="form-group">--}}
+                    {{--<label for="tag">Tag</label>--}}
+                    {{--<select name="tags" class="form-control" id="tag">--}}
+                        {{--@foreach ($tags as $tag)--}}
+                            {{--<option value="{{$tag->id}}">{{$tag->title}}</option>--}}
+                        {{--@endforeach--}}
+                    {{--</select>--}}
+                {{--</div>--}}
                 
                 <label for="">Active Status:</label>
                 <div class="row">
@@ -67,7 +67,7 @@
                             @endif 
                             >
                             <label class="form-check-label" for="deactive">
-                                Deactive
+                                Inactive
                             </label>
                         </div>
                         

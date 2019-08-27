@@ -25,14 +25,13 @@
                 </thead>
                 <tbody>
                     @foreach ($tags as $key=>$tag)
-                        @php(++$key)
                         <tr>
-                            <td>{{ $key }}</td>
+                            <td>{{ ++$key }}</td>
                             <td>{{$tag->title}}</td>
                             <td>{{$tag->slug}}</td>
                             <td>
                                 <a href="{{ url('tag/'.$tag->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-                                <a href="#" class="border-0 btn btn-outline-danger"><i data-id="{{$tag->id}}" class="fas fa-trash delete_btn" aria-hidden="true"></i></a>
+                                <a href="#" class="border-0 btn btn-outline-danger delete_btn" data-id="{{$tag->id}}"><i data-id="{{$tag->id}}" class="fas fa-trash " aria-hidden="true"></i></a>
                             </td>
                         </tr>
                    @endforeach
@@ -82,8 +81,8 @@
 @push('scripts')
     <script>
         $(function () {
-            $('.delete_btn').click(function () {
-                var id = $(this).attr('data-id');
+            $('.delete_btn').click(function (event) {
+                var id = $(event.target).attr('data-id');
 
                 console.log(id);
 
