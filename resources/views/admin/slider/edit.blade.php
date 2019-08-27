@@ -13,14 +13,14 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ url("sliders/$slider->id") }}" method="POST">
+                        <form role="form" action="{{ url("sliders/$slider->id") }}" method="POST" novalidate>
                             @csrf
                             {{method_field('PUT')}}
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
                                     <label for="title" class="required">Title</label>
                                     <input type="text" name="title" class="form-control" placeholder="Enter title"
-                                           value="{{ old("title") ? old('title') : $slider->title }}">
+                                           value="{{ old("title") ? old('title') : $slider->title }}" required data-validation-required-message="Enter slider title">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title'))
                                         <div class="help-block">  {{ $errors->first('title') }}</div>
@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="form-group col-md-6 {{ $errors->has('slider_type_id') ? ' error' : '' }}">
                                     <label class="required">Slider Type</label>
-                                    <select class="form-control" name="slider_type_id">
+                                    <select class="form-control" name="slider_type_id" data-validation-required-message="Select slider type">
                                         <option value="">--Select slider type--</option>
                                         @if(isset($sliderTypes))
                                             @foreach($sliderTypes as $slider_type)
