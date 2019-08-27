@@ -5,7 +5,9 @@
     <li class="breadcrumb-item active">Slider List</li>
 @endsection
 @section('action')
-    <a href="{{ url('sliders/create') }}" class="btn btn-primary  round btn-glow px-2">Add Slider</a>
+    <a href="{{ url('sliders/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Add Slider
+    </a>
 @endsection
 @section('content')
     <section>
@@ -32,29 +34,29 @@
                                 <td>{{ $slider->sliderType->name }}</td>
                                 <td>{{ $slider->description }}</td>
                                 <td>
-                                            <span class="dropdown">
-                                            <button id="btnSearchDrop2" type="button" data-toggle="dropdown"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false" class="btn btn-info dropdown-toggle"><i
-                                                        class="la la-cog"></i></button>
-                                              <span aria-labelledby="btnSearchDrop2"
-                                                    class="dropdown-menu mt-1 dropdown-menu-right">
-                                                <a href="{{ url('sliders/'.$slider->id.'/edit') }}"
-                                                   class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>
-                                                <div class="dropdown-divider"></div>
+                                    <span class="dropdown">
+                                    <button id="btnSearchDrop2" type="button" data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false" class="btn btn-info dropdown-toggle"><i
+                                                class="la la-cog"></i></button>
+                                      <span aria-labelledby="btnSearchDrop2"
+                                            class="dropdown-menu mt-1 dropdown-menu-right">
+                                        <a href="{{ url('sliders/'.$slider->id.'/edit') }}"
+                                           class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>
+                                        <div class="dropdown-divider"></div>
 
-                                                  <form method="POST"
-                                                        action="{{ url('/sliders', ['id' => $slider->id]) }}"
-                                                        accept-charset="UTF-8" style="display:inline">
-                                                  <button type="submit" class="dropdown-item danger"
-                                                          title="Delete the user"
-                                                          onclick="return confirm('Are you sure?')"><i
-                                                              class="ft-trash"></i> Delete</button>
-                                                       @method('delete')
-                                                      @csrf
-                                                  </form>
-                                              </span>
-                                            </span>
+                                          <form method="POST"
+                                                action="{{ url('/sliders', ['id' => $slider->id]) }}"
+                                                accept-charset="UTF-8" style="display:inline">
+                                          <button type="submit" class="dropdown-item danger"
+                                                  title="Delete the user"
+                                                  onclick="return confirm('Are you sure?')"><i
+                                                      class="ft-trash"></i> Delete</button>
+                                               @method('delete')
+                                              @csrf
+                                          </form>
+                                      </span>
+                                    </span>
                                 </td>
                             </tr>
                         @endforeach
