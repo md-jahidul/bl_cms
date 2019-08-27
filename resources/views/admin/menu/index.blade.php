@@ -29,8 +29,8 @@
                             @php($i = 0)
                             @foreach($menus as $menu)
                                 @php($i++)
-                                <tr>
-                                    <td>{{ $i }}</td>
+                                <tr data-index="{{ $menu->id }}" data-position="{{ $menu->display_order }}">
+                                    <td class="list">{{ $i }}</td>
                                     <td>{{ $menu->name }}</td>
                                     <td>{{ $menu->url }}</td>
                                     <td class="text-center"><a href="{{ url("menu/$menu->id/child_menu") }}" class="btn btn-outline-success">Show Child Menu</a></td>
@@ -56,12 +56,10 @@
 @stop
 
 @push('scripts')
-    <script>
-
-        $(function () {
+     <script>
+        $(function(){
             $('.delete_btn').click(function () {
                 var id = $(this).attr('data-id');
-
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -91,15 +89,41 @@
                     }
                 })
             })
-        })
 
+            $("#sortable" ).sortable({
+                update: function( event, ui ) {
+                    $(this).children().each(function (index) {
+                        // console.log(index+1)
+                        if ($(this).attr('data-position') != (index+1)){
+                            $(this).attr('data-position', (index+1)).addClass('update')
+                        }
+                    });
+                    saveNewPositions()
+
+                    $('.list').each(function (index) {
+                        $(this).text(index+1)
+                    })
+                }
+            });
+
+            function saveNewPositions() {
+                var positions = [];
+                $('.update').each(function () {
+                    positions.push([$(this).attr('data-index'), $(this).attr('data-position')]);
+                })
+                $.ajax({
+                    methods: "POST",
+                    url:'{{ url('menu/parent_menu_sort') }}',
+                    data: {
+                        update: 1,
+                        position: positions
+                    },
+                    success:function(data){ console.log(data) },
+                    error : function() {
+                        alert('Some problems..');
+                    }
+                });
+            }
+        });
     </script>
-
-    <script>
-        $( function() {
-            $( "#sortable" ).sortable();
-            $( "#sortable" ).disableSelection();
-        } );
-    </script>
-
 @endpush

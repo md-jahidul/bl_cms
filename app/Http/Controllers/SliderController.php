@@ -55,7 +55,6 @@ class SliderController extends Controller
     {
         $sliderTypes = $this->sliderTypeService->findAll();
         return view('admin.slider.create', compact('sliderTypes'));
-
     }
 
     /**
@@ -80,7 +79,6 @@ class SliderController extends Controller
         $slider = $this->sliderService->findOne($id);
         $sliderTypes = $this->sliderTypeService->findAll();
         return view('admin.slider.edit', compact('slider', 'sliderTypes'));
-
     }
 
     /**

@@ -102,7 +102,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('tag.index')}}" class="nav-link">
+                    <a href="{{ url('tag')}}" class="nav-link">
                         <i class="nav-icon fas fa-user-circle"></i>
                         <p>Tag List</p>
                     </a>

@@ -16,10 +16,7 @@ class MenuController extends Controller
     public function index()
     {
         try {
-//            $menus = Menu::where('parent_id', 0)->get();
-
-            $menus = Menu::with('children')->where('parent_id', 0)->get();
-
+            $menus = Menu::with('children')->where('parent_id', 0)->orderBy('display_order', 'ASC')->get();
             return view('admin.menu.index', compact('menus'));
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage());
@@ -44,7 +41,6 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-
         try {
             $menu_count = (new Menu())->get()->count();
             Menu::create([
@@ -58,6 +54,19 @@ class MenuController extends Controller
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage());
         }
+    }
+
+    public function parentMenuSortable(Request $request){
+
+        $positions = $request->position;
+        foreach ($positions as $position){
+            $menu_id = $position[0];
+            $new_position = $position[1];
+            $update_menu = Menu::findOrFail($menu_id);
+            $update_menu['display_order'] = $new_position;
+            $update_menu->save();
+        }
+        return "success";
     }
 
     /**
@@ -81,9 +90,6 @@ class MenuController extends Controller
     {
         $parent_id = $id;
         $child_menus = Menu::with('parent')->where('parent_id', $id)->get();
-
-//        return $child_menus;
-
         return view('admin.menu.child-menu.child-list', compact('child_menus', 'parent_id'));
     }
 
@@ -111,10 +117,8 @@ class MenuController extends Controller
 
     public function childEdit($id){
         try {
-
             $child_edit = Menu::findORFail($id);
             return view('admin.menu.child-menu.edit', compact('child_edit'));
-
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage());
         }
@@ -129,6 +133,17 @@ class MenuController extends Controller
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage());
         }
+    }
+
+    public function childSubList($id){
+        $parent_id = $id;
+        $child_sub_lists = Menu::with('parent')->where('parent_id', $id)->get();
+        return view('admin.menu.child-sub-menu.child-sub-list', compact('child_sub_lists', 'parent_id'));
+    }
+
+    public function childSubForm($parent_id)
+    {
+        return view('admin.menu.child-menu.create', compact('parent_id'));
     }
 
 
