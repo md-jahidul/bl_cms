@@ -46,9 +46,9 @@ class SliderService
     }
 
     /**
-     * Updating the slider
      * @param $data
-     * @return Response
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
     public function updateSlider($data, $id)
     {
