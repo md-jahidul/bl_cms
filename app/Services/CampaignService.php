@@ -32,6 +32,8 @@ class CampaignService
         $this->setActionRepository($campaignRepository);
     }
 
+
+
     /**
      * @param $data
      * @return Response
@@ -39,10 +41,6 @@ class CampaignService
     public function storeCampaign($data)
     {
         //Todo:: validation required
-
-//        echo '<pre>';
-//        print_r($data);die();
-
         $this->save($data);
         return new Response('Campaign added successfully');
     }

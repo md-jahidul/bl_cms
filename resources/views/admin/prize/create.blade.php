@@ -22,6 +22,8 @@
                     <label for="campaign_id">Campaign</label>
                     <select id="campaign_id" name="campaign_id" class="form-control">
                         @foreach ($campaigns as $campaign)
+
+                            {{print_r($campaign['id'])}}
                             <option value="{{$campaign->id}}">{{$campaign->title}}</option>
                         @endforeach
                     
