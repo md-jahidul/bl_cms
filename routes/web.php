@@ -83,7 +83,10 @@ Route::resource('tag','TagController');
 Route::get('tag/destroy/{id}','TagController@destroy');
 
 Route::resource('page','PageBuilderController');
-Route::resource('campaign','CampaignController');
+
+Route::resource('campaign','CMS\CampaignController');
+Route::get('campaign/destroy/{id}','CMS\CampaignController@destroy');
+
 Route::resource('prize','PrizeController');
 
 Route::resource('digital_service','DigitalServiceController');

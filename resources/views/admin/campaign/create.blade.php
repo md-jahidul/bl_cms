@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group">
                     <label for="quote">Quote</label>
-                    <input type="text" id="quote" name="quote" class="form-control">
+                    <input type="text" id="quote" name="motivational_quote" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="start">Start date</label>
@@ -30,14 +30,14 @@
                     <label for="end">End date</label>
                     <input type="date" id="end" name="end_date" class="form-control">
                 </div>
-                <div class="form-group">
-                    <label for="tag">Tag</label>
-                    <select name="tags[]" class="form-control" id="tag">
-                        @foreach ($tags as $tag)
-                            <option value="{{$tag->id}}">{{$tag->title}}</option>
-                        @endforeach
-                    </select>
-                </div>
+                {{--<div class="form-group">--}}
+                    {{--<label for="tag">Tag</label>--}}
+                    {{--<select name="tags[]" class="form-control" id="tag">--}}
+                        {{--@foreach ($tags as $tag)--}}
+                            {{--<option value="{{$tag->id}}">{{$tag->title}}</option>--}}
+                        {{--@endforeach--}}
+                    {{--</select>--}}
+                {{--</div>--}}
                 <label for="">Active Status:</label>
                 <div class="row">
 
@@ -54,9 +54,9 @@
                     <div class="col-md-2">
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="is_enable" id="deactive" value="0">
-                            <label class="form-check-label" for="deactive">
-                                Deactive
+                            <input class="form-check-input" type="radio" name="is_enable" id="Inactive" value="0">
+                            <label class="form-check-label" for="Inactive">
+                                Inactive
                             </label>
                         </div>
                         
