@@ -41,7 +41,6 @@ Route::group(['prefix' => 'menu'], function () {
     Route::get('/{id}/child_sub_menu', 'CMS\MenuController@childSubList');
     Route::get('/{id}/child_sub_create', 'CMS\MenuController@childSubForm');
     Route::post('/{id}/child_menu_store', 'CMS\MenuController@childStore');
-
 });
 
 Route::resource('questions', 'CMS\QuestionController');
