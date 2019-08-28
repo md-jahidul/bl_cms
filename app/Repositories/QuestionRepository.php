@@ -14,4 +14,5 @@ use App\Models\Question;
 class QuestionRepository extends BaseRepository
 {
     public $modelName = Question::class;
+
 }

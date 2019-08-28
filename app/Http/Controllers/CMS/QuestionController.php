@@ -6,6 +6,7 @@ use App\Services\QuestionService;
 use App\Services\TagService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class QuestionController extends Controller
 {
@@ -47,7 +48,8 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        return view('admin.question.create');
+        $tags = $this->tagService->findAll();
+        return view('admin.question.create', compact('tags'));
     }
 
     /**
@@ -58,7 +60,9 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-
+        $response = $this->questionService->storeQuestion($request);
+        Session::flash('message', $response->getContent());
+        return redirect('/questions');
     }
 
     /**

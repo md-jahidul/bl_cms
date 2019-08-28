@@ -55,12 +55,6 @@ class TagsTableSeeder extends Seeder
                 'slug' => 'information_technology',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
-            ],
-            [
-                'title' => 'Donald Trump',
-                'slug' => 'donald_trump',
-                'created_at' => Carbon::now()->toDateTimeString(),
-                'updated_at' => Carbon::now()->toDateTimeString(),
             ]
         ];
 
