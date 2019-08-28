@@ -174,9 +174,6 @@
                                                 <label for="exampleInputPassword1" class="label-control col-md-1">Option - 1</label>
                                                 <input type="text" name="option[]" placeholder="Enter option" class="form-control col-md-10" id="example-tel-input">
                                                 <input type="radio" name="answer" class="mt-1 mr-2 ml-2" id="input-radio-12">
-                                                <span class="input-group-append" id="button-addon2">
-                                                    <button class="btn-sm btn-danger remove-option" type="button"><i class="ft-x"></i></button>
-                                                </span>
                                             </div>
 
 
@@ -226,13 +223,7 @@
             $(document).on('click', '.create-option', function () {
 
                 var option_count = $('.options-count');
-
-                console.log(option_count);
-
                 var total_option = option_count.length + 1
-
-                console.log(total_option);
-
                 click_count++
 
                 var input = '<div class="input-group mb-1 col-md-12 options-count option-'+total_option+'">\n' +
@@ -240,7 +231,7 @@
                     '<input type="text" name="option[]" placeholder="Enter option" class="form-control col-md-10" id="example-tel-input">\n' +
                     '<input type="radio" name="answer[]" data-id="option-'+total_option+'" class="mt-1 mr-2 ml-2" id="input-radio-12">\n' +
                     '<span class="input-group-append" id="button-addon2">\n' +
-                    '    <button class="btn-sm btn-danger remove-option" data-id="option-'+total_option+'" type="button"><i class="ft-x"></i></button>\n' +
+                    '    <button class="btn-sm btn-danger remove-option" data-id="option-'+total_option+'" type="button"><i data-id="option-'+total_option+'" class="ft-x"></i></button>\n' +
                     '</span>\n' +
                     '</div>';
                 $('.repeat-option').append(input)
@@ -249,8 +240,8 @@
             $(document).on('click', '.remove-option', function (event) {
                 var rowId = $(event.target).attr('data-id');
 
-                console.log(rowId);
-                $('.option-'+rowId).remove();
+
+                $('.'+rowId).remove();
             })
         })
     </script>
