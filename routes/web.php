@@ -10,15 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('admin.admin-auth.login');
-})->name('test');
+Auth::routes();
+Route::group(['middleware' => 'auth'], function () {
 
 
-Route::get('/cms', 'CMS\TestCMSController@index');
 
-Route::resource('questions', 'CMS\QuestionController');
+
+
+    //
+
+    Route::get('/cms', 'CMS\TestCMSController@index');
+
+    Route::resource('questions', 'CMS\QuestionController');
 
 //Route::group(['prefix' => 'question'], function () {
 //    Route::get('/', ['uses' => 'QuestionController@index']);
@@ -42,31 +45,31 @@ Route::resource('questions', 'CMS\QuestionController');
 //});
 
 
-Route::resource('sliders', 'SliderController');
-Route::resource('slider_image', 'SliderImageController');
-Route::get('slider_image/destroy/{id}', 'SliderImageController@destroy');
+    Route::resource('sliders', 'SliderController');
+    Route::resource('slider_image', 'SliderImageController');
+    Route::get('slider_image/destroy/{id}', 'SliderImageController@destroy');
 
-Route::group(['prefix' => 'menu'], function () {
-    Route::get('/', 'CMS\MenuController@index');
-    Route::get('/create', 'CMS\MenuController@create');
-    Route::post('/store', 'CMS\MenuController@store')->name('menu.store');
-    Route::get('/{id}/edit', 'CMS\MenuController@edit');
-    Route::put('{id}/', 'CMS\MenuController@update')->name('menu.update');
+    Route::group(['prefix' => 'menu'], function () {
+        Route::get('/', 'CMS\MenuController@index');
+        Route::get('/create', 'CMS\MenuController@create');
+        Route::post('/store', 'CMS\MenuController@store')->name('menu.store');
+        Route::get('/{id}/edit', 'CMS\MenuController@edit');
+        Route::put('{id}/', 'CMS\MenuController@update')->name('menu.update');
 
-    Route::get('/destroy/{id}', 'CMS\MenuController@destroy');
-    Route::get('/parent_menu_sort','CMS\MenuController@parentMenuSortable');
+        Route::get('/destroy/{id}', 'CMS\MenuController@destroy');
+        Route::get('/parent_menu_sort', 'CMS\MenuController@parentMenuSortable');
 
-    Route::get('/{id}/child_menu', 'CMS\MenuController@childList');
-    Route::get('/{id}/child_menu_create', 'CMS\MenuController@childForm');
-    Route::post('/{id}/child_menu_store', 'CMS\MenuController@childStore');
-    Route::get('/{id}/child_edit', 'CMS\MenuController@childEdit');
-    Route::put('/{id}/child_update', 'CMS\MenuController@childUpdate');
+        Route::get('/{id}/child_menu', 'CMS\MenuController@childList');
+        Route::get('/{id}/child_menu_create', 'CMS\MenuController@childForm');
+        Route::post('/{id}/child_menu_store', 'CMS\MenuController@childStore');
+        Route::get('/{id}/child_edit', 'CMS\MenuController@childEdit');
+        Route::put('/{id}/child_update', 'CMS\MenuController@childUpdate');
 
-    Route::get('/{id}/child_sub_menu', 'CMS\MenuController@childSubList');
-    Route::get('/{id}/child_sub_create', 'CMS\MenuController@childSubForm');
-    Route::post('/{id}/child_menu_store', 'CMS\MenuController@childStore');
+        Route::get('/{id}/child_sub_menu', 'CMS\MenuController@childSubList');
+        Route::get('/{id}/child_sub_create', 'CMS\MenuController@childSubForm');
+        Route::post('/{id}/child_menu_store', 'CMS\MenuController@childStore');
 
-});
+    });
 
 //Route::resource('menu','CMS\MenuController');
 //Route::get('menu/child_menu/retret','CMS\MenuController@childList');
@@ -75,21 +78,25 @@ Route::group(['prefix' => 'menu'], function () {
 //Route::resource('page', 'PageBuilderController');
 
 //Route::resource('campaign', 'CampaignController');
-Route::resource('prize', 'PrizeController');
+    Route::resource('prize', 'PrizeController');
 //Route::resource('tag', 'TagController');
 //Route::resource('digital_service', 'DigitalServiceController');
 
-Route::resource('tags','TagController');
+    Route::resource('tags', 'TagController');
 //Route::get('tag/destroy/{id}','TagController@destroy');
 
 //Route::resource('page','PageBuilderController');
 
-Route::resource('campaigns','CMS\CampaignController');
+    Route::resource('campaigns', 'CMS\CampaignController');
 //Route::get('campaign/destroy/{id}','CMS\CampaignController@destroy');
 
-Route::resource('prize','CMS\PrizeController');
+    Route::resource('prize', 'CMS\PrizeController');
 
 //Route::resource('digital_service','DigitalServiceController');
 
-Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/', 'HomeController@index')->name('home');
+
+
+});
