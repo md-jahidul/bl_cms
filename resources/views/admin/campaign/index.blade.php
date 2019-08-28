@@ -18,7 +18,7 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th>Id</th>
+                            <th>SL</th>
                             <th>Title</th>
                             <th>Motivational Quote</th>
                             <th>Start to End Date</th>

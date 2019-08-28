@@ -18,7 +18,7 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                             <tr>
-                                <th>id</th>
+                                <th>SL</th>
                                 <th>Tag</th>
                                 <th>Slug</th>
                                 <th>Action</th>

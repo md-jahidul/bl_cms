@@ -12,11 +12,6 @@
 */
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
-
-
-
-
-
     //
 
     Route::get('/cms', 'CMS\TestCMSController@index');
@@ -82,8 +77,12 @@ Route::group(['middleware' => 'auth'], function () {
 //Route::resource('tag', 'TagController');
 //Route::resource('digital_service', 'DigitalServiceController');
 
+
     Route::resource('tags', 'TagController');
 //Route::get('tag/destroy/{id}','TagController@destroy');
+
+    Route::resource('tags', 'TagController');
+
 
 //Route::resource('page','PageBuilderController');
 
