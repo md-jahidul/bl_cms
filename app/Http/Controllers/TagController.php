@@ -42,7 +42,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tag.create');
     }
 
     /**
@@ -55,7 +55,7 @@ class TagController extends Controller
     {
         $response = $this->tagService->storeTag($request->all());
         Session::flash('message', $response->getContent());
-        return redirect('/tag');
+        return redirect('/tags');
     }
 
     /**
@@ -92,18 +92,19 @@ class TagController extends Controller
     {
         $response = $this->tagService->updateTag($request->all(), $request->id);
         Session::flash('message', $response->getContent());
-        return redirect('/tag');
+        return redirect('/tags');
     }
 
     /**
      * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Exception
      */
     public function destroy($id)
     {
         $response = $this->tagService->deleteTag($id);
         Session::flash('message', $response->getContent());
-        redirect('/tah');
+        return redirect('/tags');
 
     }
 }

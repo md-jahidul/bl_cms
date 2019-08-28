@@ -1,90 +1,103 @@
-@extends('layouts.master-layout')
+@extends('layouts.admin')
+@section('title', 'Campaign Create')
+@section('card_name', 'Campaign Create')
+@section('breadcrumb')
+    <li class="breadcrumb-item active"> <a href="{{ url('campaigns') }}"> Campaign List</a></li>
+    <li class="breadcrumb-item active"> Campaign Create</li>
+@endsection
+@section('action')
+    <a href="{{ url('campaigns') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+@endsection
+@section('content')
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <div class="card-body card-dashboard">
+                        <form role="form" action="{{ route('campaigns.store') }}" method="POST" novalidate>
+                            <div class="row">
+                                <div class="form-group col-md-12 {{ $errors->has('title') ? ' error' : '' }}">
+                                    <label for="title" class="required">Title</label>
+                                    <input type="text" name="title"  class="form-control" placeholder="Enter title"
+                                           value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Enter campaign title">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title'))
+                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @endif
+                                </div>
 
-@section('main-content')
-    
-    <div class="container py-5">
-    <div class="row">
-    <div class="col-md-8 offset-2">
+                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                    <label for="start_date" class="required">Start Data</label>
+                                    <input type="date" name="start_date"  class="form-control"
+                                           value="{{ old("start_date") ? old("start_date") : '' }}" required data-validation-required-message="Please select start date">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('start_date'))
+                                        <div class="help-block">  {{ $errors->first('start_date') }}</div>
+                                    @endif
+                                </div>
 
 
-    <div class="card">
-        <div class="card-header">
-            Create Campaign
-        </div>
-        <div class="card-body">
-            <form action="{{route('campaign.store')}}" method="post">
-                @csrf
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" id="title" name="title" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="quote">Quote</label>
-                    <input type="text" id="quote" name="motivational_quote" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="start">Start date</label>
-                    <input type="date" id="start" name="start_date" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="end">End date</label>
-                    <input type="date" id="end" name="end_date" class="form-control">
-                </div>
-                {{--<div class="form-group">--}}
-                    {{--<label for="tag">Tag</label>--}}
-                    {{--<select name="tags[]" class="form-control" id="tag">--}}
-                        {{--@foreach ($tags as $tag)--}}
-                            {{--<option value="{{$tag->id}}">{{$tag->title}}</option>--}}
-                        {{--@endforeach--}}
-                    {{--</select>--}}
-                {{--</div>--}}
-                <label for="">Active Status:</label>
-                <div class="row">
+                                <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                    <label for="end_date" class="required">End Date</label>
+                                    <input type="date" name="end_date"  class="form-control" placeholder="Enter title"
+                                           value="{{ old("end_date") ? old("end_date") : '' }}" required data-validation-required-message="Please select end date">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('end_date'))
+                                        <div class="help-block">  {{ $errors->first('end_date') }}</div>
+                                    @endif
+                                </div>
 
-                    <div class="col-md-2">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Motivational Quote</label>
+                                        <textarea name="motivational_quote" class="form-control" rows="5"
+                                                  placeholder="Enter motivational quote"></textarea>
+                                    </div>
+                                </div>
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="is_enable" id="active" value="1" checked>
-                            <label class="form-check-label" for="active">
-                                Active
-                            </label>
-                        </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="title" class="required mr-1">Status:</label>
 
+                                        <input type="radio" name="is_enable" value="1" id="input-radio-15">
+                                        <label for="input-radio-15" class="mr-1">Active</label>
+
+                                        <input type="radio" name="is_enable" value="0" id="input-radio-16">
+                                        <label for="input-radio-16">Inactive</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions col-md-12 ">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                    class="la la-check-square-o"></i> SAVE
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            @csrf
+                        </form>
                     </div>
-                    <div class="col-md-2">
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="is_enable" id="Inactive" value="0">
-                            <label class="form-check-label" for="Inactive">
-                                Inactive
-                            </label>
-                        </div>
-                        
-                    </div>
+
+                    </form>
                 </div>
-
-                <button type="submit" class="btn btn-primary my-2">Submit</button>
-            </form>
+            </div>
         </div>
-    </div>
+    </section>
 
-
-    </div>
-    </div>
-    </div>
 @stop
-@push('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-        flatpickr("#start");
-        flatpickr("#end");
-        $(document).ready(function() {
-            $('#tag').select2();
-        });
-    </script>
+
+@push('page-css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
-@push('style')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@push('page-js')
+
 @endpush
+
+
+
+
+
+
+

@@ -32,6 +32,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('theme/css/core/menu/menu-types/vertical-menu-modern.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('theme/css/core/colors/palette-gradient.css')}}">
 
+    <link rel="stylesheet" type="text/css" href="{{asset('theme/css/plugins/forms/checkboxes-radios.css')}}">
+
     <link rel="stylesheet" type="text/css" href="{{asset('theme/vendors/css/charts/jquery-jvectormap-2.0.3.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('theme/vendors/css/charts/morris.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('theme/fonts/simple-line-icons/style.css')}}">
@@ -105,13 +107,18 @@
 
 <script src="{{ asset('theme/vendors/js/ui/jquery.sticky.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/vendors/js/forms/toggle/bootstrap-switch.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('theme/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js') }}"
-        type="text/javascript"></script>
+<script src="{{ asset('theme/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/vendors/js/forms/icheck/icheck.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/vendors/js/forms/validation/jqBootstrapValidation.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/scripts/forms/validation/form-validation.js') }}" type="text/javascript"></script>
-
+<script src="{{ asset('theme/vendors/js/forms/repeater/jquery.repeater.min.js') }}" type="text/javascript"></script>
 <!-- END PAGE LEVEL JS-->
+
+<!-- BEGIN PAGE LEVEL JS-->
+<script src="{{ asset('theme/js/scripts/forms/form-repeater.js') }}" type="text/javascript"></script>
+<script src="{{ asset('theme/js/scripts/forms/checkbox-radio.js') }}" type="text/javascript"></script>
+<!-- END PAGE LEVEL JS-->
+
 @stack('page-js')
 </body>
 </html>

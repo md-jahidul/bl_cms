@@ -2,32 +2,30 @@
 
 namespace App\Http\Controllers\CMS;
 
-use App\Repositories\CampaignRepository;
-use App\Services\CampaignService;
+use App\Services\QuestionService;
 use App\Services\TagService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
 
-class CampaignController extends Controller
+class QuestionController extends Controller
 {
     /**
-     * @var $campaignService
+     * @var $questionService
      */
-    private $campaignService;
+    private $questionService;
 
-    /**
-     * @var $tagService
-     */
     private $tagService;
 
-
-    public function __construct(CampaignService $campaignService, TagService $tagService)
+    /**
+     * QuestionController constructor.
+     * @param QuestionService $questionService
+     * @param TagService $tagService
+     */
+    public function __construct(QuestionService $questionService, TagService $tagService)
     {
-        $this->campaignService = $campaignService;
+        $this->questionService = $questionService;
         $this->tagService = $tagService;
     }
-
 
     /**
      * Display a listing of the resource.
@@ -36,8 +34,10 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        $campaigns = $this->campaignService->findAll();
-        return view('admin.campaign.index', compact('campaigns'));
+       $questions = $this->questionService->findAll('', 'tags');
+
+//       return $questions;
+       return view('admin.question.index', compact('questions'));
     }
 
     /**
@@ -47,7 +47,7 @@ class CampaignController extends Controller
      */
     public function create()
     {
-        return view('admin.campaign.create');
+        return view('admin.question.create');
     }
 
     /**
@@ -58,9 +58,7 @@ class CampaignController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->campaignService->storeCampaign($request->all());
-        Session::flash('message', $response->getContent());
-        return redirect('/campaigns');
+
     }
 
     /**
@@ -82,8 +80,7 @@ class CampaignController extends Controller
      */
     public function edit($id)
     {
-        $campaign = $this->campaignService->findOne($id);
-        return view('admin.campaign.edit', compact('campaign'));
+        //
     }
 
     /**
@@ -95,20 +92,17 @@ class CampaignController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $response = $this->campaignService->updateCampaign($request->all(), $id);
-        Session::flash('message', $response->getContent());
-        return redirect('campaigns');
+        //
     }
 
     /**
-     * @param $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Exception
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $response = $this->campaignService->deleteCampaign($id);
-        Session::flash('message', $response->getContent());
-        return redirect('/campaigns');
+        //
     }
 }

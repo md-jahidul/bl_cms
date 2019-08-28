@@ -1,101 +1,123 @@
-@extends('layouts.master-layout')
-
-@section('main-content')
-
-    
-    
-    <div class="container-fluid py-4">
-    <div class="card">
-        <div class="card-header">
-            <h5 class="float-left"><b>Campaign list</b></h5>
-            <a href="{{route('campaign.create')}}" role="button" class="btn btn-primary float-right">Create Page</a>
-        </div>
-        <div class="card-body">
-            <table id="campaign_data" class="display table table-hover">
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>Title</th>
-                        <th>Motivational Quote</th>
-                        <th>Start to End Date</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($campaigns as $key=>$campaign)
+@extends('layouts.admin')
+@section('title', 'Campaign List')
+@section('card_name', 'Campaign List')
+@section('breadcrumb')
+    <li class="breadcrumb-item active">Campaign List</li>
+@endsection
+@section('action')
+    <a href="{{ url('campaigns/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Add Campaign
+    </a>
+@endsection
+@section('content')
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
+                           id="Example1" role="grid" aria-describedby="Example1_info" style="">
+                        <thead>
                         <tr>
-                            <td>{{ ++$key }}</td>
-                            <td>{{$campaign->title}}</td>
-                            <td>{{$campaign->motivational_quote}}</td>
-                            <td>{{$campaign->start_date}} To {{$campaign->end_date}}</td>
-
-                            @if($campaign->is_enable == 1)
-                                <td><span class="badge bg-success">Active</span></td>
-                            @else
-                                <td><span class="badge bg-danger">Inactive</span></td>
-                            @endif
-
-                            <td>
-                                <a href="{{route('campaign.edit',$campaign->id)}}" role="button" class="btn btn-outline-info border-0"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-                                {{-- <a href="{{route('campaign.destroy',$campaign->id)}}" role="button" class="btn btn-primary">Delete</a> --}}
-                                <a href="" id="delete_btn" data-toggle="modal" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $campaign->id }}"><i data-id="{{ $campaign->id }}" class="fas fa-trash" aria-hidden="true"></i></a>
-                            </td>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Motivational Quote</th>
+                            <th>Start to End Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
-                   @endforeach
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                        @foreach ($campaigns as $key=>$campaign)
+                            <tr>
+                                <td>{{ ++$key }}</td>
+                                <td>{{$campaign->title}}</td>
+                                <td>{{$campaign->motivational_quote}}</td>
+                                <td>{{$campaign->start_date}} To {{$campaign->end_date}}</td>
+
+                                @if($campaign->is_enable == 1)
+                                    <td class="text-center"><span class="badge bg-success">Active</span></td>
+                                @else
+                                    <td class="text-center"><span class="badge bg-danger">Inactive</span></td>
+                                @endif
+
+                                <td class="text-center">
+                                    <span class="dropdown">
+                                    <button id="btnSearchDrop2" type="button" data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false" class="btn btn-info dropdown-toggle"><i
+                                                class="la la-cog"></i></button>
+                                      <span aria-labelledby="btnSearchDrop2"
+                                            class="dropdown-menu mt-1 dropdown-menu-right">
+                                        <a href="{{ url('campaigns/'.$campaign->id.'/edit') }}"
+                                           class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>
+                                        <div class="dropdown-divider"></div>
+
+                                          <form method="POST"
+                                                action="{{ url('/campaigns', ['id' => $campaign->id]) }}"
+                                                accept-charset="UTF-8" style="display:inline">
+                                          <button type="submit" class="dropdown-item danger"
+                                                  title="Delete the user"
+                                                  onclick="return confirm('Are you sure?')"><i
+                                                      class="ft-trash"></i> Delete</button>
+                                               @method('delete')
+                                              @csrf
+                                          </form>
+                                      </span>
+                                    </span>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-    
 
+    </section>
 
-
-
-     
 @stop
-@push('style')
-    {{--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">--}}
-@endpush
-@push('scripts')
-    {{--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>--}}
+
+@push('page-js')
     <script>
-        $(function () {
-            $('.delete_btn').click(function (event) {
-                var id = $(event.target).attr('data-id');
+        $(document).ready(function () {
+            $('#Example1').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copy', className: 'copyButton',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'excel', className: 'excel',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'pdf', className: 'pdf', "charset": "utf-8",
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'print', className: 'print',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                ],
+                paging: true,
+                searching: true,
+                "bDestroy": true,
+            });
+        });
 
-                console.log(id);
-
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    html: jQuery('.delete_btn').html(),
-                    showCancelButton: true,
-                    confirmButtonColor: '#f51c31',
-                    cancelButtonColor: '#1fdd4b',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.value) {
-                        $.ajax({
-                            url: "{{ url('campaign/destroy') }}/"+id,
-                            methods: "get",
-                            success: function (res) {
-                                Swal.fire(
-                                    'Deleted!',
-                                    'Your file has been deleted.',
-                                    'success',
-                                );
-                                setTimeout(redirect, 2000)
-                                function redirect() {
-                                    window.location.href = "{{ url('campaign') }}"
-                                }
-                            }
-                        })
-                    }
-                })
-            })
-        })
     </script>
 @endpush
+
+
+
+
