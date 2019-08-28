@@ -1,56 +1,63 @@
-@extends('layouts.master-layout')
+@extends('layouts.admin')
+@section('title', 'Tag Create')
+@section('card_name', 'Tag Edit')
+@section('breadcrumb')
+    <li class="breadcrumb-item active"><a href="{{ url('tags') }}">Tag List</a></li>
+    <li class="breadcrumb-item active"> Tag Create</li>
+@endsection
+@section('action')
+    <a href="{{ url('tags') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+@endsection
+@section('content')
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <div class="card-body card-dashboard">
+                        <form role="form" action="{{ url("tags/$tag->id") }}" method="POST" novalidate>
+                            @csrf
+                            {{method_field('PUT')}}
+                            <div class="row">
+                                <div class="form-group col-md-12 {{ $errors->has('title') ? ' error' : '' }}">
+                                    <label for="title" class="required">Title</label>
+                                    <input type="text" name="title"  class="form-control" placeholder="Enter title" value="{{ $tag->title }}"
+                                            required data-validation-required-message="Enter slider title">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title'))
+                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-actions col-md-12 ">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                    class="la la-check-square-o"></i> SAVE
+                                        </button>
 
-
-@section('main-content')
-    <!-- general form elements -->
-    <div class="col-md-6 offset-md-3 py-3">
-
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">Edit Tag</h3>
-            </div>
-            <!-- /.card-header -->
-            <!-- form start -->
-            <form role="form" action="{{ url("tag/$tag->id") }}" method="POST">
-                @csrf
-                {{method_field('PUT')}}
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="m_name">Name</label>
-                        <input type="text" name="title" class="form-control" id="m_name" placeholder="Enter question" value="{{ $tag->title }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <input type="hidden" name="id" value="{{ $tag->id }}">
                 </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
-    <!-- /.card -->
-
-
-    {{--{!! Form::open(array('url' => 'foo/bar','method' => 'POST')) !!}--}}
-
-    {{--{{Form::text("username",--}}
-    {{--old("username") ? old("username") : (!empty($user) ? $user->username : null),--}}
-    {{--[--}}
-    {{--"class" => "form-group user-email",--}}
-    {{--"placeholder" => "Username",--}}
-    {{--])--}}
-    {{--}}--}}
-
-    {{--{{Form::password("password",--}}
-    {{--[--}}
-    {{--"class" => "form-group",--}}
-    {{--"placeholder" => "Your Password",--}}
-    {{--])--}}
-    {{--}}--}}
-
-    {{--{!! Form::close() !!}--}}
+    </section>
 
 @stop
+
+@push('page-css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+@endpush
+@push('page-js')
+
+@endpush
+
+
+
+
+
+
+
 
 
 

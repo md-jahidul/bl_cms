@@ -90,7 +90,7 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $response = $this->tagService->updateTag($request->all(), $request->id);
+        $response = $this->tagService->updateTag($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect('/tags');
     }

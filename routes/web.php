@@ -80,7 +80,6 @@ Route::resource('prize', 'PrizeController');
 //Route::resource('digital_service', 'DigitalServiceController');
 
 Route::resource('tags','TagController');
-//Route::get('tag/destroy/{id}','TagController@destroy');
 
 //Route::resource('page','PageBuilderController');
 

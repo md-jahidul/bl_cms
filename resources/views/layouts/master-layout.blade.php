@@ -65,11 +65,11 @@
 <div class="wrapper">
 
     <!-- Navbar -->
-    @include('admin.partials.nav-bar')
+    {{--@include('admin.partials.nav-bar')--}}
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    @include('admin.partials.left-sidebar')
+    {{--@include('admin.partials.left-sidebar')--}}
     {{--@include('admin.partials.left-sidebar')--}}
     <!-- End Sidebar Container -->
 
