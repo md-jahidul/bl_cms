@@ -22,7 +22,7 @@ class CreateQuestionsTable extends Migration
 
             $table->foreign('tag_id')
                 ->references('id')
-                ->on('quiz_tags')
+                ->on('tags')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });

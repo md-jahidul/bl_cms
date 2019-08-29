@@ -19,7 +19,7 @@
                                 <div class="form-group col-md-12 {{ $errors->has('title') ? ' error' : '' }}">
                                     <label for="title" class="required">Question</label>
                                     <input type="text" name="question_text"  class="form-control" placeholder="Enter question"
-                                           value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Enter campaign title">
+                                           value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Enter Question">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title'))
                                         <div class="help-block">  {{ $errors->first('title') }}</div>
@@ -40,7 +40,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('slider_type_id') ? ' error' : '' }}">
                                     <label class="required">Tag</label>
-                                    <select class="form-control error" name="tag_id" data-validation-required-message="Select slider type">
+                                    <select class="form-control error" name="tag_id" data-validation-required-message="Select tag type">
                                         <option value="">--Select Tag--</option>
                                         @if(isset($tags))
                                             @foreach($tags as $tag)
@@ -65,8 +65,6 @@
                                                 <input type="text" name="option[]" placeholder="Enter option" class="form-control col-md-10" id="example-tel-input">
                                                 <input type="radio" name="answer[]" value="1" class="mt-1 mr-2 ml-2" id="input-radio-12">
                                             </div>
-
-
                                         </div>
                                         <div class="input-group col-md-12">
                                             <label class="col-md-1"></label>
@@ -74,10 +72,8 @@
                                                 <i class="ft-plus"></i> Add more option
                                             </button>
                                         </div>
-
                                     </div>
                                 </div>
-
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
@@ -97,10 +93,6 @@
             </div>
         </div>
     </section>
-
-
-
-
 @stop
 
 @push('page-css')

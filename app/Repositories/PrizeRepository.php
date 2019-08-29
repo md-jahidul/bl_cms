@@ -14,8 +14,4 @@ use App\Models\Prize;
 class PrizeRepository extends BaseRepository
 {
     public $modelName = Prize::class;
-
-    public function pluck(array $column){
-        $this->modelName = $this->pluck($column);
-    }
 }

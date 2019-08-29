@@ -71,27 +71,6 @@
         </div>
     </div>
     <!-- /.card -->
-
-
-    {{--{!! Form::open(array('url' => 'foo/bar','method' => 'POST')) !!}--}}
-
-    {{--{{Form::text("username",--}}
-             {{--old("username") ? old("username") : (!empty($user) ? $user->username : null),--}}
-             {{--[--}}
-                {{--"class" => "form-group user-email",--}}
-                {{--"placeholder" => "Username",--}}
-             {{--])--}}
-    {{--}}--}}
-
-    {{--{{Form::password("password",--}}
-             {{--[--}}
-                {{--"class" => "form-group",--}}
-                {{--"placeholder" => "Your Password",--}}
-             {{--])--}}
-    {{--}}--}}
-
-    {{--{!! Form::close() !!}--}}
-
 @stop
 
 

@@ -1,117 +1,114 @@
-@extends('layouts.master-layout')
-
-@section('main-content')
-
-    
-    
-    <div class="container-fluid pt-4">
-    <div class="card">
-        <div class="card-header">
-            <h5 class="float-left"><b>Prize List</b></h5>
-            <a href="{{route('prize.create')}}" role="button" class="btn btn-primary float-right"><i class="fa fa-plus"></i> Create Prize</a>
-        </div>
-        <div class="card-body">
-            <table id="prize_data" class="display">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Campaign</th>
-                        <th>Product</th>
-                        <th>Position</th>
-                        <th>Reword</th>
-                        <th>Validity</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($prizes as $prize)
-                       
+@extends('layouts.admin')
+@section('title', 'Prizes List')
+@section('card_name', 'Prizes List')
+@section('breadcrumb')
+    <li class="breadcrumb-item active">Prize List</li>
+@endsection
+@section('action')
+    <a href="{{ url('prizes/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Add Prize
+    </a>
+@endsection
+@section('content')
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
+                           id="Example1" role="grid" aria-describedby="Example1_info" style="">
+                        <thead>
                         <tr>
-                            <td>{{$prize->id}}</td>
-                            <td>{{$prize->title}}</td>
-                            <td>{{$prize->campaign->title}}</td>
-                            <td>{{$prize->product_id}}</td>
-                            <td>{{$prize->position}}</td>
-                            <td>{{$prize->reword}}</td>
-                            <td>{{$prize->validity}}</td>
-                            <td>
-                                <a href="{{route('prize.edit',$prize->id)}}" role="button" class="btn btn-outline-info border-0"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-                                <a href="{{route('prize.show',$prize->id)}}" role="button" class="btn btn-outline-success border-0"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                <a href="" onclick="showDelete('{{$prize->id}}','{{$prize->title}}')" id="delete_btn" data-toggle="modal" role="button" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger"><i class="fas fa-trash" aria-hidden="true"></i></a>
-                            </td>
+                            <th>SL</th>
+                            <th>Title</th>
+                            <th>Campaign</th>
+                            <th>Product</th>
+                            <th>Position</th>
+                            <th>Reword</th>
+                            <th>Validity</th>
+                            <th>Action</th>
                         </tr>
-                   @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
+                        </thead>
+                        <tbody>
+                        @foreach ($prizes as $key=>$prize)
+                            <tr>
+                                <td>{{ ++$key }}</td>
+                                <td>{{$prize->title}}</td>
+                                <td>{{$prize->campaign->title}}</td>
+                                <td>{{$prize->product_id}}</td>
+                                <td>{{$prize->position}}</td>
+                                <td>{{$prize->reword}}</td>
+                                <td>{{$prize->validity}}</td>
+                                <td class="text-center">
+                                    <span class="dropdown">
+                                    <button id="btnSearchDrop2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-info dropdown-toggle">
+                                        <i class="la la-cog"></i>
+                                    </button>
+                                        <span aria-labelledby="btnSearchDrop2" class="dropdown-menu mt-1 dropdown-menu-right">
+                                            <a href="{{ url('prizes/'.$prize->id.'/edit') }}" class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>
+                                            <div class="dropdown-divider"></div>
 
-    
-    </div>
-    
+                                            <form method="POST" action="{{ url('/prizes', ['id' => $prize->id]) }}" accept-charset="UTF-8" style="display:inline">
+                                              <button type="submit" class="dropdown-item danger" title="Delete the user" onclick="return confirm('Are you sure?')">
+                                                  <i class="ft-trash"></i> Delete
+                                              </button>
+                                                @method('delete')
+                                                @csrf
+                                            </form>
+                                        </span>
+                                    </span>
+                                </td>
+
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
 
 
-
-
-    
-<div class="modal fade" id="danger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-header bg-danger text-light">
-                <h1><i class="glyphicon glyphicon-thumbs-up"></i>Delete</h1>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
             </div>
-            
-            <form id="deleteForm" action="" method="post">
-                @csrf
-                @method('delete')
-                <div class="modal-body">
-                    <p id="modal-text" class="text-center font-weight-bold "></p>
-                    <input name="id" id="deleteID" type="hidden" value="">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-info pull-left" data-dismiss="modal">Close</button>
-                    <button type="Submit" class="btn btn-outline-danger pull-left">Delete</button>
-                </div>
-            </form>
+        </div>
 
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!-- Modal -->
+    </section>
 
-     
 @stop
-@push('style')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-@endpush
-@push('scripts')
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+@push('page-js')
     <script>
-        $(document).ready( function () {
-            $('#prize_data').DataTable();
-        } );
+        $(document).ready(function () {
+            $('#Example1').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copy', className: 'copyButton',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'excel', className: 'excel',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'pdf', className: 'pdf', "charset": "utf-8",
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'print', className: 'print',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                ],
+                paging: true,
+                searching: true,
+                "bDestroy": true,
 
-        function showDelete(id,name){
-
-        //to clear the url if its not given delete query will show bug when url is in edit 
-        var uri = window.location.toString();
-        if (uri.indexOf("prize/")) {
-            var clean_uri = uri.substring(0, uri.indexOf("prize/"));
-            window.history.replaceState({}, document.title, clean_uri);
-        }
-        //to clear the url if its not given delete query will show bug when url is in edit 
-
-        $('#danger').modal("show");
-        $("#modal-text").html("Are you sure you want to Move this Tag <srtong class='text-danger'>( "+ name +" )</srtong> to the trash ?");
-        $('#deleteForm').attr('action', 'prize/'+id)
-        $('#deleteID').attr('value',id)
-    }
-
-
-
+            });
+        });
 
     </script>
 @endpush

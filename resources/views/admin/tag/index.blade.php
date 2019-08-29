@@ -30,7 +30,7 @@
                                 <td>{{ ++$key }}</td>
                                 <td>{{$tag->title}}</td>
                                 <td>{{$tag->slug}}</td>
-                                <td>
+                                <td class="text-center">
                                     <span class="dropdown">
                                     <button id="btnSearchDrop2" type="button" data-toggle="dropdown"
                                             aria-haspopup="true"
@@ -41,7 +41,6 @@
                                         <a href="{{ url('tags/'.$tag->id.'/edit') }}"
                                            class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>
                                         <div class="dropdown-divider"></div>
-
                                           <form method="POST"
                                                 action="{{ url('/tags', ['id' => $tag->id]) }}"
                                                 accept-charset="UTF-8" style="display:inline">

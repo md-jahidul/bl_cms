@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\SliderImage;
+use App\Models\SliderImage;
 use Faker\Generator as Faker;
 
 $factory->define(SliderImage::class, function (Faker $faker) {

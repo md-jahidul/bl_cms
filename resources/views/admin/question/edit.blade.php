@@ -1,131 +1,126 @@
-@extends('layouts.master-layout')
+@extends('layouts.admin')
+@section('title', 'Question Create')
+@section('card_name', 'Question Create')
+@section('breadcrumb')
+    <li class="breadcrumb-item active"> <a href="{{ url('questions') }}"> Question List</a></li>
+    <li class="breadcrumb-item active"> Question Create</li>
+@endsection
+@section('action')
+    <a href="{{ url('campaigns') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+@endsection
+@section('content')
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <div class="card-body card-dashboard">
+                        <form role="form" action="{{ url("questions/$question->id") }}" method="POST" novalidate>
+                            <div class="row">
+                                <div class="form-group col-md-12 {{ $errors->has('title') ? ' error' : '' }}">
+                                    <label for="title" class="required">Question</label>
+                                    <input type="text" name="question_text"  class="form-control" placeholder="Enter question"
+                                           value="{{ $question->question_text }}" required data-validation-required-message="Enter campaign title">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title'))
+                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @endif
+                                </div>
 
 
-@section('main-content')
+                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                    <label for="start_date" class="required">Point</label>
+                                    <input type="number" name="point"  class="form-control" placeholder="Enter point"
+                                           value="{{ $question->point }}" required data-validation-required-message="Please select start date">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('start_date'))
+                                        <div class="help-block">  {{ $errors->first('start_date') }}</div>
+                                    @endif
+                                </div>
 
-    <!-- general form elements -->
-    <div class="col-md-6 offset-md-3 pt-5">
 
-        <div class="card card-primary">
-            <div class="card-header" style="background: orange">
-                <h3 class="card-title">Edit Question</h3>
+                                <div class="form-group col-md-6 {{ $errors->has('slider_type_id') ? ' error' : '' }}">
+                                    <label class="required">Tag</label>
+                                    <select class="form-control error" name="tag_id" data-validation-required-message="Select slider type">
+                                        <option value="">--Select Tag--</option>
+                                        @if(isset($tags))
+                                            @foreach($tags as $tag)
+                                                <option value="{{ $tag->id }}" {{ $question->tag_id == $tag->id ? 'selected' : ''}}>{{ $tag->title }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('slider_type_id'))
+                                        <div class="help-block">  {{ $errors->first('slider_type_id') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-12">
+                                    <span class="text-muted mt-5">Options</span><span class="text-muted mt-5 offset-md-11">Answer</span>
+                                    <hr class="mt-1">
+                                    <div class="form-group contact-repeater">
+                                        @foreach($options as $key=>$option)
+                                            <div class="repeat-option">
+                                                <div class="input-group mb-1 col-md-12 options-count">
+                                                    <label for="exampleInputPassword1" class="label-control col-md-1 option-sl">Option - {{ ++$key }}</label>
+                                                    <input type="text" name="option[]" placeholder="Enter option" value="{{ $option->option_text }}" class="form-control col-md-10" id="example-tel-input">
+                                                    <input type="radio" name="answer[]" value="{{ $key }}" class="mt-1 mr-2 ml-2" id="input-radio-12" {{ ($option->is_correct == 1) ? 'checked' : '' }}>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <div class="form-actions col-md-12 ">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                class="la la-check-square-o"></i> Update
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            @csrf
+                            {{ method_field('PUT') }}
+                        </form>
+                    </div>
+
+
+                    </form>
+                </div>
             </div>
-            <!-- /.card-header -->
-            <!-- form start -->
-            <form role="form" action="{{ url('question/update/'.$question_edit->id) }}" method="POST">
-                @csrf
-                {{method_field('PUT')}}
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Question name</label>
-                        <input type="text" name="question_text" class="form-control" value="{{ $question_edit->question_text }}" id="exampleInputEmail1" placeholder="Enter question">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Point</label>
-                        <input type="number" name="point" class="form-control"  value="{{ $question_edit->point }}" id="exampleInputPassword1" placeholder="Enter point">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Tag</label>
-                        <select class="form-control" name="tag_id">
-                            <option>--Select tag--</option>
-                            @if(isset($tags))
-                                @foreach($tags as $tag)
-                                    <option value="{{ $tag->id }}" @if($tag->id == $question_edit->tag_id) {{'selected'}} @endif>{{ $tag->title }}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
-
-                    <spen class="text-muted mt-5">Options</spen><spen class="text-muted mt-5 offset-9">Answer</spen>
-                    <hr class="mt-1">
-
-                    <div class="form-group row option">
-
-                        @foreach($options as $key=>$option)
-                            @php(++$key)
-                            <label for="inputEmail3" class="col-sm-2 control-label options-count mt-3">Option - 1</label>
-                            <div class="col-sm-8 mt-3">
-                                <input type="text" name="option[]" class="form-control option-1" value="{{ $option->option }}" id="inputEmail3" placeholder="Enter option">
-                            </div>
-                            <div class="col-sm-2 mt-3">
-                                <input type="radio" name="answer" data-id="option-1" value="{{ $key }}" class="answer" @if($key == $options_answer->option_id ) {{ 'checked' }} @endif>
-                            </div>
-                        @endforeach
-                    </div>
-
-                    {{--<button type="button" class="btn-sm btn-success offset-8 create-option"><i class="fa fa-plus"></i> Add more option</button>--}}
-                </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-            </form>
         </div>
-    </div>
-    <!-- /.card -->
-
-
-    {{--{!! Form::open(array('url' => 'foo/bar','method' => 'POST')) !!}--}}
-
-    {{--{{Form::text("username",--}}
-    {{--old("username") ? old("username") : (!empty($user) ? $user->username : null),--}}
-    {{--[--}}
-    {{--"class" => "form-group user-email",--}}
-    {{--"placeholder" => "Username",--}}
-    {{--])--}}
-    {{--}}--}}
-
-    {{--{{Form::password("password",--}}
-    {{--[--}}
-    {{--"class" => "form-group",--}}
-    {{--"placeholder" => "Your Password",--}}
-    {{--])--}}
-    {{--}}--}}
-
-    {{--{!! Form::close() !!}--}}
-
+    </section>
 @stop
 
-@push('scripts')
+@push('page-css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+@endpush
+@push('page-js')
     <script>
         $(function () {
-
-            // $(document).on('click', '.answer', function () {
-            //     var get_option = $(this).attr('data-id')
-            //     var option_value = $('.'+get_option).val();
-            //     $(this).val(option_value)
-            //     console.log(option_value);
-            // })
-
-            var click_count = 1;
             $(document).on('click', '.create-option', function () {
+                var option_count = $('.options-count');
+                var total_option = option_count.length + 1;
 
-                var option_count = $('.options-count')
-                var total_option = option_count.length + 1
-                click_count++
-
-                var input = '<label for="inputEmail3" class="col-sm-2 control-label mt-3 options-count delete-option'+total_option+'">Option - '+total_option+'</label>\n' +
-                    ' <div class="col-sm-8 mt-3 delete-option'+total_option+'">\n' +
-                    '     <input type="text" name="option[]" class="form-control option-'+total_option+'" id="inputEmail3" placeholder="Enter option">\n' +
-                    ' </div>\n' +
-                    ' <div class="col-sm-1 mt-3 delete-option'+total_option+'">\n' +
-                    '     <input type="radio" name="answer" data-id="option-'+total_option+'" value="'+total_option+'" class="answer" id="inputEmail3">\n' +
-                    ' </div>\n' +
-                    ' <div class="col-sm-1 mt-3 delete-option'+total_option+'">\n' +
-                    '     <button type="button" class="btn-sm btn-danger remove-option delete-option'+total_option+'" data-id='+total_option+'><i data-id='+total_option+' class="fa fa-trash"></i></button>\n' +
-                    ' </div>';
-                $('.option').append(input)
-            })
+                var input = '<div class="input-group mb-1 col-md-12 options-count option-'+total_option+'">\n' +
+                    '<label for="exampleInputPassword1" class="label-control col-md-1 option-sl">Option - '+total_option+'</label>\n' +
+                    '<input type="text" name="option[]" placeholder="Enter option" class="form-control col-md-10" id="example-tel-input">\n' +
+                    '<input type="radio" name="answer[]" data-id="option-'+total_option+'" value="'+total_option+'" class="mt-1 mr-2 ml-2" id="input-radio-12">\n' +
+                    '<span class="input-group-append" id="button-addon2">\n' +
+                    '    <button class="btn-sm btn-danger remove-option" data-id="option-'+total_option+'" type="button"><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
+                    '</span>\n' +
+                    '</div>';
+                $('.repeat-option').append(input)
+            });
 
             $(document).on('click', '.remove-option', function (event) {
                 var rowId = $(event.target).attr('data-id');
-                $('.delete-option'+rowId).remove();
+                $('.'+rowId).remove();
             })
         })
     </script>
+
 @endpush
+
 
 
 

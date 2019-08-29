@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Services\AnswerOptionService;
 use App\Services\QuestionService;
 use App\Services\TagService;
 use Illuminate\Http\Request;
@@ -17,15 +18,20 @@ class QuestionController extends Controller
 
     private $tagService;
 
+    private $answerOptionService;
+
+
     /**
      * QuestionController constructor.
      * @param QuestionService $questionService
      * @param TagService $tagService
+     * @param AnswerOptionService $answerOptionService
      */
-    public function __construct(QuestionService $questionService, TagService $tagService)
+    public function __construct(QuestionService $questionService, TagService $tagService, AnswerOptionService $answerOptionService)
     {
         $this->questionService = $questionService;
         $this->tagService = $tagService;
+        $this->answerOptionService = $answerOptionService;
     }
 
     /**
@@ -35,9 +41,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-       $questions = $this->questionService->findAll('', 'tags');
-
-//       return $questions;
+       $questions = $this->questionService->findAll('', 'tag');
        return view('admin.question.index', compact('questions'));
     }
 
@@ -84,29 +88,33 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tags = $this->tagService->findAll();
+        $question = $this->questionService->findOne($id, 'answerOptions');
+        $options = $question->answerOptions;
+        return view('admin.question.edit', compact('question', 'tags', 'options'));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
     {
-        //
+        $response = $this->questionService->updateQuestion($request, $id);
+        Session::flash('message', $response->getContent());
+        return redirect('questions');
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        //
+        $response = $this->questionService->deleteQuestion($id);
+        Session::flash('message', $response->getContent());
+        return redirect('/questions');
     }
 }

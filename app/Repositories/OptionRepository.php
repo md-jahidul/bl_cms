@@ -8,10 +8,7 @@
 
 namespace App\Repositories;
 
-
-use App\Models\Option;
-
 class OptionRepository extends BaseRepository
 {
-    public $modelName = Option::class;
+    //
 }

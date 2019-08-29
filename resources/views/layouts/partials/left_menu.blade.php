@@ -38,10 +38,10 @@
                                     class="la la-question"></i> Question</a>
                     </li>
 
-                    {{--<li class="{{ is_active_url('sliders') . is_active_url('sliders/create')}}">--}}
-                        {{--<a class="menu-item" href="{{ url('sliders') }}" data-i18n="nav.templates.vert.classic_menu"><i--}}
-                                    {{--class="la la-trophy"></i> Prize</a>--}}
-                    {{--</li>--}}
+                    <li class="{{ is_active_url('prizes') . is_active_url('prizes/create')}}">
+                        <a class="menu-item" href="{{ url('prizes') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-trophy"></i> Prize</a>
+                    </li>
 
                 </ul>
             </li>

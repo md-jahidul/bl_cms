@@ -12,6 +12,6 @@ class SliderImageTableSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\SliderImage', 5)->create();
+        factory('App\Models\SliderImage', 5)->create();
     }
 }

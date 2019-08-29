@@ -48,7 +48,7 @@ class PrizeService
      * @param $id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function updateTag($data, $id)
+    public function updatePrize($data, $id)
     {
         $prize = $this->findOne($id);
         $prize->update($data);
@@ -61,7 +61,7 @@ class PrizeService
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      * @throws \Exception
      */
-    public function deleteTag($id)
+    public function deletePrize($id)
     {
         $prize = $this->findOne($id);
         $prize->delete();

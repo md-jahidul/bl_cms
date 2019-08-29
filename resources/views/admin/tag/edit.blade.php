@@ -42,9 +42,7 @@
             </div>
         </div>
     </section>
-
 @stop
-
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush

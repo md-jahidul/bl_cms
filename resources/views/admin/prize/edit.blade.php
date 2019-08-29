@@ -1,98 +1,104 @@
-@extends('layouts.master-layout')
+@extends('layouts.admin')
+@section('title', 'Prize Create')
+@section('card_name', 'Prize Create')
+@section('breadcrumb')
+    <li class="breadcrumb-item active"><a href="{{ url('prizes') }}">Prize List</a></li>
+    <li class="breadcrumb-item active"> Prize Create</li>
+@endsection
+@section('action')
+    <a href="{{ url('prizes') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+@endsection
+@section('content')
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <div class="card-body card-dashboard">
+                        <form role="form" action="{{ url("prizes/$prize->id") }}" method="POST" novalidate>
+                            @csrf
+                            {{ method_field('PUT') }}
+                            <div class="row">
+                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
+                                    <label for="title" class="required">Title</label>
+                                    <input type="text" name="title"  class="form-control" placeholder="Enter title"
+                                           value="{{$prize->title}}" required data-validation-required-message="Enter prizes title">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title'))
+                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('campaign_id') ? ' error' : '' }}">
+                                    <label class="required">Campaign</label>
+                                    <select class="form-control error" name="campaign_id" data-validation-required-message="Select campaign">
+                                        <option value="">--Select campaign type--</option>
+                                        @if(isset($campaigns))
+                                            @foreach ($campaigns as $campaign)
+                                                <option value="{{$campaign->id}}" {{ $prize->campaign_id == $campaign->id ? 'selected' : ''}}>{{$campaign->title}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('campaign_id'))
+                                        <div class="help-block">  {{ $errors->first('campaign_id') }}</div>
+                                    @endif
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="product_id">Product</label>
+                                        <input type="number" id="product_id" name="product_id" value="{{$prize->product_id}}" class="form-control" placeholder="Enter Product">
+                                    </div>
+                                </div>
 
-@section('main-content')
-    
-    <div class="container py-5">
-    <div class="row">
-    <div class="col-md-8 offset-2">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="position">Position</label>
+                                        <input type="text" id="position" name="position" value="{{$prize->position}}" class="form-control" placeholder="Enter Product">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="reword">Reword</label>
+                                        <input type="text" id="reword" name="reword" value="{{$prize->reword}}" class="form-control" placeholder="Enter reword">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="validity">Validity</label>
+                                        <input type="text" id="validity" name="validity" value="{{$prize->validity}}" class="form-control" placeholder="Enter validity">
+                                    </div>
+                                </div>
 
 
-    <div class="card">
-        <div class="card-header">
-            Edit {{$prize->title}}
-        </div>
-        <div class="card-body">
-            <form action="{{route('prize.update',$prize->id)}}" method="post">
-                @csrf
-                @method('PUT')
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input value="{{$prize->title}}" type="text" id="title" name="title" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="campaign_id">Campaign</label>
-                    <select id="campaign_id" name="campaign_id" class="form-control">
-                        @foreach ($campaigns as $campaign)
-                            <option @if($prize->campaign_id === $campaign->id) selected @endif value="{{$campaign->id}}">{{$campaign->title}}</option>
-                        @endforeach
-                    
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="product_id">Product</label>
-                    <input value="{{$prize->product_id}}" type="text" id="product_id" name="product_id" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="position">Position</label>
-                    <input value="{{$prize->position}}" type="text" id="position" name="position" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="reword">Reword</label>
-                    <input value="{{$prize->reword}}" type="text" id="reword" name="reword" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="validity">Validity</label>
-                    <input value="{{$prize->validity}}" type="text" id="validity" name="validity" class="form-control">
-                </div>
-                
-                {{-- <label for="">Active Status:</label>
-                <div class="row">
+                                <div class="form-actions col-md-12 ">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                class="la la-check-square-o"></i> SAVE
+                                        </button>
 
-                    <div class="col-md-2">
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="is_enable" id="active" value="1" checked>
-                            <label class="form-check-label" for="active">
-                                Active
-                            </label>
-                        </div>
-
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-md-2">
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="is_enable" id="deactive" value="0">
-                            <label class="form-check-label" for="deactive">
-                                Deactive
-                            </label>
-                        </div>
-                        
-                    </div> --}}
                 </div>
-
-                <button type="submit" class="btn btn-primary my-2">Submit</button>
-            </form>
+            </div>
         </div>
-    </div>
-
-
-    </div>
-    </div>
-    </div>
+    </section>
 @stop
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
-    <script>
-        flatpickr("#start_date");
-        flatpickr("#end_date");
-        $(document).ready(function() {
-            $('#campaign_id').select2();
-        });
-    </script>
+
+@push('page-css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
-@push('style')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
-    
+@push('page-js')
+
 @endpush
+
+
+
+
+
+
+
+

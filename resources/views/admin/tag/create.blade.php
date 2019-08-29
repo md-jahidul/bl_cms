@@ -19,7 +19,7 @@
                                 <div class="form-group col-md-12 {{ $errors->has('title') ? ' error' : '' }}">
                                     <label for="title" class="required">Title</label>
                                     <input type="text" name="title"  class="form-control" placeholder="Enter title"
-                                           value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Enter slider title">
+                                           value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Enter tag title">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title'))
                                         <div class="help-block">  {{ $errors->first('title') }}</div>
