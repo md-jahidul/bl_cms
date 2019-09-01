@@ -33,4 +33,10 @@ class DigitalServiceController extends Controller
     {
         return Response()->json($this->digitalService->findAll());
     }
+
+
+//    public function testApi()
+//    {
+//
+//    }
 }

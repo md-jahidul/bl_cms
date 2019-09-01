@@ -1,62 +1,87 @@
-@extends('layouts.master-layout')
+@extends('layouts.admin')
+@section('title', 'Tag List')
+@section('card_name', 'Menu List')
+@section('breadcrumb')
+    <li class="breadcrumb-item active">Menu List</li>
+@endsection
+@section('action')
+    <a href="{{ url('menu/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Add Menu
+    </a>
+@endsection
+@section('content')
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
+                           id="Example1" role="grid" aria-describedby="Example1_info" style="">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>URL</th>
+                            <th></th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody id="sortable">
+                        @php($i = 0)
+                        @foreach($menus as $menu)
+                            @php($i++)
+                            <tr data-index="{{ $menu->id }}" data-position="{{ $menu->display_order }}">
+                                <td class="list">{{ $i }}</td>
+                                <td>{{ $menu->name }}</td>
+                                <td>{{ $menu->url }}</td>
+                                <td class="text-center"><a href="{{ url("menu/$menu->id/child_menu") }}" class="btn btn-outline-success">Show Child Menu</a></td>
+                                @if($menu->status == 1)
+                                    <td><span class="badge bg-success">Active</span></td>
+                                @else
+                                    <td><span class="badge bg-danger">Inactive</span></td>
+                                @endif
+{{--                                <td><a href="{{ url('menu/'.$menu->id.'/edit') }}" class="mr-3"><i class="fas fa-edit text-primary"></i></a> <a href="#" ><i data-id="{{$menu->id}}" class="fas fa-trash text-danger delete_btn"></i></a></td>--}}
 
-@section('main-content')
-    <section class="content py-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        {{--<div class="col-md-12">--}}
-                        <h3 class="card-title float-left">Menu List</h3>
-                        <a href="{{ url('menu/create') }}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Add Menu</a>
-                        {{--</div>--}}
+                                <td class="">
+                                    <span class="dropdown">
+                                    <button id="btnSearchDrop2" type="button" data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false" class="btn btn-info dropdown-toggle"><i
+                                            class="la la-cog"></i></button>
+                                      <span aria-labelledby="btnSearchDrop2"
+                                            class="dropdown-menu mt-1 dropdown-menu-right">
+                                        <a href="{{ url('menu/'.$menu->id.'/edit') }}"
+                                           class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>
+                                        <div class="dropdown-divider"></div>
+                                          <form method="POST"
+                                                action="{{ url('/menu', ['id' => $menu->id]) }}"
+                                                accept-charset="UTF-8" style="display:inline">
+                                          <button type="submit" class="dropdown-item danger"
+                                                  title="Delete the user"
+                                                  onclick="return confirm('Are you sure?')"><i
+                                                  class="ft-trash"></i> Delete</button>
+                                               @method('delete')
+                                              @csrf
+                                          </form>
+                                      </span>
+                                    </span>
+                                </td>
 
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>URL</th>
-                                <th></th>
-                                <th>Status</th>
-                                <th>Action</th>
                             </tr>
-                            </thead>
-                            <tbody id="sortable">
-                            @php($i = 0)
-                            @foreach($menus as $menu)
-                                @php($i++)
-                                <tr data-index="{{ $menu->id }}" data-position="{{ $menu->display_order }}">
-                                    <td class="list">{{ $i }}</td>
-                                    <td>{{ $menu->name }}</td>
-                                    <td>{{ $menu->url }}</td>
-                                    <td class="text-center"><a href="{{ url("menu/$menu->id/child_menu") }}" class="btn btn-outline-success">Show Child Menu</a></td>
-                                    @if($menu->status == 1)
-                                        <td><span class="badge bg-success">Active</span></td>
-                                    @else
-                                        <td><span class="badge bg-danger">Inactive</span></td>
-                                    @endif
-                                    <td><a href="{{ url('menu/'.$menu->id.'/edit') }}" class="mr-3"><i class="fas fa-edit text-primary"></i></a> <a href="#" ><i data-id="{{$menu->id}}" class="fas fa-trash text-danger delete_btn"></i></a></td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
+                        @endforeach
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
-            <!-- /.col -->
         </div>
-        <!-- /.row -->
+
     </section>
 
 @stop
 
-@push('scripts')
-     <script>
+@push('page-js')
+    <script>
         $(function(){
             $('.delete_btn').click(function () {
                 var id = $(this).attr('data-id');
@@ -125,5 +150,45 @@
                 });
             }
         });
+
+
+        $(document).ready(function () {
+            $('#Example1').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copy', className: 'copyButton',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'excel', className: 'excel',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'pdf', className: 'pdf', "charset": "utf-8",
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                    {
+                        extend: 'print', className: 'print',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3]
+                        }
+                    },
+                ],
+                paging: true,
+                searching: true,
+                "bDestroy": true,
+            });
+        });
+
     </script>
 @endpush
+
+
+
