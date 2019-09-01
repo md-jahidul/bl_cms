@@ -1,31 +1,32 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: BS23
- * Date: 27-Aug-19
- * Time: 12:37 PM
+ * User: bs-205
+ * Date: 18/08/19
+ * Time: 17:23
  */
 
 namespace App\Services;
 
 
 use App\Repositories\SliderImageRepository;
-use App\Repositories\SliderRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
+use DB;
+
 
 class SliderImageService
 {
-    use CrudTrait;
 
+    use CrudTrait;
     /**
      * @var $sliderRepository
      */
     protected $sliderImageRepository;
 
     /**
-     * SliderImageService constructor.
-     * @param SliderImageRepository $sliderImageRepository
+     * DigitalServicesService constructor.
+     * @param SliderImageRepository $sliderTypeRepository
      */
     public function __construct(SliderImageRepository $sliderImageRepository)
     {
@@ -34,28 +35,51 @@ class SliderImageService
     }
 
     /**
-     * @param $data
+     * Storing the banner resource
      * @return Response
      */
-    public function storeSliderImage($data)
+    public function storeSliderImage($images)
     {
-        return new Response('Slider Image added successfully');
+        //dd($images);
+        $slider_id = $images[0]['slider_id'];
+        foreach ($images as $image) {
+            $image['image_url'] = 'storage/'.$image['image_url']->store('Slider_image');
+            $image['slider_id'] = $slider_id; 
+            $this->save($image);
+        }
+        return new Response("Image has successfully been Added to slider");
     }
 
     /**
+     * Updating the banner
      * @param $data
-     * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @return Response
      */
     public function updateSliderImage($data, $id)
     {
-        return Response('Slider Image update successfully !');
+        $is_sequence_exist = $this->sliderImageRepository->is_sequence_exist($data['sequence'],$data['slider_id']);
+        dd($is_sequence_exist);
+        $sliderImage = $this->findOne($id);
+        if(!isset($data['image_url'])){
+           $data['image_url'] = $sliderImage->image_url;
+        }else{
+            unlink($sliderImage->image_url);
+            $data['image_url'] = 'storage/'.$data['image_url']->store('Slider_image');
+        }
+        $sliderImage->update($data);
+        return new Response("Image has successfully been updated to slider");
     }
 
-    public function deleteSliderImage()
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @throws \Exception
+     */
+    public function deleteSliderImage($id)
     {
-        return Response('Slider Image delete successfully');
+        $sliderImage = $this->findOne($id);
+        $sliderImage->delete();
+        return Response('Slider Image deleted successfully !');
     }
-
 
 }

@@ -8,9 +8,9 @@
 
 namespace App\Repositories;
 
-use App\Models\Slider;
+use App\Models\Banner;
 
-class SliderRepository extends BaseRepository
+class BannerRepository extends BaseRepository
 {
-    public $modelName = Slider::class;
+    public $modelName = Banner::class;
 }

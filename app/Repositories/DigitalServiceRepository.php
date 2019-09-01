@@ -16,5 +16,4 @@ class DigitalServiceRepository extends BaseRepository
     public $modelName = DigitalService::class;
 
 
-
 }

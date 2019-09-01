@@ -46,6 +46,26 @@
                 </ul>
             </li>
 
+            <li class=" nav-item"><a href="#"><i class="la la-question"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Manage Page</span></a>
+                <ul class="menu-content">
+                    {{--Tag--}}
+                    <li class="{{ is_active_url('') . is_active_url('')}}">
+                        <a class="menu-item" href="{{ route('slider.index') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-tags"></i>Slider</a>
+                    </li>
+                    <li class="{{ is_active_url('') . is_active_url('')}}">
+                        <a class="menu-item" href="{{ route('banner.index') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-bullhorn"></i> Banner</a>
+                    </li>
+                    <li class="{{ is_active_url('') . is_active_url('')}}">
+                        <a class="menu-item" href="{{ url('questions') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-question"></i> Welcome Info</a>
+                    </li>
+
+                </ul>
+            </li>
+
         </ul>
     </div>
 </div>

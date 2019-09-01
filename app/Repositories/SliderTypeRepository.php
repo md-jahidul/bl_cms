@@ -2,17 +2,15 @@
 /**
  * Created by PhpStorm.
  * User: bs-205
- * Date: 25/08/19
- * Time: 13:06
+ * Date: 18/08/19
+ * Time: 17:07
  */
 
 namespace App\Repositories;
 
-
-use App\SliderType;
+use App\Models\SliderType;
 
 class SliderTypeRepository extends BaseRepository
 {
-    protected $modelName = SliderType::class;
-
+    public $modelName = SliderType::class;
 }

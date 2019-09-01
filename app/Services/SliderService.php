@@ -34,26 +34,24 @@ class SliderService
     }
 
     /**
-     * Storing the slider resource
+     * Storing the banner resource
      * @return Response
      */
     public function storeSlider($data)
     {
-        //Todo:: Make the short code dynamic
-        $data['short_code'] = uniqid();
+        $data['short_code'] = strtolower(str_replace(' ','_',$data['title'])); 
         $this->save($data);
-        return new Response('Slider added successfully');
+        return new Response("Slider has successfully been created");
     }
 
     /**
+     * Updating the banner
      * @param $data
-     * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @return Response
      */
-    public function updateSlider($data, $id)
+    public function updateSlider($request, $slider)
     {
-        $slider = $this->findOne($id);
-        $slider->update($data);
+        $slider->update($request->all());
         return Response('Slider updated successfully !');
     }
 

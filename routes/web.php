@@ -29,3 +29,23 @@ Route::resource('prizes','CMS\PrizeController');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+// myBL-routs
+route::resource('short_cuts','CMS\ShortCutController');
+route::resource('UserShortcut','CMS\UserShortcutController');
+route::resource('slider','CMS\SliderController');
+Route::get('slider/destroy/{id}','CMS\SliderController@destroy');
+
+route::resource('sliderImage','CMS\SliderImageController');
+Route::get('slider/addImage/{sliderId}','CMS\SliderImageController@index')->name('sliderImage.index');
+
+route::resource('banner','CMS\BannerController');
+Route::get('banner/destroy/{id}','CMS\BannerController@destroy');
+
+route::resource('welcome_info','CMS\WelcomeInfoController');
+
+
+Route::put('short_cuts/SerialUpdate/{id}','CMS\UserShortcutController@serialUpdate')->name('serial.update');
+Route::get('short_cuts/destroy/{id}','CMS\ShortCutController@destroy');
+// myBL-routs

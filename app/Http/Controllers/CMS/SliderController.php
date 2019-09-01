@@ -4,19 +4,18 @@ namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\SliderImageService;
-use App\Http\Requests\SliderImageStoreRequest;
-use App\Http\Requests\SliderImageUpdateRequest;
+use App\Models\Slider;
+use App\Models\SliderType;
 use App\Services\SliderService;
 use App\Services\SliderTypeService;
+use App\Http\Requests\SliderRequest;
 
-class SliderImageController extends Controller
+class SliderController extends Controller
 {
 
      /**
      * @var SliderService
      */
-    private $sliderImageService;
     private $sliderService;
     private $sliderTypeService;
     /**
@@ -26,11 +25,10 @@ class SliderImageController extends Controller
 
     /**
      * BannerController constructor.
-     * @param SliderImageService $sliderService
+     * @param SliderService $sliderService
      */
-    public function __construct(SliderImageService $sliderImageService,SliderService $sliderService,SliderTypeService $sliderTypeService)
+    public function __construct(SliderService $sliderService,SliderTypeService $sliderTypeService)
     {
-        $this->sliderImageService = $sliderImageService;
         $this->sliderService = $sliderService;
         $this->sliderTypeService = $sliderTypeService;
     }
@@ -42,9 +40,11 @@ class SliderImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($sliderId)
+    public function index()
     {
-        return view('admin.slider.add_image_to_slider')->with('sliderId',$sliderId);
+        return view('admin.slider.index')
+                ->with('sliders',$this->sliderService->findAll())
+                ->with('slider_types',$this->sliderTypeService->findAll());
     }
 
     /**
@@ -63,10 +63,9 @@ class SliderImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SliderImageStoreRequest $request)
+    public function store(SliderRequest $request)
     {
-    
-        session()->flash('status',$this->sliderImageService->storeSliderImage($request->all()['repeater-list'])->getContent());
+        session()->flash('status',$this->sliderService->storeSlider($request->all())->getContent());
         return redirect(route('slider.index'));
     }
 
@@ -87,10 +86,13 @@ class SliderImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Slider $slider)
     {
-        $slider = $this->sliderService->findOne($id);
-        return view('admin.slider.edit_image_to_slider')->with('slider',$slider);
+        return view('admin.slider.index')
+                ->with('sliders',$this->sliderService->findAll())
+                ->with('slider_types',$this->sliderTypeService->findAll())
+                ->with('single_slider',$slider);
+
     }
 
     /**
@@ -100,11 +102,10 @@ class SliderImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SliderImageUpdateRequest $request, $id)
+    public function update(SliderRequest $request,Slider $slider)
     {
-        //dd( $request, $id);
-        session()->flash('status',$this->sliderImageService->updateSliderImage($request->all(), $id)->getContent());
-        return redirect()->back();
+        session()->flash('status',$this->sliderService->updateSlider($request, $slider)->getContent());
+        return redirect(route('slider.index'));
     }
 
     /**
@@ -115,8 +116,8 @@ class SliderImageController extends Controller
      */
     public function destroy($id)
     {
-        //dd($id);
-        session()->flash('danger',$this->sliderImageService->deletesliderImage($id)->getContent());
-        return redirect()->back();
+        //return $slider;
+        session()->flash('danger',$this->sliderService->deleteSlider($id)->getContent());
+        return redirect(route('slider.index'));
     }
 }
