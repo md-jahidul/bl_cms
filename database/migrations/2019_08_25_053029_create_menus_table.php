@@ -15,10 +15,14 @@ class CreateMenusTable extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name')->unique();
             $table->integer('parent_id')->default(0);
-            $table->string('name');
+            $table->string('en_label_text');
+            $table->string('bn_label_text');
+            $table->string('code');   // HomePage
             $table->string('url')->unique();
             $table->tinyInteger('status');
+            $table->tinyInteger('external_site');
             $table->integer('display_order');
             $table->timestamps();
         });
