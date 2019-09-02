@@ -11,38 +11,28 @@
 @endsection
 @section('content')
     <section>
-        <div class="card">
+        <div class="card col-sm-12">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
-                           id="Example1" role="grid" aria-describedby="Example1_info" style="">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>URL</th>
-                            <th></th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
+                    <h3 class="menu-title">Dragabble Menu list : lable 1</h3>
+                    <table class="table table-striped table-bordered"
+                           role="grid" aria-describedby="Example1_info" style="cursor:move;">
                         <tbody id="sortable">
                         @php($i = 0)
                         @foreach($menus as $menu)
                             @php($i++)
                             <tr data-index="{{ $menu->id }}" data-position="{{ $menu->display_order }}">
-                                <td class="list">{{ $i }}</td>
-                                <td>{{ $menu->name }}</td>
-                                <td>{{ $menu->url }}</td>
-                                <td class="text-center"><a href="{{ url("menu/$menu->id/child_menu") }}" class="btn btn-outline-success">Show Child Menu</a></td>
-                                @if($menu->status == 1)
-                                    <td><span class="badge bg-success">Active</span></td>
-                                @else
+                                <td width="3%"><i class="icon-cursor-move icons"></i></td>
+                                <td>{{ $menu->en_label_text }}</td>
+                                @if($menu->status == 0)
                                     <td><span class="badge bg-danger">Inactive</span></td>
+                                @else
+                                    <td></td>
                                 @endif
-{{--                                <td><a href="{{ url('menu/'.$menu->id.'/edit') }}" class="mr-3"><i class="fas fa-edit text-primary"></i></a> <a href="#" ><i data-id="{{$menu->id}}" class="fas fa-trash text-danger delete_btn"></i></a></td>--}}
+                                <td width="10%"><a href="{{ url('menu/'.$menu->id.'/edit') }}" class="mr-3"><i class="ft-edit-2"></i></a> <a href="#" ><i data-id="{{$menu->id}}" class="ft-trash"></i></a></td>
+                                <td class="text-center" width="10%"><a href="{{ url("menu/$menu->id/child_menu") }}" class="badge bg-success">Show Child Menu</a></td>
 
-                                <td class="">
+                            <!-- <td class="">
                                     <span class="dropdown">
                                     <button id="btnSearchDrop2" type="button" data-toggle="dropdown"
                                             aria-haspopup="true"
@@ -61,11 +51,11 @@
                                                   onclick="return confirm('Are you sure?')"><i
                                                   class="ft-trash"></i> Delete</button>
                                                @method('delete')
-                                              @csrf
-                                          </form>
-                                      </span>
-                                    </span>
-                                </td>
+                            @csrf
+                                </form>
+                            </span>
+                          </span>
+                      </td> -->
 
                             </tr>
                         @endforeach
@@ -79,6 +69,31 @@
     </section>
 
 @stop
+
+
+<style>
+    h3 .menu-title{
+        font-weight: bold;
+    }
+    .table tr{
+        padding : 10px;
+    }
+    .card .table th,.card .table td {
+        padding: 10px;
+        vertical-align: middle;
+    }
+    .card .table-bordered th,.card .table-bordered td{
+        border : 0px;
+    }
+
+    .card .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(206, 208, 212, 0.5);
+    }
+
+    /* .table-striped tbody tr:nth-of-type(even) {
+        // background-color: rgba(206, 208, 212, 0.5);
+    } */
+</style>
 
 @push('page-js')
     <script>
@@ -150,45 +165,7 @@
                 });
             }
         });
-
-
-        $(document).ready(function () {
-            $('#Example1').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy', className: 'copyButton',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'excel', className: 'excel',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'pdf', className: 'pdf', "charset": "utf-8",
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'print', className: 'print',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                ],
-                paging: true,
-                searching: true,
-                "bDestroy": true,
-            });
-        });
-
     </script>
 @endpush
-
 
 

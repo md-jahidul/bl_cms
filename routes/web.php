@@ -29,15 +29,15 @@ Route::resource('prizes','CMS\PrizeController');
 Route::resource('footer-menu','CMS\FooterMenuController');
 
 Route::group(['prefix' => 'child-footer'], function () {
-    Route::get('/{id}', 'CMS\MenuController@childList');
-    Route::get('/{id}/create', 'CMS\MenuController@childForm');
-    Route::post('/{id}/store', 'CMS\MenuController@childStore');
-    Route::get('/{id}/edit', 'CMS\MenuController@childEdit');
-    Route::put('/{id}/delete', 'CMS\MenuController@childUpdate');
+    Route::get('/{id}', 'CMS\FooterMenuController@footerChildList');
+    Route::get('/{id}/create', 'CMS\FooterMenuController@childForm');
+    Route::post('/{id}/store', 'CMS\FooterMenuController@childStore');
+    Route::get('/{id}/edit', 'CMS\FooterMenuController@childEdit');
+    Route::put('/{id}/delete', 'CMS\FooterMenuController@childUpdate');
 
-    Route::get('/{id}/child_sub_menu', 'CMS\MenuController@childSubList');
-    Route::get('/{id}/child_sub_create', 'CMS\MenuController@childSubForm');
-    Route::post('/{id}/child_menu_store', 'CMS\MenuController@childStore');
+    Route::get('/{id}/child_sub_menu', 'CMS\FooterMenuController@childSubList');
+    Route::get('/{id}/child_sub_create', 'CMS\FooterMenuController@childSubForm');
+    Route::post('/{id}/child_menu_store', 'CMS\FooterMenuController@childStore');
 });
 
 
