@@ -17,6 +17,11 @@ class CreateFooterMenusTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->integer('parent_id')->default(0);
+            $table->string('en_label_text');
+            $table->string('bn_label_text');
+            $table->string('code');   // HomePage
+            $table->string('url')->unique();
+            $table->tinyInteger('external_site')->default(0);
             $table->tinyInteger('status');
             $table->integer('display_order')->default(0);
             $table->timestamps();

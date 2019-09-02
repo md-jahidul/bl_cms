@@ -30,7 +30,7 @@
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{$footerMenu->name}}</td>
-                                <td><a class="btn btn-outline-success" href="">Child Menu</a></td>
+                                <td><a class="btn btn-outline-success" href="{{ url("footer-menu/create/".$footerMenu->id) }}">Child Menu</a></td>
 
                                 @if($footerMenu->status == 1)
                                     <td class=""><span class="badge bg-success">Active</span></td>
@@ -38,30 +38,35 @@
                                     <td class=""><span class="badge bg-danger">Inactive</span></td>
                                 @endif
 
-                                <td class="">
-                                    <span class="dropdown">
-                                    <button id="btnSearchDrop2" type="button" data-toggle="dropdown"
-                                            aria-haspopup="true"
-                                            aria-expanded="false" class="btn btn-info dropdown-toggle"><i
-                                            class="la la-cog"></i></button>
-                                      <span aria-labelledby="btnSearchDrop2"
-                                            class="dropdown-menu mt-1 dropdown-menu-right">
-                                        <a href="{{ url('footer-menu/'.$footerMenu->id.'/edit') }}"
-                                           class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>
-                                        <div class="dropdown-divider"></div>
-                                          <form method="POST"
-                                                action="{{ url('footer-menu', ['id' => $footerMenu->id]) }}"
-                                                accept-charset="UTF-8" style="display:inline">
-                                          <button type="submit" class="dropdown-item danger"
-                                                  title="Delete the user"
-                                                  onclick="return confirm('Are you sure?')"><i
-                                                  class="ft-trash"></i> Delete</button>
-                                               @method('delete')
-                                              @csrf
-                                          </form>
-                                      </span>
-                                    </span>
+{{--                                <td><a href="{{ url('menu/'.$footerMenu->id.'/edit') }}" class=""><i class="la la-pencil text-primary"></i></a> <a href="#" ><i data-id="{{$footerMenu->id}}" class="la la-trash text-danger delete_btn"></i></a></td>--}}
+                                <td>
+                                    <a href="" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="" id="delete_btn" data-toggle="modal" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></a>
                                 </td>
+{{--                                <td class="">--}}
+{{--                                    <span class="dropdown">--}}
+{{--                                    <button id="btnSearchDrop2" type="button" data-toggle="dropdown"--}}
+{{--                                            aria-haspopup="true"--}}
+{{--                                            aria-expanded="false" class="btn btn-info dropdown-toggle"><i--}}
+{{--                                            class="la la-cog"></i></button>--}}
+{{--                                      <span aria-labelledby="btnSearchDrop2"--}}
+{{--                                            class="dropdown-menu mt-1 dropdown-menu-right">--}}
+{{--                                        <a href="{{ url('footer-menu/'.$footerMenu->id.'/edit') }}"--}}
+{{--                                           class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>--}}
+{{--                                        <div class="dropdown-divider"></div>--}}
+{{--                                          <form method="POST"--}}
+{{--                                                action="{{ url('footer-menu', ['id' => $footerMenu->id]) }}"--}}
+{{--                                                accept-charset="UTF-8" style="display:inline">--}}
+{{--                                          <button type="submit" class="dropdown-item danger"--}}
+{{--                                                  title="Delete the user"--}}
+{{--                                                  onclick="return confirm('Are you sure?')"><i--}}
+{{--                                                  class="ft-trash"></i> Delete</button>--}}
+{{--                                               @method('delete')--}}
+{{--                                              @csrf--}}
+{{--                                          </form>--}}
+{{--                                      </span>--}}
+{{--                                    </span>--}}
+{{--                                </td>--}}
                             </tr>
                         @endforeach
                         </tbody>

@@ -33,6 +33,10 @@ class FooterMenuService
      */
     public function storeFooterMenu($data)
     {
+        $code = ucwords($data['name']);
+        $code = str_replace(' ','', $code);
+        $code = str_replace('&','And', $code);
+        $data['code'] = $code."Page";
         $this->save($data);
         return new Response('Footer menu added successfully');
     }
