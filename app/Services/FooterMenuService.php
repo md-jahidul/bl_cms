@@ -40,10 +40,8 @@ class FooterMenuService
     public function storeFooterMenu($data)
     {
         $name = ucwords( strtolower( $data['name'] )  );
-
         $search = [" ", "&"];
         $replace   = ["", "And"];
-
         $data['code'] = str_replace($search, $replace, $name);
         $this->save($data);
         return new Response('Footer menu added successfully');

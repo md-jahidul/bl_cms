@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Tag List')
+@section('title', 'Footer Child Menu')
 @section('card_name', 'Footer Child Menu List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Menu List</li>
+    <li class="breadcrumb-item active">Footer Child Menu List</li>
 @endsection
 @section('action')
-    <a href="{{ url('menu/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Add Menu
+    <a href="{{ url("child-footer/$footerChildLists->id/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+       Add Child Menu
     </a>
 @endsection
 @section('content')
@@ -30,11 +30,18 @@
                                     <td></td>
                                 @endif
                                 <td class="action" width="20%">
-                                    <a href="" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="" id="delete_btn" data-toggle="modal" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></a>
+                                    <a href="{{ url("child-footer/$footerChild->id/edit/$footerChildLists->id") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <form method="POST" action="{{ url("child-footer/$footerChild->id/delete/$footerChildLists->id") }}" accept-charset="UTF-8" style="display:inline">
+                                        <button type="submit" class="border-0 btn btn-outline-danger" title="Delete the user" onclick="return confirm('Are you sure?')">
+                                            <i class="la la-trash"></i>
+                                        </button>
+                                        @method('delete')
+                                        @csrf
+                                    </form>
                                 </td>
-                                <td class="text-center" width="10%"><a href="{{ url("child-footer/$footerChild->id") }}" class="badge bg-success">Child Menus</a></td>
 
+
+                                <td class="text-center" width="10%"><a href="{{ url("child-footer/$footerChild->id") }}" class="badge bg-success">Child Menus</a></td>
                                 @method('delete')
                                 @csrf
 

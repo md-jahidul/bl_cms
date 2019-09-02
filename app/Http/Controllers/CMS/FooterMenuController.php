@@ -32,6 +32,10 @@ class FooterMenuController extends Controller
         return view('admin.footer-menu.index', compact('footerMenus'));
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function footerChildList($id)
     {
         $footerChildLists = $this->footerMenuService->findOne($id, 'children');
@@ -49,6 +53,16 @@ class FooterMenuController extends Controller
     }
 
     /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function createChildMenu($id)
+    {
+        $parentId = $id;
+        return view('admin.footer-menu.footer-child.create', compact('parentId'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -59,6 +73,14 @@ class FooterMenuController extends Controller
         $response = $this->footerMenuService->storeFooterMenu($request->all());
         Session::flash('message', $response->getContent());
         return redirect('/footer-menu');
+    }
+
+    public function storeChildMenu(Request $request)
+    {
+        $parentId = $request->parent_id;
+        $response = $this->footerMenuService->storeFooterMenu($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect("child-footer/$parentId");
     }
 
     /**
@@ -85,6 +107,16 @@ class FooterMenuController extends Controller
     }
 
     /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function childEdit($id, $parentId)
+    {
+       $footerChildMenu = $this->footerMenuService->findOrFail($id);
+       return view('admin.footer-menu.footer-child.edit', compact('footerChildMenu', 'parentId'));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -98,6 +130,15 @@ class FooterMenuController extends Controller
        return redirect('footer-menu');
     }
 
+    public function childUpdate(Request $request, $id)
+    {
+        $parentId = $request->parent_id;
+
+        $response = $this->footerMenuService->updateFooterMenu($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect("child-footer/$parentId");
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -109,5 +150,17 @@ class FooterMenuController extends Controller
         $response = $this->footerMenuService->deleteFooterMenu($id);
         Session::flash('message', $response->getContent());
         return redirect('footer-menu');
+    }
+
+    /**
+     * @param $id
+     * @param $parentId
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function destroyChildMenu($id, $parentId)
+    {
+        $response = $this->footerMenuService->deleteFooterMenu($id);
+        Session::flash('message', $response->getContent());
+        return redirect("child-footer/$parentId");
     }
 }

@@ -30,10 +30,11 @@ Route::resource('footer-menu','CMS\FooterMenuController');
 
 Route::group(['prefix' => 'child-footer'], function () {
     Route::get('/{id}', 'CMS\FooterMenuController@footerChildList');
-    Route::get('/{id}/create', 'CMS\FooterMenuController@childForm');
-    Route::post('/{id}/store', 'CMS\FooterMenuController@childStore');
-    Route::get('/{id}/edit', 'CMS\FooterMenuController@childEdit');
-    Route::put('/{id}/delete', 'CMS\FooterMenuController@childUpdate');
+    Route::get('/{id}/create', 'CMS\FooterMenuController@createChildMenu');
+    Route::post('/{id}/store', 'CMS\FooterMenuController@storeChildMenu');
+    Route::get('/{id}/edit/{parentId}', 'CMS\FooterMenuController@childEdit');
+    Route::put('/{id}/update', 'CMS\FooterMenuController@childUpdate');
+    Route::delete('/{id}/delete/{parentId}', 'CMS\FooterMenuController@destroyChildMenu');
 
     Route::get('/{id}/child_sub_menu', 'CMS\FooterMenuController@childSubList');
     Route::get('/{id}/child_sub_create', 'CMS\FooterMenuController@childSubForm');
