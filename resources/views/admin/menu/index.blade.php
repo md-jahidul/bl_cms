@@ -29,8 +29,13 @@
                                 @else
                                     <td></td>
                                 @endif
-                               <td width="10%"><a href="{{ url('menu/'.$menu->id.'/edit') }}" class="mr-3"><i class="ft-edit-2"></i></a> <a href="#" ><i data-id="{{$menu->id}}" class="ft-trash"></i></a></td>
-                               <td class="text-center" width="10%"><a href="{{ url("menu/$menu->id/child_menu") }}" class="badge bg-success">Show Child Menu</a></td>
+                               <td class="action" width="20%">
+                                    <a href="" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="" id="delete_btn" data-toggle="modal" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></a>
+
+                                    <!-- <a href="{{ url('menu/'.$menu->id.'/edit') }}" class="mr-3"><i class="ft-edit-2"></i></a> <a href="#" ><i data-id="{{$menu->id}}" class="ft-trash"></i></a> -->
+                                </td>
+                               <td class="text-center" width="10%"><a href="{{ url("menu/$menu->id/child_menu") }}" class="badge bg-success">Child Menus</a></td>
 
                                 <!-- <td class="">
                                     <span class="dropdown">
@@ -72,11 +77,14 @@
 
 
 <style>
-    h3 .menu-title{
+    h3.menu-title{
         font-weight: bold;
     }
     .table tr{
         padding : 10px;
+    }
+    section .card {
+        background: rgba(235, 242, 255, 0.5);
     }
     .card .table th,.card .table td {
         padding: 10px;
@@ -90,9 +98,13 @@
         background-color: rgba(206, 208, 212, 0.5);
     }
 
-    /* .table-striped tbody tr:nth-of-type(even) {
-        // background-color: rgba(206, 208, 212, 0.5);
-    } */
+    td.action{
+        width: 20%;
+        text-align: right;
+    }
+    .table-striped tbody tr:nth-of-type(even) {
+        background-color : rgb(255, 255, 255);
+    } 
 </style>
 
 @push('page-js')
