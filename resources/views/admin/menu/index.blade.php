@@ -31,38 +31,16 @@
                                 @endif
                                <td class="action" width="20%">
                                     <a href="{{ url('menu/'.$menu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="" id="delete_btn" title="Delete the user" onclick="return confirm('Are you sure?')" data-toggle="modal" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></a>
-
-                                    <!-- <a href="{{ url('menu/'.$menu->id.'/edit') }}" class="mr-3"><i class="ft-edit-2"></i></a> <a href="#" ><i data-id="{{$menu->id}}" class="ft-trash"></i></a> -->
-                                </td>
+                                    <!-- <a href="" id="delete_btn" title="Delete the user" onclick="return confirm('Are you sure?')" data-toggle="modal" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></a> -->
+                                    <form method="POST" action="{{ url('/menu', ['id' => $menu->id]) }}" accept-charset="UTF-8" style="display:inline">
+                                        <button type="submit" class="border-0 btn btn-outline-danger" title="Delete the user" onclick="return confirm('Are you sure?')">
+                                            <i class="la la-trash"></i>
+                                        </button>
+                                        @method('delete')
+                                        @csrf
+                                    </form>
+                               </td>
                                <td class="text-center" width="10%"><a href="{{ url("menu/$menu->id/child_menu") }}" class="badge bg-success">Child Menus</a></td>
-
-
-                            <!-- <td class="">
-                                    <span class="dropdown">
-                                    <button id="btnSearchDrop2" type="button" data-toggle="dropdown"
-                                            aria-haspopup="true"
-                                            aria-expanded="false" class="btn btn-info dropdown-toggle"><i
-                                            class="la la-cog"></i></button>
-                                      <span aria-labelledby="btnSearchDrop2"
-                                            class="dropdown-menu mt-1 dropdown-menu-right">
-                                        <a href="{{ url('menu/'.$menu->id.'/edit') }}"
-                                           class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>
-                                        <div class="dropdown-divider"></div>
-                                          <form method="POST"
-                                                action="{{ url('/menu', ['id' => $menu->id]) }}"
-                                                accept-charset="UTF-8" style="display:inline">
-                                          <button type="submit" class="dropdown-item danger"
-                                                  title="Delete the user"
-                                                  onclick="return confirm('Are you sure?')"><i
-                                                  class="ft-trash"></i> Delete</button>
-                                               @method('delete')
-                            @csrf
-                                </form>
-                            </span>
-                          </span>
-                      </td> -->
-
                             </tr>
                         @endforeach
                         </tbody>

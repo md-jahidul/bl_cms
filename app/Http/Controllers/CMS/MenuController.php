@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class MenuController extends Controller
 {
@@ -193,6 +194,7 @@ class MenuController extends Controller
         try {
             $menu = Menu::findOrFail($id);
             $menu->delete();
+            Session::flash('message', 'Footer delete successfully');
             return redirect('menu');
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage());
