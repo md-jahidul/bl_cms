@@ -42,10 +42,19 @@ class SliderImageService
     {
         //dd($images);
         $slider_id = $images[0]['slider_id'];
+        $image_data = DB::table('slider_images')->where('slider_id',$slider_id)->get();
+        if(empty($image_data->all())){
+            $i = 1;
+        }else{
+            $image = DB::table('slider_images')->where('slider_id',$slider_id)->orderBy('sequence', 'desc')->first();
+            $i = $image->sequence+1;
+        }
         foreach ($images as $image) {
             $image['image_url'] = 'storage/'.$image['image_url']->store('Slider_image');
+            $image['sequence'] = $i; 
             $image['slider_id'] = $slider_id; 
             $this->save($image);
+            $i++;
         }
         return new Response("Image has successfully been Added to slider");
     }
@@ -57,17 +66,22 @@ class SliderImageService
      */
     public function updateSliderImage($data, $id)
     {
-        $is_sequence_exist = $this->sliderImageRepository->is_sequence_exist($data['sequence'],$data['slider_id']);
-        dd($is_sequence_exist);
-        $sliderImage = $this->findOne($id);
-        if(!isset($data['image_url'])){
-           $data['image_url'] = $sliderImage->image_url;
-        }else{
-            unlink($sliderImage->image_url);
-            $data['image_url'] = 'storage/'.$data['image_url']->store('Slider_image');
-        }
-        $sliderImage->update($data);
-        return new Response("Image has successfully been updated to slider");
+        // $is_sequence_exist = $this->sliderImageRepository->is_sequence_exist($data['sequence'],$data['slider_id']);
+        // if($is_sequence_exist){
+
+            $sliderImage = $this->findOne($id);
+            if(!isset($data['image_url'])){
+            $data['image_url'] = $sliderImage->image_url;
+            }else{
+                unlink($sliderImage->image_url);
+                $data['image_url'] = 'storage/'.$data['image_url']->store('Slider_image');
+            }
+            $sliderImage->update($data);
+            return new Response("Image has successfully been updated to slider");
+            
+        // }else{
+        //     return new Response("You cannot have one sequence more then one");
+        // }
     }
 
     /**

@@ -58,7 +58,7 @@ class BannerController extends Controller
      */
     public function store(BannerStoreRequest $request)
     {
-        session()->flash('status',$this->bannerService->storeBanner($request->all())->getContent());
+        session()->flash('success',$this->bannerService->storeBanner($request->all())->getContent());
         return redirect(route('banner.index'));
     }
 
@@ -93,7 +93,7 @@ class BannerController extends Controller
      */
     public function update(BannerUpdateRequest $request,Banner $banner)
     { 
-        session()->flash('status',$this->bannerService->updateBanner($request, $banner)->getContent());
+        session()->flash('success',$this->bannerService->updateBanner($request, $banner)->getContent());
         return redirect(route('banner.index'));
         
     }
@@ -106,7 +106,7 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('danger',$this->bannerService->deleteBanner($id)->getContent());
+        session()->flash('warning',$this->bannerService->deleteBanner($id)->getContent());
         return redirect(route('banner.index'));
     }
 }

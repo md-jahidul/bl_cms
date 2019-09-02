@@ -14,8 +14,7 @@ use DB;
 class SliderImageRepository extends BaseRepository
 {
     public $modelName = SliderImage::class;
-
-
+    
     public function is_sequence_exist($sequence,$slider_id){
         $image_sequence = DB::table('slider_images')
                     ->where('slider_id',$slider_id)

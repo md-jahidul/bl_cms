@@ -24,7 +24,7 @@ class Slider extends Model
     }
  
     public function sliderImages(){
-        return $this->hasMany(SliderImage::class);
+        return $this->hasMany(SliderImage::class)->orderBy('sequence', 'asc');
     }
     
 }

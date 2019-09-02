@@ -9,6 +9,7 @@ use App\Http\Requests\SliderImageStoreRequest;
 use App\Http\Requests\SliderImageUpdateRequest;
 use App\Services\SliderService;
 use App\Services\SliderTypeService;
+use App\Models\SliderImage;
 
 class SliderImageController extends Controller
 {
@@ -46,6 +47,7 @@ class SliderImageController extends Controller
     {
         return view('admin.slider.add_image_to_slider')->with('sliderId',$sliderId);
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -80,7 +82,21 @@ class SliderImageController extends Controller
     {
         //
     }
-
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePosition(Request $request)
+    {
+        foreach ($request->positions as $position) {
+            $image = SliderImage::FindorFail($position[0]);
+            $image->update(['sequence' => $position[1]]);
+        } 
+        return "success";
+    }
+    
     /**
      * Show the form for editing the specified resource.
      *

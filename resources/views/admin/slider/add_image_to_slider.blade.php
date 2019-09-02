@@ -5,28 +5,6 @@
     <li class="breadcrumb-item active">Add Image </li>
 @endsection
 
-@section('content_header')
-    <p class="rounded">
-       @if (session('status'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('status') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-        @if (session('danger'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('danger') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-        
-    </p>
-@endsection
-
 @section('content')
     
 

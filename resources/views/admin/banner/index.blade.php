@@ -4,31 +4,11 @@
 @section('breadcrumb')
     <li class="breadcrumb-item active">Banner</li>
 @endsection
-
-{{-- @section('content_header')
-    <h1 class="content-header-title">
-        Banner
-    </h1>
-    <p class="rounded">
-       @if (session('status'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('status') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-        @if (session('danger'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('danger') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-        
-    </p>
-@endsection --}}
+@section('action')
+    <a href="{{route('banner.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Create Banner
+    </a>
+@endsection
 
 @section('content')
     <section>
@@ -38,9 +18,7 @@
                     <div class="col-md-10">
                         <h1 class="card-title pl-1">Banner List</h1>
                     </div>
-                    <div class="col-md-2 heading-elements">
-                        <a href="{{route('banner.create')}}" role="button" style="width:100%" class="btn btn-success btn-sm mb-2">Create Banner</a>
-                    </div>
+                    
                 </div>
             </div>
             <div class="card-content collapse show">
@@ -67,12 +45,12 @@
                                 <td>{{$banner->redirect_url}}</td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-2 mr-1">
+                                        <div class="col-md-1 mr-1">
                                             <a role="button" href="{{route('banner.edit',$banner->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-1">
                                             <button data-id="{{$banner->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

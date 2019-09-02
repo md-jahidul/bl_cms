@@ -5,35 +5,11 @@
     <li class="breadcrumb-item active">Slider List</li>
 @endsection
 
-{{-- @section('content_header')
-    <h1 class="content-header-title mb-0 d-inline-block">
-        Slider List
-    </h1>
-    <p class="rounded">
-       @if (session('status'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('status') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-        @if (session('danger'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('danger') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-    </p>
-@endsection --}}
-
 @section('content')
     <section>
         <div class="card card-info mb-0" style="padding-left:10px">
             <div id="headingCollapse2" class="card-header" @if (!$errors->isEmpty() || isset($single_slider)) role="tab" @endif >
-                <a role="button" data-toggle="collapse" href="#collapse2" id="show_form" aria-expanded="false" aria-controls="collapse2" class="card-title lead collapsed btn btn-info btn-sm"><i class="la la-plus"></i> Create Slider</a>
+                <a role="button" data-toggle="collapse" href="#collapse2" id="show_form" aria-expanded="false" aria-controls="collapse2" class="card-title lead collapsed btn btn-primary round btn-glow px-2"><i class="la la-plus"></i> Create Slider</a>
             </div>
             <div style="padding-left:10px;padding-right:10px" id="collapse2" role="tabpanel" aria-labelledby="headingCollapse2" id="show_form_extra" class="collapse @if (!$errors->isEmpty()|| isset($single_slider)) show @endif" aria-expanded="false">
                 <div class="card-content">
@@ -78,7 +54,7 @@
                             </div>
                         </div>
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-success round px-2">
                             <i class="la la-check-square-o"></i> Save
                             </button>
                         </div>
@@ -163,7 +139,41 @@
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
-      
+      $(function () {
+            $('.delete').click(function () {
+                var id = $(this).attr('data-id');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    html: jQuery('.delete_btn').html(),
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: "{{ url('slider/destroy') }}/"+id,
+                            methods: "get",
+                            success: function (res) {
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success',
+                                );
+                                setTimeout(redirect, 2000)
+                                function redirect() {
+                                    window.location.href = "{{ url('slider/') }}"
+                                }
+                            }
+                        })
+                    }
+                })
+            })
+        })
+
 
        
         $(document).ready(function () {

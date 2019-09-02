@@ -18,12 +18,12 @@ Route::get('/', function () {
 
 Route::get('/cms', 'CMS\TestCMSController@index');
 
-Route::resource('sliders', 'SliderController');
-Route::resource('slider_image', 'SliderImageController');
+Route::resource('sliders', 'CMS\SliderController');
+Route::resource('slider_image', 'CMS\SliderImageController');
 
 Route::resource('questions', 'CMS\QuestionController');
-Route::resource('prize', 'PrizeController');
-Route::resource('tags','TagController');
+Route::resource('prize', 'CMS\PrizeController');
+Route::resource('tags','CMS\TagController');
 Route::resource('campaigns','CMS\CampaignController');
 Route::resource('prizes','CMS\PrizeController');
 
@@ -38,6 +38,7 @@ route::resource('slider','CMS\SliderController');
 Route::get('slider/destroy/{id}','CMS\SliderController@destroy');
 
 route::resource('sliderImage','CMS\SliderImageController');
+route::get('sliderImage/addImage/update-position','CMS\SliderImageController@updatePosition');
 Route::get('slider/addImage/{sliderId}','CMS\SliderImageController@index')->name('sliderImage.index');
 
 route::resource('banner','CMS\BannerController');
