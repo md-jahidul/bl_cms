@@ -15,12 +15,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        try {
-            $menus = Menu::with('children')->where('parent_id', 0)->orderBy('display_order', 'ASC')->get();
-            return view('admin.menu.index', compact('menus'));
-        } catch (\Exception $exception) {
-            return back()->withError($exception->getMessage());
-        }
+        $menus = Menu::with('children')->where('parent_id', 0)->orderBy('display_order', 'ASC')->get();
+        return view('admin.menu.index', compact('menus'));
     }
 
     /**
@@ -29,7 +25,7 @@ class MenuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {        
         return view('admin.menu.create');
     }
 
@@ -40,13 +36,21 @@ class MenuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {      
+
+        // dd(request()->all());
+
+
         try {
             $menu_count = (new Menu())->get()->count();
             Menu::create([
                 'parent_id' => 0,
                 'name' => $request->name,
+                'en_label_text' => request()->en_label_text,
+                'bn_label_text' => $request->bn_label_text,
                 'url' => $request->url,
+                'code' => str_replace( " ", "", ucwords( strtolower($request->name) ) ),
+                "external_site" => $request->external_site,
                 'status' => $request->status,
                 'display_order' => ($menu_count == 0) ? 1 : ++$menu_count
             ]);
