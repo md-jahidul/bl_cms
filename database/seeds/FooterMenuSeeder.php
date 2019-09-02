@@ -15,7 +15,7 @@ class FooterMenuSeeder extends Seeder
     {
         $menus = ['About','Offers','Apps And Service','Bussiness','Useful Links'];
         $menu_english = ['About','Offers','Apps And Service','Bussiness','Useful Links'];
-        $menu_bangla = ['পরিচিতি','কভারেজ','মোবাইল নাম্বার পোর্টেবিলিটি','বিজনেস','লয়াল্টি','ই-শপ'];
+        $menu_bangla = ['পরিচিতি','কভারেজ','অ্যাপ & সার্ভিস','বিজনেস','লয়াল্টি','ই-শপ'];
 
         foreach ($menus as $key => $menu){
             FooterMenu::create([
@@ -32,9 +32,9 @@ class FooterMenuSeeder extends Seeder
         }
 
 
-        $sub_menus = ['Prepaid','Postpaid','Propaid'];
-        $sub_menu_english =  ['Prepaid','Postpaid','Propaid'];
-        $sub_menu_bangla = ['প্রিপেইড','পোষ্টপেইড','প্রপেইড'];
+        $sub_menus = ['About 4G','3G Coverage','Mobile Number Portability', 'Banglalink IT incubator', 'Share your experience', 'Partnership with Google: Kormo'];
+        $sub_menu_english = ['About 4G','3G Coverage','Mobile Number Portability', 'Banglalink IT incubator', 'Share your experience', 'Partnership with Google: Kormo'];
+        $sub_menu_bangla = ['4G পরিচিতি','3G কভারেজ','মোবাইল নাম্বার পোর্টেবিলিটি', 'আপনার অভিজ্ঞতা শেয়ার করুন', 'বাংলালিংক আইটি ইনকিউবেটর', 'গুগল কর্ম-এর সাথে পার্টনারশিপ'];
 
         foreach ($sub_menus as $key => $smenu){
             FooterMenu::create([
