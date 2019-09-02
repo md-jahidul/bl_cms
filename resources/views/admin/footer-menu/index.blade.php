@@ -40,8 +40,22 @@
 
 {{--                                <td><a href="{{ url('menu/'.$footerMenu->id.'/edit') }}" class=""><i class="la la-pencil text-primary"></i></a> <a href="#" ><i data-id="{{$footerMenu->id}}" class="la la-trash text-danger delete_btn"></i></a></td>--}}
                                 <td>
-                                    <a href="" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="" id="delete_btn" data-toggle="modal" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></a>
+                                    <a href="{{ url('footer-menu/'.$footerMenu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <form method="POST"
+                                          action="{{ url('footer-menu', ['id' => $footerMenu->id]) }}"
+                                          accept-charset="UTF-8" style="display:inline">
+{{--                                        <button type="submit" class="dropdown-item danger"--}}
+{{--                                                title="Delete the user"--}}
+{{--                                                onclick="return confirm('Are you sure?')"><i--}}
+{{--                                                class="ft-trash"></i> Delete</button>--}}
+
+                                        <button id="delete_btn" data-toggle="modal" data-placement="right" title="Delete" type="submit" onclick="return confirm('Are you sure?')" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></button>
+
+                                        @method('delete')
+                                        @csrf
+                                    </form>
+
+{{--                                    <a href="" id="delete_btn" data-toggle="modal" data-placement="right" title="Delete" role="button" onclick="return confirm('Are you sure?')" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></a>--}}
                                 </td>
 {{--                                <td class="">--}}
 {{--                                    <span class="dropdown">--}}

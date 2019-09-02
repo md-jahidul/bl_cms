@@ -25,6 +25,45 @@
                                         <div class="help-block">  {{ $errors->first('title') }}</div>
                                     @endif
                                 </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
+                                    <label for="title" class="required">English Label</label>
+                                    <input type="text" name="en_label_text"  class="form-control" placeholder="Enter english label"
+                                           value="{{ $footerMenu->en_label_text }}" required data-validation-required-message="Enter footer menu english label">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('en_label_text'))
+                                        <div class="help-block">  {{ $errors->first('en_label_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('bn_label_text') ? ' error' : '' }}">
+                                    <label for="title" class="required">Bangla Label</label>
+                                    <input type="text" name="bn_label_text"  class="form-control" placeholder="Enter bangla label"
+                                           value="{{ $footerMenu->bn_label_text }}" required data-validation-required-message="Enter footer menu bangla label">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('bn_label_text'))
+                                        <div class="help-block">  {{ $errors->first('bn_label_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-12 {{ $errors->has('url') ? ' error' : '' }}">
+                                    <label for="url" class="required">URL</label>
+                                    <input type="text" name="url"  class="form-control" placeholder="Enter URL"
+                                           value="{{ $footerMenu->url }}" required data-validation-required-message="Enter footer menu url">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="external_site" class="mr-1">External Site</label>
+                                        <input type="checkbox" name="external_site" value="1" id="external_site" @if($footerMenu->external_site == 1) {{ 'checked' }} @endif>
+                                    </div>
+                                </div>
+
+
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="title" class="required mr-1">Status:</label>
