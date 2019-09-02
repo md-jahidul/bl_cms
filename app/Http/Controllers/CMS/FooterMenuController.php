@@ -28,16 +28,14 @@ class FooterMenuController extends Controller
      */
     public function index()
     {
-        $footerMenus = $this->footerMenuService->findAll();
-
-//        return $footerMenus;
+        $footerMenus = $this->footerMenuService->footerMenuParent();
         return view('admin.footer-menu.index', compact('footerMenus'));
     }
 
     public function footerChildList($id)
     {
-        $footerChildList = $this->footerMenuService->findOne($id, 'children');
-        return $footerChildList;
+        $footerChildLists = $this->footerMenuService->findOne($id, 'children');
+        return view('admin.footer-menu.footer-child.index', compact('footerChildLists'));
     }
 
     /**

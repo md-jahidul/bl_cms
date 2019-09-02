@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Tag List')
-@section('card_name', 'Menu List')
+@section('card_name', 'Footer Child Menu List')
 @section('breadcrumb')
     <li class="breadcrumb-item active">Menu List</li>
 @endsection
@@ -19,12 +19,12 @@
                            role="grid" aria-describedby="Example1_info" style="cursor:move;">
                         <tbody id="sortable">
                         @php($i = 0)
-                        @foreach($footerMenus as $footerMenu)
+                        @foreach($footerChildLists['children'] as $footerChild)
                             @php($i++)
-                            <tr data-index="{{ $footerMenu->id }}" data-position="{{ $footerMenu->display_order }}">
+                            <tr data-index="{{ $footerChild->id }}" data-position="{{ $footerChild->display_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <td>{{ $footerMenu->name }}</td>
-                                @if($footerMenu->status == 0)
+                                <td>{{ $footerChild->name }}</td>
+                                @if($footerChild->status == 0)
                                     <td><span class="badge bg-danger">Inactive</span></td>
                                 @else
                                     <td></td>
@@ -33,7 +33,7 @@
                                     <a href="" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="" id="delete_btn" data-toggle="modal" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></a>
                                 </td>
-                                <td class="text-center" width="10%"><a href="{{ url("child-footer/$footerMenu->id") }}" class="badge bg-success">Child Menus</a></td>
+                                <td class="text-center" width="10%"><a href="{{ url("child-footer/$footerChild->id") }}" class="badge bg-success">Child Menus</a></td>
 
                                 @method('delete')
                                 @csrf

@@ -27,16 +27,24 @@ class FooterMenuService
         $this->setActionRepository($footerMenuRepository);
     }
 
+    public function footerMenuParent()
+    {
+        return $this->footerMenuRepository->parentFooter();
+
+    }
+
     /**
      * @param $data
      * @return Response
      */
     public function storeFooterMenu($data)
     {
-        $code = ucwords($data['name']);
-        $code = str_replace(' ','', $code);
-        $code = str_replace('&','And', $code);
-        $data['code'] = $code."Page";
+        $name = ucwords( strtolower( $data['name'] )  );
+
+        $search = [" ", "&"];
+        $replace   = ["", "And"];
+
+        $data['code'] = str_replace($search, $replace, $name);
         $this->save($data);
         return new Response('Footer menu added successfully');
     }
