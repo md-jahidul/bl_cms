@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SliderImageTableSeeder::class);
         $this->call(DigitalServiceTableSeeder::class);
         $this->call(MenusTableSeeder::class);
+        $this->call(FooterMenuSeeder::class);
     }
 }
