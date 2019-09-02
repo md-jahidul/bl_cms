@@ -17,7 +17,7 @@
                         <table id="example1" class="table table-hover">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <!-- <th>#</th> -->
                                 <th>Name</th>
                                 <th>Parent</th>
                                 <th>URL</th>
@@ -31,7 +31,7 @@
                             @foreach($child_menus as $child_menu)
                                 @php($i++)
                                 <tr>
-                                    <td>{{ $i }}</td>
+                                    <!-- <td>{{ $i }}</td> -->
                                     <td>{{ $child_menu->name }}</td>
                                     <td>{{ $child_menu->parent['name'] }}</td>
                                     <td>{{ $child_menu->url }}</td>
