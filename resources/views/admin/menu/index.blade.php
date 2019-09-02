@@ -30,8 +30,8 @@
                                     <td></td>
                                 @endif
                                <td class="action" width="20%">
-                                    <a href="" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="" id="delete_btn" data-toggle="modal" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></a>
+                                    <a href="{{ url('menu/'.$menu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="" id="delete_btn" title="Delete the user" onclick="return confirm('Are you sure?')" data-toggle="modal" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></a>
 
                                     <!-- <a href="{{ url('menu/'.$menu->id.'/edit') }}" class="mr-3"><i class="ft-edit-2"></i></a> <a href="#" ><i data-id="{{$menu->id}}" class="ft-trash"></i></a> -->
                                 </td>
