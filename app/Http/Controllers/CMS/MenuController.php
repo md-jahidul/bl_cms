@@ -36,11 +36,7 @@ class MenuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {      
-
-        // dd(request()->all());
-
-
+    {  
         try {
             $menu_count = (new Menu())->get()->count();
             Menu::create([
