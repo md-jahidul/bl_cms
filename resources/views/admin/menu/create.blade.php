@@ -6,7 +6,7 @@
     <li class="breadcrumb-item active"> Header Menu Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('footer-menu') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ $parent_id == 0 ? url('menu') : url("menu/$parent_id/child_menu") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
