@@ -23,23 +23,18 @@
                             @php($i++)
                             <tr data-index="{{ $menu->id }}" data-position="{{ $menu->display_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <td>{{ $menu->en_label_text }}</td>
-                                @if($menu->status == 0)
-                                    <td><span class="badge bg-danger">Inactive</span></td>
-                                @else
-                                    <td></td>
-                                @endif
-                               <td class="action" width="20%">
-                                    <a href="{{ url('menu/'.$menu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <!-- <a href="" id="delete_btn" title="Delete the user" onclick="return confirm('Are you sure?')" data-toggle="modal" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></a> -->
-                                    <form method="POST" action="{{ url('/menu', ['id' => $menu->id]) }}" accept-charset="UTF-8" style="display:inline">
-                                        <button type="submit" class="border-0 btn btn-outline-danger" title="Delete the user" onclick="return confirm('Are you sure?')">
-                                            <i class="la la-trash"></i>
-                                        </button>
-                                        @method('delete')
-                                        @csrf
-                                    </form>
-                               </td>
+                                <td>{{ $menu->en_label_text  }} {!! $menu->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+                                <td class="action" width="20%">
+                                        <a href="{{ url('menu/'.$menu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <!-- <a href="" id="delete_btn" title="Delete the user" onclick="return confirm('Are you sure?')" data-toggle="modal" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></a> -->
+                                        <form method="POST" action="{{ url('/menu', ['id' => $menu->id]) }}" accept-charset="UTF-8" style="display:inline">
+                                            <button type="submit" class="border-0 btn btn-outline-danger" title="Delete the user" onclick="return confirm('Are you sure?')">
+                                                <i class="la la-trash"></i>
+                                            </button>
+                                            @method('delete')
+                                            @csrf
+                                        </form>
+                                </td>
                                <td class="text-center" width="10%"><a href="{{ url("menu/$menu->id/child_menu") }}" class="badge bg-success">Child Menus</a></td>
                             </tr>
                         @endforeach
@@ -83,6 +78,11 @@
     }
     .table-striped tbody tr:nth-of-type(even) {
         background-color : rgb(255, 255, 255);
+    }
+
+    span.inactive{
+        color: red;
+        font-size: small;
     }
 </style>
 
