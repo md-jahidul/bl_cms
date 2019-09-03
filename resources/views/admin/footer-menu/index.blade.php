@@ -107,9 +107,11 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('footer-menu/destroy') }}/"+id,
+                            url: "{{ url("footer-menu/$parent_id/destroy") }}/"+id,
                             methods: "get",
                             success: function (res) {
+                                console.log(res);
+
                                 Swal.fire(
                                     'Deleted!',
                                     'Your file has been deleted.',
@@ -117,7 +119,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('footer-menu') }}"
+                                    window.location.href = "{{ url( ($parent_id == 0) ? 'footer-menu' : "/footer-menu/$parent_id/child-footer") }}"
                                 }
                             }
                         })

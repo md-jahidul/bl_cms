@@ -27,7 +27,7 @@ Route::resource('campaigns','CMS\CampaignController');
 // Route::resource('prizes','CMS\PrizeController');
 
 Route::resource('footer-menu','CMS\FooterMenuController');
-Route::get('footer-menu/destroy/{id}', 'CMS\FooterMenuController@destroy');
+Route::get('footer-menu/{parentId}/destroy/{id}', 'CMS\FooterMenuController@destroy');
 Route::get('sort-autosave/parent-footer-sort','CMS\FooterMenuController@parentFooterSortable');
 
 Route::group(['prefix' => 'footer-menu'], function () {

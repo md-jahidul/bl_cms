@@ -77,7 +77,7 @@ class FooterMenuController extends Controller
 
         $response = $this->footerMenuService->storeFooterMenu($request->all());
         Session::flash('message', $response->getContent());
-        return ($parentId == 0) ? redirect('/footer-menu') : redirect("/footer-menu/$parentId/child-footer");
+        return redirect( ($parentId == 0) ? '/footer-menu' : "/footer-menu/$parentId/child-footer");
     }
 
     public function storeChildMenu(Request $request)
@@ -164,22 +164,10 @@ class FooterMenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($parentId, $id)
     {
         $response = $this->footerMenuService->deleteFooterMenu($id);
         Session::flash('message', $response->getContent());
-        return redirect('footer-menu');
-    }
-
-    /**
-     * @param $id
-     * @param $parentId
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function destroyChildMenu($parentId, $id)
-    {
-        $response = $this->footerMenuService->deleteFooterMenu($id);
-        Session::flash('message', $response->getContent());
-        return redirect("child-footer/$parentId");
+        return redirect(($parentId == 0) ? '/footer-menu' : "/footer-menu/$parentId/child-footer");
     }
 }
