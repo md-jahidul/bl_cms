@@ -8,9 +8,9 @@ class FooterMenuRepository extends BaseRepository
 {
     public $modelName = FooterMenu::class;
 
-    public function parentFooter()
+    public function parentFooter($parent_id)
     {
-        return $this->model->where('parent_id', 0)->orderBy('display_order')->get();
+        return $this->model->where('parent_id', $parent_id)->orderBy('display_order')->get();
     }
 
     public function footerTableSort($request)

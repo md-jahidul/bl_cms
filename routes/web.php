@@ -30,13 +30,14 @@ Route::resource('footer-menu','CMS\FooterMenuController');
 Route::get('footer-menu/destroy/{id}', 'CMS\FooterMenuController@destroy');
 Route::get('sort-autosave/parent-footer-sort','CMS\FooterMenuController@parentFooterSortable');
 
-Route::group(['prefix' => 'child-footer'], function () {
-    Route::get('/{id}', 'CMS\FooterMenuController@footerChildList');
-    Route::get('/{id}/create', 'CMS\FooterMenuController@createChildMenu');
-    Route::post('/{id}/store', 'CMS\FooterMenuController@storeChildMenu');
-    Route::get('/{id}/edit/{parentId}', 'CMS\FooterMenuController@childEdit');
-    Route::put('/{id}/update', 'CMS\FooterMenuController@childUpdate');
-    Route::get('/{parentId}/delete/{id}', 'CMS\FooterMenuController@destroyChildMenu');
+Route::group(['prefix' => 'footer-menu'], function () {
+    Route::get('/{id}/child-footer', 'CMS\FooterMenuController@index');
+    Route::get('/{id}/child-footer/create', 'CMS\FooterMenuController@create');
+
+//    Route::post('/{id}/store', 'CMS\FooterMenuController@storeChildMenu');
+//    Route::get('/{id}/edit/{parentId}', 'CMS\FooterMenuController@childEdit');
+//    Route::put('/{id}/update', 'CMS\FooterMenuController@childUpdate');
+//    Route::get('/{parentId}/delete/{id}', 'CMS\FooterMenuController@destroyChildMenu');
 });
 
 
@@ -46,15 +47,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 
 
-
-
-
 Route::resource('menu','CMS\MenuController');
 Route::get('/menu-auto-save','CMS\MenuController@parentMenuSortable');
 
-Route::group(['prefix' => 'menu'], function () {        
+Route::group(['prefix' => 'menu'], function () {
     Route::get('/{id}/child_menu', 'CMS\MenuController@index');
-    Route::get('/{id}/child_menu/create', 'CMS\MenuController@create');
+    Route::get('/{id}/child-menu/create', 'CMS\MenuController@create');
 
     // Route::post('/{id}/child_menu/store', 'CMS\MenuController@store');
     // Route::get('/{id}/child_menu/edit', 'CMS\MenuController@childEdit');

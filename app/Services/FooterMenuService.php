@@ -27,9 +27,9 @@ class FooterMenuService
         $this->setActionRepository($footerMenuRepository);
     }
 
-    public function footerMenuParent()
+    public function footerMenuParent($parent_id)
     {
-        return $this->footerMenuRepository->parentFooter();
+        return $this->footerMenuRepository->parentFooter($parent_id);
     }
 
     /**

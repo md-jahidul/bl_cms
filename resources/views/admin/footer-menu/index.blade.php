@@ -5,9 +5,16 @@
     <li class="breadcrumb-item active">Footer Menu List</li>
 @endsection
 @section('action')
-    <a href="{{ url('footer-menu/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+{{--    <a href="{{ url('footer-menu/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
+{{--        Add Footer Menu--}}
+{{--    </a>--}}
+
+@if($parent_id != 0)
+    <a href="{{ url("footer-menu/$parent_id/child-footer/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add Footer Menu
     </a>
+@endif
+
 @endsection
 @section('content')
     <section>
@@ -30,12 +37,13 @@
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>
-                                <td class="text-center" width="10%"><a href="{{ url("child-footer/$footerMenu->id") }}" class="badge bg-success">Child Menus</a></td>
+                                @if($parent_id == 0)
+                                    <td class="text-center" width="10%"><a href="{{ url("footer-menu/$footerMenu->id/child-footer") }}" class="badge bg-success">Child Menus</a></td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>

@@ -26,7 +26,7 @@ class MenuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create($parent_id = 0)
-    {      
+    {
         return view('admin.menu.create', compact('parent_id'));
     }
 
@@ -37,7 +37,7 @@ class MenuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {  
+    {
         try {
 
             $menu_count = (new Menu())->where('parent_id', $request->parent_id )->get()->count();

@@ -17,6 +17,7 @@
                         <form role="form" action="{{ route('footer-menu.store') }}" method="POST" novalidate>
                             <div class="row">
                                 <div class="form-group col-md-12 {{ $errors->has('title') ? ' error' : '' }}">
+                                    <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                                     <label for="title" class="required">Title</label>
                                     <input type="text" name="name"  class="form-control" placeholder="Enter title"
                                            value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Enter footer menu title">

@@ -28,31 +28,31 @@ class FooterMenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($parent_id = 0)
     {
-        $footerMenus = $this->footerMenuService->footerMenuParent();
-        return view('admin.footer-menu.index', compact('footerMenus'));
+        $footerMenus = $this->footerMenuService->footerMenuParent($parent_id);
+        return view('admin.footer-menu.index', compact('footerMenus', 'parent_id'));
     }
 
     /**
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function footerChildList($id)
-    {
-        $footerChildLists = $this->footerMenuService->findOne($id, 'children');
-
-        return view('admin.footer-menu.footer-child.index', compact('footerChildLists'));
-    }
+//    public function footerChildList($id)
+//    {
+//        $footerChildLists = $this->footerMenuService->findOne($id, 'children');
+//
+//        return view('admin.footer-menu.footer-child.index', compact('footerChildLists'));
+//    }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($parent_id = 0)
     {
-        return view('admin.footer-menu.create');
+        return view('admin.footer-menu.create', compact('parent_id'));
     }
 
     /**
@@ -73,9 +73,11 @@ class FooterMenuController extends Controller
      */
     public function store(Request $request)
     {
+        $parentId = $request->parent_id;
+
         $response = $this->footerMenuService->storeFooterMenu($request->all());
         Session::flash('message', $response->getContent());
-        return redirect('/footer-menu');
+        return ($parentId == 0) ? redirect('/footer-menu') : redirect("/footer-menu/$parentId/child-footer");
     }
 
     public function storeChildMenu(Request $request)
