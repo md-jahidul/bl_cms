@@ -41,10 +41,6 @@ Route::group(['prefix' => 'child-footer'], function () {
     Route::get('/{id}/edit/{parentId}', 'CMS\FooterMenuController@childEdit');
     Route::put('/{id}/update', 'CMS\FooterMenuController@childUpdate');
     Route::get('/{parentId}/delete/{id}', 'CMS\FooterMenuController@destroyChildMenu');
-
-    Route::get('/{id}/child_sub_menu', 'CMS\FooterMenuController@childSubList');
-    Route::get('/{id}/child_sub_create', 'CMS\FooterMenuController@childSubForm');
-    Route::post('/{id}/child_menu_store', 'CMS\FooterMenuController@childStore');
 });
 
 

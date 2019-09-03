@@ -10,7 +10,7 @@ class FooterMenuRepository extends BaseRepository
 
     public function parentFooter()
     {
-        return $this->model->where('parent_id', 0)->get();
+        return $this->model->where('parent_id', 0)->orderBy('display_order')->get();
     }
 
     public function footerTableSort($request)
@@ -21,7 +21,7 @@ class FooterMenuRepository extends BaseRepository
             $new_position = $position[1];
             $update_menu = $this->model->findOrFail($footer_id);
             $update_menu['display_order'] = $new_position;
-            $update_menu->save();
+            $update_menu->update();
         }
         return "success";
     }

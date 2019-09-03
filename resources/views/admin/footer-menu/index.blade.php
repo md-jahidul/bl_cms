@@ -24,32 +24,18 @@
                             <tr data-index="{{ $footerMenu->id }}" data-position="{{ $footerMenu->display_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $footerMenu->name }}</td>
-                                @if($footerMenu->status == 0)
-                                    <td><span class="badge bg-danger">Inactive</span></td>
-                                @else
-                                    <td></td>
-                                @endif
                                 <td class="action" width="20%">
-
-
-
                                     <a href="{{ url('footer-menu/'.$footerMenu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="#" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $footerMenu->id }}" title="Delete the user">
                                         <i class="la la-trash"></i>
                                     </a>
-{{--                                    <form method="POST" class="delete-form" action="{{ url('/footer-menu', ['id' => $footerMenu->id]) }}" accept-charset="UTF-8" style="display:inline">--}}
-{{--                                       --}}
-                                        @method('delete')
-                                        @csrf
-{{--                                    </form>--}}
                                 </td>
                                 <td class="text-center" width="10%"><a href="{{ url("child-footer/$footerMenu->id") }}" class="badge bg-success">Child Menus</a></td>
-                                @method('delete')
-                                @csrf
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
@@ -85,6 +71,11 @@
     }
     .table-striped tbody tr:nth-of-type(even) {
         background-color : rgb(255, 255, 255);
+    }
+
+    span.inactive{
+        color: red;
+        font-size: small;
     }
 </style>
 

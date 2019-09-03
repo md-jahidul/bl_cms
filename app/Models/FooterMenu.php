@@ -16,5 +16,4 @@ class FooterMenu extends Model
     public function children(){
         return $this->hasMany( FooterMenu::class, 'parent_id', 'id' );
     }
-
 }
