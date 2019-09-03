@@ -14,10 +14,10 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($parent_id = 0)
     {
-        $menus = Menu::with('children')->where('parent_id', 0)->orderBy('display_order', 'ASC')->get();
-        return view('admin.menu.index', compact('menus'));
+        $menus = Menu::with('children')->where('parent_id', $parent_id)->orderBy('display_order', 'ASC')->get();
+        return view('admin.menu.index', compact('menus','parent_id'));
     }
 
     /**
@@ -25,9 +25,9 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {        
-        return view('admin.menu.create');
+    public function create($parent_id = 0)
+    {      
+        return view('admin.menu.create', compact('parent_id'));
     }
 
     /**
@@ -39,7 +39,8 @@ class MenuController extends Controller
     public function store(Request $request)
     {  
         try {
-            $menu_count = (new Menu())->get()->count();
+
+            $menu_count = (new Menu())->where('parent_id', $request->parent_id )->get()->count();
             Menu::create([
                 'parent_id' => 0,
                 'name' => $request->name,
@@ -72,46 +73,33 @@ class MenuController extends Controller
         return "success";
     }
 
-    /**
-     * Create the specified resource in storage.
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function childList($id)
-    {
-        $parent_id = $id;
-        $child_menus = Menu::with('parent')->where('parent_id', $id)->get();
-        return view('admin.menu.child-menu.child-list', compact('child_menus', 'parent_id'));
-    }
+    // public function childForm($parent_id)
+    // {
+    //     return view('admin.menu.child-menu.create', compact('parent_id'));
+    // }
 
-    public function childForm($parent_id)
-    {
-        return view('admin.menu.child-menu.create', compact('parent_id'));
-    }
+    // public function childStore(Request $request)
+    // {
+    //     try {
+    //         $menu_count = (new Menu())->where('parent_id', $request->parent_id )->get()->count();
+    //         Menu::create([
+    //             'parent_id' => $request->parent_id,
+    //             'name' => $request->name,
+    //             'en_label_text' => request()->en_label_text,
+    //             'bn_label_text' => $request->bn_label_text,
+    //             'url' => $request->url,
+    //             'code' => str_replace( " ", "", ucwords( strtolower($request->name) ) ),
+    //             "external_site" => $request->external_site,
+    //             'status' => $request->status,
+    //             'display_order' => ($menu_count == 0) ? 1 : ++$menu_count
+    //         ]);
 
-    public function childStore(Request $request)
-    {
-        try {
-            $menu_count = (new Menu())->where('parent_id', $request->parent_id )->get()->count();
-            Menu::create([
-                'parent_id' => $request->parent_id,
-                'name' => $request->name,
-                'en_label_text' => request()->en_label_text,
-                'bn_label_text' => $request->bn_label_text,
-                'url' => $request->url,
-                'code' => str_replace( " ", "", ucwords( strtolower($request->name) ) ),
-                "external_site" => $request->external_site,
-                'status' => $request->status,
-                'display_order' => ($menu_count == 0) ? 1 : ++$menu_count
-            ]);
-
-            Session::flash('message', 'Menu saved successfully');
-            return redirect(url("menu/$request->parent_id/child_menu"));
-        } catch (\Exception $exception) {
-            return back()->withError($exception->getMessage());
-        }
-    }
+    //         Session::flash('message', 'Menu saved successfully');
+    //         return redirect(url("menu/$request->parent_id/child_menu"));
+    //     } catch (\Exception $exception) {
+    //         return back()->withError($exception->getMessage());
+    //     }
+    // }
 
 
     /**

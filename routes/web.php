@@ -57,10 +57,10 @@ Route::resource('menu','CMS\MenuController');
 Route::get('/menu-auto-save','CMS\MenuController@parentMenuSortable');
 
 Route::group(['prefix' => 'menu'], function () {        
-    Route::get('/{id}/child_menu', 'CMS\MenuController@childList');
-    Route::get('/{id}/child_menu/create', 'CMS\MenuController@childForm');
+    Route::get('/{id}/child_menu', 'CMS\MenuController@index');
+    Route::get('/{id}/child_menu/create', 'CMS\MenuController@create');
 
-    Route::post('/{id}/child_menu/store', 'CMS\MenuController@childStore');
-    Route::get('/{id}/child_menu/edit', 'CMS\MenuController@childEdit');
-    Route::put('/{id}/child_menu/update', 'CMS\MenuController@childUpdate');
+    // Route::post('/{id}/child_menu/store', 'CMS\MenuController@store');
+    // Route::get('/{id}/child_menu/edit', 'CMS\MenuController@childEdit');
+    // Route::put('/{id}/child_menu/update', 'CMS\MenuController@childUpdate');
 });

@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active">Menu List</li>
 @endsection
 @section('action')
-    <a href="{{ url('menu/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{ $parent_id == 0 ? url('menu/create') : url("menu/$parent_id/child_menu/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add Menu
     </a>
 @endsection
