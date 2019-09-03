@@ -66,7 +66,7 @@ class SliderImageService
     {
         $sliderImage = $this->findOne($id);
         if(!isset($data['image_url'])){
-        $data['image_url'] = $sliderImage->image_url;
+            $data['image_url'] = $sliderImage->image_url;
         }else{
             unlink($sliderImage->image_url);
             $data['image_url'] = 'storage/'.$data['image_url']->store('Slider_image');
