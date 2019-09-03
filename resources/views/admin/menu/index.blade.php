@@ -144,7 +144,7 @@
                 })
                 $.ajax({
                     methods: "POST",
-                    url:'{{ url('menu/parent_menu_sort') }}',
+                    url:'{{ url('menu-auto-save') }}',
                     data: {
                         update: 1,
                         position: positions

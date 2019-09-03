@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active">Menu List</li>
 @endsection
 @section('action')
-    <a href="{{ url('menu/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{ url("menu/$parent_id/child_menu/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add Menu
     </a>
 @endsection
@@ -138,13 +138,14 @@
             });
 
             function saveNewPositions() {
+                console.log('sadfd');
                 var positions = [];
                 $('.update').each(function () {
                     positions.push([$(this).attr('data-index'), $(this).attr('data-position')]);
                 })
                 $.ajax({
                     methods: "POST",
-                    url:'{{ url('menu/parent_menu_sort') }}',
+                    url:'{{ url('menu-auto-save') }}',
                     data: {
                         update: 1,
                         position: positions
