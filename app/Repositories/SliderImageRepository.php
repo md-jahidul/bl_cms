@@ -21,4 +21,8 @@ class SliderImageRepository extends BaseRepository
                     ->where('sequence',$sequence)->get();
         return empty($image_sequence->all());
     }
+    public function sliderImage($slider_id){
+        return DB::table('slider_images')->where('slider_id',$slider_id)->orderBy('sequence', 'desc')->first();
+    }
+
 }
