@@ -73,35 +73,6 @@ class MenuController extends Controller
         return "success";
     }
 
-    // public function childForm($parent_id)
-    // {
-    //     return view('admin.menu.child-menu.create', compact('parent_id'));
-    // }
-
-    // public function childStore(Request $request)
-    // {
-    //     try {
-    //         $menu_count = (new Menu())->where('parent_id', $request->parent_id )->get()->count();
-    //         Menu::create([
-    //             'parent_id' => $request->parent_id,
-    //             'name' => $request->name,
-    //             'en_label_text' => request()->en_label_text,
-    //             'bn_label_text' => $request->bn_label_text,
-    //             'url' => $request->url,
-    //             'code' => str_replace( " ", "", ucwords( strtolower($request->name) ) ),
-    //             "external_site" => $request->external_site,
-    //             'status' => $request->status,
-    //             'display_order' => ($menu_count == 0) ? 1 : ++$menu_count
-    //         ]);
-
-    //         Session::flash('message', 'Menu saved successfully');
-    //         return redirect(url("menu/$request->parent_id/child_menu"));
-    //     } catch (\Exception $exception) {
-    //         return back()->withError($exception->getMessage());
-    //     }
-    // }
-
-
     /**
      * Show the form for editing the specified resource.
      * @param  int  $id
@@ -148,7 +119,7 @@ class MenuController extends Controller
             $menu = Menu::findOrFail($id);
             $menu->delete();
             Session::flash('message', 'Menu delete successfully');
-            return redirect('menu');
+            return $menu->id == 0 ? redirect('menu') : redirect(url("menu/$menu->parent_id/child_menu"));
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage());
         }
