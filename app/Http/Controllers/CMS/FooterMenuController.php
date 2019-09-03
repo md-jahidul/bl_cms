@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Models\FooterMenu;
+use App\Models\Menu;
 use App\Services\FooterMenuService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -39,6 +41,7 @@ class FooterMenuController extends Controller
     public function footerChildList($id)
     {
         $footerChildLists = $this->footerMenuService->findOne($id, 'children');
+
         return view('admin.footer-menu.footer-child.index', compact('footerChildLists'));
     }
 
@@ -130,6 +133,11 @@ class FooterMenuController extends Controller
        return redirect('footer-menu');
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function childUpdate(Request $request, $id)
     {
         $parentId = $request->parent_id;
@@ -137,6 +145,15 @@ class FooterMenuController extends Controller
         $response = $this->footerMenuService->updateFooterMenu($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect("child-footer/$parentId");
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function parentFooterSortable(Request $request)
+    {
+       return $this->footerMenuService->tableSort($request);
     }
 
     /**
@@ -157,7 +174,7 @@ class FooterMenuController extends Controller
      * @param $parentId
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroyChildMenu($id, $parentId)
+    public function destroyChildMenu($parentId, $id)
     {
         $response = $this->footerMenuService->deleteFooterMenu($id);
         Session::flash('message', $response->getContent());

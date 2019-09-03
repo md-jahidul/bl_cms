@@ -27,6 +27,9 @@ Route::resource('campaigns','CMS\CampaignController');
 // Route::resource('prizes','CMS\PrizeController');
 
 Route::resource('footer-menu','CMS\FooterMenuController');
+Route::get('footer-menu/destroy/{id}', 'CMS\FooterMenuController@destroy');
+Route::get('sort-autosave/parent-footer-sort','CMS\FooterMenuController@parentFooterSortable');
+
 
 Route::resource('menu','CMS\MenuController');
 
@@ -37,7 +40,7 @@ Route::group(['prefix' => 'child-footer'], function () {
     Route::post('/{id}/store', 'CMS\FooterMenuController@storeChildMenu');
     Route::get('/{id}/edit/{parentId}', 'CMS\FooterMenuController@childEdit');
     Route::put('/{id}/update', 'CMS\FooterMenuController@childUpdate');
-    Route::delete('/{id}/delete/{parentId}', 'CMS\FooterMenuController@destroyChildMenu');
+    Route::get('/{parentId}/delete/{id}', 'CMS\FooterMenuController@destroyChildMenu');
 
     Route::get('/{id}/child_sub_menu', 'CMS\FooterMenuController@childSubList');
     Route::get('/{id}/child_sub_create', 'CMS\FooterMenuController@childSubForm');

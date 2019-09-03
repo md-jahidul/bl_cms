@@ -206,7 +206,7 @@
                          <img src="{{ asset('theme/images/portrait/small/avatar-s-19.png') }}" alt="x"><i></i></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#"><i class="ft-power"></i> Logout</a>
+                            <a class="dropdown-item" href="#"><i class="ft-phone-off"></i> Logout</a>
                         </div>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"

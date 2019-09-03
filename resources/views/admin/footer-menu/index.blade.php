@@ -2,7 +2,7 @@
 @section('title', 'Tag List')
 @section('card_name', 'Footer Menu List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Footer List</li>
+    <li class="breadcrumb-item active">Footer Menu List</li>
 @endsection
 @section('action')
     <a href="{{ url('footer-menu/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
@@ -30,19 +30,22 @@
                                     <td></td>
                                 @endif
                                 <td class="action" width="20%">
+
+
+
                                     <a href="{{ url('footer-menu/'.$footerMenu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <form method="POST" action="{{ url('/footer-menu', ['id' => $footerMenu->id]) }}" accept-charset="UTF-8" style="display:inline">
-                                        <button type="submit" class="border-0 btn btn-outline-danger" title="Delete the user" onclick="return confirm('Are you sure?')">
-                                            <i class="la la-trash"></i>
-                                        </button>
+                                    <a href="#" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $footerMenu->id }}" title="Delete the user">
+                                        <i class="la la-trash"></i>
+                                    </a>
+{{--                                    <form method="POST" class="delete-form" action="{{ url('/footer-menu', ['id' => $footerMenu->id]) }}" accept-charset="UTF-8" style="display:inline">--}}
+{{--                                       --}}
                                         @method('delete')
                                         @csrf
-                                    </form>
+{{--                                    </form>--}}
                                 </td>
                                 <td class="text-center" width="10%"><a href="{{ url("child-footer/$footerMenu->id") }}" class="badge bg-success">Child Menus</a></td>
                                 @method('delete')
                                 @csrf
-
                             </tr>
                         @endforeach
                         </tbody>
@@ -90,6 +93,9 @@
         $(function(){
             $('.delete_btn').click(function () {
                 var id = $(this).attr('data-id');
+
+                console.log(id);
+
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -102,7 +108,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('menu/destroy') }}/"+id,
+                            url: "{{ url('footer-menu/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -112,7 +118,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('menu') }}"
+                                    window.location.href = "{{ url('footer-menu') }}"
                                 }
                             }
                         })
@@ -123,16 +129,11 @@
             $("#sortable" ).sortable({
                 update: function( event, ui ) {
                     $(this).children().each(function (index) {
-                        // console.log(index+1)
                         if ($(this).attr('data-position') != (index+1)){
                             $(this).attr('data-position', (index+1)).addClass('update')
                         }
                     });
                     saveNewPositions()
-
-                    $('.list').each(function (index) {
-                        $(this).text(index+1)
-                    })
                 }
             });
 
@@ -140,15 +141,24 @@
                 var positions = [];
                 $('.update').each(function () {
                     positions.push([$(this).attr('data-index'), $(this).attr('data-position')]);
-                })
+                });
+
+                console.dir(JSON.stringify({
+                    update: 1,
+                    position: positions
+                }) );
+
                 $.ajax({
                     methods: "POST",
-                    url:'{{ url('menu/parent_menu_sort') }}',
+                    url:'{{ url('sort-autosave/parent-footer-sort') }}',
                     data: {
                         update: 1,
                         position: positions
                     },
-                    success:function(data){ console.log(data) },
+                    success: function(response){
+                        console.log('working');
+                        console.dir(response);
+                    },
                     error : function() {
                         alert('Some problems..');
                     }

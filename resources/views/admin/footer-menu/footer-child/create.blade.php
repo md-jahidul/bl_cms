@@ -2,11 +2,12 @@
 @section('title', 'Footer Child Menu Create')
 @section('card_name', 'Footer Child Menu Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ url('footer-menu/create') }}">Footer Child Menu List</a></li>
-    <li class="breadcrumb-item active"> Footer Child Menu Create</li>
+    <li class="breadcrumb-item active pl-0"><a href="{{ url("footer-menu") }}">Footer Menu List</a></li>
+    <li class="breadcrumb-item active pl-0"><a href="{{ url("child-footer/$parentId") }}">Footer Child Menu List</a></li>
+    <li class="breadcrumb-item active pl-0">Footer Child Menu Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('footer-menu') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
+    <a href="{{ url("child-footer/$parentId") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
 @endsection
 @section('content')
     <section>

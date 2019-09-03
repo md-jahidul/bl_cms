@@ -30,7 +30,6 @@ class FooterMenuService
     public function footerMenuParent()
     {
         return $this->footerMenuRepository->parentFooter();
-
     }
 
     /**
@@ -44,6 +43,12 @@ class FooterMenuService
         $replace   = ["", "And"];
         $data['code'] = str_replace($search, $replace, $name);
         $this->save($data);
+        return new Response('Footer menu added successfully');
+    }
+
+    public function tableSort($data)
+    {
+        $this->footerMenuRepository->footerTableSort($data);
         return new Response('Footer menu added successfully');
     }
 

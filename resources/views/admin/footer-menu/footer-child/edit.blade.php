@@ -2,7 +2,8 @@
 @section('title', 'Footer Child Menu Edit')
 @section('card_name', 'Footer Child Menu Edit')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ url('footer-menu') }}">Footer Child Menu List</a></li>
+    <li class="breadcrumb-item active"><a href="{{ url('footer-menu') }}">Footer Menu List</a></li>
+    <li class="breadcrumb-item active"><a href="{{ url("child-footer/$parentId") }}">Footer Child Menu List</a></li>
     <li class="breadcrumb-item active"> Footer Child Menu Edit</li>
 @endsection
 @section('action')

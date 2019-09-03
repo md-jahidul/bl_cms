@@ -2,6 +2,7 @@
 @section('title', 'Footer Child Menu')
 @section('card_name', 'Footer Child Menu List')
 @section('breadcrumb')
+    <li class="breadcrumb-item active"><a href="{{ url('footer-menu') }}">Footer Menu List</a></li>
     <li class="breadcrumb-item active">Footer Child Menu List</li>
 @endsection
 @section('action')
@@ -14,13 +15,14 @@
         <div class="card col-sm-12">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h3 class="menu-title">Dragabble Menu list : lable 1</h3>
+                    <h3 class="menu-title mb-2">Parent: {{$footerChildLists->name}}</h3>
+                    <h5 class="menu-title">Dragabble Menu list : lable 1</h5>
+
                     <table class="table table-striped table-bordered"
                            role="grid" aria-describedby="Example1_info" style="cursor:move;">
                         <tbody id="sortable">
-                        @php($i = 0)
                         @foreach($footerChildLists['children'] as $footerChild)
-                            @php($i++)
+
                             <tr data-index="{{ $footerChild->id }}" data-position="{{ $footerChild->display_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $footerChild->name }}</td>
@@ -31,18 +33,18 @@
                                 @endif
                                 <td class="action" width="20%">
                                     <a href="{{ url("child-footer/$footerChild->id/edit/$footerChildLists->id") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <form method="POST" action="{{ url("child-footer/$footerChild->id/delete/$footerChildLists->id") }}" accept-charset="UTF-8" style="display:inline">
-                                        <button type="submit" class="border-0 btn btn-outline-danger" title="Delete the user" onclick="return confirm('Are you sure?')">
-                                            <i class="la la-trash"></i>
-                                        </button>
-                                        @method('delete')
-                                        @csrf
-                                    </form>
+                                    <a href="#" class="border-0 btn btn-outline-danger delete_btn" data-id="{{$footerChild->id}}" title="Delete the user">
+                                        <i class="la la-trash"></i>
+                                    </a>
+
+{{--                                    <form method="POST" action="{{ url("child-footer/$footerChild->id/delete/$footerChildLists->id") }}" accept-charset="UTF-8" style="display:inline">--}}
+{{--                                        <button type="submit" class="border-0 btn btn-outline-danger" title="Delete the user" onclick="return confirm('Are you sure?')">--}}
+{{--                                            <i class="la la-trash"></i>--}}
+{{--                                        </button>--}}
+{{--                                        @method('delete')--}}
+{{--                                        @csrf--}}
+{{--                                    </form>--}}
                                 </td>
-
-
-                                <td class="text-center" width="10%"><a href="{{ url("child-footer/$footerChild->id") }}" class="badge bg-success">Child Menus</a></td>
-                                @method('delete')
                                 @csrf
 
                             </tr>
@@ -95,6 +97,8 @@
         $(function(){
             $('.delete_btn').click(function () {
                 var id = $(this).attr('data-id');
+                console.log(id);
+
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -107,7 +111,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('menu/destroy') }}/"+id,
+                            url: "{{ url("child-footer/$footerChildLists->id/delete") }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -117,7 +121,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('menu') }}"
+                                    window.location.href = "{{ url("child-footer/$footerChildLists->id") }}"
                                 }
                             }
                         })
