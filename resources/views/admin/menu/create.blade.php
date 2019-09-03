@@ -16,6 +16,7 @@
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('menu.store') }}" method="POST" novalidate>
                             <div class="row">
+                                <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                                 <div class="form-group col-md-12 {{ $errors->has('title') ? ' error' : '' }}">
                                     <label for="title" class="required">Title</label>
                                     <input type="text" name="name"  class="form-control" placeholder="Enter title"

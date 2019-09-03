@@ -14,10 +14,10 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($parent_id = 0)
     {
-        $menus = Menu::with('children')->where('parent_id', 0)->orderBy('display_order', 'ASC')->get();
-        return view('admin.menu.index', compact('menus'));
+        $menus = Menu::with('children')->where('parent_id', $parent_id)->orderBy('display_order', 'ASC')->get();
+        return view('admin.menu.index', compact('menus','parent_id'));
     }
 
     /**
@@ -25,9 +25,9 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {        
-        return view('admin.menu.create');
+    public function create($parent_id = 0)
+    {      
+        return view('admin.menu.create', compact('parent_id'));
     }
 
     /**
@@ -39,7 +39,8 @@ class MenuController extends Controller
     public function store(Request $request)
     {  
         try {
-            $menu_count = (new Menu())->get()->count();
+
+            $menu_count = (new Menu())->where('parent_id', $request->parent_id )->get()->count();
             Menu::create([
                 'parent_id' => 0,
                 'name' => $request->name,
@@ -51,6 +52,8 @@ class MenuController extends Controller
                 'status' => $request->status,
                 'display_order' => ($menu_count == 0) ? 1 : ++$menu_count
             ]);
+
+            Session::flash('message', 'Menu saved successfully');
             return redirect('menu');
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage());
@@ -70,84 +73,33 @@ class MenuController extends Controller
         return "success";
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    // public function childForm($parent_id)
+    // {
+    //     return view('admin.menu.child-menu.create', compact('parent_id'));
+    // }
 
-    /**
-     * Create the specified resource in storage.
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function childList($id)
-    {
-        $parent_id = $id;
-        $child_menus = Menu::with('parent')->where('parent_id', $id)->get();
-        return view('admin.menu.child-menu.child-list', compact('child_menus', 'parent_id'));
-    }
+    // public function childStore(Request $request)
+    // {
+    //     try {
+    //         $menu_count = (new Menu())->where('parent_id', $request->parent_id )->get()->count();
+    //         Menu::create([
+    //             'parent_id' => $request->parent_id,
+    //             'name' => $request->name,
+    //             'en_label_text' => request()->en_label_text,
+    //             'bn_label_text' => $request->bn_label_text,
+    //             'url' => $request->url,
+    //             'code' => str_replace( " ", "", ucwords( strtolower($request->name) ) ),
+    //             "external_site" => $request->external_site,
+    //             'status' => $request->status,
+    //             'display_order' => ($menu_count == 0) ? 1 : ++$menu_count
+    //         ]);
 
-    public function childForm($parent_id)
-    {
-        return view('admin.menu.child-menu.create', compact('parent_id'));
-    }
-
-    public function childStore(Request $request)
-    {
-        try {
-            $parent_id = $request->parent_id;
-            Menu::create([
-                'parent_id' => $parent_id,
-                'name' => $request->name,
-                'url' => $request->url,
-                'status' => $request->status,
-                'display_order' => 1,
-            ]);
-            return redirect(url("menu/$parent_id/child_menu"));
-        } catch (\Exception $exception) {
-            return back()->withError($exception->getMessage());
-        }
-    }
-
-    public function childEdit($id){
-        try {
-            $child_edit = Menu::findORFail($id);
-            return view('admin.menu.child-menu.edit', compact('child_edit'));
-        } catch (\Exception $exception) {
-            return back()->withError($exception->getMessage());
-        }
-    }
-
-    public function childUpdate(Request $request, $id){
-        try {
-            $child_edit = Menu::findORFail($id);
-            $parent_id = $child_edit->parent_id;
-            $child_edit->update($request->all());
-            return redirect(url("menu/$parent_id/child_menu"));
-        } catch (\Exception $exception) {
-            return back()->withError($exception->getMessage());
-        }
-    }
-
-    public function childSubList($id){
-        $parent_id = $id;
-        $child_sub_lists = Menu::with('parent')->where('parent_id', $id)->get();
-        return view('admin.menu.child-sub-menu.child-sub-list', compact('child_sub_lists', 'parent_id'));
-    }
-
-    public function childSubForm($parent_id)
-    {
-        return view('admin.menu.child-menu.create', compact('parent_id'));
-    }
-
-
+    //         Session::flash('message', 'Menu saved successfully');
+    //         return redirect(url("menu/$request->parent_id/child_menu"));
+    //     } catch (\Exception $exception) {
+    //         return back()->withError($exception->getMessage());
+    //     }
+    // }
 
 
     /**
@@ -177,7 +129,8 @@ class MenuController extends Controller
         try {
             $menu = Menu::findOrFail($id);
             $menu->update($request->all());
-            return redirect('menu');
+            Session::flash('message', 'Menu updated successfully');
+            return $menu->id == 0 ? redirect('menu') : redirect(url("menu/$request->parent_id/child_menu"));
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage());
         }
@@ -194,7 +147,7 @@ class MenuController extends Controller
         try {
             $menu = Menu::findOrFail($id);
             $menu->delete();
-            Session::flash('message', 'Footer delete successfully');
+            Session::flash('message', 'Menu delete successfully');
             return redirect('menu');
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage());
