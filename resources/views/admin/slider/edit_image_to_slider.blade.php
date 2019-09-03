@@ -22,7 +22,8 @@
                
                 @foreach ($slider->sliderImages as $image)
                     <div data-position = "{{$image->sequence}}" data-index="{{$image->id}}" class="list-item">
-                        <div id="headingCollapse{{$image->id}}" class="card-header">
+                        <div style="cursor:all-scroll" id="headingCollapse{{$image->id}}" class="card-header">
+                            <i class="icon-cursor-move icons"></i>
                             <a data-toggle="collapse" href="#collapse11{{$image->id}}" aria-expanded="false" aria-controls="collapse11{{$image->id}}" class="card-title">
                                 <img style="height:50px;width:100px" class="" src="{{asset($image->image_url)}}" alt="" srcset=""><br>
                             </a>
