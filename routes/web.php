@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Route::get('/cms', 'CMS\TestCMSController@index');
 
-Route::resource('sliders', 'CMS\SliderController');
+// Route::resource('sliders', 'CMS\SliderController');
 Route::resource('slider_image', 'CMS\SliderImageController');
 
 Route::resource('questions', 'CMS\QuestionController');
@@ -34,9 +34,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 // myBL-routs
 route::resource('short_cuts','CMS\ShortCutController');
 route::resource('UserShortcut','CMS\UserShortcutController');
+
+
 route::resource('slider','CMS\SliderController');
 Route::get('slider/destroy/{id}','CMS\SliderController@destroy');
-
+Route::get('slider/edit/{slider}','CMS\SliderController@edit')->name('slider.edit');
 route::resource('sliderImage','CMS\SliderImageController');
 route::get('sliderImage/addImage/update-position','CMS\SliderImageController@updatePosition');
 Route::get('slider/addImage/{sliderId}','CMS\SliderImageController@index')->name('sliderImage.index');
@@ -44,7 +46,7 @@ Route::get('slider/addImage/{sliderId}','CMS\SliderImageController@index')->name
 route::resource('banner','CMS\BannerController');
 Route::get('banner/destroy/{id}','CMS\BannerController@destroy');
 
-route::resource('welcome_info','CMS\WelcomeInfoController');
+route::resource('wellcomeInfo','CMS\WellcomeInfoController');
 
 
 Route::put('short_cuts/SerialUpdate/{id}','CMS\UserShortcutController@serialUpdate')->name('serial.update');

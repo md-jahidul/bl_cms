@@ -5,7 +5,7 @@
                     <span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
 
             </li>
-            <li class=" nav-item"><a href="#"><i class="la la-sliders"></i>
+            {{-- <li class=" nav-item"><a href="#"><i class="la la-sliders"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Slider Management</span></a>
                 <ul class="menu-content">
 
@@ -19,7 +19,7 @@
                     </li>
 
                 </ul>
-            </li>
+            </li> --}}
 
             <li class=" nav-item"><a href="#"><i class="la la-question"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Quiz Management</span></a>
@@ -50,16 +50,16 @@
                     <span class="menu-title" data-i18n="nav.templates.main">Manage Page</span></a>
                 <ul class="menu-content">
                     {{--Tag--}}
-                    <li class="{{ is_active_url('') . is_active_url('')}}">
+                    <li class="{{ is_active_url('slider') . is_active_url('slider/addImage/') . is_active_url('slider/create') . is_active_url('slider/edit') }}">
                         <a class="menu-item" href="{{ route('slider.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-sliders"></i>Slider</a>
                     </li>
-                    <li class="{{ is_active_url('') . is_active_url('')}}">
+                    <li class="{{ is_active_url('banner') . is_active_url('banner/create')}}">
                         <a class="menu-item" href="{{ route('banner.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-image"></i> Banner</a>
                     </li>
-                    <li class="{{ is_active_url('') . is_active_url('')}}">
-                        <a class="menu-item" href="{{ url('questions') }}" data-i18n="nav.templates.vert.classic_menu">
+                    <li class="{{ is_active_url('wellcomeInfo') . is_active_url('wellcomeInfo/create')}}">
+                        <a class="menu-item" href="{{ route('wellcomeInfo.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-info-circle"></i> Welcome Info</a>
                     </li>
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWelcomeInfosTable extends Migration
+class CreateWellcomeInfosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateWelcomeInfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('welcome_infos', function (Blueprint $table) {
+        Schema::create('wellcome_infos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('welcome_message');
-            $table->text('welcome_description');
-            $table->string('welcome_logo');
-            $table->enum('welcome_category', ['home','dashbord','other']);
+            $table->text('guest_salutation');
+            $table->text('user_salutation');
+            $table->text('guest_message');
+            $table->text('user_message');
+            $table->string('icon');
             $table->timestamps();
         });
     }

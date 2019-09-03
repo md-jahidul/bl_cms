@@ -45,7 +45,10 @@ class SliderImageController extends Controller
      */
     public function index($sliderId)
     {
-        return view('admin.slider.add_image_to_slider')->with('sliderId',$sliderId);
+        
+        return view('admin.slider.add_image_to_slider')
+                    ->with('sliderId',$sliderId)
+                    ->with('slider_information',$this->sliderService->findOne($sliderId));
     }
     
 
@@ -106,7 +109,9 @@ class SliderImageController extends Controller
     public function edit($id)
     {
         $slider = $this->sliderService->findOne($id);
-        return view('admin.slider.edit_image_to_slider')->with('slider',$slider);
+        return view('admin.slider.edit_image_to_slider')
+                ->with('slider',$slider)
+                ->with('slider_information',$this->sliderService->findOne($id));
     }
 
     /**

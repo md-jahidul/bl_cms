@@ -1,68 +1,17 @@
 @extends('layouts.admin')
-@section('title', 'questions List')
-@section('card_name', 'Question List')
+@section('title', 'Slider')
+@section('card_name', 'Slider')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Slider List</li>
+    <li class="breadcrumb-item active">Slider</li>
 @endsection
-
+@section('action')
+    <a href="{{route('slider.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Create Slider
+    </a>
+@endsection
 @section('content')
     <section>
-        <div class="card card-info mb-0" style="padding-left:10px">
-            <div id="headingCollapse2" class="card-header" @if (!$errors->isEmpty() || isset($single_slider)) role="tab" @endif >
-                <a role="button" data-toggle="collapse" href="#collapse2" id="show_form" aria-expanded="false" aria-controls="collapse2" class="card-title lead collapsed btn btn-primary round btn-glow px-2"><i class="la la-plus"></i> Create Slider</a>
-            </div>
-            <div style="padding-left:10px;padding-right:10px" id="collapse2" role="tabpanel" aria-labelledby="headingCollapse2" id="show_form_extra" class="collapse @if (!$errors->isEmpty()|| isset($single_slider)) show @endif" aria-expanded="false">
-                <div class="card-content">
-                    <div class="card-body">
-                        <form class="form" action="@if (isset($single_slider)) {{route('slider.update',$single_slider->id)}} @else {{route('slider.store')}} @endif" method="POST">
-                        @csrf
-                        @if (isset($single_slider)) @method('put') @else @method('post') @endif
-                        <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Slider Information</h4>
-                            <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="companyName">Name:<small class="text-danger">*</small></label>
-                                    <input type="text" value="@if(isset($single_slider)) {{ $single_slider->title }} @endif" id="companyName" class="form-control @error('title') is-invalid @enderror" placeholder="Slider Name" name="title">
-                                    @error('title')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="projectinput6">Slider Type:<small class="text-danger">*</small></label>
-                                    <select id="projectinput6" value="" name="slider_type_id" class="form-control @error('slider_type_id') is-invalid @enderror">
-                                        @foreach ($slider_types as $type)
-                                            <option @if(isset($single_slider)) @if($single_slider->slider_type_id == $type->id) selected @endif @endif value="{{$type->id}}">{{$type->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('slider_type_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            </div>
-                            <div class="form-group">
-                            <label for="projectinput8">Discription:</label>
-                            <textarea id="projectinput8" rows="5" class="form-control" name="description" placeholder="About Project">@if(isset($single_slider)) {{ $single_slider->description }} @endif
-                            </textarea>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-success round px-2">
-                            <i class="la la-check-square-o"></i> Save
-                            </button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <div class="card card-info mt-0" style="box-shadow: 0px 0px">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">

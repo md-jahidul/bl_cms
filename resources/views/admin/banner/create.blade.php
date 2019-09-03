@@ -1,6 +1,7 @@
 @extends('layouts.admin')
-@section('title', 'Create Banner')
-@section('card_name', 'Create Banner')
+@php $cardname = isset($banner_info)? 'Edit-Banner':'Create-Banner' @endphp
+@section('title', "Banner")
+@section('card_name', "Banner-edit")
 @section('breadcrumb')
     <li class="breadcrumb-item active">Banner</li>
 @endsection
@@ -9,14 +10,20 @@
 
     <div class="card">
         <div class="card-header">
-            <h1 class="card-title">Create Banner</h1>
+            <h1 class="card-title">
+                @if(isset($banner_info))
+                    Edit-Banner
+                    @else
+                    Create-Banner
+                @endif
+            </h1>
         </div>
         
         <!-- /.card-header -->
         <div class="card-body">
 
             <!-- /short cut add form -->
-             @if(isset($banner_info))             
+            @if(isset($banner_info))             
                 <form action="{{ route('banner.update',$banner_info->id) }}" method="post" enctype="multipart/form-data">
                 @else
                 <form action="{{ route('banner.store') }}" method="post" enctype="multipart/form-data">

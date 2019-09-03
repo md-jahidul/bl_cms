@@ -54,7 +54,9 @@ class SliderController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.slider.create')
+                ->with('sliders',$this->sliderService->findAll())
+                ->with('slider_types',$this->sliderTypeService->findAll());;
     }
 
     /**
@@ -88,7 +90,8 @@ class SliderController extends Controller
      */
     public function edit(Slider $slider)
     {
-        return view('admin.slider.index')
+        
+        return view('admin.slider.create')
                 ->with('sliders',$this->sliderService->findAll())
                 ->with('slider_types',$this->sliderTypeService->findAll())
                 ->with('single_slider',$slider);

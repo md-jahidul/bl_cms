@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'questions List')
-@section('card_name', 'Question List')
+@section('title', 'Slider')
+@section('card_name', $slider_information->title." Slider")
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Edit Slider Image</li>
+    <li class="breadcrumb-item active">Edit-image</li>
 @endsection
 
 @section('content')
