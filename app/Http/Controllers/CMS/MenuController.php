@@ -9,6 +9,20 @@ use Illuminate\Support\Facades\Session;
 
 class MenuController extends Controller
 {
+
+    protected $menuItems = [];
+    private function getInfo($id){
+        return (new Menu)->find($id, ['id','name','parent_id']);
+    }
+
+
+    public function getBradcamInfo($parent_id)
+    {
+        $temp = (new Menu)->find($parent_id, ['id','name','parent_id']);
+        $this->menuItems[] = $temp;
+        return $temp['parent_id'];
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +30,20 @@ class MenuController extends Controller
      */
     public function index($parent_id = 0)
     {
-        $menus = Menu::with('children')->where('parent_id', $parent_id)->orderBy('display_order', 'ASC')->get();
-        return view('admin.menu.index', compact('menus','parent_id'));
+        $menus = Menu::where('parent_id', $parent_id)->orderBy('display_order', 'ASC')->get();
+        $menu_id = $parent_id;
+
+
+        while ( $menu_id != 0 ){
+            $menu_id = $this->getBradcamInfo($menu_id);
+        }
+
+        $liHtml = '';
+        for($i = count($this->menuItems) - 1; $i >= 0; $i--){
+            $liHtml .= '<li class="breadcrumb-item active">' .  $this->menuItems[$i]['name']  . '</li><br/>';
+        }
+
+        return view('admin.menu.index', compact('menus','parent_id','liHtml'));
     }
 
     /**

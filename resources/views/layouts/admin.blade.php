@@ -67,8 +67,6 @@
                 <div class="row breadcrumbs-top d-inline-block">
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ url('/home') }}">Admin</a>
-                            </li>
                             @yield('breadcrumb')
                         </ol>
                     </div>

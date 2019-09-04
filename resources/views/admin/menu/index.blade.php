@@ -2,7 +2,7 @@
 @section('title', 'Tag List')
 @section('card_name', 'Menu List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Menu List</li>
+    {!! $liHtml !!}
 @endsection
 @section('action')
     <a href="{{ $parent_id == 0 ? url('menu/create') : url("menu/$parent_id/child-menu/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
