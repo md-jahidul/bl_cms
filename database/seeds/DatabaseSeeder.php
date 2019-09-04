@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CampaignTableSeeder::class);
         $this->call(SliderTypeSeeder::class);
         $this->call(SliderTableSeeder::class);
-        $this->call(SliderImageTableSeeder::class);
-        $this->call(DigitalServiceTableSeeder::class);
+        // $this->call(SliderImageTableSeeder::class);
+        // $this->call(DigitalServiceTableSeeder::class);
         $this->call(MenusTableSeeder::class);
         $this->call(FooterMenuSeeder::class);
     }
