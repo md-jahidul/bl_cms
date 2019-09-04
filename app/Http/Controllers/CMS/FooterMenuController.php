@@ -115,10 +115,10 @@ class FooterMenuController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function childEdit($id, $parentId)
+    public function childEdit($parentId, $id)
     {
        $footerChildMenu = $this->footerMenuService->findOrFail($id);
-       return view('admin.footer-menu.footer-child.edit', compact('footerChildMenu', 'parentId'));
+       return view('admin.footer-menu.edit', compact('footerChildMenu', 'parentId'));
     }
 
     /**
@@ -130,9 +130,12 @@ class FooterMenuController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+       $parentId =  $request->parent_id;
+
        $response = $this->footerMenuService->updateFooterMenu($request->all(), $id);
        Session::flash('message', $response->getContent());
-       return redirect('footer-menu');
+       return redirect( ($parentId != 0) ? "footer-menu/$parentId/child-footer" : 'footer-menu' );
     }
 
     /**

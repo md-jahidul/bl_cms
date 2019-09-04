@@ -12,10 +12,10 @@ class MenusTableSeeder extends Seeder
      */
     public function run()
     {
-        $menus = ['Home','Offers','Apps And Service','Bussiness','Loyalty','Eshop'];
-        $menu_english = ['Home','Offers','Apps & Service','Bussiness','Loyalty','Eshop'];
+        $menus = ['Home','Offers','Apps And Services','Bussiness','Loyalty','Eshop'];
+        $menu_english = ['Home','Offers','Apps & Services','Bussiness','Loyalty','Eshop'];
         $menu_bangla = ['হোম','অফার','অ্যাপ & সার্ভিস','বিজনেস','লয়াল্টি','ই-শপ'];
-        
+
         foreach ($menus as $key => $menu){
             Menu::create([
                 'name' => $menu,
@@ -34,7 +34,7 @@ class MenusTableSeeder extends Seeder
         $sub_menus = ['Prepaid','Postpaid','Propaid'];
         $sub_menu_english =  ['Prepaid','Postpaid','Propaid'];
         $sub_menu_bangla = ['প্রিপেইড','পোষ্টপেইড','প্রপেইড'];
-        
+
         foreach ($sub_menus as $key => $smenu){
             Menu::create([
                 'name' => $smenu,

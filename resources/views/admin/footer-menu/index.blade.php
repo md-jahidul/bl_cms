@@ -33,6 +33,8 @@
                                 <td>{{ $footerMenu->name }}</td>
                                 <td class="action" width="20%">
                                     <a href="{{ url('footer-menu/'.$footerMenu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+
+                                    {{--                                    <a href="{{ url('footer-menu/'.$footerMenu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>--}}
                                     <a href="#" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $footerMenu->id }}" title="Delete the user">
                                         <i class="la la-trash"></i>
                                     </a>

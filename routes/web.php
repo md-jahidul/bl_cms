@@ -33,8 +33,9 @@ Route::get('sort-autosave/parent-footer-sort','CMS\FooterMenuController@parentFo
 Route::group(['prefix' => 'footer-menu'], function () {
     Route::get('/{id}/child-footer', 'CMS\FooterMenuController@index');
     Route::get('/{id}/child-footer/create', 'CMS\FooterMenuController@create');
+//    Route::get('/{parentId}/child-footer/{id}/edit', 'CMS\FooterMenuController@edit');
+//    Route::post('/{parentId}/child-footer/{id}/update', 'CMS\FooterMenuController@update');
 
-//    Route::post('/{id}/store', 'CMS\FooterMenuController@storeChildMenu');
 //    Route::get('/{id}/edit/{parentId}', 'CMS\FooterMenuController@childEdit');
 //    Route::put('/{id}/update', 'CMS\FooterMenuController@childUpdate');
 //    Route::get('/{parentId}/delete/{id}', 'CMS\FooterMenuController@destroyChildMenu');

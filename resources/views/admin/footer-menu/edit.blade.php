@@ -6,7 +6,9 @@
     <li class="breadcrumb-item active"> Footer Menu Edit</li>
 @endsection
 @section('action')
-    <a href="{{ url('footer-menu') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+{{--    <a href="{{ url('footer-menu') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>--}}
+
+    <a href="{{ $footerMenu->parent_id == 0 ? url('footer-menu') : url("footer-menu/$footerMenu->parent_id/child-footer") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -16,6 +18,7 @@
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ url("footer-menu/$footerMenu->id") }}" method="POST" novalidate>
                             <div class="row">
+                                <input type="hidden" name="parent_id" value="{{ $footerMenu->parent_id }}">
                                 <div class="form-group col-md-12 {{ $errors->has('title') ? ' error' : '' }}">
                                     <label for="title" class="required">Title</label>
                                     <input type="text" name="name"  class="form-control" placeholder="Enter title"
