@@ -22,7 +22,7 @@ class CreateMenusTable extends Migration
             $table->string('code');   // HomePage
             $table->string('url')->unique();
             $table->tinyInteger('status');
-            $table->tinyInteger('external_site');
+            $table->tinyInteger('external_site')->default(0);
             $table->integer('display_order');
             $table->timestamps();
         });

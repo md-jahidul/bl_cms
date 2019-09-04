@@ -111,7 +111,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url("menu-delete") }}/"+id,
+                            url: "{{ url("menu/$parent_id/destroy") }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 console.log(res);
@@ -123,7 +123,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href =  res;
+                                    window.location.href = "{{ url( ($parent_id == 0) ? 'menu' : "/menu/$parent_id/child-menu") }}";
                                 }
                             }
                         })

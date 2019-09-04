@@ -41,7 +41,7 @@ class FooterMenuSeeder extends Seeder
                 'name' => $smenu,
                 'en_label_text' => $sub_menu_english[$key],
                 'bn_label_text' => $sub_menu_bangla[$key],
-                'parent_id' => 2,
+                'parent_id' => 1,
                 'code' => str_replace( " ", "", $smenu),
                 'url' => '/'. strtolower( str_replace( " ", "-", $smenu) ) ,
                 'external_site' => 0,

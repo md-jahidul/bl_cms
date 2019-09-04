@@ -27,6 +27,10 @@ class FooterMenuService
         $this->setActionRepository($footerMenuRepository);
     }
 
+    /**
+     * @param $parent_id
+     * @return mixed
+     */
     public function footerMenuParent($parent_id)
     {
         return $this->footerMenuRepository->parentFooter($parent_id);
@@ -46,6 +50,10 @@ class FooterMenuService
         return new Response('Footer menu added successfully');
     }
 
+    /**
+     * @param $data
+     * @return Response
+     */
     public function tableSort($data)
     {
         $this->footerMenuRepository->footerTableSort($data);
@@ -64,6 +72,11 @@ class FooterMenuService
         return Response('Footer menu updated successfully');
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @throws \Exception
+     */
     public function deleteFooterMenu($id)
     {
         $footerMenu = $this->findOne($id);
