@@ -42,7 +42,7 @@ class MenuController extends Controller
 
             $menu_count = (new Menu())->where('parent_id', $request->parent_id )->get()->count();
             Menu::create([
-                'parent_id' => 0,
+                'parent_id' => request()->parent_id,
                 'name' => $request->name,
                 'en_label_text' => request()->en_label_text,
                 'bn_label_text' => $request->bn_label_text,
@@ -54,7 +54,7 @@ class MenuController extends Controller
             ]);
 
             Session::flash('message', 'Menu saved successfully');
-            return redirect('menu');
+            return request()->parent_id == 0 ? redirect('menu') : redirect(url("menu/$request->parent_id/child-menu"));
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage());
         }
@@ -101,7 +101,7 @@ class MenuController extends Controller
             $menu = Menu::findOrFail($id);
             $menu->update($request->all());
             Session::flash('message', 'Menu updated successfully');
-            return $menu->id == 0 ? redirect('menu') : redirect(url("menu/$request->parent_id/child_menu"));
+            return $menu->parent_id == 0 ? redirect('menu') : redirect(url("menu/$request->parent_id/child-menu"));
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage());
         }
@@ -119,7 +119,7 @@ class MenuController extends Controller
             $menu = Menu::findOrFail($id);
             $menu->delete();
             Session::flash('message', 'Menu delete successfully');
-            return $menu->id == 0 ? redirect('menu') : redirect(url("menu/$menu->parent_id/child_menu"));
+            return $menu->parent_id == 0 ? url('menu') : url("menu/$menu->parent_id/child-menu");
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage());
         }

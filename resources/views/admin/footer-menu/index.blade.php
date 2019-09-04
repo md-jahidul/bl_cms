@@ -30,11 +30,9 @@
                             @php($i++)
                             <tr data-index="{{ $footerMenu->id }}" data-position="{{ $footerMenu->display_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <td>{{ $footerMenu->name }}</td>
+                                <td>{{ $footerMenu->en_label_text  }} {!! $footerMenu->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                 <td class="action" width="20%">
                                     <a href="{{ url('footer-menu/'.$footerMenu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-
-                                    {{--                                    <a href="{{ url('footer-menu/'.$footerMenu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>--}}
                                     <a href="#" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $footerMenu->id }}" title="Delete the user">
                                         <i class="la la-trash"></i>
                                     </a>

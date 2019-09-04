@@ -27,15 +27,20 @@
                                 <td class="action" width="20%">
                                         <a href="{{ url('menu/'.$menu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         <!-- <a href="" id="delete_btn" title="Delete the user" onclick="return confirm('Are you sure?')" data-toggle="modal" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></a> -->
-                                        <form method="POST" action="{{ url('/menu', ['id' => $menu->id]) }}" accept-charset="UTF-8" style="display:inline">
-                                            <button type="submit" class="border-0 btn btn-outline-danger" title="Delete the user" onclick="return confirm('Are you sure?')">
-                                                <i class="la la-trash"></i>
-                                            </button>
-                                            @method('delete')
-                                            @csrf
-                                        </form>
+{{--                                        <form method="POST" action="{{ url('/menu', ['id' => $menu->id]) }}" accept-charset="UTF-8" style="display:inline">--}}
+{{--                                            <button type="submit" class="border-0 btn btn-outline-danger" title="Delete the user" onclick="return confirm('Are you sure?')">--}}
+{{--                                                <i class="la la-trash"></i>--}}
+{{--                                            </button>--}}
+{{--                                            @method('delete')--}}
+{{--                                            @csrf--}}
+{{--                                        </form>--}}
+
+                                    <a href="#" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $menu->id }}" title="Delete the user">
+                                        <i class="la la-trash"></i>
+                                    </a>
+
                                 </td>
-                               <td class="text-center" width="10%"><a href="{{ url("menu/$menu->id/child_menu") }}" class="badge bg-success">Child Menus</a></td>
+                               <td class="text-center" width="10%"><a href="{{ url("menu/$menu->id/child-menu") }}" class="badge bg-success">Child Menus</a></td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -91,6 +96,9 @@
         $(function(){
             $('.delete_btn').click(function () {
                 var id = $(this).attr('data-id');
+
+                console.log(id);
+
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -103,9 +111,11 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('menu/destroy') }}/"+id,
+                            url: "{{ url("menu-delete") }}/"+id,
                             methods: "get",
                             success: function (res) {
+                                console.log(res);
+
                                 Swal.fire(
                                     'Deleted!',
                                     'Your file has been deleted.',
@@ -113,7 +123,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('menu') }}"
+                                    window.location.href =  res;
                                 }
                             }
                         })
