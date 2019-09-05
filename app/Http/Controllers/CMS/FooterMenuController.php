@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Http\Requests\StoreFooterMenuRequest;
 use App\Models\FooterMenu;
 use App\Models\Menu;
 use App\Services\FooterMenuService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class FooterMenuController extends Controller
 {
@@ -51,8 +53,16 @@ class FooterMenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreFooterMenuRequest $request)
     {
+//        Validator::make($request->all(), [
+//            'name' => 'required',
+//            'en_label_text' => 'required',
+//            'bn_label_text' => 'required',
+//            'url' => 'required',
+//        ])->validate();
+
+
         $parentId = $request->parent_id;
         $response = $this->footerMenuService->storeFooterMenu($request->all());
         Session::flash('message', $response->getContent());

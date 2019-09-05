@@ -16,17 +16,17 @@
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('footer-menu.store') }}" method="POST" novalidate>
                             <div class="row">
-                                <div class="form-group col-md-12 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+                                <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+                                <div class="form-group col-md-12 {{ $errors->has('name') ? ' error' : '' }}">
                                     <label for="title" class="required">Title</label>
                                     <input type="text" name="name"  class="form-control" placeholder="Enter title"
-                                           value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Enter footer menu title">
+                                           value="{{ old("name") ? old("name") : '' }}" required data-validation-required-message="Enter footer menu title">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('title'))
-                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @if ($errors->has('name'))
+                                        <div class="help-block">  {{ $errors->first('name') }}</div>
                                     @endif
                                 </div>
-                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('en_label_text') ? ' error' : '' }}">
                                     <label for="title" class="required">English Label</label>
                                     <input type="text" name="en_label_text"  class="form-control" placeholder="Enter english label"
                                            value="{{ old("en_label_text") ? old("en_label_text") : '' }}" required data-validation-required-message="Enter footer menu english label">
@@ -64,14 +64,18 @@
                                 </div>
 
                                 <div class="col-md-6 float-left">
-                                    <div class="form-group">
+                                    <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                         <label for="title" class="required mr-1">Status:</label>
 
-                                        <input type="radio" name="status" value="1" id="input-radio-15">
+                                        <input type="radio" name="status" value="1" id="input-radio-15" checked>
                                         <label for="input-radio-15" class="mr-1">Active</label>
 
                                         <input type="radio" name="status" value="0" id="input-radio-16">
                                         <label for="input-radio-16">Inactive</label>
+
+                                        @if ($errors->has('status'))
+                                            <div class="help-block">  {{ $errors->first('status') }}</div>
+                                        @endif
                                     </div>
                                 </div>
 

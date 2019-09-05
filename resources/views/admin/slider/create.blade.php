@@ -30,7 +30,7 @@
                                         <option value="">--Select slider type--</option>
                                         @if(isset($sliderTypes))
                                             @foreach($sliderTypes as $slider_type)
-                                                <option value="{{ $slider_type->id }}"{{ old('slider_type_id')== $slider_type->id ? 'selected' : ''}}>{{ $slider_type->name }}</option>
+                                                <option value="{{ $slider_type->id }}" {{ old('slider_type_id')== $slider_type->id ? 'selected' : ''}}>{{ $slider_type->name }}</option>
                                             @endforeach
                                         @endif
                                     </select>
