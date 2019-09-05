@@ -50,9 +50,8 @@ class MenuController extends Controller
         while ( $menu_id != 0 ){
             $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
-        
-        $menu_items = $this->menuItems;       
 
+        $menu_items = $this->menuItems;
         return view('admin.menu.index', compact('menus','parent_id','menu_items'));
     }
 
@@ -63,16 +62,13 @@ class MenuController extends Controller
      */
     public function create($parent_id = 0)
     {
-
         $this->menuItems[] = ['name' => 'Create'];
-
         $menu_id = $parent_id;
         while ( $menu_id != 0 ){
             $menu_id = $this->getBreadcrumbInfo($menu_id);
-        }       
-      
-        $menu_items = $this->menuItems;   
-        
+        }
+
+        $menu_items = $this->menuItems;
         return view('admin.menu.create', compact('parent_id','menu_items'));
     }
 
@@ -113,9 +109,9 @@ class MenuController extends Controller
         $menu_id = $menu->parent_id;
         while ( $menu_id != 0 ){
             $menu_id = $this->getBreadcrumbInfo($menu_id);
-        }       
-      
-        $menu_items = $this->menuItems; 
+        }
+
+        $menu_items = $this->menuItems;
         return view('admin.menu.edit', compact('menu','menu_items'));
     }
 

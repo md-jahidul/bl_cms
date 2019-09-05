@@ -2,8 +2,15 @@
 @section('title', 'Tag Create')
 @section('card_name', 'Footer Menu Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ url('footer-menu') }}">Footer Menu List</a></li>
-    <li class="breadcrumb-item active"> Footer Menu Create</li>
+    @php
+        $liHtml = '<li class="breadcrumb-item"><a href="'. url('footer-menu') .'">Footer Menu</a></li>';
+        for($i = count($footer_menu_items) - 1; $i >= 0; $i--){
+            $liHtml .=  $i == 0 ? '<li class="breadcrumb-item active">' .  $footer_menu_items[$i]['name']  . '</li>' :
+                                  '<li class="breadcrumb-item"><a href="'. url("footer-menu/". $footer_menu_items[$i]["id"] . "/child-footer") .'">' .  $footer_menu_items[$i]['name']  . '</a></li>';
+        }
+    @endphp
+
+    {!! $liHtml !!}
 @endsection
 @section('action')
     <a href="{{ url('footer-menu') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>

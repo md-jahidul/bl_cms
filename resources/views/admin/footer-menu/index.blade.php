@@ -2,7 +2,15 @@
 @section('title', 'Tag List')
 @section('card_name', 'Footer Menu List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Footer Menu List</li>
+    @php
+
+        $liHtml = '<li class="breadcrumb-item"><a href="'. url('footer-menu') .'">Footer Menu</a></li>';
+        for($i = count($footer_menu_items) - 1; $i >= 0; $i--){
+            $liHtml .=  $i == 0 ? '<li class="breadcrumb-item active">' .  $footer_menu_items[$i]['name']  . '</li>' :
+                                  '<li class="breadcrumb-item"><a href="'. url("footer-menu/". $footer_menu_items[$i]["id"] . "/child-footer") .'">' .  $footer_menu_items[$i]['name']  . '</a></li>';
+        }
+    @endphp
+    {!! $liHtml !!}
 @endsection
 @section('action')
 {{--    <a href="{{ url('footer-menu/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
@@ -84,6 +92,15 @@
     span.inactive{
         color: red;
         font-size: small;
+    }
+
+    .breadcrumb-wrapper ol.breadcrumb{
+        margin-left : 20px;
+    }
+
+    .breadcrumb-wrapper li, .breadcrumb-wrapper a{
+        font-weight : bold;
+        font-size : 15px;
     }
 </style>
 
