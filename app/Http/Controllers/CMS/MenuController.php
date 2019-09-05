@@ -29,12 +29,6 @@ class MenuController extends Controller
         $this->menuService = $menuService;
     }
 
-
-    private function getInfo($id){
-        return (new Menu)->find($id, ['id','name','parent_id']);
-    }
-
-
     public function getBradcamInfo($parent_id)
     {
         $temp = (new Menu)->find($parent_id, ['id','name','parent_id']);
@@ -55,13 +49,10 @@ class MenuController extends Controller
         while ( $menu_id != 0 ){
             $menu_id = $this->getBradcamInfo($menu_id);
         }
+        
+        $menu_items = $this->menuItems;       
 
-        $liHtml = '';
-        for($i = count($this->menuItems) - 1; $i >= 0; $i--){
-            $liHtml .= '<li class="breadcrumb-item active">' .  $this->menuItems[$i]['name']  . '</li>';
-        }
-
-        return view('admin.menu.index', compact('menus','parent_id','liHtml'));
+        return view('admin.menu.index', compact('menus','parent_id','menu_items'));
     }
 
     /**

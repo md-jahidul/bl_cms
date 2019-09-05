@@ -2,6 +2,14 @@
 @section('title', 'Tag List')
 @section('card_name', 'Menu List')
 @section('breadcrumb')
+    @php 
+        $liHtml = '<li class="breadcrumb-item"><a href="'. url('menu') .'">Menu</a></li>';
+        for($i = count($menu_items) - 1; $i >= 0; $i--){
+            $liHtml .=  $i == 0 ? '<li class="breadcrumb-item active">' .  $menu_items[$i]['name']  . '</li>' : 
+                                  '<li class="breadcrumb-item"><a href="'. url("menu/". $menu_items[$i]["id"] . "/child-menu") .'">' .  $menu_items[$i]['name']  . '</a></li>';
+        }
+    @endphp
+
     {!! $liHtml !!}
 @endsection
 @section('action')
@@ -25,20 +33,10 @@
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $menu->en_label_text  }} {!! $menu->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                 <td class="action" width="20%">
-                                        <a href="{{ url('menu/'.$menu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <!-- <a href="" id="delete_btn" title="Delete the user" onclick="return confirm('Are you sure?')" data-toggle="modal" data-placement="right" title="Delete" role="button" class="border-0 btn btn-outline-danger"><i class="la la-trash" aria-hidden="true"></i></a> -->
-{{--                                        <form method="POST" action="{{ url('/menu', ['id' => $menu->id]) }}" accept-charset="UTF-8" style="display:inline">--}}
-{{--                                            <button type="submit" class="border-0 btn btn-outline-danger" title="Delete the user" onclick="return confirm('Are you sure?')">--}}
-{{--                                                <i class="la la-trash"></i>--}}
-{{--                                            </button>--}}
-{{--                                            @method('delete')--}}
-{{--                                            @csrf--}}
-{{--                                        </form>--}}
-
+                                    <a href="{{ url('menu/'.$menu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="#" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $menu->id }}" title="Delete the user">
                                         <i class="la la-trash"></i>
                                     </a>
-
                                 </td>
                                <td class="text-center" width="10%"><a href="{{ url("menu/$menu->id/child-menu") }}" class="badge bg-success">Child Menus</a></td>
                             </tr>
@@ -88,6 +86,133 @@
     span.inactive{
         color: red;
         font-size: small;
+    }
+
+
+    /** The Magic **/
+    .btn-breadcrumb .btn:not(:last-child):after {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 17px solid transparent;
+    border-bottom: 17px solid transparent;
+    border-left: 10px solid white;
+    position: absolute;
+    top: 50%;
+    margin-top: -17px;
+    left: 100%;
+    z-index: 3;
+    }
+    .btn-breadcrumb .btn:not(:last-child):before {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 17px solid transparent;
+    border-bottom: 17px solid transparent;
+    border-left: 10px solid rgb(173, 173, 173);
+    position: absolute;
+    top: 50%;
+    margin-top: -17px;
+    margin-left: 1px;
+    left: 100%;
+    z-index: 3;
+    }
+
+    /** The Spacing **/
+    .btn-breadcrumb .btn {
+    padding:6px 12px 6px 24px;
+    }
+    .btn-breadcrumb .btn:first-child {
+    padding:6px 6px 6px 10px;
+    }
+    .btn-breadcrumb .btn:last-child {
+    padding:6px 18px 6px 24px;
+    }
+
+    /** Default button **/
+    .btn-breadcrumb .btn.btn-default:not(:last-child):after {
+    border-left: 10px solid #fff;
+    }
+    .btn-breadcrumb .btn.btn-default:not(:last-child):before {
+    border-left: 10px solid #ccc;
+    }
+    .btn-breadcrumb .btn.btn-default:hover:not(:last-child):after {
+    border-left: 10px solid #ebebeb;
+    }
+    .btn-breadcrumb .btn.btn-default:hover:not(:last-child):before {
+    border-left: 10px solid #adadad;
+    }
+
+    /** Primary button **/
+    .btn-breadcrumb .btn.btn-primary:not(:last-child):after {
+    border-left: 10px solid #428bca;
+    }
+    .btn-breadcrumb .btn.btn-primary:not(:last-child):before {
+    border-left: 10px solid #357ebd;
+    }
+    .btn-breadcrumb .btn.btn-primary:hover:not(:last-child):after {
+    border-left: 10px solid #3276b1;
+    }
+    .btn-breadcrumb .btn.btn-primary:hover:not(:last-child):before {
+    border-left: 10px solid #285e8e;
+    }
+
+    /** Success button **/
+    .btn-breadcrumb .btn.btn-success:not(:last-child):after {
+    border-left: 10px solid #5cb85c;
+    }
+    .btn-breadcrumb .btn.btn-success:not(:last-child):before {
+    border-left: 10px solid #4cae4c;
+    }
+    .btn-breadcrumb .btn.btn-success:hover:not(:last-child):after {
+    border-left: 10px solid #47a447;
+    }
+    .btn-breadcrumb .btn.btn-success:hover:not(:last-child):before {
+    border-left: 10px solid #398439;
+    }
+
+    /** Danger button **/
+    .btn-breadcrumb .btn.btn-danger:not(:last-child):after {
+    border-left: 10px solid #d9534f;
+    }
+    .btn-breadcrumb .btn.btn-danger:not(:last-child):before {
+    border-left: 10px solid #d43f3a;
+    }
+    .btn-breadcrumb .btn.btn-danger:hover:not(:last-child):after {
+    border-left: 10px solid #d2322d;
+    }
+    .btn-breadcrumb .btn.btn-danger:hover:not(:last-child):before {
+    border-left: 10px solid #ac2925;
+    }
+
+    /** Warning button **/
+    .btn-breadcrumb .btn.btn-warning:not(:last-child):after {
+    border-left: 10px solid #f0ad4e;
+    }
+    .btn-breadcrumb .btn.btn-warning:not(:last-child):before {
+    border-left: 10px solid #eea236;
+    }
+    .btn-breadcrumb .btn.btn-warning:hover:not(:last-child):after {
+    border-left: 10px solid #ed9c28;
+    }
+    .btn-breadcrumb .btn.btn-warning:hover:not(:last-child):before {
+    border-left: 10px solid #d58512;
+    }
+
+    /** Info button **/
+    .btn-breadcrumb .btn.btn-info:not(:last-child):after {
+    border-left: 10px solid #5bc0de;
+    }
+    .btn-breadcrumb .btn.btn-info:not(:last-child):before {
+    border-left: 10px solid #46b8da;
+    }
+    .btn-breadcrumb .btn.btn-info:hover:not(:last-child):after {
+    border-left: 10px solid #39b3d7;
+    }
+    .btn-breadcrumb .btn.btn-info:hover:not(:last-child):before {
+    border-left: 10px solid #269abc;
     }
 </style>
 
