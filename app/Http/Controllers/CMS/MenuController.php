@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Http\Requests\StoreMenuRequest;
 use App\Models\Menu;
 use App\Services\MenuService;
 use Illuminate\Http\Request;
@@ -81,7 +82,7 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMenuRequest $request)
     {
         $parentId = $request->parent_id;
         $response = $this->menuService->storeMenu($request->all());
