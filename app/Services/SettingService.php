@@ -38,15 +38,18 @@ class SettingService
      * Storing the banner resource
      * @return Response
      */
-    public function storeSetting($settings)
+    public function storeSetting($request)
     {
-        unset($settings['_token']);
-        unset($settings['_method']);
-        if(DB::table('settings')->where('setting_key_id',$settings['setting_key_id'])){
-            $setting = DB::table('settings')->where('setting_key_id',$settings['setting_key_id']);
-            $setting->update($settings);
+        //dd($this->settingRepository->is_exist($settings['setting_key_id']));
+        unset($request['_token']);
+        unset($request['_method']);
+        $setting = $this->settingRepository->is_exist($request['setting_key_id']);
+        
+        if(isset($setting)){
+            $settings = $this->findOne($setting->id);
+            $settings->update($request);
         }else{
-            $this->save($settings);
+            $this->save($request);
         }
         return new Response("Satting successfully been Added");
     }

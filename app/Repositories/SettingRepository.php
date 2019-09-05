@@ -10,8 +10,14 @@ namespace App\Repositories;
 
 
 use App\Models\Setting;
+use DB;
 
 class SettingRepository extends BaseRepository
 {
     public $modelName = Setting::class;
+
+    public function is_exist($id){
+        $data = DB::table('settings')->where('setting_key_id',$id)->first();
+        return $data;
+    }
 }
