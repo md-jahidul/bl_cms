@@ -21,7 +21,7 @@
         <div class="card col-sm-12">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h3 class="menu-title">Dragabble Menu list : lable 1</h3>
+                    <h4 class="menu-title">Dragabble and auto save items</h4>
                     <table class="table table-striped table-bordered"
                            role="grid" aria-describedby="Example1_info" style="cursor:move;">
                         <tbody id="sortable">
@@ -53,7 +53,7 @@
 
 
 <style>
-    h3.menu-title{
+    h4.menu-title{
         font-weight: bold;
     }
     .table tr{
