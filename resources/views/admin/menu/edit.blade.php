@@ -2,8 +2,15 @@
 @section('title', 'Menu Edit')
 @section('card_name', 'Menu Edit')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ url('footer-menu') }}">Menu List</a></li>
-    <li class="breadcrumb-item active"> Menu Edit</li>
+    @php 
+        $liHtml = '<li class="breadcrumb-item"><a href="'. url('menu') .'">Menu</a></li>';
+        for($i = count($menu_items) - 1; $i >= 0; $i--){
+            $liHtml .=  $i == 0 ? '<li class="breadcrumb-item active">' .  $menu_items[$i]['name']  . '</li>' : 
+                                  '<li class="breadcrumb-item"><a href="'. url("menu/". $menu_items[$i]["id"] . "/child-menu") .'">' .  $menu_items[$i]['name']  . '</a></li>';
+        }
+    @endphp
+
+    {!! $liHtml !!}
 @endsection
 @section('action')
     <a href="{{ $menu->parent_id == 0 ? url('menu') : url("menu/$menu->parent_id/child-menu") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>

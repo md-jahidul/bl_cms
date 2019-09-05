@@ -29,9 +29,9 @@ class MenuController extends Controller
         $this->menuService = $menuService;
     }
 
-    public function getBradcamInfo($parent_id)
+    public function getBreadcrumbInfo($parent_id)
     {
-        $temp = (new Menu)->find($parent_id, ['id','name','parent_id']);
+        $temp = (new Menu)->find($parent_id, ['id','name','parent_id'])->toArray();
         $this->menuItems[] = $temp;
         return $temp['parent_id'];
     }
@@ -47,7 +47,7 @@ class MenuController extends Controller
         $menu_id = $parent_id;
 
         while ( $menu_id != 0 ){
-            $menu_id = $this->getBradcamInfo($menu_id);
+            $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
         
         $menu_items = $this->menuItems;       
@@ -62,7 +62,17 @@ class MenuController extends Controller
      */
     public function create($parent_id = 0)
     {
-        return view('admin.menu.create', compact('parent_id'));
+
+        $this->menuItems[] = ['name' => 'Create'];
+
+        $menu_id = $parent_id;
+        while ( $menu_id != 0 ){
+            $menu_id = $this->getBreadcrumbInfo($menu_id);
+        }       
+      
+        $menu_items = $this->menuItems;   
+        
+        return view('admin.menu.create', compact('parent_id','menu_items'));
     }
 
     /**
@@ -95,7 +105,17 @@ class MenuController extends Controller
     public function edit($id)
     {
         $menu = $this->menuService->findOrFail($id);
-        return view('admin.menu.edit', compact('menu'));
+
+
+        $this->menuItems[] = ['name' => $menu->name];
+
+        $menu_id = $menu->parent_id;
+        while ( $menu_id != 0 ){
+            $menu_id = $this->getBreadcrumbInfo($menu_id);
+        }       
+      
+        $menu_items = $this->menuItems; 
+        return view('admin.menu.edit', compact('menu','menu_items'));
     }
 
     /**
