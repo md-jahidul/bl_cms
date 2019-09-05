@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Tag Create')
-@section('card_name', 'Footer Menu Create')
+@section('title', 'Menu Create')
+@section('card_name', 'Menu Create')
 @section('breadcrumb')
     <li class="breadcrumb-item active"><a href="{{ url('footer-menu') }}">Header Menu List</a></li>
     <li class="breadcrumb-item active"> Header Menu Create</li>
