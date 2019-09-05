@@ -5,37 +5,7 @@
     <li class="breadcrumb-item active">Short-Cuts List</li>
 @endsection
 
-{{-- @section('content_header')
-    <p class="rounded">
-       @if (session('status'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('status') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-        @if (session('danger'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('danger') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-        @error('short_cut')
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ $message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @enderror
-        
-    </p>
-@endsection --}}
-
-@section('main-content')
+@section('content')
 
     <div class="row">
         <div class="col-md-6">
@@ -46,8 +16,6 @@
                 
                 <!-- /.card-header -->
                 <div class="card-body">
-
-                   
                     <form action="{{route('UserShortcut.store')}}" method="post">
                         @csrf
                         @method('post')

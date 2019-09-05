@@ -2,25 +2,15 @@
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
             <li class=" nav-item"><a href="#"><i class="la la-home"></i>
-                    <span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
-
+                <span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
             </li>
-            {{-- <li class=" nav-item"><a href="#"><i class="la la-sliders"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">Slider Management</span></a>
-                <ul class="menu-content">
-
-                    <li class="{{ is_active_url('sliders') . is_active_url('sliders/create')}}">
-                        <a class="menu-item" href="{{ url('sliders') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-file-image-o"></i> Slider</a>
-                    </li>
-                    <li class="{{ is_active_url('slider/images') . is_active_url('sliders/images/create')}}">
-                        <a class="menu-item" href="{{ url('slider/images') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-file-image-o"></i> Slider Image</a>
-                    </li>
-
-                </ul>
-            </li> --}}
-
+            <li class="{{ is_active_url('short_cuts') }} nav-item"><a href="{{route('short_cuts.index')}}"><i class="la la-fighter-jet"></i>
+                <span class="menu-title" data-i18n="nav.dash.main">Short Cuts</span></a>
+            </li>
+            <li class="{{ is_active_url('setting') }} nav-item"><a href="{{route('setting.index')}}"><i class="la la-cogs"></i>
+                <span class="menu-title" data-i18n="nav.dash.main">Setting</span></a>
+            </li>
+           
             <li class=" nav-item"><a href="#"><i class="la la-question"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Quiz Management</span></a>
                 <ul class="menu-content">

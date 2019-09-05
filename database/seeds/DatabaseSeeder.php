@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SliderImageTableSeeder::class);
         $this->call(DigitalServiceTableSeeder::class);
 
+        $this->call(SettingKeysTableSeeder::class);
     }
 }

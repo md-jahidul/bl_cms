@@ -3,26 +3,25 @@
 namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
-use App\Models\ShortCut;
 use App\Http\Controllers\Controller;
-use App\Services\ShortCutService;
-use App\Http\Requests\ShortCutUpdateRequest;
-use App\Http\Requests\ShortCutStoreRequest;
+use App\Services\SettingService;
+use App\Models\Setting;
+use DB;
 
-class ShortCutController extends Controller
+class SettingController extends Controller
 {
      /**
      * @var $questionService
      */
-    private $shortCutService;
+    private $settingService;
 
     /**
      * QuestionController constructor.
      * @param QuestionService $questionService
      */
-    public function __construct(ShortCutService $shortCutService)
+    public function __construct(SettingService $settingService)
     {
-        $this->shortCutService = $shortCutService;
+        $this->settingService = $settingService;
     }
 
     /**
@@ -32,7 +31,9 @@ class ShortCutController extends Controller
      */
     public function index()
     {
-        return view('admin.short_cuts.index')->with('short_cuts',ShortCut::all());
+        return view('admin.setting.index')
+                ->with('keys',DB::table('setting_keys')->get())
+                ->with('settings',$this->settingService->findAll());
     }
 
     /**
@@ -42,7 +43,7 @@ class ShortCutController extends Controller
      */
     public function create()
     {
-        return view('admin.short_cuts.create');
+        //
     }
 
     /**
@@ -51,10 +52,10 @@ class ShortCutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ShortCutStoreRequest $request)
+    public function store(Request $request)
     {
-        session()->flash('success',$this->shortCutService->storeShortCut($request->all())->getContent());
-        return redirect(route('short_cuts.index'));
+        session()->flash('success',$this->settingService->storeSetting($request->all())->getContent());
+        return redirect(route('setting.index'));
     }
 
     /**
@@ -76,9 +77,10 @@ class ShortCutController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.short_cuts.index')
-                    ->with('short_cuts',$this->shortCutService->findAll())
-                    ->with('short_cut_info',$this->shortCutService->findOne($id));
+            return view('admin.setting.index')
+                ->with('keys',DB::table('setting_keys')->get())
+                ->with('settings',$this->settingService->findAll())
+                ->with('setting_info',$this->settingService->findOne($id));
     }
 
     /**
@@ -88,10 +90,10 @@ class ShortCutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ShortCutUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        session()->flash('success',$this->shortCutService->updateShortCut($request->all(),$id)->getContent());
-        return redirect(route('short_cuts.index'));
+        session()->flash('success',$this->settingService->updateSetting($request->all(),$id)->getContent());
+        return redirect(route('setting.index'));
     }
 
     /**
@@ -102,7 +104,7 @@ class ShortCutController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('success',$this->shortCutService->destroyShortCut($id)->getContent());
-        return redirect(route('short_cuts.index'));
+        session()->flash('success',$this->settingService->destroySetting($id)->getContent());
+        return redirect(route('setting.index'));
     }
 }

@@ -31,24 +31,48 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-// myBL-routs
+//------------------------------- ********** ------------------------------------//
+//------------------------------- myBL-routs ------------------------------------//
+//------------------------------- ********** ------------------------------------//
+
+// shortcuts
 route::resource('short_cuts','CMS\ShortCutController');
 route::resource('UserShortcut','CMS\UserShortcutController');
+Route::put('short_cuts/SerialUpdate/{id}','CMS\UserShortcutController@serialUpdate')->name('serial.update');
+Route::get('short_cuts/destroy/{id}','CMS\ShortCutController@destroy');
 
-
-route::resource('slider','CMS\SliderController');
-Route::get('slider/destroy/{id}','CMS\SliderController@destroy');
-Route::get('slider/edit/{slider}','CMS\SliderController@edit')->name('slider.edit');
-route::resource('sliderImage','CMS\SliderImageController');
-route::get('sliderImage/addImage/update-position','CMS\SliderImageController@updatePosition');
-Route::get('slider/addImage/{sliderId}','CMS\SliderImageController@index')->name('sliderImage.index');
-
+// Banner
 route::resource('banner','CMS\BannerController');
 Route::get('banner/destroy/{id}','CMS\BannerController@destroy');
 
+// welcomeInfo
 route::resource('wellcomeInfo','CMS\WellcomeInfoController');
 
+//settings 
+route::resource('setting','CMS\SettingController');
+Route::get('setting_limit/store','CMS\SettingController@Addlimit');
+Route::get('setting/destroy/{id}','CMS\SettingController@destroy')->name('setting.destroy');
 
-Route::put('short_cuts/SerialUpdate/{id}','CMS\UserShortcutController@serialUpdate')->name('serial.update');
-Route::get('short_cuts/destroy/{id}','CMS\ShortCutController@destroy');
-// myBL-routs
+
+//------ Slider -----------//
+
+// Slider
+route::resource('slider','CMS\SliderController');
+Route::get('slider/destroy/{id}','CMS\SliderController@destroy');
+Route::get('slider/edit/{slider}','CMS\SliderController@edit')->name('slider.edit');
+// Slider
+
+// Slider Image
+route::resource('sliderImage','CMS\SliderImageController');
+route::get('sliderImage/addImage/update-position','CMS\SliderImageController@updatePosition');
+Route::get('slider/addImage/{sliderId}','CMS\SliderImageController@index')->name('sliderImage.index');
+// Slider Image
+
+//------ Slider -----------//
+
+
+
+
+//------------------------------- ********** ------------------------------------//
+//------------------------------- myBL-routs ------------------------------------//
+//------------------------------- ********** ------------------------------------//

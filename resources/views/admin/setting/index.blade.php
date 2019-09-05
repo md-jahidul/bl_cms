@@ -1,56 +1,51 @@
 @extends('layouts.admin')
-@section('title', 'questions List')
-@section('card_name', 'Short Cuts')
+@section('title', 'Setting')
+@section('card_name', 'Setting')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Short-Cuts List</li>
-@endsection
-
-@section('content_header')
-    <h1 class="content-header-title mb-0 d-inline-block">
-        Short-Cuts List
-    </h1>
+    <li class="breadcrumb-item active">Setting</li>
 @endsection
 
 @section('content')
-    <!-- /short cut add form -->
-    <form action=" @if(isset($short_cut_info)) {{route('short_cuts.update',$short_cut_info->id)}} @else {{route('short_cuts.store')}} @endif " method="post" enctype="multipart/form-data">
-        @csrf
-        @if(isset($short_cut_info)) @method('put') @else @method('post') @endif
-        <div class="row pl-1">
-            <div class="col-md-4">
-
-                <div class="form-group">
+<div class="card mb-0 px-1" style="box-shadow:none;">        
+    <div class="card-content">
+        <div class="card-body">
+            <form class="form" method="POST" action="@if(isset($setting_info)) {{route('setting.update',$setting_info->id)}} @else {{route('setting.store')}} @endif">
+                @csrf
+                @if(isset($setting_info)) 
+                    @method('put')
+                @else
+                    @method('post')
+                @endif
+                <div class="form-body">
+                    <h4 class="form-section">Setting Key</h4>
                     <div class="row">
-                        <input style="height:100%" value="@if(isset($short_cut_info)) {{$short_cut_info->tittle}} @endif" type="text" name="tittle" class="form-control @error('tittle') is-invalid @enderror" id="tittle" placeholder="Enter Shor Cuts Name..">
-                        <small class="text-danger"> @error('tittle') {{ $message }} @enderror </small>
+                        <div class="col-md-5">
+                           <label for="key">Key:</label>
+                            <select name="setting_key_id" class="form-control" id="key">
+                               @foreach ($keys as $key)
+                                    <option @if(isset($setting_info)) @if($setting_info->setting_key_id == $key->id) selected @endif @endif value="{{$key->id}}">{{$key->title}}</option>
+                               @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                 <label for="limit">Limit:</label>
+                                <input @if(isset($setting_info)) value="{{$setting_info->limit}}" @endif style="width:100%;height:100%" min="0" type="number" id="limit" class="form-control" placeholder="Insert Title.." name="limit">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group" style="margin-top:26px">
+                                <button style="width:100%;height:100%" class="btn btn-outline-success my-2 my-sm-0" style="padding:7px 10px;width:100%" type="submit">Submit</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-            </div>
-
-            <div class="col-md-5">
-
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
-                            <label class="custom-file-label" for="icon">Upload icon...</label>
-                        </div>
-                        <div class="input-group-append">
-                            <span class="input-group-text" id="">Upload</span>
-                        </div>
-                    </div>
-                    <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
-                </div>
-
-            </div>
-            <div class="col-md-3" >
-                <button type="submit" style="width:100%" class="btn btn-info">Add Short Cut</button>
-            </div>
-            
+                
+            </form>
         </div>
-    </form>
-    
+    </div>
+</div>
+
 <section>
     <div class="card card-info mt-0" style="box-shadow: 0px 0px">
         <div class="card-content">
@@ -60,26 +55,26 @@
                     <tr>
                         <th width="100">id</th>
                         <th>Tittle</th>
-                        <th>Tittle</th>
-                        <th width="400">Limit</th>
+                        <th width="80">Limit</th>
+                        <th width="280">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($short_cuts as $short_cut)
+                        @foreach ($settings as $setting)
                             <tr>
-                                <td>{{$short_cut->id}}</td>
-                                <td>{{$short_cut->tittle}}</td>
-                                <td><img style="height:20px;width:20px" src="{{asset($short_cut->icon)}}" alt="" srcset=""></td>
+                                <td>{{$setting->id}}</td>
+                                <td>{{$setting->settingsKey->title}}</td>
+                                <td>{{$setting->limit}}</td>
                                 <td>
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('short_cuts.edit',$short_cut->id)}}" class="btn-pancil btn btn-outline-success" >
+                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('setting.edit',$setting->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
                                         
                                         <div class="col-md-2">
-                                            <button data-id="{{$short_cut->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                            <button data-id="{{$setting->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>
                                 </td>
@@ -94,14 +89,12 @@
 
 </section>
 
+   
+
 
 @endsection
 
-@section('content_right_side_bar')
-    <h1>
-        info
-    </h1>
-@endsection
+
 
 
 @push('style')
@@ -131,7 +124,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('short_cuts/destroy') }}/"+id,
+                            url: "{{ url('setting/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -141,7 +134,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('short_cuts/') }}"
+                                    window.location.href = "{{ url('setting/') }}"
                                 }
                             }
                         })
