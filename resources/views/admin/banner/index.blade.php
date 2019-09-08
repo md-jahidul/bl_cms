@@ -18,7 +18,6 @@
                     <div class="col-md-10">
                         <h1 class="card-title pl-1">Banner List</h1>
                     </div>
-                    
                 </div>
             </div>
             <div class="card-content collapse show">
@@ -55,7 +54,6 @@
                                         </div>
                                     </div>
                                 </td>
-
                             </tr>
 
                         @endforeach

@@ -78,9 +78,9 @@ class WellcomeInfoController extends Controller
      */
     public function edit($id)
     {
+        //dd($id,$this->wellcomeInfoService->findOne($id));
        return view('admin.wellcomeInfo.create')
-                ->with('wellcomeInfo',$this->wellcomeInfoService->findAll())
-                ->with('wellcomeInfoService',$wellcomeInfoService);
+                ->with('wellcomeInfo',$this->wellcomeInfoService->findOne($id));
     }
 
     /**

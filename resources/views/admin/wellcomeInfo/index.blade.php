@@ -5,9 +5,16 @@
     <li class="breadcrumb-item active">Wellcome-Information</li>
 @endsection
 @section('action')
-    <a href="{{route('wellcomeInfo.create')}}" class="btn btn-primary round btn-glow px-2 mb-1"><i class="la la-plus"></i>
-        Edit/Create Welcome Info
-    </a>
+    @if(isset($wellcomeInfo))
+        <a href="{{route('wellcomeInfo.edit',$wellcomeInfo->id)}}" class="btn btn-primary round btn-glow px-2 mb-1"><i class="la la-plus"></i>
+            Edit/Create Welcome Info
+        </a>
+    @else
+        <a href="{{route('wellcomeInfo.create')}}" class="btn btn-primary round btn-glow px-2 mb-1"><i class="la la-plus"></i>
+            Edit/Create Welcome Info
+        </a>
+    @endif
+    
 @endsection
 
 @section('content')
@@ -17,42 +24,64 @@
             <div class="card-content">
                 <div class="card-body card-dashboard">
                     <div class="row">
+                        {{-- ----------------------------- --}}
                         <div class="col-6">
-                            <div class=" text-white bg-glow round p-3" style="border-radius:5px;background-color:#F7941E">
-                                <h4 class="card-title text-white">Guest:</h4>
-                                <p class="text-white">
-                                    @if(isset($wellcomeInfo))
-                                        {{$wellcomeInfo->guest_salutation}}
-                                    @endif
-                                </p>
-                                <p class="text-white">
-                                    <small class="">
-                                        @if(isset($wellcomeInfo))
-                                            {{$wellcomeInfo->guest_message}}
-                                        @endif
-                                    </small>
-                                </p>
-                            </div>
+                            <h4 class="card-title text-dark">Guest:</h4>
+                            <p class="text-dark">
+                                @if(isset($wellcomeInfo))
+                                    {{$wellcomeInfo->guest_salutation}}
+                                @endif
+                            </p>
                         </div>
                         <div class="col-6">
-                            <div class="text-white bg-glow round p-3" style="border-radius:5px;background-color:#F7941E">
-                                <h4 class="card-title text-white">Guest:</h4>
-                                <p class="text-white">
-                                    @if(isset($wellcomeInfo))
-                                        {{$wellcomeInfo->user_salutation}}
-                                    @endif
-                                </p>
-                                <p class="text-white">
-                                    <small class="">
-                                        @if(isset($wellcomeInfo))
-                                            {{$wellcomeInfo->user_message}}
-                                        @endif
-                                    </small>
-                                </p>
-                            </div>
+                            <h4 class="card-title text-dark">User:</h4>
+                            <p class="text-dark">
+                                @if(isset($wellcomeInfo))
+                                    {{$wellcomeInfo->user_salutation}}
+                                @endif
+                            </p>
                         </div>
+                        {{-- ----------------------------- --}}
+                        <div class="col-6">
+                            <p class="text-dark" style="text-align: justify;text-justify: inter-word;">
+                                <small class="">
+                                    @if(isset($wellcomeInfo))
+                                        {{$wellcomeInfo->guest_message}}
+                                    @endif
+                                </small>
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <p class="text-dark" style="text-align: justify;text-justify: inter-word;">
+                                <small class="">
+                                    @if(isset($wellcomeInfo))
+                                        {{$wellcomeInfo->user_message}}
+                                    @endif
+                                </small>
+                            </p>
+                        </div>
+                        {{-- ----------------------------- --}}
+                        <div class="col-6">
+                            <p class="text-dark">
+                                <small class="">
+                                    @if(isset($wellcomeInfo))
+                                        <img style="height:100px;width:200px" src="{{ asset($wellcomeInfo->icon)}}" alt="" srcset="">
+                                    @endif
+                                </small>
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <p class="text-dark">
+                                <small class="">
+                                    @if(isset($wellcomeInfo))
+                                        <img style="height:100px;width:200px" src="{{ asset($wellcomeInfo->icon)}}" alt="" srcset="">
+                                    @endif
+                                </small>
+                            </p>
+                        </div>
+                        {{-- ----------------------------- --}}
                     </div>
-
+                    
                 </div>
             </div>
         </div>

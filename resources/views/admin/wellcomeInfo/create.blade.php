@@ -15,8 +15,6 @@
                         <form class="form" action="@if(isset($wellcomeInfo)) {{route('wellcomeInfo.update',$wellcomeInfo->id)}} @else {{route('wellcomeInfo.store')}} @endif" enctype="multipart/form-data" method="POST">
                         @csrf
                         @if(isset($wellcomeInfo)) @method('put') @else @method('post') @endif
-                        
-                        
                         <div class="form-body">
                             <h4 class="form-section"><i class="la la-paperclip"></i>Slider Information</h4>
                             <div class="row">

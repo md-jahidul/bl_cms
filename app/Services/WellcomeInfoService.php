@@ -51,13 +51,14 @@ class WellcomeInfoService
      */
     public function updateWellcomeInfo($request, $wellcomeInfo)
     {
+        $data = $request->all();
         if(isset($request->all()['icon'])){
             unlink($wellcomeInfo->icon);
-            $request->all()['icon'] = 'storage/'.$request->all()['icon']->store('icon');
-            $wellcomeInfo->update($request->all());
+            $data['icon'] = 'storage/'.$request->all()['icon']->store('icon');
+            $wellcomeInfo->update($data);
         }else{
-            $request->all()['icon'] = $wellcomeInfo->icon;
-            $wellcomeInfo->update($request->all());
+            $data['icon'] = $wellcomeInfo->icon;
+            $wellcomeInfo->update($data);
         }
         return Response('Wellcome Info updated successfully !');
     }
