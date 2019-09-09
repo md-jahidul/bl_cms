@@ -96,7 +96,6 @@
 <script src="{{asset('/theme/js/core/app.js')}}" type="text/javascript"></script>
 <script src="{{asset('/theme/js/scripts/customizer.js')}}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/scripts/forms/select/form-select2.js') }}" type="text/javascript"></script>
-<script src="{{ asset('theme/js/core/app-menu.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/core/app.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/scripts/tables/datatables/datatable-basic.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/scripts/tables/datatables/datatable-advanced.js') }}" type="text/javascript"></script>
@@ -117,6 +116,8 @@
 <script src="{{ asset('theme/js/scripts/forms/checkbox-radio.js') }}" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <!-- END PAGE LEVEL JS-->
+
+<script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
 
 @stack('page-js')
 </body>
