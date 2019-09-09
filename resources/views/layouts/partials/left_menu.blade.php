@@ -5,6 +5,18 @@
                     <span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
 
             </li>
+            <li class=" nav-item"><a href="{{ url('menu') }}"><i class="la la-medium"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Menu Management</span></a>
+            </li>
+
+            <li class=" nav-item"><a href="{{ url('footer-menu') }}"><i class="la la-futbol-o"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Footer Management</span></a>
+            </li>
+
+            <li class=" nav-item"><a href="{{ url('quick-launch-panel') }}"><i class="la la-automobile"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Quick launch</span></a>
+            </li>
+
             <li class=" nav-item"><a href="#"><i class="la la-sliders"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Slider Management</span></a>
                 <ul class="menu-content">
@@ -19,14 +31,6 @@
                     </li>
 
                 </ul>
-            </li>
-
-            <li class=" nav-item"><a href="{{ url('menu') }}"><i class="la la-medium"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">Menu Management</span></a>
-            </li>
-
-            <li class=" nav-item"><a href="{{ url('footer-menu') }}"><i class="la la-futbol-o"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">Footer Management</span></a>
             </li>
 
             <li class=" nav-item"><a href="#"><i class="la la-question"></i>

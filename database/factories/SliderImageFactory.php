@@ -6,6 +6,7 @@ use App\Models\SliderImage;
 use Faker\Generator as Faker;
 
 $factory->define(SliderImage::class, function (Faker $faker) {
+    echo public_path();
     return [
         'slider_id' => rand(1, 5),
         'title' => $faker->streetName,

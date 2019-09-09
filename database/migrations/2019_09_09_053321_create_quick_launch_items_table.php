@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIconMenusTable extends Migration
+class CreateQuickLaunchItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateIconMenusTable extends Migration
      */
     public function up()
     {
-        Schema::create('icon_menus', function (Blueprint $table) {
+        Schema::create('quick_launch_items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->string('image');
+            $table->string('image_url');
+            $table->string('alt_text');
             $table->string('link');
-            $table->string('serial_no');
+            $table->string('display_order');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateIconMenusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('icon_menus');
+        Schema::dropIfExists('quick_launch_items');
     }
 }

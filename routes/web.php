@@ -50,3 +50,6 @@ Route::group(['prefix' => 'footer-menu'], function () {
     Route::get('/{id}/child-footer', 'CMS\FooterMenuController@index');
     Route::get('/{id}/child-footer/create', 'CMS\FooterMenuController@create');
 });
+
+
+Route::get('quick-launch-panel', 'CMS\QuickLaunchController@index');
