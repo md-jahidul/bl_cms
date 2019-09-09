@@ -14,14 +14,16 @@ class QuickLaunchItemSeeder extends Seeder
     {
 
         $quick_launch_items = [];
-        $items = ["New connection","Packages","Roaming", "Digital Services","Helpline","My BL AppHelpline","Bondho SIM Offer","Banglalink Advancee","Shop","Lifestyle & Benefits","Banglalink 4G"];
+        $items = ["New connection","Packages","Roaming", "Digital Services","Helpline","My BL App","Helpline","Bondho SIM Offer","Banglalink Advance","eShop","Lifestyle & Benefits","Banglalink 4G"];
+        $item_bn_text = ["নিউ কানেকশন","প্যাকেজ","রোমিং", "ডিজিটাল সার্ভিসেস","হেল্পলাইন","মাই বিএল অ্যাপ","হেল্পলাইন","বন্ধু সিম অফার","বাংলালিংক অ্যাডভান্স","ই-শপ","লাইফস্টাইল & বেনিফিটস","বাংলালিংক 4G"];
 
         foreach ($items as $key => $item) {
             $quick_launch_items[] = [
-                'title' => $item,
+                'en_title' => $item,
+                'bn_title' => $item_bn_text[$key],
                 'image_url' => env('APP_URL', 'http://localhost:8000') . '/quick-launch-items/' . strtolower( str_replace( " ", "-", $item) ) . '.png',
                 'alt_text' => $item,
-                'link' => 'http://103.4.146.91:89/assetlite-cms/' . strtolower( str_replace( " ", "-", $item) ),
+                'link' => env('APP_URL', 'http://localhost:8000') . strtolower( str_replace( " ", "-", $item) ),
                 'display_order' => ++$key
             ];
         }
