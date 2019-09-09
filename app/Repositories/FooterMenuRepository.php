@@ -10,7 +10,7 @@ class FooterMenuRepository extends BaseRepository
 
     public function parentFooter($parent_id)
     {
-        return $this->model->where('parent_id', $parent_id)->orderBy('display_order')->get();
+        return $this->model->where('parent_id', $parent_id)->orderBy('display_order')->with('children')->get();
     }
 
     public function footerTableSort($request)

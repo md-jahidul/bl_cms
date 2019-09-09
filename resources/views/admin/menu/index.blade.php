@@ -25,19 +25,19 @@
                     <table class="table table-striped table-bordered"
                            role="grid" aria-describedby="Example1_info" style="cursor:move;">
                         <tbody id="sortable">
-                        @php($i = 0)
                         @foreach($menus as $menu)
-                            @php($i++)
+                            @php($childCount = count($menu->children))
                             <tr data-index="{{ $menu->id }}" data-position="{{ $menu->display_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $menu->en_label_text  }} {!! $menu->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                 <td class="action" width="20%">
                                     <a href="{{ url('menu/'.$menu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $menu->id }}" title="Delete the user">
+                                    <a href="#" class="border-0 btn btn-outli
+                                    ne-danger delete_btn" data-id="{{ $menu->id }}" title="Delete the user">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>
-                               <td class="text-center" width="10%"><a href="{{ url("menu/$menu->id/child-menu") }}" class="badge bg-success">Child Menus</a></td>
+                               <td class="text-center" width="10%"><a href="{{ url("menu/$menu->id/child-menu") }}" class="btn btn-outline-success">Child Menus <spen class="text-danger">({{ $childCount }})</spen></a></td>
                             </tr>
                         @endforeach
                         </tbody>

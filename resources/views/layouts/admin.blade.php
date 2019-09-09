@@ -114,6 +114,10 @@
 <!-- BEGIN PAGE LEVEL JS-->
 <script src="{{ asset('theme/js/scripts/forms/form-repeater.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/scripts/forms/checkbox-radio.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('theme/js/scripts/ui/jquery-ui/navigations.js') }}" type="text/javascript"></script>
+
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <!-- END PAGE LEVEL JS-->
 

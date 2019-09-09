@@ -33,9 +33,8 @@
                     <table class="table table-striped table-bordered"
                            role="grid" aria-describedby="Example1_info" style="cursor:move;">
                         <tbody id="sortable">
-                        @php($i = 0)
                         @foreach($footerMenus as $footerMenu)
-                            @php($i++)
+                            @php($childCount = count($footerMenu->children))
                             <tr data-index="{{ $footerMenu->id }}" data-position="{{ $footerMenu->display_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $footerMenu->en_label_text  }} {!! $footerMenu->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
@@ -46,7 +45,7 @@
                                     </a>
                                 </td>
                                 @if($parent_id == 0)
-                                    <td class="text-center" width="10%"><a href="{{ url("footer-menu/$footerMenu->id/child-footer") }}" class="badge bg-success">Child Menus</a></td>
+                                    <td class="text-center" width="10%"><a href="{{ url("footer-menu/$footerMenu->id/child-footer") }}" class="btn btn-outline-success">Child Menus <spen class="text-danger">({{ $childCount }})</spen></a></td>
                                 @endif
                             </tr>
                         @endforeach
@@ -56,81 +55,6 @@
             </div>
         </div>
     </section>
-
-
-    <div class="col-lg-6 col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Sortable</h4>
-                <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
-                <div class="heading-elements">
-                    <ul class="list-inline mb-0">
-                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                        <li><a data-action="close"><i class="ft-x"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card-content collapse show constrain-movement-container">
-                <div class="card-body">
-                    <p class="card-text">
-                        Drag the header to re-order panels.
-                    </p>
-                    <div class="jqueryui-ele-container">
-                        <div class="accordion-sortable">
-                            <div class="group">
-                                <h3>Section 1</h3>
-                                <div>
-                                    <p>
-                                        Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque.
-                                        Vivamus nisi metus, molestie vel, gravida in, condimentum
-                                        sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam
-                                        mi. Proin viverra leo ut odio. Curabitur malesuada.
-                                        Vestibulum a velit eu ante scelerisque vulputate.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="group">
-                                <h3>Section 2</h3>
-                                <div>
-                                    <p>
-                                        Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus
-                                        hendrerit, dolor at aliquet laoreet, mauris turpis
-                                        porttitor velit, faucibus interdum tellus libero ac
-                                        justo. Vivamus non quam. In suscipit faucibus urna.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="group">
-                                <h3>Section 3</h3>
-                                <div>
-                                    <p>
-                                        Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus
-                                        pellentesque purus in massa. Aenean in pede. Phasellus
-                                        ac libero ac tellus pellentesque semper. Sed ac felis.
-                                        Sed commodo, magna quis lacinia ornare, quam ante aliquam
-                                        nisi, eu iaculis leo purus venenatis dui.
-                                </div>
-                            </div>
-                            <div class="group">
-                                <h3>Section 4</h3>
-                                <div>
-                                    <p>
-                                        Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada
-                                        fames ac turpis egestas. Vestibulum ante ipsum primis
-                                        in faucibus orci luctus et ultrices posuere cubilia
-                                        Curae; Aenean lacinia mauris vel est.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 @stop
 
 
