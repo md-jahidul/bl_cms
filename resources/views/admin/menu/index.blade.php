@@ -32,8 +32,7 @@
                                 <td>{{ $menu->en_label_text  }} {!! $menu->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                 <td class="action" width="20%">
                                     <a href="{{ url('menu/'.$menu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" class="border-0 btn btn-outli
-                                    ne-danger delete_btn" data-id="{{ $menu->id }}" title="Delete the user">
+                                    <a href="#" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $menu->id }}" title="Delete the user">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>
