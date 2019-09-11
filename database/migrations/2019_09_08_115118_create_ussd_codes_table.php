@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInternetOffersTable extends Migration
+class CreateUssdCodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,15 @@ class CreateInternetOffersTable extends Migration
      */
     public function up()
     {
-        Schema::create('internet_offers', function (Blueprint $table) {
+        Schema::create('ussd_codes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->integer('volume');
-            $table->string('validity');
-            $table->integer('price')->unsigned();
-            $table->text('offer_code');
-            $table->integer('points')->unsigned();
+            $table->text('title')->nullable();
+            $table->text('code')->nullable();
+            $table->text('purpose')->nullable();
+            $table->text('provider')->nullable();
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
@@ -33,6 +30,6 @@ class CreateInternetOffersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('internet_offers');
+        Schema::dropIfExists('ussd_codes');
     }
 }

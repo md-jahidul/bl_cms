@@ -7,6 +7,12 @@
             <li class="{{ is_active_url('short_cuts') }} nav-item"><a href="{{route('short_cuts.index')}}"><i class="la la-fighter-jet"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Short Cuts</span></a>
             </li>
+            <li class="{{ is_active_url('ussd') }} {{is_active_url('ussd/create')}} nav-item"><a href="{{route('ussd.index')}}"><i class="la la-asterisk"></i>
+                <span class="menu-title" data-i18n="nav.dash.main">USSD Code</span></a>
+            </li>
+            <li class="{{ is_active_url('helpCenter') }} {{ is_active_url('helpCenter/create') }} nav-item"><a href="{{route('helpCenter.index')}}"><i class="la la-ambulance"></i>
+                <span class="menu-title" data-i18n="nav.dash.main">Help Center</span></a>
+            </li>
             <li class="{{ is_active_url('setting') }} nav-item"><a href="{{route('setting.index')}}"><i class="la la-cogs"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Setting</span></a>
             </li>
@@ -39,7 +45,7 @@
             <li class=" nav-item"><a href="#"><i class="la la-file"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Manage Page</span></a>
                 <ul class="menu-content">
-                    {{--Tag--}}
+                    {{--page--}}
                     <li class="{{ is_active_url('slider') . is_active_url('slider/addImage/') . is_active_url('slider/create') . is_active_url('slider/edit') }}">
                         <a class="menu-item" href="{{ route('slider.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-sliders"></i>Slider</a>
@@ -51,6 +57,34 @@
                     <li class="{{ is_active_url('wellcomeInfo') . is_active_url('wellcomeInfo/create')}}">
                         <a class="menu-item" href="{{ route('wellcomeInfo.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-info-circle"></i> Welcome Info</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class=" nav-item"><a href="#"><i class="la la-gift"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Offers</span></a>
+                <ul class="menu-content">
+                    {{--offers--}}
+                    <li class="{{ is_active_url('internetOffer')}} {{is_active_url('internetOffer/create')}}">
+                        <a class="menu-item" href="{{ route('internetOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-globe"></i> Internet Offer</a>
+                    </li>
+                    <li class="{{is_active_url('minuteOffer')}} {{is_active_url('minuteOffer/create')}}">
+                        <a class="menu-item" href="{{ route('minuteOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-phone-square"></i> Minuit Offer</a>
+                    </li>
+                    <li class="{{is_active_url('smsOffer')}} {{is_active_url('smsOffer/create')}}">
+                        <a class="menu-item" href="{{ route('smsOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-comments-o"></i> SMS Offer</a>
+                    </li>
+                    <li class="{{is_active_url('mixedBundleOffer')}} {{is_active_url('mixedBundleOffer/create')}}">
+                        <a class="menu-item" href="{{ route('mixedBundleOffer.index') }} " data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-flask"></i> Mixed Bundle</a>
+                    </li>
+                    <li class="{{is_active_url('nearByOffer')}} {{is_active_url('nearByOffer/create')}}">
+                        <a class="menu-item" href="{{ route('nearByOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-gift"></i> Near by Offer</a>
                     </li>
 
                 </ul>

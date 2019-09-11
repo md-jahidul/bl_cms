@@ -1,16 +1,12 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class InternetOffer extends Model
+class MinuteOffer extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'internet_offers';
+    protected $table = 'minute_offers';
     protected $fillable = [
         'title',
         'volume',
@@ -19,5 +15,4 @@ class InternetOffer extends Model
         'offer_code',
         'points'
     ];
-    
 }

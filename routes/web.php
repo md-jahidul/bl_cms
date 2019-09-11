@@ -70,6 +70,37 @@ Route::get('slider/addImage/{sliderId}','CMS\SliderImageController@index')->name
 
 //------ Slider -----------//
 
+//------ offers -----------//
+// minute 
+route::resource('minuteOffer','CMS\MinuteOfferController');
+Route::get('minuteOffer/destroy/{id}','CMS\MinuteOfferController@destroy');
+
+// sms offer
+route::resource('smsOffer','CMS\SmsOfferController');
+Route::get('smsOffer/destroy/{id}','CMS\SmsOfferController@destroy');
+
+// internet
+route::resource('internetOffer','CMS\InternetOfferController');
+Route::get('internetOffer/destroy/{id}','CMS\InternetOfferController@destroy');
+
+// Mixed Bundle
+route::resource('mixedBundleOffer','CMS\MixedBundleOfferController');
+Route::get('mixedBundleOffer/destroy/{id}','CMS\MixedBundleOfferController@destroy');
+
+// Mixed Bundle
+route::resource('nearByOffer','CMS\NearbyOfferController');
+Route::get('nearByOffer/destroy/{id}','CMS\NearbyOfferController@destroy');
+
+//------ offers -----------//
+
+// ussd code
+route::resource('ussd','CMS\UssdController');
+Route::get('ussd/destroy/{id}','CMS\UssdController@destroy');
+
+// help center
+route::resource('helpCenter','CMS\HelpCenterController');
+Route::get('helpCenter/destroy/{id}','CMS\HelpCenterController@destroy');
+
 
 
 

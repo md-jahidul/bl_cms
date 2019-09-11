@@ -10,5 +10,17 @@ class MixedBundleOffer extends Model
      *
      * @var string
      */
-    //protected $table = 'mixed_bundle_offers';
+    protected $table = 'mixed_bundle_offers';
+    protected $fillable = [
+        'title',
+        'internet',
+        'minutes',
+        'sms',
+        'validity',
+        'price',
+        'points',
+        'offer_code',
+        'tag'
+    ];
+
 }
