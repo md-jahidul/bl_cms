@@ -9,7 +9,6 @@ class QuickLaunchRepository extends BaseRepository
 {
     public $modelName = QuickLaunchItem::class;
 
-
     public function quickLaunchTableSort($request)
     {
         $positions = $request->position;

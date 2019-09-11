@@ -25,6 +25,7 @@ class QuickLaunchItemSeeder extends Seeder
                 'image_url' => env('APP_URL', 'http://localhost:8000') . '/quick-launch-items/' . strtolower( str_replace( " ", "-", $item) ) . '.png',
                 'alt_text' => $item,
                 'link' => env('APP_URL', 'http://localhost:8000') . strtolower( str_replace( " ", "-", $item) ),
+                'status' => 1,
                 'display_order' => ++$key
             ];
         }

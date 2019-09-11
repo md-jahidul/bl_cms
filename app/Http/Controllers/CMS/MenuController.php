@@ -49,7 +49,6 @@ class MenuController extends Controller
         while ( $menu_id != 0 ){
             $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
-
         $menu_items = $this->menuItems;
         return view('admin.menu.index', compact('menus','parent_id','menu_items'));
     }

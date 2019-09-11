@@ -4,6 +4,8 @@
 namespace App\Services;
 
 
+use App\Http\Helpers;
+use App\Repositories\QuickLaunchRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
@@ -12,43 +14,59 @@ class QuickLaunchService
     use CrudTrait;
 
     /**
-     * @var $menuRepository
+     * @var QuickLaunchRepository
      */
     protected $quickLaunchRepository;
 
     /**
-     * MenuService constructor.
-     * @param MenuRepository $menuRepository
+     * QuickLaunchService constructor.
+     * @param QuickLaunchRepository $quickLaunchRepository
      */
-    public function __construct(MenuRepository $menuRepository)
+    public function __construct(QuickLaunchRepository $quickLaunchRepository)
     {
-        $this->menuRepository = $menuRepository;
-        $this->setActionRepository($menuRepository);
+        $this->quickLaunchRepository = $quickLaunchRepository;
+        $this->setActionRepository($quickLaunchRepository);
     }
 
     /**
      * @param $parent_id
      * @return mixed
      */
-    public function menuList($parent_id)
+    public function itemList()
     {
-        return $this->menuRepository->parentMenu($parent_id);
+        return $this->quickLaunchRepository->findAll();
+    }
+
+
+    public function imageUpload($request, $location)
+    {
+        $file_name = str_replace(' ', '-', strtolower($request['en_title']));
+        $upload_date = date('Y-m-d-h-i');
+
+        $sliderImage = $request->file('image_url');
+        $fileType = $sliderImage->getClientOriginalExtension();
+        $imageName = $upload_date.'_'.$file_name.'.' . $fileType;
+
+//        echo "<pre>";
+//        print_r($imageName);
+        $directory = $location;
+        $imageUrl = $imageName;
+        $sliderImage->move($directory, $imageName);
+        return $imageUrl;
     }
 
     /**
      * @param $data
      * @return Response
      */
-    public function storeMenu($data)
+    public function storeQuickLaunchItem($data)
     {
-        $menu_count = count($this->menuRepository->findAll());
-        $name = ucwords( strtolower( $data['name'] )  );
-        $search = [" ", "&"];
-        $replace   = ["", "And"];
-        $data['code'] = str_replace($search, $replace, $name);
-        $data['display_order'] = ++$menu_count;
+
+        $count = count($this->quickLaunchRepository->findAll());
+//        $data['image_url'] = $this->imageUpload($data, 'quick-launch-items/');
+        $data['display_order'] = ++$count;
         $this->save($data);
-        return new Response('Menu added successfully');
+        return new Response('Quick Launch added successfully');
     }
 
     /**

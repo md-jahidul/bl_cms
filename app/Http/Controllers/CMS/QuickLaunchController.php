@@ -2,11 +2,29 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Services\QuickLaunchService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class QuickLaunchController extends Controller
 {
+
+    /**
+     * @var $quickLaunchService
+     */
+    private $quickLaunchService;
+
+    /**
+     * QuickLaunchController constructor.
+     * @param QuickLaunchService $quickLaunchService
+     */
+    public function __construct(QuickLaunchService $quickLaunchService)
+    {
+        $this->quickLaunchService = $quickLaunchService;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +32,8 @@ class QuickLaunchController extends Controller
      */
     public function index()
     {
-        //
+        $quickLaunchItems = $this->quickLaunchService->itemList();
+        return view('admin.quick-launch-item.index', compact('quickLaunchItems'));
     }
 
     /**
@@ -24,7 +43,7 @@ class QuickLaunchController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.quick-launch-item.create');
     }
 
     /**
@@ -35,7 +54,9 @@ class QuickLaunchController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $response = $this->quickLaunchService->storeQuickLaunchItem($request);
+        Session::flash('message', $response->getContent());
+        return redirect('quick-launch');
     }
 
     /**
