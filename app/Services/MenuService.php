@@ -83,7 +83,11 @@ class MenuService
     {
         $menu = $this->findOne($id);
         $menu->delete();
-        return Response('Menu delete successfully');
+        
+        return [
+            'message' => 'Menu delete successfully',
+            'parent_id' => $menu->parent_id
+        ];
     }
 
 }
