@@ -157,12 +157,6 @@ class FooterMenuController extends Controller
     public function destroy($parentId, $id)
     {
         $response = $this->footerMenuService->deleteFooterMenu($id);
-
-
-        return $response;
-//        Session::flash('message', $response->getContent());
-
         return ($response['parent_id'] == 0) ? url('footer-menu') : url("/footer-menu/" . $response['parent_id'] . "/child-footer");
-//        return redirect(($parentId == 0) ? '/footer-menu' : "/footer-menu/$parentId/child-footer");
     }
 }

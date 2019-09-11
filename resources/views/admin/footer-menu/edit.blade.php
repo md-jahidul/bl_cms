@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Tag Create')
+@section('title', 'Footer Menu Edit')
 @section('card_name', 'Footer Menu Edit')
 @section('breadcrumb')
     @php

@@ -1,19 +1,19 @@
 @extends('layouts.admin')
-@section('title', 'Footer Menu Create')
-@section('card_name', 'Footer Menu Create')
+@section('title', 'Menu Create')
+@section('card_name', 'Menu Create')
 @section('breadcrumb')
-    @php
-        $liHtml = '<li class="breadcrumb-item"><a href="'. url('footer-menu') .'">Footer Menu</a></li>';
-        for($i = count($footer_menu_items) - 1; $i >= 0; $i--){
-            $liHtml .=  $i == 0 ? '<li class="breadcrumb-item active">' .  $footer_menu_items[$i]['name']  . '</li>' :
-                                  '<li class="breadcrumb-item"><a href="'. url("footer-menu/". $footer_menu_items[$i]["id"] . "/child-footer") .'">' .  $footer_menu_items[$i]['name']  . '</a></li>';
+    @php 
+        $liHtml = '<li class="breadcrumb-item"><a href="'. url('menu') .'">Menu</a></li>';
+        for($i = count($menu_items) - 1; $i >= 0; $i--){
+            $liHtml .=  $i == 0 ? '<li class="breadcrumb-item active">' .  $menu_items[$i]['name']  . '</li>' : 
+                                  '<li class="breadcrumb-item"><a href="'. url("menu/". $menu_items[$i]["id"] . "/child-menu") .'">' .  $menu_items[$i]['name']  . '</a></li>';
         }
     @endphp
 
     {!! $liHtml !!}
 @endsection
 @section('action')
-    <a href="{{ url('footer-menu') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ $parent_id == 0 ? url('menu') : url("menu/$parent_id/child-menu") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -21,7 +21,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('footer-menu.store') }}" method="POST" novalidate>
+                        <form role="form" action="{{ route('menu.store') }}" method="POST" novalidate>
                             <div class="row">
                                 <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                                 <div class="form-group col-md-12 {{ $errors->has('name') ? ' error' : '' }}">
@@ -110,6 +110,7 @@
 @push('page-js')
 
 @endpush
+
 
 
 

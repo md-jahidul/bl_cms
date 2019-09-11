@@ -42,10 +42,12 @@ class FooterMenuService
      */
     public function storeFooterMenu($data)
     {
+        $footer_menu_count = count($this->footerMenuRepository->findAll());
         $name = ucwords( strtolower( $data['name'] )  );
         $search = [" ", "&"];
         $replace   = ["", "And"];
         $data['code'] = str_replace($search, $replace, $name);
+        $data['display_order'] = ++$footer_menu_count;
         $this->save($data);
         return new Response('Footer menu added successfully');
     }
@@ -81,7 +83,11 @@ class FooterMenuService
     {
         $footerMenu = $this->findOne($id);
         $footerMenu->delete();
-        return Response('Footer delete successfully');
+        $response = [
+            'message' => 'Footer menu delete successfully',
+            'parent_id' => $footerMenu->parent_id
+        ];
+        return $response;
     }
 
 }

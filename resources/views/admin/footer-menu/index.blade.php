@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Tag List')
+@section('title', 'Footer Menu List')
 @section('card_name', 'Footer Menu List')
 @section('breadcrumb')
     @php
@@ -30,22 +30,29 @@
                     <table class="table table-striped table-bordered"
                            role="grid" aria-describedby="Example1_info" style="cursor:move;">
                         <tbody id="sortable">
-                        @foreach($footerMenus as $footerMenu)
-                            @php($childCount = count($footerMenu->children))
-                            <tr data-index="{{ $footerMenu->id }}" data-position="{{ $footerMenu->display_order }}">
-                                <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <td>{{ $footerMenu->en_label_text  }} {!! $footerMenu->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
-                                <td class="action" width="20%">
-                                    <a href="{{ url('footer-menu/'.$footerMenu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("footer-menu/$parent_id/destroy/$footerMenu->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $footerMenu->id }}" title="Delete the user">
-                                        <i class="la la-trash"></i>
-                                    </a>
-                                </td>
-                                @if($parent_id == 0)
-                                    <td class="text-center" width="10%"><a href="{{ url("footer-menu/$footerMenu->id/child-footer") }}" class="btn btn-outline-success">Child Menus <spen class="text-danger">({{ $childCount }})</spen></a></td>
-                                @endif
-                            </tr>
-                        @endforeach
+
+                        @if(count($footerMenus) == !0)
+                            @foreach($footerMenus as $footerMenu)
+                                @php($childCount = count($footerMenu->children))
+                                <tr data-index="{{ $footerMenu->id }}" data-position="{{ $footerMenu->display_order }}">
+                                    <td width="3%"><i class="icon-cursor-move icons"></i></td>
+                                    <td>{{ $footerMenu->en_label_text  }} {!! $footerMenu->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+                                    <td class="action" width="20%">
+                                        <a href="{{ url('footer-menu/'.$footerMenu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <a href="#" remove="{{ url("footer-menu/$parent_id/destroy/$footerMenu->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $footerMenu->id }}" title="Delete the user">
+                                            <i class="la la-trash"></i>
+                                        </a>
+                                    </td>
+                                    @if($parent_id == 0)
+                                        <td class="text-center" width="10%"><a href="{{ url("footer-menu/$footerMenu->id/child-footer") }}" class="btn btn-outline-success">Child Menus <spen class="text-danger">({{ $childCount }})</spen></a></td>
+                                    @endif
+                                </tr>
+                            @endforeach
+                        @else
+                            <div class="text-center mt-5">
+                                <spen>No data available in table</spen>
+                            </div>
+                        @endif
                         </tbody>
                     </table>
                 </div>
