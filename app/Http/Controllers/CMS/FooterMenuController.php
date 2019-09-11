@@ -51,7 +51,7 @@ class FooterMenuController extends Controller
      */
     public function index($parent_id = 0)
     {
-        $footerMenus = $this->footerMenuService->footerMenuParent($parent_id);
+        $footerMenus = $this->footerMenuService->footerMenuList($parent_id);
         $footer_menu_id = $parent_id;
         while ( $footer_menu_id != 0 ){
             $footer_menu_id = $this->getBreadcrumbInfo($footer_menu_id);

@@ -31,9 +31,9 @@ class FooterMenuService
      * @param $parent_id
      * @return mixed
      */
-    public function footerMenuParent($parent_id)
+    public function footerMenuList($parent_id)
     {
-        return $this->footerMenuRepository->parentFooter($parent_id);
+        return $this->footerMenuRepository->getChildMenus($parent_id);
     }
 
     /**
@@ -42,10 +42,13 @@ class FooterMenuService
      */
     public function storeFooterMenu($data)
     {
+        $menu_count = count( $this->menuRepository->getChildMenus( $data['parent_id'] ) );
         $name = ucwords( strtolower( $data['name'] )  );
         $search = [" ", "&"];
         $replace   = ["", "And"];
         $data['code'] = str_replace($search, $replace, $name);
+        $data['display_order'] = ++$menu_count;
+        $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
         $this->save($data);
         return new Response('Footer menu added successfully');
     }

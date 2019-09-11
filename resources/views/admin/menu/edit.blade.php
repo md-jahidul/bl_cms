@@ -58,18 +58,19 @@
                                     <label for="url" class="required">URL</label>
                                     <input type="text" name="url"  class="form-control" placeholder="Enter URL"
                                            value="{{ $menu->url }}" required data-validation-required-message="Enter footer menu url">
+                                    <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>
                                     <div class="help-block"></div>
                                     @if ($errors->has('url'))
                                         <div class="help-block">  {{ $errors->first('url') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="col-md-12">
+                                <!-- <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="external_site" class="mr-1">External Site</label>
                                         <input type="checkbox" name="external_site" value="1" id="external_site" @if($menu->external_site == 1) {{ 'checked' }} @endif>
                                     </div>
-                                </div>
+                                </div> -->
 
 
                                 <div class="col-md-12">

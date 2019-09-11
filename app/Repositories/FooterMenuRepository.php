@@ -8,7 +8,7 @@ class FooterMenuRepository extends BaseRepository
 {
     public $modelName = FooterMenu::class;
 
-    public function parentFooter($parent_id)
+    public function getChildMenus($parent_id)
     {
         return $this->model->where('parent_id', $parent_id)->orderBy('display_order')->with('children')->get();
     }
