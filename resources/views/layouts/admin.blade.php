@@ -45,12 +45,14 @@
 
     <!-- Begin File uploader dropzone CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/file-uploaders/dropzone.css') }}">
-
+    
 
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('theme/assets/css/style.css')}}">
     <!-- END Custom CSS-->
+    
+    @stack('page-css')    
     @yield('page-css')
 </head>
 <body class="vertical-layout vertical-menu-modern 2-columns   menu-expanded fixed-navbar"

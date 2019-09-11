@@ -50,8 +50,8 @@
 
 @stop
 
-@push('page-js')
-
+@push('page-css')
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
 @endpush
 
 @push('page-js')
