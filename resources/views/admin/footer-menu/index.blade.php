@@ -33,7 +33,7 @@
 
                         @if(count($footerMenus) == !0)
                             @foreach($footerMenus as $footerMenu)
-                                @php($childCount = count($footerMenu->children))
+                                @php($childNumber = count($footerMenu->children))
                                 <tr data-index="{{ $footerMenu->id }}" data-position="{{ $footerMenu->display_order }}">
                                     <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                     <td>{{ $footerMenu->en_label_text  }} {!! $footerMenu->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
@@ -44,7 +44,7 @@
                                         </a>
                                     </td>
                                     @if($parent_id == 0)
-                                        <td class="text-center" width="10%"><a href="{{ url("footer-menu/$footerMenu->id/child-footer") }}" class="btn btn-outline-success">Child Menus <spen class="text-danger">({{ $childCount }})</spen></a></td>
+                                        <td class="text-center" width="10%"><a href="{{ url("footer-menu/$footerMenu->id/child-footer") }}" class="btn btn-outline-success">Child Menus <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{ $childNumber }}</span></a></td>
                                     @endif
                                 </tr>
                             @endforeach
