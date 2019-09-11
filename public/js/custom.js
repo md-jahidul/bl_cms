@@ -40,9 +40,11 @@
 
         function saveNewPositions() {
             var positions = [];
+
+
             $('.update').each(function () {
                 positions.push([
-                    $(this).attr('data-index'), 
+                    $(this).attr('data-index'),
                     $(this).attr('data-position')
                 ]);
             })
@@ -63,6 +65,8 @@
 
         $("#sortable" ).sortable({
             update: function( event, ui ) {
+
+                console.log(auto_save_url)
                 $(this).children().each(function (index) {
                     if ($(this).attr('data-position') != (index+1)){
                         $(this).attr('data-position', (index+1)).addClass('update')
