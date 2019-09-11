@@ -57,92 +57,13 @@
 
 @stop
 
-
-<style>
-    h4.menu-title{
-        font-weight: bold;
-    }
-    .table tr{
-        padding : 10px;
-    }
-    section .card {
-        background: rgba(235, 242, 255, 0.5);
-    }
-    .card .table th,.card .table td {
-        padding: 10px;
-        vertical-align: middle;
-    }
-    .card .table-bordered th,.card .table-bordered td{
-        border : 0px;
-    }
-
-    .card .table-striped tbody tr:nth-of-type(odd) {
-        background-color: rgba(206, 208, 212, 0.5);
-    }
-
-    td.action{
-        width: 20%;
-        text-align: right;
-    }
-    .table-striped tbody tr:nth-of-type(even) {
-        background-color : rgb(255, 255, 255);
-    }
-
-    span.inactive{
-        color: red;
-        font-size: small;
-    }
-
-    .breadcrumb-wrapper ol.breadcrumb{
-        margin-left : 20px;
-    }
-
-    .breadcrumb-wrapper li, .breadcrumb-wrapper a{
-        font-weight : bold;
-        font-size : 15px;
-    }
-
-</style>
+@push('page-css')
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+@endpush
 
 @push('page-js')
     <script>
-        $(function(){
-
-            $("#sortable" ).sortable({
-                update: function( event, ui ) {
-                    $(this).children().each(function (index) {
-                        // console.log(index+1)
-                        if ($(this).attr('data-position') != (index+1)){
-                            $(this).attr('data-position', (index+1)).addClass('update')
-                        }
-                    });
-                    saveNewPositions()
-
-                    $('.list').each(function (index) {
-                        $(this).text(index+1)
-                    })
-                }
-            });
-
-            function saveNewPositions() {
-                var positions = [];
-                $('.update').each(function () {
-                    positions.push([$(this).attr('data-index'), $(this).attr('data-position')]);
-                })
-                $.ajax({
-                    methods: "POST",
-                    url:'{{ url('menu-auto-save') }}',
-                    data: {
-                        update: 1,
-                        position: positions
-                    },
-                    success:function(data){ console.log(data) },
-                    error : function() {
-                        alert('Some problems..');
-                    }
-                });
-            }
-        });
+        var auto_save_url = "{{ url('menu-auto-save') }}";
     </script>
 @endpush
 

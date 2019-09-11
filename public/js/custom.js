@@ -36,4 +36,40 @@
                 }
             })
         });
+
+
+        function saveNewPositions() {
+            var positions = [];
+            $('.update').each(function () {
+                positions.push([
+                    $(this).attr('data-index'), 
+                    $(this).attr('data-position')
+                ]);
+            })
+            $.ajax({
+                methods: "POST",
+                url: auto_save_url,
+                data: {
+                    update: 1,
+                    position: positions
+                },
+                success:function(data){ console.log(data) },
+                error : function() {
+                    alert('Some problems..');
+                }
+            });
+        }
+
+
+        $("#sortable" ).sortable({
+            update: function( event, ui ) {
+                $(this).children().each(function (index) {
+                    if ($(this).attr('data-position') != (index+1)){
+                        $(this).attr('data-position', (index+1)).addClass('update')
+                    }
+                });
+                saveNewPositions();
+            }
+        });
+
 })();
