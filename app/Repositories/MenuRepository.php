@@ -12,7 +12,7 @@ class MenuRepository extends BaseRepository
 
     public function parentMenu($parent_id)
     {
-        return $this->model->where('parent_id', $parent_id)->orderBy('display_order')->get();
+        return $this->model->where('parent_id', $parent_id)->orderBy('display_order')->with('children')->get();
     }
 
     public function menuTableSort($request)

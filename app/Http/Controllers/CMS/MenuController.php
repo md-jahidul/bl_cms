@@ -44,9 +44,8 @@ class MenuController extends Controller
      */
     public function index($parent_id = 0)
     {
-        $menus = Menu::where('parent_id', $parent_id)->orderBy('display_order', 'ASC')->get();
+        $menus = $this->menuService->menuList($parent_id);
         $menu_id = $parent_id;
-
         while ( $menu_id != 0 ){
             $menu_id = $this->getBreadcrumbInfo($menu_id);
         }

@@ -31,7 +31,7 @@ class MenuService
      * @param $parent_id
      * @return mixed
      */
-    public function footerMenuParent($parent_id)
+    public function menuList($parent_id)
     {
         return $this->menuRepository->parentMenu($parent_id);
     }
