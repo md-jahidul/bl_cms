@@ -139,7 +139,6 @@ class MenuController extends Controller
     public function destroy($parentId, $id)
     {
         $response = $this->menuService->deleteMenu($id);
-        Session::flash('message', $response->getContent());
-        return redirect(($parentId == 0) ? '/menu' : "/menu/$parentId/child-menu");
+        return ($response['parent_id'] == 0) ? url('menu') : url("/menu/" . $response['parent_id'] . "/child-menu");
     }
 }

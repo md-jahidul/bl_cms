@@ -43,7 +43,7 @@ Route::group(['prefix' => 'menu'], function () {
 
 // FOOTER MENU PAGES ====================================
 Route::resource('footer-menu','CMS\FooterMenuController');
-Route::get('footer-menu-delete/{parentId}/destroy/{id}', 'CMS\FooterMenuController@destroy');
+Route::get('footer-menu/{parentId}/destroy/{id}', 'CMS\FooterMenuController@destroy');
 Route::get('sort-autosave/parent-footer-sort','CMS\FooterMenuController@parentFooterSortable');
 
 Route::group(['prefix' => 'footer-menu'], function () {
