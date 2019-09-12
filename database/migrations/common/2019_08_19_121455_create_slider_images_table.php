@@ -21,7 +21,10 @@ class CreateSliderImagesTable extends Migration
             $table->string('image_url');
             $table->string('alt_text')->nullable();
             $table->string('url_btn_label')->nullable();
-            $table->string('url')->nullable();
+            $table->string('redirect_url')->nullable();
+            $table->integer('sequence')->nullable();
+            $table->tinyInteger('is_active')->default(1);
+            $table->string('other_attributes')->nullable();
             $table->timestamps();
 
             $table->foreign('slider_id')
