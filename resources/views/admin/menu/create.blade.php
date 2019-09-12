@@ -1,74 +1,116 @@
-@extends('layouts.master-layout')
+@extends('layouts.admin')
+@section('title', 'Menu Create')
+@section('card_name', 'Menu Create')
+@section('breadcrumb')
+    @php 
+        $liHtml = '<li class="breadcrumb-item"><a href="'. url('menu') .'">Menu</a></li>';
+        for($i = count($menu_items) - 1; $i >= 0; $i--){
+            $liHtml .=  $i == 0 ? '<li class="breadcrumb-item active">' .  $menu_items[$i]['name']  . '</li>' : 
+                                  '<li class="breadcrumb-item"><a href="'. url("menu/". $menu_items[$i]["id"] . "/child-menu") .'">' .  $menu_items[$i]['name']  . '</a></li>';
+        }
+    @endphp
 
+    {!! $liHtml !!}
+@endsection
+@section('action')
+    <a href="{{ $parent_id == 0 ? url('menu') : url("menu/$parent_id/child-menu") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+@endsection
+@section('content')
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <div class="card-body card-dashboard">
+                        <form role="form" action="{{ route('menu.store') }}" method="POST" novalidate>
+                            <div class="row">
+                                <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+                                <div class="form-group col-md-12 {{ $errors->has('name') ? ' error' : '' }}">
+                                    <label for="title" class="required">Title</label>
+                                    <input type="text" name="name"  class="form-control" placeholder="Enter title"
+                                           value="{{ old("name") ? old("name") : '' }}" required data-validation-required-message="Enter footer menu title">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('name'))
+                                        <div class="help-block">  {{ $errors->first('name') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 {{ $errors->has('en_label_text') ? ' error' : '' }}">
+                                    <label for="title" class="required">English Label</label>
+                                    <input type="text" name="en_label_text"  class="form-control" placeholder="Enter english label"
+                                           value="{{ old("en_label_text") ? old("en_label_text") : '' }}" required data-validation-required-message="Enter footer menu english label">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('en_label_text'))
+                                        <div class="help-block">  {{ $errors->first('en_label_text') }}</div>
+                                    @endif
+                                </div>
 
-@section('main-content')
+                                <div class="form-group col-md-6 {{ $errors->has('bn_label_text') ? ' error' : '' }}">
+                                    <label for="title" class="required">Bangla Label</label>
+                                    <input type="text" name="bn_label_text"  class="form-control" placeholder="Enter bangla label"
+                                           value="{{ old("bn_label_text") ? old("bn_label_text") : '' }}" required data-validation-required-message="Enter footer menu bangla label">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('bn_label_text'))
+                                        <div class="help-block">  {{ $errors->first('bn_label_text') }}</div>
+                                    @endif
+                                </div>
 
-    <!-- general form elements -->
-    <div class="col-md-6 offset-md-3 py-4">
+                                <div class="form-group col-md-12 {{ $errors->has('url') ? ' error' : '' }}">
+                                    <label for="url" class="required">URL</label>
+                                    <input type="text" name="url"  class="form-control" placeholder="Enter URL"
+                                           value="{{ old("url") ? old("url") : '' }}" required data-validation-required-message="Enter header menu url">
+                                    <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('url') }}</div>
+                                    @endif
+                                </div>
 
-        <div class="card card-primary">
-            <div class="card-header">
-                <h3 class="card-title">Menu Create</h3>
+                                <!-- <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="external_site" class="mr-1">External Site</label>
+                                        <input type="checkbox" name="external_site" value="1" id="external_site">
+                                    </div>
+                                </div> -->
+
+                                <div class="col-md-6 float-left">
+                                    <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
+                                        <label for="title" class="required mr-1">Status:</label>
+
+                                        <input type="radio" name="status" value="1" id="input-radio-15" checked>
+                                        <label for="input-radio-15" class="mr-1">Active</label>
+
+                                        <input type="radio" name="status" value="0" id="input-radio-16">
+                                        <label for="input-radio-16">Inactive</label>
+
+                                        @if ($errors->has('status'))
+                                            <div class="help-block">  {{ $errors->first('status') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-actions col-md-12 ">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                    class="la la-check-square-o"></i> SAVE
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            @csrf
+                        </form>
+                    </div>
+                </div>
             </div>
-
-
-            @if (session('error'))
-                <div class="alert alert-danger m-3">{{ session('error') }}</div>
-            @endif
-            <!-- /.card-header -->
-            <!-- form start -->
-            <form role="form" action="{{ route('menu.store') }}" method="POST">
-                @csrf
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="m_name">Name</label>
-                        <input type="text" name="name" class="form-control" id="m_name" placeholder="Enter question">
-                    </div>
-                    <div class="form-group">
-                        <label for="url">URL</label>
-                        <input type="text" name="url" class="form-control" id="url" placeholder="Enter question">
-                    </div>
-                    <div class="form-group mt-4">
-                        <label for="m_status">Status:</label>
-                        <div class="d-inline ml-3 mr-3">
-                            <input type="radio" name="status" id="m_active" value="1">
-                            <label class="text-muted" for="m_active">Active</label>
-                        </div>
-                        <div class="d-inline">
-                            <input type="radio" name="status" id="m_deactivate" value="0">
-                            <label class="text-muted" for="m_deactivate">
-                                Inactive
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
         </div>
-    </div>
-    <!-- /.card -->
-
-
-    {{--{!! Form::open(array('url' => 'foo/bar','method' => 'POST')) !!}--}}
-    {{--{{Form::text("username",--}}
-             {{--old("username") ? old("username") : (!empty($user) ? $user->username : null),--}}
-             {{--[--}}
-                {{--"class" => "form-group user-email",--}}
-                {{--"placeholder" => "Username",--}}
-             {{--])--}}
-    {{--}}--}}
-    {{--{{Form::password("password",--}}
-             {{--[--}}
-                {{--"class" => "form-group",--}}
-                {{--"placeholder" => "Your Password",--}}
-             {{--])--}}
-    {{--}}--}}
-    {{--{!! Form::close() !!}--}}
+    </section>
 
 @stop
+
+@push('page-css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+@endpush
+@push('page-js')
+
+@endpush
 
 
 

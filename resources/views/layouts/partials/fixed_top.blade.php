@@ -16,7 +16,7 @@
         <div class="navbar-container content">
             <div class="collapse navbar-collapse" id="navbar-mobile">
                 <ul class="nav navbar-nav mr-auto float-left">
-                    <li class="nav-item d-none d-md-block"><a class="nav-link nav-link-expand" href="#"><i
+                    <!-- <li class="nav-item d-none d-md-block"><a class="nav-link nav-link-expand" href="#"><i
                                     class="ficon ft-maximize"></i></a></li>
                     <li class="dropdown nav-item mega-dropdown"><a class="dropdown-toggle nav-link" href="#"
                                                                    data-toggle="dropdown">Mega</a>
@@ -84,7 +84,7 @@
                                                             class="la la-life-ring"></i> Customer support center</a>
                                             </li>
                                         </ul>
-                                    </li>
+                                    </li> 
                                 </ul>
                             </li>
                             <li class="col-md-3">
@@ -196,7 +196,7 @@
                         <div class="search-input">
                             <input class="input" type="text" placeholder="Explore Modern...">
                         </div>
-                    </li>
+                    </li>-->
                 </ul>
                 <ul class="nav navbar-nav float-right">
                     <li class="dropdown dropdown-user nav-item">
@@ -206,7 +206,7 @@
                          <img src="{{ asset('theme/images/portrait/small/avatar-s-19.png') }}" alt="x"><i></i></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#"><i class="ft-power"></i> Logout</a>
+                            <a class="dropdown-item" href="#"><i class="ft-phone-off"></i> Logout</a>
                         </div>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
@@ -219,8 +219,6 @@
                         </div>
 
                     </li>
-
-
                 </ul>
             </div>
         </div>

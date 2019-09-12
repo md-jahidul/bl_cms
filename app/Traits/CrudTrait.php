@@ -110,4 +110,5 @@ trait CrudTrait
         return $this->actionRepository->save($data);
     }
 
+
 }

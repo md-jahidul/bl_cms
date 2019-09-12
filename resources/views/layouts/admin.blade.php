@@ -45,12 +45,14 @@
 
     <!-- Begin File uploader dropzone CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/file-uploaders/dropzone.css') }}">
-
+    
 
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('theme/assets/css/style.css')}}">
     <!-- END Custom CSS-->
+    
+    @stack('page-css')    
     @yield('page-css')
     @stack('style')
 </head>
@@ -63,19 +65,17 @@
 <div class="app-content content">
     <div class="content-wrapper">
         <div class="content-header row">
-            <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-                <h3 class="content-header-title mb-0 d-inline-block">@yield('card_name')</h3>
+            <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
+                <!-- <h3 class="content-header-title mb-0 d-inline-block">@yield('card_name')</h3> -->
                 <div class="row breadcrumbs-top d-inline-block">
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/">Admin</a>
-                            </li>
                             @yield('breadcrumb')
                         </ol>
                     </div>
                 </div>
             </div>
-            <div class="content-header-right col-md-6 col-12">
+            <div class="content-header-right col-md-4 col-12">
                 <div class="dropdown float-md-right">
                     @yield('action')
                 </div>
@@ -99,7 +99,6 @@
 <script src="{{asset('/theme/js/core/app.js')}}" type="text/javascript"></script>
 <script src="{{asset('/theme/js/scripts/customizer.js')}}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/scripts/forms/select/form-select2.js') }}" type="text/javascript"></script>
-<script src="{{ asset('theme/js/core/app-menu.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/core/app.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/scripts/tables/datatables/datatable-basic.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/scripts/tables/datatables/datatable-advanced.js') }}" type="text/javascript"></script>
@@ -118,7 +117,14 @@
 <!-- BEGIN PAGE LEVEL JS-->
 <script src="{{ asset('theme/js/scripts/forms/form-repeater.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/scripts/forms/checkbox-radio.js') }}" type="text/javascript"></script>
+
+<script src="{{ asset('theme/js/scripts/ui/jquery-ui/navigations.js') }}" type="text/javascript"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <!-- END PAGE LEVEL JS-->
+
+<script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
 
 @stack('page-js')
 <script>

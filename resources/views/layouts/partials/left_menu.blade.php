@@ -6,6 +6,32 @@
             </li>
             <li class="{{ is_active_url('short_cuts') }} nav-item"><a href="{{route('short_cuts.index')}}"><i class="la la-fighter-jet"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Short Cuts</span></a>
+            <li class=" nav-item"><a href="{{ url('menu') }}"><i class="la la-medium"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Menu Management</span></a>
+            </li>
+
+            <li class=" nav-item"><a href="{{ url('footer-menu') }}"><i class="la la-futbol-o"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Footer Management</span></a>
+            </li>
+
+            <li class=" nav-item"><a href="{{ url('quick-launch') }}"><i class="la la-automobile"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Quick launch</span></a>
+            </li>
+
+            <li class=" nav-item"><a href="#"><i class="la la-sliders"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Slider Management</span></a>
+                <ul class="menu-content">
+
+                    <li class="{{ is_active_url('sliders') . is_active_url('sliders/create')}}">
+                        <a class="menu-item" href="{{ url('sliders') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-file-image-o"></i> Slider</a>
+                    </li>
+                    <li class="{{ is_active_url('slider/images') . is_active_url('sliders/images/create')}}">
+                        <a class="menu-item" href="{{ url('slider/images') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-file-image-o"></i> Slider Image</a>
+                    </li>
+
+                </ul>
             </li>
             <li class="{{ is_active_url('ussd') }} {{is_active_url('ussd/create')}} nav-item"><a href="{{route('ussd.index')}}"><i class="la la-asterisk"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">USSD Code</span></a>

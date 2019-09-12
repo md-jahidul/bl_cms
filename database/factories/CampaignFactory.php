@@ -12,8 +12,6 @@ $factory->define(Campaign::class, function (Faker $faker) {
         'motivational_quote' => $faker->slug,
         'start_date' => $faker->date('D-M-y'),
         'end_date' => $faker->date('D-M-y'),
-        'is_enable' => 1,
-        'created_at' => $faker->dateTime,
-        'updated_at' => $faker->dateTime,
+        'is_enable' => 1
     ];
 });

@@ -2,25 +2,55 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Http\Requests\StoreMenuRequest;
 use App\Models\Menu;
+use App\Services\MenuService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class MenuController extends Controller
 {
+    /**
+     * @var $menuService
+     */
+    private $menuService;
+
+    /**
+     * @var array $menuItems
+     */
+    protected $menuItems = [];
+
+    /**
+     * MenuController constructor.
+     * @param MenuService $menuService
+     */
+    public function __construct(MenuService $menuService)
+    {
+        $this->menuService = $menuService;
+    }
+
+    public function getBreadcrumbInfo($parent_id)
+    {
+        $temp = (new Menu)->find($parent_id, ['id','name','parent_id'])->toArray();
+        $this->menuItems[] = $temp;
+        return $temp['parent_id'];
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($parent_id = 0)
     {
-        try {
-            $menus = Menu::with('children')->where('parent_id', 0)->orderBy('display_order', 'ASC')->get();
-            return view('admin.menu.index', compact('menus'));
-        } catch (\Exception $exception) {
-            return back()->withError($exception->getMessage());
+        $menus = $this->menuService->menuList($parent_id);
+        $menu_id = $parent_id;
+        while ( $menu_id != 0 ){
+            $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
+        $menu_items = $this->menuItems;
+        return view('admin.menu.index', compact('menus','parent_id','menu_items'));
     }
 
     /**
@@ -28,9 +58,16 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($parent_id = 0)
     {
-        return view('admin.menu.create');
+        $this->menuItems[] = ['name' => 'Create'];
+        $menu_id = $parent_id;
+        while ( $menu_id != 0 ){
+            $menu_id = $this->getBreadcrumbInfo($menu_id);
+        }
+
+        $menu_items = $this->menuItems;
+        return view('admin.menu.create', compact('parent_id','menu_items'));
     }
 
     /**
@@ -39,115 +76,21 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMenuRequest $request)
     {
-        try {
-            $menu_count = (new Menu())->get()->count();
-            Menu::create([
-                'parent_id' => 0,
-                'name' => $request->name,
-                'url' => $request->url,
-                'status' => $request->status,
-                'display_order' => ($menu_count == 0) ? 1 : ++$menu_count
-            ]);
-            return redirect('menu');
-        } catch (\Exception $exception) {
-            return back()->withError($exception->getMessage());
-        }
+        $parentId = $request->parent_id;
+        $response = $this->menuService->storeMenu($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect( ($parentId == 0) ? '/menu' : "/menu/$parentId/child-menu");
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function parentMenuSortable(Request $request){
-
-        $positions = $request->position;
-        foreach ($positions as $position){
-            $menu_id = $position[0];
-            $new_position = $position[1];
-            $update_menu = Menu::findOrFail($menu_id);
-            $update_menu['display_order'] = $new_position;
-            $update_menu->save();
-        }
-        return "success";
+        return $this->menuService->tableSort($request);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Create the specified resource in storage.
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function childList($id)
-    {
-        $parent_id = $id;
-        $child_menus = Menu::with('parent')->where('parent_id', $id)->get();
-        return view('admin.menu.child-menu.child-list', compact('child_menus', 'parent_id'));
-    }
-
-    public function childForm($parent_id)
-    {
-        return view('admin.menu.child-menu.create', compact('parent_id'));
-    }
-
-    public function childStore(Request $request)
-    {
-        try {
-            $parent_id = $request->parent_id;
-            Menu::create([
-                'parent_id' => $parent_id,
-                'name' => $request->name,
-                'url' => $request->url,
-                'status' => $request->status,
-                'display_order' => 1,
-            ]);
-            return redirect(url("menu/$parent_id/child_menu"));
-        } catch (\Exception $exception) {
-            return back()->withError($exception->getMessage());
-        }
-    }
-
-    public function childEdit($id){
-        try {
-            $child_edit = Menu::findORFail($id);
-            return view('admin.menu.child-menu.edit', compact('child_edit'));
-        } catch (\Exception $exception) {
-            return back()->withError($exception->getMessage());
-        }
-    }
-
-    public function childUpdate(Request $request, $id){
-        try {
-            $child_edit = Menu::findORFail($id);
-            $parent_id = $child_edit->parent_id;
-            $child_edit->update($request->all());
-            return redirect(url("menu/$parent_id/child_menu"));
-        } catch (\Exception $exception) {
-            return back()->withError($exception->getMessage());
-        }
-    }
-
-    public function childSubList($id){
-        $parent_id = $id;
-        $child_sub_lists = Menu::with('parent')->where('parent_id', $id)->get();
-        return view('admin.menu.child-sub-menu.child-sub-list', compact('child_sub_lists', 'parent_id'));
-    }
-
-    public function childSubForm($parent_id)
-    {
-        return view('admin.menu.child-menu.create', compact('parent_id'));
-    }
-
-
-
 
     /**
      * Show the form for editing the specified resource.
@@ -156,12 +99,18 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        try {
-            $menu = Menu::findOrFail($id);
-            return view('admin.menu.edit', compact('menu'));
-        } catch (\Exception $exception) {
-            return back()->withError($exception->getMessage());
+        $menu = $this->menuService->findOrFail($id);
+
+
+        $this->menuItems[] = ['name' => $menu->name];
+
+        $menu_id = $menu->parent_id;
+        while ( $menu_id != 0 ){
+            $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
+
+        $menu_items = $this->menuItems;
+        return view('admin.menu.edit', compact('menu','menu_items'));
     }
 
     /**
@@ -173,29 +122,22 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $menu = Menu::findOrFail($id);
-            $menu->update($request->all());
-            return redirect('menu');
-        } catch (\Exception $exception) {
-            return back()->withError($exception->getMessage());
-        }
+        $parentId =  $request->parent_id;
+        $response = $this->menuService->updateMenu($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect( ($parentId != 0) ? "menu/$parentId/child-menu" : 'menu' );
     }
 
     /**
-     * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $parentId
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($parentId, $id)
     {
-        try {
-            $menu = Menu::findOrFail($id);
-            $menu->delete();
-            return redirect('menu');
-        } catch (\Exception $exception) {
-            return back()->withError($exception->getMessage());
-        }
+        $response = $this->menuService->deleteMenu($id);
+        return ($response['parent_id'] == 0) ? url('menu') : url("/menu/" . $response['parent_id'] . "/child-menu");
     }
 }
