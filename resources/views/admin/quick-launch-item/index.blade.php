@@ -31,43 +31,18 @@
                         @foreach ($quickLaunchItems as $key=>$quickLaunchItem)
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td><img src="" alt="image"></td>
+                                <td><img src="{{ $quickLaunchItem->image_url }}" alt="image" height="45" width="40"></td>
                                 <td>{{$quickLaunchItem->en_title}}</td>
                                 <td>{{$quickLaunchItem->bn_title}}</td>
                                 <td>{{$quickLaunchItem->alt_text}}</td>
                                 <td>{{$quickLaunchItem->link}}</td>
 
                                 <td class="action" width="8%">
-                                    <a href="{{ url('menu/'.$quickLaunchItem->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("menu/$quickLaunchItem->id/destroy") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $quickLaunchItem->id }}" title="Delete the user">
+                                    <a href="{{ url("quick-launch/$quickLaunchItem->id/edit") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" remove="{{ url("quick-launch/destroy/$quickLaunchItem->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $quickLaunchItem->id }}" title="Delete the user">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>
-
-{{--                                <td class="text-center">--}}
-{{--                                    <span class="dropdown">--}}
-{{--                                    <button id="btnSearchDrop2" type="button" data-toggle="dropdown"--}}
-{{--                                            aria-haspopup="true"--}}
-{{--                                            aria-expanded="false" class="btn btn-info dropdown-toggle"><i--}}
-{{--                                            class="la la-cog"></i></button>--}}
-{{--                                      <span aria-labelledby="btnSearchDrop2"--}}
-{{--                                            class="dropdown-menu mt-1 dropdown-menu-right">--}}
-{{--                                        <a href="{{ url('tags/'.$quickLaunchItem->id.'/edit') }}"--}}
-{{--                                           class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>--}}
-{{--                                        <div class="dropdown-divider"></div>--}}
-{{--                                          <form method="POST"--}}
-{{--                                                action="{{ url('/tags', ['id' => $quickLaunchItem->id]) }}"--}}
-{{--                                                accept-charset="UTF-8" style="display:inline">--}}
-{{--                                          <button type="submit" class="dropdown-item danger"--}}
-{{--                                                  title="Delete the user"--}}
-{{--                                                  onclick="return confirm('Are you sure?')"><i--}}
-{{--                                                  class="ft-trash"></i> Delete</button>--}}
-{{--                                               @method('delete')--}}
-{{--                                              @csrf--}}
-{{--                                          </form>--}}
-{{--                                      </span>--}}
-{{--                                    </span>--}}
-{{--                                </td>--}}
                             </tr>
                         @endforeach
                         </tbody>

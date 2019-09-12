@@ -48,7 +48,7 @@ Route::get('sort-autosave/parent-footer-sort','CMS\FooterMenuController@parentFo
 
 // QUICK LAUNCH PAGES ====================================
 Route::resource('quick-launch','CMS\QuickLaunchController');
-//Route::get('quick-launch/{parentId}/destroy/{id}', 'CMS\QuickLaunchController@destroy');
+Route::get('quick-launch/destroy/{id}', 'CMS\QuickLaunchController@destroy');
 //Route::get('sort-autosave/parent-footer-sort','CMS\QuickLaunchController@parentFooterSortable');
 
 Route::group(['prefix' => 'footer-menu'], function () {
@@ -57,4 +57,4 @@ Route::group(['prefix' => 'footer-menu'], function () {
 });
 
 
-Route::get('quick-launch-panel', 'CMS\QuickLaunchController@index');
+//Route::get('quick-launch-panel', 'CMS\QuickLaunchController@index');

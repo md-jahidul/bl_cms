@@ -54,7 +54,7 @@ class QuickLaunchController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->quickLaunchService->storeQuickLaunchItem($request);
+        $response = $this->quickLaunchService->storeQuickLaunchItem($request->all());
         Session::flash('message', $response->getContent());
         return redirect('quick-launch');
     }
@@ -78,7 +78,8 @@ class QuickLaunchController extends Controller
      */
     public function edit($id)
     {
-        //
+        $quickLaunch = $this->quickLaunchService->findOne($id);
+        return view('admin.quick-launch-item.edit', compact('quickLaunch'));
     }
 
     /**
@@ -90,17 +91,20 @@ class QuickLaunchController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $response = $this->quickLaunchService->updateQuickLaunch($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect('/quick-launch');
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        //
+        $response = $this->quickLaunchService->deleteQuickLaunch($id);
+        Session::flash('message', $response->getContent());
+        return url('quick-launch');
     }
 }

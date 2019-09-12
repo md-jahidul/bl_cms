@@ -8,6 +8,7 @@ use App\Http\Helpers;
 use App\Repositories\QuickLaunchRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
 
 class QuickLaunchService
 {
@@ -37,23 +38,19 @@ class QuickLaunchService
         return $this->quickLaunchRepository->findAll();
     }
 
-
-    public function imageUpload($request, $location)
+    public function imageUpload($request, $imageTitle, $location)
     {
-        $file_name = str_replace(' ', '-', strtolower($request['en_title']));
-        $upload_date = date('Y-m-d-h-i');
-
-        $sliderImage = $request->file('image_url');
-        $fileType = $sliderImage->getClientOriginalExtension();
+        $file_name = str_replace(' ', '-', strtolower($imageTitle));
+        $upload_date = date('Y-m-d-h-i-s');
+        $image = request()->file('image_url');
+        $fileType = $image->getClientOriginalExtension();
         $imageName = $upload_date.'_'.$file_name.'.' . $fileType;
-
-//        echo "<pre>";
-//        print_r($imageName);
         $directory = $location;
         $imageUrl = $imageName;
-        $sliderImage->move($directory, $imageName);
+        $image->move($directory, $imageName);
         return $imageUrl;
     }
+
 
     /**
      * @param $data
@@ -61,9 +58,9 @@ class QuickLaunchService
      */
     public function storeQuickLaunchItem($data)
     {
-
         $count = count($this->quickLaunchRepository->findAll());
-//        $data['image_url'] = $this->imageUpload($data, 'quick-launch-items/');
+        $imageUrl = $this->imageUpload($data, $data['en_title'], 'quick-launch-items');
+        $data['image_url'] = env('APP_URL', 'http://localhost:8000'). '/quick-launch-items/'.$imageUrl;
         $data['display_order'] = ++$count;
         $this->save($data);
         return new Response('Quick Launch added successfully');
@@ -79,16 +76,26 @@ class QuickLaunchService
         return new Response('Footer menu added successfully');
     }
 
+
     /**
      * @param $data
      * @param $id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function updateMenu($data, $id)
+    public function updateQuickLaunch($data, $id)
     {
         $menu = $this->findOne($id);
-        $menu->update($data);
-        return Response('Menu updated successfully');
+
+        if (isset($data['image_url'])){
+            echo "image found";
+            di
+        }
+//        $imageUrl = $this->imageUpload($data, $data['en_title'], 'quick-launch-items');
+//        $data['image_url'] = env('APP_URL', 'http://localhost:8000'). '/quick-launch-items/'.$imageUrl;
+
+
+//        $menu->update($data);
+//        return Response('Menu updated successfully');
     }
 
     /**
@@ -96,15 +103,11 @@ class QuickLaunchService
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      * @throws \Exception
      */
-    public function deleteMenu($id)
+    public function deleteQuickLaunch($id)
     {
-        $menu = $this->findOne($id);
-        $menu->delete();
-
-        return [
-            'message' => 'Menu delete successfully',
-            'parent_id' => $menu->parent_id
-        ];
+        $quickLaunch = $this->findOne($id);
+        $quickLaunch->delete();
+        return Response('Quick launch deleted successfully !');
     }
 
 }

@@ -13,7 +13,7 @@
                     <span class="menu-title" data-i18n="nav.templates.main">Footer Management</span></a>
             </li>
 
-            <li class=" nav-item"><a href="{{ url('quick-launch-panel') }}"><i class="la la-automobile"></i>
+            <li class=" nav-item"><a href="{{ url('quick-launch') }}"><i class="la la-automobile"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Quick launch</span></a>
             </li>
 
