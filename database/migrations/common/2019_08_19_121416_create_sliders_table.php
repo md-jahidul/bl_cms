@@ -15,16 +15,16 @@ class CreateSlidersTable extends Migration
     {
         Schema::create('sliders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('slider_type_id');
+            $table->unsignedInteger('component_id');
             $table->string('title');
             $table->mediumText('description')->nullable();
             $table->string('short_code');
-
-            $table->foreign('slider_type_id')
-                ->references('id')
-                ->on('slider_types')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            $table->enum('platform', ['Web', 'App']);
+            $table->foreign('component_id')
+                    ->references('id')
+                    ->on('slider_component_types')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
 
             $table->timestamps();
         });
