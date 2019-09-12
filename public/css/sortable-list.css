@@ -40,3 +40,8 @@ span.inactive{
     font-weight : bold;
     font-size : 15px;
 }
+
+/*#sortable tr td{*/
+/*    padding-top: 0 !important;*/
+/*    padding-bottom: 0 !important;*/
+/*}*/

@@ -30,12 +30,11 @@ class QuickLaunchService
     }
 
     /**
-     * @param $parent_id
      * @return mixed
      */
     public function itemList()
     {
-        return $this->quickLaunchRepository->findAll();
+        return $this->quickLaunchRepository->getQuickLaunch();
     }
 
     public function imageUpload($request, $imageTitle, $location)
@@ -70,9 +69,11 @@ class QuickLaunchService
      * @param $data
      * @return Response
      */
-    public function tableSort($data)
+    public function tableSortable($data)
     {
-        $this->menuRepository->menuTableSort($data);
+//        print_r($data);die();
+
+        $this->quickLaunchRepository->quickLaunchTableSort($data);
         return new Response('Footer menu added successfully');
     }
 
@@ -84,18 +85,13 @@ class QuickLaunchService
      */
     public function updateQuickLaunch($data, $id)
     {
-        $menu = $this->findOne($id);
-
-        if (isset($data['image_url'])){
-            echo "image found";
-            di
+        $quickLaunch = $this->findOne($id);
+        if (!empty($data['image_url'])){
+            $imageUrl = $this->imageUpload($data, $data['en_title'], 'quick-launch-items');
+            $data['image_url'] = env('APP_URL', 'http://localhost:8000'). '/quick-launch-items/'.$imageUrl;
         }
-//        $imageUrl = $this->imageUpload($data, $data['en_title'], 'quick-launch-items');
-//        $data['image_url'] = env('APP_URL', 'http://localhost:8000'). '/quick-launch-items/'.$imageUrl;
-
-
-//        $menu->update($data);
-//        return Response('Menu updated successfully');
+        $quickLaunch->update($data);
+        return Response('Quick launch updated successfully');
     }
 
     /**
