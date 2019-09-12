@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Http\Requests\StoreQuickLaunch;
 use App\Services\QuickLaunchService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -33,6 +34,8 @@ class QuickLaunchController extends Controller
     public function index()
     {
         $quickLaunchItems = $this->quickLaunchService->itemList();
+
+        return $quickLaunchItems;
         return view('admin.quick-launch-item.index', compact('quickLaunchItems'));
     }
 
@@ -52,7 +55,7 @@ class QuickLaunchController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreQuickLaunch $request)
     {
         $response = $this->quickLaunchService->storeQuickLaunchItem($request->all());
         Session::flash('message', $response->getContent());
@@ -68,6 +71,13 @@ class QuickLaunchController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function quickLaunchSortable(Request $request)
+    {
+//        return $request;
+
+        $this->quickLaunchService->tableSortable($request);
     }
 
     /**

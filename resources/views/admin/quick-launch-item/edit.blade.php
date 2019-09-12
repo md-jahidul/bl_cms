@@ -14,7 +14,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('quick-launch.store') }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ url("quick-launch/$quickLaunch->id") }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('en_title') ? ' error' : '' }}">
                                     <label for="en_title" class="required">English Title</label>
@@ -90,6 +90,7 @@
                                 </div>
                             </div>
                             @csrf
+                            {{method_field('PUT')}}
                         </form>
                     </div>
 

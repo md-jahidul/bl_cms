@@ -49,12 +49,11 @@ Route::get('sort-autosave/parent-footer-sort','CMS\FooterMenuController@parentFo
 // QUICK LAUNCH PAGES ====================================
 Route::resource('quick-launch','CMS\QuickLaunchController');
 Route::get('quick-launch/destroy/{id}', 'CMS\QuickLaunchController@destroy');
-//Route::get('sort-autosave/parent-footer-sort','CMS\QuickLaunchController@parentFooterSortable');
+Route::get('quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
 
 Route::group(['prefix' => 'footer-menu'], function () {
     Route::get('/{id}/child-footer', 'CMS\FooterMenuController@index');
     Route::get('/{id}/child-footer/create', 'CMS\FooterMenuController@create');
 });
-
 
 //Route::get('quick-launch-panel', 'CMS\QuickLaunchController@index');
