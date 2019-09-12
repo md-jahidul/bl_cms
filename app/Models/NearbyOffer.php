@@ -12,4 +12,14 @@ class NearbyOffer extends Model
      * @var string
      */
     protected $table = 'nearby_offers';
+    protected $fillable = [
+        'title',
+        'vendor',
+        'location',
+        'type',
+        'offer',
+        'image',
+        'offer_code'
+     ];
+    
 }

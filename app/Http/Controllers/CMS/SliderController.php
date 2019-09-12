@@ -5,7 +5,7 @@ namespace App\Http\Controllers\CMS;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
-use App\Models\SliderType;
+use App\Models\SliderComponentTypes;
 use App\Services\SliderService;
 use App\Services\SliderTypeService;
 use App\Http\Requests\SliderRequest;
@@ -67,7 +67,8 @@ class SliderController extends Controller
      */
     public function store(SliderRequest $request)
     {
-        session()->flash('status',$this->sliderService->storeSlider($request->all())->getContent());
+        
+        session()->flash('success',$this->sliderService->storeSlider($request->all())->getContent());
         return redirect(route('slider.index'));
     }
 
@@ -107,7 +108,7 @@ class SliderController extends Controller
      */
     public function update(SliderRequest $request,Slider $slider)
     {
-        session()->flash('status',$this->sliderService->updateSlider($request, $slider)->getContent());
+        session()->flash('success',$this->sliderService->updateSlider($request, $slider)->getContent());
         return redirect(route('slider.index'));
     }
 

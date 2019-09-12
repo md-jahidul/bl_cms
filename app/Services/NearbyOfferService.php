@@ -37,11 +37,13 @@ class NearbyOfferService
      * Storing the banner resource
      * @return Response
      */
-    public function storeSlider($data)
+    public function storeNearbyOffer($data)
     {
-        $data['short_code'] = strtolower(str_replace(' ','_',$data['title'])); 
+        //dd($data);
+        // $data['short_code'] = strtolower(str_replace(' ','_',$data['title']));           
+        $data['image'] = 'storage/'.$data['image']->store('NearbyOffer_image');
         $this->save($data);
-        return new Response("Slider has successfully been created");
+        return new Response("Near By Offer has successfully been created");
     }
 
     /**
@@ -49,7 +51,7 @@ class NearbyOfferService
      * @param $data
      * @return Response
      */
-    public function updateSlider($request, $slider)
+    public function updateNearbyOffer($request, $slider)
     {
         $slider->update($request->all());
         return Response('Slider updated successfully !');
@@ -60,11 +62,13 @@ class NearbyOfferService
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      * @throws \Exception
      */
-    public function deleteSlider($id)
+    public function deleteNearbyOffer($id)
     {
-        $slider = $this->findOne($id);
-        $slider->delete();
-        return Response('Slider deleted successfully !');
+        $data = $this->findOne($id);
+
+        unlink($data->image);
+        $data->delete();
+        return Response('Offer deleted successfully !');
     }
 
 }

@@ -121,5 +121,23 @@
 <!-- END PAGE LEVEL JS-->
 
 @stack('page-js')
+<script>
+
+        function readURL(input) {
+        if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#imgDisplay').css('display', 'block');
+                    $('#imgDisplay').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#image").change(function() {
+            readURL(this);
+        });
+
+</script>
 </body>
 </html>

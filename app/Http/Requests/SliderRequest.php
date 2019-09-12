@@ -25,7 +25,7 @@ class SliderRequest extends FormRequest
     {
        return [
             'title' => 'required',
-            'slider_type_id' => 'required'
+            'component_id' => 'required'
         ];
     }
 
@@ -33,7 +33,7 @@ class SliderRequest extends FormRequest
     {
         return [
             'title.required' => 'Name is required',
-            'slider_type_id.required' => 'Slider type is required'
+            'component_id.required' => 'Slider type is required'
         ];
     }
 

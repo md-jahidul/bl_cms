@@ -87,7 +87,7 @@ Route::get('internetOffer/destroy/{id}','CMS\InternetOfferController@destroy');
 route::resource('mixedBundleOffer','CMS\MixedBundleOfferController');
 Route::get('mixedBundleOffer/destroy/{id}','CMS\MixedBundleOfferController@destroy');
 
-// Mixed Bundle
+// Near By Offer
 route::resource('nearByOffer','CMS\NearbyOfferController');
 Route::get('nearByOffer/destroy/{id}','CMS\NearbyOfferController@destroy');
 

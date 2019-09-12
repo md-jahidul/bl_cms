@@ -34,7 +34,7 @@
                                         <span class="badge badge-default badge-pill bg-primary float-right">{{$slider->sliderImages->count()}}</span>
                                     
                                     </td>
-                                    <td>{{$slider->sliderType->name}}</td>
+                                    <td>{{$slider->SliderComponentTypes->name}}</td>
                                     <td>
                                         <div class="row">
                                             <div class="col-md-2">

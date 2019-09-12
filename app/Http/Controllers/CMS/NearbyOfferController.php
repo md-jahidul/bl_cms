@@ -33,7 +33,7 @@ class NearbyOfferController extends Controller
      */
     public function index()
     {
-        return view('admin.offer-nearby.index');
+        return view('admin.offer-nearby.index')->with('nearByOffers',$this->nearbyOfferService->findAll());
     }
 
     /**
@@ -54,7 +54,8 @@ class NearbyOfferController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        session()->flash('success',$this->nearbyOfferService->storeNearbyOffer($request->all())->getContent());
+        return redirect(route('nearByOffer.index'));
     }
 
     /**
@@ -76,7 +77,8 @@ class NearbyOfferController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admin.offer-nearby.edit')
+                ->with('nearByOffer',$this->nearbyOfferService->findOne($id));
     }
 
     /**
@@ -99,6 +101,8 @@ class NearbyOfferController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //return $id;
+        session()->flash('success',$this->nearbyOfferService->deleteNearbyOffer($id));
+        return redirect(route('nearByOffer.index'));
     }
 }

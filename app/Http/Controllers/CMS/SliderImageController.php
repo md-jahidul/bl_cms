@@ -70,8 +70,7 @@ class SliderImageController extends Controller
      */
     public function store(SliderImageStoreRequest $request)
     {
-    
-        session()->flash('status',$this->sliderImageService->storeSliderImage($request->all()['repeater-list'])->getContent());
+        session()->flash('success',$this->sliderImageService->storeSliderImage($request->all()['repeater-list'])->getContent());
         return redirect(route('slider.index'));
     }
 
@@ -124,7 +123,7 @@ class SliderImageController extends Controller
     public function update(SliderImageUpdateRequest $request, $id)
     {
         //dd( $request, $id);
-        session()->flash('status',$this->sliderImageService->updateSliderImage($request->all(), $id)->getContent());
+        session()->flash('success',$this->sliderImageService->updateSliderImage($request->all(), $id)->getContent());
         return redirect()->back();
     }
 

@@ -25,7 +25,7 @@
                         <div class="form-body">
                             <h4 class="form-section"><i class="la la-paperclip"></i>Slider Information</h4>
                             <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="companyName">Name:<small class="text-danger">*</small></label>
                                     <input type="text" value="@if(isset($single_slider)) {{ $single_slider->title }} @endif" id="companyName" class="form-control @error('title') is-invalid @enderror" placeholder="Slider Name" name="title">
@@ -39,12 +39,27 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="projectinput6">Slider Type:<small class="text-danger">*</small></label>
-                                    <select id="projectinput6" value="" name="slider_type_id" class="form-control @error('slider_type_id') is-invalid @enderror">
+                                    <select id="projectinput6" value="" name="component_id" class="form-control @error('component_id') is-invalid @enderror">
                                         @foreach ($slider_types as $type)
-                                            <option @if(isset($single_slider)) @if($single_slider->slider_type_id == $type->id) selected @endif @endif value="{{$type->id}}">{{$type->name}}</option>
+                                            <option @if(isset($single_slider)) @if($single_slider->component_id == $type->id) selected @endif @endif value="{{$type->id}}">{{$type->name}}</option>
                                         @endforeach
                                     </select>
-                                    @error('slider_type_id')
+                                    @error('component_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="platform">Platform :<small class="text-danger">*</small></label>
+                                    <select id="platform" value="" name="platform" class="form-control @error('platform') is-invalid @enderror">
+                                        <option value="Web">WebSite</option>
+                                        <option value="App">MyBL App</option>
+                                       
+                                    </select>
+                                    @error('platform')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

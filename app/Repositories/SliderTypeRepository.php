@@ -8,9 +8,9 @@
 
 namespace App\Repositories;
 
-use App\Models\SliderType;
+use App\Models\SliderComponentTypes;
 
 class SliderTypeRepository extends BaseRepository
 {
-    public $modelName = SliderType::class;
+    public $modelName = SliderComponentTypes::class;
 }

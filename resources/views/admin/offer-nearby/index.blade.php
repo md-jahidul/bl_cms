@@ -27,34 +27,43 @@
                         <thead>
                         <tr>
                             <th width=''>ID</th>
-                            <th width=''>Title</th>
-                            <th width=''>Banner</th>
-                            <th width=''>Redirect url</th>
-                            <th  width='500'>Action</th>
+                            <th width=''>title</th>
+                            <th width=''>vendor</th>
+                            <th width=''>location</th>
+                            <th width=''>type</th>
+                            <th width=''>offer</th>
+                            <th width=''>offer_code</th>
+                            <th width=''>image</th>
+                            <th width=''>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {{-- @foreach ($banners as $banner) --}}
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <div class="row">
-                                        <div class="col-md-1 mr-1">
-                                            <a role="button" href="" class="btn btn-outline-success">
-                                                <i class="la la-pencil"></i>
-                                            </a>
+                            @foreach ($nearByOffers as $nearByOffer)
+                                <tr>
+                                    <td>{{$nearByOffer->id}}</td>
+                                    <td>{{$nearByOffer->title}}</td>
+                                    <td>{{$nearByOffer->vendor}}</td>
+                                    <td>{{$nearByOffer->location}}</td>
+                                    <td>{{$nearByOffer->type}}</td>
+                                    <td>{{$nearByOffer->offer}}</td>
+                                    <td>{{$nearByOffer->offer_code}}</td>
+                                    
+                                    <td><img style="height:50px;width:100px" src="{{asset($nearByOffer->image)}}" alt="" srcset=""> </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-3 mr-1">
+                                                <a role="button" href="{{route('nearByOffer.edit',$nearByOffer->id)}}" class="btn btn-outline-success">
+                                                    <i class="la la-pencil"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button data-id="{{$nearByOffer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                            </div>
                                         </div>
-                                        <div class="col-md-1">
-                                            <button data-id="" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
 
-                        {{-- @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
 
@@ -99,7 +108,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('banner/destroy') }}/"+id,
+                            url: "{{ url('nearByOffer/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -109,7 +118,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('banner/') }}"
+                                    window.location.href = "{{ url('nearByOffer/') }}"
                                 }
                             }
                         })

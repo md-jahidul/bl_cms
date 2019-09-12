@@ -25,7 +25,7 @@ class StoreSliderRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'slider_type_id' => 'required'
+            'component_id' => 'required'
         ];
     }
 

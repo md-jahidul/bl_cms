@@ -46,8 +46,8 @@
                                             <input id="btn" type="text" class="form-control" placeholder="Button Name" name="url_btn_label">
                                         </div>
                                         <div class="form-group col-md-6 mb-2">
-                                            <label for="url">URL: </label>
-                                            <input id="url" type="text" class="form-control" placeholder="http.." name="url">
+                                            <label for="redirect_url">URL: </label>
+                                            <input id="redirect_url" type="text" class="form-control" placeholder="http.." name="redirect_url">
                                         </div>
                                        
                                         <div class="form-group col-12 mb-2">
