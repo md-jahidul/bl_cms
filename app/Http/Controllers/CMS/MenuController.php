@@ -45,8 +45,6 @@ class MenuController extends Controller
     public function index($parent_id = 0)
     {
         $menus = $this->menuService->menuList($parent_id);
-
-        return $menus;
         $menu_id = $parent_id;
         while ( $menu_id != 0 ){
             $menu_id = $this->getBreadcrumbInfo($menu_id);
