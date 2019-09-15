@@ -42,7 +42,7 @@ class FooterMenuService
      */
     public function storeFooterMenu($data)
     {
-        $menu_count = count( $this->menuRepository->getChildMenus( $data['parent_id'] ) );
+        $menu_count = count( $this->footerMenuRepository->getChildMenus( $data['parent_id'] ) );
         $name = ucwords( strtolower( $data['name'] )  );
         $search = [" ", "&"];
         $replace   = ["", "And"];
