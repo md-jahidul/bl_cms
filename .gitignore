@@ -10,5 +10,5 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .idea
-/public/quick-launch-items
+#/public/quick-launch-items
 /public/slider-images
