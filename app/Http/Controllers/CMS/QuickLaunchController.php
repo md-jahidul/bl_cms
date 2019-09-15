@@ -34,8 +34,6 @@ class QuickLaunchController extends Controller
     public function index()
     {
         $quickLaunchItems = $this->quickLaunchService->itemList();
-
-//        return $quickLaunchItems;
         return view('admin.quick-launch-item.index', compact('quickLaunchItems'));
     }
 

@@ -32,6 +32,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 
 
+ Route::resource('config','CMS\ConfigController');
+
 // MENU PAGES ====================================
 Route::resource('menu','CMS\MenuController');
 Route::get('menu/{parentId}/destroy/{id}', 'CMS\MenuController@destroy');
@@ -45,15 +47,16 @@ Route::group(['prefix' => 'menu'], function () {
 Route::resource('footer-menu','CMS\FooterMenuController');
 Route::get('footer-menu/{parentId}/destroy/{id}', 'CMS\FooterMenuController@destroy');
 Route::get('sort-autosave/parent-footer-sort','CMS\FooterMenuController@parentFooterSortable');
-
-// QUICK LAUNCH PAGES ====================================
-Route::resource('quick-launch','CMS\QuickLaunchController');
-Route::get('quick-launch/destroy/{id}', 'CMS\QuickLaunchController@destroy');
-Route::get('quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
-
 Route::group(['prefix' => 'footer-menu'], function () {
     Route::get('/{id}/child-footer', 'CMS\FooterMenuController@index');
     Route::get('/{id}/child-footer/create', 'CMS\FooterMenuController@create');
 });
+
+// QUICK LAUNCH PAGES ====================================
+Route::resource('quick-launch','CMS\QuickLaunchController');
+Route::get('quick-launch/destroy/{id}', 'CMS\QuickLaunchController@destroy');
+Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
+
+
 
 //Route::get('quick-launch-panel', 'CMS\QuickLaunchController@index');
