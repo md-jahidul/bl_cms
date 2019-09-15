@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\NearbyOfferRequest;
 use App\Http\Controllers\Controller;
 use App\Services\NearbyOfferService;
 use Illuminate\Support\Facades\Session;
+use App\Models\NearbyOffer;
+
 
 class NearbyOfferController extends Controller
 {
@@ -52,7 +55,7 @@ class NearbyOfferController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NearbyOfferRequest $request)
     {
         session()->flash('success',$this->nearbyOfferService->storeNearbyOffer($request->all())->getContent());
         return redirect(route('nearByOffer.index'));
@@ -88,9 +91,10 @@ class NearbyOfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(NearbyOfferRequest $request,NearbyOffer $nearByOffer)
     {
-        //
+        session()->flash('success',$this->nearbyOfferService->updateNearbyOffer($request->all(),$nearByOffer)->getContent());
+        return redirect(route('nearByOffer.index'));
     }
 
     /**

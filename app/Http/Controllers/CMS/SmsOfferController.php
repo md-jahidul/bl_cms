@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\SmsOfferRequest;
 use App\Http\Controllers\Controller;
 use App\Services\SmsOfferService;
 use Illuminate\Support\Facades\Session;
@@ -52,7 +53,7 @@ class SmsOfferController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SmsOfferRequest $request)
     {
         $response = $this->smsOfferService->storeSmsOffer($request->all());
         Session::flash('message', $response->content());
@@ -88,7 +89,7 @@ class SmsOfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SmsOfferRequest $request, $id)
     {
         //dd($request,$id);
         session()->flash('success',$this->smsOfferService->updateSmsOffer($request,$id)->getContent());

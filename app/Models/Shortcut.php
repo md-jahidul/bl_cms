@@ -13,7 +13,7 @@ class Shortcut extends Model
      * @var array
      */
     protected $fillable = [
-        'tittle','icon','component_identifier'
+        'tittle','icon','component_identifier','is_default'
     ];
 
 

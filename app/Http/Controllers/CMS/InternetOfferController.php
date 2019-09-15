@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\InternetOfferRequest;
 use App\Http\Controllers\Controller;
 use App\Services\InternetOfferService;
 use Illuminate\Support\Facades\Session;
@@ -52,7 +53,7 @@ class InternetOfferController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(InternetOfferRequest $request)
     {
         $response = $this->internetOfferService->storeInternetOffer($request->all());
         Session::flash('message', $response->content());
@@ -89,7 +90,7 @@ class InternetOfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(InternetOfferRequest $request, $id)
     {
         session()->flash('success',$this->internetOfferService->updateInternetOffer($request,$id)->getContent());
         return redirect(route('internetOffer.index'));

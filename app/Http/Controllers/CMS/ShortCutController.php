@@ -88,7 +88,7 @@ class ShortCutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ShortCutUpdateRequest $request, $id)
+    public function update(ShortCutStoreRequest $request, $id)
     {
         session()->flash('success',$this->shortCutService->updateShortCut($request->all(),$id)->getContent());
         return redirect(route('short_cuts.index'));

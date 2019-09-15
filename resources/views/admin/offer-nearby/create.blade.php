@@ -45,9 +45,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="volume">location:<small class="text-danger">*</small></label>
-                                        <input type="text" min="0" value="" id="volume" class="form-control @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="location">
+                                        <input type="text" min="0" value="" id="volume" class="form-control @error('location') is-invalid @enderror" placeholder="Enter volume...." name="location">
                                         <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
-                                        @error('volume')
+                                        @error('location')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -57,9 +57,9 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="volume">type:<small class="text-danger">*</small></label>
-                                        <input type="text" min="0" value="" id="volume" class="form-control @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="type">
+                                        <input type="text" min="0" value="" id="volume" class="form-control @error('type') is-invalid @enderror" placeholder="Enter volume...." name="type">
                                         <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
-                                        @error('volume')
+                                        @error('type')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -69,9 +69,9 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="volume">offer:<small class="text-danger">*</small></label>
-                                        <input type="text" min="0" value="" id="volume" class="form-control @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="offer">
+                                        <input type="text" min="0" value="" id="volume" class="form-control @error('offer') is-invalid @enderror" placeholder="Enter volume...." name="offer">
                                         <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
-                                        @error('volume')
+                                        @error('offer')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -81,9 +81,9 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="volume">offer_code:<small class="text-danger">*</small></label>
-                                        <input type="text" min="0" value="" id="volume" class="form-control @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="offer_code">
+                                        <input type="text" min="0" value="" id="volume" class="form-control @error('offer_code') is-invalid @enderror" placeholder="Enter volume...." name="offer_code">
                                         <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
-                                        @error('volume')
+                                        @error('offer_code')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -92,13 +92,14 @@
                                 </div>
                                 <div class="col-md-12"> 
                                     <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt="" srcset="">
+                                    <input type="hidden" value="no" name="value_exist">
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="">
+                                    <div class="form-group">
                                         <label for="volume">image:<small class="text-danger">*</small></label><br>
-                                        <input type="file" min="0" value="" id="image" class=" @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="image">
-                                        <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
-                                        @error('volume')
+                                        <input type="file" style="border:none" value="" id="image" class="p-0 form-control @error('image') is-invalid @enderror" placeholder="Enter volume...." name="image">
+                                        <small class="form-text text-muted">Enter volume in minute.</small>
+                                        @error('image')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

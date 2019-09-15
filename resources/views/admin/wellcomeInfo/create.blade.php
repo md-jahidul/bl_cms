@@ -15,11 +15,13 @@
                         <form class="form" action="@if(isset($wellcomeInfo)) {{route('wellcomeInfo.update',$wellcomeInfo->id)}} @else {{route('wellcomeInfo.store')}} @endif" enctype="multipart/form-data" method="POST">
                         @csrf
                         @if(isset($wellcomeInfo)) @method('put') @else @method('post') @endif
+                        <input type="hidden" value="@if(isset($wellcomeInfo)) yes @else no @endif" name="value_exist">
                         <div class="form-body">
                             <h4 class="form-section"><i class="la la-paperclip"></i>Slider Information</h4>
                             <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    
                                     <label for="guest_salutation">guest_salutation:<small class="text-danger">*</small></label>
                                     <input type="text" @if(isset($wellcomeInfo)) value="{{$wellcomeInfo->guest_salutation}}"  @else value=""  @endif  id="guest_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Slider Name" name="guest_salutation">
                                     @error('title')

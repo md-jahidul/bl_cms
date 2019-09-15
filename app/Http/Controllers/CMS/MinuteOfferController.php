@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\MinuitOfferRequest;
 use App\Http\Controllers\Controller;
 use App\Services\MinuteOfferService;
 use Illuminate\Support\Facades\Session;
@@ -53,7 +54,7 @@ class MinuteOfferController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MinuitOfferRequest $request)
     {
         $response = $this->minuteOfferService->storeMinuteOffer($request->all());
         Session::flash('message', $response->content());
@@ -89,7 +90,7 @@ class MinuteOfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MinuitOfferRequest $request, $id)
     {   
         session()->flash('success',$this->minuteOfferService->updateMinuteOffer($request,$id)->getContent());
         return redirect(route('minuteOffer.index'));

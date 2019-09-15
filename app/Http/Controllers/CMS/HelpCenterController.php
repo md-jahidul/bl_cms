@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\HelpCenterRequest;
 use App\Http\Controllers\Controller;
 use App\Services\HelpCenterService;
+use App\Models\HelpCenter;
 
 class HelpCenterController extends Controller
 {
@@ -33,7 +35,7 @@ class HelpCenterController extends Controller
      */
     public function index()
     {
-        return view('admin.help-center.index');
+        return view('admin.help-center.index')->with('helpCenters',$this->helpCenterService->findAll());
     }
 
     /**
@@ -52,9 +54,10 @@ class HelpCenterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(HelpCenterRequest $request)
     {
-        dd($request);
+        session()->flash('success',$this->helpCenterService->storeHelpCenter($request->all())->getContent());
+        return redirect(route('helpCenter.index'));
     }
 
     /**
@@ -74,9 +77,9 @@ class HelpCenterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(HelpCenter $helpCenter)
     {
-        //
+        return view('admin.help-center.edit')->with('helpCenter',$helpCenter);
     }
 
     /**
@@ -86,9 +89,10 @@ class HelpCenterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(HelpCenterRequest $request,helpCenter $helpCenter)
     {
-        //
+        session()->flash('success',$this->helpCenterService->updateHelpCenter($request->all(),$helpCenter)->getContent());
+        return redirect(route('helpCenter.index'));
     }
 
     /**
@@ -99,6 +103,8 @@ class HelpCenterController extends Controller
      */
     public function destroy($id)
     {
-        //
+       
+        session()->flash('success',$this->helpCenterService->destroyHelpCenter($id)->getContetn());
+        return redirect(route('helpCenter.index'));
     }
 }

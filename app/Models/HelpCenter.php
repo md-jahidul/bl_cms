@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class HelpCenter extends Model
 {
-    protected $table = 'internet_offers';
+    protected $table = 'help_centers';
     protected $fillable = [
         'title',
         'icon',

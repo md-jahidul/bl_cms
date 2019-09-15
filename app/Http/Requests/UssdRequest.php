@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ShortCutStoreRequest extends FormRequest
+class UssdRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,19 +24,10 @@ class ShortCutStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'tittle' => 'required|unique:shortcuts|max:10',
-            'icon' => 'required_if:value_exist,no|image|mimes:jpeg,jpg,png'
-        ];
-    }
-    /**
-     * Custom message for validation
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            
+            'title'=>'required',
+            'code'=>'required',
+            'purpose'=>'required',
+            'provider'=>'required',
         ];
     }
 }

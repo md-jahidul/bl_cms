@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MixedBundleOfferRequest;
 use App\Services\MixedBundleOfferService;
 use Illuminate\Support\Facades\Session;
 
@@ -52,7 +53,7 @@ class MixedBundleOfferController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MixedBundleOfferRequest $request)
     {
         // return $request;
         $response = $this->mixedBundleOfferService->storeMixedBundleOffer($request->all());
@@ -89,7 +90,7 @@ class MixedBundleOfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MixedBundleOfferRequest $request, $id)
     {
         session()->flash('success',$this->mixedBundleOfferService->updateMixedBundleOffer($request,$id)->getContent());
         return redirect(route('mixedBundleOffer.index'));

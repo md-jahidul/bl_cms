@@ -37,11 +37,11 @@ class HelpCenterService
      * Storing the banner resource
      * @return Response
      */
-    public function storeSlider($data)
+    public function storeHelpCenter($data)
     {
-        $data['short_code'] = strtolower(str_replace(' ','_',$data['title'])); 
+        $data['icon'] = 'storage/'.$data['icon']->store('Help_Center_Icon');
         $this->save($data);
-        return new Response("Slider has successfully been created");
+        return new Response("Help Center has successfully been created");
     }
 
     /**
@@ -49,10 +49,16 @@ class HelpCenterService
      * @param $data
      * @return Response
      */
-    public function updateSlider($request, $slider)
+    public function updateHelpCenter($request, $helpCenter)
     {
-        $slider->update($request->all());
-        return Response('Slider updated successfully !');
+        if(array_key_exists('icon', $request)){
+            $request['icon'] = 'storage/'.$request['icon']->store('Help_Center_Icon');
+            unlink($helpCenter->icon);
+        }else{
+            $request['icon'] = $helpCenter->icon;
+        }
+        $helpCenter->update($request);
+        return Response('Help Center updated successfully !');
     }
 
     /**
@@ -60,11 +66,12 @@ class HelpCenterService
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      * @throws \Exception
      */
-    public function deleteSlider($id)
+    public function destroyHelpCenter($id)
     {
-        $slider = $this->findOne($id);
-        $slider->delete();
-        return Response('Slider deleted successfully !');
+        $helpCenter = $this->findOne($id);
+        unlink($helpCenter->icon);
+        $helpCenter->delete();
+        return Response('Help Center deleted successfully !');
     }
 
 }

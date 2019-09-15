@@ -92,6 +92,7 @@
                                 </div>
                                 <div class="col-md-12"> 
                                     <img style="height:100px;width:200px" id="imgDisplay" src="{{asset($nearByOffer->image)}}" alt="" srcset="">
+                                    <input type="hidden" value="yes" name="value_exist">
                                 </div>
                                 <div class="col-md-12">
                                     <div class="">

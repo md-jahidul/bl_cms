@@ -18,6 +18,7 @@ class CreateShortcutsTable extends Migration
             $table->string('tittle');
             $table->string('icon');
             $table->string('component_identifier');
+            $table->tinyinteger('is_default')->default('0');
             $table->timestamps();
         });
     }

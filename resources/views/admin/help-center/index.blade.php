@@ -28,35 +28,37 @@
                         <thead>
                         <tr>
                             <th width=''>ID</th>
-                            <th width=''>Title</th>
-                            <th width=''>Banner</th>
-                            <th width=''>Redirect url</th>
+                            <th width=''>title</th>
+                            <th width=''>redirect_link</th>
+                            <th width=''>sequence</th>
+                            <th width=''>icon</th>
                             <th  width='500'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {{-- @foreach ($banners as $banner) --}}
+                        @foreach ($helpCenters as $helpCenter)
 
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{$helpCenter->id}}</td>
+                                <td>{{$helpCenter->title}}</td>
+                                <td>{{$helpCenter->redirect_link}}</td>
+                                <td>{{$helpCenter->sequence}}</td>
+                                <td><img src="{{asset($helpCenter->icon)}}" style="height:50px;width:100px" alt=""></td>
                                 <td>
                                     <div class="row">
                                         <div class="col-md-1 mr-1">
-                                            <a role="button" href="" class="btn btn-outline-success">
+                                            <a role="button" href="{{ route('helpCenter.edit',$helpCenter->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
                                         <div class="col-md-1">
-                                            <button data-id="" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                            <button data-id="{{$helpCenter->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
                             
-                        {{-- @endforeach --}}
+                        @endforeach
                         </tbody>
                     </table>
 
@@ -101,7 +103,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('banner/destroy') }}/"+id,
+                            url: "{{ url('helpCenter/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -111,7 +113,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('banner/') }}"
+                                    window.location.href = "{{ url('helpCenter/') }}"
                                 }
                             }
                         })

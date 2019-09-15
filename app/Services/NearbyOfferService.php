@@ -38,9 +38,7 @@ class NearbyOfferService
      * @return Response
      */
     public function storeNearbyOffer($data)
-    {
-        //dd($data);
-        // $data['short_code'] = strtolower(str_replace(' ','_',$data['title']));           
+    {        
         $data['image'] = 'storage/'.$data['image']->store('NearbyOffer_image');
         $this->save($data);
         return new Response("Near By Offer has successfully been created");
@@ -51,10 +49,15 @@ class NearbyOfferService
      * @param $data
      * @return Response
      */
-    public function updateNearbyOffer($request, $slider)
+    public function updateNearbyOffer($request, $nearByOffer)
     {
-        $slider->update($request->all());
-        return Response('Slider updated successfully !');
+        if(array_key_exists('image', $request)){
+            unlink($nearByOffer->image);
+        }else{
+            $request['image'] = $nearByOffer->image;
+        }
+        $nearByOffer->update($request);
+        return Response('Near By Offer updated successfully !');
     }
 
     /**
@@ -65,7 +68,6 @@ class NearbyOfferService
     public function deleteNearbyOffer($id)
     {
         $data = $this->findOne($id);
-
         unlink($data->image);
         $data->delete();
         return Response('Offer deleted successfully !');
