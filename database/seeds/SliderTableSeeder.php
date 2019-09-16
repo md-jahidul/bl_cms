@@ -20,7 +20,7 @@ class SliderTableSeeder extends Seeder
                 'title' =>  'Home page' . $slider,
                 'component_id' => $key + 1,
                 'description' => 'Description of ' . $slider,
-                'short_code' => 'slider_'.++$key,
+                'short_code' => '[slider_'.++$key .']',
                 'platform' => 'web'
             ]);
         }

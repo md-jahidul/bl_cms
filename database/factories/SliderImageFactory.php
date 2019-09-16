@@ -11,8 +11,10 @@ $factory->define(SliderImage::class, function (Faker $faker) {
         'title' => $faker->streetName,
         'description' => $faker->sentence,
         'image_url' => $faker->image(public_path()."/slider-images", 420,320,"nature", false),
-        'url_btn_label' => $faker->city,
         'alt_text' => 'slider image',
-        'url' => $faker->url
+        'url_btn_label' => 'View Details',
+        'redirect_url' => $faker->url,
+        'sequence' => count(SliderImage::get()) + 1,
+        'other_attributes' => null
     ];
 });
