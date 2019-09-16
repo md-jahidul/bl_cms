@@ -4,70 +4,66 @@
             <li class=" nav-item"><a href="#"><i class="la la-home"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
             </li>
-            <li class="{{ is_active_url('short_cuts') }} nav-item"><a href="{{route('short_cuts.index')}}"><i class="la la-fighter-jet"></i>
-                <span class="menu-title" data-i18n="nav.dash.main">Short Cuts</span></a>
-            <li class=" nav-item"><a href="{{ url('menu') }}"><i class="la la-medium"></i>
+
+            {{--------------------------------------------------------------------------------------------------------------------}}
+            {{---------------------------------------------------------Asset Lite-------------------------------------------------}}
+            {{--------------------------------------------------------------------------------------------------------------------}}
+            @if(Auth::user()->role_id == '1'|| Auth::user()->role_id == '3')
+            <li class="nav-item"><a href="{{ url('menu') }}"><i class="la la-medium"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Menu Management</span></a>
             </li>
 
-            <li class=" nav-item"><a href="{{ url('footer-menu') }}"><i class="la la-futbol-o"></i>
+            <li class="nav-item"><a href="{{ url('footer-menu') }}"><i class="la la-futbol-o"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Footer Management</span></a>
             </li>
-
-            <li class=" nav-item"><a href="{{ url('quick-launch') }}"><i class="la la-automobile"></i>
+            {{-- <li class="{{ is_active_url('slider') . is_active_url('slider/addImage/') . is_active_url('slider/create') . is_active_url('slider/edit') }}">
+                <a class="nav-item" href="{{ route('slider.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-sliders"></i>Slider</a>
+            </li> --}}
+            <li class="nav-item"><a href="{{ url('quick-launch') }}"><i class="la la-automobile"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Quick launch</span></a>
             </li>
+            <li class="nav-item"><a href="#"><i class="la la-question"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Quiz Management</span></a>
+                    <ul class="menu-content">
+                        {{--Tag--}}
+                        <li class="{{ is_active_url('tags') . is_active_url('tags/create')}}">
+                            <a class="menu-item" href="{{ url('tags') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-tags"></i> Tag</a>
+                        </li>
+                        <li class="{{ is_active_url('campaigns') . is_active_url('campaigns/create')}}">
+                            <a class="menu-item" href="{{ url('campaigns') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-bullhorn"></i> Campaign</a>
+                        </li>
+                        <li class="{{ is_active_url('questions') . is_active_url('questions/create')}}">
+                            <a class="menu-item" href="{{ url('questions') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-question"></i> Question</a>
+                        </li>
 
-            <li class=" nav-item"><a href="#"><i class="la la-sliders"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">Slider Management</span></a>
-                <ul class="menu-content">
-
-                    <li class="{{ is_active_url('sliders') . is_active_url('sliders/create')}}">
-                        <a class="menu-item" href="{{ url('sliders') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-file-image-o"></i> Slider</a>
-                    </li>
-                    <li class="{{ is_active_url('slider/images') . is_active_url('sliders/images/create')}}">
-                        <a class="menu-item" href="{{ url('slider/images') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-file-image-o"></i> Slider Image</a>
-                    </li>
-
-                </ul>
-            </li>
-            <li class="{{ is_active_url('ussd') }} {{is_active_url('ussd/create')}} nav-item"><a href="{{route('ussd.index')}}"><i class="la la-asterisk"></i>
-                <span class="menu-title" data-i18n="nav.dash.main">USSD Code</span></a>
-            </li>
-            <li class="{{ is_active_url('helpCenter') }} {{ is_active_url('helpCenter/create') }} nav-item"><a href="{{route('helpCenter.index')}}"><i class="la la-ambulance"></i>
-                <span class="menu-title" data-i18n="nav.dash.main">Help Center</span></a>
-            </li>
-            <li class="{{ is_active_url('setting') }} nav-item"><a href="{{route('setting.index')}}"><i class="la la-cogs"></i>
-                <span class="menu-title" data-i18n="nav.dash.main">Setting</span></a>
-            </li>
-           
-            <li class=" nav-item"><a href="#"><i class="la la-question"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">Quiz Management</span></a>
-                <ul class="menu-content">
-                    {{--Tag--}}
-                    <li class="{{ is_active_url('tags') . is_active_url('tags/create')}}">
-                        <a class="menu-item" href="{{ url('tags') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-tags"></i> Tag</a>
-                    </li>
-                    <li class="{{ is_active_url('campaigns') . is_active_url('campaigns/create')}}">
-                        <a class="menu-item" href="{{ url('campaigns') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-bullhorn"></i> Campaign</a>
-                    </li>
-                    <li class="{{ is_active_url('questions') . is_active_url('questions/create')}}">
-                        <a class="menu-item" href="{{ url('questions') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-question"></i> Question</a>
-                    </li>
-
-                    <li class="{{ is_active_url('prizes') . is_active_url('prizes/create')}}">
-                        <a class="menu-item" href="{{ url('prizes') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-trophy"></i> Prize</a>
-                    </li>
+                        <li class="{{ is_active_url('prizes') . is_active_url('prizes/create')}}">
+                            <a class="menu-item" href="{{ url('prizes') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-trophy"></i> Prize</a>
+                        </li>
 
                 </ul>
             </li>
+            @endif
+            {{--------------------------------------------------------------------------------------------------------------------}}
+            {{---------------------------------------------------------Asset Lite End---------------------------------------------}}
+            {{--------------------------------------------------------------------------------------------------------------------}}
 
+
+
+            {{--------------------------------------------------------------------------------------------------------------------}}
+            {{---------------------------------------------------------My-BL App--------------------------------------------------}}
+            {{--------------------------------------------------------------------------------------------------------------------}}
+            @if(Auth::user()->role_id == '1'|| Auth::user()->role_id == '2')
+            <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{route('setting.index')}}"><i class="la la-cogs"></i>
+                <span class="menu-title" data-i18n="nav.dash.main">Settings</span></a>
+            </li>
+            <li class="{{ is_active_url('short_cuts') }} nav-item"><a href="{{route('short_cuts.index')}}"><i class="la la-fighter-jet"></i>
+                <span class="menu-title" data-i18n="nav.dash.main">Short Cuts</span></a>
+            </li>
             <li class=" nav-item"><a href="#"><i class="la la-file"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Manage Page</span></a>
                 <ul class="menu-content">
@@ -115,7 +111,12 @@
 
                 </ul>
             </li>
+            @endif
+            {{--------------------------------------------------------------------------------------------------------------------}}
+            {{---------------------------------------------------------My-BL App End----------------------------------------------}}
+            {{--------------------------------------------------------------------------------------------------------------------}}
 
         </ul>
+
     </div>
 </div>
