@@ -14,6 +14,7 @@
                     <h4 class="card-title" id="striped-row-layout-card-center"><i class="la la-gears"></i> Settings Page</h4>
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 </div>
+                <hr class="mb-0">
                 <div class="card-content collpase show">
                     <div class="card-body">
                         <form action="{{ url('config/update') }}" method="POST" class="form form-horizontal striped-rows">

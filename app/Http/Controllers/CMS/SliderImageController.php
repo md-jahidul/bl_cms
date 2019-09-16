@@ -83,9 +83,11 @@ class SliderImageController extends Controller
      */
     public function edit($id)
     {
-        $sliders = Slider::select('id', 'title')->get();
-        $slider_image = SliderImage::findOrFail($id);
-        return view('admin.slider-image.edit', compact('sliders', 'slider_image'));
+        $sliderImage = SliderImage::findOrFail($id);
+
+//        return $sliderImage;
+
+        return view('admin.slider-image.edit', compact('sliderImage'));
     }
 
     /**

@@ -63,6 +63,9 @@
                         <input type="text" name="url" class="form-control" id="exampleInputPassword1" placeholder="Enter url">
                     </div>
                 </div>
+                <div class="card-body">
+
+                </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>

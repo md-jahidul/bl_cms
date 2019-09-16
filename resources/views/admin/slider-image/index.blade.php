@@ -255,7 +255,7 @@
                             <th>Description</th>
                             <th>Alt Text</th>
                             <th>Button Label</th>
-                            <th>Action</th>
+                            <th class="text-right">Action</th>
                         </tr>
                         </thead>
                         <tbody id="sortable">
@@ -269,8 +269,8 @@
                                 <td>{{ $slider_image->alt_text }}</td>
                                 <td>{{ $slider_image->url_btn_label }}</td>
                                 <td class="action" width="8%">
-                                    <a href="{{ url("quick-launch/$slider_image->id/edit") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("quick-launch/destroy/$slider_image->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $slider_image->id }}" title="Delete the user">
+                                    <a href="{{ url("slider-image/$slider_image->id/edit") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" remove="{{ url("slider-image/destroy/$slider_image->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $slider_image->id }}" title="Delete the user">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>
