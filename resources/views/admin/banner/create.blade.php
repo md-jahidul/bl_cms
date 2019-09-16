@@ -42,7 +42,7 @@
 
                         <div class="form-group">
                             <label for="name">Banner Name: <span class="text-danger">*</span> </label>
-                            <input id="name" value="@if(isset($banner_info)) {{$banner_info->name}} @endif" type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="title" placeholder="Enter Banner Name..">
+                            <input required id="name" value="@if(isset($banner_info)) {{$banner_info->name}} @endif" type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="title" placeholder="Enter Banner Name..">
                             <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
                         </div>
 
@@ -51,7 +51,7 @@
 
                         <div class="form-group">
                             <label for="image_name">Image Name: <span class="text-danger">*</span> </label>
-                            <input id="image_name" value="@if(isset($banner_info)) {{$banner_info->image_name}} @endif" type="text" name="image_name" class="form-control @error('image_name') is-invalid @enderror" placeholder="Enter Image Name..">
+                            <input required id="image_name" value="@if(isset($banner_info)) {{$banner_info->image_name}} @endif" type="text" name="image_name" class="form-control @error('image_name') is-invalid @enderror" placeholder="Enter Image Name..">
                             <small class="text-danger"> @error('image_name') {{ $message }} @enderror </small>
                         </div>
 
@@ -60,7 +60,7 @@
 
                         <div class="form-group">
                             <label for="code">Code: <span class="text-danger">*</span> </label>
-                            <input id="code" value="@if(isset($banner_info)) {{$banner_info->code}} @endif" type="text" name="code" class="form-control @error('code') is-invalid @enderror" placeholder="Enter Banner code..">
+                            <input required id="code" value="@if(isset($banner_info)) {{$banner_info->code}} @endif" type="text" name="code" class="form-control @error('code') is-invalid @enderror" placeholder="Enter Banner code..">
                             <small class="text-danger"> @error('code') {{ $message }} @enderror </small>
                         </div>
 
@@ -69,7 +69,7 @@
 
                         <div class="form-group">
                             <label for="url">URL: <span class="text-danger">*</span> </label>
-                            <input id="url" value="@if(isset($banner_info)) {{$banner_info->redirect_url}} @endif" type="text" name="redirect_url" class="form-control @error('redirect_url') is-invalid @enderror" placeholder="URL..">
+                            <input required id="url" value="@if(isset($banner_info)) {{$banner_info->redirect_url}} @endif" type="text" name="redirect_url" class="form-control @error('redirect_url') is-invalid @enderror" placeholder="URL..">
                             <small class="text-danger"> @error('redirect_url') {{ $message }} @enderror </small>
                         </div>
 
@@ -86,7 +86,7 @@
                             <label for="banner">Banner : <span class="text-danger">*</span> </label>
                             <div id="banner" class="input-group">
                                 <div class="custom-file">
-                                    <input accept="image/*" onchange="loadFile(event)" name="image_path" type="file" class="custom-file-input @error('image_path') is-invalid @enderror">
+                                    <input @if(!isset($banner_info))  required @endif accept="image/*" onchange="loadFile(event)" name="image_path" type="file" class="custom-file-input @error('image_path') is-invalid @enderror">
                                     <label class="custom-file-label" for="imgInp">Upload Banner...</label>
                                 </div>
                                 <div class="input-group-append">

@@ -40,10 +40,10 @@ class SettingService
      */
     public function storeSetting($request)
     {
-        //dd($this->settingRepository->is_exist($settings['setting_key_id']));
         unset($request['_token']);
         unset($request['_method']);
         $setting = $this->settingRepository->is_exist($request['setting_key_id']);
+        //dd($request);
         
         if(isset($setting)){
             $settings = $this->findOne($setting->id);

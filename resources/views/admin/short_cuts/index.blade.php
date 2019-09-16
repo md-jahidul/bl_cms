@@ -19,24 +19,25 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
-                    <input style="height:100%" value="@if(isset($short_cut_info)) {{$short_cut_info->tittle}} @endif" type="text" name="tittle" class="form-control @error('tittle') is-invalid @enderror" id="tittle" placeholder="Enter Shor Cuts Name..">
+                    <input required style="height:100%" value="@if(isset($short_cut_info)) {{$short_cut_info->tittle}} @endif" type="text" name="tittle" class="form-control @error('tittle') is-invalid @enderror" id="tittle" placeholder="Enter Shor Cuts Name..">
                     <input type="hidden" value="@if(isset($short_cut_info)) yes @else no @endif" name="value_exist">
                     <small class="text-danger"> @error('tittle') {{ $message }} @enderror </small>
                 </div>
             </div>
             <div class="col-md-2 p-0">
                 <div class="form-group">
-                    <select class="form-control" value="" name="is_default" id="">
+                    <select required class="form-control" value="" name="is_default" id="">
                         <option @if(isset($short_cut_info)) @if($short_cut_info->is_default==0) selected @endif @endif value="0">Not Default</option>
                         <option @if(isset($short_cut_info)) @if($short_cut_info->is_default==1) selected @endif @endif value="1">Default</option>
                     </select>
                 </div>
             </div>
             <div class="col-md-5 p-0 pl-1">
+                
                 <div class="form-group">
                     <div class="input-group">
                         <div class="custom-file">
-                            <input name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
+                            <input @if(!isset($short_cut_info)) required @endif  name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
                             <label class="custom-file-label" for="icon">Upload icon...</label>
                         </div>
                         <div class="input-group-append">

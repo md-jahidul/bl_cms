@@ -58,6 +58,9 @@
             {{---------------------------------------------------------My-BL App--------------------------------------------------}}
             {{--------------------------------------------------------------------------------------------------------------------}}
             @if(Auth::user()->role_id == '1'|| Auth::user()->role_id == '2')
+            <li class="{{ is_active_url('/helpCenter') }} {{ is_active_url('helpCenter/create') }} nav-item"><a href="{{route('helpCenter.index')}}"><i class="la la-ambulance"></i>
+                <span class="menu-title" data-i18n="nav.dash.main">Help Center</span></a>
+            </li>
             <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{route('setting.index')}}"><i class="la la-cogs"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Settings</span></a>
             </li>
