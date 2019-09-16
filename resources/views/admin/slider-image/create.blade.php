@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-
+                    @include('layouts.partials.slider_types.'. $type .')
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

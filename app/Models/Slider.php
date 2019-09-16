@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\SliderType;
+use App\Models\SliderComponentType;
 //use App\SliderImage;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,8 +10,8 @@ class Slider extends Model
 {
     protected $fillable = ['slider_type_id', 'title', 'description', 'short_code'];
 
-    public function sliderType(){
-        return $this->belongsTo(SliderType::class);
+    public function type(){
+        return $this->belongsTo(SliderComponentType::class,'id');
     }
 
     public function sliderImages(){

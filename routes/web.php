@@ -20,9 +20,13 @@ Auth::routes();
 
 Route::get('/cms', 'CMS\TestCMSController@index');
 
-Route::resource('sliders', 'SliderController');
-Route::get('slider/{parent_id}/images', 'CMS\SliderImageController@index');
-Route::get('slider-image/{id}/edit', 'CMS\SliderImageController@edit');
+//Route::resource('sliders', 'SliderController');
+//Route::get('slider/{parent_id}/images', 'CMS\SliderImageController@index');
+//Route::get('slider-image/{id}/edit', 'CMS\SliderImageController@edit');
+
+Route::get('sliders', 'SliderController@index');
+Route::get('slider/{slider_id}/{type}', 'CMS\SliderImageController@index')->name('slider_images');
+Route::get('slider/{slider_id}/{type}/image/{id}', 'CMS\SliderImageController@edit')->name('slider_image_edit');
 
 
 

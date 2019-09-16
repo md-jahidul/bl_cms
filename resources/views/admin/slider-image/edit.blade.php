@@ -95,7 +95,9 @@
                                     </div>
                                 </div>
 
-                                <div class="form-actions col-md-12 ">
+                                @include('layouts.partials.slider_types.' . $type )
+
+                                <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
                                                 class="la la-check-square-o"></i> Update
@@ -103,6 +105,8 @@
                                     </div>
                                 </div>
                             </div>
+
+
                             @csrf
                             {{method_field('PUT')}}
                         </form>

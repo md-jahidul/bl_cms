@@ -14,17 +14,10 @@ class SliderImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($parentId)
+    public function index($parentId,$type)
     {
-
-//        return $parentId;
-
-
         $slider_images = SliderImage::where('slider_id', $parentId)->with('slider')->get();
-
-//        return $slider_images;
-
-        return view('admin.slider-image.index', compact('slider_images'));
+        return view('admin.slider-image.index', compact('slider_images','type'));
     }
 
     /**
@@ -35,6 +28,8 @@ class SliderImageController extends Controller
     public function create()
     {
         $sliders = Slider::select('id', 'title')->get();
+        $type = 'degital_services';
+
         return view('admin.slider-image.create', compact('sliders'));
     }
 
@@ -81,13 +76,10 @@ class SliderImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,$type)
     {
         $sliderImage = SliderImage::findOrFail($id);
-
-//        return $sliderImage;
-
-        return view('admin.slider-image.edit', compact('sliderImage'));
+        return view('admin.slider-image.edit', compact('sliderImage','type'));
     }
 
     /**
