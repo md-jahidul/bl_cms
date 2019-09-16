@@ -1,68 +1,55 @@
 @extends('layouts.admin')
 @section('title', 'Config Item List')
 @section('card_name', 'Config Item List')
-@section('breadcrumb')
-    <li class="breadcrumb-item active">Config Item List</li>
-@endsection
-@section('action')
-{{--    <a href="{{ url('tags/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
-{{--        Add Tag--}}
-{{--    </a>--}}
-@endsection
+{{--@section('breadcrumb')--}}
+{{--    <li class="breadcrumb-item active">Config Item List</li>--}}
+{{--@endsection--}}
+{{--@section('action')--}}
+{{--@endsection--}}
 @section('content')
-    <section>
-        <div class="card">
-            <div class="card-content collapse show">
-                <div class="card-body card-dashboard">
-                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
-                           id="Example1" role="grid" aria-describedby="Example1_info" style="">
-                        <thead>
-                        <tr>
-                            <th>SL</th>
-                            <th>Tag</th>
-                            <th>Slug</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($configs as $key=>$config)
-                            <tr>
-{{--                                <td>{{ ++$key }}</td>--}}
-{{--                                <td>{{$config->title}}</td>--}}
-{{--                                <td>{{$config->slug}}</td>--}}
-{{--                                <td class="text-center">--}}
-{{--                                    <span class="dropdown">--}}
-{{--                                    <button id="btnSearchDrop2" type="button" data-toggle="dropdown"--}}
-{{--                                            aria-haspopup="true"--}}
-{{--                                            aria-expanded="false" class="btn btn-info dropdown-toggle"><i--}}
-{{--                                            class="la la-cog"></i></button>--}}
-{{--                                      <span aria-labelledby="btnSearchDrop2"--}}
-{{--                                            class="dropdown-menu mt-1 dropdown-menu-right">--}}
-{{--                                        <a href="{{ url('tags/'.$config->id.'/edit') }}"--}}
-{{--                                           class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>--}}
-{{--                                        <div class="dropdown-divider"></div>--}}
-{{--                                          <form method="POST"--}}
-{{--                                                action="{{ url('/tags', ['id' => $config->id]) }}"--}}
-{{--                                                accept-charset="UTF-8" style="display:inline">--}}
-{{--                                          <button type="submit" class="dropdown-item danger"--}}
-{{--                                                  title="Delete the user"--}}
-{{--                                                  onclick="return confirm('Are you sure?')"><i--}}
-{{--                                                  class="ft-trash"></i> Delete</button>--}}
-{{--                                               @method('delete')--}}
-{{--                                              @csrf--}}
-{{--                                          </form>--}}
-{{--                                      </span>--}}
-{{--                                    </span>--}}
-{{--                                </td>--}}
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+    <div class="row justify-content-md-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" id="striped-row-layout-card-center"><i class="la la-gears"></i> Settings Page</h4>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                </div>
+                <div class="card-content collpase show">
+                    <div class="card-body">
+                        <form action="{{ url('config/update') }}" method="POST" class="form form-horizontal striped-rows">
+                            @csrf
+                            @method('put')
+                            <div class="form-body">
+
+                                @foreach($configs as $key =>$config)
+                                    @php($title = ucfirst(str_replace('_', ' ', $config->key )))
+                                    <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                        <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
+                                        <div class="col-md-9">
+                                            <input type="text" id="row{{$key}}" class="form-control" value="{{ $config->value }}" placeholder="name" name="{{ $config->key }}">
+                                            @if ($errors->has($config->key))
+                                                <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                @endforeach
+                            </div>
+                            <hr>
+                                <div class="form-group row">
+                                    <label class="col-md-3 label-control" for="eventRegInput5"></label>
+                                    <div class="col-md-9 pt-0 pb-0">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="la la-check-square-o"></i> Save Change
+                                        </button>
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-
-    </section>
+    </div>
 
 @stop
 

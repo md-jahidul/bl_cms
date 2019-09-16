@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\SliderType;
-use App\SliderImage;
+//use App\SliderImage;
 use Illuminate\Database\Eloquent\Model;
 
 class Slider extends Model
@@ -13,9 +13,9 @@ class Slider extends Model
     public function sliderType(){
         return $this->belongsTo(SliderType::class);
     }
- 
+
     public function sliderImages(){
         return $this->hasMany(SliderImage::class);
     }
-    
+
 }

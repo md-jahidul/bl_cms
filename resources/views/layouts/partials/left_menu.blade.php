@@ -17,6 +17,10 @@
                     <span class="menu-title" data-i18n="nav.templates.main">Quick launch</span></a>
             </li>
 
+            <li class=" nav-item"><a href="{{ url('config') }}"><i class="la la-gears"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Settings Page</span></a>
+            </li>
+
             <li class=" nav-item"><a href="#"><i class="la la-sliders"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Slider Management</span></a>
                 <ul class="menu-content">
@@ -25,10 +29,10 @@
                         <a class="menu-item" href="{{ url('sliders') }}" data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-file-image-o"></i> Slider</a>
                     </li>
-                    <li class="{{ is_active_url('slider/images') . is_active_url('sliders/images/create')}}">
-                        <a class="menu-item" href="{{ url('slider/images') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-file-image-o"></i> Slider Image</a>
-                    </li>
+{{--                    <li class="{{ is_active_url('slider/images') . is_active_url('sliders/images/create')}}">--}}
+{{--                        <a class="menu-item" href="{{ url('slider/images') }}" data-i18n="nav.templates.vert.classic_menu"><i--}}
+{{--                                    class="la la-file-image-o"></i> Slider Image</a>--}}
+{{--                    </li>--}}
 
                 </ul>
             </li>

@@ -21,7 +21,11 @@ Auth::routes();
 Route::get('/cms', 'CMS\TestCMSController@index');
 
 Route::resource('sliders', 'SliderController');
-Route::resource('slider_image', 'SliderImageController');
+Route::get('slider/{parent_id}/images', 'CMS\SliderImageController@index');
+
+
+
+
 Route::resource('questions', 'CMS\QuestionController');
 // Route::resource('prize', 'PrizeController');
 Route::resource('tags','TagController');
@@ -31,8 +35,9 @@ Route::resource('campaigns','CMS\CampaignController');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 
-
- Route::resource('config','CMS\ConfigController');
+// CONFIG PAGES ====================================
+Route::get('config','CMS\ConfigController@index');
+Route::put('config/update','CMS\ConfigController@update');
 
 // MENU PAGES ====================================
 Route::resource('menu','CMS\MenuController');
@@ -56,6 +61,7 @@ Route::group(['prefix' => 'footer-menu'], function () {
 Route::resource('quick-launch','CMS\QuickLaunchController');
 Route::get('quick-launch/destroy/{id}', 'CMS\QuickLaunchController@destroy');
 Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
+
 
 
 

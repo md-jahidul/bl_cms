@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
-use App\Slider;
-use App\SliderImage;
+use App\Http\Controllers\Controller;
+use App\Models\Slider;
+use App\Models\SliderImage;
 use Illuminate\Http\Request;
 
 class SliderImageController extends Controller
@@ -13,11 +14,16 @@ class SliderImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($parentId)
     {
-        $slider_images = SliderImage::with('slider')->get();
+
+//        return $parentId;
+
+
+        $slider_images = SliderImage::where('slider_id', $parentId)->with('slider')->get();
 
 //        return $slider_images;
+
         return view('admin.slider-image.index', compact('slider_images'));
     }
 
@@ -29,7 +35,6 @@ class SliderImageController extends Controller
     public function create()
     {
         $sliders = Slider::select('id', 'title')->get();
-
         return view('admin.slider-image.create', compact('sliders'));
     }
 

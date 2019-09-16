@@ -2,12 +2,26 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Http\Requests\UpdateConfigRequest;
 use App\Models\Config;
+use App\Services\ConfigService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class ConfigController extends Controller
 {
+    /**
+     * @var $configService
+     */
+    private $configService;
+
+    public function __construct(ConfigService $configService)
+    {
+        $this->configService = $configService;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -16,55 +30,7 @@ class ConfigController extends Controller
     public function index()
     {
         $configs = Config::all();
-
-        return $configs;
-//        echo "<pre>";
-//        print_r(json_decode($config['value']));
-
         return view('admin.config.index', compact('configs'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -74,19 +40,11 @@ class ConfigController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateConfigRequest $request)
     {
-        //
+        $response = $this->configService->updateConfigData($request);
+        Session::flash('message', $response->getContent());
+        return redirect( "/config");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

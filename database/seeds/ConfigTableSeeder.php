@@ -14,25 +14,17 @@ class ConfigTableSeeder extends Seeder
     public function run()
     {
 
-        $siteLogo[] = ['icon' => 'logo/bl-logo.phg', 'url' => 'banglalink.net/home'];
-        $address = "info@banglalink.net | +8801911304121 | For any query : pr@banglalink.net Tiger’s Den, House 4 (SW), Bir Uttam Mir Shawkat Sarak, Gulshan1, Dhaka 1212.";
-        $copyRight = "© 2019 - Banglalink - All rights reserved";
+        $siteLogo     = "banglalink.net/home";
+        $email        = "info@banglalink.net";
+        $mobileNumber = "+8801911304121";
+        $otherInfo   = "pr@banglalink.net Tiger’s Den, House 4 (SW), Bir Uttam Mir Shawkat Sarak, Gulshan1, Dhaka 1212.";
+        $copyRight    = "© 2019 - Banglalink - All rights reserved";
+        $facebook     = "facebook.com/banglalink-page-fb";
+        $twitter      = "twitter.com/banglalink-page";
+        $linkedin     = "linkedin.com/banglalink-page-ln";
 
-        $socialIcons = ["facebook/facebook.png","twitter/twitter.jpg","linkedin/linkedin.png"];
-        $url = ["facebook/facebook","twitter/twitter", "linkedin/linkedin"];
-        foreach ($socialIcons as $key => $item) {
-            $social_value[] = [
-                'icon' => $item,
-                'social_url' => $url[$key],
-            ];
-        }
-
-        $site_logo_json = json_encode($siteLogo);
-        $social_json = json_encode($social_value);
-
-        $configKeys = ['site_logo', 'address', 'copy_right', 'social_item'];  /*'site_logo' 'address', 'copy_right', 'social_item'*/
-        $configValue = [$site_logo_json, $address, $copyRight, $social_json];  /*$siteLogo, $address, $copyRight, $social_json*/
-
+        $configKeys = ['site_url', 'email', 'mobile_number', 'other_info', 'copy_right', 'facebook', 'twitter', 'linkedin'];
+        $configValue = [$siteLogo, $email, $mobileNumber, $otherInfo, $copyRight, $facebook, $twitter, $linkedin];
 
         foreach ($configKeys as $index => $keyItem) {
             Config::create([

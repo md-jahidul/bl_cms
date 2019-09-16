@@ -31,33 +31,9 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $slider->title }}</td>
-                                <td>{{ $slider->sliderType->name }}</td>
                                 <td>{{ $slider->description }}</td>
-                                <td>
-                                    <span class="dropdown">
-                                    <button id="btnSearchDrop2" type="button" data-toggle="dropdown"
-                                            aria-haspopup="true"
-                                            aria-expanded="false" class="btn btn-info dropdown-toggle"><i
-                                                class="la la-cog"></i></button>
-                                      <span aria-labelledby="btnSearchDrop2"
-                                            class="dropdown-menu mt-1 dropdown-menu-right">
-                                        <a href="{{ url('sliders/'.$slider->id.'/edit') }}"
-                                           class="dropdown-item"><i class="ft-edit-2"></i> Edit </a>
-                                        <div class="dropdown-divider"></div>
-
-                                          <form method="POST"
-                                                action="{{ url('/sliders', ['id' => $slider->id]) }}"
-                                                accept-charset="UTF-8" style="display:inline">
-                                          <button type="submit" class="dropdown-item danger"
-                                                  title="Delete the user"
-                                                  onclick="return confirm('Are you sure?')"><i
-                                                      class="ft-trash"></i> Delete</button>
-                                               @method('delete')
-                                              @csrf
-                                          </form>
-                                      </span>
-                                    </span>
-                                </td>
+                                <td>{{ $slider->platform }}</td>
+                                <td class="text-center" width="10%"><a href="{{ url("slider/$slider->id/images") }}" class="btn btn-outline-info"><i class="la la-image"></i> Slider Images <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{--{{ $childNumber }}--}}</span></a></td>
                             </tr>
                         @endforeach
                         </tbody>
