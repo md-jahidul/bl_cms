@@ -5,9 +5,9 @@
     <li class="breadcrumb-item active">Slider List</li>
 @endsection
 @section('action')
-    <a href="{{ url('sliders/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <!-- <a href="{{ url('sliders/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add Slider
-    </a>
+    </a> -->
 @endsection
 @section('content')
     <section>
