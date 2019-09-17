@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 use Auth;
 use Closure;
 
-class WabAdmin
+class WebAdmin
 {
     /**
      * Handle an incoming request.
