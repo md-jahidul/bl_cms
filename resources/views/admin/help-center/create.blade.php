@@ -22,7 +22,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="title">Title:<small class="text-danger">*</small></label>
-                                        <input required type="text" value="" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
+                                        <input value="{{ old("title") ? old("title") : '' }}" type="text" value="" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
                                         @error('title')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -34,7 +34,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="sequence">Sequence:<small class="text-danger">*</small></label>
-                                        <input required type="number" min="0" value="" id="sequence" class="form-control @error('sequence') is-invalid @enderror" placeholder="sequence.." name="sequence">
+                                        <input type="number" value="{{ old("sequence") ? old("sequence") : '' }}" min="0" value="" id="sequence" class="form-control @error('sequence') is-invalid @enderror" placeholder="sequence.." name="sequence">
                                         @error('sequence')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -46,7 +46,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="redirect_link">Redirect link:<small class="text-danger">*</small></label>
-                                        <input required type="text" value="" id="redirect_link" class="form-control @error('redirect_link') is-invalid @enderror" placeholder="Http.." name="redirect_link">
+                                        <input required type="text" value="{{ old("redirect_link") ? old("redirect_link") : '' }}" value="" id="redirect_link" class="form-control @error('redirect_link') is-invalid @enderror" placeholder="Http.." name="redirect_link">
                                         <small id="redirect_link" class="form-text text-muted">Enter Link here.</small>
                                         @error('redirect_link')
                                             <span class="invalid-feedback" role="alert">
@@ -63,7 +63,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input required name="icon" id="image" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
+                                                <input value="{{ old("icon") ? old("icon") : '' }}" name="icon" id="image" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
                                                 <label class="custom-file-label" for="icon">Upload icon...</label>
                                             </div>
                                             <div class="input-group-append">
