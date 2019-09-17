@@ -59,7 +59,7 @@
                                     <div class="form-group">
                                         <label for="sms">SMS:<small class="text-danger">*</small></label>
                                         <input required type="number" min="0" value="{{$mixedBundle_offer->sms}}" id="sms" class="form-control @error('sms') is-invalid @enderror" placeholder="Enter volume...." name="sms">
-                                        <small id="sms" class="form-text text-muted">Enter volume in sms.</small>
+                                        <small id="sms" class="form-text text-muted">Enter volume in amount of sms.</small>
                                         @error('sms')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

@@ -27,12 +27,12 @@
                         <thead>
                         <tr>
                             <th width=''>ID</th>
-                            <th width=''>title</th>
-                            <th width=''>volume</th>
-                            <th width=''>validity</th>
-                            <th width=''>price</th>
-                            <th width=''>offer_code</th>
-                            <th width=''>points</th>
+                            <th width=''>Title</th>
+                            <th width=''>Volume</th>
+                            <th width=''>Validity</th>
+                            <th width=''>Price</th>
+                            <th width=''>Offer Code</th>
+                            <th width=''>Points</th>
                             <th  width='500'>Action</th>
                         </tr>
                         </thead>

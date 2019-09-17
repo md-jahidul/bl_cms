@@ -43,7 +43,7 @@
                                         </div>
                                         <div class="form-group col-md-6 mb-2">
                                             <label for="btn">Button URL: </label>
-                                            <input id="btn" type="text" class="form-control" placeholder="Button Name" name="url_btn_label">
+                                            <input id="btn" type="text" class="form-control" placeholder="Button url.." name="url_btn_label">
                                         </div>
                                         <div class="form-group col-md-6 mb-2">
                                             <label for="redirect_url">URL: </label>
@@ -52,7 +52,7 @@
                                        
                                         <div class="form-group col-12 mb-2">
                                             <label for="description">Description: </label>
-                                            <textarea id="description" rows="5" class="form-control" name="description" placeholder="About Project"></textarea>
+                                            <textarea id="description" rows="5" class="form-control" name="description" placeholder="About Slider.."></textarea>
                                         </div>
                                         <div class="col-12">
                                             <label for="sliderImage" class="file center-block">Slider Image:<small class="text-danger">*</small></label><br>

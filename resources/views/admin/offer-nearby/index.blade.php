@@ -27,13 +27,13 @@
                         <thead>
                         <tr>
                             <th width=''>ID</th>
-                            <th width=''>title</th>
-                            <th width=''>vendor</th>
-                            <th width=''>location</th>
-                            <th width=''>type</th>
-                            <th width=''>offer</th>
-                            <th width=''>offer_code</th>
-                            <th width=''>image</th>
+                            <th width=''>Title</th>
+                            <th width=''>Vendor</th>
+                            <th width=''>Location</th>
+                            <th width=''>Type</th>
+                            <th width=''>Offer</th>
+                            <th width=''>Offer Code</th>
+                            <th width=''>Image</th>
                             <th width='200'>Action</th>
                         </tr>
                         </thead>

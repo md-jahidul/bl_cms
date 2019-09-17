@@ -58,7 +58,7 @@
                                         
                                             <div class="form-group col-12 mb-2">
                                                 <label for="description">Description: </label>
-                                                <textarea id="description" rows="5" class="form-control" name="description" placeholder="About Project">{{$image->description}}</textarea>
+                                                <textarea id="description" rows="5" class="form-control" name="description" placeholder="About Slider..">{{$image->description}}</textarea>
                                             </div>
                                             
                                             <div class="col-6">
