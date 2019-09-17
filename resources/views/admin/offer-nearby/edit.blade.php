@@ -22,7 +22,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="title">title:<small class="text-danger">*</small></label>
-                                        <input type="text" value="{{$nearByOffer->title}}" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
+                                        <input required type="text" value="{{$nearByOffer->title}}" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
                                         @error('title')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -33,7 +33,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="vendor">vendor:<small class="text-danger">*</small></label>
-                                        <input type="text" value="{{$nearByOffer->vendor}}" id="vendor" class="form-control @error('vendor') is-invalid @enderror" placeholder="Enter vendor...." name="vendor">
+                                        <input required type="text" value="{{$nearByOffer->vendor}}" id="vendor" class="form-control @error('vendor') is-invalid @enderror" placeholder="Enter vendor...." name="vendor">
                                         <small id="vendor" class="form-text text-muted">Enter vendor...</small>
                                         @error('vendor')
                                             <span class="invalid-feedback" role="alert">
@@ -45,7 +45,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="volume">location:<small class="text-danger">*</small></label>
-                                        <input type="text" min="0" value="{{$nearByOffer->location}}" id="volume" class="form-control @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="location">
+                                        <input required type="text" min="0" value="{{$nearByOffer->location}}" id="volume" class="form-control @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="location">
                                         <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
                                         @error('volume')
                                             <span class="invalid-feedback" role="alert">
@@ -57,7 +57,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="volume">type:<small class="text-danger">*</small></label>
-                                        <input type="text" min="0" value="{{$nearByOffer->type}}" id="volume" class="form-control @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="type">
+                                        <input required type="text" min="0" value="{{$nearByOffer->type}}" id="volume" class="form-control @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="type">
                                         <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
                                         @error('volume')
                                             <span class="invalid-feedback" role="alert">
@@ -69,7 +69,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="volume">offer:<small class="text-danger">*</small></label>
-                                        <input type="text" min="0" value="{{$nearByOffer->offer}}" id="volume" class="form-control @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="offer">
+                                        <input required type="text" min="0" value="{{$nearByOffer->offer}}" id="volume" class="form-control @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="offer">
                                         <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
                                         @error('volume')
                                             <span class="invalid-feedback" role="alert">
@@ -81,7 +81,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="volume">offer_code:<small class="text-danger">*</small></label>
-                                        <input type="text" min="0" value="{{$nearByOffer->offer_code}}" id="volume" class="form-control @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="offer_code">
+                                        <input required type="text" min="0" value="{{$nearByOffer->offer_code}}" id="volume" class="form-control @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="offer_code">
                                         <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
                                         @error('volume')
                                             <span class="invalid-feedback" role="alert">
