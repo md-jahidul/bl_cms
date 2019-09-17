@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Slider List')
-@section('card_name', 'Slider List')
+@section('title', 'Partner List')
+@section('card_name', 'Partner List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Slider List</li>
+    <li class="breadcrumb-item active">Partner List</li>
 @endsection
 @section('action')
-    <a href="{{ url('sliders/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Add Slider
+    <a href="{{ url('partners/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Add Partner
     </a>
 @endsection
 @section('content')
@@ -19,20 +19,35 @@
                         <thead>
                         <tr>
                             <th>SL</th>
-                            <th>Title</th>
-                            <th>Slider Type</th>
-                            <th>Description</th>
+                            <th>Company Name</th>
+                            <th>CEO Name</th>
+                            <th>Company Logo</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Address</th>
+                            <th>Website</th>
+                            <th>Services</th>
                             <th width="10%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($sliders as $key=>$slider)
+                        @foreach($partners as $key=>$partner)
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $slider->title }}</td>
-                                <td>{{ $slider->type->name }}</td>
-                                <td>{{ $slider->description }}</td>
-                                <td class="text-center" width="10%"><a href="{{ route('slider_images',[$slider->id,  str_replace(" ", "-", strtolower( $slider->type->name ) ) ]  ) }}" class="btn btn-outline-info"><i class="la la-image"></i> Slider Images <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{--{{ $childNumber }}--}}</span></a></td>
+                                <td class="pt-2">{{ ++$key }}</td>
+                                <td class="pt-2">{{ $partner->company_name }}</td>
+                                <td class="pt-2">{{ $partner->ceo_name }}</td>
+                                <td><img src="{{ asset('images/partners-logo/'. $partner->company_logo) }}" height="50" width="50"></td>
+                                <td class="pt-2">{{ $partner->email }}</td>
+                                <td class="pt-2">{{ $partner->mobile }}</td>
+                                <td class="pt-2">{{ $partner->address }}</td>
+                                <td class="pt-2">{{ $partner->website }}</td>
+                                <td class="pt-2">{{ $partner->services }}</td>
+                                <td class="action" width="8%">
+                                    <a href="{{ url("partners/$partner->id/edit") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" remove="{{ url("partner/destroy/$partner->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $partner->id }}" title="Delete the user">
+                                        <i class="la la-trash"></i>
+                                    </a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -40,9 +55,7 @@
                 </div>
             </div>
         </div>
-
     </section>
-
 @stop
 
 @push('page-js')
@@ -82,6 +95,5 @@
 
             });
         });
-
     </script>
 @endpush

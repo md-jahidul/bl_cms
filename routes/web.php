@@ -32,6 +32,7 @@ Route::post('slider/{slider_id}/{type}/image/store', 'CMS\SliderImageController@
 Route::get('slider/{slider_id}/{type}/image/{id}', 'CMS\SliderImageController@edit')->name('slider_image_edit');
 Route::put('slider/{slider_id}/{type}/image/{id}/update', 'CMS\SliderImageController@update')->name('slider_image_update');
 Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'CMS\SliderImageController@destroy');
+Route::get('/slider-image-sortable','CMS\SliderImageController@sliderImageSortable');
 
 
 
@@ -73,6 +74,10 @@ Route::get('quick-launch/destroy/{id}', 'CMS\QuickLaunchController@destroy');
 Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
 
 
+// PARTNERS PAGES ====================================
+Route::resource('partners','CMS\PartnerController');
+Route::get('partner/destroy/{id}', 'CMS\PartnerController@destroy');
+//Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
 
 
 //Route::get('quick-launch-panel', 'CMS\QuickLaunchController@index');

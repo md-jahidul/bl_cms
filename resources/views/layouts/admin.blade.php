@@ -45,14 +45,14 @@
 
     <!-- Begin File uploader dropzone CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/file-uploaders/dropzone.css') }}">
-    
+
 
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('theme/assets/css/style.css')}}">
     <!-- END Custom CSS-->
-    
-    @stack('page-css')    
+
+    @stack('page-css')
     @yield('page-css')
 </head>
 <body class="vertical-layout vertical-menu-modern 2-columns   menu-expanded fixed-navbar"
@@ -68,7 +68,7 @@
                 <!-- <h3 class="content-header-title mb-0 d-inline-block">@yield('card_name')</h3> -->
                 <div class="row breadcrumbs-top d-inline-block">
                     <div class="breadcrumb-wrapper col-12">
-                        <ol class="breadcrumb">
+                        <ol class="breadcrumb mb-1">
                             @yield('breadcrumb')
                         </ol>
                     </div>

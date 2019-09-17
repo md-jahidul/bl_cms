@@ -58,7 +58,7 @@ class QuickLaunchService
     public function tableSortable($data)
     {
         $this->quickLaunchRepository->quickLaunchTableSort($data);
-        return new Response('Footer menu added successfully');
+        return new Response('update successfully');
     }
 
 

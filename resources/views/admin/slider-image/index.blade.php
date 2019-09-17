@@ -29,7 +29,7 @@
                         </thead>
                         <tbody id="sortable">
                         @foreach($slider_images as $index=>$slider_image)
-                            <tr>
+                            <tr data-index="{{ $slider_image->id }}" data-position="{{ $slider_image->sequence }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $slider_image->slider['title'] }}</td>
                                 <td>{{ $slider_image->title }}</td>
@@ -105,7 +105,7 @@
     </script>
 
     <script>
-        var auto_save_url = "{{ url('quick-launch-sortable') }}";
+        var auto_save_url = "{{ url('slider-image-sortable') }}";
     </script>
 @endpush
 

@@ -21,7 +21,11 @@
                     <span class="menu-title" data-i18n="nav.templates.main">Settings Page</span></a>
             </li>
 
-            <li class=" nav-item"><a href="#"><i class="la la-sliders"></i>
+            <li class=" nav-item {{ is_active_url('partners') . is_active_url('partners/create')}}"><a href="{{ url('partners') }}"><i class="la la-users"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Partners Management</span></a>
+            </li>
+
+            <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Slider Management</span></a>
                 <ul class="menu-content">
 

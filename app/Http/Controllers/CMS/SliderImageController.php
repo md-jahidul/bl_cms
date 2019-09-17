@@ -32,7 +32,9 @@ class SliderImageController extends Controller
      */
     public function index($sliderId, $type)
     {
-        $slider_images = SliderImage::where('slider_id', $sliderId)->with('slider')->get();
+        $slider_images = SliderImage::where('slider_id', $sliderId)->with('slider')->orderBy('sequence')->get();
+        $this->sliderImageService->itemList($sliderId, $type);
+
         return view('admin.slider-image.index', compact('slider_images', 'sliderId','type'));
     }
 
@@ -97,16 +99,29 @@ class SliderImageController extends Controller
         return redirect("slider/$parentId/$type");
     }
 
+    public function sliderImageSortable(Request $request)
+    {
+//        return $request->all();
+
+        $this->sliderImageService->tableSortable($request);
+    }
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $parentId
+     * @param $type
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     * @throws \Exception
      */
     public function destroy($parentId, $type, $id)
     {
-        $slider = SliderImage::findOrFail($id);
-        $slider->delete();
+
+        $response = $this->sliderImageService->deleteSliderImage($id);
+        Session::flash('message', $response->getContent());
+
+
+//        $slider = SliderImage::findOrFail($id);
+//        $slider->delete();
         return url("slider/$parentId/$type");
     }
 }

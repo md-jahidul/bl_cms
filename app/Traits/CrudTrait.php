@@ -117,11 +117,11 @@ trait CrudTrait
      * @param $location
      * @return string
      */
-    public function imageUpload($request, $imageTitle, $location)
+    public function imageUpload($request, $imgColumnName, $imageTitle, $location)
     {
         $file_name = str_replace(' ', '-', strtolower($imageTitle));
         $upload_date = date('Y-m-d-h-i-s');
-        $image = request()->file('image_url');
+        $image = request()->file($imgColumnName);
         $fileType = $image->getClientOriginalExtension();
         $imageName = $upload_date.'_'.$file_name.'.' . $fileType;
         $directory = $location;
