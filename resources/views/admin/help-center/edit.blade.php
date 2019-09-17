@@ -34,7 +34,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="offer_code">sequence:<small class="text-danger">*</small></label>
-                                        <input required type="number" value="{{$helpCenter->sequence}}" id="sequence" class="form-control @error('sequence') is-invalid @enderror" placeholder="Offer code.." name="sequence">
+                                        <input required type="number" min="0" value="{{$helpCenter->sequence}}" id="sequence" class="form-control @error('sequence') is-invalid @enderror" placeholder="Offer code.." name="sequence">
                                         <small id="validity" class="form-text text-muted">Offer Code must have *,# and number in it.</small>
                                         @error('sequence')
                                             <span class="invalid-feedback" role="alert">
