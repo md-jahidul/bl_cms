@@ -17,7 +17,7 @@ class SliderTableSeeder extends Seeder
 
         foreach ($sliders as $key => $slider){
             Slider::create([
-                'title' =>  'Home page' . $slider,
+                'title' =>  'Home page ' . $slider,
                 'component_id' => $key + 1,
                 'description' => 'Description of ' . $slider,
                 'short_code' => '[slider_'.++$key .']',

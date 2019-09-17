@@ -126,7 +126,7 @@ trait CrudTrait
         $imageName = $upload_date.'_'.$file_name.'.' . $fileType;
         $directory = $location;
         $imageUrl = $imageName;
-        $image->move($directory, $imageName);
+        $image->move(public_path($directory), $imageName);
         return $imageUrl;
     }
 

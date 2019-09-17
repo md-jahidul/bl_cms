@@ -45,7 +45,6 @@ class QuickLaunchService
     {
         $count = count($this->quickLaunchRepository->findAll());
         $imageUrl = $this->imageUpload($data, $data['en_title'], 'quick-launch-items');
-
         $data['image_url'] = env('APP_URL', 'http://localhost:8000'). '/quick-launch-items/'.$imageUrl;
         $data['display_order'] = ++$count;
         $this->save($data);
@@ -58,8 +57,6 @@ class QuickLaunchService
      */
     public function tableSortable($data)
     {
-//        print_r($data);die();
-
         $this->quickLaunchRepository->quickLaunchTableSort($data);
         return new Response('Footer menu added successfully');
     }
