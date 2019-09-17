@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HelpCenterRequest extends FormRequest
+class SettingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,20 @@ class HelpCenterRequest extends FormRequest
     public function rules()
     {
         return [
-            'value_exist'=>'required',
-            'title'=>'required',
-            'icon'=>'required_if:value_exist,no|image|mimes:jpeg,jpg,png',
-            'redirect_link'=>'required',
-            'sequence'=>'required|numeric|min:0|unique:help_centers',
+            'setting_key_id'=>'required|numeric|min:1',
+            'limit'=>'required|numeric|min:1'
+        ];
+    }
+
+     /**
+     * Custom message for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'setting_key_id.min' => 'Setting Key is required',
         ];
     }
 }

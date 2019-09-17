@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\SettingService;
 use App\Models\Setting;
+use App\Http\Requests\SettingRequest;
 use DB;
 
 class SettingController extends Controller
@@ -52,7 +53,7 @@ class SettingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SettingRequest $request)
     {
         session()->flash('success',$this->settingService->storeSetting($request->all())->getContent());
         return redirect(route('setting.index'));
@@ -90,7 +91,7 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SettingRequest $request, $id)
     {
         session()->flash('success',$this->settingService->updateSetting($request->all(),$id)->getContent());
         return redirect(route('setting.index'));

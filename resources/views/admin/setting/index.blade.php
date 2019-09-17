@@ -21,17 +21,20 @@
                     <div class="row">
                         <div class="col-md-5">
                            <label for="key">Key:</label>
-                            <select name="setting_key_id" class="form-control" id="key">
+                            <select required name="setting_key_id" class="form-control @error('setting_key_id') is-invalid @enderror" id="key">
+                               <option value="0"> Select Key </option>
                                @foreach ($keys as $key)
                                     <option @if(isset($setting_info)) @if($setting_info->setting_key_id == $key->id) selected @endif @endif value="{{$key->id}}">{{$key->title}}</option>
                                @endforeach
                             </select>
+                            <small class="text-danger"> @error('setting_key_id') {{ $message }} @enderror </small>
                         </div>
                         <div class="col-md-5">
                             <div class="form-group">
-                                 <label for="limit">Limit:</label>
-                                <input @if(isset($setting_info)) value="{{$setting_info->limit}}" @endif style="width:100%;height:100%" min="0" type="number" id="limit" class="form-control" placeholder="Insert Title.." name="limit">
+                                <label for="limit">Limit:</label>
+                                <input required @if(isset($setting_info)) value="{{$setting_info->limit}}" @endif style="width:100%;height:100%" min="0" type="number" id="limit" class="form-control @error('limit') is-invalid @enderror" placeholder="Set Limite..." name="limit">
                             </div>
+                            <small class="limit"> @error('limit') {{ $message }} @enderror </small>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group" style="margin-top:26px">

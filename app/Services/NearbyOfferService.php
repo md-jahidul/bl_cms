@@ -53,6 +53,7 @@ class NearbyOfferService
     {
         if(array_key_exists('image', $request)){
             unlink($nearByOffer->image);
+            $request['image'] = 'storage/'.$request['image']->store('NearbyOffer_image');
         }else{
             $request['image'] = $nearByOffer->image;
         }

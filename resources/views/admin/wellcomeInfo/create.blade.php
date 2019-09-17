@@ -23,7 +23,7 @@
                                 <div class="form-group">
                                     
                                     <label for="guest_salutation">guest_salutation:<small class="text-danger">*</small></label>
-                                    <input type="text" @if(isset($wellcomeInfo)) value="{{$wellcomeInfo->guest_salutation}}"  @else value=""  @endif  id="guest_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Slider Name" name="guest_salutation">
+                                    <input required type="text" @if(isset($wellcomeInfo)) value="{{$wellcomeInfo->guest_salutation}}"  @else value=""  @endif  id="guest_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Slider Name" name="guest_salutation">
                                     @error('title')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -34,7 +34,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="user_salutation">user_salutation:<small class="text-danger">*</small></label>
-                                    <input type="text" @if(isset($wellcomeInfo))  value="{{$wellcomeInfo->user_salutation}}"  @else value=""  @endif id="user_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Slider Name" name="user_salutation">
+                                    <input required type="text" @if(isset($wellcomeInfo))  value="{{$wellcomeInfo->user_salutation}}"  @else value=""  @endif id="user_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Slider Name" name="user_salutation">
                                     @error('title')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -45,7 +45,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="guest_message">Guest Message :<small class="text-danger">*</small></label>
-                                    <textarea name="guest_message" class="form-control" id="guest_message" rows="3">@if(isset($wellcomeInfo))  {{$wellcomeInfo->guest_message}} @endif </textarea>
+                                    <textarea required name="guest_message" class="form-control" id="guest_message" rows="3">@if(isset($wellcomeInfo))  {{$wellcomeInfo->guest_message}} @endif </textarea>
                                     @error('guest_message')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -56,7 +56,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="user_message">User Message :<small class="text-danger">*</small></label>
-                                    <textarea name="user_message" class="form-control" id="user_message" rows="3">@if(isset($wellcomeInfo))  {{$wellcomeInfo->user_message}} @endif</textarea>
+                                    <textarea required name="user_message" class="form-control" id="user_message" rows="3">@if(isset($wellcomeInfo))  {{$wellcomeInfo->user_message}} @endif</textarea>
                                     @error('user_message')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -64,9 +64,26 @@
                                     @enderror
                                 </div>
                             </div>
+                            @if(isset($wellcomeInfo))
+                                <div class="col-6">
+                                    <p class="text-dark">
+                                        <small class="">
+                                            <img style="height:100px;width:200px" id="imgDisplay" src="{{ asset($wellcomeInfo->icon)}}" alt="" srcset="">
+                                        </small>
+                                    </p>
+                                </div>
+                                @else
+                                <div class="col-6">
+                                    <p class="text-dark">
+                                        <small class="">
+                                            <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt="" srcset="">
+                                        </small>
+                                    </p>
+                                </div>
+                            @endif
                             <div class="col-md-12">
                                 <div class="custom-file">
-                                    <input name="icon" type="file" class="custom-file-input @error('title') is-invalid @enderror" id="validatedCustomFile">
+                                    <input @if(!isset($wellcomeInfo)) required @endif name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="image">
                                     <label class="custom-file-label @error('title') is-invalid @enderror" for="validatedCustomFile">Choose Icon...</label>
                                     <div class="invalid-feedback">Example invalid custom file feedback</div>
                                     @error('icon')

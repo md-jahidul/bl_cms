@@ -22,7 +22,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="title">title:<small class="text-danger">*</small></label>
-                                        <input type="text" value="" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
+                                        <input required type="text" value="" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
                                         @error('title')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -34,7 +34,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="offer_code">sequence:<small class="text-danger">*</small></label>
-                                        <input type="number" value="" id="sequence" class="form-control @error('sequence') is-invalid @enderror" placeholder="Offer code.." name="sequence">
+                                        <input required type="number" min="0" value="" id="sequence" class="form-control @error('sequence') is-invalid @enderror" placeholder="Offer code.." name="sequence">
                                         <small id="validity" class="form-text text-muted">Offer Code must have *,# and number in it.</small>
                                         @error('sequence')
                                             <span class="invalid-feedback" role="alert">
@@ -47,7 +47,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="price">redirect_link:<small class="text-danger">*</small></label>
-                                        <input type="number" min="0" value="" id="redirect_link" class="form-control @error('redirect_link') is-invalid @enderror" placeholder="Price.." name="redirect_link">
+                                        <input required type="number" min="0" value="" id="redirect_link" class="form-control @error('redirect_link') is-invalid @enderror" placeholder="Price.." name="redirect_link">
                                         <small id="price" class="form-text text-muted">Enter price in BDT.</small>
                                         @error('redirect_link')
                                             <span class="invalid-feedback" role="alert">
@@ -56,23 +56,27 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-12"> 
+                                <div class="col-md-12 mb-1"> 
                                     <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt="" srcset="">
                                     <input type="hidden" value="no" name="value_exist">
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="image">icon:<small class="text-danger">*</small></label><br>
-                                        <input type="file" value="" id="image" style="border:none" class="form-control p-0 @error('icon') is-invalid @enderror" placeholder="Enter volume...." name="icon">
-                                        <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
-                                        @error('icon')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input required name="icon" id="image" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
+                                                <label class="custom-file-label" for="icon">Upload icon...</label>
+                                            </div>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="">Upload</span>
+                                            </div>
+                                        </div>
+                                        <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                     </div>
                                 </div>
-                            <div class="form-actions">
+                                
+                        </div>
+                        <div class="form-actions">
                             <button type="submit" class="btn btn-success round px-2">
                             <i class="la la-check-square-o"></i> Save
                             </button>

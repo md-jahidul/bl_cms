@@ -103,8 +103,7 @@ class HelpCenterController extends Controller
      */
     public function destroy($id)
     {
-       
-        session()->flash('success',$this->helpCenterService->destroyHelpCenter($id)->getContetn());
+        session()->flash('success',$this->helpCenterService->destroyHelpCenter($id)->getContent());
         return redirect(route('helpCenter.index'));
     }
 }

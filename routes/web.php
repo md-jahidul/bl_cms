@@ -46,10 +46,18 @@ Route::group(['middleware' => ['webAdmin']], function () {
 //------------------------------- ********** ------------------------------------//
 Route::group(['middleware' => ['appAdmin']], function () {
     // shortcuts
-    route::resource('short_cuts','CMS\ShortCutController');
-    route::resource('UserShortcut','CMS\UserShortcutController');
-    Route::put('short_cuts/SerialUpdate/{id}','CMS\UserShortcutController@serialUpdate')->name('serial.update');
-    Route::get('short_cuts/destroy/{id}','CMS\ShortCutController@destroy');
+    // route::resource('short_cuts','CMS\ShortCutController');
+    // route::resource('UserShortcut','CMS\UserShortcutController');
+
+    Route::put('shortcuts/SerialUpdate/{id}','CMS\UserShortcutController@serialUpdate')->name('serial.update');
+    Route::get('shortcuts/destroy/{id}','CMS\ShortCutController@destroy');
+
+    Route::get('shortcuts','CMS\ShortCutController@index')->name('short_cuts.index');
+    Route::post('shortcuts','CMS\ShortCutController@store')->name('short_cuts.store');
+    Route::get('shortcuts/create','CMS\ShortCutController@create')->name('short_cuts.create');
+    Route::get('shortcuts/{short_cut}/edit','CMS\ShortCutController@edit')->name('short_cuts.edit');
+    Route::put('shortcuts/{short_cut}','CMS\ShortCutController@update')->name('short_cuts.update');
+                                        
     
     // Banner
     route::resource('banner','CMS\BannerController');

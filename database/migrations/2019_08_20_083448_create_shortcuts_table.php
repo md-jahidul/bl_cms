@@ -15,7 +15,7 @@ class CreateShortcutsTable extends Migration
     {
         Schema::create('shortcuts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('tittle');
+            $table->string('title');
             $table->string('icon');
             $table->string('component_identifier');
             $table->tinyinteger('is_default')->default('0');
