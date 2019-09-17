@@ -37,20 +37,6 @@ class QuickLaunchService
         return $this->quickLaunchRepository->getQuickLaunch();
     }
 
-    public function imageUpload($request, $imageTitle, $location)
-    {
-        $file_name = str_replace(' ', '-', strtolower($imageTitle));
-        $upload_date = date('Y-m-d-h-i-s');
-        $image = request()->file('image_url');
-        $fileType = $image->getClientOriginalExtension();
-        $imageName = $upload_date.'_'.$file_name.'.' . $fileType;
-        $directory = $location;
-        $imageUrl = $imageName;
-        $image->move($directory, $imageName);
-        return $imageUrl;
-    }
-
-
     /**
      * @param $data
      * @return Response
@@ -59,6 +45,7 @@ class QuickLaunchService
     {
         $count = count($this->quickLaunchRepository->findAll());
         $imageUrl = $this->imageUpload($data, $data['en_title'], 'quick-launch-items');
+
         $data['image_url'] = env('APP_URL', 'http://localhost:8000'). '/quick-launch-items/'.$imageUrl;
         $data['display_order'] = ++$count;
         $this->save($data);

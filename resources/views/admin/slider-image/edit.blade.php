@@ -14,11 +14,14 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ url("quick-launch/$sliderImage->id") }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route("slider_image_update", [ $sliderImage->slider_id, $type, $sliderImage->id ]) }}" method="POST" novalidate enctype="multipart/form-data">
+                            @csrf
+                            {{method_field('PUT')}}
+
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
                                     <label for="title" class="required">Title</label>
-                                    <input type="text" name="en_title"  class="form-control" placeholder="Enter english title"
+                                    <input type="text" name="title"  class="form-control" placeholder="Enter english title"
                                            value="{{ $sliderImage->title }}" required data-validation-required-message="Enter english title">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title'))
@@ -58,7 +61,7 @@
 
                                 <div class="form-group col-md-12 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Description</label>
-                                    <textarea type="text" name="alt_text" rows="5"  class="form-control" placeholder="Enter alt text"
+                                    <textarea type="text" name="description" rows="5"  class="form-control" placeholder="Enter alt text"
                                               required data-validation-required-message="Please select start date">{{ $sliderImage->description }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
@@ -77,20 +80,16 @@
 
                                 <div class="form-group col-md-6">
                                     <img class="img-thumbnail" src="{{ asset('slider-images/'.$sliderImage->image_url) }}" height="80" width="80">
-{{--                                    <label class="label-control ml-1" for="file">Current Image</label>--}}
                                 </div>
-
-
-
 
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="title" class="required mr-1">Status:</label>
 
-                                        <input type="radio" name="status" value="1" id="input-radio-15" @if($sliderImage->is_active == 1) {{ 'checked' }} @endif>
+                                        <input type="radio" name="is_active" value="1" id="input-radio-15" @if($sliderImage->is_active == 1) {{ 'checked' }} @endif>
                                         <label for="input-radio-15" class="mr-1">Active</label>
 
-                                        <input type="radio" name="status" value="0" id="input-radio-16" @if($sliderImage->is_active == 0) {{ 'checked' }} @endif>
+                                        <input type="radio" name="is_active" value="0" id="input-radio-16" @if($sliderImage->is_active == 0) {{ 'checked' }} @endif>
                                         <label for="input-radio-16">Inactive</label>
                                     </div>
                                 </div>
@@ -107,8 +106,7 @@
                             </div>
 
 
-                            @csrf
-                            {{method_field('PUT')}}
+
                         </form>
                     </div>
 

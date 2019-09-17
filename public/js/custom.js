@@ -43,8 +43,6 @@
 
         function saveNewPositions() {
             var positions = [];
-
-
             $('.update').each(function () {
                 positions.push([
                     $(this).attr('data-index'),

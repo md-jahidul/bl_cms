@@ -39,7 +39,29 @@ class SliderImageService
      */
     public function storeSliderImage($data)
     {
+
+        $count = count($this->sliderImageRepository->findAll());
+        $imageUrl = $this->imageUpload($data, $data['title'], 'quick-launch-items');
+        $data['image_url'] = $imageUrl;
+        $data['sequence'] = ++$count;
+        $this->save($data);
         return new Response('Slider Image added successfully');
+
+//        $slider_data = $request->all();
+//        $file_name = str_replace(' ', '_', $request->title);
+//        $upload_date = date('d_m_Y_h_i_s');
+//
+//        $sliderImage = $request->file('image_url');
+//        $fileType = $sliderImage->getClientOriginalExtension();
+//        $imageName = $file_name .'_'.$upload_date.'.' . $fileType;
+//        $directory = 'slider-images/';
+//        $imageUrl = $imageName;
+//        $sliderImage->move($directory, $imageName);
+//
+//        $slider_data['image_url'] = $imageUrl;
+//        SliderImage::create($slider_data);
+
+//        return new Response('Slider Image added successfully');
     }
 
     /**

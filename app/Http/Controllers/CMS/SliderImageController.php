@@ -5,10 +5,26 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use App\Models\SliderImage;
+use App\Services\SliderImageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class SliderImageController extends Controller
 {
+    /**
+     * @var $sliderImageService
+     */
+    private $sliderImageService;
+
+    /**
+     * SliderImageController constructor.
+     * @param SliderImageService $sliderImageService
+     */
+    public function __construct(SliderImageService $sliderImageService)
+    {
+        $this->sliderImageService = $sliderImageService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -41,21 +57,8 @@ class SliderImageController extends Controller
      */
     public function store(Request $request)
     {
-
-        $slider_data = $request->all();
-        $file_name = str_replace(' ', '_', $request->title);
-        $upload_date = date('d_m_Y_h_i_s');
-
-        $sliderImage = $request->file('image_url');
-        $fileType = $sliderImage->getClientOriginalExtension();
-        $imageName = $file_name .'_'.$upload_date.'.' . $fileType;
-        $directory = 'slider-images/';
-        $imageUrl = $imageName;
-        $sliderImage->move($directory, $imageName);
-
-        $slider_data['image_url'] = $imageUrl;
-        SliderImage::create($slider_data);
-
+        $response = $this->sliderImageService->storeSliderImage($request->all());
+        Session::flash('message', $response->getContent());
         return redirect('slider_image');
     }
 
@@ -76,10 +79,11 @@ class SliderImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,$type)
+    public function edit($parentId, $type, $id)
     {
         $sliderImage = SliderImage::findOrFail($id);
-        return view('admin.slider-image.edit', compact('sliderImage','type'));
+        $other_attributes = json_decode($sliderImage->other_attributes, true);
+        return view('admin.slider-image.edit', compact('sliderImage','type', 'other_attributes'));
     }
 
     /**
@@ -89,31 +93,32 @@ class SliderImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $parentId, $type, $id)
     {
 
         $slider_data = $request->all();
+        $other_attributes = $request->only('monthly_rate', 'google_play_link', 'app_store_link');
 
-//        return $slider_data;
+        $slider_data['other_attributes'] = json_encode($other_attributes);
+
 
         if (!empty($request->image_url)){
-            $file_name = str_replace(' ', '_', $request->title);
+            $file_name = strtolower(str_replace(' ', '_', $request->title));
             $upload_date = date('d_m_Y_h_i_s');
             $sliderImage = $request->file('image_url');
             $fileType = $sliderImage->getClientOriginalExtension();
             $imageName = $file_name .'_'.$upload_date.'.' . $fileType;
             $directory = 'slider-images/';
-            $imageUrl = $directory . $imageName;
+            $imageUrl = $imageName;
             $sliderImage->move($directory, $imageName);
             $slider_data['image_url'] = $imageUrl;
-        }else{
-            unset($slider_data['image_url']);
         }
+
+
 
         $slider_image = SliderImage::findOrFail($id);
         $slider_image->update($slider_data);
-
-        return redirect('slider_image');
+        return redirect("slider/$parentId/$type");
 
     }
 
@@ -123,10 +128,10 @@ class SliderImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($parentId, $type, $id)
     {
         $slider = SliderImage::findOrFail($id);
         $slider->delete();
-        return json_encode('success');
+        return url("slider/$parentId/$type");
     }
 }
