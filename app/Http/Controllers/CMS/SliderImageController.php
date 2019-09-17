@@ -30,10 +30,10 @@ class SliderImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($parentId,$type)
+    public function index($sliderId, $type)
     {
-        $slider_images = SliderImage::where('slider_id', $parentId)->with('slider')->get();
-        return view('admin.slider-image.index', compact('slider_images','type'));
+        $slider_images = SliderImage::where('slider_id', $sliderId)->with('slider')->get();
+        return view('admin.slider-image.index', compact('slider_images', 'sliderId','type'));
     }
 
     /**
@@ -41,12 +41,9 @@ class SliderImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($sliderId, $type)
     {
-        $sliders = Slider::select('id', 'title')->get();
-        $type = 'degital_services';
-
-        return view('admin.slider-image.create', compact('sliders'));
+        return view('admin.slider-image.create', compact("sliderId", 'type'));
     }
 
     /**
@@ -55,11 +52,11 @@ class SliderImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $sliderId, $type)
     {
-        $response = $this->sliderImageService->storeSliderImage($request->all());
+        $response = $this->sliderImageService->storeSliderImage($request->all(), $sliderId);
         Session::flash('message', $response->getContent());
-        return redirect('slider_image');
+        return redirect("slider/$sliderId/$type");
     }
 
     /**
@@ -95,31 +92,9 @@ class SliderImageController extends Controller
      */
     public function update(Request $request, $parentId, $type, $id)
     {
-
-        $slider_data = $request->all();
-        $other_attributes = $request->only('monthly_rate', 'google_play_link', 'app_store_link');
-
-        $slider_data['other_attributes'] = json_encode($other_attributes);
-
-
-        if (!empty($request->image_url)){
-            $file_name = strtolower(str_replace(' ', '_', $request->title));
-            $upload_date = date('d_m_Y_h_i_s');
-            $sliderImage = $request->file('image_url');
-            $fileType = $sliderImage->getClientOriginalExtension();
-            $imageName = $file_name .'_'.$upload_date.'.' . $fileType;
-            $directory = 'slider-images/';
-            $imageUrl = $imageName;
-            $sliderImage->move($directory, $imageName);
-            $slider_data['image_url'] = $imageUrl;
-        }
-
-
-
-        $slider_image = SliderImage::findOrFail($id);
-        $slider_image->update($slider_data);
+        $response = $this->sliderImageService->updateSliderImage($request->all(), $id);
+        Session::flash('message', $response->getContent());
         return redirect("slider/$parentId/$type");
-
     }
 
     /**

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SliderImage extends Model
 {
     protected $fillable = [
+            'slider_id',
             'title',
             'alt_text',
             'url_btn_label',
@@ -15,6 +16,7 @@ class SliderImage extends Model
             'description',
             'is_active',
             'image_url',
+            'sequence',
             'other_attributes',
     ];
 

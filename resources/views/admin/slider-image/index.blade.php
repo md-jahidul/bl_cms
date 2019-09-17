@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Quick Launch List')
-@section('card_name', 'Quick Launch List')
+@section('title', 'Slider Image List')
+@section('card_name', 'Slider Image List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><strong>Quick Launch List</strong></li>
+    <li class="breadcrumb-item active"><strong>Slider Image List</strong></li>
 @endsection
 @section('action')
-    <a href="{{ url('quick-launch/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Add Quick Launch
+    <a href="{{ url("slider/$sliderId/$type/image/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Add Slider Image
     </a>
 @endsection
 @section('content')

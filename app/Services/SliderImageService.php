@@ -37,31 +37,15 @@ class SliderImageService
      * @param $data
      * @return Response
      */
-    public function storeSliderImage($data)
+    public function storeSliderImage($data, $sliderId)
     {
-
         $count = count($this->sliderImageRepository->findAll());
-        $imageUrl = $this->imageUpload($data, $data['title'], 'quick-launch-items');
+        $imageUrl = $this->imageUpload($data, $data['title'], 'slider-images');
         $data['image_url'] = $imageUrl;
+        $data['slider_id'] = $sliderId;
         $data['sequence'] = ++$count;
         $this->save($data);
         return new Response('Slider Image added successfully');
-
-//        $slider_data = $request->all();
-//        $file_name = str_replace(' ', '_', $request->title);
-//        $upload_date = date('d_m_Y_h_i_s');
-//
-//        $sliderImage = $request->file('image_url');
-//        $fileType = $sliderImage->getClientOriginalExtension();
-//        $imageName = $file_name .'_'.$upload_date.'.' . $fileType;
-//        $directory = 'slider-images/';
-//        $imageUrl = $imageName;
-//        $sliderImage->move($directory, $imageName);
-//
-//        $slider_data['image_url'] = $imageUrl;
-//        SliderImage::create($slider_data);
-
-//        return new Response('Slider Image added successfully');
     }
 
     /**
@@ -71,6 +55,18 @@ class SliderImageService
      */
     public function updateSliderImage($data, $id)
     {
+        $sliderImage = $this->findOne($id);
+        $other_attributes = request()->only('monthly_rate', 'google_play_link', 'app_store_link');
+        $data['other_attributes'] = json_encode($other_attributes);
+
+//        echo "<pre>";
+//        print_r($other_attributes);die();
+
+        if (!empty($data['image_url'])){
+            $imageUrl = $this->imageUpload($data, $data['title'], 'slider-images');
+            $data['image_url'] = $imageUrl;
+        }
+        $sliderImage->update($data);
         return Response('Slider Image update successfully !');
     }
 
@@ -78,6 +74,5 @@ class SliderImageService
     {
         return Response('Slider Image delete successfully');
     }
-
 
 }

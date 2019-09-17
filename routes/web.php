@@ -27,6 +27,8 @@ Route::get('/cms', 'CMS\TestCMSController@index');
 // SLIDERS PAGES ====================================
 Route::get('sliders', 'SliderController@index');
 Route::get('slider/{slider_id}/{type}', 'CMS\SliderImageController@index')->name('slider_images');
+Route::get('slider/{slider_id}/{type}/image/create', 'CMS\SliderImageController@create');
+Route::post('slider/{slider_id}/{type}/image/store', 'CMS\SliderImageController@store')->name('slider_image_store');
 Route::get('slider/{slider_id}/{type}/image/{id}', 'CMS\SliderImageController@edit')->name('slider_image_edit');
 Route::put('slider/{slider_id}/{type}/image/{id}/update', 'CMS\SliderImageController@update')->name('slider_image_update');
 Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'CMS\SliderImageController@destroy');

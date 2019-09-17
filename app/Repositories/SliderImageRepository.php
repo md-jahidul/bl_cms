@@ -14,5 +14,4 @@ use App\Models\SliderImage;
 class SliderImageRepository extends BaseRepository
 {
     public $modelName = SliderImage::class;
-
 }
