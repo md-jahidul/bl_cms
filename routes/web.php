@@ -45,10 +45,13 @@ Route::group(['middleware' => ['webAdmin']], function () {
 //------------------------------- myBL-routs ------------------------------------//
 //------------------------------- ********** ------------------------------------//
 Route::group(['middleware' => ['appAdmin']], function () {
-    // shortcuts
+    
+    //------ shortcuts -----------//
+
     // route::resource('short_cuts','CMS\ShortCutController');
     // route::resource('UserShortcut','CMS\UserShortcutController');
 
+    //shortcuts
     Route::put('shortcuts/SerialUpdate/{id}','CMS\UserShortcutController@serialUpdate')->name('serial.update');
     Route::get('shortcuts/destroy/{id}','CMS\ShortCutController@destroy');
 
@@ -57,7 +60,9 @@ Route::group(['middleware' => ['appAdmin']], function () {
     Route::get('shortcuts/create','CMS\ShortCutController@create')->name('short_cuts.create');
     Route::get('shortcuts/{short_cut}/edit','CMS\ShortCutController@edit')->name('short_cuts.edit');
     Route::put('shortcuts/{short_cut}','CMS\ShortCutController@update')->name('short_cuts.update');
-                                        
+
+    //------ shortcuts -----------//
+    
     
     // Banner
     route::resource('banner','CMS\BannerController');
@@ -108,6 +113,10 @@ Route::group(['middleware' => ['appAdmin']], function () {
     // Near By Offer
     route::resource('nearByOffer','CMS\NearbyOfferController');
     Route::get('nearByOffer/destroy/{id}','CMS\NearbyOfferController@destroy');
+
+    // Near By Offer
+    route::resource('nearByOffer','CMS\NearbyOfferController');
+    Route::get('nearByOffer/destroy/{id}','CMS\NearbyOfferController@destroy');
     
     //------ offers -----------//
     
@@ -118,6 +127,10 @@ Route::group(['middleware' => ['appAdmin']], function () {
     // help center
     route::resource('helpCenter','CMS\HelpCenterController');
     Route::get('helpCenter/destroy/{id}','CMS\HelpCenterController@destroy');
+    
+    // contextual cards
+    route::resource('contextualcard','CMS\ContextualCardController');
+    Route::get('contextualcard/destroy/{id}','CMS\ContextualCardController@destroy');
 
 });    
 

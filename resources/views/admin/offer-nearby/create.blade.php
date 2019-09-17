@@ -17,12 +17,12 @@
                         @csrf
                         @method('post')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Create SMS offer.</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Create Near By offer.</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="title">title:<small class="text-danger">*</small></label>
-                                        <input required type="text" value="" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
+                                        <label for="title">Title:<small class="text-danger">*</small></label>
+                                        <input required type="text" value="" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title." name="title">
                                         @error('title')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -32,9 +32,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="vendor">vendor:<small class="text-danger">*</small></label>
-                                        <input required type="text" value="" id="vendor" class="form-control @error('vendor') is-invalid @enderror" placeholder="Enter vendor...." name="vendor">
-                                        <small id="vendor" class="form-text text-muted">Enter vendor...</small>
+                                        <label for="vendor">Vendor:<small class="text-danger">*</small></label>
+                                        <input required type="text" value="" id="vendor" class="form-control @error('vendor') is-invalid @enderror" placeholder="Enter vendor." name="vendor">
                                         @error('vendor')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -44,9 +43,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="volume">location:<small class="text-danger">*</small></label>
-                                        <input required type="text" min="0" value="" id="volume" class="form-control @error('location') is-invalid @enderror" placeholder="Enter volume...." name="location">
-                                        <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
+                                        <label for="location">Location:<small class="text-danger">*</small></label>
+                                        <input required type="text" min="0" value="" id="location" class="form-control @error('location') is-invalid @enderror" placeholder="Enter location...." name="location">
                                         @error('location')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -56,9 +54,9 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="volume">type:<small class="text-danger">*</small></label>
-                                        <input required type="text" min="0" value="" id="volume" class="form-control @error('type') is-invalid @enderror" placeholder="Enter volume...." name="type">
-                                        <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
+                                        <label for="type">Type:<small class="text-danger">*</small></label>
+                                        <input required type="text" min="0" value="" id="type" class="form-control @error('type') is-invalid @enderror" placeholder="Enter type...." name="type">
+                                        
                                         @error('type')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -68,9 +66,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="volume">offer:<small class="text-danger">*</small></label>
-                                        <input required type="text" min="0" value="" id="volume" class="form-control @error('offer') is-invalid @enderror" placeholder="Enter volume...." name="offer">
-                                        <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
+                                        <label for="Offer">Offer:<small class="text-danger">*</small></label>
+                                        <input required type="text" min="0" value="" id="Offer" class="form-control @error('offer') is-invalid @enderror" placeholder="Enter Offer...." name="offer">
                                         @error('offer')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -80,9 +77,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="volume">offer_code:<small class="text-danger">*</small></label>
-                                        <input required type="text" min="0" value="" id="volume" class="form-control @error('offer_code') is-invalid @enderror" placeholder="Enter volume...." name="offer_code">
-                                        <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
+                                        <label for="offer_code">Offer Code:<small class="text-danger">*</small></label>
+                                        <input required type="text" min="0" value="" id="offer_code" class="form-control @error('offer_code') is-invalid @enderror" placeholder="Enter offer code...." name="offer_code">
                                         @error('offer_code')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

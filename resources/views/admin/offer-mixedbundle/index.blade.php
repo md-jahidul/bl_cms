@@ -27,15 +27,15 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>title</th>
-                            <th>internet</th>
-                            <th>minutes</th>
-                            <th>sms</th>
-                            <th>validity</th>
-                            <th>price</th>
-                            <th>points</th>
-                            <th>offer_code</th>
-                            <th>tag</th>
+                            <th>Title</th>
+                            <th>Internet</th>
+                            <th>Minutes</th>
+                            <th>SMS</th>
+                            <th>Validity</th>
+                            <th>Price</th>
+                            <th>Points</th>
+                            <th>Offer Code</th>
+                            <th>Tag</th>
                             <th>Action</th>
                         </tr>
                         </thead>

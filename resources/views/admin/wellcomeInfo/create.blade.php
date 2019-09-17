@@ -17,13 +17,13 @@
                         @if(isset($wellcomeInfo)) @method('put') @else @method('post') @endif
                         <input type="hidden" value="@if(isset($wellcomeInfo)) yes @else no @endif" name="value_exist">
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Slider Information</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Wellcome Information</h4>
                             <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     
-                                    <label for="guest_salutation">guest_salutation:<small class="text-danger">*</small></label>
-                                    <input required type="text" @if(isset($wellcomeInfo)) value="{{$wellcomeInfo->guest_salutation}}"  @else value=""  @endif  id="guest_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Slider Name" name="guest_salutation">
+                                    <label for="guest_salutation">Guest Salutation:<small class="text-danger">*</small></label>
+                                    <input required type="text" @if(isset($wellcomeInfo)) value="{{$wellcomeInfo->guest_salutation}}"  @else value=""  @endif  id="guest_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Enter guest salutation." name="guest_salutation">
                                     @error('title')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -33,8 +33,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="user_salutation">user_salutation:<small class="text-danger">*</small></label>
-                                    <input required type="text" @if(isset($wellcomeInfo))  value="{{$wellcomeInfo->user_salutation}}"  @else value=""  @endif id="user_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Slider Name" name="user_salutation">
+                                    <label for="user_salutation">User Salutation:<small class="text-danger">*</small></label>
+                                    <input required type="text" @if(isset($wellcomeInfo))  value="{{$wellcomeInfo->user_salutation}}"  @else value=""  @endif id="user_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Enter user salutation." name="user_salutation">
                                     @error('title')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -84,8 +84,7 @@
                             <div class="col-md-12">
                                 <div class="custom-file">
                                     <input @if(!isset($wellcomeInfo)) required @endif name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="image">
-                                    <label class="custom-file-label @error('title') is-invalid @enderror" for="validatedCustomFile">Choose Icon...</label>
-                                    <div class="invalid-feedback">Example invalid custom file feedback</div>
+                                    <label class="custom-file-label @error('title') is-invalid @enderror" for="validatedCustomFile">Upload Icon...</label>
                                     @error('icon')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -129,41 +128,7 @@
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
-      $(function () {
-            $('.delete').click(function () {
-                var id = $(this).attr('data-id');
-
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    html: jQuery('.delete_btn').html(),
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.value) {
-                        $.ajax({
-                            url: "{{ url('slider/destroy') }}/"+id,
-                            methods: "get",
-                            success: function (res) {
-                                Swal.fire(
-                                    'Deleted!',
-                                    'Your file has been deleted.',
-                                    'success',
-                                );
-                                setTimeout(redirect, 2000)
-                                function redirect() {
-                                    window.location.href = "{{ url('slider/') }}"
-                                }
-                            }
-                        })
-                    }
-                })
-            })
-        })
-
+     
 
        
         $(document).ready(function () {

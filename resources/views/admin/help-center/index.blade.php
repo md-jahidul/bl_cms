@@ -28,10 +28,10 @@
                         <thead>
                         <tr>
                             <th width=''>ID</th>
-                            <th width=''>title</th>
-                            <th width=''>redirect_link</th>
-                            <th width=''>sequence</th>
-                            <th width=''>icon</th>
+                            <th width=''>Title</th>
+                            <th width=''>Redirect Link</th>
+                            <th width=''>Sequence</th>
+                            <th width=''>Icon</th>
                             <th  width='500'>Action</th>
                         </tr>
                         </thead>

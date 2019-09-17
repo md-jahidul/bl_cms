@@ -1,22 +1,22 @@
 @extends('layouts.admin')
-@section('title', 'Neare By Offer')
-@section('card_name', 'Neare By Offer')
+@section('title', 'questions List')
+@section('card_name', 'Banner-List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Neare By Offer list</li>
+    <li class="breadcrumb-item active">Banner</li>
 @endsection
 @section('action')
-    <a href="{{route('nearByOffer.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-       Create Near by offer 
+    <a href="{{route('banner.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Create Banner
     </a>
 @endsection
+
 @section('content')
-   
     <section>
         <div class="card">
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">Neare By Offer list</h1>
+                        <h1 class="card-title pl-1">Banner List</h1>
                     </div>
                 </div>
             </div>
@@ -28,42 +28,35 @@
                         <tr>
                             <th width=''>ID</th>
                             <th width=''>Title</th>
-                            <th width=''>Vendor</th>
-                            <th width=''>Location</th>
-                            <th width=''>Type</th>
-                            <th width=''>Offer</th>
-                            <th width=''>Offer Code</th>
-                            <th width=''>Image</th>
-                            <th width='200'>Action</th>
+                            <th width=''>Banner</th>
+                            <th width=''>Code</th>
+                            <th width=''>Redirect url</th>
+                            <th  width='500'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach ($nearByOffers as $nearByOffer)
-                                <tr>
-                                    <td>{{$nearByOffer->id}}</td>
-                                    <td>{{$nearByOffer->title}}</td>
-                                    <td>{{$nearByOffer->vendor}}</td>
-                                    <td>{{$nearByOffer->location}}</td>
-                                    <td>{{$nearByOffer->type}}</td>
-                                    <td>{{$nearByOffer->offer}}</td>
-                                    <td>{{$nearByOffer->offer_code}}</td>
-                                    
-                                    <td><img style="height:50px;width:100px" src="{{asset($nearByOffer->image)}}" alt="" srcset=""> </td>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-md-2 mr-1">
-                                                <a role="button" href="{{route('nearByOffer.edit',$nearByOffer->id)}}" class="btn btn-outline-success">
-                                                    <i class="la la-pencil"></i>
-                                                </a>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button data-id="{{$nearByOffer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                            </div>
+                        @foreach ($contextualCardss as $contextualCards)
+                            <tr>
+                                <td>{{$contextualCard->id}}</td>
+                                <td>{{$contextualCard->title}}</td>
+                                <td><img style="height:50px;width:100px" src="{{asset($contextualCard->image_path)}}" alt="" srcset=""></td>
+                                <td>{{$contextualCard->code}}</td>
+                                <td>{{$contextualCard->redirect_url}}</td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-1 mr-1">
+                                            <a role="button" href="{{route('contextualCard.edit',$contextualCard->id)}}" class="btn btn-outline-success">
+                                                <i class="la la-pencil"></i>
+                                            </a>
                                         </div>
-                                    </td>
-                                </tr>
+                                        <div class="col-md-1">
+                                            <button data-id="{{$contextualCard->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
 
-                            @endforeach
+                        @endforeach
                         </tbody>
                     </table>
 
@@ -72,10 +65,18 @@
         </div>
 
     </section>
+   
+    <!-- /.card -->
+
+
 
 @endsection
 
-
+@section('content_right_side_bar')
+    <h1>
+        List
+    </h1>
+@endsection
 
 
 @push('style')
@@ -108,7 +109,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('nearByOffer/destroy') }}/"+id,
+                            url: "{{ url('banner/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -118,7 +119,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('nearByOffer/') }}"
+                                    window.location.href = "{{ url('banner/') }}"
                                 }
                             }
                         })

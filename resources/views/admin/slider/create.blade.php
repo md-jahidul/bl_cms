@@ -69,8 +69,7 @@
                             </div>
                             <div class="form-group">
                             <label for="projectinput8">Discription:</label>
-                            <textarea id="projectinput8" rows="5" class="form-control" name="description" placeholder="About Project">@if(isset($single_slider)) {{ $single_slider->description }} @endif
-                            </textarea>
+                            <textarea id="projectinput8" rows="5" class="form-control" name="description" placeholder="About Slider...">@if(isset($single_slider)) {{ $single_slider->description }} @endif</textarea>
                             </div>
                         </div>
                         <div class="form-actions">

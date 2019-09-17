@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
-                    <input required style="height:100%" value="@if(isset($short_cut_info)) {{$short_cut_info->tittle}} @endif" type="text" name="tittle" class="form-control @error('tittle') is-invalid @enderror" id="tittle" placeholder="Enter Shor Cuts Name..">
+                    <input maxlength="10" required style="height:100%" value="@if(isset($short_cut_info)) {{$short_cut_info->tittle}} @endif" type="text" name="tittle" class="form-control @error('tittle') is-invalid @enderror" id="tittle" placeholder="Enter Shor Cut Name..">
                     <input type="hidden" value="@if(isset($short_cut_info)) yes @else no @endif" name="value_exist">
                     <small class="text-danger"> @error('tittle') {{ $message }} @enderror </small>
                 </div>
@@ -65,7 +65,7 @@
                         <th width="100">id</th>
                         <th>Tittle</th>
                         <th>Icon</th>
-                        <th>is_Default</th>
+                        <th>Is Default</th>
                         <th width="400">Limit</th>
                     </tr>
                     </thead>
