@@ -139,7 +139,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('short_cuts/destroy') }}/"+id,
+                            url: "{{ url('shortcuts/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -149,7 +149,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('short_cuts/') }}"
+                                    window.location.href = "{{ url('shortcuts/') }}"
                                 }
                             }
                         })

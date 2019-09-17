@@ -102,6 +102,7 @@ class ShortCutController extends Controller
      */
     public function destroy($id)
     {
+        //return $id;
         session()->flash('danger',$this->shortCutService->destroyShortCut($id)->getContent());
         return redirect(route('short_cuts.index'));
     }
