@@ -3,24 +3,27 @@
 namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\wellcomeInfoService;
+use App\Services\WellcomeInfoService;
 use App\Models\WellcomeInfo;
 
 class WellcomeInfoController extends Controller
 {
 
-     /**
-     * @var SliderService
+
+    /**
+     * @var wellcomeInfoService
      */
     private $wellcomeInfoService;
+
     /**
      * @var bool
      */
     private $isAuthenticated = true;
 
+
     /**
-     * BannerController constructor.
-     * @param WellcomeInfoService $sliderService
+     * WellcomeInfoController constructor.
+     * @param WellcomeInfoService $wellcomeInfoService
      */
     public function __construct(WellcomeInfoService $wellcomeInfoService)
     {
@@ -86,8 +89,8 @@ class WellcomeInfoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param WellcomeInfo $wellcomeInfo
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,WellcomeInfo $wellcomeInfo)

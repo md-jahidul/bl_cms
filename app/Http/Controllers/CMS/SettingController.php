@@ -11,14 +11,16 @@ use DB;
 
 class SettingController extends Controller
 {
-     /**
-     * @var $questionService
+
+    /**
+     * @var SettingService
      */
     private $settingService;
 
+
     /**
-     * QuestionController constructor.
-     * @param QuestionService $questionService
+     * SettingController constructor.
+     * @param SettingService $settingService
      */
     public function __construct(SettingService $settingService)
     {
