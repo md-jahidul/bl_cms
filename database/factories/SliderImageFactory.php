@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(SliderImage::class, function (Faker $faker) {
     return [
-        'slider_id' => rand(1, 4),
+        'slider_id' => rand(1, 2),
         'title' => $faker->streetName,
         'description' => $faker->sentence,
         'image_url' => $faker->image(public_path()."/slider-images", 420,320,"nature", false),

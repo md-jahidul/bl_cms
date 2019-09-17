@@ -13,7 +13,8 @@ class SliderTableSeeder extends Seeder
      */
     public function run()
     {
-        $sliders = ['Hero','Explore Devices','Digital Services','Testimonial'];      
+        // $sliders = ['Hero','Explore Devices','Digital Services','Testimonial'];      
+        $sliders = ['Hero', 'Digital Services'];    
 
         foreach ($sliders as $key => $slider){
             Slider::create([
