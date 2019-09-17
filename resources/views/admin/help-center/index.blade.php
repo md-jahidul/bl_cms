@@ -32,7 +32,7 @@
                             <th width=''>Redirect Link</th>
                             <th width=''>Sequence</th>
                             <th width=''>Icon</th>
-                            <th  width='500'>Action</th>
+                            <th  width='200'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -46,12 +46,12 @@
                                 <td><img src="{{asset($helpCenter->icon)}}" style="height:50px;width:100px" alt=""></td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-1 mr-1">
+                                        <div class="col-md-2 mr-1">
                                             <a role="button" href="{{ route('helpCenter.edit',$helpCenter->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-md-2">
                                             <button data-id="{{$helpCenter->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

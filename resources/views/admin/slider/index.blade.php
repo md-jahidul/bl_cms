@@ -2,7 +2,7 @@
 @section('title', 'Slider')
 @section('card_name', 'Slider')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Slider</li>
+    <li class="breadcrumb-item active">Slider List</li>
 @endsection
 @section('action')
     <a href="{{route('slider.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>

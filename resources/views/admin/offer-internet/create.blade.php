@@ -17,7 +17,7 @@
                         @csrf
                         @method('post')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Create SMS offer.</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Create Internet offer.</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -113,8 +113,9 @@
 
 
 @push('style')
-    
+
 @endpush
+
 @push('page-js')
     
 @endpush

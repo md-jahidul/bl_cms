@@ -62,11 +62,11 @@
                 <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
-                        <th width="100">id</th>
+                        <th>id</th>
                         <th>Tittle</th>
                         <th>Icon</th>
                         <th>Is Default</th>
-                        <th width="400">Limit</th>
+                        <th width="100">Limit</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -80,13 +80,13 @@
                                 </td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <div class="col-md-5">
                                             <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('short_cuts.edit',$short_cut->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
                                         
-                                        <div class="col-md-2">
+                                        <div class="col-md-5">
                                             <button data-id="{{$short_cut->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

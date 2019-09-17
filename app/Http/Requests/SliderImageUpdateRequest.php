@@ -42,7 +42,7 @@ class SliderImageUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'dimensions' => 'Slider Image is Mast be in 16:9',
+            'dimensions' => 'Slider Image is Mast be in 16:9 dimension',
             'required' => 'Slider Image is required',
             'required' => 'title is required',
         ];

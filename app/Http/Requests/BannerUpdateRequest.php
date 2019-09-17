@@ -39,7 +39,7 @@ class BannerUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'image_path.dimensions' => 'Image Dimantion must be in 16:9',
+            'image_path.dimensions' => 'Image dimension must be in 16:9',
         ];
     }
 }

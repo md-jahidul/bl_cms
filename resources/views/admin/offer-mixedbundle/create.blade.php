@@ -9,20 +9,6 @@
 
 @section('content')
     <section>
-{{-- 
-title
-
-internet
-minutes
-sms
-
-validity
-points
-price
-
-offer_code
-tag 
---}}
         <div class="card card-info mb-0" style="padding-left:10px">
             <div class="card-content">
                 <div class="card-body">

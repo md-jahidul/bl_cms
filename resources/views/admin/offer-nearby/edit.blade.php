@@ -3,7 +3,7 @@
 @section('card_name', "Near by offer")
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        Create Near by offer
+        Edit Near by offer
     </li>
 @endsection
 
@@ -92,7 +92,7 @@
                                 <div class="col-md-12">
                                     <div class="custom-file">
                                         <input required name="image" type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image">
-                                        <label class="custom-file-label @error('image') is-invalid @enderror" for="validatedCustomFile">Choose image...</label>
+                                        <label class="custom-file-label @error('image') is-invalid @enderror" for="validatedCustomFile">Upload image...</label>
                                         @error('image')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

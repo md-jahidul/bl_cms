@@ -3,7 +3,7 @@
 @section('card_name', "Mixed Bundle offer")
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        Create Mixed Bundle offer
+        Edit Mixed Bundle offer
     </li>
 @endsection
 
@@ -17,7 +17,7 @@
                         @method('put')
                         
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Create SMS offer.</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Edit SMS offer.</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">

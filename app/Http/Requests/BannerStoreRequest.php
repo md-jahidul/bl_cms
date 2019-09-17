@@ -40,14 +40,7 @@ class BannerStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            // 'name.required' => '',
-            // 'code.required' => '',
-            // 'redirect_url.required' => '',
-            // 'image_name.required' => '',
-            // 'image_path.required' => '',
-            // 'image_path.image' => '',
-            // 'image_path.mimes' => '',
-            'image_path.dimensions' => 'Image Dimantion must be in 16:9',
+            'image_path.dimensions' => 'Image dimension must be in 16:9',
         ];
     }
 
