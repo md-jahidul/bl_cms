@@ -11,14 +11,15 @@ use App\Http\Requests\ShortCutStoreRequest;
 
 class ShortCutController extends Controller
 {
-     /**
-     * @var $questionService
+
+    /**
+     * @var ShortCutService
      */
     private $shortCutService;
 
     /**
      * QuestionController constructor.
-     * @param QuestionService $questionService
+     * @param ShortCutService $shortCutService
      */
     public function __construct(ShortCutService $shortCutService)
     {

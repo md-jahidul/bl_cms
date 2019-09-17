@@ -17,16 +17,18 @@ use DB;
 
 class SettingService
 {
-
     use CrudTrait;
+
+
     /**
-     * @var $sliderRepository
+     * @var SettingRepository
      */
     protected $settingRepository;
 
+
     /**
-     * DigitalServicesService constructor.
-     * @param SettingRepository $sliderTypeRepository
+     * SettingService constructor.
+     * @param SettingRepository $settingRepository
      */
     public function __construct(SettingRepository $settingRepository)
     {

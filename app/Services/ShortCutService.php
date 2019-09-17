@@ -22,11 +22,12 @@ class ShortCutService
     /**
      * @var $sliderRepository
      */
-    protected $ShortCutRepository;
+    protected $shortCutRepository;
+
 
     /**
-     * DigitalServicesService constructor.
-     * @param ShortCutRepository $sliderTypeRepository
+     * ShortCutService constructor.
+     * @param ShortCutRepository $shortCutRepository
      */
     public function __construct(ShortCutRepository $shortCutRepository)
     {
