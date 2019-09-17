@@ -68,14 +68,22 @@
                                 <div class="col-6">
                                     <p class="text-dark">
                                         <small class="">
-                                            <img style="height:100px;width:200px" src="{{ asset($wellcomeInfo->icon)}}" alt="" srcset="">
+                                            <img style="height:100px;width:200px" id="imgDisplay" src="{{ asset($wellcomeInfo->icon)}}" alt="" srcset="">
+                                        </small>
+                                    </p>
+                                </div>
+                                @else
+                                <div class="col-6">
+                                    <p class="text-dark">
+                                        <small class="">
+                                            <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt="" srcset="">
                                         </small>
                                     </p>
                                 </div>
                             @endif
                             <div class="col-md-12">
                                 <div class="custom-file">
-                                    <input @if(!isset($wellcomeInfo)) required @endif name="icon" type="file" class="custom-file-input @error('title') is-invalid @enderror" id="validatedCustomFile">
+                                    <input @if(!isset($wellcomeInfo)) required @endif name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="image">
                                     <label class="custom-file-label @error('title') is-invalid @enderror" for="validatedCustomFile">Choose Icon...</label>
                                     <div class="invalid-feedback">Example invalid custom file feedback</div>
                                     @error('icon')

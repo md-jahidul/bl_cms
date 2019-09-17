@@ -90,15 +90,15 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-12"> 
+                                <div class="col-md-12 mb-1"> 
                                     <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt="" srcset="">
                                     <input type="hidden" value="no" name="value_exist">
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="volume">image:<small class="text-danger">*</small></label><br>
-                                        <input type="file" style="border:none" value="" id="image" class="p-0 form-control @error('image') is-invalid @enderror" placeholder="Enter volume...." name="image">
-                                        <small class="form-text text-muted">Enter volume in minute.</small>
+                                    <div class="custom-file">
+                                        <input required name="image" type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image">
+                                        <label class="custom-file-label @error('image') is-invalid @enderror" for="validatedCustomFile">Choose image...</label>
+                                        <div class="invalid-feedback">Example invalid custom file feedback</div>
                                         @error('image')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

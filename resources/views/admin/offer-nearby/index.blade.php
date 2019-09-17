@@ -34,7 +34,7 @@
                             <th width=''>offer</th>
                             <th width=''>offer_code</th>
                             <th width=''>image</th>
-                            <th width=''>Action</th>
+                            <th width='200'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -51,12 +51,12 @@
                                     <td><img style="height:50px;width:100px" src="{{asset($nearByOffer->image)}}" alt="" srcset=""> </td>
                                     <td>
                                         <div class="row">
-                                            <div class="col-md-3 mr-1">
+                                            <div class="col-md-2 mr-1">
                                                 <a role="button" href="{{route('nearByOffer.edit',$nearByOffer->id)}}" class="btn btn-outline-success">
                                                     <i class="la la-pencil"></i>
                                                 </a>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-2">
                                                 <button data-id="{{$nearByOffer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                             </div>
                                         </div>

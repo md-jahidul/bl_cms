@@ -90,16 +90,16 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-12"> 
+                                <div class="col-md-12 mb-1"> 
                                     <img style="height:100px;width:200px" id="imgDisplay" src="{{asset($nearByOffer->image)}}" alt="" srcset="">
                                     <input type="hidden" value="yes" name="value_exist">
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="">
-                                        <label for="image">image:<small class="text-danger">*</small></label><br>
-                                        <input type="file" min="0" value="{{$nearByOffer->image}}" id="image" class=" @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="image">
-                                        <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
-                                        @error('volume')
+                                    <div class="custom-file">
+                                        <input required name="image" type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image">
+                                        <label class="custom-file-label @error('image') is-invalid @enderror" for="validatedCustomFile">Choose image...</label>
+                                        <div class="invalid-feedback">Example invalid custom file feedback</div>
+                                        @error('image')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
