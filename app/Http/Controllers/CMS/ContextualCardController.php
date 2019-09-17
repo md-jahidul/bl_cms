@@ -1,18 +1,18 @@
 <?php
 
 namespace App\Http\Controllers\CMS;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Services\wellcomeInfoService;
-use App\Models\WellcomeInfo;
 
-class WellcomeInfoController extends Controller
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Services\ContextualCardService;
+
+class ContextualCardController extends Controller
 {
 
-     /**
-     * @var SliderService
+    /**
+     * @var BannerService
      */
-    private $wellcomeInfoService;
+    private $contextualCardService;
     /**
      * @var bool
      */
@@ -20,11 +20,11 @@ class WellcomeInfoController extends Controller
 
     /**
      * BannerController constructor.
-     * @param WellcomeInfoService $sliderService
+     * @param ContextualCardService $bannerService
      */
-    public function __construct(WellcomeInfoService $wellcomeInfoService)
+    public function __construct(ContextualCardService $contextualCardService)
     {
-        $this->wellcomeInfoService = $wellcomeInfoService;
+        $this->contextualCardService = $contextualCardService;
     }
 
     /**
@@ -34,7 +34,7 @@ class WellcomeInfoController extends Controller
      */
     public function index()
     {
-        return view('admin.wellcomeInfo.index')->with('wellcomeInfo',$this->wellcomeInfoService->findAll()->first());
+        return view('admin.contextual-card.index')->with('contextualCards',$this->contextualCardService->findAll());
     }
 
     /**
@@ -44,7 +44,7 @@ class WellcomeInfoController extends Controller
      */
     public function create()
     {
-        return view('admin.wellcomeInfo.create')->with('wellcomeInfo',$this->wellcomeInfoService->findAll()->first());
+        return view('admin.contextual-card.create');
     }
 
     /**
@@ -55,8 +55,8 @@ class WellcomeInfoController extends Controller
      */
     public function store(Request $request)
     {
-        session()->flash('status',$this->wellcomeInfoService->storeWellcomeInfo($request->all())->getContent());
-        return redirect(route('wellcomeInfo.index'));
+        session()->flash('success',$this->contextualCardService->storeContextualCard($request->all())->getContent());
+        return redirect(route('contextual-card.index'));
     }
 
     /**
@@ -67,7 +67,7 @@ class WellcomeInfoController extends Controller
      */
     public function show($id)
     {
-        dd($id);
+        //
     }
 
     /**
@@ -78,9 +78,7 @@ class WellcomeInfoController extends Controller
      */
     public function edit($id)
     {
-        //dd($id,$this->wellcomeInfoService->findOne($id));
-       return view('admin.wellcomeInfo.create')
-                ->with('wellcomeInfo',$this->wellcomeInfoService->findOne($id));
+        return view('admin.contextual-card.create')->with('contextualCard', $banner);
     }
 
     /**
@@ -90,10 +88,10 @@ class WellcomeInfoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,WellcomeInfo $wellcomeInfo)
+    public function update(Request $request, $id)
     {
-        session()->flash('status',$this->wellcomeInfoService->updateWellcomeInfo($request, $wellcomeInfo)->getContent());
-        return redirect(route('wellcomeInfo.index'));
+        session()->flash('success',$this->contextualCardService->updateContextualCard($request, $banner)->getContent());
+        return redirect(route('contextual-card.index'));
     }
 
     /**
@@ -104,6 +102,7 @@ class WellcomeInfoController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
+        session()->flash('warning',$this->contextualCardService->deleteContextualCard($id)->getContent());
+        return redirect(route('contextualCard.index'));
     }
 }

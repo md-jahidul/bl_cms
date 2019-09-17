@@ -21,7 +21,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="title">title:<small class="text-danger">*</small></label>
+                                        <label for="title">Title:<small class="text-danger">*</small></label>
                                         <input required type="text" value="" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
                                         @error('title')
                                             <span class="invalid-feedback" role="alert">
@@ -33,7 +33,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="offer_code">sequence:<small class="text-danger">*</small></label>
+                                        <label for="offer_code">Sequence:<small class="text-danger">*</small></label>
                                         <input required type="number" min="0" value="" id="sequence" class="form-control @error('sequence') is-invalid @enderror" placeholder="Offer code.." name="sequence">
                                         <small id="validity" class="form-text text-muted">Offer Code must have *,# and number in it.</small>
                                         @error('sequence')
@@ -46,9 +46,9 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="price">redirect_link:<small class="text-danger">*</small></label>
-                                        <input required type="number" min="0" value="" id="redirect_link" class="form-control @error('redirect_link') is-invalid @enderror" placeholder="Price.." name="redirect_link">
-                                        <small id="price" class="form-text text-muted">Enter price in BDT.</small>
+                                        <label for="price">Redirect link:<small class="text-danger">*</small></label>
+                                        <input required type="number" min="0" value="" id="redirect_link" class="form-control @error('redirect_link') is-invalid @enderror" placeholder="Http.." name="redirect_link">
+                                        <small id="price" class="form-text text-muted">Enter Link here.</small>
                                         @error('redirect_link')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
