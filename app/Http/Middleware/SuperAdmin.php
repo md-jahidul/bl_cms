@@ -18,7 +18,7 @@ class SuperAdmin
         if(Auth::user()->role_id == "1"){
             return $next($request);
         }else{
-            return redirect()->back();
+            return "your do not have permition";
         }
     }
 }
