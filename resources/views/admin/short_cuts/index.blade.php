@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'questions List')
+@section('title', 'Short Cuts List')
 @section('card_name', 'Short Cuts')
 @section('breadcrumb')
     <li class="breadcrumb-item active">Short-Cuts List</li>
@@ -37,7 +37,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <div class="custom-file">
-                            <input @if(!isset($short_cut_info)) required @endif  name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
+                            <input accept="image/*" @if(!isset($short_cut_info)) required @endif  name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
                             <label class="custom-file-label" for="icon">Upload icon...</label>
                         </div>
                         <div class="input-group-append">

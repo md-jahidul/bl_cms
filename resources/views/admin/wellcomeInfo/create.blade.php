@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Wellcome Information')
-@section('card_name', 'Wellcome-Information')
+@section('title', 'Welcome Information')
+@section('card_name', 'Welcome-Information')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Wellcome-Information</li>
+    <li class="breadcrumb-item active">Welcome-Information</li>
 @endsection
 
 @section('content')
@@ -83,7 +83,7 @@
                             @endif
                             <div class="col-md-12">
                                 <div class="custom-file">
-                                    <input @if(!isset($wellcomeInfo)) required @endif @if(!isset($wellcomeInfo)) @endif name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="image">
+                                    <input accept="image/*" @if(!isset($wellcomeInfo)) required @endif @if(!isset($wellcomeInfo)) @endif name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="image">
                                     <label class="custom-file-label @error('title') is-invalid @enderror" for="validatedCustomFile">Upload Icon...</label>
                                     <input type="hidden" name="update" value="@if(!isset($wellcomeInfo)) yes @else no  @endif"> 
                                     @error('icon')

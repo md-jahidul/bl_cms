@@ -63,7 +63,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input name="icon" id="image" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
+                                                <input accept="image/*" name="icon" id="image" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
                                                 <label class="custom-file-label" for="icon">Upload icon...</label>
                                             </div>
                                             <div class="input-group-append">
