@@ -19,9 +19,9 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
-                    <input maxlength="50" required style="height:100%" value="@if(isset($short_cut_info)){{$short_cut_info->tittle}} @elseif(old("tittle")) {{old("tittle")}} @endif" type="text" name="tittle" class="form-control @error('tittle') is-invalid @enderror" id="tittle" placeholder="Enter Shor Cut Name..">
+                    <input maxlength="50" required style="height:100%" value="@if(isset($short_cut_info)){{$short_cut_info->title}} @elseif(old("title")) {{old("title")}} @endif" type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter Shor Cut Name..">
                     <input type="hidden" value="@if(isset($short_cut_info)) yes @else no @endif" name="value_exist">
-                    <small class="text-danger"> @error('tittle') {{ $message }} @enderror </small>
+                    <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                 </div>
             </div>
             <div class="col-md-2 p-0">
@@ -63,7 +63,7 @@
                     <thead>
                     <tr>
                         <th>id</th>
-                        <th>Tittle</th>
+                        <th>Title</th>
                         <th>Icon</th>
                         <th>Is Default</th>
                         <th width="100">Limit</th>
@@ -73,7 +73,7 @@
                         @foreach ($short_cuts as $short_cut)
                             <tr>
                                 <td>{{$short_cut->id}}</td>
-                                <td>{{$short_cut->tittle}}</td>
+                                <td>{{$short_cut->title}}</td>
                                 <td><img style="height:20px;width:20px" src="{{asset($short_cut->icon)}}" alt="" srcset=""></td>
                                 <td>
                                     @if($short_cut->is_default==1) Default @else Not Default @endif
