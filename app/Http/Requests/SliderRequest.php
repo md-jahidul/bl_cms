@@ -24,8 +24,9 @@ class SliderRequest extends FormRequest
     public function rules()
     {
        return [
-            'title' => 'required',
-            'component_id' => 'required'
+            // 'component_id' => 'required|unique:sliders,component_id,'.$this->id,
+            'component_id' => 'required',
+            'title' => 'required'
         ];
     }
 
@@ -33,7 +34,8 @@ class SliderRequest extends FormRequest
     {
         return [
             'title.required' => 'Name is required',
-            'component_id.required' => 'Slider type is required'
+            'component_id.required' => 'Slider type is required',
+            // 'component_id.unique' => 'The slider your trying to add already exist'
         ];
     }
 
