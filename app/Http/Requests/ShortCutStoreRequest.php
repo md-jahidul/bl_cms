@@ -24,7 +24,7 @@ class ShortCutStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:shortcuts|max:150',
+            'title' => 'required|unique:shortcuts,title,'.$this->id,
             'icon' => 'required_if:value_exist,no|image|mimes:jpeg,jpg,png'
         ];
     }

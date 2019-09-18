@@ -13,49 +13,68 @@
 
 @section('content')
     <!-- /short cut add form -->
-    <form action=" @if(isset($short_cut_info)) {{route('short_cuts.update',$short_cut_info->id)}} @else {{route('short_cuts.store')}} @endif " method="post" enctype="multipart/form-data">
-        @csrf
-        @if(isset($short_cut_info)) @method('put') @else @method('post') @endif
-        <div class="row">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <input maxlength="50" required style="height:100%" value="@if(isset($short_cut_info)){{$short_cut_info->title}} @elseif(old("title")) {{old("title")}} @endif" type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter Shor Cut Name..">
-                    <input type="hidden" value="@if(isset($short_cut_info)) yes @else no @endif" name="value_exist">
-                    <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
-                </div>
-            </div>
-            <div class="col-md-2 p-0">
-                <div class="form-group">
-                    <select required class="form-control" value="" name="is_default" id="">
-                        <option @if(isset($short_cut_info)) @if($short_cut_info->is_default==0) selected @endif @endif value="0">Not Default</option>
-                        <option @if(isset($short_cut_info)) @if($short_cut_info->is_default==1) selected @endif @endif value="1">Default</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-5 p-0 pl-1">
-                
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input accept="image/*" @if(!isset($short_cut_info)) required @endif  name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
-                            <label class="custom-file-label" for="icon">Upload icon...</label>
-                        </div>
-                        <div class="input-group-append">
-                            <span class="input-group-text" id="">Upload</span>
+    <section>
+            <form action=" @if(isset($short_cut_info)) {{route('short_cuts.update',$short_cut_info->id)}} @else {{route('short_cuts.store')}} @endif " method="post" enctype="multipart/form-data">
+                @csrf
+                @if(isset($short_cut_info)) @method('put') @else @method('post') @endif
+                <div class="container-fluid">
+                <div class="row px-1 pt-3 bg-white">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input maxlength="50" required style="height:100%" value="@if(isset($short_cut_info)){{$short_cut_info->title}} @elseif(old("title")) {{old("title")}} @endif" type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter Shor Cut Name..">
+                            <input type="hidden" value="@if(isset($short_cut_info)) yes @else no @endif" name="value_exist">
+                            @if(isset($short_cut_info)) 
+                                <input type="hidden" value="{{$short_cut_info->id}}" name="id">
+                            @endif
+                            <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                         </div>
                     </div>
-                    <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <select required class="form-control" value="" name="is_default" id="">
+                                <option @if(isset($short_cut_info)) @if($short_cut_info->is_default==0) selected @endif @endif value="0">Not Default</option>
+                                <option @if(isset($short_cut_info)) @if($short_cut_info->is_default==1) selected @endif @endif value="1">Default</option>
+                            </select>
+                        </div>
+                    </div>
+        
+                    @if(isset($short_cut_info))
+                        <div class="col-md-12 mb-1"> 
+                            <img style="height:100px;width:200px" id="imgDisplay" src="{{asset($short_cut_info->icon)}}" alt="" srcset="">
+                        </div>
+                        @else
+                        <div class="col-md-12 mb-1"> 
+                            <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt="" srcset="">
+                        </div>
+                    @endif
+                    
+        
+                    <div class="col-md-10">
+                        
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input accept="image/*" id="image" @if(!isset($short_cut_info)) required @endif  name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
+                                    <label class="custom-file-label" for="icon">Upload icon...</label>
+                                </div>
+                            </div>
+                            <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                        </div>
+        
+                    </div>
+        
+                    <div class="col-md-2" >
+                        @if(isset($short_cut_info))
+                                <button type="submit" style="width:100%" class="btn btn-info">Update Short Cut</button>
+                            @else
+                                <button type="submit" style="width:100%" class="btn btn-info">Add Short Cut</button>
+                        @endif
+                    </div>
+                    
                 </div>
-
             </div>
-            <div class="col-md-2" >
-                <button type="submit" style="width:100%" class="btn btn-info">Add Short Cut</button>
-            </div>
+            </form>
             
-        </div>
-    </form>
-    
-<section>
     <div class="card card-info mt-0" style="box-shadow: 0px 0px">
         <div class="card-content">
             <div class="card-body card-dashboard">
@@ -66,7 +85,7 @@
                         <th>Title</th>
                         <th>Icon</th>
                         <th>Is Default</th>
-                        <th width="100">Limit</th>
+                        <th width="150">Limit</th>
                     </tr>
                     </thead>
                     <tbody>
