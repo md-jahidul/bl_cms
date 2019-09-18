@@ -37,8 +37,8 @@ class PartnerService
     public function storePartner($data)
     {
 
-        $imageUrl = $this->imageUpload($data, "company_logo", $data['company_name'], 'images/partners-logo');
-        $data['company_logo'] = $imageUrl;
+//        $imageUrl = $this->imageUpload($data, "company_logo", $data['company_name'], 'images/partners-logo');
+//        $data['company_logo'] = $imageUrl;
         $this->save($data);
         return new Response('Partner added successfully');
     }
@@ -53,10 +53,10 @@ class PartnerService
     public function updatePartner($data, $id)
     {
         $partner = $this->findOne($id);
-        if (!empty($data['company_logo'])){
-            $imageUrl = $this->imageUpload($data, "company_logo", $data['company_name'], 'images/partners-logo');
-            $data['company_logo'] = $imageUrl;
-        }
+//        if (!empty($data['company_logo'])){
+//            $imageUrl = $this->imageUpload($data, "company_logo", $data['company_name'], 'images/partners-logo');
+//            $data['company_logo'] = $imageUrl;
+//        }
         $partner->update($data);
         return Response('Partner update successfully !');
     }

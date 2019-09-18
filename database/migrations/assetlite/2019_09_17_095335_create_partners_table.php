@@ -19,7 +19,7 @@ class CreatePartnersTable extends Migration
             $table->string('ceo_name');
             $table->string('email')->unique();
             $table->string('mobile');
-            $table->string('company_logo');
+            $table->string('company_logo')->nullable();
             $table->text('address');
             $table->string('website');
             $table->string('is_active');

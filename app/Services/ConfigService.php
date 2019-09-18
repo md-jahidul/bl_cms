@@ -31,7 +31,20 @@ class ConfigService
 
     public function updateConfigData($request)
     {
-        $this->configRepository->updateConfig($request);
+        if (isset($request['site_logo'])){
+            $imageUrl = $this->imageUpload($request, 'site_logo', $request['logo_alt_text'],'images/logo');
+        }
+        $items = request()->except(['_token','_method']);
+        foreach ($items as $key => $value){
+            $config = $this->configRepository->updateConfig($key);
+            $config->value = $value;
+            if ($key == "site_logo"){
+                $config->value = env("APP_URL").'/images/logo/'.$imageUrl;
+            }
+            $config->save();
+        }
+
+
         return Response('Settings Page updated successfully');
     }
 }

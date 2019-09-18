@@ -40,9 +40,11 @@ class ConfigController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateConfigRequest $request)
+    public function update(Request $request)
     {
-        $response = $this->configService->updateConfigData($request);
+//        return $request;
+
+        $response = $this->configService->updateConfigData($request->all());
         Session::flash('message', $response->getContent());
         return redirect( "/config");
     }

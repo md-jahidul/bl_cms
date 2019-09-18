@@ -58,7 +58,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 mb-0 {{ $errors->has('website') ? ' error' : '' }}">
+                                <div class="form-group col-md-12 mb-0 {{ $errors->has('website') ? ' error' : '' }}">
                                     <label for="website" class="required">Website</label>
                                     <input type="text" name="website"  class="form-control" placeholder="Enter website"
                                            value="{{ $partner->website }}" required data-validation-required-message="Enter website number">
@@ -69,19 +69,19 @@
                                 </div>
 
 
-                                <div class="form-group col-md-5 mb-1">
-                                    <label for="file">Company Icon</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="company_logo" class="custom-file-input" id="inputGroupFile01"
-                                            value="{{ $partner->company_name }}">
-                                        <label class="custom-file-label" for="inputGroupFile01">Select icon</label>
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-                                </div>
+{{--                                <div class="form-group col-md-5 mb-1">--}}
+{{--                                    <label for="file">Company Icon</label>--}}
+{{--                                    <div class="custom-file">--}}
+{{--                                        <input type="file" name="company_logo" class="custom-file-input" id="inputGroupFile01"--}}
+{{--                                            value="{{ $partner->company_name }}">--}}
+{{--                                        <label class="custom-file-label" for="inputGroupFile01">Select icon</label>--}}
+{{--                                    </div>--}}
+{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-1 mb-0 mt-2" >
-                                    <img src="{{ asset('images/partners-logo/'.$partner->company_logo) }}" height="50" width="50" alt="logo">
-                                </div>
+{{--                                <div class="form-group col-md-1 mb-0 mt-2" >--}}
+{{--                                    <img src="{{ asset('images/partners-logo/'.$partner->company_logo) }}" height="50" width="50" alt="logo">--}}
+{{--                                </div>--}}
 
                                 <div class="form-group col-md-6 {{ $errors->has('address') ? ' error' : '' }}">
                                     <label for="address" class="required">Address</label>

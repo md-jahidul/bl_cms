@@ -17,7 +17,7 @@
                 <hr class="mb-0">
                 <div class="card-content collpase show">
                     <div class="card-body">
-                        <form action="{{ url('config/update') }}" method="POST" class="form form-horizontal striped-rows">
+                        <form action="{{ url('config/update') }}" method="POST" class="form form-horizontal striped-rows" enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="form-body">
@@ -29,9 +29,8 @@
                                             <label class="col-md-3 label-control pt-3"  for="row">{{ $title }}</label>
                                             <div class="pb-0">
                                                 <img src="{{ $config->value }}">
-                                                <div style="display: none;" class="logo-input">
-                                                    <input type="file">
-                                                </div>
+                                                    <input type="file" name="site_logo" class="input-logo pl-2" style="display: none">
+                                                    <a href="#" class="close-edit text-danger" style="display: none"><i class="la la-close" aria-hidden="true"></i></a>
                                             </div>
                                             <div class="edit pt-3 pb-0">
                                                 <a href="#" class="edit-btn"><i class="la la-pencil" aria-hidden="true"></i></a>
@@ -69,10 +68,6 @@
 
 @stop
 
-@push('page-css')
-{{--    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">--}}
-
-@endpush
 
 <style>
     .profile-pic {
@@ -86,14 +81,6 @@
         display: none;
     }
 </style>
-
-<script>
-    $(function () {
-        $(document).on('click','#edit-btn', function () {
-            alert("Hii")
-        })
-    })
-</script>
 
 @push('page-js')
     <script>
@@ -132,6 +119,18 @@
             });
         });
 
+        (function () {
+            $(".edit-btn").on('click', function () {
+                $('.edit-btn').hide();
+                $('.input-logo').show();
+                $('.close-edit').show();
+            });
+            $(".close-edit").on('click', function () {
+                $('.edit-btn').show();
+                $('.input-logo').hide();
+                $('.close-edit').hide();
+            })
+        })()
     </script>
 @endpush
 

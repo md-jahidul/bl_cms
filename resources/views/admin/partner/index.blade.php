@@ -21,7 +21,7 @@
                             <th>SL</th>
                             <th>Company Name</th>
                             <th>CEO Name</th>
-                            <th>Company Logo</th>
+{{--                            <th>Company Logo</th>--}}
                             <th>Email</th>
                             <th>Mobile</th>
                             <th>Address</th>
@@ -36,7 +36,7 @@
                                 <td class="pt-2">{{ ++$key }}</td>
                                 <td class="pt-2">{{ $partner->company_name }}</td>
                                 <td class="pt-2">{{ $partner->ceo_name }}</td>
-                                <td><img src="{{ asset('images/partners-logo/'. $partner->company_logo) }}" height="50" width="50"></td>
+{{--                                <td><img src="{{ asset('images/partners-logo/'. $partner->company_logo) }}" height="50" width="50"></td>--}}
                                 <td class="pt-2">{{ $partner->email }}</td>
                                 <td class="pt-2">{{ $partner->mobile }}</td>
                                 <td class="pt-2">{{ $partner->address }}</td>
