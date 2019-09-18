@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Quick Launch Create')
-@section('card_name', 'Quick Launch Create')
+@section('title', 'Partner Create')
+@section('card_name', 'Partner Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('quick-launch') }}"> Quick Launch List</a></li>
-    <li class="breadcrumb-item active"> Quick Launch Create</li>
+    <li class="breadcrumb-item active"> <a href="{{ url('partners') }}"> Partner List</a></li>
+    <li class="breadcrumb-item active"> Partner Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('quick-launch') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('partners') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -48,13 +48,13 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('mobile') ? ' error' : '' }}">
                                     <label for="mobile" class="required">Mobile Number</label>
-                                    <input type="text" name="mobile"  class="form-control" placeholder="Enter alt text"
+                                    <input type="number" name="mobile"  class="form-control" placeholder="Enter alt text"
                                            value="{{ old("mobile") ? old("mobile") : '' }}" required data-validation-required-message="Enter mobile number">
                                     <div class="help-block"></div>
                                     @if ($errors->has('mobile'))
                                         <div class="help-block">  {{ $errors->first('mobile') }}</div>
                                     @endif
-                                </div>                              
+                                </div>
 
 
 {{--                                <div class="form-group col-md-6 mb-1 {{ $errors->has('company_logo') ? ' error' : '' }}">--}}

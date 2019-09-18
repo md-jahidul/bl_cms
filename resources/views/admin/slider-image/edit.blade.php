@@ -76,10 +76,7 @@
                                         <input type="file" id="file" name="image_url">
                                         <span class="file-custom"></span>
                                     </label>
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <img class="img-thumbnail" src="{{ asset('slider-images/'.$sliderImage->image_url) }}" height="80" width="80">
+                                    <img class="img-thumbnail" src="{{ $sliderImage->image_url }}" height="80" width="80">
                                 </div>
 
                                 <div class="col-md-12">

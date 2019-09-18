@@ -68,12 +68,17 @@
                                 </div>
 
 
-                                <div class="form-group col-md-6 mt-1">
-                                    <label for="file">Select File</label>
-                                    <label id="projectinput7" class="file center-block">
-                                        <input type="file" id="file" name="image_url">
-                                        <span class="file-custom"></span>
-                                    </label>
+                                <div class="form-group col-md-6 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                    <label for="file" class="required">Select File</label>
+
+                                    <label id="projectinput7" class="file center-block ml-2">
+                                        <input type="file" id="file" name="image_url" required>
+                                    </label><br>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    @if ($errors->has('image_url'))
+                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-12">

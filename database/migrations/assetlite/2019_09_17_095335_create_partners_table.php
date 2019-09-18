@@ -17,7 +17,7 @@ class CreatePartnersTable extends Migration
             $table->bigIncrements('id');
             $table->string('company_name');
             $table->string('ceo_name');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('mobile');
             $table->string('company_logo')->nullable();
             $table->text('address');

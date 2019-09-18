@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Http\Requests\StorePartnerRequest;
 use App\Services\PartnerService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -50,7 +51,7 @@ class PartnerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePartnerRequest $request)
     {
         $response = $this->partnerService->storePartner($request->all());
         Session::flash('message', $response->getContent());

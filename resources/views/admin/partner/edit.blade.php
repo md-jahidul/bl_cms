@@ -2,11 +2,11 @@
 @section('title', 'Quick Launch Create')
 @section('card_name', 'Quick Launch Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('quick-launch') }}"> Quick Launch List</a></li>
-    <li class="breadcrumb-item active"> Quick Launch Create</li>
+    <li class="breadcrumb-item active"> <a href="{{ url('partners') }}"> Partner List</a></li>
+    <li class="breadcrumb-item active"> Partner Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('quick-launch') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('partners') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>

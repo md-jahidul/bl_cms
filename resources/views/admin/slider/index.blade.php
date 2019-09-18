@@ -46,8 +46,4 @@
 
 @stop
 
-<style>
-    h4.menu-title {
-        font-weight: bold;
-    }
-</style>
+

@@ -74,7 +74,7 @@ class SliderImageService
         $data['other_attributes'] = json_encode($other_attributes);
         if (!empty($data['image_url'])){
             $imageUrl = $this->imageUpload($data, 'image_url', $data['title'], 'slider-images');
-            $data['image_url'] = $imageUrl;
+            $data['image_url'] = env('APP_URL', 'http://localhost:8000') . "/slider-images/".$imageUrl;
         }
         $sliderImage->update($data);
         return Response('Slider Image update successfully !');

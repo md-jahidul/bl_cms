@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreSliderImageRequest;
 use App\Models\Slider;
 use App\Models\SliderImage;
 use App\Services\SliderImageService;
@@ -54,7 +55,7 @@ class SliderImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $sliderId, $type)
+    public function store(StoreSliderImageRequest $request, $sliderId, $type)
     {
         $response = $this->sliderImageService->storeSliderImage($request->all(), $sliderId);
         Session::flash('message', $response->getContent());
@@ -101,8 +102,6 @@ class SliderImageController extends Controller
 
     public function sliderImageSortable(Request $request)
     {
-//        return $request->all();
-
         $this->sliderImageService->tableSortable($request);
     }
 
