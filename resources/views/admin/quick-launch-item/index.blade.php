@@ -20,8 +20,6 @@
 {{--                            <th>SL</th>--}}
                             <th width="6%" class="text-center">Image</th>
                             <th>English</th>
-                            <th>Bangla</th>
-                            <th>Alt Text</th>
                             <th>Link</th>
                             <th class="text-right">Action</th>
                         </tr>
@@ -31,11 +29,8 @@
                             <tr data-index="{{ $quickLaunchItem->id }}" data-position="{{ $quickLaunchItem->display_order }}">
 {{--                                <td>{{ ++$key }}</td>--}}
                                 <td width="6%" class="text-center"><img src="{{ $quickLaunchItem->image_url }}" alt="image" height="30" width="30"></td>
-                                <td>{{$quickLaunchItem->en_title}}</td>
-                                <td>{{$quickLaunchItem->bn_title}}</td>
-                                <td>{{$quickLaunchItem->alt_text}}</td>
+                                <td width="20%">{{$quickLaunchItem->en_title}} {!! $quickLaunchItem->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                 <td>{{$quickLaunchItem->link}}</td>
-
                                 <td class="action" width="8%">
                                     <a href="{{ url("quick-launch/$quickLaunchItem->id/edit") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="#" remove="{{ url("quick-launch/destroy/$quickLaunchItem->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $quickLaunchItem->id }}" title="Delete the user">

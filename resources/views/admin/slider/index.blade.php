@@ -14,8 +14,9 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
-                           id="Example1" role="grid" aria-describedby="Example1_info" style="">
+                    <h4 class="menu-title">Available sliders :</h4>
+                    <table class="table table-striped table-bordered"
+                           role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
                             <th>SL</th>
@@ -45,43 +46,8 @@
 
 @stop
 
-@push('page-js')
-    <script>
-        $(document).ready(function () {
-            $('#Example1').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy', className: 'copyButton',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'excel', className: 'excel',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'pdf', className: 'pdf', "charset": "utf-8",
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'print', className: 'print',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                ],
-                paging: true,
-                searching: true,
-                "bDestroy": true,
-
-            });
-        });
-
-    </script>
-@endpush
+<style>
+    h4.menu-title {
+        font-weight: bold;
+    }
+</style>

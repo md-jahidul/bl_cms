@@ -2,11 +2,11 @@
 @section('title', 'Slider Image Create')
 @section('card_name', 'Slider Image Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('quick-launch') }}"> Slider Image List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ route('slider_images', [$sliderId, $type]) }}"> Slider Image List</a></li>
     <li class="breadcrumb-item active"> Slider Image Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('quick-launch') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ route('slider_images', [$sliderId, $type]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>

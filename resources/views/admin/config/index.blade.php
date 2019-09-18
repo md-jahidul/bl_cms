@@ -28,12 +28,12 @@
                                         <div class="form-group row profile-pic">
                                             <label class="col-md-3 label-control pt-3"  for="row">{{ $title }}</label>
                                             <div class="pb-0">
-                                                <img src="{{ $config->value }}">
+                                                <img src="{{ $config->value }}" height="60" width="50">
                                                     <input type="file" name="site_logo" class="input-logo pl-2" style="display: none">
                                                     <a href="#" class="close-edit text-danger" style="display: none"><i class="la la-close" aria-hidden="true"></i></a>
                                             </div>
                                             <div class="edit pt-3 pb-0">
-                                                <a href="#" class="edit-btn"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                                <a href="#" class="edit-btn"><i class="la la-pencil" title="Change Logo" aria-hidden="true"></i></a>
                                             </div>
                                         </div>
                                     @else
