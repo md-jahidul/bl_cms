@@ -2,7 +2,7 @@
 @section('title', 'Setting')
 @section('card_name', 'Setting')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Setting</li>
+    <li class="breadcrumb-item active">Setting List</li>
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@
                     @method('post')
                 @endif
                 <div class="form-body">
-                    <h4 class="form-section">Setting Key</h4>
+                    <h4 class="form-section"><i class="la la-key"></i>Setting Key</h4>
                     <div class="row">
                         <div class="col-md-5">
                            <label for="key">Key:</label>

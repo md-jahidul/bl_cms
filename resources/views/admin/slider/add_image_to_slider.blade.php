@@ -11,7 +11,7 @@
     <section id="form-control-repeater">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title" id="file-repeater">Project Info</h4>
+                <h4 class="form-section"><i class="la la-paperclip"></i>Add Image to "{{$slider_information->title}}" Slider</h4>
                 <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                 <div class="heading-elements">
                 
@@ -20,6 +20,7 @@
             
             <div class="card-content collapse show">
                 <div class="card-body">
+                    
                     <form class="form row" action="{{route('sliderImage.store')}}" enctype="multipart/form-data" method="POST">
                         @csrf
                         @method('post')

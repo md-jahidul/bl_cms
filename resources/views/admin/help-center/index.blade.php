@@ -17,7 +17,10 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">Help center list</h1>
+
+                        <h1 class="card-title pl-1">
+                            <h4 class="form-section"><i class="la la-stethoscope"></i> Help center list</h4>
+                        </h1>
                     </div>
                 </div>
             </div>
@@ -35,7 +38,7 @@
                             <th  width='80'>Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="list">
                         @foreach ($helpCenters as $helpCenter)
 
                             <tr>
@@ -157,5 +160,48 @@
             });
         });
 
+        // -------------------------------------------------
+        // -------------------position----------------------
+        // -------------------------------------------------
+        $(document).ready( function() {
+            $( "#list" ).sortable({
+                update:function(event,ui){
+                   $(this).children().each(function(index){
+                       if($(this).attr('data-position')!=(index+1)){
+                        $(this).attr('data-position',index+1).addClass('update');
+                        console.log(index)
+                       }
+                   });
+                   saveNewPosition();
+                }
+            });
+
+           function saveNewPosition(){
+               var position = [];
+               $('.update').each(
+                   function(){
+                        position.push([$(this).attr('data-index'),$(this).attr('data-position')]);
+                        //$this.removeClass('update');
+                })
+               console.log(position)
+
+                $.ajax({
+                    url:"{{url("helpCenter/update-position")}}",
+                    methoder:'get',
+                    dataType:'text',
+                    data:{
+                        update:1,
+                        positions:position
+                    },
+                    success:function (data){
+                        console.log(data)
+                    }
+                })
+           }
+           
+        } );
+        // -------------------------------------------------
+        // -------------------position----------------------
+        // -------------------------------------------------
     </script>
 @endpush

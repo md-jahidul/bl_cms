@@ -15,12 +15,21 @@
     <!-- /short cut add form -->
     <section>
             <form action=" @if(isset($short_cut_info)) {{route('short_cuts.update',$short_cut_info->id)}} @else {{route('short_cuts.store')}} @endif " method="post" enctype="multipart/form-data">
+                
                 @csrf
                 @if(isset($short_cut_info)) @method('put') @else @method('post') @endif
                 <div class="container-fluid">
-                <div class="row px-1 pt-3 bg-white">
+                    <div class="row px-1 pt-1 bg-white">
+                    <h4 class="form-section col-md-12">
+                        @if(isset($short_cut_info))
+                            Update Short Cuts
+                            @else
+                            Create Short Cuts
+                        @endif
+                    </h4>
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label for="title">Title :</label>
                             <input maxlength="50" required style="height:100%" value="@if(isset($short_cut_info)){{$short_cut_info->title}} @elseif(old("title")) {{old("title")}} @endif" type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter Shor Cut Name..">
                             <input type="hidden" value="@if(isset($short_cut_info)) yes @else no @endif" name="value_exist">
                             @if(isset($short_cut_info)) 
@@ -31,7 +40,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <select required class="form-control" value="" name="is_default" id="">
+                            <label for="default">Default :</label>
+                            <select required class="form-control" value="" name="is_default" id="default">
                                 <option @if(isset($short_cut_info)) @if($short_cut_info->is_default==0) selected @endif @endif value="0">Not Default</option>
                                 <option @if(isset($short_cut_info)) @if($short_cut_info->is_default==1) selected @endif @endif value="1">Default</option>
                             </select>
@@ -52,6 +62,7 @@
                     <div class="col-md-10">
                         
                         <div class="form-group">
+                            <label for="image">Upload Icon :</label>
                             <div class="input-group">
                                 <div class="custom-file">
                                     <input accept="image/*" id="image" @if(!isset($short_cut_info)) required @endif  name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
@@ -63,7 +74,7 @@
         
                     </div>
         
-                    <div class="col-md-2" >
+                    <div class="col-md-2" style="margin-top:26px">
                         @if(isset($short_cut_info))
                                 <button type="submit" style="width:100%" class="btn btn-info">Update Short Cut</button>
                             @else
@@ -85,7 +96,7 @@
                         <th>Title</th>
                         <th>Icon</th>
                         <th>Is Default</th>
-                        <th width="150">Limit</th>
+                        <th width="100">Limit</th>
                     </tr>
                     </thead>
                     <tbody>
