@@ -17,7 +17,7 @@
                 <hr class="mb-0">
                 <div class="card-content collpase show">
                     <div class="card-body">
-                        <form action="{{ url('config/update') }}" method="POST" class="form form-horizontal striped-rows" enctype="multipart/form-data">
+                        <form role="form" action="{{ url('config/update') }}" method="POST" class="form form-horizontal striped-rows" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="form-body">
@@ -29,7 +29,7 @@
                                             <label class="col-md-3 label-control pt-3"  for="row">{{ $title }}</label>
                                             <div class="pb-0">
                                                 <img src="{{ $config->value }}" height="60" width="50">
-                                                    <input type="file" name="site_logo" class="input-logo pl-2" style="display: none">
+                                                    <input type="file" name="site_logo" class="input-logo pl-2" style="display: none" placeholder="Enter logo alt text">
                                                     <a href="#" class="close-edit text-danger" style="display: none"><i class="la la-close" aria-hidden="true"></i></a>
                                             </div>
                                             <div class="edit pt-3 pb-0">
@@ -40,7 +40,8 @@
                                         <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
                                             <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
                                             <div class="col-md-9">
-                                                <input type="text" id="row{{$key}}" class="form-control" value="{{ $config->value }}" placeholder="name" name="{{ $config->key }}">
+                                                <input type="text" id="row{{$key}}" class="form-control"  value="{{ $config->value }}" required data-validation-required-message="Enter {{$title}}" placeholder="Enter {{ $title }}" name="{{ $config->key }}">
+                                                <div class="help-block"></div>
                                                 @if ($errors->has($config->key))
                                                     <div class="help-block">  {{ $errors->first($config->key) }}</div>
                                                 @endif
@@ -55,14 +56,49 @@
                                     <label class="col-md-3 label-control" for="eventRegInput5"></label>
                                     <div class="col-md-9 pt-0 pb-0">
                                         <button type="submit" class="btn btn-primary">
-                                            <i class="la la-check-square-o"></i> Save Change
+                                            <i class="la la-check-square-o"></i> Save Changes
                                         </button>
+                                        <a href="{{ url('/home') }}" class="btn btn-warning">
+                                            <i class="la la-arrow-circle-left"></i> Cancel
+                                        </a>
                                     </div>
                                 </div>
                         </form>
                     </div>
                 </div>
             </div>
+
+{{--            <div class="card">--}}
+{{--                <div class="card-content collapse show">--}}
+{{--                    <div class="card-body card-dashboard">--}}
+{{--                        <div class="card-body card-dashboard">--}}
+{{--                            <form role="form" action="{{ route('partners.store') }}" method="POST" novalidate enctype="multipart/form-data">--}}
+{{--                                <div class="row">--}}
+{{--                                    <div class="form-group col-md-6 {{ $errors->has('company_name') ? ' error' : '' }}">--}}
+{{--                                        <label for="company_name" class="required">Company Name</label>--}}
+{{--                                        <input type="text" name="company_name"  class="form-control" placeholder="Enter english title"--}}
+{{--                                               value="{{ old("company_name") ? old("company_name") : '' }}" required data-validation-required-message="Enter company name">--}}
+{{--                                        <div class="help-block"></div>--}}
+{{--                                        @if ($errors->has('company_name'))--}}
+{{--                                            <div class="help-block">  {{ $errors->first('company_name') }}</div>--}}
+{{--                                        @endif--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                @csrf--}}
+
+{{--                                <div class="form-actions col-md-12 ">--}}
+{{--                                    <div class="pull-right">--}}
+{{--                                        <button type="submit" class="btn btn-primary"><i--}}
+{{--                                                class="la la-check-square-o"></i> SAVE--}}
+{{--                                        </button>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </form>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+
         </div>
     </div>
 

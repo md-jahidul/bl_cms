@@ -40,7 +40,7 @@ class ConfigController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateConfigRequest $request)
     {
 //        return $request;
 
