@@ -24,7 +24,7 @@ class BannerStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|unique:banners,name,'.$this->id,
             'code' => 'required',
             'redirect_url' => 'required',
             'image_name' => 'required',

@@ -26,7 +26,7 @@ class SliderRequest extends FormRequest
        return [
             // 'component_id' => 'required|unique:sliders,component_id,'.$this->id,
             'component_id' => 'required',
-            'title' => 'required'
+            'title' => 'required|unique:sliders,title,'.$this->id,
         ];
     }
 

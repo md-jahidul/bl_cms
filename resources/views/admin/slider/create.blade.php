@@ -36,7 +36,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            @if(isset($single_slider)) <input type="hidden" name="id" value="{{$single_slider->component_id}}"> @endif
+                            @if(isset($single_slider)) <input type="hidden" name="id" value="{{$single_slider->id}}"> @endif
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="projectinput6">Slider Type:<small class="text-danger">*</small></label>

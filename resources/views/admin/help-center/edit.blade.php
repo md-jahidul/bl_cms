@@ -30,6 +30,7 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <input type="hidden" name="id" value="{{ $helpCenter->id }}">
 
                                 <div class="col-md-6">
                                     <div class="form-group">

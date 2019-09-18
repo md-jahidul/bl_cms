@@ -51,7 +51,7 @@
                             <input required id="name" value="@if(isset($banner_info)){{$banner_info->name}} @elseif(old("name")) {{old("name")}} @endif" type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="title" placeholder="Enter Banner Name..">
                             <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
                         </div>
-
+                        @if(isset($banner_info)) <input type="hidden" name="id" value="{{$banner_info->id}}"> @endif
                     </div>
                     <div class="col-6">
 
