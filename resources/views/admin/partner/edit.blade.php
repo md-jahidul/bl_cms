@@ -92,7 +92,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 mb-0 {{ $errors->has('website') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('website') ? ' error' : '' }}">
                                     <label for="website" class="required">Website</label>
                                     <input type="text" name="website"  class="form-control" placeholder="Enter website"
                                            value="{{ $partner->website }}" required data-validation-required-message="Enter website number">
