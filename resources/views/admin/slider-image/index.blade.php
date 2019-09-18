@@ -33,7 +33,7 @@
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $slider_image->slider['title'] }}</td>
                                 <td>{{ $slider_image->title }}</td>
-                                <td><img class="" src="{{ asset("slider-images/".$slider_image->image_url) }}" alt="Slider Image" height="50" width="50" /></td>
+                                <td><img class="" src="{{ $slider_image->image_url }}" alt="Slider Image" height="50" width="50" /></td>
                                 <td>{{ $slider_image->description }}</td>
                                 <td>{{ $slider_image->alt_text }}</td>
                                 <td>{{ $slider_image->url_btn_label }}</td>

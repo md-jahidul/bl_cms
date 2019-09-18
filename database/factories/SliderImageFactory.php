@@ -10,7 +10,7 @@ $factory->define(SliderImage::class, function (Faker $faker) {
         'slider_id' => rand(1, 2),
         'title' => $faker->streetName,
         'description' => $faker->sentence,
-        'image_url' => $faker->image(public_path()."/slider-images", 420,320,"nature", false),
+        'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/'. $faker->image(public_path()."/slider-images", 420,320,"nature", false),
         'alt_text' => 'slider image',
         'url_btn_label' => 'View Details',
         'redirect_url' => $faker->url,
@@ -18,3 +18,4 @@ $factory->define(SliderImage::class, function (Faker $faker) {
         'other_attributes' => null
     ];
 });
+
