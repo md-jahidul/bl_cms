@@ -109,7 +109,13 @@ class HelpCenterController extends Controller
 
     public function changeSequece(Request $request)
     {
-        return $request;
+        return $request->positions;
+        
+        foreach ($request->positions as $position) {
+            $helpCenter = HelpCenter::FindorFail($position[0]);
+            $helpCenter->update(['sequence' => $position[1]]);
+        } 
+        return "success";
         
     }
 }

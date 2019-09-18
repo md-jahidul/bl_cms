@@ -92,6 +92,7 @@ class SliderImageController extends Controller
      */
     public function updatePosition(Request $request)
     {
+        //return $request;
         foreach ($request->positions as $position) {
             $image = SliderImage::FindorFail($position[0]);
             $image->update(['sequence' => $position[1]]);

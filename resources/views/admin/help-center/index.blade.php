@@ -41,7 +41,7 @@
                         <tbody id="list">
                         @foreach ($helpCenters as $helpCenter)
 
-                            <tr data-position = "{{$helpCenter->sequence}}">
+                            <tr data-position = "{{$helpCenter->sequence}}" data-index="{{$helpCenter->id}}">
                                 <td>{{$helpCenter->id}}</td>
                                 <td>{{$helpCenter->title}}</td>
                                 <td>{{$helpCenter->redirect_link}}</td>
@@ -186,7 +186,7 @@
                console.log(position)
 
                 $.ajax({
-                    url:"{{url("helpCenter/update-position")}}",
+                    url:"{{url("helpCenter/updatePosition")}}",
                     methoder:'get',
                     dataType:'text',
                     data:{
