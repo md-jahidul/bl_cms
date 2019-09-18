@@ -29,6 +29,7 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <input type="hidden" name="id" value="{{$sms_offer->id}}">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="volume">Volume:<small class="text-danger">*</small></label>

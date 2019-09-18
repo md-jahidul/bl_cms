@@ -24,7 +24,7 @@ class InternetOfferRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required',
+            'title'=>'required|unique:internet_offers,title,'.$this->id,
             'volume'=>'required|numeric|min:1',
             'validity'=>'required|numeric|min:1',
             'price'=>'required|numeric|min:1',

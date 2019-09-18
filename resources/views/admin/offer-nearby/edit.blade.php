@@ -30,6 +30,7 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <input type="hidden" name="id" value="{{$nearByOffer->id}}">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="vendor">vendor:<small class="text-danger">*</small></label>

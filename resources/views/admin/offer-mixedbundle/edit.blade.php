@@ -30,7 +30,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                
+                                <input type="hidden" name="id" value="{{$mixedBundle_offer->id}}">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="internet">Internet:<small class="text-danger">*</small></label>
