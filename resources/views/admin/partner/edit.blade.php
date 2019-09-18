@@ -58,17 +58,6 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-12 mb-0 {{ $errors->has('website') ? ' error' : '' }}">
-                                    <label for="website" class="required">Website</label>
-                                    <input type="text" name="website"  class="form-control" placeholder="Enter website"
-                                           value="{{ $partner->website }}" required data-validation-required-message="Enter website number">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('website'))
-                                        <div class="help-block">  {{ $errors->first('website') }}</div>
-                                    @endif
-                                </div>
-
-
 {{--                                <div class="form-group col-md-5 mb-1">--}}
 {{--                                    <label for="file">Company Icon</label>--}}
 {{--                                    <div class="custom-file">--}}
@@ -100,6 +89,16 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('services'))
                                         <div class="help-block">  {{ $errors->first('services') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('website') ? ' error' : '' }}">
+                                    <label for="website" class="required">Website</label>
+                                    <input type="text" name="website"  class="form-control" placeholder="Enter website"
+                                           value="{{ $partner->website }}" required data-validation-required-message="Enter website number">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('website'))
+                                        <div class="help-block">  {{ $errors->first('website') }}</div>
                                     @endif
                                 </div>
 
