@@ -21,18 +21,33 @@
                             @csrf
                             @method('put')
                             <div class="form-body">
-
                                 @foreach($configs as $key =>$config)
                                     @php($title = ucfirst(str_replace('_', ' ', $config->key )))
-                                    <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
-                                        <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
-                                        <div class="col-md-9">
-                                            <input type="text" id="row{{$key}}" class="form-control" value="{{ $config->value }}" placeholder="name" name="{{ $config->key }}">
-                                            @if ($errors->has($config->key))
-                                                <div class="help-block">  {{ $errors->first($config->key) }}</div>
-                                            @endif
+
+                                    @if($config->key == "site_logo")
+                                        <div class="form-group row profile-pic">
+                                            <label class="col-md-3 label-control pt-3"  for="row">{{ $title }}</label>
+                                            <div class="pb-0">
+                                                <img src="{{ $config->value }}">
+                                                <div style="display: none;" class="logo-input">
+                                                    <input type="file">
+                                                </div>
+                                            </div>
+                                            <div class="edit pt-3 pb-0">
+                                                <a href="#" class="edit-btn"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @else
+                                        <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                            <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="row{{$key}}" class="form-control" value="{{ $config->value }}" placeholder="name" name="{{ $config->key }}">
+                                                @if ($errors->has($config->key))
+                                                    <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endif
 
                                 @endforeach
                             </div>
@@ -53,6 +68,32 @@
     </div>
 
 @stop
+
+@push('page-css')
+{{--    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">--}}
+
+@endpush
+
+<style>
+    .profile-pic {
+        position: relative;
+        display: inline-block;
+    }
+    .profile-pic:hover .edit {
+        display: block;
+    }
+    .edit {
+        display: none;
+    }
+</style>
+
+<script>
+    $(function () {
+        $(document).on('click','#edit-btn', function () {
+            alert("Hii")
+        })
+    })
+</script>
 
 @push('page-js')
     <script>
@@ -93,6 +134,8 @@
 
     </script>
 @endpush
+
+
 
 
 
