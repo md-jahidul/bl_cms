@@ -71,6 +71,7 @@ class FooterMenuService
     public function updateFooterMenu($data, $id)
     {
         $footerMenu = $this->findOne($id);
+        $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
         $footerMenu->update($data);
         return Response('Footer menu updated successfully');
     }

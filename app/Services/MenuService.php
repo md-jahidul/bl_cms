@@ -71,6 +71,7 @@ class MenuService
     public function updateMenu($data, $id)
     {
         $menu = $this->findOne($id);
+        $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
         $menu->update($data);
         return Response('Menu updated successfully');
     }
