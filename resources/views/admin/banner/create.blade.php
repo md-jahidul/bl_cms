@@ -92,7 +92,7 @@
                             <label for="banner" id="bor">Banner : <span class="text-danger">*</span> </label>
                             <div id="banner" class="input-group">
                                 <div class="custom-file">
-                                    <input @if(!isset($banner_info))  required @endif accept="image/*" onchange="loadFile(event)" name="image_path" type="file" class="custom-file-input @error('image_path') is-invalid @enderror">
+                                    <input accept="image/*" @if(!isset($banner_info))  required @endif accept="image/*" onchange="loadFile(event)" name="image_path" type="file" class="custom-file-input @error('image_path') is-invalid @enderror">
                                     <label class="custom-file-label" for="imgInp">Upload Banner...</label>
                                 </div>
                                 <div class="input-group-append">

@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="custom-file">
-                                        <input required name="image" type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image">
+                                        <input accept="image/*" required name="image" type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image">
                                         <label class="custom-file-label @error('image') is-invalid @enderror" for="validatedCustomFile">Upload image...</label>
                                         {{-- <div class="invalid-feedback">Example invalid custom file feedback</div> --}}
                                         @error('image')
