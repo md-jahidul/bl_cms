@@ -48,7 +48,7 @@ class SliderImageService
         $other_attributes = request()->only('monthly_rate', 'google_play_link', 'app_store_link');
         $data['other_attributes'] = json_encode($other_attributes);
         $count = count($this->sliderImageRepository->findAll());
-        $imageUrl = $this->imageUpload($data, $data['title'], 'slider-images');
+        $imageUrl = $this->imageUpload($data, 'image_url', $data['title'], 'slider-images');
         $data['image_url'] = $imageUrl;
         $data['slider_id'] = $sliderId;
         $data['sequence'] = ++$count;
@@ -73,7 +73,7 @@ class SliderImageService
         $other_attributes = request()->only('monthly_rate', 'google_play_link', 'app_store_link');
         $data['other_attributes'] = json_encode($other_attributes);
         if (!empty($data['image_url'])){
-            $imageUrl = $this->imageUpload($data, $data['title'], 'slider-images');
+            $imageUrl = $this->imageUpload($data, 'image_url', $data['title'], 'slider-images');
             $data['image_url'] = $imageUrl;
         }
         $sliderImage->update($data);
