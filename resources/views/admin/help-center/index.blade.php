@@ -183,10 +183,9 @@
                         position.push([$(this).attr('data-index'),$(this).attr('data-position')]);
                         //$this.removeClass('update');
                 })
-               console.log(position)
-
+                console.log(position)
                 $.ajax({
-                    url:"{{url("helpCenter/updatePosition")}}",
+                    url:"{{url("help_Center/update-position")}}",
                     methoder:'get',
                     dataType:'text',
                     data:{
