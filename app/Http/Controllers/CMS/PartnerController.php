@@ -88,7 +88,7 @@ class PartnerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StorePartnerRequest $request, $id)
     {
         $response = $this->partnerService->updatePartner($request->all(), $id);
         Session::flash('message', $response->getContent());

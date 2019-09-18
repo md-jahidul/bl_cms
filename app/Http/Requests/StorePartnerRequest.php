@@ -24,13 +24,13 @@ class StorePartnerRequest extends FormRequest
     public function rules()
     {
         return [
-            'company_name' => 'required|unique:partners',
+            'company_name' => 'required|unique:partners,company_name,'.$this->partner,
             'ceo_name' => 'required',
-            'email' => 'required|email|unique:partners',
-            'mobile' => 'required|unique:partners',
+            'email' => 'required|email|unique:partners,email,'.$this->partner,
+            'mobile' => 'required|unique:partners,mobile,'.$this->partner,
 //            'company_logo' => 'required',
             'address' => 'required',
-            'website' => 'required|unique:partners',
+            'website' => 'required|unique:partners,website,'.$this->partner,
             'is_active' => 'required',
             'services' => 'required',
         ];
