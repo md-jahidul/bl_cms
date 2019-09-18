@@ -55,6 +55,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'internal' => [
+            'driver' => 'local',
+            'root' => env('UPLOAD_BASE_PATH','/src/uploads'),
+            'url' => env('APP_URL').'/uploads',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -65,5 +72,10 @@ return [
         ],
 
     ],
+    'paths' => [
+        'test' => 'test',
+        'task_attachments' => 'task_attachments',
+        'monthly_update_attachments' => 'monthly_update_attachments',
+    ]
 
 ];
