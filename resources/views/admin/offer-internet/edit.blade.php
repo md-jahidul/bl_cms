@@ -3,7 +3,7 @@
 @section('card_name', "Internet Offer")
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        Create Internet Offer
+        Edit Internet Offer
     </li>
 @endsection
 
@@ -17,7 +17,7 @@
                         @csrf
                         @method('put')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Create SMS offer.</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Edit Internet offer.</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">

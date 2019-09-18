@@ -32,9 +32,9 @@
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="limit">Limit:</label>
-                                <input required @if(isset($setting_info)) value="{{$setting_info->limit}}" @endif style="width:100%;height:100%" min="0" type="number" id="limit" class="form-control @error('limit') is-invalid @enderror" placeholder="Set Limite..." name="limit">
+                                <input @if(isset($setting_info)) value="{{$setting_info->limit}}"@else value="{{ old("limit") ? old("limit") : '' }}" @endif style="width:100%;height:100%" min="0" type="number" id="limit" class="form-control @error('limit') is-invalid @enderror" placeholder="Set Limite..." name="limit">
+                                <small class="text-danger"> @error('limit') {{ $message }} @enderror </small>
                             </div>
-                            <small class="limit"> @error('limit') {{ $message }} @enderror </small>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group" style="margin-top:26px">
@@ -59,7 +59,7 @@
                         <th width="100">id</th>
                         <th>Tittle</th>
                         <th width="80">Limit</th>
-                        <th width="280">Action</th>
+                        <th width="100">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -70,13 +70,13 @@
                                 <td>{{$setting->limit}}</td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <div class="col-md-5">
                                             <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('setting.edit',$setting->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
                                         
-                                        <div class="col-md-2">
+                                        <div class="col-md-5">
                                             <button data-id="{{$setting->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

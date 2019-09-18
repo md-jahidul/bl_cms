@@ -33,7 +33,7 @@
                             <th>Price</th>
                             <th>Offer Code</th>
                             <th>Points</th>
-                            <th>Action</th>
+                            <th width="100">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -48,12 +48,12 @@
                                 <td>{{$sms_offer->points}}</td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-3 mr-1">
+                                        <div class="col-md-4 mr-1">
                                             <a role="button" href="{{route('smsOffer.edit',$sms_offer->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <button data-id="{{$sms_offer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

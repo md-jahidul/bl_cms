@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'questions List')
+@section('title', 'Banner List')
 @section('card_name', 'Banner-List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Banner</li>
+    <li class="breadcrumb-item active">Banner-list</li>
 @endsection
 @section('action')
     <a href="{{route('banner.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
@@ -31,7 +31,7 @@
                             <th width=''>Banner</th>
                             <th width=''>Code</th>
                             <th width=''>Redirect url</th>
-                            <th  width='500'>Action</th>
+                            <th  width='100'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -44,12 +44,12 @@
                                 <td>{{$banner->redirect_url}}</td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-1 mr-1">
+                                        <div class="col-md-5">
                                             <a role="button" href="{{route('banner.edit',$banner->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-md-5">
                                             <button data-id="{{$banner->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

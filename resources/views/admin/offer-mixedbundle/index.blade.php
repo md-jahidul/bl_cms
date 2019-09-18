@@ -35,7 +35,7 @@
                             <th>Price</th>
                             <th>Points</th>
                             <th>Offer Code</th>
-                            <th>Tag</th>
+                            {{-- <th>Tag</th> --}}
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -51,15 +51,15 @@
                                 <td>{{$mixedBundle_offer->price}}</td>
                                 <td>{{$mixedBundle_offer->points}}</td>
                                 <td>{{$mixedBundle_offer->offer_code}}</td>
-                                <td>{{$mixedBundle_offer->tag}}</td>
+                                {{-- <td>{{$mixedBundle_offer->tag}}</td> --}}
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-1 mr-1">
+                                        <div class="col-md-5">
                                             <a role="button" href="{{route('mixedBundleOffer.edit',$mixedBundle_offer->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-md-5">
                                             <button data-id="{{$mixedBundle_offer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

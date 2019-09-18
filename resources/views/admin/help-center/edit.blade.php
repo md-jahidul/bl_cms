@@ -3,7 +3,7 @@
 @section('card_name', "Help Center")
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        Create Help Center
+        Edit Help Center
     </li>
 @endsection
 
@@ -22,7 +22,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="title">title:<small class="text-danger">*</small></label>
-                                        <input required type="text" value="{{$helpCenter->title}}" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
+                                        <input type="text" value="{{ old("title") ? old("title") : $helpCenter->title }}" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
                                         @error('title')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -34,7 +34,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="offer_code">sequence:<small class="text-danger">*</small></label>
-                                        <input required type="number" min="0" value="{{$helpCenter->sequence}}" id="sequence" class="form-control @error('sequence') is-invalid @enderror" placeholder="sequence." name="sequence">
+                                        <input type="number" min="0" value="{{ old("sequence") ? old("sequence") : $helpCenter->sequence }}"  id="sequence" class="form-control @error('sequence') is-invalid @enderror" placeholder="sequence." name="sequence">
                                         @error('sequence')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -46,7 +46,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="price">Redirect Link:<small class="text-danger">*</small></label>
-                                        <input required type="text" value="{{$helpCenter->redirect_link}}" id="redirect_link" class="form-control @error('redirect_link') is-invalid @enderror" placeholder="Http.." name="redirect_link">
+                                        <input type="text" value="{{ old("redirect_link") ? old("redirect_link") : $helpCenter->redirect_link }}" id="redirect_link" class="form-control @error('redirect_link') is-invalid @enderror" placeholder="Http.." name="redirect_link">
                                         <small id="price" class="form-text text-muted">Redirect Link.</small>
                                         @error('redirect_link')
                                             <span class="invalid-feedback" role="alert">
@@ -63,7 +63,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input name="icon" id="image" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
+                                                <input accept="image/*" name="icon" id="image" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
                                                 <label class="custom-file-label" for="icon">Upload icon...</label>
                                             </div>
                                             <div class="input-group-append">

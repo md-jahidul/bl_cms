@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'questions List')
+@section('title', 'Short Cuts List')
 @section('card_name', 'Short Cuts')
 @section('breadcrumb')
     <li class="breadcrumb-item active">Short-Cuts List</li>
@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
-                    <input maxlength="10" required style="height:100%" value="@if(isset($short_cut_info)) {{$short_cut_info->tittle}} @endif" type="text" name="tittle" class="form-control @error('tittle') is-invalid @enderror" id="tittle" placeholder="Enter Shor Cut Name..">
+                    <input maxlength="50" required style="height:100%" value="@if(isset($short_cut_info)){{$short_cut_info->tittle}} @elseif(old("tittle")) {{old("tittle")}} @endif" type="text" name="tittle" class="form-control @error('tittle') is-invalid @enderror" id="tittle" placeholder="Enter Shor Cut Name..">
                     <input type="hidden" value="@if(isset($short_cut_info)) yes @else no @endif" name="value_exist">
                     <small class="text-danger"> @error('tittle') {{ $message }} @enderror </small>
                 </div>
@@ -37,7 +37,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <div class="custom-file">
-                            <input @if(!isset($short_cut_info)) required @endif  name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
+                            <input accept="image/*" @if(!isset($short_cut_info)) required @endif  name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
                             <label class="custom-file-label" for="icon">Upload icon...</label>
                         </div>
                         <div class="input-group-append">
@@ -62,11 +62,11 @@
                 <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
-                        <th width="100">id</th>
+                        <th>id</th>
                         <th>Tittle</th>
                         <th>Icon</th>
                         <th>Is Default</th>
-                        <th width="400">Limit</th>
+                        <th width="100">Limit</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -80,13 +80,13 @@
                                 </td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <div class="col-md-5">
                                             <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('short_cuts.edit',$short_cut->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
                                         
-                                        <div class="col-md-2">
+                                        <div class="col-md-5">
                                             <button data-id="{{$short_cut->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

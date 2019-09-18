@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'questions List')
-@section('card_name', 'Question List')
+@section('title', 'Short Cuts List')
+@section('card_name', 'Short Cuts List')
 @section('breadcrumb')
     <li class="breadcrumb-item active">Short-Cuts List</li>
 @endsection

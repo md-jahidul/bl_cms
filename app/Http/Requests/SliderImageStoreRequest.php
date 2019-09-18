@@ -42,7 +42,7 @@ class SliderImageStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'repeater-list.*.image_url.dimensions' => 'Slider Image is Mast be in 16:9',
+            'repeater-list.*.image_url.dimensions' => 'Slider Image is Mast be in 16:9 dimension',
             'repeater-list.*.image_url.required' => 'Slider Image is required',
             'repeater-list.*.title.required' => 'title is required',
         ];

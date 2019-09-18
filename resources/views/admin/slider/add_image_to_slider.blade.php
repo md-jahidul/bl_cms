@@ -56,22 +56,47 @@
                                         </div>
                                         <div class="col-12">
                                             <label for="sliderImage" class="file center-block">Slider Image:<small class="text-danger">*</small></label><br>
-                                            <input required id="sliderImage" type="file" class="mb-1 @error('repeater-list.*.image_url') is-invalid @enderror" name="image_url" id="file">
-                                            <small class="text-danger"> @error('repeater-list.*.image_url') {{ $message }} @enderror </small>
-                                            <span class="file-custom"></span>
+                                            <input accept="image/*" onchange="
+                                                    createImageBitmap(this.files[0]).then((bmp) => {
+                                                        
+                                                        //console.log(this.files[0].name.split('.').pop())
+                                                        if(bmp.width/bmp.height == 16/9){
+                                                            console.log('yes')
+                                                            document.getElementById('addMore').disabled = false;
+                                                            document.getElementById('submitForm').disabled = false;
+                                                            this.style.border = 'none';
+                                                            this.nextElementSibling.innerHTML = '';
+                                                        }else{ 
+                                                            console.log('no')
+                                                            this.style.border = '1px solid red';
+                                                            this.nextElementSibling.innerHTML = '<br><b>image aspact ratio must 16:9</b>';
+                                                            document.getElementById('addMore').disabled = true;
+                                                            document.getElementById('submitForm').disabled = true;
+                                                        } 
+                                                    })" 
+
+                                                    required id="sliderImage" 
+                                                    type="file" 
+                                                    class="@error('repeater-list.*.image_url') is-invalid @enderror" 
+                                                    name="image_url"
+                                                    style="margin-bottom:10px" 
+                                                    id="file">
+
+                                                    <small class="text-danger"> @error('repeater-list.*.image_url') {{ $message }} @enderror </small>
+                                                    <span class="file-custom"></span>
                                         </div>
                                         <div class="col-12">
-                                            <button type="button" style="width:20%" data-repeater-delete class="btn btn-icon btn-danger">Remove</button>
+                                            <button type="button" style="width:11%" data-repeater-delete class="btn btn-icon btn-danger">Remove</button>
                                         </div>
                                     </div>
                                 </div>
                                 {{-- image add --}}
 
                             </div>
-                            <button type="button" data-repeater-create class="btn btn-primary">
+                            <button type="button" id="addMore" data-repeater-create class="btn btn-primary">
                                 <i class="ft-plus"></i> Add Image
                             </button>
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" id="submitForm" class="btn btn-success">
                                 Submit
                             </button>
                         </div>

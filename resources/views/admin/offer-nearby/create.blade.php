@@ -22,7 +22,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="title">Title:<small class="text-danger">*</small></label>
-                                        <input required type="text" value="" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title." name="title">
+                                        <input required type="text" value="@if(old('title')){{old('title')}}@endif" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title." name="title">
                                         @error('title')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -33,7 +33,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="vendor">Vendor:<small class="text-danger">*</small></label>
-                                        <input required type="text" value="" id="vendor" class="form-control @error('vendor') is-invalid @enderror" placeholder="Enter vendor." name="vendor">
+                                        <input required type="text" value="@if(old('vendor')){{old('vendor')}}@endif" id="vendor" class="form-control @error('vendor') is-invalid @enderror" placeholder="Enter vendor." name="vendor">
                                         @error('vendor')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -44,7 +44,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="location">Location:<small class="text-danger">*</small></label>
-                                        <input required type="text" min="0" value="" id="location" class="form-control @error('location') is-invalid @enderror" placeholder="Enter location...." name="location">
+                                        <input required type="text" min="0" value="@if(old('location')){{old('location')}}@endif" id="location" class="form-control @error('location') is-invalid @enderror" placeholder="Enter location...." name="location">
                                         @error('location')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -55,7 +55,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="type">Type:<small class="text-danger">*</small></label>
-                                        <input required type="text" min="0" value="" id="type" class="form-control @error('type') is-invalid @enderror" placeholder="Enter type...." name="type">
+                                        <input required type="text" min="0" value="@if(old('type')){{old('type')}}@endif" id="type" class="form-control @error('type') is-invalid @enderror" placeholder="Enter type...." name="type">
                                         
                                         @error('type')
                                             <span class="invalid-feedback" role="alert">
@@ -67,7 +67,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="Offer">Offer:<small class="text-danger">*</small></label>
-                                        <input required type="text" min="0" value="" id="Offer" class="form-control @error('offer') is-invalid @enderror" placeholder="Enter Offer...." name="offer">
+                                        <input required type="text" min="0" value="@if(old('offer')){{old('offer')}}@endif" id="Offer" class="form-control @error('offer') is-invalid @enderror" placeholder="Enter Offer...." name="offer">
                                         @error('offer')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -78,7 +78,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="offer_code">Offer Code:<small class="text-danger">*</small></label>
-                                        <input required type="text" min="0" value="" id="offer_code" class="form-control @error('offer_code') is-invalid @enderror" placeholder="Enter offer code...." name="offer_code">
+                                        <input required type="text" min="0" value="@if(old('offer_code')){{old('offer_code')}}@endif" id="offer_code" class="form-control @error('offer_code') is-invalid @enderror" placeholder="Enter offer code...." name="offer_code">
                                         @error('offer_code')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -92,9 +92,9 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="custom-file">
-                                        <input required name="image" type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image">
-                                        <label class="custom-file-label @error('image') is-invalid @enderror" for="validatedCustomFile">Choose image...</label>
-                                        <div class="invalid-feedback">Example invalid custom file feedback</div>
+                                        <input accept="image/*" required name="image" type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image">
+                                        <label class="custom-file-label @error('image') is-invalid @enderror" for="validatedCustomFile">Upload image...</label>
+                                        {{-- <div class="invalid-feedback">Example invalid custom file feedback</div> --}}
                                         @error('image')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

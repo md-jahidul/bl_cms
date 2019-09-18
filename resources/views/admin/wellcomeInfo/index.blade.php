@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Wellcome Information')
-@section('card_name', 'Wellcome-Information')
+@section('title', 'Welcome Information')
+@section('card_name', 'Welcome-Information')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Wellcome-Information</li>
+    <li class="breadcrumb-item active">Welcome-Information</li>
 @endsection
 @section('action')
     @if(isset($wellcomeInfo))

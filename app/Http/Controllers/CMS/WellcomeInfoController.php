@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\WellcomeInfoService;
 use App\Models\WellcomeInfo;
+use App\Http\Requests\WellcomeInfoRequest;
 
 class WellcomeInfoController extends Controller
 {
@@ -56,7 +57,7 @@ class WellcomeInfoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(WellcomeInfoRequest $request)
     {
         session()->flash('status',$this->wellcomeInfoService->storeWellcomeInfo($request->all())->getContent());
         return redirect(route('wellcomeInfo.index'));
@@ -93,7 +94,7 @@ class WellcomeInfoController extends Controller
      * @param WellcomeInfo $wellcomeInfo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,WellcomeInfo $wellcomeInfo)
+    public function update(WellcomeInfoRequest $request,WellcomeInfo $wellcomeInfo)
     {
         session()->flash('status',$this->wellcomeInfoService->updateWellcomeInfo($request, $wellcomeInfo)->getContent());
         return redirect(route('wellcomeInfo.index'));

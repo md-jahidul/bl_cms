@@ -33,7 +33,7 @@
                             <th width=''>Price</th>
                             <th width=''>Offer Code</th>
                             <th width=''>Points</th>
-                            <th  width='500'>Action</th>
+                            <th  width='100'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -48,12 +48,12 @@
                                 <td>{{$internet_offer->points}}</td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-1 mr-1">
+                                        <div class="col-md-4 mr-1">
                                             <a role="button" href="{{route('internetOffer.edit',$internet_offer->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-md-4">
                                             <button data-id="{{$internet_offer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>
