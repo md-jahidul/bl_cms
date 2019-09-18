@@ -54,17 +54,7 @@
                                     @if ($errors->has('mobile'))
                                         <div class="help-block">  {{ $errors->first('mobile') }}</div>
                                     @endif
-                                </div>
-
-                                <div class="form-group col-md-12 mb-0 {{ $errors->has('website') ? ' error' : '' }}">
-                                    <label for="website" class="required">Website</label>
-                                    <input type="text" name="website"  class="form-control" placeholder="Enter website"
-                                           value="{{ old("website") ? old("website") : '' }}" required data-validation-required-message="Enter website number">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('website'))
-                                        <div class="help-block">  {{ $errors->first('website') }}</div>
-                                    @endif
-                                </div>
+                                </div>                              
 
 
 {{--                                <div class="form-group col-md-6 mb-1 {{ $errors->has('company_logo') ? ' error' : '' }}">--}}
@@ -99,6 +89,15 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-12 mb-0 {{ $errors->has('website') ? ' error' : '' }}">
+                                    <label for="website" class="required">Website</label>
+                                    <input type="text" name="website"  class="form-control" placeholder="Enter website"
+                                           value="{{ old("website") ? old("website") : '' }}" required data-validation-required-message="Enter website number">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('website'))
+                                        <div class="help-block">  {{ $errors->first('website') }}</div>
+                                    @endif
+                                </div>
 
                                 <div class="col-md-12">
                                     <div class="form-group {{ $errors->has('is_active') ? ' error' : '' }}">
