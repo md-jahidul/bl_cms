@@ -106,4 +106,10 @@ class HelpCenterController extends Controller
         session()->flash('success',$this->helpCenterService->destroyHelpCenter($id)->getContent());
         return redirect(route('helpCenter.index'));
     }
+
+    public function changeSequece(Request $request)
+    {
+        return $request;
+        
+    }
 }

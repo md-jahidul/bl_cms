@@ -41,7 +41,7 @@
                         <tbody id="list">
                         @foreach ($helpCenters as $helpCenter)
 
-                            <tr>
+                            <tr data-position = "{{$helpCenter->sequence}}">
                                 <td>{{$helpCenter->id}}</td>
                                 <td>{{$helpCenter->title}}</td>
                                 <td>{{$helpCenter->redirect_link}}</td>

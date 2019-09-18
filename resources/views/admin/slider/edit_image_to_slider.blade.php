@@ -23,7 +23,7 @@
                 <div class="col-lg-12 col-xl-12 col-md-12">
                 
                 <div id="list" class="card collapse-icon accordion-icon-rotate mb-0 sortable" style=" box-shadow: 0px 0px;">
-                       
+                        <h4 class="form-section p-1"><i class="la la-paperclip"></i>Edit Image of "{{$slider_information->title}}" Slider</h4>
                     @foreach ($slider->sliderImages as $image)
                         <div data-position = "{{$image->sequence}}" data-index="{{$image->id}}" class="list-item">
                             <div style="cursor:all-scroll" id="headingCollapse{{$image->id}}" class="card-header">

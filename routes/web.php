@@ -127,6 +127,7 @@ Route::group(['middleware' => ['appAdmin']], function () {
     // help center
     route::resource('helpCenter','CMS\HelpCenterController');
     Route::get('helpCenter/destroy/{id}','CMS\HelpCenterController@destroy');
+    Route::get('helpCenter/update-position','CMS\HelpCenterController@changeSequece');
     
     // contextual cards
     route::resource('contextualcard','CMS\ContextualCardController');
