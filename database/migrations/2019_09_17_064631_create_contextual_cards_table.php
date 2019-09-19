@@ -16,12 +16,12 @@ class CreateContextualCardsTable extends Migration
         Schema::create('contextual_cards', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->string('description');
-            $table->string('first_action_text')->nullable();
-            $table->string('second_action_text')->nullable();
-            $table->string('first_action')->nullable();
-            $table->string('second_action')->nullable();
-            $table->string('image_url')->nullable();
+            $table->text('description');
+            $table->text('first_action_text')->nullable();
+            $table->text('second_action_text')->nullable();
+            $table->text('first_action')->nullable();
+            $table->text('second_action')->nullable();
+            $table->text('image_url')->nullable();
             $table->timestamps();
         });
     }

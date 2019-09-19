@@ -16,11 +16,11 @@ class CreateSmsOffersTable extends Migration
         Schema::create('sms_offers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->integer('volume');
+            $table->bigInteger('volume');
             $table->string('validity');
-            $table->integer('price')->unsigned();
+            $table->bigInteger('price')->unsigned();
             $table->text('offer_code');
-            $table->integer('points')->unsigned();
+            $table->bigInteger('points')->unsigned();
             $table->timestamps();
         });
     }

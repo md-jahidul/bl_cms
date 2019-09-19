@@ -16,12 +16,12 @@ class CreateMixedBundleOffersTable extends Migration
         Schema::create('mixed_bundle_offers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->integer('internet')->unsigned();
-            $table->integer('minutes')->unsigned();
-            $table->integer('sms')->unsigned();
-            $table->integer('validity')->unsigned();
-            $table->integer('price')->unsigned();
-            $table->integer('points')->unsigned();
+            $table->bigInteger('internet')->unsigned();
+            $table->bigInteger('minutes')->unsigned();
+            $table->bigInteger('sms')->unsigned();
+            $table->bigInteger('validity')->unsigned();
+            $table->bigInteger('price')->unsigned();
+            $table->bigInteger('points')->unsigned();
             $table->string('offer_code');
             $table->string('tag');
             $table->timestamps();

@@ -41,16 +41,17 @@ Route::group(['middleware' => ['webAdmin']], function () {
 //Route::get('slider/{parent_id}/images', 'CMS\SliderImageController@index');
 //Route::get('slider-image/{id}/edit', 'CMS\SliderImageController@edit');
 
-// SLIDERS PAGES ====================================
-Route::get('sliders', 'SliderController@index');
-Route::get('slider/{slider_id}/{type}', 'CMS\SliderImageController@index')->name('slider_images');
-Route::get('slider/{slider_id}/{type}/image/create', 'CMS\SliderImageController@create');
-Route::post('slider/{slider_id}/{type}/image/store', 'CMS\SliderImageController@store')->name('slider_image_store');
-Route::get('slider/{slider_id}/{type}/image/{id}', 'CMS\SliderImageController@edit')->name('slider_image_edit');
-Route::put('slider/{slider_id}/{type}/image/{id}/update', 'CMS\SliderImageController@update')->name('slider_image_update');
-Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'CMS\SliderImageController@destroy');
-Route::get('/slider-image-sortable','CMS\SliderImageController@sliderImageSortable');
+// Slider
+route::resource('slider','CMS\SliderController');
+Route::get('slider/destroy/{id}','CMS\SliderController@destroy');
+Route::get('slider/edit/{slider}','CMS\SliderController@edit')->name('slider.edit');
+// Slider
 
+// Slider Image
+route::resource('sliderImage','CMS\SliderImageController');
+route::get('sliderImage/addImage/update-position','CMS\SliderImageController@updatePosition');
+Route::get('slider/addImage/{sliderId}','CMS\SliderImageController@index')->name('sliderImage.index');
+// Slider Image
 
 
 

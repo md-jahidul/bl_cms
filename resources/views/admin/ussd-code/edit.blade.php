@@ -3,7 +3,7 @@
 @section('card_name', "USSD")
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        Create USSD
+        Edit USSD
     </li>
 @endsection
 
@@ -16,7 +16,7 @@
                         @csrf
                         @method('put')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Create SMS offer.</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Edit USSD Code.</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -31,9 +31,9 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="volume">code:<small class="text-danger">*</small></label>
+                                        <label for="volume">Code:<small class="text-danger">*</small></label>
                                         <input type="text" value="{{$ussd_code->code}}" id="volume" class="form-control @error('code') is-invalid @enderror" placeholder="Enter code...." name="code">
-                                        <small id="volume" class="form-text text-muted">Enter volume in minute.</small>
+                                        
                                         @error('code')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -44,9 +44,9 @@
                                 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="price">purpose:<small class="text-danger">*</small></label>
-                                        <input type="number" min="0" value="{{$ussd_code->purpose}}" id="price" class="form-control @error('purpose') is-invalid @enderror" placeholder="Price.." name="purpose">
-                                        <small id="price" class="form-text text-muted">Enter price in BDT.</small>
+                                        <label for="price">Purpose:<small class="text-danger">*</small></label>
+                                        <input type="text" value="{{$ussd_code->purpose}}" id="price" class="form-control @error('purpose') is-invalid @enderror" placeholder="purpose.." name="purpose">
+                                        
                                         @error('purpose')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -58,8 +58,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="offer_code">provider:<small class="text-danger">*</small></label>
-                                        <input type="text" value="{{$ussd_code->provider}}" id="offer_code" class="form-control @error('provider') is-invalid @enderror" placeholder="Offer code.." name="provider">
-                                        <small id="validity" class="form-text text-muted">Offer Code must have *,# and number in it.</small>
+                                        <input type="text" value="{{$ussd_code->provider}}" id="offer_code" class="form-control @error('provider') is-invalid @enderror" placeholder="provider.." name="provider">
+                                        
                                         @error('provider')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

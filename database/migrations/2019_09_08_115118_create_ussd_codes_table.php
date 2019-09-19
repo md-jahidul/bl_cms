@@ -15,7 +15,7 @@ class CreateUssdCodesTable extends Migration
     {
         Schema::create('ussd_codes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('title')->nullable();
+            $table->string('title')->nullable();
             $table->text('code')->nullable();
             $table->text('purpose')->nullable();
             $table->text('provider')->nullable();

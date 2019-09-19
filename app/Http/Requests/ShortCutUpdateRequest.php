@@ -19,7 +19,7 @@ class ShortCutUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'tittle' => 'unique:shortcuts|max:10',
+            'tittle' => 'unique:shortcuts|max:200',
             'icon' => 'image|mimes:jpeg,jpg,png'
         ];
     }

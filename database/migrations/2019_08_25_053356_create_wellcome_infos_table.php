@@ -19,7 +19,7 @@ class CreateWellcomeInfosTable extends Migration
             $table->text('user_salutation');
             $table->text('guest_message');
             $table->text('user_message');
-            $table->string('icon');
+            $table->text('icon');
             $table->timestamps();
         });
     }

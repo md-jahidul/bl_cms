@@ -25,7 +25,7 @@ class NearbyOfferRequest extends FormRequest
     {
         return [
             'value_exist'=>'required',
-            'title'=>'required|unique:nearby_offers,title,'.$this->id,
+            'title'=>'required|max:200|unique:nearby_offers,title,'.$this->id,
             'vendor'=>'required',
             'location'=>'required',
             'type'=>'required',

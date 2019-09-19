@@ -24,7 +24,7 @@ class MixedBundleOfferRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required|unique:mixed_bundle_offers,title,'.$this->id,
+            'title'=>'required|max:200|unique:mixed_bundle_offers,title,'.$this->id,
             'internet'=>'required|numeric|min:1',
             'minutes'=>'required|numeric|min:1',
             'sms'=>'required|numeric|min:1',

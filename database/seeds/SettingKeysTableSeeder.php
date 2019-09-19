@@ -14,48 +14,41 @@ class SettingKeysTableSeeder extends Seeder
     {
         
 
-        \DB::table('setting_keys')->delete();
+        // \DB::table('setting_keys')->delete();
         
         \DB::table('setting_keys')->insert(array (
             0 => 
             array (
-                'id' => 13,
-                'title' => 'User Short-Cut Limit',
+                'id' => 1,
+                'title' => 'Offer',
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
             1 => 
             array (
-                'id' => 14,
-                'title' => 'Offer',
+                'id' => 2,
+                'title' => 'Short Cuts',
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
             2 => 
             array (
-                'id' => 15,
-                'title' => 'Priojon',
+                'id' => 3,
+                'title' => 'SMS',
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
             3 => 
             array (
-                'id' => 16,
-                'title' => 'Gold Short-Cut',
+                'id' => 4,
+                'title' => 'Internet',
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),
             4 => 
             array (
-                'id' => 17,
-                'title' => 'Platinum offer',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            5 => 
-            array (
-                'id' => 18,
-                'title' => 'Platinum Short-cuts',
+                'id' => 5,
+                'title' => 'Talk Time',
                 'created_at' => NULL,
                 'updated_at' => NULL,
             ),

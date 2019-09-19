@@ -25,7 +25,7 @@ class MinuitOfferRequest extends FormRequest
     {
         //dd($this->id);
         return [
-            'title'=>'required|unique:minute_offers,title,'.$this->id,
+            'title'=>'required|max:200|unique:minute_offers,title,'.$this->id,
             'volume'=>'required|numeric|min:1',
             'validity'=>'required|numeric|min:1',
             'price'=>'required|numeric|min:1',
