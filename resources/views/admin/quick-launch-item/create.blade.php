@@ -32,7 +32,7 @@
                                            value="{{ old("bn_title") ? old("bn_title") : '' }}" required data-validation-required-message="Enter bangla title">
                                     <div class="help-block"></div>
                                     @if ($errors->has('bn_title'))
-                                        <div class="help-block">  {{ $errors->bn_titlefirst('bn_title') }}</div>
+                                        <div class="help-block">  {{ $errors->first('bn_title') }}</div>
                                     @endif
                                 </div>
 
@@ -49,7 +49,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Alt Text</label>
                                     <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text"
-                                           value="{{ old("alt_text") ? old("alt_text") : '' }}" required data-validation-required-message="Please select start date">
+                                           value="{{ old("alt_text") ? old("alt_text") : '' }}" required data-validation-required-message="Enter alt text">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>
@@ -57,24 +57,30 @@
                                 </div>
 
 
-                                <div class="form-group col-md-6 mt-1">
-                                    <label for="file">Select File</label>
-                                    <label id="projectinput7" class="file center-block">
-                                        <input type="file" id="file" name="image_url">
-                                        <span class="file-custom"></span>
-                                    </label>
+                                <div class="form-group col-md-6 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                    <label for="file" class="required">Select File</label>
+
+                                    <label id="projectinput7" class="file center-block ml-2">
+                                        <input type="file" id="file" name="image_url" required>
+                                    </label><br>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    @if ($errors->has('image_url'))
+                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
+                                    @endif
                                 </div>
 
 
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
                                         <label for="title" class="required mr-1">Status:</label>
-
-                                        <input type="radio" name="status" value="1" id="input-radio-15">
+                                        <input type="radio" name="status" value="1" id="input-radio-15" checked>
                                         <label for="input-radio-15" class="mr-1">Active</label>
-
                                         <input type="radio" name="status" value="0" id="input-radio-16">
                                         <label for="input-radio-16">Inactive</label>
+                                        @if ($errors->has('status'))
+                                            <div class="help-block">  {{ $errors->first('status') }}</div>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -89,9 +95,6 @@
                             @csrf
                         </form>
                     </div>
-
-
-                    </form>
                 </div>
             </div>
         </div>

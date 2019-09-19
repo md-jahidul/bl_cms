@@ -7,13 +7,14 @@ use Faker\Generator as Faker;
 
 $factory->define(SliderImage::class, function (Faker $faker) {
     return [
-        'slider_id' => rand(1, 5),
+        'slider_id' => rand(1, 2),
         'title' => $faker->streetName,
         'description' => $faker->sentence,
-      //  'image_url' => $faker->image(public_path()."/slider-images", 420,320,"nature", false),
-        'image_url' => $faker->url,
-        'url_btn_label' => $faker->city,
+        'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/'. $faker->image(public_path()."/slider-images", 420,320,"nature", false),
         'alt_text' => 'slider image',
-        'url' => $faker->url
+        'url_btn_label' => 'View Details',
+        'redirect_url' => $faker->url,
+        'sequence' => count(SliderImage::get()) + 1,
+        'other_attributes' => null
     ];
 });

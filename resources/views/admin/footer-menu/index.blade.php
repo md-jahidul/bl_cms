@@ -39,9 +39,11 @@
                                     <td>{{ $footerMenu->en_label_text  }} {!! $footerMenu->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                     <td class="action" width="20%">
                                         <a href="{{ url('footer-menu/'.$footerMenu->id.'/edit') }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        @if($parent_id != 0)
                                         <a href="#" remove="{{ url("footer-menu/$parent_id/destroy/$footerMenu->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $footerMenu->id }}" title="Delete the user">
                                             <i class="la la-trash"></i>
                                         </a>
+                                        @endif
                                     </td>
                                     @if($parent_id == 0)
                                         <td class="text-center" width="10%"><a href="{{ url("footer-menu/$footerMenu->id/child-footer") }}" class="btn btn-outline-success">Child Menus <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{ $childNumber }}</span></a></td>

@@ -21,7 +21,7 @@ class CreateQuickLaunchItemsTable extends Migration
             $table->string('alt_text');
             $table->string('link');
             $table->tinyInteger('status');
-            $table->string('display_order');
+            $table->integer('display_order');
             $table->timestamps();
         });
     }

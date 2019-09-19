@@ -17,7 +17,6 @@ use DB;
 
 class SliderImageService
 {
-
     use CrudTrait;
     /**
      * @var $sliderRepository
@@ -25,8 +24,8 @@ class SliderImageService
     protected $sliderImageRepository;
 
     /**
-     * DigitalServicesService constructor.
-     * @param SliderImageRepository $sliderTypeRepository
+     * SliderImageService constructor.
+     * @param SliderImageRepository $sliderImageRepository
      */
     public function __construct(SliderImageRepository $sliderImageRepository)
     {
@@ -34,6 +33,16 @@ class SliderImageService
         $this->setActionRepository($sliderImageRepository);
     }
 
+
+    public function itemList($sliderId, $type)
+    {
+        return $this->sliderImageRepository->getSliderImage($sliderId, $type);
+    }
+
+    /**
+     * Storing the banner resource
+     * @return Response
+     */
     /**
      * Storing the banner resource
      * @return Response
@@ -49,12 +58,18 @@ class SliderImageService
         }
         foreach ($images as $image) {
             $image['image_url'] = 'storage/'.$image['image_url']->store('Slider_image');
-            $image['sequence'] = $i; 
-            $image['slider_id'] = $slider_id; 
+            $image['sequence'] = $i;
+            $image['slider_id'] = $slider_id;
             $this->save($image);
             $i++;
         }
         return new Response("Image has successfully been Added to slider");
+    }
+
+    public function tableSortable($data)
+    {
+        $this->sliderImageRepository->sliderImageTableSort($data);
+        return new Response('update successfully');
     }
 
     /**
@@ -75,6 +90,9 @@ class SliderImageService
         return new Response("Image has successfully been updated to slider");
     }
 
+
+
+
     /**
      * @param $id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
@@ -84,7 +102,7 @@ class SliderImageService
     {
         $sliderImage = $this->findOne($id);
         $sliderImage->delete();
-        return Response('Slider Image deleted successfully !');
+        return Response('Slider Image delete successfully');
     }
 
 }

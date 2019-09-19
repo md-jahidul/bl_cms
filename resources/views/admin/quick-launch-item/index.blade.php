@@ -14,29 +14,23 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
-                           id="Example1" role="grid" aria-describedby="Example1_info" style="">
+                    <table class="table table-striped table-bordered">
                         <thead>
                         <tr>
-                            <th>SL</th>
-                            <th>Image</th>
+{{--                            <th>SL</th>--}}
+                            <th width="6%" class="text-center">Image</th>
                             <th>English</th>
-                            <th>Bangla</th>
-                            <th>Alt Text</th>
                             <th>Link</th>
-                            <th>Action</th>
+                            <th class="text-right">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable">
                         @foreach ($quickLaunchItems as $key=>$quickLaunchItem)
-                            <tr>
-                                <td>{{ ++$key }}</td>
-                                <td><img src="{{ $quickLaunchItem->image_url }}" alt="image" height="45" width="40"></td>
-                                <td>{{$quickLaunchItem->en_title}}</td>
-                                <td>{{$quickLaunchItem->bn_title}}</td>
-                                <td>{{$quickLaunchItem->alt_text}}</td>
+                            <tr data-index="{{ $quickLaunchItem->id }}" data-position="{{ $quickLaunchItem->display_order }}">
+{{--                                <td>{{ ++$key }}</td>--}}
+                                <td width="6%" class="text-center"><img src="{{ $quickLaunchItem->image_url }}" alt="image" height="30" width="30"></td>
+                                <td width="20%">{{$quickLaunchItem->en_title}} {!! $quickLaunchItem->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                 <td>{{$quickLaunchItem->link}}</td>
-
                                 <td class="action" width="8%">
                                     <a href="{{ url("quick-launch/$quickLaunchItem->id/edit") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="#" remove="{{ url("quick-launch/destroy/$quickLaunchItem->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $quickLaunchItem->id }}" title="Delete the user">
@@ -54,6 +48,16 @@
     </section>
 
 @stop
+
+@push('page-css')
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+    <style>
+        #sortable tr td{
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+    </style>
+@endpush
 
 @push('page-js')
     <script>
@@ -93,7 +97,12 @@
         });
 
     </script>
+
+    <script>
+        var auto_save_url = "{{ url('quick-launch-sortable') }}";
+    </script>
 @endpush
+
 
 
 

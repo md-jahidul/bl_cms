@@ -12,14 +12,14 @@ class SliderComponentTypesSeeder extends Seeder
      */
     public function run()
     {
-        $slider_types = ['Hero','Explore Devices','Digital Services','Testimonial'];
+        $slider_types = ['Hero','Digital Services','Explore Devices','Testimonial'];
 
         $slider_component_types = [];
 
         foreach ($slider_types as $slider) {
             $slider_component_types[] = [
                 'name' => $slider,
-                'slug' => str_replace( " ", "", $slider) 
+                'slug' => str_replace( " ", "", $slider)
             ];
         }
 

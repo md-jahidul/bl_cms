@@ -11,7 +11,7 @@
 @endsection
 @section('content')
     <section>
-        
+
         <div class="card card-info mt-0" style="box-shadow: 0px 0px">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
@@ -32,7 +32,7 @@
                                     <td>
                                         {{$slider->title}}
                                         <span class="badge badge-default badge-pill bg-primary float-right">{{$slider->sliderImages->count()}}</span>
-                                    
+
                                     </td>
                                     <td>{{$slider->SliderComponentTypes->name}}</td>
                                     <td>
@@ -69,7 +69,7 @@
 
     </section>
 
-   
+
 
 
 @endsection
@@ -124,7 +124,7 @@
         })
 
 
-       
+
         $(document).ready(function () {
             $('#Example1').DataTable({
                 dom: 'Bfrtip',

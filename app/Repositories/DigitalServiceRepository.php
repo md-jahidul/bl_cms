@@ -14,6 +14,4 @@ use App\Models\DigitalService;
 class DigitalServiceRepository extends BaseRepository
 {
     public $modelName = DigitalService::class;
-
-
 }
