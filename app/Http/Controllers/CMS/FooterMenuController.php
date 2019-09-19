@@ -38,7 +38,7 @@ class FooterMenuController extends Controller
      */
     public function getBreadcrumbInfo($parent_id)
     {
-        $temp = (new FooterMenu)->find($parent_id, ['id','name','parent_id'])->toArray();
+        $temp = (new FooterMenu)->find($parent_id, ['id','en_label_text','parent_id'])->toArray();
         $this->footerMenuItems[] = $temp;
         return $temp['parent_id'];
     }
@@ -71,7 +71,7 @@ class FooterMenuController extends Controller
      */
     public function create($parent_id = 0)
     {
-        $this->footerMenuItems[] = ['name' => 'Create'];
+        $this->footerMenuItems[] = ['en_label_text' => 'Create'];
         $footer_menu_id = $parent_id;
         while ( $footer_menu_id != 0 ){
             $footer_menu_id = $this->getBreadcrumbInfo($footer_menu_id);
@@ -117,7 +117,7 @@ class FooterMenuController extends Controller
     {
        $footerMenu = $this->footerMenuService->findOrFail($id);
 
-        $this->footerMenuItems[] = ['name' => $footerMenu->name];
+        $this->footerMenuItems[] = ['en_label_text' => $footerMenu->en_label_text];
 
         $footer_menu_id = $footerMenu->parent_id;
         while ( $footer_menu_id != 0 ){

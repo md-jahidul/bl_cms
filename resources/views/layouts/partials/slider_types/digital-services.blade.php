@@ -31,7 +31,7 @@
 
 <div class="form-group col-md-12 {{ $errors->has('details_page_link') ? ' error' : '' }}">
     <label for="details_page_link" class="">Details Page Link</label>
-    <input type="text" name="details_page_link"  class="form-control" placeholder="Enter details page link"
+    <input type="url" name="details_page_link"  class="form-control" placeholder="Enter details page link"
            value="{{ (!empty($other_attributes['details_page_link'])) ? $other_attributes['details_page_link'] : "" }}">
     <div class="help-block"></div>
     @if ($errors->has('details_page_link'))

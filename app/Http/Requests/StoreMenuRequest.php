@@ -24,7 +24,7 @@ class StoreMenuRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:menus',
+            'code' => 'required',
             'en_label_text' => 'required',
             'bn_label_text' => 'required',
             'url' => 'required|unique:menus',
@@ -35,7 +35,7 @@ class StoreMenuRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => "Enter menu title",
+            'code.required' => "Enter menu title",
             'en_label_text.required' => "Enter menu english",
             'bn_label_text.required' => "Enter menu bangla",
             'url.required' => "Enter menu url",
