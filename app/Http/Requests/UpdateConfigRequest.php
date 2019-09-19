@@ -24,27 +24,29 @@ class UpdateConfigRequest extends FormRequest
     public function rules()
     {
         return [
-            "site_url" => 'required',
+//            "site_logo" => 'required',
+            "logo_alt_text" => 'required',
             'email' => 'required|email',
+            'query_email' => 'required|email',
             'mobile_number' => 'required|numeric',
-            'other_info' => 'required',
+            'address' => 'required',
             'copy_right' => 'required',
-            'facebook' => 'required',
-            'twitter' => 'required',
-            'linkedin' => 'required',
+            'facebook' => 'required|url',
+            'twitter' => 'required|url',
+            'linkedin' => 'required|url',
         ];
     }
 
     public function messages() {
         return [
-            'site_url.required' => "Can't be save null value",
-            'email.required' => "Can\'t be save null value",
-            'mobile_number.required' => "Can\'t be save null value",
-            'other_info.required' => "Can\'t be save null value",
-            'copy_right.required' => "Can\'t be save null value",
-            'facebook.required' => "Can\'t be save null value",
-            'twitter.required' => "Can\'t be save null value",
-            'linkedin.required' => "Can\'t be save null value",
+//            'site_logo.required' => "Can't be save null value",
+//            'email.required' => "Can\'t be save null value",
+//            'mobile_number.required' => "Can\'t be save null value",
+//            'address.required' => "Can\'t be save null value",
+//            'copy_right.required' => "Can\'t be save null value",
+//            'facebook.required' => "Can\'t be save null value",
+//            'twitter.required' => "Can\'t be save null value",
+//            'linkedin.required' => "Can\'t be save null value",
         ];
     }
 }

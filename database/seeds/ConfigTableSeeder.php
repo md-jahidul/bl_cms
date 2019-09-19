@@ -20,12 +20,13 @@ class ConfigTableSeeder extends Seeder
         $mobileNumber = "+8801911304121";
         $address    = "pr@banglalink.net Tiger’s Den, House 4 (SW), Bir Uttam Mir Shawkat Sarak, Gulshan1, Dhaka 1212.";
         $copyRight    = "© 2019 - Banglalink - All rights reserved";
-        $facebook     = "facebook.com/banglalink-page-fb";
-        $twitter      = "twitter.com/banglalink-page";
-        $linkedin     = "linkedin.com/banglalink-page-ln";
+        $copyRightBangla    = "© ২০১৯ বাংলালিংক (বাংলালিংক ডিজিটাল কমিউনিকেশনস লিমিটেড)";
+        $facebook     = "https://facebook.com/banglalink-page-fb";
+        $twitter      = "https://twitter.com/banglalink-page";
+        $linkedin     = "https://linkedin.com/banglalink-page-ln";
 
-        $configKeys = ['site_logo','logo_alt_text', 'email', 'query_email', 'mobile_number', 'address', 'copy_right', 'facebook', 'twitter', 'linkedin'];
-        $configValue = [$siteLogo, $logoAltText, $email, $query_email, $mobileNumber, $address, $copyRight, $facebook, $twitter, $linkedin];
+        $configKeys = ['site_logo','logo_alt_text', 'email', 'query_email', 'mobile_number', 'address', 'copy_right_en', 'copy_right_bn', 'facebook', 'twitter', 'linkedin'];
+        $configValue = [$siteLogo, $logoAltText, $email, $query_email, $mobileNumber, $address, $copyRight,$copyRightBangla, $facebook, $twitter, $linkedin];
 
         foreach ($configKeys as $index => $keyItem) {
             Config::create([
