@@ -30,10 +30,13 @@ class UpdateConfigRequest extends FormRequest
             'query_email' => 'required|email',
             'mobile_number' => 'required|numeric',
             'address' => 'required',
-            'copy_right' => 'required',
-            'facebook' => 'required|url',
-            'twitter' => 'required|url',
-            'linkedin' => 'required|url',
+            'copy_right_en' => 'required',
+            'copy_right_bn' => 'required',
+            'facebook_url' => 'required|url',
+            'twitter_url' => 'required|url',
+            'linkedin_url' => 'required|url',
+            'google_play_link' => 'required|url',
+            'apple_app_store_link' => 'required|url',
         ];
     }
 

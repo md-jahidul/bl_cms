@@ -24,32 +24,6 @@ Route::get('/cms', 'CMS\TestCMSController@index');
 //Route::get('slider/{parent_id}/images', 'CMS\SliderImageController@index');
 //Route::get('slider-image/{id}/edit', 'CMS\SliderImageController@edit');
 
-// SLIDERS PAGES ====================================
-Route::get('sliders', 'SliderController@index');
-Route::get('slider/{slider_id}/{type}', 'CMS\SliderImageController@index')->name('slider_images');
-Route::get('slider/{slider_id}/{type}/image/create', 'CMS\SliderImageController@create');
-Route::post('slider/{slider_id}/{type}/image/store', 'CMS\SliderImageController@store')->name('slider_image_store');
-Route::get('slider/{slider_id}/{type}/image/{id}', 'CMS\SliderImageController@edit')->name('slider_image_edit');
-Route::put('slider/{slider_id}/{type}/image/{id}/update', 'CMS\SliderImageController@update')->name('slider_image_update');
-Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'CMS\SliderImageController@destroy');
-Route::get('/slider-image-sortable','CMS\SliderImageController@sliderImageSortable');
-
-
-
-
-Route::resource('questions', 'CMS\QuestionController');
-// Route::resource('prize', 'PrizeController');
-Route::resource('tags','TagController');
-Route::resource('campaigns','CMS\CampaignController');
-// Route::resource('prizes','CMS\PrizeController');
-
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
-
-// CONFIG PAGES ====================================
-Route::get('config','CMS\ConfigController@index');
-Route::put('config/update','CMS\ConfigController@update');
-
 // MENU PAGES ====================================
 Route::resource('menu','CMS\MenuController');
 Route::get('menu/{parentId}/destroy/{id}', 'CMS\MenuController@destroy');
@@ -74,10 +48,39 @@ Route::get('quick-launch/destroy/{id}', 'CMS\QuickLaunchController@destroy');
 Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
 
 
+// CONFIG PAGES ====================================
+Route::get('config','CMS\ConfigController@index');
+Route::put('config/update','CMS\ConfigController@update');
+
+// SLIDERS PAGES ====================================
+Route::get('sliders', 'SliderController@index');
+Route::get('slider/{slider_id}/{type}', 'CMS\SliderImageController@index')->name('slider_images');
+Route::get('slider/{slider_id}/{type}/image/create', 'CMS\SliderImageController@create');
+Route::post('slider/{slider_id}/{type}/image/store', 'CMS\SliderImageController@store')->name('slider_image_store');
+Route::get('slider/{slider_id}/{type}/image/{id}', 'CMS\SliderImageController@edit')->name('slider_image_edit');
+Route::put('slider/{slider_id}/{type}/image/{id}/update', 'CMS\SliderImageController@update')->name('slider_image_update');
+Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'CMS\SliderImageController@destroy');
+Route::get('/slider-image-sortable','CMS\SliderImageController@sliderImageSortable');
+
+
+
+
+
 // PARTNERS PAGES ====================================
 Route::resource('partners','CMS\PartnerController');
 Route::get('partner/destroy/{id}', 'CMS\PartnerController@destroy');
 //Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
 
 
-//Route::get('quick-launch-panel', 'CMS\QuickLaunchController@index');
+
+
+Route::resource('questions', 'CMS\QuestionController');
+// Route::resource('prize', 'PrizeController');
+Route::resource('tags','TagController');
+Route::resource('campaigns','CMS\CampaignController');
+// Route::resource('prizes','CMS\PrizeController');
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
+
+
