@@ -24,8 +24,8 @@ class SettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'setting_key_id'=>'required|numeric|min:1',
-            'limit'=>'required|numeric|min:1'
+            'setting_key_id'=>'required|numeric|min:1|max:999999999999999999',
+            'limit'=>'required|numeric|min:1|max:999999999999999999'
         ];
     }
 

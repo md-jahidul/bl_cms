@@ -13,8 +13,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
-        "laravelista/ekko": "^1.5",
-        "orangehill/iseed": "^2.6"
+        "laravelista/ekko": "^1.5"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

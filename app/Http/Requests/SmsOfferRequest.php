@@ -25,11 +25,11 @@ class SmsOfferRequest extends FormRequest
     {
         return [
             'title'=>'required|max:200|unique:sms_offers,title,'.$this->id,
-            'volume'=>'required|numeric|min:1',
-            'validity'=>'required|numeric|min:1',
-            'price'=>'required|numeric|min:1',
+            'volume'=>'required|numeric|min:1|max:999999999999999999',
+            'validity'=>'required|numeric|min:1|max:999999999999999999',
+            'price'=>'required|numeric|min:1|max:999999999999999999',
             'offer_code'=>'required',
-            'points'=>'required|min:1'
+            'points'=>'required|numeric|min:1|max:999999999999999999'
         ];
     }
 }
