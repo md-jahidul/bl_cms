@@ -44,11 +44,11 @@
                                         </div>
                                         <div class="form-group col-md-6 mb-2">
                                             <label for="btn">Button URL: </label>
-                                            <input id="btn" type="text" class="form-control" placeholder="Button url.." name="url_btn_label">
+                                            <input id="btn" type="url" class="form-control" placeholder="Button url.." name="url_btn_label">
                                         </div>
                                         <div class="form-group col-md-6 mb-2">
                                             <label for="redirect_url">URL: </label>
-                                            <input id="redirect_url" type="text" class="form-control" placeholder="http.." name="redirect_url">
+                                            <input id="redirect_url" type="url" class="form-control" placeholder="http.." name="redirect_url">
                                         </div>
                                        
                                         <div class="form-group col-12 mb-2">

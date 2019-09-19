@@ -15,7 +15,9 @@
         <section id="collapsible">
             <div class="row">
                 <div class="col-12">
-                <h3 class="text-uppercase"></h3>
+                <h3 class="text-uppercase">
+                    <small class="text-success"><b>Drag the list to change the sequence</b></small>
+                </h3>
                 </div>
             </div>
             
@@ -52,12 +54,12 @@
                                                     <input value="{{$image->alt_text}}" id="alt_text" type="text" class="form-control" placeholder="Alt text" name="alt_text">
                                                 </div>
                                                 <div class="form-group col-md-6 mb-2">
-                                                    <label for="btn">Button: </label>
-                                                    <input id="btn" type="text" class="form-control" placeholder="Button Name" name="url_btn_label">
+                                                    <label for="btn">Button URL: </label>
+                                                    <input id="btn" type="url" class="form-control" placeholder="Button Name" name="url_btn_label">
                                                 </div>
                                                 <div class="form-group col-md-6 mb-2">
                                                     <label for="url">URL: </label>
-                                                    <input value="{{$image->url}}" id="url" type="text" class="form-control" placeholder="http.." name="url">
+                                                    <input value="{{$image->url}}" id="url" type="url" class="form-control" placeholder="http.." name="url">
                                                 </div>
                                             
                                                 <div class="form-group col-12 mb-2">
