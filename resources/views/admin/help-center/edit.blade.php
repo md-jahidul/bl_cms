@@ -67,9 +67,6 @@
                                                 <input accept="image/*" name="icon" id="image" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
                                                 <label class="custom-file-label" for="icon">Upload icon...</label>
                                             </div>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text" id="">Upload</span>
-                                            </div>
                                         </div>
                                         <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                     </div>
