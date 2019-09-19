@@ -14,11 +14,11 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
+                    <h4 class="pb-1"><strong>{{ ucwords($sliderTitle." ". "slider images") }}</strong></h4>
                     <table class="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                            <th>Slider Name</th>
                             <th>Title</th>
                             <th>Image</th>
                             <th>Description</th>
@@ -31,8 +31,7 @@
                         @foreach($slider_images as $index=>$slider_image)
                             <tr data-index="{{ $slider_image->id }}" data-position="{{ $slider_image->sequence }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <td>{{ $slider_image->slider['title'] }}</td>
-                                <td>{{ $slider_image->title }}</td>
+                                <td>{{ $slider_image->title }} {!! $slider_image->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                 <td><img class="" src="{{ $slider_image->image_url }}" alt="Slider Image" height="50" width="50" /></td>
                                 <td>{{ $slider_image->description }}</td>
                                 <td>{{ $slider_image->alt_text }}</td>

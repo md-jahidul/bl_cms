@@ -34,9 +34,9 @@ class SliderImageController extends Controller
     public function index($sliderId, $type)
     {
         $slider_images = SliderImage::where('slider_id', $sliderId)->with('slider')->orderBy('sequence')->get();
+        $sliderTitle = Slider::where('id', $sliderId)->pluck('title')->first();
         $this->sliderImageService->itemList($sliderId, $type);
-
-        return view('admin.slider-image.index', compact('slider_images', 'sliderId','type'));
+        return view('admin.slider-image.index', compact('slider_images', 'sliderTitle', 'sliderId','type'));
     }
 
     /**
