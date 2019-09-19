@@ -24,7 +24,7 @@ class BannerUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:banners,name,'.$this->id,
+            'name' => 'required|max:200|unique:banners,name,'.$this->id,
             'code' => 'required',
             'redirect_url' => 'required',
             'image_name' => 'required',

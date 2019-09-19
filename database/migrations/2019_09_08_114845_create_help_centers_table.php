@@ -18,7 +18,7 @@ class CreateHelpCentersTable extends Migration
             $table->text('title')->nullable();
             $table->text('icon')->nullable();
             $table->text('redirect_link')->nullable();
-            $table->integer('sequence')->unsigned();
+            $table->bigInteger('sequence')->unsigned();
             $table->timestamps();
         });
     }

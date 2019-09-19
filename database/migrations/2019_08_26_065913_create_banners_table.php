@@ -19,7 +19,7 @@ class CreateBannersTable extends Migration
             $table->string('code');
             $table->string('redirect_url');
             $table->string('image_name');
-            $table->string('image_path')->nullable();
+            $table->text('image_path');
             $table->timestamps();
         });
     }

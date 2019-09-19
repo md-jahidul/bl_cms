@@ -25,7 +25,7 @@ class SliderImageStoreRequest extends FormRequest
     {
         return [
             'repeater-list.*.slider_id'=>'',
-            'repeater-list.*.title'=>'required',
+            'repeater-list.*.title'=>'required|max:200',
             'repeater-list.*.description'=>'',
             'repeater-list.*.image_url'=>'required|image|mimes:jpeg,jpg,png|dimensions:ratio=16/9',
             'repeater-list.*.alt_text'=>'',

@@ -16,12 +16,12 @@ class CreateNearbyOffersTable extends Migration
         Schema::create('nearby_offers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->string('vendor')->nullable();
-            $table->string('location')->nullable();
-            $table->string('type')->nullable();
-            $table->string('offer')->nullable();
-            $table->string('image')->nullable();
-            $table->string('offer_code')->nullable();
+            $table->text('vendor')->nullable();
+            $table->text('location')->nullable();
+            $table->text('type')->nullable();
+            $table->text('offer')->nullable();
+            $table->text('image');
+            $table->text('offer_code')->nullable();
             $table->timestamps();
         });
     }

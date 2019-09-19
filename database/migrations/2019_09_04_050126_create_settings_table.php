@@ -16,7 +16,7 @@ class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('setting_key_id')->unsigned();
-            $table->Integer('limit')->unsigned();
+            $table->bigInteger('limit')->unsigned();
             $table->foreign('setting_key_id')->references('id')->on('setting_keys')->onDelete('cascade');
             $table->timestamps();
         });

@@ -24,7 +24,7 @@ class UssdRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required',
+            'title'=>'required|max:200',
             'code'=>'required',
             'purpose'=>'required',
             'provider'=>'required',

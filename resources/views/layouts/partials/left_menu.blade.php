@@ -64,6 +64,9 @@
             <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{route('setting.index')}}"><i class="la la-cogs"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Settings</span></a>
             </li>
+            <li class="{{ is_active_url('ussd') }} nav-item"><a href="{{route('ussd.index')}}">
+                <i class="la la-qrcode"></i>USSD</span></a>
+            </li>
             <li class="{{ is_active_url('shortcuts') }} nav-item"><a href="{{route('short_cuts.index')}}"><i class="la la-fighter-jet"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Short Cuts</span></a>
             </li>
