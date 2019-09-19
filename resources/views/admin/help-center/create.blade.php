@@ -46,7 +46,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="redirect_link">Redirect link:<small class="text-danger">*</small></label>
-                                        <input required type="text" value="{{ old("redirect_link") ? old("redirect_link") : '' }}" value="" id="redirect_link" class="form-control @error('redirect_link') is-invalid @enderror" placeholder="Http.." name="redirect_link">
+                                        <input required type="url" value="{{ old("redirect_link") ? old("redirect_link") : '' }}" value="" id="redirect_link" class="form-control @error('redirect_link') is-invalid @enderror" placeholder="Http.." name="redirect_link">
                                         <small id="redirect_link" class="form-text text-muted">Enter Link here.</small>
                                         @error('redirect_link')
                                             <span class="invalid-feedback" role="alert">

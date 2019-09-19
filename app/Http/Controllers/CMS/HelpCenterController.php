@@ -35,7 +35,10 @@ class HelpCenterController extends Controller
      */
     public function index()
     {
-        return view('admin.help-center.index')->with('helpCenters',$this->helpCenterService->findAll());
+        $helpCenters = HelpCenter::orderBy('sequence', 'asc')->get();
+        //dd($helpCenterInfo);
+        return view('admin.help-center.index')->with('helpCenters',$helpCenters);
+        // return view('admin.help-center.index')->with('helpCenters',$this->helpCenterService->findAll());
     }
 
     /**

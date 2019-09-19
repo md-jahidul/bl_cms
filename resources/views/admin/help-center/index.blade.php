@@ -20,6 +20,7 @@
 
                         <h1 class="card-title pl-1">
                             <h4 class="form-section"><i class="la la-stethoscope"></i> Help center list</h4>
+                            <small class="text-success text-uppercase"><b>Drag the list to change the sequence</b></small>
                         </h1>
                     </div>
                 </div>
@@ -30,7 +31,7 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width=''>ID</th>
+                            <th width=''>Drag</th>
                             <th width=''>Title</th>
                             <th width=''>Redirect Link</th>
                             <th width=''>Sequence</th>
@@ -41,8 +42,9 @@
                         <tbody id="list">
                         @foreach ($helpCenters as $helpCenter)
 
-                            <tr data-position = "{{$helpCenter->sequence}}" data-index="{{$helpCenter->id}}">
-                                <td>{{$helpCenter->id}}</td>
+                            <tr style="cursor:all-scroll" data-position = "{{$helpCenter->sequence}}" data-index="{{$helpCenter->id}}">
+                                <td><i class="icon-cursor-move icons"></i></td>
+                                {{-- <td>{{$helpCenter->id}}</td> --}}
                                 <td>{{$helpCenter->title}}</td>
                                 <td>{{$helpCenter->redirect_link}}</td>
                                 <td>{{$helpCenter->sequence}}</td>
@@ -193,6 +195,10 @@
                         positions:position
                     },
                     success:function (data){
+                        if(data=="success"){
+                            console.log("yes")
+                            document.location.reload()
+                        }
                         console.log(data)
                     }
                 })

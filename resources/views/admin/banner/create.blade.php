@@ -75,7 +75,7 @@
 
                         <div class="form-group">
                             <label for="url">URL: <span class="text-danger">*</span> </label>
-                            <input required id="url" value="@if(isset($banner_info)){{$banner_info->redirect_url}}@elseif(old("redirect_url")) {{old("redirect_url")}} @endif" type="text" name="redirect_url" class="form-control @error('redirect_url') is-invalid @enderror" placeholder="URL..">
+                            <input required id="url" value="@if(isset($banner_info)){{$banner_info->redirect_url}}@elseif(old("redirect_url")) {{old("redirect_url")}} @endif" type="url" name="redirect_url" class="form-control @error('redirect_url') is-invalid @enderror" placeholder="URL..">
                             <small class="text-danger"> @error('redirect_url') {{ $message }} @enderror </small>
                         </div>
 
