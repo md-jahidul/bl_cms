@@ -96,7 +96,7 @@
                         <th>Title</th>
                         <th>Icon</th>
                         <th>Is Default</th>
-                        <th width="100">Limit</th>
+                        <th width="100">Action</th>
                     </tr>
                     </thead>
                     <tbody>
