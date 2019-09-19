@@ -71,11 +71,12 @@
                                         <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                     </div>
                                 </div>
+                            </div>
                             <div class="form-actions">
-                            <button type="submit" class="btn btn-success round px-2">
-                            <i class="la la-check-square-o"></i> Save
-                            </button>
-                        </div>
+                                <button type="submit" class="btn btn-success round px-2">
+                                    <i class="la la-check-square-o"></i> Save
+                                </button>
+                            </div>
                     </form>
                 </div>
             </div>
