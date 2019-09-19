@@ -24,9 +24,12 @@ class ConfigTableSeeder extends Seeder
         $facebook     = "https://facebook.com/banglalink-page-fb";
         $twitter      = "https://twitter.com/banglalink-page";
         $linkedin     = "https://linkedin.com/banglalink-page-ln";
+        $googlePlayLink = 'https://play.google.com/store/apps/details?id=com.arena.banglalinkmela.app';
+        $appleAppstoreLink = 'https://apps.apple.com/us/app/my-banglalink/id934133022';
 
-        $configKeys = ['site_logo','logo_alt_text', 'email', 'query_email', 'mobile_number', 'address', 'copy_right_en', 'copy_right_bn', 'facebook', 'twitter', 'linkedin'];
-        $configValue = [$siteLogo, $logoAltText, $email, $query_email, $mobileNumber, $address, $copyRight,$copyRightBangla, $facebook, $twitter, $linkedin];
+
+        $configKeys = ['site_logo','logo_alt_text', 'email', 'query_email', 'mobile_number', 'address', 'copy_right_en', 'copy_right_bn', 'facebook_url', 'twitter_url', 'linkedin_url', 'google_play_link', 'apple_app_store_link'];
+        $configValue = [$siteLogo, $logoAltText, $email, $query_email, $mobileNumber, $address, $copyRight,$copyRightBangla, $facebook, $twitter, $linkedin,$googlePlayLink,$appleAppstoreLink];
 
         foreach ($configKeys as $index => $keyItem) {
             Config::create([
