@@ -16,7 +16,7 @@
                         @csrf
                         @method('post')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Create SMS offer.</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Create USSD Code.</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
