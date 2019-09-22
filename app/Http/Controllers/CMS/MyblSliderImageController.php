@@ -4,14 +4,14 @@ namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\SliderImageService;
+use App\Services\MyblSliderImageService;
 use App\Http\Requests\SliderImageStoreRequest;
 use App\Http\Requests\SliderImageUpdateRequest;
-use App\Services\SliderService;
+use App\Services\MyblSliderService;
 use App\Services\SliderTypeService;
 use App\Models\SliderImage;
 
-class SliderImageController extends Controller
+class MyblSliderImageController extends Controller
 {
 
      /**
@@ -29,7 +29,7 @@ class SliderImageController extends Controller
      * BannerController constructor.
      * @param SliderImageService $sliderService
      */
-    public function __construct(SliderImageService $sliderImageService,SliderService $sliderService,SliderTypeService $sliderTypeService)
+    public function __construct(MyblSliderImageService $sliderImageService,MyblSliderService $sliderService,SliderTypeService $sliderTypeService)
     {
         $this->sliderImageService = $sliderImageService;
         $this->sliderService = $sliderService;
@@ -46,7 +46,7 @@ class SliderImageController extends Controller
     public function index($sliderId)
     {
         
-        return view('admin.slider.add_image_to_slider')
+        return view('admin.myblslider.add_image_to_slider')
                     ->with('sliderId',$sliderId)
                     ->with('slider_information',$this->sliderService->findOne($sliderId));
     }
@@ -71,7 +71,7 @@ class SliderImageController extends Controller
     public function store(SliderImageStoreRequest $request)
     {
         session()->flash('success',$this->sliderImageService->storeSliderImage($request->all()['repeater-list'])->getContent());
-        return redirect(route('slider.index'));
+        return redirect(route('myblslider.index'));
     }
 
     /**
@@ -109,7 +109,7 @@ class SliderImageController extends Controller
     public function edit($id)
     {
         $slider = $this->sliderService->findOne($id);
-        return view('admin.slider.edit_image_to_slider')
+        return view('admin.myblslider.edit_image_to_slider')
                 ->with('slider',$slider)
                 ->with('slider_information',$this->sliderService->findOne($id));
     }

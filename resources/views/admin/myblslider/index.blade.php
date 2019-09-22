@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active">Slider List</li>
 @endsection
 @section('action')
-    <a href="{{route('slider.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{route('myblslider.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Create Slider
     </a>
 @endsection
@@ -38,17 +38,17 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-md-2">
-                                                <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('slider.edit',$slider->id)}}" class="btn-pancil btn btn-outline-success" >
+                                                <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('myblslider.edit',$slider->id)}}" class="btn-pancil btn btn-outline-success" >
                                                     <i class="la la-pencil"></i>
                                                 </a>
                                             </div>
                                             <div class="col-md-2">
-                                                <a role="button" data-toggle="tooltip" data-original-title="Add Image to slider" data-placement="top" href="{{route('sliderImage.index',$slider->id)}}" class=" btn btn-outline-success">
+                                                <a role="button" data-toggle="tooltip" data-original-title="Add Image to slider" data-placement="top" href="{{route('myblsliderImage.index',$slider->id)}}" class=" btn btn-outline-success">
                                                     <i class="la la-plus"></i>
                                                 </a>
                                             </div>
                                             <div class="col-md-2">
-                                                <a role="button" data-toggle="tooltip" data-original-title="View & Edit slider" data-placement="top" href="{{route('sliderImage.edit',$slider->id)}}" class=" btn btn-outline-success">
+                                                <a role="button" data-toggle="tooltip" data-original-title="View & Edit slider" data-placement="top" href="{{route('myblsliderImage.edit',$slider->id)}}" class=" btn btn-outline-success">
                                                     <i class="la la-eye"></i>
                                                 </a>
                                             </div>
@@ -104,7 +104,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('slider/destroy') }}/"+id,
+                            url: "{{ url('myblslider/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -114,7 +114,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('slider/') }}"
+                                    window.location.href = "{{ url('myblslider/') }}"
                                 }
                             }
                         })

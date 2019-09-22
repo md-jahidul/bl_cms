@@ -19,7 +19,7 @@
         <div class="card card-info mb-0" style="padding-left:10px">
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" action="@if (isset($single_slider)) {{route('slider.update',$single_slider->id)}} @else {{route('slider.store')}} @endif" method="POST">
+                        <form class="form" action="@if (isset($single_slider)) {{route('myblslider.update',$single_slider->id)}} @else {{route('myblslider.store')}} @endif" method="POST">
                         @csrf
                         @if (isset($single_slider)) @method('put') @else @method('post') @endif
                         <div class="form-body">

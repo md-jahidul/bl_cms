@@ -39,9 +39,9 @@ class ContextualCardService
      */
     public function storeContextualCard($data)
     {
-        $data['image'] = 'storage/'.$data['image']->store('banner');
+        $data['image_url'] = 'storage/'.$data['image_url']->store('contextualcard');
         $this->save($data);
-        return new Response("Banner has successfully been created");
+        return new Response("Contextual Card has successfully been created");
     }
 
     /**
@@ -71,12 +71,13 @@ class ContextualCardService
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      * @throws \Exception
      */
-    public function deleteContextualCard($id)
+    public function deleteContextualCard($contextualcard)
     {
+        return $contextualcard;
         $contextualCard = $this->findOne($id);
         unlink($contextualCard->image_path);
         $contextualCard->delete();
-        return Response('banner deleted successfully !');
+        return Response('successfull!');
     }
 
 }

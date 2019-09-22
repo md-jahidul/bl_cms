@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'questions List')
-@section('card_name', 'Banner-List')
+@section('title', 'Contextual Card')
+@section('card_name', 'Contextual Card')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Banner</li>
+    <li class="breadcrumb-item active">Contextual Card  list</li>
 @endsection
 @section('action')
-    <a href="{{route('banner.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create Banner
+    <a href="{{route('contextualcard.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Create Contextual Card 
     </a>
 @endsection
 
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">Banner List</h1>
+                        <h1 class="card-title pl-1">Contextual Card List</h1>
                     </div>
                 </div>
             </div>
@@ -26,30 +26,39 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width=''>ID</th>
+                            <th width=''>id</th>
                             <th width=''>Title</th>
-                            <th width=''>Banner</th>
-                            <th width=''>Code</th>
-                            <th width=''>Redirect url</th>
-                            <th  width='500'>Action</th>
+                            <th width=''>Description</th>
+                            {{-- <th width=''>First Action Text</th>
+                            <th width=''>Second Action Text</th>
+                            <th width=''>First Action</th>
+                            <th width=''>Second Action</th> --}}
+                            <th width=''>Image</th>
+                            <th  width=''>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($contextualCardss as $contextualCards)
+                        @foreach ($contextualCards as $contextualCard)
                             <tr>
                                 <td>{{$contextualCard->id}}</td>
                                 <td>{{$contextualCard->title}}</td>
-                                <td><img style="height:50px;width:100px" src="{{asset($contextualCard->image_path)}}" alt="" srcset=""></td>
-                                <td>{{$contextualCard->code}}</td>
-                                <td>{{$contextualCard->redirect_url}}</td>
+                                <td>{{$contextualCard->description}}</td>
+                                {{-- <td>{{$contextualCard->first_action_text}}</td>
+                                <td>{{$contextualCard->second_action_text}}</td>
+                                <td>{{$contextualCard->first_action}}</td>
+                                <td>{{$contextualCard->second_action}}</td> --}}
+                                <td><img style="height:50px;width:100px" src="{{asset($contextualCard->image_url)}}" alt="" srcset=""></td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-1 mr-1">
-                                            <a role="button" href="{{route('contextualCard.edit',$contextualCard->id)}}" class="btn btn-outline-success">
+                                        <div class="col-md-2">
+                                            <button href="{{route('contextualcard.show',$contextualCard->id)}}" class="btn btn-outline-info"><i class="la la-info"></i></button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a role="button" href="{{route('contextualcard.edit',$contextualCard->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-md-2">
                                             <button data-id="{{$contextualCard->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>
@@ -109,7 +118,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('banner/destroy') }}/"+id,
+                            url: "{{ url('card/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -117,9 +126,9 @@
                                     'Your file has been deleted.',
                                     'success',
                                 );
-                                setTimeout(redirect, 2000)
+                                // setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('banner/') }}"
+                                    window.location.href = "{{ url('contextualcard/') }}"
                                 }
                             }
                         })
@@ -128,37 +137,13 @@
             })
         })
 
-         $(document).ready(function () {
+        $(document).ready(function () {
             $('#Example1').DataTable({
                 dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy', className: 'copyButton',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'excel', className: 'excel',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'pdf', className: 'pdf', "charset": "utf-8",
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'print', className: 'print',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                ],
+                buttons: [],
                 paging: true,
                 searching: true,
+                "pageLength": 5,
                 "bDestroy": true,
             });
         });

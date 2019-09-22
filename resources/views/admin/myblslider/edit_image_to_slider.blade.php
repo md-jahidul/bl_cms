@@ -37,7 +37,7 @@
                             <div id="collapse11{{$image->id}}" role="tabpanel" aria-expanded="false" aria-labelledby="headingCollapse{{$image->id}}" class="collapse">
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form class="form row" action="{{route('sliderImage.update',$image->id)}}" enctype="multipart/form-data" method="POST">
+                                        <form class="form row" action="{{route('myblsliderImage.update',$image->id)}}" enctype="multipart/form-data" method="POST">
                                         @csrf
                                         @method('put')
                                         <input type="hidden" hidden value="{{$slider->id}}" name="slider_id">
@@ -99,7 +99,7 @@
                                                 </div>
                                             </form>
                                                 <div class="col-2 ml-0 pl-0">
-                                                    <form action="{{route('sliderImage.destroy',$image->id)}}" method="post">
+                                                    <form action="{{route('myblsliderImage.destroy',$image->id)}}" method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button type="submit" style="width:100%" class="btn btn-icon btn-danger">Delete Image</button>

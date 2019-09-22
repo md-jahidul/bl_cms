@@ -14,7 +14,7 @@ use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
 
-class SliderService
+class MyblSliderService
 {
 
     use CrudTrait;

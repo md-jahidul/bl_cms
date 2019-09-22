@@ -17,11 +17,11 @@ class CreateContextualCardsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->text('description');
-            $table->text('first_action_text')->nullable();
-            $table->text('second_action_text')->nullable();
-            $table->text('first_action')->nullable();
-            $table->text('second_action')->nullable();
-            $table->text('image_url')->nullable();
+            $table->text('first_action_text');
+            $table->text('second_action_text');
+            $table->text('first_action');
+            $table->text('second_action');
+            $table->text('image_url');
             $table->timestamps();
         });
     }

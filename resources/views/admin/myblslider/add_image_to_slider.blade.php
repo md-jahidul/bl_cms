@@ -21,7 +21,7 @@
             <div class="card-content collapse show">
                 <div class="card-body">
                     
-                    <form class="form row" action="{{route('sliderImage.store')}}" enctype="multipart/form-data" method="POST">
+                    <form class="form row" action="{{route('myblsliderImage.store')}}" enctype="multipart/form-data" method="POST">
                         @csrf
                         @method('post')
                         
