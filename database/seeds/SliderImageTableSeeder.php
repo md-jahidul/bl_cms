@@ -44,11 +44,11 @@ class SliderImageTableSeeder extends Seeder
                 'url_btn_label' => '',
                 'redirect_url' => '',
                 'sequence' => count(SliderImage::get()) + 1,
-                'other_attributes' => json_encode([
+                'other_attributes' => [
                     'price_info' => 'Monthly 50',
                     'google_play_link' => 'https://play.google.com/store/apps/details?id=com.arena.banglalinkmela.app',
                     'app_store_link' => 'https://apps.apple.com/us/app/my-banglalink/id934133022'
-                ])
+                ]
             ]);
         }
     }

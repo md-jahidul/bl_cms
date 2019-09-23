@@ -45,7 +45,7 @@ class SliderImageService
      */
     public function storeSliderImage($data, $sliderId)
     {
-        $data['other_attributes'] = json_encode($data['other_attributes']);
+        $data['other_attributes'] = $data['other_attributes'];
         $count = count($this->sliderImageRepository->findAll());
         $imageUrl = $this->imageUpload($data, 'image_url', $data['title'], 'slider-images');
         $data['image_url'] = env('APP_URL', 'http://localhost:8000') . "/slider-images/".$imageUrl;
@@ -69,8 +69,6 @@ class SliderImageService
     public function updateSliderImage($data, $id)
     {
         $sliderImage = $this->findOne($id);
-        $other_attributes = request()->only('price_info', 'google_play_link', 'app_store_link', 'details_page_link');
-        $data['other_attributes'] = json_encode($other_attributes);
         if (!empty($data['image_url'])){
             $imageUrl = $this->imageUpload($data, 'image_url', $data['title'], 'slider-images');
             $data['image_url'] = env('APP_URL', 'http://localhost:8000') . "/slider-images/".$imageUrl;

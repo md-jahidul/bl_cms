@@ -3,7 +3,7 @@
 
 <div class="form-group col-md-4 {{ $errors->has('title_bn') ? ' error' : '' }}">
     <label for="title_bn" class="">Title Bangla</label>
-    <input type="text" name="title_bn"  class="form-control" placeholder="Enter price info"
+    <input type="text" name="other_attributes[title_bn]"  class="form-control" placeholder="Enter price info"
             value="{{ (!empty($other_attributes['title_bn'])) ? $other_attributes['title_bn'] : "" }}" >
     <div class="help-block"></div>
     @if ($errors->has('title_bn'))
@@ -13,7 +13,7 @@
 
 <div class="form-group col-md-4 {{ $errors->has('price_info') ? ' error' : '' }}">
     <label for="price_info" class="">Price Info</label>
-    <input type="text" name="price_info"  class="form-control" placeholder="Enter price info"
+    <input type="text" name="other_attributes[price_info]"  class="form-control" placeholder="Enter price info"
             value="{{ (!empty($other_attributes['price_info'])) ? $other_attributes['price_info'] : "" }}" >
     <div class="help-block"></div>
     @if ($errors->has('price_info'))
@@ -23,7 +23,7 @@
 
 <div class="form-group col-md-4 {{ $errors->has('price_info_bn') ? ' error' : '' }}">
     <label for="price_info_bn" class="">Price Info</label>
-    <input type="text" name="price_info_bn"  class="form-control" placeholder="Enter price info (Bangla)"
+    <input type="text" name="other_attributes[price_info_bn]"  class="form-control" placeholder="Enter price info (Bangla)"
             value="{{ (!empty($other_attributes['price_info_bn'])) ? $other_attributes['price_info_bn'] : "" }}" >
     <div class="help-block"></div>
     @if ($errors->has('price_info_bn'))
@@ -33,7 +33,7 @@
 
 <div class="form-group col-md-4 {{ $errors->has('google_play_link') ? ' error' : '' }}">
     <label for="title" class="">Google Play Store Link</label>
-    <input type="text" name="google_play_link"  class="form-control" placeholder="Google Play Store Link"
+    <input type="text" name="other_attributes[google_play_link]"  class="form-control" placeholder="Google Play Store Link"
             value="{{ (!empty($other_attributes['google_play_link'])) ? $other_attributes['google_play_link'] : "" }}">
     <div class="help-block"></div>
     @if ($errors->has('google_play_link'))
@@ -42,7 +42,7 @@
 </div>
 <div class="form-group col-md-4 {{ $errors->has('app_store_link') ? ' error' : '' }}">
     <label for="title" class="">App Store Link</label>
-    <input type="text" name="app_store_link"  class="form-control" placeholder="App Store Link"
+    <input type="text" name="other_attributes[app_store_link]"  class="form-control" placeholder="App Store Link"
             value="{{ (!empty($other_attributes['app_store_link'])) ? $other_attributes['app_store_link'] : "" }}">
     <div class="help-block"></div>
     @if ($errors->has('app_store_link'))
@@ -52,7 +52,7 @@
 
 <div class="form-group col-md-12 {{ $errors->has('description_bn') ? ' error' : '' }}">
     <label for="description_bn" class="required">Description (bangla)</label>
-    <textarea type="text" name="description_bn" rows="5"  class="form-control" placeholder="Enter alt text">{{ old("description_bn") ? old("description_bn") : '' }}</textarea>
+    <textarea type="text" name="other_attributes[description_bn]" rows="5"  class="form-control" placeholder="Enter alt text">{{ old("description_bn") ? old("description_bn") : '' }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('description_bn'))
         <div class="help-block">  {{ $errors->first('description_bn') }}</div>
