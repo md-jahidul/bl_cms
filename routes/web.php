@@ -22,8 +22,8 @@ Route::group(['middleware' => ['webAdmin']], function () {
     Route::get('/cms', 'CMS\TestCMSController@index');
 
 
-    Route::resource('sliders', 'CMS\SliderController');
-    Route::resource('slider_image', 'CMS\SliderImageController');
+    // Route::resource('sliders', 'CMS\SliderController');
+    // Route::resource('slider_image', 'CMS\SliderImageController');
 
     Route::resource('questions', 'CMS\QuestionController');
     Route::resource('prize', 'CMS\PrizeController');
@@ -129,6 +129,11 @@ Route::group(['middleware' => ['appAdmin']], function () {
     // Near By Offer
     route::resource('nearByOffer','CMS\NearbyOfferController');
     Route::get('nearByOffer/destroy/{id}','CMS\NearbyOfferController@destroy');
+
+
+    // Amar Offer
+    route::resource('amarOffer','CMS\AmarOfferController');
+    Route::get('amarOffer/destroy/{id}','CMS\AmarOfferController@destroy');
 
     //------ offers -----------//
 

@@ -49,20 +49,21 @@ class ContextualCardService
      * @param $data
      * @return Response
      */
-    public function updateContextualCard($data, $contextualCard)
+    public function updateContextualCard($data, $id)
     {
-
-        if(isset($data->image_path)){
-            $data = $data->all();
-            $data['image_path'] = 'storage/'.$data['image_path']->store('contextualCard');
+        $contextualCard = $this->findOne($id);
+        if(isset($data['image_url'])){
+            //$data = $data->all();
+            $data['image_url'] = 'storage/'.$data['image_url']->store('contextualCard');
             unlink($contextualCard->image_path);
             $contextualCard->update($data);
         }else{
-            $data->image_path = $contextualCard->image_path;
+            //dd($data);
+            $data['image_path'] = $contextualCard->image_url;
             $contextualCard->update($contextualCard->all());
         }
         
-        return Response('Banner updated successfully !');
+        return Response('Contextual Card updated successfully !');
         
     }
 

@@ -4,16 +4,15 @@ namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\ContextualCardService;
-use App\Models\Contextualcards;
+use App\Services\AmarOfferService;
+use App\Models\AmarOffer;
 
-class ContextualCardController extends Controller
+class AmarOfferController extends Controller
 {
-
     /**
      * @var BannerService
      */
-    private $contextualCardService;
+    private $amarOfferService;
     /**
      * @var bool
      */
@@ -21,12 +20,13 @@ class ContextualCardController extends Controller
 
     /**
      * BannerController constructor.
-     * @param ContextualCardService $bannerService
+     * @param BannerService $bannerService
      */
-    public function __construct(ContextualCardService $contextualCardService)
+    public function __construct(AmarOfferService $amarOfferService)
     {
-        $this->contextualCardService = $contextualCardService;
+        $this->amarOfferService = $amarOfferService;
     }
+
 
     /**
      * Display a listing of the resource.
@@ -35,7 +35,7 @@ class ContextualCardController extends Controller
      */
     public function index()
     {
-        return view('admin.contextual-card.index')->with('contextualCards',$this->contextualCardService->findAll());
+        return view('admin\offer-Amar\index')->with('amarOffers',$this->amarOfferService->findAll());
     }
 
     /**
@@ -45,7 +45,7 @@ class ContextualCardController extends Controller
      */
     public function create()
     {
-        return view('admin.contextual-card.create');
+        return view('admin\offer-Amar\create');
     }
 
     /**
@@ -56,9 +56,9 @@ class ContextualCardController extends Controller
      */
     public function store(Request $request)
     {
-        
-        session()->flash('success',$this->contextualCardService->storeContextualCard($request->all())->getContent());
-        return redirect(route('contextualcard.index'));
+        $response = $this->amarOfferService->storeAmarOffer($request->all());
+        Session()->flash('message', $response->content());
+        return redirect(route('amarOffer.index'));
     }
 
     /**
@@ -67,7 +67,7 @@ class ContextualCardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(AmarOffer $amarOffer)
     {
         //
     }
@@ -78,9 +78,9 @@ class ContextualCardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ContextualCards $contextualcard)
+    public function edit(AmarOffer $amarOffer)
     {
-        return view('admin.contextual-card.edit')->with('contextualCard', $contextualcard);
+        return view('admin\offer-Amar\edit')->with('amarOffer',$amarOffer);
     }
 
     /**
@@ -92,9 +92,7 @@ class ContextualCardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //dd($id);
-        session()->flash('success',$this->contextualCardService->updateContextualCard($request->all(), $id)->getContent());
-        return redirect(route('contextualcard.index'));
+        //
     }
 
     /**
@@ -103,10 +101,8 @@ class ContextualCardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ContextualCards $contextualcard)
+    public function destroy($id)
     {
-        // return $contextualcard;
-        session()->flash('success',$this->contextualCardService->deleteContextualCard($contextualcard)->getContent());
-        return redirect(route('contextualCard.index'));
+        //
     }
 }

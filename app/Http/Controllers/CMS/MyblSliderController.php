@@ -8,8 +8,7 @@ use App\Models\Slider;
 use App\Models\SliderComponentTypes;
 use App\Services\MyblSliderService;
 use App\Services\SliderTypeService;
-use App\Http\Requests\SliderRequest;
-
+use App\Http\Requests\MyblSliderRequest;
 class MyblSliderController extends Controller
 {
 
@@ -66,7 +65,7 @@ class MyblSliderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SliderRequest $request)
+    public function store(MyblSliderRequest $request)
     {
         
         session()->flash('success',$this->sliderService->storeSlider($request->all())->getContent());
@@ -107,7 +106,7 @@ class MyblSliderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SliderRequest $request,Slider $slider)
+    public function update(MyblSliderRequest $request,Slider $slider)
     {
         session()->flash('success',$this->sliderService->updateSlider($request, $slider)->getContent());
         return redirect(route('myblslider.index'));
