@@ -50,7 +50,7 @@ class AmarOfferController extends Controller
      */
     public function create()
     {
-        return view('admin\offer-Amar\create');
+        return view('admin.offer-Amar.create');
     }
 
     /**
@@ -74,7 +74,7 @@ class AmarOfferController extends Controller
      */
     public function show(AmarOffer $amarOffer)
     {
-        return view('admin\offer-Amar\show')->with('amarOffer',$amarOffer);
+        return view('admin.offer-Amar.show')->with('amarOffer',$amarOffer);
     }
 
     /**
@@ -85,7 +85,7 @@ class AmarOfferController extends Controller
      */
     public function edit(AmarOffer $amarOffer)
     {
-        return view('admin\offer-Amar\edit')->with('amarOffer',$amarOffer);
+        return view('admin.offer-Amar.edit')->with('amarOffer',$amarOffer);
     }
 
     /**
