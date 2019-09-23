@@ -39,6 +39,10 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapMyBlWebRoutes();
+
+        $this->mapAssetLiteWebRoutes();
+
         //
     }
 
@@ -53,8 +57,39 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
              ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+             ->group(base_path('routes/common-web.php'));
     }
+
+
+    /**
+     * Define the "my-bl-web" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapMyBlWebRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/my-bl-web.php'));
+    }
+
+    /**
+     * Define the "asset-lite-web" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAssetLiteWebRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/asset-lite-web.php'));
+    }
+
+
 
     /**
      * Define the "api" routes for the application.
