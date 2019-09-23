@@ -28,7 +28,7 @@ class HelpCenterRequest extends FormRequest
             'title'=>'required|max:200|unique:help_centers,title,'.$this->id,
             'icon'=>'required_if:value_exist,no|image|mimes:jpeg,jpg,png',
             'redirect_link'=>'required',
-            'sequence'=>'required|numeric|min:0|unique:help_centers,sequence,'.$this->id,
+            'sequence'=>'required|numeric|min:0|max:999999999999999999|unique:help_centers,sequence,'.$this->id,
         ];
     }
 }

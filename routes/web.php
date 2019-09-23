@@ -22,7 +22,7 @@ Route::group(['middleware' => ['webAdmin']], function () {
     Route::get('/cms', 'CMS\TestCMSController@index');
 
 
-    // Route::resource('sliders', 'CMS\SliderController');
+    Route::resource('sliders', 'CMS\SliderController');
     Route::resource('slider_image', 'CMS\SliderImageController');
 
     Route::resource('questions', 'CMS\QuestionController');
@@ -103,15 +103,15 @@ Route::group(['middleware' => ['appAdmin']], function () {
     //------ Slider -----------//
     
     // Slider
-    route::resource('slider','CMS\SliderController');
-    Route::get('slider/destroy/{id}','CMS\SliderController@destroy');
-    Route::get('slider/edit/{slider}','CMS\SliderController@edit')->name('slider.edit');
+    route::resource('myblslider','CMS\MyblSliderController');
+    Route::get('myblslider/destroy/{id}','CMS\MyblSliderController@destroy');
+    Route::get('myblslider/edit/{slider}','CMS\MyblSliderController@edit')->name('slider.edit');
     // Slider
     
     // Slider Image
-    route::resource('sliderImage','CMS\SliderImageController');
-    route::get('sliderImage/addImage/update-position','CMS\SliderImageController@updatePosition');
-    Route::get('slider/addImage/{sliderId}','CMS\SliderImageController@index')->name('sliderImage.index');
+    route::resource('myblsliderImage','CMS\MyblSliderImageController');
+    route::get('myblsliderImage/addImage/update-position','CMS\MyblSliderImageController@updatePosition');
+    Route::get('myblslider/addImage/{sliderId}','CMS\MyblSliderImageController@index')->name('myblsliderImage.index');
     // Slider Image
     
     //------ Slider -----------//
@@ -154,7 +154,7 @@ Route::group(['middleware' => ['appAdmin']], function () {
     
     // contextual cards
     route::resource('contextualcard','CMS\ContextualCardController');
-    Route::get('contextualcard/destroy/{id}','CMS\ContextualCardController@destroy');
+    Route::get('card/destroy/{id}','CMS\ContextualCardController@destroy');
 
 });    
 

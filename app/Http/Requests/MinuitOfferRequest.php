@@ -26,11 +26,11 @@ class MinuitOfferRequest extends FormRequest
         //dd($this->id);
         return [
             'title'=>'required|max:200|unique:minute_offers,title,'.$this->id,
-            'volume'=>'required|numeric|min:1',
-            'validity'=>'required|numeric|min:1',
-            'price'=>'required|numeric|min:1',
+            'volume'=>'required|numeric|min:1|max:999999999999999999',
+            'validity'=>'required|numeric|min:1|max:999999999999999999',
+            'price'=>'required|numeric|min:1|max:999999999999999999',
             'offer_code'=>'required',
-            'points'=>'required|min:1'
+            'points'=>'required|min:1|numeric|min:1|max:999999999999999999'
         ];
     }
 }

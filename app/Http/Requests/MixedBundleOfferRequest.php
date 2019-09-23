@@ -25,12 +25,12 @@ class MixedBundleOfferRequest extends FormRequest
     {
         return [
             'title'=>'required|max:200|unique:mixed_bundle_offers,title,'.$this->id,
-            'internet'=>'required|numeric|min:1',
-            'minutes'=>'required|numeric|min:1',
-            'sms'=>'required|numeric|min:1',
-            'validity'=>'required|numeric|min:1',
-            'price'=>'required|numeric|min:1',
-            'points'=>'required|numeric|min:1',
+            'internet'=>'required|numeric|min:1|max:999999999999999999',
+            'minutes'=>'required|numeric|min:1|max:999999999999999999',
+            'sms'=>'required|numeric|min:1|max:999999999999999999',
+            'validity'=>'required|numeric|min:1|max:999999999999999999',
+            'price'=>'required|numeric|min:1|max:999999999999999999',
+            'points'=>'required|numeric|min:1|max:999999999999999999',
             'offer_code'=>'required|',
             'tag'=>'required',
         ];

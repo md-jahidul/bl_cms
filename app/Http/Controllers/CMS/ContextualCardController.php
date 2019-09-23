@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\ContextualCardService;
+use App\Models\Contextualcards;
 
 class ContextualCardController extends Controller
 {
@@ -56,7 +57,7 @@ class ContextualCardController extends Controller
     public function store(Request $request)
     {
         session()->flash('success',$this->contextualCardService->storeContextualCard($request->all())->getContent());
-        return redirect(route('contextual-card.index'));
+        return redirect(route('contextualcard.index'));
     }
 
     /**
@@ -76,9 +77,9 @@ class ContextualCardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ContextualCards $contextualcard)
     {
-        return view('admin.contextual-card.create')->with('contextualCard', $banner);
+        return view('admin.contextual-card.edit')->with('contextualCard', $contextualcard);
     }
 
     /**
@@ -91,7 +92,7 @@ class ContextualCardController extends Controller
     public function update(Request $request, $id)
     {
         session()->flash('success',$this->contextualCardService->updateContextualCard($request, $banner)->getContent());
-        return redirect(route('contextual-card.index'));
+        return redirect(route('contextualcard.index'));
     }
 
     /**
@@ -100,9 +101,10 @@ class ContextualCardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ContextualCards $contextualcard)
     {
-        session()->flash('warning',$this->contextualCardService->deleteContextualCard($id)->getContent());
+        // return $contextualcard;
+        session()->flash('success',$this->contextualCardService->deleteContextualCard($contextualcard)->getContent());
         return redirect(route('contextualCard.index'));
     }
 }

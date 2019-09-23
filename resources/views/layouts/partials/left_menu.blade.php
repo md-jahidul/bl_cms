@@ -74,17 +74,21 @@
                     <span class="menu-title" data-i18n="nav.templates.main">Manage Page</span></a>
                 <ul class="menu-content">
                     {{--page--}}
-                    <li class="{{ is_active_url('slider') . is_active_url('slider/addImage/') . is_active_url('slider/create') . is_active_url('slider/edit') }}">
-                        <a class="menu-item" href="{{ route('slider.index') }}" data-i18n="nav.templates.vert.classic_menu">
-                            <i class="la la-sliders"></i>Slider</a>
+                    <li class="{{ is_active_url('myblslider') . is_active_url('myblslider/addImage/') . is_active_url('myblslider/create') . is_active_url('myblslider/edit') }}">
+                        <a class="menu-item" href="{{ route('myblslider.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-sliders"></i>My-BL Slider</a>
                     </li>
                     <li class="{{ is_active_url('banner') . is_active_url('banner/create')}}">
                         <a class="menu-item" href="{{ route('banner.index') }}" data-i18n="nav.templates.vert.classic_menu">
-                            <i class="la la-image"></i> Banner</a>
+                            <i class="la la-image"></i>My-BL Banner</a>
                     </li>
                     <li class="{{ is_active_url('wellcomeInfo') . is_active_url('wellcomeInfo/create')}}">
                         <a class="menu-item" href="{{ route('wellcomeInfo.index') }}" data-i18n="nav.templates.vert.classic_menu">
-                            <i class="la la-info-circle"></i> Welcome Info</a>
+                            <i class="la la-info-circle"></i>My-BL Welcome Info</a>
+                    </li>
+                    <li class="{{ is_active_url('contextualcard') . is_active_url('contextualcard/create')}}">
+                        <a class="menu-item" href="{{ route('contextualcard.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-external-link-square"></i>My-BL Contextual Card</a>
                     </li>
 
                 </ul>

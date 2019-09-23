@@ -15,7 +15,7 @@ use Illuminate\Http\Response;
 use DB;
 
 
-class SliderImageService
+class MyblSliderImageService
 {
     use CrudTrait;
     /**
