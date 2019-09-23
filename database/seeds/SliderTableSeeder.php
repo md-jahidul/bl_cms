@@ -24,7 +24,7 @@ class SliderTableSeeder extends Seeder
                 'short_code' => '[slider_'.++$key .']',
                 'platform' => 'web',
                 'other_attributes' => [
-                    'sliding_speed' => '5',
+                    'sliding_speed' => 5,
                 ]
             ]);
         }
