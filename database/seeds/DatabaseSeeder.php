@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(DigitalServiceTableSeeder::class);
         $this->call(SettingKeysTableSeeder::class);
         $this->call(SliderComponentTypesTableSeeder::class);
+        $this->call(OfferFilterTypeTableSeeder::class);
     }
 }
