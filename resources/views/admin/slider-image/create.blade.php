@@ -49,7 +49,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('redirect_url') ? ' error' : '' }}">
                                     <label for="redirect_url" class="required">Redirect Url</label>
-                                    <input type="text" name="redirect_url"  class="form-control" placeholder="Enter alt text"
+                                    <input type="text" name="redirect_url"  class="form-control" placeholder="Enter redirect url"
                                            value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Enter valid link">
                                     <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>
                                     <div class="help-block"></div>
@@ -62,6 +62,7 @@
                                     <label for="description" class="required">Description</label>
                                     <textarea type="text" name="description" rows="5"  class="form-control" placeholder="Enter description"
                                               required data-validation-required-message="Enter description">{{ old("description") ? old("description") : '' }}</textarea>
+
                                     <div class="help-block"></div>
                                     @if ($errors->has('description'))
                                         <div class="help-block">  {{ $errors->first('description') }}</div>
