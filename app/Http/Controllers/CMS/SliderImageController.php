@@ -24,6 +24,7 @@ class SliderImageController extends Controller
     public function __construct(SliderImageService $sliderImageService)
     {
         $this->sliderImageService = $sliderImageService;
+        $this->middleware('auth');
     }
 
     /**

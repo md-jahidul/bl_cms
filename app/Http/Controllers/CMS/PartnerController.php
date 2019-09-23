@@ -22,6 +22,7 @@ class PartnerController extends Controller
     public function __construct(PartnerService $partnerService)
     {
         $this->partnerService = $partnerService;
+        $this->middleware('auth');
     }
 
     /**

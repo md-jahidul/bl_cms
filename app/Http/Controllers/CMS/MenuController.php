@@ -28,6 +28,7 @@ class MenuController extends Controller
     public function __construct(MenuService $menuService)
     {
         $this->menuService = $menuService;
+        $this->middleware('auth');
     }
 
     public function getBreadcrumbInfo($parent_id)
