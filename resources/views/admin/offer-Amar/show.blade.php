@@ -5,8 +5,8 @@
     <li class="breadcrumb-item active">Amar Offer details</li>
 @endsection
 @section('action')
-    <a href="{{route('amarOffer.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create Amar Offer 
+    <a href="{{route('amarOffer.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Amar Offer List
     </a>
 @endsection
 @section('content')

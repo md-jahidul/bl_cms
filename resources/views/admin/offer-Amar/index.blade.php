@@ -26,16 +26,10 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th>id</th>
-                            <th>title</th>
-                            {{-- <th>internet</th>
-                            <th>minutes</th>
-                            <th>sms</th>
-                            <th>validity</th>
-                            <th>price</th> --}}
-                            <th>offer_code</th>
-                            <th>points</th>
-                            {{-- <th>tag</th> --}}
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Offer code</th>
+                            <th>Points</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -44,29 +38,20 @@
                             <tr>
                                 <td>{{$amarOffer->id}}</td>
                                 <td>{{$amarOffer->title}}</td>
-                                {{-- <td>{{$amarOffer->internet}}</td>
-                                <td>{{$amarOffer->minutes}}</td>
-                                <td>{{$amarOffer->sms}}</td>
-                                <td>{{$amarOffer->validity}}</td>
-                                <td>{{$amarOffer->price}}</td> --}}
                                 <td>{{$amarOffer->offer_code}}</td>
                                 <td>{{$amarOffer->points}}</td>
-                                {{-- <td>{{$amarOffer->tag}}</td> --}}
                                 <td>
-                                    
-                                    
                                     <div class="row">
                                         <div class="col-md-2">
-                                                <a role="button" href="{{route('amarOffer.show',$amarOffer->id)}}" class="btn btn-outline-success">
-                                                    <i class="la la-info"></i>
-                                                </a>
+                                            <a role="button" href="{{route('amarOffer.show',$amarOffer->id)}}" class="btn btn-outline-success">
+                                                <i class="la la-info"></i>
+                                            </a>
                                         </div>
                                         <div class="col-md-2">
                                             <a role="button" href="{{route('amarOffer.edit',$amarOffer->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        
                                         <div class="col-md-2">
                                             <button data-id="{{$amarOffer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>

@@ -15,7 +15,7 @@
                    <form class="form" action="{{route('amarOffer.update',$amarOffer->id)}}" method="POST">
                         @csrf
                         @method('put')
-                        
+                        <input type="hidden" name="id" value="{{$amarOffer->id}}">
                         <div class="form-body">
                             <h4 class="form-section"><i class="la la-paperclip"></i>Edit Amar offer.</h4>
                             <div class="row">
