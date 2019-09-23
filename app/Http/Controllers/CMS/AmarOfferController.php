@@ -69,7 +69,7 @@ class AmarOfferController extends Controller
      */
     public function show(AmarOffer $amarOffer)
     {
-        //
+        return view('admin\offer-Amar\show')->with('amarOffer',$amarOffer);
     }
 
     /**
@@ -92,7 +92,9 @@ class AmarOfferController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $response = $this->amarOfferService->updateAmarOffer($request->all(),$id);
+        Session()->flash('message', $response->content());
+        return redirect(route('amarOffer.index'));
     }
 
     /**
@@ -103,6 +105,8 @@ class AmarOfferController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = $this->amarOfferService->deleteAmarOffer($id);
+        Session()->flash('danger', $response->content());
+        return redirect(route('amarOffer.index'));
     }
 }
