@@ -30,6 +30,7 @@ class FooterMenuController extends Controller
     public function __construct(FooterMenuService $footerMenuService)
     {
         $this->footerMenuService = $footerMenuService;
+        $this->middleware('auth');
     }
 
     /**

@@ -20,6 +20,10 @@ class SliderImage extends Model
             'other_attributes',
     ];
 
+    protected $casts = [
+        'other_attributes' => 'array'
+    ]; 
+
     public function slider(){
         return $this->belongsTo(Slider::class);
     }
