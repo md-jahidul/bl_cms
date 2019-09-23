@@ -2,11 +2,11 @@
 @section('title', 'Menu Create')
 @section('card_name', 'Menu Create')
 @section('breadcrumb')
-    @php 
+    @php
         $liHtml = '<li class="breadcrumb-item"><a href="'. url('menu') .'">Menu</a></li>';
         for($i = count($menu_items) - 1; $i >= 0; $i--){
-            $liHtml .=  $i == 0 ? '<li class="breadcrumb-item active">' .  $menu_items[$i]['name']  . '</li>' : 
-                                  '<li class="breadcrumb-item"><a href="'. url("menu/". $menu_items[$i]["id"] . "/child-menu") .'">' .  $menu_items[$i]['name']  . '</a></li>';
+            $liHtml .=  $i == 0 ? '<li class="breadcrumb-item active">' .  $menu_items[$i]['en_label_text']  . '</li>' :
+                                  '<li class="breadcrumb-item"><a href="'. url("menu/". $menu_items[$i]["id"] . "/child-menu") .'">' .  $menu_items[$i]['en_label_text']  . '</a></li>';
         }
     @endphp
 
@@ -25,9 +25,9 @@
                             <div class="row">
                                 <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                                 <div class="form-group col-md-12 {{ $errors->has('name') ? ' error' : '' }}">
-                                    <label for="title" class="required">Title</label>
-                                    <input type="text" name="name"  class="form-control" placeholder="Enter title"
-                                           value="{{ old("name") ? old("name") : '' }}" required data-validation-required-message="Enter footer menu title">
+                                    <label for="title" class="required">Page Name</label>
+                                    <input type="text" name="code"  class="form-control" placeholder="Enter title" readonly
+                                           value="DynamicPage" required data-validation-required-message="Enter footer menu title">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name'))
                                         <div class="help-block">  {{ $errors->first('name') }}</div>
@@ -63,6 +63,7 @@
                                         <div class="help-block">  {{ $errors->first('url') }}</div>
                                     @endif
                                 </div>
+
 
                                 <!-- <div class="col-md-12">
                                     <div class="form-group">

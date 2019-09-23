@@ -43,10 +43,6 @@ class MenuService
     public function storeMenu($data)
     {
         $menu_count = count( $this->menuRepository->getChildMenus( $data['parent_id'] ) );
-        $name = ucwords( strtolower( $data['name'] )  );
-        $search = [" ", "&"];
-        $replace   = ["", "And"];
-        $data['code'] = str_replace($search, $replace, $name);
         $data['display_order'] = ++$menu_count;
         $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
         $this->save($data);
@@ -85,7 +81,7 @@ class MenuService
     {
         $menu = $this->findOne($id);
         $menu->delete();
-        
+
         return [
             'message' => 'Menu delete successfully',
             'parent_id' => $menu->parent_id

@@ -1,13 +1,13 @@
 <h4 class="pl-1">Advance Option</h4>
 <div class="form-actions col-md-12 mt-0"></div>
 
-<div class="form-group col-md-4 {{ $errors->has('monthly_rate') ? ' error' : '' }}">
-    <label for="title" class="">Monthly Rate</label>
-    <input type="text" name="monthly_rate"  class="form-control" placeholder="Monthly Rate"
-            value="{{ (!empty($other_attributes['monthly_rate'])) ? $other_attributes['monthly_rate'] : "" }}" >
+<div class="form-group col-md-4 {{ $errors->has('price_info') ? ' error' : '' }}">
+    <label for="price_info" class="">Price Info</label>
+    <input type="text" name="price_info"  class="form-control" placeholder="Enter price info"
+            value="{{ (!empty($other_attributes['price_info'])) ? $other_attributes['price_info'] : "" }}" >
     <div class="help-block"></div>
-    @if ($errors->has('monthly_rate'))
-        <div class="help-block">  {{ $errors->first('monthly_rate') }}</div>
+    @if ($errors->has('price_info'))
+        <div class="help-block">  {{ $errors->first('price_info') }}</div>
     @endif
 </div>
 <div class="form-group col-md-4 {{ $errors->has('google_play_link') ? ' error' : '' }}">
@@ -26,6 +26,16 @@
     <div class="help-block"></div>
     @if ($errors->has('app_store_link'))
         <div class="help-block">  {{ $errors->first('app_store_link') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-12 {{ $errors->has('details_page_link') ? ' error' : '' }}">
+    <label for="details_page_link" class="">Details Page Link</label>
+    <input type="url" name="details_page_link"  class="form-control" placeholder="Enter details page link"
+           value="{{ (!empty($other_attributes['details_page_link'])) ? $other_attributes['details_page_link'] : "" }}">
+    <div class="help-block"></div>
+    @if ($errors->has('details_page_link'))
+        <div class="help-block">  {{ $errors->first('details_page_link') }}</div>
     @endif
 </div>
 

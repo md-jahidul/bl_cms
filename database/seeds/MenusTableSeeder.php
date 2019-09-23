@@ -18,7 +18,6 @@ class MenusTableSeeder extends Seeder
 
         foreach ($menus as $key => $menu){
             Menu::create([
-                'name' => $menu,
                 'en_label_text' => $menu_english[$key],
                 'bn_label_text' => $menu_bangla[$key],
                 'parent_id' => 0,
@@ -37,7 +36,6 @@ class MenusTableSeeder extends Seeder
 
         foreach ($sub_menus as $key => $smenu){
             Menu::create([
-                'name' => $smenu,
                 'en_label_text' => $sub_menu_english[$key],
                 'bn_label_text' => $sub_menu_bangla[$key],
                 'parent_id' => 2,

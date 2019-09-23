@@ -32,7 +32,7 @@ class MenuController extends Controller
 
     public function getBreadcrumbInfo($parent_id)
     {
-        $temp = (new Menu)->find($parent_id, ['id','name','parent_id'])->toArray();
+        $temp = (new Menu)->find($parent_id, ['id','en_label_text','parent_id'])->toArray();
         $this->menuItems[] = $temp;
         return $temp['parent_id'];
     }
@@ -60,7 +60,7 @@ class MenuController extends Controller
      */
     public function create($parent_id = 0)
     {
-        $this->menuItems[] = ['name' => 'Create'];
+        $this->menuItems[] = ['en_label_text' => 'Create'];
         $menu_id = $parent_id;
         while ( $menu_id != 0 ){
             $menu_id = $this->getBreadcrumbInfo($menu_id);
@@ -102,7 +102,7 @@ class MenuController extends Controller
         $menu = $this->menuService->findOrFail($id);
 
 
-        $this->menuItems[] = ['name' => $menu->name];
+        $this->menuItems[] = ['en_label_text' => $menu->en_label_text];
 
         $menu_id = $menu->parent_id;
         while ( $menu_id != 0 ){

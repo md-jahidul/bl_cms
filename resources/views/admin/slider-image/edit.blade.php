@@ -52,7 +52,8 @@
                                 <div class="form-group col-md-6 {{ $errors->has('redirect_url') ? ' error' : '' }}">
                                     <label for="redirect_url" class="required">Redirect Url</label>
                                     <input type="text" name="redirect_url"  class="form-control" placeholder="Enter alt text"
-                                           value="{{ $sliderImage->redirect_url }}" required data-validation-required-message="Please select start date">
+                                           value="{{ $sliderImage->redirect_url }}" required data-validation-required-message="Enter valid link">
+                                    <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>
                                     <div class="help-block"></div>
                                     @if ($errors->has('redirect_url'))
                                         <div class="help-block">  {{ $errors->first('redirect_url') }}</div>

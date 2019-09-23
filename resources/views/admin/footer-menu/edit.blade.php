@@ -5,8 +5,8 @@
     @php
         $liHtml = '<li class="breadcrumb-item"><a href="'. url('footer-menu') .'">Footer Menu</a></li>';
         for($i = count($footer_menu_items) - 1; $i >= 0; $i--){
-            $liHtml .=  $i == 0 ? '<li class="breadcrumb-item active">' .  $footer_menu_items[$i]['name']  . '</li>' :
-                                  '<li class="breadcrumb-item"><a href="'. url("menu/". $footer_menu_items[$i]["id"] . "/child-footer") .'">' .  $footer_menu_items[$i]['name']  . '</a></li>';
+            $liHtml .=  $i == 0 ? '<li class="breadcrumb-item active">' .  $footer_menu_items[$i]['en_label_text']  . '</li>' :
+                                  '<li class="breadcrumb-item"><a href="'. url("menu/". $footer_menu_items[$i]["id"] . "/child-footer") .'">' .  $footer_menu_items[$i]['en_label_text']  . '</a></li>';
         }
     @endphp
     {!! $liHtml !!}
@@ -24,9 +24,9 @@
                             <div class="row">
                                 <input type="hidden" name="parent_id" value="{{ $footerMenu->parent_id }}">
                                 <div class="form-group col-md-12 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="title" class="required">Title</label>
-                                    <input type="text" name="name"  class="form-control" placeholder="Enter title"
-                                           value="{{ $footerMenu->name }}" required data-validation-required-message="Enter footer menu title">
+                                    <label for="title" class="required">Page name</label>
+                                    <input type="text" name="code"  class="form-control" placeholder="Enter title" readonly
+                                           value="{{ $footerMenu->code }}" required data-validation-required-message="Enter footer menu title">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title'))
                                         <div class="help-block">  {{ $errors->first('title') }}</div>

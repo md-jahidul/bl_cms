@@ -39,10 +39,7 @@ class MyblSliderImageService
         return $this->sliderImageRepository->getSliderImage($sliderId, $type);
     }
 
-    /**
-     * Storing the banner resource
-     * @return Response
-     */
+
     /**
      * Storing the banner resource
      * @return Response

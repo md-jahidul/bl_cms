@@ -43,10 +43,6 @@ class FooterMenuService
     public function storeFooterMenu($data)
     {
         $menu_count = count( $this->footerMenuRepository->getChildMenus( $data['parent_id'] ) );
-        $name = ucwords( strtolower( $data['name'] )  );
-        $search = [" ", "&"];
-        $replace   = ["", "And"];
-        $data['code'] = str_replace($search, $replace, $name);
         $data['display_order'] = ++$menu_count;
         $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
         $this->save($data);
