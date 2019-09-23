@@ -20,6 +20,7 @@ class CreateSlidersTable extends Migration
             $table->mediumText('description')->nullable();
             $table->string('short_code');
             $table->enum('platform', ['Web', 'App']);
+            $table->json('other_attributes')->nullable();
             $table->foreign('component_id')
                     ->references('id')
                     ->on('slider_component_types')

@@ -29,6 +29,7 @@ class PrizeController extends Controller
     {
         $this->prizeService = $prizeService;
         $this->campaignService = $campaignService;
+        $this->middleware('auth');
     }
 
     /**

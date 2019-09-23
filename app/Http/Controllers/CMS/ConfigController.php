@@ -19,7 +19,10 @@ class ConfigController extends Controller
     public function __construct(ConfigService $configService)
     {
         $this->configService = $configService;
+        $this->middleware('auth');
     }
+
+
 
 
     /**
