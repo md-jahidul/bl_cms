@@ -118,6 +118,10 @@
                         <a class="menu-item" href="{{ route('nearByOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-gift"></i> Near by Offer</a>
                     </li>
+                    <li class="">
+                        <a class="menu-item" href="{{ route('amarOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-cart-arrow-down"></i> Amar Offer</a>
+                    </li>
 
                 </ul>
             </li>
