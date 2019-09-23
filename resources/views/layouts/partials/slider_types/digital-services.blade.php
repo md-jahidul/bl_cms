@@ -51,9 +51,8 @@
 </div>
 
 <div class="form-group col-md-12 {{ $errors->has('description_bn') ? ' error' : '' }}">
-    <label for="description_bn" class="required">Description</label>
-    <textarea type="text" name="description_bn" rows="5"  class="form-control" placeholder="Enter alt text"
-                required data-validation-required-message="Please select start date">{{ old("title") ? old("title") : '' }}</textarea>
+    <label for="description_bn" class="required">Description (bangla)</label>
+    <textarea type="text" name="description_bn" rows="5"  class="form-control" placeholder="Enter alt text">{{ old("description_bn") ? old("description_bn") : '' }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('description_bn'))
         <div class="help-block">  {{ $errors->first('description_bn') }}</div>
