@@ -13,9 +13,9 @@
         <div class="card card-info mb-0" style="padding-left:10px">
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form" action="{{route('contextualcard.store')}}" enctype="multipart/form-data" method="POST">
+                    <form class="form" action="{{route('contextualcard.update',$contextualCard->id)}}" enctype="multipart/form-data" method="POST">
                         @csrf
-                        @method('post')
+                        @method('put')
                         <div class="form-body">
                             <h4 class="form-section"><i class="la la-paperclip"></i>Edit {{$contextualCard->title}}.</h4>
                             

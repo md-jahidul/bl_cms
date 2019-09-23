@@ -56,6 +56,7 @@ class ContextualCardController extends Controller
      */
     public function store(Request $request)
     {
+        
         session()->flash('success',$this->contextualCardService->storeContextualCard($request->all())->getContent());
         return redirect(route('contextualcard.index'));
     }
@@ -91,7 +92,8 @@ class ContextualCardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        session()->flash('success',$this->contextualCardService->updateContextualCard($request, $banner)->getContent());
+        //dd($id);
+        session()->flash('success',$this->contextualCardService->updateContextualCard($request->all(), $id)->getContent());
         return redirect(route('contextualcard.index'));
     }
 
