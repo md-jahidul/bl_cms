@@ -70,15 +70,18 @@
                                     @endif
                                 </div>
 
+                                @include('layouts.partials.slider_types.' . $type )
+
 
                                 <div class="form-group col-md-6 mt-1">
-                                    <label for="file">Select File</label>
+                                    <label for="file" >Select File</label>
                                     <label id="projectinput7" class="file center-block">
                                         <input type="file" id="file" name="image_url">
                                         <span class="file-custom"></span>
                                     </label>
                                     <img class="img-thumbnail" src="{{ $sliderImage->image_url }}" height="80" width="80">
                                 </div>
+
 
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -92,7 +95,7 @@
                                     </div>
                                 </div>
 
-                                @include('layouts.partials.slider_types.' . $type )
+
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
