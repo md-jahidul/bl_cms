@@ -61,9 +61,7 @@ Route::group(['middleware' => ['appAdmin']], function () {
     Route::get('myblslider/addImage/{sliderId}','CMS\MyblSliderImageController@index')->name('myblsliderImage.index');
     // Slider Image
 
-    //------ Slider -----------//
 
-    //------ offers -----------//
     // minute
     route::resource('minuteOffer','CMS\MinuteOfferController');
     Route::get('minuteOffer/destroy/{id}','CMS\MinuteOfferController@destroy');
@@ -93,7 +91,6 @@ Route::group(['middleware' => ['appAdmin']], function () {
     route::resource('amarOffer','CMS\AmarOfferController');
     Route::get('amarOffer/destroy/{id}','CMS\AmarOfferController@destroy');
 
-    //------ offers -----------//
 
     // ussd code
     route::resource('ussd','CMS\UssdController');

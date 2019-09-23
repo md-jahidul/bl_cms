@@ -22,9 +22,6 @@ Route::group(['middleware' => ['webAdmin']], function () {
     Route::get('/cms', 'CMS\TestCMSController@index');
 
 
-    // Route::resource('sliders', 'CMS\SliderController');
-    // Route::resource('slider_image', 'CMS\SliderImageController');
-
     Route::resource('questions', 'CMS\QuestionController');
     Route::resource('prize', 'CMS\PrizeController');
     Route::resource('tags','CMS\TagController');

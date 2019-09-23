@@ -10,10 +10,12 @@ use App\Models\AmarOffer;
 
 class AmarOfferController extends Controller
 {
+
     /**
-     * @var BannerService
+     * @var AmarOfferService
      */
     private $amarOfferService;
+
     /**
      * @var bool
      */
@@ -21,7 +23,7 @@ class AmarOfferController extends Controller
 
     /**
      * BannerController constructor.
-     * @param BannerService $bannerService
+     * @param AmarOfferService $amarOfferService
      */
     public function __construct(AmarOfferService $amarOfferService)
     {
@@ -36,7 +38,9 @@ class AmarOfferController extends Controller
      */
     public function index()
     {
-        return view('admin\offer-Amar\index')->with('amarOffers',$this->amarOfferService->findAll());
+        $amarOffers = $this->amarOfferService->findAll();
+
+        return view('admin.offer-Amar.index')->with('amarOffers', $amarOffers);
     }
 
     /**
