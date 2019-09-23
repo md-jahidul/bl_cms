@@ -7,8 +7,8 @@
                                 class="ft-menu font-large-1"></i></a></li>
                 <li class="nav-item mr-auto">
                     <a class="navbar-brand" href="{{route('home')}}">
-                        {{--<img class="brand-logo" alt="AssetLite CMS" src="">--}}
-                        <h3 class="brand-text">AssetLite CMS</h3>
+                        @if(Auth::user()->role_id == '1'|| Auth::user()->role_id == '2') <img class="brand-logo" alt="MyBL CMS" src="{{asset('logo/logo.png')}}"> @endif
+                        <h3 class="brand-text">@if(Auth::user()->role_id == '1'|| Auth::user()->role_id == '2') MyBL @else AssetLite @endif CMS</h3>
                     </a>
                 </li>
             </ul>

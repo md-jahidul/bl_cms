@@ -9,7 +9,9 @@
     <meta name="keywords"
           content="">
     <meta name="author" content="">
-    <title>@yield('title') - AssetLite CMS</title>
+    <title>
+        @yield('title') - @if(Auth::user()->role_id == '1'|| Auth::user()->role_id == '2') MyBL @else AssetLite @endif CMS
+    </title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="apple-touch-icon" href="{{asset('theme/assets/images/ico/apple-icon-120.png')}}">
     {{--fevicon--}}
