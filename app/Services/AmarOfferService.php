@@ -48,10 +48,11 @@ class AmarOfferService
      * @param $data
      * @return Response
      */
-    public function updateAmarOffer($request, $amarOffer)
+    public function updateAmarOffer($request, $id)
     {
+        $nearByOffer = $this->findOne($id);
         $nearByOffer->update($request);
-        return Response('Near By Offer updated successfully !');
+        return Response('Amar Offer updated successfully !');
     }
 
     /**

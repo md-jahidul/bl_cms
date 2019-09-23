@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\AmarOfferRequest;
 use App\Http\Controllers\Controller;
 use App\Services\AmarOfferService;
 use App\Models\AmarOffer;
@@ -54,7 +55,7 @@ class AmarOfferController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AmarOfferRequest $request)
     {
         $response = $this->amarOfferService->storeAmarOffer($request->all());
         Session()->flash('message', $response->content());
@@ -69,7 +70,7 @@ class AmarOfferController extends Controller
      */
     public function show(AmarOffer $amarOffer)
     {
-        //
+        return view('admin\offer-Amar\show')->with('amarOffer',$amarOffer);
     }
 
     /**
@@ -90,9 +91,11 @@ class AmarOfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AmarOfferRequest $request, $id)
     {
-        //
+        $response = $this->amarOfferService->updateAmarOffer($request->all(),$id);
+        Session()->flash('message', $response->content());
+        return redirect(route('amarOffer.index'));
     }
 
     /**
@@ -103,6 +106,8 @@ class AmarOfferController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = $this->amarOfferService->deleteAmarOffer($id);
+        Session()->flash('danger', $response->content());
+        return redirect(route('amarOffer.index'));
     }
 }
