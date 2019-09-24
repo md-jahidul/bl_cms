@@ -23,6 +23,19 @@
             <li class="nav-item"><a href="{{ url('quick-launch') }}"><i class="la la-automobile"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Quick launch</span></a>
             </li>
+
+            <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Slider Management</span></a>
+                <ul class="menu-content">
+
+                    <li class="{{ is_active_url('sliders') . is_active_url('sliders/create')}}">
+                        <a class="menu-item" href="{{ url('sliders') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-file-image-o"></i> Slider</a>
+                    </li>
+
+                </ul>
+            </li>
+
             <li class="nav-item"><a href="#"><i class="la la-question"></i>
                         <span class="menu-title" data-i18n="nav.templates.main">Quiz Management</span></a>
                     <ul class="menu-content">

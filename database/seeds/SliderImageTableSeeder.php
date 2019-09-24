@@ -51,5 +51,48 @@ class SliderImageTableSeeder extends Seeder
                 ]
             ]);
         }
+
+        $testimonialSlidersEns = ["Shakib al hasan", "Musfiqur Rahim","Tamim Iqbal","Mostafizur Rrahman", "Mashrafi bin Morthaza"];
+        $testimonialSlidersBn = ["সাকিব আল হাসান", "মুশফিকুর রাহিম", "তামিম ইকবাল ", "মোস্তাফিজুর রহমান", "মাশরাফি বিন মোর্তাজা"];
+        $userPic = ["shakib_al_hasan.jpg", "musfiqur_rahim.jpg","tamim_iqbal.jpg","mostafizur_rrahman.jpg", "mashrafi_bin_morthaza.jpg"];
+
+        $feedBackEn = "Banglalink provide the fastest internet throughout the country, I never get the best experience except using Banlalink. It’s awesome service ever, I’ll always use Banglalink.";
+
+        $feedBackBn = "বাংলালিংক সারা দেশে দ্রুততম ইন্টারনেট সরবরাহ করে, আমি কখনও বাংলালিংক ব্যবহার ব্যতীত সেরা অভিজ্ঞতা পাই না। এটি সর্বদা দুর্দান্ত সেবা, আমি সর্বদা বাংলালিংক ব্যবহার করব।";
+
+        foreach ($testimonialSlidersEns as $key => $testimonialSlidersEn){
+            SliderImage::create([
+                'id'    => $key + 9,
+                'slider_id' => 3,
+                'title' =>  $testimonialSlidersEn,
+                'description' => "Banglalink Mobile TV brings live TV Video on Demand (VOD) streaming on a mobile phone",
+                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/'.$userPic[$key],
+                'alt_text' => 'testimonial slider image',
+                'url_btn_label' => 'button',
+                'redirect_url' => '/testimonial',
+                'sequence' => count(SliderImage::get()) + 1,
+                'other_attributes' => [
+                    'user_name_en' => $testimonialSlidersEn,
+                    'user_name_bn' => $testimonialSlidersBn[$key],
+                    'company_name_en' => 'Studiomaqs',
+                    'company_name_bn' => 'স্টুডিওম্যাক্স',
+                    'rating' => rand(1, 5),
+                    'feedback_en' => $feedBackEn,
+                    'feedback_bn' => $feedBackBn,
+                ]
+            ]);
+        }
+
+//
+//        'user_name_en' => $testimonialSlidersEn,
+//        'user_name_bn' => $testimonialSlidersBn[$key],
+//        'company_name_en' => 'Studiomaqs',
+//        'company_name_bn' => 'স্টুডিওম্যাক্স',
+//        'rating' => rand(1, 5),
+//        'feedback_en' => $feedBackEn[$key],
+//        'feedback_bn' => $feedBackBn[$key],
+
+
+
     }
 }

@@ -1,19 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bs-205
- * Date: 18/08/19
- * Time: 17:23
- */
-
 namespace App\Services;
 
 
 use App\Repositories\SliderImageRepository;
+use App\Repositories\SliderRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
-use DB;
-
 
 class SliderImageService
 {
@@ -39,28 +31,19 @@ class SliderImageService
         return $this->sliderImageRepository->getSliderImage($sliderId, $type);
     }
 
-
     /**
-     * Storing the banner resource
+     * @param $data
      * @return Response
      */
-    public function storeSliderImage($images)
+    public function storeSliderImage($data, $sliderId)
     {
-        $slider_id = $images[0]['slider_id'];
-        $image_data = $this->sliderImageRepository->sliderImage($slider_id);
-        if(empty($image_data)){
-            $i = 1;
-        }else{
-            $i = $image_data->sequence+1;
-        }
-        foreach ($images as $image) {
-            $image['image_url'] = 'storage/'.$image['image_url']->store('Slider_image');
-            $image['sequence'] = $i;
-            $image['slider_id'] = $slider_id;
-            $this->save($image);
-            $i++;
-        }
-        return new Response("Image has successfully been Added to slider");
+        $count = count($this->sliderImageRepository->findAll());
+        $imageUrl = $this->imageUpload($data, 'image_url', $data['title'], 'slider-images');
+        $data['image_url'] = env('APP_URL', 'http://localhost:8000') . "/slider-images/".$imageUrl;
+        $data['slider_id'] = $sliderId;
+        $data['sequence'] = ++$count;
+        $this->save($data);
+        return new Response('Slider Image added successfully');
     }
 
     public function tableSortable($data)
@@ -70,25 +53,20 @@ class SliderImageService
     }
 
     /**
-     * Updating the banner
      * @param $data
-     * @return Response
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
     public function updateSliderImage($data, $id)
     {
         $sliderImage = $this->findOne($id);
-        if(!isset($data['image_url'])){
-            $data['image_url'] = $sliderImage->image_url;
-        }else{
-            unlink($sliderImage->image_url);
-            $data['image_url'] = 'storage/'.$data['image_url']->store('Slider_image');
+        if (!empty($data['image_url'])){
+            $imageUrl = $this->imageUpload($data, 'image_url', $data['title'], 'slider-images');
+            $data['image_url'] = env('APP_URL', 'http://localhost:8000') . "/slider-images/".$imageUrl;
         }
         $sliderImage->update($data);
-        return new Response("Image has successfully been updated to slider");
+        return Response('Slider Image update successfully !');
     }
-
-
-
 
     /**
      * @param $id

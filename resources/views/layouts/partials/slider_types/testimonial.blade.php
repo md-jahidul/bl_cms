@@ -1,28 +1,48 @@
 <h4 class="pl-1">Advance Option</h4>
 <div class="form-actions col-md-12 mt-0"></div>
 
-<div class="form-group col-md-4 {{ $errors->has('user_name') ? ' error' : '' }}">
-    <label for="user_name" class="">User Name</label>
-    <input type="text" name="other_attributes[user_name]"  class="form-control" placeholder="Enter user name"
-           value="{{ (!empty($other_attributes['user_name'])) ? $other_attributes['user_name'] : "" }}" required data-validation-required-message="Enter user name">
+<div class="form-group col-md-6 {{ $errors->has('user_name_en') ? ' error' : '' }}">
+    <label for="user_name_en" class="required">User Name</label>
+    <input type="text" name="other_attributes[user_name_en]"  class="form-control" placeholder="Enter user name"
+           value="{{ (!empty($other_attributes['user_name_en'])) ? $other_attributes['user_name_en'] : "" }}" required data-validation-required-message="Enter user name">
     <div class="help-block"></div>
-    @if ($errors->has('user_name'))
-        <div class="help-block">  {{ $errors->first('user_name') }}</div>
+    @if ($errors->has('user_name_en'))
+        <div class="help-block">  {{ $errors->first('user_name_en') }}</div>
     @endif
 </div>
 
-<div class="form-group col-md-4 {{ $errors->has('company_name') ? ' error' : '' }}">
-    <label for="company_name" class="">Company Name</label>
-    <input type="text" name="other_attributes[company_name]"  class="form-control" placeholder="Enter company name"
-           value="{{ (!empty($other_attributes['company_name'])) ? $other_attributes['company_name'] : "" }}" required data-validation-required-message="Enter company name">
+<div class="form-group col-md-6 {{ $errors->has('user_name_bn') ? ' error' : '' }}">
+    <label for="user_name_bn" class="required">User Name Bangla</label>
+    <input type="text" name="other_attributes[user_name_bn]"  class="form-control" placeholder="Enter user name"
+           value="{{ (!empty($other_attributes['user_name_bn'])) ? $other_attributes['user_name_bn'] : "" }}" required data-validation-required-message="Enter user name">
     <div class="help-block"></div>
-    @if ($errors->has('company_name'))
-        <div class="help-block">  {{ $errors->first('company_name') }}</div>
+    @if ($errors->has('user_name_bn'))
+        <div class="help-block">  {{ $errors->first('user_name_bn') }}</div>
     @endif
 </div>
 
-<div class="form-group col-md-4 {{ $errors->has('rating') ? ' error' : '' }}">
-    <label for="rating" class="">Rating</label>
+<div class="form-group col-md-6 {{ $errors->has('company_name_en') ? ' error' : '' }}">
+    <label for="company_name_en" class="required">Company Name</label>
+    <input type="text" name="other_attributes[company_name_en]"  class="form-control" placeholder="Enter company name"
+           value="{{ (!empty($other_attributes['company_name_en'])) ? $other_attributes['company_name_en'] : "" }}" required data-validation-required-message="Enter company name">
+    <div class="help-block"></div>
+    @if ($errors->has('company_name_en'))
+        <div class="help-block">  {{ $errors->first('company_name_en') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-6 {{ $errors->has('company_name_bn') ? ' error' : '' }}">
+    <label for="company_name_bn" class="required">Company Name Bangla</label>
+    <input type="text" name="other_attributes[company_name_bn]"  class="form-control" placeholder="Enter company name"
+           value="{{ (!empty($other_attributes['company_name_bn'])) ? $other_attributes['company_name_bn'] : "" }}" required data-validation-required-message="Enter company name">
+    <div class="help-block"></div>
+    @if ($errors->has('company_name_bn'))
+        <div class="help-block">  {{ $errors->first('company_name_bn') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-12 {{ $errors->has('rating') ? ' error' : '' }}">
+    <label for="rating" class="required">Rating</label>
     <input type="number" name="other_attributes[rating]"  class="form-control" placeholder="Enter rating out of 5" max="5"
            value="{{ (!empty($other_attributes['rating'])) ? $other_attributes['rating'] : "" }}" required data-validation-required-message="Enter rating out of 5">
     <spen class="text-primary">(Please given rating out of 5)</spen>
@@ -32,13 +52,23 @@
     @endif
 </div>
 
-<div class="form-group col-md-12 {{ $errors->has('feedback') ? ' error' : '' }}">
-    <label for="feedback" class="required">Feedback</label>
-    <textarea type="text" name="other_attributes[feedback]" rows="5"  class="form-control" placeholder="Enter user feedback"
-              required data-validation-required-message="Enter user feedback">{{ (!empty($other_attributes['feedback'])) ? $other_attributes['feedback'] : "" }}</textarea>
+<div class="form-group col-md-6 {{ $errors->has('feedback_en') ? ' error' : '' }}">
+    <label for="feedback_en" class="required">Feedback</label>
+    <textarea type="text" name="other_attributes[feedback_en]" rows="5"  class="form-control" placeholder="Enter user feedback"
+              required data-validation-required-message="Enter user feedback">{{ (!empty($other_attributes['feedback_en'])) ? $other_attributes['feedback_en'] : "" }}</textarea>
     <div class="help-block"></div>
-    @if ($errors->has('feedback'))
-        <div class="help-block">  {{ $errors->first('feedback') }}</div>
+    @if ($errors->has('feedback_en'))
+        <div class="help-block">  {{ $errors->first('feedback_en') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-6 {{ $errors->has('feedback_bn') ? ' error' : '' }}">
+    <label for="feedback_bn" class="required">Feedback Bangla</label>
+    <textarea type="text" name="other_attributes[feedback_bn]" rows="5"  class="form-control" placeholder="Enter user feedback"
+              required data-validation-required-message="Enter user feedback">{{ (!empty($other_attributes['feedback_bn'])) ? $other_attributes['feedback_bn'] : "" }}</textarea>
+    <div class="help-block"></div>
+    @if ($errors->has('feedback_bn'))
+        <div class="help-block">  {{ $errors->first('feedback_bn') }}</div>
     @endif
 </div>
 
