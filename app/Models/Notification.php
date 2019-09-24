@@ -15,7 +15,8 @@ class Notification extends Model
     ];
     public function NotificationCategory()
     {
-        return $this->belongsTo(NotificationCategory::class);
+        return $this->belongsTo(NotificationCategory::class,'category_id');
+        
     }
 
 

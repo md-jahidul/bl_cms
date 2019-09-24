@@ -4,9 +4,33 @@ namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\NotifiactionCategorieService;
+use App\Services\NotifiactionService;
+use App\Http\Requests\NotificationRequest;
 
 class NotifiactionController extends Controller
 {
+
+    /**
+     * @var NotifiactionService
+     */
+    private $notifiactionService;
+    private $notifiactionCategorieService;
+    /**
+     * @var bool
+     */
+    private $isAuthenticated = true;
+
+    /**
+     * NotifiactionService constructor.
+     * @param NotifiactionService $Notifiactionervice
+     */
+    public function __construct(NotifiactionService $notifiactionService,NotifiactionCategorieService $notifiactionCategorieService)
+    {
+        $this->notifiactionService = $notifiactionService;
+        $this->notifiactionCategorieService = $notifiactionCategorieService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +38,12 @@ class NotifiactionController extends Controller
      */
     public function index()
     {
-        $notifiactionCategories = $this->notifiactionCategorieService->findAll();
-        return view('admin.notification.notifiacation-categorie.index')->with('notifiactionCategories',$notifiactionCategories);
+
+        $notifiactions = $this->notifiactionService->findAll();
+        $cat =  $this->notifiactionCategorieService->findAll();
+        return view('admin.notification.notification.index')
+                ->with('cat',$cat)
+                ->with('notifiactions',$notifiactions);
     }
 
     /**
@@ -25,7 +53,8 @@ class NotifiactionController extends Controller
      */
     public function create()
     {
-        //
+        $categories = $this->notifiactionCategorieService->findAll();
+        return view('admin.notification.notification.create')->with('categories',$categories);
     }
 
     /**
@@ -34,10 +63,11 @@ class NotifiactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NotificationRequest $request)
     {
-        session()->flash('success',$this->notifiactionCategorieService->storeNotifiactionCategorie($request->all())->getContent());
-        return redirect(route('nearByOffer.index'));
+        //dd($request->all());
+        session()->flash('success',$this->notifiactionService->storeNotifiaction($request->all())->getContent());
+        return redirect(route('notifiaction.index'));
 
     }
 
@@ -60,8 +90,10 @@ class NotifiactionController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.offer-nearby.edit')
-                ->with('nearByOffer',$this->notifiactionCategorieService->findOne($id));
+        $categories = $this->notifiactionCategorieService->findAll();
+        return view('admin.notification.notification.edit')
+                ->with('categories',$categories)
+                ->with('notifiaction',$this->notifiactionService->findOne($id));
     }
 
     /**
@@ -71,10 +103,11 @@ class NotifiactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(NotificationRequest $request, $id)
     {
-        session()->flash('success',$this->notifiactionCategorieService->updateNotifiactionCategorie($request->all(),$nearByOffer)->getContent());
-        return redirect(route('nearByOffer.index'));
+        //dd($request);
+        session()->flash('success',$this->notifiactionService->updateNotifiaction($request->all(),$id)->getContent());
+        return redirect(route('notifiaction.index'));
     }
 
     /**
@@ -85,7 +118,8 @@ class NotifiactionController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('success',$this->notifiactionCategorieService->deleteNotifiactionCategorie($id));
-        return redirect(route('nearByOffer.index'));
+        //dd($id);
+        session()->flash('success',$this->notifiactionService->deleteNotifiaction($id));
+        return redirect(route('notifiaction.index'));
     }
 }

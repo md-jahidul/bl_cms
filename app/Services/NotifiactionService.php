@@ -48,9 +48,10 @@ class NotifiactionService
      * @param $data
      * @return Response
      */
-    public function updateNotifiaction($data, $notifiaction)
+    public function updateNotifiaction($data, $id)
     {
-        $notifiaction->update($data->all());
+        $notifiaction = $this->findOne($id);
+        $notifiaction->update($data);
         return Response('Notifiaction updated successfully !');
         
     }
