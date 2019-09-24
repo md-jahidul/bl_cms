@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FooterMenuSeeder::class);
         $this->call(QuickLaunchItemSeeder::class);
         $this->call(ConfigTableSeeder::class);
-        $this->call(SliderComponentTypesSeeder::class);
+        $this->call(SliderComponentTypesTableSeeder::class);
         $this->call(SliderTableSeeder::class);
         $this->call(SliderImageTableSeeder::class);
         $this->call(DigitalServiceTableSeeder::class);
