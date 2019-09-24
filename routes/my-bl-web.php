@@ -39,7 +39,7 @@ Route::group(['middleware' => ['appAdmin']], function () {
     Route::get('banner/destroy/{id}','CMS\BannerController@destroy');
 
     // welcomeInfo
-    route::resource('wellcomeInfo','CMS\WellcomeInfoController');
+    route::resource('welcomeInfo','CMS\WelcomeInfoController');
 
     //settings
     route::resource('setting','CMS\SettingController');

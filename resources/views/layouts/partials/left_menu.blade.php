@@ -98,8 +98,8 @@
                         <a class="menu-item" href="{{ route('banner.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-image"></i>My-BL Banner</a>
                     </li>
-                    <li class="{{ is_active_url('wellcomeInfo') . is_active_url('wellcomeInfo/create')}}">
-                        <a class="menu-item" href="{{ route('wellcomeInfo.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                    <li class="{{ is_active_url('welcomeInfo') . is_active_url('welcomeInfo')}}">
+                        <a class="menu-item" href="{{ route('welcomeInfo.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-info-circle"></i>My-BL Welcome Info</a>
                     </li>
                     <li class="{{ is_active_url('contextualcard') . is_active_url('contextualcard/create')}}">
@@ -120,7 +120,7 @@
                     </li>
                     <li class="{{is_active_url('minuteOffer')}} {{is_active_url('minuteOffer/create')}}">
                         <a class="menu-item" href="{{ route('minuteOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
-                            <i class="la la-phone-square"></i> Minuit Offer</a>
+                            <i class="la la-phone-square"></i> Minute Offer</a>
                     </li>
                     <li class="{{is_active_url('smsOffer')}} {{is_active_url('smsOffer/create')}}">
                         <a class="menu-item" href="{{ route('smsOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">

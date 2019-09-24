@@ -1,55 +1,52 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bs-205
- * Date: 18/08/19
- * Time: 17:23
- */
-
 namespace App\Services;
 
 
-use App\Repositories\WellcomeInfoRepository;
+use App\Repositories\WelcomeInfoRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
 
-class WellcomeInfoService
+class WelcomeInfoService
 {
 
     use CrudTrait;
-    /**
-     * @var $sliderRepository
-     */
-    protected $wellcomeInfoRepository;
+
 
     /**
-     * DigitalServicesService constructor.
-     * @param WellcomeInfoRepository $sliderRepository
+     * @var WelcomeInfoRepository
      */
-    public function __construct(WellcomeInfoRepository $wellcomeInfoRepository)
+    protected $welcomeInfoRepository;
+
+
+    /**
+     * WelcomeInfoService constructor.
+     * @param WelcomeInfoRepository $welcomeInfoRepository
+     */
+    public function __construct(WelcomeInfoRepository $welcomeInfoRepository)
     {
-        $this->wellcomeInfoRepository = $wellcomeInfoRepository;
-        $this->setActionRepository($wellcomeInfoRepository);
+        $this->welcomeInfoRepository = $welcomeInfoRepository;
+        $this->setActionRepository($welcomeInfoRepository);
     }
 
     /**
      * Storing the banner resource
      * @return Response
      */
-    public function storeWellcomeInfo($data)
+    public function storeWelcomeInfo($data)
     {
         $data['icon'] = 'storage/'.$data['icon']->store('icon');
         $this->save($data);
-        return new Response("Wellcome Info has successfully been created");
+        return new Response("Welcome Info has successfully been created");
     }
 
     /**
      * Updating the banner
-     * @param $data
+     * @param $request
+     * @param $wellcomeInfo
      * @return Response
      */
-    public function updateWellcomeInfo($request, $wellcomeInfo)
+    public function updateWelcomeInfo($request, $wellcomeInfo)
     {
         $data = $request->all();
         if(isset($request->all()['icon'])){
@@ -60,15 +57,14 @@ class WellcomeInfoService
             $data['icon'] = $wellcomeInfo->icon;
             $wellcomeInfo->update($data);
         }
-        return Response('Wellcome Info updated successfully !');
+        return Response('Welcome Info updated successfully !');
     }
+
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
-     * @throws \Exception
      */
-    public function deleteWellcomeInfo($id)
+    public function deleteWelcomeInfo($id)
     {
         // $slider-other-attr = $this->findOne($id);
         // $slider-other-attr->delete();
