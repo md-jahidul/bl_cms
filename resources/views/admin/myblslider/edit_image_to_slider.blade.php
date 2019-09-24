@@ -158,7 +158,7 @@
                console.log(position)
 
                 $.ajax({
-                    url:"{{url("sliderImage/addImage/update-position")}}",
+                    url:"{{url('myblsliderImage/addImage/update-position')}}",
                     methoder:'get',
                     dataType:'text',
                     data:{

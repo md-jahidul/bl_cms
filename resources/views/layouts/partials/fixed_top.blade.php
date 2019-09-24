@@ -13,7 +13,7 @@
                 </li>
             </ul>
         </div>
-        <div class="navbar-container content">
+        <div class="navbar-container content float-right">
             <div class="collapse navbar-collapse" id="navbar-mobile">
                 
                 <ul class="nav navbar-nav float-right">
