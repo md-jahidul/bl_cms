@@ -12,12 +12,12 @@
             
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" action="@if(isset($welcomeInfo)) {{route('welcomeInfo',$welcomeInfo->id)}} @else {{route('welcomeInfo')}} @endif" enctype="multipart/form-data" method="POST">
+                        <form class="form" action="@if(isset($welcomeInfo)) {{route('welcomeInfo.update',$welcomeInfo->id)}} @else {{route('welcomeInfo.store')}} @endif" enctype="multipart/form-data" method="POST">
                         @csrf
                         @if(isset($welcomeInfo)) @method('put') @else @method('post') @endif
                         <input type="hidden" value="@if(isset($welcomeInfo)) yes @else no @endif" name="value_exist">
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Wellcome Information</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Welcome Information</h4>
                             <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

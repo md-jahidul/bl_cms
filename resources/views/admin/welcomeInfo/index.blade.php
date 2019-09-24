@@ -4,23 +4,24 @@
 @section('breadcrumb')
     <li class="breadcrumb-item active">Welcome-Information</li>
 @endsection
+
 @section('action')
     @if(isset($welcomeInfo))
-        <a href="{{route('welcomeInfo',$welcomeInfo->id)}}" class="btn btn-primary round btn-glow px-2 mb-1"><i class="la la-plus"></i>
+        <a href="{{route('welcomeInfo.edit',$welcomeInfo->id)}}" class="btn btn-primary round btn-glow px-2 mb-1"><i class="la la-plus"></i>
             Edit/Create Welcome Info
         </a>
     @else
-        <a href="{{route('welcomeInfo')}}" class="btn btn-primary round btn-glow px-2 mb-1"><i class="la la-plus"></i>
+        <a href="{{route('welcomeInfo.create')}}" class="btn btn-primary round btn-glow px-2 mb-1"><i class="la la-plus"></i>
             Edit/Create Welcome Info
         </a>
     @endif
-    
+
 @endsection
 
 @section('content')
     <section>
         <div class="card">
-            
+
             <div class="card-content">
                 <div class="card-body card-dashboard">
                     <div class="row">
@@ -81,13 +82,13 @@
                         </div>
                         {{-- ----------------------------- --}}
                     </div>
-                    
+
                 </div>
             </div>
         </div>
 
     </section>
-   
+
     <!-- /.card -->
 
 
@@ -112,8 +113,8 @@
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
-        
-       
+
+
 
         $(function () {
             $('.delete').click(function () {
