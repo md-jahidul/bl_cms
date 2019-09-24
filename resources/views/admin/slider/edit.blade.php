@@ -26,21 +26,21 @@
                                         <div class="help-block">  {{ $errors->first('title') }}</div>
                                     @endif
                                 </div>
-                                <div class="form-group col-md-6 {{ $errors->has('slider_type_id') ? ' error' : '' }}">
-                                    <label class="required">Slider Type</label>
-                                    <select class="form-control" name="slider_type_id" data-validation-required-message="Select slider type">
-                                        <option value="">--Select slider type--</option>
-                                        @if(isset($sliderTypes))
-                                            @foreach($sliderTypes as $slider_type)
-                                                <option value="{{ $slider_type->id }}" {{  ($slider_type->id == $slider->slider_type_id) ? 'selected' : ''}} >{{ $slider_type->name }}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('slider_type_id'))
-                                        <div class="help-block">  {{ $errors->first('slider_type_id') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('slider_type_id') ? ' error' : '' }}">--}}
+{{--                                    <label class="required">Slider Type</label>--}}
+{{--                                    <select class="form-control" name="slider_type_id" data-validation-required-message="Select slider type">--}}
+{{--                                        <option value="">--Select slider type--</option>--}}
+{{--                                        @if(isset($sliderTypes))--}}
+{{--                                            @foreach($sliderTypes as $slider_type)--}}
+{{--                                                <option value="{{ $slider_type->id }}" {{  ($slider_type->id == $slider->slider_type_id) ? 'selected' : ''}} >{{ $slider_type->name }}</option>--}}
+{{--                                            @endforeach--}}
+{{--                                        @endif--}}
+{{--                                    </select>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('slider_type_id'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('slider_type_id') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Description</label>
@@ -48,6 +48,11 @@
                                                   placeholder="Enter description">{!! $slider->description !!}</textarea>
                                     </div>
                                 </div>
+
+                                @if($slider->platform == 'web')
+                                    @include('layouts.partials.slider.' . $type )
+                                @endif
+
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i

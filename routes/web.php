@@ -17,10 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
-Route::get('/cms', 'CMS\TestCMSController@index');
-
-//Route::resource('sliders', 'SliderController');
+Route::resource('sliders', 'SliderController');
 //Route::get('slider/{parent_id}/images', 'CMS\SliderImageController@index');
 //Route::get('slider-image/{id}/edit', 'CMS\SliderImageController@edit');
 

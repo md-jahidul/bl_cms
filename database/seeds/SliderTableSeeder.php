@@ -25,6 +25,9 @@ class SliderTableSeeder extends Seeder
                 'platform' => 'web',
                 'other_attributes' => [
                     'sliding_speed' => 5,
+                    'view_list_url' => '/view-details',
+                    'view_list_btn_text_en' => "View all $slider",
+                    'view_list_btn_text_bn' => "View all Bangla $slider"
                 ]
             ]);
         }

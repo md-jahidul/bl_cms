@@ -68,7 +68,7 @@ class SliderImageTableSeeder extends Seeder
                 'description' => "Banglalink Mobile TV brings live TV Video on Demand (VOD) streaming on a mobile phone",
                 'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/'.$userPic[$key],
                 'alt_text' => 'testimonial slider image',
-                'url_btn_label' => 'button',
+                'url_btn_label' => 'N/A',
                 'redirect_url' => '/testimonial',
                 'sequence' => count(SliderImage::get()) + 1,
                 'other_attributes' => [
