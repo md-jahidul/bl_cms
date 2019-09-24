@@ -70,8 +70,8 @@ class WellcomeInfoService
      */
     public function deleteWellcomeInfo($id)
     {
-        // $slider = $this->findOne($id);
-        // $slider->delete();
+        // $slider-other-attr = $this->findOne($id);
+        // $slider-other-attr->delete();
         // return Response('Slider deleted successfully !');
     }
 

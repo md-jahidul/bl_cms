@@ -57,7 +57,7 @@ $(window).on("load", function(){
 
     var slider = new Rickshaw.Graph.RangeSlider.Preview({
         graph: graph,
-        element: document.querySelector('#slider')
+        element: document.querySelector('#slider-other-attr')
     });
 
     graph.render();

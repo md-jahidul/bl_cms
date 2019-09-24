@@ -45,6 +45,9 @@ class SliderController extends Controller
     public function index()
     {
         $sliders = $this->sliderService->findAll();
+
+//        return $sliders;
+
         return view('admin.slider.index', compact('sliders'));
 
     }
@@ -74,11 +77,13 @@ class SliderController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($id, $type)
     {
+
+
         $slider = $this->sliderService->findOne($id);
-        $sliderTypes = $this->sliderTypeService->findAll();
-        return view('admin.slider.edit', compact('slider', 'sliderTypes'));
+//        $sliderTypes = $this->sliderTypeService->findAll();
+        return view('admin.slider.edit', compact('slider', 'type'));
     }
 
     /**
@@ -86,7 +91,7 @@ class SliderController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(StoreSliderRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $response = $this->sliderService->updateSlider($request->all(), $request->id);
         Session::flash('message', $response->getContent());

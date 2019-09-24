@@ -22,7 +22,7 @@ $(document).ready(function() {
             'max': 80
         }
     };
-    var smallSlider = document.getElementById('small-slider');
+    var smallSlider = document.getElementById('small-slider-other-attr');
     noUiSlider.create(smallSlider, sm_options);
 
 

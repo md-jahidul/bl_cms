@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active"><strong>Slider Image List</strong></li>
 @endsection
 @section('action')
-    <a href="{{ url("slider/$sliderId/$type/image/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{ url("slider-other-attr$sliderId/$type/image/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add Slider Image
     </a>
 @endsection

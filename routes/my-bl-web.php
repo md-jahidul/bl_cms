@@ -52,7 +52,7 @@ Route::group(['middleware' => ['appAdmin']], function () {
     // Slider
     route::resource('myblslider','CMS\MyblSliderController');
     Route::get('myblslider/destroy/{id}','CMS\MyblSliderController@destroy');
-    Route::get('myblslider/edit/{slider}','CMS\MyblSliderController@edit')->name('slider.edit');
+    Route::get('myblslider/edit/{slider-other-attr}','CMS\MyblSliderController@edit')->name('slider-other-attr.edit');
     // Slider
 
     // Slider Image
@@ -104,11 +104,11 @@ Route::group(['middleware' => ['appAdmin']], function () {
     // contextual cards
     route::resource('contextualcard','CMS\ContextualCardController');
     Route::get('card/destroy/{id}','CMS\ContextualCardController@destroy');
-    
+
     // Notifiaction Categorie
     route::resource('notifiactionCategorie','CMS\NotifiactionCategorieController');
     Route::get('notifiactionCategorie/destroy/{id}','CMS\NotifiactionCategorieController@destroy');
-    
+
     // Notifiaction
     route::resource('notifiaction','CMS\NotifiactionController');
     Route::get('notifiaction/destroy/{id}','CMS\NotifiactionController@destroy');

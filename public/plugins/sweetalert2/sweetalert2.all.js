@@ -2477,7 +2477,7 @@ function _main(userParams) {
       };
     } else {
       var ignoreOutsideClick = false; // Ignore click events that had mousedown on the popup but mouseup on the container
-      // This can happen when the user drags a slider
+      // This can happen when the user drags a slider-other-attr
 
       domCache.popup.onmousedown = function () {
         domCache.container.onmouseup = function (e) {

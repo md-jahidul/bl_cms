@@ -34,10 +34,10 @@ class SliderImageController extends Controller
      */
     public function index($sliderId, $type)
     {
-        $slider_images = SliderImage::where('slider_id', $sliderId)->with('slider')->orderBy('sequence')->get();
+        $slider_images = SliderImage::where('slider_id', $sliderId)->with('slider-other-attr')->orderBy('sequence')->get();
         $sliderTitle = Slider::where('id', $sliderId)->pluck('title')->first();
         $this->sliderImageService->itemList($sliderId, $type);
-        return view('admin.slider-image.index', compact('slider_images', 'sliderTitle', 'sliderId','type'));
+        return view('admin.slider-other-attr-image.index', compact('slider_images', 'sliderTitle', 'sliderId','type'));
     }
 
     /**
@@ -47,7 +47,7 @@ class SliderImageController extends Controller
      */
     public function create($sliderId, $type)
     {
-        return view('admin.slider-image.create', compact("sliderId", 'type'));
+        return view('admin.slider-other-attr-image.create', compact("sliderId", 'type'));
     }
 
     /**
@@ -60,7 +60,7 @@ class SliderImageController extends Controller
     {
         $response = $this->sliderImageService->storeSliderImage($request->all(), $sliderId);
         Session::flash('message', $response->getContent());
-        return redirect("slider/$sliderId/$type");
+        return redirect("slider-other-attr/$sliderId/$type");
     }
 
     /**
@@ -84,7 +84,7 @@ class SliderImageController extends Controller
     {
         $sliderImage = SliderImage::findOrFail($id);
         $other_attributes = $sliderImage->other_attributes;
-        return view('admin.slider-image.edit', compact('sliderImage','type', 'other_attributes'));
+        return view('admin.slider-other-attr-image.edit', compact('sliderImage','type', 'other_attributes'));
     }
 
     /**
@@ -98,7 +98,7 @@ class SliderImageController extends Controller
     {
         $response = $this->sliderImageService->updateSliderImage($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect("slider/$parentId/$type");
+        return redirect("slider-other-attr/$parentId/$type");
     }
 
     public function sliderImageSortable(Request $request)
@@ -120,8 +120,8 @@ class SliderImageController extends Controller
         Session::flash('message', $response->getContent());
 
 
-//        $slider = SliderImage::findOrFail($id);
-//        $slider->delete();
-        return url("slider/$parentId/$type");
+//        $slider-other-attr = SliderImage::findOrFail($id);
+//        $slider-other-attr->delete();
+        return url("slider-other-attr/$parentId/$type");
     }
 }

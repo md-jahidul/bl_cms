@@ -53,41 +53,6 @@
     @endif
 </div>
 
-{{--<div class="form-group col-md-6 {{ $errors->has('view_page_url') ? ' error' : '' }}">--}}
-{{--    <label for="view_page_url" class="required">View All Page URL</label>--}}
-{{--    <input type="text" name="other_attributes[view_page_url]"  class="form-control" placeholder="Enter view all page url"--}}
-{{--           value="{{ (!empty($other_attributes['view_page_url'])) ? $other_attributes['view_page_url'] : old("other_attributes.view_page_url") ?? '' }}"--}}
-{{--           required data-validation-required-message="Enter view all page url">--}}
-{{--    <div class="help-block"></div>--}}
-{{--    @if ($errors->has('view_page_url'))--}}
-{{--        <div class="help-block">  {{ $errors->first('view_page_url') }}</div>--}}
-{{--    @endif--}}
-{{--</div>--}}
-
-{{--<div class="form-group col-md-6 {{ $errors->has('view_page') ? ' error' : '' }}">--}}
-{{--    <label for="view_page" class="required">View All Page</label>--}}
-{{--    <input type="text" name="other_attributes[view_page]"  class="form-control" placeholder="Enter view page"--}}
-{{--           value="{{ (!empty($other_attributes['view_page'])) ? $other_attributes['view_page'] : old("other_attributes.view_page") ?? '' }}"--}}
-{{--           required data-validation-required-message="Enter view page">--}}
-{{--    <div class="help-block"></div>--}}
-{{--    @if ($errors->has('view_page'))--}}
-{{--        <div class="help-block">  {{ $errors->first('view_page') }}</div>--}}
-{{--    @endif--}}
-{{--</div>--}}
-
-{{--<div class="form-group col-md-6 {{ $errors->has('view_page_bn') ? ' error' : '' }}">--}}
-{{--    <label for="view_page_bn" class="required">View All Page Bangla</label>--}}
-{{--    <input type="text" name="other_attributes[view_page_bn]"  class="form-control" placeholder="Enter view page bangla"--}}
-{{--           value="{{ (!empty($other_attributes['view_page_bn'])) ? $other_attributes['view_page_bn'] : old("other_attributes.view_page_bn") ?? '' }}"--}}
-{{--           required data-validation-required-message="Enter view page bangla">--}}
-{{--    <div class="help-block"></div>--}}
-{{--    @if ($errors->has('view_page_bn'))--}}
-{{--        <div class="help-block">  {{ $errors->first('view_page_bn') }}</div>--}}
-{{--    @endif--}}
-{{--</div>--}}
-
-
-
 <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
     <label for="description_en" class="required">Description</label>
     <textarea type="text" name="other_attributes[description_en]" rows="5" required data-validation-required-message="Enter description"

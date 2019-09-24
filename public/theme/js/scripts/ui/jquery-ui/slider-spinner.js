@@ -1,5 +1,5 @@
 /*=========================================================================================
-    File Name: slider-spinner.js
+    File Name: slider-other-attr-spinner.js
     Description: jQuery UI sliders and spinners
     ----------------------------------------------------------------------------------------
     Item Name: Modern Admin - Clean Bootstrap 4 Dashboard HTML Template
@@ -15,20 +15,20 @@ $(document).ready(function(){
 	*****************************/
 
 	// Default
-	$( ".jui-slider-default" ).slider();
+	$( ".jui-slider-other-attr-default" ).slider();
 
-	$( ".jui-slider-custom-start" ).slider({
+	$( ".jui-slider-other-attr-custom-start" ).slider({
 		value: 60
 	});
 
-	$( ".jui-slider-increment-steps" ).slider({
+	$( ".jui-slider-other-attr-increment-steps" ).slider({
 		value:20,
         min: 0,
         max: 100,
         step: 5
 	});
 
-	$( ".jui-slider-animation" ).slider({
+	$( ".jui-slider-other-attr-animation" ).slider({
 		value:40,
         min: 0,
         max: 100,
@@ -36,7 +36,7 @@ $(document).ready(function(){
 	});
 
 	// Fixed minimum
-    $(".jui-slider-min").slider({
+    $(".jui-slider-other-attr-min").slider({
         range: "min",
         value: 15,
         min: 1,
@@ -44,21 +44,21 @@ $(document).ready(function(){
     });
 
     // Fixed maximum
-    $(".jui-slider-max").slider({
+    $(".jui-slider-other-attr-max").slider({
         range: "max",
         min: 1,
         max: 100,
         value: 10
     });
 
-	$( ".jui-slider-range" ).slider({
+	$( ".jui-slider-other-attr-range" ).slider({
 		range: true,
 		min: 0,
 		max: 500,
 		values: [ 75, 300 ],
 	});
 
-	$( ".jui-slider-disabled" ).slider({
+	$( ".jui-slider-other-attr-disabled" ).slider({
 		value: 20,
 		disabled: true
 	});
@@ -67,7 +67,7 @@ $(document).ready(function(){
 	*			Advance Sliders			*
 	************************************/
 	// Show All Labels
-	$(".jui-slider-all-labels")
+	$(".jui-slider-other-attr-all-labels")
     .slider({
         max: 12
     })
@@ -76,7 +76,7 @@ $(document).ready(function(){
     });
 
     // Hide Labels & Pips
-    $(".jui-slider-hide-labels-pips")
+    $(".jui-slider-other-attr-hide-labels-pips")
     .slider({
         max: 20,
         range: true,
@@ -87,7 +87,7 @@ $(document).ready(function(){
     });
 
     // Only Show Pips
-    $(".jui-slider-only-pips")
+    $(".jui-slider-other-attr-only-pips")
     .slider({
         max: 30
     })
@@ -97,7 +97,7 @@ $(document).ready(function(){
     });
 
     // Prefix / Suffix
-    $(".jui-slider-prefix-suffix")
+    $(".jui-slider-other-attr-prefix-suffix")
     .slider({
         min: 0,
         max: 90,
@@ -116,9 +116,9 @@ $(document).ready(function(){
 	// lets be fancy for the demo and select the current month.
 	var activeMonth = new Date().getMonth();
 
-	$(".jui-slider-months")
+	$(".jui-slider-other-attr-months")
 
-    // activate the slider with options
+    // activate the slider-other-attr with options
     .slider({
         min: 0,
         max: months.length-1,
@@ -134,7 +134,7 @@ $(document).ready(function(){
     // More Custom Labels
     var hanzi = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
 
-	$(".jui-slider-more-custom-labels")
+	$(".jui-slider-other-attr-more-custom-labels")
 
     .slider({
         min: 0,
@@ -152,7 +152,7 @@ $(document).ready(function(){
     });
 
     // Steps
-    $(".jui-slider-pip-steps")
+    $(".jui-slider-other-attr-pip-steps")
 
     .slider({
         min: 0,
@@ -164,7 +164,7 @@ $(document).ready(function(){
         rest: "label"
     });
 
-    $(".jui-slider-multiplicative-steps")
+    $(".jui-slider-other-attr-multiplicative-steps")
 
 	.slider({
 		min: 0,
@@ -183,7 +183,7 @@ $(document).ready(function(){
 	*			Vertical Sliders		*
 	************************************/
 	// Default
-    $(".jui-vert-slider-default > span").each(function() {
+    $(".jui-vert-slider-other-attr-default > span").each(function() {
 
         // Read initial values
         var val = parseInt( $( this ).text(), 10 );
@@ -199,8 +199,8 @@ $(document).ready(function(){
     });
 
 
-    // Min Range slider
-    $(".jui-vert-min-range-slider > span").each(function() {
+    // Min Range slider-other-attr
+    $(".jui-vert-min-range-slider-other-attr > span").each(function() {
 
         // Read initial values
         var val = parseInt( $( this ).text(), 10 );
@@ -216,8 +216,8 @@ $(document).ready(function(){
         }).slider('float');
     });
 
-    // Max Range slider
-    $(".jui-vert-max-range-slider > span").each(function() {
+    // Max Range slider-other-attr
+    $(".jui-vert-max-range-slider-other-attr > span").each(function() {
 
         // Read initial values
         var val = parseInt( $( this ).text(), 10 );
@@ -237,7 +237,7 @@ $(document).ready(function(){
 	*			Vertical Advance Sliders		*
 	********************************************/
 	// Only Pips
-    $(".jui-vert-slider-pips > span").each(function() {
+    $(".jui-vert-slider-other-attr-pips > span").each(function() {
         var val = parseInt($(this).text(), 10);
 
         $(this).empty();
@@ -251,15 +251,15 @@ $(document).ready(function(){
             orientation: "vertical"
         });
     });
-    $(".jui-vert-slider-pips > span").slider("pips", {
+    $(".jui-vert-slider-other-attr-pips > span").slider("pips", {
         first: "pip",
         last: "pip"
     });
-    $(".jui-vert-slider-pips > span").slider("float");
+    $(".jui-vert-slider-other-attr-pips > span").slider("float");
 
 
     // With labels
-    $( ".jui-vert-slider-pips-lables > span" ).each(function() {
+    $( ".jui-vert-slider-other-attr-pips-lables > span" ).each(function() {
         var val = parseInt($(this).text(), 10);
 
         $(this).empty();
@@ -273,10 +273,10 @@ $(document).ready(function(){
             orientation: "vertical"
         });
     });
-    $(".jui-vert-slider-pips-lables > span").slider("pips" , {
+    $(".jui-vert-slider-other-attr-pips-lables > span").slider("pips" , {
         rest: "label"
     });
-    $(".jui-vert-slider-pips-lables > span").slider("float");
+    $(".jui-vert-slider-other-attr-pips-lables > span").slider("float");
 
 
     // Hide Labels & Pips
@@ -300,7 +300,7 @@ $(document).ready(function(){
     /********************************************
 	*			Vertical Sliders Sizing			*
 	********************************************/
-    $(".jui-vert-slider-size-default > span").each(function() {
+    $(".jui-vert-slider-other-attr-size-default > span").each(function() {
 
         // Read initial values
         var val = parseInt( $( this ).text(), 10 );
@@ -316,7 +316,7 @@ $(document).ready(function(){
         }).slider('float');
     });
 
-    $(".jui-vert-slider-size-pips > span").each(function() {
+    $(".jui-vert-slider-other-attr-size-pips > span").each(function() {
 
         // Read initial values
         var val = parseInt( $( this ).text(), 10 );
@@ -337,7 +337,7 @@ $(document).ready(function(){
     });
 
     // Fixed maximum
-    $(".ui-slider-vertical-range-max > span").each(function() {
+    $(".ui-slider-other-attr-vertical-range-max > span").each(function() {
 
         // Read initial values from markup and remove that
         var value = parseInt( $( this ).text(), 10 );
@@ -351,7 +351,7 @@ $(document).ready(function(){
 
 
     // Default handle
-    $(".ui-slider-vertical-handle-default > span").each(function() {
+    $(".ui-slider-other-attr-vertical-handle-default > span").each(function() {
 
         // Read initial values from markup and remove that
         var value = parseInt( $( this ).text(), 10 );
@@ -366,7 +366,7 @@ $(document).ready(function(){
 	/************************************
 	*			Color Sliders			*
 	************************************/
-	$( ".jui-default-color-slider, .jui-primary-color-slider, .jui-info-color-slider, .jui-success-color-slider, .jui-warning-color-slider, .jui-danger-color-slider" ).slider({
+	$( ".jui-default-color-slider-other-attr, .jui-primary-color-slider-other-attr, .jui-info-color-slider-other-attr, .jui-success-color-slider-other-attr, .jui-warning-color-slider-other-attr, .jui-danger-color-slider-other-attr" ).slider({
 		range: true,
 		min: 0,
 		max: 500,
@@ -377,7 +377,7 @@ $(document).ready(function(){
 	*			Sliders	Sizing			*
 	************************************/
 
-	$( ".jui-slider-sizing-xl, .jui-slider-sizing-lg, .jui-slider-sizing-default, .jui-slider-sizing-sm, .jui-slider-sizing-xs" ).slider({
+	$( ".jui-slider-other-attr-sizing-xl, .jui-slider-other-attr-sizing-lg, .jui-slider-other-attr-sizing-default, .jui-slider-other-attr-sizing-sm, .jui-slider-other-attr-sizing-xs" ).slider({
 		range: true,
 		min: 0,
 		max: 500,
@@ -385,7 +385,7 @@ $(document).ready(function(){
 	});
 
 	// With Pips & Float
-	$( ".jui-slider-sizing-pips-xl, .jui-slider-sizing-pips-lg, .jui-slider-sizing-pips-default, .jui-slider-sizing-pips-sm, .jui-slider-sizing-pips-xs" )
+	$( ".jui-slider-other-attr-sizing-pips-xl, .jui-slider-other-attr-sizing-pips-lg, .jui-slider-other-attr-sizing-pips-default, .jui-slider-other-attr-sizing-pips-sm, .jui-slider-other-attr-sizing-pips-xs" )
     .slider({
         max: 50,
         min: 0,

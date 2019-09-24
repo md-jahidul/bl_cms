@@ -16,8 +16,8 @@
             <li class="nav-item"><a href="{{ url('footer-menu') }}"><i class="la la-futbol-o"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Footer Management</span></a>
             </li>
-            {{-- <li class="{{ is_active_url('slider') . is_active_url('slider/addImage/') . is_active_url('slider/create') . is_active_url('slider/edit') }}">
-                <a class="nav-item" href="{{ route('slider.index') }}" data-i18n="nav.templates.vert.classic_menu">
+            {{-- <li class="{{ is_active_url('slider-other-attr') . is_active_url('slider-other-attr/addImage/') . is_active_url('slider-other-attr/create') . is_active_url('slider-other-attr/edit') }}">
+                <a class="nav-item" href="{{ route('slider-other-attr.index') }}" data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-sliders"></i>Slider</a>
             </li> --}}
             <li class="nav-item"><a href="{{ url('quick-launch') }}"><i class="la la-automobile"></i>

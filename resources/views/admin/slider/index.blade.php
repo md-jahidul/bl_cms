@@ -28,14 +28,15 @@
                         </thead>
                         <tbody>
                         @foreach($sliders as $key=>$slider)
+                            @php( $sliderType = str_replace(" ", "-", strtolower( $slider->type->name ) ))
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $slider->title }}</td>
                                 <td>{{ $slider->type->name }}</td>
                                 <td>{{ $slider->description }}</td>
                                 <td class="text-center" width="14%">
-                                    <a href="{{ url("sliders/$slider->id/edit") }}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="{{ route('slider_images',[$slider->id,  str_replace(" ", "-", strtolower( $slider->type->name ) ) ]  ) }}" class="btn btn-outline-warning"><i class="la la-image"></i> Slider Images <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{--{{ $childNumber }}--}}</span></a>
+                                    <a href="{{ url("sliders/$slider->id/$sliderType/edit") }}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="{{ route('slider_images',[$slider->id, $sliderType ]  ) }}" class="btn btn-outline-warning"><i class="la la-image"></i> Slider Images <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{--{{ $childNumber }}--}}</span></a>
                                 </td>
                             </tr>
                         @endforeach
