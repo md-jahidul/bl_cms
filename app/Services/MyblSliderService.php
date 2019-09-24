@@ -44,6 +44,11 @@ class MyblSliderService
         return new Response("Slider has successfully been created");
     }
 
+    public function getAppSlider()
+    {
+        return $this->sliderRepository->getAppSlider();
+    }
+
     /**
      * Updating the banner
      * @param $data
