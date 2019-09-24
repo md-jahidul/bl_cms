@@ -94,7 +94,7 @@ class SliderImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $parentId, $type, $id)
+    public function update(StoreSliderImageRequest $request, $parentId, $type, $id)
     {
         $response = $this->sliderImageService->updateSliderImage($request->all(), $id);
         Session::flash('message', $response->getContent());

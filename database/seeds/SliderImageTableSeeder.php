@@ -83,16 +83,5 @@ class SliderImageTableSeeder extends Seeder
             ]);
         }
 
-//
-//        'user_name_en' => $testimonialSlidersEn,
-//        'user_name_bn' => $testimonialSlidersBn[$key],
-//        'company_name_en' => 'Studiomaqs',
-//        'company_name_bn' => 'স্টুডিওম্যাক্স',
-//        'rating' => rand(1, 5),
-//        'feedback_en' => $feedBackEn[$key],
-//        'feedback_bn' => $feedBackBn[$key],
-
-
-
     }
 }
