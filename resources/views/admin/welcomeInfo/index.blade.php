@@ -6,11 +6,11 @@
 @endsection
 @section('action')
     @if(isset($wellcomeInfo))
-        <a href="{{route('wellcomeInfo.edit',$wellcomeInfo->id)}}" class="btn btn-primary round btn-glow px-2 mb-1"><i class="la la-plus"></i>
+        <a href="{{route('welcomeInfo',$wellcomeInfo->id)}}" class="btn btn-primary round btn-glow px-2 mb-1"><i class="la la-plus"></i>
             Edit/Create Welcome Info
         </a>
     @else
-        <a href="{{route('wellcomeInfo.create')}}" class="btn btn-primary round btn-glow px-2 mb-1"><i class="la la-plus"></i>
+        <a href="{{route('welcomeInfo')}}" class="btn btn-primary round btn-glow px-2 mb-1"><i class="la la-plus"></i>
             Edit/Create Welcome Info
         </a>
     @endif

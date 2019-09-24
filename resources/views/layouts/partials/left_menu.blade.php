@@ -98,7 +98,7 @@
                         <a class="menu-item" href="{{ route('banner.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-image"></i>My-BL Banner</a>
                     </li>
-                    <li class="{{ is_active_url('wellcomeInfo') . is_active_url('wellcomeInfo/create')}}">
+                    <li class="{{ is_active_url('welcomeInfo') . is_active_url('welcomeInfo')}}">
                         <a class="menu-item" href="{{ route('wellcomeInfo.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-info-circle"></i>My-BL Welcome Info</a>
                     </li>

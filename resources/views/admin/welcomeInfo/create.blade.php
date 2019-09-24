@@ -12,7 +12,7 @@
             
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" action="@if(isset($wellcomeInfo)) {{route('wellcomeInfo.update',$wellcomeInfo->id)}} @else {{route('wellcomeInfo.store')}} @endif" enctype="multipart/form-data" method="POST">
+                        <form class="form" action="@if(isset($wellcomeInfo)) {{route('welcomeInfo',$wellcomeInfo->id)}} @else {{route('welcomeInfo')}} @endif" enctype="multipart/form-data" method="POST">
                         @csrf
                         @if(isset($wellcomeInfo)) @method('put') @else @method('post') @endif
                         <input type="hidden" value="@if(isset($wellcomeInfo)) yes @else no @endif" name="value_exist">
