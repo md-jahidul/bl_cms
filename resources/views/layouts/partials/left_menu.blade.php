@@ -83,7 +83,7 @@
             <li class="{{ is_active_url('shortcuts') }} nav-item"><a href="{{route('short_cuts.index')}}"><i class="la la-fighter-jet"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Short Cuts</span></a>
             </li>
-            <li class="nav-item"><a href=""><i class="la la-bell"></i>
+            <li class="nav-item"><a href="{{route('notifiactionCategorie.index')}}"><i class="la la-bell"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Notification</span></a>
             </li>
             <li class=" nav-item"><a href="#"><i class="la la-file"></i>

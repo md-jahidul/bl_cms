@@ -14,7 +14,8 @@ class NotifiactionController extends Controller
      */
     public function index()
     {
-        //
+        $notifiactionCategories = $this->notifiactionCategorieService->findAll();
+        return view('admin.notification.notifiacation-categorie.index')->with('notifiactionCategories',$notifiactionCategories);
     }
 
     /**
@@ -35,7 +36,9 @@ class NotifiactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        session()->flash('success',$this->notifiactionCategorieService->storeNotifiactionCategorie($request->all())->getContent());
+        return redirect(route('nearByOffer.index'));
+
     }
 
     /**
@@ -57,7 +60,8 @@ class NotifiactionController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admin.offer-nearby.edit')
+                ->with('nearByOffer',$this->notifiactionCategorieService->findOne($id));
     }
 
     /**
@@ -69,7 +73,8 @@ class NotifiactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        session()->flash('success',$this->notifiactionCategorieService->updateNotifiactionCategorie($request->all(),$nearByOffer)->getContent());
+        return redirect(route('nearByOffer.index'));
     }
 
     /**
@@ -80,6 +85,7 @@ class NotifiactionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        session()->flash('success',$this->notifiactionCategorieService->deleteNotifiactionCategorie($id));
+        return redirect(route('nearByOffer.index'));
     }
 }

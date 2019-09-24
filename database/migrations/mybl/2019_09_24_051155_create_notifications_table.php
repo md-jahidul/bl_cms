@@ -15,7 +15,7 @@ class CreateNotificationsTable extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('category_id');
+            $table->bigInteger('category_id')->unsigned();
             $table->string('title');
             $table->string('body')->nullable();
             $table->foreign('category_id')->references('id')->on('notifications_category')->onDelete('cascade');
