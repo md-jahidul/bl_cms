@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
+use App\Models\WelcomeInfo;
 use App\Services\WelcomeInfoService;
-use App\Models\WellcomeInfo;
 use App\Http\Requests\WelcomeInfoRequest;
 
 class WelcomeInfoController extends Controller
@@ -82,12 +82,12 @@ class WelcomeInfoController extends Controller
      * Update the specified resource in storage.
      *
      * @param WelcomeInfoRequest $request
-     * @param WellcomeInfo $wellcomeInfo
+     * @param WelcomeInfo $welcomeInfo
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(WelcomeInfoRequest $request, WellcomeInfo $wellcomeInfo)
+    public function update(WelcomeInfoRequest $request, WelcomeInfo $welcomeInfo)
     {
-        session()->flash('status',$this->welcomeInfoService->updateWelcomeInfo($request, $wellcomeInfo)->getContent());
+        session()->flash('status',$this->welcomeInfoService->updateWelcomeInfo($request, $welcomeInfo)->getContent());
         return redirect(route('welcomeInfo.index'));
     }
 
