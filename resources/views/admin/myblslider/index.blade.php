@@ -21,7 +21,7 @@
                         <tr>
                             <th width="100">id</th>
                             <th>Tittle</th>
-                            <th>Slider Type</th>
+                            <th>Slider Component Type</th>
                             <th width="300">Action</th>
                         </tr>
                         </thead>
