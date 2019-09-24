@@ -42,7 +42,7 @@
         <div class="help-block">  {{ $errors->first('google_play_link') }}</div>
     @endif
 </div>
-<div class="form-group col-md-6 {{ $errors->has('app_store_link') ? ' error' : '' }}">
+<div class="form-group col-md-6 {{ $errors->has('app_store_link') ? ' error' : '' }} mr-2">
     <label for="title" class="required">App Store Link</label>
     <input type="text" name="other_attributes[app_store_link]"  class="form-control" placeholder="Enter app store link"
             value="{{ (!empty($other_attributes['app_store_link'])) ? $other_attributes['app_store_link'] : old("other_attributes.app_store_link") ?? '' }}"

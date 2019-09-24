@@ -37,40 +37,6 @@
                                     @endif
                                 </div>
 
-{{--                                <div class="form-group col-md-6 {{ $errors->has('url_btn_label') ? ' error' : '' }}">--}}
-{{--                                    <label for="url_btn_label" class="required">Button Label</label>--}}
-{{--                                    <input type="text" name="url_btn_label"  class="form-control" placeholder="Enter english title"--}}
-{{--                                           value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Enter link">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('url_btn_label'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('url_btn_label') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
-{{--                                <div class="form-group col-md-6 {{ $errors->has('redirect_url') ? ' error' : '' }}">--}}
-{{--                                    <label for="redirect_url" class="required">Redirect Url</label>--}}
-{{--                                    <input type="text" name="redirect_url"  class="form-control" placeholder="Enter redirect url"--}}
-{{--                                           value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Enter valid link">--}}
-{{--                                    <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('redirect_url'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('redirect_url') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
-{{--                                <div class="form-group col-md-12 {{ $errors->has('description') ? ' error' : '' }}">--}}
-{{--                                    <label for="description" class="required">Description</label>--}}
-{{--                                    <textarea type="text" name="description" rows="5"  class="form-control" placeholder="Enter description"--}}
-{{--                                              required data-validation-required-message="Enter description">{{ old("description") ? old("description") : '' }}</textarea>--}}
-
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('description'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('description') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
-
-
                                 @include('layouts.partials.slider_types.'.$type )
 
                                 <div class="form-group col-md-6 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">

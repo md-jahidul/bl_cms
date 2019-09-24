@@ -27,13 +27,13 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="title" class="required">Platform</label>
-                                    <input type="text" name="title" class="form-control" placeholder="Enter title"
-                                           value="{{ old("title") ? old('title') : $slider->platform }}" required data-validation-required-message="Enter slider title" readonly>
+                                <div class="form-group col-md-6 {{ $errors->has('platform') ? ' error' : '' }}">
+                                    <label for="platform" class="required">Platform</label>
+                                    <input type="text" name="platform" class="form-control" placeholder="Enter platform"
+                                           value="{{ old("platform") ? old('platform') : $slider->platform }}" required data-validation-required-message="Enter slider platform" readonly>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('title'))
-                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @if ($errors->has('platform'))
+                                        <div class="help-block">  {{ $errors->first('platform') }}</div>
                                     @endif
                                 </div>
 {{--                                <div class="form-group col-md-6 {{ $errors->has('slider_type_id') ? ' error' : '' }}">--}}
