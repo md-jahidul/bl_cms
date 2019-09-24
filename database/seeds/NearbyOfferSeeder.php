@@ -16,6 +16,7 @@ class NearbyOfferSeeder extends Seeder
         $offers = [
 
             [
+                'title' => '250MNN',
                 'vendor'=> "Burger King",
                 'location' => "Gulshan 1, Dahaka",
                 'type' => "Resturants",
@@ -26,6 +27,7 @@ class NearbyOfferSeeder extends Seeder
             ],
 
             [
+                'title' => '250MNN',
                 'vendor'=> "Burger King",
                 'location' => "Gulshan 1, Dahaka",
                 'type' => "Resturants",
@@ -36,6 +38,7 @@ class NearbyOfferSeeder extends Seeder
             ],
 
             [
+                'title' => '250MNN',
                 'vendor'=> "Gentle Park",
                 'location' => "Gulshan 1, Dahaka",
                 'type' => "Fashion",
@@ -46,6 +49,7 @@ class NearbyOfferSeeder extends Seeder
             ],
 
             [
+                'title' => '250MNN',
                 'vendor'=> "Yellow",
                 'location' => "Gulshan 1, Dahaka",
                 'type' => "Fashion",
@@ -57,6 +61,7 @@ class NearbyOfferSeeder extends Seeder
 
 
             [
+                'title' => '250MNN',
                 'vendor'=> "Richman",
                 'location' => "Gulshan 1, Dahaka",
                 'type' => "Fashion",
@@ -67,6 +72,7 @@ class NearbyOfferSeeder extends Seeder
             ],
 
             [
+                'title' => '250MNN',
                 'vendor'=> "Aroma Coffee shop",
                 'location' => "Gulshan 1, Dahaka",
                 'type' => "Coffee Shop",
@@ -77,6 +83,7 @@ class NearbyOfferSeeder extends Seeder
             ],
 
             [
+                'title' => '250MNN',
                 'vendor'=> "Aroma Coffee shop",
                 'location' => "Gulshan 1, Dahaka",
                 'type' => "Coffee Shop",
