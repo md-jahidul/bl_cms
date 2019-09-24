@@ -69,7 +69,7 @@ Route::get('partner/destroy/{id}', 'CMS\PartnerController@destroy');
 
 Route::resource('questions', 'CMS\QuestionController');
 // Route::resource('prize', 'PrizeController');
-Route::resource('tags','TagController');
+// Route::resource('tags','TagController');
 Route::resource('campaigns','CMS\CampaignController');
 // Route::resource('prizes','CMS\PrizeController');
 

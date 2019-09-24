@@ -95,9 +95,6 @@
                                     <input accept="image/*" @if(!isset($banner_info))  required @endif accept="image/*" onchange="loadFile(event)" name="image_path" type="file" class="custom-file-input @error('image_path') is-invalid @enderror">
                                     <label class="custom-file-label" for="imgInp">Upload Banner...</label>
                                 </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text" id="">Upload</span>
-                                </div>
                             </div>
                             <small class="text-danger" id="msg"> @error('image_path') {{ $message }} @enderror </small>
                         </div>

@@ -41,10 +41,12 @@ class MyblSliderController extends Controller
      */
     public function index()
     {
-        //dd('hi');
+        $sliders = $this->sliderService->getAppSlider();
+        $slider_types = $this->sliderTypeService->findAll();
+        //dd($sliders);
         return view('admin.myblslider.index')
-                ->with('sliders',$this->sliderService->findAll())
-                ->with('slider_types',$this->sliderTypeService->findAll());
+                ->with('sliders',$sliders)
+                ->with('slider_types',$slider_types);
     }
 
     /**
