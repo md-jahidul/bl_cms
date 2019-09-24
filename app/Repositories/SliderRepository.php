@@ -8,13 +8,9 @@
 
 namespace App\Repositories;
 
-
 use App\Models\Slider;
 
 class SliderRepository extends BaseRepository
 {
     public $modelName = Slider::class;
-
-
-
 }
