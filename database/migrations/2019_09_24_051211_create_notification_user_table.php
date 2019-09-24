@@ -15,6 +15,10 @@ class CreateNotificationUserTable extends Migration
     {
         Schema::create('notification_user', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('user_id');
+            $table->bigInteger('notification_id');
+            $table->tinyInteger('is_read')->default(0);
+            $table->tinyInteger('is_seed')->default(0);
             $table->timestamps();
         });
     }

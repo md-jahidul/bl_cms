@@ -15,6 +15,8 @@ class CreateNotificationsCategoryTable extends Migration
     {
         Schema::create('notifications_category', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }
