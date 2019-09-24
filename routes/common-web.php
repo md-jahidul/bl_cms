@@ -11,6 +11,9 @@
 |
 */
 
+use App\Model\MixedBundleFilter;
+use App\Models\Shortcut;
+
 Route::get('/', function () {
     return view('admin.admin-auth.login');
 })->name('test');
@@ -47,4 +50,25 @@ Route::resource('tags','TagController');
 Route::resource('campaigns','CMS\CampaignController');
 // Route::resource('prizes','CMS\PrizeController');
 
+});
+
+Route::get('mixed-bundle-offer/filter/create','CMS\MixedBundleFilterController@create');
+Route::post('mixed-bundle-offer/filter/price/save','CMS\MixedBundleFilterController@savePriceFilter')->name('mixed-bundle-offer.filter.price.save');
+Route::get('mixed-bundle-offer/filter/price','CMS\MixedBundleFilterController@getPriceFilter')->name('mixed-bundle-offer.filter.price.list');
+
+Route::post('mixed-bundle-offer/filter/delete','CMS\MixedBundleFilterController@deleteFilter')->name('mixed-bundle-offer.filter.delete');
+
+Route::post('mixed-bundle-offer/filter/internet/save','CMS\MixedBundleFilterController@saveInternetFilter')->name('mixed-bundle-offer.filter.internet.save');
+Route::get('mixed-bundle-offer/filter/internet','CMS\MixedBundleFilterController@getInternetFilter')->name('mixed-bundle-offer.filter.internet.list');
+
+Route::post('mixed-bundle-offer/filter/minutes/save','CMS\MixedBundleFilterController@saveMinutesFilter')->name('mixed-bundle-offer.filter.minutes.save');
+Route::get('mixed-bundle-offer/filter/minutes','CMS\MixedBundleFilterController@getMinutesFilter')->name('mixed-bundle-offer.filter.minutes.list');
+
+Route::post('mixed-bundle-offer/filter/sms/save','CMS\MixedBundleFilterController@saveSmsFilter')->name('mixed-bundle-offer.filter.sms.save');
+Route::get('mixed-bundle-offer/filter/sms','CMS\MixedBundleFilterController@getSmsFilter')->name('mixed-bundle-offer.filter.sms.list');
+
+Route::get('/test/test','CMS\MixedBundleFilterController@getPriceFilter');
+Route::get('/test2/',function (){
+
+    dd (new MixedBundleFilter());
 });
