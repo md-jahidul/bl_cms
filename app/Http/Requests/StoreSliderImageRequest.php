@@ -25,11 +25,11 @@ class StoreSliderImageRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'description' => 'required',
-            'image_url' => 'required|mimes:png,jpeg',
+//            'description' => 'required',
+            'image_url' => 'mimes:png,jpeg',
             'alt_text' => 'required',
-            'url_btn_label' => 'required',
-            'redirect_url' => 'required',
+//            'url_btn_label' => 'required',
+//            'redirect_url' => 'required',
             'is_active' => 'required',
         ];
     }

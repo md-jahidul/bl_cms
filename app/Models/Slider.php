@@ -14,7 +14,7 @@ class Slider extends Model
         'description',
         'short_code',
         'platform',
-        'slider'
+        'slider-other-attr'
     ];
 
     protected $casts = [

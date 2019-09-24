@@ -22,8 +22,8 @@ class SliderImageTableSeeder extends Seeder
                 'slider_id' => 1,
                 'title' =>  "Extra internet for all Banglalink users " . $i ,
                 'description' => "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ",
-                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/hero.png',
-                'alt_text' => 'Hero slider image',
+                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-other-attr-images/hero.png',
+                'alt_text' => 'Hero slider-other-attr image',
                 'url_btn_label' => 'Internet Offers',
                 'redirect_url' => '/offers',
                 'sequence' => count(SliderImage::get()) + 1,
@@ -39,8 +39,8 @@ class SliderImageTableSeeder extends Seeder
                 'slider_id' => 2,
                 'title' =>  $digitalServiceSlider,
                 'description' => "Banglalink Mobile TV brings live TV Video on Demand (VOD) streaming on a mobile phone",
-                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/digital_service.png',
-                'alt_text' => 'Digital service slider image',
+                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-other-attr-images/digital_service.png',
+                'alt_text' => 'Digital service slider-other-attr image',
                 'url_btn_label' => '',
                 'redirect_url' => '',
                 'sequence' => count(SliderImage::get()) + 1,
@@ -66,9 +66,9 @@ class SliderImageTableSeeder extends Seeder
                 'slider_id' => 3,
                 'title' =>  $testimonialSlidersEn,
                 'description' => "Banglalink Mobile TV brings live TV Video on Demand (VOD) streaming on a mobile phone",
-                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/'.$userPic[$key],
-                'alt_text' => 'testimonial slider image',
-                'url_btn_label' => 'button',
+                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-other-attr-images/'.$userPic[$key],
+                'alt_text' => 'testimonial slider-other-attr image',
+                'url_btn_label' => 'N/A',
                 'redirect_url' => '/testimonial',
                 'sequence' => count(SliderImage::get()) + 1,
                 'other_attributes' => [
@@ -82,17 +82,6 @@ class SliderImageTableSeeder extends Seeder
                 ]
             ]);
         }
-
-//
-//        'user_name_en' => $testimonialSlidersEn,
-//        'user_name_bn' => $testimonialSlidersBn[$key],
-//        'company_name_en' => 'Studiomaqs',
-//        'company_name_bn' => 'স্টুডিওম্যাক্স',
-//        'rating' => rand(1, 5),
-//        'feedback_en' => $feedBackEn[$key],
-//        'feedback_bn' => $feedBackBn[$key],
-
-
 
     }
 }

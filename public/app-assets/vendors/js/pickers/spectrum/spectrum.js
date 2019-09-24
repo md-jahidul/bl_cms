@@ -81,7 +81,7 @@
     markup = (function () {
 
         // IE does not support gradients with multiple stops, so we need to simulate
-        //  that for the rainbow slider with 8 divs that each have a single gradient
+        //  that for the rainbow slider-other-attr with 8 divs that each have a single gradient
         var gradientFix = "";
         if (IE) {
             for (var i = 1; i <= 6; i++) {
@@ -111,7 +111,7 @@
                             "<div class='sp-clear sp-clear-display'>",
                             "</div>",
                             "<div class='sp-hue'>",
-                                "<div class='sp-slider'></div>",
+                                "<div class='sp-slider-other-attr'></div>",
                                 gradientFix,
                             "</div>",
                         "</div>",
@@ -215,7 +215,7 @@
             dragger = container.find(".sp-color"),
             dragHelper = container.find(".sp-dragger"),
             slider = container.find(".sp-hue"),
-            slideHelper = container.find(".sp-slider"),
+            slideHelper = container.find(".sp-slider-other-attr"),
             alphaSliderInner = container.find(".sp-alpha-inner"),
             alphaSlider = container.find(".sp-alpha"),
             alphaSlideHelper = container.find(".sp-alpha-handle"),
