@@ -30,11 +30,12 @@
                         </tr>
                         </thead>
                         <tbody>
+                            
                             <tr>
                                 <th>title</th>
                                 <td>{{$amarOffer->title}}</td>
-                                <th>internet</th>
-                                <td>{{$amarOffer->internet}}</td>
+                                <th>tag</th>
+                                <td>{{$amarOffer->tag}}</td>
                             </tr>
                             <tr>
                                 <th>minutes</th>
@@ -51,13 +52,30 @@
                             <tr>
                                 <th>points</th>
                                 <td>{{$amarOffer->points}}</td>
-                                <th>tag</th>
-                                <td>{{$amarOffer->tag}}</td>
+                                <th>internet</th>
+                                <td>{{$amarOffer->internet}}</td>
                             </tr>
                             <tr>
-                                <th colspan="2">offer_code</th>
-                                <td colspan="2">{{$amarOffer->offer_code}}</td>
+                                <th style="padding-top:12px">offer_code</th>
+                                <td colspan="3"> 
+                                    <div class="row">
+                                        <div class="col-8 text-danger font-weight-bold" style="padding-top:5px">
+                                            {{$amarOffer->offer_code}}
+                                        </div>
+                                        <div class="col-2">
+                                            <a  style="width:100%" role="button" href="{{route('amarOffer.edit',$amarOffer->id)}}" class="btn btn-sm btn-success">
+                                                <i class="la la-pencil"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-2">
+                                            <button  style="width:100%" data-id="{{$amarOffer->id}}" class="btn btn-sm btn-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                </td>
+                                
                             </tr>
+                            
                                 
                         </tbody>
                     </table>

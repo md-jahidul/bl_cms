@@ -70,6 +70,9 @@
             <li class="{{ is_active_url('shortcuts') }} nav-item"><a href="{{route('short_cuts.index')}}"><i class="la la-fighter-jet"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Short Cuts</span></a>
             </li>
+            <li class="{{ is_active_url('shortcuts') }} nav-item"><a href=""><i class="la la-bell"></i>
+                <span class="menu-title" data-i18n="nav.dash.main">Notification</span></a>
+            </li>
             <li class=" nav-item"><a href="#"><i class="la la-file"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Manage Page</span></a>
                 <ul class="menu-content">
@@ -118,7 +121,7 @@
                         <a class="menu-item" href="{{ route('nearByOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-gift"></i> Near by Offer</a>
                     </li>
-                    <li class="">
+                    <li class="{{is_active_url('amarOffer')}} {{is_active_url('amarOffer/create')}}">
                         <a class="menu-item" href="{{ route('amarOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-cart-arrow-down"></i> Amar Offer</a>
                     </li>
