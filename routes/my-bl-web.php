@@ -107,7 +107,7 @@ Route::group(['middleware' => ['appAdmin']], function () {
     
     // Notifiaction Categorie
     route::resource('notifiactionCategorie','CMS\NotifiactionCategorieController');
-    Route::get('notifiaction/destroy/{id}','CMS\NotifiactionController@destroy');
+    Route::get('notifiactionCategorie/destroy/{id}','CMS\NotifiactionCategorieController@destroy');
     
     // Notifiaction
     route::resource('notifiaction','CMS\NotifiactionController');

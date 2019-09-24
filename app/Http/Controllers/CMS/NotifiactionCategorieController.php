@@ -4,9 +4,30 @@ namespace App\Http\Controllers\CMS;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\NotifiactionCategorieService;
+use App\Http\Requests\NotifiactionCategorieRequest;
 
 class NotifiactionCategorieController extends Controller
 {
+
+    /**
+     * @var NotifiactionCategorieService
+     */
+    private $notifiactionCategorieService;
+    /**
+     * @var bool
+     */
+    private $isAuthenticated = true;
+
+    /**
+     * NotifiactionCategorieService constructor.
+     * @param NotifiactionCategorieService $NotifiactionCategorieService
+     */
+    public function __construct(NotifiactionCategorieService $notifiactionCategorieService)
+    {
+        $this->notifiactionCategorieService = $notifiactionCategorieService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +35,8 @@ class NotifiactionCategorieController extends Controller
      */
     public function index()
     {
-        //
+        $notifiactionCategories = $this->notifiactionCategorieService->findAll();
+        return view('admin.notification.notifiacation-categorie.index')->with('notifiactionCategories',$notifiactionCategories);
     }
 
     /**
@@ -33,9 +55,11 @@ class NotifiactionCategorieController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NotifiactionCategorieRequest $request)
     {
-        //
+        session()->flash('success',$this->notifiactionCategorieService->storeNotifiactionCategorie($request->all())->getContent());
+        return redirect(route('notifiactionCategorie.index'));
+
     }
 
     /**
@@ -56,8 +80,14 @@ class NotifiactionCategorieController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    { 
+        $notifiactionCategories = $this->notifiactionCategorieService->findAll();
+        $notifiactionCategorie = $this->notifiactionCategorieService->findOne($id);
+
+        return view('admin.notification.notifiacation-categorie.index')
+                    ->with('notifiactionCategorie',$notifiactionCategorie)
+                    ->with('notifiactionCategories',$notifiactionCategories);
+        
     }
 
     /**
@@ -67,9 +97,11 @@ class NotifiactionCategorieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(NotifiactionCategorieRequest $request, $id)
+    { 
+        session()->flash('success',$this->notifiactionCategorieService->updateNotifiactionCategorie($request->all(),$id)->getContent());
+        return redirect(route('notifiactionCategorie.index'));
+        
     }
 
     /**
@@ -80,6 +112,8 @@ class NotifiactionCategorieController extends Controller
      */
     public function destroy($id)
     {
-        //
+        session()->flash('success',$this->notifiactionCategorieService->deleteNotifiactionCategorie($id));
+        return redirect(route('notifiactionCategorie.index'));
+        
     }
 }
