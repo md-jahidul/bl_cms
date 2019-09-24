@@ -32,6 +32,7 @@ class WelcomeInfoController extends Controller
      */
     public function index()
     {
+
         return view('admin.welcomeInfo.index')->with('welcomeInfo',$this->welcomeInfoService->findAll()->first());
     }
 

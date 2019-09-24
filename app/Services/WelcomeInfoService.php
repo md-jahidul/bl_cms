@@ -25,7 +25,7 @@ class WelcomeInfoService
      */
     public function __construct(WelcomeInfoRepository $welcomeInfoRepository)
     {
-        $this->$welcomeInfoRepository = $welcomeInfoRepository;
+        $this->welcomeInfoRepository = $welcomeInfoRepository;
         $this->setActionRepository($welcomeInfoRepository);
     }
 

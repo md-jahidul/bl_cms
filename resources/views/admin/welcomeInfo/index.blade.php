@@ -5,8 +5,8 @@
     <li class="breadcrumb-item active">Welcome-Information</li>
 @endsection
 @section('action')
-    @if(isset($wellcomeInfo))
-        <a href="{{route('welcomeInfo',$wellcomeInfo->id)}}" class="btn btn-primary round btn-glow px-2 mb-1"><i class="la la-plus"></i>
+    @if(isset($welcomeInfo))
+        <a href="{{route('welcomeInfo',$welcomeInfo->id)}}" class="btn btn-primary round btn-glow px-2 mb-1"><i class="la la-plus"></i>
             Edit/Create Welcome Info
         </a>
     @else
@@ -28,16 +28,16 @@
                         <div class="col-6">
                             <h4 class="card-title text-dark">Guest:</h4>
                             <p class="text-dark">
-                                @if(isset($wellcomeInfo))
-                                    {{$wellcomeInfo->guest_salutation}}
+                                @if(isset($welcomeInfo))
+                                    {{$welcomeInfo->guest_salutation}}
                                 @endif
                             </p>
                         </div>
                         <div class="col-6">
                             <h4 class="card-title text-dark">User:</h4>
                             <p class="text-dark">
-                                @if(isset($wellcomeInfo))
-                                    {{$wellcomeInfo->user_salutation}}
+                                @if(isset($welcomeInfo))
+                                    {{$welcomeInfo->user_salutation}}
                                 @endif
                             </p>
                         </div>
@@ -45,8 +45,8 @@
                         <div class="col-6">
                             <p class="text-dark" style="text-align: justify;text-justify: inter-word;">
                                 <small class="">
-                                    @if(isset($wellcomeInfo))
-                                        {{$wellcomeInfo->guest_message}}
+                                    @if(isset($welcomeInfo))
+                                        {{$welcomeInfo->guest_message}}
                                     @endif
                                 </small>
                             </p>
@@ -54,8 +54,8 @@
                         <div class="col-6">
                             <p class="text-dark" style="text-align: justify;text-justify: inter-word;">
                                 <small class="">
-                                    @if(isset($wellcomeInfo))
-                                        {{$wellcomeInfo->user_message}}
+                                    @if(isset($welcomeInfo))
+                                        {{$welcomeInfo->user_message}}
                                     @endif
                                 </small>
                             </p>
@@ -64,8 +64,8 @@
                         <div class="col-6">
                             <p class="text-dark">
                                 <small class="">
-                                    @if(isset($wellcomeInfo))
-                                        <img style="height:100px;width:200px" src="{{ asset($wellcomeInfo->icon)}}" alt="" srcset="">
+                                    @if(isset($welcomeInfo))
+                                        <img style="height:100px;width:200px" src="{{ asset($welcomeInfo->icon)}}" alt="" srcset="">
                                     @endif
                                 </small>
                             </p>
@@ -73,8 +73,8 @@
                         <div class="col-6">
                             <p class="text-dark">
                                 <small class="">
-                                    @if(isset($wellcomeInfo))
-                                        <img style="height:100px;width:200px" src="{{ asset($wellcomeInfo->icon)}}" alt="" srcset="">
+                                    @if(isset($welcomeInfo))
+                                        <img style="height:100px;width:200px" src="{{ asset($welcomeInfo->icon)}}" alt="" srcset="">
                                     @endif
                                 </small>
                             </p>

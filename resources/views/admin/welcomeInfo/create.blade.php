@@ -12,10 +12,10 @@
             
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" action="@if(isset($wellcomeInfo)) {{route('welcomeInfo',$wellcomeInfo->id)}} @else {{route('welcomeInfo')}} @endif" enctype="multipart/form-data" method="POST">
+                        <form class="form" action="@if(isset($welcomeInfo)) {{route('welcomeInfo',$welcomeInfo->id)}} @else {{route('welcomeInfo')}} @endif" enctype="multipart/form-data" method="POST">
                         @csrf
-                        @if(isset($wellcomeInfo)) @method('put') @else @method('post') @endif
-                        <input type="hidden" value="@if(isset($wellcomeInfo)) yes @else no @endif" name="value_exist">
+                        @if(isset($welcomeInfo)) @method('put') @else @method('post') @endif
+                        <input type="hidden" value="@if(isset($welcomeInfo)) yes @else no @endif" name="value_exist">
                         <div class="form-body">
                             <h4 class="form-section"><i class="la la-paperclip"></i>Wellcome Information</h4>
                             <div class="row">
@@ -23,7 +23,7 @@
                                 <div class="form-group">
                                     
                                     <label for="guest_salutation">Guest Salutation:<small class="text-danger">*</small></label>
-                                    <input required type="text" @if(isset($wellcomeInfo)) value="{{$wellcomeInfo->guest_salutation}}" @elseif(old('guest_salutation')) value="{{old('guest_salutation')}}"  @else value=""  @endif  id="guest_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Enter guest salutation." name="guest_salutation">
+                                    <input required type="text" @if(isset($welcomeInfo)) value="{{$welcomeInfo->guest_salutation}}" @elseif(old('guest_salutation')) value="{{old('guest_salutation')}}"  @else value=""  @endif  id="guest_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Enter guest salutation." name="guest_salutation">
                                     @error('guest_salutation')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -34,7 +34,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="user_salutation">User Salutation:<small class="text-danger">*</small></label>
-                                    <input required type="text" @if(isset($wellcomeInfo))  value="{{$wellcomeInfo->user_salutation}}"  @elseif(old("user_salutation")) value="{{old("user_salutation")}}"  @endif id="user_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Enter user salutation." name="user_salutation">
+                                    <input required type="text" @if(isset($welcomeInfo))  value="{{$welcomeInfo->user_salutation}}"  @elseif(old("user_salutation")) value="{{old("user_salutation")}}"  @endif id="user_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Enter user salutation." name="user_salutation">
                                     @error('user_salutation')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -45,7 +45,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="guest_message">Guest Message :<small class="text-danger">*</small></label>
-                                    <textarea required name="guest_message" class="form-control" id="guest_message" rows="3">@if(isset($wellcomeInfo)){{$wellcomeInfo->guest_message}}@elseif(old("guest_message")){{old("guest_message")}}@endif</textarea>
+                                    <textarea required name="guest_message" class="form-control" id="guest_message" rows="3">@if(isset($welcomeInfo)){{$welcomeInfo->guest_message}}@elseif(old("guest_message")){{old("guest_message")}}@endif</textarea>
                                     @error('guest_message')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -56,7 +56,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="user_message">User Message :<small class="text-danger">*</small></label>
-                                    <textarea required name="user_message" class="form-control" id="user_message" rows="3">@if(isset($wellcomeInfo)){{$wellcomeInfo->user_message}}@elseif(old("user_message")){{old("user_message")}} @endif</textarea>
+                                    <textarea required name="user_message" class="form-control" id="user_message" rows="3">@if(isset($welcomeInfo)){{$welcomeInfo->user_message}}@elseif(old("user_message")){{old("user_message")}} @endif</textarea>
                                     @error('user_message')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -64,11 +64,11 @@
                                     @enderror
                                 </div>
                             </div>
-                            @if(isset($wellcomeInfo))
+                            @if(isset($welcomeInfo))
                                 <div class="col-6">
                                     <p class="text-dark">
                                         <small class="">
-                                            <img style="height:100px;width:200px" id="imgDisplay" src="{{ asset($wellcomeInfo->icon)}}" alt="" srcset="">
+                                            <img style="height:100px;width:200px" id="imgDisplay" src="{{ asset($welcomeInfo->icon)}}" alt="" srcset="">
                                         </small>
                                     </p>
                                 </div>
@@ -83,9 +83,9 @@
                             @endif
                             <div class="col-md-12">
                                 <div class="custom-file">
-                                    <input accept="image/*" @if(!isset($wellcomeInfo)) required @endif @if(!isset($wellcomeInfo)) @endif name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="image">
+                                    <input accept="image/*" @if(!isset($welcomeInfo)) required @endif @if(!isset($welcomeInfo)) @endif name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="image">
                                     <label class="custom-file-label @error('title') is-invalid @enderror" for="validatedCustomFile">Upload Icon...</label>
-                                    <input type="hidden" name="update" value="@if(!isset($wellcomeInfo)) yes @else no  @endif"> 
+                                    <input type="hidden" name="update" value="@if(!isset($welcomeInfo)) yes @else no  @endif">
                                     @error('icon')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
