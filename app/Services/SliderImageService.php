@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: BS23
- * Date: 27-Aug-19
- * Time: 12:37 PM
- */
-
 namespace App\Services;
 
 
@@ -17,7 +10,6 @@ use Illuminate\Http\Response;
 class SliderImageService
 {
     use CrudTrait;
-
     /**
      * @var $sliderRepository
      */

@@ -24,8 +24,8 @@ class StoreSliderRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'slider_type_id' => 'required'
+            'title' => 'required|max:200',
+            'component_id' => 'required'
         ];
     }
 

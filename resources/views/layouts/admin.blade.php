@@ -9,7 +9,9 @@
     <meta name="keywords"
           content="">
     <meta name="author" content="">
-    <title>@yield('title') - AssetLite CMS</title>
+    <title>
+        @yield('title') - @if(Auth::user()->role_id == '1'|| Auth::user()->role_id == '2') MyBL @else AssetLite @endif CMS
+    </title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="apple-touch-icon" href="{{asset('theme/assets/images/ico/apple-icon-120.png')}}">
     {{--fevicon--}}
@@ -54,6 +56,7 @@
 
     @stack('page-css')
     @yield('page-css')
+    @stack('style')
 </head>
 <body class="vertical-layout vertical-menu-modern 2-columns   menu-expanded fixed-navbar"
       data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
@@ -65,7 +68,7 @@
     <div class="content-wrapper">
         <div class="content-header row">
             <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
-                <!-- <h3 class="content-header-title mb-0 d-inline-block">@yield('card_name')</h3> -->
+                <h3 class="content-header-title mb-0 d-inline-block">@yield('card_name')</h3>
                 <div class="row breadcrumbs-top d-inline-block">
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb mb-1">
@@ -126,5 +129,23 @@
 <script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
 
 @stack('page-js')
+<script>
+
+        function readURL(input) {
+        if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#imgDisplay').css('display', 'block');
+                    $('#imgDisplay').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#image").change(function() {
+            readURL(this);
+        });
+
+</script>
 </body>
 </html>

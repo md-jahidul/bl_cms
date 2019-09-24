@@ -18,4 +18,3 @@ $factory->define(SliderImage::class, function (Faker $faker) {
         'other_attributes' => null
     ];
 });
-
