@@ -31,7 +31,7 @@ class SliderTableSeeder extends Seeder
                 'description' => 'Description of ' . $slider,
                 'short_code' => '[slider_'.++$key .']',
                 'platform' => 'web',
-                'other_attributes' => ($slider == 'Digital Services') ? $other_attributes : []
+                'other_attributes' => ($slider == 'Digital Services') ? $other_attributes : ['sliding_speed' => 10]
             ]);            
         }
     }
