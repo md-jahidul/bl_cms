@@ -63,16 +63,16 @@
                                                         //console.log(this.files[0].name.split('.').pop())
                                                         if(bmp.width/bmp.height == 16/9){
                                                             console.log('yes')
-                                                            // document.getElementById('addMore').disabled = false;
-                                                            // document.getElementById('submitForm').disabled = false;
+                                                            document.getElementById('addMore').disabled = false;
+                                                            document.getElementById('submitForm').disabled = false;
                                                             this.style.border = 'none';
                                                             this.nextElementSibling.innerHTML = '';
                                                         }else{ 
                                                             console.log('no')
                                                             this.style.border = '1px solid red';
                                                             this.nextElementSibling.innerHTML = '<br><b>image aspact ratio must 16:9</b>';
-                                                            // document.getElementById('addMore').disabled = true;
-                                                            // document.getElementById('submitForm').disabled = true;
+                                                            document.getElementById('addMore').disabled = true;
+                                                            document.getElementById('submitForm').disabled = true;
                                                         } 
                                                     })" 
 
