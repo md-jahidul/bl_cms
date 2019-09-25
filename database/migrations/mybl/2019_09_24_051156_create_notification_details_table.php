@@ -16,9 +16,8 @@ class CreateNotificationDetailsTable extends Migration
         Schema::create('notification_details', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('phone');
-            $table->integer('notification_id')->unsigned();
+            $table->bigInteger('notification_id')->unsigned();
             $table->string('message')->nullable();
-
             $table->foreign('notification_id')->references('id')->on('notifications')->onDelete('cascade');
             $table->integer('status');
             $table->timestamps();
