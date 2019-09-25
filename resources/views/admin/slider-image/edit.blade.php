@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('title', 'Quick Launch Create')
-@section('card_name', 'Quick Launch Create')
+@section('card_name', 'Slider image Edit Page')
 @section('breadcrumb')
     <li class="breadcrumb-item active"> <a href="{{ route('slider_images', [$sliderImage->slider_id, $type]) }}"> Slider Image List</a></li>
-    <li class="breadcrumb-item active"> Slider Image Create</li>
+    <li class="breadcrumb-item active"> Slider Image Edit</li>
 @endsection
 @section('action')
     <a href="{{ route('slider_images', [$sliderImage->slider_id, $type]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
