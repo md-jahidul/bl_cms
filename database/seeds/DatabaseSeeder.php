@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SliderImageTableSeeder::class);
         $this->call(DigitalServiceTableSeeder::class);
         $this->call(SettingKeysTableSeeder::class);
+        $this->call(OfferFilterTypeTableSeeder::class);
 
         $this->call(InternetOfferSeeder::class);
         $this->call(MixedBundleOfferSeeder::class);
