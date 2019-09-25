@@ -43,8 +43,8 @@
                                 </div>
                                 <div class="col-md-1 add-button">
                                     <button type="button" id="add_internet_filter"
-                                            class="btn btn-sm btn-icon btn-outline-info">
-                                        <i class="la la-plus-circle"></i>
+                                            class="btn btn-sm btn-icon btn-outline-info" title="Save">
+                                        <i class="la la-save"></i>
                                     </button>
                                 </div>
                             </div>
