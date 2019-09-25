@@ -1,78 +1,63 @@
 @extends('layouts.admin')
-@section('title', 'Setting')
-@section('card_name', 'Setting')
+@section('title', 'Notification')
+@section('card_name', 'Notification')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Setting List</li>
+    <li class="breadcrumb-item active">Notification List</li>
+@endsection
+
+@section('action')
+        @if($cat->count()==0)
+            <a href="" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+                There is no category
+            </a>
+        @else
+            <a href="{{route('notifiaction.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+                Create Notifiaction
+            </a>
+        @endif
+
 @endsection
 
 @section('content')
-<div class="card mb-0 px-1" style="box-shadow:none;">        
-    <div class="card-content">
-        <div class="card-body">
-            <form class="form" method="POST" action="@if(isset($setting_info)) {{route('setting.update',$setting_info->id)}} @else {{route('setting.store')}} @endif">
-                @csrf
-                @if(isset($setting_info)) 
-                    @method('put')
-                @else
-                    @method('post')
-                @endif
-                <div class="form-body">
-                    <h4 class="form-section"><i class="la la-key"></i>Setting Key</h4>
-                    <div class="row">
-                        <div class="col-md-5">
-                           <label for="key">Key:</label>
-                            <select required name="setting_key_id" class="form-control @error('setting_key_id') is-invalid @enderror" id="key">
-                               <option value="0"> Select Key </option>
-                               @foreach ($keys as $key)
-                                    <option @if(isset($setting_info)) @if($setting_info->setting_key_id == $key->id) selected @endif @endif value="{{$key->id}}">{{$key->title}}</option>
-                               @endforeach
-                            </select>
-                            <small class="text-danger"> @error('setting_key_id') {{ $message }} @enderror </small>
-                        </div>
-                        
-                        <div class="col-md-2">
-                            <div class="form-group" style="margin-top:26px">
-                                <button style="width:100%;height:100%" class="btn btn-outline-success my-2 my-sm-0" style="padding:7px 10px;width:100%" type="submit">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-            </form>
-        </div>
-    </div>
-</div>
 
 <section>
     <div class="card card-info mt-0" style="box-shadow: 0px 0px">
         <div class="card-content">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h1 class="card-title pl-1">Notification List</h1>
+                    </div>
+                </div>
+            </div>
             <div class="card-body card-dashboard">
                 <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
                         <th width="100">id</th>
                         <th>Tittle</th>
-                        <th>Limit</th>
-                        <th>Action</th>
+                        <th>category</th>
+                        <th width="210">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($settings as $setting)
+                        @foreach ($notifiactions as $notifiaction)
                             <tr>
-                                <td>{{$setting->id}}</td>
-                                <td>{{$setting->settingsKey->title}}</td>
-                                <td>{{$setting->limit}}</td>
+                                <td>{{$notifiaction->id}}</td>
+                                <td>{{$notifiaction->title}}</td>
+                                <td>{{$notifiaction->NotificationCategory->name}}</td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-5">
-                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('setting.edit',$setting->id)}}" class="btn-pancil btn btn-outline-success" >
+
+                                        <div class="col-md-3">
+                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notifiaction.edit',$notifiaction->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        
-                                        <div class="col-md-5">
-                                            <button data-id="{{$setting->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                        <div class="col-md-3">
+                                            <button data-id="{{$notifiaction->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
+
                                     </div>
                                 </td>
                             </tr>
@@ -121,7 +106,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('setting/destroy') }}/"+id,
+                            url: "{{ url('notifiaction/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -131,7 +116,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('setting/') }}"
+                                    window.location.href = "{{ url('notifiaction') }}"
                                 }
                             }
                         })

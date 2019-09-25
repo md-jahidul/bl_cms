@@ -14,6 +14,6 @@ class NotificationCategory extends Model
     ];
 
     public function Notification(){
-        return $this->hasMany(Notification::class,'id','category_id');
+        return $this->hasMany(Notification::class,'category_id','id');
     }
 }
