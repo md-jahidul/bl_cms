@@ -9,17 +9,17 @@
 <div class="card mb-0 px-1" style="box-shadow:none;">        
     <div class="card-content">
         <div class="card-body">
-            <form class="form" method="POST" action="@if(isset($notifiactionCategorie)) {{route('notifiactionCategorie.update',$notifiactionCategorie->id)}} @else {{route('notifiactionCategorie.store')}} @endif">
+            <form class="form" method="POST" action="@if(isset($notificationCategory)) {{route('notificationCategory.update',$notificationCategory->id)}} @else {{route('notificationCategory.store')}} @endif">
                 @csrf
-                @if(isset($notifiactionCategorie)) 
+                @if(isset($notificationCategory)) 
                     @method('put')
                 @else
                     @method('post')
                 @endif
                 <div class="form-body">
                     <h4 class="form-section"><i class="la la-key"></i>
-                        @if(isset($notifiactionCategorie))
-                            Edit "{{$notifiactionCategorie->name}}" Category
+                        @if(isset($notificationCategory))
+                            Edit "{{$notificationCategory->name}}" Category
                         @else
                             Create Notification Category 
                         @endif
@@ -27,9 +27,9 @@
                     <div class="row">
                         <div class="col-md-10">
                            <label for="name">Notification Category :</label>
-                            <input type="text" value="@if(isset($notifiactionCategorie)) {{$notifiactionCategorie->name}} @elseif(old("name")) {{old("name")}} @endif" required name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Notification Category..">  
-                            @if(isset($notifiactionCategorie))
-                                <input type="hidden" name="id" value="{{$notifiactionCategorie->id}}">
+                            <input type="text" value="@if(isset($notificationCategory)) {{$notificationCategory->name}} @elseif(old("name")) {{old("name")}} @endif" required name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Notification Category..">  
+                            @if(isset($notificationCategory))
+                                <input type="hidden" name="id" value="{{$notificationCategory->id}}">
                             @endif
                             <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
                         </div>
@@ -60,20 +60,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($notifiactionCategories as $notifiactionCategorie)
+                        @foreach ($notificationCategories as $notificationCategory)
                             <tr>
-                                <td>{{$notifiactionCategorie->id}}</td>
-                                <td>{{$notifiactionCategorie->name}}<span class="badge badge-default badge-pill bg-primary float-right">{{$notifiactionCategorie->Notification->count()}}</span></td>
+                                <td>{{$notificationCategory->id}}</td>
+                                <td>{{$notificationCategory->name}}<span class="badge badge-default badge-pill bg-primary float-right">{{$notificationCategory->Notification->count()}}</span></td>
                                 <td>
                                     <div class="row">
 
                                         <div class="col-md-3">
-                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notifiactionCategorie.edit',$notifiactionCategorie->id)}}" class="btn-pancil btn btn-outline-success" >
+                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notificationCategory.edit',$notificationCategory->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
                                         <div class="col-md-3">
-                                            <button data-id="{{$notifiactionCategorie->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                            <button data-id="{{$notificationCategory->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
 
                                     </div>
@@ -124,7 +124,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('notifiactionCategorie/destroy') }}/"+id,
+                            url: "{{ url('notificationCategory/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -134,7 +134,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('notifiactionCategorie') }}"
+                                    window.location.href = "{{ url('notificationCategory') }}"
                                 }
                             }
                         })

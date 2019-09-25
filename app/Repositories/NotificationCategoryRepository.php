@@ -10,7 +10,7 @@ namespace App\Repositories;
 
 use App\Models\NotificationCategory;
 
-class NotifiactionCategorieRepository extends BaseRepository
+class NotificationCategoryRepository extends BaseRepository
 {
     public $modelName = NotificationCategory::class;
 }
