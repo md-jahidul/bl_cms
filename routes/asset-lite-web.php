@@ -14,9 +14,9 @@
 
 Auth::routes();
 
-//Route::resource('sliders', 'CMS\SliderController');
-//Route::get('slider/{parent_id}/images', 'CMS\SliderImageController@index');
-//Route::get('slider-image/{id}/edit', 'CMS\SliderImageController@edit');
+//Route::resource('sliders', 'CMS\AlSliderController');
+//Route::get('slider/{parent_id}/images', 'CMS\AlSliderImageController@index');
+//Route::get('slider-image/{id}/edit', 'CMS\AlSliderImageController@edit');
 
 Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 
@@ -54,16 +54,16 @@ Route::get('config','CMS\ConfigController@index');
 Route::put('config/update','CMS\ConfigController@update');
 
 // SLIDERS PAGES ====================================
-Route::get('sliders', 'CMS\SliderController@index');
-Route::get('sliders/{id}/{type}/edit', 'CMS\SliderController@edit');
-Route::put('sliders/{id}/update', 'CMS\SliderController@update');
-Route::get('slider/{slider_id}/{type}', 'CMS\SliderImageController@index')->name('slider_images');
-Route::get('slider/{slider_id}/{type}/image/create', 'CMS\SliderImageController@create');
-Route::post('slider/{slider_id}/{type}/image/store', 'CMS\SliderImageController@store')->name('slider_image_store');
-Route::get('slider/{slider_id}/{type}/image/{id}', 'CMS\SliderImageController@edit')->name('slider_image_edit');
-Route::put('slider/{slider_id}/{type}/image/{id}/update', 'CMS\SliderImageController@update')->name('slider_image_update');
-Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'CMS\SliderImageController@destroy');
-Route::get('/slider-image-sortable','CMS\SliderImageController@sliderImageSortable');
+Route::get('sliders', 'CMS\AlSliderController@index');
+Route::get('sliders/{id}/{type}/edit', 'CMS\AlSliderController@edit');
+Route::put('sliders/{id}/update', 'CMS\AlSliderController@update');
+Route::get('slider/{slider_id}/{type}', 'CMS\AlSliderImageController@index')->name('slider_images');
+Route::get('slider/{slider_id}/{type}/image/create', 'CMS\AlSliderImageController@create');
+Route::post('slider/{slider_id}/{type}/image/store', 'CMS\AlSliderImageController@store')->name('slider_image_store');
+Route::get('slider/{slider_id}/{type}/image/{id}', 'CMS\AlSliderImageController@edit')->name('slider_image_edit');
+Route::put('slider/{slider_id}/{type}/image/{id}/update', 'CMS\AlSliderImageController@update')->name('slider_image_update');
+Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'CMS\AlSliderImageController@destroy');
+Route::get('/slider-image-sortable','CMS\AlSliderImageController@sliderImageSortable');
 
 
 

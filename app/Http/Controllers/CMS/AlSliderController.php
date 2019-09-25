@@ -3,38 +3,38 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Requests\StoreSliderRequest;
-use App\Services\SliderService;
-use App\Services\SliderTypeService;
+use App\Services\AlSliderService;
+use App\Services\AlSliderComponentTypeService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 
-class SliderController extends Controller
+class AlSliderController extends Controller
 {
     /**
-     * @var SliderService
+     * @var AlSliderService
      */
-    private $sliderService;
+    private $alSliderService;
     /**
      * @var bool
      */
     private $isAuthenticated = true;
 
     /**
-     * @var SliderTypeService
+     * @var AlSliderComponentTypeService
      */
-    private $sliderTypeService;
+    private $sliderTypeComponentService;
 
     /**
-     * SliderController constructor.
-     * @param SliderService $sliderService
-     * @param SliderTypeService $sliderTypeService
+     * AlSliderController constructor.
+     * @param AlSliderService $alSliderService
+     * @param AlSliderComponentTypeService $alSliderComponentTypeService
      */
-    public function __construct(SliderService $sliderService, SliderTypeService $sliderTypeService)
+    public function __construct(AlSliderService $alSliderService, AlSliderComponentTypeService $alSliderComponentTypeService)
     {
-        $this->sliderService = $sliderService;
-        $this->sliderTypeService = $sliderTypeService;
+        $this->alSliderService = $alSliderService;
+        $this->sliderTypeComponentService = $alSliderComponentTypeService;
         $this->middleware('auth');
     }
 
@@ -44,10 +44,7 @@ class SliderController extends Controller
 
     public function index()
     {
-        $sliders = $this->sliderService->findAll();
-
-//        return $sliders;
-
+        $sliders = $this->alSliderService->findAll();
         return view('admin.slider.index', compact('sliders'));
 
     }
@@ -57,7 +54,7 @@ class SliderController extends Controller
      */
     public function create()
     {
-        $sliderTypes = $this->sliderTypeService->findAll();
+        $sliderTypes = $this->sliderTypeComponentService->findAll();
         return view('admin.slider.create', compact('sliderTypes'));
     }
 
@@ -68,7 +65,7 @@ class SliderController extends Controller
 
     public function store(StoreSliderRequest $request)
     {
-        $response = $this->sliderService->storeSlider($request->all());
+        $response = $this->alSliderService->storeSlider($request->all());
         Session::flash('message', $response->getContent());
         return redirect('/sliders');
     }
@@ -79,7 +76,7 @@ class SliderController extends Controller
      */
     public function edit($id, $type)
     {
-        $slider = $this->sliderService->findOne($id);
+        $slider = $this->alSliderService->findOne($id);
         $other_attributes = $slider->other_attributes;
         return view('admin.slider.edit', compact('slider', 'type', 'other_attributes'));
     }
@@ -91,7 +88,7 @@ class SliderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $response = $this->sliderService->updateSlider($request->all(), $request->id);
+        $response = $this->alSliderService->updateSlider($request->all(), $request->id);
         Session::flash('message', $response->getContent());
         return redirect('/sliders');
     }
@@ -103,7 +100,7 @@ class SliderController extends Controller
      */
     public function destroy($id)
     {
-        $response = $this->sliderService->deleteSlider($id);
+        $response = $this->alSliderService->deleteSlider($id);
         Session::flash('message', $response->getContent());
         return redirect('/sliders');
     }

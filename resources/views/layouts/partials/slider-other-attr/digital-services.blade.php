@@ -9,17 +9,6 @@
     @endif
 </div>
 
-<div class="form-group col-md-6 {{ $errors->has('view_list_url') ? ' error' : '' }}">
-    <label for="view_list_url" class="required">View List Url</label>
-    <input type="text" name="other_attributes[view_list_url]"  class="form-control" placeholder="Enter view list url"
-            value="{{ (!empty($other_attributes['view_list_url'])) ? $other_attributes['view_list_url'] : old("other_attributes.view_list_url") ?? '' }}"
-            required data-validation-required-message="Enter view list url">
-    <div class="help-block"></div>
-    @if ($errors->has('view_list_url'))
-        <div class="help-block">  {{ $errors->first('view_list_url') }}</div>
-    @endif
-</div>
-
 <div class="form-group col-md-6 {{ $errors->has('view_list_btn_text_en') ? ' error' : '' }}">
     <label for="view_list_btn_text_en" class="required">View List Button Label</label>
     <input type="text" name="other_attributes[view_list_btn_text_en]"  class="form-control" placeholder="Enter view list button label"
@@ -38,6 +27,17 @@
     <div class="help-block"></div>
     @if ($errors->has('view_list_btn_text_bn'))
         <div class="help-block">  {{ $errors->first('view_list_btn_text_bn') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-6 {{ $errors->has('view_list_url') ? ' error' : '' }}">
+    <label for="view_list_url" class="required">View List Url</label>
+    <input type="text" name="other_attributes[view_list_url]"  class="form-control" placeholder="Enter view list url"
+           value="{{ (!empty($other_attributes['view_list_url'])) ? $other_attributes['view_list_url'] : old("other_attributes.view_list_url") ?? '' }}"
+           required data-validation-required-message="Enter view list url">
+    <div class="help-block"></div>
+    @if ($errors->has('view_list_url'))
+        <div class="help-block">  {{ $errors->first('view_list_url') }}</div>
     @endif
 </div>
 

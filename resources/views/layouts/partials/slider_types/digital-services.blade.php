@@ -1,15 +1,3 @@
-<div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-    <label for="title_bn" class="required">Title Bangla</label>
-    <input type="text" name="other_attributes[title_bn]"  class="form-control" placeholder="Enter title (bangla)"
-            value="{{ (!empty($other_attributes['title_bn'])) ? $other_attributes['title_bn'] : old("other_attributes.title_bn") ?? '' }}"
-            required data-validation-required-message="Enter title (bangla)">
-    <div class="help-block"></div>
-    @if ($errors->has('title_bn'))
-        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
-    @endif
-</div>
-
-
 <div class="form-group col-md-6 {{ $errors->has('price_info') ? ' error' : '' }}">
     <label for="price_info" class="required">Price Info</label>
     <input type="text" name="other_attributes[price_info]"  class="form-control" placeholder="Enter price info"

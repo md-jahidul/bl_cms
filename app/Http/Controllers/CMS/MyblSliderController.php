@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use App\Models\SliderComponentTypes;
 use App\Services\MyblSliderService;
-use App\Services\SliderTypeService;
+use App\Services\AlSliderComponentTypeService;
 use App\Http\Requests\MyblSliderRequest;
 class MyblSliderController extends Controller
 {
@@ -26,7 +26,7 @@ class MyblSliderController extends Controller
      * BannerController constructor.
      * @param SliderService $sliderService
      */
-    public function __construct(MyblSliderService $sliderService,SliderTypeService $sliderTypeService)
+    public function __construct(MyblSliderService $sliderService, AlSliderComponentTypeService $sliderTypeService)
     {
         $this->sliderService = $sliderService;
         $this->sliderTypeService = $sliderTypeService;
@@ -69,7 +69,7 @@ class MyblSliderController extends Controller
      */
     public function store(MyblSliderRequest $request)
     {
-        
+
         session()->flash('success',$this->sliderService->storeSlider($request->all())->getContent());
         return redirect(route('myblslider.index'));
     }
@@ -93,7 +93,7 @@ class MyblSliderController extends Controller
      */
     public function edit(Slider $myblslider)
     {
-        
+
         return view('admin.myblslider.create')
                 ->with('sliders',$this->sliderService->findAll())
                 ->with('slider_types',$this->sliderTypeService->findAll())

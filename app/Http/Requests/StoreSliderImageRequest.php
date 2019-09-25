@@ -24,7 +24,7 @@ class StoreSliderImageRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
+            'title_bn' => 'required',
 //            'description' => 'required',
             'image_url' => 'mimes:png,jpeg',
             'alt_text' => 'required',
