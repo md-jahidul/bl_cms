@@ -16,22 +16,28 @@ class SliderImageTableSeeder extends Seeder
     {
         // factory('App\Models\SliderImage', 10)->create();
 
+
+
         for($i=1; $i < 4; $i++){
             SliderImage::create([
                 'id'    => $i,
                 'slider_id' => 1,
                 'title' =>  "Extra internet for all Banglalink users " . $i ,
                 'description' => "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ",
-                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-other-attr-images/hero.png',
-                'alt_text' => 'Hero slider-other-attr image',
+                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/hero.png',
+                'alt_text' => 'Hero slider image',
                 'url_btn_label' => 'Internet Offers',
                 'redirect_url' => '/offers',
                 'sequence' => count(SliderImage::get()) + 1,
-                'other_attributes' => null
+                'other_attributes' => [
+                    'title_bn' => 'সমস্ত বাংলালিংক ব্যবহারকারীদের জন্য অতিরিক্ত ইন্টারনেট',
+                    'button_label_bn' => 'ইন্টারনেট অফার'
+                ]
             ]);
         }
 
         $digitalServiceSliders = ["Banglaflix","Mobile TV","Gaan Mela","Boi Ghor","Others"];
+        $digitalServiceSlidersBn = ["বাংলাফ্লিক্স", "মোবাইল টিভি", "গানের মেলা", "বোই ঘোড়", "অন্যরা"];
 
         foreach ($digitalServiceSliders as $key => $digitalServiceSlider){
             SliderImage::create([
@@ -39,13 +45,17 @@ class SliderImageTableSeeder extends Seeder
                 'slider_id' => 2,
                 'title' =>  $digitalServiceSlider,
                 'description' => "Banglalink Mobile TV brings live TV Video on Demand (VOD) streaming on a mobile phone",
-                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-other-attr-images/digital_service.png',
-                'alt_text' => 'Digital service slider-other-attr image',
+                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/digital_service.png',
+                'alt_text' => 'Digital service slider image',
                 'url_btn_label' => '',
                 'redirect_url' => '',
                 'sequence' => count(SliderImage::get()) + 1,
                 'other_attributes' => [
+                    'title_bn' => $digitalServiceSlidersBn[$key],
                     'price_info' => 'Monthly 50',
+                    'price_info_bn' => 'মাসিক ৫০',
+                    'description_en' => 'Banglalink Mobile TV brings live TV Video on Demand (VOD) streaming on a mobile phone',
+                    'description_bn' => 'বাংলালিংক মোবাইল টিভি একটি মোবাইল ফোনে স্ট্রিমিং ডাইমান্ড (ভিওডি) এ লাইভ টিভি ভিডিও নিয়ে আসে।',
                     'google_play_link' => 'https://play.google.com/store/apps/details?id=com.arena.banglalinkmela.app',
                     'app_store_link' => 'https://apps.apple.com/us/app/my-banglalink/id934133022'
                 ]
@@ -66,14 +76,14 @@ class SliderImageTableSeeder extends Seeder
                 'slider_id' => 3,
                 'title' =>  $testimonialSlidersEn,
                 'description' => "Banglalink Mobile TV brings live TV Video on Demand (VOD) streaming on a mobile phone",
-                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-other-attr-images/'.$userPic[$key],
-                'alt_text' => 'testimonial slider-other-attr image',
+                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/'.$userPic[$key],
+                'alt_text' => 'testimonial slider image',
                 'url_btn_label' => 'N/A',
                 'redirect_url' => '/testimonial',
                 'sequence' => count(SliderImage::get()) + 1,
                 'other_attributes' => [
-                    'user_name_en' => $testimonialSlidersEn,
-                    'user_name_bn' => $testimonialSlidersBn[$key],
+                    'client_name_en' => $testimonialSlidersEn,
+                    'client_name_bn' => $testimonialSlidersBn[$key],
                     'company_name_en' => 'Studiomaqs',
                     'company_name_bn' => 'স্টুডিওম্যাক্স',
                     'rating' => rand(1, 5),

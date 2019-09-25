@@ -79,11 +79,9 @@ class SliderController extends Controller
      */
     public function edit($id, $type)
     {
-
-
         $slider = $this->sliderService->findOne($id);
-//        $sliderTypes = $this->sliderTypeService->findAll();
-        return view('admin.slider.edit', compact('slider', 'type'));
+        $other_attributes = $slider->other_attributes;
+        return view('admin.slider.edit', compact('slider', 'type', 'other_attributes'));
     }
 
     /**
