@@ -40,7 +40,7 @@
                                         </div>
                                         <div class="form-group col-md-6 mb-2">
                                             <label for="alt_text">Alt Text: </label>
-                                            <input id="alt_text" type="text" class="form-control" placeholder="Alt text" name="alt_text">
+                                            <input id="alt_text" required type="text" class="form-control" placeholder="Alt text" name="alt_text">
                                         </div>
                                         <div class="form-group col-md-6 mb-2">
                                             <label for="btn">Button URL: </label>

@@ -60,7 +60,7 @@ class SliderImageController extends Controller
     {
         $response = $this->sliderImageService->storeSliderImage($request->all(), $sliderId);
         Session::flash('message', $response->getContent());
-        return redirect("slider/$sliderId/$type");
+        return redirect("sliders/$sliderId/$type");
     }
 
     /**
@@ -94,7 +94,7 @@ class SliderImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $parentId, $type, $id)
+    public function update(StoreSliderImageRequest $request, $parentId, $type, $id)
     {
         $response = $this->sliderImageService->updateSliderImage($request->all(), $id);
         Session::flash('message', $response->getContent());
@@ -122,6 +122,6 @@ class SliderImageController extends Controller
 
 //        $slider = SliderImage::findOrFail($id);
 //        $slider->delete();
-        return url("slider/$parentId/$type");
+        return url("sliders/$parentId/$type");
     }
 }

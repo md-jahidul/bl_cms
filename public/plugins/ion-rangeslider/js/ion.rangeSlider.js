@@ -151,7 +151,7 @@
      * Main plugin constructor
      *
      * @param input {Object} link to base input element
-     * @param options {Object} slider config
+     * @param options {Object} slider-other-attr config
      * @param plugin_count {Number}
      * @constructor
      */
@@ -502,7 +502,7 @@
         },
 
         /**
-         * Appends slider template to a DOM
+         * Appends slider-other-attr template to a DOM
          */
         append: function () {
             var container_html = '<span class="irs irs--' + this.options.skin + ' js-irs-' + this.plugin_count + ' ' + this.options.extra_classes + '"></span>';
@@ -573,7 +573,7 @@
 
         /**
          * Determine which handler has a priority
-         * works only for double slider type
+         * works only for double slider-other-attr type
          */
         setTopHandler: function () {
             var min = this.options.min,
@@ -622,7 +622,7 @@
         },
 
         /**
-         * Then slider is disabled
+         * Then slider-other-attr is disabled
          * appends extra layer with opacity
          */
         appendDisableMask: function () {
@@ -631,7 +631,7 @@
         },
 
         /**
-         * Then slider is not disabled
+         * Then slider-other-attr is not disabled
          * remove disable mask
          */
         removeDisableMask: function () {
@@ -640,7 +640,7 @@
         },
 
         /**
-         * Remove slider instance
+         * Remove slider-other-attr instance
          * and unbind all events
          */
         remove: function () {
@@ -670,7 +670,7 @@
         },
 
         /**
-         * bind all slider events
+         * bind all slider-other-attr events
          */
         bindEvents: function () {
             if (this.no_diapason) {
@@ -855,7 +855,7 @@
 
         /**
          * Mousedown or touchstart
-         * for other slider elements, like diapason line
+         * for other slider-other-attr elements, like diapason line
          *
          * @param target {String}
          * @param e {Object} event object
@@ -881,7 +881,7 @@
         },
 
         /**
-         * Keyborard controls for focused slider
+         * Keyborard controls for focused slider-other-attr
          *
          * @param target {String}
          * @param e {Object} event object
