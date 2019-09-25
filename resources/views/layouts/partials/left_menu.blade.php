@@ -142,6 +142,10 @@
                         <a class="menu-item" href="{{ route('mixedBundleOffer.index') }} " data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-flask"></i> Mixed Bundle</a>
                     </li>
+                    <li class="{{is_active_url('mixedBundleOffer')}} {{is_active_url('mixed-bundle-offer/filter/create')}}">
+                        <a class="menu-item" href="{{ route('mixed-bundle-offer.filter.create') }} " data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-flask"></i> Mixed Bundle Filter</a>
+                    </li>
                     <li class="{{is_active_url('nearByOffer')}} {{is_active_url('nearByOffer/create')}}">
                         <a class="menu-item" href="{{ route('nearByOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-gift"></i> Near by Offer</a>

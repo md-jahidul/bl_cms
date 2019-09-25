@@ -32,7 +32,7 @@ Route::resource('campaigns','CMS\CampaignController');
 
 });
 
-Route::get('mixed-bundle-offer/filter/create','CMS\MixedBundleFilterController@create');
+Route::get('mixed-bundle-offer/filter/create','CMS\MixedBundleFilterController@create')->name('mixed-bundle-offer.filter.create');
 Route::post('mixed-bundle-offer/filter/price/save','CMS\MixedBundleFilterController@savePriceFilter')->name('mixed-bundle-offer.filter.price.save');
 Route::get('mixed-bundle-offer/filter/price','CMS\MixedBundleFilterController@getPriceFilter')->name('mixed-bundle-offer.filter.price.list');
 
