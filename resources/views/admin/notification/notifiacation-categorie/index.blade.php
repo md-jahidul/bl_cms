@@ -56,7 +56,7 @@
                     <tr>
                         <th width="100">id</th>
                         <th>Tittle</th>
-                        <th width="200">Action</th>
+                        <th width="210">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -66,21 +66,16 @@
                                 <td>{{$notifiactionCategorie->name}}<span class="badge badge-default badge-pill bg-primary float-right">{{$notifiactionCategorie->Notification->count()}}</span></td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-4">
+
+                                        <div class="col-md-3">
                                             <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notifiactionCategorie.edit',$notifiactionCategorie->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-
-                                        <div class="col-md-4">
-                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notifiactionCategorie.edit',$notifiactionCategorie->id)}}" class="btn-pancil btn btn-outline-info" >
-                                                <i class="la la-plus"></i>
-                                            </a>
-                                        </div>
-                                        
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <button data-id="{{$notifiactionCategorie->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
+
                                     </div>
                                 </td>
                             </tr>
