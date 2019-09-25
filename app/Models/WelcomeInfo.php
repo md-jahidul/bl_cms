@@ -14,6 +14,11 @@ class WelcomeInfo extends Model
     protected $table = 'welcome_info';
 
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'guest_salutation',
         'user_salutation',

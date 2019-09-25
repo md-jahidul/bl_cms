@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 
 
 
-$factory->define(NotificationCategory::class, function (Faker\Generator $faker) {
+$factory->define(NotificationCategory::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
     ];
@@ -18,10 +18,10 @@ $factory->define(NotificationCategory::class, function (Faker\Generator $faker) 
 $factory->define(Notification::class, function (Faker $faker) {
     return [
 
-        'title' => $faker->o,
+        'title' => $faker->name,
         'body' => $faker->sentence,
         'category_id' => function () {
-            return factory(App\Club::class)->create()->id;
+            return factory(NotificationCategory::class)->create()->id;
         },
         'status' => 'INPROGRESS'
 

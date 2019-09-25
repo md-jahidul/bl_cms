@@ -14,8 +14,8 @@ class NotificationsTableSeeder extends Seeder
     {
         factory(\App\Models\NotificationCategory::class, 5)->create()->each(function($c) {
 
-            $c->fixtures()->saveMany(
-                factory(\App\Models\Notification::class, 30)->make()
+            $c->notifications()->saveMany(
+                factory(\App\Models\Notification::class, 10)->make()
             );
         });
     }
