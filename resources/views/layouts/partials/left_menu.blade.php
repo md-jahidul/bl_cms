@@ -16,8 +16,8 @@
             <li class="nav-item"><a href="{{ url('footer-menu') }}"><i class="la la-futbol-o"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Footer Management</span></a>
             </li>
-            {{-- <li class="{{ is_active_url('slider') . is_active_url('slider/addImage/') . is_active_url('slider/create') . is_active_url('slider/edit') }}">
-                <a class="nav-item" href="{{ route('slider.index') }}" data-i18n="nav.templates.vert.classic_menu">
+            {{-- <li class="{{ is_active_url('slider-other-attr') . is_active_url('slider-other-attr/addImage/') . is_active_url('slider-other-attr/create') . is_active_url('slider-other-attr/edit') }}">
+                <a class="nav-item" href="{{ route('slider-other-attr.index') }}" data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-sliders"></i>Slider</a>
             </li> --}}
             <li class="nav-item"><a href="{{ url('quick-launch') }}"><i class="la la-automobile"></i>
@@ -110,8 +110,8 @@
                         <a class="menu-item" href="{{ route('banner.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-image"></i>My-BL Banner</a>
                     </li>
-                    <li class="{{ is_active_url('wellcomeInfo') . is_active_url('wellcomeInfo/create')}}">
-                        <a class="menu-item" href="{{ route('wellcomeInfo.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                    <li class="{{ is_active_url('welcomeInfo') . is_active_url('welcomeInfo/create')}}">
+                        <a class="menu-item" href="{{ route('welcomeInfo.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-info-circle"></i>My-BL Welcome Info</a>
                     </li>
                     <li class="{{ is_active_url('contextualcard') . is_active_url('contextualcard/create')}}">
@@ -132,7 +132,7 @@
                     </li>
                     <li class="{{is_active_url('minuteOffer')}} {{is_active_url('minuteOffer/create')}}">
                         <a class="menu-item" href="{{ route('minuteOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
-                            <i class="la la-phone-square"></i> Minuit Offer</a>
+                            <i class="la la-phone-square"></i> Minute Offer</a>
                     </li>
                     <li class="{{is_active_url('smsOffer')}} {{is_active_url('smsOffer/create')}}">
                         <a class="menu-item" href="{{ route('smsOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">

@@ -1,6 +1,6 @@
 /*! jQuery UI - v1.12.1 - 2016-09-14
 * http://jqueryui.com
-* Includes: widget.js, position.js, data.js, disable-selection.js, effect.js, effects/effect-blind.js, effects/effect-bounce.js, effects/effect-clip.js, effects/effect-drop.js, effects/effect-explode.js, effects/effect-fade.js, effects/effect-fold.js, effects/effect-highlight.js, effects/effect-puff.js, effects/effect-pulsate.js, effects/effect-scale.js, effects/effect-shake.js, effects/effect-size.js, effects/effect-slide.js, effects/effect-transfer.js, focusable.js, form-reset-mixin.js, jquery-1-7.js, keycode.js, labels.js, scroll-parent.js, tabbable.js, unique-id.js, widgets/accordion.js, widgets/autocomplete.js, widgets/button.js, widgets/checkboxradio.js, widgets/controlgroup.js, widgets/datepicker.js, widgets/dialog.js, widgets/draggable.js, widgets/droppable.js, widgets/menu.js, widgets/mouse.js, widgets/progressbar.js, widgets/resizable.js, widgets/selectable.js, widgets/selectmenu.js, widgets/slider.js, widgets/sortable.js, widgets/spinner.js, widgets/tabs.js, widgets/tooltip.js
+* Includes: widget.js, position.js, data.js, disable-selection.js, effect.js, effects/effect-blind.js, effects/effect-bounce.js, effects/effect-clip.js, effects/effect-drop.js, effects/effect-explode.js, effects/effect-fade.js, effects/effect-fold.js, effects/effect-highlight.js, effects/effect-puff.js, effects/effect-pulsate.js, effects/effect-scale.js, effects/effect-shake.js, effects/effect-size.js, effects/effect-slide.js, effects/effect-transfer.js, focusable.js, form-reset-mixin.js, jquery-1-7.js, keycode.js, labels.js, scroll-parent.js, tabbable.js, unique-id.js, widgets/accordion.js, widgets/autocomplete.js, widgets/button.js, widgets/checkboxradio.js, widgets/controlgroup.js, widgets/datepicker.js, widgets/dialog.js, widgets/draggable.js, widgets/droppable.js, widgets/menu.js, widgets/mouse.js, widgets/progressbar.js, widgets/resizable.js, widgets/selectable.js, widgets/selectmenu.js, widgets/slider-other-attr.js, widgets/sortable.js, widgets/spinner.js, widgets/tabs.js, widgets/tooltip.js
 * Copyright jQuery Foundation and other contributors; Licensed MIT */
 
 (function( factory ) {
@@ -14473,11 +14473,11 @@ var widgetsSelectmenu = $.widget( "ui.selectmenu", [ $.ui.formResetMixin, {
 
 //>>label: Slider
 //>>group: Widgets
-//>>description: Displays a flexible slider with ranges and accessibility via keyboard.
+//>>description: Displays a flexible slider-other-attr with ranges and accessibility via keyboard.
 //>>docs: http://api.jqueryui.com/slider/
 //>>demos: http://jqueryui.com/slider/
 //>>css.structure: ../../themes/base/core.css
-//>>css.structure: ../../themes/base/slider.css
+//>>css.structure: ../../themes/base/slider-other-attr.css
 //>>css.theme: ../../themes/base/theme.css
 
 
@@ -14512,7 +14512,7 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 		stop: null
 	},
 
-	// Number of pages in a slider
+	// Number of pages in a slider-other-attr
 	// (how many times can you page up/down to go through the whole range)
 	numPages: 5,
 
@@ -14525,7 +14525,7 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 		this._mouseInit();
 		this._calculateNewMax();
 
-		this._addClass( "ui-slider ui-slider-" + this.orientation,
+		this._addClass( "ui-slider-other-attr ui-slider-other-attr-" + this.orientation,
 			"ui-widget ui-widget-content" );
 
 		this._refresh();
@@ -14543,7 +14543,7 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 	_createHandles: function() {
 		var i, handleCount,
 			options = this.options,
-			existingHandles = this.element.find( ".ui-slider-handle" ),
+			existingHandles = this.element.find( ".ui-slider-other-attr-handle" ),
 			handle = "<span tabindex='0'></span>",
 			handles = [];
 
@@ -14566,7 +14566,7 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 
 		this.handles.each( function( i ) {
 			$( this )
-				.data( "ui-slider-handle-index", i )
+				.data( "ui-slider-other-attr-handle-index", i )
 				.attr( "tabIndex", 0 );
 		} );
 	},
@@ -14591,7 +14591,7 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 
 				this._addClass( this.range, "ui-slider-range" );
 			} else {
-				this._removeClass( this.range, "ui-slider-range-min ui-slider-range-max" );
+				this._removeClass( this.range, "ui-slider-other-attr-range-min ui-slider-other-attr-range-max" );
 
 				// Handle range switching from true to min/max
 				this.range.css( {
@@ -14600,7 +14600,7 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 				} );
 			}
 			if ( options.range === "min" || options.range === "max" ) {
-				this._addClass( this.range, "ui-slider-range-" + options.range );
+				this._addClass( this.range, "ui-slider-other-attr-range-" + options.range );
 			}
 		} else {
 			if ( this.range ) {
@@ -14667,7 +14667,7 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 		closestHandle.trigger( "focus" );
 
 		offset = closestHandle.offset();
-		mouseOverHandle = !$( event.target ).parents().addBack().is( ".ui-slider-handle" );
+		mouseOverHandle = !$( event.target ).parents().addBack().is( ".ui-slider-other-attr-handle" );
 		this._clickOffset = mouseOverHandle ? { left: 0, top: 0 } : {
 			left: event.pageX - offset.left - ( closestHandle.width() / 2 ),
 			top: event.pageY - offset.top -
@@ -14886,8 +14886,8 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 		switch ( key ) {
 			case "orientation":
 				this._detectOrientation();
-				this._removeClass( "ui-slider-horizontal ui-slider-vertical" )
-					._addClass( "ui-slider-" + this.orientation );
+				this._removeClass( "ui-slider-other-attr-horizontal ui-slider-other-attr-vertical" )
+					._addClass( "ui-slider-other-attr-" + this.orientation );
 				this._refreshValue();
 				if ( this.options.range ) {
 					this._refreshRange( value );
@@ -15120,7 +15120,7 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 	_handleEvents: {
 		keydown: function( event ) {
 			var allowed, curVal, newVal, step,
-				index = $( event.target ).data( "ui-slider-handle-index" );
+				index = $( event.target ).data( "ui-slider-other-attr-handle-index" );
 
 			switch ( event.keyCode ) {
 				case $.ui.keyCode.HOME:
@@ -15185,7 +15185,7 @@ var widgetsSlider = $.widget( "ui.slider", $.ui.mouse, {
 			this._slide( event, index, newVal );
 		},
 		keyup: function( event ) {
-			var index = $( event.target ).data( "ui-slider-handle-index" );
+			var index = $( event.target ).data( "ui-slider-other-attr-handle-index" );
 
 			if ( this._keySliding ) {
 				this._keySliding = false;

@@ -519,7 +519,7 @@
                 .data('originalStyling', $(element).attr('style') || '');
         });
 
-        _.$slider.addClass('slick-slider');
+        _.$slider.addClass('slick-slider-other-attr');
 
         _.$slideTrack = (_.slideCount === 0) ?
             $('<div class="slick-track"/>').appendTo(_.$slider) :
@@ -903,7 +903,7 @@
 
         _.cleanUpRows();
 
-        _.$slider.removeClass('slick-slider');
+        _.$slider.removeClass('slick-slider-other-attr');
         _.$slider.removeClass('slick-initialized');
         _.$slider.removeClass('slick-dotted');
 

@@ -19,9 +19,9 @@
                         <thead>
                         <tr>
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                            <th>Title</th>
+                            <th width="25%">Title</th>
                             <th>Image</th>
-                            <th>Description</th>
+{{--                            <th>Description</th>--}}
                             <th>Alt Text</th>
                             <th>Button Label</th>
                             <th class="text-right">Action</th>
@@ -33,7 +33,7 @@
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $slider_image->title }} {!! $slider_image->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                 <td><img class="" src="{{ $slider_image->image_url }}" alt="Slider Image" height="50" width="50" /></td>
-                                <td>{{ $slider_image->description }}</td>
+{{--                                <td>{{ $slider_image->description }}</td>--}}
                                 <td>{{ $slider_image->alt_text }}</td>
                                 <td>{{ $slider_image->url_btn_label }}</td>
                                 <td class="action" width="8%">

@@ -6,7 +6,7 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /*! =========================================================
- * bootstrap-slider.js
+ * bootstrap-slider-other-attr.js
  *
  * Maintainers:
  *		Kyle Kemp
@@ -18,7 +18,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  *
  * =========================================================
  *
- * bootstrap-slider is released under the MIT License
+ * bootstrap-slider-other-attr is released under the MIT License
  * Copyright (c) 2019 Kyle Kemp, Rohit Kalkur, and contributors
  *
  * Permission is hereby granted, free of charge, to any person
@@ -223,7 +223,7 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 			formatInvalidInputErrorMsg: function formatInvalidInputErrorMsg(input) {
 				return "Invalid input value '" + input + "' passed in";
 			},
-			callingContextNotSliderInstance: "Calling context element does not have instance of Slider bound to it. Check your code to make sure the JQuery object returned from the call to the slider() initializer is calling the method"
+			callingContextNotSliderInstance: "Calling context element does not have instance of Slider bound to it. Check your code to make sure the JQuery object returned from the call to the slider-other-attr() initializer is calling the method"
 		};
 
 		var SliderScale = {
@@ -334,7 +334,7 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 		function createNewSlider(element, options) {
 
 			/*
-   	The internal state object is used to store data about the current 'state' of slider.
+   	The internal state object is used to store data about the current 'state' of slider-other-attr.
    	This includes values such as the `value`, `enabled`, etc...
    */
 			this._state = {
@@ -422,7 +422,7 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 			}
 
 			function getDataAttrib(element, optName) {
-				var dataName = "data-slider-" + optName.replace(/_/g, '-');
+				var dataName = "data-slider-other-attr-" + optName.replace(/_/g, '-');
 				var dataValString = element.getAttribute(dataName);
 
 				try {
@@ -447,31 +447,31 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 			if (this.sliderElem) {
 				updateSlider = true;
 			} else {
-				/* Create elements needed for slider */
+				/* Create elements needed for slider-other-attr */
 				this.sliderElem = document.createElement("div");
 				this.sliderElem.className = "slider";
 
-				/* Create slider track elements */
+				/* Create slider-other-attr track elements */
 				var sliderTrack = document.createElement("div");
-				sliderTrack.className = "slider-track";
+				sliderTrack.className = "slider-other-attr-track";
 
 				sliderTrackLow = document.createElement("div");
-				sliderTrackLow.className = "slider-track-low";
+				sliderTrackLow.className = "slider-other-attr-track-low";
 
 				sliderTrackSelection = document.createElement("div");
-				sliderTrackSelection.className = "slider-selection";
+				sliderTrackSelection.className = "slider-other-attr-selection";
 
 				sliderTrackHigh = document.createElement("div");
-				sliderTrackHigh.className = "slider-track-high";
+				sliderTrackHigh.className = "slider-other-attr-track-high";
 
 				sliderMinHandle = document.createElement("div");
-				sliderMinHandle.className = "slider-handle min-slider-handle";
+				sliderMinHandle.className = "slider-other-attr-handle min-slider-other-attr-handle";
 				sliderMinHandle.setAttribute('role', 'slider');
 				sliderMinHandle.setAttribute('aria-valuemin', this.options.min);
 				sliderMinHandle.setAttribute('aria-valuemax', this.options.max);
 
 				sliderMaxHandle = document.createElement("div");
-				sliderMaxHandle.className = "slider-handle max-slider-handle";
+				sliderMaxHandle.className = "slider-other-attr-handle max-slider-other-attr-handle";
 				sliderMaxHandle.setAttribute('role', 'slider');
 				sliderMaxHandle.setAttribute('aria-valuemin', this.options.min);
 				sliderMaxHandle.setAttribute('aria-valuemax', this.options.max);
@@ -487,7 +487,7 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 					for (var j = 0; j < rangeHighlightsOpts.length; j++) {
 						var rangeHighlightElement = document.createElement("div");
 						var customClassString = rangeHighlightsOpts[j].class || "";
-						rangeHighlightElement.className = "slider-rangeHighlight slider-selection " + customClassString;
+						rangeHighlightElement.className = "slider-other-attr-rangeHighlight slider-other-attr-selection " + customClassString;
 						this.rangeHighlightElements.push(rangeHighlightElement);
 						sliderTrack.appendChild(rangeHighlightElement);
 					}
@@ -510,11 +510,11 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 				this.ticks = [];
 				if (Array.isArray(this.options.ticks) && this.options.ticks.length > 0) {
 					this.ticksContainer = document.createElement('div');
-					this.ticksContainer.className = 'slider-tick-container';
+					this.ticksContainer.className = 'slider-other-attr-tick-container';
 
 					for (i = 0; i < this.options.ticks.length; i++) {
 						var tick = document.createElement('div');
-						tick.className = 'slider-tick';
+						tick.className = 'slider-other-attr-tick';
 						if (this.options.ticks_tooltip) {
 							var tickListenerReference = this._addTickListener();
 							var enterCallback = tickListenerReference.addMouseEnter(this, tick, i);
@@ -529,19 +529,19 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 						this.ticksContainer.appendChild(tick);
 					}
 
-					sliderTrackSelection.className += " tick-slider-selection";
+					sliderTrackSelection.className += " tick-slider-other-attr-selection";
 				}
 
 				this.tickLabels = [];
 				if (Array.isArray(this.options.ticks_labels) && this.options.ticks_labels.length > 0) {
 					this.tickLabelContainer = document.createElement('div');
-					this.tickLabelContainer.className = 'slider-tick-label-container';
+					this.tickLabelContainer.className = 'slider-other-attr-tick-label-container';
 
 					for (i = 0; i < this.options.ticks_labels.length; i++) {
 						var label = document.createElement('div');
 						var noTickPositionsSpecified = this.options.ticks_positions.length === 0;
 						var tickLabelsIndex = this.options.reversed && noTickPositionsSpecified ? this.options.ticks_labels.length - (i + 1) : i;
-						label.className = 'slider-tick-label';
+						label.className = 'slider-other-attr-tick-label';
 						label.innerHTML = this.options.ticks_labels[tickLabelsIndex];
 
 						this.tickLabels.push(label);
@@ -592,7 +592,7 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 				this.sliderElem.appendChild(sliderMinHandle);
 				this.sliderElem.appendChild(sliderMaxHandle);
 
-				/* Append slider element to parent container, right before the original <input> element */
+				/* Append slider-other-attr element to parent container, right before the original <input> element */
 				parent.insertBefore(this.sliderElem, this.element);
 
 				/* Hide original <input> element */
@@ -630,9 +630,9 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 
 			if (updateSlider === true) {
 				// Reset classes
-				this._removeClass(this.sliderElem, 'slider-horizontal');
-				this._removeClass(this.sliderElem, 'slider-vertical');
-				this._removeClass(this.sliderElem, 'slider-rtl');
+				this._removeClass(this.sliderElem, 'slider-other-attr-horizontal');
+				this._removeClass(this.sliderElem, 'slider-other-attr-vertical');
+				this._removeClass(this.sliderElem, 'slider-other-attr-rtl');
 				this._removeClass(this.tooltip, 'hide');
 				this._removeClass(this.tooltip_min, 'hide');
 				this._removeClass(this.tooltip_max, 'hide');
@@ -664,12 +664,12 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 			}
 
 			if (this.options.orientation === 'vertical') {
-				this._addClass(this.sliderElem, 'slider-vertical');
+				this._addClass(this.sliderElem, 'slider-other-attr-vertical');
 				this.stylePos = 'top';
 				this.mousePos = 'pageY';
 				this.sizePos = 'offsetHeight';
 			} else {
-				this._addClass(this.sliderElem, 'slider-horizontal');
+				this._addClass(this.sliderElem, 'slider-other-attr-horizontal');
 				this.sliderElem.style.width = origWidth;
 				this.options.orientation = 'horizontal';
 				if (this.options.rtl) {
@@ -682,7 +682,7 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 			}
 			// specific rtl class
 			if (this.options.rtl) {
-				this._addClass(this.sliderElem, 'slider-rtl');
+				this._addClass(this.sliderElem, 'slider-other-attr-rtl');
 			}
 			this._setTooltipPosition();
 			/* In case ticks are specified, overwrite the min and max bounds */
@@ -965,10 +965,10 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 			},
 
 			destroy: function destroy() {
-				// Remove event handlers on slider elements
+				// Remove event handlers on slider-other-attr elements
 				this._removeSliderEventHandlers();
 
-				// Remove the slider from the DOM
+				// Remove the slider-other-attr from the DOM
 				this.sliderElem.parentNode.removeChild(this.sliderElem);
 				/* Show original <input> element */
 				this.element.style.display = "";
@@ -993,7 +993,7 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 				this._state.enabled = false;
 				this.handle1.removeAttribute("tabindex");
 				this.handle2.removeAttribute("tabindex");
-				this._addClass(this.sliderElem, 'slider-disabled');
+				this._addClass(this.sliderElem, 'slider-other-attr-disabled');
 				this._trigger('slideDisabled');
 
 				return this;
@@ -1003,7 +1003,7 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 				this._state.enabled = true;
 				this.handle1.setAttribute("tabindex", 0);
 				this.handle2.setAttribute("tabindex", 0);
-				this._removeClass(this.sliderElem, 'slider-disabled');
+				this._removeClass(this.sliderElem, 'slider-other-attr-disabled');
 				this._trigger('slideEnabled');
 
 				return this;
@@ -1053,12 +1053,12 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 				var currentValue = this.getValue();
 				this._removeSliderEventHandlers();
 				createNewSlider.call(this, this.element, this.options);
-				// Don't reset slider's value on refresh if `useCurrentValue` is true
+				// Don't reset slider-other-attr's value on refresh if `useCurrentValue` is true
 				if (options && options.useCurrentValue === true) {
 					this.setValue(currentValue);
 				}
 				if ($) {
-					// Bind new instance of slider to the element
+					// Bind new instance of slider-other-attr to the element
 					if (autoRegisterNamespace === NAMESPACE_MAIN) {
 						$.data(this.element, NAMESPACE_MAIN, this);
 						$.data(this.element, NAMESPACE_ALTERNATE, this);
@@ -1715,7 +1715,7 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 					return;
 				}
 
-				// Prevent page from scrolling and only drag the slider
+				// Prevent page from scrolling and only drag the slider-other-attr
 				if (ev.preventDefault) {
 					ev.preventDefault();
 				}
@@ -1846,14 +1846,14 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 				if (this.stylePos === 'right') {
 					distanceToSlide = -distanceToSlide;
 				}
-				// Calculate what percent of the length the slider handle has slid
+				// Calculate what percent of the length the slider-other-attr handle has slid
 				var percentage = distanceToSlide / this._state.size * 100;
 				percentage = Math.round(percentage / this._state.percentage[2]) * this._state.percentage[2];
 				if (this.options.reversed) {
 					percentage = 100 - percentage;
 				}
 
-				// Make sure the percent is within the bounds of the slider.
+				// Make sure the percent is within the bounds of the slider-other-attr.
 				// 0% corresponds to the 'min' value of the slide
 				// 100% corresponds to the 'max' value of the slide
 				return Math.max(0, Math.min(100, percentage));
@@ -2026,8 +2026,8 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 				return index;
 			},
 			/**
-    * Attempts to find the index in `ticks[]` the slider values are set at.
-    * The indexes can be -1 to indicate the slider value is not set at a value in `ticks[]`.
+    * Attempts to find the index in `ticks[]` the slider-other-attr values are set at.
+    * The indexes can be -1 to indicate the slider-other-attr value is not set at a value in `ticks[]`.
     */
 			_setTickIndex: function _setTickIndex() {
 				if (this.ticksAreValid) {
@@ -2045,15 +2045,15 @@ var windowIsDefined = (typeof window === "undefined" ? "undefined" : _typeof(win
 				autoRegisterNamespace = NAMESPACE_MAIN;
 			} else {
 				if (windowIsDefined) {
-					window.console.warn("bootstrap-slider.js - WARNING: $.fn.slider namespace is already bound. Use the $.fn.bootstrapSlider namespace instead.");
+					window.console.warn("bootstrap-slider-other-attr.js - WARNING: $.fn.slider-other-attr namespace is already bound. Use the $.fn.bootstrapSlider namespace instead.");
 				}
 				autoRegisterNamespace = NAMESPACE_ALTERNATE;
 			}
 			$.bridget(NAMESPACE_ALTERNATE, Slider);
 
-			// Auto-Register data-provide="slider" Elements
+			// Auto-Register data-provide="slider-other-attr" Elements
 			$(function () {
-				$("input[data-provide=slider]")[autoRegisterNamespace]();
+				$("input[data-provide=slider-other-attr]")[autoRegisterNamespace]();
 			});
 		}
 	})($);

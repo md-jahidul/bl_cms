@@ -15,12 +15,18 @@ class SliderImageRepository extends BaseRepository
 {
     public $modelName = SliderImage::class;
 
+    public function getSliderImage($sliderId, $type)
+    {
+        return $this->model->where('slider_id', $sliderId)->orderBy('sequence')->get();
+    }
+
     public function is_sequence_exist($sequence,$slider_id){
         $image_sequence = DB::table('slider_images')
                     ->where('slider_id',$slider_id)
                     ->where('sequence',$sequence)->get();
         return empty($image_sequence->all());
     }
+
     public function sliderImage($slider_id){
         return DB::table('slider_images')->where('slider_id',$slider_id)->orderBy('sequence', 'desc')->first();
     }
