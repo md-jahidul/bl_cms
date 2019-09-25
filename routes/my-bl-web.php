@@ -104,14 +104,14 @@ Route::group(['middleware' => ['appAdmin']], function () {
     // contextual cards
     route::resource('contextualcard','CMS\ContextualCardController');
     Route::get('card/destroy/{id}','CMS\ContextualCardController@destroy');
-
-    // Notifiaction Categorie
-    route::resource('notifiactionCategorie','CMS\NotifiactionCategorieController');
-    Route::get('notifiactionCategorie/destroy/{id}','CMS\NotifiactionCategorieController@destroy');
-
-    // Notifiaction
-    route::resource('notifiaction','CMS\NotifiactionController');
-    Route::get('notifiaction/destroy/{id}','CMS\NotifiactionController@destroy');
+    
+    // Notification categorys
+    route::resource('notificationCategory','CMS\NotificationCategoryController');
+    Route::get('notificationCategory/destroy/{id}','CMS\NotificationCategoryController@destroy');
+    
+    // Notification
+    route::resource('notification','CMS\NotificationController');
+    Route::get('notification/destroy/{id}','CMS\NotificationController@destroy');
 
 });
 

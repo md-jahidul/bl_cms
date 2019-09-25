@@ -37,26 +37,26 @@
             </li>
 
             <li class="nav-item"><a href="#"><i class="la la-question"></i>
-                        <span class="menu-title" data-i18n="nav.templates.main">Quiz Management</span></a>
+                    <span class="menu-title" data-i18n="nav.templates.main">Quiz Management</span></a>
                     <ul class="menu-content">
-                        {{--Tag--}}
-                        <li class="{{ is_active_url('tags') . is_active_url('tags/create')}}">
-                            <a class="menu-item" href="{{ url('tags') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                        class="la la-tags"></i> Tag</a>
-                        </li>
-                        <li class="{{ is_active_url('campaigns') . is_active_url('campaigns/create')}}">
-                            <a class="menu-item" href="{{ url('campaigns') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                        class="la la-bullhorn"></i> Campaign</a>
-                        </li>
-                        <li class="{{ is_active_url('questions') . is_active_url('questions/create')}}">
-                            <a class="menu-item" href="{{ url('questions') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                        class="la la-question"></i> Question</a>
-                        </li>
+                    {{--Tag--}}
+                    <li class="{{ is_active_url('tags') . is_active_url('tags/create')}}">
+                        <a class="menu-item" href="{{ url('tags') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-tags"></i> Tag</a>
+                    </li>
+                    <li class="{{ is_active_url('campaigns') . is_active_url('campaigns/create')}}">
+                        <a class="menu-item" href="{{ url('campaigns') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-bullhorn"></i> Campaign</a>
+                    </li>
+                    <li class="{{ is_active_url('questions') . is_active_url('questions/create')}}">
+                        <a class="menu-item" href="{{ url('questions') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-question"></i> Question</a>
+                    </li>
 
-                        <li class="{{ is_active_url('prizes') . is_active_url('prizes/create')}}">
-                            <a class="menu-item" href="{{ url('prizes') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                        class="la la-trophy"></i> Prize</a>
-                        </li>
+                    <li class="{{ is_active_url('prizes') . is_active_url('prizes/create')}}">
+                        <a class="menu-item" href="{{ url('prizes') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-trophy"></i> Prize</a>
+                    </li>
 
                 </ul>
             </li>
@@ -87,13 +87,13 @@
                 <span class="menu-title" data-i18n="nav.templates.main">Notification</span></a>
                 <ul class="menu-content">
                     {{--page--}}
-                    <li class="{{is_active_url('notifiactionCategorie')}}">
-                        <a class="menu-item" href="{{ route('notifiactionCategorie.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                    <li class="{{ is_active_url('notificationCategory') }}{{ is_active_url('notificationCategory/create') }}">
+                        <a class="menu-item" href="{{ route('notificationCategory.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-server"></i>Notification Category
                         </a>
                     </li>
-                    <li class="{{is_active_url('notifiaction')}}{{is_active_url('notifiaction/create')}}">
-                        <a class="menu-item" href="{{ route('notifiaction.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                    <li class="{{ is_active_url('notification') }}{{ is_active_url('notification/create') }}">
+                        <a class="menu-item" href="{{ route('notification.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-comment-o"></i>Notification</a>
                     </li>
                 </ul>
@@ -110,7 +110,7 @@
                         <a class="menu-item" href="{{ route('banner.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-image"></i>My-BL Banner</a>
                     </li>
-                    <li class="{{ is_active_url('welcomeInfo') . is_active_url('welcomeInfo')}}">
+                    <li class="{{ is_active_url('welcomeInfo') . is_active_url('welcomeInfo/create')}} . @if(isset($welcomeInfo)) {{is_active_url('welcomeInfo/'.$welcomeInfo->id.'/edit')}} @endif">
                         <a class="menu-item" href="{{ route('welcomeInfo.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-info-circle"></i>My-BL Welcome Info</a>
                     </li>

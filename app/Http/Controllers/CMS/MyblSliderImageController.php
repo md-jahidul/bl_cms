@@ -108,9 +108,10 @@ class MyblSliderImageController extends Controller
      */
     public function edit($id)
     {
+        
         $slider = $this->sliderService->findOne($id);
         return view('admin.myblslider.edit_image_to_slider')
-                ->with('slider-other-attr',$slider)
+                ->with('slider',$slider)
                 ->with('slider_information',$this->sliderService->findOne($id));
     }
 

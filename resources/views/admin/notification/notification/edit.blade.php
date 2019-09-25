@@ -9,7 +9,7 @@
 <div class="card mb-0 px-1" style="box-shadow:none;">        
     <div class="card-content">
         <div class="card-body">
-            <form class="form" method="post" action="{{route('notifiaction.update',$notifiaction->id)}}">
+            <form class="form" method="post" action="{{route('notification.update',$notification->id)}}">
                 @csrf
                 @method('put')
                 
@@ -20,21 +20,21 @@
                     <div class="row">
 
                         <div class="col-md-6">
-                            <input type="hidden" name="id" value="{{$notifiaction->id}}">
+                            <input type="hidden" name="id" value="{{$notification->id}}">
                             <div class="form-group">
                                 <label for="title">Title :</label>
-                                <input name="title" style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @else {{$notifiaction->title}} @endif" max="200" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
+                                <input name="title" style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @else {{$notification->title}} @endif" max="200" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
                                 <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="category_id">Categorie :</label>
+                                <label for="category_id">Category :</label>
                                 <select class="form-control @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
-                                    <option value="0">Select Categorie</option>
-                                    @foreach ($categories as $categorie)
-                                        <option @if(old("category_id")) {{ (old("category_id") == $categorie->id ? "selected":"") }}  @elseif($categorie->id == $notifiaction->category_id) selected  @endif value="{{$categorie->id}}">{{$categorie->name}}</option>
+                                    <option value="0">Select category</option>
+                                    @foreach ($categories as $category)
+                                        <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}  @elseif($category->id == $notification->category_id) selected  @endif value="{{$category->id}}">{{$category->name}}</option>
                                     @endforeach
                                 </select>
                                 <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
@@ -44,7 +44,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="body">Body :</label>
-                                <textarea class="form-control @error('body') is-invalid @enderror" placeholder="Enter body description....." id="body" name="body" rows="10">@if(old('body')){{old('body')}} @else {{$notifiaction->title}}@endif</textarea>
+                                <textarea class="form-control @error('body') is-invalid @enderror" placeholder="Enter body description....." id="body" name="body" rows="10">@if(old('body')){{old('body')}} @else {{$notification->title}}@endif</textarea>
                                 <small class="text-danger"> @error('body') {{ $message }} @enderror </small>
                             </div>
                         </div>

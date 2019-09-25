@@ -10,7 +10,7 @@ namespace App\Repositories;
 
 use App\Models\Notification;
 
-class NotifiactionRepository extends BaseRepository
+class NotificationRepository extends BaseRepository
 {
     public $modelName = Notification::class;
 }
