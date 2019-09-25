@@ -105,8 +105,7 @@ class NearbyOfferController extends Controller
      */
     public function destroy($id)
     {
-        //return $id;
-        session()->flash('success',$this->nearbyOfferService->deleteNearbyOffer($id));
-        return redirect(route('nearByOffer.index'));
+        session()->flash('error',$this->nearbyOfferService->deleteNearbyOffer($id));
+        return url('nearByOffer');
     }
 }

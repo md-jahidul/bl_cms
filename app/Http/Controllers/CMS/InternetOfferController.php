@@ -104,7 +104,7 @@ class InternetOfferController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('success',$this->internetOfferService->destroyInternetOffer($id)->getContent());
-        return redirect(route('internetOffer.index'));
+        session()->flash('error',$this->internetOfferService->destroyInternetOffer($id)->getContent());
+        return url('internetOffer');
     }
 }

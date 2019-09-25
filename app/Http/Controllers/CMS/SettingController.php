@@ -107,7 +107,7 @@ class SettingController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('success',$this->settingService->destroySetting($id)->getContent());
-        return redirect(route('setting.index'));
+        session()->flash('error',$this->settingService->destroySetting($id)->getContent());
+        return url('setting');
     }
 }

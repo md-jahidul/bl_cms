@@ -111,7 +111,7 @@ class AmarOfferController extends Controller
     public function destroy($id)
     {
         $response = $this->amarOfferService->deleteAmarOffer($id);
-        Session()->flash('danger', $response->content());
-        return redirect(route('amarOffer.index'));
+        Session()->flash('error', $response->content());
+        return url('amarOffer');
     }
 }

@@ -195,7 +195,7 @@
             $('#Example1').DataTable({
                 dom: 'Bfrtip',
                 buttons: [],
-                "pageLength": 5,
+                "pageLength": 10,
                 paging: true,
                 searching: true,
                 "bDestroy": true,

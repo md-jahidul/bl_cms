@@ -123,7 +123,7 @@ class MyblSliderController extends Controller
     public function destroy($id)
     {
         //return $slider;
-        session()->flash('danger',$this->sliderService->deleteSlider($id)->getContent());
-        return redirect(route('myblslider.index'));
+        session()->flash('error',$this->sliderService->deleteSlider($id)->getContent());
+        return url('myblslider');
     }
 }
