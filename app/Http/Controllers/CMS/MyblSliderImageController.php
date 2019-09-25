@@ -45,12 +45,12 @@ class MyblSliderImageController extends Controller
      */
     public function index($sliderId)
     {
-        
+
         return view('admin.myblslider.add_image_to_slider')
                     ->with('sliderId',$sliderId)
                     ->with('slider_information',$this->sliderService->findOne($sliderId));
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -96,10 +96,10 @@ class MyblSliderImageController extends Controller
         foreach ($request->positions as $position) {
             $image = SliderImage::FindorFail($position[0]);
             $image->update(['sequence' => $position[1]]);
-        } 
+        }
         return "success";
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -110,7 +110,7 @@ class MyblSliderImageController extends Controller
     {
         $slider = $this->sliderService->findOne($id);
         return view('admin.myblslider.edit_image_to_slider')
-                ->with('slider',$slider)
+                ->with('slider-other-attr',$slider)
                 ->with('slider_information',$this->sliderService->findOne($id));
     }
 

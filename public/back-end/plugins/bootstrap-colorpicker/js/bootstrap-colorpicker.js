@@ -3702,7 +3702,7 @@ var SliderHandler = function () {
   }
 
   /**
-   * This function is called every time a slider guide is moved
+   * This function is called every time a slider-other-attr guide is moved
    * The scope of "this" is the SliderHandler object.
    *
    * @param {int} top
@@ -3803,7 +3803,7 @@ var SliderHandler = function () {
 
       var target = (0, _jquery2.default)(e.target);
 
-      // detect the slider and set the limits and callbacks
+      // detect the slider-other-attr and set the limits and callbacks
       var zone = target.closest('div');
       var sliders = this.colorpicker.options.horizontal ? this.colorpicker.options.slidersHorz : this.colorpicker.options.sliders;
 
@@ -3825,7 +3825,7 @@ var SliderHandler = function () {
           break;
         } else if (slider.childSelector !== undefined && zone.is(slider.childSelector)) {
           this.currentSlider = _jquery2.default.extend({}, slider, { name: sliderName });
-          zone = zone.parent(); // zone.parents(slider.selector).first() ?
+          zone = zone.parent(); // zone.parents(slider-other-attr.selector).first() ?
           break;
         }
       }

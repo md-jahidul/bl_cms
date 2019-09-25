@@ -23,9 +23,12 @@ class SliderTableSeeder extends Seeder
                 'description' => 'Description of ' . $slider,
                 'short_code' => '[slider_'.++$key .']',
                 'platform' => 'web',
-                'other_attributes' => [
-                    'sliding_speed' => 5,
-                ]
+                'other_attributes' => ($slider == 'Digital Services') ? [
+                    'sliding_speed' => 10,
+                    'view_list_btn_text_en' => "View all $slider",
+                    'view_list_btn_text_bn' => "সমস্ত পরিষেবা দেখুন",
+                    'view_list_url' => "/view-all-digital-service",
+                ] : []
             ]);
         }
     }

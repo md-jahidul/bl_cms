@@ -1,6 +1,6 @@
 /*=========================================================================================
-	File Name: noui-slider.js
-	Description: noUiSlider is a lightweight JavaScript range slider library.
+	File Name: noui-slider-other-attr.js
+	Description: noUiSlider is a lightweight JavaScript range slider-other-attr library.
 	----------------------------------------------------------------------------------------
 	Item Name: Modern Admin - Clean Bootstrap 4 Dashboard HTML Template
 	Version: 1.0
@@ -15,7 +15,7 @@ $(document).ready(function(){
 	********************************************/
 
 	// Handles
-    var handlesSlider = document.getElementById('slider-handles');
+    var handlesSlider = document.getElementById('slider-other-attr-handles');
 
 	noUiSlider.create(handlesSlider, {
 		start: [ 4000, 8000 ],
@@ -27,7 +27,7 @@ $(document).ready(function(){
 
 
 	// Range
-	var rangeSlider = document.getElementById('slider-range');
+	var rangeSlider = document.getElementById('slider-other-attr-range');
 
 	noUiSlider.create(rangeSlider, {
 		start: [4000],
@@ -39,7 +39,7 @@ $(document).ready(function(){
 
 
 	// Stepping and snapping to values
-	var stepSlider = document.getElementById('slider-step');
+	var stepSlider = document.getElementById('slider-other-attr-step');
 
 	noUiSlider.create(stepSlider, {
 		start: [4000],
@@ -52,7 +52,7 @@ $(document).ready(function(){
 
 
 	// Non-linear sliders
-	var nonLinearSlider = document.getElementById('slider-non-linear');
+	var nonLinearSlider = document.getElementById('slider-other-attr-non-linear');
 
 	noUiSlider.create(nonLinearSlider, {
 		start: [4000],
@@ -66,7 +66,7 @@ $(document).ready(function(){
 
 
 	// Stepping in non-linear sliders
-	var nonLinearStepSlider = document.getElementById('slider-non-linear-step');
+	var nonLinearStepSlider = document.getElementById('slider-other-attr-non-linear-step');
 
 	noUiSlider.create(nonLinearStepSlider, {
 		start: [500, 4000],
@@ -80,7 +80,7 @@ $(document).ready(function(){
 
 
 	// Snapping between steps
-	var snapSlider = document.getElementById('slider-snap');
+	var snapSlider = document.getElementById('slider-other-attr-snap');
 
 	noUiSlider.create(snapSlider, {
 		start: [0, 500],
@@ -336,7 +336,7 @@ $(document).ready(function(){
 	********************************************/
 
 	// Default
-	var defaultColorSlider = document.getElementById('default-color-slider');
+	var defaultColorSlider = document.getElementById('default-color-slider-other-attr');
 
 	noUiSlider.create(defaultColorSlider, {
 		start: [45,55],
@@ -350,7 +350,7 @@ $(document).ready(function(){
 
 
 	// Success
-	var successColorSlider = document.getElementById('success-color-slider');
+	var successColorSlider = document.getElementById('success-color-slider-other-attr');
 
 	noUiSlider.create(successColorSlider, {
 		start: [40,60],
@@ -364,7 +364,7 @@ $(document).ready(function(){
 
 
 	// Info
-	var infoColorSlider = document.getElementById('info-color-slider');
+	var infoColorSlider = document.getElementById('info-color-slider-other-attr');
 
 	noUiSlider.create(infoColorSlider, {
 		start: [35,65],
@@ -378,7 +378,7 @@ $(document).ready(function(){
 
 
 	// Warning
-	var warningColorSlider = document.getElementById('warning-color-slider');
+	var warningColorSlider = document.getElementById('warning-color-slider-other-attr');
 
 	noUiSlider.create(warningColorSlider, {
 		start: [45,55],
@@ -392,7 +392,7 @@ $(document).ready(function(){
 
 
 	// Danger
-	var dangerColorSlider = document.getElementById('danger-color-slider');
+	var dangerColorSlider = document.getElementById('danger-color-slider-other-attr');
 
 	noUiSlider.create(dangerColorSlider, {
 		start: [40, 60],
@@ -406,7 +406,7 @@ $(document).ready(function(){
 
 
 	// Custom Color
-	var customColorSlider = document.getElementById('custom-color-slider');
+	var customColorSlider = document.getElementById('custom-color-slider-other-attr');
 
 	noUiSlider.create(customColorSlider, {
 		start: [35,65],
@@ -475,45 +475,45 @@ $(document).ready(function(){
 	};
 
 	// Extra Large
-	var extraLargeSlider = document.getElementById('extra-large-slider');
-	var circleExtraLargeSlider = document.getElementById('circle-extra-large-slider');
-	var squareExtraLargeSlider = document.getElementById('square-extra-large-slider');
+	var extraLargeSlider = document.getElementById('extra-large-slider-other-attr');
+	var circleExtraLargeSlider = document.getElementById('circle-extra-large-slider-other-attr');
+	var squareExtraLargeSlider = document.getElementById('square-extra-large-slider-other-attr');
 
 	noUiSlider.create(extraLargeSlider, xl_options);
 	noUiSlider.create(circleExtraLargeSlider, xl_options);
 	noUiSlider.create(squareExtraLargeSlider, xl_options);
 
 	// Large
-	var largeSlider = document.getElementById('large-slider');
-	var circleLargeSlider = document.getElementById('circle-large-slider');
-	var squareLargeSlider = document.getElementById('square-large-slider');
+	var largeSlider = document.getElementById('large-slider-other-attr');
+	var circleLargeSlider = document.getElementById('circle-large-slider-other-attr');
+	var squareLargeSlider = document.getElementById('square-large-slider-other-attr');
 
 	noUiSlider.create(largeSlider, lg_options);
 	noUiSlider.create(circleLargeSlider, lg_options);
 	noUiSlider.create(squareLargeSlider, lg_options);
 
 	// Default
-	var defaultSlider = document.getElementById('default-slider');
-	var circleDefaultSlider = document.getElementById('circle-default-slider');
-	var squareDefaultSlider = document.getElementById('square-default-slider');
+	var defaultSlider = document.getElementById('default-slider-other-attr');
+	var circleDefaultSlider = document.getElementById('circle-default-slider-other-attr');
+	var squareDefaultSlider = document.getElementById('square-default-slider-other-attr');
 
 	noUiSlider.create(defaultSlider, default_options);
 	noUiSlider.create(circleDefaultSlider, default_options);
 	noUiSlider.create(squareDefaultSlider, default_options);
 
 	// Small
-	var smallSlider = document.getElementById('small-slider');
-	var circleSmallSlider = document.getElementById('circle-small-slider');
-	var squareSmallSlider = document.getElementById('square-small-slider');
+	var smallSlider = document.getElementById('small-slider-other-attr');
+	var circleSmallSlider = document.getElementById('circle-small-slider-other-attr');
+	var squareSmallSlider = document.getElementById('square-small-slider-other-attr');
 
 	noUiSlider.create(smallSlider, sm_options);
 	noUiSlider.create(circleSmallSlider, sm_options);
 	noUiSlider.create(squareSmallSlider, sm_options);
 
 	// Extra Small
-	var extraSmallSlider = document.getElementById('extra-small-slider');
-	var circleExtraSmallSlider = document.getElementById('circle-extra-small-slider');
-	var squareExtraSmallSlider = document.getElementById('square-extra-small-slider');
+	var extraSmallSlider = document.getElementById('extra-small-slider-other-attr');
+	var circleExtraSmallSlider = document.getElementById('circle-extra-small-slider-other-attr');
+	var squareExtraSmallSlider = document.getElementById('square-extra-small-slider-other-attr');
 
 	noUiSlider.create(extraSmallSlider, xs_options);
 	noUiSlider.create(circleExtraSmallSlider, xs_options);
@@ -525,7 +525,7 @@ $(document).ready(function(){
 	********************************************/
 
 	// Default
-	var vertical_slider_1 = document.getElementById('slider-vertical-1');
+	var vertical_slider_1 = document.getElementById('slider-other-attr-vertical-1');
 
 	noUiSlider.create(vertical_slider_1, {
 		start: 20,
@@ -536,7 +536,7 @@ $(document).ready(function(){
 		}
 	});
 
-	var vertical_slider_2 = document.getElementById('slider-vertical-2');
+	var vertical_slider_2 = document.getElementById('slider-other-attr-vertical-2');
 
 	noUiSlider.create(vertical_slider_2, {
 		start: 50,
@@ -547,7 +547,7 @@ $(document).ready(function(){
 		}
 	});
 
-	var vertical_slider_3 = document.getElementById('slider-vertical-3');
+	var vertical_slider_3 = document.getElementById('slider-other-attr-vertical-3');
 
 	noUiSlider.create(vertical_slider_3, {
 		start: 20,
@@ -558,7 +558,7 @@ $(document).ready(function(){
 		}
 	});
 
-	var vertical_slider_4 = document.getElementById('slider-vertical-4');
+	var vertical_slider_4 = document.getElementById('slider-other-attr-vertical-4');
 
 	noUiSlider.create(vertical_slider_4, {
 		start: 50,
@@ -569,7 +569,7 @@ $(document).ready(function(){
 		}
 	});
 
-	var vertical_slider_5 = document.getElementById('slider-vertical-5');
+	var vertical_slider_5 = document.getElementById('slider-other-attr-vertical-5');
 
 	noUiSlider.create(vertical_slider_5, {
 		start: 20,
@@ -706,7 +706,7 @@ $(document).ready(function(){
 
 
 	// Tooltips
-	var tooltipSlider1 = document.getElementById('slider-tooltips-1');
+	var tooltipSlider1 = document.getElementById('slider-other-attr-tooltips-1');
 
 	noUiSlider.create(tooltipSlider1, {
 		start: [20, 80],
@@ -720,7 +720,7 @@ $(document).ready(function(){
 		}
 	});
 
-	var tooltipSlider2 = document.getElementById('slider-tooltips-2');
+	var tooltipSlider2 = document.getElementById('slider-other-attr-tooltips-2');
 
 	noUiSlider.create(tooltipSlider2, {
 		start: [20, 80],
@@ -734,7 +734,7 @@ $(document).ready(function(){
 		}
 	});
 
-	var tooltipSlider3 = document.getElementById('slider-tooltips-3');
+	var tooltipSlider3 = document.getElementById('slider-other-attr-tooltips-3');
 
 	noUiSlider.create(tooltipSlider3, {
 		start: [20, 80],
@@ -749,7 +749,7 @@ $(document).ready(function(){
 	});
 
 	// Direction top to bottom
-	var directionTopBottom1 = document.getElementById('slider-direction-top-bottom-1');
+	var directionTopBottom1 = document.getElementById('slider-other-attr-direction-top-bottom-1');
 
 	noUiSlider.create(directionTopBottom1, {
 		range: range_all_sliders,
@@ -762,7 +762,7 @@ $(document).ready(function(){
         }
 	});
 
-	var directionTopBottom2 = document.getElementById('slider-direction-top-bottom-2');
+	var directionTopBottom2 = document.getElementById('slider-other-attr-direction-top-bottom-2');
 
 	noUiSlider.create(directionTopBottom2, {
 		range: range_all_sliders,
@@ -775,7 +775,7 @@ $(document).ready(function(){
         }
 	});
 
-	var directionTopBottom3 = document.getElementById('slider-direction-top-bottom-3');
+	var directionTopBottom3 = document.getElementById('slider-other-attr-direction-top-bottom-3');
 
 	noUiSlider.create(directionTopBottom3, {
 		range: range_all_sliders,
@@ -790,7 +790,7 @@ $(document).ready(function(){
 
 
 	// Direction bottom to top
-	var directionBottomTop1 = document.getElementById('slider-direction-bottom-top-1');
+	var directionBottomTop1 = document.getElementById('slider-other-attr-direction-bottom-top-1');
 
 	noUiSlider.create(directionBottomTop1, {
 		range: range_all_sliders,
@@ -804,7 +804,7 @@ $(document).ready(function(){
         }
 	});
 
-	var directionBottomTop2 = document.getElementById('slider-direction-bottom-top-2');
+	var directionBottomTop2 = document.getElementById('slider-other-attr-direction-bottom-top-2');
 
 	noUiSlider.create(directionBottomTop2, {
 		range: range_all_sliders,
@@ -818,7 +818,7 @@ $(document).ready(function(){
         }
 	});
 
-	var directionBottomTop3 = document.getElementById('slider-direction-bottom-top-3');
+	var directionBottomTop3 = document.getElementById('slider-other-attr-direction-bottom-top-3');
 
 	noUiSlider.create(directionBottomTop3, {
 		range: range_all_sliders,
@@ -1054,45 +1054,45 @@ $(document).ready(function(){
 	};
 
 	// Extra Large
-	var vertExtraLargeSlider = document.getElementById('vert-extra-large-slider');
-	var vertCircleExtraLargeSlider = document.getElementById('vert-circle-extra-large-slider');
-	var vertSquareExtraLargeSlider = document.getElementById('vert-square-extra-large-slider');
+	var vertExtraLargeSlider = document.getElementById('vert-extra-large-slider-other-attr');
+	var vertCircleExtraLargeSlider = document.getElementById('vert-circle-extra-large-slider-other-attr');
+	var vertSquareExtraLargeSlider = document.getElementById('vert-square-extra-large-slider-other-attr');
 
 	noUiSlider.create(vertExtraLargeSlider, vertical_xl_options);
 	noUiSlider.create(vertCircleExtraLargeSlider, vertical_xl_options);
 	noUiSlider.create(vertSquareExtraLargeSlider, vertical_xl_options);
 
 	// Large
-	var vertLargeSlider = document.getElementById('vert-large-slider');
-	var vertCircleLargeSlider = document.getElementById('vert-circle-large-slider');
-	var vertSquareLargeSlider = document.getElementById('vert-square-large-slider');
+	var vertLargeSlider = document.getElementById('vert-large-slider-other-attr');
+	var vertCircleLargeSlider = document.getElementById('vert-circle-large-slider-other-attr');
+	var vertSquareLargeSlider = document.getElementById('vert-square-large-slider-other-attr');
 
 	noUiSlider.create(vertLargeSlider, vertical_lg_options);
 	noUiSlider.create(vertCircleLargeSlider, vertical_lg_options);
 	noUiSlider.create(vertSquareLargeSlider, vertical_lg_options);
 
 	// Default
-	var vertDefaultSlider = document.getElementById('vert-default-slider');
-	var vertCircleDefaultSlider = document.getElementById('vert-circle-default-slider');
-	var vertSquareDefaultSlider = document.getElementById('vert-square-default-slider');
+	var vertDefaultSlider = document.getElementById('vert-default-slider-other-attr');
+	var vertCircleDefaultSlider = document.getElementById('vert-circle-default-slider-other-attr');
+	var vertSquareDefaultSlider = document.getElementById('vert-square-default-slider-other-attr');
 
 	noUiSlider.create(vertDefaultSlider, vertical_default_options);
 	noUiSlider.create(vertCircleDefaultSlider, vertical_default_options);
 	noUiSlider.create(vertSquareDefaultSlider, vertical_default_options);
 
 	// Small
-	var vertSmallSlider = document.getElementById('vert-small-slider');
-	var vertCircleSmallSlider = document.getElementById('vert-circle-small-slider');
-	var vertSquareSmallSlider = document.getElementById('vert-square-small-slider');
+	var vertSmallSlider = document.getElementById('vert-small-slider-other-attr');
+	var vertCircleSmallSlider = document.getElementById('vert-circle-small-slider-other-attr');
+	var vertSquareSmallSlider = document.getElementById('vert-square-small-slider-other-attr');
 
 	noUiSlider.create(vertSmallSlider, vertical_sm_options);
 	noUiSlider.create(vertCircleSmallSlider, vertical_sm_options);
 	noUiSlider.create(vertSquareSmallSlider, vertical_sm_options);
 
 	// Extra Small
-	var vertExtraSmallSlider = document.getElementById('vert-extra-small-slider');
-	var vertCircleExtraSmallSlider = document.getElementById('vert-circle-extra-small-slider');
-	var vertSquareExtraSmallSlider = document.getElementById('vert-square-extra-small-slider');
+	var vertExtraSmallSlider = document.getElementById('vert-extra-small-slider-other-attr');
+	var vertCircleExtraSmallSlider = document.getElementById('vert-circle-extra-small-slider-other-attr');
+	var vertSquareExtraSmallSlider = document.getElementById('vert-square-extra-small-slider-other-attr');
 
 	noUiSlider.create(vertExtraSmallSlider, vertical_xs_options);
 	noUiSlider.create(vertCircleExtraSmallSlider, vertical_xs_options);

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWellcomeInfosTable extends Migration
+class CreateNotificationUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateWellcomeInfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('wellcome_infos', function (Blueprint $table) {
+        Schema::create('notification_user', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('guest_salutation');
-            $table->text('user_salutation');
-            $table->text('guest_message');
-            $table->text('user_message');
-            $table->text('icon');
+            $table->bigInteger('user_id');
+            $table->bigInteger('notification_id');
+            $table->tinyInteger('is_read')->default(0);
+            $table->tinyInteger('is_seed')->default(0);
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateWellcomeInfosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('welcome_infos');
+        Schema::dropIfExists('notification_user');
     }
 }

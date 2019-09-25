@@ -10,7 +10,6 @@ use Illuminate\Http\Response;
 class SliderImageService
 {
     use CrudTrait;
-
     /**
      * @var $sliderRepository
      */
