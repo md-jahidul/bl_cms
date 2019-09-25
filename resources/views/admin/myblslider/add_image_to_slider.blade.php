@@ -70,7 +70,7 @@
                                                         }else{ 
                                                             console.log('no')
                                                             this.style.border = '1px solid red';
-                                                            this.nextElementSibling.innerHTML = '<br><b>image aspact ratio must 16:9</b>';
+                                                            this.nextElementSibling.innerHTML = '<br><b>image aspact ratio must 16:9(change the picture to enable button)</b>';
                                                             document.getElementById('addMore').disabled = true;
                                                             document.getElementById('submitForm').disabled = true;
                                                         } 
