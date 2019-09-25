@@ -1,7 +1,9 @@
-<div id="sms_heading" class="card-header">
-    <a data-toggle="collapse" data-parent="#settings_panel" href="#sms_config"
-       aria-expanded="true"
-       aria-controls="sms_config" class="card-title lead">SMS Filter</a>
+<div class="card collapse-icon accordion-icon-rotate left">
+    <div id="sms_heading" class="card-header">
+        <a data-toggle="collapse" data-parent="#settings_panel" href="#sms_config"
+           aria-expanded="false"
+           aria-controls="sms_config" class="card-title lead">SMS Filter</a>
+    </div>
 </div>
 <div id="sms_config" role="tabpanel" aria-labelledby="sms_heading" class="collapse">
     <div class="card-content">
@@ -13,7 +15,7 @@
                         @csrf
                         @method('post')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-globe"></i>Create SMS
+                            <h4 class="form-section"><i class="la la-send"></i>Create SMS
                                 Filter</h4>
                             <div class="row">
                                 <div class="col-md-4">

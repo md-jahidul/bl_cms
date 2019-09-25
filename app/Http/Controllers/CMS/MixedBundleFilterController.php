@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Models\MixedBundleFilter;
 use App\Services\MixedBundleFilterService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,7 +23,14 @@ class MixedBundleFilterController extends Controller
 
     public function create()
     {
-        return view('admin.offer-mixedbundle.config.create');
+        $existing_sort_filters = $this->service->getAll()->sort()->active()->get();
+
+        $sort_filters = [];
+        foreach ($existing_sort_filters as $item){
+            $filters = json_decode($item->filter,true);
+            $sort_filters [] = $filters['value'];
+        }
+        return view('admin.offer-mixedbundle.config.create',compact('sort_filters'));
     }
 
     public function getPriceFilter(Request $request)
@@ -52,6 +60,14 @@ class MixedBundleFilterController extends Controller
 
         return $this->service->preparePriceFilterForDatatable($builder, $request);
     }
+
+    public function getValidityFilter(Request $request)
+    {
+        $builder = $this->service->getAll()->validity()->active();
+
+        return $this->service->preparePriceFilterForDatatable($builder, $request);
+    }
+
 
     public function savePriceFilter(Request $request)
     {
@@ -153,6 +169,48 @@ class MixedBundleFilterController extends Controller
         }
 
         return $this->service->addFilter($request,'sms','sms');
+
+    }
+
+
+    public function saveValidityFilter(Request $request)
+    {
+        $validate = Validator::make($request->all(),
+            [
+                'lower' => 'required|numeric',
+                'upper' => 'numeric'
+            ]
+        );
+
+        if ($validate->fails()) {
+            $response = [
+                'success' =>'FAILED',
+                'errors'  => $validate->errors()->first()
+            ];
+            return response()->json($response, 422);
+        }
+
+        return $this->service->addFilter($request,'validation','days');
+
+    }
+
+    public function saveSortFilter(Request $request)
+    {
+        $validate = Validator::make($request->all(),
+            [
+                'filters' => 'required|array',
+            ]
+        );
+
+        if ($validate->fails()) {
+            $response = [
+                'success' =>'FAILED',
+                'errors'  => $validate->errors()->first()
+            ];
+            return response()->json($response, 422);
+        }
+
+        return $this->service->addSortFilter($request);
 
     }
 }

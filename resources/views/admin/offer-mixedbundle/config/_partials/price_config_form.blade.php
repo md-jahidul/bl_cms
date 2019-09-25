@@ -1,8 +1,9 @@
-
-<div id="price_heading" class="card-header">
-    <a data-toggle="collapse" data-parent="#settings_panel" href="#price_config"
-       aria-expanded="true"
-       aria-controls="price_config" class="card-title lead">Price Filter</a>
+<div class="card collapse-icon accordion-icon-rotate left">
+    <div id="price_heading" class="card-header">
+        <a data-toggle="collapse" data-parent="#settings_panel" href="#price_config"
+           aria-expanded="true"
+           aria-controls="price_config" class="card-title lead">Price Filter</a>
+    </div>
 </div>
 <div id="price_config" role="tabpanel" aria-labelledby="price_heading" class="collapse show">
     <div class="card-content">
@@ -64,8 +65,7 @@
                 </div>
                 <div class="offset-1 col-md-4">
                     <h5>Price Filter List</h5>
-                    <table class="table table-striped table-bordered base-style dataTable"
-                           style="width: 100%;"
+                    <table class="table table-striped table-bordered base-style"
                            id="price_filter_table" role="grid" aria-describedby="Example1_info">
                         <thead>
                         <tr>

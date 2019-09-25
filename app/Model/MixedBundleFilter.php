@@ -33,7 +33,7 @@ class MixedBundleFilter extends Model
         return $builder->where('offer_filter_type_id','=', $type->id);
     }
 
-    public function scopeValidation($builder)
+    public function scopeValidity($builder)
     {
         $type = OfferFilterType::where('slug','validation')->first();
         return $builder->where('offer_filter_type_id','=', $type->id);

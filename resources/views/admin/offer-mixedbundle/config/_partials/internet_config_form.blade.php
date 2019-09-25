@@ -1,7 +1,9 @@
-<div id="internet_heading" class="card-header">
-    <a data-toggle="collapse" data-parent="#settings_panel" href="#internet_config"
-       aria-expanded="true"
-       aria-controls="internet_config" class="card-title lead">Internet Filter</a>
+<div class="card collapse-icon accordion-icon-rotate left">
+    <div id="internet_heading" class="card-header">
+        <a data-toggle="collapse" data-parent="#settings_panel" href="#internet_config"
+           aria-expanded="false"
+           aria-controls="internet_config" class="card-title lead">Internet Filter</a>
+    </div>
 </div>
 <div id="internet_config" role="tabpanel" aria-labelledby="internet_heading" class="collapse">
     <div class="card-content">
@@ -51,8 +53,7 @@
                 </div>
                 <div class="offset-1 col-md-4">
                     <h5>Internet Filter List</h5>
-                    <table class="table table-striped table-bordered base-style dataTable"
-                           style="width: 100%!important;"
+                    <table class="table table-striped table-bordered base-style"
                            id="internet_filter_table" role="grid" aria-describedby="Example1_info">
                         <thead>
                         <tr>

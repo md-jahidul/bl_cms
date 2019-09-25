@@ -106,4 +106,46 @@ class MixedBundleFilterService
             ], 500);
         }
     }
+
+
+    public function addSortFilter(Request $request)
+    {
+        DB::beginTransaction();
+
+        try{
+
+            // first delete previous data and save new data. Done with transaction.if fails revert operation
+            DB::table('mixed_bundle_filters')
+                ->where('offer_filter_type_id',$this->filter_types['sort'])
+                ->delete();
+
+            //save
+            $filters = $request->filters;
+            foreach ($filters as $filter){
+                MixedBundleFilter::create([
+                    'offer_filter_type_id' => $this->filter_types['sort'],
+                    'filter' => json_encode([
+                        'name'  => $filter['name'],
+                        'value' => $filter['value']
+                    ]),
+                ]);
+            }
+            $response = [
+                'status' => 'SUCCESS',
+                'message' => 'Filter Added Successfully'
+            ];
+
+            DB::commit();
+
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return response()->json([
+                'status' => ' FAILED',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

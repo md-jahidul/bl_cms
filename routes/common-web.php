@@ -67,6 +67,11 @@ Route::get('mixed-bundle-offer/filter/minutes','CMS\MixedBundleFilterController@
 Route::post('mixed-bundle-offer/filter/sms/save','CMS\MixedBundleFilterController@saveSmsFilter')->name('mixed-bundle-offer.filter.sms.save');
 Route::get('mixed-bundle-offer/filter/sms','CMS\MixedBundleFilterController@getSmsFilter')->name('mixed-bundle-offer.filter.sms.list');
 
+Route::post('mixed-bundle-offer/filter/validity/save','CMS\MixedBundleFilterController@saveValidityFilter')->name('mixed-bundle-offer.filter.validity.save');
+Route::get('mixed-bundle-offer/filter/validity','CMS\MixedBundleFilterController@getValidityFilter')->name('mixed-bundle-offer.filter.validity.list');
+
+Route::post('mixed-bundle-offer/filter/sort/save','CMS\MixedBundleFilterController@saveSortFilter')->name('mixed-bundle-offer.filter.sort.save');
+
 Route::get('/test/test','CMS\MixedBundleFilterController@getPriceFilter');
 Route::get('/test2/',function (){
 

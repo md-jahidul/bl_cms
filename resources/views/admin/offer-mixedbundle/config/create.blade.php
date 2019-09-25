@@ -27,51 +27,10 @@
                         @include('admin.offer-mixedbundle.config._partials.sms_config_form')
 
                         <!---------------  Validation Config ------------------------------------>
-                        <div id="validation_heading" class="card-header">
-                            <a data-toggle="collapse" data-parent="#settings_panel" href="#validation_config"
-                               aria-expanded="false"
-                               aria-controls="accordion14" class="card-title lead collapsed">Validation Filter</a>
-                        </div>
-                        <div id="validation_config" role="tabpanel" aria-labelledby="validation_heading"
-                             class="collapse"
-                             aria-expanded="false" style="height: 0px;">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    Sesame snaps chocolate lollipop sesame snaps apple pie chocolate cake sweet roll.
-                                    Dragée candy canes carrot cake chupa chups danish cake sugar
-                                    plum candy. Cake powder biscuit bear claw. Sesame snaps cotton
-                                    candy cheesecake topping ice cream cookie tiramisu. Liquorice
-                                    bonbon cookie pie halvah. Cookie toffee ice cream cotton
-                                    candy lollipop fruitcake. Tart cheesecake tiramisu danish
-                                    marzipan pie pastry chocolate cake. Pastry bonbon lollipop
-                                    oat cake pastry halvah dessert jelly. Toffee caramels croissant
-                                    apple pie chupa chups toffee muffin chupa chups apple pie.
-                                </div>
-                            </div>
-                        </div>
+                       @include('admin.offer-mixedbundle.config._partials.validity_config_form')
 
                         <!---------------  Sorting Config ------------------------------------>
-                        <div id="sorting_heading" class="card-header">
-                            <a data-toggle="collapse" data-parent="#settings_panel" href="#sorting_config"
-                               aria-expanded="false"
-                               aria-controls="accordion14" class="card-title lead collapsed">Sorting Filter</a>
-                        </div>
-                        <div id="sorting_config" role="tabpanel" aria-labelledby="sorting_heading" class="collapse"
-                             aria-expanded="false" style="height: 0px;">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    Sesame snaps chocolate lollipop sesame snaps apple pie chocolate cake sweet roll.
-                                    Dragée candy canes carrot cake chupa chups danish cake sugar
-                                    plum candy. Cake powder biscuit bear claw. Sesame snaps cotton
-                                    candy cheesecake topping ice cream cookie tiramisu. Liquorice
-                                    bonbon cookie pie halvah. Cookie toffee ice cream cotton
-                                    candy lollipop fruitcake. Tart cheesecake tiramisu danish
-                                    marzipan pie pastry chocolate cake. Pastry bonbon lollipop
-                                    oat cake pastry halvah dessert jelly. Toffee caramels croissant
-                                    apple pie chupa chups toffee muffin chupa chups apple pie.
-                                </div>
-                            </div>
-                        </div>
+                        @include('admin.offer-mixedbundle.config._partials.sorting_config_form')
 
                     </div>
                 </div>
@@ -85,8 +44,14 @@
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" href="{{asset('app-assets')}}/vendors/css/forms/icheck/icheck.css">
+    <link rel="stylesheet" href="{{asset('app-assets')}}/vendors/css/forms/icheck/custom.css">
     <link rel="stylesheet" type="text/css"
           href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
+{{--    <link rel="stylesheet" type="text/css"
+          href="{{asset('app-assets')}}/vendors/css/forms/toggle/bootstrap-switch.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('app-assets')}}/css/plugins/forms/switch.css">--}}
     <style>
         .add-button {
             margin-top: 1.9rem !important;
@@ -95,9 +60,27 @@
         .filter_data {
             text-align: right;
         }
+
+        .dataTable{
+            width: 100%!important;
+        }
     </style>
 @endpush
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
+    <script src="{{asset('app-assets')}}/vendors/js/forms/icheck/icheck.min.js" type="text/javascript"></script>
+{{--    <script src="{{asset('app-assets')}}/vendors/js/forms/toggle/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script src="{{asset('app-assets')}}/vendors/js/forms/toggle/bootstrap-checkbox.min.js" type="text/javascript"></script>
+    <script src="{{asset('app-assets')}}/js/scripts/forms/switch.js" type="text/javascript"></script>--}}
+
+    <script>
+        $(function () {
+
+            $('.collapse').on('shown.bs.collapse', function () {
+                $($.fn.dataTable.tables(true)).DataTable()
+                    .columns.adjust();
+            });
+        })
+    </script>
 @endpush
