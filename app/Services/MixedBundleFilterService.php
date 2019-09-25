@@ -4,7 +4,7 @@
 namespace App\Services;
 
 
-use App\Model\MixedBundleFilter;
+use App\Models\MixedBundleFilter;
 use App\Models\OfferFilterType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
