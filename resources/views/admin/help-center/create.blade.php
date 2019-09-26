@@ -47,7 +47,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="sequence">Sequence:<small class="text-danger">*</small></label>
-                                        <input maxlength="50000"
+                                        <input 
+                                         maxlength="50000"
                                          type="number"
                                          data-validation-required-message="sequence is required" 
                                          value="{{ old("sequence") ? old("sequence") : '' }}" 

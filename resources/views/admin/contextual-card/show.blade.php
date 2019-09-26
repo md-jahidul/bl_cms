@@ -46,15 +46,15 @@
                                 <td class="text-center" colspan="4">{{$contextualCard->description}}</td>
                             </tr>
                             <tr>
-                                <th>Minutes</th>
+                                <th>First Action Text</th>
                                 <td>{{$contextualCard->first_action_text}}</td>
-                                <th>sms</th>
+                                <th>Second Action Text</th>
                                 <td>{{$contextualCard->second_action_text}}</td>
                             </tr>
                             <tr>
-                                <th>Validity</th>
+                                <th>First Action</th>
                                 <td>{{$contextualCard->first_action}}</td>
-                                <th>Price</th>
+                                <th>Second Action</th>
                                 <td>{{$contextualCard->second_action}}</td>
                             </tr>
                             <tr>
