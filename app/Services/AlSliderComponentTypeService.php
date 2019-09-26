@@ -9,12 +9,12 @@
 namespace App\Services;
 
 
-use App\Repositories\SliderTypeRepository;
+use App\Repositories\AlSliderComponentTypeRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
 
-class SliderTypeService
+class AlSliderComponentTypeService
 {
 
     use CrudTrait;
@@ -25,9 +25,9 @@ class SliderTypeService
 
     /**
      * DigitalServicesService constructor.
-     * @param SliderTypeRepository $sliderTypeRepository
+     * @param AlSliderComponentTypeRepository $sliderTypeRepository
      */
-    public function __construct(SliderTypeRepository $sliderTypeRepository)
+    public function __construct(AlSliderComponentTypeRepository $sliderTypeRepository)
     {
         $this->sliderTypeRepository = $sliderTypeRepository;
         $this->setActionRepository($sliderTypeRepository);
@@ -39,7 +39,7 @@ class SliderTypeService
      */
     public function storeSlider($data)
     {
-       
+
     }
 
     /**
@@ -50,8 +50,8 @@ class SliderTypeService
     public function updateSlider($data, $banner)
     {
 
-        
-        
+
+
     }
 
     /**
@@ -61,7 +61,7 @@ class SliderTypeService
      */
     public function deleteSlider($id)
     {
-        
+
     }
 
 }

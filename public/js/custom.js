@@ -29,9 +29,7 @@
                         url: url,
                         methods: "get",
                         success: function (redirectUrl) {
-
                             console.log(redirectUrl);
-
                             Swal.fire(deletePopupParams);
                             setTimeout(redirect, 2000, redirectUrl)
                         }

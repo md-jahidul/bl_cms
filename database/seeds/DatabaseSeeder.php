@@ -11,9 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(AmarOfferSeeder::class);
+//      Common Seeder
         $this->call(RoleTableSeeder::class);
         $this->call(UsersTableSeeder::class);
+
+//      Asset-Lite Seeder
         $this->call(TagsTableSeeder::class);
         $this->call(CampaignTableSeeder::class);
         $this->call(MenusTableSeeder::class);
@@ -24,8 +26,11 @@ class DatabaseSeeder extends Seeder
         $this->call(SliderTableSeeder::class);
         $this->call(SliderImageTableSeeder::class);
         $this->call(DigitalServiceTableSeeder::class);
-        $this->call(SettingKeysTableSeeder::class);
+        $this->call(PartnerCategoryTableSeeder::class);
 
+//      My-Bl Seeder
+        $this->call(AmarOfferSeeder::class);
+        $this->call(SettingKeysTableSeeder::class);
         $this->call(InternetOfferSeeder::class);
         $this->call(MixedBundleOfferSeeder::class);
         $this->call(NearbyOfferSeeder::class);
@@ -34,5 +39,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CurrentBalanceSeeder::class);
         $this->call(BonusTableSeeder::class);
         $this->call(ContextualCardSeeder::class);
+        $this->call(MyblSliderComponentTypesTableSeeder::class);
     }
 }

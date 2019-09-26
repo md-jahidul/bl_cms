@@ -16,10 +16,7 @@
             <li class="nav-item"><a href="{{ url('footer-menu') }}"><i class="la la-futbol-o"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Footer Management</span></a>
             </li>
-            {{-- <li class="{{ is_active_url('slider-other-attr') . is_active_url('slider-other-attr/addImage/') . is_active_url('slider-other-attr/create') . is_active_url('slider-other-attr/edit') }}">
-                <a class="nav-item" href="{{ route('slider-other-attr.index') }}" data-i18n="nav.templates.vert.classic_menu">
-                    <i class="la la-sliders"></i>Slider</a>
-            </li> --}}
+
             <li class="nav-item"><a href="{{ url('quick-launch') }}"><i class="la la-automobile"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Quick launch</span></a>
             </li>
@@ -31,6 +28,18 @@
                     <li class="{{ is_active_url('sliders') . is_active_url('sliders/create')}}">
                         <a class="menu-item" href="{{ url('sliders') }}" data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-file-image-o"></i> Slider</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="nav-item"><a href="#"><i class="la la-gift"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Offer Management</span></a>
+                <ul class="menu-content">
+
+                    <li class="{{ is_active_url('partners') . is_active_url('partners/create')}}">
+                        <a class="menu-item" href="{{ url('partners') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-magic"></i> Partner and Offers</a>
                     </li>
 
                 </ul>
