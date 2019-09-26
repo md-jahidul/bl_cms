@@ -7,12 +7,12 @@
 
 @section('action')
         @if($cat->count()==0)
-            <a href="" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+            <a href="{{route('notificationCategory.index')}}" class="btn btn-danger round btn-glow px-2"><i class="la la-plus"></i>
                 There is no category
             </a>
         @else
-            <a href="{{route('notifiaction.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
-                Create Notifiaction
+            <a href="{{route('notification.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+                Create notification
             </a>
         @endif
 
@@ -41,21 +41,21 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($notifiactions as $notifiaction)
+                        @foreach ($notifications as $notification)
                             <tr>
-                                <td>{{$notifiaction->id}}</td>
-                                <td>{{$notifiaction->title}}</td>
-                                <td>{{$notifiaction->NotificationCategory->name}}</td>
+                                <td>{{$notification->id}}</td>
+                                <td>{{$notification->title}}</td>
+                                <td>{{$notification->NotificationCategory->name}}</td>
                                 <td>
                                     <div class="row">
 
                                         <div class="col-md-3">
-                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notifiaction.edit',$notifiaction->id)}}" class="btn-pancil btn btn-outline-success" >
+                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notification.edit',$notification->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
                                         <div class="col-md-3">
-                                            <button data-id="{{$notifiaction->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                            <button data-id="{{$notification->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
 
                                     </div>
@@ -106,7 +106,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('notifiaction/destroy') }}/"+id,
+                            url: "{{ url('notification/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -116,7 +116,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('notifiaction') }}"
+                                    window.location.href = "{{ url('notification') }}"
                                 }
                             }
                         })
@@ -135,6 +135,7 @@
                 paging: true,
                 searching: true,
                 "bDestroy": true,
+                "pageLength": 10
             });
         });
 

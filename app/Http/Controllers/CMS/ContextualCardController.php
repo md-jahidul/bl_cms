@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\ContextualCardService;
 use App\Models\Contextualcards;
+use App\Http\Requests\ContextualCardRequest;
 
 class ContextualCardController extends Controller
 {
@@ -54,7 +55,7 @@ class ContextualCardController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ContextualCardRequest $request)
     {
         
         session()->flash('success',$this->contextualCardService->storeContextualCard($request->all())->getContent());
@@ -69,7 +70,8 @@ class ContextualCardController extends Controller
      */
     public function show($id)
     {
-        //
+        $contextualCard = $this->contextualCardService->findOne($id);
+        return view('admin.contextual-card.show')->with('contextualCard', $contextualCard);
     }
 
     /**
@@ -90,9 +92,8 @@ class ContextualCardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ContextualCardRequest $request, $id)
     {
-        //dd($id);
         session()->flash('success',$this->contextualCardService->updateContextualCard($request->all(), $id)->getContent());
         return redirect(route('contextualcard.index'));
     }
@@ -103,10 +104,9 @@ class ContextualCardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ContextualCards $contextualcard)
+    public function destroy($id)
     {
-        // return $contextualcard;
-        session()->flash('success',$this->contextualCardService->deleteContextualCard($contextualcard)->getContent());
-        return redirect(route('contextualCard.index'));
+        session()->flash('error',$this->contextualCardService->deleteContextualCard($id)->getContent());
+        return url('contextualcard');
     }
 }

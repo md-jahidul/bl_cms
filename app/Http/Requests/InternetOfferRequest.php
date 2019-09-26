@@ -25,7 +25,7 @@ class InternetOfferRequest extends FormRequest
     {
         return [
             'title'=>'required|max:200|unique:internet_offers,title,'.$this->id,
-            'volume'=>'required|numeric|min:1|max:999999999999999999',
+            'volume'=>'required|numeric|min:0|max:999999999999999999',
             'validity'=>'required|numeric|min:1|max:999999999999999999',
             'price'=>'required|numeric|min:1|max:999999999999999999',
             'offer_code'=>'required',

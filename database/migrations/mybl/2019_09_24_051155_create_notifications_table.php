@@ -18,6 +18,7 @@ class CreateNotificationsTable extends Migration
             $table->bigInteger('category_id')->unsigned();
             $table->string('title');
             $table->string('body')->nullable();
+            $table->string('status')->default('INPROGRESS');
             $table->foreign('category_id')->references('id')->on('notifications_category')->onDelete('cascade');
             $table->timestamps();
         });

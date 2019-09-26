@@ -29,10 +29,6 @@
                             <th width=''>id</th>
                             <th width=''>Title</th>
                             <th width=''>Description</th>
-                            {{-- <th width=''>First Action Text</th>
-                            <th width=''>Second Action Text</th>
-                            <th width=''>First Action</th>
-                            <th width=''>Second Action</th> --}}
                             <th width=''>Image</th>
                             <th  width=''>Action</th>
                         </tr>
@@ -43,23 +39,19 @@
                                 <td>{{$contextualCard->id}}</td>
                                 <td>{{$contextualCard->title}}</td>
                                 <td>{{$contextualCard->description}}</td>
-                                {{-- <td>{{$contextualCard->first_action_text}}</td>
-                                <td>{{$contextualCard->second_action_text}}</td>
-                                <td>{{$contextualCard->first_action}}</td>
-                                <td>{{$contextualCard->second_action}}</td> --}}
                                 <td><img style="height:50px;width:100px" src="{{asset($contextualCard->image_url)}}" alt="" srcset=""></td>
                                 <td>
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <button href="{{route('contextualcard.show',$contextualCard->id)}}" class="btn btn-outline-info"><i class="la la-info"></i></button>
+                                            <a role="button" href="{{route('contextualcard.show',$contextualCard->id)}}" class="btn btn-outline-info"><i class="la la-info"></i></a>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 mr-1 ml-1">
                                             <a role="button" href="{{route('contextualcard.edit',$contextualCard->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
                                         <div class="col-md-2">
-                                            <button data-id="{{$contextualCard->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                            <button  data-id="{{$contextualCard->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>
                                 </td>
@@ -93,6 +85,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
     <style></style>
 @endpush
+
+
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
@@ -126,9 +120,9 @@
                                     'Your file has been deleted.',
                                     'success',
                                 );
-                                // setTimeout(redirect, 2000)
+                                setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('contextualcard/') }}"
+                                    window.location.href = "{{ url('contextualcard') }}"
                                 }
                             }
                         })
@@ -143,7 +137,7 @@
                 buttons: [],
                 paging: true,
                 searching: true,
-                "pageLength": 5,
+                "pageLength": 10,
                 "bDestroy": true,
             });
         });

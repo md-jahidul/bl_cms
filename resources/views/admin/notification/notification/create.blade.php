@@ -9,7 +9,7 @@
 <div class="card mb-0 px-1" style="box-shadow:none;">        
     <div class="card-content">
         <div class="card-body">
-            <form class="form" method="POST" action="{{route('notifiaction.store')}}">
+            <form class="form" method="POST" action="{{route('notification.store')}}">
                 @csrf
                 @method('post')
                 
@@ -29,10 +29,10 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="category_id">Categorie :</label>
+                                <label for="category_id">category :</label>
                                 <select class="form-control @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
-                                    @foreach ($categories as $categorie)
-                                        <option value="{{$categorie->id}}" {{ (old("category_id") == $categorie->id ? "selected":"") }}>{{$categorie->name}}</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name}}</option>
                                     @endforeach
                                 </select>
                                 <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>

@@ -77,7 +77,7 @@ class ShortCutService
         $shortcut =$this->findOne($id);
         unlink($shortcut['icon']);
         $shortcut->delete();
-        return Response('Short-Cut deleted successfully !');
+        return Response('Shortcut deleted successfully !');
     }
 
 }

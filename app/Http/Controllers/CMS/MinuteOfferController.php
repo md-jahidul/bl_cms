@@ -105,7 +105,7 @@ class MinuteOfferController extends Controller
     public function destroy($id)
     {
         //return $id;
-        session()->flash('success',$this->minuteOfferService->deleteMinuteOffer($id)->getContent());
-        return redirect(route('minuteOffer.index'));
+        session()->flash('error',$this->minuteOfferService->deleteMinuteOffer($id)->getContent());
+        return url('minuteOffer');
     }
 }

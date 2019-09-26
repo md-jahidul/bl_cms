@@ -103,7 +103,7 @@ class UssdController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('success',$this->ussdService->deleteUssd($id)->getContent());
-        return redirect(route('ussd.index'));
+        session()->flash('error',$this->ussdService->deleteUssd($id)->getContent());
+        return url('ussd');
     }
 }

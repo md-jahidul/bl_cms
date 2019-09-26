@@ -104,7 +104,7 @@ class SmsOfferController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('success',$this->smsOfferService->deleteSmsOffer($id)->getContent());
-        return redirect(route('smsOffer.index'));
+        session()->flash('error',$this->smsOfferService->deleteSmsOffer($id)->getContent());
+        return url('smsOffer');
     }
 }
