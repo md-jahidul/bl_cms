@@ -11,12 +11,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-<<<<<<< HEAD
+
 //      Common Seeder
-=======
-        $this->call(NotificationsTableSeeder::class);
-        $this->call(AmarOfferSeeder::class);
->>>>>>> bc00a04cdad526eafd2147e8bb1f3affaa2f4b6f
         $this->call(RoleTableSeeder::class);
         $this->call(UsersTableSeeder::class);
 
@@ -31,14 +27,10 @@ class DatabaseSeeder extends Seeder
         $this->call(SliderTableSeeder::class);
         $this->call(SliderImageTableSeeder::class);
         $this->call(DigitalServiceTableSeeder::class);
-<<<<<<< HEAD
         $this->call(PartnerCategoryTableSeeder::class);
-=======
-        $this->call(SettingKeysTableSeeder::class);
-        $this->call(OfferFilterTypeTableSeeder::class);
->>>>>>> bc00a04cdad526eafd2147e8bb1f3affaa2f4b6f
 
 //      My-Bl Seeder
+        $this->call(NotificationsTableSeeder::class);
         $this->call(AmarOfferSeeder::class);
         $this->call(SettingKeysTableSeeder::class);
         $this->call(InternetOfferSeeder::class);
@@ -49,10 +41,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CurrentBalanceSeeder::class);
         $this->call(BonusTableSeeder::class);
         $this->call(ContextualCardSeeder::class);
-<<<<<<< HEAD
+        $this->call(SettingKeysTableSeeder::class);
         $this->call(MyblSliderComponentTypesTableSeeder::class);
-=======
-
->>>>>>> bc00a04cdad526eafd2147e8bb1f3affaa2f4b6f
+        $this->call(OfferFilterTypeTableSeeder::class);
     }
 }
