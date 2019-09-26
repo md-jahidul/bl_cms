@@ -98,7 +98,7 @@
                     </li>
                 </ul>
             </li>
-            <li class=" nav-item"><a href="#"><i class="la la-file"></i>
+            <li class=" nav-item"><a href="#"><i class="la la-puzzle-piece"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Component</span></a>
                 <ul class="menu-content">
                     {{--page--}}
