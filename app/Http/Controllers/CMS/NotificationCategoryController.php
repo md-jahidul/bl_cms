@@ -112,8 +112,8 @@ class NotificationCategoryController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('success',$this->notificationCategoryService->deleteNotificationCategory($id));
-        return redirect(route('notificationCategory.index'));
+        session()->flash('error',$this->notificationCategoryService->deleteNotificationCategory($id)->getContent());
+        return url('notificationCategory');
         
     }
 }

@@ -104,7 +104,7 @@ class MixedBundleOfferController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('success',$this->mixedBundleOfferService->deleteMixedBundleOffer($id)->getContent());
-        return redirect(route('mixedBundleOffer.index'));
+        session()->flash('error',$this->mixedBundleOfferService->deleteMixedBundleOffer($id)->getContent());
+        return url('mixedBundleOffer');
     }
 }

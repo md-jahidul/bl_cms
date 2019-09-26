@@ -137,7 +137,7 @@ class MyblSliderImageController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('danger',$this->sliderImageService->deletesliderImage($id)->getContent());
+        session()->flash('error',$this->sliderImageService->deletesliderImage($id)->getContent());
         return redirect()->back();
     }
 }

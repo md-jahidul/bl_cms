@@ -108,9 +108,9 @@ class MyblSliderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(MyblSliderRequest $request,Slider $slider)
+    public function update(MyblSliderRequest $request,$id)
     {
-        session()->flash('success',$this->sliderService->updateSlider($request, $slider)->getContent());
+        session()->flash('success',$this->sliderService->updateSlider($request, $this->sliderService->findOne($id))->getContent());
         return redirect(route('myblslider.index'));
     }
 
@@ -123,7 +123,7 @@ class MyblSliderController extends Controller
     public function destroy($id)
     {
         //return $slider;
-        session()->flash('danger',$this->sliderService->deleteSlider($id)->getContent());
-        return redirect(route('myblslider.index'));
+        session()->flash('error',$this->sliderService->deleteSlider($id)->getContent());
+        return url('myblslider');
     }
 }

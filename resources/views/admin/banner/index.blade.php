@@ -134,7 +134,7 @@
                 buttons: [],
                 paging: true,
                 searching: true,
-                "pageLength": 5,
+                "pageLength": 10,
                 "bDestroy": true,
             });
         });

@@ -51,16 +51,15 @@ class ContextualCardService
      */
     public function updateContextualCard($data, $id)
     {
+        
         $contextualCard = $this->findOne($id);
         if(isset($data['image_url'])){
-            //$data = $data->all();
             $data['image_url'] = 'storage/'.$data['image_url']->store('contextualCard');
-            unlink($contextualCard->image_path);
+            unlink($contextualCard->image_url);
             $contextualCard->update($data);
         }else{
-            //dd($data);
-            $data['image_path'] = $contextualCard->image_url;
-            $contextualCard->update($contextualCard->all());
+            $data['image_url'] = $contextualCard->image_url;
+            $contextualCard->update($data);
         }
         
         return Response('Contextual Card updated successfully !');
@@ -72,13 +71,12 @@ class ContextualCardService
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      * @throws \Exception
      */
-    public function deleteContextualCard($contextualcard)
+    public function deleteContextualCard($id)
     {
-        return $contextualcard;
         $contextualCard = $this->findOne($id);
-        unlink($contextualCard->image_path);
+        unlink($contextualCard->image_url);
         $contextualCard->delete();
-        return Response('successfull!');
+        return Response('Contextual Card deleted successfully !');
     }
 
 }

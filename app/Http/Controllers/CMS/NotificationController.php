@@ -119,7 +119,7 @@ class NotificationController extends Controller
     public function destroy($id)
     {
         //dd($id);
-        session()->flash('success',$this->notificationService->deleteNotification($id));
-        return redirect(route('notification.index'));
+        session()->flash('error',$this->notificationService->deleteNotification($id)->getContent());
+        return url('notificationCategory');
     }
 }

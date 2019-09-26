@@ -106,7 +106,7 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('warning',$this->bannerService->deleteBanner($id)->getContent());
-        return redirect(route('banner.index'));
+        session()->flash('error',$this->bannerService->deleteBanner($id)->getContent());
+        return url('banner');
     }
 }
