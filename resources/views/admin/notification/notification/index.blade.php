@@ -122,14 +122,12 @@
 
                                     </div>
                                 </div>
-                                
-                                {{-- 
-                                <div class="col-md-2">
-                                    <div class="form-group" style="margin-top:26px">
-                                        <button class="btn btn-outline-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
+
+                                <div class="col-md-12" >
+                                    <div class="form-group float-right" style="margin-top:26px;">
+                                        <button class="btn btn-primary" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
                                     </div>
                                 </div> 
-                                --}}
 
                             </div>
                         </div>
@@ -139,11 +137,9 @@
             </div>  
           </div>
       </div>
+    </div>
       
 </section>
-
-   
-
 
 @endsection
 
