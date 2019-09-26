@@ -24,8 +24,8 @@
                                                 class="text-danger">*</small></label>
                                         <input required type="number"
                                                id="validity_lower" min="1"
-                                               class="form-control"
-                                               placeholder="Enter Lower Bound...." name="lower">
+                                               class="form-control validity_filter_input"
+                                               placeholder="Max 365" name="lower">
                                         <small class="form-text text-muted">Enter
                                             amount in days</small>
                                     </div>
@@ -35,8 +35,8 @@
                                         <label for="validity_upper">Upper</label>
                                         <input required type="number"
                                                id="validity_upper"
-                                               class="form-control"
-                                               placeholder="Enter Upper Bound...." name="upper">
+                                               class="form-control validity_filter_input"
+                                               placeholder="Max 365" name="upper">
                                         <small class="form-text text-muted">Enter
                                             amount in days</small>
                                     </div>
@@ -136,7 +136,7 @@
                 let lower_price = $("#validity_lower").val();
                 let upper_price = $("#validity_upper").val();
 
-                if(upper_price !='' && lower_price > upper_price){
+                if(upper_price !='' && parseInt(lower_price) > parseInt(upper_price)){
                     Swal.fire(
                         'Input Error!',
                         'Lower input cannot be greater than Upper Input',
@@ -146,20 +146,10 @@
                     return false;
                 }
 
-                if (lower_price <= 0) {
+                if (parseInt(upper_price) < 0 && upper_price != '') {
                     Swal.fire(
                         'Input Error!',
-                        'Validity day must be atleast 1',
-                        'error',
-                    );
-
-                    return false;
-                }
-
-                if (upper_price <= 0 && upper_price != '') {
-                    Swal.fire(
-                        'Input Error!',
-                        'Upper input should be greater than 0',
+                        'Upper input should be positive number',
                         'error',
                     );
 
@@ -241,6 +231,19 @@
                 });
             })
 
+            $(document).on('input','.validity_filter_input',function () {
+               let input = $(this).val();
+
+               if(input > 365){
+                   Swal.fire(
+                       'Input Error!',
+                       ' Validity Value must be less than 365',
+                       'error',
+                   );
+
+                   $(this).val('');
+               }
+            })
 
         });
     </script>

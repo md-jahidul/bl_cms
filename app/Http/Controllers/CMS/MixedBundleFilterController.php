@@ -73,8 +73,8 @@ class MixedBundleFilterController extends Controller
     {
         $validate = Validator::make($request->all(),
             [
-                'lower' => 'required|numeric',
-                'upper' => 'numeric|gt:lower'
+                'lower' => 'required|numeric|max:2000',
+                'upper' => 'numeric|gt:lower|max:2000'
             ]
         );
 
@@ -113,8 +113,8 @@ class MixedBundleFilterController extends Controller
     {
         $validate = Validator::make($request->all(),
             [
-                'lower' => 'required|numeric',
-                'upper' => 'numeric|gt:lower'
+                'lower' => 'required|numeric|max:102400',
+                'upper' => 'numeric|gt:lower|max:102400'
             ]
         );
 
@@ -134,8 +134,8 @@ class MixedBundleFilterController extends Controller
     {
         $validate = Validator::make($request->all(),
             [
-                'lower' => 'required|numeric',
-                'upper' => 'numeric|gt:lower'
+                'lower' => 'required|numeric|max:2000',
+                'upper' => 'numeric|gt:lower|max:2000'
             ]
         );
 
@@ -155,8 +155,8 @@ class MixedBundleFilterController extends Controller
     {
         $validate = Validator::make($request->all(),
             [
-                'lower' => 'required|numeric',
-                'upper' => 'numeric|gt:lower'
+                'lower' => 'required|numeric|max:2000',
+                'upper' => 'numeric|gt:lower|max:2000'
             ]
         );
 
@@ -177,8 +177,8 @@ class MixedBundleFilterController extends Controller
     {
         $validate = Validator::make($request->all(),
             [
-                'lower' => 'required|numeric',
-                'upper' => 'numeric|gt:lower'
+                'lower' => 'required|numeric|max:365',
+                'upper' => 'numeric|gt:lower|max:365'
             ]
         );
 
