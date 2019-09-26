@@ -63,7 +63,7 @@
                         @foreach ($notificationCategories as $notificationCategory)
                             <tr>
                                 <td>{{$notificationCategory->id}}</td>
-                                <td>{{$notificationCategory->name}}<span class="badge badge-default badge-pill bg-primary float-right">{{$notificationCategory->Notification->count()}}</span></td>
+                                <td>{{$notificationCategory->name}}<span class="badge badge-default badge-pill bg-primary float-right">{{$notificationCategory->notifications->count()}}</span></td>
                                 <td>
                                     <div class="row">
 
