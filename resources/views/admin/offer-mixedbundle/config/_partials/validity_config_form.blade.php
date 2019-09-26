@@ -44,7 +44,7 @@
                                 <div class="col-md-1 add-button">
                                     <button type="button" id="add_validity_filter"
                                             class="btn btn-sm btn-icon btn-outline-info" title="Save">
-                                        <i class="la la-save"></i>
+                                        <i class="la la-save"></i>Save
                                     </button>
                                 </div>
                             </div>
