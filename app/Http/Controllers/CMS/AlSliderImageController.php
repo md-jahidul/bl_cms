@@ -4,26 +4,26 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreSliderImageRequest;
-use App\Models\Slider;
-use App\Models\SliderImage;
-use App\Services\SliderImageService;
+use App\Models\AlSlider;
+use App\Models\AlSliderImage;
+use App\Services\AlSliderImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class SliderImageController extends Controller
+class AlSliderImageController extends Controller
 {
     /**
-     * @var $sliderImageService
+     * @var $alSliderImageService
      */
-    private $sliderImageService;
+    private $alSliderImageService;
 
     /**
-     * SliderImageController constructor.
-     * @param SliderImageService $sliderImageService
+     * AlSliderImageController constructor.
+     * @param AlSliderImageService $alSliderImageService
      */
-    public function __construct(SliderImageService $sliderImageService)
+    public function __construct(AlSliderImageService $alSliderImageService)
     {
-        $this->sliderImageService = $sliderImageService;
+        $this->alSliderImageService = $alSliderImageService;
         $this->middleware('auth');
     }
 
@@ -34,9 +34,16 @@ class SliderImageController extends Controller
      */
     public function index($sliderId, $type)
     {
-        $slider_images = SliderImage::where('slider_id', $sliderId)->with('slider')->orderBy('sequence')->get();
-        $sliderTitle = Slider::where('id', $sliderId)->pluck('title')->first();
-        $this->sliderImageService->itemList($sliderId, $type);
+
+
+        $slider_images = AlSliderImage::where('slider_id', $sliderId)->with('slider')->orderBy('display_order')->get();
+
+
+
+        $sliderTitle = AlSlider::where('id', $sliderId)->pluck('title_en')->first();
+
+
+        $this->alSliderImageService->itemList($sliderId, $type);
         return view('admin.slider-image.index', compact('slider_images', 'sliderTitle', 'sliderId','type'));
     }
 
@@ -58,9 +65,9 @@ class SliderImageController extends Controller
      */
     public function store(StoreSliderImageRequest $request, $sliderId, $type)
     {
-        $response = $this->sliderImageService->storeSliderImage($request->all(), $sliderId);
+        $response = $this->alSliderImageService->storeSliderImage($request->all(), $sliderId);
         Session::flash('message', $response->getContent());
-        return redirect("sliders/$sliderId/$type");
+        return redirect("slider/$sliderId/$type");
     }
 
     /**
@@ -82,7 +89,7 @@ class SliderImageController extends Controller
      */
     public function edit($parentId, $type, $id)
     {
-        $sliderImage = SliderImage::findOrFail($id);
+        $sliderImage = AlSliderImage::findOrFail($id);
         $other_attributes = $sliderImage->other_attributes;
         return view('admin.slider-image.edit', compact('sliderImage','type', 'other_attributes'));
     }
@@ -96,14 +103,14 @@ class SliderImageController extends Controller
      */
     public function update(StoreSliderImageRequest $request, $parentId, $type, $id)
     {
-        $response = $this->sliderImageService->updateSliderImage($request->all(), $id);
+        $response = $this->alSliderImageService->updateSliderImage($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect("slider/$parentId/$type");
     }
 
     public function sliderImageSortable(Request $request)
     {
-        $this->sliderImageService->tableSortable($request);
+        $this->alSliderImageService->tableSortable($request);
     }
 
     /**
@@ -116,12 +123,8 @@ class SliderImageController extends Controller
     public function destroy($parentId, $type, $id)
     {
 
-        $response = $this->sliderImageService->deleteSliderImage($id);
+        $response = $this->alSliderImageService->deleteSliderImage($id);
         Session::flash('message', $response->getContent());
-
-
-//        $slider = SliderImage::findOrFail($id);
-//        $slider->delete();
-        return url("sliders/$parentId/$type");
+        return url("slider/$parentId/$type");
     }
 }

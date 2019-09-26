@@ -24,7 +24,7 @@ class MyblSliderImageService
     protected $sliderImageRepository;
 
     /**
-     * SliderImageService constructor.
+     * AlSliderImageService constructor.
      * @param SliderImageRepository $sliderImageRepository
      */
     public function __construct(SliderImageRepository $sliderImageRepository)

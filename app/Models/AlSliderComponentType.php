@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Slider;
+use App\Models\AlSlider;
 use Illuminate\Database\Eloquent\Model;
 
-class SliderComponentType extends Model
+class AlSliderComponentType extends Model
 {
     protected $fillable = [
         'name',
@@ -13,6 +13,6 @@ class SliderComponentType extends Model
     ];
 
     public function sliders(){
-        return $this->hasMany(Slider::class);
+        return $this->hasMany(AlSlider::class);
     }
 }

@@ -2,28 +2,29 @@
 namespace App\Services;
 
 
+use App\Repositories\AlSliderRepository;
 use App\Repositories\SliderRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
 
-class SliderService
+class AlSliderService
 {
 
     use CrudTrait;
     /**
-     * @var $sliderRepository
+     * @var $alSliderRepository
      */
-    protected $sliderRepository;
+    protected $alSliderRepository;
 
     /**
-     * DigitalServicesService constructor.
-     * @param SliderRepository $sliderRepository
+     * AlSliderService constructor.
+     * @param AlSliderRepository $alSliderRepository
      */
-    public function __construct(SliderRepository $sliderRepository)
+    public function __construct(AlSliderRepository $alSliderRepository)
     {
-        $this->sliderRepository = $sliderRepository;
-        $this->setActionRepository($sliderRepository);
+        $this->alSliderRepository = $alSliderRepository;
+        $this->setActionRepository($alSliderRepository);
     }
 
     /**

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQuickLaunchItemsTable extends Migration
+class CreateAlSliderImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,24 @@ class CreateQuickLaunchItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('quick_launch_items', function (Blueprint $table) {
+        Schema::create('al_slider_images', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('slider_id');
             $table->string('title_en');
             $table->string('title_bn');
             $table->string('image_url');
             $table->string('alt_text');
-            $table->string('link');
-            $table->tinyInteger('status');
-            $table->integer('display_order');
+            $table->integer('display_order')->nullable();
+            $table->tinyInteger('is_active')->default(1);
+            $table->json('other_attributes')->nullable();
             $table->timestamps();
+
+            $table->foreign('slider_id')
+                ->references('id')
+                ->on('al_sliders')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
         });
     }
 
@@ -33,6 +41,6 @@ class CreateQuickLaunchItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quick_launch_items');
+        Schema::dropIfExists('al_slider_images');
     }
 }

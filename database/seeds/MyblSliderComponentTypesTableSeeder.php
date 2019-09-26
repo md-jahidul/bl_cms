@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class SliderComponentTypesTableSeeder extends Seeder
+class MyblSliderComponentTypesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,7 +12,7 @@ class SliderComponentTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        $slider_types = ['Hero','Digital Services','Testimonial', 'Explore Devices', 'Home', 'Dashboard'];
+        $slider_types = ['Home', 'Dashboard'];
 
         $slider_component_types = [];
 
@@ -23,6 +23,6 @@ class SliderComponentTypesTableSeeder extends Seeder
             ];
         }
 
-        DB::table('al_slider_component_types')->insert($slider_component_types);
+        DB::table('slider_component_types')->insert($slider_component_types);
     }
 }

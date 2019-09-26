@@ -2,33 +2,34 @@
 namespace App\Services;
 
 
+use App\Repositories\AlSliderImageRepository;
 use App\Repositories\SliderImageRepository;
 use App\Repositories\SliderRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
-class SliderImageService
+class AlSliderImageService
 {
     use CrudTrait;
     /**
      * @var $sliderRepository
      */
-    protected $sliderImageRepository;
+    protected $alSliderImageRepository;
 
     /**
-     * SliderImageService constructor.
-     * @param SliderImageRepository $sliderImageRepository
+     * AlSliderImageService constructor.
+     * @param SliderImageRepository $alSliderImageRepository
      */
-    public function __construct(SliderImageRepository $sliderImageRepository)
+    public function __construct(AlSliderImageRepository $alSliderImageRepository)
     {
-        $this->sliderImageRepository = $sliderImageRepository;
-        $this->setActionRepository($sliderImageRepository);
+        $this->alSliderImageRepository = $alSliderImageRepository;
+        $this->setActionRepository($alSliderImageRepository);
     }
 
 
     public function itemList($sliderId, $type)
     {
-        return $this->sliderImageRepository->getSliderImage($sliderId, $type);
+        return $this->alSliderImageRepository->getSliderImage($sliderId, $type);
     }
 
     /**
@@ -37,18 +38,18 @@ class SliderImageService
      */
     public function storeSliderImage($data, $sliderId)
     {
-        $count = count($this->sliderImageRepository->findAll());
-        $imageUrl = $this->imageUpload($data, 'image_url', $data['title'], 'slider-images');
+        $count = count($this->alSliderImageRepository->findAll());
+        $imageUrl = $this->imageUpload($data, 'image_url', $data['title_en'], 'slider-images');
         $data['image_url'] = env('APP_URL', 'http://localhost:8000') . "/slider-images/".$imageUrl;
         $data['slider_id'] = $sliderId;
-        $data['sequence'] = ++$count;
+        $data['display_order'] = ++$count;
         $this->save($data);
         return new Response('Slider Image added successfully');
     }
 
     public function tableSortable($data)
     {
-        $this->sliderImageRepository->sliderImageTableSort($data);
+        $this->alSliderImageRepository->sliderImageTableSort($data);
         return new Response('update successfully');
     }
 
@@ -61,7 +62,7 @@ class SliderImageService
     {
         $sliderImage = $this->findOne($id);
         if (!empty($data['image_url'])){
-            $imageUrl = $this->imageUpload($data, 'image_url', $data['title'], 'slider-images');
+            $imageUrl = $this->imageUpload($data, 'image_url', $data['title_en'], 'slider-images');
             $data['image_url'] = env('APP_URL', 'http://localhost:8000') . "/slider-images/".$imageUrl;
         }
         $sliderImage->update($data);
