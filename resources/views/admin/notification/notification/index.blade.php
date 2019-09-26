@@ -61,15 +61,12 @@
                                         </div>
 
                                         <div class="col-md-3">
-                                            <button data-id="" 
-                                                
-                                                data-toggle="tooltip" 
-                                                data-original-title="{{$notification->title}}" 
-                                                data-original-category="{{$notification->NotificationCategory->name}}" 
-                                                data-original-discription="{{$notification->body}}" 
+                                            <a  role="button"
+                                                data-id=""
+                                                href="{{route('notification.show',$notification->id)}}" 
                                                 data-placement="right" 
                                                 class="showButton btn btn-outline-info" 
-                                                onclick=""><i class="la la-paper-plane"></i></button>
+                                                onclick=""><i class="la la-paper-plane"></i></a>
                                         </div>
 
                                     </div>
@@ -193,12 +190,12 @@
         })
 
 
-        $(".showButton").click(function(){
-            $('#sendUser').modal()
-            $('#title').html($(this).attr('data-original-title'))
-            $('#category').html($(this).attr('data-original-category'))
-            $('#discription').html($(this).attr('data-original-discription'))
-        })
+        // $(".showButton").click(function(){
+        //     $('#sendUser').modal()
+        //     $('#title').html($(this).attr('data-original-title'))
+        //     $('#category').html($(this).attr('data-original-category'))
+        //     $('#discription').html($(this).attr('data-original-discription'))
+        // })
        
         $(document).ready(function () {
             $('#Example1').DataTable({
