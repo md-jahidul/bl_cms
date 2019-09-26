@@ -136,6 +136,16 @@
                 let lower_price = $("#validity_lower").val();
                 let upper_price = $("#validity_upper").val();
 
+                if(upper_price !='' && lower_price > upper_price){
+                    Swal.fire(
+                        'Input Error!',
+                        'Lower input cannot be greater than Upper Input',
+                        'error',
+                    );
+
+                    return false;
+                }
+
                 if (lower_price <= 0) {
                     Swal.fire(
                         'Input Error!',
@@ -149,7 +159,7 @@
                 if (upper_price <= 0 && upper_price != '') {
                     Swal.fire(
                         'Input Error!',
-                        'Upper input should be greater than 1',
+                        'Upper input should be greater than 0',
                         'error',
                     );
 
@@ -176,11 +186,10 @@
 
 
                 }).fail(function (jqXHR, textStatus, errorThrown) {
-                    // If fail
-                    //console.log(textStatus + ': ' + errorThrown);
+                    let errorResponse = jqXHR.responseJSON;
                     Swal.fire(
                         'Error!',
-                        'Something went wrong.try Later',
+                        errorResponse.errors,
                         'error',
                     );
                 });
@@ -219,11 +228,10 @@
                                 'success',
                             );
                         }).fail(function (jqXHR, textStatus, errorThrown) {
-                            // If fail
-                            //console.log(textStatus + ': ' + errorThrown);
+                            let errorResponse = jqXHR.responseJSON;
                             Swal.fire(
                                 'Error!',
-                                'Something went wrong.try Later',
+                                errorResponse.errors,
                                 'error',
                             );
                         });

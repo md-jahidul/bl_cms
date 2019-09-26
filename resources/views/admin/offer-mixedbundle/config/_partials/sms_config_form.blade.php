@@ -136,6 +136,16 @@
                 let lower_price = $("#sms_lower_price").val();
                 let upper_price = $("#sms_upper_price").val();
 
+                if(upper_price !='' && lower_price > upper_price){
+                    Swal.fire(
+                        'Input Error!',
+                        'Lower input cannot be greater than Upper Input',
+                        'error',
+                    );
+
+                    return false;
+                }
+
                 if (lower_price < 0) {
                     Swal.fire(
                         'Input Error!',
