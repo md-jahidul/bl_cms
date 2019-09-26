@@ -22,7 +22,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="title">Title :</label>
-                                <input name="title" style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @endif" max="200" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
+                                <input name="title" maxlength="200" style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @endif" max="200" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
                                 <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                             </div>
                         </div>

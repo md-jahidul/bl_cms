@@ -27,7 +27,7 @@
                     <div class="row">
                         <div class="col-md-10">
                            <label for="name">Notification Category :</label>
-                            <input type="text" value="@if(isset($notificationCategory)) {{$notificationCategory->name}} @elseif(old("name")) {{old("name")}} @endif" required name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Notification Category..">  
+                            <input type="text" maxlength="200" value="@if(isset($notificationCategory)) {{$notificationCategory->name}} @elseif(old("name")) {{old("name")}} @endif" required name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Notification Category..">  
                             @if(isset($notificationCategory))
                                 <input type="hidden" name="id" value="{{$notificationCategory->id}}">
                             @endif
@@ -86,6 +86,7 @@
             </div>
         </div>
     </div>
+    
 
 </section>
 
@@ -143,9 +144,6 @@
             })
         })
 
-
-
-       
         $(document).ready(function () {
             $('#Example1').DataTable({
                 dom: 'Bfrtip',
