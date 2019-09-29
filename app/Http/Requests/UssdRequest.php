@@ -23,9 +23,10 @@ class UssdRequest extends FormRequest
      */
     public function rules()
     {
+        //dd($this->id);
         return [
-            'title'=>'required|max:200',
-            'code'=>'required',
+            'title'=>'required|max:200|unique:ussd_codes,title,'.$this->id,
+            'code'=>'required|unique:ussd_codes,code,'.$this->id,
             'purpose'=>'required',
             'provider'=>'required',
         ];

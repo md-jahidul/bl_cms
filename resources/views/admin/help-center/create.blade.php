@@ -21,20 +21,22 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group {{ $errors->has('title') ? ' error' : '' }}">
-                                        <label for="title">Title:<small class="text-danger">*</small></label>
+                                        <label for="title" class="required">Title:</label>
                                         <input
+
                                         required 
                                         data-validation-required-message="title is required" 
                                         maxlength="200" 
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
+                                        data-validation-regex-message="title must start with alphabets"
+                                        data-validation-maxlength-message = "title canot be more then 200"
+
                                         value="{{ old("title") ? old("title") : '' }}" 
                                         type="text" value="" id="title" 
                                         class="form-control @error('title') is-invalid @enderror" 
                                         placeholder="Enter title...." 
                                         name="title">
-                                        <small class="text-info">
-                                            Title length can never be more then 200
-                                        </small>
-                                        <div class="help-block"></div>
+                                        <div class="help-block"><small class="text-info">Title length can never be more then 200</small></div>
                                         @error('title')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -46,21 +48,27 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="sequence">Sequence:<small class="text-danger">*</small></label>
+                                        <label for="sequence"  class="required">Sequence:</label>
                                         <input 
-                                         maxlength="50000"
+
                                          type="number"
+                                         required
+                                         maxlength="5" 
+                                         data-validation-maxlength-message = "Sequence can never be more then 5 digits"
                                          data-validation-required-message="sequence is required" 
+
                                          value="{{ old("sequence") ? old("sequence") : '' }}" 
                                          value="" id="sequence" 
                                          class="form-control @error('sequence') is-invalid @enderror" 
                                          placeholder="sequence.." 
                                          name="sequence"
                                          >
-                                        <small class="text-info">
-                                            Sequence can never be more then 50000
-                                        </small>
-                                        <div class="help-block"></div>
+                                        
+                                        <div class="help-block">
+                                            <small class="text-info">
+                                                Sequence can never be more then 5 digits
+                                            </small>
+                                        </div>
                                         @error('sequence')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -71,17 +79,21 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="redirect_link">Redirect link:<small class="text-danger">*</small></label>
+                                        <label for="redirect_link" class="required">Redirect link:</label>
                                         <input 
+
                                         required type="url" 
+                                        data-validation-regex-regex="((http[s]?|ftp[s]?):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*"
+                                        data-validation-regex-message="Only Valid URL's"
+                                        data-validation-required-message="Redirect Link is required"
+
                                         value="{{ old("redirect_link") ? old("redirect_link") : '' }}" 
                                         value="" id="redirect_link" 
                                         class="form-control @error('redirect_link') is-invalid @enderror" 
                                         placeholder="Http.." 
                                         name="redirect_link"
                                         >
-                                        <small id="redirect_link" class="form-text text-info">Enter Link here.</small>
-                                        <div class="help-block"></div>
+                                        <div class="help-block"><small id="redirect_link" class="form-text text-info">Enter Link here.</small></div>
                                         @error('redirect_link')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -109,7 +121,7 @@
                                                         }else{ 
                                                             console.log('no')
                                                             this.style.border = '1px solid red';
-                                                            document.getElementById('massage').innerHTML = '<b>image aspact ratio must 1:1(change the picture to enable button)</b>';
+                                                            document.getElementById('massage').innerHTML = '<b>image aspact ratio must 1:1(change the image to enable button)</b>';
                                                             document.getElementById('massage').classList.add('text-danger');
                                                             document.getElementById('submitForm').disabled = true;
                                                         } 
@@ -127,11 +139,14 @@
                                             </div>
                                             
                                         </div>
-                                        <div class="help-block"></div>
+                                        
                                         <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
-                                        <small class="text-info" id="massage">
-                                            Image aspect ratio should be 1:1
-                                        </small>
+                                        
+                                        <div class="help-block">
+                                            <small class="text-info" id="massage">
+                                                Image aspect ratio should be 1:1
+                                            </small>
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -145,7 +160,6 @@
                 </div>
             </div>
         </div>
-        
     </section>
 @endsection
 
@@ -156,5 +170,10 @@
     
 @endpush
 @push('page-js')
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+    <script>
+        $(document).ready(function($){
+            $("#sequence").mask('00000000',{placeholder:"sequence can not be more then 5 digits"})
+        })
+    </script>
 @endpush
