@@ -45,7 +45,7 @@ class MyblSliderImageController extends Controller
      */
     public function index($sliderId)
     {
-
+        
         return view('admin.myblslider.add_image_to_slider')
                     ->with('sliderId',$sliderId)
                     ->with('slider_information',$this->sliderService->findOne($sliderId));
@@ -62,7 +62,7 @@ class MyblSliderImageController extends Controller
         //
     }
 
-    /**
+    /**return redirect(route('myblslider.index'));
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -71,7 +71,8 @@ class MyblSliderImageController extends Controller
     public function store(SliderImageStoreRequest $request)
     {
         session()->flash('success',$this->sliderImageService->storeSliderImage($request->all()['repeater-list'])->getContent());
-        return redirect(route('myblslider.index'));
+        return redirect()->back();
+        
     }
 
     /**
@@ -112,6 +113,7 @@ class MyblSliderImageController extends Controller
         $slider = $this->sliderService->findOne($id);
         return view('admin.myblslider.edit_image_to_slider')
                 ->with('slider',$slider)
+                ->with('slider_id',$id)
                 ->with('slider_information',$this->sliderService->findOne($id));
     }
 

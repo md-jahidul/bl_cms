@@ -1,90 +1,123 @@
 @extends('layouts.admin')
-@section('title', 'Short Cuts List')
-@section('card_name', 'Short Cuts')
+@section('title', 'Shortcuts List')
+@section('card_name', 'Shortcuts')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Short-Cuts List</li>
+    <li class="breadcrumb-item active">Shortcuts List</li>
 @endsection
 
 @section('content_header')
     <h1 class="content-header-title mb-0 d-inline-block">
-        Short-Cuts List
+        Shortcuts List
     </h1>
 @endsection
 
 @section('content')
     <!-- /short cut add form -->
     <section>
-            <form action=" @if(isset($short_cut_info)) {{route('short_cuts.update',$short_cut_info->id)}} @else {{route('short_cuts.store')}} @endif " method="post" enctype="multipart/form-data">
-                
-                @csrf
-                @if(isset($short_cut_info)) @method('put') @else @method('post') @endif
-                <div class="container-fluid">
-                    <div class="row px-1 pt-1 bg-white">
-                    <h4 class="form-section col-md-12">
-                        @if(isset($short_cut_info))
-                            Update Short Cuts
-                            @else
-                            Create Short Cuts
-                        @endif
-                    </h4>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="title">Title :</label>
-                            <input maxlength="50" required style="height:100%" value="@if(isset($short_cut_info)){{$short_cut_info->title}} @elseif(old("title")) {{old("title")}} @endif" type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter Shor Cut Name..">
-                            <input type="hidden" value="@if(isset($short_cut_info)) yes @else no @endif" name="value_exist">
-                            @if(isset($short_cut_info)) 
-                                <input type="hidden" value="{{$short_cut_info->id}}" name="id">
-                            @endif
-                            <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="default">Default :</label>
-                            <select required class="form-control" value="" name="is_default" id="default">
-                                <option @if(isset($short_cut_info)) @if($short_cut_info->is_default==0) selected @endif @endif value="0">Not Default</option>
-                                <option @if(isset($short_cut_info)) @if($short_cut_info->is_default==1) selected @endif @endif value="1">Default</option>
-                            </select>
-                        </div>
-                    </div>
-        
+        <form action=" @if(isset($short_cut_info)) {{route('short_cuts.update',$short_cut_info->id)}} @else {{route('short_cuts.store')}} @endif " method="post" enctype="multipart/form-data" novalidate>
+            
+            @csrf
+            @if(isset($short_cut_info)) @method('put') @else @method('post') @endif
+            <div class="container-fluid">
+                <div class="row px-1 pt-1 bg-white">
+                <h4 class="form-section col-md-12">
                     @if(isset($short_cut_info))
-                        <div class="col-md-12 mb-1"> 
-                            <img style="height:100px;width:200px" id="imgDisplay" src="{{asset($short_cut_info->icon)}}" alt="" srcset="">
-                        </div>
+                        Update Shortcuts
                         @else
-                        <div class="col-md-12 mb-1"> 
-                            <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt="" srcset="">
-                        </div>
+                        Create Shortcuts
                     @endif
-                    
-        
-                    <div class="col-md-10">
-                        
-                        <div class="form-group">
-                            <label for="image">Upload Icon :</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input accept="image/*" id="image" @if(!isset($short_cut_info)) required @endif  name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
-                                    <label class="custom-file-label" for="icon">Upload icon...</label>
-                                </div>
-                            </div>
-                            <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                </h4>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="title" class="required">Title :</label>
+                        <input 
+                         
+                        required 
+                        data-validation-required-message="Title fild is required" 
+                        maxlength="50" 
+                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
+                        data-validation-regex-message="Title must start with alphabets"
+                        data-validation-maxlength-message = "Title canot be more then 50 Characters"
+                        style="height:100%" value="@if(isset($short_cut_info)){{$short_cut_info->title}} @elseif(old("title")) {{old("title")}} @endif" type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter Shorcut Name..">
+                        <div class="help-block">
+                            <small class="text-info"> Title can not be more then 50 Characters</small>
                         </div>
-        
-                    </div>
-        
-                    <div class="col-md-2" style="margin-top:26px">
-                        @if(isset($short_cut_info))
-                                <button type="submit" style="width:100%" class="btn btn-info">Update Short Cut</button>
-                            @else
-                                <button type="submit" style="width:100%" class="btn btn-info">Add Short Cut</button>
+                        <input type="hidden" value="@if(isset($short_cut_info)) yes @else no @endif" name="value_exist">
+                        @if(isset($short_cut_info)) 
+                            <input type="hidden" value="{{$short_cut_info->id}}" name="id">
                         @endif
+                        <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                     </div>
-                    
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="default">Default :</label>
+                        <select required class="form-control" value="" name="is_default" id="default">
+                            <option @if(isset($short_cut_info)) @if($short_cut_info->is_default==0) selected @endif @endif value="0">Not Default</option>
+                            <option @if(isset($short_cut_info)) @if($short_cut_info->is_default==1) selected @endif @endif value="1">Default</option>
+                        </select>
+                    </div>
+                </div>
+    
+                @if(isset($short_cut_info))
+                    <div class="col-md-12 mb-1"> 
+                        <img style="height:100px;width:200px" id="imgDisplay" src="{{asset($short_cut_info->icon)}}" alt="" srcset="">
+                    </div>
+                    @else
+                    <div class="col-md-12 mb-1"> 
+                        <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt="" srcset="">
+                    </div>
+                @endif
+                
+    
+                <div class="col-md-10">
+                    
+                    <div class="form-group">
+                        <label for="image" class="required">Upload Icon :</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input accept="image/*" 
+                                data-validation-required-message="Icon fild is required" 
+                                onchange="createImageBitmap(this.files[0]).then((bmp) => {
+                                                        
+                                    if(bmp.width/bmp.height == 1/1){
+                                        console.log('yes')
+                                        document.getElementById('submitForm').disabled = false;
+                                        document.getElementById('massage').innerHTML = '';
+                                        this.style.border = 'none';
+                                        this.nextElementSibling.innerHTML = '';
+                                    }else{ 
+                                        console.log('no')
+                                        this.style.border = '1px solid red';
+                                        document.getElementById('massage').innerHTML = '<b>image aspact ratio must 1:1(change the picture to enable button)</b>';
+                                        document.getElementById('massage').classList.add('text-danger');
+                                        document.getElementById('submitForm').disabled = true;
+                                    } 
+                                })" 
+                                id="image" @if(!isset($short_cut_info)) required @endif  name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="icon">
+                                <label class="custom-file-label" for="icon">Upload icon...</label>
+                            </div>
+                        </div>
+                        <div class="help-block">
+                            <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                            <small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small>
+                        </div>
+                        <small id="massage"></small>
+                    </div>
+    
+                </div>
+    
+                <div class="col-md-2" style="margin-top:26px">
+                    @if(isset($short_cut_info))
+                            <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Update Shortcut</button>
+                        @else
+                            <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Add Shortcut</button>
+                    @endif
+                </div>
+                
             </div>
-            </form>
+        </div>
+        </form>
             
     <div class="card card-info mt-0" style="box-shadow: 0px 0px">
         <div class="card-content">

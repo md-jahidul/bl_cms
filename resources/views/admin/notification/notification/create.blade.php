@@ -9,7 +9,7 @@
 <div class="card mb-0 px-1" style="box-shadow:none;">        
     <div class="card-content">
         <div class="card-body">
-            <form class="form" method="POST" action="{{route('notification.store')}}">
+            <form novalidate class="form" method="POST" action="{{route('notification.store')}}">
                 @csrf
                 @method('post')
                 
@@ -21,28 +21,52 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="title">Title :</label>
-                                <input name="title" maxlength="200" style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @endif" max="200" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
+                                <label for="title" class="required">Title :</label>
+                                <input 
+                                name="title" 
+                                required
+                                maxlength="200" 
+                                data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
+                                data-validation-required-message="Title fild is required" 
+                                data-validation-regex-message="Title must start with alphabets"
+                                data-validation-maxlength-message = "Title canot be more then 200 Characters" 
+                                
+                                style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @endif" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
+                                
+                                <div class="help-block">
+                                    <small class="text-info"> Title can not be more then 200 Characters</small><br>
+                                </div>
                                 <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                             </div>
                         </div>
 
                         <div class="col-md-6">
+
                             <div class="form-group">
-                                <label for="category_id">category :</label>
-                                <select class="form-control @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
+                                <label for="category_id" class="required">
+                                    Category :
+                                </label>
+                                <div class="controls">
+                                    <select name="category_id" id="category_id" required class="form-control @error('category_id') is-invalid @enderror">
+                                    <option value="">Select Category</option>
                                     @foreach ($categories as $category)
                                         <option value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name}}</option>
                                     @endforeach
-                                </select>
-                                <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
+                                    </select>
+                                    <div class="help-block"></div>
+                                    <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
+                                </div>
                             </div>
                         </div>
                         
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="body">Body :</label>
-                                <textarea class="form-control @error('body') is-invalid @enderror" placeholder="Enter body description....." id="body" name="body" rows="10">@if(old('body')){{old('body')}}@endif</textarea>
+                                <label for="body" class="required">Body :</label>
+                                <textarea 
+                                required
+                                data-validation-required-message="Title fild is required" 
+                                class="form-control @error('body') is-invalid @enderror" placeholder="Enter body description....." id="body" name="body" rows="10">@if(old('body')){{old('body')}}@endif</textarea>
+                                <div class="help-block"></div>
                                 <small class="text-danger"> @error('body') {{ $message }} @enderror </small>
                             </div>
                         </div>

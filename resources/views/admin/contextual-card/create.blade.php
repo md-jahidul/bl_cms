@@ -13,7 +13,7 @@
         <div class="card card-info mb-0" style="padding-left:10px">
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form" action="{{route('contextualcard.store')}}" enctype="multipart/form-data" method="POST" novalidate>
+                    <form novalidate class="form" action="{{route('contextualcard.store')}}" enctype="multipart/form-data" method="POST" novalidate>
                         @csrf
                         @method('post')
                         <div class="form-body">
@@ -25,15 +25,22 @@
                                     <div class="form-group {{ $errors->has('title') ? ' error' : '' }}">
                                         <label for="title" class="required">Title:</label>
                                         <input required value="{{ old("title") ? old("title") : '' }}" 
-                                            maxlength="200"
-                                            required 
-                                            data-validation-required-message="title is required"
+                                            required
+                                            maxlength="200" 
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
+                                            data-validation-required-message="Title fild is required" 
+                                            data-validation-regex-message="Title must start with alphabets"
+                                            data-validation-maxlength-message = "Title canot be more then 200 Characters"
                                             type="text"
                                             value="" id="title" class="form-control @error('title') is-invalid @enderror"
                                             placeholder="Enter title...." 
                                             name="title">
 
-                                        <div class="help-block"></div>
+                                        <div class="help-block">
+                                            <small class="text-info">
+                                                Title canot be more then 200 Characters
+                                            </small>
+                                        </div>
                                         @if ($errors->has('title'))
                                             <div class="help-block">  {{ $errors->first('title') }}</div>
                                         @endif
@@ -43,7 +50,10 @@
                                 <div class="col-md-12">
                                     <div class="form-group {{ $errors->has('description') ? ' error' : '' }}">
                                         <label for="description" class="required">Description:</label>
-                                        <textarea required class="form-control" name="description" placeholder="Enter description..." id="description" rows="8">{{ old("description") ? old("description") : '' }}</textarea>
+                                        <textarea
+                                        required
+                                        data-validation-required-message="Description fild is required" 
+                                        class="form-control" name="description" placeholder="Enter description..." id="description" rows="8">{{ old("description") ? old("description") : '' }}</textarea>
                                         <small id="description" class="form-text text-muted">Enter description...</small>
                                         <div class="help-block"></div>
                                         @error('description')
@@ -57,8 +67,20 @@
                                 <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('first_action_text') ? ' error' : '' }}">
                                         <label for="first_action_text" class="required">First Action Text:</label>
-                                        <input maxlength="200" required type="text" value="{{ old("first_action_text") ? old("first_action_text") : '' }}" value="" id="first_action_text" class="form-control @error('first_action_text') is-invalid @enderror" placeholder="first action text.." name="first_action_text">
-                                        <div class="help-block"></div>
+                                        <input 
+                                        required
+                                        maxlength="200" 
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
+                                        data-validation-required-message="First Action Text fild is required" 
+                                        data-validation-regex-message="First Action Text must start with alphabets"
+                                        data-validation-maxlength-message = "First Action Text canot be more then 200 Characters" 
+                                        
+                                        type="text" value="{{ old("first_action_text") ? old("first_action_text") : '' }}" value="" id="first_action_text" class="form-control @error('first_action_text') is-invalid @enderror" placeholder="first action text.." name="first_action_text">
+                                        <div class="help-block">
+                                            <small class="text-info">
+                                                First Action Text canot be more then 200 Characters
+                                            </small>
+                                        </div>
                                         @error('first_action_text')
                                             <span class="help-block" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -70,8 +92,20 @@
                                 <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('second_action_text') ? ' error' : '' }}">
                                         <label for="second_action_text" class="required">Second Action Text:</label>
-                                        <input  maxlength="200" required type="text" value="{{ old("second_action_text") ? old("second_action_text") : '' }}" value="" id="second_action_text" class="form-control @error('second_action_text') is-invalid @enderror" placeholder="second action text.." name="second_action_text">
-                                        <div class="help-block"></div>
+                                        <input  
+                                        required
+                                        maxlength="200" 
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
+                                        data-validation-required-message="Second Action Text fild is required" 
+                                        data-validation-regex-message="Second Action Text must start with alphabets"
+                                        data-validation-maxlength-message = "Second Action Text canot be more then 200 Characters"  
+                                        
+                                        type="text" value="{{ old("second_action_text") ? old("second_action_text") : '' }}" value="" id="second_action_text" class="form-control @error('second_action_text') is-invalid @enderror" placeholder="second action text.." name="second_action_text">
+                                        <div class="help-block">
+                                            <small class="text-info">
+                                                Second Action Text canot be more then 200 Characters
+                                            </small>
+                                        </div>
                                         @error('second_action_text')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -83,8 +117,19 @@
                                 <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('first_action') ? ' error' : '' }}">
                                         <label for="first_action" class="required">First Action:</label>
-                                        <input  maxlength="200" required type="text" value="{{ old("first_action") ? old("first_action") : '' }}" value="" id="first_action" class="form-control @error('first_action') is-invalid @enderror" placeholder="first action.." name="first_action">
-                                        <div class="help-block"></div>
+                                        <input  
+                                        required
+                                        maxlength="200" 
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
+                                        data-validation-required-message="First Action fild is required" 
+                                        data-validation-regex-message="First Action must start with alphabets"
+                                        data-validation-maxlength-message = "First Action canot be more then 200 Characters"   
+                                        type="text" value="{{ old("first_action") ? old("first_action") : '' }}" value="" id="first_action" class="form-control @error('first_action') is-invalid @enderror" placeholder="first action.." name="first_action">
+                                        <div class="help-block">
+                                            <small class="text-info">
+                                                First Action canot be more then 200 Characters
+                                            </small>
+                                        </div>
                                         @error('first_action')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -96,8 +141,21 @@
                                 <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('second_action') ? ' error' : '' }}">
                                         <label for="second_action" class="required">Second Action:</label>
-                                        <input  maxlength="200" required type="text" value="{{ old("second_action") ? old("second_action") : '' }}" value="" id="second_action" class="form-control @error('second_action') is-invalid @enderror" placeholder="second action.." name="second_action">
-                                        <div class="help-block"></div>
+                                        <input  
+                                        
+                                        required
+                                        maxlength="200" 
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
+                                        data-validation-required-message="Second Action fild is required" 
+                                        data-validation-regex-message="Second Action must start with alphabets"
+                                        data-validation-maxlength-message = "Second Action canot be more then 200 Characters"
+                                        
+                                        value="{{ old("second_action") ? old("second_action") : '' }}" value="" id="second_action" class="form-control @error('second_action') is-invalid @enderror" placeholder="second action.." name="second_action">
+                                        <div class="help-block">
+                                            <small class="text-info">
+                                                Second Action canot be more then 200 Characters
+                                            </small>
+                                        </div>
                                         @error('second_action')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -114,7 +172,10 @@
                                         <label for="image" class="required">Upload contextual Card Image:</label>
                                         <div class="input-group ">
                                             <div class="custom-file">
-                                                <input required accept="image/*"
+                                                <input
+                                                required
+                                                data-validation-required-message="Card Image fild is required" 
+                                                accept="image/*"
                                                 onchange="
                                                     createImageBitmap(this.files[0]).then((bmp) => {
                                                         
@@ -124,12 +185,12 @@
                                                             // document.getElementById('addMore').disabled = false;
                                                             document.getElementById('submitForm').disabled = false;
                                                             this.style.border = 'none';
-                                                            this.nextElementSibling.innerHTML = '';
+                                                            document.getElementById('massage').innerHTML = '';
                                                         }else{ 
                                                             console.log('no')
                                                             this.style.border = '1px solid red';
-                                                            this.nextElementSibling.classList.add('text-danger');
-                                                            this.nextElementSibling.innerHTML = '<br><br><b>image aspact ratio must 1:1(change the picture to enable button)</b>';
+                                                            document.getElementById('massage').classList.add('text-danger');
+                                                            document.getElementById('massage').innerHTML = '<b>Card Image aspact ratio must be in 1:1(change the picture to enable button)</b>';
                                                             // document.getElementById('addMore').disabled = true;
                                                             document.getElementById('submitForm').disabled = true;
                                                         } 
@@ -140,7 +201,12 @@
                                                 <label class="custom-file-label" for="image_url">Upload image...</label>
                                             </div>
                                         </div>
-                                        <div class="help-block"></div>
+                                        <div class="help-block">
+                                            <small class="text-info">
+                                                Card Image aspact ratio must be in 1:1
+                                            </small>
+                                        </div>
+                                        <div id="massage"></div>
                                         <small class="text-danger"> @error('image_url') {{ $message }} @enderror </small>
                                     </div>
                                 </div>

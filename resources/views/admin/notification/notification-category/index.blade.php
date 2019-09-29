@@ -9,7 +9,7 @@
 <div class="card mb-0 px-1" style="box-shadow:none;">        
     <div class="card-content">
         <div class="card-body">
-            <form class="form" method="POST" action="@if(isset($notificationCategory)) {{route('notificationCategory.update',$notificationCategory->id)}} @else {{route('notificationCategory.store')}} @endif">
+            <form class="form" method="POST" action="@if(isset($notificationCategory)) {{route('notificationCategory.update',$notificationCategory->id)}} @else {{route('notificationCategory.store')}} @endif" novalidate >
                 @csrf
                 @if(isset($notificationCategory)) 
                     @method('put')
@@ -26,11 +26,22 @@
                     </h4>
                     <div class="row">
                         <div class="col-md-10">
-                           <label for="name">Notification Category :</label>
-                            <input type="text" maxlength="200" value="@if(isset($notificationCategory)) {{$notificationCategory->name}} @elseif(old("name")) {{old("name")}} @endif" required name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Notification Category..">  
+                           <label for="name" class="required">Notification Category :</label>
+                            <input type="text" 
+                            required
+                            maxlength="200" 
+                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
+                            data-validation-required-message="Name fild is required" 
+                            data-validation-regex-message="Name must start with alphabets"
+                            data-validation-maxlength-message = "Name canot be more then 200 Characters" 
+                             
+                            value="@if(isset($notificationCategory)) {{$notificationCategory->name}} @elseif(old("name")) {{old("name")}} @endif" name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Notification Category..">  
                             @if(isset($notificationCategory))
                                 <input type="hidden" name="id" value="{{$notificationCategory->id}}">
                             @endif
+                            <div class="help-block">
+                                <small class="text-info"> Notification Category can not be more then 200 Characters</small><br>
+                            </div>
                             <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
                         </div>
                         
