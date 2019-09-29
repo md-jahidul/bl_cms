@@ -12,10 +12,10 @@ class NotificationsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\NotificationCategory::class, 5)->create()->each(function($c) {
+        factory(\App\Models\NotificationCategory::class, 3)->create()->each(function($c) {
 
             $c->notifications()->saveMany(
-                factory(\App\Models\Notification::class, 10)->make()
+                factory(\App\Models\Notification::class, 5)->make()
             );
         });
     }

@@ -15,13 +15,14 @@ class PushNotificationController extends Controller
 
     /**
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function sendNotification(Request $request)
     {
         $notification = [
             'title' => $request->input('title'),
             'body' => $request->input('message'),
-            'send_to_type​' => "​ALL",
+            "send_to_type" => "ALL",
             "is_interactive" => "Yes",
             "data" => [
                 "cid" => "1",
@@ -29,11 +30,14 @@ class PushNotificationController extends Controller
                 "component" => "offer",
             ]
 
-
        ];
 
 
-        PushNotificationService::sendNotification($notification);
+        $response = PushNotificationService::sendNotification($notification);
+
+        session()->flash('success',$response);
+
+        return redirect(route('notification.send'));
 
     }
 

@@ -29,7 +29,6 @@ class PushNotificationService
 
     public static function sendNotification($data)
     {
-
         $res = static::post('/api/v1/push/notification', $data);
 
         return $res;
@@ -44,8 +43,9 @@ class PushNotificationService
     private static function makeHeader()
     {
         return [
-            'X-Client-Token: '.static::getToken(),
+            //'X-Client-Token: '.static::getToken(),
             'Content-Type: application/json',
+            'app-key: '.static::getToken(),
             'Expect: 100-continue'
         ];
     }
