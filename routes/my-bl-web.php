@@ -113,6 +113,11 @@ Route::group(['middleware' => ['appAdmin']], function () {
     route::resource('notification','CMS\NotificationController');
     Route::get('notification/destroy/{id}','CMS\NotificationController@destroy');
 
+
+    // Push Notification
+    Route::post('push-notification','CMS\PushNotificationController@sendNotification')->name('notification.send');
+
+
 });
 
 
