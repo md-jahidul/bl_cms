@@ -31,10 +31,10 @@
                                     <input 
                                         required
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
-                                        data-validation-required-message="Name fild is required" 
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                        data-validation-required-message="Name is required" 
                                         data-validation-regex-message="Name must start with alphabets"
-                                        data-validation-maxlength-message = "Name canot be more then 200 Characters" 
+                                        data-validation-maxlength-message = "Name can not be more then 200 Characters" 
                                         
                                         type="text" 
                                         value="@if(isset($single_slider)) {{ $single_slider->title }} @endif" 
@@ -58,7 +58,7 @@
                                 <div class="form-group">
                                     <label class="required">Slider type:</label>
                                     <div class="controls">
-                                        <select required data-validation-required-message="Slider type fild is required" id="projectinput6" style="height:34px" value="" name="component_id" class="form-control @error('component_id') is-invalid @enderror">
+                                        <select required data-validation-required-message="Slider type is required" id="projectinput6" style="height:34px" value="" name="component_id" class="form-control @error('component_id') is-invalid @enderror">
                                         <option value="">Select slider type</option>
                                         @foreach ($slider_types as $type)
                                             <option @if(isset($single_slider)) @if($single_slider->component_id == $type->id) selected @endif @endif value="{{$type->id}}">{{$type->name}}</option>
@@ -79,7 +79,7 @@
                             <label for="projectinput8">Discription:</label>
                             <textarea 
                             required
-                            data-validation-required-message="Discription fild is required" 
+                            data-validation-required-message="Discription is required" 
                             id="projectinput8" name="description" rows="5" class="form-control" name="description" placeholder="About Slider...">@if(isset($single_slider)) {{ $single_slider->description }} @endif</textarea>
                             <div class="help-block"></div>
                             </div>

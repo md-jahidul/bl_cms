@@ -17,7 +17,7 @@
                         @csrf
                         @method('post')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Create Internet offer.</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Create Internet Offer.</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -27,13 +27,13 @@
                                         required 
                                         data-validation-required-message="Title is required" 
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.<>\-])*)*"
                                         data-validation-regex-message="Title must start with alphabets"
-                                        data-validation-maxlength-message = "Title canot be more then 200 charecters"
+                                        data-validation-maxlength-message = "Title can not be more then 200 charecters"
                                         
                                         type="text" value="@if(old('title')){{old('title')}}@endif" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
                                         <div class="help-block">
-                                            <small class="text-info">Title canot be more then 200 charecters</small>
+                                            <small class="text-info">Title can not be more then 200 charecters</small>
                                         </div>
                                         @error('title')
                                             <span class="invalid-feedback" role="alert">
@@ -91,7 +91,7 @@
                                         required 
                                         data-validation-required-message="Offer Code is required" 
                                         maxlength="200" 
-                                        data-validation-maxlength-message = "Offer Code canot be more then 200 charecters"
+                                        data-validation-maxlength-message = "Offer Code can not be more then 200 charecters"
  
                                         type="text" value="@if(old('offer_code')){{old('offer_code')}}@endif" id="offer_code" class="form-control @error('offer_code') is-invalid @enderror" placeholder="Offer code.." name="offer_code">
                                         <div class="help-block">

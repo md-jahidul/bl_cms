@@ -24,13 +24,13 @@ class SliderImageStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'repeater-list.*.slider_id'=>'',
-            'repeater-list.*.title'=>'required|max:200',
-            'repeater-list.*.description'=>'',
-            'repeater-list.*.image_url'=>'required|image|mimes:jpeg,jpg,png|dimensions:ratio=16/9',
-            'repeater-list.*.alt_text'=>'',
-            'repeater-list.*.url_btn_label'=>'',
-            'repeater-list.*.url'=>'',
+            'slider_id'=>'',
+            'title'=>'required|max:200|unique:slider_images,title,'.$this->id,
+            'description'=>'',
+            'image_url'=>'required|image|mimes:jpeg,jpg,png|dimensions:ratio=16/9',
+            'alt_text'=>'max:200|unique:slider_images,alt_text,'.$this->id,
+            'url_btn_label'=>'max:200|url',
+            'url'=>'max:200|url',
         ];
     }
 
@@ -42,9 +42,9 @@ class SliderImageStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'repeater-list.*.image_url.dimensions' => 'Slider Image is Mast be in 16:9 dimension',
-            'repeater-list.*.image_url.required' => 'Slider Image is required',
-            'repeater-list.*.title.required' => 'title is required',
+            'image_url.dimensions' => 'Slider Image is Mast be in 16:9 dimension',
+            'image_url.required' => 'Slider Image is required',
+            'title.required' => 'title is required',
         ];
     }
 

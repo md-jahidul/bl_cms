@@ -36,7 +36,7 @@
                             <th>Points</th>
                             <th>Offer Code</th>
                             {{-- <th>Tag</th> --}}
-                            <th>Action</th>
+                            <th width="100">Action</th>
                         </tr>
                         </thead>
                         <tbody>

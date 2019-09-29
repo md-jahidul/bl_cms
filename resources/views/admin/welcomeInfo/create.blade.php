@@ -12,7 +12,7 @@
             
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" action="@if(isset($welcomeInfo)) {{route('welcomeInfo.update',$welcomeInfo->id)}} @else {{route('welcomeInfo.store')}} @endif" enctype="multipart/form-data" method="POST">
+                        <form novalidate class="form" action="@if(isset($welcomeInfo)) {{route('welcomeInfo.update',$welcomeInfo->id)}} @else {{route('welcomeInfo.store')}} @endif" enctype="multipart/form-data" method="POST">
                         @csrf
                         @if(isset($welcomeInfo)) @method('put') @else @method('post') @endif
                         <input type="hidden" value="@if(isset($welcomeInfo)) yes @else no @endif" name="value_exist">
@@ -22,8 +22,9 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     
-                                    <label for="guest_salutation">Guest Salutation:<small class="text-danger">*</small></label>
-                                    <input required type="text" @if(isset($welcomeInfo)) value="{{$welcomeInfo->guest_salutation}}" @elseif(old('guest_salutation')) value="{{old('guest_salutation')}}"  @else value=""  @endif  id="guest_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Enter guest salutation." name="guest_salutation">
+                                    <label for="guest_salutation" class="required">Guest Salutation:</label>
+                                    <input required maxlength="200" type="text" @if(isset($welcomeInfo)) value="{{$welcomeInfo->guest_salutation}}" @elseif(old('guest_salutation')) value="{{old('guest_salutation')}}"  @else value=""  @endif  id="guest_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Enter guest salutation." name="guest_salutation">
+                                    <div class="help-block"></div>
                                     @error('guest_salutation')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -33,8 +34,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="user_salutation">User Salutation:<small class="text-danger">*</small></label>
-                                    <input required type="text" @if(isset($welcomeInfo))  value="{{$welcomeInfo->user_salutation}}"  @elseif(old("user_salutation")) value="{{old("user_salutation")}}"  @endif id="user_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Enter user salutation." name="user_salutation">
+                                    <label for="user_salutation" class="required">User Salutation:</label>
+                                    <input required maxlength="200" type="text" @if(isset($welcomeInfo))  value="{{$welcomeInfo->user_salutation}}"  @elseif(old("user_salutation")) value="{{old("user_salutation")}}"  @endif id="user_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Enter user salutation." name="user_salutation">
+                                    <div class="help-block"></div>
                                     @error('user_salutation')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -44,8 +46,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="guest_message">Guest Message :<small class="text-danger">*</small></label>
+                                    <label for="guest_message" class="required">Guest Message :</label>
                                     <textarea required name="guest_message" class="form-control" id="guest_message" rows="3">@if(isset($welcomeInfo)){{$welcomeInfo->guest_message}}@elseif(old("guest_message")){{old("guest_message")}}@endif</textarea>
+                                    <div class="help-block"></div>
                                     @error('guest_message')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -55,8 +58,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="user_message">User Message :<small class="text-danger">*</small></label>
+                                    <label for="user_message" class="required">User Message :</label>
                                     <textarea required name="user_message" class="form-control" id="user_message" rows="3">@if(isset($welcomeInfo)){{$welcomeInfo->user_message}}@elseif(old("user_message")){{old("user_message")}} @endif</textarea>
+                                    <div class="help-block"></div>
                                     @error('user_message')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -86,6 +90,7 @@
                                     <input accept="image/*" @if(!isset($welcomeInfo)) required @endif @if(!isset($welcomeInfo)) @endif name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="image">
                                     <label class="custom-file-label @error('title') is-invalid @enderror" for="validatedCustomFile">Upload Icon...</label>
                                     <input type="hidden" name="update" value="@if(!isset($welcomeInfo)) yes @else no  @endif">
+                                    <div class="help-block"></div>
                                     @error('icon')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

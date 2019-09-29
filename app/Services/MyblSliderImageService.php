@@ -44,22 +44,16 @@ class MyblSliderImageService
      * Storing the banner resource
      * @return Response
      */
-    public function storeSliderImage($images)
+    public function storeSliderImage($image)
     {
-        $slider_id = $images[0]['slider_id'];
-        $image_data = $this->sliderImageRepository->sliderImage($slider_id);
-        if(empty($image_data)){
-            $i = 1;
-        }else{
-            $i = $image_data->sequence+1;
-        }
-        foreach ($images as $image) {
-            $image['image_url'] = 'storage/'.$image['image_url']->store('Slider_image');
-            $image['sequence'] = $i;
-            $image['slider_id'] = $slider_id;
-            $this->save($image);
-            $i++;
-        }
+        //dd($image);
+        $image_data = $this->sliderImageRepository->sliderImage($image['slider_id']);
+        if(empty($image_data)){ $i = 1;}else{ $i = $image_data->sequence+1;}
+       
+        $image['image_url'] = 'storage/'.$image['image_url']->store('Slider_image');
+        $image['sequence'] = $i;
+        $this->save($image);
+        
         return new Response("Image has successfully been Added to slider");
     }
 

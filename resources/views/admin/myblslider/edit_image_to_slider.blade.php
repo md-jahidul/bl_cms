@@ -2,16 +2,19 @@
 @section('title', 'Slider')
 @section('card_name', $slider_information->title." Slider")
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Edit-image</li>
+    <li class="breadcrumb-item active">Edit Image Info</li>
 @endsection
-
+@section('action')
+    <a href="{{route('myblsliderImage.index',$slider_information->id)}}" class="btn btn-info btn-glow px-2">
+        Add Image
+    </a>
+    <a href="{{route('myblslider.index')}}" class="btn btn-primary btn-glow px-2">
+        Slider list 
+    </a>
+@endsection
 @section('content')
 
     <section id="form-control-repeater">
-
-       
-
-        
         
     </section>
 
@@ -50,20 +53,21 @@
                                                 @csrf
                                                 @method('put')
                                                 <input type="hidden" hidden value="{{$slider_information->id}}" name="slider_id">
+                                                <input type="hidden" hidden value="{{$image->id}}" name="id">
                                                 <div class="form-group col-12 mb-2 file-repeater">
                                                 
                                                     <div class="row mb-1">
                                                         <div class="form-group col-md-6 mb-2">
                                                             <label for="title">Title: <small class="text-danger">*</small> </label>
-                                                            <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                                             <input 
                                                             required
                                                             maxlength="200" 
-                                                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
-                                                            data-validation-required-message="Title fild is required" 
+                                                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                                            data-validation-required-message="Title is required" 
                                                             data-validation-regex-message="Title must start with alphabets"
-                                                            data-validation-maxlength-message = "Title canot be more then 200 Characters" 
+                                                            data-validation-maxlength-message = "Title can not be more then 200 Characters" 
                                                             value="{{$image->title}}" required id="title" type="text" class="form-control @error('title') is-invalid @enderror" placeholder="Title" name="title">
+                                                            <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                                             <div class="help-block"></div>
                                                         </div>
                                                         <div class="form-group col-md-6 mb-2">
@@ -71,11 +75,12 @@
                                                             <input 
                                                             required
                                                             maxlength="200" 
-                                                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
-                                                            data-validation-required-message="Alt Text fild is required" 
+                                                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                                            data-validation-required-message="Alt Text is required" 
                                                             data-validation-regex-message="Alt Text must start with alphabets"
-                                                            data-validation-maxlength-message = "Alt Text canot be more then 200 Characters"
-                                                            value="{{$image->alt_text}}" id="alt_text" type="text" class="form-control" placeholder="Alt text" name="alt_text">
+                                                            data-validation-maxlength-message = "Alt Text can not be more then 200 Characters"
+                                                            value="{{$image->alt_text}}" id="alt_text" type="text" class="form-control @error('alt_text') is-invalid @enderror" placeholder="Alt text" name="alt_text">
+                                                            <small class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
                                                             <div class="help-block"></div>
                                                         </div>
                                                         <div class="form-group col-md-6 mb-2">
@@ -85,6 +90,7 @@
                                                             data-validation-regex-message="Button URL must be a valid link"
                                                             value="{{$image->url_btn_label}}"
                                                             type="url" class="form-control" placeholder="Button Name" name="url_btn_label">
+                                                            <small class="text-danger"> @error('url_btn_label') {{ $message }} @enderror </small>
                                                             <div class="help-block"></div>
                                                         </div>
                                                         <div class="form-group col-md-6 mb-2">
@@ -93,6 +99,7 @@
                                                             data-validation-regex-regex="((http[s]?|ftp[s]?):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*"
                                                             data-validation-regex-message="URL must be a valid link"
                                                             value="{{$image->redirect_url}}" id="url" type="url" class="form-control" placeholder="http.." name="url">
+                                                            <small class="text-danger"> @error('url') {{ $message }} @enderror </small>
                                                             <div class="help-block"></div>
                                                         </div>
                                                     
@@ -128,8 +135,6 @@
                                                                     <div class="input-group">
                                                                         <div class="custom-file">
                                                                         <input accept="image/*" 
-                                                                        required
-                                                                        data-validation-required-message="Alt Text fild is required" 
                                                                         onchange="createImageBitmap(this.files[0]).then((bmp) => {
                                                                                                 
                                                                             if(bmp.width/bmp.height == 16/9){
@@ -146,7 +151,8 @@
                                                                                 document.getElementById('submitForm').disabled = true;
                                                                             } 
                                                                         })" 
-                                                                        id="image"  name="image_url" type="file" class="custom-file-input" id="image_url">
+                                                                        id="image"  name="image_url" type="file" class="custom-file-input" >
+                                                                        <div class="help-block"></div>
                                                                         <label class="custom-file-label" for="image_url">Upload Image...</label>
                                                                     </div>
                                                                 </div>

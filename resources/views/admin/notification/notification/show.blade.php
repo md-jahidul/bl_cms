@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Notification details')
-@section('card_name', 'Notification details')
+@section('title', 'Notification')
+@section('card_name', 'Notification')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Notification details</li>
+    <li class="breadcrumb-item active">Notification Send</li>
 @endsection
 @section('action')
     <a href="{{route('notification.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
@@ -16,58 +16,34 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">Notification "{{$notification->title}}"</h1>
                     </div>
                 </div>
             </div>
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
-                           id="Example1" role="grid" aria-describedby="Example1_info" style="">
-                        <thead>
-                        <tr>
-                            
-                        </tr>
-                        </thead>
-                        <tbody>
-                            
-                            <tr>
-                                <th>title</th>
-                                <td>{{$notification->title}}</td>
-                                <th>Category</th>
-                                <td>{{$notification->category}}</td>
-                            </tr>
-                            <tr>
-                                <th>Body:</th>
-                            </tr>
-                            <tr>
-                                <td>{{$notification->body}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3"> 
-                                    <div class="row">
-                                        <div class="col-2">
-                                            <a  style="width:100%" role="button" href="{{route('notification.edit',$notification->id)}}" class="btn btn-sm btn-success">
-                                                <i class="la la-pencil"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-2">
-                                            <button  style="width:100%" data-id="{{$notification->id}}" class="btn btn-sm btn-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                        </div>
-                                    </div>
-                                    
-                                </td>
-                                
-                            </tr>
-                            
-                                
-                        </tbody>
-                    </table>
+
+                    <form class="form" method="POST" action="{{route('notification.send')}}">
+                        @csrf
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$notification->title}}">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea class="form-control col-md-12" name="message" id="message"> {{$notification->body}}</textarea>
+                        </div>
+
+                        <div class="col-md-12" >
+                            <div class="form-group float-right" style="margin-top:15px;">
+                                <button class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </form>
 
                 </div>
             </div>
         </div>
-
     </section>
 
 @endsection

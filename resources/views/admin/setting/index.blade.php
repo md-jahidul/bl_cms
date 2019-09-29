@@ -20,17 +20,6 @@
                     <h4 class="form-section"><i class="la la-key"></i>Setting Key</h4>
                     <div class="row">
                         <div class="col-md-5">
-                           {{-- <label for="key" class="required">Key:</label>
-                            <div class="controls">
-                                <select required name="setting_key_id" class="form-control @error('setting_key_id') is-invalid @enderror" id="key">
-                                <option value=""> Select Key </option>
-                                @foreach ($keys as $key)
-                                        <option @if(isset($setting_info)) @if($setting_info->setting_key_id == $key->id) selected @endif @endif value="{{$key->id}}">{{$key->title}}</option>
-                                @endforeach
-                                </select>
-                            </div>
-                            <div class="help-block"></div>
-                            <small class="text-danger"> @error('setting_key_id') {{ $message }} @enderror </small> --}}
                             <div class="form-group">
                                     <label class="required">Setting Key :
                                     </label>
@@ -52,8 +41,8 @@
                                 type="number"
                                 required
                                 maxlength="5" 
-                                data-validation-maxlength-message = "limit can never be more then 5 digits"
-                                data-validation-required-message="limit is required"  
+                                data-validation-maxlength-message = "Limit can never be more then 5 digits"
+                                data-validation-required-message="Limit is required"  
                                 @if(isset($setting_info)) value="{{$setting_info->limit}}"@else value="{{ old("limit") ? old("limit") : '' }}" @endif style="width:100%;height:100%" min="0" type="number" id="limit" class="form-control @error('limit') is-invalid @enderror" placeholder="Set Limite..." name="limit">
                                 <div class="help-block"> <small class="text-info">limit can never be more then 5 digits</small></div>
                                 <small class="text-danger"> @error('limit') {{ $message }} @enderror </small>
@@ -187,8 +176,6 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
     <script>
-        $(document).ready(function($){
-            $("#limit").mask('00000000',{placeholder:"limit can not be more then 50000"})
-        })
+        
     </script>
 @endpush

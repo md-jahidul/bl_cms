@@ -27,10 +27,10 @@
                                         <input required value="{{ old("title") ? old("title") : '' }}" 
                                             required
                                             maxlength="200" 
-                                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
-                                            data-validation-required-message="Title fild is required" 
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                            data-validation-required-message="Title is required" 
                                             data-validation-regex-message="Title must start with alphabets"
-                                            data-validation-maxlength-message = "Title canot be more then 200 Characters"
+                                            data-validation-maxlength-message = "Title can not be more then 200 Characters"
                                             type="text"
                                             value="" id="title" class="form-control @error('title') is-invalid @enderror"
                                             placeholder="Enter title...." 
@@ -38,7 +38,7 @@
 
                                         <div class="help-block">
                                             <small class="text-info">
-                                                Title canot be more then 200 Characters
+                                                Title can not be more then 200 Characters
                                             </small>
                                         </div>
                                         @if ($errors->has('title'))
@@ -52,7 +52,7 @@
                                         <label for="description" class="required">Description:</label>
                                         <textarea
                                         required
-                                        data-validation-required-message="Description fild is required" 
+                                        data-validation-required-message="Description is required" 
                                         class="form-control" name="description" placeholder="Enter description..." id="description" rows="8">{{ old("description") ? old("description") : '' }}</textarea>
                                         <small id="description" class="form-text text-muted">Enter description...</small>
                                         <div class="help-block"></div>
@@ -70,15 +70,15 @@
                                         <input 
                                         required
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
-                                        data-validation-required-message="First Action Text fild is required" 
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                        data-validation-required-message="First Action Text is required" 
                                         data-validation-regex-message="First Action Text must start with alphabets"
-                                        data-validation-maxlength-message = "First Action Text canot be more then 200 Characters" 
+                                        data-validation-maxlength-message = "First Action Text can not be more then 200 Characters" 
                                         
                                         type="text" value="{{ old("first_action_text") ? old("first_action_text") : '' }}" value="" id="first_action_text" class="form-control @error('first_action_text') is-invalid @enderror" placeholder="first action text.." name="first_action_text">
                                         <div class="help-block">
                                             <small class="text-info">
-                                                First Action Text canot be more then 200 Characters
+                                                First Action Text can not be more then 200 Characters
                                             </small>
                                         </div>
                                         @error('first_action_text')
@@ -95,15 +95,15 @@
                                         <input  
                                         required
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
-                                        data-validation-required-message="Second Action Text fild is required" 
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                        data-validation-required-message="Second Action Text is required" 
                                         data-validation-regex-message="Second Action Text must start with alphabets"
-                                        data-validation-maxlength-message = "Second Action Text canot be more then 200 Characters"  
+                                        data-validation-maxlength-message = "Second Action Text can not be more then 200 Characters"  
                                         
                                         type="text" value="{{ old("second_action_text") ? old("second_action_text") : '' }}" value="" id="second_action_text" class="form-control @error('second_action_text') is-invalid @enderror" placeholder="second action text.." name="second_action_text">
                                         <div class="help-block">
                                             <small class="text-info">
-                                                Second Action Text canot be more then 200 Characters
+                                                Second Action Text can not be more then 200 Characters
                                             </small>
                                         </div>
                                         @error('second_action_text')
@@ -120,14 +120,14 @@
                                         <input  
                                         required
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
-                                        data-validation-required-message="First Action fild is required" 
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                        data-validation-required-message="First Action is required" 
                                         data-validation-regex-message="First Action must start with alphabets"
-                                        data-validation-maxlength-message = "First Action canot be more then 200 Characters"   
+                                        data-validation-maxlength-message = "First Action can not be more then 200 Characters"   
                                         type="text" value="{{ old("first_action") ? old("first_action") : '' }}" value="" id="first_action" class="form-control @error('first_action') is-invalid @enderror" placeholder="first action.." name="first_action">
                                         <div class="help-block">
                                             <small class="text-info">
-                                                First Action canot be more then 200 Characters
+                                                First Action can not be more then 200 Characters
                                             </small>
                                         </div>
                                         @error('first_action')
@@ -145,15 +145,15 @@
                                         
                                         required
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
-                                        data-validation-required-message="Second Action fild is required" 
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                        data-validation-required-message="Second Action is required" 
                                         data-validation-regex-message="Second Action must start with alphabets"
-                                        data-validation-maxlength-message = "Second Action canot be more then 200 Characters"
+                                        data-validation-maxlength-message = "Second Action can not be more then 200 Characters"
                                         
                                         value="{{ old("second_action") ? old("second_action") : '' }}" value="" id="second_action" class="form-control @error('second_action') is-invalid @enderror" placeholder="second action.." name="second_action">
                                         <div class="help-block">
                                             <small class="text-info">
-                                                Second Action canot be more then 200 Characters
+                                                Second Action can not be more then 200 Characters
                                             </small>
                                         </div>
                                         @error('second_action')
@@ -174,7 +174,7 @@
                                             <div class="custom-file">
                                                 <input
                                                 required
-                                                data-validation-required-message="Card Image fild is required" 
+                                                data-validation-required-message="Card Image is required" 
                                                 accept="image/*"
                                                 onchange="
                                                     createImageBitmap(this.files[0]).then((bmp) => {

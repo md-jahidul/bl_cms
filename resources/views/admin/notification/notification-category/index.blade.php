@@ -31,16 +31,16 @@
                             required
                             maxlength="200" 
                             data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
-                            data-validation-required-message="Name fild is required" 
+                            data-validation-required-message="Name is required" 
                             data-validation-regex-message="Name must start with alphabets"
-                            data-validation-maxlength-message = "Name canot be more then 200 Characters" 
+                            data-validation-maxlength-message = "Name can not be more then 200 Characters" 
                              
                             value="@if(isset($notificationCategory)) {{$notificationCategory->name}} @elseif(old("name")) {{old("name")}} @endif" name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Notification Category..">  
                             @if(isset($notificationCategory))
                                 <input type="hidden" name="id" value="{{$notificationCategory->id}}">
                             @endif
                             <div class="help-block">
-                                <small class="text-info"> Notification Category can not be more then 200 Characters</small><br>
+                                <small class="text-info"> Notification category can not be more then 200 characters</small><br>
                             </div>
                             <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
                         </div>
@@ -65,7 +65,7 @@
                 <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
-                        <th width="100">id</th>
+                        <th width="100">ID</th>
                         <th>Tittle</th>
                         <th width="210">Action</th>
                     </tr>
