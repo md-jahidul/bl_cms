@@ -14,15 +14,15 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-{{--                    <h4 class="pb-1"><strong>{{ ucwords($sliderTitle." ". "slider images") }}</strong></h4>--}}
+                    <h4 class="pb-1"><strong>{{ ucwords($partnerName." ". "Offers") }}</strong></h4>
                     <table class="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <th>Company Logo</th>
                             <th width="25%">Validity</th>
-                            <th>get_offer_msg_en</th>
-                            <th>offer_en</th>
+                            <th>Get Send SMS</th>
+                            <th>Offer Percentage</th>
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
@@ -32,7 +32,6 @@
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td><img class="" src="{{ $partnerOffer->partner->company_logo }}" alt="Slider Image" height="50" width="50" /></td>
                                 <td>{{ $partnerOffer->validity_en }} {!! $partnerOffer->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
-{{--                                <td>{{ $partnerOffer->description }}</td>--}}
                                 <td>{{ $partnerOffer->get_offer_msg_en }}</td>
                                 <td>{{ $partnerOffer->offer_en }}</td>
                                 <td class="action" width="8%">

@@ -79,9 +79,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('btn_text_en') ? ' error' : '' }}">
-                                    <label for="btn_text_en" class="required">Button (English)</label>
+                                    <label for="btn_text_en" class="required">Button Label (English)</label>
                                     <input type="text" name="btn_text_en"  class="form-control" placeholder="Enter alt text"
-                                           value="{{ old("btn_text_en") ? old("btn_text_en") : '' }}" required data-validation-required-message="Enter alt text">
+                                           value="{{ old("btn_text_en") ? old("btn_text_en") : '' }}" required data-validation-required-message="Enter button label english">
                                     <div class="help-block"></div>
                                     @if ($errors->has('btn_text_en'))
                                         <div class="help-block">  {{ $errors->first('btn_text_en') }}</div>
@@ -89,9 +89,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('btn_text_bn') ? ' error' : '' }}">
-                                    <label for="btn_text_bn" class="required">Button (Bangla)</label>
+                                    <label for="btn_text_bn" class="required">Button Label (Bangla)</label>
                                     <input type="text" name="btn_text_bn"  class="form-control" placeholder="Enter alt text"
-                                           value="{{ old("btn_text_bn") ? old("btn_text_bn") : '' }}" required data-validation-required-message="Enter alt text">
+                                           value="{{ old("btn_text_bn") ? old("btn_text_bn") : '' }}" required data-validation-required-message="Enter button label bangla">
                                     <div class="help-block"></div>
                                     @if ($errors->has('btn_text_bn'))
                                         <div class="help-block">  {{ $errors->first('btn_text_bn') }}</div>
@@ -101,13 +101,9 @@
 
 
                                 <div class="col-md-12">
-                                    <div class="form-group {{ $errors->has('btn_text_bn') ? ' error' : '' }}">
-                                        <label for="title" class="required mr-1">Show In Home:</label>
-                                        <input type="checkbox" name="show_in_home" value="1" id="input-radio-16">
-
-                                        @if ($errors->has('btn_text_bn'))
-                                            <div class="help-block">  {{ $errors->first('btn_text_bn') }}</div>
-                                        @endif
+                                    <div class="form-group">
+                                        <label for="show_in_home" class="mr-1">Show In Home:</label>
+                                        <input type="checkbox" name="show_in_home" value="1" id="show_in_home">
                                     </div>
                                 </div>
 
