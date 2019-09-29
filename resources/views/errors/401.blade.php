@@ -6,7 +6,7 @@
                 <h1>Oops!</h1>
                 <h2>401 - Sorry, you are not authorized to access this page.</h2>
             </div>
-            <a href="/home">Go TO Homepage</a>
+            <a href="{{route('home')}}">Go TO Homepage</a>
         </div>
     </div>
 @endsection

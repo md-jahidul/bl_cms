@@ -6,7 +6,7 @@
                 <h1>Oops!</h1>
                 <h2>500 - Something Went Wrong.Contact with Support Team</h2>
             </div>
-            <a href="/home">Go TO Homepage</a>
+            <a href="{{route('home')}}">Go TO Homepage</a>
         </div>
     </div>
 @endsection
