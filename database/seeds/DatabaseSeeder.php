@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MixedBundleOfferSeeder::class);
         $this->call(NearbyOfferSeeder::class);
         $this->call(WelcomeInfoSeeder::class);
-        $this->call(BannersTableSeeder::class);
+       // $this->call(BannersTableSeeder::class);
         $this->call(CurrentBalanceSeeder::class);
         $this->call(BonusTableSeeder::class);
         $this->call(ContextualCardSeeder::class);
