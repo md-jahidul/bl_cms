@@ -94,13 +94,16 @@
                                 </div>
 
 
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 {{ $errors->has('company_logo') ? ' error' : '' }}">
                                     <label for="file" class=""></label><br>
                                     <label for="file">Select Company Logo</label>
                                     <label id="projectinput7" class="file center-block ml-2">
                                         <input type="file" id="file" name="company_logo">
                                     </label><br>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    @if ($errors->has('company_logo'))
+                                        <div class="help-block">  {{ $errors->first('company_logo') }}</div>
+                                    @endif
                                 </div>
                                 <div class="form-group col-md-1 pt-1">
                                     <img class="img-thumbnail" src="{{ $partner->company_logo }}" height="80" width="80">
