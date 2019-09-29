@@ -19,7 +19,7 @@
         <div class="card card-info mb-0" style="padding-left:10px">
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" action="@if (isset($single_slider)) {{route('myblslider.update',$single_slider->id)}} @else {{route('myblslider.store')}} @endif" method="POST">
+                        <form novalidate class="form" action="@if (isset($single_slider)) {{route('myblslider.update',$single_slider->id)}} @else {{route('myblslider.store')}} @endif" method="POST">
                         @csrf
                         @if (isset($single_slider)) @method('put') @else @method('post') @endif
                         <div class="form-body">
@@ -27,8 +27,24 @@
                             <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="companyName">Name:<small class="text-danger">*</small></label>
-                                    <input type="text" value="@if(isset($single_slider)) {{ $single_slider->title }} @endif" id="companyName" class="form-control @error('title') is-invalid @enderror" placeholder="Slider Name" name="title">
+                                    <label for="companyName" class="required">Name:</label>
+                                    <input 
+                                        required
+                                        maxlength="200" 
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
+                                        data-validation-required-message="Name fild is required" 
+                                        data-validation-regex-message="Name must start with alphabets"
+                                        data-validation-maxlength-message = "Name canot be more then 200 Characters" 
+                                        
+                                        type="text" 
+                                        value="@if(isset($single_slider)) {{ $single_slider->title }} @endif" 
+                                        id="companyName" 
+                                        class="form-control @error('title') is-invalid @enderror" 
+                                        placeholder="Slider Name" name="title">
+                                        
+                                        <div class="help-block">
+                                            <small class="text-info"> Name can not be more then 200 Characters</small><br>
+                                        </div>
                                     @error('title')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -38,25 +54,34 @@
                             </div>
                             @if(isset($single_slider)) <input type="hidden" name="id" value="{{$single_slider->id}}"> @endif
                             <div class="col-md-6">
+                                
                                 <div class="form-group">
-                                    <label for="projectinput6">Slider Type:<small class="text-danger">*</small></label>
-                                    <select id="projectinput6" style="height:34px" value="" name="component_id" class="form-control @error('component_id') is-invalid @enderror">
+                                    <label class="required">Slider type:</label>
+                                    <div class="controls">
+                                        <select required data-validation-required-message="Slider type fild is required" id="projectinput6" style="height:34px" value="" name="component_id" class="form-control @error('component_id') is-invalid @enderror">
+                                        <option value="">Select slider type</option>
                                         @foreach ($slider_types as $type)
                                             <option @if(isset($single_slider)) @if($single_slider->component_id == $type->id) selected @endif @endif value="{{$type->id}}">{{$type->name}}</option>
                                         @endforeach
-                                    </select>
-                                    @error('component_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                        </select>
+                                        <div class="help-block"></div>
+                                        @error('component_id')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                             <input type="hidden" name="platform" value="App">
                             </div>
                             <div class="form-group">
                             <label for="projectinput8">Discription:</label>
-                            <textarea id="projectinput8" rows="5" class="form-control" name="description" placeholder="About Slider...">@if(isset($single_slider)) {{ $single_slider->description }} @endif</textarea>
+                            <textarea 
+                            required
+                            data-validation-required-message="Discription fild is required" 
+                            id="projectinput8" name="description" rows="5" class="form-control" name="description" placeholder="About Slider...">@if(isset($single_slider)) {{ $single_slider->description }} @endif</textarea>
+                            <div class="help-block"></div>
                             </div>
                         </div>
                         <div class="form-actions">

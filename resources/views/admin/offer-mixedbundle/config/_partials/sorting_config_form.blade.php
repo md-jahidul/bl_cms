@@ -87,9 +87,10 @@
                     );
 
                 }).fail(function (jqXHR, textStatus, errorThrown) {
+                    let errorResponse = jqXHR.responseJSON;
                     Swal.fire(
                         'Error!',
-                        'Something went wrong.try Later',
+                        errorResponse.errors,
                         'error',
                     );
                 });

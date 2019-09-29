@@ -12,7 +12,7 @@
         <div class="card card-info mb-0" style="padding-left:10px">
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form" action="{{route('ussd.store')}}" method="POST">
+                    <form class="form" action="{{route('ussd.store')}}" method="POST" novalidate>
                         @csrf
                         @method('post')
                         <div class="form-body">
@@ -20,8 +20,18 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="title">Title:<small class="text-danger">*</small></label>
-                                        <input type="text" value="" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
+                                        <label for="title" class="required">Title:</label>
+                                        <input 
+
+                                        required 
+                                        data-validation-required-message="Title fild is required" 
+                                        maxlength="200" 
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
+                                        data-validation-regex-message="Title must start with alphabets"
+                                        data-validation-maxlength-message = "Title canot be more then 200 Characters"
+                                        type="text" 
+                                        value="{{ old("title") ? old("title") : '' }}" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
+                                        <div class="help-block"><small class="text-info">Title length can not be more then 200 Characters</small></div>
                                         @error('title')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -31,9 +41,20 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="volume">Code:<small class="text-danger">*</small></label>
-                                        <input type="text" value="" id="volume" class="form-control @error('code') is-invalid @enderror" placeholder="Enter code...." name="code">
-                                        
+                                        <label for="volume" class="required">Code:</label>
+                                        <input
+                                        required 
+                                        data-validation-required-message="Code fild is required" 
+                                        maxlength="200" 
+                                        {{-- data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
+                                        data-validation-regex-message="title must start with alphabets" --}}
+                                        data-validation-maxlength-message = "Code canot be more then 200 Characters"
+
+                                        type="text" value="{{ old("code") ? old("code") : '' }}" id="volume" class="form-control @error('code') is-invalid @enderror" placeholder="Enter code...." name="code">
+                                        <div class="help-block">
+                                            <small class="text-info">Code length can not be more the 200 Characters</small><br>
+                                            <small class="text-success">Code can contain *#</small>
+                                        </div>
                                         @error('code')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -44,9 +65,21 @@
                                 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="price">Purpose:<small class="text-danger">*</small></label>
-                                        <input type="text" value="" id="price" class="form-control @error('purpose') is-invalid @enderror" placeholder="purpose.." name="purpose">
-                                        
+                                        <label for="price" class="required">Purpose:</label>
+                                        <input 
+                                        required
+                                        maxlength="200"
+                                        data-validation-required-message="Purpose fild is required" 
+                                        data-validation-maxlength-message = "Purpose canot be more then 200 Characters"
+                                        type="text" 
+                                        value="{{ old("purpose") ? old("purpose") : '' }}" 
+                                        id="price" 
+                                        class="form-control @error('purpose') is-invalid @enderror" 
+                                        placeholder="purpose.." 
+                                        name="purpose">
+                                        <div class="help-block">
+                                            <small class="text-info">Purpose fild length can not be more the 200 Characters</small>
+                                        </div>
                                         @error('purpose')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -57,9 +90,19 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="offer_code">Provider:<small class="text-danger">*</small></label>
-                                        <input type="text" value="" id="offer_code" class="form-control @error('provider') is-invalid @enderror" placeholder="Provider.." name="provider">
-                                        
+                                        <label for="Provider" class="required">Provider:</label>
+                                        <input 
+                                        required
+                                        maxlength="200"
+                                        data-validation-required-message="Provider fild is required" 
+                                        data-validation-maxlength-message = "Provider canot be more then 200 Characters" 
+                                        type="text" 
+                                        value="{{ old("provider") ? old("provider") : '' }}" id="Provider" class="form-control @error('provider') is-invalid @enderror" 
+                                        placeholder="Provider.." 
+                                        name="provider">
+                                        <div class="help-block">
+                                            <small class="text-info">Provider fild length can not be more the 200 Characters</small><br>
+                                        </div>
                                         @error('provider')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -89,5 +132,5 @@
     
 @endpush
 @push('page-js')
-    
+
 @endpush

@@ -34,8 +34,9 @@
                 <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
-                        <th width="100">id</th>
+                        <th width="">id</th>
                         <th>Tittle</th>
+                        <th width="300">Body</th>
                         <th>category</th>
                         <th width="210">Action</th>
                     </tr>
@@ -45,6 +46,7 @@
                             <tr>
                                 <td>{{$notification->id}}</td>
                                 <td>{{$notification->title}}</td>
+                                <td>{{$notification->body}}</td>
                                 <td>{{$notification->NotificationCategory->name}}</td>
                                 <td>
                                     <div class="row">
@@ -58,6 +60,15 @@
                                             <button data-id="{{$notification->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
 
+                                        <div class="col-md-3">
+                                            <a  role="button"
+                                                data-id=""
+                                                href="{{route('notification.show',$notification->id)}}" 
+                                                data-placement="right" 
+                                                class="showButton btn btn-outline-info" 
+                                                onclick=""><i class="la la-paper-plane"></i></a>
+                                        </div>
+
                                     </div>
                                 </td>
                             </tr>
@@ -68,7 +79,64 @@
             </div>
         </div>
     </div>
+    <div id="sendUser" class="modal fade bd-example-modal-lg " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content p-2">
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form" method="POST" action="">
+                       
+                        <div class="form-body">
+                            <button type="button" class="close mt-1" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="form-section">
+                                <i class="la la-key"></i>
+                                 Send Notification
+                            </h4>
+                            
+                            <div class="row">
+                                <div class="col-6">
+                                    <h4>
+                                       Notification title :<span id="title"></span>
+                                    </h4>
+                                </div>
+                                <div class="col-6">
+                                    <h4>
+                                       Notification Category :<span id="category"></span>
+                                    </h4>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h4>
+                                               Notification Discription :
+                                            </h4>
+                                        </div>
+                                        <div class="col-12">
+                                            <span id="discription"></span>
+                                        </div>
 
+                                    </div>
+                                </div>
+                                
+                                {{-- 
+                                <div class="col-md-2">
+                                    <div class="form-group" style="margin-top:26px">
+                                        <button class="btn btn-outline-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
+                                    </div>
+                                </div> 
+                                --}}
+
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>  
+          </div>
+      </div>
+      
 </section>
 
    
@@ -126,7 +194,12 @@
         })
 
 
-
+        // $(".showButton").click(function(){
+        //     $('#sendUser').modal()
+        //     $('#title').html($(this).attr('data-original-title'))
+        //     $('#category').html($(this).attr('data-original-category'))
+        //     $('#discription').html($(this).attr('data-original-discription'))
+        // })
        
         $(document).ready(function () {
             $('#Example1').DataTable({

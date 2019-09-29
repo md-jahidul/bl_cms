@@ -79,7 +79,8 @@ class NotificationController extends Controller
      */
     public function show($id)
     {
-        //
+        $notification = $this->notificationService->findOne($id);
+        return view('admin.notification.notification.show')->with('notification',$notification);
     }
 
     /**

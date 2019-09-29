@@ -120,7 +120,7 @@
                     </li>
                 </ul>
             </li>
-            <li class=" nav-item"><a href="#"><i class="la la-file"></i>
+            <li class=" nav-item"><a href="#"><i class="la la-puzzle-piece"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Component</span></a>
                 <ul class="menu-content">
                     {{--page--}}
@@ -164,10 +164,6 @@
                         <a class="menu-item" href="{{ route('mixedBundleOffer.index') }} " data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-flask"></i> Mixed Bundle</a>
                     </li>
-                    <li class="{{is_active_url('mixedBundleOffer')}} {{is_active_url('mixed-bundle-offer/filter/create')}}">
-                        <a class="menu-item" href="{{ route('mixed-bundle-offer.filter.create') }} " data-i18n="nav.templates.vert.classic_menu">
-                            <i class="la la-flask"></i> Mixed Bundle Filter</a>
-                    </li>
                     <li class="{{is_active_url('nearByOffer')}} {{is_active_url('nearByOffer/create')}}">
                         <a class="menu-item" href="{{ route('nearByOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-gift"></i> Near by Offer</a>
@@ -179,6 +175,18 @@
 
                 </ul>
             </li>
+
+            <li class=" nav-item"><a href="#"><i class="la la-flask"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Filters</span></a>
+                <ul class="menu-content">
+
+                    <li class="{{is_active_url('mixedBundleOffer')}} {{is_active_url('mixed-bundle-offer/filter/create')}}">
+                        <a class="menu-item" href="{{ route('mixed-bundle-offer.filter.create') }} " data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-flask"></i> Mixed Bundle Filter</a>
+
+                </ul>
+            </li>
+
             @endif
             {{--------------------------------------------------------------------------------------------------------------------}}
             {{---------------------------------------------------------My-BL App End----------------------------------------------}}

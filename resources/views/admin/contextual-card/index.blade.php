@@ -30,7 +30,7 @@
                             <th width=''>Title</th>
                             <th width=''>Description</th>
                             <th width=''>Image</th>
-                            <th  width=''>Action</th>
+                            <th  width='200'>Action</th>
                         </tr>
                         </thead>
                         <tbody>

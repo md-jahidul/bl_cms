@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'USSD')
-@section('card_name', 'USSD')
+@section('title', 'Notification details')
+@section('card_name', 'Notification details')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">USSD List</li>
+    <li class="breadcrumb-item active">Notification details</li>
 @endsection
 @section('action')
-    <a href="{{route('ussd.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create USSD
+    <a href="{{route('notification.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Notification List
     </a>
 @endsection
 @section('content')
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">USSD List</h1>
+                        <h1 class="card-title pl-1">Notification "{{$notification->title}}"</h1>
                     </div>
                 </div>
             </div>
@@ -26,37 +26,41 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width=''>ID</th>
-                            <th width=''>title</th>
-                            <th width=''>code</th>
-                            <th width=''>purpose</th>
-                            <th width=''>provider</th>
-                            <th  width='200'>Action</th>
+                            
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($ussd_cods as $ussd_code)
+                            
                             <tr>
-                                <td>{{$ussd_code->id}}</td>
-                                <td>{{$ussd_code->title}}</td>
-                                <td>{{$ussd_code->code}}</td>
-                                <td>{{$ussd_code->purpose}}</td>
-                                <td>{{$ussd_code->provider}}</td>
-                                <td>
+                                <th>title</th>
+                                <td>{{$notification->title}}</td>
+                                <th>Category</th>
+                                <td>{{$notification->category}}</td>
+                            </tr>
+                            <tr>
+                                <th>Body:</th>
+                            </tr>
+                            <tr>
+                                <td>{{$notification->body}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"> 
                                     <div class="row">
-                                        <div class="col-md-2 mr-1">
-                                            <a role="button" href="{{ route('ussd.edit',$ussd_code->id)}}" class="btn btn-outline-success">
+                                        <div class="col-2">
+                                            <a  style="width:100%" role="button" href="{{route('notification.edit',$notification->id)}}" class="btn btn-sm btn-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-2">
-                                            <button data-id="{{$ussd_code->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                        <div class="col-2">
+                                            <button  style="width:100%" data-id="{{$notification->id}}" class="btn btn-sm btn-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>
+                                    
                                 </td>
+                                
                             </tr>
-
-                        @endforeach
+                            
+                                
                         </tbody>
                     </table>
 
@@ -101,7 +105,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('ussd/destroy') }}/"+id,
+                            url: "{{ url('amarOffer/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -111,7 +115,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('ussd/') }}"
+                                    window.location.href = "{{ url('amarOffer/') }}"
                                 }
                             }
                         })
@@ -126,8 +130,7 @@
                 buttons: [],
                 paging: true,
                 searching: true,
-                "pageLength": 10,
-                // "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "pageLength": 5,
                 "bDestroy": true,
             });
         });

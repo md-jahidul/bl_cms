@@ -9,7 +9,7 @@
 <div class="card mb-0 px-1" style="box-shadow:none;">        
     <div class="card-content">
         <div class="card-body">
-            <form class="form" method="post" action="{{route('notification.update',$notification->id)}}">
+            <form novalidate class="form" method="post" action="{{route('notification.update',$notification->id)}}">
                 @csrf
                 @method('put')
                 
@@ -22,29 +22,53 @@
                         <div class="col-md-6">
                             <input type="hidden" name="id" value="{{$notification->id}}">
                             <div class="form-group">
-                                <label for="title">Title :</label>
-                                <input name="title" style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @else {{$notification->title}} @endif" max="200" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
+                                <label for="title" class="required">Title :</label>
+                                <input name="title" 
+                                
+                                required
+                                maxlength="200" 
+                                data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
+                                data-validation-required-message="Title fild is required" 
+                                data-validation-regex-message="Title must start with alphabets"
+                                data-validation-maxlength-message = "Title canot be more then 200 Characters" 
+                                
+                                style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @else {{$notification->title}} @endif" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
+                                <div class="help-block">
+                                    <small class="text-info"> Title can not be more then 200 Characters</small><br>
+                                </div>
                                 <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                             </div>
                         </div>
 
                         <div class="col-md-6">
+
                             <div class="form-group">
-                                <label for="category_id">Category :</label>
-                                <select class="form-control @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
-                                    <option value="0">Select category</option>
+                                <label for="category_id" class="required">
+                                    Category :
+                                </label>
+                                <div class="controls">
+                                    <select name="category_id" id="category_id" required class="form-control @error('category_id') is-invalid @enderror">
+                                    <option value="">Select Category</option>
                                     @foreach ($categories as $category)
-                                        <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}  @elseif($category->id == $notification->category_id) selected  @endif value="{{$category->id}}">{{$category->name}}</option>
+                                        <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}  @elseif($category->id == $notification->category_id) selected  @endif value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name}}</option>
                                     @endforeach
-                                </select>
-                                <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
+                                    </select>
+                                    <div class="help-block"></div>
+                                    <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
+                                </div>
                             </div>
                         </div>
+
+                            
                         
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="body">Body :</label>
-                                <textarea class="form-control @error('body') is-invalid @enderror" placeholder="Enter body description....." id="body" name="body" rows="10">@if(old('body')){{old('body')}} @else {{$notification->title}}@endif</textarea>
+                                <label for="body" class="required">Body :</label>
+                                <textarea 
+                                required
+                                data-validation-required-message="body fild is required" 
+                                class="form-control @error('body') is-invalid @enderror" placeholder="Enter body description....." id="body" name="body" rows="10">@if(old('body')){{old('body')}} @else {{$notification->body}}@endif</textarea>
+                                <div class="help-block"></div>
                                 <small class="text-danger"> @error('body') {{ $message }} @enderror </small>
                             </div>
                         </div>
