@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Http\Requests\StorePartnerOfferRequest;
 use App\Services\PartnerOfferService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -48,7 +49,7 @@ class PartnerOfferController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $partnerId, $partnerName)
+    public function store(StorePartnerOfferRequest $request, $partnerId, $partnerName)
     {
         $response = $this->partnerOfferService->storePartnerOffer($request->all(), $partnerId);
         Session::flash('message', $response->getContent());
@@ -93,7 +94,7 @@ class PartnerOfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $partnerId, $partnerName, $id)
+    public function update(StorePartnerOfferRequest $request, $partnerId, $partnerName, $id)
     {
         $response = $this->partnerOfferService->updatePartnerOffer($request->all(), $id);
         Session::flash('message', $response->getContent());

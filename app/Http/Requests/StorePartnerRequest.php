@@ -27,7 +27,7 @@ class StorePartnerRequest extends FormRequest
             'partner_category_id' => 'required',
             'company_name_en' => 'required|unique:partners,company_name_en,'.$this->partner,
             'company_name_bn' => 'required|unique:partners,company_name_bn,'.$this->partner,
-            'company_logo' => 'image|mimes:jpeg,jpg,png',
+            'company_logo' => 'file|mimes:jpeg,jpg,png',
             'company_address' => 'required',
             'company_website' => 'required|unique:partners,company_website,'.$this->partner,
             'contact_person_name' => 'required',
