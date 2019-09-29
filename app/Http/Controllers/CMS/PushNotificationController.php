@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
+use App\Services\PushNotificationService;
 use Illuminate\Http\Request;
 
 /**
@@ -31,7 +32,8 @@ class PushNotificationController extends Controller
 
        ];
 
-        dd($notification);
+
+        PushNotificationService::sendNotification($notification);
 
     }
 

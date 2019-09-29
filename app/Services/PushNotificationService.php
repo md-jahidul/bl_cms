@@ -18,16 +18,6 @@ class PushNotificationService
     }
 
     /**
-     * Get Host from env file
-     *
-     * @return string
-     */
-    public static function getPort() {
-        return env('NOTIFICATION_PORT');
-    }
-
-
-    /**
      * Get Token from env file
      *
      * @return string
@@ -40,7 +30,7 @@ class PushNotificationService
     public static function sendNotification($data)
     {
 
-        $res = static::post('api/v1/push/notification', $data);
+        $res = static::post('/api/v1/push/notification', $data);
 
         return $res;
 
@@ -131,8 +121,7 @@ class PushNotificationService
      */
     private static function makeRequest($ch, $url, $body, $headers)
     {
-
-        $url = static::getHost().':'.static::getPort().$url;
+        $url = static::getHost().$url;
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
