@@ -40,7 +40,7 @@ class MinuteOfferService
     public function storeMinuteOffer($data)
     {
         $this->save($data);
-        return new Response("Minute offer has successfully been created");
+        return new Response("Minute offer has been successfully created");
     }
 
     /**
@@ -52,7 +52,7 @@ class MinuteOfferService
     {
         $data = $this->findOne($id);
         $data->update($request->all());
-        return Response('Minute Offer updated successfully !');
+        return Response('Minute Offer has been successfully updated');
     }
 
     /**
@@ -64,7 +64,7 @@ class MinuteOfferService
     {
         $data = $this->findOne($id);
         $data->delete();
-        return Response('Minute Offer deleted successfully !');
+        return Response('Minute Offer has been successfully deleted');
     }
 
 }

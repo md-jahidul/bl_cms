@@ -40,7 +40,7 @@ class InternetOfferService
     public function storeInternetOffer($data)
     {
         $this->save($data);
-        return new Response("Internet offer has successfully been created");
+        return new Response("Internet offer has been successfully created");
     }
 
     /**
@@ -52,7 +52,7 @@ class InternetOfferService
     {
         $data = $this->findOne($id);
         $data->update($request->all());
-        return Response('Internet Offer updated successfully !');
+        return Response('Internet Offer has been successfully updated');
     }
 
     /**
@@ -64,7 +64,7 @@ class InternetOfferService
     {
         $data = $this->findOne($id);
         $data->delete();
-        return Response('Internet Offer deleted successfully !');
+        return Response('Internet Offer has been successfully deleted');
     }
 
 }

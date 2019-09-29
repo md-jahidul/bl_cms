@@ -41,7 +41,7 @@ class ContextualCardService
     {
         $data['image_url'] = 'storage/'.$data['image_url']->store('contextualcard');
         $this->save($data);
-        return new Response("Contextual Card has successfully been created");
+        return new Response("Contextual Card has been successfully created");
     }
 
     /**
@@ -62,7 +62,7 @@ class ContextualCardService
             $contextualCard->update($data);
         }
         
-        return Response('Contextual Card updated successfully !');
+        return Response('Contextual Card has been successfully updated');
         
     }
 
@@ -76,7 +76,7 @@ class ContextualCardService
         $contextualCard = $this->findOne($id);
         unlink($contextualCard->image_url);
         $contextualCard->delete();
-        return Response('Contextual Card deleted successfully !');
+        return Response('Contextual Card has been successfully deleted');
     }
 
 }

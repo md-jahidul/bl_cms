@@ -59,7 +59,7 @@ class HelpCenterController extends Controller
      */
     public function store(HelpCenterRequest $request)
     {
-        session()->flash('success',$this->helpCenterService->storeHelpCenter($request->all())->getContent());
+        session()->flash('message',$this->helpCenterService->storeHelpCenter($request->all())->getContent());
         return redirect(route('helpCenter.index'));
     }
 

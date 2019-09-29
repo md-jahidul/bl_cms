@@ -40,7 +40,7 @@ class NotificationService
     public function storeNotification($data)
     {
         $this->save($data);
-        return new Response("Notification has successfully been created");
+        return new Response("Notification has been successfully created");
     }
 
     /**
@@ -52,7 +52,7 @@ class NotificationService
     {
         $notification = $this->findOne($id);
         $notification->update($data);
-        return Response('Notification updated successfully !');
+        return Response('Notification has been successfully updated');
         
     }
 
@@ -65,7 +65,7 @@ class NotificationService
     {
         $notification = $this->findOne($id);
         $notification->delete();
-        return Response('Notification deleted successfully !');
+        return Response('Notification has been successfully deleted');
     }
 
 }

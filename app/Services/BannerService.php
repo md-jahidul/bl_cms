@@ -41,7 +41,7 @@ class BannerService
     {
         $data['image_path'] = 'storage/'.$data['image_path']->store('banner');
         $this->save($data);
-        return new Response("Banner has successfully been created");
+        return new Response("Banner has been successfully created");
     }
 
     /**
@@ -62,7 +62,7 @@ class BannerService
             $banner->update($data->all());
         }
         
-        return Response('Banner updated successfully !');
+        return Response('Banner has been successfully updated');
         
     }
 
@@ -76,7 +76,7 @@ class BannerService
         $banner = $this->findOne($id);
         unlink($banner->image_path);
         $banner->delete();
-        return Response('banner deleted successfully !');
+        return Response('banner has been successfully deleted');
     }
 
 }

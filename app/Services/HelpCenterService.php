@@ -41,7 +41,7 @@ class HelpCenterService
     {
         $data['icon'] = 'storage/'.$data['icon']->store('Help_Center_Icon');
         $this->save($data);
-        return new Response("Help Center has successfully been created");
+        return new Response("Help Center has been successfully created");
     }
 
     /**
@@ -58,7 +58,7 @@ class HelpCenterService
             $request['icon'] = $helpCenter->icon;
         }
         $helpCenter->update($request);
-        return Response('Help Center updated successfully !');
+        return Response('Help Center has been successfully updated');
     }
 
     /**
@@ -71,7 +71,7 @@ class HelpCenterService
         $helpCenter = $this->findOne($id);
         unlink($helpCenter->icon);
         $helpCenter->delete();
-        return Response('Help Center deleted successfully !');
+        return Response('Help Center has been successfully deleted');
     }
 
 }

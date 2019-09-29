@@ -98,7 +98,7 @@ class AmarOfferController extends Controller
     public function update(AmarOfferRequest $request, $id)
     {
         $response = $this->amarOfferService->updateAmarOffer($request->all(),$id);
-        Session()->flash('message', $response->content());
+        Session()->flash('success', $response->content());
         return redirect(route('amarOffer.index'));
     }
 

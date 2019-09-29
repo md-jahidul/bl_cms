@@ -70,7 +70,7 @@ class MyblSliderController extends Controller
     public function store(MyblSliderRequest $request)
     {
         
-        session()->flash('success',$this->sliderService->storeSlider($request->all())->getContent());
+        session()->flash('message',$this->sliderService->storeSlider($request->all())->getContent());
         return redirect(route('myblslider.index'));
     }
 

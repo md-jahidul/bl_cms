@@ -41,7 +41,7 @@ class MyblSliderService
     {
         $data['short_code'] = strtolower(str_replace(' ','_',$data['title'])); 
         $this->save($data);
-        return new Response("Slider has successfully been created");
+        return new Response("Slider has been successfully created");
     }
 
     public function getAppSlider()
@@ -57,7 +57,7 @@ class MyblSliderService
     public function updateSlider($request, $slider)
     {
         $slider->update($request->all());
-        return Response('Slider updated successfully !');
+        return Response('Slider has been successfully updated');
     }
 
     /**
@@ -69,7 +69,7 @@ class MyblSliderService
     {
         $slider = $this->findOne($id);
         $slider->delete();
-        return Response('Slider deleted successfully !');
+        return Response('Slider has been successfully deleted');
     }
 
 }

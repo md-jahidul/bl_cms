@@ -40,7 +40,7 @@ class MixedBundleOfferService
     public function storeMixedBundleOffer($data)
     { 
         $this->save($data);
-        return new Response("Mixed Bundle offer has successfully been created");
+        return new Response("Mixed Bundle offer has been successfully created");
     }
 
     /**
@@ -52,7 +52,7 @@ class MixedBundleOfferService
     {
         $data = $this->findOne($id);
         $data->update($request->all());
-        return Response('Mixed Bundle Offer updated successfully !');
+        return Response('Mixed Bundle Offer has been successfully updated');
     }
 
     /**
@@ -64,7 +64,7 @@ class MixedBundleOfferService
     {
         $data = $this->findOne($id);
         $data->delete();
-        return Response('Mixed Bundle deleted successfully !');
+        return Response('Mixed Bundle has been successfully deleted');
     }
 
 }
