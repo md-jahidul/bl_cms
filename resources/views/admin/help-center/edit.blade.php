@@ -25,11 +25,11 @@
                                         <input
 
                                         required 
-                                        data-validation-required-message="title is required" 
+                                        data-validation-required-message="Title is required" 
                                         maxlength="200" 
                                         data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
-                                        data-validation-regex-message="title must start with alphabets"
-                                        data-validation-maxlength-message = "title canot be more then 200"
+                                        data-validation-regex-message="Title must start with alphabets"
+                                        data-validation-maxlength-message = "Title canot be more then 200"
                                         
                                         value="{{ old("title") ? old("title") : $helpCenter->title }}" 
                                         type="text" value="" id="title" 
@@ -58,7 +58,7 @@
                                         required
                                         maxlength="5" 
                                         data-validation-maxlength-message = "Sequence can never be more then 5 digits"
-                                        data-validation-required-message="sequence is required"  
+                                        data-validation-required-message="Sequence is required"  
                                          
                                          value="{{ old("sequence") ? old("sequence") : $helpCenter->sequence }}" 
                                          value="" id="sequence" 

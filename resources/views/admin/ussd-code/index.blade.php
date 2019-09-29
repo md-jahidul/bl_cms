@@ -27,10 +27,10 @@
                         <thead>
                         <tr>
                             <th width=''>ID</th>
-                            <th width=''>title</th>
-                            <th width=''>code</th>
-                            <th width=''>purpose</th>
-                            <th width=''>provider</th>
+                            <th width=''>Title</th>
+                            <th width=''>Code</th>
+                            <th width=''>Purpose</th>
+                            <th width=''>Provider</th>
                             <th  width='200'>Action</th>
                         </tr>
                         </thead>

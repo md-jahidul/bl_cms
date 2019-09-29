@@ -2,7 +2,7 @@
 @section('title', 'Contextual Card')
 @section('card_name', 'Contextual Card')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">{{$contextualCard->title}} Card details</li>
+    <li class="breadcrumb-item active">Card details</li>
 @endsection
 @section('action')
     <a href="{{route('contextualcard.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
@@ -13,13 +13,7 @@
    
     <section>
         <div class="card">
-            {{-- <div class="card-header">
-                <div class="row">
-                    <div class="col-md-10">
-                        <h1 class="card-title pl-1">Card "{{$contextualCard->title}}"</h1>
-                    </div>
-                </div>
-            </div> --}}
+            
             <div class="card-content collapse show">
                 
                 <div class="card-body card-dashboard">

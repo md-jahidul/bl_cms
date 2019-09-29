@@ -23,11 +23,11 @@
                                         <label for="title" class="required">Title:</label>
                                         <input
                                         required 
-                                        data-validation-required-message="Title fild is required" 
+                                        data-validation-required-message="Title is required" 
                                         maxlength="200" 
                                         data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
                                         data-validation-regex-message="Title must start with alphabets"
-                                        data-validation-maxlength-message = "Title canot be more then 200 Characters"
+                                        data-validation-maxlength-message = "Title can not be more then 200 Characters"
                                         
                                         type="text" value="{{ old("provider") ? old("provider") : $ussd_code->title }}" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
                                         <div class="help-block">
@@ -47,9 +47,9 @@
                                         <input 
                                         
                                         required 
-                                        data-validation-required-message="Code fild is required" 
+                                        data-validation-required-message="Code is required" 
                                         maxlength="200" 
-                                        data-validation-maxlength-message = "Code canot be more then 200 Characters"
+                                        data-validation-maxlength-message = "Code can not be more then 200 Characters"
                                         
                                         type="text" value="{{ old("provider") ? old("provider") : $ussd_code->code }}" id="volume" class="form-control @error('code') is-invalid @enderror" placeholder="Enter code...." name="code">
                                         <div class="help-block">
@@ -70,11 +70,11 @@
                                         <input
                                         required
                                         maxlength="200"
-                                        data-validation-required-message="Purpose fild is required" 
-                                        data-validation-maxlength-message = "Purpose canot be more then 200 Characters"
+                                        data-validation-required-message="Purpose is required" 
+                                        data-validation-maxlength-message = "Purpose can not be more then 200 Characters"
                                         type="text" value="{{ old("provider") ? old("provider") : $ussd_code->purpose }}" id="price" class="form-control @error('purpose') is-invalid @enderror" placeholder="purpose.." name="purpose">
                                         <div class="help-block">
-                                            <small class="text-info">Purpose fild length can not be more the 200 Characters</small>
+                                            <small class="text-info">Purpose length can not be more the 200 Characters</small>
                                         </div>
                                         @error('purpose')
                                             <span class="invalid-feedback" role="alert">
@@ -90,11 +90,11 @@
                                         <input 
                                         required
                                         maxlength="200"
-                                        data-validation-required-message="Provider fild is required" 
-                                        data-validation-maxlength-message = "Provider canot be more then 200 Characters" 
+                                        data-validation-required-message="Provider is required" 
+                                        data-validation-maxlength-message = "Provider can not be more then 200 Characters" 
                                         type="text" value="{{ old("provider") ? old("provider") : $ussd_code->provider }}" id="offer_code" class="form-control @error('provider') is-invalid @enderror" placeholder="provider.." name="provider">
                                         <div class="help-block">
-                                            <small class="text-info">Provider fild length can not be more the 200 Characters</small><br>
+                                            <small class="text-info">Provider length can not be more the 200 Characters</small><br>
                                         </div>
                                         @error('provider')
                                             <span class="invalid-feedback" role="alert">

@@ -26,12 +26,12 @@
                                         required 
                                         data-validation-required-message="title is required" 
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.\<>,''-])*)*"
                                         data-validation-regex-message="Title must start with alphabets"
-                                        data-validation-maxlength-message = "Title canot be more then 200 charecters"
+                                        data-validation-maxlength-message = "Title can not be more then 200 charecters"
                                         type="text" value="{{$internet_offer->title}}" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
                                         <div class="help-block">
-                                            <small class="text-info">Title canot be more then 200 charecters</small>
+                                            <small class="text-info">Title can not be more then 200 charecters</small>
                                         </div>
                                         @error('title')
                                             <span class="invalid-feedback" role="alert">
@@ -92,7 +92,7 @@
                                         required 
                                         data-validation-required-message="Offer Code is required" 
                                         maxlength="200" 
-                                        data-validation-maxlength-message = "Offer Code canot be more then 200 charecters"
+                                        data-validation-maxlength-message = "Offer Code can not be more then 200 charecters"
 
                                         type="text" value="{{$internet_offer->offer_code}}" id="offer_code" class="form-control @error('offer_code') is-invalid @enderror" placeholder="Offer code.." name="offer_code">
                                         <div class="help-block">

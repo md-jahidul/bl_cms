@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'SMS offer')
-@section('card_name', 'SMS offer')
+@section('title', 'SMS Offer')
+@section('card_name', 'SMS Offer')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">SMS offer list</li>
+    <li class="breadcrumb-item active">SMS Offer List</li>
 @endsection
 @section('action')
     <a href="{{route('smsOffer.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create SMS offer
+        Create SMS Offer
     </a>
 @endsection
 @section('content')
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">SMS offer list</h1>
+                        <h1 class="card-title pl-1">SMS Offer List</h1>
                     </div>
                 </div>
             </div>

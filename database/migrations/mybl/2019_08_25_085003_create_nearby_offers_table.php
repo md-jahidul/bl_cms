@@ -21,7 +21,7 @@ class CreateNearbyOffersTable extends Migration
             $table->string('type');
             $table->string('offer');
             $table->string('image');
-            $table->dateTime('validity');
+            $table->integer('validity');
             $table->string('offer_code');
             $table->timestamps();
         });

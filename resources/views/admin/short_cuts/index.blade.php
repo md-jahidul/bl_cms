@@ -33,11 +33,11 @@
                         <input 
                          
                         required 
-                        data-validation-required-message="Title fild is required" 
+                        data-validation-required-message="Title is required" 
                         maxlength="50" 
                         data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
                         data-validation-regex-message="Title must start with alphabets"
-                        data-validation-maxlength-message = "Title canot be more then 50 Characters"
+                        data-validation-maxlength-message = "Title can not be more then 50 Characters"
                         style="height:100%" value="@if(isset($short_cut_info)){{$short_cut_info->title}} @elseif(old("title")) {{old("title")}} @endif" type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter Shorcut Name..">
                         <div class="help-block">
                             <small class="text-info"> Title can not be more then 50 Characters</small>
@@ -77,7 +77,7 @@
                         <div class="input-group">
                             <div class="custom-file">
                                 <input accept="image/*" 
-                                data-validation-required-message="Icon fild is required" 
+                                data-validation-required-message="Icon is required" 
                                 onchange="createImageBitmap(this.files[0]).then((bmp) => {
                                                         
                                     if(bmp.width/bmp.height == 1/1){
@@ -89,7 +89,7 @@
                                     }else{ 
                                         console.log('no')
                                         this.style.border = '1px solid red';
-                                        document.getElementById('massage').innerHTML = '<b>image aspact ratio must 1:1(change the picture to enable button)</b>';
+                                        document.getElementById('massage').innerHTML = '<b>Image aspact ratio must 1:1(Change the picture to enable button)</b>';
                                         document.getElementById('massage').classList.add('text-danger');
                                         document.getElementById('submitForm').disabled = true;
                                     } 

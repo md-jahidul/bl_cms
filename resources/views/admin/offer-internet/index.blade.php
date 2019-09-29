@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Internet offer')
+@section('title', 'Internet Offer')
 @section('card_name', 'Internet Offer')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Internet offer list</li>
+    <li class="breadcrumb-item active">Internet Offer List</li>
 @endsection
 @section('action')
     <a href="{{route('internetOffer.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create Internet offer
+        Create Internet Offer
     </a>
 @endsection
 @section('content')
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">Internet offer list</h1>
+                        <h1 class="card-title pl-1">Internet Offer List</h1>
                     </div>
                 </div>
             </div>

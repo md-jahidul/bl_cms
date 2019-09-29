@@ -19,7 +19,7 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width="100">id</th>
+                            <th width="100">ID</th>
                             <th>Tittle</th>
                             <th>Slider Component Type</th>
                             <th width="300">Action</th>

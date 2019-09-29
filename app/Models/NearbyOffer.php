@@ -16,6 +16,7 @@ class NearbyOffer extends Model
         'title',
         'vendor',
         'location',
+        'validity',
         'type',
         'offer',
         'image',

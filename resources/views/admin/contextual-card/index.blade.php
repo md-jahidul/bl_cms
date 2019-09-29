@@ -26,7 +26,7 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width=''>id</th>
+                            <th width=''>ID</th>
                             <th width=''>Title</th>
                             <th width=''>Description</th>
                             <th width=''>Image</th>
