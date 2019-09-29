@@ -1,11 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Quick Launch List')
-@section('card_name', 'Quick Launch List')
+@section('title', 'Partner Offer List')
+@section('card_name', 'Partner Offer List')
 @section('breadcrumb')
+    <li class="breadcrumb-item active"><strong>Partner Offer List</strong></li>
 @endsection
 @section('action')
-    <a href="{{ url('quick-launch/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Add Quick Launch
+    <a href="{{ url("partner-offer/$parentId/$partnerName/offer/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Add Offer
     </a>
 @endsection
 @section('content')
@@ -13,26 +14,30 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
+{{--                    <h4 class="pb-1"><strong>{{ ucwords($sliderTitle." ". "slider images") }}</strong></h4>--}}
                     <table class="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                            <th width="3%" class="text-center">Image</th>
-                            <th>English</th>
-                            <th>Link</th>
+                            <th>Company Logo</th>
+                            <th width="25%">Validity</th>
+                            <th>get_offer_msg_en</th>
+                            <th>offer_en</th>
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
                         <tbody id="sortable">
-                        @foreach ($quickLaunchItems as $key=>$quickLaunchItem)
-                            <tr data-index="{{ $quickLaunchItem->id }}" data-position="{{ $quickLaunchItem->display_order }}">
+                        @foreach($partnerOffers as $index=>$partnerOffer)
+                            <tr data-index="{{ $partnerOffer->id }}" data-position="{{ $partnerOffer->display_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <td width="6%" class="text-center"><img src="{{ $quickLaunchItem->image_url }}" alt="image" height="30" width="30"></td>
-                                <td width="20%">{{$quickLaunchItem->title_en}} {!! $quickLaunchItem->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
-                                <td>{{$quickLaunchItem->link}}</td>
+                                <td><img class="" src="{{ $partnerOffer->partner->company_logo }}" alt="Slider Image" height="50" width="50" /></td>
+                                <td>{{ $partnerOffer->validity_en }} {!! $partnerOffer->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+{{--                                <td>{{ $partnerOffer->description }}</td>--}}
+                                <td>{{ $partnerOffer->get_offer_msg_en }}</td>
+                                <td>{{ $partnerOffer->offer_en }}</td>
                                 <td class="action" width="8%">
-                                    <a href="{{ url("quick-launch/$quickLaunchItem->id/edit") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("quick-launch/destroy/$quickLaunchItem->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $quickLaunchItem->id }}" title="Delete the user">
+                                    <a href="{{ route('partner_offer_edit', [ $partnerOffer->partner_id, $partnerName, $partnerOffer->id ] ) }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" remove="{{ url("partner-offer/$partnerOffer->partner_id/$partnerName/offer/destroy/$partnerOffer->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $partnerOffer->id }}" title="Delete">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>
@@ -52,8 +57,8 @@
     <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
     <style>
         #sortable tr td{
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
         }
     </style>
 @endpush
@@ -98,9 +103,10 @@
     </script>
 
     <script>
-        var auto_save_url = "{{ url('quick-launch-sortable') }}";
+        var auto_save_url = "{{ url('/partner-offer/sortable') }}";
     </script>
 @endpush
+
 
 
 

@@ -19,29 +19,30 @@
                         <thead>
                         <tr>
                             <th>SL</th>
+                            <th>Company Logo</th>
                             <th>Company Name</th>
-                            <th>CEO Name</th>
-{{--                            <th>Company Logo</th>--}}
-                            <th>Email</th>
-                            <th>Mobile</th>
+                            <th>Category</th>
+                            <th>Contact Parson Mobile</th>
                             <th>Address</th>
-                            <th>Website</th>
-                            <th>Services</th>
+                            <th>Offer</th>
                             <th width="10%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($partners as $key=>$partner)
+                            @php(  $partnerName = str_replace(" ", "-", strtolower( $partner->company_name_en ) ))
                             <tr>
                                 <td class="pt-2">{{ ++$key }}</td>
-                                <td class="pt-2">{{ $partner->company_name }}</td>
-                                <td class="pt-2">{{ $partner->ceo_name }}</td>
-{{--                                <td><img src="{{ asset('images/partners-logo/'. $partner->company_logo) }}" height="50" width="50"></td>--}}
-                                <td class="pt-2">{{ $partner->email }}</td>
-                                <td class="pt-2">{{ $partner->mobile }}</td>
-                                <td class="pt-2">{{ $partner->address }}</td>
-                                <td class="pt-2">{{ $partner->website }}</td>
-                                <td class="pt-2">{{ $partner->services }}</td>
+                                <td><img src="{{ $partner->company_logo }}" height="50" width="50"></td>
+                                <td class="pt-2">{{ $partner->company_name_en }}</td>
+                                <td class="pt-2">{{ $partner->partnerCategory->name_en }}</td>
+                                <td class="pt-2">{{ $partner->contact_person_mobile }}</td>
+                                <td class="pt-2">{{ $partner->company_address }}</td>
+                                <td>
+                                    <a href="{{ route('partner-offer', [$partner->id, $partnerName]  ) }}" class="btn btn-outline-warning">
+                                        <i class="la la-gift"></i> Partner Offers <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{--{{ $childNumber }}--}}</span>
+                                    </a>
+                                </td>
                                 <td class="action" width="8%">
                                     <a href="{{ url("partners/$partner->id/edit") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="#" remove="{{ url("partner/destroy/$partner->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $partner->id }}" title="Delete the user">

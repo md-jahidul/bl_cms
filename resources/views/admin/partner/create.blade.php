@@ -16,101 +16,112 @@
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('partners.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('company_name') ? ' error' : '' }}">
-                                    <label for="company_name" class="required">Company Name</label>
-                                    <input type="text" name="company_name"  class="form-control" placeholder="Enter english title"
-                                           value="{{ old("company_name") ? old("company_name") : '' }}" required data-validation-required-message="Enter company name">
+                                <div class="form-group col-md-6 {{ $errors->has('company_name_en') ? ' error' : '' }}">
+                                    <label for="company_name_en" class="required">Company Name (English)</label>
+                                    <input type="text" name="company_name_en"  class="form-control" placeholder="Enter company name english"
+                                           value="{{ old("company_name_en") ? old("company_name_en") : '' }}" required data-validation-required-message="Enter company name english">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('company_name'))
-                                        <div class="help-block">  {{ $errors->first('company_name') }}</div>
+                                    @if ($errors->has('company_name_en'))
+                                        <div class="help-block">  {{ $errors->first('company_name_en') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('ceo_name') ? ' error' : '' }}">
-                                    <label for="ceo_name" class="required">CEO Name</label>
-                                    <input type="text" name="ceo_name"  class="form-control" placeholder="Enter bangla title"
-                                           value="{{ old("ceo_name") ? old("ceo_name") : '' }}" required data-validation-required-message="Enter CEO name">
+                                <div class="form-group col-md-6 {{ $errors->has('company_name_bn') ? ' error' : '' }}">
+                                    <label for="company_name_bn" class="required">Company Name (Bangla)</label>
+                                    <input type="text" name="company_name_bn"  class="form-control" placeholder="Enter company name bangla"
+                                           value="{{ old("company_name_bn") ? old("company_name_bn") : '' }}" required data-validation-required-message="Enter company name bangla">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('ceo_name'))
-                                        <div class="help-block">  {{ $errors->first('ceo_name') }}</div>
+                                    @if ($errors->has('company_name_bn'))
+                                        <div class="help-block">  {{ $errors->first('company_name_bn') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('email') ? ' error' : '' }}">
-                                    <label for="email" class="required">Email</label>
-                                    <input type="text" name="email"  class="form-control" placeholder="Enter english title"
-                                           value="{{ old("email") ? old("email") : '' }}" required data-validation-required-message="Enter email">
+                                <div class="form-group col-md-6 {{ $errors->has('company_website') ? ' error' : '' }}">
+                                    <label for="company_website" class="required">Company Website</label>
+                                    <input type="url" name="company_website"  class="form-control" placeholder="Enter company website"
+                                           value="{{ old("company_website") ? old("company_website") : '' }}" required data-validation-required-message="Enter company website">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('email'))
-                                        <div class="help-block">  {{ $errors->first('email') }}</div>
+                                    @if ($errors->has('company_website'))
+                                        <div class="help-block">  {{ $errors->first('company_website') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('mobile') ? ' error' : '' }}">
-                                    <label for="mobile" class="required">Mobile Number</label>
-                                    <input type="number" name="mobile"  class="form-control" placeholder="Enter alt text"
-                                           value="{{ old("mobile") ? old("mobile") : '' }}" required data-validation-required-message="Enter mobile number">
+                                <div class="form-group col-md-6 {{ $errors->has('contact_person_name') ? ' error' : '' }}">
+                                    <label for="contact_person_name" class="required">Contact Person Name</label>
+                                    <input type="text" name="contact_person_name"  class="form-control" placeholder="Enter contact person name"
+                                           value="{{ old("contact_person_name") ? old("contact_person_name") : '' }}" required data-validation-required-message="Enter contact person name">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('mobile'))
-                                        <div class="help-block">  {{ $errors->first('mobile') }}</div>
+                                    @if ($errors->has('contact_person_name'))
+                                        <div class="help-block">  {{ $errors->first('contact_person_name') }}</div>
                                     @endif
                                 </div>
 
-
-{{--                                <div class="form-group col-md-6 mb-1 {{ $errors->has('company_logo') ? ' error' : '' }}">--}}
-{{--                                    <label for="file">Company Icon</label>--}}
-{{--                                    <div class="custom-file">--}}
-{{--                                        <input type="file" name="company_logo" class="custom-file-input" id="inputGroupFile01" required data-validation-required-message="Enter website number">--}}
-{{--                                        <label class="custom-file-label" for="inputGroupFile01">Select icon</label>--}}
-{{--                                    </div>--}}
-{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
-{{--                                    @if ($errors->has('company_logo'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('company_logo') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
-                                <div class="form-group col-md-6 {{ $errors->has('address') ? ' error' : '' }}">
-                                    <label for="address" class="required">Address</label>
-                                    <textarea name="address" rows="4" class="form-control" placeholder="Enter website"
-                                              required data-validation-required-message="Enter website number">{{ old("address") ? old("address") : '' }}</textarea>
+                                <div class="form-group col-md-6 {{ $errors->has('contact_person_email') ? ' error' : '' }}">
+                                    <label for="contact_person_email" class="required">Contact Person Email</label>
+                                    <input type="text" name="contact_person_email"  class="form-control" placeholder="Enter contact person name"
+                                           value="{{ old("contact_person_email") ? old("contact_person_email") : '' }}" required data-validation-required-message="Enter contact person eamil">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('address'))
-                                        <div class="help-block">  {{ $errors->first('address') }}</div>
+                                    @if ($errors->has('contact_person_email'))
+                                        <div class="help-block">  {{ $errors->first('contact_person_email') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('services') ? ' error' : '' }}">
-                                    <label for="services" class="required">Service</label>
-                                    <textarea type="text" name="services" rows="4" class="form-control" placeholder="Enter service"
-                                              required data-validation-required-message="Enter service number">{{ old("services") ? old("services") : '' }}</textarea>
+                                <div class="form-group col-md-6 {{ $errors->has('contact_person_mobile') ? ' error' : '' }}">
+                                    <label for="contact_person_mobile" class="required">Contact Person Mobile Number</label>
+                                    <input type="number" name="contact_person_mobile"  class="form-control" placeholder="Enter contact person name"
+                                           value="{{ old("contact_person_mobile") ? old("contact_person_mobile") : '' }}" required data-validation-required-message="Enter contact person mobile number">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('services'))
-                                        <div class="help-block">  {{ $errors->first('services') }}</div>
+                                    @if ($errors->has('contact_person_mobile'))
+                                        <div class="help-block">  {{ $errors->first('contact_person_mobile') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('website') ? ' error' : '' }}">
-                                    <label for="website" class="required">Website</label>
-                                    <input type="text" name="website"  class="form-control" placeholder="Enter website"
-                                           value="{{ old("website") ? old("website") : '' }}" required data-validation-required-message="Enter website number">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('website'))
-                                        <div class="help-block">  {{ $errors->first('website') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-group {{ $errors->has('is_active') ? ' error' : '' }}">
-                                        <label for="is_active" class="required mr-1">Status:</label>
-                                        <input type="radio" name="is_active" value="1" id="input-radio-15" checked>
-                                        <label for="input-radio-15" class="mr-1">Active</label>
-                                        <input type="radio" name="is_active" value="0" id="input-radio-16">
-                                        <label for="input-radio-16">Inactive</label>
-                                        @if ($errors->has('is_active'))
-                                            <div class="help-block">  {{ $errors->first('is_active') }}</div>
+                                <div class="form-group col-md-6 {{ $errors->has('partner_category_id') ? ' error' : '' }}">
+                                    <label for="partner_category_id" class="required">Company Category</label>
+                                    <fieldset class="form-group position-relative">
+                                        <select class="form-control input-sm" name="partner_category_id" id="SmallSelect" required data-validation-required-message="Please partner category">
+                                            <option selected="" value="">--Select partner category--</option>
+                                            @foreach($partnerCategories as $partnerCategory)
+                                                <option value="{{ $partnerCategory->id }}" {{ (old('partner_category_id') == $partnerCategory->id) ? 'selected' : "" }}>
+                                                    {{$partnerCategory->name_en}}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('partner_category_id'))
+                                            <div class="help-block">  {{ $errors->first('partner_category_id') }}</div>
                                         @endif
-                                    </div>
+                                    </fieldset>
                                 </div>
+
+
+                                <div class="form-group col-md-6 {{ $errors->has('company_logo') ? ' error' : '' }}">
+                                    <label for="file" class=""></label><br>
+                                    <label for="file" class="required">Select Company Logo</label>
+
+                                    <label id="projectinput7" class="file center-block ml-2">
+                                        <input type="file" id="file" name="company_logo" accept="image/png,image/jpg,image/jpeg" required>
+                                    </label><br>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    @if ($errors->has('company_logo'))
+                                        <div class="help-block">  {{ $errors->first('company_logo') }}</div>
+                                    @endif
+                                </div>
+
+
+
+
+                                <div class="form-group col-md-12 {{ $errors->has('company_address') ? ' error' : '' }}">
+                                    <label for="company_address" class="required">Company Address</label>
+                                    <textarea name="company_address" rows="4" class="form-control" placeholder="Enter company address"
+                                              required data-validation-required-message="Enter company address">{{ old("company_address") ? old("company_address") : '' }}</textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('company_address'))
+                                        <div class="help-block">  {{ $errors->first('company_address') }}</div>
+                                    @endif
+                                </div>
+
+
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">

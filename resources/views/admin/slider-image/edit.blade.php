@@ -1,11 +1,6 @@
 @extends('layouts.admin')
-<<<<<<< HEAD
-@section('title', 'Quick Launch Create')
-@section('card_name', 'Slider image Edit Page')
-=======
 @section('title', 'Slider Image Edit')
 @section('card_name', 'Slider Image Edit')
->>>>>>> development
 @section('breadcrumb')
     <li class="breadcrumb-item active"> <a href="{{ route('slider_images', [$sliderImage->slider_id, $type]) }}"> Slider Image List</a></li>
     <li class="breadcrumb-item active"> Slider Image Edit</li>

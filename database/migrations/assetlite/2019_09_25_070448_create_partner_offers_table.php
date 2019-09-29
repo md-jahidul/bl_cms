@@ -24,8 +24,10 @@ class CreatePartnerOffersTable extends Migration
             $table->string('get_offer_msg_bn');
             $table->string('btn_text_en');
             $table->string('btn_text_bn');
+            $table->tinyInteger('show_in_home')->default(0);
             $table->tinyInteger('is_active');
-            $table->string('other_attributes');
+            $table->string('display_order');
+            $table->json('other_attributes')->nullable();
             $table->foreign('partner_id')
                 ->references('id')
                 ->on('partners')

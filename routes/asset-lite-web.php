@@ -65,12 +65,18 @@ Route::put('slider/{slider_id}/{type}/image/{id}/update', 'CMS\AlSliderImageCont
 Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'CMS\AlSliderImageController@destroy');
 Route::get('/slider-image-sortable','CMS\AlSliderImageController@sliderImageSortable');
 
-
-
-
 // PARTNERS PAGES ====================================
 Route::resource('partners','CMS\PartnerController');
 Route::get('partner/destroy/{id}', 'CMS\PartnerController@destroy');
+
+Route::get('partner-offer/{partner_id}/{type}', 'CMS\PartnerOfferController@index')->name('partner-offer');
+Route::get('partner-offer/{partner_id}/{partner}/offer/create', 'CMS\PartnerOfferController@create');
+Route::post('partner-offer/{partner_id}/{partner}/offer/store', 'CMS\PartnerOfferController@store')->name('partner_offer_store');
+Route::get('partner-offer/{partner_id}/{partner}/offer/{id}', 'CMS\PartnerOfferController@edit')->name('partner_offer_edit');
+Route::put('partner-offer/{partner_id}/{partner}/offer/{id}/update', 'CMS\PartnerOfferController@update')->name('partner_offer_update');
+Route::get('partner-offer/{partner_id}/{partner}/offer/destroy/{id}', 'CMS\PartnerOfferController@destroy');
+Route::get('/partner-offer/sortable','CMS\PartnerOfferController@partnerOfferSortable');
+
 //Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
 
 
