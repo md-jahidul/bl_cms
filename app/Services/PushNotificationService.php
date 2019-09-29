@@ -14,7 +14,7 @@ class PushNotificationService
      * @return string
      */
     public static function getHost() {
-        return env('ASSET_HOST');
+        return env('NOTIFICATION_HOST');
     }
 
     /**
@@ -23,7 +23,7 @@ class PushNotificationService
      * @return string
      */
     public static function getPort() {
-        return env('ASSET_PORT');
+        return env('NOTIFICATION_PORT');
     }
 
 
@@ -33,7 +33,17 @@ class PushNotificationService
      * @return string
      */
     public static function getToken() {
-        return env('ASSET_TOKEN');
+        return env('NOTIFICATION_TOKEN');
+    }
+
+
+    public static function sendNotification($data)
+    {
+
+        $res = static::post('api/v1/push/notification', $data);
+
+        return $res;
+
     }
 
     /**
