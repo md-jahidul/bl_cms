@@ -74,6 +74,12 @@ Route::get('partner/destroy/{id}', 'CMS\PartnerController@destroy');
 //Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
 
 
+// Fixed PAGES ====================================
+Route::get('fixed-pages', 'CMS\FixedPageController@index');
+Route::get('fixed-page/{id}/components', 'CMS\FixedPageController@components')->name('fixed-page-components');
+Route::get('fixed-pages/{id}/metatags', 'CMS\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
+Route::post('fixed-pages/{id}/metatags', 'CMS\FixedPageController@metaTagsUpdate');
+
 
 
 Route::resource('questions', 'CMS\QuestionController');

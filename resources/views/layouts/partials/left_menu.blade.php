@@ -33,6 +33,19 @@
                 </ul>
             </li>
 
+
+            <li class="nav-item"><a href="#"><i class="la la-question"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Page Management</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('fixed-pages') . is_active_url('fixed-pages/home')}}">
+                        <a class="menu-item" href="{{ url('fixed-pages') }}" data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-file-image-o"></i> Fixed pages
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
             <li class="nav-item"><a href="#"><i class="la la-gift"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Offer Management</span></a>
                 <ul class="menu-content">
