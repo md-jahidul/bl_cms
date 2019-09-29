@@ -24,8 +24,7 @@ class CreatePartnersTable extends Migration
             $table->string('contact_person_name');
             $table->string('contact_person_email');
             $table->string('contact_person_mobile');
-            $table->string('is_active');
-            $table->text('other_attributes');
+            $table->json('other_attributes')->nullable();
             $table->foreign('partner_category_id')
                 ->references('id')
                 ->on('partner_categories')

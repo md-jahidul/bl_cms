@@ -9,17 +9,18 @@
 namespace App\Repositories;
 
 use App\Models\AlSliderImage;
+use App\Models\PartnerOffer;
 
-class AlSliderImageRepository extends BaseRepository
+class PartnerOfferRepository extends BaseRepository
 {
-    public $modelName = AlSliderImage::class;
+    public $modelName = PartnerOffer::class;
 
-    public function getSliderImage($sliderId, $type)
+    public function getPartnerOffer($partnerId)
     {
-        return $this->model->where('slider_id', $sliderId)->orderBy('display_order')->get();
+        return $this->model->where('partner_id', $partnerId)->orderBy('display_order')->with('partner')->get();
     }
 
-    public function sliderImageTableSort($request)
+    public function partnerOfferTableSort($request)
     {
         $positions = $request->position;
         foreach ($positions as $position){
@@ -31,4 +32,5 @@ class AlSliderImageRepository extends BaseRepository
         }
         return "success";
     }
+
 }

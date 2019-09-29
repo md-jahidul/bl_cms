@@ -12,8 +12,6 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-
-
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ url("sliders/$slider->id/update") }}" method="POST" novalidate>
                             @csrf
@@ -50,7 +48,3 @@
         </div>
     </section>
 @stop
-
-
-
-

@@ -32,7 +32,7 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        $partners = $this->partnerService->findAll();
+        $partners = $this->partnerService->findAll('', 'partnerCategory');
         return view('admin.partner.index', compact('partners'));
     }
 
@@ -43,7 +43,8 @@ class PartnerController extends Controller
      */
     public function create()
     {
-        return view('admin.partner.create');
+        $partnerCategories = $this->partnerService->partnerCategories();
+        return view('admin.partner.create', compact('partnerCategories'));
     }
 
     /**
@@ -79,7 +80,8 @@ class PartnerController extends Controller
     public function edit($id)
     {
        $partner = $this->partnerService->findOne($id);
-       return view('admin.partner.edit', compact('partner'));
+       $partnerCategories = $this->partnerService->partnerCategories();
+       return view('admin.partner.edit', compact('partner', 'partnerCategories'));
     }
 
     /**

@@ -24,26 +24,22 @@ class StorePartnerRequest extends FormRequest
     public function rules()
     {
         return [
-            'company_name' => 'required|unique:partners,company_name,'.$this->partner,
-            'ceo_name' => 'required',
-            'email' => 'required|email|unique:partners,email,'.$this->partner,
-            'mobile' => 'required|unique:partners,mobile,'.$this->partner,
-//            'company_logo' => 'required',
-            'address' => 'required',
-            'website' => 'required|unique:partners,website,'.$this->partner,
-            'is_active' => 'required',
-            'services' => 'required',
+            'partner_category_id' => 'required',
+            'company_name_en' => 'required|unique:partners,company_name_en,'.$this->partner,
+            'company_name_bn' => 'required|unique:partners,company_name_bn,'.$this->partner,
+            'company_logo' => 'image|mimes:jpeg,jpg,png',
+            'company_address' => 'required',
+            'company_website' => 'required|unique:partners,company_website,'.$this->partner,
+            'contact_person_name' => 'required',
+            'contact_person_email' => 'required|email|unique:partners,contact_person_email,'.$this->partner,
+            'contact_person_mobile' => 'required|unique:partners,contact_person_mobile,'.$this->partner,
         ];
     }
 
     public function messages()
     {
         return [
-//            'title.required' => "Enter english title",
-//            'description.required' => "Enter bangla english",
-//            'alt_text.required' => "Enter alt ext",
-//            'url_btn_label.required' => "Enter button url",
-//            'redirect_url.required' => "Enter redirect url",
+            'partner_category_id.required' => "The partner category field is required.",
         ];
     }
 }

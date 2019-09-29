@@ -28,6 +28,11 @@ class DatabaseSeeder extends Seeder
         $this->call(SliderImageTableSeeder::class);
         $this->call(DigitalServiceTableSeeder::class);
         $this->call(PartnerCategoryTableSeeder::class);
+        $this->call(PartnerTableSeeder::class);
+        $this->call(PartnerOfferTableSeeder::class);
+        $this->call(ShortCodesTableSeeder::class);
+        $this->call(PagesTableSeeder::class);
+
 
 //      My-Bl Seeder
         $this->call(NotificationsTableSeeder::class);
@@ -43,6 +48,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ContextualCardSeeder::class);
         $this->call(SettingKeysTableSeeder::class);
         $this->call(MyblSliderComponentTypesTableSeeder::class);
-        $this->call(OfferFilterTypeTableSeeder::class);
+//        $this->call(OfferFilterTypeTableSeeder::class);
     }
 }

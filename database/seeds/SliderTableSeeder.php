@@ -15,6 +15,7 @@ class SliderTableSeeder extends Seeder
     {
         // $sliders = ['Hero','Explore Devices','Digital Services','Testimonial'];
         $sliders = ['Hero', 'Digital Services', 'Testimonial'];
+        $slidersBn = ['হিরো', 'ডিজিটাল পরিষেবা', 'প্রশংসাপত্র'];
 
         foreach ($sliders as $key => $slider){
 
@@ -30,8 +31,8 @@ class SliderTableSeeder extends Seeder
             $component_id = $key + 1;
 
             AlSlider::create([
-                'title_en' =>  'Home page ' . $slider,
-                'title_bn' =>  'Home page ' . $slider,
+                'title_en' =>  $slider,
+                'title_bn' =>  $slidersBn[$key],
                 'component_id' => $component_id,
                 'short_code' => '[slider_'. $component_id .']',
                 'other_attributes' => ($slider == 'Digital Services') ? $other_attributes : ['sliding_speed' => 10]

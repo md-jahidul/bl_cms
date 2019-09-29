@@ -23,7 +23,7 @@
                             <th width="25%">Title</th>
 {{--                            <th>Description</th>--}}
                             <th>Alt Text</th>
-                            <th>Button Label</th>
+{{--                            <th>Button Label</th>--}}
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
@@ -35,7 +35,7 @@
                                 <td>{{ $slider_image->title_en }} {!! $slider_image->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
 {{--                                <td>{{ $slider_image->description }}</td>--}}
                                 <td>{{ $slider_image->alt_text }}</td>
-                                <td>{{ $slider_image->url_btn_label }}</td>
+{{--                                <td>{{ $slider_image->url_btn_label }}</td>--}}
                                 <td class="action" width="8%">
                                     <a href="{{ route('slider_image_edit', [ $slider_image->slider_id, $type, $slider_image->id ] ) }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="#" remove="{{ url("slider/$slider_image->slider_id/$type/image/destroy/$slider_image->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $slider_image->id }}" title="Delete the user">

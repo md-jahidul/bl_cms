@@ -34,15 +34,8 @@ class AlSliderImageController extends Controller
      */
     public function index($sliderId, $type)
     {
-
-
         $slider_images = AlSliderImage::where('slider_id', $sliderId)->with('slider')->orderBy('display_order')->get();
-
-
-
         $sliderTitle = AlSlider::where('id', $sliderId)->pluck('title_en')->first();
-
-
         $this->alSliderImageService->itemList($sliderId, $type);
         return view('admin.slider-image.index', compact('slider_images', 'sliderTitle', 'sliderId','type'));
     }

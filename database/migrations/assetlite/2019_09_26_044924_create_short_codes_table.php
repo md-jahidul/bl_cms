@@ -15,12 +15,12 @@ class CreateShortCodesTable extends Migration
     {
         Schema::create('short_codes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-			$table->string('short_code');
-			$table->string('copmponent_name');
-			$table->string('table_name');
-			$table->integer('filter_column');
-            $table->integer('filter_value');
+            $table->unsignedInteger('page_id');
+            $table->string('component_type');                        // such as slider,recharge
+            $table->unsignedInteger('component_id')->nullable();     // such as slider_id 
+            $table->string('component_status')->default('enabled');        
+            $table->string('display_order')->default(0);
+            $table->string('is_active')->default(1);
             $table->timestamps();
         });
     }
@@ -35,4 +35,3 @@ class CreateShortCodesTable extends Migration
         Schema::dropIfExists('short_codes');
     }
 }
-
