@@ -30,7 +30,7 @@
                             <th>Title</th>
                             <th>Offer code</th>
                             <th>Points</th>
-                            <th>Action</th>
+                            <th width="200">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -42,17 +42,17 @@
                                 <td>{{$amarOffer->points}}</td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <a role="button" href="{{route('amarOffer.show',$amarOffer->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-info"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <a role="button" href="{{route('amarOffer.edit',$amarOffer->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <button data-id="{{$amarOffer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

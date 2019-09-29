@@ -167,12 +167,10 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group ">
-                                        <label for="image" class="required">Upload contextual Card Image:</label>
+                                        <label for="image" >Upload contextual Card Image:</label>
                                         <div class="input-group ">
                                             <div class="custom-file">
                                                 <input accept="image/*"
-                                                required
-                                                data-validation-required-message="Card Image fild is required" 
                                                 onchange="
                                                     createImageBitmap(this.files[0]).then((bmp) => {
                                                         
