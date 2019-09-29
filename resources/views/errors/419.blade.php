@@ -6,7 +6,7 @@
                 <h1>Oops!</h1>
                 <h2>419 - Sorry, your session has expired. Please refresh and try again.</h2>
             </div>
-            <a href="/home">Go TO Homepage</a>
+            <a href="{{route('home')}}">Go TO Homepage</a>
         </div>
     </div>
 @endsection

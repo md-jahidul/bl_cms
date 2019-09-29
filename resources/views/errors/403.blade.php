@@ -6,7 +6,7 @@
                 <h1>Oops!</h1>
                 <h2>403 -Sorry, you are forbidden from accessing this page.</h2>
             </div>
-            <a href="/home">Go TO Homepage</a>
+            <a href="{{route('home')}}">Go TO Homepage</a>
         </div>
     </div>
 @endsection
