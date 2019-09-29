@@ -30,6 +30,10 @@ class ShortCodesTableSeeder extends Seeder
                 'component_id'   =>  2
             ],
             [
+                'component_type' => 'partner_offers',
+                'component_id'   =>  null
+            ],
+            [
                 'component_type' => 'slider',
                 'component_id'   =>  3
             ]

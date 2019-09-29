@@ -27,9 +27,6 @@
                                     @endif
                                 </div>
 
-                                @include('layouts.partials.slider-other-attr.' . $type )
-
-
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i

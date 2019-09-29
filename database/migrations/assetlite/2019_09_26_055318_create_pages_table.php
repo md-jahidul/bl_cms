@@ -19,7 +19,6 @@ class CreatePagesTable extends Migration
             $table->string('body')->nullable();
             $table->string('url')->nullable();           
             $table->string('menu_id');
-            $table->string('meta_tag_id');
             $table->string('page_type'); // fixed, dynamic
             $table->string('status')->default(1);
             $table->timestamps();
