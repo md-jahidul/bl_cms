@@ -29,7 +29,7 @@ class SliderTableSeeder extends Seeder
 
             $component_id = $key + 1;
 
-            AlSlider::create([
+            $slider = AlSlider::create([
                 'title_en' =>  'Home page ' . $slider,
                 'title_bn' =>  'Home page ' . $slider,
                 'component_id' => $component_id,
