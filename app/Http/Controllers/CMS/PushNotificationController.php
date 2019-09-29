@@ -17,28 +17,21 @@ class PushNotificationController extends Controller
      */
     public function sendNotification(Request $request)
     {
-       dd($request->input('title'));
+        $notification = [
+            'title' => $request->input('title'),
+            'body' => $request->input('message'),
+            'send_to_type​' => "​ALL",
+            "is_interactive" => "Yes",
+            "data" => [
+                "cid" => "1",
+                "url" => "test.com",
+                "component" => "offer",
+            ]
 
-       $data = [
-           'title' =>  $request->input('title'),
-           'body'  =>   $request->input('title'),
 
        ];
 
-
-
-       $data ['title'] = $request->input('title');
-
-        $data ['body'] = $request->input('title');
-
-        "title"​ : ​ " সরা অফার!" ,
-"body"​ : " ​ বাংলািলংক আপনার জন িনেয় এেসেছ ১ পয়সা/ সেক
-"send_to_type"​ : ​ "ALL"​ ,
-"is_interactive"​ : ​ "'Yes"​ ,
-"data"​ : {
-"cid"​ : ​ "1"​ ,
-"url"​ : ​ "https://xxxxx.xxx"​ ,
-"component"​ : ​ "offer"
+        dd($notification);
 
     }
 
