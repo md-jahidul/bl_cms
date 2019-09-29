@@ -26,12 +26,12 @@ class NearbyOfferRequest extends FormRequest
         return [
             'value_exist'=>'required',
             'title'=>'required|max:200|unique:nearby_offers,title,'.$this->id,
-            'vendor'=>'required',
-            'location'=>'required',
-            'type'=>'required',
-            'offer'=>'required',
+            'vendor'=>'required|max:200',
+            'location'=>'required|max:200',
+            'type'=>'required|max:200',
+            'offer'=>'required|max:200',
             'image'=>'required_if:value_exist,no|image|mimes:jpeg,jpg,png',
-            'offer_code'=>'required',
+            'offer_code'=>'required|max:200|unique:nearby_offers,offer_code,'.$this->id,
         ];
     }
 }
