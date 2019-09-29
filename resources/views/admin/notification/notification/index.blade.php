@@ -12,7 +12,7 @@
             </a>
         @else
             <a href="{{route('notification.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
-                Create notification
+                Create Notification
             </a>
         @endif
 
@@ -34,10 +34,10 @@
                 <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
-                        <th width="">id</th>
-                        <th>Tittle</th>
+                        <th width="">ID</th>
+                        <th>Title</th>
                         <th width="300">Body</th>
-                        <th>category</th>
+                        <th>Category</th>
                         <th width="210">Action</th>
                     </tr>
                     </thead>

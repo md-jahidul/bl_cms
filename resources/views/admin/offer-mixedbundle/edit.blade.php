@@ -17,7 +17,7 @@
                         @method('put')
                         
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Edit SMS offer.</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Edit Mixed Bundle offer.</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">

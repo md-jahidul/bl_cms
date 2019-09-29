@@ -70,7 +70,7 @@ class MyblSliderImageController extends Controller
      */
     public function store(SliderImageStoreRequest $request)
     {
-        session()->flash('success',$this->sliderImageService->storeSliderImage($request->all()['repeater-list'])->getContent());
+        session()->flash('success',$this->sliderImageService->storeSliderImage($request->all())->getContent());
         return redirect()->back();
         
     }

@@ -51,14 +51,14 @@
                             <input 
                             required
                             maxlength="200" 
-                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
-                            data-validation-required-message="Banner Name fild is required" 
+                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                            data-validation-required-message="Banner Name is required" 
                             data-validation-regex-message="Banner Name must start with alphabets"
-                            data-validation-maxlength-message = "Banner Name canot be more then 200 Characters"
+                            data-validation-maxlength-message = "Banner Name can not be more then 200 Characters"
                             id="name" value="@if(isset($banner_info)){{$banner_info->name}} @elseif(old("name")) {{old("name")}} @endif" type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="title" placeholder="Enter Banner Name..">
                             <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
                             <div class="help-block">
-                                <small class="text-info">Banner Name canot be more then 200 Characters</small>
+                                <small class="text-info">Banner Name can not be more then 200 Characters</small>
                             </div>
                         </div>
                         @if(isset($banner_info)) <input type="hidden" name="id" value="{{$banner_info->id}}"> @endif
@@ -70,14 +70,14 @@
                             <input
                             required
                             maxlength="200" 
-                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
-                            data-validation-required-message="Image Name fild is required" 
+                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                            data-validation-required-message="Image Name is required" 
                             data-validation-regex-message="Image Name must start with alphabets"
-                            data-validation-maxlength-message = "Image Name canot be more then 200 Characters"
+                            data-validation-maxlength-message = "Image Name can not be more then 200 Characters"
                             id="image_name" value="@if(isset($banner_info)){{$banner_info->image_name}} @elseif(old("image_name")) {{old("image_name")}} @endif" type="text" name="image_name" class="form-control @error('image_name') is-invalid @enderror" placeholder="Enter Image Name..">
                             <small class="text-danger"> @error('image_name') {{ $message }} @enderror </small>
                             <div class="help-block">
-                                <small class="text-info">Image Name canot be more then 200 Characters</small>
+                                <small class="text-info">Image Name can not be more then 200 Characters</small>
                             </div>
                         </div>
 
@@ -86,7 +86,7 @@
 
                         <div class="form-group">
                             <label for="code" class="required">Code:</label>
-                            <input required data-validation-required-message="Code fild is required" id="code" value="@if(isset($banner_info)){{$banner_info->code}} @elseif(old("code")) {{old("code")}} @endif" type="text" name="code" class="form-control @error('code') is-invalid @enderror" placeholder="Enter Banner code..">
+                            <input required data-validation-required-message="Code is required" id="code" value="@if(isset($banner_info)){{$banner_info->code}} @elseif(old("code")) {{old("code")}} @endif" type="text" name="code" class="form-control @error('code') is-invalid @enderror" placeholder="Enter Banner code..">
                             <small class="text-danger"> @error('code') {{ $message }} @enderror </small>
                             <div class="help-block"></div>
                         </div>
@@ -98,7 +98,7 @@
                             <label for="url" class="required">URL:</label>
                             <input 
                             required
-                            data-validation-required-message="URL fild is required"
+                            data-validation-required-message="URL is required"
                             data-validation-regex-regex="((http[s]?|ftp[s]?):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*"
                             data-validation-regex-message="URL must be a valid link"
                             id="url" value="@if(isset($banner_info)){{$banner_info->redirect_url}}@elseif(old("redirect_url")) {{old("redirect_url")}} @endif" type="url" name="redirect_url" class="form-control @error('redirect_url') is-invalid @enderror" placeholder="URL..">
@@ -127,7 +127,7 @@
                                     <input 
                                     accept="image/*" 
                                     @if(!isset($banner_info))  required @endif 
-                                    data-validation-required-message="Image fild is required"
+                                    data-validation-required-message="Image is required"
                                     accept="image/*" 
                                     onchange="
                                     createImageBitmap(this.files[0]).then((bmp) => {

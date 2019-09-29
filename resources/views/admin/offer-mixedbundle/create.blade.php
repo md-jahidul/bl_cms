@@ -16,7 +16,7 @@
                         @csrf
                         @method('post')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Create SMS offer.</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Create Mixed Bundle offer.</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -112,7 +112,7 @@
                                         required
                                         maxlength="50" 
                                         data-validation-maxlength-message = "Price can never be more then 50 digits"
-                                        data-validation-required-message="Price fild is required"
+                                        data-validation-required-message="Price is required"
 
                                         type="number" min="0" value="@if(old('price')){{old('price')}}@endif" id="price" class="form-control @error('price') is-invalid @enderror" placeholder="Price.." name="price">
                                         <div class="help-block">
@@ -134,7 +134,7 @@
                                         required
                                         maxlength="50000" 
                                         data-validation-maxlength-message = "Points can never be more then 50000 digits"
-                                        data-validation-required-message="Points fild is required"
+                                        data-validation-required-message="Points is required"
 
                                         type="number" min="0" value="@if(old('points')){{old('points')}}@endif" id="points" class="form-control @error('points') is-invalid @enderror" placeholder="Points.." name="points">
                                         <div class="help-block"></div>

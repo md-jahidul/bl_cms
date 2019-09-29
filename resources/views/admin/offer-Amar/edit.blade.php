@@ -114,7 +114,7 @@
                                         required
                                         maxlength="50" 
                                         data-validation-maxlength-message = "Price can never be more then 50 digits"
-                                        data-validation-required-message="Price fild is required"
+                                        data-validation-required-message="Price is required"
                                         type="number" min="0" value="{{$amarOffer->price}}" id="price" class="form-control @error('price') is-invalid @enderror" placeholder="Price.." name="price">
                                         <div class="help-block">
                                             <small id="price" class="form-text text-info">Enter price in BDT.</small>
@@ -134,7 +134,7 @@
                                         required
                                         maxlength="50000" 
                                         data-validation-maxlength-message = "Points can never be more then 50000 digits"
-                                        data-validation-required-message="Points fild is required"
+                                        data-validation-required-message="Points is required"
                                         type="number" min="0" value="{{$amarOffer->points}}" id="points" class="form-control @error('points') is-invalid @enderror" placeholder="Points.." name="points">
                                         <div class="help-block"></div>
                                         @error('points')
@@ -152,7 +152,7 @@
                                         required 
                                         data-validation-required-message="Offer Code is required" 
                                         maxlength="200" 
-                                        data-validation-maxlength-message = "Offer Code canot be more then 200 charecters"
+                                        data-validation-maxlength-message = "Offer Code can not be more then 200 charecters"
                                         type="text" value="{{$amarOffer->offer_code}}" id="offer_code" class="form-control @error('offer_code') is-invalid @enderror" placeholder="Offer code.." name="offer_code">
                                         <div class="help-block">
                                             <small id="validity" class="form-text text-info">Offer Code must have *,# and number in it.</small>

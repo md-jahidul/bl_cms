@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Minuit Offer')
-@section('card_name', "Minuit Offer")
+@section('title', 'Minut Offer')
+@section('card_name', "Minut Offer")
 @section('breadcrumb')
     <li class="breadcrumb-item active">
         Create Minut Offer
@@ -17,7 +17,7 @@
                         @csrf
                         @method('post')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Create SMS offer.</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Create Minut Offer.</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -26,12 +26,12 @@
                                         required 
                                         data-validation-required-message="Title is required" 
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.-])*)*"
                                         data-validation-regex-message="Title must start with alphabets"
-                                        data-validation-maxlength-message = "Title canot be more then 200 charecters"
+                                        data-validation-maxlength-message = "Title can not be more then 200 charecters"
                                         type="text" value="@if(old('title')){{old('title')}}@endif" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
                                         <div class="help-block">
-                                            <small class="text-info">Title canot be more then 200 charecters</small>
+                                            <small class="text-info">Title can not be more then 200 charecters</small>
                                         </div> 
                                         @error('title')
                                             <span class="invalid-feedback" role="alert">
@@ -47,7 +47,7 @@
                                         
                                         required
                                         maxlength="50000" 
-                                        data-validation-maxlength-message = "Volume can never be more then 50000 digits"
+                                        data-validation-maxlength-message = "Volume can not be more then 50000 digits"
                                         data-validation-required-message="Volume is required"
                                         type="number" min="0" value="@if(old('volume')){{old('volume')}}@endif" id="volume" class="form-control @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="volume">
                                         <div class="help-block">
@@ -67,7 +67,7 @@
                                         <input
                                         required
                                         maxlength="50" 
-                                        data-validation-maxlength-message = "Price can never be more then 50 digits"
+                                        data-validation-maxlength-message = "Price can not be more then 50 digits"
                                         data-validation-required-message="Price is required"
                                         type="number" min="0" value="@if(old('price')){{old('price')}}@endif" id="price" class="form-control @error('price') is-invalid @enderror" placeholder="Price.." name="price">
                                         <div class="help-block">
@@ -88,7 +88,7 @@
                                         required 
                                         data-validation-required-message="Offer Code is required" 
                                         maxlength="200" 
-                                        data-validation-maxlength-message = "Offer Code canot be more then 200 charecters"
+                                        data-validation-maxlength-message = "Offer Code can not be more then 200 charecters"
                                         type="text" value="@if(old('offer_code')){{old('offer_code')}}@endif" id="offer_code" class="form-control @error('offer_code') is-invalid @enderror" placeholder="Offer code.." name="offer_code">
                                         <div class="help-block">
                                             <small id="validity" class="form-text text-info">Offer Code must have *,# and number in it.</small>
@@ -107,7 +107,7 @@
                                         <input 
                                         required
                                         maxlength="50000" 
-                                        data-validation-maxlength-message = "Points can never be more then 50000 digits"
+                                        data-validation-maxlength-message = "Points can not be more then 50000 digits"
                                         data-validation-required-message="Points is required" 
                                         type="number" min="0" value="@if(old('points')){{old('points')}}@endif" id="points" class="form-control @error('points') is-invalid @enderror" placeholder="Points.." name="points">
                                         <div class="help-block"></div>
@@ -126,7 +126,7 @@
                                         
                                         required
                                         maxlength="5" 
-                                        data-validation-maxlength-message = "Validity can never be more then 5 digits"
+                                        data-validation-maxlength-message = "Validity can not be more then 5 digits"
                                         data-validation-required-message="Validity is required"
 
                                         type="number" min="0" value="@if(old('validity')){{old('validity')}}@endif" id="validity" class="form-control @error('validity') is-invalid @enderror" placeholder="" name="validity">

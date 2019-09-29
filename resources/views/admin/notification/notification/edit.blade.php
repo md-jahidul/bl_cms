@@ -28,9 +28,9 @@
                                 required
                                 maxlength="200" 
                                 data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
-                                data-validation-required-message="Title fild is required" 
+                                data-validation-required-message="Title is required" 
                                 data-validation-regex-message="Title must start with alphabets"
-                                data-validation-maxlength-message = "Title canot be more then 200 Characters" 
+                                data-validation-maxlength-message = "Title can not be more then 200 Characters" 
                                 
                                 style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @else {{$notification->title}} @endif" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
                                 <div class="help-block">
@@ -66,7 +66,7 @@
                                 <label for="body" class="required">Body :</label>
                                 <textarea 
                                 required
-                                data-validation-required-message="body fild is required" 
+                                data-validation-required-message="body is required" 
                                 class="form-control @error('body') is-invalid @enderror" placeholder="Enter body description....." id="body" name="body" rows="10">@if(old('body')){{old('body')}} @else {{$notification->body}}@endif</textarea>
                                 <div class="help-block"></div>
                                 <small class="text-danger"> @error('body') {{ $message }} @enderror </small>

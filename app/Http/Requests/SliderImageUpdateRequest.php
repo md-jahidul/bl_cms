@@ -25,12 +25,12 @@ class SliderImageUpdateRequest extends FormRequest
     {
         return [
             'slider_id'=>'',
-            'title'=>'required',
+            'title'=>'required|max:200|unique:slider_images,title,'.$this->id,
             'description'=>'',
             'image_url'=>'image|mimes:jpeg,jpg,png|dimensions:ratio=16/9',
-            'alt_text'=>'',
-            'url_btn_label'=>'',
-            'url'=>'',
+            'alt_text'=>'max:200|unique:slider_images,alt_text,'.$this->id,
+            'url_btn_label'=>'max:200',
+            'url'=>'max:200',
         ];
     }
 

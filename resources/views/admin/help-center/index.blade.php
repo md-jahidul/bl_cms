@@ -2,7 +2,7 @@
 @section('title', 'Help Center')
 @section('card_name', 'Help Center')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Help center list</li>
+    <li class="breadcrumb-item active">Help Center List</li>
 @endsection
 @section('action')
     <a href="{{route('helpCenter.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
@@ -11,7 +11,6 @@
 @endsection
 @section('content')
 
-
     <section>
         <div class="card">
             <div class="card-header">
@@ -19,7 +18,7 @@
                     <div class="col-md-10">
 
                         <h1 class="card-title pl-1">
-                            <h4 class="form-section"><i class="la la-stethoscope"></i> Help center list</h4>
+                            <h4 class="form-section"><i class="la la-stethoscope"></i> Help Center List</h4>
                             <small class="text-success text-uppercase"><b>Drag the list to change the sequence</b></small>
                         </h1>
                     </div>
