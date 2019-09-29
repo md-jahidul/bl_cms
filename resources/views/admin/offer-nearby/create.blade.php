@@ -17,7 +17,7 @@
                         @csrf
                         @method('post')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Create Near By offer.</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Create Near By Offer.</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -49,7 +49,7 @@
                                         required 
                                         data-validation-required-message="Vendor is required" 
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.-])*)*"
                                         data-validation-regex-message="Vendor must start with alphabets"
                                         data-validation-maxlength-message = "Vendor name can not be more then 200 charecters"
                                         type="text" value="@if(old('vendor')){{old('vendor')}}@endif" id="vendor" class="form-control @error('vendor') is-invalid @enderror" placeholder="Enter vendor." name="vendor">
@@ -162,12 +162,12 @@
 
                                         required
                                         maxlength="50" 
-                                        data-validation-maxlength-message = "Validity can never be more then 50 digits"
+                                        data-validation-maxlength-message = "Validity can not be more then 50 digits"
                                         data-validation-required-message="Validity is required"
                                         placeholder="Enter validity in day"
                                         type="number" min="0" value="@if(old('validity')){{old('validity')}}@endif" id="validity" class="form-control @error('validity') is-invalid @enderror" placeholder="" name="validity">
                                         <div class="help-block">
-                                            <small id="validity" class="form-text text-info">Enter Validation on day.</small>
+                                            <small class="text-info">Enter Validation on day.</small>
                                         </div>
                                         @error('validity')
                                             <span class="invalid-feedback" role="alert">
@@ -184,13 +184,13 @@
                                     <div class="custom-file">
                                         <input accept="image/*" 
                                         required 
-                                        data-validation-required-message="Image fild is required" 
+                                        data-validation-required-message="Image is required" 
                                         name="image" type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image">
                                         <label class="custom-file-label @error('image') is-invalid @enderror" for="validatedCustomFile">Upload image...</label>
                                         
                                         <div class="help-block">
                                             <small class="text-info">
-                                                Image fild is required
+                                                Image is required
                                             </small>
                                         </div>
                                         @error('image')
