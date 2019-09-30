@@ -32,32 +32,32 @@
                         <tbody>
                             
                             <tr>
-                                <th>title</th>
-                                <td>{{$amarOffer->title}}</td>
-                                <th>tag</th>
-                                <td>{{$amarOffer->tag}}</td>
+                                <th width="10%">title</th>
+                                <td width="40%">{{$amarOffer->title}}</td>
+                                <th width="10%">tag</th>
+                                <td width="40%">{{$amarOffer->tag}}</td>
                             </tr>
                             <tr>
-                                <th>minutes</th>
-                                <td>{{$amarOffer->minutes}}</td>
-                                <th>sms</th>
-                                <td>{{$amarOffer->sms}}</td>
+                                <th width="10%">minutes</th>
+                                <td width="40%">{{$amarOffer->minutes}}</td>
+                                <th width="10%">sms</th>
+                                <td width="40%">{{$amarOffer->sms}}</td>
                             </tr>
                             <tr>
-                                <th>validity</th>
-                                <td>{{$amarOffer->validity}}</td>
-                                <th>price</th>
-                                <td>{{$amarOffer->price}}</td>
+                                <th width="10%">validity</th>
+                                <td width="40%">{{$amarOffer->validity}}</td>
+                                <th width="10%">price</th>
+                                <td width="40%">{{$amarOffer->price}}</td>
                             </tr>
                             <tr>
-                                <th>points</th>
-                                <td>{{$amarOffer->points}}</td>
-                                <th>internet</th>
-                                <td>{{$amarOffer->internet}}</td>
+                                <th width="10%">points</th>
+                                <td width="40%">{{$amarOffer->points}}</td>
+                                <th width="10%">internet</th>
+                                <td width="40%">{{$amarOffer->internet}}</td>
                             </tr>
                             <tr>
-                                <th style="padding-top:12px">offer_code</th>
-                                <td colspan="3"> 
+                                <th width="10%" style="padding-top:12px">offer_code</th>
+                                <td width="90%" colspan="3"> 
                                     <div class="row">
                                         <div class="col-8 text-danger font-weight-bold" style="padding-top:5px">
                                             {{$amarOffer->offer_code}}

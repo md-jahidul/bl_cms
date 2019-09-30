@@ -26,33 +26,32 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Internet</th>
-                            <th>Minutes</th>
-                            <th>SMS</th>
-                            <th>Validity</th>
-                            <th>Price</th>
-                            <th>Points</th>
-                            <th>Offer Code</th>
-                            {{-- <th>Tag</th> --}}
-                            <th width="100">Action</th>
+                            <th width="2%">ID</th>
+                            <th width="40%">Title</th>
+                            <th width="2%">Internet</th>
+                            <th width="2%">Minutes</th>
+                            <th width="2%">SMS</th>
+                            <th width="2%">Validity</th>
+                            <th width="2%">Price</th>
+                            <th width="2%">Points</th>
+                            <th width="25%">Offer Code</th>
+                            <th width="30%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($mixedBundle_offers as $mixedBundle_offer)
                             <tr>
-                                <td>{{$mixedBundle_offer->id}}</td>
-                                <td>{{$mixedBundle_offer->title}}</td>
-                                <td>{{$mixedBundle_offer->internet}}</td>
-                                <td>{{$mixedBundle_offer->minutes}}</td>
-                                <td>{{$mixedBundle_offer->sms}}</td>
-                                <td>{{$mixedBundle_offer->validity}}</td>
-                                <td>{{$mixedBundle_offer->price}}</td>
-                                <td>{{$mixedBundle_offer->points}}</td>
-                                <td>{{$mixedBundle_offer->offer_code}}</td>
+                                <td width="2%">{{$mixedBundle_offer->id}}</td>
+                                <td width="40%">{{$mixedBundle_offer->title}}</td>
+                                <td width="2%">{{$mixedBundle_offer->internet}}</td>
+                                <td width="2%">{{$mixedBundle_offer->minutes}}</td>
+                                <td width="2%">{{$mixedBundle_offer->sms}}</td>
+                                <td width="2%">{{$mixedBundle_offer->validity}}</td>
+                                <td width="2%">{{$mixedBundle_offer->price}}</td>
+                                <td width="2%">{{$mixedBundle_offer->points}}</td>
+                                <td width="25%">{{$mixedBundle_offer->offer_code}}</td>
                                 {{-- <td>{{$mixedBundle_offer->tag}}</td> --}}
-                                <td>
+                                <td width="30%">
                                     <div class="row">
                                         <div class="col-md-5">
                                             <a role="button" href="{{route('mixedBundleOffer.edit',$mixedBundle_offer->id)}}" class="btn btn-outline-success">

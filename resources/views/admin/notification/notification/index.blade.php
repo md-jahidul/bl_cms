@@ -44,23 +44,23 @@
                     <tbody>
                         @foreach ($notifications as $notification)
                             <tr>
-                                <td>{{$notification->id}}</td>
-                                <td>{{$notification->title}}</td>
-                                <td>{{$notification->body}}</td>
-                                <td>{{$notification->NotificationCategory->name}}</td>
-                                <td>
+                                <td width="10%">{{$notification->id}}</td>
+                                <td width="15%">{{$notification->title}}</td>
+                                <td width="35%">{{$notification->body}}</td>
+                                <td width="10%">{{$notification->NotificationCategory->name}}</td>
+                                <td width="30%">
                                     <div class="row">
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notification.edit',$notification->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <button data-id="{{$notification->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <a  role="button"
                                                 data-id=""
                                                 href="{{route('notification.show',$notification->id)}}" 

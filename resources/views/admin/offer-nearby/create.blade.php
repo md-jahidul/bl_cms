@@ -160,12 +160,12 @@
                                         <label for="validity" class="required">Validity:</label>
                                         <input 
 
-                                        required
-                                        maxlength="50" 
+                                        {{-- required --}}
+                                        {{-- maxlength="50" 
                                         data-validation-maxlength-message = "Validity can not be more then 50 digits"
                                         data-validation-required-message="Validity is required"
-                                        placeholder="Enter validity in day"
-                                        type="number" min="0" value="@if(old('validity')){{old('validity')}}@endif" id="validity" class="form-control @error('validity') is-invalid @enderror" placeholder="" name="validity">
+                                        placeholder="Enter validity in day" --}}
+                                        type="date" value="@if(old('validity')){{old('validity')}}@endif" id="validity" class="form-control @error('validity') is-invalid @enderror" placeholder="" name="validity">
                                         <div class="help-block">
                                             <small class="text-info">Enter Validation on day.</small>
                                         </div>

@@ -125,31 +125,31 @@
                 <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
-                        <th>id</th>
-                        <th>Title</th>
-                        <th>Icon</th>
-                        <th>Is Default</th>
-                        <th width="100">Action</th>
+                        <th width="10%">id</th>
+                        <th width="35%">Title</th>
+                        <th width="5%">Icon</th>
+                        <th width="10%">Is Default</th>
+                        <th width="30%">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                         @foreach ($short_cuts as $short_cut)
                             <tr>
-                                <td>{{$short_cut->id}}</td>
-                                <td>{{$short_cut->title}}</td>
-                                <td><img style="height:20px;width:20px" src="{{asset($short_cut->icon)}}" alt="" srcset=""></td>
-                                <td>
+                                <td width="10%">{{$short_cut->id}}</td>
+                                <td width="35%">{{$short_cut->title}}</td>
+                                <td width="5%"><img style="height:20px;width:20px" src="{{asset($short_cut->icon)}}" alt="" srcset=""></td>
+                                <td width="10%">
                                     @if($short_cut->is_default==1) Default @else Not Default @endif
                                 </td>
-                                <td>
+                                <td width="30%">
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col-md-2">
                                             <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('short_cuts.edit',$short_cut->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
                                         
-                                        <div class="col-md-5">
+                                        <div class="col-md-2">
                                             <button data-id="{{$short_cut->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

@@ -27,32 +27,32 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="4"><img style="height:150px;width:250px" src="{{asset($contextualCard->image_url)}}" alt="" srcset=""></td>
+                                <td width="100%" colspan="4"><img style="height:150px;width:250px" src="{{asset($contextualCard->image_url)}}" alt="" srcset=""></td>
                             </tr>
                             <tr>
-                                <th>Title</th>
-                                <td colspan="3">{{$contextualCard->title}}</td>
+                                <th width="10%">Title</th>
+                                <td width="90%" colspan="3">{{$contextualCard->title}}</td>
                             </tr>
                             <tr>
-                                <th class="text-center" colspan="4">Description</th>
+                                <th width="100%" class="text-center" colspan="4">Description</th>
                             </tr>
                             <tr>
-                                <td class="text-center" colspan="4">{{$contextualCard->description}}</td>
+                                <td width="100%" class="text-justify" colspan="4">{{$contextualCard->description}}</td>
                             </tr>
                             <tr>
-                                <th>First Action Text</th>
-                                <td>{{$contextualCard->first_action_text}}</td>
-                                <th>Second Action Text</th>
-                                <td>{{$contextualCard->second_action_text}}</td>
+                                <th width="10%">First Action Text</th>
+                                <td width="40%">{{$contextualCard->first_action_text}}</td>
+                                <th width="10%">Second Action Text</th>
+                                <td width="40%">{{$contextualCard->second_action_text}}</td>
                             </tr>
                             <tr>
-                                <th>First Action</th>
-                                <td>{{$contextualCard->first_action}}</td>
-                                <th>Second Action</th>
-                                <td>{{$contextualCard->second_action}}</td>
+                                <th width="10%">First Action</th>
+                                <td width="40%">{{$contextualCard->first_action}}</td>
+                                <th width="10%">Second Action</th>
+                                <td width="40%">{{$contextualCard->second_action}}</td>
                             </tr>
                             <tr>
-                                <td colspan="4"> 
+                                <td width="100%" colspan="4"> 
 
                                     <div class="row justify-content-end">
                                         <div class="col-2">
