@@ -29,20 +29,20 @@
                            <label for="name" class="required">Notification Category :</label>
                             <input type="text" 
                             required
-                            maxlength="200" 
-                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
+                            maxlength="50" 
+                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.-<>'',\|:[]{}!@#$%^&*()_-+=`~*])*)*"
                             data-validation-required-message="Name is required" 
                             data-validation-regex-message="Name must start with alphabets"
-                            data-validation-maxlength-message = "Name can not be more then 200 Characters" 
+                            data-validation-maxlength-message = "Name can not be more then 50 Characters" 
                              
                             value="@if(isset($notificationCategory)) {{$notificationCategory->name}} @elseif(old("name")) {{old("name")}} @endif" name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Notification Category..">  
                             @if(isset($notificationCategory))
                                 <input type="hidden" name="id" value="{{$notificationCategory->id}}">
                             @endif
-                            <div class="help-block">
-                                <small class="text-info"> Notification category can not be more then 200 characters</small><br>
-                            </div>
                             <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
+                            <div class="help-block">
+                                <small class="text-info"> Notification category can not be more then 50 characters</small><br>
+                            </div>
                         </div>
                         
                         <div class="col-md-2">
