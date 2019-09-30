@@ -12,27 +12,28 @@ class PartnerOfferTableSeeder extends Seeder
      */
     public function run()
     {
-        $validityEn = ["Vaild till 8 March 2019", "Vaild till 10 April 2019", "Vaild till 29 May 2019", "Vaild till 29 May 2019"];
-        $validityBn = ["8 ই মার্চ 2019 অবধি বৈধ", "10 এপ্রিল 2019 পর্যন্ত বৈধ", "29 মে 2019 অবধি বৈধ","29 মে 2019 অবধি বৈধ"];
-        $offerEn = ["Upto 15% Discount","Upto 20% Discount","Upto 25% Discount", "Upto 25% Discount"];
-        $offerBn = ["১৫% ছাড় পর্যন্ত","২০% ছাড় পর্যন্ত","২৫% ছাড় পর্যন্ত","২৫% ছাড় পর্যন্ত"];
+        $validityEn = ["Vaild till 8 March 2019", "Vaild till 10 April 2019", "Vaild till 29 May 2019"];
+        $validityBn = ["8 ই মার্চ 2019 অবধি বৈধ", "10 এপ্রিল 2019 পর্যন্ত বৈধ", "29 মে 2019 অবধি বৈধ"];
+        $offerEn = ["Upto 15% Discount","Upto 20% Discount","Upto 25% Discount"];
+        $offerBn = ["১৫% ছাড় পর্যন্ত","২০% ছাড় পর্যন্ত","২৫% ছাড় পর্যন্ত"];
         $getOfferMsgEn = "Type 8497 send SMS to 1020";
         $getOfferMsgBn = "৮৪৯৭ টাইপ করুন ১০২০ নম্বরে এসএমএস পাঠান";
 
-        foreach ($validityEn as $key=>$value){
+        for ($i=0; $i < 30; $i++){
+            $randItem = rand(0,2);
             PartnerOffer::create([
-                'partner_id' => $key +1,
-                'validity_en' => $value,
-                'validity_bn' => $validityBn[$key],
-                'offer_en' => $offerEn[$key],
-                'offer_bn' => $offerBn[$key],
+                'partner_id' => rand(1,5),
+                'validity_en' => $validityEn[$randItem],
+                'validity_bn' => $validityBn[$randItem],
+                'offer_en' => $offerEn[$randItem],
+                'offer_bn' => $offerBn[$randItem],
                 'get_offer_msg_en' => $getOfferMsgEn,
                 'get_offer_msg_bn' => $getOfferMsgBn,
                 'btn_text_en' => 'View Details',
                 'btn_text_bn' => 'বিস্তারিত দেখুন',
-                'show_in_home' => 1,
-                'is_active' => 1,
-                'display_order' => $key +1,
+                'show_in_home' => $i < 7 ? 1 : 0,
+                'is_active' => rand(0,6) ? 1 : 0,
+                'display_order' => 0,
                 'other_attributes' => json_encode(null),
             ]);
         }

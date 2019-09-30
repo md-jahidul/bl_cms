@@ -12,24 +12,15 @@ class PartnerTableSeeder extends Seeder
      */
     public function run()
     {
-        $companyNameEn =  ['Burger King','Labaid', 'Aarong', 'Aarong'];
-        $companyNameBn =  ['বার্গার কিং', 'ল্যাবাইদ', 'আড়ং', 'আড়ং'];
-        $companyLogo =    ['logo-buger-king.png','labaid_logo.png','arong_logo.png','arong_logo.png'];
+        $companyNameEn =  ['Sheraton','Burger King','Labaid', 'Patho', 'Aarong'];
+        $companyNameBn =  ['শেরাটন', 'বার্গার কিং', 'ল্যাবাইড', 'পাঠো', 'আড়ং'];
+        $companyLogo =    ['logo-sheraton.png','logo-buger-king.png','logo-labaid.png','logo-patho.png','logo-aarong.png'];
         $companyAddress = "Tiger’s Den, House 4 (SW), Bir Uttam Mir Shawkat Sarak, Gulshan1, Dhaka 1212.";
-        $companyWebSite = ['burgerking.com','labaid.com', 'aarong.com', 'aarong.com'];
+        $companyWebSite = ['sheraton.marriott.com','burger-king.com','labaid.com', 'patho.com', 'aarong.com'];
         $contactPersonName = "Shafiq Ahamad";
         $contactPersonEmail = "banglaling@bl.net";
         $contactPersonMobile = "01919555222";
 
-
-        // $other_attributes = [
-        //     'sliding_speed' => 10,
-        //     'description_en' => 'Description of ' . $slider,
-        //     'description_bn' => 'Description of ' . $slider,
-        //     'view_list_btn_text_en' => "View all $slider",
-        //     'view_list_btn_text_bn' => "সমস্ত পরিষেবা দেখুন",
-        //     'view_list_url' => "/view-all-digital-service",
-        // ];
 
         foreach ($companyNameEn as $key => $value){
             Partner::create([
