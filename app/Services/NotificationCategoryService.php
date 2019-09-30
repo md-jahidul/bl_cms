@@ -42,7 +42,7 @@ class NotificationCategoryService
         $data['slug'] =  str_replace(" ","_",strtolower($data['name']));
         //dd($data);
         $this->save($data);
-        return new Response("Notification Category has successfully been created");
+        return new Response("Notification Category has been successfully created");
     }
 
     /**
@@ -55,7 +55,7 @@ class NotificationCategoryService
         $notificationCategory = $this->findOne($id);
         $data['slug'] =  str_replace(" ","_",strtolower($data['name']));
         $notificationCategory->update($data);
-        return Response('Notification Category updated successfully !');
+        return Response('Notification Category has been successfully updated');
         
     }
 
@@ -68,7 +68,7 @@ class NotificationCategoryService
     {
         $notificationCategory = $this->findOne($id);
         $notificationCategory->delete();
-        return Response('Notification Category deleted successfully !');
+        return Response('Notification Category has been successfully deleted');
     }
 
 }

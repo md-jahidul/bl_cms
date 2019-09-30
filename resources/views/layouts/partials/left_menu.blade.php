@@ -180,9 +180,11 @@
                     <span class="menu-title" data-i18n="nav.templates.main">Filters</span></a>
                 <ul class="menu-content">
 
-                    <li class="{{is_active_url('mixedBundleOffer')}} {{is_active_url('mixed-bundle-offer/filter/create')}}">
+                    <li class="{{is_active_url('mixed-bundle-offer/')}} {{is_active_url('mixed-bundle-offer/filter/create')}}">
                         <a class="menu-item" href="{{ route('mixed-bundle-offer.filter.create') }} " data-i18n="nav.templates.vert.classic_menu">
-                            <i class="la la-flask"></i> Mixed Bundle Filter</a>
+                            <i class="la la-flask"></i> Mixed Bundle Filter
+                        </a>
+                    </li>
 
                 </ul>
             </li>

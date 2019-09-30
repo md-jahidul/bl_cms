@@ -77,7 +77,7 @@
                         <div class="input-group">
                             <div class="custom-file">
                                 <input accept="image/*" 
-                                data-validation-required-message="Icon is required" 
+                                @if(!isset($short_cut_info)) data-validation-required-message="Icon is required" @endif
                                 onchange="createImageBitmap(this.files[0]).then((bmp) => {
                                                         
                                     if(bmp.width/bmp.height == 1/1){

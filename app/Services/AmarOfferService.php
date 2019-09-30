@@ -40,7 +40,7 @@ class AmarOfferService
     public function storeAmarOffer($data)
     {   
         $this->save($data);
-        return new Response("Near By Offer has successfully been created");
+        return new Response("Amar Offer has been successfully created");
     }
 
     /**
@@ -52,7 +52,7 @@ class AmarOfferService
     {
         $nearByOffer = $this->findOne($id);
         $nearByOffer->update($request);
-        return Response('Amar Offer updated successfully !');
+        return Response('Amar Offer has been successfully updated');
     }
 
     /**
@@ -64,7 +64,7 @@ class AmarOfferService
     {
         $data = $this->findOne($id);
         $data->delete();
-        return Response('Offer deleted successfully !');
+        return Response('Amar Offer has been successfully deleted');
     }
 
 }

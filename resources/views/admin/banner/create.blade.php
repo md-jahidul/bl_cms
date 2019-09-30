@@ -126,8 +126,10 @@
                                 <div class="custom-file">
                                     <input 
                                     accept="image/*" 
-                                    @if(!isset($banner_info))  required @endif 
-                                    data-validation-required-message="Image is required"
+                                    @if(!isset($banner_info))  
+                                        required 
+                                        data-validation-required-message="Image is required"
+                                    @endif 
                                     accept="image/*" 
                                     onchange="
                                     createImageBitmap(this.files[0]).then((bmp) => {
@@ -137,7 +139,6 @@
                                             document.getElementById('submitForm').disabled = false;
                                             document.getElementById('massage').innerHTML = '';
                                             this.style.border = 'none';
-                                            // this.nextElementSibling.innerHTML = '';
                                         }else{ 
                                             console.log('no')
                                             this.style.border = '1px solid red';

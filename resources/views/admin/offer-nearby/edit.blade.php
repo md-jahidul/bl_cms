@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Near by offer')
-@section('card_name', "Near by offer")
+@section('title', 'Near By Offer')
+@section('card_name', "Near By Offer")
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        Edit Near by offer
+        Edit Near By Offer
     </li>
 @endsection
 
@@ -17,7 +17,7 @@
                         @csrf
                         @method('put')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Edit Near By offer.</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Edit Near By Offer.</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -26,7 +26,7 @@
                                         required 
                                         data-validation-required-message="Title is required" 
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.-])*)*"
                                         data-validation-regex-message="Title must start with alphabets"
                                         data-validation-maxlength-message = "Title can not be more then 200 charecters"
                                         type="text" value="{{$nearByOffer->title}}" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
@@ -50,7 +50,7 @@
                                         required 
                                         data-validation-required-message="Vendor is required" 
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.-])*)*"
                                         data-validation-regex-message="Vendor must start with alphabets"
                                         data-validation-maxlength-message = "Vendor name can not be more then 200 charecters"
                                         type="text" value="{{$nearByOffer->vendor}}" id="vendor" class="form-control @error('vendor') is-invalid @enderror" placeholder="Enter vendor...." name="vendor">

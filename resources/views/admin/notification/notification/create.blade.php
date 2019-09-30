@@ -72,9 +72,9 @@
                         </div>
 
                         <div class="col-md-2">
-                            <div class="form-group" style="">
-                                <button class="btn btn-outline-success" placeholder="Enter body description.." style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
-                            </div>
+                            <button type="submit" class="btn btn-success round px-2">
+                                <i class="la la-check-square-o"></i> Submit
+                            </button>
                         </div>
                     </div>
                 </div>

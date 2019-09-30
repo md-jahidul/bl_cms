@@ -18,7 +18,7 @@ class AppAdmin
         if(Auth::user()->role_id == "2" || Auth::user()->role_id == "1"){
             return $next($request);
         }else{
-            return "your do not have permition";
+            return redirect()->back();
         }
     }
 }

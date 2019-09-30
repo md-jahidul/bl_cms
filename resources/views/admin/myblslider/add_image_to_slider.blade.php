@@ -61,7 +61,7 @@
                                     <small class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
                                     <div class="help-block"></div>
                                 </div>
-                                <div class="form-group col-md-6 mb-2">
+                                {{-- <div class="form-group col-md-6 mb-2">
                                     <label for="btn">Button URL: </label>
                                     <input id="btn" 
                                     data-validation-regex-regex="((http[s]?|ftp[s]?):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*"
@@ -84,7 +84,7 @@
                                 <div class="form-group col-12 mb-2">
                                     <label for="description">Description: </label>
                                     <textarea id="description" rows="5" class="form-control" name="description" placeholder="About Slider..">@if(old('description')) {{old('description')}} @endif</textarea>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-12 mb-1"> 
                                     <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt="" srcset="">
                                 </div>
@@ -125,7 +125,9 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <button type="submit" style="width:100%" id="submitForm" class=" btn btn-success">Save Info</button>
+                                    <button type="submit" id="submitForm" class="btn btn-success round px-2">
+                                        <i class="la la-check-square-o"></i> Submit
+                                    </button>
                                 </div>
                                 </form>
                             

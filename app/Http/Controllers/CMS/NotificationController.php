@@ -66,7 +66,7 @@ class NotificationController extends Controller
     public function store(NotificationRequest $request)
     {
         //dd($request->all());
-        session()->flash('success',$this->notificationService->storeNotification($request->all())->getContent());
+        session()->flash('message',$this->notificationService->storeNotification($request->all())->getContent());
         return redirect(route('notification.index'));
 
     }

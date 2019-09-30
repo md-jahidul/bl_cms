@@ -152,7 +152,7 @@
                         </div>
                         <div class="form-actions">
                             <button id="submitForm" type="submit" class="btn btn-success round px-2">
-                                <i class="la la-check-square-o"></i> Save
+                                <i class="la la-check-square-o"></i> Submit
                             </button>
                         </div>
                     </form>
@@ -171,9 +171,6 @@
 @push('page-js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
     <script>
-        $(document).ready(function($){
-            $("#sequence").mask('00000000',{placeholder:"sequence can not be more then 5 digits"})
-            $("#redirect_link").mask('http://www.',{placeholder:"http://"})
-        })
+       
     </script>
 @endpush

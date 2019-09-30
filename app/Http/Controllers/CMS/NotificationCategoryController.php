@@ -57,7 +57,7 @@ class NotificationCategoryController extends Controller
      */
     public function store(NotificationCategoryRequest $request)
     {
-        session()->flash('success',$this->notificationCategoryService->storeNotificationCategory($request->all())->getContent());
+        session()->flash('message',$this->notificationCategoryService->storeNotificationCategory($request->all())->getContent());
         return redirect(route('notificationCategory.index'));
 
     }

@@ -57,7 +57,7 @@ class SettingController extends Controller
      */
     public function store(SettingRequest $request)
     {
-        session()->flash('success',$this->settingService->storeSetting($request->all())->getContent());
+        session()->flash('message',$this->settingService->storeSetting($request->all())->getContent());
         return redirect(route('setting.index'));
     }
 

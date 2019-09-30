@@ -51,7 +51,7 @@
                                         <input 
                                         required
                                         maxlength="50000" 
-                                        data-validation-maxlength-message = "Internet Volume can never be more then 50000 digits"
+                                        data-validation-maxlength-message = "Internet Volume can not be more then 50000 digits"
                                         data-validation-required-message="Internet Volume is required"
                                         type="number" min="0" value="{{$mixedBundle_offer->internet}}" id="internet" class="form-control @error('internet') is-invalid @enderror" placeholder="Enter volume...." name="internet">
                                         
@@ -72,7 +72,7 @@
 
                                         required
                                         maxlength="50000" 
-                                        data-validation-maxlength-message = "Minutes Volume can never be more then 50000 digits"
+                                        data-validation-maxlength-message = "Minutes Volume can not be more then 50000 digits"
                                         data-validation-required-message="Minutes Volume is required"
 
                                         type="number" min="0" value="{{$mixedBundle_offer->minutes}}" id="minutes" class="form-control @error('minutes') is-invalid @enderror" placeholder="Enter volume...." name="minutes">
@@ -94,7 +94,7 @@
 
                                         required
                                         maxlength="50000" 
-                                        data-validation-maxlength-message = "SMS Volume can never be more then 50000 digits"
+                                        data-validation-maxlength-message = "SMS Volume can not be more then 50000 digits"
                                         data-validation-required-message="SMS Volume is required"
 
                                         type="number" min="0" value="{{$mixedBundle_offer->sms}}" id="sms" class="form-control @error('sms') is-invalid @enderror" placeholder="Enter volume...." name="sms">
@@ -117,12 +117,12 @@
 
                                         required
                                         maxlength="50" 
-                                        data-validation-maxlength-message = "Price can never be more then 50 digits"
-                                        data-validation-required-message="Price fild is required"
+                                        data-validation-maxlength-message = "Price can not be more then 50 digits"
+                                        data-validation-required-message="Price is required"
 
                                         type="number" min="0" value="{{$mixedBundle_offer->price}}" id="price" class="form-control @error('price') is-invalid @enderror" placeholder="Price.." name="price">
                                         <div class="help-block">
-                                            <small id="validity" class="form-text text-info">Price can never be more then 50 digits</small>
+                                            <small id="validity" class="form-text text-info">Price can not be more then 50 digits</small>
                                         </div>
                                         <small id="price" class="form-text text-muted">Enter price in BDT.</small>
                                         @error('price')
@@ -139,11 +139,11 @@
                                         <input 
                                         required
                                         maxlength="50000" 
-                                        data-validation-maxlength-message = "Points can never be more then 50000 digits"
-                                        data-validation-required-message="Points fild is required"
+                                        data-validation-maxlength-message = "Points can not be more then 50000 digits"
+                                        data-validation-required-message="Points is required"
                                         type="number" min="0" value="{{$mixedBundle_offer->points}}" id="points" class="form-control @error('points') is-invalid @enderror" placeholder="Points.." name="points">
                                         <div class="help-block">
-                                            <small id="validity" class="form-text text-info">Points can never be more then 50000 digits</small>
+                                            <small id="validity" class="form-text text-info">Points can not be more then 50000 digits</small>
                                         </div>
                                         @error('points')
                                             <span class="invalid-feedback" role="alert">

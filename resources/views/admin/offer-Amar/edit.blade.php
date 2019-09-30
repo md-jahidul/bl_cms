@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Amar offer')
-@section('card_name', "Amar offer offer")
+@section('title', 'Amar Offer')
+@section('card_name', "Amar Offer")
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        Edit Amar offer
+        Edit Amar Offer
     </li>
 @endsection
 
@@ -27,7 +27,7 @@
                                         required 
                                         data-validation-required-message="Title is required" 
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/\.,])*)*"
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/\.,-])*)*"
                                         data-validation-regex-message="Title must start with alphabets"
                                         data-validation-maxlength-message = "Title name can not be more then 200 charecters"
 
@@ -52,7 +52,7 @@
 
                                         required
                                         maxlength="50000" 
-                                        data-validation-maxlength-message = "Internet Volume can never be more then 50000 digits"
+                                        data-validation-maxlength-message = "Internet Volume can not be more then 50000 digits"
                                         data-validation-required-message="Internet Volume is required"
 
                                         type="number" min="0" value="{{$amarOffer->internet}}" id="internet" class="form-control @error('internet') is-invalid @enderror" placeholder="Enter volume...." name="internet">
@@ -73,7 +73,7 @@
 
                                         required
                                         maxlength="50000" 
-                                        data-validation-maxlength-message = "Minutes Volume can never be more then 50000 digits"
+                                        data-validation-maxlength-message = "Minutes Volume can not be more then 50000 digits"
                                         data-validation-required-message="Minutes Volume is required"
 
                                         type="number" min="0" value="{{$amarOffer->minutes}}" id="minutes" class="form-control @error('minutes') is-invalid @enderror" placeholder="Enter volume...." name="minutes">
@@ -93,7 +93,7 @@
                                         <input
                                         required
                                         maxlength="50000" 
-                                        data-validation-maxlength-message = "SMS Volume can never be more then 50000 digits"
+                                        data-validation-maxlength-message = "SMS Volume can not be more then 50000 digits"
                                         data-validation-required-message="SMS Volume is required"
                                         type="number" min="0" value="{{$amarOffer->sms}}" id="sms" class="form-control @error('sms') is-invalid @enderror" placeholder="Enter volume...." name="sms">
                                         <div class="help-block">
@@ -113,7 +113,7 @@
                                         <input 
                                         required
                                         maxlength="50" 
-                                        data-validation-maxlength-message = "Price can never be more then 50 digits"
+                                        data-validation-maxlength-message = "Price can not be more then 50 digits"
                                         data-validation-required-message="Price is required"
                                         type="number" min="0" value="{{$amarOffer->price}}" id="price" class="form-control @error('price') is-invalid @enderror" placeholder="Price.." name="price">
                                         <div class="help-block">
@@ -133,7 +133,7 @@
                                         <input 
                                         required
                                         maxlength="50000" 
-                                        data-validation-maxlength-message = "Points can never be more then 50000 digits"
+                                        data-validation-maxlength-message = "Points can not be more then 50000 digits"
                                         data-validation-required-message="Points is required"
                                         type="number" min="0" value="{{$amarOffer->points}}" id="points" class="form-control @error('points') is-invalid @enderror" placeholder="Points.." name="points">
                                         <div class="help-block"></div>
@@ -188,7 +188,7 @@
                                         <input 
                                         required
                                         maxlength="50" 
-                                        data-validation-maxlength-message = "Validity can never be more then 50 digits"
+                                        data-validation-maxlength-message = "Validity can not be more then 50 digits"
                                         data-validation-required-message="Validity is required"
                                         type="number" min="0" value="{{$amarOffer->validity}}" id="validity" class="form-control @error('validity') is-invalid @enderror" placeholder="" name="validity">
                                         <div class="help-block">

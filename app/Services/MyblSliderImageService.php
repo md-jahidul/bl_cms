@@ -54,13 +54,13 @@ class MyblSliderImageService
         $image['sequence'] = $i;
         $this->save($image);
         
-        return new Response("Image has successfully been Added to slider");
+        return new Response("Image has been successfully added");
     }
 
     public function tableSortable($data)
     {
         $this->sliderImageRepository->sliderImageTableSort($data);
-        return new Response('update successfully');
+        return new Response('Sequence has been successfully update');
     }
 
     /**
@@ -78,7 +78,7 @@ class MyblSliderImageService
             $data['image_url'] = 'storage/'.$data['image_url']->store('Slider_image');
         }
         $sliderImage->update($data);
-        return new Response("Image has successfully been updated to slider");
+        return new Response("Image has has been successfully updated");
     }
 
 
@@ -93,7 +93,7 @@ class MyblSliderImageService
     {
         $sliderImage = $this->findOne($id);
         $sliderImage->delete();
-        return Response('Slider Image delete successfully');
+        return Response('Image has been successfully deleted');
     }
 
 }

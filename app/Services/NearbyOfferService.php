@@ -41,7 +41,7 @@ class NearbyOfferService
     {        
         $data['image'] = 'storage/'.$data['image']->store('NearbyOffer_image');
         $this->save($data);
-        return new Response("Near By Offer has successfully been created");
+        return new Response("Near By Offer has been successfully created");
     }
 
     /**
@@ -58,7 +58,7 @@ class NearbyOfferService
             $request['image'] = $nearByOffer->image;
         }
         $nearByOffer->update($request);
-        return Response('Near By Offer updated successfully !');
+        return Response('Near By Offer has been successfully updated');
     }
 
     /**
@@ -71,7 +71,7 @@ class NearbyOfferService
         $data = $this->findOne($id);
         unlink($data->image);
         $data->delete();
-        return Response('Offer deleted successfully !');
+        return Response('Near By Offer has been successfully deleted');
     }
 
 }

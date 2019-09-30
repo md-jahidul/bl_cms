@@ -27,7 +27,7 @@ class SmsOfferRequest extends FormRequest
             'title'=>'required|max:200|unique:sms_offers,title,'.$this->id,
             'volume'=>'required|numeric|min:1|max:999999999999999999',
             'validity'=>'required|numeric|min:1|max:999999999999999999',
-            'price'=>'required|max:200|numeric|min:1|max:999999999999999999',
+            'price'=>'required|numeric|min:1|max:999999999999999999',
             'offer_code'=>'required|unique:sms_offers,offer_code,'.$this->id,
             'points'=>'required|numeric|min:1|max:999999999999999999'
         ];

@@ -58,7 +58,7 @@ class ContextualCardController extends Controller
     public function store(ContextualCardRequest $request)
     {
         
-        session()->flash('success',$this->contextualCardService->storeContextualCard($request->all())->getContent());
+        session()->flash('message',$this->contextualCardService->storeContextualCard($request->all())->getContent());
         return redirect(route('contextualcard.index'));
     }
 

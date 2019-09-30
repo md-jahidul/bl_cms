@@ -54,7 +54,7 @@ class ShortCutController extends Controller
      */
     public function store(ShortCutStoreRequest $request)
     {
-        session()->flash('success',$this->shortCutService->storeShortCut($request->all())->getContent());
+        session()->flash('message',$this->shortCutService->storeShortCut($request->all())->getContent());
         return redirect(route('short_cuts.index'));
     }
 
