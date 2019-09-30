@@ -14,8 +14,8 @@ class PartnerOfferTableSeeder extends Seeder
     {
         $validityEn = ["Vaild till 8 March 2019", "Vaild till 10 April 2019", "Vaild till 29 May 2019"];
         $validityBn = ["8 ই মার্চ 2019 অবধি বৈধ", "10 এপ্রিল 2019 পর্যন্ত বৈধ", "29 মে 2019 অবধি বৈধ"];;
-        $offerEn = ["15","20","25"];
-        $offerBn = ["১৫","২০","২৫"];
+        $offerEn = ["Upto 15% Discount","Upto 20% Discount","Upto 25% Discount"];
+        $offerBn = ["১৫% ছাড় পর্যন্ত","২০% ছাড় পর্যন্ত","২৫% ছাড় পর্যন্ত"];
         $getOfferMsgEn = "Type 8497 send SMS to 1020";
         $getOfferMsgBn = "৮৪৯৭ টাইপ করুন ১০২০ নম্বরে এসএমএস পাঠান";
 
