@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
-    //
+    public function shortCodes()
+    {
+        return $this->hasMany(ShortCode::class);
+    }
 }

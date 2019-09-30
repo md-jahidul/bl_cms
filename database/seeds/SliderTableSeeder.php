@@ -21,7 +21,7 @@ class SliderTableSeeder extends Seeder
 
             $other_attributes = [
                 'sliding_speed' => 10,
-                'view_list_btn_text_en' => "View all" . ($slider == 'Digital Services') ? 'Digital Services' : 'Offers',
+                'view_list_btn_text_en' => "View all " . ( ($slider == 'Digital Services') ? 'Digital Services' : 'Offers' ),
                 'view_list_btn_text_bn' => "সমস্ত পরিষেবা দেখুন",
                 'view_list_url' =>  ($slider == 'Digital Services') ? '/view-all-digital-service' : '/priojon',
             ];

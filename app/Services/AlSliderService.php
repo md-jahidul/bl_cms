@@ -27,6 +27,16 @@ class AlSliderService
         $this->setActionRepository($alSliderRepository);
     }
 
+    public function allSingleSlider()
+    {
+       return $this->alSliderRepository->singleSlider();
+    }
+
+    public function allMultiSlider()
+    {
+        return $this->alSliderRepository->multiSlider();
+    }
+
     /**
      * Storing the slider resource
      * @return Response

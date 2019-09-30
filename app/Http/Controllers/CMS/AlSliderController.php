@@ -42,11 +42,19 @@ class AlSliderController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
 
-    public function index()
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function singleSlider()
     {
-        $sliders = $this->alSliderService->findAll();
+        $sliders = $this->alSliderService->allSingleSlider();
         return view('admin.slider.index', compact('sliders'));
+    }
 
+    public function multiSlider()
+    {
+        $sliders = $this->alSliderService->allMultiSlider();
+        return view('admin.slider.multi-slider', compact('sliders'));
     }
 
     /**
@@ -78,6 +86,8 @@ class AlSliderController extends Controller
     {
         $slider = $this->alSliderService->findOne($id);
         $other_attributes = $slider->other_attributes;
+
+//        return $slider;
         return view('admin.slider.edit', compact('slider', 'type', 'other_attributes'));
     }
 
@@ -88,9 +98,11 @@ class AlSliderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $sliderType = $request->slider_type;
+
         $response = $this->alSliderService->updateSlider($request->all(), $request->id);
         Session::flash('message', $response->getContent());
-        return redirect('/sliders');
+        return redirect("/$sliderType-sliders");
     }
 
     /**

@@ -17,8 +17,7 @@ class CreateShortCodesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('page_id');
             $table->string('component_type');                        // such as slider,recharge
-            $table->unsignedInteger('component_id')->nullable();     // such as slider_id 
-            $table->string('component_status')->default('enabled');        
+            $table->unsignedInteger('component_id')->nullable();     // such as slider_id
             $table->string('display_order')->default(0);
             $table->string('is_active')->default(1);
             $table->timestamps();
