@@ -34,11 +34,11 @@
                 <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
-                        <th width="">ID</th>
-                        <th>Title</th>
-                        <th width="300">Body</th>
-                        <th>Category</th>
-                        <th width="210">Action</th>
+                        <th width="10%">ID</th>
+                        <th width="15%">Title</th>
+                        <th width="35%">Body</th>
+                        <th width="10%">Category</th>
+                        <th width="30%">Action</th>
                     </tr>
                     </thead>
                     <tbody>
