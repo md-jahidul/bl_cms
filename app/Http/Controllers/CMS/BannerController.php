@@ -58,7 +58,7 @@ class BannerController extends Controller
      */
     public function store(BannerStoreRequest $request)
     {
-        session()->flash('success',$this->bannerService->storeBanner($request->all())->getContent());
+        session()->flash('message',$this->bannerService->storeBanner($request->all())->getContent());
         return redirect(route('banner.index'));
     }
 

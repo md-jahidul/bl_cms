@@ -40,7 +40,7 @@ class SmsOfferService
     public function storeSmsOffer($data)
     {
         $this->save($data);
-        return new Response("SMS offer has successfully been created");
+        return new Response("SMS Offer has been successfully created");
     }
 
     /**
@@ -52,7 +52,7 @@ class SmsOfferService
     {
         $data = $this->findOne($id);
         $data->update($request->all());
-        return Response('Internet Offer updated successfully !');
+        return Response('SMS Offer has been successfully updated');
     }
 
     /**
@@ -65,7 +65,7 @@ class SmsOfferService
         //return $id;
         $data = $this->findOne($id);
         $data->delete();
-        return Response('SMS Offer deleted successfully !');
+        return Response('SMS Offer has been successfully deleted');
     }
 
 }

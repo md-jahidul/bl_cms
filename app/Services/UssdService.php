@@ -40,7 +40,7 @@ class UssdService
     public function storeUssd($data)
     { 
         $this->save($data);
-        return new Response("USSD has successfully been created");
+        return new Response("USSD Code has been successfully created");
     }
 
     /**
@@ -52,7 +52,7 @@ class UssdService
     {
         $data = $this->findOne($id);
         $data->update($request->all());
-        return Response('USSD Code updated successfully !');
+        return Response('USSD Code has been successfully updated');
     }
 
     /**
@@ -64,7 +64,7 @@ class UssdService
     {
         $data = $this->findOne($id);
         $data->delete();
-        return Response('USSD Code deleted successfully !');
+        return Response('USSD Code has been successfully deleted');
     }
 
 }

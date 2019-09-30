@@ -31,7 +31,7 @@ class AmarOfferRequest extends FormRequest
             'validity' => 'required|numeric|min:0|max:500000',
             'price' => 'required|numeric|min:0|max:500000',
             'offer_code' => 'required|max:200|unique:amar_offers,offer_code,'.$this->id,
-            'tag' => 'required|max:200',
+            'tag' => 'max:200',
             'points' => 'required|numeric|min:0|max:500000'
         ];
     }

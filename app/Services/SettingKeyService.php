@@ -41,7 +41,7 @@ class SettingKeyService
     public function storeSettingKey($request)
     {
         $this->save($request);
-        return new Response("Setting has successfully been Stored");
+        return new Response("Setting Key has been successfully created");
     }
 
     /**
@@ -52,7 +52,7 @@ class SettingKeyService
     public function updateSettingKey($data, $id)
     {
         $sliderImage->update($data);
-        return new Response("Image has successfully been updated to slider");
+        return new Response("Setting Key has successfully been updated to slider");
     }
 
     /**
@@ -64,7 +64,7 @@ class SettingKeyService
     {
         
         $sliderImage->delete();
-        return Response('Slider Image deleted successfully !');
+        return Response('Setting Key has been successfully deleted');
     }
 
 }

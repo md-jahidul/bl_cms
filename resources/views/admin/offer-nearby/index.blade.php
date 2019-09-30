@@ -2,11 +2,11 @@
 @section('title', 'Neare By Offer')
 @section('card_name', 'Neare By Offer')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Neare By Offer list</li>
+    <li class="breadcrumb-item active">Neare By Offer List</li>
 @endsection
 @section('action')
     <a href="{{route('nearByOffer.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-       Create Near by offer 
+       Create Near By Offer 
     </a>
 @endsection
 @section('content')
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">Neare By Offer list</h1>
+                        <h1 class="card-title pl-1">Neare By Offer List</h1>
                     </div>
                 </div>
             </div>

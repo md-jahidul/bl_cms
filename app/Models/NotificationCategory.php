@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 
 
 class NotificationCategory extends Model
 {
+
+    use Sluggable;
 
     /**
      * The table associated with the model.
@@ -31,5 +34,20 @@ class NotificationCategory extends Model
      */
     public function notifications(){
         return $this->hasMany(Notification::class,'category_id','id');
+    }
+
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
     }
 }

@@ -44,7 +44,7 @@ class ShortCutService
         $shortCut['icon'] = 'storage/'.$shortCut['icon']->store('short_cuts_icon'); 
         $shortCut['component_identifier'] = strtolower(str_replace(" ","_",$shortCut['title']));
         $this->save($shortCut);
-        return new Response("Short Cut has successfully been Added ");
+        return new Response("Shortcut has been successfully created");
     }
 
     /**
@@ -64,7 +64,7 @@ class ShortCutService
         $request['component_identifier'] = strtolower(str_replace(" ","_",$request['title']));
         $shortCut->update($request);
         
-        return new Response("Short-cut has successfully been updated");
+        return new Response("Shortcut has been successfully updated");
     }
 
     /**
@@ -77,7 +77,7 @@ class ShortCutService
         $shortcut =$this->findOne($id);
         unlink($shortcut['icon']);
         $shortcut->delete();
-        return Response('Shortcut deleted successfully !');
+        return Response('Shortcut has been successfully deleted');
     }
 
 }

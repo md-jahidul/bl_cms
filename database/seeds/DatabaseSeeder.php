@@ -53,5 +53,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SettingKeysTableSeeder::class);
         $this->call(MyblSliderComponentTypesTableSeeder::class);
         $this->call(OfferFilterTypeTableSeeder::class);
+        $this->call(NotificationUserTableSeeder::class);
     }
 }

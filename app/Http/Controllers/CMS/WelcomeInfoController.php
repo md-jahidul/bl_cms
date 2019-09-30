@@ -54,7 +54,7 @@ class WelcomeInfoController extends Controller
      */
     public function store(WelcomeInfoRequest $request)
     {
-        session()->flash('status',$this->welcomeInfoService->storeWelcomeInfo($request->all())->getContent());
+        session()->flash('message',$this->welcomeInfoService->storeWelcomeInfo($request->all())->getContent());
         return redirect(route('welcomeInfo.index'));
     }
 

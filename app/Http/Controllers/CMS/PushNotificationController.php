@@ -35,6 +35,7 @@ class PushNotificationController extends Controller
         $response = PushNotificationService::sendNotification($notification);
 
 
+
         if(json_decode($response)->status == "SUCCESS"){
 
             session()->flash('success',"Notification has been sent successfully");

@@ -2,11 +2,11 @@
 @section('title', 'Amar Offer')
 @section('card_name', 'Amar Offer')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Amar Offer List</li>
+    <li class="breadcrumb-item active">Ussd Code Details</li>
 @endsection
 @section('action')
-    <a href="{{route('amarOffer.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create Amar Offer 
+    <a href="{{route('ussd.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        USSD Code List
     </a>
 @endsection
 @section('content')
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">Amar Offer List</h1>
+                        <h1 class="card-title pl-1">USSD Code "{{$ussd_code->title}}"</h1>
                     </div>
                 </div>
             </div>
@@ -26,40 +26,51 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Offer code</th>
-                            <th>Points</th>
-                            <th width="200">Action</th>
+                            
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($amarOffers as $amarOffer)
+                            
                             <tr>
-                                <td>{{$amarOffer->id}}</td>
-                                <td>{{$amarOffer->title}}</td>
-                                <td>{{$amarOffer->offer_code}}</td>
-                                <td>{{$amarOffer->points}}</td>
-                                <td>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <a role="button" href="{{route('amarOffer.show',$amarOffer->id)}}" class="btn btn-outline-info">
-                                                <i class="la la-info"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <a role="button" href="{{route('amarOffer.edit',$amarOffer->id)}}" class="btn btn-outline-success">
-                                                <i class="la la-pencil"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <button data-id="{{$amarOffer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                        </div>
-                                    </div>
-                                </td>
+                                <th colspan="1">Title</th>
+                                <td colspan="3">{{$ussd_code->title}}</td>
+                            </tr>
+                            <tr>
+                                <th colspan="1">Provider</th>
+                                <td colspan="3">{{$ussd_code->provider}}</td>
+                            </tr>
+                            
+                            <tr>
+                                <th colspan="1">Purpose</th>
+                                <td colspan="3">{{$ussd_code->purpose}}</td>
                             </tr>
 
-                        @endforeach
+                            <tr>
+                                <th colspan="1">Code</th>
+                                <td colspan="3">{{$ussd_code->code}}</td>
+                            </tr>
+                            
+                            <tr>
+                                <td colspan="4"> 
+                                    <div class="row">
+                                        <div class="col-8 text-danger font-weight-bold" style="padding-top:5px">
+                                            {{$ussd_code->offer_code}}
+                                        </div>
+                                        <div class="col-2">
+                                            <a  style="width:100%" role="button" href="{{route('ussd.edit',$ussd_code->id)}}" class="btn btn-sm btn-success">
+                                                Edit
+                                            </a>
+                                        </div>
+                                        <div class="col-2">
+                                            <button style="width:100%" data-id="{{$ussd_code->id}}" class="btn btn-sm btn-danger delete" onclick="">Delete</button>
+                                        </div>
+                                    </div>
+                                    
+                                </td>
+                                
+                            </tr>
+                            
+                                
                         </tbody>
                     </table>
 
@@ -104,7 +115,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('amarOffer/destroy') }}/"+id,
+                            url: "{{ url('ussd/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -114,7 +125,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('amarOffer/') }}"
+                                    window.location.href = "{{ url('ussd/') }}"
                                 }
                             }
                         })
@@ -129,7 +140,7 @@
                 buttons: [],
                 paging: true,
                 searching: true,
-                "pageLength": 10,
+                "pageLength": 5,
                 "bDestroy": true,
             });
         });

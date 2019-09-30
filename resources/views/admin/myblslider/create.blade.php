@@ -86,7 +86,7 @@
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success round px-2">
-                            <i class="la la-check-square-o"></i> Save
+                                <i class="la la-check-square-o"></i> Submit
                             </button>
                         </div>
                         </form>
