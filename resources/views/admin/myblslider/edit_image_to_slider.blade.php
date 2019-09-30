@@ -57,7 +57,7 @@
                                                 <div class="form-group col-12 mb-2 file-repeater">
                                                 
                                                     <div class="row mb-1">
-                                                        <div class="form-group col-md-6 mb-2">
+                                                        <div class="form-group col-md-12 mb-2">
                                                             <label for="title">Title: <small class="text-danger">*</small> </label>
                                                             <input 
                                                             required
@@ -83,7 +83,7 @@
                                                             <small class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
                                                             <div class="help-block"></div>
                                                         </div>
-                                                        <div class="form-group col-md-6 mb-2">
+                                                        {{-- <div class="form-group col-md-6 mb-2">
                                                             <label for="btn">Button URL: </label>
                                                             <input id="btn" 
                                                             data-validation-regex-regex="((http[s]?|ftp[s]?):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*"
@@ -106,14 +106,14 @@
                                                         <div class="form-group col-12 mb-2">
                                                             <label for="description">Description: </label>
                                                             <textarea id="description" rows="5" class="form-control" name="description" placeholder="About Slider..">{{$image->description}}</textarea>
-                                                        </div>
+                                                        </div> --}}
                                                         
-                                                        <div class="col-6">
+                                                        {{-- <div class="col-6">
                                                             <div class="form-group">
                                                                 <label for="sequence">Sequence:</label>
                                                                 <input disabled value="{{$image->sequence}}" id="sequence" type="number" class="form-control " name="sequence">
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
 
                                                         <div class="col-6">
                                                             <div class="form-group">

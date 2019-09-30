@@ -2,11 +2,11 @@
 @section('title', 'Amar Offer')
 @section('card_name', 'Amar Offer')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Amar Offer List</li>
+    <li class="breadcrumb-item active">Amar Offer details</li>
 @endsection
 @section('action')
-    <a href="{{route('amarOffer.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create Amar Offer 
+    <a href="{{route('amarOffer.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Amar Offer List
     </a>
 @endsection
 @section('content')
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">Amar Offer List</h1>
+                        <h1 class="card-title pl-1">Amar Offer "{{$amarOffer->title}}"</h1>
                     </div>
                 </div>
             </div>
@@ -26,40 +26,57 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Offer code</th>
-                            <th>Points</th>
-                            <th width="200">Action</th>
+                            
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($amarOffers as $amarOffer)
+                            
                             <tr>
-                                <td>{{$amarOffer->id}}</td>
+                                <th>title</th>
                                 <td>{{$amarOffer->title}}</td>
-                                <td>{{$amarOffer->offer_code}}</td>
+                                <th>tag</th>
+                                <td>{{$amarOffer->tag}}</td>
+                            </tr>
+                            <tr>
+                                <th>minutes</th>
+                                <td>{{$amarOffer->minutes}}</td>
+                                <th>sms</th>
+                                <td>{{$amarOffer->sms}}</td>
+                            </tr>
+                            <tr>
+                                <th>validity</th>
+                                <td>{{$amarOffer->validity}}</td>
+                                <th>price</th>
+                                <td>{{$amarOffer->price}}</td>
+                            </tr>
+                            <tr>
+                                <th>points</th>
                                 <td>{{$amarOffer->points}}</td>
-                                <td>
+                                <th>internet</th>
+                                <td>{{$amarOffer->internet}}</td>
+                            </tr>
+                            <tr>
+                                <th style="padding-top:12px">offer_code</th>
+                                <td colspan="3"> 
                                     <div class="row">
-                                        <div class="col-md-3">
-                                            <a role="button" href="{{route('amarOffer.show',$amarOffer->id)}}" class="btn btn-outline-info">
-                                                <i class="la la-info"></i>
-                                            </a>
+                                        <div class="col-8 text-danger font-weight-bold" style="padding-top:5px">
+                                            {{$amarOffer->offer_code}}
                                         </div>
-                                        <div class="col-md-3">
-                                            <a role="button" href="{{route('amarOffer.edit',$amarOffer->id)}}" class="btn btn-outline-success">
+                                        <div class="col-2">
+                                            <a  style="width:100%" role="button" href="{{route('amarOffer.edit',$amarOffer->id)}}" class="btn btn-sm btn-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-3">
-                                            <button data-id="{{$amarOffer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                        <div class="col-2">
+                                            <button  style="width:100%" data-id="{{$amarOffer->id}}" class="btn btn-sm btn-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>
+                                    
                                 </td>
+                                
                             </tr>
-
-                        @endforeach
+                            
+                                
                         </tbody>
                     </table>
 
@@ -129,7 +146,7 @@
                 buttons: [],
                 paging: true,
                 searching: true,
-                "pageLength": 10,
+                "pageLength": 5,
                 "bDestroy": true,
             });
         });

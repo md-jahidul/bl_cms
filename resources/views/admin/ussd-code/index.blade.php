@@ -44,14 +44,20 @@
                                 <td>{{$ussd_code->provider}}</td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-2 mr-1">
+
+                                        {{-- <div class="col-md-3">
+                                            <a role="button" href="{{ route('ussd.show',$ussd_code->id)}}" class="btn btn-outline-info delete" onclick=""><i class="la la-info"></i></a>
+                                        </div> --}}
+
+                                        <div class="col-md-3">
                                             <a role="button" href="{{ route('ussd.edit',$ussd_code->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <button data-id="{{$ussd_code->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
+                                        
                                     </div>
                                 </td>
                             </tr>

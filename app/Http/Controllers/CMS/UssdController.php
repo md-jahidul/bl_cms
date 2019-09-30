@@ -68,7 +68,8 @@ class UssdController extends Controller
      */
     public function show($id)
     {
-        //
+        $ussd = $this->ussdService->findOne($id);
+        return view('admin.ussd-code.show')->with('ussd_code',$ussd);
     }
 
     /**
