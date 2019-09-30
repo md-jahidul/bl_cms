@@ -12,7 +12,7 @@ class SliderComponentTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        $slider_types = ['Hero','Digital Services','Testimonial', 'Explore Devices', 'Home', 'Dashboard'];
+        $slider_types = ['Hero','Digital Services','Testimonial', 'Partner Offer', 'Explore Devices', 'Home', 'Dashboard'];
 
         $slider_component_types = [];
 
