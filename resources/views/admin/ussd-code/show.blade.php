@@ -2,11 +2,11 @@
 @section('title', 'Amar Offer')
 @section('card_name', 'Amar Offer')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Amar Offer details</li>
+    <li class="breadcrumb-item active">Ussd Code Details</li>
 @endsection
 @section('action')
-    <a href="{{route('amarOffer.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Amar Offer List
+    <a href="{{route('ussd.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        USSD Code List
     </a>
 @endsection
 @section('content')
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">Amar Offer "{{$amarOffer->title}}"</h1>
+                        <h1 class="card-title pl-1">USSD Code "{{$ussd_code->title}}"</h1>
                     </div>
                 </div>
             </div>
@@ -32,43 +32,37 @@
                         <tbody>
                             
                             <tr>
-                                <th>title</th>
-                                <td>{{$amarOffer->title}}</td>
-                                <th>tag</th>
-                                <td>{{$amarOffer->tag}}</td>
+                                <th colspan="1">Title</th>
+                                <td colspan="3">{{$ussd_code->title}}</td>
                             </tr>
                             <tr>
-                                <th>minutes</th>
-                                <td>{{$amarOffer->minutes}}</td>
-                                <th>sms</th>
-                                <td>{{$amarOffer->sms}}</td>
+                                <th colspan="1">Provider</th>
+                                <td colspan="3">{{$ussd_code->provider}}</td>
                             </tr>
+                            
                             <tr>
-                                <th>validity</th>
-                                <td>{{$amarOffer->validity}}</td>
-                                <th>price</th>
-                                <td>{{$amarOffer->price}}</td>
+                                <th colspan="1">Purpose</th>
+                                <td colspan="3">{{$ussd_code->purpose}}</td>
                             </tr>
+
                             <tr>
-                                <th>points</th>
-                                <td>{{$amarOffer->points}}</td>
-                                <th>internet</th>
-                                <td>{{$amarOffer->internet}}</td>
+                                <th colspan="1">Code</th>
+                                <td colspan="3">{{$ussd_code->code}}</td>
                             </tr>
+                            
                             <tr>
-                                <th style="padding-top:12px">offer_code</th>
-                                <td colspan="3"> 
+                                <td colspan="4"> 
                                     <div class="row">
                                         <div class="col-8 text-danger font-weight-bold" style="padding-top:5px">
-                                            {{$amarOffer->offer_code}}
+                                            {{$ussd_code->offer_code}}
                                         </div>
                                         <div class="col-2">
-                                            <a  style="width:100%" role="button" href="{{route('amarOffer.edit',$amarOffer->id)}}" class="btn btn-sm btn-success">
-                                                <i class="la la-pencil"></i>
+                                            <a  style="width:100%" role="button" href="{{route('ussd.edit',$ussd_code->id)}}" class="btn btn-sm btn-success">
+                                                Edit
                                             </a>
                                         </div>
                                         <div class="col-2">
-                                            <button  style="width:100%" data-id="{{$amarOffer->id}}" class="btn btn-sm btn-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                            <button style="width:100%" data-id="{{$ussd_code->id}}" class="btn btn-sm btn-danger delete" onclick="">Delete</button>
                                         </div>
                                     </div>
                                     
@@ -121,7 +115,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('amarOffer/destroy') }}/"+id,
+                            url: "{{ url('ussd/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -131,7 +125,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('amarOffer/') }}"
+                                    window.location.href = "{{ url('ussd/') }}"
                                 }
                             }
                         })

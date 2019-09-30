@@ -29,8 +29,6 @@
                             <th width=''>ID</th>
                             <th width=''>Title</th>
                             <th width=''>Code</th>
-                            <th width=''>Purpose</th>
-                            <th width=''>Provider</th>
                             <th  width='200'>Action</th>
                         </tr>
                         </thead>
@@ -40,14 +38,12 @@
                                 <td>{{$ussd_code->id}}</td>
                                 <td>{{$ussd_code->title}}</td>
                                 <td>{{$ussd_code->code}}</td>
-                                <td>{{$ussd_code->purpose}}</td>
-                                <td>{{$ussd_code->provider}}</td>
                                 <td>
                                     <div class="row">
 
-                                        {{-- <div class="col-md-3">
-                                            <a role="button" href="{{ route('ussd.show',$ussd_code->id)}}" class="btn btn-outline-info delete" onclick=""><i class="la la-info"></i></a>
-                                        </div> --}}
+                                        <div class="col-md-3">
+                                            <a role="button" href="{{ route('ussd.show',$ussd_code->id)}}" class="btn btn-outline-info" onclick=""><i class="la la-info"></i></a>
+                                        </div>
 
                                         <div class="col-md-3">
                                             <a role="button" href="{{ route('ussd.edit',$ussd_code->id)}}" class="btn btn-outline-success">
