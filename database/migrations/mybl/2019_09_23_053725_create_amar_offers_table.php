@@ -22,7 +22,7 @@ class CreateAmarOffersTable extends Migration
             $table->biginteger('validity');
             $table->biginteger('price');
             $table->text('offer_code');
-            $table->text('tag');
+            $table->text('tag')->nullable();
             $table->biginteger('points');
             $table->timestamps();
         });
