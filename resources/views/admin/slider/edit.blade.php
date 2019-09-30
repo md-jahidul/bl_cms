@@ -19,15 +19,28 @@
                             @csrf
                             {{method_field('PUT')}}
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="title" class="required">Title</label>
-                                    <input type="text" name="title" class="form-control" placeholder="Enter title"
-                                           value="{{ $slider->title_en }}" required data-validation-required-message="Enter slider title" readonly>
+                                <input type="hidden" name="slider_type" value="{{ $slider->slider_type }}">
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="title_en" class="required">Title (English)</label>
+                                    <input type="text" name="title_en"  class="form-control" placeholder="Enter title (english)"
+                                           value="{{ $slider->title_en }}" required data-validation-required-message="Enter slider title (english)">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('title'))
-                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @if ($errors->has('title_en'))
+                                        <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn" class="required">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title (english)"
+                                           value="{{ $slider->title_bn }}" required data-validation-required-message="Enter slider title (english)">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
+
+
 
                                 @include('layouts.partials.slider-other-attr.' . $type )
 

@@ -1,47 +1,95 @@
 @extends('layouts.admin')
-@section('title', 'Slider Edit')
-@section('card_name', 'Slider Edit')
+@section('title', 'Slider Image List')
+@section('card_name', 'Slider Image List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> {{$slider->title_en}}</li>
+    <li class="breadcrumb-item active"><strong>Slider Image List</strong></li>
 @endsection
 @section('action')
-    <a href="{{ url('sliders') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+{{--    <a href="{{ url("slider/$sliderId/$type/image/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
+{{--        Add Slider Image--}}
+{{--    </a>--}}
 @endsection
 @section('content')
     <section>
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <div class="card-body card-dashboard">
-                        <form role="form" action="{{ url("sliders/$slider->id/update") }}" method="POST" novalidate>
-                            @csrf
-                            {{method_field('PUT')}}
-                            <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="title" class="required">Title</label>
-                                    <input type="text" name="title" class="form-control" placeholder="Enter title"
-                                           value="{{ $slider->title_en }}" required data-validation-required-message="Enter slider title" readonly>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('title'))
-                                        <div class="help-block">  {{ $errors->first('title') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-actions col-md-12 ">
-                                    <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary"><i
-                                                    class="la la-check-square-o"></i> SAVE
-                                        </button>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <input type="hidden" name="id" value="{{ $slider->id }}"/>
-                        </form>
-
-                    </div>
+                    <h4 class="pb-1"><strong>{{ ucwords($page." ". "Components") }}</strong></h4>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <td width="3%">#</td>
+                            <th width="25%">Component Type</th>
+                            <th>Component Status</th>
+                            <th class="text-right">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($shortCodes as $index=>$shortCode)
+                                <tr data-index="{{ $shortCode->id }}" data-position="{{ $shortCode->display_order }}">
+                                    <td width="3%">{{ $index + 1 }}</td>
+                                    <td>{{ $shortCode->component_type }} {!! $shortCode->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+                                    <td>{{ $shortCode->alt_text }} </td>
+                                    <td class="action" width="8%">
+                                        @if($shortCode->is_active == 1)
+                                            <a href="{{ route("update-component-status", [ $shortCode->page_id, $shortCode->id ]) }}" class="btn btn-success border-0"> Enable</a>
+                                        @else
+                                            <a href="{{ route("update-component-status", [ $shortCode->page_id, $shortCode->id ]) }}" role="button" class="btn btn-danger border-0"> Disable</a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+
     </section>
+
 @stop
+
+@push('page-css')
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+    <style>
+        #sortable tr td{
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
+        }
+    </style>
+@endpush
+
+@push('page-js')
+    <script>
+        $(document).ready(function() {
+            $('.component-active').on('change', function() {
+                alert('hi')
+                if(this.checked) {
+                    alert('active');
+                }else{
+                    alert('inactive')
+                }
+            });
+
+            // $.ajax({
+            //     methods: "POST",
+            //     url: auto_save_url,
+            //     data: {
+            //         update: 1,
+            //         position: positions
+            //     },
+            //     success:function(data){ console.log(data) },
+            //     error : function() {
+            //         alert('Some problems..');
+            //     }
+            // });
+        });
+
+        var auto_save_url = "{{ url('slider-image-sortable') }}";
+    </script>
+@endpush
+
+
+
+
+

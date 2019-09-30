@@ -54,7 +54,8 @@ Route::get('config','CMS\ConfigController@index');
 Route::put('config/update','CMS\ConfigController@update');
 
 // SLIDERS PAGES ====================================
-Route::get('sliders', 'CMS\AlSliderController@index');
+Route::get('single-sliders', 'CMS\AlSliderController@singleSlider');
+Route::get('multiple-sliders', 'CMS\AlSliderController@multiSlider');
 Route::get('sliders/{id}/{type}/edit', 'CMS\AlSliderController@edit');
 Route::put('sliders/{id}/update', 'CMS\AlSliderController@update');
 Route::get('slider/{slider_id}/{type}', 'CMS\AlSliderImageController@index')->name('slider_images');
@@ -85,6 +86,8 @@ Route::get('fixed-pages', 'CMS\FixedPageController@index');
 Route::get('fixed-page/{id}/components', 'CMS\FixedPageController@components')->name('fixed-page-components');
 Route::get('fixed-pages/{id}/metatags', 'CMS\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
 Route::post('fixed-pages/{id}/metatags', 'CMS\FixedPageController@metaTagsUpdate');
+Route::get('fixed-pages/{pageId}/component/{componentId}', 'CMS\FixedPageController@fixedPageStatusUpdate')->name('update-component-status');
+
 
 
 

@@ -1,4 +1,7 @@
 (function(){
+
+
+
         var confirmPopupParams = {
             title: 'Are you sure?',
             text: "You won't be able to revert this!",

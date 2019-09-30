@@ -15,15 +15,26 @@
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('sliders.store') }}" method="POST" novalidate>
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="title" class="required">Title</label>
-                                    <input type="text" name="title"  class="form-control" placeholder="Enter title"
-                                           value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Enter slider title">
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="title_en" class="required">Title (English)</label>
+                                    <input type="text" name="title_en"  class="form-control" placeholder="Enter title (english)"
+                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Enter slider title (english)">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('title'))
-                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @if ($errors->has('title_en'))
+                                        <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn" class="required">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title (english)"
+                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Enter slider title (english)">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('slider_type_id') ? ' error' : '' }}">
                                     <label class="required">Slider Type</label>
                                     <select class="form-control error" name="slider_type_id" data-validation-required-message="Select slider type">
