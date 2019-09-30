@@ -14,18 +14,16 @@ class SliderTableSeeder extends Seeder
     public function run()
     {
         // $sliders = ['Hero','Explore Devices','Digital Services','Testimonial'];
-        $sliders = ['Hero', 'Digital Services', 'Testimonial'];
-        $slidersBn = ['হিরো', 'ডিজিটাল পরিষেবা', 'প্রশংসাপত্র'];
+        $sliders = ['Hero', 'Digital Services', 'Testimonial', 'Lifestyle & benefits'];
+        $slidersBn = ['হিরো', 'ডিজিটাল পরিষেবা', 'প্রশংসাপত্র', 'লাইফস্টাইল এবং বেনিফিট'];
 
         foreach ($sliders as $key => $slider){
 
             $other_attributes = [
                 'sliding_speed' => 10,
-                'description_en' => 'Description of ' . $slider,
-                'description_bn' => 'Description of ' . $slider,
-                'view_list_btn_text_en' => "View all $slider",
+                'view_list_btn_text_en' => "View all" . ($slider == 'Digital Services') ? 'Digital Services' : 'Offers',
                 'view_list_btn_text_bn' => "সমস্ত পরিষেবা দেখুন",
-                'view_list_url' => "/view-all-digital-service",
+                'view_list_url' =>  ($slider == 'Digital Services') ? '/view-all-digital-service' : '/priojon',
             ];
 
             $component_id = $key + 1;
@@ -35,7 +33,8 @@ class SliderTableSeeder extends Seeder
                 'title_bn' =>  $slidersBn[$key],
                 'component_id' => $component_id,
                 'short_code' => '[slider_'. $component_id .']',
-                'other_attributes' => ($slider == 'Digital Services') ? $other_attributes : ['sliding_speed' => 10]
+                'slider_type' => ($slider == 'Lifestyle & benefits') ? 'multiple' : 'single',
+                'other_attributes' => ($slider == 'Digital Services' || $slider == 'Lifestyle & benefits') ? $other_attributes : ['sliding_speed' => 10]
             ]);
         }
     }

@@ -14,7 +14,7 @@ class ShortCodesTableSeeder extends Seeder
     {
         $homePageComponentList = [
             [
-                'component_type' => 'slider',
+                'component_type' => 'slider_single',
                 'component_id'   =>  1
             ],
             [
@@ -26,15 +26,15 @@ class ShortCodesTableSeeder extends Seeder
                 'component_id'   =>  null
             ],
             [
-                'component_type' => 'slider',
+                'component_type' => 'slider_single',
                 'component_id'   =>  2
             ],
             [
-                'component_type' => 'partner_offers',
+                'component_type' => 'slider_multiple',
                 'component_id'   =>  null
             ],
             [
-                'component_type' => 'slider',
+                'component_type' => 'slider_single',
                 'component_id'   =>  3
             ]
         ];
