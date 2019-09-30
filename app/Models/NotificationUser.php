@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ShortcutUser extends Model
+
+class NotificationUser extends Model
 {
+
     /**
-     * The attributes that are mass assignable.
+     * The table associated with the model.
      *
-     * @var array
+     * @var string
      */
-    protected $table = 'shortcut_user';
+    protected $table = 'notification_user';
+
 
 
     /**
@@ -21,8 +24,7 @@ class ShortcutUser extends Model
      */
     protected $fillable = [
         'user_id',
-        'shortcut_id',
-        'serial'
+        'notification_id',
     ];
 
 

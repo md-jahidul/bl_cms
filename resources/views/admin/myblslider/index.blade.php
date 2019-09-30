@@ -19,23 +19,23 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width="100">ID</th>
-                            <th>Tittle</th>
-                            <th>Slider Component Type</th>
-                            <th width="300">Action</th>
+                            <th width="10%">ID</th>
+                            <th width="40%">Tittle</th>
+                            <th width="20%">Slider Component Type</th>
+                            <th width="30%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
                             @foreach ($sliders as $slider)
                                 <tr>
-                                    <td>{{$slider->id}}</td>
-                                    <td>
+                                    <td width="10%">{{$slider->id}}</td>
+                                    <td width="40%">
                                         {{$slider->title}}
                                         <span class="badge badge-default badge-pill bg-primary float-right">{{$slider->sliderImages->count()}}</span>
 
                                     </td>
-                                    <td>{{$slider->SliderComponentTypes->name}}</td>
-                                    <td>
+                                    <td width="20%">{{$slider->SliderComponentTypes->name}}</td>
+                                    <td width="30%">
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('myblslider.edit',$slider->id)}}" class="btn-pancil btn btn-outline-success" >

@@ -53,7 +53,7 @@ class SettingService
         }else{
             $this->save($request);
         }
-        return new Response("Satting has been successfully created");
+        return new Response("Setting has been successfully created");
     }
 
     /**
@@ -65,7 +65,7 @@ class SettingService
     {
         $setting = $this->findOne($id);
         $setting->update($data);
-        return new Response("Satting has been successfully updated");
+        return new Response("Setting has been successfully updated");
     }
 
     /**
@@ -77,7 +77,7 @@ class SettingService
     {
         $setting = $this->findOne($id);
         $setting->delete();
-        return Response('Satting has been successfully deleted');
+        return Response('Setting has been successfully deleted');
     }
 
 }

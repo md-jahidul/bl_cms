@@ -26,31 +26,31 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width=''>ID</th>
-                            <th width=''>Title</th>
-                            <th width=''>Code</th>
-                            <th  width='200'>Action</th>
+                            <th width='10%'>ID</th>
+                            <th width='30%'>Title</th>
+                            <th width='30%'>Code</th>
+                            <th width='30%'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($ussd_cods as $ussd_code)
                             <tr>
-                                <td>{{$ussd_code->id}}</td>
-                                <td>{{$ussd_code->title}}</td>
-                                <td>{{$ussd_code->code}}</td>
-                                <td>
+                                <td width='10%'>{{$ussd_code->id}}</td>
+                                <td width='30%'>{{$ussd_code->title}}</td>
+                                <td width='30%'>{{$ussd_code->code}}</td>
+                                <td width='30%'>
                                     <div class="row">
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <a role="button" href="{{ route('ussd.show',$ussd_code->id)}}" class="btn btn-outline-info" onclick=""><i class="la la-info"></i></a>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <a role="button" href="{{ route('ussd.edit',$ussd_code->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <button data-id="{{$ussd_code->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                         

@@ -30,32 +30,31 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width=''>Drag</th>
-                            <th width=''>Title</th>
-                            <th width=''>Redirect Link</th>
-                            <th width=''>Sequence</th>
-                            <th width='80'>Icon</th>
-                            <th  width='80'>Action</th>
+                            <th width='10%'>Drag</th>
+                            <th width='20%'>Title</th>
+                            <th width='15%'>Redirect Link</th>
+                            <th width='10%'>Sequence</th>
+                            <th width='15%'>Icon</th>
+                            <th width='30%'>Action</th>
                         </tr>
                         </thead>
                         <tbody id="list">
                         @foreach ($helpCenters as $helpCenter)
 
                             <tr style="cursor:all-scroll" data-position = "{{$helpCenter->sequence}}" data-index="{{$helpCenter->id}}">
-                                <td><i class="icon-cursor-move icons"></i></td>
-                                {{-- <td>{{$helpCenter->id}}</td> --}}
-                                <td>{{$helpCenter->title}}</td>
-                                <td>{{$helpCenter->redirect_link}}</td>
-                                <td>{{$helpCenter->sequence}}</td>
-                                <td><img src="{{asset($helpCenter->icon)}}" style="height:50px;width:100px" alt=""></td>
-                                <td>
+                                <td width='10%'><i class="icon-cursor-move icons"></i></td>
+                                <td width='20%'>{{$helpCenter->title}}</td>
+                                <td width='15%'>{{$helpCenter->redirect_link}}</td>
+                                <td width='10%'>{{$helpCenter->sequence}}</td>
+                                <td width='15%'><img src="{{asset($helpCenter->icon)}}" style="height:50px;width:100px" alt=""></td>
+                                <td width='30%'>
                                     <div class="row">
-                                        <div class="col-md-4 mr-1">
+                                        <div class="col-md-2 mr-1">
                                             <a role="button" href="{{ route('helpCenter.edit',$helpCenter->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-2">
                                             <button data-id="{{$helpCenter->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

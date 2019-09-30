@@ -257,7 +257,6 @@
                         console.log('no');
                         msg.innerHTML = "<b> Image aspect ratio must be in 16:9(change the image to enable the submit button) </b>";
                         document.getElementById("addImagesubmit").disabled = true;
-
                 } } );
         };
     </script>

@@ -26,26 +26,26 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width=''>ID</th>
-                            <th width=''>Title</th>
-                            <th width=''>Description</th>
-                            <th width=''>Image</th>
-                            <th  width='200'>Action</th>
+                            <th width='10%'>ID</th>
+                            <th width='20%'>Title</th>
+                            <th width='30%'>Description</th>
+                            <th width='10%'>Image</th>
+                            <th width='30%'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($contextualCards as $contextualCard)
                             <tr>
-                                <td>{{$contextualCard->id}}</td>
-                                <td>{{$contextualCard->title}}</td>
-                                <td>{{$contextualCard->description}}</td>
-                                <td><img style="height:50px;width:100px" src="{{asset($contextualCard->image_url)}}" alt="" srcset=""></td>
-                                <td>
+                                <td width='10%' >{{$contextualCard->id}}</td>
+                                <td width='20%' >{{$contextualCard->title}}</td>
+                                <td width='30%' >{{$contextualCard->description}}</td>
+                                <td width='10%' ><img style="height:50px;width:100px" src="{{asset($contextualCard->image_url)}}" alt="" srcset=""></td>
+                                <td width='30%' >
                                     <div class="row">
                                         <div class="col-md-2">
                                             <a role="button" href="{{route('contextualcard.show',$contextualCard->id)}}" class="btn btn-outline-info"><i class="la la-info"></i></a>
                                         </div>
-                                        <div class="col-md-2 mr-1 ml-1">
+                                        <div class="col-md-2">
                                             <a role="button" href="{{route('contextualcard.edit',$contextualCard->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>

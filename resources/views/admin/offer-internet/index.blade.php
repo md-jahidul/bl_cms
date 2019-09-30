@@ -26,34 +26,34 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width=''>ID</th>
-                            <th width=''>Title</th>
-                            <th width=''>Volume</th>
-                            <th width=''>Validity</th>
-                            <th width=''>Price</th>
-                            <th width=''>Offer Code</th>
-                            <th width=''>Points</th>
-                            <th  width='100'>Action</th>
+                            <th width='5%'>ID</th>
+                            <th width='20%'>Title</th>
+                            <th width='10%'>Volume</th>
+                            <th width='10%'>Validity</th>
+                            <th width='10%'>Price</th>
+                            <th width='15%'>Offer Code</th>
+                            <th width='10%'>Points</th>
+                            <th width='20%'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($internet_offers as $internet_offer)
                             <tr>
-                                <td>{{$internet_offer->id}}</td>
-                                <td>{{$internet_offer->title}}</td>
-                                <td>{{$internet_offer->volume}}</td>
-                                <td>{{$internet_offer->validity}}</td>
-                                <td>{{$internet_offer->price}}</td>
-                                <td>{{$internet_offer->offer_code}}</td>
-                                <td>{{$internet_offer->points}}</td>
-                                <td>
+                                <td width='5%'>{{$internet_offer->id}}</td>
+                                <td width='20%'>{{$internet_offer->title}}</td>
+                                <td width='10%'>{{$internet_offer->volume}}</td>
+                                <td width='10%'>{{$internet_offer->validity}}</td>
+                                <td width='10%'>{{$internet_offer->price}}</td>
+                                <td width='15%'>{{$internet_offer->offer_code}}</td>
+                                <td width='10%'>{{$internet_offer->points}}</td>
+                                <td width='20%'>
                                     <div class="row">
-                                        <div class="col-md-4 mr-1">
+                                        <div class="col-md-3">
                                             <a role="button" href="{{route('internetOffer.edit',$internet_offer->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <button data-id="{{$internet_offer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

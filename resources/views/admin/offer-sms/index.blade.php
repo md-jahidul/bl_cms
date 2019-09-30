@@ -26,34 +26,34 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Volume</th>
-                            <th>Validity</th>
-                            <th>Price</th>
-                            <th>Offer Code</th>
-                            <th>Points</th>
-                            <th width="100">Action</th>
+                            <th width='5%'>ID</th>
+                            <th width='20%'>Title</th>
+                            <th width='10%'>Volume</th>
+                            <th width='10%'>Validity</th>
+                            <th width='10%'>Price</th>
+                            <th width='15%'>Offer Code</th>
+                            <th width='10%'>Points</th>
+                            <th width='20%'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($sms_offers as $sms_offer)
                             <tr>
-                                <td>{{$sms_offer->id}}</td>
-                                <td>{{$sms_offer->title}}</td>
-                                <td>{{$sms_offer->volume}}</td>
-                                <td>{{$sms_offer->validity}}</td>
-                                <td>{{$sms_offer->price}}</td>
-                                <td>{{$sms_offer->offer_code}}</td>
-                                <td>{{$sms_offer->points}}</td>
-                                <td>
+                                <td width='5%'>{{$sms_offer->id}}</td>
+                                <td width='20%'>{{$sms_offer->title}}</td>
+                                <td width='10%'>{{$sms_offer->volume}}</td>
+                                <td width='10%'>{{$sms_offer->validity}}</td>
+                                <td width='10%'>{{$sms_offer->price}}</td>
+                                <td width='15%'>{{$sms_offer->offer_code}}</td>
+                                <td width='10%'>{{$sms_offer->points}}</td>
+                                <td width='20%'>
                                     <div class="row">
-                                        <div class="col-md-4 mr-1">
+                                        <div class="col-md-3">
                                             <a role="button" href="{{route('smsOffer.edit',$sms_offer->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <button data-id="{{$sms_offer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>
