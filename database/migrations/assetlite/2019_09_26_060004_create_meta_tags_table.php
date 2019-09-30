@@ -17,7 +17,7 @@ class CreateMetaTagsTable extends Migration
             $table->bigIncrements('id');           
             $table->string('title');
             $table->string('keywords');
-            $table->string('description');           
+            $table->string('description')->nullable();           
             $table->unsignedInteger('page_id');
             $table->timestamps();
         });

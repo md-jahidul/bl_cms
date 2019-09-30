@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Slider Edit')
-@section('card_name', 'Slider Edit')
+@section('title', 'Metatag Edit')
+@section('card_name', 'Metatag Edit')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> {{$metatags->title_en}}</li>
+    {{-- <li class="breadcrumb-item active"> {{$metatags->title}}</li> --}}
 @endsection
 @section('action')
     <a href="{{ url('sliders') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
@@ -20,7 +20,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
                                     <label for="title" class="required">Title</label>
                                     <input type="text" name="title" class="form-control" placeholder="Enter title"
-                                           value="{{ $metatags->title }}" required data-validation-required-message="Enter slider title" readonly>
+                                           value="{{ !empty($metatags) ? $metatags->title : '' }}" required data-validation-required-message="Enter slider title" readonly>
                                     <div class="help-block"></div>
                                     @if ($errors->has('title'))
                                         <div class="help-block">  {{ $errors->first('title') }}</div>
