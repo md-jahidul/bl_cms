@@ -19,6 +19,8 @@ class CreateNotificationsTable extends Migration
             $table->string('title')->nullable();
             $table->text('body')->nullable();
             $table->string('status')->default('INPROGRESS');
+            $table->dateTime('starts_at')->nullable();
+            $table->dateTime('expires_at')->nullable();
             $table->foreign('category_id')->references('id')->on('notifications_category')->onDelete('cascade');
             $table->timestamps();
         });
