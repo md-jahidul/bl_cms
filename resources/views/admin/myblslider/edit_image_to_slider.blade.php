@@ -162,7 +162,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-2">
-                                                            <button type="submit" style="width:100%" id="submitForm" class=" btn btn-success">Save Info</button>
+                                                            <button type="submit" style="width:100%" id="submitForm" class=" btn btn-success">Submit</button>
                                                         </div>
                                                         </form>
                                                         <div class="col-2">

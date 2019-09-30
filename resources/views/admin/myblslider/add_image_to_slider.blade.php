@@ -125,7 +125,9 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <button type="submit" style="width:100%" id="submitForm" class=" btn btn-success">Save Info</button>
+                                    <button type="submit" class="btn btn-success round px-2">
+                                        <i class="la la-check-square-o"></i> Submit
+                                    </button>
                                 </div>
                                 </form>
                             
