@@ -26,33 +26,33 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Offer code</th>
-                            <th>Points</th>
-                            <th width="200">Action</th>
+                            <th width="10%">ID</th>
+                            <th width="30%">Title</th>
+                            <th width="20%">Offer code</th>
+                            <th width="10%">Points</th>
+                            <th width="30%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($amarOffers as $amarOffer)
                             <tr>
-                                <td>{{$amarOffer->id}}</td>
-                                <td>{{$amarOffer->title}}</td>
-                                <td>{{$amarOffer->offer_code}}</td>
-                                <td>{{$amarOffer->points}}</td>
-                                <td>
+                                <td width="10%">{{$amarOffer->id}}</td>
+                                <td width="30%">{{$amarOffer->title}}</td>
+                                <td width="20%">{{$amarOffer->offer_code}}</td>
+                                <td width="10%">{{$amarOffer->points}}</td>
+                                <td width="30%">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <a role="button" href="{{route('amarOffer.show',$amarOffer->id)}}" class="btn btn-outline-info">
                                                 <i class="la la-info"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <a role="button" href="{{route('amarOffer.edit',$amarOffer->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <button data-id="{{$amarOffer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

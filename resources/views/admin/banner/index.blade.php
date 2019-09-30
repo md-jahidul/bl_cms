@@ -26,30 +26,30 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width=''>ID</th>
-                            <th width=''>Title</th>
-                            <th width=''>Banner</th>
-                            <th width=''>Code</th>
-                            <th width=''>Redirect url</th>
-                            <th  width='100'>Action</th>
+                            <th width='10%'>ID</th>
+                            <th width='20%'>Title</th>
+                            <th width='20%'>Code</th>
+                            <th width='10%'>Redirect url</th>
+                            <th width='10%'>Banner</th>
+                            <th width='30%'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($banners as $banner)
                             <tr>
-                                <td>{{$banner->id}}</td>
-                                <td>{{$banner->name}}</td>
-                                <td><img style="height:50px;width:100px" src="{{asset($banner->image_path)}}" alt="" srcset=""></td>
-                                <td>{{$banner->code}}</td>
-                                <td>{{$banner->redirect_url}}</td>
-                                <td>
+                                <td width='10%'>{{$banner->id}}</td>
+                                <td width='20%'>{{$banner->name}}</td>
+                                <td width='20%'>{{$banner->code}}</td>
+                                <td width='10%'>{{$banner->redirect_url}}</td>
+                                <td width='10%'><img style="height:50px;width:100px" src="{{asset($banner->image_path)}}" alt="" srcset=""></td>
+                                <td width='30%'>
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col-md-3">
                                             <a role="button" href="{{route('banner.edit',$banner->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-5">
+                                        <div class="col-md-3">
                                             <button data-id="{{$banner->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

@@ -69,27 +69,27 @@
                 <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
-                        <th width="100">id</th>
-                        <th>Tittle</th>
-                        <th width="80">Limit</th>
-                        <th width="100">Action</th>
+                        <th width="10%">id</th>
+                        <th width="50%">Tittle</th>
+                        <th width="10%">Limit</th>
+                        <th width="30%">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                         @foreach ($settings as $setting)
                             <tr>
-                                <td>{{$setting->id}}</td>
-                                <td>{{$setting->settingsKey->title}}</td>
-                                <td>{{$setting->limit}}</td>
-                                <td>
+                                <td width="10%">{{$setting->id}}</td>
+                                <td width="50%">{{$setting->settingsKey->title}}</td>
+                                <td width="10%">{{$setting->limit}}</td>
+                                <td width="30%">
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col-md-2">
                                             <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('setting.edit',$setting->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
                                         
-                                        <div class="col-md-5">
+                                        <div class="col-md-2">
                                             <button data-id="{{$setting->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

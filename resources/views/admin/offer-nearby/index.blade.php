@@ -26,30 +26,32 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width=''>ID</th>
-                            <th width=''>Title</th>
-                            <th width=''>Vendor</th>
-                            <th width=''>Location</th>
-                            <th width=''>Type</th>
-                            <th width=''>Offer</th>
-                            <th width=''>Offer Code</th>
-                            <th width=''>Image</th>
-                            <th width='100'>Action</th>
+                            <th width="2%">ID</th>
+                            <th width="40%">Title</th>
+                            <th width="2%">Vendor</th>
+                            <th width="2%">Location</th>
+                            <th width="2%">Type</th>
+                            <th width="2%">Offer</th>
+                            <th width="2%">Offer Code</th>
+                            <th width="2%">validity</th>
+                            <th width="2%">Image</th>
+                            <th width="30%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
                             @foreach ($nearByOffers as $nearByOffer)
                                 <tr>
-                                    <td>{{$nearByOffer->id}}</td>
-                                    <td>{{$nearByOffer->title}}</td>
-                                    <td>{{$nearByOffer->vendor}}</td>
-                                    <td>{{$nearByOffer->location}}</td>
-                                    <td>{{$nearByOffer->type}}</td>
-                                    <td>{{$nearByOffer->offer}}</td>
-                                    <td>{{$nearByOffer->offer_code}}</td>
+                                    <td width="2%">{{$nearByOffer->id}}</td>
+                                    <td width="40%">{{$nearByOffer->title}}</td>
+                                    <td width="2%">{{$nearByOffer->vendor}}</td>
+                                    <td width="2%">{{$nearByOffer->location}}</td>
+                                    <td width="2%">{{$nearByOffer->type}}</td>
+                                    <td width="2%">{{$nearByOffer->offer}}</td>
+                                    <td width="2%">{{$nearByOffer->offer_code}}</td>
+                                    <td width="2%">{{$nearByOffer->validity}}</td>
                                     
-                                    <td><img style="height:50px;width:100px" src="{{asset($nearByOffer->image)}}" alt="" srcset=""> </td>
-                                    <td>
+                                    <td width="2%"><img style="height:25px;width:50px" src="{{asset($nearByOffer->image)}}" alt="" srcset=""> </td>
+                                    <td width="30%">
                                         <div class="row">
                                             <div class="col-md-4 mr-1">
                                                 <a role="button" href="{{route('nearByOffer.edit',$nearByOffer->id)}}" class="btn btn-outline-success">

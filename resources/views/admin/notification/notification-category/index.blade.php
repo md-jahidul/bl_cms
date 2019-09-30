@@ -65,9 +65,9 @@
                 <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
-                        <th width="100">ID</th>
-                        <th>Tittle</th>
-                        <th width="210">Action</th>
+                        <th width="10%">ID</th>
+                        <th width="60%">Tittle</th>
+                        <th width="30%">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -78,12 +78,12 @@
                                 <td>
                                     <div class="row">
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notificationCategory.edit',$notificationCategory->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <button data-id="{{$notificationCategory->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
 
