@@ -14,9 +14,9 @@
 
 Auth::routes();
 
-//Route::resource('sliders', 'CMS\SliderController');
-//Route::get('slider/{parent_id}/images', 'CMS\SliderImageController@index');
-//Route::get('slider-image/{id}/edit', 'CMS\SliderImageController@edit');
+//Route::resource('sliders', 'CMS\AlSliderController');
+//Route::get('slider/{parent_id}/images', 'CMS\AlSliderImageController@index');
+//Route::get('slider-image/{id}/edit', 'CMS\AlSliderImageController@edit');
 
 Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 
@@ -54,25 +54,37 @@ Route::get('config','CMS\ConfigController@index');
 Route::put('config/update','CMS\ConfigController@update');
 
 // SLIDERS PAGES ====================================
-Route::get('sliders', 'CMS\SliderController@index');
-Route::get('sliders/{id}/{type}/edit', 'CMS\SliderController@edit');
-Route::put('sliders/{id}/update', 'CMS\SliderController@update');
-Route::get('slider/{slider_id}/{type}', 'CMS\SliderImageController@index')->name('slider_images');
-Route::get('slider/{slider_id}/{type}/image/create', 'CMS\SliderImageController@create');
-Route::post('slider/{slider_id}/{type}/image/store', 'CMS\SliderImageController@store')->name('slider_image_store');
-Route::get('slider/{slider_id}/{type}/image/{id}', 'CMS\SliderImageController@edit')->name('slider_image_edit');
-Route::put('slider/{slider_id}/{type}/image/{id}/update', 'CMS\SliderImageController@update')->name('slider_image_update');
-Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'CMS\SliderImageController@destroy');
-Route::get('/slider-image-sortable','CMS\SliderImageController@sliderImageSortable');
-
-
-
+Route::get('sliders', 'CMS\AlSliderController@index');
+Route::get('sliders/{id}/{type}/edit', 'CMS\AlSliderController@edit');
+Route::put('sliders/{id}/update', 'CMS\AlSliderController@update');
+Route::get('slider/{slider_id}/{type}', 'CMS\AlSliderImageController@index')->name('slider_images');
+Route::get('slider/{slider_id}/{type}/image/create', 'CMS\AlSliderImageController@create');
+Route::post('slider/{slider_id}/{type}/image/store', 'CMS\AlSliderImageController@store')->name('slider_image_store');
+Route::get('slider/{slider_id}/{type}/image/{id}', 'CMS\AlSliderImageController@edit')->name('slider_image_edit');
+Route::put('slider/{slider_id}/{type}/image/{id}/update', 'CMS\AlSliderImageController@update')->name('slider_image_update');
+Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'CMS\AlSliderImageController@destroy');
+Route::get('/slider-image-sortable','CMS\AlSliderImageController@sliderImageSortable');
 
 // PARTNERS PAGES ====================================
 Route::resource('partners','CMS\PartnerController');
 Route::get('partner/destroy/{id}', 'CMS\PartnerController@destroy');
+
+Route::get('partner-offer/{partner_id}/{type}', 'CMS\PartnerOfferController@index')->name('partner-offer');
+Route::get('partner-offer/{partner_id}/{partner}/offer/create', 'CMS\PartnerOfferController@create');
+Route::post('partner-offer/{partner_id}/{partner}/offer/store', 'CMS\PartnerOfferController@store')->name('partner_offer_store');
+Route::get('partner-offer/{partner_id}/{partner}/offer/{id}', 'CMS\PartnerOfferController@edit')->name('partner_offer_edit');
+Route::put('partner-offer/{partner_id}/{partner}/offer/{id}/update', 'CMS\PartnerOfferController@update')->name('partner_offer_update');
+Route::get('partner-offer/{partner_id}/{partner}/offer/destroy/{id}', 'CMS\PartnerOfferController@destroy');
+Route::get('/partner-offer/sortable','CMS\PartnerOfferController@partnerOfferSortable');
+
 //Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
 
+
+// Fixed PAGES ====================================
+Route::get('fixed-pages', 'CMS\FixedPageController@index');
+Route::get('fixed-page/{id}/components', 'CMS\FixedPageController@components')->name('fixed-page-components');
+Route::get('fixed-pages/{id}/metatags', 'CMS\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
+Route::post('fixed-pages/{id}/metatags', 'CMS\FixedPageController@metaTagsUpdate');
 
 
 

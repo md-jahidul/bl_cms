@@ -44,7 +44,7 @@
                                 <div class="col-md-1 add-button">
                                     <button type="button" id="add_internet_filter"
                                             class="btn btn-sm btn-icon btn-outline-info" title="Save">
-                                        <i class="la la-save"></i>
+                                        <i class="la la-save"></i>Save
                                     </button>
                                 </div>
                             </div>
@@ -135,6 +135,16 @@
                 let lower_price = $("#internet_lower_price").val();
                 let upper_price = $("#internet_upper_price").val();
 
+                if(upper_price !='' && lower_price > upper_price){
+                    Swal.fire(
+                        'Input Error!',
+                        'Lower input cannot be greater than Upper Input',
+                        'error',
+                    );
+
+                    return false;
+                }
+
                 if (lower_price < 0) {
                     Swal.fire(
                         'Input Error!',
@@ -175,11 +185,10 @@
 
 
                 }).fail(function (jqXHR, textStatus, errorThrown) {
-                    // If fail
-                    //console.log(textStatus + ': ' + errorThrown);
+                    let errorResponse = jqXHR.responseJSON;
                     Swal.fire(
                         'Error!',
-                        'Something went wrong.try Later',
+                        errorResponse.errors,
                         'error',
                     );
                 });
@@ -218,11 +227,10 @@
                                 'success',
                             );
                         }).fail(function (jqXHR, textStatus, errorThrown) {
-                            // If fail
-                            //console.log(textStatus + ': ' + errorThrown);
+                            let errorResponse = jqXHR.responseJSON;
                             Swal.fire(
                                 'Error!',
-                                'Something went wrong.try Later',
+                                errorResponse.errors,
                                 'error',
                             );
                         });

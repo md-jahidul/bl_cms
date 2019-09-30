@@ -28,6 +28,6 @@ class CreateSliderComponentTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('slider_types');
+        Schema::dropIfExists('slider_component_types');
     }
 }

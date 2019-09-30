@@ -16,23 +16,23 @@
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('quick-launch.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('en_title') ? ' error' : '' }}">
-                                    <label for="en_title" class="required">English Title</label>
-                                    <input type="text" name="en_title"  class="form-control" placeholder="Enter english title"
-                                           value="{{ old("en_title") ? old("en_title") : '' }}" required data-validation-required-message="Enter english title">
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="title_en" class="required">English Title</label>
+                                    <input type="text" name="title_en"  class="form-control" placeholder="Enter english title"
+                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Enter english title">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('en_title'))
-                                        <div class="help-block">  {{ $errors->first('en_title') }}</div>
+                                    @if ($errors->has('title_en'))
+                                        <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('bn_title') ? ' error' : '' }}">
-                                    <label for="bn_title" class="required">Bangla Title</label>
-                                    <input type="text" name="bn_title"  class="form-control" placeholder="Enter bangla title"
-                                           value="{{ old("bn_title") ? old("bn_title") : '' }}" required data-validation-required-message="Enter bangla title">
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn" class="required">Bangla Title</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter bangla title"
+                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Enter bangla title">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('bn_title'))
-                                        <div class="help-block">  {{ $errors->first('bn_title') }}</div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
 

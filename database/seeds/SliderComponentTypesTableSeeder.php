@@ -23,6 +23,6 @@ class SliderComponentTypesTableSeeder extends Seeder
             ];
         }
 
-        DB::table('slider_component_types')->insert($slider_component_types);
+        DB::table('al_slider_component_types')->insert($slider_component_types);
     }
 }

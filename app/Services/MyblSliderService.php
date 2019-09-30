@@ -39,7 +39,7 @@ class MyblSliderService
      */
     public function storeSlider($data)
     {
-        $data['short_code'] = strtolower(str_replace(' ','_',$data['title'])); 
+        $data['short_code'] = strtolower(str_replace(' ','_',$data['title']));
         $this->save($data);
         return new Response("Slider has been successfully created");
     }

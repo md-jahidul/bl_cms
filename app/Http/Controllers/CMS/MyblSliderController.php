@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\Repositories\MyblSliderComponentTypeRepository;
+use App\Services\MyblSliderComponentTypeService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
-use App\Models\SliderComponentTypes;
+//use App\Models\SliderComponentTypes;
 use App\Services\MyblSliderService;
-use App\Services\SliderTypeService;
+
 use App\Http\Requests\MyblSliderRequest;
 class MyblSliderController extends Controller
 {
@@ -26,7 +28,7 @@ class MyblSliderController extends Controller
      * BannerController constructor.
      * @param SliderService $sliderService
      */
-    public function __construct(MyblSliderService $sliderService,SliderTypeService $sliderTypeService)
+    public function __construct(MyblSliderService $sliderService, MyblSliderComponentTypeService $sliderTypeService)
     {
         $this->sliderService = $sliderService;
         $this->sliderTypeService = $sliderTypeService;
@@ -93,7 +95,7 @@ class MyblSliderController extends Controller
      */
     public function edit(Slider $myblslider)
     {
-        
+
         return view('admin.myblslider.create')
                 ->with('sliders',$this->sliderService->findAll())
                 ->with('slider_types',$this->sliderTypeService->findAll())
@@ -108,6 +110,7 @@ class MyblSliderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(MyblSliderRequest $request,$id)
     {
         session()->flash('success',$this->sliderService->updateSlider($request, $this->sliderService->findOne($id))->getContent());
@@ -115,10 +118,9 @@ class MyblSliderController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     * @throws \Exception
      */
     public function destroy($id)
     {

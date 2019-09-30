@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\SliderImage;
+use App\Models\AlSliderImage;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
@@ -14,24 +14,20 @@ class SliderImageTableSeeder extends Seeder
      */
     public function run()
     {
-        // factory('App\Models\SliderImage', 10)->create();
-
-
 
         for($i=1; $i < 4; $i++){
-            SliderImage::create([
+            AlSliderImage::create([
                 'id'    => $i,
                 'slider_id' => 1,
-                'title' =>  "Extra internet for all Banglalink users " . $i ,
-                'description' => "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ",
+                'title_en' =>  "Extra internet for all Banglalink users " . $i ,
+                'title_bn' => "সমস্ত বাংলালিংক ব্যবহারকারীদের জন্য অতিরিক্ত ইন্টারনেট" . $i ,
                 'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/hero.png',
                 'alt_text' => 'Hero slider image',
-                'url_btn_label' => 'Internet Offers',
-                'redirect_url' => '/offers',
-                'sequence' => count(SliderImage::get()) + 1,
+                'display_order' => count(AlSliderImage::get()) + 1,
                 'other_attributes' => [
-                    'title_bn' => 'সমস্ত বাংলালিংক ব্যবহারকারীদের জন্য অতিরিক্ত ইন্টারনেট',
-                    'button_label_bn' => 'ইন্টারনেট অফার'
+                    'button_label_en' => 'Internet Offers',
+                    'button_label_bn' => 'ইন্টারনেট অফার',
+                    'redirect_url' => '/offers',
                 ]
             ]);
         }
@@ -40,18 +36,15 @@ class SliderImageTableSeeder extends Seeder
         $digitalServiceSlidersBn = ["বাংলাফ্লিক্স", "মোবাইল টিভি", "গানের মেলা", "বোই ঘোড়", "অন্যরা"];
 
         foreach ($digitalServiceSliders as $key => $digitalServiceSlider){
-            SliderImage::create([
+            AlSliderImage::create([
                 'id'    => $key + 4,
                 'slider_id' => 2,
-                'title' =>  $digitalServiceSlider,
-                'description' => "Banglalink Mobile TV brings live TV Video on Demand (VOD) streaming on a mobile phone",
+                'title_en' =>  $digitalServiceSlider,
+                'title_bn' => $digitalServiceSlidersBn[$key],
                 'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/digital_service.png',
                 'alt_text' => 'Digital service slider image',
-                'url_btn_label' => '',
-                'redirect_url' => '',
-                'sequence' => count(SliderImage::get()) + 1,
+                'display_order' => count(AlSliderImage::get()) + 1,
                 'other_attributes' => [
-                    'title_bn' => $digitalServiceSlidersBn[$key],
                     'price_info' => 'Monthly 50',
                     'price_info_bn' => 'মাসিক ৫০',
                     'description_en' => 'Banglalink Mobile TV brings live TV Video on Demand (VOD) streaming on a mobile phone',
@@ -71,16 +64,14 @@ class SliderImageTableSeeder extends Seeder
         $feedBackBn = "বাংলালিংক সারা দেশে দ্রুততম ইন্টারনেট সরবরাহ করে, আমি কখনও বাংলালিংক ব্যবহার ব্যতীত সেরা অভিজ্ঞতা পাই না। এটি সর্বদা দুর্দান্ত সেবা, আমি সর্বদা বাংলালিংক ব্যবহার করব।";
 
         foreach ($testimonialSlidersEns as $key => $testimonialSlidersEn){
-            SliderImage::create([
+            AlSliderImage::create([
                 'id'    => $key + 9,
                 'slider_id' => 3,
-                'title' =>  $testimonialSlidersEn,
-                'description' => "Banglalink Mobile TV brings live TV Video on Demand (VOD) streaming on a mobile phone",
+                'title_en' =>  $testimonialSlidersEn,
+                'title_bn' =>  $testimonialSlidersEn,
                 'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/'.$userPic[$key],
                 'alt_text' => 'testimonial slider image',
-                'url_btn_label' => 'N/A',
-                'redirect_url' => '/testimonial',
-                'sequence' => count(SliderImage::get()) + 1,
+                'display_order' => count(AlSliderImage::get()) + 1,
                 'other_attributes' => [
                     'client_name_en' => $testimonialSlidersEn,
                     'client_name_bn' => $testimonialSlidersBn[$key],

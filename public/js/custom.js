@@ -23,15 +23,15 @@
         $('.delete_btn').click(function () {
             var url = $(this).attr('remove');
 
+            console.log(url);
+
             Swal.fire(confirmPopupParams).then((result) => {
                 if(result.value) {
                     $.ajax({
                         url: url,
                         methods: "get",
                         success: function (redirectUrl) {
-
                             console.log(redirectUrl);
-
                             Swal.fire(deletePopupParams);
                             setTimeout(redirect, 2000, redirectUrl)
                         }
@@ -66,7 +66,6 @@
 
         $("#sortable" ).sortable({
             update: function( event, ui ) {
-
                 console.log(auto_save_url)
                 $(this).children().each(function (index) {
                     if ($(this).attr('data-position') != (index+1)){

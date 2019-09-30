@@ -2,7 +2,6 @@
 @section('title', 'Quick Launch List')
 @section('card_name', 'Quick Launch List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><strong>Quick Launch List</strong></li>
 @endsection
 @section('action')
     <a href="{{ url('quick-launch/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
@@ -17,8 +16,8 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                         <tr>
-{{--                            <th>SL</th>--}}
-                            <th width="6%" class="text-center">Image</th>
+                            <td width="3%"><i class="icon-cursor-move icons"></i></td>
+                            <th width="3%" class="text-center">Image</th>
                             <th>English</th>
                             <th>Link</th>
                             <th class="text-right">Action</th>
@@ -27,9 +26,9 @@
                         <tbody id="sortable">
                         @foreach ($quickLaunchItems as $key=>$quickLaunchItem)
                             <tr data-index="{{ $quickLaunchItem->id }}" data-position="{{ $quickLaunchItem->display_order }}">
-{{--                                <td>{{ ++$key }}</td>--}}
+                                <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td width="6%" class="text-center"><img src="{{ $quickLaunchItem->image_url }}" alt="image" height="30" width="30"></td>
-                                <td width="20%">{{$quickLaunchItem->en_title}} {!! $quickLaunchItem->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+                                <td width="20%">{{$quickLaunchItem->title_en}} {!! $quickLaunchItem->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                 <td>{{$quickLaunchItem->link}}</td>
                                 <td class="action" width="8%">
                                     <a href="{{ url("quick-launch/$quickLaunchItem->id/edit") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

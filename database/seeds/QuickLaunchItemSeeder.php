@@ -20,8 +20,8 @@ class QuickLaunchItemSeeder extends Seeder
 
         foreach ($items as $key => $item) {
             $quick_launch_items[] = [
-                'en_title' => $item,
-                'bn_title' => $item_bn_text[$key],
+                'title_en' => $item,
+                'title_bn' => $item_bn_text[$key],
                 'image_url' => env('APP_URL', 'http://localhost:8000') . '/quick-launch-items/' . strtolower( str_replace( " ", "-", $item) ) . '.png',
                 'alt_text' => $item,
                 'link' => env('APP_URL', 'http://localhost:8000') . strtolower( str_replace( " ", "-", $item) ),

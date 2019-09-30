@@ -15,8 +15,8 @@ class CreateQuickLaunchItemsTable extends Migration
     {
         Schema::create('quick_launch_items', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('en_title');
-            $table->string('bn_title');
+            $table->string('title_en');
+            $table->string('title_bn');
             $table->string('image_url');
             $table->string('alt_text');
             $table->string('link');

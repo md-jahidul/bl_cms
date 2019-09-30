@@ -22,13 +22,9 @@ class Slider extends Model
         'other_attributes' => 'array'
     ];
 
-    public function type()
-    {
-        return $this->belongsTo(SliderComponentType::class, 'id');
-    }
 
     public function SliderComponentTypes(){
-        return $this->belongsTo(SliderComponentTypes::class,'component_id','id');
+        return $this->belongsTo(SliderComponentType::class,'component_id','id');
     }
 
     public function sliderImages(){

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class QuickLaunchItem extends Model
 {
-    protected $fillable = ['en_title', 'bn_title', 'image_url', 'alt_text', 'link', 'status', 'display_order'];
+    protected $fillable = ['title_en', 'title_bn', 'image_url', 'alt_text', 'link', 'status', 'display_order'];
 }

@@ -8,7 +8,7 @@ use App\Services\MyblSliderImageService;
 use App\Http\Requests\SliderImageStoreRequest;
 use App\Http\Requests\SliderImageUpdateRequest;
 use App\Services\MyblSliderService;
-use App\Services\SliderTypeService;
+use App\Services\AlSliderComponentTypeService;
 use App\Models\SliderImage;
 
 class MyblSliderImageController extends Controller
@@ -29,7 +29,7 @@ class MyblSliderImageController extends Controller
      * BannerController constructor.
      * @param SliderImageService $sliderService
      */
-    public function __construct(MyblSliderImageService $sliderImageService,MyblSliderService $sliderService,SliderTypeService $sliderTypeService)
+    public function __construct(MyblSliderImageService $sliderImageService, MyblSliderService $sliderService, AlSliderComponentTypeService $sliderTypeService)
     {
         $this->sliderImageService = $sliderImageService;
         $this->sliderService = $sliderService;

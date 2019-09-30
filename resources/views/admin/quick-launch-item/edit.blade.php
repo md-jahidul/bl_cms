@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('title', 'Quick Launch Create')
-@section('card_name', 'Quick Launch Create')
+@section('card_name', 'Quick Launch Edit')
 @section('breadcrumb')
     <li class="breadcrumb-item active"> <a href="{{ url('quick-launch') }}"> Quick Launch List</a></li>
-    <li class="breadcrumb-item active"> Quick Launch Create</li>
+    <li class="breadcrumb-item active"> Quick Launch Edit</li>
 @endsection
 @section('action')
     <a href="{{ url('quick-launch') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
@@ -16,23 +16,23 @@
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ url("quick-launch/$quickLaunch->id") }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('en_title') ? ' error' : '' }}">
-                                    <label for="en_title" class="required">English Title</label>
-                                    <input type="text" name="en_title"  class="form-control" placeholder="Enter english title"
-                                           value="{{ $quickLaunch->en_title }}" required data-validation-required-message="Enter english title">
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="title_en" class="required">English Title</label>
+                                    <input type="text" name="title_en"  class="form-control" placeholder="Enter english title"
+                                           value="{{ $quickLaunch->title_en }}" required data-validation-required-message="Enter english title">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('en_title'))
-                                        <div class="help-block">  {{ $errors->first('en_title') }}</div>
+                                    @if ($errors->has('title_en'))
+                                        <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('bn_title') ? ' error' : '' }}">
-                                    <label for="bn_title" class="required">Bangla Title</label>
-                                    <input type="text" name="bn_title"  class="form-control" placeholder="Enter bangla title"
-                                           value="{{ $quickLaunch->bn_title }}" required data-validation-required-message="Enter bangla title">
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn" class="required">Bangla Title</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter bangla title"
+                                           value="{{ $quickLaunch->title_bn }}" required data-validation-required-message="Enter bangla title">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('bn_title'))
-                                        <div class="help-block">  {{ $errors->bn_titlefirst('bn_title') }}</div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">  {{ $errors->title_bnfirst('title_bn') }}</div>
                                     @endif
                                 </div>
 
