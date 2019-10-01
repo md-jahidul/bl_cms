@@ -6,7 +6,7 @@
 @endsection
 
 @section('action')
-        @if($cat->count()==0)
+        @if($category->count()==0)
             <a href="{{route('notificationCategory.index')}}" class="btn btn-danger round btn-glow px-2"><i class="la la-plus"></i>
                 There is no category
             </a>

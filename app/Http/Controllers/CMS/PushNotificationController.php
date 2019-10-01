@@ -13,23 +13,10 @@ use Illuminate\Http\Request;
 class PushNotificationController extends Controller
 {
 
-    /**
-     * @var UserService
-     */
-    protected $userService;
-
 
     /**
-     * PushNotificationController constructor.
-     * @param UserService $userService
-     */
-    public function __construct(UserService $userService)
-    {
-        $this->userService = $userService;
-    }
-
-
-    /**
+     * Send Notification
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
@@ -49,8 +36,6 @@ class PushNotificationController extends Controller
        ];
 
         $response = PushNotificationService::sendNotification($notification);
-
-
 
         if(json_decode($response)->status == "SUCCESS"){
 

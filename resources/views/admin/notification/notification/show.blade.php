@@ -34,20 +34,16 @@
                             <textarea class="form-control col-md-12" name="message" id="message"> {{$notification->body}}</textarea>
                         </div>
 
-
-
                         <div class="form-group">
 
                             <label for="message">Select User</label> </br>
 
-                            <select id="user-multiple-selected" multiple="multiple">
-                                <option value="1">Option 1</option>
-                                <option value="2" selected="selected">Option 2</option>
-                                <!-- Option 3 will be selected in advance ... -->
-                                <option value="3" selected="selected">Option 3</option>
-                                <option value="4">Option 4</option>
-                                <option value="5">Option 5</option>
-                                <option value="6">Option 6</option>
+                            <select id="user-multiple-selected" multiple="multiple" style="width: auto">
+
+                                @foreach ($users as $user)
+                                    <option value="{{$user->id}}">{{$user->phone}}({{$user->name}})</option>
+                                @endforeach
+
                             </select>
                         </div>
 
@@ -74,7 +70,15 @@
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
-    <style></style>
+    <style>
+
+        .multiselect-container{
+            width: 250px;
+        }
+        .multiselect-container > li > a > label {
+            padding: 3px 5px 3px 10px;
+        }
+    </style>
 @endpush
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
