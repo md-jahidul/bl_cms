@@ -27,6 +27,7 @@
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$notification->title}}">
+                            <input type="hidden" class="form-control col-md-12" name="id" id="id" value="{{$notification->id}}">
 
                         </div>
                         <div class="form-group">

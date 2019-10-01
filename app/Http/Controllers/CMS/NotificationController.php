@@ -92,7 +92,6 @@ class NotificationController extends Controller
      */
     public function show($id)
     {
-
         $notification = $this->notificationService->findOne($id);
         $users = $this->userService->getUserListForNotification();
 

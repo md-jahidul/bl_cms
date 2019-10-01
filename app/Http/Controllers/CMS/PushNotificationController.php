@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
+use App\Services\NotificationService;
 use App\Services\PushNotificationService;
-use App\Services\UserService;
 use Illuminate\Http\Request;
 
 /**
@@ -15,6 +15,21 @@ class PushNotificationController extends Controller
 
 
     /**
+     * @var NotificationService
+     */
+    protected $notificationService;
+
+
+    /**
+     * PushNotificationController constructor.
+     * @param NotificationService $notificationService
+     */
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
+
+    /**
      * Send Notification
      *
      * @param Request $request
@@ -23,13 +38,17 @@ class PushNotificationController extends Controller
     public function sendNotification(Request $request)
     {
 
+        $notification_id = $request->input('id');
+
+        $user_phone = $request->input('user_phone');
+
         if($request->filled('user_phone'))
         {
             $notification = [
                 'title' => $request->input('title'),
                 'body' => $request->input('message'),
                 "send_to_type" => "INDIVIDUALS" ,
-                "recipients" => $request->input('user_phone'),
+                "recipients" => $user_phone,
                 "is_interactive" => "Yes",
                 "data" => [
                     "cid" => "1",
@@ -55,9 +74,13 @@ class PushNotificationController extends Controller
         }
 
 
+
         $response = PushNotificationService::sendNotification($notification);
 
+
         if(json_decode($response)->status == "SUCCESS"){
+
+            $this->notificationService->attachNotificationToUser($notification_id, $user_phone);
 
             session()->flash('success',"Notification has been sent successfully");
 
@@ -68,6 +91,5 @@ class PushNotificationController extends Controller
 
 
     }
-
 
 }
