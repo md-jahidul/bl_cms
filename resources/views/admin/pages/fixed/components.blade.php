@@ -29,7 +29,7 @@
                                 <tr data-index="{{ $shortCode->id }}" data-position="{{ $shortCode->display_order }}">
                                     <td width="3%">{{ $index + 1 }}</td>
                                     <td>{{ $shortCode->component_type }} {!! $shortCode->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
-                                    <td>{{ $shortCode->alt_text }} </td>
+                                    <td><span class="badge badge-success badge-pill float-right">Enabled</span> </td>
                                     <td class="action" width="8%">
                                         @if($shortCode->is_active == 1)
                                             <a href="{{ route("update-component-status", [ $shortCode->page_id, $shortCode->id ]) }}" class="btn btn-success border-0"> Enable</a>
