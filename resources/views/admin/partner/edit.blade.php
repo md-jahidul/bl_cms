@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Partner Create')
-@section('card_name', 'Partner Create')
+@section('title', 'Partner Edit')
+@section('card_name', 'Partner Edit')
 @section('breadcrumb')
     <li class="breadcrumb-item active"> <a href="{{ url('partners') }}"> Partner List</a></li>
-    <li class="breadcrumb-item active"> Partner Create</li>
+    <li class="breadcrumb-item active"> Partner Edit</li>
 @endsection
 @section('action')
     <a href="{{ url('partners') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
@@ -39,7 +39,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('company_website') ? ' error' : '' }}">
                                     <label for="company_website" class="required">Company Website</label>
                                     <input type="url" name="company_website"  class="form-control" placeholder="Enter company website"
-                                           value="{{ $partner->company_website }}" required data-validation-required-message="Enter company website">
+                                           value="{{ old('company_website') ??  $partner->company_website }}" required data-validation-required-message="Enter company website">
                                     <div class="help-block"></div>
                                     @if ($errors->has('company_website'))
                                         <div class="help-block">  {{ $errors->first('company_website') }}</div>
@@ -59,7 +59,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('contact_person_email') ? ' error' : '' }}">
                                     <label for="contact_person_email" class="required">Contact Person Email</label>
                                     <input type="text" name="contact_person_email"  class="form-control" placeholder="Enter contact person name"
-                                           value="{{ $partner->contact_person_email }}" required data-validation-required-message="Enter contact person eamil">
+                                           value="{{ old('contact_person_email') ?? $partner->contact_person_email }}" required data-validation-required-message="Enter contact person eamil">
                                     <div class="help-block"></div>
                                     @if ($errors->has('contact_person_email'))
                                         <div class="help-block">  {{ $errors->first('contact_person_email') }}</div>

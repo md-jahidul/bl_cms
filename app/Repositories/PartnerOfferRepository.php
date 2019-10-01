@@ -17,7 +17,7 @@ class PartnerOfferRepository extends BaseRepository
 
     public function getPartnerOffer($partnerId)
     {
-        return $this->model->where('partner_id', $partnerId)->orderBy('display_order')->with('partner')->get();
+        return $this->model->where('partner_id', $partnerId)->orderBy('created_at')->with('partner')->get();
     }
 
     public function partnerOfferTableSort($request)

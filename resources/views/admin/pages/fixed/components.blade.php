@@ -1,8 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Slider Image List')
-@section('card_name', 'Slider Image List')
+@section('title', 'Components List')
+@section('card_name', 'Components List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><strong>Slider Image List</strong></li>
+    <li class="breadcrumb-item active"><a href="{{ url('fixed-pages') }}"> Fixed Pages List </a></li>
+    <li class="breadcrumb-item active"><strong>Components List</strong></li>
 @endsection
 @section('action')
 {{--    <a href="{{ url("slider/$sliderId/$type/image/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
@@ -19,7 +20,7 @@
                         <thead>
                         <tr>
                             <td width="3%">#</td>
-                            <th width="25%">Component Type</th>
+                            <th>Component Type</th>
                             <th>Component Status</th>
                             <th class="text-right">Action</th>
                         </tr>
@@ -28,13 +29,21 @@
                             @foreach($shortCodes as $index=>$shortCode)
                                 <tr data-index="{{ $shortCode->id }}" data-position="{{ $shortCode->display_order }}">
                                     <td width="3%">{{ $index + 1 }}</td>
-                                    <td>{{ $shortCode->component_type }} {!! $shortCode->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
-                                    <td><span class="badge badge-success badge-pill float-right">Enabled</span> </td>
-                                    <td class="action" width="8%">
+                                    <td>{{ $shortCode->component_type }}</td>
+                                    <td>
                                         @if($shortCode->is_active == 1)
-                                            <a href="{{ route("update-component-status", [ $shortCode->page_id, $shortCode->id ]) }}" class="btn btn-success border-0"> Enable</a>
+                                            <span class="badge badge-success badge-pill">Enabled</span>
                                         @else
-                                            <a href="{{ route("update-component-status", [ $shortCode->page_id, $shortCode->id ]) }}" role="button" class="btn btn-danger border-0"> Disable</a>
+                                            <span class="badge badge-danger badge-pill">Disabled</span>
+                                        @endif
+                                    </td>
+                                    <td class="action" width="8%">
+                                        @if($shortCode->is_active == 0)
+                                            <a href="{{ route("update-component-status", [ $shortCode->page_id, $shortCode->id ]) }}"
+                                               class="btn btn-success border-0" title="Click to enable"> Enable</a>
+                                        @else
+                                            <a href="{{ route("update-component-status", [ $shortCode->page_id, $shortCode->id ]) }}"
+                                               role="button" class="btn btn-danger border-0" title="Click to disable"> Disable</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -44,9 +53,7 @@
                 </div>
             </div>
         </div>
-
     </section>
-
 @stop
 
 @push('page-css')

@@ -2,6 +2,7 @@
 @section('title', 'Partner Offer Edit')
 @section('card_name', 'Partner Offer Edit')
 @section('breadcrumb')
+    <li class="breadcrumb-item active"><strong><a href="{{ url('partners') }}"> Partner List</a></strong></li>
     <li class="breadcrumb-item active"> <a href="{{ route('partner-offer', [$partnerId, $partnerName]) }}"> Partner Offer List</a></li>
     <li class="breadcrumb-item active"> Partner Offer Edit</li>
 @endsection
@@ -41,7 +42,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_en') ? ' error' : '' }}">
                                     <label for="offer_en" class="required">Offer Percentage (English)</label>
-                                    <input type="number" name="offer_en"  class="form-control" placeholder="Enter offer percentage english"
+                                    <input type="text" name="offer_en"  class="form-control" placeholder="Enter offer percentage english"
                                            value="{{ $partnerOffer->offer_en }}" required data-validation-required-message="Enter offer percentage english">
                                     <div class="help-block"></div>
                                     @if ($errors->has('offer_en'))

@@ -48,6 +48,11 @@ Route::resource('quick-launch','CMS\QuickLaunchController');
 Route::get('quick-launch/destroy/{id}', 'CMS\QuickLaunchController@destroy');
 Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
 
+// META TAG PAGES ====================================
+Route::resource('meta-tag','CMS\MetaTagController');
+//Route::get('quick-launch/destroy/{id}', 'CMS\QuickLaunchController@destroy');
+//Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
+
 
 // CONFIG PAGES ====================================
 Route::get('config','CMS\ConfigController@index');
@@ -84,8 +89,8 @@ Route::get('/partner-offer/sortable','CMS\PartnerOfferController@partnerOfferSor
 // Fixed PAGES ====================================
 Route::get('fixed-pages', 'CMS\FixedPageController@index');
 Route::get('fixed-page/{id}/components', 'CMS\FixedPageController@components')->name('fixed-page-components');
-Route::get('fixed-pages/{id}/metatags', 'CMS\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
-Route::post('fixed-pages/{id}/metatags', 'CMS\FixedPageController@metaTagsUpdate');
+Route::get('fixed-pages/{id}/meta-tags', 'CMS\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
+Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'CMS\FixedPageController@metaTagsUpdate');
 Route::get('fixed-pages/{pageId}/component/{componentId}', 'CMS\FixedPageController@fixedPageStatusUpdate')->name('update-component-status');
 
 

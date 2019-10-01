@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active"> {{$slider->title_en}}</li>
 @endsection
 @section('action')
-    <a href="{{ url('sliders') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url("$slider->slider_type-sliders") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
