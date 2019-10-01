@@ -38,10 +38,10 @@
 
                             <label for="message">Select User</label> </br>
 
-                            <select id="user-multiple-selected" multiple="multiple" style="width: auto">
+                            <select id="user-multiple-selected" name="user_phone[]" multiple="multiple" style="width: auto">
 
                                 @foreach ($users as $user)
-                                    <option value="{{$user->id}}">{{$user->phone}}({{$user->name}})</option>
+                                    <option value="{{$user->phone}}">{{$user->phone}}({{$user->name}})</option>
                                 @endforeach
 
                             </select>

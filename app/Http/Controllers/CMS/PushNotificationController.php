@@ -22,18 +22,38 @@ class PushNotificationController extends Controller
      */
     public function sendNotification(Request $request)
     {
-        $notification = [
-            'title' => $request->input('title'),
-            'body' => $request->input('message'),
-            "send_to_type" => "ALL",
-            "is_interactive" => "Yes",
-            "data" => [
-                "cid" => "1",
-                "url" => "test.com",
-                "component" => "offer",
-            ]
 
-       ];
+        if($request->filled('user_phone'))
+        {
+            $notification = [
+                'title' => $request->input('title'),
+                'body' => $request->input('message'),
+                "send_to_type" => "INDIVIDUALS" ,
+                "recipients" => $request->input('user_phone'),
+                "is_interactive" => "Yes",
+                "data" => [
+                    "cid" => "1",
+                    "url" => "test.com",
+                    "component" => "offer",
+                ]
+
+            ];
+        } else {
+
+            $notification = [
+                'title' => $request->input('title'),
+                'body' => $request->input('message'),
+                "send_to_type" => "ALL",
+                "is_interactive" => "Yes",
+                "data" => [
+                    "cid" => "1",
+                    "url" => "test.com",
+                    "component" => "offer",
+                ]
+
+            ];
+        }
+        
 
         $response = PushNotificationService::sendNotification($notification);
 
