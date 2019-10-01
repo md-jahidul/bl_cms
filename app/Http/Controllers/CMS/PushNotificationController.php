@@ -53,7 +53,7 @@ class PushNotificationController extends Controller
 
             ];
         }
-        
+
 
         $response = PushNotificationService::sendNotification($notification);
 
