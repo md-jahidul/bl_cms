@@ -29,7 +29,7 @@
                             @foreach($shortCodes as $index=>$shortCode)
                                 <tr data-index="{{ $shortCode->id }}" data-position="{{ $shortCode->display_order }}">
                                     <td width="3%">{{ $index + 1 }}</td>
-                                    <td>{{ $shortCode->component_type }}</td>
+                                    <td>{{ $shortCode->component_title }}</td>
                                     <td>
                                         @if($shortCode->is_active == 1)
                                             <span class="badge badge-success badge-pill">Enabled</span>

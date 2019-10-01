@@ -2,6 +2,7 @@
 @section('title', 'Slider Image Create')
 @section('card_name', 'Slider Image Create')
 @section('breadcrumb')
+    <li class="breadcrumb-item active"> <a href="{{ url('single-sliders')}}"> Slider List</a></li>
     <li class="breadcrumb-item active"> <a href="{{ route('slider_images', [$sliderId, $type]) }}"> Slider Image List</a></li>
     <li class="breadcrumb-item active"> Slider Image Create</li>
 @endsection

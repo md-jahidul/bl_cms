@@ -86,8 +86,6 @@ class AlSliderController extends Controller
     {
         $slider = $this->alSliderService->findOne($id);
         $other_attributes = $slider->other_attributes;
-
-//        return $slider;
         return view('admin.slider.edit', compact('slider', 'type', 'other_attributes'));
     }
 
@@ -99,7 +97,6 @@ class AlSliderController extends Controller
     public function update(Request $request, $id)
     {
         $sliderType = $request->slider_type;
-
         $response = $this->alSliderService->updateSlider($request->all(), $request->id);
         Session::flash('message', $response->getContent());
         return redirect("/$sliderType-sliders");

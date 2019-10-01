@@ -35,9 +35,11 @@ class AlSliderImageController extends Controller
     public function index($sliderId, $type)
     {
         $slider_images = AlSliderImage::where('slider_id', $sliderId)->with('slider')->orderBy('display_order')->get();
-        $sliderTitle = AlSlider::where('id', $sliderId)->pluck('title_en')->first();
-        $this->alSliderImageService->itemList($sliderId, $type);
-        return view('admin.slider-image.index', compact('slider_images', 'sliderTitle', 'sliderId','type'));
+        $sliderItem = AlSlider::select('title_en', 'slider_type')->where('id', $sliderId)->first();
+//        $this->alSliderImageService->itemList($sliderId, $type);
+
+//        return $sliderTitle;
+        return view('admin.slider-image.index', compact('slider_images', 'sliderItem', 'sliderId','type'));
     }
 
     /**
@@ -82,7 +84,7 @@ class AlSliderImageController extends Controller
      */
     public function edit($parentId, $type, $id)
     {
-        $sliderImage = AlSliderImage::findOrFail($id);
+        $sliderImage = AlSliderImage::find($id);
         $other_attributes = $sliderImage->other_attributes;
         return view('admin.slider-image.edit', compact('sliderImage','type', 'other_attributes'));
     }

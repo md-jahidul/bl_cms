@@ -2,9 +2,11 @@
 @section('title', 'Slider Image List')
 @section('card_name', 'Slider Image List')
 @section('breadcrumb')
+    <li class="breadcrumb-item active"><a href="{{ url("$sliderItem->slider_type-sliders") }}">Slider List</a></li>
     <li class="breadcrumb-item active"><strong>Slider Image List</strong></li>
 @endsection
 @section('action')
+
     <a href="{{ url("slider/$sliderId/$type/image/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add Slider Image
     </a>
@@ -14,7 +16,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>{{ ucwords($sliderTitle." ". "slider images") }}</strong></h4>
+                    <h4 class="pb-1"><strong>{{ ucwords($sliderItem->title_en." ". "slider images") }}</strong></h4>
                     <table class="table table-striped table-bordered">
                         <thead>
                         <tr>

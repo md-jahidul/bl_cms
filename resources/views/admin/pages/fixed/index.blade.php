@@ -17,7 +17,7 @@
                             @if(count($pages) == !0)
                                 @foreach($pages as $page)
                                     <tr data-index="{{ $page->id }}" data-position="{{ $page->display_order }}">
-                                        <td>{{ $page->title  }} {!! $page->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+                                        <td>{{ $page->title  }} {!! $page->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                         <td class="text-center" width="10%"><a href="{{ route('fixed-page-metatags', $page->id ) }}" class="btn btn-outline-success">Meta Info</a></td>
                                         <td class="text-center" width="10%"><a href="{{ route('fixed-page-components', $page->id ) }}" class="btn btn-outline-success">Components</a></td>
                                     </tr>

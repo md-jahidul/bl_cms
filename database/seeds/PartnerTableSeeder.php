@@ -18,8 +18,8 @@ class PartnerTableSeeder extends Seeder
         $companyAddress = "Tiger’s Den, House 4 (SW), Bir Uttam Mir Shawkat Sarak, Gulshan1, Dhaka 1212.";
         $companyWebSite = ['sheraton.marriott.com','burger-king.com','labaid.com', 'patho.com', 'aarong.com'];
         $contactPersonName = "Shafiq Ahamad";
-        $contactPersonEmail = "banglaling@bl.net";
-        $contactPersonMobile = "01919555222";
+        // $contactPersonEmail = "banglaling@bl.net";
+        $contactPersonMobile = "0191955522";
 
 
         foreach ($companyNameEn as $key => $value){
@@ -29,10 +29,10 @@ class PartnerTableSeeder extends Seeder
                 'company_name_bn' => $companyNameBn[$key],
                 'company_logo' => env('APP_URL', 'http://localhost:8000'). '/images/partners-logo/' . $companyLogo[$key],
                 'company_address' => $companyAddress,
-                'company_website' => $companyWebSite[$key],
+                'company_website' => 'https://'. $companyWebSite[$key],
                 'contact_person_name' => $contactPersonName,
-                'contact_person_email' => $contactPersonEmail,
-                'contact_person_mobile' => $contactPersonMobile,
+                'contact_person_email' =>  str_replace(" ", "",  strtolower($value)) . '@gmail.com',
+                'contact_person_mobile' => $contactPersonMobile . $key,
                 'other_attributes' => [],
             ]);
         }
