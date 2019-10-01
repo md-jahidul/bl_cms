@@ -26,7 +26,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">Notification List</h1>
+
                     </div>
                 </div>
             </div>
