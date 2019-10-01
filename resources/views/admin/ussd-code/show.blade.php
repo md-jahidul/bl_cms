@@ -6,7 +6,7 @@
 @endsection
 @section('action')
     <a href="{{route('ussd.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        USSD Code List
+        USSD Code Details
     </a>
 @endsection
 @section('content')
