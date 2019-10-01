@@ -6,7 +6,7 @@
 @endsection
 
 @section('action')
-        @if($cat->count()==0)
+        @if($category->count()==0)
             <a href="{{route('notificationCategory.index')}}" class="btn btn-danger round btn-glow px-2"><i class="la la-plus"></i>
                 There is no category
             </a>
@@ -26,7 +26,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">Notification List</h1>
+
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                         <th width="15%">Title</th>
                         <th width="35%">Body</th>
                         <th width="10%">Category</th>
-                        <th width="30%">Action</th>
+                        <th width="15%">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -48,19 +48,19 @@
                                 <td width="15%">{{$notification->title}}</td>
                                 <td width="35%">{{$notification->body}}</td>
                                 <td width="10%">{{$notification->NotificationCategory->name}}</td>
-                                <td width="30%">
+                                <td width="15%">
                                     <div class="row">
 
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 m-1">
                                             <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notification.edit',$notification->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 m-1">
                                             <button data-id="{{$notification->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
 
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 m-1">
                                             <a  role="button"
                                                 data-id=""
                                                 href="{{route('notification.show',$notification->id)}}" 

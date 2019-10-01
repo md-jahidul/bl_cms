@@ -23,7 +23,7 @@ class CreateMixedBundleOffersTable extends Migration
             $table->bigInteger('price')->unsigned();
             $table->bigInteger('points')->unsigned();
             $table->string('offer_code');
-            $table->string('tag');
+            $table->string('tag')->nullable();
             $table->timestamps();
         });
     }

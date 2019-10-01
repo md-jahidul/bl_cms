@@ -26,7 +26,7 @@
                                         required 
                                         data-validation-required-message="Title is required" 
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.-])*)*"
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                         data-validation-regex-message="Title must start with alphabets"
                                         data-validation-maxlength-message = "Title can not be more then 200 charecters"
 
@@ -169,13 +169,10 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="tag">Tag:<small class="text-danger">*</small></label>
+                                        <label for="tag">Tag:</label>
                                         <input
-                                        required 
-                                        data-validation-required-message="Tag is required" 
                                         maxlength="200" 
                                         data-validation-maxlength-message = "Tag can not be more then 200 charecters"
-
                                         type="text" value="@if(old('tag')){{old('tag')}}@endif" id="tag" class="form-control @error('tag') is-invalid @enderror" placeholder="Offer code.." name="tag">
                                         <div class="help-block"></div>
                                         @error('tag')

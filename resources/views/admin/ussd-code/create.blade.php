@@ -26,7 +26,7 @@
                                         required 
                                         data-validation-required-message="Title is required" 
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                         data-validation-regex-message="Title must start with alphabets"
                                         data-validation-maxlength-message = "Title can not be more then 200 Characters"
                                         type="text" 
@@ -46,8 +46,6 @@
                                         required 
                                         data-validation-required-message="Code is required" 
                                         maxlength="200" 
-                                        {{-- data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
-                                        data-validation-regex-message="title must start with alphabets" --}}
                                         data-validation-maxlength-message = "Code can not be more then 200 Characters"
 
                                         type="text" value="{{ old("code") ? old("code") : '' }}" id="volume" class="form-control @error('code') is-invalid @enderror" placeholder="Enter code...." name="code">

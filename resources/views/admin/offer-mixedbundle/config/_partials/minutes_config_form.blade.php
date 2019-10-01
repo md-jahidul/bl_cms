@@ -24,8 +24,8 @@
                                                 class="text-danger">*</small></label>
                                         <input required type="number"
                                                id="minutes_lower_price" min="1"
-                                               class="form-control"
-                                               placeholder="Enter Lower Bound...." name="lower">
+                                               class="form-control minutes_filter_input"
+                                               placeholder="Max. 2000" name="lower">
                                         <small class="form-text text-muted">Enter
                                             amount in minutes</small>
                                     </div>
@@ -35,8 +35,8 @@
                                         <label for="minutes_upper_price">Upper</label>
                                         <input required type="number"
                                                id="minutes_upper_price"
-                                               class="form-control"
-                                               placeholder="Enter Upper Bound...." name="upper">
+                                               class="form-control minutes_filter_input"
+                                               placeholder="Max. 2000" name="upper">
                                         <small class="form-text text-muted">Enter
                                             amount in minutes</small>
                                     </div>
@@ -136,7 +136,7 @@
                 let lower_price = $("#minutes_lower_price").val();
                 let upper_price = $("#minutes_upper_price").val();
 
-                if(upper_price !='' && lower_price > upper_price){
+                if(upper_price !='' && parseInt(lower_price) > parseInt(upper_price)){
                     Swal.fire(
                         'Input Error!',
                         'Lower input cannot be greater than Upper Input',
@@ -239,6 +239,20 @@
 
                     }
                 });
+            })
+
+            $(document).on('input','.minutes_filter_input',function () {
+                let input = $(this).val();
+
+                if(input > 2000){
+                    Swal.fire(
+                        'Input Error!',
+                        'Minutes value must be less than 2000 mins',
+                        'error',
+                    );
+
+                    $(this).val('');
+                }
             })
 
 

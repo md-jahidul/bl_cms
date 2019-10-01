@@ -34,21 +34,20 @@
                             <textarea class="form-control col-md-12" name="message" id="message"> {{$notification->body}}</textarea>
                         </div>
 
-
-
                         <div class="form-group">
-                            <div class="form-check">
-                                <label class="form-check-label" for="check1">
-                                    <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something" checked>Option 1
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label" for="check2">
-                                    <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">Option 2
-                                </label>
-                            </div>
 
+                            <label for="message">Select User</label> </br>
+
+                            <select id="user-multiple-selected" name="user_phone[]" multiple="multiple" style="width: auto">
+
+                                @foreach ($users as $user)
+                                    <option value="{{$user->phone}}">{{$user->phone}}({{$user->name}})</option>
+                                @endforeach
+
+                            </select>
                         </div>
+
+
 
                         <div class="col-md-12" >
                             <div class="form-group float-right" style="margin-top:15px;">
@@ -70,16 +69,26 @@
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
-    <style></style>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+    <style>
+
+        .multiselect-container{
+            width: 250px;
+        }
+        .multiselect-container > li > a > label {
+            padding: 3px 5px 3px 10px;
+        }
+    </style>
 @endpush
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+
+
     <script>
-        
-       
 
         $(function () {
             $('.delete').click(function () {
@@ -127,5 +136,13 @@
             });
         });
 
+
+        $('#user-multiple-selected').multiselect({
+            includeSelectAllOption: true
+            }
+        );
+
     </script>
 @endpush
+
+

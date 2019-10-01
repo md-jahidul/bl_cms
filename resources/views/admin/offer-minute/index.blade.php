@@ -47,7 +47,7 @@
                                 <td width='15%'>{{$minute_offer->offer_code}}</td>
                                 <td width='10%'>{{$minute_offer->points}}</td>
                                 <td width='20%'>
-                                    <div class="row">
+                                    <div class="row justify-content-md-center no-gutters">
                                         <div class="col-md-5">
                                             <a role="button" href="{{route('minuteOffer.edit',$minute_offer->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>

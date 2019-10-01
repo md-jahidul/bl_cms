@@ -27,7 +27,7 @@
                                         required 
                                         data-validation-required-message="Title is required" 
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.<>\-])*)*"
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                         data-validation-regex-message="Title must start with alphabets"
                                         data-validation-maxlength-message = "Title can not be more then 200 charecters"
                                         

@@ -27,7 +27,7 @@
                                         <input required value="{{ old("title") ? old("title") : '' }}" 
                                             required
                                             maxlength="200" 
-                                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                             data-validation-required-message="Title is required" 
                                             data-validation-regex-message="Title must start with alphabets"
                                             data-validation-maxlength-message = "Title can not be more then 200 Characters"
@@ -70,7 +70,7 @@
                                         <input 
                                         required
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                         data-validation-required-message="First Action Text is required" 
                                         data-validation-regex-message="First Action Text must start with alphabets"
                                         data-validation-maxlength-message = "First Action Text can not be more then 200 Characters" 

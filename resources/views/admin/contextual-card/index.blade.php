@@ -41,16 +41,16 @@
                                 <td width='30%' >{{$contextualCard->description}}</td>
                                 <td width='10%' ><img style="height:50px;width:100px" src="{{asset($contextualCard->image_url)}}" alt="" srcset=""></td>
                                 <td width='30%' >
-                                    <div class="row">
-                                        <div class="col-md-2">
+                                    <div class="row justify-content-md-center no-gutters">
+                                        <div class="col-md-3">
                                             <a role="button" href="{{route('contextualcard.show',$contextualCard->id)}}" class="btn btn-outline-info"><i class="la la-info"></i></a>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <a role="button" href="{{route('contextualcard.edit',$contextualCard->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <button  data-id="{{$contextualCard->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

@@ -48,7 +48,7 @@
                                 <td width='10%'>{{$helpCenter->sequence}}</td>
                                 <td width='15%'><img src="{{asset($helpCenter->icon)}}" style="height:50px;width:100px" alt=""></td>
                                 <td width='30%'>
-                                    <div class="row">
+                                    <div class="row justify-content-md-center no-gutters">
                                         <div class="col-md-2 mr-1">
                                             <a role="button" href="{{ route('helpCenter.edit',$helpCenter->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
