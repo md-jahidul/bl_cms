@@ -25,8 +25,8 @@
                                         <input required type="number"
                                                value="@if(old('lower')){{old('lower')}}@endif"
                                                id="lower_price" min="1"
-                                               class="form-control @error('lower') is-invalid @enderror"
-                                               placeholder="Enter Lower Bound...." name="lower">
+                                               class="form-control price_filter_input @error('lower') is-invalid @enderror"
+                                               placeholder="Max 2000" name="lower">
                                         <small class="form-text text-muted">Enter
                                             amount in Tk.</small>
                                         @error('lower')
@@ -42,8 +42,8 @@
                                         <input required type="number"
                                                value="@if(old('upper')){{old('upper')}}@endif"
                                                id="upper_price"
-                                               class="form-control @error('lower') is-invalid @enderror"
-                                               placeholder="Enter Upper Bound...." name="upper">
+                                               class="form-control price_filter_input @error('lower') is-invalid @enderror"
+                                               placeholder="Max 2000" name="upper">
                                         <small class="form-text text-muted">Enter
                                             amount in Tk.</small>
                                         @error('lower')
@@ -148,7 +148,7 @@
                 let lower_price = $("#lower_price").val();
                 let upper_price = $("#upper_price").val();
 
-                if(upper_price !='' && lower_price > upper_price){
+                if(upper_price !='' && parseInt(lower_price) > parseInt(upper_price)){
                     Swal.fire(
                         'Input Error!',
                         'Lower input cannot be greater than Upper Input',
@@ -253,6 +253,20 @@
 
                     }
                 });
+            })
+
+            $(document).on('input','.price_filter_input',function () {
+                let input = $(this).val();
+
+                if(input > 2000){
+                    Swal.fire(
+                        'Input Error!',
+                        'Price Value must be less than 2000 tk',
+                        'error',
+                    );
+
+                    $(this).val('');
+                }
             })
 
 
