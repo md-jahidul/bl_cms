@@ -51,7 +51,7 @@
                             <input 
                             required
                             maxlength="200" 
-                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                             data-validation-required-message="Banner Name is required" 
                             data-validation-regex-message="Banner Name must start with alphabets"
                             data-validation-maxlength-message = "Banner Name can not be more then 200 Characters"
@@ -70,7 +70,7 @@
                             <input
                             required
                             maxlength="200" 
-                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                             data-validation-required-message="Image Name is required" 
                             data-validation-regex-message="Image Name must start with alphabets"
                             data-validation-maxlength-message = "Image Name can not be more then 200 Characters"

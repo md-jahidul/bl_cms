@@ -43,7 +43,7 @@
                                 <td width='10%'>{{$banner->redirect_url}}</td>
                                 <td width='10%'><img style="height:50px;width:100px" src="{{asset($banner->image_path)}}" alt="" srcset=""></td>
                                 <td width='30%'>
-                                    <div class="row">
+                                    <div class="row justify-content-md-center no-gutters">
                                         <div class="col-md-3">
                                             <a role="button" href="{{route('banner.edit',$banner->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>

@@ -47,13 +47,13 @@
                                 <td width='15%'>{{$internet_offer->offer_code}}</td>
                                 <td width='10%'>{{$internet_offer->points}}</td>
                                 <td width='20%'>
-                                    <div class="row">
-                                        <div class="col-md-3">
+                                    <div class="row justify-content-md-center no-gutters">
+                                        <div class="col-md-4">
                                             <a role="button" href="{{route('internetOffer.edit',$internet_offer->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <button data-id="{{$internet_offer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

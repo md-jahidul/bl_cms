@@ -30,7 +30,7 @@
                             <th width="30%">Title</th>
                             <th width="20%">Offer code</th>
                             <th width="10%">Points</th>
-                            <th width="30%">Action</th>
+                            <th width="20%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -40,19 +40,19 @@
                                 <td width="30%">{{$amarOffer->title}}</td>
                                 <td width="20%">{{$amarOffer->offer_code}}</td>
                                 <td width="10%">{{$amarOffer->points}}</td>
-                                <td width="30%">
-                                    <div class="row">
-                                        <div class="col-md-2">
+                                <td width="20%">
+                                    <div class="row justify-content-md-center no-gutters">
+                                        <div class="col-md-3">
                                             <a role="button" href="{{route('amarOffer.show',$amarOffer->id)}}" class="btn btn-outline-info">
                                                 <i class="la la-info"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <a role="button" href="{{route('amarOffer.edit',$amarOffer->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <button data-id="{{$amarOffer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

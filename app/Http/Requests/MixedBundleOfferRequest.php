@@ -32,7 +32,7 @@ class MixedBundleOfferRequest extends FormRequest
             'price'=>'required|numeric|min:1|max:999999999999999999',
             'points'=>'required|numeric|min:0|max:999999999999999999',
             'offer_code'=>'required|unique:mixed_bundle_offers,offer_code,'.$this->id,
-            'tag'=>'required',
+            'tag'=>'max:200',
         ];
     }
 }

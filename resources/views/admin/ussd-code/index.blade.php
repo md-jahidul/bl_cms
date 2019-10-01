@@ -39,7 +39,7 @@
                                 <td width='30%'>{{$ussd_code->title}}</td>
                                 <td width='30%'>{{$ussd_code->code}}</td>
                                 <td width='30%'>
-                                    <div class="row">
+                                    <div class="row justify-content-md-center">
 
                                         <div class="col-md-2">
                                             <a role="button" href="{{ route('ussd.show',$ussd_code->id)}}" class="btn btn-outline-info" onclick=""><i class="la la-info"></i></a>

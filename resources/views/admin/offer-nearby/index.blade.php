@@ -27,7 +27,7 @@
                         <thead>
                         <tr>
                             <th width="2%">ID</th>
-                            <th width="40%">Title</th>
+                            <th width="10%">Title</th>
                             <th width="2%">Vendor</th>
                             <th width="2%">Location</th>
                             <th width="2%">Type</th>
@@ -35,14 +35,14 @@
                             <th width="2%">Offer Code</th>
                             <th width="2%">validity</th>
                             <th width="2%">Image</th>
-                            <th width="30%">Action</th>
+                            <th width="40%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
                             @foreach ($nearByOffers as $nearByOffer)
                                 <tr>
                                     <td width="2%">{{$nearByOffer->id}}</td>
-                                    <td width="40%">{{$nearByOffer->title}}</td>
+                                    <td width="10%">{{$nearByOffer->title}}</td>
                                     <td width="2%">{{$nearByOffer->vendor}}</td>
                                     <td width="2%">{{$nearByOffer->location}}</td>
                                     <td width="2%">{{$nearByOffer->type}}</td>
@@ -51,14 +51,14 @@
                                     <td width="2%">{{$nearByOffer->validity}}</td>
                                     
                                     <td width="2%"><img style="height:25px;width:50px" src="{{asset($nearByOffer->image)}}" alt="" srcset=""> </td>
-                                    <td width="30%">
-                                        <div class="row">
-                                            <div class="col-md-4 mr-1">
+                                    <td width="40%">
+                                        <div class="row justify-content-md-center no-gutters">
+                                            <div class="col-md-6">
                                                 <a role="button" href="{{route('nearByOffer.edit',$nearByOffer->id)}}" class="btn btn-outline-success">
                                                     <i class="la la-pencil"></i>
                                                 </a>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <button data-id="{{$nearByOffer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                             </div>
                                         </div>

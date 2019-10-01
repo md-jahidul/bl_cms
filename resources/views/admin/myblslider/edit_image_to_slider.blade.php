@@ -62,7 +62,7 @@
                                                             <input 
                                                             required
                                                             maxlength="200" 
-                                                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                                             data-validation-required-message="Title is required" 
                                                             data-validation-regex-message="Title must start with alphabets"
                                                             data-validation-maxlength-message = "Title can not be more then 200 Characters" 
@@ -75,7 +75,7 @@
                                                             <input 
                                                             required
                                                             maxlength="200" 
-                                                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                                             data-validation-required-message="Alt Text is required" 
                                                             data-validation-regex-message="Alt Text must start with alphabets"
                                                             data-validation-maxlength-message = "Alt Text can not be more then 200 Characters"
@@ -83,37 +83,6 @@
                                                             <small class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
                                                             <div class="help-block"></div>
                                                         </div>
-                                                        {{-- <div class="form-group col-md-6 mb-2">
-                                                            <label for="btn">Button URL: </label>
-                                                            <input id="btn" 
-                                                            data-validation-regex-regex="((http[s]?|ftp[s]?):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*"
-                                                            data-validation-regex-message="Button URL must be a valid link"
-                                                            value="{{$image->url_btn_label}}"
-                                                            type="url" class="form-control" placeholder="Button Name" name="url_btn_label">
-                                                            <small class="text-danger"> @error('url_btn_label') {{ $message }} @enderror </small>
-                                                            <div class="help-block"></div>
-                                                        </div>
-                                                        <div class="form-group col-md-6 mb-2">
-                                                            <label for="url">URL: </label>
-                                                            <input 
-                                                            data-validation-regex-regex="((http[s]?|ftp[s]?):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*"
-                                                            data-validation-regex-message="URL must be a valid link"
-                                                            value="{{$image->redirect_url}}" id="url" type="url" class="form-control" placeholder="http.." name="url">
-                                                            <small class="text-danger"> @error('url') {{ $message }} @enderror </small>
-                                                            <div class="help-block"></div>
-                                                        </div>
-                                                    
-                                                        <div class="form-group col-12 mb-2">
-                                                            <label for="description">Description: </label>
-                                                            <textarea id="description" rows="5" class="form-control" name="description" placeholder="About Slider..">{{$image->description}}</textarea>
-                                                        </div> --}}
-                                                        
-                                                        {{-- <div class="col-6">
-                                                            <div class="form-group">
-                                                                <label for="sequence">Sequence:</label>
-                                                                <input disabled value="{{$image->sequence}}" id="sequence" type="number" class="form-control " name="sequence">
-                                                            </div>
-                                                        </div> --}}
 
                                                         <div class="col-6">
                                                             <div class="form-group">

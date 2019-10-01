@@ -120,7 +120,7 @@
                                         <input 
                                         required
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                         data-validation-required-message="First Action is required" 
                                         data-validation-regex-message="First Action must start with alphabets"
                                         data-validation-maxlength-message = "First Action can not be more then 200 Characters"   
@@ -144,7 +144,7 @@
                                         <input
                                         required
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                         data-validation-required-message="Second Action is required" 
                                         data-validation-regex-message="Second Action must start with alphabets"
                                         data-validation-maxlength-message = "Second Action can not be more then 200 Characters"

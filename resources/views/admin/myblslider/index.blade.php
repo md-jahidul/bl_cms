@@ -36,23 +36,23 @@
                                     </td>
                                     <td width="20%">{{$slider->SliderComponentTypes->name}}</td>
                                     <td width="30%">
-                                        <div class="row">
-                                            <div class="col-md-2">
+                                        <div class="row justify-content-md-center no-gutters">
+                                            <div class="col-md-3">
                                                 <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('myblslider.edit',$slider->id)}}" class="btn-pancil btn btn-outline-success" >
                                                     <i class="la la-pencil"></i>
                                                 </a>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <a role="button" data-toggle="tooltip" data-original-title="Add Image to slider" data-placement="top" href="{{route('myblsliderImage.index',$slider->id)}}" class=" btn btn-outline-success">
                                                     <i class="la la-plus"></i>
                                                 </a>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <a role="button" data-toggle="tooltip" data-original-title="View & Edit slider" data-placement="top" href="{{route('myblsliderImage.edit',$slider->id)}}" class=" btn btn-outline-success">
                                                     <i class="la la-eye"></i>
                                                 </a>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-3">
                                                 <button data-id="{{$slider->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                             </div>
                                         </div>
