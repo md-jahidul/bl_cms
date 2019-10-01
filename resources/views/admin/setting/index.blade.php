@@ -82,7 +82,7 @@
                                 <td width="50%">{{$setting->settingsKey->title}}</td>
                                 <td width="10%">{{$setting->limit}}</td>
                                 <td width="30%">
-                                    <div class="row">
+                                    <div class="row justify-content-md-center">
                                         <div class="col-md-2">
                                             <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('setting.edit',$setting->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>

@@ -58,7 +58,7 @@
                             <tr>
                                 <th width="10%" style="padding-top:12px">offer_code</th>
                                 <td width="90%" colspan="3"> 
-                                    <div class="row">
+                                    <div class="row justify-content-md-center no-gutters">
                                         <div class="col-8 text-danger font-weight-bold" style="padding-top:5px">
                                             {{$amarOffer->offer_code}}
                                         </div>

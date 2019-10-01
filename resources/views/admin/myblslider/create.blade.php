@@ -31,7 +31,7 @@
                                     <input 
                                         required
                                         maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
+                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                         data-validation-required-message="Name is required" 
                                         data-validation-regex-message="Name must start with alphabets"
                                         data-validation-maxlength-message = "Name can not be more then 200 Characters" 

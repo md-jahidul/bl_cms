@@ -34,7 +34,7 @@
                             <th width="2%">Validity</th>
                             <th width="2%">Price</th>
                             <th width="2%">Points</th>
-                            <th width="25%">Offer Code</th>
+                            <th width="20%">Offer Code</th>
                             <th width="30%">Action</th>
                         </tr>
                         </thead>
@@ -49,16 +49,16 @@
                                 <td width="2%">{{$mixedBundle_offer->validity}}</td>
                                 <td width="2%">{{$mixedBundle_offer->price}}</td>
                                 <td width="2%">{{$mixedBundle_offer->points}}</td>
-                                <td width="25%">{{$mixedBundle_offer->offer_code}}</td>
+                                <td width="20%">{{$mixedBundle_offer->offer_code}}</td>
                                 {{-- <td>{{$mixedBundle_offer->tag}}</td> --}}
                                 <td width="30%">
-                                    <div class="row">
-                                        <div class="col-md-5">
+                                    <div class="row justify-content-md-center no-gutters">
+                                        <div class="col-md-6">
                                             <a role="button" href="{{route('mixedBundleOffer.edit',$mixedBundle_offer->id)}}" class="btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-5">
+                                        <div class="col-md-6">
                                             <button data-id="{{$mixedBundle_offer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </div>

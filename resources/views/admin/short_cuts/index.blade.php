@@ -35,7 +35,7 @@
                         required 
                         data-validation-required-message="Title is required" 
                         maxlength="50" 
-                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.])*)*"
+                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                         data-validation-regex-message="Title must start with alphabets"
                         data-validation-maxlength-message = "Title can not be more then 50 Characters"
                         style="height:100%" value="@if(isset($short_cut_info)){{$short_cut_info->title}} @elseif(old("title")) {{old("title")}} @endif" type="text" name="title" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter Shorcut Name..">
@@ -142,7 +142,7 @@
                                     @if($short_cut->is_default==1) Default @else Not Default @endif
                                 </td>
                                 <td width="30%">
-                                    <div class="row">
+                                    <div class="row justify-content-md-center no-gutters">
                                         <div class="col-md-2">
                                             <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('short_cuts.edit',$short_cut->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
