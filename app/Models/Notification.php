@@ -37,4 +37,14 @@ class Notification extends Model
     }
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(Notification::class,'notification_user',
+            'notification_id','user_id');
+    }
+
+
 }
