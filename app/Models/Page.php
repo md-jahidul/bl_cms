@@ -10,4 +10,9 @@ class Page extends Model
     {
         return $this->hasMany(ShortCode::class);
     }
+
+    public function metaTags ()
+    {
+        return $this->hasMany(MetaTag::class);
+    }
 }

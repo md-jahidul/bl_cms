@@ -2,7 +2,8 @@
 @section('title', 'Partner Offer List')
 @section('card_name', 'Partner Offer List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><strong>Partner Offer List</strong></li>
+    <li class="breadcrumb-item "><a href="{{ url('partners') }}"> Partner List</a></li>
+    <li class="breadcrumb-item ">Partner Offer List</li>
 @endsection
 @section('action')
     <a href="{{ url("partner-offer/$parentId/$partnerName/offer/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
@@ -26,7 +27,7 @@
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
-                        <tbody id="sortable">
+                        <tbody>
                         @foreach($partnerOffers as $index=>$partnerOffer)
                             <tr data-index="{{ $partnerOffer->id }}" data-position="{{ $partnerOffer->display_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
