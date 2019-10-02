@@ -34,9 +34,9 @@
                 <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
-                        <th width="10%">ID</th>
-                        <th width="15%">Title</th>
-                        <th width="35%">Body</th>
+                        <th width="5%">ID</th>
+                        <th width="12%">Title</th>
+                        <th width="30%">Body</th>
                         <th width="10%">Category</th>
                         <th width="15%">Action</th>
                     </tr>
@@ -44,9 +44,9 @@
                     <tbody>
                         @foreach ($notifications as $notification)
                             <tr>
-                                <td width="10%">{{$notification->id}}</td>
-                                <td width="15%">{{$notification->title}}</td>
-                                <td width="35%">{{$notification->body}}</td>
+                                <td width="5%">{{$notification->id}}</td>
+                                <td width="12%">{{$notification->title}}</td>
+                                <td width="30%">{{$notification->body}}</td>
                                 <td width="10%">{{$notification->NotificationCategory->name}}</td>
                                 <td width="15%">
                                     <div class="row">
