@@ -118,11 +118,8 @@ class PartnerOfferController extends Controller
      */
     public function destroy($partnerId, $partnerName, $id)
     {
-
         $response = $this->partnerOfferService->deletePartnerOffer($id);
         Session::flash('message', $response->getContent());
-        return url("slider/$partnerId/$partnerName");
+        return url("partner-offer/$partnerId/$partnerName");
     }
-
-
 }
