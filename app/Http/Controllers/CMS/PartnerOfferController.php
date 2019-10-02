@@ -115,4 +115,10 @@ class PartnerOfferController extends Controller
         Session::flash('message', $response->getContent());
         return url("slider/$partnerId/$partnerName");
     }
+
+    public function partnerOffersHome()
+    {
+        $homePartnerOffers = $this->partnerOfferService->itemList(null,true);
+        return view('admin.partner-offer.home', compact('homePartnerOffers' ));
+    }
 }

@@ -16,10 +16,11 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <h4 class="pb-1"><strong>{{ ucwords($partnerName." ". "Offers") }}</strong></h4>
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
+                           id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <td width="3%"><i class="icon-cursor-move icons"></i></td>
+                            <td width="3%">#</td>
                             <th>Company Logo</th>
                             <th width="25%">Validity</th>
                             <th>Get Send SMS</th>
@@ -30,8 +31,8 @@
                         <tbody>
                         @foreach($partnerOffers as $index=>$partnerOffer)
                             <tr data-index="{{ $partnerOffer->id }}" data-position="{{ $partnerOffer->display_order }}">
-                                <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <td><img class="" src="{{ $partnerOffer->partner->company_logo }}" alt="Slider Image" height="50" width="50" /></td>
+                                <td width="3%">{{ $index + 1 }}</td>
+                                <td><img class="" src="{{ $partnerOffer->partner->company_logo }}" alt="Slider Image" height="40" width="50" /></td>
                                 <td>{{ $partnerOffer->validity_en }} {!! $partnerOffer->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                 <td>{{ $partnerOffer->get_offer_msg_en }}</td>
                                 <td>{{ $partnerOffer->offer_en }}</td>
@@ -64,44 +65,6 @@
 @endpush
 
 @push('page-js')
-    <script>
-        $(document).ready(function () {
-            $('#Example1').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy', className: 'copyButton',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'excel', className: 'excel',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'pdf', className: 'pdf', "charset": "utf-8",
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'print', className: 'print',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                ],
-                paging: true,
-                searching: true,
-                "bDestroy": true,
-            });
-        });
-
-    </script>
-
     <script>
         var auto_save_url = "{{ url('/partner-offer/sortable') }}";
     </script>

@@ -25,9 +25,9 @@ class PartnerOfferService
     }
 
 
-    public function itemList($partnerId)
+    public function itemList($partnerId,$isHome = false)
     {
-        return $this->partnerOfferRepository->getPartnerOffer($partnerId);
+        return $this->partnerOfferRepository->getPartnerOffer($partnerId,$isHome);
     }
 
     /**

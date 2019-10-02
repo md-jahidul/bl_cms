@@ -36,12 +36,13 @@ class ShortCodesTableSeeder extends Seeder
             [
                 'component_title' => 'Life Style & Benefits',
                 'component_type' => 'slider_multiple',
-                'component_id'   =>  null
+                'component_id'   =>  4
             ],
             [
                 'component_title' => 'Testimonial Slider',
                 'component_type' => 'slider_single',
-                'component_id'   =>  3
+                'component_id'   =>  3,
+                'limit' => 5
             ]
         ];
 
