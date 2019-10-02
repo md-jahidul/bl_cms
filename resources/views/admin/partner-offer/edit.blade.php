@@ -103,22 +103,19 @@
 
 
                                 <div class="col-md-12">
-                                    <div class="form-group {{ $errors->has('btn_text_bn') ? ' error' : '' }}">
-                                        <label for="title" class="mr-1">Show In Home:</label>
-                                        <input type="checkbox" name="show_in_home" value="1" id="input-radio-16" {{ ($partnerOffer->show_in_home == 1) ? 'checked' : '' }}>
-                                        @if ($errors->has('btn_text_bn'))
-                                            <div class="help-block">  {{ $errors->first('btn_text_bn') }}</div>
-                                        @endif
+                                    <div class="form-group">
+                                        <label for="show_in_home" class="mr-1">Show In Home:</label>
+                                        <input type="checkbox" name="show_in_home" value="1" id="show_in_home" {{ ($partnerOffer->show_in_home == 1) ? 'checked' : '' }}>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="title" class="required mr-1">Status:</label>
-                                        <input type="radio" name="is_active" value="1" id="input-radio-15" {{ ($partnerOffer->is_active == 1) ? 'checked' : '' }}>
-                                        <label for="input-radio-15" class="mr-1">Active</label>
-                                        <input type="radio" name="is_active" value="0" id="input-radio-16" {{ ($partnerOffer->is_active == 0) ? 'checked' : '' }}>
-                                        <label for="input-radio-16">Inactive</label>
+                                        <input type="radio" name="is_active" value="1" id="active" {{ ($partnerOffer->is_active == 1) ? 'checked' : '' }}>
+                                        <label for="active" class="mr-1">Active</label>
+                                        <input type="radio" name="is_active" value="0" id="inactive" {{ ($partnerOffer->is_active == 0) ? 'checked' : '' }}>
+                                        <label for="inactive">Inactive</label>
                                     </div>
                                 </div>
 
