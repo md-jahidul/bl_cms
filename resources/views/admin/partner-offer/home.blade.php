@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('title', 'Partner Offer List')
-@section('card_name', 'Partner Offer List')
+@section('card_name', 'Home Page Offer List')
 @section('breadcrumb')
     <li class="breadcrumb-item "><a href="{{ url('partners') }}"> Partner List</a></li>
-    <li class="breadcrumb-item ">Partner Offer List</li>
+    <li class="breadcrumb-item ">Home Page Offer List</li>
 @endsection
 @section('action')
 {{--    <a href="{{ url("partner-offer/$parentId/$partnerName/offer/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
@@ -24,11 +24,12 @@
                             <th width="25%">Validity</th>
                             <th>Get Send SMS</th>
                             <th>Offer Percentage</th>
-                            <th class="text-right">Action</th>
+{{--                            <th class="text-right">Action</th>--}}
                         </tr>
                         </thead>
                         <tbody id="sortable">
                         @foreach($homePartnerOffers as $index=>$partnerOffer)
+                            @php $partnerName = strtolower(str_replace(' ', '-', $partnerOffer->partner->company_name_en)) @endphp
                             <tr data-index="{{ $partnerOffer->id }}" data-position="{{ $partnerOffer->display_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td><img class="" src="{{ $partnerOffer->partner->company_logo }}" alt="Slider Image" height="50" width="50" /></td>

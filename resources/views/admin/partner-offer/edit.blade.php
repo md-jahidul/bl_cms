@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title">{{ ucwords($partnerName) }} offer edit</h5><hr>
+                    <h4 class="menu-title"><strong>{{ ucwords($partnerName) }} offer edit</strong></h4><hr>
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('partner_offer_update', [$partnerId, $partnerName, $partnerOffer->id]) }}" method="POST" novalidate>
                             @csrf

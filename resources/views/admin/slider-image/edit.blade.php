@@ -55,16 +55,15 @@
 
 
                                 <div class="form-group col-md-6 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="file" >Select File</label>
-                                    <label id="projectinput7" class="file center-block ml-2">
-                                        <input type="file" id="file" name="image_url">
-                                        <span class="file-custom"></span>
-                                    </label>
-                                    <img class="img-thumbnail" src="{{ $sliderImage->image_url }}" height="80" width="80">
+                                    <div class="custom-file">
+                                        <input type="file" name="image_url" class="custom-file-input" id="image">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                </div>
 
-                                    @if ($errors->has('image_url'))
-                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
-                                    @endif
+                                <div class="form-group col-md-6">
+                                    <img src="{{ $sliderImage->image_url }}" style="height:70px;width:70px;" id="imgDisplay">
                                 </div>
 
 

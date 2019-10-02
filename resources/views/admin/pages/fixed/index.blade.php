@@ -12,7 +12,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <table class="table table-striped table-bordered"
-                           role="grid" aria-describedby="Example1_info" style="cursor:move;">
+                           role="grid" aria-describedby="Example1_info">
                         <tbody>
                             @if(count($pages) == !0)
                                 @foreach($pages as $page)

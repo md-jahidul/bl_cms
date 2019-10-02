@@ -76,7 +76,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('partner_category_id') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 mb-0{{ $errors->has('partner_category_id') ? ' error' : '' }}">
                                     <label for="partner_category_id" class="required">Company Category</label>
                                     <fieldset class="form-group position-relative">
                                         <select class="form-control input-sm" name="partner_category_id" id="SmallSelect" required data-validation-required-message="Please partner category">
@@ -94,22 +94,38 @@
                                 </div>
 
 
-                                <div class="form-group col-md-6 {{ $errors->has('company_logo') ? ' error' : '' }}">
-                                    <label for="file" class=""></label><br>
-                                    <label for="file" class="required">Select Company Logo</label>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('company_logo') ? ' error' : '' }}">--}}
+{{--                                    <label for="file" class=""></label><br>--}}
+{{--                                    <label for="file" class="required">Select Company Logo</label>--}}
 
-                                    <label id="projectinput7" class="file center-block ml-2">
-                                        <input type="file" id="file" name="company_logo" accept="image/png,image/jpg,image/jpeg" required>
-                                    </label><br>
+{{--                                    <label id="projectinput7" class="file center-block ml-2">--}}
+{{--                                        <input type="file" id="file" name="company_logo" accept="image/png,image/jpg,image/jpeg" required>--}}
+{{--                                    </label><br>--}}
+{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
+
+{{--                                    @if ($errors->has('company_logo'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('company_logo') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+
+                                <div class="form-group col-md-6 mb-0 {{ $errors->has('company_logo') ? ' error' : '' }}">
+                                    <label for="alt_text" class="required">Company logo</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="company_logo" class="custom-file-input" id="image" accept="image/*"
+                                               required data-validation-required-message="Company logo field is required.">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
 
+                                    <div class="help-block"></div>
                                     @if ($errors->has('company_logo'))
                                         <div class="help-block">  {{ $errors->first('company_logo') }}</div>
                                     @endif
+
+                                    <div class="form-group col-md-6 mt-1">
+                                        <img style="height:70px;width:70px;display:none" id="imgDisplay">
+                                    </div>
                                 </div>
-
-
-
 
                                 <div class="form-group col-md-12 {{ $errors->has('company_address') ? ' error' : '' }}">
                                     <label for="company_address" class="required">Company Address</label>

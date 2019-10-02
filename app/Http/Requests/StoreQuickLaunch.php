@@ -24,8 +24,8 @@ class StoreQuickLaunch extends FormRequest
     public function rules()
     {
         return [
-            'en_title' => 'required',
-            'bn_title' => 'required',
+            'title_en' => 'required',
+            'title_bn' => 'required',
             'image_url' => 'required|mimes:png,jpeg',
             'alt_text' => 'required',
             'link' => 'required',

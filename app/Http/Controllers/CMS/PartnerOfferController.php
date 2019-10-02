@@ -33,6 +33,12 @@ class PartnerOfferController extends Controller
         return view('admin.partner-offer.index', compact('partnerOffers', 'parentId', 'partnerName'));
     }
 
+    public function partnerOffersHome()
+    {
+        $homePartnerOffers = $this->partnerOfferService->itemList(null,true);
+        return view('admin.partner-offer.home', compact('homePartnerOffers' ));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -84,7 +90,7 @@ class PartnerOfferController extends Controller
     public function edit($partnerId, $partnerName, $id)
     {
         $partnerOffer = $this->partnerOfferService->findOne($id);
-        return view('admin.partner-offer.edit', compact('partnerOffer', 'partnerId', 'partnerName'));
+        return view('admin.partner-offer.edit', compact('partnerOffer', 'partnerId', 'partnerName', 'path'));
     }
 
     /**
@@ -96,9 +102,11 @@ class PartnerOfferController extends Controller
      */
     public function update(StorePartnerOfferRequest $request, $partnerId, $partnerName, $id)
     {
+
+
         $response = $this->partnerOfferService->updatePartnerOffer($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect("partner-offer/$partnerId/$partnerName");
+        return redirect( isset($redirect) ? $redirect : "partner-offer/$partnerId/$partnerName");
     }
 
     /**
@@ -116,9 +124,5 @@ class PartnerOfferController extends Controller
         return url("slider/$partnerId/$partnerName");
     }
 
-    public function partnerOffersHome()
-    {
-        $homePartnerOffers = $this->partnerOfferService->itemList(null,true);
-        return view('admin.partner-offer.home', compact('homePartnerOffers' ));
-    }
+
 }
