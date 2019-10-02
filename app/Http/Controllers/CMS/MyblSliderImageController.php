@@ -10,6 +10,7 @@ use App\Http\Requests\SliderImageUpdateRequest;
 use App\Services\MyblSliderService;
 use App\Services\AlSliderComponentTypeService;
 use App\Models\SliderImage;
+use Illuminate\Http\Response;
 
 class MyblSliderImageController extends Controller
 {
@@ -27,7 +28,9 @@ class MyblSliderImageController extends Controller
 
     /**
      * BannerController constructor.
-     * @param SliderImageService $sliderService
+     * @param MyblSliderImageService $sliderImageService
+     * @param MyblSliderService $sliderService
+     * @param AlSliderComponentTypeService $sliderTypeService
      */
     public function __construct(MyblSliderImageService $sliderImageService, MyblSliderService $sliderService, AlSliderComponentTypeService $sliderTypeService)
     {
@@ -37,15 +40,15 @@ class MyblSliderImageController extends Controller
     }
 
 
-
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param $sliderId
+     * @return Response
      */
     public function index($sliderId)
     {
-        
+
         return view('admin.myblslider.add_image_to_slider')
                     ->with('sliderId',$sliderId)
                     ->with('slider_information',$this->sliderService->findOne($sliderId));
@@ -55,7 +58,7 @@ class MyblSliderImageController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -65,31 +68,32 @@ class MyblSliderImageController extends Controller
     /**return redirect(route('myblslider.index'));
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param SliderImageStoreRequest $request
+     * @return Response
      */
     public function store(SliderImageStoreRequest $request)
     {
         session()->flash('message',$this->sliderImageService->storeSliderImage($request->all())->getContent());
         return redirect()->back();
-        
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return void
      */
     public function show($id)
     {
         //
     }
+
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function updatePosition(Request $request)
     {
@@ -105,11 +109,11 @@ class MyblSliderImageController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
-        
+
         $slider = $this->sliderService->findOne($id);
         return view('admin.myblslider.edit_image_to_slider')
                 ->with('slider',$slider)
@@ -120,9 +124,9 @@ class MyblSliderImageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param SliderImageUpdateRequest $request
+     * @param int $id
+     * @return Response
      */
     public function update(SliderImageUpdateRequest $request, $id)
     {
@@ -134,8 +138,9 @@ class MyblSliderImageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
+     * @throws \Exception
      */
     public function destroy($id)
     {

@@ -79,7 +79,8 @@ class PushNotificationController extends Controller
         }
 
 
-        NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService);
+        NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+                          ->onQueue('notification');;
 
         session()->flash('success',"Notification has been sent successfully");
 
