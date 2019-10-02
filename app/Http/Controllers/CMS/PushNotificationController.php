@@ -43,13 +43,11 @@ class PushNotificationController extends Controller
 
         if($request->filled('user_phone'))
         {
-            $user_phone = $request->input('user_phone');
-
             $notification = [
                 'title' => $request->input('title'),
                 'body' => $request->input('message'),
                 "send_to_type" => "INDIVIDUALS" ,
-                "recipients" => $user_phone,
+                "recipients" => $request->input('user_phone'),
                 "is_interactive" => "Yes",
                 "data" => [
                     "cid" => "1",
@@ -89,6 +87,8 @@ class PushNotificationController extends Controller
 
             if($request->filled('user_phone'))
             {
+                $user_phone = $request->input('user_phone');
+
                 $this->notificationService->attachNotificationToUser($notification_id, $user_phone);
             }
 
