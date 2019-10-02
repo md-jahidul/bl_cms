@@ -4,6 +4,8 @@ namespace App\Http\Controllers\CMS;
 
 use App\Repositories\MyblSliderComponentTypeRepository;
 use App\Services\MyblSliderComponentTypeService;
+use Exception;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
@@ -11,6 +13,8 @@ use App\Models\Slider;
 use App\Services\MyblSliderService;
 
 use App\Http\Requests\MyblSliderRequest;
+use Illuminate\Http\Response;
+
 class MyblSliderController extends Controller
 {
 
@@ -26,7 +30,8 @@ class MyblSliderController extends Controller
 
     /**
      * BannerController constructor.
-     * @param SliderService $sliderService
+     * @param MyblSliderService $sliderService
+     * @param MyblSliderComponentTypeService $sliderTypeService
      */
     public function __construct(MyblSliderService $sliderService, MyblSliderComponentTypeService $sliderTypeService)
     {
@@ -39,22 +44,18 @@ class MyblSliderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
         $sliders = $this->sliderService->getAppSlider();
-        $slider_types = $this->sliderTypeService->findAll();
-        //dd($sliders);
-        return view('admin.myblslider.index')
-                ->with('sliders',$sliders)
-                ->with('slider_types',$slider_types);
+        return view('admin.myblslider.index',compact('sliders'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -66,12 +67,12 @@ class MyblSliderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(MyblSliderRequest $request)
     {
-        
+
         session()->flash('message',$this->sliderService->storeSlider($request->all())->getContent());
         return redirect(route('myblslider.index'));
     }
@@ -80,7 +81,7 @@ class MyblSliderController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -91,7 +92,7 @@ class MyblSliderController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(Slider $myblslider)
     {
@@ -106,9 +107,9 @@ class MyblSliderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
 
     public function update(MyblSliderRequest $request,$id)
@@ -119,8 +120,8 @@ class MyblSliderController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
-     * @throws \Exception
+     * @return UrlGenerator|string
+     * @throws Exception
      */
     public function destroy($id)
     {

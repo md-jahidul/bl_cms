@@ -38,22 +38,18 @@
                                     <td width="30%">
                                         <div class="row justify-content-md-center no-gutters">
                                             <div class="col-md-3">
-                                                <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('myblslider.edit',$slider->id)}}" class="btn-pancil btn btn-outline-success" >
+                                                <a role="button" title="Edit" href="{{route('myblslider.edit',$slider->id)}}" class="btn-pancil btn btn-outline-success" >
                                                     <i class="la la-pencil"></i>
                                                 </a>
                                             </div>
                                             <div class="col-md-3">
-                                                <a role="button" data-toggle="tooltip" data-original-title="Add Image to slider" data-placement="top" href="{{route('myblsliderImage.index',$slider->id)}}" class=" btn btn-outline-success">
-                                                    <i class="la la-plus"></i>
+                                                <a role="button" title="View Images" href="{{route('myblslider.images.index',$slider->id)}}"
+                                                   class=" btn btn-outline-success">
+                                                    <i class="la la-picture-o"></i>
                                                 </a>
                                             </div>
                                             <div class="col-md-3">
-                                                <a role="button" data-toggle="tooltip" data-original-title="View & Edit slider" data-placement="top" href="{{route('myblsliderImage.edit',$slider->id)}}" class=" btn btn-outline-success">
-                                                    <i class="la la-eye"></i>
-                                                </a>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <button data-id="{{$slider->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                                <button data-id="{{$slider->id}}" title="Delete" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                             </div>
                                         </div>
                                     </td>

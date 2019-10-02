@@ -48,10 +48,8 @@ class MyblSliderImageController extends Controller
      */
     public function index($sliderId)
     {
-
-        return view('admin.myblslider.add_image_to_slider')
-                    ->with('sliderId',$sliderId)
-                    ->with('slider_information',$this->sliderService->findOne($sliderId));
+        $slider_information = $this->sliderService->findOne($sliderId);
+        return view('admin.myblslider.images.index',compact('sliderId','slider_information'));
     }
 
 
@@ -60,9 +58,10 @@ class MyblSliderImageController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create($sliderId)
     {
-        //
+        $slider_information = $this->sliderService->findOne($sliderId);
+        return view('admin.myblslider.images.create',compact('sliderId','slider_information'));
     }
 
     /**return redirect(route('myblslider.index'));
@@ -98,7 +97,7 @@ class MyblSliderImageController extends Controller
     public function updatePosition(Request $request)
     {
         //return $request;
-        foreach ($request->positions as $position) {
+        foreach ($request->position as $position) {
             $image = SliderImage::FindorFail($position[0]);
             $image->update(['sequence' => $position[1]]);
         }
@@ -111,14 +110,10 @@ class MyblSliderImageController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($sliderImageId)
     {
-
-        $slider = $this->sliderService->findOne($id);
-        return view('admin.myblslider.edit_image_to_slider')
-                ->with('slider',$slider)
-                ->with('slider_id',$id)
-                ->with('slider_information',$this->sliderService->findOne($id));
+        $imageInfo = SliderImage::find($sliderImageId);
+        return view('admin.myblslider.images.edit',compact('imageInfo'));
     }
 
     /**
@@ -130,7 +125,6 @@ class MyblSliderImageController extends Controller
      */
     public function update(SliderImageUpdateRequest $request, $id)
     {
-        //dd( $request, $id);
         session()->flash('success',$this->sliderImageService->updateSliderImage($request->all(), $id)->getContent());
         return redirect()->back();
     }

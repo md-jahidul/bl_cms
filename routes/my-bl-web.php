@@ -50,13 +50,21 @@ Route::group(['middleware' => ['appAdmin']], function () {
     //------ Slider -----------//
 
     // Slider
-    route::resource('myblslider','CMS\MyblSliderController');
+    Route::resource('myblslider','CMS\MyblSliderController');
+
+    Route::get('myblslider/{slider_id}/images','CMS\MyblSliderImageController@index')->name('myblslider.images.index');
+    Route::get('myblslider/{slider_id}/images/create','CMS\MyblSliderImageController@create')->name('myblslider.images.create');
+    Route::post('myblslider/images/store','CMS\MyblSliderImageController@store')->name('myblslider.images.store');
+    Route::get('myblslider/images/{id}/edit','CMS\MyblSliderImageController@edit')->name('myblslider.images.edit');
+    Route::put('myblslider/images/{id}/update','CMS\MyblSliderImageController@update')->name('myblslider.images.update');
+
     Route::get('myblslider/destroy/{id}','CMS\MyblSliderController@destroy');
-    Route::get('myblslider/edit/{slider-other-attr}','CMS\MyblSliderController@edit')->name('slider-other-attr.edit');
+    //Route::get('myblslider/edit/{slider-other-attr}','CMS\MyblSliderController@edit')->name('slider-other-attr.edit');
     // Slider
 
     // Slider Image
-    route::resource('myblsliderImage','CMS\MyblSliderImageController');
+/*    route::resource('myblsliderImage','CMS\MyblSliderImageController');*/
+    Route::get('myblslider/{id}/images','CMS\MyblSliderImageController@index');
     route::get('myblsliderImage/addImage/update-position','CMS\MyblSliderImageController@updatePosition');
     Route::get('myblslider/addImage/{sliderId}','CMS\MyblSliderImageController@index')->name('myblsliderImage.index');
     // Slider Image
@@ -104,11 +112,11 @@ Route::group(['middleware' => ['appAdmin']], function () {
     // contextual cards
     route::resource('contextualcard','CMS\ContextualCardController');
     Route::get('card/destroy/{id}','CMS\ContextualCardController@destroy');
-    
+
     // Notification categorys
     route::resource('notificationCategory','CMS\NotificationCategoryController');
     Route::get('notificationCategory/destroy/{id}','CMS\NotificationCategoryController@destroy');
-    
+
     // Notification
     route::resource('notification','CMS\NotificationController');
     Route::get('notification/destroy/{id}','CMS\NotificationController@destroy');

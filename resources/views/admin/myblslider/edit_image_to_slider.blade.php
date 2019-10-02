@@ -43,7 +43,8 @@
                                     <i class="icon-cursor-move icons"></i>
                                     <a data-toggle="collapse" href="#collapse11{{$image->id}}" aria-expanded="false"
                                        aria-controls="collapse11{{$image->id}}" class="card-title">
-                                        <img style="height:50px;width:100px" class="" id="image_preview_{{$index}}" src="{{asset($image->image_url)}}"
+                                        <img style="height:50px;width:100px" class="" id="image_preview_{{$index}}"
+                                             src="{{asset($image->image_url)}}"
                                              alt="" srcset=""><br>
                                     </a>
                                 </div>
@@ -64,101 +65,103 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12 mb-2 file-repeater">
-                                                    <form novalidate class="form row"
-                                                          action="{{route('myblsliderImage.update',$image->id)}}"
-                                                          enctype="multipart/form-data" method="POST">
-                                                        @csrf
-                                                        @method('put')
-                                                        <input type="hidden" hidden value="{{$slider_information->id}}"
-                                                               name="slider_id">
-                                                        <input type="hidden" hidden value="{{$image->id}}" name="id">
-                                                        <div class="form-group col-md-12 mb-2">
-                                                            <label for="title">Title: <small
-                                                                    class="text-danger">*</small> </label>
-                                                            <input
-                                                                required
-                                                                maxlength="200"
-                                                                data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                                                data-validation-required-message="Title is required"
-                                                                data-validation-regex-message="Title must start with alphabets"
-                                                                data-validation-maxlength-message="Title can not be more then 200 Characters"
-                                                                value="{{$image->title}}" required id="title"
-                                                                type="text"
-                                                                class="form-control @error('title') is-invalid @enderror"
-                                                                placeholder="Title" name="title">
-                                                            <small
-                                                                class="text-danger"> @error('title') {{ $message }} @enderror </small>
-                                                            <div class="help-block"></div>
-                                                        </div>
-                                                        <div class="form-group col-md-6 mb-2">
-                                                            <label for="alt_text">Alt Text: </label>
-                                                            <input
-                                                                required
-                                                                maxlength="200"
-                                                                data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                                                data-validation-required-message="Alt Text is required"
-                                                                data-validation-regex-message="Alt Text must start with alphabets"
-                                                                data-validation-maxlength-message="Alt Text can not be more then 200 Characters"
-                                                                value="{{$image->alt_text}}" id="alt_text" type="text"
-                                                                class="form-control @error('alt_text') is-invalid @enderror"
-                                                                placeholder="Alt text" name="alt_text">
-                                                            <small
-                                                                class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
-                                                            <div class="help-block"></div>
-                                                        </div>
+                                                <form novalidate class="form row"
+                                                      action="{{route('myblsliderImage.update',$image->id)}}"
+                                                      enctype="multipart/form-data" method="POST">
+                                                    @csrf
+                                                    @method('put')
+                                                    <input type="hidden" hidden value="{{$slider_information->id}}"
+                                                           name="slider_id">
+                                                    <input type="hidden" hidden value="{{$image->id}}" name="id">
+                                                    <div class="form-group col-md-12 mb-2">
+                                                        <label for="title">Title: <small
+                                                                class="text-danger">*</small> </label>
+                                                        <input
+                                                            required
+                                                            maxlength="200"
+                                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                                            data-validation-required-message="Title is required"
+                                                            data-validation-regex-message="Title must start with alphabets"
+                                                            data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                                            value="{{$image->title}}" required id="title"
+                                                            type="text"
+                                                            class="form-control @error('title') is-invalid @enderror"
+                                                            placeholder="Title" name="title">
+                                                        <small
+                                                            class="text-danger"> @error('title') {{ $message }} @enderror </small>
+                                                        <div class="help-block"></div>
+                                                    </div>
+                                                    <div class="form-group col-md-6 mb-2">
+                                                        <label for="alt_text">Alt Text: </label>
+                                                        <input
+                                                            required
+                                                            maxlength="200"
+                                                            data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
+                                                            data-validation-required-message="Alt Text is required"
+                                                            data-validation-regex-message="Alt Text must start with alphabets"
+                                                            data-validation-maxlength-message="Alt Text can not be more then 200 Characters"
+                                                            value="{{$image->alt_text}}" id="alt_text" type="text"
+                                                            class="form-control @error('alt_text') is-invalid @enderror"
+                                                            placeholder="Alt text" name="alt_text">
+                                                        <small
+                                                            class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
+                                                        <div class="help-block"></div>
+                                                    </div>
 
-                                                        <div class="col-6">
-                                                            <div class="form-group">
-                                                                <label for="is_active">Active Status:</label>
-                                                                <select value="{{$image->is_active}}"
-                                                                        class="form-control" id="is_active"
-                                                                        name="is_active">
-                                                                    <option value="1"
-                                                                            @if($image->is_active == "1") selected @endif>
-                                                                        Active
-                                                                    </option>
-                                                                    <option value="0"
-                                                                            @if($image->is_active == "0") selected @endif>
-                                                                        De-Active
-                                                                    </option>
-                                                                </select>
-                                                            </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="is_active">Active Status:</label>
+                                                            <select value="{{$image->is_active}}"
+                                                                    class="form-control" id="is_active"
+                                                                    name="is_active">
+                                                                <option value="1"
+                                                                        @if($image->is_active == "1") selected @endif>
+                                                                    Active
+                                                                </option>
+                                                                <option value="0"
+                                                                        @if($image->is_active == "0") selected @endif>
+                                                                    De-Active
+                                                                </option>
+                                                            </select>
                                                         </div>
+                                                    </div>
 
-                                                        <div class="col-md-12 mb-1">
-                                                            <img style="height:100px;width:200px" id="img_display_{{$index}}"
-                                                                 src="{{asset($image->image_url)}}" alt="" srcset="">
-                                                        </div>
-                                                        <div class="col-md-12">
+                                                    <div class="col-md-12 mb-1">
+                                                        <img style="height:100px;width:200px"
+                                                             id="img_display_{{$index}}"
+                                                             src="{{asset($image->image_url)}}" alt="" srcset="">
+                                                    </div>
+                                                    <div class="col-md-12">
 
-                                                            <div class="form-group">
-                                                                <label for="image">Upload Image :</label>
-                                                                <div class="input-group" id="image_input_div_{{$index}}">
-                                                                    <div class="custom-file">
-                                                                        <input accept="image/*"
-                                                                               onchange="checkImageRatio(this,{{$index}})"
-                                                                               id="image_{{$index}}" name="image_url"
-                                                                               type="file"
-                                                                               class="custom-file-input">
-                                                                        <div class="help-block"></div>
-                                                                        <label class="custom-file-label"
-                                                                               for="image_url">Upload Image...</label>
-                                                                    </div>
+                                                        <div class="form-group">
+                                                            <label for="image">Upload Image :</label>
+                                                            <div class="input-group" id="image_input_div_{{$index}}">
+                                                                <div class="custom-file">
+                                                                    <input accept="image/*"
+                                                                           onchange="checkImageRatio(this,{{$index}})"
+                                                                           id="image_{{$index}}" name="image_url"
+                                                                           type="file"
+                                                                           class="custom-file-input">
+                                                                    <div class="help-block"></div>
+                                                                    <label class="custom-file-label"
+                                                                           for="image_url">Upload Image...</label>
                                                                 </div>
-                                                                <small class="text-info" id="ratio_info_{{$index}}"> Shortcut icon should be in
-                                                                    16:9 aspect ratio</small><br>
-                                                                <small
-                                                                    class="text-danger"> @error('icon') {{ $message }} @enderror </small>
-                                                                <small id="message_{{$index}}"></small>
                                                             </div>
+                                                            <small class="text-info" id="ratio_info_{{$index}}">
+                                                                Shortcut icon should be in
+                                                                16:9 aspect ratio</small><br>
+                                                            <small
+                                                                class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                                            <small id="message_{{$index}}"></small>
                                                         </div>
-                                                        <div class="col-2">
-                                                            <button type="submit" style="width:100%"
-                                                                    id="submitForm_{{$index}}"
-                                                                    class=" btn btn-success">Submit
-                                                            </button>
-                                                        </div>
-                                                    </form>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <button type="submit" style="width:100%"
+                                                                id="submitForm_{{$index}}"
+                                                                class=" btn btn-success">Submit
+                                                        </button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -188,7 +191,7 @@
 
     <script>
 
-        let imageURL = function (input,id) {
+        let imageURL = function (input, id) {
             if (input.files && input.files[0]) {
                 console.log(id);
                 let reader = new FileReader();
@@ -210,7 +213,7 @@
                     document.getElementById('image_input_div_' + index).style.border = 'none';
 
                     //change image preview
-                    imageURL($this,'img_display_' + index);
+                    imageURL($this, 'img_display_' + index);
 
                 } else {
                     document.getElementById('image_input_div_' + index).style.border = '1px solid red';
@@ -257,7 +260,6 @@
                 })
             }
         });
-
 
 
     </script>
