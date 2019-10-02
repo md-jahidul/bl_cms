@@ -79,14 +79,14 @@ class PushNotificationController extends Controller
         }
 
 
-        /*NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService);
+        NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService);
 
         session()->flash('success',"Notification has been sent successfully");
 
-        return redirect(route('notification.index'));*/
+        return redirect(route('notification.index'));
 
 
-        $response = PushNotificationService::sendNotification($notification);
+       /* $response = PushNotificationService::sendNotification($notification);
 
 
         if(json_decode($response)->status == "SUCCESS"){
@@ -101,7 +101,7 @@ class PushNotificationController extends Controller
             return redirect(route('notification.index'));
         }
 
-        session()->flash('success',"Notification send Failed");
+        session()->flash('success',"Notification send Failed");*/
 
 
     }
