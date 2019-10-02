@@ -22,7 +22,7 @@
                             <th>SL</th>
                             <th>Title</th>
                             <th width="60%">Slider Type</th>
-                            <th width="6%">Action</th>
+                            <th width="18%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -32,8 +32,11 @@
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $slider->title_en }}</td>
                                 <td>{{ $slider->type->name }}</td>
-                                <td class="text-center" width="6%">
-                                    <a href="{{ url("sliders/$slider->id/$sliderType/edit") }}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                <td class="text-center" width="18%">
+                                    <a href="{{ url("sliders/$slider->id/$sliderType/edit") }}" role="button" class="btn btn-outline-success border-0 "><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="{{ route('partner-offer-home') }}" class="btn btn-outline-warning">
+                                        <i class="la la-gift"></i> Home Partner Offers <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow"></span>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach

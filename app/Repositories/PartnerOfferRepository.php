@@ -15,9 +15,11 @@ class PartnerOfferRepository extends BaseRepository
 {
     public $modelName = PartnerOffer::class;
 
-    public function getPartnerOffer($partnerId)
+    public function getPartnerOffer($partnerId,$isHome)
     {
-        return $this->model->where('partner_id', $partnerId)->orderBy('created_at')->with('partner')->get();
+        $query =  $this->model;
+        $query = ($isHome) ? $query->where('show_in_home', 1)->orderBy('display_order')  : $query->where('partner_id', $partnerId)->orderBy('created_at');
+        return $query->with('partner')->get();
     }
 
     public function partnerOfferTableSort($request)
