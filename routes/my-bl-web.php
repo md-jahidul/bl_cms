@@ -57,6 +57,8 @@ Route::group(['middleware' => ['appAdmin']], function () {
     Route::post('myblslider/images/store','CMS\MyblSliderImageController@store')->name('myblslider.images.store');
     Route::get('myblslider/images/{id}/edit','CMS\MyblSliderImageController@edit')->name('myblslider.images.edit');
     Route::put('myblslider/images/{id}/update','CMS\MyblSliderImageController@update')->name('myblslider.images.update');
+    Route::put('myblslider/images/{id}/update','CMS\MyblSliderImageController@update')->name('myblslider.images.update');
+    Route::delete('myblslider/images/{id}/delete','CMS\MyblSliderImageController@destroy')->name('myblslider.images.destroy');
 
     Route::get('myblslider/destroy/{id}','CMS\MyblSliderController@destroy');
     //Route::get('myblslider/edit/{slider-other-attr}','CMS\MyblSliderController@edit')->name('slider-other-attr.edit');

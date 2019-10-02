@@ -18,7 +18,8 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>{{ ucwords($slider_information->title." ". "slider images") }}</strong></h4>
+                    <h4 class="pb-1"><strong>{{ ucwords($slider_information->title." ". "slider images") }}</strong>
+                    </h4>
                     <table class="table table-striped table-bordered">
                         <thead>
                         <tr>
@@ -45,15 +46,20 @@
                                         <span class="badge badge-danger">InActive</span>
                                     @endif
                                 </td>
-                                <td class="action" width="8%">
-                                    <a href="{{route('myblslider.images.edit', $slider_image->id )}}"
-                                       role="button" class="btn btn-outline-info border-0"><i class="la la-pencil"
-                                                                                              aria-hidden="true"></i></a>
-                                    <a href="#"
-                                       class="border-0 btn btn-outline-danger delete_btn"
-                                       data-id="{{ $slider_image->id }}" title="Delete the user">
-                                        <i class="la la-trash"></i>
-                                    </a>
+                                <td class="action">
+                                    <form action="{{route('myblslider.images.destroy',$slider_image->id)}}"
+                                          id="del_form"
+                                          method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <a href="{{route('myblslider.images.edit', $slider_image->id )}}"
+                                           role="button" class="btn btn-outline-info border-0"><i class="la la-pencil"
+                                                                                                  aria-hidden="true"></i></a>
+                                        <a href="#"
+                                           role="button" class="btn btn-outline-danger border-0 del"><i
+                                                class="la la-remove"
+                                                aria-hidden="true"></i></a>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -83,6 +89,24 @@
         let auto_save_url = "{{ url('myblsliderImage/addImage/update-position') }}";
 
         $(document).ready(function () {
+            $(document).on('click', '.del', function (e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    html: jQuery('.delete_btn').html(),
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        $("#del_form").submit();
+                    }
+                })
+            })
 
         });
 
