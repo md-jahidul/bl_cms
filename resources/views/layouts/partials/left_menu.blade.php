@@ -9,20 +9,30 @@
             {{---------------------------------------------------------Asset Lite-------------------------------------------------}}
             {{--------------------------------------------------------------------------------------------------------------------}}
             @if(Auth::user()->role_id == '1'|| Auth::user()->role_id == '3')
-            <li class="nav-item"><a href="{{ url('menu') }}"><i class="la la-medium"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">Menu Management</span></a>
-            </li>
-
-            <li class="nav-item"><a href="{{ url('footer-menu') }}"><i class="la la-futbol-o"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">Footer Management</span></a>
-            </li>
 
             <li class="nav-item"><a href="{{ url('quick-launch') }}"><i class="la la-automobile"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Quick launch</span></a>
             </li>
 
-            <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{route('setting.index')}}"><i class="la la-cogs"></i>
-                    <span class="menu-title" data-i18n="nav.dash.main">Settings</span></a>
+            <li class="nav-item">
+                <a href="#">
+                    <i class="la la la-cogs"></i><span class="menu-title" data-i18n="nav.templates.main">Settings</span>
+                </a>
+                <ul class="menu-content">
+
+                    <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{ url('config')}}"><i class="la la-cogs"></i>
+                            <span class="menu-title" data-i18n="nav.dash.main">General</span></a>
+                    </li>
+
+                    <li class="nav-item"><a href="{{ url('menu') }}"><i class="la la-medium"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Header menu</span></a>
+                    </li>
+
+                    <li class="nav-item"><a href="{{ url('footer-menu') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Footer menu</span></a>
+                    </li>
+
+                </ul>
             </li>
 
             <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
@@ -31,24 +41,21 @@
 
                     <li class="{{ is_active_url('single-sliders') . is_active_url('sliders/create')}}">
                         <a class="menu-item" href="{{ url('single-sliders') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-file-image-o"></i> Slider (Single)</a>
+                                    class="la la-file-image-o"></i> Single slider</a>
                     </li>
 
                     <li class="{{ is_active_url('multiple-sliders') . is_active_url('sliders/create')}}">
                         <a class="menu-item" href="{{ url('multiple-sliders/') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                class="la la-file-image-o"></i> Slider (Multiple)</a>
+                                class="la la-file-image-o"></i> Multiple slider</a>
                     </li>
 
                 </ul>
             </li>
 
-
-
-
             <li class="nav-item"><a href="#"><i class="la la-question"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Page Management</span></a>
                 <ul class="menu-content">
-                    <li class="{{ is_active_url('fixed-pages') . is_active_url('fixed-pages/home')}}">
+                    <li class="{{ is_active_url('fixed-pages') }}">
                         <a class="menu-item" href="{{ url('fixed-pages') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-file-image-o"></i> Fixed pages
                         </a>

@@ -2,6 +2,7 @@
 @section('title', 'Slider Image Edit')
 @section('card_name', 'Slider Image Edit')
 @section('breadcrumb')
+    <li class="breadcrumb-item active"> <a href="{{ url('single-sliders') }}"> Slider List</a></li>
     <li class="breadcrumb-item active"> <a href="{{ route('slider_images', [$sliderImage->slider_id, $type]) }}"> Slider Image List</a></li>
     <li class="breadcrumb-item active"> Slider Image Edit</li>
 @endsection
@@ -50,37 +51,6 @@
                                     @endif
                                 </div>
 
-{{--                                <div class="form-group col-md-6 {{ $errors->has('url_btn_label') ? ' error' : '' }}">--}}
-{{--                                    <label for="url_btn_label" class="required">Button Label</label>--}}
-{{--                                    <input type="text" name="url_btn_label"  class="form-control" placeholder="Enter english title"--}}
-{{--                                           value="{{ $sliderImage->url_btn_label }}" required data-validation-required-message="Enter link">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('url_btn_label'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('url_btn_label') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
-{{--                                <div class="form-group col-md-6 {{ $errors->has('redirect_url') ? ' error' : '' }}">--}}
-{{--                                    <label for="redirect_url" class="required">Redirect Url</label>--}}
-{{--                                    <input type="text" name="redirect_url"  class="form-control" placeholder="Enter alt text"--}}
-{{--                                           value="{{ $sliderImage->redirect_url }}" required data-validation-required-message="Enter valid link">--}}
-{{--                                    <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('redirect_url'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('redirect_url') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
-{{--                                <div class="form-group col-md-12 {{ $errors->has('alt_text') ? ' error' : '' }}">--}}
-{{--                                    <label for="alt_text" class="required">Description</label>--}}
-{{--                                    <textarea type="text" name="description" rows="5"  class="form-control" placeholder="Enter alt text"--}}
-{{--                                              required data-validation-required-message="Please select start date">{{ $sliderImage->description }}</textarea>--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('alt_text'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
                                 @include('layouts.partials.slider_types.' . $type )
 
 
@@ -109,9 +79,6 @@
                                         <label for="input-radio-16">Inactive</label>
                                     </div>
                                 </div>
-
-
-
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
@@ -120,14 +87,8 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </form>
                     </div>
-
-
-                    </form>
                 </div>
             </div>
         </div>

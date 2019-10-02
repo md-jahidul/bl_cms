@@ -92,7 +92,7 @@ Route::get('fixed-page/{id}/components', 'CMS\FixedPageController@components')->
 Route::get('fixed-pages/{id}/meta-tags', 'CMS\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
 Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'CMS\FixedPageController@metaTagsUpdate');
 Route::get('fixed-pages/{pageId}/component/{componentId}', 'CMS\FixedPageController@fixedPageStatusUpdate')->name('update-component-status');
-
+// Route::get('dynamic-pages', 'CMS\FixedPageController@index');
 
 
 

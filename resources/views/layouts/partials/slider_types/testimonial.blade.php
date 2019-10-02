@@ -42,9 +42,10 @@
     @endif
 </div>
 
-<div class="form-group col-md-6 mr-2 {{ $errors->has('rating') ? ' error' : '' }}">
+<div class="form-group col-md-6 {{ $errors->has('rating') ? ' error' : '' }}">
     <label for="rating" class="required">Rating</label>
-    <input type="number" name="other_attributes[rating]"  class="form-control" placeholder="Enter rating out of 5" max="5"
+    <input type="text" name="other_attributes[rating]"  class="form-control" placeholder="Enter rating out of 5" min="1" max="5"
+           oninput="this.value =Number(this.value.replace(/[^1-5.]/g, '').replace(/(\..*)\./g, '$1'));"
            value="{{ (!empty($other_attributes['rating'])) ? $other_attributes['rating'] : old("other_attributes.rating") ?? '' }}"
            required data-validation-required-message="Enter rating out of 5">
     <spen class="text-primary">(Please given rating out of 5)</spen>

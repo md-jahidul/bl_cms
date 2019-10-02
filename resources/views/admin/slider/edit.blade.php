@@ -2,10 +2,11 @@
 @section('title', 'Slider Edit')
 @section('card_name', 'Slider Edit')
 @section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ url($slider->slider_type.'-sliders') }}">Slider List</a></li>
     <li class="breadcrumb-item active"> {{$slider->title_en}}</li>
 @endsection
 @section('action')
-    <a href="{{ url("$slider->slider_type-sliders") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url("$slider->slider_type-sliders") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
 @endsection
 @section('content')
     <section>

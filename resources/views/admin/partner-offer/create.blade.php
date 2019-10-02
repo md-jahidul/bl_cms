@@ -40,7 +40,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_en') ? ' error' : '' }}">
-                                    <label for="offer_en" class="required">Offer Percentage (English)</label>
+                                    <label for="offer_en" class="required">Offer (English)</label>
                                     <input type="text" name="offer_en"  class="form-control" placeholder="Enter offer percentage english"
                                            value="{{ old("offer_en") ? old("offer_en") : '' }}" required data-validation-required-message="Enter offer percentage english">
                                     <div class="help-block"></div>
@@ -50,7 +50,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_bn') ? ' error' : '' }}">
-                                    <label for="offer_bn" class="required">Offer Percentage (Bangla)</label>
+                                    <label for="offer_bn" class="required">Offer (Bangla)</label>
                                     <input type="text" name="offer_bn"  class="form-control" placeholder="Enter offer percentage bangla"
                                            value="{{ old("offer_bn") ? old("offer_bn") : '' }}" required data-validation-required-message="Enter offer percentage bangla">
                                     <div class="help-block"></div>
@@ -60,7 +60,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('get_offer_msg_en') ? ' error' : '' }}">
-                                    <label for="get_offer_msg_en" class="required">Get Send SMS (English)</label>
+                                    <label for="get_offer_msg_en" class="required">Subscription SMS Info (English)</label>
                                     <input type="text" name="get_offer_msg_en"  class="form-control" placeholder="Enter get send SMS text english"
                                            value="{{ old("get_offer_msg_en") ? old("get_offer_msg_en") : '' }}" required data-validation-required-message="Enter get send SMS text english">
                                     <div class="help-block"></div>
@@ -70,7 +70,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('get_offer_msg_bn') ? ' error' : '' }}">
-                                    <label for="get_offer_msg_bn" class="required">Get Send SMS (Bangla)</label>
+                                    <label for="get_offer_msg_bn" class="required">Subscription SMS Info (Bangla)</label>
                                     <input type="text" name="get_offer_msg_bn"  class="form-control" placeholder="Enter get send SMS text bangla"
                                            value="{{ old("get_offer_msg_bn") ? old("get_offer_msg_bn") : '' }}" required data-validation-required-message="Enter get send SMS text bangla">
                                     <div class="help-block"></div>

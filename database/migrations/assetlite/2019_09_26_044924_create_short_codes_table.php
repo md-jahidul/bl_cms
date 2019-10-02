@@ -16,6 +16,7 @@ class CreateShortCodesTable extends Migration
         Schema::create('short_codes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('page_id');
+            $table->string('component_title');                       // Hero Slider
             $table->string('component_type');                        // such as slider,recharge
             $table->unsignedInteger('component_id')->nullable();     // such as slider_id
             $table->string('display_order')->default(0);
