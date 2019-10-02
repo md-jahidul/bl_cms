@@ -57,20 +57,16 @@
                                 </div>
 
                                 <div class="form-group col-md-6 mt-1">
-                                    <label for="file" class="required">Select File</label>
-                                    <label id="projectinput7" class="file center-block ml-2">
+                                    <label for="file">Select File</label>
+                                    <label id="projectinput7" class="file center-block ml-1">
                                         <input type="file" id="file" name="image_url">
                                         <span class="file-custom"></span>
                                     </label>
-                                    <img src="{{ $quickLaunch->image_url }}" height="50" width="50">
+                                    <img src="{{ $quickLaunch->image_url }}" height="50" width="50"><br>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
                                 </div>
 
-{{--                                <div class="form-group col-md-6">--}}
-{{--                                    <img src="{{ $quickLaunch->image_url }}" height="50" width="50">--}}
-{{--                                    <label class="label-control ml-1" for="file">Current Image</label>--}}
-{{--                                </div>--}}
-
-                                <div class="col-md-12">
+                                <div class="col-md-12 mt-1">
                                     <div class="form-group">
                                         <label for="title" class="required mr-1">Status:</label>
 

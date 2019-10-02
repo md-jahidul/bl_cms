@@ -51,13 +51,23 @@ class UsersTableSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name' => 'Rupok Hasan',
+            'name' => 'Rupok Biswas',
             'role_id' => 5,
             'email' => 'rupok@admin.com',
             'phone' => '01919415565',
             'uid' => uniqid(),
             'password' => Hash::make('123456'),
             'device_token' =>  "c3DAuP4BnZQ:APA91bHtwS1dFC9CKZ5MdbSnZvGByhyIxATakCPnUBYWgyJY7L59A70KzBR5DdXlhQ1yVOxxmZcVXdQ_rHUojjB666us6WEo9gFuPCyQOgmTNqYSArVS2kxAWq68iY15_EIYQaKUGSvs"
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'QA Team',
+            'role_id' => 5,
+            'email' => 'qa@admin.com',
+            'phone' => '01919415568',
+            'uid' => uniqid(),
+            'password' => Hash::make('123456'),
+            'device_token' =>  "d0Z-Mro4aIg:APA91bHXRkkZHxKVWws7cC-T2kWcu6srvLPWswPqd3Lah7EWbPz8sMwBhg5v2Z1c1Vv1glFY3KukwO4EcRUPlVWKrt8iTjoUDOWVcguVs_b2GgVaJRB4vzT4A2relAs09m3WOcv_BOaD"
         ]);
     }
 }

@@ -74,4 +74,15 @@ class NotificationService
         return $this->notificationRepository->attachmentNotificationToUser($notification_id, $user_phone);
     }
 
+
+    /**
+     * @param $category_id
+     * @param $user_phone
+     * @return array
+     */
+    public function checkMuteOfferForUser($category_id,$user_phone): array
+    {
+        return $this->notificationRepository->checkMuteOfferForUser($category_id,$user_phone);
+    }
+
 }

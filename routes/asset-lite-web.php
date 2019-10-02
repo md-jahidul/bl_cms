@@ -81,7 +81,8 @@ Route::post('partner-offer/{partner_id}/{partner}/offer/store', 'CMS\PartnerOffe
 Route::get('partner-offer/{partner_id}/{partner}/offer/{id}', 'CMS\PartnerOfferController@edit')->name('partner_offer_edit');
 Route::put('partner-offer/{partner_id}/{partner}/offer/{id}/update', 'CMS\PartnerOfferController@update')->name('partner_offer_update');
 Route::get('partner-offer/{partner_id}/{partner}/offer/destroy/{id}', 'CMS\PartnerOfferController@destroy');
-Route::get('/partner-offer/sortable','CMS\PartnerOfferController@partnerOfferSortable');
+Route::get('/partner-offer-home/sortable','CMS\PartnerOfferController@partnerOfferSortable');
+Route::get('partner-offers/home','CMS\PartnerOfferController@partnerOffersHome')->name('partner-offer-home');
 
 //Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
 
