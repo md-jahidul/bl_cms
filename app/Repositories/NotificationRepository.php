@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use App\Models\Notification;
 use App\Models\User;
+use App\Models\UserMuteNotificationCategory;
 
 class NotificationRepository extends BaseRepository
 {
@@ -33,6 +34,32 @@ class NotificationRepository extends BaseRepository
 
         return 'success';
 
+    }
+
+
+    /**
+     * @param $category_id
+     * @param $user_phone
+     * @return array
+     */
+    public function checkMuteOfferForUser($category_id,$user_phone):array
+    {
+        $user_ids = UserMuteNotificationCategory::where('category_id', $category_id)
+                                                ->select('user_id')
+                                                ->get()
+                                                ->toArray();
+
+        $phone_list = User::whereIn('id', $user_ids)
+            ->select('phone')
+            ->get()->toArray();
+
+        $mute_user_phone = array_map(function ($phone) {
+            return $phone['phone'];
+
+        }, $phone_list);
+
+
+        return array_diff($user_phone, $mute_user_phone);
     }
 
 

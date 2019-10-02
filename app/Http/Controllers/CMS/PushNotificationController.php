@@ -38,16 +38,22 @@ class PushNotificationController extends Controller
      */
     public function sendNotification(Request $request)
     {
-
+        $user_phone = [];
         $notification_id = $request->input('id');
+        $category_id = $request->input('category_id');
 
         if($request->filled('user_phone'))
         {
+
+            $phone_list = $request->input('user_phone');
+
+            $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id,$phone_list);
+
             $notification = [
                 'title' => $request->input('title'),
                 'body' => $request->input('message'),
                 "send_to_type" => "INDIVIDUALS" ,
-                "recipients" => $request->input('user_phone'),
+                "recipients" => $user_phone,
                 "is_interactive" => "Yes",
                 "data" => [
                     "cid" => "1",
@@ -87,8 +93,6 @@ class PushNotificationController extends Controller
 
             if($request->filled('user_phone'))
             {
-                $user_phone = $request->input('user_phone');
-
                 $this->notificationService->attachNotificationToUser($notification_id, $user_phone);
             }
 
