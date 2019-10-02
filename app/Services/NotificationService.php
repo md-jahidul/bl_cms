@@ -61,9 +61,28 @@ class NotificationService
         return Response('Notification has been successfully deleted');
     }
 
+
+    /**
+     * Attach Notification to user
+     *
+     * @param $notification_id
+     * @param $user_phone
+     * @return string
+     */
     public function attachNotificationToUser($notification_id, $user_phone)
     {
         return $this->notificationRepository->attachmentNotificationToUser($notification_id, $user_phone);
+    }
+
+
+    /**
+     * @param $category_id
+     * @param $user_phone
+     * @return array
+     */
+    public function checkMuteOfferForUser($category_id,$user_phone): array
+    {
+        return $this->notificationRepository->checkMuteOfferForUser($category_id,$user_phone);
     }
 
 }

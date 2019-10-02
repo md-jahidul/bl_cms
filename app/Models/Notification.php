@@ -43,7 +43,7 @@ class Notification extends Model
     public function users()
     {
         return $this->belongsToMany(Notification::class,'notification_user',
-            'notification_id','user_id');
+            'notification_id','user_id')->withTimestamps();
     }
 
 

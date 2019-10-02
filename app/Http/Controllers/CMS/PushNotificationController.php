@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
+use App\Jobs\NotificationSend;
 use App\Services\NotificationService;
 use App\Services\PushNotificationService;
 use Illuminate\Http\Request;
@@ -37,13 +38,17 @@ class PushNotificationController extends Controller
      */
     public function sendNotification(Request $request)
     {
-
+        $user_phone = [];
         $notification_id = $request->input('id');
-
-        $user_phone = $request->input('user_phone');
+        $category_id = $request->input('category_id');
 
         if($request->filled('user_phone'))
         {
+
+            $phone_list = $request->input('user_phone');
+
+            $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id,$phone_list);
+
             $notification = [
                 'title' => $request->input('title'),
                 'body' => $request->input('message'),
@@ -74,13 +79,22 @@ class PushNotificationController extends Controller
         }
 
 
+        /*NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService);
+
+        session()->flash('success',"Notification has been sent successfully");
+
+        return redirect(route('notification.index'));*/
+
 
         $response = PushNotificationService::sendNotification($notification);
 
 
         if(json_decode($response)->status == "SUCCESS"){
 
-            $this->notificationService->attachNotificationToUser($notification_id, $user_phone);
+            if($request->filled('user_phone'))
+            {
+                $this->notificationService->attachNotificationToUser($notification_id, $user_phone);
+            }
 
             session()->flash('success',"Notification has been sent successfully");
 
