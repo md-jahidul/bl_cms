@@ -23,18 +23,15 @@
                             <input type="hidden" name="id" value="{{$notification->id}}">
                             <div class="form-group">
                                 <label for="title" class="required">Title :</label>
-                                <input name="title" 
-                                
-                                required
-                                maxlength="200" 
-                                data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><])*)*"
-                                data-validation-required-message="Title is required" 
-                                data-validation-regex-message="Title must start with alphabets"
-                                data-validation-maxlength-message = "Title can not be more then 200 Characters" 
+                                <input name="title"
+                                       required
+                                       maxlength="100"
+                                       data-validation-required-message="Title is required"
+                                       data-validation-maxlength-message = "Title can not be more then 100 Characters"
                                 
                                 style="height:100%" type="text" value="@if(old('title')) {{old('title')}} @else {{$notification->title}} @endif" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
                                 <div class="help-block">
-                                    <small class="text-info"> Title can not be more then 200 Characters</small><br>
+                                    <small class="text-info"> Title can not be more then 100 Characters</small><br>
                                 </div>
                                 <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                             </div>
