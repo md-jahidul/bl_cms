@@ -5,10 +5,10 @@
     <li class="breadcrumb-item active">Partner List</li>
 @endsection
 @section('action')
-    <a href="{{ route('partner-offer-home') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{ route('partner-offer-home') }}" class="btn btn-instagram  round btn-glow px-2"><i class="la la-list"></i>
         View home page offers
     </a>
-    <a href="{{ url('partners/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{ url('partners/create') }}" class="btn btn-success  round btn-glow px-2"><i class="la la-plus"></i>
         Add Partner
     </a>
 @endsection
@@ -25,10 +25,10 @@
                             <th>Company Logo</th>
                             <th>Company Name</th>
                             <th>Category</th>
-                            <th>Contact Parson Mobile</th>
+                            <th width="12%">Contact Parson Mobile</th>
                             <th>Address</th>
                             <th>Offer</th>
-                            <th width="10%">Action</th>
+                            <th width="12%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
