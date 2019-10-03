@@ -22,7 +22,7 @@
                             <th>SL</th>
                             <th>Title</th>
                             <th width="60%">Slider Type</th>
-                            <th width="14%">Action</th>
+                            <th width="20%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -32,7 +32,7 @@
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $slider->title_en }}</td>
                                 <td>{{ $slider->type->name }}</td>
-                                <td class="text-center" width="14%">
+                                <td class="text-center" width="20%">
                                     <a href="{{ url("sliders/$slider->id/$sliderType/edit") }}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="{{ route('slider_images',[$slider->id, $sliderType ]  ) }}" class="btn btn-outline-warning"><i class="la la-image"></i> Slider Images <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{--{{ $childNumber }}--}}</span></a>
                                 </td>
