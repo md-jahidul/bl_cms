@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Slider')
 
-@php 
+@php
     $name = isset($single_slider)?'Edit ':'Create ';
     $slidername = isset($single_slider)? $single_slider->title:''
 
@@ -12,6 +12,12 @@
     <li class="breadcrumb-item active">
         {{$name.$slidername}} Slider
     </li>
+@endsection
+
+@section('action')
+    <a href="{{route('myblslider.index') }}" class="btn btn-info btn-glow px-2">
+        Back
+    </a>
 @endsection
 
 @section('content')
@@ -28,20 +34,20 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="companyName" class="required">Name:</label>
-                                    <input 
+                                    <input
                                         required
-                                        maxlength="200" 
+                                        maxlength="200"
                                         data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                        data-validation-required-message="Name is required" 
+                                        data-validation-required-message="Name is required"
                                         data-validation-regex-message="Name must start with alphabets"
-                                        data-validation-maxlength-message = "Name can not be more then 200 Characters" 
-                                        
-                                        type="text" 
-                                        value="@if(isset($single_slider)) {{ $single_slider->title }} @endif" 
-                                        id="companyName" 
-                                        class="form-control @error('title') is-invalid @enderror" 
+                                        data-validation-maxlength-message = "Name can not be more then 200 Characters"
+
+                                        type="text"
+                                        value="@if(isset($single_slider)) {{ $single_slider->title }} @else {{old('title')}} @endif"
+                                        id="companyName"
+                                        class="form-control @error('title') is-invalid @enderror"
                                         placeholder="Slider Name" name="title">
-                                        
+
                                         <div class="help-block">
                                             <small class="text-info"> Name can not be more then 200 Characters</small><br>
                                         </div>
@@ -54,14 +60,15 @@
                             </div>
                             @if(isset($single_slider)) <input type="hidden" name="id" value="{{$single_slider->id}}"> @endif
                             <div class="col-md-6">
-                                
+
                                 <div class="form-group">
                                     <label class="required">Slider type:</label>
                                     <div class="controls">
                                         <select required data-validation-required-message="Slider type is required" id="projectinput6" style="height:34px" value="" name="component_id" class="form-control @error('component_id') is-invalid @enderror">
                                         <option value="">Select slider type</option>
                                         @foreach ($slider_types as $type)
-                                            <option @if(isset($single_slider)) @if($single_slider->component_id == $type->id) selected @endif @endif value="{{$type->id}}">{{$type->name}}</option>
+                                            <option @if(isset($single_slider)) @if($single_slider->component_id == $type->id) selected @endif
+                                            @else  @if(old('component_id') == $type->id) selected @endif @endif value="{{$type->id}}">{{$type->name}}</option>
                                         @endforeach
                                         </select>
                                         <div class="help-block"></div>
@@ -77,10 +84,10 @@
                             </div>
                             <div class="form-group">
                             <label for="projectinput8">Discription:</label>
-                            <textarea 
+                            <textarea
                             required
-                            data-validation-required-message="Discription is required" 
-                            id="projectinput8" name="description" rows="5" class="form-control" name="description" placeholder="About Slider...">@if(isset($single_slider)) {{ $single_slider->description }} @endif</textarea>
+                            data-validation-required-message="Discription is required"
+                            id="projectinput8" name="description" rows="5" class="form-control" name="description" placeholder="About Slider...">@if(isset($single_slider)) {{ $single_slider->description }} @else {{old('description')}}@endif</textarea>
                             <div class="help-block"></div>
                             </div>
                         </div>
@@ -92,12 +99,12 @@
                         </form>
                     </div>
                 </div>
-            
+
         </div>
-        
+
     </section>
 
-   
+
 
 
 @endsection
@@ -118,7 +125,7 @@
     <script>
       $(function () {
             $('.delete').click(function () {
-                var id = $(this).attr('data-id');
+                let id = $(this).attr('data-id');
 
                 Swal.fire({
                     title: 'Are you sure?',
@@ -150,43 +157,6 @@
                 })
             })
         })
-
-
-       
-        $(document).ready(function () {
-            $('#Example1').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy', className: 'copyButton',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'excel', className: 'excel',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'pdf', className: 'pdf', "charset": "utf-8",
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'print', className: 'print',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                ],
-                paging: true,
-                searching: true,
-                "bDestroy": true,
-            });
-        });
 
     </script>
 @endpush
