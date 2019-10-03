@@ -14,6 +14,12 @@
     </li>
 @endsection
 
+@section('action')
+    <a href="{{route('myblslider.index') }}" class="btn btn-info btn-glow px-2">
+        Back
+    </a>
+@endsection
+
 @section('content')
     <section>
         <div class="card card-info mb-0" style="padding-left:10px">
