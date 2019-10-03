@@ -17,9 +17,18 @@
                             @if(count($pages) == !0)
                                 @foreach($pages as $page)
                                     <tr data-index="{{ $page->id }}" data-position="{{ $page->display_order }}">
-                                        <td>{{ $page->title  }} {!! $page->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
-                                        <td class="text-center" width="10%"><a href="{{ route('fixed-page-metatags', $page->id ) }}" class="btn btn-outline-success">Meta Info</a></td>
-                                        <td class="text-center" width="10%"><a href="{{ route('fixed-page-components', $page->id ) }}" class="btn btn-outline-success">Components</a></td>
+                                        <td>{{ $page->title  }}</td>
+                                        <td class="text-center" width="10%">
+                                            <a href="{{ route('fixed-page-metatags', $page->id ) }}" class="btn btn-success  round btn-glow px-2">Meta Info</a>
+                                        </td>
+                                        <td class="text-center" width="10%">
+                                            <a href="{{ route('fixed-page-components', $page->id ) }}" class="btn btn-instagram  round btn-glow px-2">Components</a>
+                                        </td>
+
+                                        <!-- <a href="{{ route('partner-offer-home') }}" class="btn btn-instagram  round btn-glow px-2"><i class="la la-list"></i>View home page offers</a>
+                                        <a href="{{ url('partners/create') }}" class="btn btn-success  round btn-glow px-2"><i class="la la-plus"></i>Add Partner</a> -->
+
+
                                     </tr>
                                 @endforeach
                             @else

@@ -21,7 +21,7 @@
                         <tr>
                             <td width="3%">#</td>
                             <th>Component Type</th>
-                            <th>Component Status</th>
+{{--                            <th>Component Status</th>--}}
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
@@ -29,14 +29,14 @@
                             @foreach($shortCodes as $index=>$shortCode)
                                 <tr data-index="{{ $shortCode->id }}" data-position="{{ $shortCode->display_order }}">
                                     <td width="3%">{{ $index + 1 }}</td>
-                                    <td>{{ $shortCode->component_title }}</td>
-                                    <td>
-                                        @if($shortCode->is_active == 1)
-                                            <span class="badge badge-success badge-pill">Enabled</span>
-                                        @else
-                                            <span class="badge badge-danger badge-pill">Disabled</span>
-                                        @endif
-                                    </td>
+                                    <td>{{ $shortCode->component_title }}{!! $shortCode->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+{{--                                    <td>--}}
+{{--                                        @if($shortCode->is_active == 1)--}}
+{{--                                            <span class="badge badge-success badge-pill">Enabled</span>--}}
+{{--                                        @else--}}
+{{--                                            <span class="badge badge-danger badge-pill">Disabled</span>--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
                                     <td class="action" width="8%">
                                         @if($shortCode->is_active == 0)
                                             <a href="{{ route("update-component-status", [ $shortCode->page_id, $shortCode->id ]) }}"
