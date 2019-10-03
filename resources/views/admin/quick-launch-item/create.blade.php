@@ -56,20 +56,40 @@
                                     @endif
                                 </div>
 
+{{--                                <div class="form-group col-md-6 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">--}}
+{{--                                    <label for="file" class="required">Select File</label>--}}
 
-                                <div class="form-group col-md-6 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="file" class="required">Select File</label>
+{{--                                    <label id="projectinput7" class="file center-block ml-2">--}}
+{{--                                        <input type="file" id="file" name="image_url" required>--}}
+{{--                                    </label><br>--}}
+{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
+{{--                                    @if ($errors->has('image_url'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
-                                    <label id="projectinput7" class="file center-block ml-2">
-                                        <input type="file" id="file" name="image_url" required>
-                                    </label><br>
+
+{{--                                <div class="controls">--}}
+{{--                                    <input type="file" name="file" class="form-control" required="" aria-invalid="false">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                </div>--}}
+
+                                <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                    <label for="alt_text" class="required">Quick Launch Icon</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="image_url" class="custom-file-input" id="image" required data-validation-required-message="Enter alt text">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                    @if ($errors->has('image_url'))
-                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text'))
+                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    <img style="height:70px;width:70px;display:none" id="imgDisplay">
+                                </div>
 
                                 <div class="col-md-12">
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">

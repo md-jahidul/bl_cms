@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Menu List')
-@section('card_name', 'Menu List')
+@section('title', 'Header Menu List')
+@section('card_name', 'Header Menu List')
 @section('breadcrumb')
     @php
         $liHtml = '<li class="breadcrumb-item"><a href="'. url('menu') .'">Menu</a></li>';
@@ -13,7 +13,7 @@
 @endsection
 @section('action')
     <a href="{{ $parent_id == 0 ? url('menu/create') : url("menu/$parent_id/child-menu/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Add Menu
+        Add Header Menu
     </a>
 @endsection
 @section('content')

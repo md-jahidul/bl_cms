@@ -1,4 +1,4 @@
-<div class="form-group col-md-6 {{ $errors->has('redirect_url') ? ' error' : '' }}">
+<div class="form-group col-md-6 mb-0 {{ $errors->has('redirect_url') ? ' error' : '' }}">
     <label for="redirect_url" class="required">Redirect Url</label>
     <input type="text" name="other_attributes[redirect_url]"  class="form-control" placeholder="Enter redirect url"
            value="{{ isset($other_attributes) ? $other_attributes['redirect_url'] : '' }}" required data-validation-required-message="Enter valid link">

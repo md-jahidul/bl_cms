@@ -39,7 +39,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 mb-0 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Alt Text</label>
                                     <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text"
                                            value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Enter alt text">
@@ -51,18 +51,38 @@
 
                                 @include('layouts.partials.slider_types.'.$type )
 
-                                <div class="form-group col-md-6 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="file" class="required">Select File</label>
+{{--                                <div class="form-group col-md-6 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">--}}
+{{--                                    <label for="file" class="required">Select File</label>--}}
 
-                                    <label id="projectinput7" class="file center-block ml-2">
-                                        <input type="file" id="file" name="image_url" required>
-                                    </label><br>
+{{--                                    <label id="projectinput7" class="file center-block ml-2">--}}
+{{--                                        <input type="file" id="file" name="image_url" required>--}}
+{{--                                    </label><br>--}}
+{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
+
+{{--                                    @if ($errors->has('image_url'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+
+                                <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                    <label for="alt_text" class="required">Slider Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="image_url" class="custom-file-input" id="image"
+                                               required data-validation-required-message="Slider image field is required.">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
 
+                                    <div class="help-block"></div>
                                     @if ($errors->has('image_url'))
                                         <div class="help-block">  {{ $errors->first('image_url') }}</div>
                                     @endif
                                 </div>
+
+                                <div class="form-group col-md-6">
+                                    <img style="height:70px;width:70px;display:none" id="imgDisplay">
+                                </div>
+
 
                                 <div class="col-md-12">
                                     <div class="form-group">

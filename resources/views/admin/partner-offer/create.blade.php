@@ -7,7 +7,7 @@
     <li class="breadcrumb-item active"> Partner Offer Create</li>
 @endsection
 @section('action')
-    <a href="{{ route('slider_images', [$parentId, $partnerName]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ route('partner-offer', [$parentId, $partnerName]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
