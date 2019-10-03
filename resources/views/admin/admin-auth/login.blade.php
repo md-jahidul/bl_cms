@@ -65,7 +65,7 @@
 {{--                                    </a>--}}
 {{--                                </div>--}}
                                 <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-1">
-                                    <span><strong>Asset-Lite CMS Login Panel</strong></span>
+                                    <span><strong>Banglalink CMS Login Panel</strong></span>
                                 </p>
                                 <div class="card-body">
 {{--                                    <form class="form-horizontal" action="index.html" novalidate>--}}

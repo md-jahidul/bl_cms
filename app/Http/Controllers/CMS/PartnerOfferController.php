@@ -102,8 +102,6 @@ class PartnerOfferController extends Controller
      */
     public function update(StorePartnerOfferRequest $request, $partnerId, $partnerName, $id)
     {
-
-
         $response = $this->partnerOfferService->updatePartnerOffer($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect( isset($redirect) ? $redirect : "partner-offer/$partnerId/$partnerName");

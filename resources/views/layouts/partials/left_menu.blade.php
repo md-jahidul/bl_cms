@@ -1,7 +1,7 @@
 <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class=" nav-item"><a href="#"><i class="la la-home"></i>
+            <li class="{{ is_active_url('/home') }} nav-item"><a href="{{ asset('home') }}"><i class="la la-home"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
             </li>
 
@@ -10,7 +10,7 @@
             {{--------------------------------------------------------------------------------------------------------------------}}
             @if(Auth::user()->role_id == '1'|| Auth::user()->role_id == '3')
 
-            <li class="nav-item"><a href="{{ url('quick-launch') }}"><i class="la la-automobile"></i>
+            <li class="{{ is_active_url('/quick-launch') }} nav-item"><a href="{{ url('quick-launch') }}"><i class="la la-automobile"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Quick launch</span></a>
             </li>
 
@@ -20,15 +20,15 @@
                 </a>
                 <ul class="menu-content">
 
-                    <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{ url('config')}}"><i class="la la-cogs"></i>
+                    <li class="{{ is_active_url('/config') }} nav-item"><a href="{{ url('config')}}"><i class="la la-cogs"></i>
                             <span class="menu-title" data-i18n="nav.dash.main">General</span></a>
                     </li>
 
-                    <li class="nav-item"><a href="{{ url('menu') }}"><i class="la la-medium"></i>
+                    <li class="{{ is_active_url('/menu') }} nav-item"><a href="{{ url('menu') }}"><i class="la la-medium"></i>
                             <span class="menu-title" data-i18n="nav.templates.main">Header menu</span></a>
                     </li>
 
-                    <li class="nav-item"><a href="{{ url('footer-menu') }}"><i class="la la-futbol-o"></i>
+                    <li class="{{ is_active_url('/footer-menu') }} nav-item"><a href="{{ url('footer-menu') }}"><i class="la la-futbol-o"></i>
                             <span class="menu-title" data-i18n="nav.templates.main">Footer menu</span></a>
                     </li>
 
@@ -52,7 +52,7 @@
                 </ul>
             </li>
 
-            <li class="nav-item"><a href="#"><i class="la la-question"></i>
+            <li class="nav-item"><a href="#"><i class="la la-file"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Page Management</span></a>
                 <ul class="menu-content">
                     <li class="{{ is_active_url('fixed-pages') }}">
