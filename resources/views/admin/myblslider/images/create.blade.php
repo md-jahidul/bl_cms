@@ -89,7 +89,7 @@
                                                         document.getElementById('submitForm').disabled = true;
                                                     }
                                                 })"
-                                                id="image"  name="image_url" type="file" class="custom-file-input" >
+                                                id="image"  name="image_url" type="file" class="custom-file-input">
                                                 <label class="custom-file-label" for="image_url">Upload Image...</label>
                                             </div>
                                         </div>
