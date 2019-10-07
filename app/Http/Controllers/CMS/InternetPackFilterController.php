@@ -20,19 +20,20 @@ class InternetPackFilterController extends Controller
 
     public function create()
     {
-        $existing_sort_filters = $this->service->getAll()->sort()->active()->get();
-
-        $sort_filters = [];
-        foreach ($existing_sort_filters as $item){
-            $filters = json_decode($item->filter,true);
-            $sort_filters [] = $filters['value'];
-        }
-        return view('admin.offer-internet.config.create',compact('sort_filters'));
+        return view('admin.offer-internet.config.create');
     }
 
     public function getPriceFilter(Request $request)
     {
         $builder = $this->service->getAll()->price()->active();
+
+        return $this->service->preparePriceFilterForDatatable($builder, $request);
+    }
+
+
+    public function getInternetFilter(Request $request)
+    {
+        $builder = $this->service->getAll()->internet()->active();
 
         return $this->service->preparePriceFilterForDatatable($builder, $request);
     }
@@ -69,7 +70,7 @@ class InternetPackFilterController extends Controller
     {
         $validate = Validator::make($request->all(),
             [
-                'id' => 'required|exists:mixed_bundle_filters,id'
+                'id' => 'required|exists:internet_pack_filters,id'
             ]
         );
 

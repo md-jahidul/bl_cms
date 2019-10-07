@@ -78,7 +78,7 @@
 
             let saveInternetFilter = function (param) {
                 return $.ajax({
-                    url: '{{route('mixed-bundle-offer.filter.internet.save')}}',
+                    url: '{{route('internet-pack.filter.internet.save')}}',
                     method: 'post',
                     data: param
                 });
@@ -93,7 +93,7 @@
                 serverSide: true,
                 ordering: false,
                 ajax: {
-                    url: '{{ route('mixed-bundle-offer.filter.internet.list') }}',
+                    url: '{{ route('internet-pack.filter.internet.list') }}',
                 },
                 columns: [
                     {
@@ -211,7 +211,7 @@
                 }).then((result) => {
                     if (result.value) {
                         call = $.ajax({
-                            url: '{{route('mixed-bundle-offer.filter.delete')}}',
+                            url: '{{route('internet-pack.filter.delete')}}',
                             method: 'post',
                             data: {
                                 _token: '{{csrf_token()}}',

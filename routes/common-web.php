@@ -59,7 +59,7 @@ Route::get('internet-pack/filter/create','CMS\InternetPackFilterController@creat
 Route::post('internet-pack/price/save','CMS\InternetPackFilterController@savePriceFilter')->name('internet-pack.filter.price.save');
 Route::get('internet-pack/filter/price','CMS\InternetPackFilterController@getPriceFilter')->name('internet-pack.filter.price.list');
 
-Route::post('internet-pack/filter/delete','CMS\MixedBundleFilterController@deleteFilter')->name('internet-pack.filter.delete');
+Route::post('internet-pack/filter/delete','CMS\InternetPackFilterController@deleteFilter')->name('internet-pack.filter.delete');
 
 Route::post('internet-pack/filter/internet/save','CMS\InternetPackFilterController@saveInternetFilter')->name('internet-pack.filter.internet.save');
 Route::get('internet-pack/filter/internet','CMS\InternetPackFilterController@getInternetFilter')->name('internet-pack.filter.internet.list');
