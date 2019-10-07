@@ -13,14 +13,15 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'all-admin',
+            'name' => 'Super Admin',
             'role_id' => 1,
-            'email' => 'all-admin@admin.com',
+            'email' => 'super@admin.com',
             'phone' => '0191911111541',
             'uid' => uniqid(),
             'password' =>Hash::make('123456'),
             'device_token' => '122'
         ]);
+
         DB::table('users')->insert([
             'name' => 'mybl-admin',
             'role_id' => 2,
@@ -30,6 +31,7 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('123456'),
             'device_token' => '122'
         ]);
+
         DB::table('users')->insert([
             'name' => 'web-admin',
             'role_id' => 3,
@@ -40,9 +42,11 @@ class UsersTableSeeder extends Seeder
             'device_token' => '122'
         ]);
 
+
+
         DB::table('users')->insert([
             'name' => 'Rafiqul Hasan',
-            'role_id' => 5,
+            'role_id' => 3,
             'email' => 'rafiq@admin.com',
             'phone' => '01919415595',
             'uid' => uniqid(),
@@ -52,7 +56,7 @@ class UsersTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'Rupok Biswas',
-            'role_id' => 5,
+            'role_id' => 4,
             'email' => 'rupok@admin.com',
             'phone' => '01919415565',
             'uid' => uniqid(),
@@ -62,7 +66,7 @@ class UsersTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'QA Team',
-            'role_id' => 5,
+            'role_id' => 4,
             'email' => 'qa@admin.com',
             'phone' => '01919415568',
             'uid' => uniqid(),

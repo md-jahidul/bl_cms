@@ -18,6 +18,9 @@ Auth::routes();
 //Route::get('slider/{parent_id}/images', 'CMS\AlSliderImageController@index');
 //Route::get('slider-image/{id}/edit', 'CMS\AlSliderImageController@edit');
 
+Route::middleware('authorize')->group(function() {
+    //Place all your routes here
+
 Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 
 // CONFIG PAGES ====================================
@@ -105,4 +108,8 @@ Route::resource('campaigns','CMS\CampaignController');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
+
+
+
+});
 

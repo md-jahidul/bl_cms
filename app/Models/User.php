@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Pondit\Authorize\Models\Authorizable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use Authorizable;
 
     /**
      * The attributes that are mass assignable.
