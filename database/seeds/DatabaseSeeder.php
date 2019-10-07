@@ -54,5 +54,8 @@ class DatabaseSeeder extends Seeder
         $this->call(MyblSliderComponentTypesTableSeeder::class);
         $this->call(OfferFilterTypeTableSeeder::class);
         $this->call(NotificationUserTableSeeder::class);
+
+        $this->call(InternetPackFilterSeeder::class);
+        $this->call(MixedBundleOfferFilterSeeder::class);
     }
 }
