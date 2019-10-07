@@ -18,7 +18,7 @@
                         <tr>
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <th width="3%" class="text-center">Image</th>
-                            <th>English</th>
+                            <th>Title</th>
                             <th>Link</th>
                             <th class="text-right">Action</th>
                         </tr>
