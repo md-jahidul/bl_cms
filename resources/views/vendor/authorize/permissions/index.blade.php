@@ -1,5 +1,15 @@
 @extends('vendor.authorize.layouts.auth')
 
+@php
+
+    function mapStr($str){
+        $func = ['index','create','store','show','edit','update','destroy','App\Http\Controllers\CMS'];
+        $rplc = ['Show List','View Create Form','Insert Data','Show Details','View Edit Form','Update Data','Delete','AssetLite Features'];
+        return str_replace($func,$rplc,$str);
+    }
+
+@endphp
+
 @section('content')
     <div class="panel panel-default">
         <div class="panel-heading">Update Permission</div>
@@ -26,22 +36,23 @@
                 <div class="col-md-6">
                     <ul id="tree">
                         @foreach($actions as $namespace => $controllers)
-                        <li>{{ $namespace }}
+
+                            <li>{{ mapStr($namespace) }} <button class="btn select-all">Select All</button>
                             <ul>
                                 @foreach($controllers as $controller => $methods)
-                                <li>{{ $controller }}
+                                <li>{{ str_replace("Controller","", $controller)  }}
                                     <ul>
                                         @foreach($methods as $method => $actions)
-                                        <li>{{ $method }}
-                                            <ul>
-                                                @foreach($actions as $action)
-                                                    <li>
-                                                        {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . $method . '-' . $action, null, ['class' => 'field']) }}
-                                                        {{ $action }}
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        </li>
+                                            <li>{{ $method }}
+                                                <ul>
+                                                    @foreach($actions as $action)
+                                                        <li>
+                                                            {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . $method . '-' . $action, null, ['class' => 'field']) }}
+                                                            {{ mapStr($action) }}
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </li>
@@ -96,6 +107,13 @@
                     }
                 });
             }
+        });
+
+        $('.select-all').on('click',function(){
+            $(this).parent().find('.indicator').trigger('click');
+            $(this).parent().find('li input.field').each(function(i,ele){
+                $(this).attr('checked', !$(this).attr('checked') );
+            })
         });
     });
 </script>
