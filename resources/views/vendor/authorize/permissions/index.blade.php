@@ -1,4 +1,5 @@
 @extends('vendor.authorize.layouts.auth')
+{{--@extends('layouts.admin')--}}
 
 @php
 
@@ -6,6 +7,19 @@
         $func = ['index','create','store','show','edit','update','destroy','App\Http\Controllers\CMS'];
         $rplc = ['Show List','View Create Form','Insert Data','Show Details','View Edit Form','Update Data','Delete','AssetLite Features'];
         return str_replace($func,$rplc,$str);
+    }
+
+    function arrayMerge($arr)
+    {
+        $actions = [];
+        foreach ($arr as $key => $items){
+            $count = 0;
+            foreach ($items as $item){
+
+                $actions[$key . '_' . ++$count ] = $item;
+            }
+        }
+        return $actions;
     }
 
 @endphp
@@ -33,32 +47,72 @@
             </div>
             <div class="form-group {{ $errors->has('controller') ? 'has-error' : ''}}">
                 {!! Form::label('controller', 'Actions', ['class' => 'col-md-4 control-label']) !!}
-                <div class="col-md-6">
+{{--                <div class="col-md-6">--}}
+{{--                    <ul id="tree">--}}
+{{--                        @foreach($actions as $namespace => $controllers)--}}
+
+{{--                            <li>{{ mapStr($namespace) }} <button class="btn select-all">Select All</button>--}}
+{{--                            <ul>--}}
+{{--                                @foreach($controllers as $controller => $methods)--}}
+{{--                                <li>{{ str_replace("Controller","", $controller)  }}--}}
+{{--                                    <ul>--}}
+{{--                                        @foreach($methods as $method => $actions)--}}
+{{--                                            <li>{{ $method }}--}}
+{{--                                                <ul>--}}
+{{--                                                    @foreach($actions as $action)--}}
+{{--                                                        <li>--}}
+{{--                                                            {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . $method . '-' . $action, null, ['class' => 'field']) }}--}}
+{{--                                                            {{ mapStr($action) }}--}}
+{{--                                                        </li>--}}
+{{--                                                    @endforeach--}}
+{{--                                                </ul>--}}
+{{--                                            </li>--}}
+{{--                                        @endforeach--}}
+{{--                                    </ul>--}}
+{{--                                </li>--}}
+{{--                                @endforeach--}}
+{{--                            </ul>--}}
+{{--                        </li>--}}
+{{--                        @endforeach--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+
+
+                {{--  new dom  --}}}
+                <div class="col-md-12">
                     <ul id="tree">
                         @foreach($actions as $namespace => $controllers)
 
                             <li>{{ mapStr($namespace) }} <button class="btn select-all">Select All</button>
-                            <ul>
-                                @foreach($controllers as $controller => $methods)
-                                <li>{{ str_replace("Controller","", $controller)  }}
-                                    <ul>
-                                        @foreach($methods as $method => $actions)
-                                            <li>{{ $method }}
-                                                <ul>
-                                                    @foreach($actions as $action)
-                                                        <li>
-                                                            {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . $method . '-' . $action, null, ['class' => 'field']) }}
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Controller</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($controllers as $controller => $methods)
+                                            @php
+                                                $actions = arrayMerge(  $methods );
+                                            @endphp
+                                            <tr>
+                                                <td style="vertical-align:middle">{{ $loop->iteration }}</td>
+                                                <td style="vertical-align:middle">{{ str_replace("Controller","", $controller)  }}</td>
+                                                <td>
+                                                    @foreach( $actions as $method => $action)
+                                                        <span style="display: block">
+                                                            {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . explode ("_",$method)[0] . '-' . $action, null, ['class' => 'field']) }}
                                                             {{ mapStr($action) }}
-                                                        </li>
+                                                        </span>
                                                     @endforeach
-                                                </ul>
-                                            </li>
+                                                </td>
+                                            </tr>
                                         @endforeach
-                                    </ul>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </li>
+                                    </tbody>
+                                </table>
+                            </li>
                         @endforeach
                     </ul>
                 </div>
