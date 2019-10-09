@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\CMS;
+namespace App\Http\Controllers\AssetLite;
 
 use App\Services\CampaignService;
 use App\Services\PrizeService;
