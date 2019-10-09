@@ -72,12 +72,12 @@ class PushNotificationController extends Controller
 
             $fileLoc = Storage::disk('public')->path($file_path);
 
-            $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
+            $reader = ReaderFactory::createFromType(Type::XLSX);
             $reader->open($fileLoc);
 
             $customer_array = [];
             foreach ($reader->getSheetIterator() as $sheet) {
-                if ($sheet->getIndex() > 0) break; // only first sheet
+                if ($sheet->getIndex() > 0) break;
 
                 foreach ($sheet->getRowIterator() as $row) {
                     $cells = $row->getCells();
@@ -111,25 +111,6 @@ class PushNotificationController extends Controller
                 NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
                     ->onQueue('notification');
 
-
-  /*              $response = PushNotificationService::sendNotification($notification);
-
-
-
-                if(json_decode($response)->status == "SUCCESS"){
-
-                    if($request->filled('user_phone'))
-                    {
-                        $this->notificationService->attachNotificationToUser($notification_id, $user_phone);
-                    }
-
-                    session()->flash('success',"Notification has been sent successfully");
-
-                    return redirect(route('notification.index'));
-                }
-
-                session()->flash('success',"Notification send Failed");*/
-
             }
 
             return [
@@ -144,18 +125,82 @@ class PushNotificationController extends Controller
 
         }
 
-/*        $notification = [
-            'title' => $request->input('title'),
-            'body' => $request->input('message'),
-            "send_to_type" => "ALL",
-            "is_interactive" => "Yes",
-            "data" => [
-                "cid" => "1",
-                "url" => "test.com",
-                "component" => "offer",
-            ]
-        ];*/
+    }
 
+
+    /**
+     * Send Notification
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function sendNotification_ALL(Request $request)
+    {
+        $user_phone = [];
+        $notification_id = $request->input('id');
+        $category_id = $request->input('category_id');
+
+        if($request->filled('user_phone'))
+        {
+
+            $phone_list = $request->input('user_phone');
+
+            $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id,$phone_list);
+
+            $notification = [
+                'title' => $request->input('title'),
+                'body' => $request->input('message'),
+                "send_to_type" => "INDIVIDUALS" ,
+                "recipients" => $user_phone,
+                "is_interactive" => "Yes",
+                "data" => [
+                    "cid" => "1",
+                    "url" => "test.com",
+                    "component" => "offer",
+                ]
+
+            ];
+        } else {
+
+            $notification = [
+                'title' => $request->input('title'),
+                'body' => $request->input('message'),
+                "send_to_type" => "ALL",
+                "is_interactive" => "Yes",
+                "data" => [
+                    "cid" => "1",
+                    "url" => "test.com",
+                    "component" => "offer",
+                ]
+
+            ];
+        }
+
+
+        NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+            ->onQueue('notification');
+
+        session()->flash('success',"Notification has been sent successfully");
+
+        return redirect(route('notification.index'));
+
+
+        /* $response = PushNotificationService::sendNotification($notification);
+
+
+         if(json_decode($response)->status == "SUCCESS"){
+
+             if($request->filled('user_phone'))
+             {
+                 $this->notificationService->attachNotificationToUser($notification_id, $user_phone);
+             }
+
+             session()->flash('success',"Notification has been sent successfully");
+
+             return redirect(route('notification.index'));
+         }
+
+         session()->flash('success',"Notification send Failed");*/
     }
 
 }
