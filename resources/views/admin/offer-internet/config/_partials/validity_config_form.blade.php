@@ -24,7 +24,7 @@
                                                 class="text-danger">*</small></label>
                                         <input required type="number"
                                                id="validity_lower" min="1"
-                                               class="form-control validity_filter_input"
+                                               class="form-control validity_filter_input limit-input"
                                                placeholder="Max 365" name="lower">
                                         <small class="form-text text-muted">Enter
                                             amount in days</small>
@@ -35,8 +35,8 @@
                                         <label for="validity_upper">Upper</label>
                                         <input required type="number"
                                                id="validity_upper"
-                                               class="form-control validity_filter_input"
-                                               placeholder="Max 365" name="upper">
+                                               class="form-control validity_filter_input limit-input"
+                                               placeholder="Max 365" name="upper" min="1">
                                         <small class="form-text text-muted">Enter
                                             amount in days</small>
                                     </div>
@@ -233,6 +233,8 @@
 
             $(document).on('input','.validity_filter_input',function () {
                 let input = $(this).val();
+
+                if(input == 0) $(this).val(1);
 
                 if(input > 365){
                     Swal.fire(

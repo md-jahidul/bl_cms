@@ -24,7 +24,7 @@
                                                 class="text-danger">*</small></label>
                                         <input required type="number"
                                                id="internet_lower_price" min="1"
-                                               class="form-control internet_filter_input"
+                                               class="form-control internet_filter_input limit-input"
                                                placeholder="Max 102400" name="lower">
                                         <small class="form-text text-muted">Enter
                                             amount in mb.</small>
@@ -35,7 +35,7 @@
                                         <label for="internet_upper_price">Upper</label>
                                         <input required type="number"
                                                id="internet_upper_price"
-                                               class="form-control internet_filter_input"
+                                               class="form-control internet_filter_input limit-input"
                                                placeholder="Max 102400" name="upper">
                                         <small class="form-text text-muted">Enter
                                             amount in mb.</small>
@@ -242,10 +242,12 @@
             $(document).on('input','.internet_filter_input',function () {
                 let input = $(this).val();
 
+                if(input == 0) $(this).val(1);
+
                 if(input > 102400){
                     Swal.fire(
                         'Input Error!',
-                        'Minutes value must be less than 100GB(102400 MB)',
+                        'Internet value must be less than 100GB(102400 MB)',
                         'error',
                     );
 

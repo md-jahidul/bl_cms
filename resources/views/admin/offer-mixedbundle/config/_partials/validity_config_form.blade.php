@@ -233,7 +233,7 @@
 
             $(document).on('input','.validity_filter_input',function () {
                 let input = $(this).val();
-
+                if(input == 0) $(this).val(1);
                 if(input > 365){
                     Swal.fire(
                         'Input Error!',
