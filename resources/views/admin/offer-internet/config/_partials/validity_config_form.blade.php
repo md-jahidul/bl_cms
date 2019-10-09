@@ -239,7 +239,7 @@
                 if(input > 365){
                     Swal.fire(
                         'Input Error!',
-                        ' Validity Value must be less than 365',
+                        ' Validity Value cannot be greater than 365',
                         'error',
                     );
 
