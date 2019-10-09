@@ -53,6 +53,21 @@ Route::get('mixed-bundle-offer/filter/validity','CMS\MixedBundleFilterController
 Route::post('mixed-bundle-offer/filter/sort/save','CMS\MixedBundleFilterController@saveSortFilter')->name('mixed-bundle-offer.filter.sort.save');
 
 Route::get('/test/test','CMS\MixedBundleFilterController@getPriceFilter');
+
+
+Route::get('internet-pack/filter/create','CMS\InternetPackFilterController@create')->name('internet-pack.filter.create');
+Route::post('internet-pack/price/save','CMS\InternetPackFilterController@savePriceFilter')->name('internet-pack.filter.price.save');
+Route::get('internet-pack/filter/price','CMS\InternetPackFilterController@getPriceFilter')->name('internet-pack.filter.price.list');
+
+Route::post('internet-pack/filter/delete','CMS\InternetPackFilterController@deleteFilter')->name('internet-pack.filter.delete');
+
+Route::post('internet-pack/filter/internet/save','CMS\InternetPackFilterController@saveInternetFilter')->name('internet-pack.filter.internet.save');
+Route::get('internet-pack/filter/internet','CMS\InternetPackFilterController@getInternetFilter')->name('internet-pack.filter.internet.list');
+
+Route::post('internet-pack/filter/validity/save','CMS\InternetPackFilterController@saveValidityFilter')->name('internet-pack.filter.validity.save');
+Route::get('internet-pack/filter/validity','CMS\InternetPackFilterController@getValidityFilter')->name('internet-pack.filter.validity.list');
+
+
 Route::get('/test2/',function (){
 
     dd (new MixedBundleFilter());

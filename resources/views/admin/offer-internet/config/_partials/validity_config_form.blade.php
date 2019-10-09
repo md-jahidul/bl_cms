@@ -24,7 +24,7 @@
                                                 class="text-danger">*</small></label>
                                         <input required type="number"
                                                id="validity_lower" min="1"
-                                               class="form-control validity_filter_input"
+                                               class="form-control validity_filter_input limit-input"
                                                placeholder="Max 365" name="lower">
                                         <small class="form-text text-muted">Enter
                                             amount in days</small>
@@ -35,8 +35,8 @@
                                         <label for="validity_upper">Upper</label>
                                         <input required type="number"
                                                id="validity_upper"
-                                               class="form-control validity_filter_input"
-                                               placeholder="Max 365" name="upper">
+                                               class="form-control validity_filter_input limit-input"
+                                               placeholder="Max 365" name="upper" min="1">
                                         <small class="form-text text-muted">Enter
                                             amount in days</small>
                                     </div>
@@ -79,7 +79,7 @@
 
             let saveValidityFilter = function (param) {
                 return $.ajax({
-                    url: '{{route('mixed-bundle-offer.filter.validity.save')}}',
+                    url: '{{route('internet-pack.filter.validity.save')}}',
                     method: 'post',
                     data: param
                 });
@@ -94,7 +94,7 @@
                 serverSide: true,
                 ordering: false,
                 ajax: {
-                    url: '{{ route('mixed-bundle-offer.filter.validity.list') }}',
+                    url: '{{ route('internet-pack.filter.validity.list') }}',
                 },
                 columns: [
                     {
@@ -202,7 +202,7 @@
                 }).then((result) => {
                     if (result.value) {
                         call = $.ajax({
-                            url: '{{route('mixed-bundle-offer.filter.delete')}}',
+                            url: '{{route('internet-pack.filter.delete')}}',
                             method: 'post',
                             data: {
                                 _token: '{{csrf_token()}}',
@@ -233,7 +233,9 @@
 
             $(document).on('input','.validity_filter_input',function () {
                 let input = $(this).val();
+
                 if(input == 0) $(this).val('');
+
                 if(input > 365){
                     Swal.fire(
                         'Input Error!',

@@ -1,11 +1,11 @@
 <div class="card collapse-icon accordion-icon-rotate left">
-    <div id="validity_heading" class="card-header">
-        <a data-toggle="collapse" data-parent="#settings_panel" href="#validity_config"
+    <div id="internet_heading" class="card-header">
+        <a data-toggle="collapse" data-parent="#settings_panel" href="#internet_config"
            aria-expanded="false"
-           aria-controls="validity_config" class="card-title lead">Validity Filter</a>
+           aria-controls="internet_config" class="card-title lead">Internet Filter</a>
     </div>
 </div>
-<div id="validity_config" role="tabpanel" aria-labelledby="validity_heading" class="collapse">
+<div id="internet_config" role="tabpanel" aria-labelledby="internet_heading" class="collapse">
     <div class="card-content">
         <div class="card-body">
             <div class="row">
@@ -15,34 +15,34 @@
                         @csrf
                         @method('post')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-calendar"></i>Create Validity
+                            <h4 class="form-section"><i class="la la-globe"></i>Create Internet
                                 Filter</h4>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="validity_lower">Lower<small
+                                        <label for="internet_lower_price">Lower<small
                                                 class="text-danger">*</small></label>
                                         <input required type="number"
-                                               id="validity_lower" min="1"
-                                               class="form-control validity_filter_input"
-                                               placeholder="Max 365" name="lower">
+                                               id="internet_lower_price" min="1"
+                                               class="form-control internet_filter_input limit-input"
+                                               placeholder="Max 102400" name="lower">
                                         <small class="form-text text-muted">Enter
-                                            amount in days</small>
+                                            amount in mb.</small>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="validity_upper">Upper</label>
+                                        <label for="internet_upper_price">Upper</label>
                                         <input required type="number"
-                                               id="validity_upper"
-                                               class="form-control validity_filter_input"
-                                               placeholder="Max 365" name="upper">
+                                               id="internet_upper_price"
+                                               class="form-control internet_filter_input limit-input"
+                                               placeholder="Max 102400" name="upper">
                                         <small class="form-text text-muted">Enter
-                                            amount in days</small>
+                                            amount in mb.</small>
                                     </div>
                                 </div>
                                 <div class="col-md-1 add-button">
-                                    <button type="button" id="add_validity_filter"
+                                    <button type="button" id="add_internet_filter"
                                             class="btn btn-sm btn-icon btn-outline-info" title="Save">
                                         <i class="la la-save"></i>Save
                                     </button>
@@ -52,10 +52,9 @@
                     </form>
                 </div>
                 <div class="offset-1 col-md-4">
-                    <h5>Validity Filter List</h5>
-                    <table class="table table-striped table-bordered base-style dataTable"
-                           style="width: 100%!important;"
-                           id="validity_filter_table" role="grid" aria-describedby="Example1_info">
+                    <h5>Internet Filter List</h5>
+                    <table class="table table-striped table-bordered base-style"
+                           id="internet_filter_table" role="grid" aria-describedby="Example1_info">
                         <thead>
                         <tr>
                             <th class="filter_data">Sl.</th>
@@ -74,19 +73,19 @@
 
 @push('page-js')
     <script>
-        let validityFilterTable = null;
+        let internetFilterTable = null;
         $(function () {
 
-            let saveValidityFilter = function (param) {
+            let saveInternetFilter = function (param) {
                 return $.ajax({
-                    url: '{{route('mixed-bundle-offer.filter.validity.save')}}',
+                    url: '{{route('internet-pack.filter.internet.save')}}',
                     method: 'post',
                     data: param
                 });
             }
             // datatable for internet filter
 
-            validityFilterTable = $("#validity_filter_table").dataTable({
+            internetFilterTable = $("#internet_filter_table").dataTable({
                 scrollX: true,
                 processing: true,
                 searching: false,
@@ -94,7 +93,7 @@
                 serverSide: true,
                 ordering: false,
                 ajax: {
-                    url: '{{ route('mixed-bundle-offer.filter.validity.list') }}',
+                    url: '{{ route('internet-pack.filter.internet.list') }}',
                 },
                 columns: [
                     {
@@ -120,7 +119,7 @@
                         className: 'filter_data',
                         render: function (data, type, row) {
                             return `<div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-sm btn-icon btn-outline-danger validity-filter-del" data-id="` + row.id + `"><i class="la la-remove"></i></button>
+                            <button type="button" class="btn btn-sm btn-icon btn-outline-danger internet-filter-del" data-id="` + row.id + `"><i class="la la-remove"></i></button>
                           </div>`
                         }
                     }
@@ -131,10 +130,10 @@
             });
 
 
-            $('#add_validity_filter').on('click', function (e) {
+            $('#add_internet_filter').on('click', function (e) {
                 e.preventDefault();
-                let lower_price = $("#validity_lower").val();
-                let upper_price = $("#validity_upper").val();
+                let lower_price = $("#internet_lower_price").val();
+                let upper_price = $("#internet_upper_price").val();
 
                 if(upper_price !='' && parseInt(lower_price) > parseInt(upper_price)){
                     Swal.fire(
@@ -146,17 +145,27 @@
                     return false;
                 }
 
-                if (parseInt(upper_price) < 0 && upper_price != '') {
+                if (lower_price < 0) {
                     Swal.fire(
                         'Input Error!',
-                        'Upper input should be positive number',
+                        'Lower input cannot be negative value',
                         'error',
                     );
 
                     return false;
                 }
 
-                let callSaveValidityFilter = saveValidityFilter(new function () {
+                if (upper_price < 0 && upper_price != '') {
+                    Swal.fire(
+                        'Input Error!',
+                        'Upper input should be greater than 0',
+                        'error',
+                    );
+
+                    return false;
+                }
+
+                let callSaveInternetFilter = saveInternetFilter(new function () {
                     this._token = '{{csrf_token()}}';
                     this.lower = lower_price;
                     if (upper_price != '') {
@@ -164,15 +173,15 @@
                     }
                 })
 
-                callSaveValidityFilter.done(function (data) {
-                    $('#validity_filter_table').DataTable().ajax.reload();
+                callSaveInternetFilter.done(function (data) {
+                    $('#internet_filter_table').DataTable().ajax.reload();
                     Swal.fire(
                         'Success!',
                         'Successfully Added',
                         'success',
                     );
-                    $("#validity_lower").val('');
-                    $("#validity_upper").val('');
+                    $("#internet_lower_price").val('');
+                    $("#internet_upper_price").val('');
 
 
                 }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -185,7 +194,7 @@
                 });
             })
 
-            $(document).on('click', '.validity-filter-del', function (e) {
+            $(document).on('click', '.internet-filter-del', function (e) {
                 e.preventDefault();
                 let id = $(this).data('id');
                 let call = null;
@@ -202,7 +211,7 @@
                 }).then((result) => {
                     if (result.value) {
                         call = $.ajax({
-                            url: '{{route('mixed-bundle-offer.filter.delete')}}',
+                            url: '{{route('internet-pack.filter.delete')}}',
                             method: 'post',
                             data: {
                                 _token: '{{csrf_token()}}',
@@ -211,7 +220,7 @@
                         });
 
                         call.done(function () {
-                            $('#validity_filter_table').DataTable().ajax.reload();
+                            $('#internet_filter_table').DataTable().ajax.reload();
                             Swal.fire(
                                 'Success!',
                                 'Successfully Deleted',
@@ -225,25 +234,27 @@
                                 'error',
                             );
                         });
-
-
                     }
                 });
             })
 
-            $(document).on('input','.validity_filter_input',function () {
+
+            $(document).on('input','.internet_filter_input',function () {
                 let input = $(this).val();
+
                 if(input == 0) $(this).val('');
-                if(input > 365){
+
+                if(input > 102400){
                     Swal.fire(
                         'Input Error!',
-                        ' Validity Value cannot be greater than 365',
+                        'Internet value must be less than 100GB(102400 MB)',
                         'error',
                     );
 
                     $(this).val('');
                 }
             })
+
 
         });
     </script>

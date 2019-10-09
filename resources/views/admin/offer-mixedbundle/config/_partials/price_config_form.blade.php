@@ -257,7 +257,7 @@
 
             $(document).on('input','.price_filter_input',function () {
                 let input = $(this).val();
-
+                if(input == 0) $(this).val('');
                 if(input > 2000){
                     Swal.fire(
                         'Input Error!',

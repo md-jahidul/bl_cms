@@ -1,11 +1,11 @@
 <div class="card collapse-icon accordion-icon-rotate left">
-    <div id="validity_heading" class="card-header">
-        <a data-toggle="collapse" data-parent="#settings_panel" href="#validity_config"
-           aria-expanded="false"
-           aria-controls="validity_config" class="card-title lead">Validity Filter</a>
+    <div id="price_heading" class="card-header">
+        <a data-toggle="collapse" data-parent="#settings_panel" href="#price_config"
+           aria-expanded="true"
+           aria-controls="price_config" class="card-title lead">Price Filter</a>
     </div>
 </div>
-<div id="validity_config" role="tabpanel" aria-labelledby="validity_heading" class="collapse">
+<div id="price_config" role="tabpanel" aria-labelledby="price_heading" class="collapse show">
     <div class="card-content">
         <div class="card-body">
             <div class="row">
@@ -15,34 +15,46 @@
                         @csrf
                         @method('post')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-calendar"></i>Create Validity
+                            <h4 class="form-section"><i class="la la-money"></i>Create Price
                                 Filter</h4>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="validity_lower">Lower<small
+                                        <label for="lower_price">Lower<small
                                                 class="text-danger">*</small></label>
                                         <input required type="number"
-                                               id="validity_lower" min="1"
-                                               class="form-control validity_filter_input"
-                                               placeholder="Max 365" name="lower">
+                                               value="@if(old('lower')){{old('lower')}}@endif"
+                                               id="lower_price" min="1"
+                                               class="form-control price_filter_input limit-input"
+                                               placeholder="Max 2000" name="lower">
                                         <small class="form-text text-muted">Enter
-                                            amount in days</small>
+                                            amount in Tk.</small>
+                                        @error('lower')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="validity_upper">Upper</label>
+                                        <label for="upper_price">Upper</label>
                                         <input required type="number"
-                                               id="validity_upper"
-                                               class="form-control validity_filter_input"
-                                               placeholder="Max 365" name="upper">
+                                               value="@if(old('upper')){{old('upper')}}@endif"
+                                               id="upper_price"
+                                               class="form-control price_filter_input limit-input"
+                                               placeholder="Max 2000" name="upper" min="1">
                                         <small class="form-text text-muted">Enter
-                                            amount in days</small>
+                                            amount in Tk.</small>
+                                        @error('lower')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-1 add-button">
-                                    <button type="button" id="add_validity_filter"
+                                    <button type="button" id="add_price_filter"
                                             class="btn btn-sm btn-icon btn-outline-info" title="Save">
                                         <i class="la la-save"></i>Save
                                     </button>
@@ -52,10 +64,9 @@
                     </form>
                 </div>
                 <div class="offset-1 col-md-4">
-                    <h5>Validity Filter List</h5>
-                    <table class="table table-striped table-bordered base-style dataTable"
-                           style="width: 100%!important;"
-                           id="validity_filter_table" role="grid" aria-describedby="Example1_info">
+                    <h5>Price Filter List</h5>
+                    <table class="table table-striped table-bordered base-style"
+                           id="price_filter_table" role="grid" aria-describedby="Example1_info">
                         <thead>
                         <tr>
                             <th class="filter_data">Sl.</th>
@@ -73,20 +84,22 @@
 </div>
 
 @push('page-js')
+
     <script>
-        let validityFilterTable = null;
+
+        let priceFilterTable = null;
         $(function () {
 
-            let saveValidityFilter = function (param) {
+            let savePriceFilter = function (param) {
                 return $.ajax({
-                    url: '{{route('mixed-bundle-offer.filter.validity.save')}}',
+                    url: '{{route('internet-pack.filter.price.save')}}',
                     method: 'post',
                     data: param
                 });
             }
-            // datatable for internet filter
+            // datatable for price filter
 
-            validityFilterTable = $("#validity_filter_table").dataTable({
+            priceFilterTable = $("#price_filter_table").dataTable({
                 scrollX: true,
                 processing: true,
                 searching: false,
@@ -94,7 +107,7 @@
                 serverSide: true,
                 ordering: false,
                 ajax: {
-                    url: '{{ route('mixed-bundle-offer.filter.validity.list') }}',
+                    url: '{{ route('internet-pack.filter.price.list') }}',
                 },
                 columns: [
                     {
@@ -120,7 +133,7 @@
                         className: 'filter_data',
                         render: function (data, type, row) {
                             return `<div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-sm btn-icon btn-outline-danger validity-filter-del" data-id="` + row.id + `"><i class="la la-remove"></i></button>
+                            <button type="button" class="btn btn-sm btn-icon btn-outline-danger price-filter-del" data-id="` + row.id + `"><i class="la la-remove"></i></button>
                           </div>`
                         }
                     }
@@ -130,11 +143,10 @@
                 }
             });
 
-
-            $('#add_validity_filter').on('click', function (e) {
+            $('#add_price_filter').on('click', function (e) {
                 e.preventDefault();
-                let lower_price = $("#validity_lower").val();
-                let upper_price = $("#validity_upper").val();
+                let lower_price = $("#lower_price").val();
+                let upper_price = $("#upper_price").val();
 
                 if(upper_price !='' && parseInt(lower_price) > parseInt(upper_price)){
                     Swal.fire(
@@ -146,17 +158,27 @@
                     return false;
                 }
 
-                if (parseInt(upper_price) < 0 && upper_price != '') {
+                if (lower_price < 0) {
                     Swal.fire(
                         'Input Error!',
-                        'Upper input should be positive number',
+                        'Lower input cannot be negative value',
                         'error',
                     );
 
                     return false;
                 }
 
-                let callSaveValidityFilter = saveValidityFilter(new function () {
+                if (upper_price < 0 && upper_price != '') {
+                    Swal.fire(
+                        'Input Error!',
+                        'Upper input should be greater than 0',
+                        'error',
+                    );
+
+                    return false;
+                }
+
+                let callSavePriceFilter = savePriceFilter(new function () {
                     this._token = '{{csrf_token()}}';
                     this.lower = lower_price;
                     if (upper_price != '') {
@@ -164,18 +186,20 @@
                     }
                 })
 
-                callSaveValidityFilter.done(function (data) {
-                    $('#validity_filter_table').DataTable().ajax.reload();
+                callSavePriceFilter.done(function (data) {
+                    $('#price_filter_table').DataTable().ajax.reload();
                     Swal.fire(
                         'Success!',
                         'Successfully Added',
                         'success',
                     );
-                    $("#validity_lower").val('');
-                    $("#validity_upper").val('');
+                    $("#lower_price").val('');
+                    $("#upper_price").val('');
 
 
                 }).fail(function (jqXHR, textStatus, errorThrown) {
+                    // If fail
+                    //console.log("error:" , jqXHR.responseJSON);
                     let errorResponse = jqXHR.responseJSON;
                     Swal.fire(
                         'Error!',
@@ -185,7 +209,7 @@
                 });
             })
 
-            $(document).on('click', '.validity-filter-del', function (e) {
+            $(document).on('click', '.price-filter-del', function (e) {
                 e.preventDefault();
                 let id = $(this).data('id');
                 let call = null;
@@ -202,7 +226,7 @@
                 }).then((result) => {
                     if (result.value) {
                         call = $.ajax({
-                            url: '{{route('mixed-bundle-offer.filter.delete')}}',
+                            url: '{{route('internet-pack.filter.delete')}}',
                             method: 'post',
                             data: {
                                 _token: '{{csrf_token()}}',
@@ -211,7 +235,7 @@
                         });
 
                         call.done(function () {
-                            $('#validity_filter_table').DataTable().ajax.reload();
+                            $('#price_filter_table').DataTable().ajax.reload();
                             Swal.fire(
                                 'Success!',
                                 'Successfully Deleted',
@@ -231,19 +255,22 @@
                 });
             })
 
-            $(document).on('input','.validity_filter_input',function () {
+            $(document).on('input','.price_filter_input',function () {
                 let input = $(this).val();
+
                 if(input == 0) $(this).val('');
-                if(input > 365){
+
+                if(input > 2000){
                     Swal.fire(
                         'Input Error!',
-                        ' Validity Value cannot be greater than 365',
+                        'Price Value must be less than 2000 tk',
                         'error',
                     );
 
                     $(this).val('');
                 }
             })
+
 
         });
     </script>
