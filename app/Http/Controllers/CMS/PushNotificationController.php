@@ -38,7 +38,9 @@ class PushNotificationController extends Controller
     public function saveCustomerListFile(Request $request)
     {
         $file = $request->file('customer_file');
-        $path = $file->storeAs('uploads', md5($file->getClientOriginalName() . Str::random()) . '.' . $file->getClientOriginalExtension(), 'public');
+        $path = $file->storeAs('uploads',
+            md5($file->getClientOriginalName() . Str::random()) . '.' . $file->getClientOriginalExtension(),
+            'public');
 
         return $path;
     }
@@ -108,9 +110,10 @@ class PushNotificationController extends Controller
 
                 NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
                     ->onQueue('notification');
-/*                $response = PushNotificationService::sendNotification($notification);
 
-                dd($response);
+
+  /*              $response = PushNotificationService::sendNotification($notification);
+
 
 
                 if(json_decode($response)->status == "SUCCESS"){

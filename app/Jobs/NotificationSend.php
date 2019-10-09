@@ -56,8 +56,6 @@ class NotificationSend implements ShouldQueue
     {
         $response = PushNotificationService::sendNotification($this->notification);
 
-        dd($response);
-
 
         if(json_decode($response)->status == "SUCCESS"){
 
