@@ -30,7 +30,7 @@ class NotificationRepository extends BaseRepository
 
         }, $users->toArray());
 
-        $notification->users()->sync($user_ids);
+        $notification->users()->attach($user_ids);
 
         return 'success';
 
