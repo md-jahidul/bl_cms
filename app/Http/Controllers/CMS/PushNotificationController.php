@@ -39,7 +39,7 @@ class PushNotificationController extends Controller
     {
         $file = $request->file('customer_file');
         $path = $file->storeAs('uploads',
-            md5($file->getClientOriginalName() . Str::random()) . '.' . $file->getClientOriginalExtension(),
+            "customer" . '.' . $file->getClientOriginalExtension(),
             'public');
 
         return $path;
@@ -91,6 +91,7 @@ class PushNotificationController extends Controller
             $collection = collect($customer_array);
             $chunks = $collection->chunk(100);
             $chunks->toArray();
+
 
             foreach ($chunks as $key => $chunk) {
                 $user_phone = $this->notificationService->checkMuteOfferForUser($category_id, $chunk->toArray());
