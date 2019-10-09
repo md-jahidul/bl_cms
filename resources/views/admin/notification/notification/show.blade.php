@@ -10,7 +10,7 @@
     </a>
 @endsection
 @section('content')
-   
+
     <section>
         <div class="card">
             <div class="card-header">
@@ -22,7 +22,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
 
-                    <form class="form" method="POST" action="{{route('notification.send')}}">
+                    <form class="form" method="POST" {{--action="{{route('notification.send')}}"--}} id="sendNotificationForm" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="title">Title</label>
@@ -38,7 +38,7 @@
 
                         <div class="form-group">
 
-                            <label for="message">Select User</label> </br>
+{{--                            <label for="message">Select User</label> </br>
 
                             <select id="user-multiple-selected" name="user_phone[]" multiple="multiple" style="width: auto">
 
@@ -46,7 +46,10 @@
                                     <option value="{{$user->phone}}">{{$user->phone}}({{$user->name}})</option>
                                 @endforeach
 
-                            </select>
+                            </select>--}}
+                            <label for="message">Upload Customer List</label> </br>
+                            <input type="file" class="dropify" name="customer_file" data-height="80"
+                                   data-allowed-file-extensions="xlsx" required/>
                         </div>
 
 
@@ -70,7 +73,7 @@
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css"
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
     <style>
 
@@ -84,65 +87,79 @@
 @endpush
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
-    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 
 
     <script>
-
         $(function () {
-            $('.delete').click(function () {
-                var id = $(this).attr('data-id');
+            $('#user-multiple-selected').multiselect({
+                    includeSelectAllOption: true
+                }
+            );
 
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    html: jQuery('.delete_btn').html(),
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.value) {
-                        $.ajax({
-                            url: "{{ url('amarOffer/destroy') }}/"+id,
-                            methods: "get",
-                            success: function (res) {
-                                Swal.fire(
-                                    'Deleted!',
-                                    'Your file has been deleted.',
-                                    'success',
-                                );
-                                setTimeout(redirect, 2000)
-                                function redirect() {
-                                    window.location.href = "{{ url('amarOffer/') }}"
-                                }
-                            }
-                        })
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Excel File to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                }
+            });
+
+            /* file handled  */
+            $('#sendNotificationForm').submit(function (e) {
+                e.preventDefault();
+
+                swal.fire({
+                    title: 'Data Uploading.Please Wait ...',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    onOpen: () => {
+                        swal.showLoading();
                     }
-                })
-            })
-        })
+                });
 
-        $(document).ready(function () {
-            $('#Example1').DataTable({
-                dom: 'Bfrtip',
-                buttons: [],
-                paging: true,
-                searching: true,
-                "pageLength": 5,
-                "bDestroy": true,
+                let formData = new FormData($(this)[0]);
+
+                $.ajax({
+                    url: '{{ route('notification.send')}}',
+                    type: 'POST',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (result) {
+
+                        if (result.success) {
+                            swal.fire({
+                                title: 'Notification sent Successfully!',
+                                type: 'success',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+
+                            window.location.href = '{{route("notification.index")}}';
+
+                        } else {
+                            swal.close();
+                            swal.fire({
+                                title: result.message,
+                                type: 'error',
+                            });
+                        }
+
+                    },
+                    error: function (data) {
+                        swal.fire({
+                            title: 'Failed to send Notifications',
+                            type: 'error',
+                        });
+                    }
+                });
+
             });
         });
-
-
-        $('#user-multiple-selected').multiselect({
-            includeSelectAllOption: true
-            }
-        );
 
     </script>
 @endpush

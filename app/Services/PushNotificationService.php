@@ -31,6 +31,8 @@ class PushNotificationService
     {
         $res = static::post('/api/v1/push/notification', $data);
 
+        dd($res);
+
         return $res;
 
     }
