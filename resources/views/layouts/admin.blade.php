@@ -56,6 +56,10 @@
     <link rel="stylesheet" type="text/css" href="{{asset('theme/assets/css/style.css')}}">
     <!-- END Custom CSS-->
 
+    <script>
+        window.Laravel = {!! json_encode(['csrfToken' => csrf_token(),]) !!};
+    </script>
+
     @stack('page-css')
     @yield('page-css')
     @stack('style')
@@ -129,6 +133,8 @@
 <!-- END PAGE LEVEL JS-->
 
 <script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
+
+
 
 @stack('page-js')
 <script>

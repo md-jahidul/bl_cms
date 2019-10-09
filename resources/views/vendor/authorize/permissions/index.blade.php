@@ -1,5 +1,16 @@
-@extends('vendor.authorize.layouts.auth')
-{{--@extends('layouts.admin')--}}
+{{--@extends('vendor.authorize.layouts.auth')--}}
+@extends('layouts.admin')
+
+@section('title', 'Permission')
+@section('card_name', 'Permission')
+@section('breadcrumb')
+    <li class="breadcrumb-item active">Permission</li>
+@endsection
+@section('action')
+    <!-- <a href="{{ url('sliders/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Add Slider
+    </a> -->
+@endsection
 
 @php
 
@@ -25,74 +36,119 @@
 @endphp
 
 @section('content')
-    <div class="panel panel-default">
-        <div class="panel-heading">Update Permission</div>
-        <div class="panel-body">
 
-            @if ($errors->any())
-                <ul class="alert alert-danger">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div id="tree" class="card-body card-dashboard">
+                    {!! Form::open(['url' => '/' . Config("authorization.route-prefix") . '/permissions', 'class' => 'form-horizontal']) !!}
+
+                    <div class="form-group row mb-0">
+                        <div class="form-group {{ $errors->has('role_id') ? 'has-error' : ''}} col-md-8 row">
+                            <strong>{!! Form::label('role_id', 'Role', ['class' => 'control-label mt-1 ml-2']) !!}</strong>
+                            <div class="col-md-5">
+                                {{--                                <select class="form-control" required="required" id="role_id" name="role_id" aria-invalid="false">--}}
+                                {{--                                    <option selected="selected" value="">Please select ...</option>--}}
+                                {{--                                </select>--}}
+                                {!! Form::select('role_id', $roles, null, ['placeholder' => 'Please select ...', 'class' => 'form-control', 'required' => 'required']) !!}
+                                {{--                                {!! $errors->first('role_id', '<p class="help-block">:message</p>') !!}--}}
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            {!! Form::submit('Update', ['class' => 'btn btn-primary float-right']) !!}
+                        </div>
+
+                    </div>
+
+                    {{--                    <ul id="tree">--}}
+                    @foreach($actions as $namespace => $controllers)
+                        <h3 class="mb-2">{{ mapStr($namespace) }}</h3>
+                        {{--                            <li>{{ mapStr($namespace) }}--}}
+                        {{--                                <button class="btn select-all">Select All</button>--}}
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Controller</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($controllers as $controller => $methods)
+                                @php
+                                    $actions = arrayMerge(  $methods );
+                                @endphp
+                                <tr>
+                                    <td style="vertical-align:middle"><label>{{ $loop->iteration }}</label></td>
+                                    <td style="vertical-align:middle"><label>{{ str_replace("Controller","", $controller)  }}</label></td>
+                                    <td>
+                                        @foreach( $actions as $method => $action)
+                                            <label style="display: block">
+
+{{--                                                {{ $action }}--}}
+                                                            {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . explode ("_",$method)[0] . '-' . $action, null, ['class' => 'field']) }}
+                                                {{ mapStr($action) }}
+                                            </label>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        {{--                            </li>--}}
                     @endforeach
-                </ul>
-            @endif
 
-            {!! Form::open(['url' => '/' . Config("authorization.route-prefix") . '/permissions', 'class' => 'form-horizontal']) !!}
-            <div class="form-group {{ $errors->has('role_id') ? 'has-error' : ''}}">
-                {!! Form::label('role_id', 'Role', ['class' => 'col-md-4 control-label']) !!}
-                <div class="col-md-6">
-                    {!! Form::select('role_id', $roles, null, ['placeholder' => 'Please select ...', 'class' => 'form-control', 'required' => 'required']) !!}
-                    {!! $errors->first('role_id', '<p class="help-block">:message</p>') !!}
+                    <div class="pb-2">
+                        {!! Form::submit('Update', ['class' => 'btn btn-primary float-right mb-2']) !!}
+                    </div>
+
+                    {!! Form::close() !!}
                 </div>
             </div>
-            <div class="form-group {{ $errors->has('controller') ? 'has-error' : ''}}">
-                {!! Form::label('controller', 'Actions', ['class' => 'col-md-4 control-label']) !!}
-{{--                <div class="col-md-6">--}}
-{{--                    <ul id="tree">--}}
-{{--                        @foreach($actions as $namespace => $controllers)--}}
+        </div>
 
-{{--                            <li>{{ mapStr($namespace) }} <button class="btn select-all">Select All</button>--}}
-{{--                            <ul>--}}
-{{--                                @foreach($controllers as $controller => $methods)--}}
-{{--                                <li>{{ str_replace("Controller","", $controller)  }}--}}
-{{--                                    <ul>--}}
-{{--                                        @foreach($methods as $method => $actions)--}}
-{{--                                            <li>{{ $method }}--}}
-{{--                                                <ul>--}}
-{{--                                                    @foreach($actions as $action)--}}
-{{--                                                        <li>--}}
-{{--                                                            {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . $method . '-' . $action, null, ['class' => 'field']) }}--}}
-{{--                                                            {{ mapStr($action) }}--}}
-{{--                                                        </li>--}}
-{{--                                                    @endforeach--}}
-{{--                                                </ul>--}}
-{{--                                            </li>--}}
-{{--                                        @endforeach--}}
-{{--                                    </ul>--}}
-{{--                                </li>--}}
-{{--                                @endforeach--}}
-{{--                            </ul>--}}
-{{--                        </li>--}}
-{{--                        @endforeach--}}
-{{--                    </ul>--}}
-{{--                </div>--}}
+    </section>
 
 
-                {{--  new dom  --}}}
-                <div class="col-md-12">
-                    <ul id="tree">
-                        @foreach($actions as $namespace => $controllers)
+    {{--    <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                @if ($errors->any())
+                    <ul class="alert alert-danger">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
 
-                            <li>{{ mapStr($namespace) }} <button class="btn select-all">Select All</button>
-                                <table class="table">
-                                    <thead>
+                {!! Form::open(['url' => '/' . Config("authorization.route-prefix") . '/permissions', 'class' => 'form-horizontal']) !!}
+                <div class="form-group {{ $errors->has('role_id') ? 'has-error' : ''}}">
+                    {!! Form::label('role_id', 'Role', ['class' => 'col-md-4 control-label']) !!}
+                    <div class="col-md-6">
+                        {!! Form::select('role_id', $roles, null, ['placeholder' => 'Please select ...', 'class' => 'form-control', 'required' => 'required']) !!}
+                        {!! $errors->first('role_id', '<p class="help-block">:message</p>') !!}
+                    </div>
+                </div>
+                <div class="form-group {{ $errors->has('controller') ? 'has-error' : ''}}">
+                      new dom
+                    <div class="col-md-12">
+                        <ul id="tree">
+                            @foreach($actions as $namespace => $controllers)
+
+                                <li>{{ mapStr($namespace) }}
+                                    <button class="btn select-all">Select All</button>
+
+                                    <table class="table">
+                                        <thead>
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Controller</th>
                                             <th scope="col">Action</th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
+                                        </thead>
+                                        <tbody>
                                         @foreach($controllers as $controller => $methods)
                                             @php
                                                 $actions = arrayMerge(  $methods );
@@ -103,72 +159,183 @@
                                                 <td>
                                                     @foreach( $actions as $method => $action)
                                                         <span style="display: block">
-                                                            {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . explode ("_",$method)[0] . '-' . $action, null, ['class' => 'field']) }}
+                                                                {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . explode ("_",$method)[0] . '-' . $action, null, ['class' => 'field']) }}
                                                             {{ mapStr($action) }}
-                                                        </span>
+                                                            </span>
                                                     @endforeach
                                                 </td>
                                             </tr>
                                         @endforeach
-                                    </tbody>
-                                </table>
-                            </li>
-                        @endforeach
-                    </ul>
+                                        </tbody>
+                                    </table>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-4 col-md-4">
-                    {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-4">
+                        {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
+                    </div>
                 </div>
+
+                {!! Form::close() !!}
             </div>
+        </div>--}}
 
-            {!! Form::close() !!}
 
-        </div>
-    </div>
+
+    {{--    <div class="card">--}}
+    {{--        <div class="card-heading">Update Permission</div>--}}
+    {{--        <div class="card-body">--}}
+
+    {{--            @if ($errors->any())--}}
+    {{--                <ul class="alert alert-danger">--}}
+    {{--                    @foreach ($errors->all() as $error)--}}
+    {{--                        <li>{{ $error }}</li>--}}
+    {{--                    @endforeach--}}
+    {{--                </ul>--}}
+    {{--            @endif--}}
+
+    {{--            {!! Form::open(['url' => '/' . Config("authorization.route-prefix") . '/permissions', 'class' => 'form-horizontal']) !!}--}}
+    {{--            <div class="form-group {{ $errors->has('role_id') ? 'has-error' : ''}}">--}}
+    {{--                {!! Form::label('role_id', 'Role', ['class' => 'col-md-4 control-label']) !!}--}}
+    {{--                <div class="col-md-6">--}}
+    {{--                    {!! Form::select('role_id', $roles, null, ['placeholder' => 'Please select ...', 'class' => 'form-control', 'required' => 'required']) !!}--}}
+    {{--                    {!! $errors->first('role_id', '<p class="help-block">:message</p>') !!}--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--            <div class="form-group {{ $errors->has('controller') ? 'has-error' : ''}}">--}}
+    {{--                {!! Form::label('controller', 'Actions', ['class' => 'col-md-4 control-label']) !!}--}}
+    {{--                <div class="col-md-6">--}}
+    {{--                    <ul id="tree">--}}
+    {{--                        @foreach($actions as $namespace => $controllers)--}}
+
+    {{--                            <li>{{ mapStr($namespace) }} <button class="btn select-all">Select All</button>--}}
+    {{--                            <ul>--}}
+    {{--                                @foreach($controllers as $controller => $methods)--}}
+    {{--                                <li>{{ str_replace("Controller","", $controller)  }}--}}
+    {{--                                    <ul>--}}
+    {{--                                        @foreach($methods as $method => $actions)--}}
+    {{--                                            <li>{{ $method }}--}}
+    {{--                                                <ul>--}}
+    {{--                                                    @foreach($actions as $action)--}}
+    {{--                                                        <li>--}}
+    {{--                                                            {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . $method . '-' . $action, null, ['class' => 'field']) }}--}}
+    {{--                                                            {{ mapStr($action) }}--}}
+    {{--                                                        </li>--}}
+    {{--                                                    @endforeach--}}
+    {{--                                                </ul>--}}
+    {{--                                            </li>--}}
+    {{--                                        @endforeach--}}
+    {{--                                    </ul>--}}
+    {{--                                </li>--}}
+    {{--                                @endforeach--}}
+    {{--                            </ul>--}}
+    {{--                        </li>--}}
+    {{--                        @endforeach--}}
+    {{--                    </ul>--}}
+    {{--                </div>--}}
+
+    {{--                //  new dom  --}}
+    {{--                <div class="col-md-12">--}}
+    {{--                    <ul id="tree">--}}
+    {{--                        @foreach($actions as $namespace => $controllers)--}}
+
+    {{--                            <li>{{ mapStr($namespace) }} <button class="btn select-all">Select All</button>--}}
+    {{--                                <table class="table">--}}
+    {{--                                    <thead>--}}
+    {{--                                        <tr>--}}
+    {{--                                            <th scope="col">#</th>--}}
+    {{--                                            <th scope="col">Controller</th>--}}
+    {{--                                            <th scope="col">Action</th>--}}
+    {{--                                        </tr>--}}
+    {{--                                    </thead>--}}
+    {{--                                    <tbody>--}}
+    {{--                                        @foreach($controllers as $controller => $methods)--}}
+    {{--                                            @php--}}
+    {{--                                                $actions = arrayMerge(  $methods );--}}
+    {{--                                            @endphp--}}
+    {{--                                            <tr>--}}
+    {{--                                                <td style="vertical-align:middle">{{ $loop->iteration }}</td>--}}
+    {{--                                                <td style="vertical-align:middle">{{ str_replace("Controller","", $controller)  }}</td>--}}
+    {{--                                                <td>--}}
+    {{--                                                    @foreach( $actions as $method => $action)--}}
+    {{--                                                        <span style="display: block">--}}
+    {{--                                                            {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . explode ("_",$method)[0] . '-' . $action, null, ['class' => 'field']) }}--}}
+    {{--                                                            {{ mapStr($action) }}--}}
+    {{--                                                        </span>--}}
+    {{--                                                    @endforeach--}}
+    {{--                                                </td>--}}
+    {{--                                            </tr>--}}
+    {{--                                        @endforeach--}}
+    {{--                                    </tbody>--}}
+    {{--                                </table>--}}
+    {{--                            </li>--}}
+    {{--                        @endforeach--}}
+    {{--                    </ul>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+
+    {{--            <div class="form-group">--}}
+    {{--                <div class="col-md-offset-4 col-md-4">--}}
+    {{--                    {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+
+    {{--            {!! Form::close() !!}--}}
+
+    {{--        </div>--}}
+    {{--    </div>--}}
 @endsection
 
 @push('styles')
-<link href="/vendor/authorize/css/tree.css" rel="stylesheet">
+    <link href="/vendor/authorize/css/tree.css" rel="stylesheet">
 @endpush
 
-@push('scripts')
-<script src="/vendor/authorize/js/tree.js"></script>
-<script>
-    $(function () {
-        $('#role_id').on('change', function () {
-            var role_id = $(this).val();
-            $('#tree').find('input[type=checkbox]:checked').prop('checked', '');
-            if (role_id > 0) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': Laravel.csrfToken
-                    },
-                    type: "POST",
-                    url: '{{ url('/' . Config("authorization.route-prefix") . '/permissions/getSelectedRoutes') }}',
-                    data: {role_id: role_id},
-                    cache: false,
-                    success: function (res) {
-                        $.each(res.selectedActions, function (key, val) {
-                            var value = val.replace(/\\/g, '\\\\');
-                            $('input[type="checkbox"][value="' + value + '"]').prop('checked', 'checked');
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        alert("An AJAX error occured: " + status + "\nError: " + error);
-                    }
-                });
-            }
-        });
+{{--@push('scripts')--}}
+@push('page-js')
+{{--    <script src="/vendor/authorize/js/app.js"></script>--}}
+    <script src="/vendor/authorize/js/tree.js"></script>
+    <script>
+        $(function () {
+            $('#role_id').on('change', function () {
 
-        $('.select-all').on('click',function(){
-            $(this).parent().find('.indicator').trigger('click');
-            $(this).parent().find('li input.field').each(function(i,ele){
-                $(this).attr('checked', !$(this).attr('checked') );
-            })
+                // alert('hi');
+                var role_id = $(this).val();
+                $('#tree').find('input[type=checkbox]:checked').prop('checked', '');
+                if (role_id > 0) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': Laravel.csrfToken
+                        },
+                        type: "POST",
+                        url: '{{ url('/' . Config("authorization.route-prefix") . '/permissions/getSelectedRoutes') }}',
+                        data: {role_id: role_id},
+                        cache: false,
+                        success: function (res) {
+
+                            console.log(res);
+
+                            $.each(res.selectedActions, function (key, val) {
+                                var value = val.replace(/\\/g, '\\\\');
+                                $('input[type="checkbox"][value="' + value + '"]').prop('checked', 'checked');
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            alert("An AJAX error occured: " + status + "\nError: " + error);
+                        }
+                    });
+                }
+            });
+
+            $('.select-all').on('click',function(){
+                $(this).parent().find('.indicator').trigger('click');
+                $(this).parent().find('li input.field').each(function(i,ele){
+                    $(this).attr('checked', !$(this).attr('checked') );
+                })
+            });
         });
-    });
-</script>
+    </script>
 @endpush

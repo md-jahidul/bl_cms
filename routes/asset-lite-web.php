@@ -21,7 +21,7 @@ Auth::routes();
 Route::middleware('authorize')->group(function() {
     //Place all your routes here
 
-Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
+//Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 
 // CONFIG PAGES ====================================
 Route::get('config','CMS\ConfigController@index');
@@ -106,8 +106,8 @@ Route::resource('questions', 'CMS\QuestionController');
 Route::resource('campaigns','CMS\CampaignController');
 // Route::resource('prizes','CMS\PrizeController');
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
+Route::get('/home', 'CMS\HomeController@index')->name('home');
+//Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 
 
 
