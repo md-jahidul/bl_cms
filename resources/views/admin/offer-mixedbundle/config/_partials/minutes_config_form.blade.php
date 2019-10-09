@@ -243,7 +243,7 @@
 
             $(document).on('input','.minutes_filter_input',function () {
                 let input = $(this).val();
-
+                if(input == 0) $(this).val(1);
                 if(input > 2000){
                     Swal.fire(
                         'Input Error!',

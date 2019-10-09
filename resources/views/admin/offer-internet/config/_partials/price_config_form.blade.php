@@ -25,7 +25,7 @@
                                         <input required type="number"
                                                value="@if(old('lower')){{old('lower')}}@endif"
                                                id="lower_price" min="1"
-                                               class="form-control price_filter_input @error('lower') is-invalid @enderror"
+                                               class="form-control price_filter_input limit-input"
                                                placeholder="Max 2000" name="lower">
                                         <small class="form-text text-muted">Enter
                                             amount in Tk.</small>
@@ -42,8 +42,8 @@
                                         <input required type="number"
                                                value="@if(old('upper')){{old('upper')}}@endif"
                                                id="upper_price"
-                                               class="form-control price_filter_input @error('lower') is-invalid @enderror"
-                                               placeholder="Max 2000" name="upper">
+                                               class="form-control price_filter_input limit-input"
+                                               placeholder="Max 2000" name="upper" min="1">
                                         <small class="form-text text-muted">Enter
                                             amount in Tk.</small>
                                         @error('lower')
@@ -257,6 +257,8 @@
 
             $(document).on('input','.price_filter_input',function () {
                 let input = $(this).val();
+
+                if(input == 0) $(this).val(1);
 
                 if(input > 2000){
                     Swal.fire(
