@@ -21,7 +21,8 @@ class PartnerOfferTableSeeder extends Seeder
         $countHomePageOffer = 0;
         for ($i=0; $i < 30; $i++){
             $randItem = rand(0,2);
-            $showInHome = $i < 7 ? 1 : 0;
+            $showInHome = rand(0,3) ? 1 : 0;
+
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
             PartnerOffer::create([
                 'partner_id' => rand(1,5),
