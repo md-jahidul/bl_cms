@@ -1,7 +1,5 @@
 (function(){
 
-
-
         var confirmPopupParams = {
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -26,7 +24,7 @@
         $('.delete_btn').click(function () {
             var url = $(this).attr('remove');
 
-            console.log(url);
+            // console.log(url);
 
             Swal.fire(confirmPopupParams).then((result) => {
                 if(result.value) {

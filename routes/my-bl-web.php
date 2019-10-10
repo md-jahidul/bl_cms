@@ -14,7 +14,7 @@
 
 
 
-Route::group(['middleware' => ['appAdmin', 'authorize']], function () {
+Route::group(['middleware' => ['appAdmin']], function () {
 
     //------ shortcuts -----------//
 

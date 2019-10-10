@@ -20,6 +20,7 @@ Auth::routes();
 
 Route::middleware('authorize')->group(function() {
     //Place all your routes here
+    Route::resource('authorize/users', 'UserController');
 
     //Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 

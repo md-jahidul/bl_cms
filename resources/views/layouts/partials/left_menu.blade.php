@@ -5,32 +5,36 @@
                 <span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
             </li>
 
-            <li class="nav-item"><a href="#"><i class="la la-users"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
-                <ul class="menu-content">
 
-                    <li class="{{ is_active_url('authorize/users') . is_active_url('authorize/users')}}">
-                        <a class="menu-item" href="{{ url('single-sliders') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                class="la la-user"></i> User</a>
-                    </li>
-
-                    <li class="{{ is_active_url('authorize/roles') . is_active_url('authorize/roles')}}">
-                        <a class="menu-item" href="{{ url('authorize/roles') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                class="la la-cubes"></i> Role</a>
-                    </li>
-
-                    <li class="{{ is_active_url('authorize/permissions') . is_active_url('authorize/permissions')}}">
-                        <a class="menu-item" href="{{ url('authorize/permissions') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                class="la la-check-square"></i> Permission</a>
-                    </li>
-
-                </ul>
-            </li>
 
             {{--------------------------------------------------------------------------------------------------------------------}}
             {{---------------------------------------------------------Asset Lite-------------------------------------------------}}
             {{--------------------------------------------------------------------------------------------------------------------}}
-            @if(Auth::user()->role_id == '1'|| Auth::user()->role_id !== '3')
+            @if(Auth::user()->type == 'assetlite')
+
+
+                <li class="nav-item"><a href="#"><i class="la la-users"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
+                    <ul class="menu-content">
+
+                        <li class="{{ is_active_url('authorize/users') . is_active_url('authorize/users')}}">
+                            <a class="menu-item" href="{{ url('authorize/users') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-user"></i> User</a>
+                        </li>
+
+                        <li class="{{ is_active_url('authorize/roles') . is_active_url('authorize/roles')}}">
+                            <a class="menu-item" href="{{ url('authorize/roles') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-cubes"></i> Role</a>
+                        </li>
+
+                        <li class="{{ is_active_url('authorize/permissions') . is_active_url('authorize/permissions')}}">
+                            <a class="menu-item" href="{{ url('authorize/permissions') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-check-square"></i> Permission</a>
+                        </li>
+
+                    </ul>
+                </li>
+
 
             <li class="{{ is_active_url('/quick-launch') }} nav-item"><a href="{{ url('quick-launch') }}"><i class="la la-automobile"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Quick launch</span></a>
@@ -132,7 +136,7 @@
             {{--------------------------------------------------------------------------------------------------------------------}}
             {{---------------------------------------------------------My-BL App--------------------------------------------------}}
             {{--------------------------------------------------------------------------------------------------------------------}}
-            @if(Auth::user()->role_id == '1'|| Auth::user()->role_id == '2')
+            @if(Auth::user()->type == 'mybl')
             <li class="{{ is_active_url('/helpCenter') }} {{ is_active_url('helpCenter/create') }} nav-item"><a href="{{route('helpCenter.index')}}"><i class="la la-ambulance"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Help Center</span></a>
             </li>
