@@ -16,7 +16,7 @@ class CreateOtpsTable extends Migration
         Schema::create('otps', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('customer_id')->nullable();
-            $table->string('msisdn');
+            $table->string('phone');
             $table->string('otp')->nullable();
             $table->string('token')->nullable();
             $table->string('session_id')->nullable();
