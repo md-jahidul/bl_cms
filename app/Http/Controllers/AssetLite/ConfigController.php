@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Requests\UpdateConfigRequest;
 use App\Models\Config;
+use App\Models\User;
 use App\Services\ConfigService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,9 +23,6 @@ class ConfigController extends Controller
         $this->middleware('auth');
     }
 
-
-
-
     /**
      * Display a listing of the resource.
      *
@@ -37,14 +35,14 @@ class ConfigController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateConfigRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateConfigRequest $request)
     {
+        $this->authorize('update', Config::class);
+
         $response = $this->configService->updateConfigData($request->all());
         Session::flash('message', $response->getContent());
         return redirect( "/config");

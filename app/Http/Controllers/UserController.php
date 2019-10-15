@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Pondit\Authorize\Models\Role;
 
 class UserController extends Controller
 {
@@ -27,7 +29,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::all();
+        return view('vendor.authorize.users.create', compact('roles'));
     }
 
     /**
@@ -38,7 +41,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = $request->all();
+        $user['uid'] = 'Null';
+        $user['type'] = Auth::user()->type;
+        $user['phone'] = '019112' . rand(10000, 99999);
+        $user['password'] = Hash::make($request->password);
+        User::create($user);
+        return redirect('authorize/users');
     }
 
     /**
@@ -60,7 +69,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $roles = Role::all();
+        return view('vendor.authorize.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -72,7 +83,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        return redirect('authorize/users');
     }
 
     /**
@@ -83,6 +96,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect('authorize/users')->with('User delete successfully');
     }
 }

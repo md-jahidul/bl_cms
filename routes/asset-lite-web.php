@@ -102,10 +102,10 @@ Route::middleware('authorize')->group(function() {
 
 
     Route::resource('questions', 'AssetLite\QuestionController');
-    // Route::resource('prize', 'PrizeController');
+//     Route::resource('prize', 'PrizeController');
     // Route::resource('tags','TagController');
-    Route::resource('campaigns','AssetLite\CampaignController');
-    // Route::resource('prizes','AssetLite\PrizeController');
+//    Route::resource('campaigns','AssetLite\CampaignController');
+//     Route::resource('prizes','AssetLite\PrizeController');
 
     Route::get('/home', 'AssetLite\HomeController@index')->name('home');
     //Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');

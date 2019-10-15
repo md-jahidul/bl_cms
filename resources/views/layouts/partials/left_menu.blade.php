@@ -40,12 +40,13 @@
                     <span class="menu-title" data-i18n="nav.templates.main">Quick launch</span></a>
             </li>
 
+
+        @can('create', \App\Models\Config::class)
             <li class="nav-item">
                 <a href="#">
                     <i class="la la la-cogs"></i><span class="menu-title" data-i18n="nav.templates.main">Settings</span>
                 </a>
                 <ul class="menu-content">
-
                     <li class="{{ is_active_url('/config') }} nav-item"><a href="{{ url('config')}}"><i class="la la-cogs"></i>
                             <span class="menu-title" data-i18n="nav.dash.main">General</span></a>
                     </li>
@@ -57,9 +58,10 @@
                     <li class="{{ is_active_url('/footer-menu') }} nav-item"><a href="{{ url('footer-menu') }}"><i class="la la-futbol-o"></i>
                             <span class="menu-title" data-i18n="nav.templates.main">Footer menu</span></a>
                     </li>
-
                 </ul>
             </li>
+        @endcan
+
 
             <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Slider Management</span></a>
@@ -81,11 +83,13 @@
             <li class="nav-item"><a href="#"><i class="la la-file"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Page Management</span></a>
                 <ul class="menu-content">
+
                     <li class="{{ is_active_url('fixed-pages') }}">
                         <a class="menu-item" href="{{ url('fixed-pages') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-file-image-o"></i> Fixed pages
                         </a>
                     </li>
+
                 </ul>
             </li>
 

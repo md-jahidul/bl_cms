@@ -16,6 +16,7 @@ class CheckAuthorization
     public function handle($request, Closure $next)
     {
         $actionName = $request->route()->getActionName();
+
         $method = $request->route()->methods()[0];
         $action = substr($actionName, strpos($actionName, '@') + 1);
         $namespace = substr($actionName, 0, strrpos($actionName, '\\'));

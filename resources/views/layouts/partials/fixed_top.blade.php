@@ -8,7 +8,7 @@
                 <li class="nav-item mr-auto">
                     <a class="navbar-brand" href="{{route('home')}}">
                         <img class="brand-logo" alt="MyBL CMS" src="{{asset('logo/logo.png')}}">
-                        <h3 class="brand-text">@if(Auth::user()->role_id == '1'|| Auth::user()->role_id == '2') MyBL @else AssetLite @endif CMS</h3>
+                        <h3 class="brand-text">@if(Auth::user()->type == 'mybl') MyBL @else AssetLite @endif CMS</h3>
                     </a>
                 </li>
             </ul>
