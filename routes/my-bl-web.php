@@ -127,6 +127,10 @@ Route::group(['middleware' => ['appAdmin']], function () {
     // Push Notification
     Route::post('push-notification','CMS\PushNotificationController@sendNotification')->name('notification.send');
 
+    // terms and conditions
+
+    Route::get('terms-conditions','CMS\TermsAndConditionsController@show')->name('terms-conditions.show');
+    Route::post('terms-conditions','CMS\TermsAndConditionsController@store')->name('terms-conditions.store');
 
 });
 
