@@ -57,5 +57,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(InternetPackFilterSeeder::class);
         $this->call(MixedBundleOfferFilterSeeder::class);
+
+        $this->call(TermsConditionsSeeder::class);
     }
 }
