@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Session;
 
 class RolesController extends Controller
@@ -18,8 +19,8 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $roles = Role::paginate(15);
-
+        $type = Auth::user()->type;
+        $roles = Role::where('user_type', $type)->get();
         return view('vendor.authorize.roles.index', compact('roles'));
     }
 
@@ -42,13 +43,11 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+        $requestData['user_type'] = Auth::user()->type;
         Role::create($requestData);
-
-        Session::flash('flash_message', 'Role added!');
-
+        Session::flash('message', 'Role added!');
         return redirect(Config("authorization.route-prefix") . '/roles');
     }
 
@@ -76,7 +75,6 @@ class RolesController extends Controller
     public function edit($id)
     {
         $role = Role::findOrFail($id);
-
         return view('vendor.authorize.roles.edit', compact('role'));
     }
 
@@ -90,9 +88,9 @@ class RolesController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         $role = Role::findOrFail($id);
         $role->update($requestData);
 

@@ -2,11 +2,11 @@
 @section('title', 'User Create')
 @section('card_name', 'User Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('partners') }}"> User List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ url('authorize/users') }}"> User List</a></li>
     <li class="breadcrumb-item active"> User Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('partners') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('authorize/users') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -36,22 +36,38 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 mb-0{{ $errors->has('role_id') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 mb-0{{ $errors->has('role_id') ? ' error' : '' }} ext-bold-600 font-medium-2">
                                     <label for="role_id" class="required">Role</label>
-                                    <fieldset class="form-group position-relative">
-                                        <select class="form-control input-sm" name="role_id" id="SmallSelect" required data-validation-required-message="Please partner category">
-                                            <option selected="" value="">--Select role--</option>
+{{--                                    <fieldset class="form-group position-relative">--}}
+
+{{--                                            <select class="select2-size-sm form-control" name="role_id" id="small-multiple" multiple="multiple" style="border: none impotent;">--}}
+{{--                                                    <option value="AZ">Arizona</option>--}}
+{{--                                                    <option value="CO">Colorado</option>--}}
+{{--                                                    <option value="ID">Idaho</option>--}}
+{{--                                                    <option value="MT">Montana</option>--}}
+{{--                                                    <option value="NE">Nebraska</option>--}}
+{{--                                                    <option value="NM">New Mexico</option>--}}
+{{--                                                    <option value="ND">North Dakota</option>--}}
+{{--                                                    <option value="UT">Utah</option>--}}
+{{--                                                    <option value="WY">Wyoming</option>--}}
+{{--                                            </select>--}}
+
+                                        <select class="select2-size-sm form-control" name="role_id[]" id="small-multiple"
+                                                required data-validation-required-message="Please select role" multiple="multiple">
+{{--                                            <option selected="" value="">--Select role--</option>--}}
                                             @foreach($roles as $role)
-                                                <option value="{{ $role->id }}"> {{--(old('partner_category_id') == $partnerCategory->id) ? 'selected' : ""--}}
-                                                    {{$role->name}}</option>
+                                                <option value="{{ $role->id }}" {{--{{ (old('partner_category_id') == $partnerCategory->id) ? 'selected' : ""}}--}}>
+                                                    {{$role->name}} </option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
                                         @if ($errors->has('role_id'))
                                             <div class="help-block">  {{ $errors->first('role_id') }}</div>
                                         @endif
-                                    </fieldset>
+{{--                                    </fieldset>--}}
                                 </div>
+
+
 
                                 <div class="form-group col-md-6 {{ $errors->has('password') ? ' error' : '' }}">
                                     <label for="password" class="required">Password</label>
