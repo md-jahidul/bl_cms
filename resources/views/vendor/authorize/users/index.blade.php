@@ -86,16 +86,27 @@
                             </thead>
                             <tbody>
                             @foreach($users as $item)
-                                <tr>
+                                @php
+                                    $roles_dom = '';
+                                     foreach($item->roles as $r){
+                                        $roles_dom .=   '<span class="badge badge-success badge-pill mr-1">' . $r->name . '</span>';
+
+
+                                     }
+                                @endphp
+
+
+
+                                <tr data-id="{{ $item->id  }}">
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
-                                    <td>{{ $item->role['name'] }}</td>
+                                    <td>{!!  $roles_dom !!}</td>
                                     <td>
 {{--                                        <a href="{{ url('/' . Config("authorization.route-prefix") . '/users/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs"--}}
 {{--                                           title="Edit User"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>--}}
                                         <a href="{{ url('/' . Config("authorization.route-prefix") . '/users/' . $item->id . '/edit') }}" role="button"
-                                           class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                           class=" border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         @if($item->id != Auth::user()->id)
                                             {!! Form::open([
                                                 'method'=>'DELETE',
@@ -104,7 +115,7 @@
                                             ]) !!}
                                             {!! Form::button('<span class="la la-trash" aria-hidden="true" title="Delete User" />', array(
                                                     'type'    => 'submit',
-                                                    'class'   => "border-0 btn btn-outline-danger",
+                                                    'class'   => "border-0 ",
                                                     'title'   => 'Delete User',
                                                     'onclick' =>'return confirm("Confirm delete?")'
 

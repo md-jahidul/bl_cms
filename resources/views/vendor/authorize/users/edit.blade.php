@@ -1,58 +1,17 @@
 {{--@extends('vendor.authorize.layouts.auth')--}}
 
-{{--@section('content')--}}
-{{--    <div class="panel panel-default">--}}
-{{--        <div class="panel-heading">Edit User {{ $user->id }}</div>--}}
-{{--        <div class="panel-body">--}}
+@php
+    function match($id,$roles){
+        foreach ($roles as $role)
+        {
+            if($role->id == $id){
+                return true;
+            }
+        }
 
-{{--            @if ($errors->any())--}}
-{{--                <ul class="alert alert-danger">--}}
-{{--                    @foreach ($errors->all() as $error)--}}
-{{--                        <li>{{ $error }}</li>--}}
-{{--                    @endforeach--}}
-{{--                </ul>--}}
-{{--            @endif--}}
-{{--            {!! Form::model($user, [--}}
-{{--                'method' => 'PATCH',--}}
-{{--                'url' => ['/authorize/users', $user->id],--}}
-{{--                'class' => 'form-horizontal',--}}
-{{--                'files' => true--}}
-{{--            ]) !!}--}}
-
-{{--            <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">--}}
-{{--                {!! Form::label('name', 'Name', ['class' => 'col-md-4 control-label']) !!}--}}
-{{--                <div class="col-md-6">--}}
-{{--                    {!! Form::text('name', null, ['class' => 'form-control']) !!}--}}
-{{--                    {!! $errors->first('name', '<p class="help-block">:message</p>') !!}--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--            <div class="form-group {{ $errors->has('email') ? 'has-error' : ''}}">--}}
-{{--                {!! Form::label('email', 'Email', ['class' => 'col-md-4 control-label']) !!}--}}
-{{--                <div class="col-md-6">--}}
-{{--                    {!! Form::text('email', null, ['class' => 'form-control']) !!}--}}
-{{--                    {!! $errors->first('email', '<p class="help-block">:message</p>') !!}--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--            <div class="form-group {{ $errors->has('role_id') ? 'has-error' : ''}}">--}}
-{{--                {!! Form::label('role_id', 'Role', ['class' => 'col-md-4 control-label']) !!}--}}
-{{--                <div class="col-md-6">--}}
-{{--                    {!! Form::select('role_id', $roles, null, ['placeholder' => 'please select ...', 'class' => 'form-control']) !!}--}}
-{{--                    {!! $errors->first('role_id', '<p class="help-block">:message</p>') !!}--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            <div class="form-group">--}}
-{{--                <div class="col-md-offset-4 col-md-4">--}}
-{{--                    {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            {!! Form::close() !!}--}}
-
-{{--        </div>--}}
-{{--    </div>--}}
-{{--@endsection--}}
-
+        return false;
+    }
+@endphp
 
 @extends('layouts.admin')
 @section('title', 'User Create')
@@ -82,6 +41,8 @@
                                     @endif
                                 </div>
 
+
+
                                 <div class="form-group col-md-6 {{ $errors->has('email') ? ' error' : '' }}">
                                     <label for="email" class="required">Email address</label>
                                     <input type="text" name="email"  class="form-control" placeholder="Enter company name bangla"
@@ -92,23 +53,22 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 mb-0{{ $errors->has('role_id') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 mb-0{{ $errors->has('role_id') ? ' error' : '' }} ext-bold-600 font-medium-2">
                                     <label for="role_id" class="required">Role</label>
-                                    <fieldset class="form-group position-relative">
-                                        <select class="form-control input-sm" name="role_id" id="SmallSelect" required data-validation-required-message="Please partner category">
-                                            <option selected="" value="">--Select role--</option>
-                                            @foreach($roles as $role)
-                                                <option value="{{ $role->id }}" {{  ($role->id == $user->role_id) ? 'selected' : "" }}>
-                                                    {{$role->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('role_id'))
-                                            <div class="help-block">  {{ $errors->first('role_id') }}</div>
-                                        @endif
-                                    </fieldset>
+                                    <select class="select2-size-sm form-control" name="role_id[]" id="small-multiple"
+                                            required data-validation-required-message="Please select role" multiple="multiple">
+                                        {{-- <option selected="" value="">--Select role--</option>--}}
+                                        @foreach($roles as $role)
+                                            <option value="{{ $role->id }}" {{ match($role->id,$user->roles) ? 'selected' : ""}}>
+                                                {{$role->name}} </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('role_id'))
+                                        <div class="help-block">  {{ $errors->first('role_id') }}</div>
+                                    @endif
+                                    {{--                                    </fieldset>--}}
                                 </div>
-
 {{--                                <div class="form-group col-md-6 {{ $errors->has('password') ? ' error' : '' }}">--}}
 {{--                                    <label for="password" class="required">Password</label>--}}
 {{--                                    <input type="text" name="password"  class="form-control" placeholder="Enter company website"--}}

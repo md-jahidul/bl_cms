@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Models\RoleUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Pondit\Authorize\Models\Role;
 use App\Http\Controllers\Controller;
+use DB;
 
 class UserController extends Controller
 {
@@ -19,7 +21,16 @@ class UserController extends Controller
     public function index()
     {
         $userType = Auth::user()->type;
-        $users = User::where('type', $userType)->get();
+
+//        $userType = Auth::user();
+
+
+
+
+        $users = User::where('type', $userType)->with('roles')->get();
+
+//        return $users;
+
         return view('vendor.authorize.users.index', compact('users'));
     }
 
@@ -42,12 +53,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $request->all();
-        $user['uid'] = 'Null';
-        $user['type'] = Auth::user()->type;
-        $user['phone'] = '019112' . rand(10000, 99999);
-        $user['password'] = Hash::make($request->password);
-        User::create($user);
+        $user = new User;
+        $user->name = request()->name;
+        $user->email = request()->email;
+        $user->uid = 'Null';
+        $user->type = Auth::user()->type;
+        $user->phone = '019112' . rand(10000, 99999);
+        $user->password = Hash::make(request()->password);
+        $user->save();
+
+        foreach (request()->role_id as $role){
+            $user->roles()->save(Role::find($role));
+        }
+
         return redirect('authorize/users');
     }
 
@@ -86,6 +104,18 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->update($request->all());
+
+        $roles = DB::table('role_user')->where('user_id',$id)->get();
+
+        foreach ($roles as $role){
+            $user->roles()->detach($role);
+        }
+
+        foreach (request()->role_id as $role){
+            $user->roles()->save(Role::find($role));
+        }
+
+
         return redirect('authorize/users');
     }
 

@@ -1,35 +1,3 @@
-{{--@extends('vendor.authorize.layouts.auth')--}}
-
-{{--@section('content')--}}
-{{--    <div class="panel panel-default">--}}
-{{--        <div class="panel-heading">Edit Role {{ $role->id }}</div>--}}
-{{--        <div class="panel-body">--}}
-
-{{--            @if ($errors->any())--}}
-{{--                <ul class="alert alert-danger">--}}
-{{--                    @foreach ($errors->all() as $error)--}}
-{{--                        <li>{{ $error }}</li>--}}
-{{--                    @endforeach--}}
-{{--                </ul>--}}
-{{--            @endif--}}
-
-{{--            {!! Form::model($role, [--}}
-{{--                'method' => 'PATCH',--}}
-{{--                'url' => ['/' . Config("authorization.route-prefix") . '/roles', $role->id],--}}
-{{--                'class' => 'form-horizontal',--}}
-{{--                'files' => true--}}
-{{--            ]) !!}--}}
-
-{{--            @include ('vendor.authorize.roles.form', ['submitButtonText' => 'Update'])--}}
-
-{{--            {!! Form::close() !!}--}}
-
-{{--        </div>--}}
-{{--    </div>--}}
-{{--@endsection--}}
-
-
-
 @extends('layouts.admin')
 @section('title', 'User Create')
 @section('card_name', 'User Create')
@@ -52,30 +20,32 @@
                             'method' => 'PATCH',
                             'url' => ['/' . Config("authorization.route-prefix") . '/roles', $role->id],
                             'class' => 'form-horizontal',
-                            'files' => true
+                            'files' => true, 'novalidate'
                         ]) !!}
 
 
                         <div class="row">
-                            <div class="form-group col-md-6 {{ $errors->has('name') ? ' error' : '' }}">
+                            <div class="form-group col-md-12 {{ $errors->has('name') ? ' error' : '' }}">
                                 <label for="name" class="required">Name</label>
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Enter company name english"
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Enter role name"
                                        value="{{ $role->name }}" required data-validation-required-message="Enter role name">
+
+                                <input type="hidden" name="alias" id="alias" class="form-control" placeholder="alias" readonly
+                                       value="{{ $role->alias }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('name'))
                                     <div class="help-block">  {{ $errors->first('name') }}</div>
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-6 {{ $errors->has('alias') ? ' error' : '' }}">
-                                <label for="alias" class="required">Alias</label>
-                                <input type="text" name="alias" id="alias" class="form-control" placeholder="alias" readonly
-                                       value="{{ $role->alias }}">
-                                <div class="help-block"></div>
-                                @if ($errors->has('alias'))
-                                    <div class="help-block">  {{ $errors->first('alias') }}</div>
-                                @endif
-                            </div>
+{{--                            <div class="form-group col-md-6 {{ $errors->has('alias') ? ' error' : '' }}">--}}
+{{--                                <label for="alias" class="required">Alias</label>--}}
+{{--               --}}
+{{--                                <div class="help-block"></div>--}}
+{{--                                @if ($errors->has('alias'))--}}
+{{--                                    <div class="help-block">  {{ $errors->first('alias') }}</div>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
 
 
                             <div class="form-actions col-md-12 ">
