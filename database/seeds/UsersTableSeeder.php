@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
                 'device_token' => '122'
             ],
             [
-                'name' => 'Rafiqul Hasan',            
+                'name' => 'Rafiqul Hasan',
                 'email' => 'rafiq@admin.com',
                 'phone' => '01919415595',
                 'type' => 'mybl',
@@ -52,15 +52,15 @@ class UsersTableSeeder extends Seeder
             ]
         ];
 
-        for ($i=0; $i < count($myblUsers); $i++) { 
+        for ($i=0; $i < count($myblUsers); $i++) {
             DB::table('users')->insert($myblUsers[$i]);
             DB::table('role_user')->insert([
                 'role_id' => 1,
                 'user_id' => $i + 1
             ]);
-        }      
-        
-        
+        }
+
+
 
         $assetLiteUsers = [
             [
@@ -92,12 +92,13 @@ class UsersTableSeeder extends Seeder
             ]
         ];
 
-        for ($i=0; $i < count($assetLiteUsers); $i++) { 
+        for ($i=0; $i < count($assetLiteUsers); $i++) {
             DB::table('users')->insert($assetLiteUsers[$i]);
             DB::table('role_user')->insert([
                 'role_id' => $i + 2,
                 'user_id' => count($myblUsers) + $i + 1
             ]);
         }
+
     }
 }

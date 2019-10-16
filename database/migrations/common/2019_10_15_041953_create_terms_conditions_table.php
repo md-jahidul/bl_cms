@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCustomersTable extends Migration
+class CreateTermsConditionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('terms_conditions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('phone');
-            $table->bigInteger('customer_account_id')->nullable();
-            $table->string('name')->nullable();
-            $table->string('email')->nullable();
+            $table->string('platform');
+            $table->longText('terms_conditions');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('terms_conditions');
     }
 }

@@ -47,9 +47,10 @@
                                 @endforeach
 
                             </select>--}}
-                            <label for="message">Upload Customer List</label> </br>
+                            <label for="message">Upload Customer List</label> <a href="{{ asset('sample-format/customers.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
                             <input type="file" class="dropify" name="customer_file" data-height="80"
                                    data-allowed-file-extensions="xlsx" required/>
+
                         </div>
 
 
