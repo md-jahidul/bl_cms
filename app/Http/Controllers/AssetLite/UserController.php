@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Pondit\Authorize\Models\Role;
+use App\Models\Role;
 use App\Http\Controllers\Controller;
 use DB;
 
@@ -21,16 +21,7 @@ class UserController extends Controller
     public function index()
     {
         $userType = Auth::user()->type;
-
-//        $userType = Auth::user();
-
-
-
-
         $users = User::where('type', $userType)->with('roles')->get();
-
-//        return $users;
-
         return view('vendor.authorize.users.index', compact('users'));
     }
 
