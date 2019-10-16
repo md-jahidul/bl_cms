@@ -69,7 +69,7 @@
 <!-- fixed-top-->
 @include('layouts.partials.fixed_top')
 <!-- ////////////////////////////////////////////////////////////////////////////-->
-@include('layouts.partials.left_menu')
+@include('layouts.partials.left_menu.parent')
 <div class="app-content content">
     <div class="content-wrapper">
         <div class="content-header row">
