@@ -8,25 +8,37 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
+                        @if ($errors->has('terms_conditions'))
+                            <div class="alert bg-danger alert-dismissible mb-2" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                Terms and Conditions Field is required. You cannot set blank.
+                            </div>
+                        @endif
                         <form role="form" action="{{ route('terms-conditions.store') }}" method="POST">
                             @csrf
                             <div class="row">
-                                <div class="form-group col-md-6">
+                                <div class="content-header-right col-md-12">
+                                    <div class="dropdown float-md-right">
+                                        <button type="submit" class="btn btn-primary btn-sm pull-right">
+                                            @if($terms_conditions)
+                                                Update
+                                            @else
+                                                Save
+                                            @endif
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
                                     <label for="title_en" class="required">Terms and Conditions</label>
-                                    <textarea id="terms-conditions" name="terms_conditions">
+                                    <textarea id="terms-conditions" name="terms_conditions" required>
                                         @if($terms_conditions)
                                             {{ $terms_conditions->terms_conditions }}
                                         @endif
                                     </textarea>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-sm pull-right">
-                                @if($terms_conditions)
-                                    Update
-                                @else
-                                    Save
-                                @endif
-                            </button>
                         </form>
                     </div>
                 </div>
@@ -45,8 +57,7 @@
         $(function () {
             tinymce.init({
                 selector: 'textarea#terms-conditions',
-                width: 1000,
-                height: 200
+                height: 400
             });
         })
     </script>
