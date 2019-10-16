@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Pondit\Authorize\Models\Authorizable;
+use App\Models\Authorizable;
 
 class User extends Authenticatable
 {

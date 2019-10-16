@@ -165,7 +165,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Pondit\Authorize\AuthorizeServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
 
         /*
