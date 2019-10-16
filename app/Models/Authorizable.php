@@ -50,9 +50,22 @@ trait Authorizable
         return false;
     }
 
-    public function can_view($controller)
+    public function can_view($feature)
     {
-        return true;
+        if(!count($this->roles)) {
+            return false;
+        }
+
+        foreach ( $this->roles as $role) {
+            $permission = $role->permissions
+                                ->where('controller', $feature . 'Controller');
+                                
+            if (count($permission) > 0) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     public function isAdmin()
