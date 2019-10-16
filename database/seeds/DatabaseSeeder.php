@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AmarOfferSeeder::class);
 
 //      Common Seeder
-        $this->call(RoleTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
 
 //      Asset-Lite Seeder

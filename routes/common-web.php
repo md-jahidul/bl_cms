@@ -19,11 +19,11 @@ Route::get('/', function () {
 })->name('test');
 
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'CMS\HomeController@index')->name('home');
 Route::group(['middleware' => ['webAdmin']], function () {
 
     Route::resource('questions', 'CMS\QuestionController');
-    Route::resource('prize', 'CMS\PrizeController');
+//    Route::resource('prize', 'CMS\PrizeController');
     // Route::resource('tags','CMS\TagController');
     Route::resource('campaigns','CMS\CampaignController');
 

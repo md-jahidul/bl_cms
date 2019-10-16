@@ -14,95 +14,148 @@
 
 Auth::routes();
 
-//Route::resource('sliders', 'CMS\AlSliderController');
-//Route::get('slider/{parent_id}/images', 'CMS\AlSliderImageController@index');
-//Route::get('slider-image/{id}/edit', 'CMS\AlSliderImageController@edit');
+//Route::resource('sliders', 'AssetLite\AlSliderController');
+//Route::get('slider/{parent_id}/images', 'AssetLite\AlSliderImageController@index');
+//Route::get('slider-image/{id}/edit', 'AssetLite\AlSliderImageController@edit');
 
-Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
+Route::middleware('authorize')->group(function() {
+    //Place all your routes here
+    Route::resource('authorize/users', 'AssetLite\UserController');
 
-// CONFIG PAGES ====================================
-Route::get('config','CMS\ConfigController@index');
-Route::put('config/update','CMS\ConfigController@update');
+    Route::resource('authorize/roles', 'AssetLite\RolesController');
+    Route::get('authorize/permissions', 'AssetLite\PermissionsController@index');
+    Route::post('authorize/permissions', 'AssetLite\PermissionsController@update');
+    Route::post('authorize/permissions/getSelectedRoutes', 'AssetLite\PermissionsController@getSelectedRoutes');
+
+    //Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
+
+    // CONFIG PAGES ====================================
+    Route::get('config','AssetLite\ConfigController@index');
+    Route::put('config/update','AssetLite\ConfigController@update');
 
 
-// MENU PAGES ====================================
-Route::resource('menu','CMS\MenuController');
-Route::get('menu/{parentId}/destroy/{id}', 'CMS\MenuController@destroy');
-Route::get('/menu-auto-save','CMS\MenuController@parentMenuSortable');
-Route::group(['prefix' => 'menu'], function () {
-    Route::get('/{id}/child-menu', 'CMS\MenuController@index');
-    Route::get('/{id}/child-menu/create', 'CMS\MenuController@create');
+    // MENU PAGES ====================================
+    Route::resource('menu','AssetLite\MenuController');
+    Route::get('menu/{parentId}/destroy/{id}', 'AssetLite\MenuController@destroy');
+    Route::get('/menu-auto-save','AssetLite\MenuController@parentMenuSortable');
+    Route::group(['prefix' => 'menu'], function () {
+        Route::get('/{id}/child-menu', 'AssetLite\MenuController@index');
+        Route::get('/{id}/child-menu/create', 'AssetLite\MenuController@create');
+    });
+
+    // FOOTER MENU PAGES ====================================
+    Route::resource('footer-menu','AssetLite\FooterMenuController');
+    Route::get('footer-menu/{parentId}/destroy/{id}', 'AssetLite\FooterMenuController@destroy');
+    Route::get('sort-autosave/parent-footer-sort','AssetLite\FooterMenuController@parentFooterSortable');
+    Route::group(['prefix' => 'footer-menu'], function () {
+        Route::get('/{id}/child-footer', 'AssetLite\FooterMenuController@index');
+        Route::get('/{id}/child-footer/create', 'AssetLite\FooterMenuController@create');
+    });
+
+    // QUICK LAUNCH PAGES ====================================
+    Route::resource('quick-launch','AssetLite\QuickLaunchController');
+    Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
+    Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
+
+    // META TAG PAGES ====================================
+    Route::resource('meta-tag','AssetLite\MetaTagController');
+    //Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
+    //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
+
+
+    // CONFIG PAGES ====================================
+    Route::get('config','AssetLite\ConfigController@index');
+    Route::put('config/update','AssetLite\ConfigController@update');
+
+    // SLIDERS PAGES ====================================
+    Route::get('single-sliders', 'AssetLite\AlSliderController@singleSlider');
+    Route::get('multiple-sliders', 'AssetLite\AlSliderController@multiSlider');
+    Route::get('sliders/{id}/{type}/edit', 'AssetLite\AlSliderController@edit');
+    Route::put('sliders/{id}/update', 'AssetLite\AlSliderController@update');
+    Route::get('slider/{slider_id}/{type}', 'AssetLite\AlSliderImageController@index')->name('slider_images');
+    Route::get('slider/{slider_id}/{type}/image/create', 'AssetLite\AlSliderImageController@create');
+    Route::post('slider/{slider_id}/{type}/image/store', 'AssetLite\AlSliderImageController@store')->name('slider_image_store');
+    Route::get('slider/{slider_id}/{type}/image/{id}', 'AssetLite\AlSliderImageController@edit')->name('slider_image_edit');
+    Route::put('slider/{slider_id}/{type}/image/{id}/update', 'AssetLite\AlSliderImageController@update')->name('slider_image_update');
+    Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'AssetLite\AlSliderImageController@destroy');
+    Route::get('/slider-image-sortable','AssetLite\AlSliderImageController@sliderImageSortable');
+
+    // PARTNERS PAGES ====================================
+    Route::resource('partners','AssetLite\PartnerController');
+    Route::get('partner/destroy/{id}', 'AssetLite\PartnerController@destroy');
+
+    Route::get('partner-offer/{partner_id}/{type}', 'AssetLite\PartnerOfferController@index')->name('partner-offer');
+    Route::get('partner-offer/{partner_id}/{partner}/offer/create', 'AssetLite\PartnerOfferController@create');
+    Route::post('partner-offer/{partner_id}/{partner}/offer/store', 'AssetLite\PartnerOfferController@store')->name('partner_offer_store');
+    Route::get('partner-offer/{partner_id}/{partner}/offer/{id}/', 'AssetLite\PartnerOfferController@edit')->name('partner_offer_edit');
+    Route::put('partner-offer/{partner_id}/{partner}/offer/{id}/update/', 'AssetLite\PartnerOfferController@update')->name('partner_offer_update');
+    Route::get('partner-offer/{partner_id}/{partner}/offer/destroy/{id}', 'AssetLite\PartnerOfferController@destroy');
+    Route::get('/partner-offer-home/sortable','AssetLite\PartnerOfferController@partnerOfferSortable');
+    Route::get('partner-offers-home','AssetLite\PartnerOfferController@partnerOffersHome')->name('partner-offer-home');
+
+    //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
+
+
+    // Fixed PAGES ====================================
+    Route::get('fixed-pages', 'AssetLite\FixedPageController@index');
+    Route::get('fixed-page/{id}/components', 'AssetLite\FixedPageController@components')->name('fixed-page-components');
+    Route::get('fixed-pages/{id}/meta-tags', 'AssetLite\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
+    Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'AssetLite\FixedPageController@metaTagsUpdate');
+    Route::get('fixed-pages/{pageId}/component/{componentId}', 'AssetLite\FixedPageController@fixedPageStatusUpdate')->name('update-component-status');
+    // Route::get('dynamic-pages', 'AssetLite\FixedPageController@index');
+
+
+
+    Route::resource('questions', 'AssetLite\QuestionController');
+//     Route::resource('prize', 'PrizeController');
+    // Route::resource('tags','TagController');
+//    Route::resource('campaigns','AssetLite\CampaignController');
+//     Route::resource('prizes','AssetLite\PrizeController');
+
+    Route::get('/home', 'AssetLite\HomeController@index')->name('home');
+    //Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
+
 });
 
-// FOOTER MENU PAGES ====================================
-Route::resource('footer-menu','CMS\FooterMenuController');
-Route::get('footer-menu/{parentId}/destroy/{id}', 'CMS\FooterMenuController@destroy');
-Route::get('sort-autosave/parent-footer-sort','CMS\FooterMenuController@parentFooterSortable');
-Route::group(['prefix' => 'footer-menu'], function () {
-    Route::get('/{id}/child-footer', 'CMS\FooterMenuController@index');
-    Route::get('/{id}/child-footer/create', 'CMS\FooterMenuController@create');
+// Route::group([
+//     'prefix' => Config("authorization.route-prefix"),
+//     'namespace' => 'Pondit\Authorize\Controllers',
+//     'middleware' => ['web', 'auth']],
+//     function() {
+  
+     
+//         Route::resource('roles', 'RolesController');
+//         Route::get('/permissions', 'PermissionsController@index');
+//         Route::post('/permissions', 'PermissionsController@update');
+//         Route::post('/permissions/getSelectedRoutes', 'PermissionsController@getSelectedRoutes');
+        
+// });
+
+/*
+
+use Symfony\component\Finder\Finder;
+
+Route::get('/b3-b4', function () {
+
+    // dd( Config::get('view.paths') );
+    // dd( app_path(), Config::get('view.paths.0') );
+    $view_path = Config::get('view.paths');
+    $routes_path = base_path().'/routes';
+    $controller_path = app_path() . '/Http/Controllers/AssetLite';
+
+    $files = Finder::create()
+        ->in( $routes_path )
+        ->name('*.php')
+        ->contains('Asset Lite');
+
+    // ->contains("/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/i");
+    // ->contains('class="');
+    // ->notName('*.rb');
+    foreach ($files as $key => $file) {
+        $content =  File::get( $file->getRealPath() );
+        $update = str_replace('AssetLite', 'AssetLite', $content);
+        File::put( $file->getRealPath() , $update );
+    }
+    echo "Count -->" . count($files);
 });
-
-// QUICK LAUNCH PAGES ====================================
-Route::resource('quick-launch','CMS\QuickLaunchController');
-Route::get('quick-launch/destroy/{id}', 'CMS\QuickLaunchController@destroy');
-Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
-
-// META TAG PAGES ====================================
-Route::resource('meta-tag','CMS\MetaTagController');
-//Route::get('quick-launch/destroy/{id}', 'CMS\QuickLaunchController@destroy');
-//Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
-
-
-// CONFIG PAGES ====================================
-Route::get('config','CMS\ConfigController@index');
-Route::put('config/update','CMS\ConfigController@update');
-
-// SLIDERS PAGES ====================================
-Route::get('single-sliders', 'CMS\AlSliderController@singleSlider');
-Route::get('multiple-sliders', 'CMS\AlSliderController@multiSlider');
-Route::get('sliders/{id}/{type}/edit', 'CMS\AlSliderController@edit');
-Route::put('sliders/{id}/update', 'CMS\AlSliderController@update');
-Route::get('slider/{slider_id}/{type}', 'CMS\AlSliderImageController@index')->name('slider_images');
-Route::get('slider/{slider_id}/{type}/image/create', 'CMS\AlSliderImageController@create');
-Route::post('slider/{slider_id}/{type}/image/store', 'CMS\AlSliderImageController@store')->name('slider_image_store');
-Route::get('slider/{slider_id}/{type}/image/{id}', 'CMS\AlSliderImageController@edit')->name('slider_image_edit');
-Route::put('slider/{slider_id}/{type}/image/{id}/update', 'CMS\AlSliderImageController@update')->name('slider_image_update');
-Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'CMS\AlSliderImageController@destroy');
-Route::get('/slider-image-sortable','CMS\AlSliderImageController@sliderImageSortable');
-
-// PARTNERS PAGES ====================================
-Route::resource('partners','CMS\PartnerController');
-Route::get('partner/destroy/{id}', 'CMS\PartnerController@destroy');
-
-Route::get('partner-offer/{partner_id}/{type}', 'CMS\PartnerOfferController@index')->name('partner-offer');
-Route::get('partner-offer/{partner_id}/{partner}/offer/create', 'CMS\PartnerOfferController@create');
-Route::post('partner-offer/{partner_id}/{partner}/offer/store', 'CMS\PartnerOfferController@store')->name('partner_offer_store');
-Route::get('partner-offer/{partner_id}/{partner}/offer/{id}/', 'CMS\PartnerOfferController@edit')->name('partner_offer_edit');
-Route::put('partner-offer/{partner_id}/{partner}/offer/{id}/update/', 'CMS\PartnerOfferController@update')->name('partner_offer_update');
-Route::get('partner-offer/{partner_id}/{partner}/offer/destroy/{id}', 'CMS\PartnerOfferController@destroy');
-Route::get('/partner-offer-home/sortable','CMS\PartnerOfferController@partnerOfferSortable');
-Route::get('partner-offers-home','CMS\PartnerOfferController@partnerOffersHome')->name('partner-offer-home');
-
-//Route::get('/quick-launch-sortable','CMS\QuickLaunchController@quickLaunchSortable');
-
-
-// Fixed PAGES ====================================
-Route::get('fixed-pages', 'CMS\FixedPageController@index');
-Route::get('fixed-page/{id}/components', 'CMS\FixedPageController@components')->name('fixed-page-components');
-Route::get('fixed-pages/{id}/meta-tags', 'CMS\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
-Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'CMS\FixedPageController@metaTagsUpdate');
-Route::get('fixed-pages/{pageId}/component/{componentId}', 'CMS\FixedPageController@fixedPageStatusUpdate')->name('update-component-status');
-// Route::get('dynamic-pages', 'CMS\FixedPageController@index');
-
-
-
-Route::resource('questions', 'CMS\QuestionController');
-// Route::resource('prize', 'PrizeController');
-// Route::resource('tags','TagController');
-Route::resource('campaigns','CMS\CampaignController');
-// Route::resource('prizes','CMS\PrizeController');
-
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
-
+*/
