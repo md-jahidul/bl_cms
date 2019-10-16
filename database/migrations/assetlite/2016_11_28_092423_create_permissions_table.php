@@ -15,7 +15,7 @@ class CreatePermissionsTable extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('role_id')->unsigned();
+            $table->unsignedInteger('role_id')->unsigned();
             $table->string('namespace')->index();
             $table->string('controller')->index();
             $table->enum('method', ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])->index();

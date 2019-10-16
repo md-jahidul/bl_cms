@@ -20,7 +20,12 @@ Auth::routes();
 
 Route::middleware('authorize')->group(function() {
     //Place all your routes here
-    Route::resource('authorize/users', 'UserController');
+    Route::resource('authorize/users', 'AssetLite\UserController');
+
+    Route::resource('authorize/roles', 'AssetLite\RolesController');
+    Route::get('authorize/permissions', 'AssetLite\PermissionsController@index');
+    Route::post('authorize/permissions', 'AssetLite\PermissionsController@update');
+    Route::post('authorize/permissions/getSelectedRoutes', 'AssetLite\PermissionsController@getSelectedRoutes');
 
     //Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 
@@ -111,6 +116,20 @@ Route::middleware('authorize')->group(function() {
     //Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 
 });
+
+// Route::group([
+//     'prefix' => Config("authorization.route-prefix"),
+//     'namespace' => 'Pondit\Authorize\Controllers',
+//     'middleware' => ['web', 'auth']],
+//     function() {
+  
+     
+//         Route::resource('roles', 'RolesController');
+//         Route::get('/permissions', 'PermissionsController@index');
+//         Route::post('/permissions', 'PermissionsController@update');
+//         Route::post('/permissions/getSelectedRoutes', 'PermissionsController@getSelectedRoutes');
+        
+// });
 
 /*
 

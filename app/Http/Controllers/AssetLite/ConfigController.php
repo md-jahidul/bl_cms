@@ -41,7 +41,7 @@ class ConfigController extends Controller
      */
     public function update(UpdateConfigRequest $request)
     {
-        $this->authorize('update', Config::class);
+        // $this->authorize('update', Config::class);
 
         $response = $this->configService->updateConfigData($request->all());
         Session::flash('message', $response->getContent());

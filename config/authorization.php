@@ -8,6 +8,6 @@ return [
     |--------------------------------------------------------------------------
     */
     'route-prefix' => 'authorize',
-    'user-model' => 'App\User',
+    'user-model' => 'App\Models\User',
     'middleware' => 'authorize'
 ];

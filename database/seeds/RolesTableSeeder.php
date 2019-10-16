@@ -14,32 +14,30 @@ class RolesTableSeeder extends Seeder
     {
         $roles = [
             [
-                'name' => 'Super Admin',
-                'alias' => 'super-admin',
+                'name' => 'My Bl Admin',
+                'alias' => 'mybl-admin',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
-                'name' => 'Asset Lite',
+                'name' => 'Asset Lite Admin',
                 'alias' => 'asset-lite',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ],
-
             [
-                'name' => 'My Bl',
-                'alias' => 'my-bl',
+                'name' => 'Guest 1',
+                'alias' => 'guest1',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ],
-
             [
-                'name' => 'Guest',
-                'alias' => 'guest',
+                'name' => 'Guest 2',
+                'alias' => 'guest2',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
-            ]
+            ],
         ];
         DB::table('roles')->insert($roles);
     }

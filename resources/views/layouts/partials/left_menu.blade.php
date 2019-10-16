@@ -12,28 +12,29 @@
             {{--------------------------------------------------------------------------------------------------------------------}}
             @if(Auth::user()->type == 'assetlite')
 
+                @if( auth()->user()->can_view('User') )
+                    <li class="nav-item"><a href="#"><i class="la la-users"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
+                        <ul class="menu-content">
 
-                <li class="nav-item"><a href="#"><i class="la la-users"></i>
-                        <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
-                    <ul class="menu-content">
+                            <li class="{{ is_active_url('authorize/users') . is_active_url('authorize/users')}}">
+                                <a class="menu-item" href="{{ url('authorize/users') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-user"></i> User</a>
+                            </li>
 
-                        <li class="{{ is_active_url('authorize/users') . is_active_url('authorize/users')}}">
-                            <a class="menu-item" href="{{ url('authorize/users') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-user"></i> User</a>
-                        </li>
+                            <li class="{{ is_active_url('authorize/roles') . is_active_url('authorize/roles')}}">
+                                <a class="menu-item" href="{{ url('authorize/roles') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-cubes"></i> Role</a>
+                            </li>
 
-                        <li class="{{ is_active_url('authorize/roles') . is_active_url('authorize/roles')}}">
-                            <a class="menu-item" href="{{ url('authorize/roles') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-cubes"></i> Role</a>
-                        </li>
+                            <li class="{{ is_active_url('authorize/permissions') . is_active_url('authorize/permissions')}}">
+                                <a class="menu-item" href="{{ url('authorize/permissions') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-check-square"></i> Permission</a>
+                            </li>
 
-                        <li class="{{ is_active_url('authorize/permissions') . is_active_url('authorize/permissions')}}">
-                            <a class="menu-item" href="{{ url('authorize/permissions') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-check-square"></i> Permission</a>
-                        </li>
-
-                    </ul>
-                </li>
+                        </ul>
+                    </li>
+                @endif
 
 
             <li class="{{ is_active_url('/quick-launch') }} nav-item"><a href="{{ url('quick-launch') }}"><i class="la la-automobile"></i>
@@ -41,7 +42,7 @@
             </li>
 
 
-        @can('create', \App\Models\Config::class)
+        {{-- @can('create', \App\Models\Config::class) --}}
             <li class="nav-item">
                 <a href="#">
                     <i class="la la la-cogs"></i><span class="menu-title" data-i18n="nav.templates.main">Settings</span>
@@ -60,7 +61,7 @@
                     </li>
                 </ul>
             </li>
-        @endcan
+        {{-- @endcan --}} 
 
 
             <li class="nav-item"><a href="#"><i class="la la-sliders"></i>

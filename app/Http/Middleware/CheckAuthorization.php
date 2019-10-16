@@ -1,6 +1,6 @@
 <?php
 
-namespace Pondit\Authorize\Middleware;
+namespace App\Http\Middleware;
 
 use Closure;
 
@@ -25,6 +25,6 @@ class CheckAuthorization
         if ($request->user()->isAdmin() || $request->user()->isAuthorize($namespace, $controller, $method, $action)) {
             return $next($request);
         }
-        return response(view('vendor.authorize.errors.401'), 401);
+        return response( view('vendor.authorize.errors.401'), 401);
     }
 }
