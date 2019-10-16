@@ -33,14 +33,6 @@
         "sort-packages": true
     },
 
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://gitlab.com/aso-nije-kori/laravel-auth.git"
-        }
-    ],
-
-
     "extra": {
         "laravel": {
             "dont-discover": []
