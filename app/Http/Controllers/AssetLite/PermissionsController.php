@@ -77,7 +77,13 @@ class PermissionsController extends Controller
         $role_id = $request->input('role_id', 0);
         $actions = $request->input('actions');
         $data = [];
-        if (count($actions) > 0) {
+
+        if(empty($actions) ){
+            Session::flash('message', 'You should select at least one permission!');
+            return redirect(Config("authorization.route-prefix") . '/permissions');
+        }
+
+        if( count($actions) > 0) {
             foreach ($actions as $action) {
                 $parts = explode('-', $action);
                 $data[] = new Permission([
@@ -89,11 +95,12 @@ class PermissionsController extends Controller
                 ]);
             }
         }
+
         $role = Role::findOrFail($role_id);
         $role->permissions()->delete();
         $role->permissions()->saveMany($data);
 
-        Session::flash('flash_message', 'Permission updated!');
+        Session::flash('message', 'Permission updated!');
 
         return redirect(Config("authorization.route-prefix") . '/permissions');
     }

@@ -46,7 +46,7 @@
                     <div class="form-group row mb-0">
                         <div class="form-group {{ $errors->has('role_id') ? 'has-error' : ''}} col-md-8 row">
                             <strong>{!! Form::label('role_id', 'Role', ['class' => 'control-label mt-1 ml-2']) !!}</strong>
-                            <div class="col-md-5">
+                            <div class="col-md-8">
                                 {{--                                <select class="form-control" required="required" id="role_id" name="role_id" aria-invalid="false">--}}
                                 {{--                                    <option selected="selected" value="">Please select ...</option>--}}
                                 {{--                                </select>--}}
@@ -86,10 +86,12 @@
                                     <td>
                                         @foreach( $actions as $method => $action)
                                             <label style="display: block">
-
-{{--                                                {{ $action }}--}}
-                                                            {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . explode ("_",$method)[0] . '-' . $action, null, ['class' => 'field']) }}
-                                                {{ mapStr($action) }}
+{{--                                                @if($controller == 'HomeController' && $action == 'index')--}}
+{{--                                                    {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . explode ("_",$method)[0] . '-' . $action, null, ['class' => 'field', 'checked']) }}--}}
+{{--                                                @else--}}
+{{--                                                @endif--}}
+                                                    {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . explode ("_",$method)[0] . '-' . $action, null, ['class' => 'field']) }}
+                                                    {{ mapStr($action) }}
                                             </label>
                                         @endforeach
                                     </td>
@@ -110,184 +112,6 @@
         </div>
 
     </section>
-
-
-    {{--    <div class="card">
-            <div class="card-content collapse show">
-                <div class="card-body card-dashboard">
-                @if ($errors->any())
-                    <ul class="alert alert-danger">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                @endif
-
-                {!! Form::open(['url' => '/' . Config("authorization.route-prefix") . '/permissions', 'class' => 'form-horizontal']) !!}
-                <div class="form-group {{ $errors->has('role_id') ? 'has-error' : ''}}">
-                    {!! Form::label('role_id', 'Role', ['class' => 'col-md-4 control-label']) !!}
-                    <div class="col-md-6">
-                        {!! Form::select('role_id', $roles, null, ['placeholder' => 'Please select ...', 'class' => 'form-control', 'required' => 'required']) !!}
-                        {!! $errors->first('role_id', '<p class="help-block">:message</p>') !!}
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('controller') ? 'has-error' : ''}}">
-                      new dom
-                    <div class="col-md-12">
-                        <ul id="tree">
-                            @foreach($actions as $namespace => $controllers)
-
-                                <li>{{ mapStr($namespace) }}
-                                    <button class="btn select-all">Select All</button>
-
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Controller</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($controllers as $controller => $methods)
-                                            @php
-                                                $actions = arrayMerge(  $methods );
-                                            @endphp
-                                            <tr>
-                                                <td style="vertical-align:middle">{{ $loop->iteration }}</td>
-                                                <td style="vertical-align:middle">{{ str_replace("Controller","", $controller)  }}</td>
-                                                <td>
-                                                    @foreach( $actions as $method => $action)
-                                                        <span style="display: block">
-                                                                {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . explode ("_",$method)[0] . '-' . $action, null, ['class' => 'field']) }}
-                                                            {{ mapStr($action) }}
-                                                            </span>
-                                                    @endforeach
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-4 col-md-4">
-                        {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}
-                    </div>
-                </div>
-
-                {!! Form::close() !!}
-            </div>
-        </div>--}}
-
-
-
-    {{--    <div class="card">--}}
-    {{--        <div class="card-heading">Update Permission</div>--}}
-    {{--        <div class="card-body">--}}
-
-    {{--            @if ($errors->any())--}}
-    {{--                <ul class="alert alert-danger">--}}
-    {{--                    @foreach ($errors->all() as $error)--}}
-    {{--                        <li>{{ $error }}</li>--}}
-    {{--                    @endforeach--}}
-    {{--                </ul>--}}
-    {{--            @endif--}}
-
-    {{--            {!! Form::open(['url' => '/' . Config("authorization.route-prefix") . '/permissions', 'class' => 'form-horizontal']) !!}--}}
-    {{--            <div class="form-group {{ $errors->has('role_id') ? 'has-error' : ''}}">--}}
-    {{--                {!! Form::label('role_id', 'Role', ['class' => 'col-md-4 control-label']) !!}--}}
-    {{--                <div class="col-md-6">--}}
-    {{--                    {!! Form::select('role_id', $roles, null, ['placeholder' => 'Please select ...', 'class' => 'form-control', 'required' => 'required']) !!}--}}
-    {{--                    {!! $errors->first('role_id', '<p class="help-block">:message</p>') !!}--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--            <div class="form-group {{ $errors->has('controller') ? 'has-error' : ''}}">--}}
-    {{--                {!! Form::label('controller', 'Actions', ['class' => 'col-md-4 control-label']) !!}--}}
-    {{--                <div class="col-md-6">--}}
-    {{--                    <ul id="tree">--}}
-    {{--                        @foreach($actions as $namespace => $controllers)--}}
-
-    {{--                            <li>{{ mapStr($namespace) }} <button class="btn select-all">Select All</button>--}}
-    {{--                            <ul>--}}
-    {{--                                @foreach($controllers as $controller => $methods)--}}
-    {{--                                <li>{{ str_replace("Controller","", $controller)  }}--}}
-    {{--                                    <ul>--}}
-    {{--                                        @foreach($methods as $method => $actions)--}}
-    {{--                                            <li>{{ $method }}--}}
-    {{--                                                <ul>--}}
-    {{--                                                    @foreach($actions as $action)--}}
-    {{--                                                        <li>--}}
-    {{--                                                            {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . $method . '-' . $action, null, ['class' => 'field']) }}--}}
-    {{--                                                            {{ mapStr($action) }}--}}
-    {{--                                                        </li>--}}
-    {{--                                                    @endforeach--}}
-    {{--                                                </ul>--}}
-    {{--                                            </li>--}}
-    {{--                                        @endforeach--}}
-    {{--                                    </ul>--}}
-    {{--                                </li>--}}
-    {{--                                @endforeach--}}
-    {{--                            </ul>--}}
-    {{--                        </li>--}}
-    {{--                        @endforeach--}}
-    {{--                    </ul>--}}
-    {{--                </div>--}}
-
-    {{--                //  new dom  --}}
-    {{--                <div class="col-md-12">--}}
-    {{--                    <ul id="tree">--}}
-    {{--                        @foreach($actions as $namespace => $controllers)--}}
-
-    {{--                            <li>{{ mapStr($namespace) }} <button class="btn select-all">Select All</button>--}}
-    {{--                                <table class="table">--}}
-    {{--                                    <thead>--}}
-    {{--                                        <tr>--}}
-    {{--                                            <th scope="col">#</th>--}}
-    {{--                                            <th scope="col">Controller</th>--}}
-    {{--                                            <th scope="col">Action</th>--}}
-    {{--                                        </tr>--}}
-    {{--                                    </thead>--}}
-    {{--                                    <tbody>--}}
-    {{--                                        @foreach($controllers as $controller => $methods)--}}
-    {{--                                            @php--}}
-    {{--                                                $actions = arrayMerge(  $methods );--}}
-    {{--                                            @endphp--}}
-    {{--                                            <tr>--}}
-    {{--                                                <td style="vertical-align:middle">{{ $loop->iteration }}</td>--}}
-    {{--                                                <td style="vertical-align:middle">{{ str_replace("Controller","", $controller)  }}</td>--}}
-    {{--                                                <td>--}}
-    {{--                                                    @foreach( $actions as $method => $action)--}}
-    {{--                                                        <span style="display: block">--}}
-    {{--                                                            {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . explode ("_",$method)[0] . '-' . $action, null, ['class' => 'field']) }}--}}
-    {{--                                                            {{ mapStr($action) }}--}}
-    {{--                                                        </span>--}}
-    {{--                                                    @endforeach--}}
-    {{--                                                </td>--}}
-    {{--                                            </tr>--}}
-    {{--                                        @endforeach--}}
-    {{--                                    </tbody>--}}
-    {{--                                </table>--}}
-    {{--                            </li>--}}
-    {{--                        @endforeach--}}
-    {{--                    </ul>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-
-    {{--            <div class="form-group">--}}
-    {{--                <div class="col-md-offset-4 col-md-4">--}}
-    {{--                    {!! Form::submit('Update', ['class' => 'btn btn-primary']) !!}--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-
-    {{--            {!! Form::close() !!}--}}
-
-    {{--        </div>--}}
-    {{--    </div>--}}
 @endsection
 
 @push('styles')
