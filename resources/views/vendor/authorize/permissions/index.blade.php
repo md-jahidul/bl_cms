@@ -74,8 +74,8 @@
                                 @php
                                     $actions = arrayMerge(  $methods );
                                 @endphp
-                                <tr>
-                                    <td style="vertical-align:middle"><label>{{ $loop->iteration }}</label></td>
+                                <tr class="item{{ $loop->iteration -1 }}">
+                                    <td style="vertical-align:middle"><label>{{ $loop->iteration -1  }}</label></td>
                                     <td style="vertical-align:middle"><label>{{ str_replace("Controller","", $controller)  }}</label></td>
                                     <td>
                                         @foreach( $actions as $method => $action)
@@ -155,15 +155,15 @@
                 })
             });
 
-            // $('.update').on('click',function(){
-            //     $('.item0').find('input[type="checkbox"]').attr('checked',true);
-            // });
+            $('.update').on('click',function(){
+                $('.item0').find('input[type="checkbox"]').attr('checked',true);
+            });
         });
     </script>
 @endpush
 
 <style>
-    /*.item0{*/
-    /*    display: none;*/
-    /*}*/
+    .item0{
+        display: none;
+    }
 </style>
