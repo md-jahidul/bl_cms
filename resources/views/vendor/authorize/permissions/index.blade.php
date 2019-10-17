@@ -44,23 +44,16 @@
                 <div id="tree" class="card-body card-dashboard">
                     {!! Form::open(['url' => '/' . Config("authorization.route-prefix") . '/permissions', 'class' => 'form-horizontal']) !!}
 
-                    <div class="form-group row mb-0">
+                    <div class="form-group row mb-0 pt-1 pb-1">
                         <div class="form-group {{ $errors->has('role_id') ? 'has-error' : ''}} col-md-8 row">
                             <strong>{!! Form::label('role_id', 'Role', ['class' => 'control-label mt-1 ml-2']) !!}</strong>
                             <div class="col-md-8">
-                                {{--                                <select class="form-control" required="required" id="role_id" name="role_id" aria-invalid="false">--}}
-                                {{--                                    <option selected="selected" value="">Please select ...</option>--}}
-                                {{--                                </select>--}}
                                 {!! Form::select('role_id', $roles, null, ['placeholder' => 'Please select ...', 'class' => 'form-control', 'required' => 'required']) !!}
-                                {{--                                {!! $errors->first('role_id', '<p class="help-block">:message</p>') !!}--}}
                             </div>
                         </div>
-
-
                         <div class="col-md-4">
                             {!! Form::submit('Update', ['class' => 'btn btn-primary float-right update']) !!}
                         </div>
-
                     </div>
 
                     {{--                    <ul id="tree">--}}
@@ -162,15 +155,15 @@
                 })
             });
 
-            $('.update').on('click',function(){
-                $('.item0').find('input[type="checkbox"]').attr('checked',true);
-            });
+            // $('.update').on('click',function(){
+            //     $('.item0').find('input[type="checkbox"]').attr('checked',true);
+            // });
         });
     </script>
 @endpush
 
 <style>
-    .item0{
-        display: none;
-    }
+    /*.item0{*/
+    /*    display: none;*/
+    /*}*/
 </style>

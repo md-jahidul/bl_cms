@@ -43,7 +43,6 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-
         $requestData = $request->all();
         $requestData['user_type'] = Auth::user()->type;
         Role::create($requestData);
