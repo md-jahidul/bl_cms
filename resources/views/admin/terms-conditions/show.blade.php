@@ -57,7 +57,11 @@
         $(function () {
             tinymce.init({
                 selector: 'textarea#terms-conditions',
-                height: 400
+                branding: false,
+                menubar: false,
+                height: 400,
+                statusbar: false,
+                plugins : 'advlist lists'
             });
         })
     </script>
