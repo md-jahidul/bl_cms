@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'superAdmin' => Middleware\SuperAdmin::class,
         'appAdmin' => Middleware\AppAdmin::class,
         'webAdmin' => Middleware\WebAdmin::class,
+        'authorize' => Middleware\CheckAuthorization::class,        
     ];
 
     /**

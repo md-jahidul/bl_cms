@@ -56,6 +56,10 @@
     <link rel="stylesheet" type="text/css" href="{{asset('theme/assets/css/style.css')}}">
     <!-- END Custom CSS-->
 
+    <script>
+        window.Laravel = {!! json_encode(['csrfToken' => csrf_token(),]) !!};
+    </script>
+
     @stack('page-css')
     @yield('page-css')
     @stack('style')
@@ -65,7 +69,7 @@
 <!-- fixed-top-->
 @include('layouts.partials.fixed_top')
 <!-- ////////////////////////////////////////////////////////////////////////////-->
-@include('layouts.partials.left_menu')
+@include('layouts.partials.left_menu.parent')
 <div class="app-content content">
     <div class="content-wrapper">
         <div class="content-header row">
@@ -129,6 +133,8 @@
 <!-- END PAGE LEVEL JS-->
 
 <script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
+
+
 
 @stack('page-js')
 <script>

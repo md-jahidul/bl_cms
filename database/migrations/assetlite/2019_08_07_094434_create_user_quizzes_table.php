@@ -15,7 +15,7 @@ class CreateUserQuizzesTable extends Migration
     {
         Schema::create('user_quizzes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedInteger('user_id');
             $table->unsignedBigInteger('campaign_id');
             $table->unsignedBigInteger('question_id');
             $table->unsignedBigInteger('option_id');

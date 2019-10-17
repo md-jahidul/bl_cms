@@ -17,8 +17,3 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/api', 'API\TestAPIController@index');
-
-Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
-
-//Route::get('/slider-other-attr', 'API\AlSliderController@get');

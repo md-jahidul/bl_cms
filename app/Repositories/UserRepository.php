@@ -33,7 +33,7 @@ class UserRepository
      */
     public function getUserListForNotification()
     {
-        $users = $this->model->where('role_id', 5)->get();
+        $users = $this->model->get();
 
         return $users;
     }
