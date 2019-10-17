@@ -24,6 +24,11 @@ class PermissionsController extends Controller
     {
         $roles = Role::where('id', '>', 1)->pluck('name', 'id');
         $actions = $this->getRoutes();
+
+//        if ()
+//        return $actions;
+
+
         return view('vendor.authorize.permissions.index', compact('roles', 'actions'));
     }
 
@@ -44,6 +49,10 @@ class PermissionsController extends Controller
             $actions[$namespace][$controller][$method][] = $action;
         }
         ksort($actions);
+
+        if ($actions['App\Http\Controllers\CMS']){
+            unset($actions['App\Http\Controllers\CMS']);
+        }
         return $actions;
     }
 

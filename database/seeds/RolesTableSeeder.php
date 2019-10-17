@@ -15,14 +15,14 @@ class RolesTableSeeder extends Seeder
         $roles = [
             [
                 'name' => 'My Bl Admin',
-                'alias' => 'mybl-admin',
+                'alias' => 'mybl_admin',
                 'user_type' => 'mybl',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
-            ],           
+            ],
             [
-                'name' => 'Asset Lite Admin',
-                'alias' => 'asset-lite',
+                'name' => 'Asset Lite Super Admin',
+                'alias' => 'assetlite_admin',
                 'user_type' => 'assetlite',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),

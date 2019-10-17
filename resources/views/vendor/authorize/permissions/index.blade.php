@@ -15,7 +15,7 @@
 @php
 
     function mapStr($str){
-        $func = ['index','create','store','show','edit','update','destroy','App\Http\Controllers\CMS'];
+        $func = ['index','create','store','show','edit','update','destroy','App\Http\Controllers\AssetLite'];
         $rplc = ['Show List','View Create Form','Insert Data','Show Details','View Edit Form','Update Data','Delete','AssetLite Features'];
         return str_replace($func,$rplc,$str);
     }
@@ -65,8 +65,8 @@
                     {{--                    <ul id="tree">--}}
                     @foreach($actions as $namespace => $controllers)
                         <h3 class="mb-2">{{ mapStr($namespace) }}</h3>
-                        {{--                            <li>{{ mapStr($namespace) }}--}}
-                        {{--                                <button class="btn select-all">Select All</button>--}}
+                        {{--  <li>{{ mapStr($namespace) }}--}}
+                        {{--      <button class="btn select-all">Select All</button>--}}
                         <table class="table table-striped table-bordered">
                             <thead>
                             <tr>

@@ -38,33 +38,17 @@
 
                                 <div class="form-group col-md-6 mb-0{{ $errors->has('role_id') ? ' error' : '' }} ext-bold-600 font-medium-2">
                                     <label for="role_id" class="required">Role</label>
-{{--                                    <fieldset class="form-group position-relative">--}}
-
-{{--                                            <select class="select2-size-sm form-control" name="role_id" id="small-multiple" multiple="multiple" style="border: none impotent;">--}}
-{{--                                                    <option value="AZ">Arizona</option>--}}
-{{--                                                    <option value="CO">Colorado</option>--}}
-{{--                                                    <option value="ID">Idaho</option>--}}
-{{--                                                    <option value="MT">Montana</option>--}}
-{{--                                                    <option value="NE">Nebraska</option>--}}
-{{--                                                    <option value="NM">New Mexico</option>--}}
-{{--                                                    <option value="ND">North Dakota</option>--}}
-{{--                                                    <option value="UT">Utah</option>--}}
-{{--                                                    <option value="WY">Wyoming</option>--}}
-{{--                                            </select>--}}
-
                                         <select class="select2-size-sm form-control" name="role_id[]" id="small-multiple"
                                                 required data-validation-required-message="Please select role" multiple="multiple">
-{{--                                            <option selected="" value="">--Select role--</option>--}}
                                             @foreach($roles as $role)
-                                                <option value="{{ $role->id }}" {{--{{ (old('partner_category_id') == $partnerCategory->id) ? 'selected' : ""}}--}}>
-                                                    {{$role->name}} </option>
+                                                    <option value="{{ $role->id }}" {{--{{ (old('partner_category_id') == $partnerCategory->id) ? 'selected' : ""}}--}}>
+                                                        {{$role->name}} </option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
                                         @if ($errors->has('role_id'))
                                             <div class="help-block">  {{ $errors->first('role_id') }}</div>
                                         @endif
-{{--                                    </fieldset>--}}
                                 </div>
 
 
@@ -78,9 +62,6 @@
                                         <div class="help-block">  {{ $errors->first('password') }}</div>
                                     @endif
                                 </div>
-
-
-
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
