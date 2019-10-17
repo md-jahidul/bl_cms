@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Session;
 use Route;
 use App\Models\Role;
@@ -22,13 +23,11 @@ class PermissionsController extends Controller
      */
     public function index()
     {
-        $roles = Role::where('id', '>', 1)->pluck('name', 'id');
+        $roles = Role::where('user_type', Auth::user()->type)
+                        ->where('alias','!=','assetlite_admin')
+                        ->pluck('name', 'id');
+
         $actions = $this->getRoutes();
-
-//        if ()
-//        return $actions;
-
-
         return view('vendor.authorize.permissions.index', compact('roles', 'actions'));
     }
 
