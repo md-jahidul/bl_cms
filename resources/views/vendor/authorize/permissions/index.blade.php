@@ -75,7 +75,7 @@
                                     $actions = arrayMerge(  $methods );
                                 @endphp
                                 <tr>
-                                    <td style="vertical-align:middle"><label>{{ $loop->iteration - 1 }}</label></td>
+                                    <td style="vertical-align:middle"><label>{{ $loop->iteration }}</label></td>
                                     <td style="vertical-align:middle"><label>{{ str_replace("Controller","", $controller)  }}</label></td>
                                     <td>
                                         @foreach( $actions as $method => $action)
