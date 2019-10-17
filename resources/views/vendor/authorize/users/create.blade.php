@@ -18,8 +18,8 @@
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('name') ? ' error' : '' }}">
                                     <label for="name" class="required">Name</label>
-                                    <input type="text" name="name"  class="form-control" placeholder="Enter company name english"
-                                           value="{{ old("name") ? old("name") : '' }}" required data-validation-required-message="Enter company name english">
+                                    <input type="text" name="name"  class="form-control" placeholder="Enter user name"
+                                           value="{{ old("name") ? old("name") : '' }}" required data-validation-required-message="Enter user name">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name'))
                                         <div class="help-block">  {{ $errors->first('name') }}</div>
@@ -28,8 +28,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('email') ? ' error' : '' }}">
                                     <label for="email" class="required">Email address</label>
-                                    <input type="text" name="email"  class="form-control" placeholder="Enter company name bangla"
-                                           value="{{ old("email") ? old("email") : '' }}" required data-validation-required-message="Enter company name bangla">
+                                    <input type="text" name="email"  class="form-control" placeholder="Enter email address"
+                                           value="{{ old("email") ? old("email") : '' }}" required data-validation-required-message="Enter email address">
                                     <div class="help-block"></div>
                                     @if ($errors->has('email'))
                                         <div class="help-block">  {{ $errors->first('email') }}</div>
@@ -41,7 +41,7 @@
                                         <select class="select2-size-sm form-control" name="role_id[]" id="small-multiple"
                                                 required data-validation-required-message="Please select role" multiple="multiple">
                                             @foreach($roles as $role)
-                                                    <option value="{{ $role->id }}" {{--{{ (old('partner_category_id') == $partnerCategory->id) ? 'selected' : ""}}--}}>
+                                                    <option value="{{ $role->id }}">
                                                         {{$role->name}} </option>
                                             @endforeach
                                         </select>
@@ -55,8 +55,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('password') ? ' error' : '' }}">
                                     <label for="password" class="required">Password</label>
-                                    <input type="text" name="password"  class="form-control" placeholder="Enter company website"
-                                           value="{{ old("password") ? old("password") : '' }}" required data-validation-required-message="Enter company website">
+                                    <input type="text" name="password"  class="form-control" placeholder="Enter password"
+                                           value="{{ old("password") ? old("password") : '' }}" required data-validation-required-message="Enter password">
                                     <div class="help-block"></div>
                                     @if ($errors->has('password'))
                                         <div class="help-block">  {{ $errors->first('password') }}</div>

@@ -74,7 +74,7 @@
                                 @php
                                     $actions = arrayMerge(  $methods );
                                 @endphp
-                                <tr class="item{{ $loop->iteration - 1 }}">
+                                <tr>
                                     <td style="vertical-align:middle"><label>{{ $loop->iteration - 1 }}</label></td>
                                     <td style="vertical-align:middle"><label>{{ str_replace("Controller","", $controller)  }}</label></td>
                                     <td>
