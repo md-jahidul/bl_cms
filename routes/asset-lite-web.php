@@ -109,14 +109,16 @@ Route::middleware('authorize')->group(function() {
 
     Route::resource('questions', 'AssetLite\QuestionController');
 //     Route::resource('prize', 'PrizeController');
-    // Route::resource('tags','TagController');
-//    Route::resource('campaigns','AssetLite\CampaignController');
+//     Route::resource('tags','TagController');
+//     Route::resource('campaigns','AssetLite\CampaignController');
 //     Route::resource('prizes','AssetLite\PrizeController');
 
-    Route::get('/home', 'AssetLite\HomeController@index')->name('home');
     //Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 
+    Route::get('/home', 'AssetLite\HomeController@index')->name('home');
 });
+
+
 
 // Route::group([
 //     'prefix' => Config("authorization.route-prefix"),
@@ -124,39 +126,9 @@ Route::middleware('authorize')->group(function() {
 //     'middleware' => ['web', 'auth']],
 //     function() {
 
-
 //         Route::resource('roles', 'RolesController');
 //         Route::get('/permissions', 'PermissionsController@index');
 //         Route::post('/permissions', 'PermissionsController@update');
 //         Route::post('/permissions/getSelectedRoutes', 'PermissionsController@getSelectedRoutes');
-
 // });
 
-/*
-
-use Symfony\component\Finder\Finder;
-
-Route::get('/b3-b4', function () {
-
-    // dd( Config::get('view.paths') );
-    // dd( app_path(), Config::get('view.paths.0') );
-    $view_path = Config::get('view.paths');
-    $routes_path = base_path().'/routes';
-    $controller_path = app_path() . '/Http/Controllers/AssetLite';
-
-    $files = Finder::create()
-        ->in( $routes_path )
-        ->name('*.php')
-        ->contains('Asset Lite');
-
-    // ->contains("/^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\.[a-zA-Z.]{2,5}$/i");
-    // ->contains('class="');
-    // ->notName('*.rb');
-    foreach ($files as $key => $file) {
-        $content =  File::get( $file->getRealPath() );
-        $update = str_replace('AssetLite', 'AssetLite', $content);
-        File::put( $file->getRealPath() , $update );
-    }
-    echo "Count -->" . count($files);
-});
-*/
