@@ -11,7 +11,7 @@
 @section('content')
     <section>
         <div class="card">
-            <div class="card-content collapse show">
+            <div class="card-content">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('users.store') }}" method="POST" novalidate enctype="multipart/form-data">
@@ -36,19 +36,33 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
-                                    <label for="role_id" class="required">Role</label>
-                                        <select class="select2-size-sm form-control" name="role_id[]" id="small-multiple"
-                                                required data-validation-required-message="Please select role" multiple="multiple">
-                                            @foreach($roles as $role)
-                                                    <option value="{{ $role->id }}">
-                                                        {{$role->name}} </option>
-                                            @endforeach
-                                        </select>
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('role_id'))
-                                            <div class="help-block">  {{ $errors->first('role_id') }}</div>
-                                        @endif
+                                <div class="form-group select-role col-md-6 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
+
+                                        <label for="role_id" class="required">Role</label>
+                                        <div class="role-select">
+                                            <select class="select2 form-control" multiple="multiple" name="role_id[]"
+                                                    required data-validation-required-message="Please select role">
+                                                @foreach($roles as $role)
+                                                    <option value="{{ $role->id }}">{{$role->name}} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('role_id'))
+                                        <div class="help-block">  {{ $errors->first('role_id') }}</div>
+                                    @endif
+
+{{--                                    <label for="role_id" class="required">Role</label>--}}
+{{--                                        <select class="select2-size-sm form-control" name="role_id[]" id="small-multiple"--}}
+{{--                                                required data-validation-required-message="Please select role" multiple="multiple">--}}
+{{--                                            @foreach($roles as $role)--}}
+{{--                                                    <option value="{{ $role->id }}">{{$role->name}} </option>--}}
+{{--                                            @endforeach--}}
+{{--                                        </select>--}}
+{{--                                        <div class="help-block"></div>--}}
+{{--                                        @if ($errors->has('role_id'))--}}
+{{--                                            <div class="help-block">  {{ $errors->first('role_id') }}</div>--}}
+{{--                                        @endif--}}
                                 </div>
 
 
@@ -62,6 +76,7 @@
                                         <div class="help-block">  {{ $errors->first('password') }}</div>
                                     @endif
                                 </div>
+
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
@@ -78,8 +93,18 @@
             </div>
         </div>
     </section>
-
 @stop
+
+<style>
+    form .select-role.validate input:focus, form .select-role.issue input:focus, form .select-role.validate input{
+        border-color: unset;
+        -webkit-box-shadow: unset;
+        -moz-box-shadow: unset;
+        box-shadow: unset;
+        border-width: 0;
+        color : unset;
+    }
+</style>
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
