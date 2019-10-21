@@ -12,6 +12,7 @@
         "barryvdh/laravel-cors": "^0.11.0",
         "box/spout": "^3.0",
         "cviebrock/eloquent-sluggable": "^4.8",
+        "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
