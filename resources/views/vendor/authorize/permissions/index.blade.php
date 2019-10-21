@@ -15,9 +15,14 @@
 @php
 
     function mapStr($str){
-        $func = ['index','create','store','show','edit','update','destroy','App\Http\Controllers\AssetLite'];
-        $rplc = ['Show List','View Create Form','Insert Data','Show Details','View Edit Form','Update Data','Delete','AssetLite Features'];
-        return str_replace($func,$rplc,$str);
+        /* $func = ['index','create','store','show','edit','update','destroy','App\\Http\\Controllers\\AssetLite','*Sortable'];
+        $rplc = ['Show List','View Create Form','Insert Data','Show Details','View Edit Form','Update Data','Delete','AssetLite Features','Enable Sorting'];
+        return str_replace($func,$rplc,$str); */
+
+        $sortableItems = "/parentFooterSortable|parentMenuSortable|partnerOfferSortable|sliderImageSortable|quickLaunchSortable/";
+        $func = ['/index/','/create/','/store/','/show/','/edit/','/update/','/destroy/','/App\\Http\\Controllers\\AssetLite/', $sortableItems];
+        $rplc = ['Show List','View Create Form','Insert Data','Show Details','View Edit Form','Update Data','Delete','AssetLite Features','Ordering'];
+        return preg_replace($func,$rplc,$str);
     }
 
     function arrayMerge($arr)
