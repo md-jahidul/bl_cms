@@ -35,6 +35,9 @@
                             console.log(redirectUrl);
                             Swal.fire(deletePopupParams);
                             setTimeout(redirect, 2000, redirectUrl)
+                        },
+                        error: function(){
+                            window.location.replace(url);
                         }
                     })
                 }
