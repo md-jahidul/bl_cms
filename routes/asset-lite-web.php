@@ -44,13 +44,26 @@ Route::middleware('authorize')->group(function() {
     });
 
     // FOOTER MENU PAGES ====================================
-    Route::resource('footer-menu','AssetLite\FooterMenuController');
+    
+
+    // Route::resource('footer-menu', 'AssetLite\FooterMenuController')->only(['store', 'update','edit']);
+
+
+    // Route::post('footer-menu','AssetLite\FooterMenuController@store')->name('footer-menu.store');
+    // Route::put('footer-menu/{id}','AssetLite\FooterMenuController@update');
+    // Route::get('footer-menu/{id}/edit','AssetLite\FooterMenuController@edit');
+
+    Route::get('footer-menu/{id}/child-footer/create', 'AssetLite\FooterMenuController@create');
+    Route::resource('footer-menu', 'AssetLite\FooterMenuController')->only(['update','edit','store']);
     Route::get('footer-menu/{parentId}/destroy/{id}', 'AssetLite\FooterMenuController@destroy');
+    Route::get('footer-menu/{parent_id?}/{child_footer?}','AssetLite\FooterMenuController@index');  // always put it last
     Route::get('sort-autosave/parent-footer-sort','AssetLite\FooterMenuController@parentFooterSortable');
-    Route::group(['prefix' => 'footer-menu'], function () {
-        Route::get('/{id}/child-footer', 'AssetLite\FooterMenuController@index');
-        Route::get('/{id}/child-footer/create', 'AssetLite\FooterMenuController@create');
-    });
+
+
+    // Route::group(['prefix' => 'footer-menu'], function () {
+    //     // Route::get('/{id}/child-footer', 'AssetLite\FooterMenuController@index');
+    //     Route::get('/{id}/child-footer/create', 'AssetLite\FooterMenuController@create');
+    // });
 
     // QUICK LAUNCH PAGES ====================================
     Route::resource('quick-launch','AssetLite\QuickLaunchController');
