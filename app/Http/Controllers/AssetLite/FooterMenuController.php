@@ -50,7 +50,7 @@ class FooterMenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($parent_id = 0)
+    public function index($parent_id = 0, $chield_menu = false)
     {
         $footerMenus = $this->footerMenuService->footerMenuList($parent_id);
         $footer_menu_id = $parent_id;
@@ -94,16 +94,6 @@ class FooterMenuController extends Controller
         return redirect( ($parentId == 0) ? '/footer-menu' : "/footer-menu/$parentId/child-footer");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -144,7 +134,7 @@ class FooterMenuController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function parentFooterSortable(Request $request)
+    public function FooterMenuSortable(Request $request)
     {
        return $this->footerMenuService->tableSort($request);
     }

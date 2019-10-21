@@ -32,7 +32,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
+        $userType = Auth::user()->type;
+        $roles = Role::where('user_type', $userType)->where('alias','!=','assetlite_admin')->get();
         return view('vendor.authorize.users.create', compact('roles'));
     }
 
@@ -79,8 +80,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $userType = Auth::user()->type;
         $user = User::findOrFail($id);
-        $roles = Role::all();
+        $roles = Role::where('user_type', $userType)->where('alias','!=','assetlite_admin')->get();
         return view('vendor.authorize.users.edit', compact('user', 'roles'));
     }
 

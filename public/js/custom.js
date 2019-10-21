@@ -35,6 +35,9 @@
                             console.log(redirectUrl);
                             Swal.fire(deletePopupParams);
                             setTimeout(redirect, 2000, redirectUrl)
+                        },
+                        error: function(){
+                            window.location.replace(url);
                         }
                     })
                 }
@@ -59,7 +62,7 @@
                 },
                 success:function(data){ console.log(data) },
                 error : function() {
-                    alert('Some problems..');
+                    window.location.replace(auto_save_url);
                 }
             });
         }
