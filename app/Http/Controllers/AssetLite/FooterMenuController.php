@@ -93,7 +93,7 @@ class FooterMenuController extends Controller
         Session::flash('message', $response->getContent());
         return redirect( ($parentId == 0) ? '/footer-menu' : "/footer-menu/$parentId/child-footer");
     }
-    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -134,7 +134,7 @@ class FooterMenuController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function parentFooterSortable(Request $request)
+    public function FooterMenuSortable(Request $request)
     {
        return $this->footerMenuService->tableSort($request);
     }

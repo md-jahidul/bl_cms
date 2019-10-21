@@ -33,31 +33,19 @@ Route::middleware('authorize')->group(function() {
     Route::get('config','AssetLite\ConfigController@index');
     Route::put('config/update','AssetLite\ConfigController@update');
 
-
     // MENU PAGES ====================================
-    Route::resource('menu','AssetLite\MenuController');
-    Route::get('menu/{parentId}/destroy/{id}', 'AssetLite\MenuController@destroy');
+    Route::get('menu/{id}/child-menu/create', 'AssetLite\MenuController@create');
+    Route::resource('menu','AssetLite\MenuController')->only(['update','edit','store']);
+    Route::get('menu/{id?}/{child_menu?}', 'AssetLite\MenuController@index');
     Route::get('/menu-auto-save','AssetLite\MenuController@parentMenuSortable');
-    Route::group(['prefix' => 'menu'], function () {
-        Route::get('/{id}/child-menu', 'AssetLite\MenuController@index');
-        Route::get('/{id}/child-menu/create', 'AssetLite\MenuController@create');
-    });
+    Route::get('menu/{parentId}/destroy/{id}', 'AssetLite\MenuController@destroy');
 
     // FOOTER MENU PAGES ====================================
-    
-
-    // Route::resource('footer-menu', 'AssetLite\FooterMenuController')->only(['store', 'update','edit']);
-
-
-    // Route::post('footer-menu','AssetLite\FooterMenuController@store')->name('footer-menu.store');
-    // Route::put('footer-menu/{id}','AssetLite\FooterMenuController@update');
-    // Route::get('footer-menu/{id}/edit','AssetLite\FooterMenuController@edit');
-
     Route::get('footer-menu/{id}/child-footer/create', 'AssetLite\FooterMenuController@create');
     Route::resource('footer-menu', 'AssetLite\FooterMenuController')->only(['update','edit','store']);
     Route::get('footer-menu/{parentId}/destroy/{id}', 'AssetLite\FooterMenuController@destroy');
     Route::get('footer-menu/{parent_id?}/{child_footer?}','AssetLite\FooterMenuController@index');  // always put it last
-    Route::get('sort-autosave/parent-footer-sort','AssetLite\FooterMenuController@parentFooterSortable');
+    Route::get('sort-autosave/parent-footer-sort','AssetLite\FooterMenuController@FooterMenuSortable');
 
 
     // Route::group(['prefix' => 'footer-menu'], function () {
@@ -66,7 +54,7 @@ Route::middleware('authorize')->group(function() {
     // });
 
     // QUICK LAUNCH PAGES ====================================
-    Route::resource('quick-launch','AssetLite\QuickLaunchController');
+    Route::resource('quick-launch','AssetLite\QuickLaunchController')->except(['show', 'destroy']);
     Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
     Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 
@@ -94,7 +82,7 @@ Route::middleware('authorize')->group(function() {
     Route::get('/slider-image-sortable','AssetLite\AlSliderImageController@sliderImageSortable');
 
     // PARTNERS PAGES ====================================
-    Route::resource('partners','AssetLite\PartnerController');
+    Route::resource('partners','AssetLite\PartnerController')->except(['show', 'destroy']);
     Route::get('partner/destroy/{id}', 'AssetLite\PartnerController@destroy');
 
     Route::get('partner-offer/{partner_id}/{type}', 'AssetLite\PartnerOfferController@index')->name('partner-offer');
@@ -135,13 +123,13 @@ Route::middleware('authorize')->group(function() {
 //     'namespace' => 'Pondit\Authorize\Controllers',
 //     'middleware' => ['web', 'auth']],
 //     function() {
-  
-     
+
+
 //         Route::resource('roles', 'RolesController');
 //         Route::get('/permissions', 'PermissionsController@index');
 //         Route::post('/permissions', 'PermissionsController@update');
 //         Route::post('/permissions/getSelectedRoutes', 'PermissionsController@getSelectedRoutes');
-        
+
 // });
 
 /*
