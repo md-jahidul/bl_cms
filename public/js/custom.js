@@ -62,7 +62,7 @@
                 },
                 success:function(data){ console.log(data) },
                 error : function() {
-                    alert('Some problems..');
+                    window.location.replace(auto_save_url);
                 }
             });
         }
