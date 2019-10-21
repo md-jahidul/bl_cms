@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'User Create')
-@section('card_name', 'User Create')
+@section('title', 'Role Edit')
+@section('card_name', 'Role Edit')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('partners') }}"> User List</a></li>
-    <li class="breadcrumb-item active"> User Create</li>
+    <li class="breadcrumb-item active"> <a href="{{ url('partners') }}"> Role List</a></li>
+    <li class="breadcrumb-item active"> Role Edit</li>
 @endsection
 @section('action')
-    <a href="{{ url('partners') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('authorize/roles') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -14,15 +14,12 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-{{--                        {!! Form::open(['url' => '/' . Config("authorization.route-prefix") . '/roles', 'class' => 'form-horizontal', 'files' => true]) !!}--}}
-
                         {!! Form::model($role, [
                             'method' => 'PATCH',
                             'url' => ['/' . Config("authorization.route-prefix") . '/roles', $role->id],
                             'class' => 'form-horizontal',
                             'files' => true, 'novalidate'
                         ]) !!}
-
 
                         <div class="row">
                             <div class="form-group col-md-12 {{ $errors->has('name') ? ' error' : '' }}">
@@ -51,7 +48,7 @@
                             <div class="form-actions col-md-12 ">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-primary"><i
-                                            class="la la-check-square-o"></i> SAVE
+                                            class="la la-check-square-o"></i> UPDATE
                                     </button>
                                 </div>
                             </div>

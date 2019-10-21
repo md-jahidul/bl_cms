@@ -36,7 +36,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 mb-0{{ $errors->has('role_id') ? ' error' : '' }} ext-bold-600 font-medium-2">
+                                <div class="form-group col-md-6 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
                                     <label for="role_id" class="required">Role</label>
                                         <select class="select2-size-sm form-control" name="role_id[]" id="small-multiple"
                                                 required data-validation-required-message="Please select role" multiple="multiple">

@@ -121,10 +121,10 @@ Route::middleware('authorize')->group(function() {
 
 
 // Route::group([
-//     'prefix' => Config("authorization.route-prefix"),
-//     'namespace' => 'Pondit\Authorize\Controllers',
-//     'middleware' => ['web', 'auth']],
-//     function() {
+//         'prefix' => Config("authorization.route-prefix"),
+//         'namespace' => 'Pondit\Authorize\Controllers',
+//         'middleware' => ['web', 'auth']],
+//         function() {
 
 //         Route::resource('roles', 'RolesController');
 //         Route::get('/permissions', 'PermissionsController@index');
