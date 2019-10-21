@@ -1,5 +1,3 @@
-{{--@extends('vendor.authorize.layouts.auth')--}}
-
 @php
     function match($id,$roles){
         foreach ($roles as $role)
@@ -17,11 +15,11 @@
 @section('title', 'User Create')
 @section('card_name', 'User Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('partners') }}"> User List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ url('authorize/users') }}"> User List</a></li>
     <li class="breadcrumb-item active"> User Edit</li>
 @endsection
 @section('action')
-    <a href="{{ url('partners') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('authorize/users') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -59,8 +57,8 @@
                                             required data-validation-required-message="Please select role" multiple="multiple">
                                         {{-- <option selected="" value="">--Select role--</option>--}}
                                         @foreach($roles as $role)
-                                            <option value="{{ $role->id }}" {{ match($role->id,$user->roles) ? 'selected' : ""}}>
-                                                {{$role->name}} </option>
+                                                <option value="{{ $role->id }}" {{ match($role->id,$user->roles) ? 'selected' : ""}}>
+                                                    {{$role->name}} </option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
