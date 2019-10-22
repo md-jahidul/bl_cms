@@ -28,7 +28,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('email') ? ' error' : '' }}">
                                     <label for="email" class="required">Email address</label>
-                                    <input type="text" name="email"  class="form-control" placeholder="Enter email address"
+                                    <input type="email" name="email"  class="form-control" placeholder="Enter email address"
                                            value="{{ old("email") ? old("email") : '' }}" required data-validation-required-message="Enter email address">
                                     <div class="help-block"></div>
                                     @if ($errors->has('email'))
@@ -66,6 +66,7 @@
                                 </div>
 
 
+{{--                                {{ dd(old("password")) }}--}}
 
                                 <div class="form-group col-md-6 {{ $errors->has('password') ? ' error' : '' }}">
                                     <label for="password" class="required">Password</label>

@@ -97,7 +97,6 @@ class UserController extends Controller
 
     public function changePassword(Request $request){
 
-//        return $request->all();
         $request->validate([
             'old_password' => 'required',
             'password' => 'required|confirmed|min:6',

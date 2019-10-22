@@ -76,7 +76,7 @@
                         <div class="card-content">
                             <div class="row py-2">
                                 <div class="col-12 col-sm-6 col-md-6 offset-md-3">
-                                    <a href="{{ url('home') }}" class="btn btn-primary btn-block"><i class="ft-home"></i> Back to Home</a>
+                                    <a href="{{ url('/') }}" class="btn btn-primary btn-block"><i class="ft-home"></i> Back to Home</a>
                                 </div>
                             </div>
                         </div>
