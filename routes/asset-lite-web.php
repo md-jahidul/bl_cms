@@ -18,9 +18,13 @@ Auth::routes();
 //Route::get('slider/{parent_id}/images', 'AssetLite\AlSliderImageController@index');
 //Route::get('slider-image/{id}/edit', 'AssetLite\AlSliderImageController@edit');
 
+Route::get('/users/change-password', 'AssetLite\UserController@changePasswordForm');
+Route::post('/users/password-update', 'AssetLite\UserController@changePassword')->name('password.update');
+
 Route::middleware('authorize')->group(function() {
     //Place all your routes here
     Route::resource('authorize/users', 'AssetLite\UserController');
+
 
     Route::resource('authorize/roles', 'AssetLite\RolesController');
     Route::get('authorize/permissions', 'AssetLite\PermissionsController@index');

@@ -15,14 +15,19 @@
 @php
 
     function mapStr($str){
-        /* $func = ['index','create','store','show','edit','update','destroy','App\\Http\\Controllers\\AssetLite','*Sortable'];
+        /* $func = ['index','create','store','show','edit','update','destroy','App\Http\Controllers\AssetLite','*Sortable'];
         $rplc = ['Show List','View Create Form','Insert Data','Show Details','View Edit Form','Update Data','Delete','AssetLite Features','Enable Sorting'];
         return str_replace($func,$rplc,$str); */
 
+
+        if($str == 'App\Http\Controllers\AssetLite'){
+            return str_replace('App\Http\Controllers\AssetLite','AssetLite Features',$str);
+        }
+
         $sortableItems = "/parentFooterSortable|parentMenuSortable|partnerOfferSortable|sliderImageSortable|quickLaunchSortable/";
-        $func = ['/index/','/create/','/store/','/show/','/edit/','/update/','/destroy/','/App\\Http\\Controllers\\AssetLite/', $sortableItems];
-        $rplc = ['Show List','View Create Form','Insert Data','Show Details','View Edit Form','Update Data','Delete','AssetLite Features','Ordering'];
-        return preg_replace($func,$rplc,$str);
+        $search = ['/index/','/create/','/store/','/show/','/edit/','/update/','/destroy/','/App\\Http\\Controllers\\AssetLite/', $sortableItems];
+        $replace = ['Show List','View Create Form','Insert Data','Show Details','View Edit Form','Update Data','Delete','AssetLite Features','Ordering'];
+        return preg_replace($search,$replace,$str);
     }
 
     function arrayMerge($arr)
