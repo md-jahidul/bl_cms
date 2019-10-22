@@ -9,7 +9,7 @@ use App\Models\User;
  *
  * @package App\Repositories
  */
-class UserRepository
+class UserRepository extends BaseRepository
 {
     /**
      * @var User
@@ -34,7 +34,6 @@ class UserRepository
     public function getUserListForNotification()
     {
         $users = $this->model->get();
-
         return $users;
     }
 

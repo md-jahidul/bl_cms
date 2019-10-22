@@ -15,6 +15,7 @@
         </div>
         <div class="navbar-container content float-right">
             <div class="collapse navbar-collapse" id="navbar-mobile">
+                <span class="pr-2"><strong>{{ Auth::user()->name }}</strong></span>
                 <ul class="nav navbar-nav float-right">
                     <li class="dropdown dropdown-user nav-item">
                         <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">

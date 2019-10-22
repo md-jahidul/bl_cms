@@ -64,8 +64,8 @@ class UsersTableSeeder extends Seeder
 
         $assetLiteUsers = [
             [
-                'name' => 'web-admin',
-                'email' => 'assetlite@admin.com',
+                'name' => 'Asset Lite Super Admin',
+                'email' => 'super@admin.com',
                 'phone' => '0191941551111',
                 'type' => 'assetlite',
                 'uid' => uniqid(),
@@ -73,18 +73,27 @@ class UsersTableSeeder extends Seeder
                 'device_token' => '122'
             ],
             [
-                'name' => 'Test',
-                'email' => 'test@admin.com',
+                'name' => 'Asset Lite Super User',
+                'email' => 'super@user.com',
                 'phone' => '01919415566',
-                'type' => 'mybl',
+                'type' => 'assetlite',
                 'uid' => uniqid(),
                 'password' => Hash::make('123456'),
                 'device_token' =>  "cbccwirrVwU:APA91bEJZkLi9mWV5hh6EjtFFLegw6_f4_eBGlqJ02KnHo7cW4KuyfJZIfQ-_VEDdCr3Kf3Lg9kj9e7ihELO3aHGrlZJxYGsOTPObHjEOLSAJPAOm_KI9QpvQM28wPW0D3BK2MllIMv2"
             ],
             [
-                'name' => 'Jahidul Islam',
-                'email' => 'jahidul@admin.com',
-                'phone' => '01919415588',
+                'name' => 'Asset Lite Power User',
+                'email' => 'power@user.com',
+                'phone' => '01919415578',
+                'type' => 'assetlite',
+                'uid' => uniqid(),
+                'password' => Hash::make('123456'),
+                'device_token' =>  "cbccwirrVwU:APA91bEJZkLi9mWV5hh6EjtFFLegw6_f4_eBGlqJ02KnHo7cW4KuyfJZIfQ-_VEDdCr3Kf3Lg9kj9e7ihELO3aHGrlZJxYGsOTPObHjEOLSAJPAOm_KI9QpvQM28wPW0D3BK2MllIMv2"
+            ],
+            [
+                'name' => 'Asset Lite User',
+                'email' => 'normal@user.com',
+                'phone' => '01919415567',
                 'type' => 'assetlite',
                 'uid' => uniqid(),
                 'password' => Hash::make('123456'),

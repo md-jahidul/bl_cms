@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
 
 //      Asset-Lite Seeder
+        $this->call(PermissionTableSeeder::class);
         $this->call(TagsTableSeeder::class);
         $this->call(CampaignTableSeeder::class);
         $this->call(MenusTableSeeder::class);

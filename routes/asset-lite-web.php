@@ -14,19 +14,19 @@
 
 Auth::routes();
 
-//Route::resource('sliders', 'AssetLite\AlSliderController');
-//Route::get('slider/{parent_id}/images', 'AssetLite\AlSliderImageController@index');
-//Route::get('slider-image/{id}/edit', 'AssetLite\AlSliderImageController@edit');
+//Route::resource('sliders', 'AssetLite\SliderController');
+//Route::get('slider/{parent_id}/images', 'AssetLite\SliderImageController@index');
+//Route::get('slider-image/{id}/edit', 'AssetLite\SliderImageController@edit');
 
 Route::get('/users/change-password', 'AssetLite\UserController@changePasswordForm');
 Route::post('/users/password-update', 'AssetLite\UserController@changePassword')->name('password.update');
 
 Route::middleware('authorize')->group(function() {
     //Place all your routes here
-    Route::resource('authorize/users', 'AssetLite\UserController');
+    Route::resource('authorize/users', 'AssetLite\UserController')->except(['show']);;
 
 
-    Route::resource('authorize/roles', 'AssetLite\RolesController');
+    Route::resource('authorize/roles', 'AssetLite\RolesController')->except(['show']);
     Route::get('authorize/permissions', 'AssetLite\PermissionsController@index');
     Route::post('authorize/permissions', 'AssetLite\PermissionsController@update');
     Route::post('authorize/permissions/getSelectedRoutes', 'AssetLite\PermissionsController@getSelectedRoutes');
@@ -73,17 +73,17 @@ Route::middleware('authorize')->group(function() {
     Route::put('config/update','AssetLite\ConfigController@update');
 
     // SLIDERS PAGES ====================================
-    Route::get('single-sliders', 'AssetLite\AlSliderController@singleSlider');
-    Route::get('multiple-sliders', 'AssetLite\AlSliderController@multiSlider');
-    Route::get('sliders/{id}/{type}/edit', 'AssetLite\AlSliderController@edit');
-    Route::put('sliders/{id}/update', 'AssetLite\AlSliderController@update');
-    Route::get('slider/{slider_id}/{type}', 'AssetLite\AlSliderImageController@index')->name('slider_images');
-    Route::get('slider/{slider_id}/{type}/image/create', 'AssetLite\AlSliderImageController@create');
-    Route::post('slider/{slider_id}/{type}/image/store', 'AssetLite\AlSliderImageController@store')->name('slider_image_store');
-    Route::get('slider/{slider_id}/{type}/image/{id}', 'AssetLite\AlSliderImageController@edit')->name('slider_image_edit');
-    Route::put('slider/{slider_id}/{type}/image/{id}/update', 'AssetLite\AlSliderImageController@update')->name('slider_image_update');
-    Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'AssetLite\AlSliderImageController@destroy');
-    Route::get('/slider-image-sortable','AssetLite\AlSliderImageController@sliderImageSortable');
+    Route::get('single-sliders', 'AssetLite\SliderController@singleSlider');
+    Route::get('multiple-sliders', 'AssetLite\SliderController@multiSlider');
+    Route::get('sliders/{id}/{type}/edit', 'AssetLite\SliderController@edit');
+    Route::put('sliders/{id}/update', 'AssetLite\SliderController@update');
+    Route::get('slider/{slider_id}/{type}', 'AssetLite\SliderImageController@index')->name('slider_images');
+    Route::get('slider/{slider_id}/{type}/image/create', 'AssetLite\SliderImageController@create');
+    Route::post('slider/{slider_id}/{type}/image/store', 'AssetLite\SliderImageController@store')->name('slider_image_store');
+    Route::get('slider/{slider_id}/{type}/image/{id}', 'AssetLite\SliderImageController@edit')->name('slider_image_edit');
+    Route::put('slider/{slider_id}/{type}/image/{id}/update', 'AssetLite\SliderImageController@update')->name('slider_image_update');
+    Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'AssetLite\SliderImageController@destroy');
+    Route::get('/slider-image-sortable','AssetLite\SliderImageController@sliderImageSortable');
 
     // PARTNERS PAGES ====================================
     Route::resource('partners','AssetLite\PartnerController')->except(['show', 'destroy']);

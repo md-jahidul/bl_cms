@@ -9,11 +9,17 @@ use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
-use Route;
+use Illuminate\Support\Facades\Route;
 use App\Models\Role;
 
 class PermissionsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -24,7 +30,7 @@ class PermissionsController extends Controller
     public function index()
     {
         $roles = Role::where('user_type', Auth::user()->type)
-                        ->where('alias','!=','assetlite_admin')
+                        ->where('alias','!=','assetlite_super_admin')
                         ->pluck('name', 'id');
 
         $actions = $this->getRoutes();

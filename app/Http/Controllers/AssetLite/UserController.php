@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Requests\UserStoreRequest;
 use App\Models\RoleUser;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +15,22 @@ use DB;
 
 class UserController extends Controller
 {
+
+    /***
+     * @var UserService
+     */
+    private $userService;
+
+    /***
+     * UserController constructor.
+     * @param UserService $userService
+     */
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -46,6 +63,9 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
+
+        $this->userService->storeUser($request);
+
         $user = new User;
         $user->name = request()->name;
         $user->email = request()->email;
@@ -63,17 +83,6 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -82,17 +91,38 @@ class UserController extends Controller
     public function edit($id)
     {
         $userType = Auth::user()->type;
+        $superAdminId = Auth::user()->roles[0]->id;
         $user = User::findOrFail($id);
-
-//        return Hash::check($user->password);
-
         $roles = Role::where('user_type', $userType)->where('alias','!=','assetlite_admin')->get();
-        return view('vendor.authorize.users.edit', compact('user', 'roles'));
+        return view('vendor.authorize.users.edit', compact('user', 'roles', 'superAdminId'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+
+        $roles = DB::table('role_user')->where('user_id',$id)->get();
+        foreach ($roles as $role){
+            $user->roles()->detach($role);
+        }
+        foreach (request()->role_id as $role){
+            $user->roles()->save(Role::find($role));
+        }
+
+        return redirect('authorize/users');
     }
 
     public function changePasswordForm()
     {
-       return view('vendor.authorize.users.change-password');
+        return view('vendor.authorize.users.change-password');
     }
 
     public function changePassword(Request $request){
@@ -116,33 +146,6 @@ class UserController extends Controller
         $user->password = bcrypt($request->get('password'));
         $user->save();
         return redirect()->back()->with("message","Password changed successfully !");
-    }
-
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-        $user->update($request->all());
-
-        $roles = DB::table('role_user')->where('user_id',$id)->get();
-
-        foreach ($roles as $role){
-            $user->roles()->detach($role);
-        }
-
-        foreach (request()->role_id as $role){
-            $user->roles()->save(Role::find($role));
-        }
-
-
-        return redirect('authorize/users');
     }
 
     /**

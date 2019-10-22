@@ -10,7 +10,7 @@ use App\Services\AlSliderImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class AlSliderImageController extends Controller
+class SliderImageController extends Controller
 {
     /**
      * @var $alSliderImageService

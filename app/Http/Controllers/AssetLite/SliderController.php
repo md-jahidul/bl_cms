@@ -15,7 +15,7 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
-class AlSliderController extends Controller
+class SliderController extends Controller
 {
     /**
      * @var AlSliderService

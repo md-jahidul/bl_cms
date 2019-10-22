@@ -6,12 +6,28 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\Role;
+use App\Services\RoleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
 
 class RolesController extends Controller
 {
+
+    /**
+     * @var RoleService
+     */
+    private $roleService;
+
+    /**
+     * RolesController constructor.
+     * @param RoleService $roleService
+     */
+    public function __construct(RoleService $roleService)
+    {
+        $this->roleService = $roleService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,6 +35,7 @@ class RolesController extends Controller
      */
     public function index()
     {
+//        $roles = $this->roleService->findAll();
         $type = Auth::user()->type;
         $roles = Role::where('user_type', $type)->get();
         return view('vendor.authorize.roles.index', compact('roles'));

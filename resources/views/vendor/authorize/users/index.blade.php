@@ -101,7 +101,7 @@
                                     <td>{{ $item->email }}</td>
                                     <td>{!!  $roles_dom !!}</td>
                                     <td>
-                                        @if($item->id !=  5)
+                                        @if($item->id !=  5 && $item->id != Auth::user()->id)
                                             <a href="{{ url('/' . Config("authorization.route-prefix") . '/users/' . $item->id . '/edit') }}" role="button"
                                            class=" border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         @endif
