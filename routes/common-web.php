@@ -15,8 +15,8 @@ use App\Model\MixedBundleFilter;
 use App\Models\Shortcut;
 
 Route::get('/', function () {
-    return view('admin.admin-auth.login');
-})->name('test');
+    return view('home');
+})->middleware('auth');
 
 Auth::routes();
 Route::get('/home', 'CMS\HomeController@index')->name('home');

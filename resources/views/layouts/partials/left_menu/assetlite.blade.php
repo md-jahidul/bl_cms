@@ -8,7 +8,7 @@
                     <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
                 <ul class="menu-content">
                     @if( auth()->user()->can_view('User') )
-                        <li class="{{ is_active_url('authorize/users') . is_active_url('authorize/users')}}">
+                        <li class="{{ is_active_url('authorize/users')}}">
                             <a class="menu-item" href="{{ url('authorize/users') }}" data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-user"></i> User</a>
                         </li>
@@ -16,13 +16,13 @@
 
 
                     @if( auth()->user()->can_view('Roles') )
-                        <li class="{{ is_active_url('authorize/roles') . is_active_url('authorize/roles')}}">
+                        <li class="{{ is_active_url('authorize/roles')}}">
                             <a class="menu-item" href="{{ url('authorize/roles') }}" data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-cubes"></i> Role</a>
                         </li>
                     @endif
                     @if( auth()->user()->can_view('Permissions') )
-                        <li class="{{ is_active_url('authorize/permissions') . is_active_url('authorize/permissions')}}">
+                        <li class="{{ is_active_url('authorize/permissions')}}">
                             <a class="menu-item" href="{{ url('authorize/permissions') }}" data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-check-square"></i> Permission</a>
                         </li>
