@@ -132,6 +132,12 @@ Route::group(['middleware' => ['appAdmin']], function () {
     Route::get('terms-conditions','CMS\TermsAndConditionsController@show')->name('terms-conditions.show');
     Route::post('terms-conditions','CMS\TermsAndConditionsController@store')->name('terms-conditions.store');
 
+    // faq category
+    Route::get('faq/category','CMS\FaqCategoryController@index')->name('faq.category.index');
+    Route::post('faq/category/update','CMS\FaqCategoryController@update')->name('faq.category.update');
+    Route::post('faq/category','CMS\FaqCategoryController@store')->name('faq.category.store');
+    Route::post('faq/category/delete','CMS\FaqCategoryController@destroy')->name('faq.category.delete');
+
 });
 
 
