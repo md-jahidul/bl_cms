@@ -11,6 +11,14 @@ class TagCategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $tags = ['Best Offer','Hot Offer','Eid Offer'];
+        foreach ($tags as $tag) {
+            factory(OfferCategory::class)->create(
+                [
+                    'name' => $tag,
+                    'alias' => strtolower(str_replace(' ', '_', $tag))
+                ]
+            );
+        }
     }
 }
