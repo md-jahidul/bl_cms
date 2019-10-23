@@ -22,9 +22,20 @@ class AppVersionService
     }
 
 
+
     public function getVersionInfo()
     {
         return $this->appVersionRepository->findAll();
+    }
+
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function createAppVersion($request)
+    {
+        return $this->appVersionRepository->create($request->all());
     }
 
 

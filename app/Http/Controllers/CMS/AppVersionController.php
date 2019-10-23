@@ -58,7 +58,8 @@ class AppVersionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        session()->flash('message', $this->appVersionService->createAppVersion($request)->getContent());
+        return redirect(route('app-version.index'));
     }
 
     /**
