@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TagCategoryTableSeeder::class);
         $this->call(SimCategoryTableSeeder::class);
         $this->call(OfferCategoryTableSeeder::class);
+        $this->call(ProductsTableSeeder::class);
 
         // ====My-Bl Seeder====
         $this->call(NotificationsTableSeeder::class);

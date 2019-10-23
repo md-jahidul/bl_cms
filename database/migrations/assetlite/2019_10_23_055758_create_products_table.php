@@ -36,6 +36,8 @@ class CreateProductsTable extends Migration
                 $table->string('contextual_message')->nullable();
                 $table->integer('like')->default(0);
                 $table->tinyInteger('status')->default(1);
+                $table->integer('display_order')->nullable();
+
 
                 $table->foreign('tag_category_id')
                     ->references('id')

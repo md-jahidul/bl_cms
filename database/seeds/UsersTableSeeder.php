@@ -103,6 +103,7 @@ class UsersTableSeeder extends Seeder
             ]
         ];
 
+        // TODO : https://stackoverflow.com/questions/45269146/laravel-seeding-many-to-many-relationship
         for ($i=0; $i < count($assetLiteUsers); $i++) {
             DB::table('users')->insert($assetLiteUsers[$i]);
             DB::table('role_user')->insert(

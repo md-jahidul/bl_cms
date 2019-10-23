@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Models\InternetPackFilter;
 use App\Models\MixedBundleFilter;
@@ -20,7 +18,8 @@ class InternetPackFilterService
         $this->filter_types = OfferFilterType::all()->pluck('id', 'slug');
     }
 
-    public function getAll(){
+    public function getAll()
+    {
         return new InternetPackFilter();
     }
 
@@ -37,9 +36,9 @@ class InternetPackFilterService
             'data'  =>  []
         ];
 
-        $items->each(function($item) use (&$response){
+        $items->each(function ($item) use (&$response) {
 
-            $filter = json_decode($item->filter,true);
+            $filter = json_decode($item->filter, true);
 
             $response['data'][] = [
                 'id'      =>  $item->id,
@@ -55,10 +54,9 @@ class InternetPackFilterService
 
         $response['data'] = $sorted->values()->all();
         return $response;
-
     }
 
-    public function addFilter(Request $request, $type,$unit)
+    public function addFilter(Request $request, $type, $unit)
     {
         $lower = $request->lower;
         $upper = $request->upper;
@@ -85,12 +83,11 @@ class InternetPackFilterService
                 'message' => $e->getMessage()
             ], 500);
         }
-
     }
 
     public function delFilter(Request $request)
     {
-        try{
+        try {
             $filter = InternetPackFilter::find($request->id);
             $filter->delete();
             $response = [
@@ -99,8 +96,7 @@ class InternetPackFilterService
             ];
 
             return response()->json($response, 200);
-
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'status' => ' FAILED',
                 'message' => $e->getMessage()
@@ -113,16 +109,15 @@ class InternetPackFilterService
     {
         DB::beginTransaction();
 
-        try{
-
+        try {
             // first delete previous data and save new data. Done with transaction.if fails revert operation
             DB::table('internet_pack_filters')
-                ->where('offer_filter_type_id',$this->filter_types['sort'])
+                ->where('offer_filter_type_id', $this->filter_types['sort'])
                 ->delete();
 
             //save
             $filters = $request->filters;
-            foreach ($filters as $filter){
+            foreach ($filters as $filter) {
                 InternetPackFilter::create([
                     'offer_filter_type_id' => $this->filter_types['sort'],
                     'filter' => json_encode([
@@ -140,7 +135,6 @@ class InternetPackFilterService
 
             return response()->json($response, 200);
         } catch (\Exception $e) {
-
             DB::rollBack();
 
             return response()->json([
