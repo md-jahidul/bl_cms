@@ -106,7 +106,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('/partner-offer-home/sortable', 'AssetLite\PartnerOfferController@partnerOfferSortable');
 
     Route::get('partner-offers-home', 'AssetLite\PartnerOfferController@partnerOffersHome')->name('partner-offer-home');
-    Route::get('/trending-home', 'AssetLite\ProductController@index')->name('trending-home');
+    Route::get('/trending-home', 'AssetLite\ProductController@trendingOfferHome')->name('trending-home');
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 
 

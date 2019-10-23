@@ -25,6 +25,8 @@ class PartnerOfferController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $parentId
+     * @param $partnerName
      * @return \Illuminate\Http\Response
      */
     public function index($parentId, $partnerName)
@@ -35,8 +37,8 @@ class PartnerOfferController extends Controller
 
     public function partnerOffersHome()
     {
-        $homePartnerOffers = $this->partnerOfferService->itemList(null,true);
-        return view('admin.partner-offer.home', compact('homePartnerOffers' ));
+        $homePartnerOffers = $this->partnerOfferService->itemList(null, true);
+        return view('admin.partner-offer.home', compact('homePartnerOffers'));
     }
 
     /**
@@ -104,7 +106,7 @@ class PartnerOfferController extends Controller
     {
         $response = $this->partnerOfferService->updatePartnerOffer($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect( isset($redirect) ? $redirect : "partner-offer/$partnerId/$partnerName");
+        return redirect(isset($redirect) ? $redirect : "partner-offer/$partnerId/$partnerName");
     }
 
     /**
