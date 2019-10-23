@@ -3,10 +3,31 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Services\AppVersionService;
 use Illuminate\Http\Request;
 
+/**
+ * Class AppVersionController
+ * @package App\Http\Controllers\CMS
+ */
 class AppVersionController extends Controller
 {
+
+    /**
+     * @var AppVersionService
+     */
+    protected $appVersionService;
+
+
+    /**
+     * AppVersionController constructor.
+     * @param AppVersionService $appVersionService
+     */
+    public function __construct(AppVersionService $appVersionService)
+    {
+        $this->appVersionService = $appVersionService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +35,9 @@ class AppVersionController extends Controller
      */
     public function index()
     {
-        dd('test');
+        $versions = $this->appVersionService->getVersionInfo();
+
+        return view('admin.app-version.index')->with('versions', $versions);
     }
 
     /**
@@ -24,7 +47,7 @@ class AppVersionController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.app-version.create');
     }
 
     /**

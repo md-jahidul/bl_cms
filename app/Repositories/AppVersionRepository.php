@@ -8,7 +8,7 @@ use App\Models\AppVersion;
  * Class AppVersionRepository
  * @package App\Repositories
  */
-class AppVersionRepository
+class AppVersionRepository extends BaseRepository
 {
     /**
      * @var Banner

@@ -22,5 +22,11 @@ class AppVersionService
     }
 
 
+    public function getVersionInfo()
+    {
+        return $this->appVersionRepository->findAll();
+    }
+
+
 
 }
