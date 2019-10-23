@@ -17,6 +17,7 @@ class CreateAppVersionsTable extends Migration
             $table->bigIncrements('id');
             $table->enum('platform', ['ios','android','windows', 'others']);
             $table->string('current_version');
+            $table->boolean('force_update')->default(false);
             $table->timestamps();
         });
     }
