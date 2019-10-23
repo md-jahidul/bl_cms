@@ -8,5 +8,13 @@ class FaqQuestion extends Model
 {
     protected $guarded = ['id'];
 
+    public function scopeApp($builder)
+    {
+        return $builder->where('platform', '=', 'app');
+    }
 
+    public function category()
+    {
+        return $this->belongsTo(FaqCategory::class, 'category_id');
+    }
 }
