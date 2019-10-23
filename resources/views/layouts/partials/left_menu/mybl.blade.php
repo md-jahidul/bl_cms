@@ -99,13 +99,13 @@
             <span class="menu-title" data-i18n="nav.templates.main">Filters</span></a>
         <ul class="menu-content">
 
-            <li class="{{is_active_url('internet-pack/')}} {{is_active_url('internet-pack/filter/create')}}">
+            <li class=" {{is_active_url('internet-pack/filter/create')}}">
                 <a class="menu-item" href="{{ route('internet-pack.filter.create') }} "
                    data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-flask"></i> Internet Pack Filter
                 </a>
             </li>
-            <li class="{{is_active_url('mixed-bundle-offer/')}} {{is_active_url('mixed-bundle-offer/filter/create')}}">
+            <li class="{{is_active_url('mixed-bundle-offer/filter/create')}}">
                 <a class="menu-item" href="{{ route('mixed-bundle-offer.filter.create') }} "
                    data-i18n="nav.templates.vert.classic_menu">
                     <i class="la la-flask"></i> Mixed Bundle Filter
@@ -123,22 +123,13 @@
         <li class=" nav-item"><a href="#"><i class="la la-question"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">FAQ</span></a>
             <ul class="menu-content">
-                <li class="{{is_active_url('faq/')}} {{is_active_url('faq/category')}}">
+                <li class=" {{is_active_url('faq/category')}}">
                     <a class="menu-item" href="{{ route('faq.category.index') }} "
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-list"></i> Category List
                     </a>
                 </li>
-            </ul>
-            <ul class="menu-content">
-{{--                <li class="{{is_active_url('faq/')}} {{is_active_url('faq/questions/create')}}">
-                    <a class="menu-item" href="{{ route('faq.questions.create') }} "
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-list"></i> Create Question
-                    </a>
-                </li>--}}
-
-                <li class="{{is_active_url('faq/')}} {{is_active_url('faq/questions')}}">
+                <li class="{{is_active_url('faq/questions')}}">
                     <a class="menu-item" href="{{ route('faq.questions.index') }} "
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-list"></i> Question List
