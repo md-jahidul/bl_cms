@@ -9,12 +9,12 @@ class CreateProductsTable extends Migration
     /**
      * Run the migrations.
      *
+     *
      * @return void
      */
     public function up()
     {
-        Schema::create(
-            'products', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->string('code');
                 $table->string('name');
@@ -22,10 +22,11 @@ class CreateProductsTable extends Migration
                 $table->integer('price_tk')->nullable();
                 $table->integer('price_vat_included')->default(0);
                 $table->integer('sms_volume')->nullable();
-                $table->integer('min_volume')->nullable();;
-                $table->integer('internet_volume_mb')->nullable();;
-                $table->string('bonus')->nullable();;
+                $table->integer('min_volume')->nullable();
+                $table->integer('internet_volume_mb')->nullable();
+                $table->string('bonus')->nullable();
                 $table->string('is_recharge')->default('no');
+                $table->integer('is_home')->default(0);
                 $table->string('validity_days')->nullable();
                 $table->string('ussd')->nullable();
                 $table->string('point')->nullable();
@@ -55,8 +56,7 @@ class CreateProductsTable extends Migration
                     ->onUpdate('cascade');
 
                 $table->timestamps();
-            }
-        );
+        });
     }
 
     /**
