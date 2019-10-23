@@ -12,6 +12,8 @@
     </li>
 @endsection
 
+dd($version);
+
 @section('content')
 
     <div class="card">
@@ -24,7 +26,7 @@
                 @endif
             </h1>
         </div>
-        
+
         <!-- /.card-header -->
         <div class="card-body">
 
@@ -44,16 +46,23 @@
             <div class="row">
 
                     <div class="col-6">
-
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="name" class="required">Select Platform:</label>
-                                <select class="browser-default custom-select">
+                                <select name="platform" class="browser-default custom-select">
                                     <option selected>Select Platform</option>
-                                    <option value="ios">ios</option>
-                                    <option value="android">android</option>
-                                    <option value="windows">windows</option>
-                                    <option value="others">others</option>
+                                    @if(isset($version))
+                                        <option value="ios" @if($version->platform == "ios") selected="selected" @endif>ios</option>
+                                        <option value="android" @if($version->platform == "android") selected="selected" @endif>android</option>
+                                        <option value="windows" @if($version->platform == "windows") selected="selected" @endif>windows</option>
+                                        <option value="others"  @if($version->platform == "others") selected="selected" @endif>others</option>
+                                    @else
+                                        <option value="ios">ios</option>
+                                        <option value="android">android</option>
+                                        <option value="windows">windows</option>
+                                        <option value="others">others</option>
+                                    @endif
+
                                 </select>
                             </div>
                         </div>
@@ -61,7 +70,9 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="code" class="required">Version:</label>
-                                <input required data-validation-required-message="Version is required" id="code" value="@if(isset($version)){{$version->code}} @elseif(old("code")) {{old("code")}} @endif" type="text" name="code" class="form-control @error('code') is-invalid @enderror" placeholder="Enter Banner code..">
+                                <input required data-validation-required-message="Version is required"  name="current_version"
+                                       value="@if(isset($version)){{$version->current_version}} @elseif(old("current_version")) {{old("current_version")}} @endif"
+                                       type="text"  class="form-control @error('code') is-invalid @enderror" placeholder="Enter app version..">
                                 <small class="text-danger"> @error('code') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
@@ -71,10 +82,15 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="name" class="required">Force Update:</label>
-                                <select class="browser-default custom-select">
+                                <select name="force_update" class="browser-default custom-select">
                                     <option selected>Select force Update</option>
-                                    <option value="true">true</option>
-                                    <option value="false">false</option>
+                                    @if(isset($version))
+                                        <option value=1 @if($version->force_update == 1) selected="selected" @endif>true</option>
+                                        <option value=0 @if($version->force_update == 0) selected="selected" @endif>false</option>
+                                    @else
+                                        <option value=1>true</option>
+                                        <option value=0>false</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>

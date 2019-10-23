@@ -22,7 +22,10 @@ class AppVersionService
     }
 
 
-
+    /**
+     * Version Info
+     * @return mixed
+     */
     public function getVersionInfo()
     {
         return $this->appVersionRepository->findAll();
@@ -36,6 +39,27 @@ class AppVersionService
     public function createAppVersion($request)
     {
         return $this->appVersionRepository->create($request->all());
+    }
+
+    /**
+     * Updating the banner
+     * @param $data
+     * @return Response
+     */
+    public function updateAppVersion($data, $version)
+    {
+        return  $version->update($data->all());
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @throws \Exception
+     */
+    public function deleteAppVersion($id)
+    {
+        $banner = $this->findOne($id);
+        return $banner->delete();
     }
 
 

@@ -25,17 +25,24 @@
                             <th width='10%'>ID</th>
                             <th width='20%'>Platform</th>
                             <th width='20%'>Version</th>
-                            <th width='30%'>Action</th>
+                            <th width='20%'>Force Update</th>
+                            <th width='20%'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($versions as $version)
+
+                            @if($version->force_update == 1)
+                                @php $force_update = "true"; @endphp
+                            @else
+                                @php $force_update = "false"; @endphp
+                            @endif
                             <tr>
                                 <td width='10%'>{{$version->id}}</td>
                                 <td width='20%'>{{$version->platform}}</td>
                                 <td width='20%'>{{$version->current_version}}</td>
-
-                                <td width='30%'>
+                                <td width='20%'>{{ $force_update}}</td>
+                                <td width='20%'>
                                     <div class="row justify-content-md-center no-gutters">
                                         <div class="col-md-3">
                                             <a role="button" href="{{route('app-version.edit',$version->id)}}" class="btn btn-outline-success">

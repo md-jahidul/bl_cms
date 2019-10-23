@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Models\AppVersion;
 use App\Services\AppVersionService;
 use Illuminate\Http\Request;
 
@@ -58,8 +59,16 @@ class AppVersionController extends Controller
      */
     public function store(Request $request)
     {
-        session()->flash('message', $this->appVersionService->createAppVersion($request)->getContent());
-        return redirect(route('app-version.index'));
+        $response =  $this->appVersionService->createAppVersion($request);
+
+        if ($response) {
+            session()->flash('success', "app version created successfully");
+            return redirect(route('app-version.index'));
+        }
+
+        session()->flash('message', "Failed! Please try again");
+
+
     }
 
     /**
@@ -76,34 +85,49 @@ class AppVersionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param AppVersion $app_version
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(AppVersion $app_version)
     {
-        //
+        return view('admin.app-version.create')->with('version', $app_version);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @param AppVersion $app_version
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, AppVersion $app_version)
     {
-        //
+        $response = $this->appVersionService->updateAppVersion($request, $app_version);
+
+        if ($response) {
+            session()->flash('success', "Updated successfully");
+            return redirect(route('app-version.index'));
+        }
+
+        session()->flash('message', "Failed! Please try again");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        //
+        $response = $this->appVersionService->deleteAppVersion($id);
+
+        if ($response) {
+            session()->flash('error', "Deleted successfully");
+            return redirect(route('app-version.index'));
+        }
+
+        session()->flash('message', "Failed! Please try again");
     }
 }
