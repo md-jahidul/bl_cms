@@ -101,7 +101,8 @@ class PermissionsController extends Controller
         $actions = $request->input('actions');
         $data = [];
 
-        if(empty($actions)) {
+        if(empty($actions))
+        {
             Session::flash('message', 'You should select at least one permission!');
             return redirect(Config("authorization.route-prefix") . '/permissions');
         }
