@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -8,16 +9,14 @@
 
 namespace App\Services;
 
-
 use App\Repositories\NotificationCategoryRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
-
 class NotificationCategoryService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -39,7 +38,7 @@ class NotificationCategoryService
      */
     public function storeNotificationCategory($data)
     {
-        $data['slug'] =  str_replace(" ","_",strtolower($data['name']));
+        $data['slug'] =  str_replace(" ", "_", strtolower($data['name']));
         //dd($data);
         $this->save($data);
         return new Response("Notification Category has been successfully created");
@@ -53,10 +52,9 @@ class NotificationCategoryService
     public function updateNotificationCategory($data, $id)
     {
         $notificationCategory = $this->findOne($id);
-        $data['slug'] =  str_replace(" ","_",strtolower($data['name']));
+        $data['slug'] =  str_replace(" ", "_", strtolower($data['name']));
         $notificationCategory->update($data);
         return Response('Notification Category has been successfully updated');
-        
     }
 
     /**
@@ -70,5 +68,4 @@ class NotificationCategoryService
         $notificationCategory->delete();
         return Response('Notification Category has been successfully deleted');
     }
-
 }
