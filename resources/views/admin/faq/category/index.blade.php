@@ -280,8 +280,6 @@
                                 showConfirmButton: false
                             });
 
-                            $('#add_form')[0].reset();
-
                             $('#category_list_table').DataTable().ajax.reload();
                         } else {
                             swal.fire({
@@ -289,9 +287,11 @@
                                 type: 'error',
                             });
                         }
+                        $('#add_form')[0].reset();
 
                     },
                     error: function (data) {
+                        $('#add_form')[0].reset();
                         swal.fire({
                             title: 'Update Failed. Please, Try again later',
                             type: 'error',
