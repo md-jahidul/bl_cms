@@ -150,6 +150,7 @@
                         render: function (data, type, row) {
                             return `<div class="btn-group" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-sm btn-icon btn-outline-success edit" data-title=" ` + row.title + `" data-slug=" ` + row.slug + `"><i class="la la-edit"></i></button>
+                             <a href="/faq/questions/create/` + row.id + ` "class="btn btn-sm btn-icon btn-outline-primary"><i class="la la-plus"></i></a>
                             <button type="button" class="btn btn-sm btn-icon btn-outline-danger del" data-total="` + row.questions_count + `"  data-slug="` + row.slug + `"><i class="la la-remove"></i></button>
                           </div>`
                         }
@@ -280,8 +281,6 @@
                                 showConfirmButton: false
                             });
 
-                            $('#add_form')[0].reset();
-
                             $('#category_list_table').DataTable().ajax.reload();
                         } else {
                             swal.fire({
@@ -289,9 +288,11 @@
                                 type: 'error',
                             });
                         }
+                        $('#add_form')[0].reset();
 
                     },
                     error: function (data) {
+                        $('#add_form')[0].reset();
                         swal.fire({
                             title: 'Update Failed. Please, Try again later',
                             type: 'error',
