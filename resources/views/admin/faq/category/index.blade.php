@@ -71,7 +71,7 @@
                             <div class="modal-body">
                                 <label>Title </label>
                                 <div class="form-group">
-                                    <input type="text" id="add_title_field" class="form-control" name="title">
+                                    <input type="text" id="add_title_field" class="form-control" name="title" required>
                                     <input id="add_category"
                                            class="btn btn-outline-primary btn-sm pull-right mt-2 mb-2" value="Add">
                                 </div>
