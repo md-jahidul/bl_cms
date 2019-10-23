@@ -48,7 +48,7 @@ class FaqCategoryController extends Controller
                 'message' => 'This title is taken'
             ], 200);
         }
-        return $this->service->store($request,'app');
+        return $this->service->store($request, 'app');
     }
 
     public function destroy(Request $request)
@@ -63,7 +63,7 @@ class FaqCategoryController extends Controller
                 'message' => 'Invalid Category Slug'
             ], 200);
         }
-        return $this->service->destroy($request,'app');
+        return $this->service->destroy($request, 'app');
     }
 
 
