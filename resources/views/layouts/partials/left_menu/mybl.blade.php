@@ -109,6 +109,18 @@
                 <span class="menu-title" >Terms and Conditions</span></a>
         </li>
 
+        <li class=" nav-item"><a href="#"><i class="la la-question"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">FAQ</span></a>
+            <ul class="menu-content">
+                <li class="{{is_active_url('faq/')}} {{is_active_url('faq/category')}}">
+                    <a class="menu-item" href="{{ route('faq.category.index') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-list"></i> Category List
+                    </a>
+                </li>
+            </ul>
+        </li>
+
     @endif
     {{--------------------------------------------------------------------------------------------------------------------}}
     {{---------------------------------------------------------My-BL App End----------------------------------------------}}
