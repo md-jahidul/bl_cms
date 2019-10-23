@@ -141,7 +141,7 @@ Route::group(['middleware' => ['appAdmin']], function () {
 
     // faq questions
     Route::get('faq/questions', 'CMS\FaqQuestionsController@index')->name('faq.questions.index');
-    Route::get('faq/questions/create', 'CMS\FaqQuestionsController@create')->name('faq.questions.create');
+    Route::get('faq/questions/create/{id?}', 'CMS\FaqQuestionsController@create')->name('faq.questions.create');
     Route::post('faq/questions/store', 'CMS\FaqQuestionsController@store')->name('faq.questions.store');
     Route::get('faq/questions/{id}', 'CMS\FaqQuestionsController@show')->name('faq.questions.show');
     Route::patch('faq/questions/{id}/update', 'CMS\FaqQuestionsController@update')->name('faq.questions.update');

@@ -31,11 +31,15 @@ class FaqQuestionsController extends Controller
         return view('admin.faq.question.index', compact('category'));
     }
 
-    public function create()
+    public function create($category = null)
     {
         $action = route('faq.questions.store');
         $edit = false;
-        $selected_category = null;
+        $selected_category = $category;
+
+        if ($category) {
+            FaqCategory::findOrFail($category);
+        }
 
         $category = FaqCategory::app()->orderBy('title')->get()->pluck('title', 'id');
 

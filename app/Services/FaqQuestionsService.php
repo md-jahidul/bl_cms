@@ -13,6 +13,7 @@ use App\Models\FaqCategory;
 use App\Models\FaqQuestion;
 use App\Repositories\NotificationCategoryRepository;
 use App\Traits\CrudTrait;
+use http\Url;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -37,7 +38,7 @@ class FaqQuestionsService
             ]);
 
             session()->flash('success', 'New FAQ Question Added Successfully');
-            return back();
+            return redirect()->route('faq.questions.create');
         } catch (\Exception $e) {
             session()->flash('error', 'Internal Server Error. Try later.');
             return back();
