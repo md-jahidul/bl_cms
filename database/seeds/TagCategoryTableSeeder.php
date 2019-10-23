@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\TagCategory;
 
 class TagCategoryTableSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class TagCategoryTableSeeder extends Seeder
     {
         $tags = ['Best Offer','Hot Offer','Eid Offer'];
         foreach ($tags as $tag) {
-            factory(OfferCategory::class)->create(
+            factory(TagCategory::class)->create(
                 [
                     'name' => $tag,
                     'alias' => strtolower(str_replace(' ', '_', $tag))
