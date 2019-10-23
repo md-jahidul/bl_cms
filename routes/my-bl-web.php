@@ -35,16 +35,20 @@ Route::group(['middleware' => ['appAdmin']], function () {
 
 
     // Banner
-    route::resource('banner','CMS\BannerController');
+    Route::resource('banner','CMS\BannerController');
     Route::get('banner/destroy/{id}','CMS\BannerController@destroy');
 
     // welcomeInfo
     route::resource('welcomeInfo','CMS\WelcomeInfoController');
 
     //settings
-    route::resource('setting','CMS\SettingController');
+    Route::resource('setting','CMS\SettingController');
     Route::get('setting_limit/store','CMS\SettingController@Addlimit');
     Route::get('setting/destroy/{id}','CMS\SettingController@destroy')->name('setting.destroy');
+
+
+    //App Version
+    Route::resource('app-version', 'CMS\AppVersionController');
 
 
     //------ Slider -----------//
