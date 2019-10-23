@@ -114,6 +114,7 @@
 
         let category_slug;
         let category_title;
+
         $(function () {
 
             $("#category_list_table").dataTable({
@@ -148,9 +149,10 @@
                         className: 'filter_data',
                         width: '150px',
                         render: function (data, type, row) {
+                            let add_question_url = "{{ URL('faq/questions/create/') }}" +"/" + row.id;
                             return `<div class="btn-group" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-sm btn-icon btn-outline-success edit" data-title=" ` + row.title + `" data-slug=" ` + row.slug + `"><i class="la la-edit"></i></button>
-                             <a href="/faq/questions/create/` + row.id + ` "class="btn btn-sm btn-icon btn-outline-primary"><i class="la la-plus"></i></a>
+                             <a href="` + add_question_url + ` "class="btn btn-sm btn-icon btn-outline-primary"><i class="la la-plus"></i></a>
                             <button type="button" class="btn btn-sm btn-icon btn-outline-danger del" data-total="` + row.questions_count + `"  data-slug="` + row.slug + `"><i class="la la-remove"></i></button>
                           </div>`
                         }

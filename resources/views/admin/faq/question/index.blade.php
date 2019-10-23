@@ -133,8 +133,9 @@
                         className: 'filter_data',
                         width: '150px',
                         render: function (data, type, row) {
+                            let detail_question_url = "{{ URL('faq/questions/') }}" +"/" + row.id;
                             return `<div class="btn-group" role="group" aria-label="Basic example">
-                            <a href="/faq/questions/` + row.id + ` "class="btn btn-sm btn-icon btn-outline-success edit"><i class="la la-eye"></i></a>
+                            <a href=" ` + detail_question_url + ` "class="btn btn-sm btn-icon btn-outline-success edit"><i class="la la-eye"></i></a>
                             <button type="button" data-id ="` + row.id + ` " class="btn btn-sm btn-icon btn-outline-danger del" ><i class="la la-remove"></i></button>
                           </div>`
                         }
