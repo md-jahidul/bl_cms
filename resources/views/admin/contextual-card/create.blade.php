@@ -47,8 +47,6 @@
                                     </div>
                                 </div>
 
-                                {!! Helper::shout('this is how to use autoloading correctly!!') !!}
-
                                 <div class="col-md-12">
                                     <div class="form-group {{ $errors->has('description') ? ' error' : '' }}">
                                         <label for="description" class="required">Description:</label>
@@ -116,55 +114,41 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group {{ $errors->has('first_action') ? ' error' : '' }}">
-                                        <label for="first_action" class="required">First Action:</label>
-                                        <input  
-                                        required
-                                        maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
-                                        data-validation-required-message="First Action is required" 
-                                        data-validation-regex-message="First Action must start with alphabets"
-                                        data-validation-maxlength-message = "First Action can not be more then 200 Characters"   
-                                        type="text" value="{{ old("first_action") ? old("first_action") : '' }}" value="" id="first_action" class="form-control @error('first_action') is-invalid @enderror" placeholder="first action.." name="first_action">
-                                        <div class="help-block">
-                                            <small class="text-info">
-                                                First Action can not be more then 200 Characters
-                                            </small>
-                                        </div>
-                                        @error('first_action')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                @php
+                                   $actionList = Helper::contextualCardActionList();
+                                @endphp
+
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="name" class="required">First Action:</label>
+                                        <select name="first_action" class="browser-default custom-select">
+                                            <option selected>Select First Action</option>
+                                            @foreach ($actionList as $key => $value)
+                                                <option value="{{ $key }}">
+                                                    {{ $value }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="form-group {{ $errors->has('second_action') ? ' error' : '' }}">
-                                        <label for="second_action" class="required">Second Action:</label>
-                                        <input  
-                                        
-                                        required
-                                        maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
-                                        data-validation-required-message="Second Action is required" 
-                                        data-validation-regex-message="Second Action must start with alphabets"
-                                        data-validation-maxlength-message = "Second Action can not be more then 200 Characters"
-                                        
-                                        value="{{ old("second_action") ? old("second_action") : '' }}" value="" id="second_action" class="form-control @error('second_action') is-invalid @enderror" placeholder="second action.." name="second_action">
-                                        <div class="help-block">
-                                            <small class="text-info">
-                                                Second Action can not be more then 200 Characters
-                                            </small>
-                                        </div>
-                                        @error('second_action')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="name" class="required">Second Action:</label>
+                                        <select name="second_action" class="browser-default custom-select">
+                                            <option selected>Select Second Action</option>
+                                            @foreach ($actionList as $key => $value)
+                                                <option value="{{ $key }}">
+                                                    {{ $value }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
+
+
                                 <div class="col-md-12 mb-1"> 
                                     <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt="" srcset="">
                                     <input type="hidden" value="no" name="value_exist">
