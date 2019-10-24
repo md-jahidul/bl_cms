@@ -30,8 +30,6 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('authorize/permissions', 'AssetLite\PermissionsController@update');
     Route::post('authorize/permissions/getSelectedRoutes', 'AssetLite\PermissionsController@getSelectedRoutes');
 
-    // SIM CATEGORY PAGES ====================================
-    Route::resource('sim-category/', 'AssetLite\SimCategoryController')->except(['show']);
 
     //Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 
@@ -90,6 +88,21 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'AssetLite\SliderImageController@destroy');
     Route::get('/slider-image-sortable', 'AssetLite\SliderImageController@sliderImageSortable');
 
+
+
+    // OFFER CATEGORY PAGES ====================================
+    Route::resource('tag-category', 'AssetLite\TagCategoryController')->except(['show', 'destroy']);
+    Route::get('tag-category/destroy/{id}', 'AssetLite\TagCategoryController@destroy');
+    Route::resource('sim-category/', 'AssetLite\SimCategoryController')->except(['show']);
+
+
+    // OFFERS PAGES ====================================
+    Route::get('offers/{type}', 'AssetLite\ProductController@index')->name('product.list');
+    Route::get('offers/{type}/{id}/create', 'AssetLite\ProductController@create')->name('product.create');
+    Route::get('offers/{type}/{id}/store', 'AssetLite\ProductController@create')->name('product.store');
+
+
+
     // PARTNERS PAGES ====================================
     Route::resource('partners', 'AssetLite\PartnerController')->except(['show', 'destroy']);
     Route::get('partner/destroy/{id}', 'AssetLite\PartnerController@destroy');
@@ -119,29 +132,11 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('update-component-status');
     // Route::get('dynamic-pages', 'AssetLite\FixedPageController@index');
 
-
-
     Route::resource('questions', 'AssetLite\QuestionController');
 //     Route::resource('prize', 'PrizeController');
-//     Route::resource('tags','TagController');
+//     Route::resource('tags', 'AssetLite\TagController');
 //     Route::resource('campaigns','AssetLite\CampaignController');
 //     Route::resource('prizes','AssetLite\PrizeController');
 
-    //Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
-
     Route::get('/home', 'AssetLite\HomeController@index')->name('home');
 });
-
-
-
-// Route::group([
-//         'prefix' => Config("authorization.route-prefix"),
-//         'namespace' => 'Pondit\Authorize\Controllers',
-//         'middleware' => ['web', 'auth']],
-//         function() {
-
-//         Route::resource('roles', 'RolesController');
-//         Route::get('/permissions', 'PermissionsController@index');
-//         Route::post('/permissions', 'PermissionsController@update');
-//         Route::post('/permissions/getSelectedRoutes', 'PermissionsController@getSelectedRoutes');
-// });

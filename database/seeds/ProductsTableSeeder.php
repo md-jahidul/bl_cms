@@ -8,37 +8,37 @@ use App\Models\Product;
 class ProductsTableSeeder extends Seeder
 {
 
-    public function getOfferInfo($name){
-        $obj = new stdClass;
+    public function getOfferInfo($name)
+    {
+        $obj = new stdClass();
         
         switch ($name) {
             case 'internet':
                 $obj->sms_volume = rand(50, 500);
-                break;        
+                break;
                 
             case 'voice':
                 $obj->min_volume = rand(50, 500);
-                break;    
+                break;
                 
             case 'packages':
                 //$obj->min_volume = rand(50, 500);
-            break;
+                break;
             
             case 'bundles':
                 $obj->sms_volume = rand(50, 500);
                 $obj->min_volume = rand(50, 500);
                 $obj->internet_volume_mb = rand(100, 12000);
-            break;
+                break;
             
             case 'others':
-            break;
+                break;
 
             case 'startup':
-            break;
+                break;
 
             case 'bussiness':
-            break;
-
+                break;
         }
 
         return $obj;
@@ -51,11 +51,11 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
-        // Prepaid, 
+        // Prepaid,
         
         
-        /* 
-        
+        /*
+
         Postpaid
                 $table->string('code');
                 $table->string('name');
@@ -65,7 +65,7 @@ class ProductsTableSeeder extends Seeder
                 $table->unsignedBigInteger('offer_category_id');
 
 
-        Prepaid 
+        Prepaid
                 $table->string('code');
                 $table->string('name');
                 $table->integer('price_tk')->nullable();
@@ -81,22 +81,21 @@ class ProductsTableSeeder extends Seeder
 
         $countHomePageOffer = 0;
 
-        for ($i=0; $i < 20; $i++) { 
-
+        for ($i = 0; $i < 20; $i++) {
             $offer = OfferCategory::whereIn('alias', ['internet','pacakages','others'])->inRandomOrder()->first();
             $offerInfo = $this->getOfferInfo($offer->alias);
 
-            $showInHome = rand(0,6) ? 1 : 0;
+            $showInHome = rand(0, 6) ? 1 : 0;
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
 
             factory(Product::class)->create(
                 [
                     'code' => 'ABC' . $i,
                     'name' => 'ABC' . $i,
-                    'price_tk' => rand(10,100),
+                    'price_tk' => rand(10, 100),
                     'internet_volume_mb' =>  $offerInfo->internet_volume_mb ?? null,
-                    'ussd' => '*' . rand(1000,9999) . '*' . '1#',
-                    'sim_category_id' => SimCategory::where('alias','postpaid')->first('id'),
+                    'ussd' => '*' . rand(1000, 9999) . '*' . '1#',
+                    'sim_category_id' => SimCategory::where('alias', 'postpaid')->first('id'),
                     'offer_category_id' => $offer->id,
                     'is_home' => $showInHome,
                     'display_order' => $displayOrder
@@ -104,32 +103,29 @@ class ProductsTableSeeder extends Seeder
             );
         }
 
-        for ($i=0; $i < 30; $i++) { 
-           
+        for ($i = 0; $i < 30; $i++) {
             $offer = OfferCategory::inRandomOrder()->first();
             $offerInfo = $this->getOfferInfo($offer->alias);
 
-            $showInHome = rand(0,6) ? 1 : 0;
+            $showInHome = rand(0, 6) ? 1 : 0;
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
 
             factory(Product::class)->create(
                 [
                     'code' => 'ABC' . $i,
                     'name' => 'ABC' . $i,
-                    'price_tk' => rand(10,100),
+                    'price_tk' => rand(10, 100),
                     'sms_volume' => $offerInfo->sms_volume ?? null,
                     'min_volume' => $offerInfo->min_volume ?? null,
                     'internet_volume_mb' =>  $offerInfo->internet_volume_mb ?? null,
                     'validity_days' => rand(1, 10),
-                    'ussd' => '*' . rand(1000,9999) . '*' . '1#',
-                    'sim_category_id' => SimCategory::where('alias','prepaid')->first('id'),
+                    'ussd' => '*' . rand(1000, 9999) . '*' . '1#',
+                    'sim_category_id' => SimCategory::where('alias', 'prepaid')->first('id'),
                     'offer_category_id' => $offer->id,
                     'is_home' => $showInHome,
                     'display_order' => $displayOrder
                 ]
             );
         }
-
-
     }
 }

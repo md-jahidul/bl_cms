@@ -99,17 +99,47 @@
             </li>
         @endif
 
-        @if( auth()->user()->can_view('Partner') )
+        @if( auth()->user()->can_view('Product') )
+            <li class="nav-item"><a href="#"><i class="la la-gift"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Offer Categories</span></a>
+                <ul class="menu-content">
+
+                    <li class="{{ is_active_url('tag-category') }}">
+                        <a class="menu-item" href="{{ url('tag-category') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-tags"></i> Tag</a>
+                    </li>
+{{--                    <li class="{{ is_active_url('offers/postpaid') }}">--}}
+{{--                        <a class="menu-item" href="{{ route('product.list','postpaid') }}" data-i18n="nav.templates.vert.classic_menu"><i--}}
+{{--                                class="la la-magic"></i> Sim</a>--}}
+{{--                    </li>--}}
+
+                </ul>
+            </li>
+        @endif
+
+
+        @if( auth()->user()->can_view('Product') )
             <li class="nav-item"><a href="#"><i class="la la-gift"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Offer Management</span></a>
                 <ul class="menu-content">
 
-                    <li class="{{ is_active_url('partners') . is_active_url('partners/create')}}">
-                        <a class="menu-item" href="{{ url('partners') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                class="la la-magic"></i> Partner and Offers</a>
+                    <li class="{{ is_active_url('offers/prepaid') }}">
+                        <a class="menu-item" href="{{ route('product.list','prepaid') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-magic"></i> Prepaid</a>
+                    </li>
+                    <li class="{{ is_active_url('offers/postpaid') }}">
+                        <a class="menu-item" href="{{ route('product.list','postpaid') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-magic"></i> Postpaid</a>
                     </li>
 
                 </ul>
+            </li>
+        @endif
+
+        @if( auth()->user()->can_view('Partner') )
+            <li class="{{ is_active_url('partners') . is_active_url('partners/create')}}">
+                <a class="menu-item" href="{{ url('partners') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-magic"></i> Partner and Offers</a>
             </li>
         @endif
 
