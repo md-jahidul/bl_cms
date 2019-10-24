@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Terms and Conditions')
-@section('card_name', 'Terms and Conditions')
+@section('title', 'Privacy and Policy')
+@section('card_name', 'Privacy and Policy')
 
 @section('content')
     <section>
@@ -13,16 +13,16 @@
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                                Terms and Conditions Field is required. You cannot set blank.
+                                Privacy and Policy Field is required. You cannot set blank.
                             </div>
                         @endif
-                        <form role="form" action="{{ route('terms-conditions.store') }}" method="POST">
+                        <form role="form" action="{{ route('privacy-policy.store') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="content-header-right col-md-12">
                                     <div class="dropdown float-md-right">
                                         <button type="submit" class="btn btn-primary btn-sm pull-right">
-                                            @if($terms_conditions)
+                                            @if($privacy_policy)
                                                 Update
                                             @else
                                                 Save
@@ -31,10 +31,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <label for="title_en" class="required">Terms and Conditions</label>
-                                    <textarea id="terms-conditions" name="terms_conditions" required>
-                                        @if($terms_conditions)
-                                            {{ $terms_conditions->terms_conditions }}
+                                    <label for="title_en" class="required">Privacy and Policy</label>
+                                    <textarea id="privacy-policy" name="privacy_policy" required>
+                                        @if($privacy_policy)
+                                            {{ $privacy_policy->privacy_policy }}
                                         @endif
                                     </textarea>
                                 </div>
@@ -56,7 +56,7 @@
     <script>
         $(function () {
             tinymce.init({
-                selector: 'textarea#terms-conditions',
+                selector: 'textarea#privacy-policy',
                 branding: false,
                 menubar: false,
                 height: 400,
