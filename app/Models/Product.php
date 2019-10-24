@@ -11,5 +11,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    public function sim_category()
+    {
+        return $this->belongsTo(SimCategory::class);
+    }
 
+
+    public function scopeCategory($query,$type){
+        return $query->whereHas('sim_category', function($q) use ($type){
+            $q->where('alias', $type);
+        });
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\SimCategory;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -13,9 +14,12 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($type)
     {
-//        return view('admin.product.')
+        $simTypeId = Product::category($type)->first()->sim_category_id;
+        $products = Product::category($type)->paginate(15);
+
+        return view('admin.product.index', compact('products', 'type', 'simTypeId'));
     }
 
     public function trendingOfferHome()
@@ -27,11 +31,13 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param $type
+     * @param $simTypeId
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($type, $simTypeId)
     {
-        //
+        return view('admin.product.create', compact('type', 'simTypeId'));
     }
 
     /**
@@ -42,7 +48,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

@@ -11,7 +11,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Slider;
 //use App\Models\SliderComponentTypes;
 use App\Services\MyblSliderService;
-
 use App\Http\Requests\MyblSliderRequest;
 use Illuminate\Http\Response;
 
@@ -49,7 +48,7 @@ class MyblSliderController extends Controller
     public function index()
     {
         $sliders = $this->sliderService->getAppSlider();
-        return view('admin.myblslider.index',compact('sliders'));
+        return view('admin.myblslider.index', compact('sliders'));
     }
 
     /**
@@ -60,8 +59,9 @@ class MyblSliderController extends Controller
     public function create()
     {
         return view('admin.myblslider.create')
-                ->with('sliders',$this->sliderService->findAll())
-                ->with('slider_types',$this->sliderTypeService->findAll());;
+                ->with('sliders', $this->sliderService->findAll())
+                ->with('slider_types', $this->sliderTypeService->findAll());
+        ;
     }
 
     /**
@@ -73,7 +73,7 @@ class MyblSliderController extends Controller
     public function store(MyblSliderRequest $request)
     {
 
-        session()->flash('message',$this->sliderService->storeSlider($request->all())->getContent());
+        session()->flash('message', $this->sliderService->storeSlider($request->all())->getContent());
         return redirect(route('myblslider.index'));
     }
 
@@ -98,10 +98,9 @@ class MyblSliderController extends Controller
     {
 
         return view('admin.myblslider.create')
-                ->with('sliders',$this->sliderService->findAll())
-                ->with('slider_types',$this->sliderTypeService->findAll())
-                ->with('single_slider',$myblslider);
-
+                ->with('sliders', $this->sliderService->findAll())
+                ->with('slider_types', $this->sliderTypeService->findAll())
+                ->with('single_slider', $myblslider);
     }
 
     /**
@@ -112,9 +111,9 @@ class MyblSliderController extends Controller
      * @return Response
      */
 
-    public function update(MyblSliderRequest $request,$id)
+    public function update(MyblSliderRequest $request, $id)
     {
-        session()->flash('success',$this->sliderService->updateSlider($request, $this->sliderService->findOne($id))->getContent());
+        session()->flash('success', $this->sliderService->updateSlider($request, $this->sliderService->findOne($id))->getContent());
         return redirect(route('myblslider.index'));
     }
 
@@ -126,7 +125,7 @@ class MyblSliderController extends Controller
     public function destroy($id)
     {
         //return $slider;
-        session()->flash('error',$this->sliderService->deleteSlider($id)->getContent());
+        session()->flash('error', $this->sliderService->deleteSlider($id)->getContent());
         return url('myblslider');
     }
 }
