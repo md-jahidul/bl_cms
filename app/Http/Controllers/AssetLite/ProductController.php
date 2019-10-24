@@ -3,33 +3,31 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
-use App\Models\SimCategory;
+use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
-/**
- * Class SimCategoryController
- * package App\Http\Controllers\AssetLite
- */
-class SimCategoryController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $simCategories = SimCategory::all();
+//        return view('admin.product.')
+    }
 
-//        return $simCategories;
-        return view('admin.category.sim.index', compact('simCategories'));
+    public function trendingOfferHome()
+    {
+        $trendingHomeOffers = Product::where('is_home', 1)->get();
+        return view('admin.product.home', compact('trendingHomeOffers'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -40,7 +38,7 @@ class SimCategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -50,10 +48,10 @@ class SimCategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SimCategory  $simCategory
-     * @return Response
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function show(SimCategory $simCategory)
+    public function show($id)
     {
         //
     }
@@ -61,10 +59,10 @@ class SimCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SimCategory  $simCategory
-     * @return Response
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function edit(SimCategory $simCategory)
+    public function edit($id)
     {
         //
     }
@@ -73,10 +71,10 @@ class SimCategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SimCategory  $simCategory
-     * @return Response
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SimCategory $simCategory)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -84,10 +82,10 @@ class SimCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SimCategory  $simCategory
-     * @return Response
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(SimCategory $simCategory)
+    public function destroy($id)
     {
         //
     }

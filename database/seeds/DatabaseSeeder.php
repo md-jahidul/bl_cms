@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SliderComponentTypesTableSeeder::class);
         $this->call(SliderTableSeeder::class);
         $this->call(SliderImageTableSeeder::class);
-        $this->call(DigitalServiceTableSeeder::class);
+//        $this->call(DigitalServiceTableSeeder::class);
         $this->call(PartnerCategoryTableSeeder::class);
         $this->call(PartnerTableSeeder::class);
         $this->call(PartnerOfferTableSeeder::class);
@@ -39,6 +39,8 @@ class DatabaseSeeder extends Seeder
         $this->call(SimCategoryTableSeeder::class);
         $this->call(OfferCategoryTableSeeder::class);
         $this->call(ProductsTableSeeder::class);
+
+
 
         // ====My-Bl Seeder====
         $this->call(NotificationsTableSeeder::class);

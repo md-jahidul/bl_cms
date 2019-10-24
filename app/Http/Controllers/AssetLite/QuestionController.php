@@ -30,7 +30,6 @@ class QuestionController extends Controller
         $this->questionService = $questionService;
         $this->tagService = $tagService;
         $this->answerOptionService = $answerOptionService;
-        $this->middleware('auth');
     }
 
     /**
