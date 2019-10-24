@@ -49,6 +49,7 @@ Route::group(['middleware' => ['appAdmin']], function () {
 
     //App Version
     Route::resource('app-version', 'CMS\AppVersionController');
+    Route::get('app-version/destroy/{id}', 'CMS\AppVersionController@destroy');
 
 
     //------ Slider -----------//

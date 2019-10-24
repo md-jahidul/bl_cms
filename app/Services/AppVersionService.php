@@ -53,13 +53,13 @@ class AppVersionService
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @return bool|null
      * @throws \Exception
      */
     public function deleteAppVersion($id)
     {
-        $banner = $this->findOne($id);
-        return $banner->delete();
+        $appVersion = $this->appVersionRepository->findOne($id);
+        return $appVersion->delete();
     }
 
 
