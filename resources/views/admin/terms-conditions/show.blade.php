@@ -49,10 +49,10 @@
 @stop
 
 @push('page-css')
-
+    <link rel="stylesheet" type="text/css" href="{{asset('plugins/tinymce/tinymce.min.css')}}">
 @endpush
 @push('page-js')
-    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="{{asset('plugins/tinymce/tinymce.min.js')}}" type="text/javascript"></script>
     <script>
         $(function () {
             tinymce.init({
@@ -61,7 +61,7 @@
                 menubar: false,
                 height: 400,
                 statusbar: false,
-                plugins : 'advlist lists'
+                plugins: 'advlist lists'
             });
         })
     </script>
