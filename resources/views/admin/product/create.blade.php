@@ -3,20 +3,20 @@
 @section('card_name', 'Partner Offer Create')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ url('partners') }}"> Partner List</a></li>
-    <li class="breadcrumb-item active"> <a href="{{ route('partner-offer', [$parentId, $partnerName]) }}"> Partner Offer List</a></li>
+{{--    <li class="breadcrumb-item active"> <a href="{{ route('partner-offer', [$parentId, $partnerName]) }}"> Partner Offer List</a></li>--}}
     <li class="breadcrumb-item active"> Partner Offer Create</li>
 @endsection
 @section('action')
-    <a href="{{ route('partner-offer', [$parentId, $partnerName]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+{{--    <a href="{{ route('partner-offer', [$parentId, $partnerName]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>--}}
 @endsection
 @section('content')
     <section>
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title">{{ ucwords($partnerName) }} offer create</h5><hr>
+                    <h5 class="menu-title"> offer create</h5><hr>
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('partner_offer_store', [$parentId, $partnerName]) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route('product.store', [$type, $simTypeId]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('validity_en') ? ' error' : '' }}">
