@@ -108,10 +108,20 @@
                         <a class="menu-item" href="{{ url('tag-category') }}" data-i18n="nav.templates.vert.classic_menu"><i
                                 class="la la-tags"></i> Tag</a>
                     </li>
-{{--                    <li class="{{ is_active_url('offers/postpaid') }}">--}}
-{{--                        <a class="menu-item" href="{{ route('product.list','postpaid') }}" data-i18n="nav.templates.vert.classic_menu"><i--}}
-{{--                                class="la la-magic"></i> Sim</a>--}}
-{{--                    </li>--}}
+                    <li class="{{ is_active_url('sim-categories') }}">
+                        <a class="menu-item" href="{{ route('sim-categories.index') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-file"></i> Sim</a>
+                    </li>
+
+                    <li class="{{ is_active_url('offer-categories') }}">
+                        <a class="menu-item" href="{{ route('offer-categories.index') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-magic"></i> Offer</a>
+                    </li>
+
+                    <li class="{{ is_active_url('duration-categories') }}">
+                        <a class="menu-item" href="{{ route('duration-categories.index') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-calendar-times-o"></i> Duration</a>
+                    </li>
 
                 </ul>
             </li>
@@ -123,11 +133,11 @@
                     <span class="menu-title" data-i18n="nav.templates.main">Offer Management</span></a>
                 <ul class="menu-content">
 
-                    <li class="{{ is_active_url('offers/prepaid') }}">
+                    <li class="{{ is_active_url('offers/prepaid') . is_active_url('offers/prepaid/create') }}">
                         <a class="menu-item" href="{{ route('product.list','prepaid') }}" data-i18n="nav.templates.vert.classic_menu"><i
                                 class="la la-magic"></i> Prepaid</a>
                     </li>
-                    <li class="{{ is_active_url('offers/postpaid') }}">
+                    <li class="{{ is_active_url('offers/postpaid') . is_active_url('offers/postpaid/create') }}">
                         <a class="menu-item" href="{{ route('product.list','postpaid') }}" data-i18n="nav.templates.vert.classic_menu"><i
                                 class="la la-magic"></i> Postpaid</a>
                     </li>

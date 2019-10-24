@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Controllers\Controller;
 use App\Models\DurationCategory;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class DurationCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $durationCategories = DurationCategory::all();
+        return view('admin.category.duration.index', compact('durationCategories'));
     }
 
     /**

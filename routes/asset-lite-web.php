@@ -93,13 +93,16 @@ Route::middleware('authorize', 'auth')->group(function () {
     // OFFER CATEGORY PAGES ====================================
     Route::resource('tag-category', 'AssetLite\TagCategoryController')->except(['show', 'destroy']);
     Route::get('tag-category/destroy/{id}', 'AssetLite\TagCategoryController@destroy');
-    Route::resource('sim-category/', 'AssetLite\SimCategoryController')->except(['show']);
+    Route::resource('sim-categories', 'AssetLite\SimCategoryController')->only(['index']);
+    Route::resource('duration-categories', 'AssetLite\DurationCategoryController')->only(['index']);
+    Route::resource('offer-categories', 'AssetLite\OfferCategoryController')->only(['index']);
+
 
 
     // OFFERS PAGES ====================================
     Route::get('offers/{type}', 'AssetLite\ProductController@index')->name('product.list');
-    Route::get('offers/{type}/{id}/create', 'AssetLite\ProductController@create')->name('product.create');
-    Route::get('offers/{type}/{id}/store', 'AssetLite\ProductController@create')->name('product.store');
+    Route::get('offers/{type}/create', 'AssetLite\ProductController@create')->name('product.create');
+    Route::get('offers/{type}/store', 'AssetLite\ProductController@create')->name('product.store');
 
 
 

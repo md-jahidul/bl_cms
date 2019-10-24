@@ -21,8 +21,6 @@ class SimCategoryController extends Controller
     public function index()
     {
         $simCategories = SimCategory::all();
-
-//        return $simCategories;
         return view('admin.category.sim.index', compact('simCategories'));
     }
 

@@ -52,7 +52,9 @@ interface BaseRepositoryContract
      * @param array|null $orderBy
      * @return Collection
      */
+
     public function findAll($perPage = null, $relation = null, array $orderBy = null);
+
 
     /**
      * @param $id

@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Sim Category List')
-@section('card_name', 'Sim Category List')
+@section('title', 'Offer Category List')
+@section('card_name', 'Offer Category List')
 @section('breadcrumb')
-    <li class="breadcrumb-item "><a href="{{ url('sim-categories') }}"> Sim Categories List</a></li>
+    <li class="breadcrumb-item "><a href="{{ url('offer-categories') }}"> Offer Categories List</a></li>
 @endsection
 @section('action')
-{{--    <a href="{{ route("sim-categories.create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
-{{--        Add Sim--}}
+{{--    <a href="{{ route("offer-categories.create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
+{{--        Add Offer--}}
 {{--    </a>--}}
 @endsection
 @section('content')
@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>Sim Categories</strong></h4>
+                    <h4 class="pb-1"><strong>Offer Categories</strong></h4>
                     <table class="table table-striped table-bordered zero-configuration">
                         <thead>
                         <tr>
@@ -24,14 +24,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach($simCategories as $simCategory)
+                            @foreach($offerCategories as $offerCategory)
                                 @php $path = 'partner-offers-home'; @endphp
-                                <tr data-index="{{ $simCategory->id }}" data-position="{{ $simCategory->display_order }}">
+                                <tr data-index="{{ $offerCategory->id }}" data-position="{{ $offerCategory->display_order }}">
                                     <td width="3%">{{ $loop->iteration }}</td>
-                                    <td>{{ $simCategory->name }}</td>
+                                    <td>{{ $offerCategory->name }}</td>
 {{--                                    <td width="12%" class="text-center">--}}
-{{--                                        <a href="{{ url("sim-category/$simCategory->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>--}}
-{{--                                        <a href="#" remove="{{ url("sim-category/destroy/$simCategory->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $simCategory->id }}" title="Delete">--}}
+{{--                                        <a href="{{ url("offer-category/$offerCategory->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>--}}
+{{--                                        <a href="#" remove="{{ url("offer-category/destroy/$offerCategory->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $offerCategory->id }}" title="Delete">--}}
 {{--                                            <i class="la la-trash"></i>--}}
 {{--                                        </a>--}}
 {{--                                    </td>--}}

@@ -6,7 +6,7 @@
     <li class="breadcrumb-item ">Partner Offer List</li>
 @endsection
 @section('action')
-    <a href="{{ route("product.create", [$type, $simTypeId]) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{ route("product.create", [$type]) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add Product
     </a>
 @endsection

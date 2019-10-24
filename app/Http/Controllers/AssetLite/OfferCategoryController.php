@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Controllers\Controller;
 use App\Models\OfferCategory;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class OfferCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $offerCategories = OfferCategory::all();
+        return view('admin.category.offer.index', compact('offerCategories'));
     }
 
     /**

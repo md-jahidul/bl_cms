@@ -4,26 +4,27 @@ namespace App\Services;
 
 use App\Models\PartnerCategory;
 use App\Repositories\PartnerOfferRepository;
+use App\Repositories\ProductRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
-class PartnerOfferService
+class ProductService
 {
     use CrudTrait;
 
     /**
      * @var $partnerOfferRepository
      */
-    protected $partnerOfferRepository;
+    protected $productRepository;
 
     /**
      * PartnerOfferService constructor.
-     * @param PartnerOfferRepository $partnerOfferRepository
+     * @param ProductRepository $productRepository
      */
-    public function __construct(PartnerOfferRepository $partnerOfferRepository)
+    public function __construct(ProductRepository $productRepository)
     {
-        $this->partnerOfferRepository = $partnerOfferRepository;
-        $this->setActionRepository($partnerOfferRepository);
+        $this->productRepository = $productRepository;
+        $this->setActionRepository($productRepository);
     }
 
 
@@ -36,10 +37,10 @@ class PartnerOfferService
      * @param $data
      * @return Response
      */
-    public function storePartnerOffer($data, $partnerId)
+    public function storeProduct($data, $partnerId)
     {
 
-        $count = count($this->partnerOfferRepository->findAll());
+        $count = count($this->productRepository->findAll());
         $data['partner_id'] = $partnerId;
         $data['display_order'] = ++$count;
         $this->save($data);
@@ -48,7 +49,7 @@ class PartnerOfferService
 
     public function tableSortable($data)
     {
-        $this->partnerOfferRepository->partnerOfferTableSort($data);
+        $this->productRepository->productTableSort($data);
         return new Response('update successfully');
     }
 
@@ -57,11 +58,12 @@ class PartnerOfferService
      * @param $id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function updatePartnerOffer($data, $id)
+    public function updateProduct($data, $id)
     {
-        $partnerOffer = $this->findOne($id);
+
+        $product = $this->findOne($id);
         (isset($data['show_in_home'])) ? $data['show_in_home'] = 1 : $data['show_in_home'] = 0;
-        $partnerOffer->update($data);
+        $product->update($data);
         return Response('Partner offer update successfully !');
     }
 
@@ -70,10 +72,10 @@ class PartnerOfferService
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      * @throws \Exception
      */
-    public function deletePartnerOffer($id)
+    public function deleteProduct($id)
     {
-        $partnerOffer = $this->findOne($id);
-        $partnerOffer->delete();
-        return Response('Partner offer delete successfully');
+        $product = $this->findOne($id);
+        $product->delete();
+        return Response('Product delete successfully');
     }
 }

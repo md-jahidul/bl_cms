@@ -4,22 +4,40 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Models\SimCategory;
+use App\Models\TagCategory;
+use App\Services\ProductService;
+use App\Services\TagCategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
+
+    private $productService;
+    private $tagCategoryService;
+
+    /**
+     * TagController constructor.
+     * @param ProductService $productService
+     * @param TagCategoryService $tagCategoryService
+     */
+    public function __construct(ProductService $productService, TagCategoryService $tagCategoryService)
+    {
+        $this->productService = $productService;
+        $this->tagCategoryService = $tagCategoryService;
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param $type
+     * @return Response
      */
     public function index($type)
     {
-        $simTypeId = Product::category($type)->first()->sim_category_id;
         $products = Product::category($type)->paginate(15);
 
-        return view('admin.product.index', compact('products', 'type', 'simTypeId'));
+        return view('admin.product.index', compact('products', 'type'));
     }
 
     public function trendingOfferHome()
@@ -32,30 +50,36 @@ class ProductController extends Controller
      * Show the form for creating a new resource.
      *
      * @param $type
-     * @param $simTypeId
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function create($type, $simTypeId)
+
+    public function create($type)
     {
-        return view('admin.product.create', compact('type', 'simTypeId'));
+        $type = ucfirst($type);
+
+        $tags = $this->tagCategoryService->findAll();
+
+        return $tags;
+
+        return view('admin.product.create', compact('type', 'tags'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -66,7 +90,7 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -78,7 +102,7 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -89,7 +113,7 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

@@ -26,7 +26,7 @@ class CreateProductsTable extends Migration
                 $table->integer('internet_volume_mb')->nullable();
                 $table->string('bonus')->nullable();
                 $table->string('is_recharge')->default('no');
-                $table->integer('is_home')->default(0);
+                $table->integer('show_in_home')->default(0);
                 $table->string('validity_days')->nullable();
                 $table->string('ussd')->nullable();
                 $table->string('point')->nullable();

@@ -5,7 +5,6 @@ namespace App\Repositories;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-
 class BaseRepository implements BaseRepositoryContract
 {
     /**
@@ -36,13 +35,12 @@ class BaseRepository implements BaseRepositoryContract
     {
         //check if the class exists
         if (class_exists($this->modelName)) {
-            $this->model = new $this->modelName;
+            $this->model = new $this->modelName();
 
             //check object is a instanceof Illuminate\Database\Eloquent\Model
             if (!$this->model instanceof Model) {
                 throw new \Exception("{$this->modelName} must be an instance of Illuminate\Database\Eloquent\Model");
             }
-
         } else {
             throw new \Exception('No model name defined');
         }
@@ -70,6 +68,9 @@ class BaseRepository implements BaseRepositoryContract
         return $this->findOneBy(['id' => $id], $relation);
     }
 
+
+
+
     /**
      * @param $id
      * @param null $relation
@@ -96,8 +97,7 @@ class BaseRepository implements BaseRepositoryContract
         $queryBuilder = $model->where(function ($query) use ($searchCriteria) {
 
             $this->applySearchCriteriaInQueryBuilder($query, $searchCriteria);
-        }
-        );
+        });
         if (!empty($searchCriteria['per_page'])) {
             return $queryBuilder->paginate($limit);
         }
@@ -132,6 +132,7 @@ class BaseRepository implements BaseRepositoryContract
 
         return $model->get();
     }
+
     /**
      * Find resource
      *
@@ -239,9 +240,7 @@ class BaseRepository implements BaseRepositoryContract
         if (is_array($data) && count($data) > 0) {
             $resource->fill($data);
         }
-
         $this->save($resource);
-
         return $resource;
     }
 
@@ -254,7 +253,6 @@ class BaseRepository implements BaseRepositoryContract
     public function delete($resource)
     {
         $resource->delete();
-
         return $resource;
     }
 
@@ -291,6 +289,4 @@ class BaseRepository implements BaseRepositoryContract
         }
         return $model;
     }
-
-
 }

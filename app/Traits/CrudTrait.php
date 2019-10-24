@@ -55,6 +55,14 @@ trait CrudTrait
         return $this->actionRepository->findAll($perPage, $relation, $orderBy);
     }
 
+
+    ///////////////////
+    public function select($columns)
+    {
+        return $this->actionRepository->select($columns);
+    }
+    ///////////////////
+
     /**
      * @param array $searchCriteria
      * @param null $relation
