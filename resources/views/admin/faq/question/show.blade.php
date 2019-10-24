@@ -71,7 +71,6 @@
         </div>
     </section>
 @endsection
-
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 @endpush
@@ -79,7 +78,7 @@
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
     <script>
         $(function () {
-            $("textarea#privacy-policy").summernote({
+            $("textarea#answer").summernote({
                 toolbar: [
                     ['style', ['bold', 'italic', 'underline', 'clear']],
                     ['font', ['strikethrough', 'superscript', 'subscript']],
