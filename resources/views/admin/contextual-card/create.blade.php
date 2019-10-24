@@ -47,6 +47,8 @@
                                     </div>
                                 </div>
 
+                                {!! Helper::shout('this is how to use autoloading correctly!!') !!}
+
                                 <div class="col-md-12">
                                     <div class="form-group {{ $errors->has('description') ? ' error' : '' }}">
                                         <label for="description" class="required">Description:</label>
