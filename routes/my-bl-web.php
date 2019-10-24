@@ -47,6 +47,11 @@ Route::group(['middleware' => ['appAdmin']], function () {
     Route::get('setting/destroy/{id}', 'CMS\SettingController@destroy')->name('setting.destroy');
 
 
+    //App Version
+    Route::resource('app-version', 'CMS\AppVersionController');
+    Route::get('app-version/destroy/{id}', 'CMS\AppVersionController@destroy');
+
+
     //------ Slider -----------//
 
     // Slider
