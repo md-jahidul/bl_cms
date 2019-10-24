@@ -72,22 +72,25 @@
     </section>
 @endsection
 
-@push('style')
-    <link rel="stylesheet" type="text/css" href="{{asset('plugins/tinymce/tinymce.min.css')}}">
+@push('page-css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 @endpush
-
 @push('page-js')
-    <script src="{{asset('plugins/tinymce/tinymce.min.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
     <script>
         $(function () {
-            tinymce.init({
-                selector: 'textarea#answer',
-                branding: false,
-                menubar: false,
-                height: 200,
-                statusbar: false,
-                plugins: 'advlist lists'
-            });
+            $("textarea#privacy-policy").summernote({
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['table', ['table']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['view', ['fullscreen']]
+                ],
+                height:300
+            })
         })
     </script>
 @endpush
