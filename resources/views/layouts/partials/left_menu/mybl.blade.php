@@ -120,6 +120,11 @@
             <span class="menu-title">Terms and Conditions</span></a>
     </li>
 
+    <li class="{{ is_active_url('/privacy-policy') }} nav-item"><a href="{{route('privacy-policy.show')}}"><i
+                class="la la-paragraph"></i>
+            <span class="menu-title">Privacy and Policy</span></a>
+    </li>
+
         <li class="{{ is_active_url('app-version') . is_active_url('app-version/create')}}">
             <a class="menu-item" href="{{ route('app-version.index') }}" data-i18n="nav.templates.vert.classic_menu">
                 <i class="la la-code-fork"></i>App Version</a>

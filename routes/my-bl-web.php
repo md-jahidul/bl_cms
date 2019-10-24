@@ -137,6 +137,11 @@ Route::group(['middleware' => ['appAdmin']], function () {
     Route::get('terms-conditions', 'CMS\TermsAndConditionsController@show')->name('terms-conditions.show');
     Route::post('terms-conditions', 'CMS\TermsAndConditionsController@store')->name('terms-conditions.store');
 
+    // privacy and policy
+
+    Route::get('privacy-policy', 'CMS\PrivacyPolicyController@show')->name('privacy-policy.show');
+    Route::post('privacy-policy', 'CMS\PrivacyPolicyController@store')->name('privacy-policy.store');
+
     // faq category
     Route::get('faq/category', 'CMS\FaqCategoryController@index')->name('faq.category.index');
 
