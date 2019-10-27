@@ -49,7 +49,7 @@ dd($version);
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="name" class="required">Select Platform:</label>
-                                <select name="platform" class="browser-default custom-select">
+                                <select name="platform" required data-validation-required-message="Platform is required"  class="browser-default custom-select">
                                     <option selected>Select Platform</option>
                                     @if(isset($version))
                                         <option value="ios" @if($version->platform == "ios") selected="selected" @endif>ios</option>
@@ -72,8 +72,8 @@ dd($version);
                                 <label for="code" class="required">Version:</label>
                                 <input required data-validation-required-message="Version is required"  name="current_version"
                                        value="@if(isset($version)){{$version->current_version}} @elseif(old("current_version")) {{old("current_version")}} @endif"
-                                       type="text"  class="form-control @error('code') is-invalid @enderror" placeholder="Enter app version..">
-                                <small class="text-danger"> @error('code') {{ $message }} @enderror </small>
+                                       type="text"  class="form-control @error('current_version') is-invalid @enderror" placeholder="Enter app version..">
+                                <small class="text-danger"> @error('current_version') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
 
@@ -82,7 +82,7 @@ dd($version);
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="name" class="required">Force Update:</label>
-                                <select name="force_update" class="browser-default custom-select">
+                                <select name="force_update"  required data-validation-required-message="Platform is required"  class="browser-default custom-select">
                                     <option selected>Select force Update</option>
                                     @if(isset($version))
                                         <option value=1 @if($version->force_update == 1) selected="selected" @endif>true</option>
@@ -93,6 +93,18 @@ dd($version);
                                     @endif
                                 </select>
                             </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="code" class="required">Message:</label>
+                                <input required data-validation-required-message="Message is required"  name="message"
+                                       value="@if(isset($version)){{$version->message}} @elseif(old("message")) {{old("message")}} @endif"
+                                       type="text"  class="form-control @error('message') is-invalid @enderror" placeholder="Enter message..">
+                                <small class="text-danger"> @error('message') {{ $message }} @enderror </small>
+                                <div class="help-block"></div>
+                            </div>
+
                         </div>
 
 

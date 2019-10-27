@@ -26,7 +26,7 @@ class AppVersionRequest extends FormRequest
         return [
             'platform'        => 'required',
             'current_version' => 'required|max:50',
-            'message'         => 'required',
+            'message'         => 'required|max:250',
             'force_update'    => 'required'
         ];
     }
