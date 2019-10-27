@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -7,7 +8,6 @@
  */
 
 namespace App\Traits;
-
 
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
@@ -123,12 +123,10 @@ trait CrudTrait
         $upload_date = date('Y-m-d-h-i-s');
         $image = request()->file($imgColumnName);
         $fileType = $image->getClientOriginalExtension();
-        $imageName = $upload_date.'_'.$file_name.'.' . $fileType;
+        $imageName = $upload_date . '_' . $file_name . '.' . $fileType;
         $directory = $location;
         $imageUrl = $imageName;
         $image->move(public_path($directory), $imageName);
         return $imageUrl;
     }
-
-
 }

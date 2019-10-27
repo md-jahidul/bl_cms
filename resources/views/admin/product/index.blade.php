@@ -6,7 +6,7 @@
     <li class="breadcrumb-item ">Partner Offer List</li>
 @endsection
 @section('action')
-    <a href="{{ route("product.create", [$type]) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{ route("product.create", strtolower($type)) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add Product
     </a>
 @endsection
@@ -36,8 +36,8 @@
                                 <td>{{ $product->ussd }}</td>
                                 <td width="15%">
                                     <a href="#" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>
-                                    <a href="#" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" {{--remove="{{ url("partner-offer/$product->partner_id/$partnerName/offer/destroy/$product->id") }}--}} class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $product->id }}" title="Delete">
+                                    <a href="{{ route('product.edit', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" remove="{{ url("offers/$type/$product->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $product->id }}" title="Delete">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>

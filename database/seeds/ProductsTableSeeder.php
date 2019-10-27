@@ -44,6 +44,17 @@ class ProductsTableSeeder extends Seeder
         return $obj;
     }
 
+
+    public function showInHome($offerType)
+    {
+        if (in_array($offerType, ['internet', 'voice', 'bundles'])) {
+            return rand(0, 2) ? 1 : 0;
+        }
+
+        return 0;
+    }
+
+
     /**
      * Run the database seeds.
      *
@@ -53,39 +64,13 @@ class ProductsTableSeeder extends Seeder
     {
         // Prepaid,
 
-
-        /*
-
-        Postpaid
-                $table->string('code');
-                $table->string('name');
-                $table->integer('price_tk')->nullable();
-                $table->string('ussd')->nullable();
-                $table->unsignedBigInteger('sim_category_id');
-                $table->unsignedBigInteger('offer_category_id');
-
-
-        Prepaid
-                $table->string('code');
-                $table->string('name');
-                $table->integer('price_tk')->nullable();
-                $table->integer('sms_volume')->nullable();
-                $table->integer('min_volume')->nullable();;
-                $table->integer('internet_volume_mb')->nullable();;
-                $table->string('validity_days')->nullable();
-                $table->string('ussd')->nullable();
-                $table->unsignedBigInteger('tag_category_id')->nullable();
-                $table->unsignedBigInteger('sim_category_id');
-                $table->unsignedBigInteger('offer_category_id');
-        */
-
         $countHomePageOffer = 0;
 
         for ($i = 0; $i < 20; $i++) {
             $offer = OfferCategory::whereIn('alias', ['internet','pacakages','others'])->inRandomOrder()->first();
             $offerInfo = $this->getOfferInfo($offer->alias);
 
-            $showInHome = rand(0, 6) ? 1 : 0;
+            $showInHome = $this->showInHome($offer->alias);
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
 
             factory(Product::class)->create(
@@ -107,7 +92,7 @@ class ProductsTableSeeder extends Seeder
             $offer = OfferCategory::inRandomOrder()->first();
             $offerInfo = $this->getOfferInfo($offer->alias);
 
-            $showInHome = rand(0, 6) ? 1 : 0;
+            $showInHome = $this->showInHome($offer->alias);
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
 
             factory(Product::class)->create(
