@@ -95,10 +95,15 @@
                         <div class="col-6">
                             <div class="form-group {{ $errors->has('message') ? ' error' : '' }}">
                                 <label for="message" class="required">Message:</label>
+                                @if(isset($version))
+                                    @php $app_msg = $version->message; @endphp
+                                @else
+                                    @php $app_msg = ''; @endphp
+                                @endif
                                 <textarea
                                         required
                                         data-validation-required-message="Message is required"
-                                        class="form-control" name="message" placeholder="Enter message..." id="message" rows="2">{{ old("message") ? old("message") : '' }}</textarea>
+                                        class="form-control" name="message" placeholder="Enter message..." id="message" rows="2">{{ old("message") ? old("message") : $app_msg }}</textarea>
                                 <div class="help-block"></div>
                                 @error('description')
                                 <span class="help-block" role="alert">
