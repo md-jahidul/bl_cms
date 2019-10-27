@@ -41,8 +41,12 @@ class NotificationDraft extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(Notification::class, 'notification_user',
-            'notification_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(
+            Notification::class,
+            'notification_user',
+            'notification_id',
+            'user_id'
+        )->withTimestamps();
     }
 
 
