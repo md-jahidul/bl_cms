@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -8,16 +9,14 @@
 
 namespace App\Services;
 
-
 use App\Repositories\SliderRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
-
 class MyblSliderService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -39,7 +38,7 @@ class MyblSliderService
      */
     public function storeSlider($data)
     {
-        $data['short_code'] = strtolower(str_replace(' ','_',$data['title']));
+        $data['short_code'] = strtolower(str_replace(' ', '_', $data['title']));
         $this->save($data);
         return new Response("Slider has been successfully created");
     }
@@ -71,5 +70,4 @@ class MyblSliderService
         $slider->delete();
         return Response('Slider has been successfully deleted');
     }
-
 }
