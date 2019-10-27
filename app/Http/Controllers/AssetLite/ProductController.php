@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\TagCategory;
+use App\Services\OfferCategoryService;
 use App\Services\ProductService;
 use App\Services\TagCategoryService;
 use Illuminate\Http\Request;
@@ -15,16 +16,22 @@ class ProductController extends Controller
 
     private $productService;
     private $tagCategoryService;
+    private $offerCategoryService;
 
     /**
      * TagController constructor.
      * @param ProductService $productService
      * @param TagCategoryService $tagCategoryService
+     * @param OfferCategoryService $offerCategoryService
      */
-    public function __construct(ProductService $productService, TagCategoryService $tagCategoryService)
-    {
+    public function __construct(
+        ProductService $productService,
+        TagCategoryService $tagCategoryService,
+        OfferCategoryService $offerCategoryService
+    ) {
         $this->productService = $productService;
         $this->tagCategoryService = $tagCategoryService;
+        $this->offerCategoryService = $offerCategoryService;
     }
 
     /**
@@ -57,10 +64,8 @@ class ProductController extends Controller
     {
         $type = ucfirst($type);
         $tags = $this->tagCategoryService->findAll();
-
-//        return $tags;
-
-        return view('admin.product.create', compact('type', 'tags'));
+        $offers = $this->offerCategoryService->findAll();
+        return view('admin.product.create', compact('type', 'tags', 'offers'));
     }
 
     /**

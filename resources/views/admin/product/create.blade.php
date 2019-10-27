@@ -126,8 +126,10 @@
                                 <div class="form-group col-md-6 {{ $errors->has('tag_category_id') ? ' error' : '' }}">
                                     <label for="tag_category_id" class="required">Tag</label>
                                     <select class="form-control" name="tag_category_id">
-                                        <option>---Select Offer---</option>
-                                        <option value="">Option 1</option>
+                                        <option>---Select Tag---</option>
+                                        @foreach($offers as $offer)
+                                            <option value="">Option 1</option>
+                                        @endforeach
                                     </select>
                                     <div class="help-block"></div>
                                     @if ($errors->has('tag_category_id'))
@@ -139,7 +141,9 @@
                                     <label for="offer_category_id" class="required">Offer</label>
                                     <select class="form-control">
                                         <option>---Select Offer---</option>
-                                        <option value="">Option 1</option>
+                                        @foreach($offers as $offer)
+                                            <option value="{{ $offer->id }}">{{ $offer->name }}</option>
+                                        @endforeach
                                     </select>
                                     <div class="help-block"></div>
                                     @if ($errors->has('offer_category_id'))
@@ -159,7 +163,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="title" class="required mr-1">Is Recharge</label>
+                                        <label for="title" class="required mr-1">Recharge</label>
 
                                         <input type="radio" name="is_recharge" value="1" id="yes" checked>
                                         <label for="yes" class="mr-1">Yes</label>
