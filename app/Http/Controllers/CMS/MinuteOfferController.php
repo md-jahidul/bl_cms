@@ -35,7 +35,7 @@ class MinuteOfferController extends Controller
      */
     public function index()
     {
-        return view('admin.offer-minute.index')->with('minute_offers',$this->minuteOfferService->findAll());
+        return view('admin.offer-minute.index')->with('minute_offers', $this->minuteOfferService->findAll());
     }
 
     /**
@@ -80,7 +80,7 @@ class MinuteOfferController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.offer-minute.edit')->with('minute_offer',$this->minuteOfferService->findOne($id));
+        return view('admin.offer-minute.edit')->with('minute_offer', $this->minuteOfferService->findOne($id));
     }
 
     /**
@@ -91,8 +91,8 @@ class MinuteOfferController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(MinuitOfferRequest $request, $id)
-    {   
-        session()->flash('success',$this->minuteOfferService->updateMinuteOffer($request,$id)->getContent());
+    {
+        session()->flash('success', $this->minuteOfferService->updateMinuteOffer($request, $id)->getContent());
         return redirect(route('minuteOffer.index'));
     }
 
@@ -105,7 +105,7 @@ class MinuteOfferController extends Controller
     public function destroy($id)
     {
         //return $id;
-        session()->flash('error',$this->minuteOfferService->deleteMinuteOffer($id)->getContent());
+        session()->flash('error', $this->minuteOfferService->deleteMinuteOffer($id)->getContent());
         return url('minuteOffer');
     }
 }

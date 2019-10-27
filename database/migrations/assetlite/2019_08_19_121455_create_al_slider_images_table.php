@@ -30,7 +30,6 @@ class CreateAlSliderImagesTable extends Migration
                 ->on('al_sliders')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-
         });
     }
 

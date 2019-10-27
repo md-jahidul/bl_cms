@@ -25,9 +25,9 @@ class NotificationRequest extends FormRequest
     {
         return [
             // 'title'=>'required|max:200|unique:notifications,title,'.$this->id,
-            'title'=>'required|max:200',
-            'category_id'=>'required|min:1',
-            'body'=>'required'
+            'title' => 'required|max:200',
+            'category_id' => 'required|min:1',
+            'body' => 'required'
         ];
     }
 

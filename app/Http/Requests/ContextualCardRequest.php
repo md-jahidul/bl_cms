@@ -25,7 +25,7 @@ class ContextualCardRequest extends FormRequest
     {
         
         return [
-            'title' => 'required|max:200|unique:contextual_cards,title,'.$this->id,
+            'title' => 'required|max:200|unique:contextual_cards,title,' . $this->id,
             'description' => 'required',
             'first_action_text' => 'required',
             'second_action_text' => 'required',

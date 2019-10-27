@@ -36,7 +36,7 @@ class ContextualCardController extends Controller
      */
     public function index()
     {
-        return view('admin.contextual-card.index')->with('contextualCards',$this->contextualCardService->findAll());
+        return view('admin.contextual-card.index')->with('contextualCards', $this->contextualCardService->findAll());
     }
 
     /**
@@ -58,7 +58,7 @@ class ContextualCardController extends Controller
     public function store(ContextualCardRequest $request)
     {
         
-        session()->flash('message',$this->contextualCardService->storeContextualCard($request->all())->getContent());
+        session()->flash('message', $this->contextualCardService->storeContextualCard($request->all())->getContent());
         return redirect(route('contextualcard.index'));
     }
 
@@ -94,7 +94,7 @@ class ContextualCardController extends Controller
      */
     public function update(ContextualCardRequest $request, $id)
     {
-        session()->flash('success',$this->contextualCardService->updateContextualCard($request->all(), $id)->getContent());
+        session()->flash('success', $this->contextualCardService->updateContextualCard($request->all(), $id)->getContent());
         return redirect(route('contextualcard.index'));
     }
 
@@ -106,7 +106,7 @@ class ContextualCardController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error',$this->contextualCardService->deleteContextualCard($id)->getContent());
+        session()->flash('error', $this->contextualCardService->deleteContextualCard($id)->getContent());
         return url('contextualcard');
     }
 }

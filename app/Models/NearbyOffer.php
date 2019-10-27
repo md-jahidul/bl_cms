@@ -22,5 +22,4 @@ class NearbyOffer extends Model
         'image',
         'offer_code'
      ];
-    
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Repositories\FooterMenuRepository;
 use App\Traits\CrudTrait;
@@ -42,7 +40,7 @@ class FooterMenuService
      */
     public function storeFooterMenu($data)
     {
-        $menu_count = count( $this->footerMenuRepository->getChildMenus( $data['parent_id'] ) );
+        $menu_count = count($this->footerMenuRepository->getChildMenus($data['parent_id']));
         $data['display_order'] = ++$menu_count;
         $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
         $this->save($data);
@@ -87,5 +85,4 @@ class FooterMenuService
         ];
         return $response;
     }
-
 }

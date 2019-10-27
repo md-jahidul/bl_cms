@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -8,16 +9,14 @@
 
 namespace App\Services;
 
-
 use App\Repositories\AlSliderComponentTypeRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
-
 class AlSliderComponentTypeService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -39,7 +38,6 @@ class AlSliderComponentTypeService
      */
     public function storeSlider($data)
     {
-
     }
 
     /**
@@ -49,9 +47,6 @@ class AlSliderComponentTypeService
      */
     public function updateSlider($data, $banner)
     {
-
-
-
     }
 
     /**
@@ -61,7 +56,5 @@ class AlSliderComponentTypeService
      */
     public function deleteSlider($id)
     {
-
     }
-
 }

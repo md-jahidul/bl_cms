@@ -28,11 +28,11 @@ class FaqCategory extends Model
 
     public function scopeApp($builder)
     {
-        return $builder->where('platform','=','app');
+        return $builder->where('platform', '=', 'app');
     }
 
     public function questions()
     {
-        return $this->hasMany(FaqQuestion::class,'category_id');
+        return $this->hasMany(FaqQuestion::class, 'category_id');
     }
 }

@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 
-
 class NotificationsTableSeeder extends Seeder
 {
     /**
@@ -12,7 +11,7 @@ class NotificationsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\NotificationCategory::class, 2)->create()->each(function($c) {
+        factory(\App\Models\NotificationCategory::class, 2)->create()->each(function ($c) {
 
             $c->notifications()->saveMany(
                 factory(\App\Models\Notification::class, 2)->make()
@@ -20,9 +19,3 @@ class NotificationsTableSeeder extends Seeder
         });
     }
 }
-
-
-
-
-
-

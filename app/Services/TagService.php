@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: BS23
@@ -7,7 +8,6 @@
  */
 
 namespace App\Services;
-
 
 use App\Repositories\TagRepository;
 use App\Traits\CrudTrait;
@@ -38,7 +38,7 @@ class TagService
      */
     public function storeTag($data)
     {
-        $data['slug'] = str_replace(" ","_", strtolower($data['title']));
+        $data['slug'] = str_replace(" ", "_", strtolower($data['title']));
         $this->save($data);
         return new Response('Tag added successfully');
     }
@@ -51,7 +51,7 @@ class TagService
     public function updateTag($data, $id)
     {
         $tag = $this->findOne($id);
-        $data['slug'] = str_replace(" ","_", strtolower($data['title']));
+        $data['slug'] = str_replace(" ", "_", strtolower($data['title']));
         $tag->update($data);
         return Response('Tag updated successfully');
     }

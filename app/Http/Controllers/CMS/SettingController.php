@@ -35,8 +35,8 @@ class SettingController extends Controller
     public function index()
     {
         return view('admin.setting.index')
-                ->with('keys',DB::table('setting_keys')->get())
-                ->with('settings',$this->settingService->findAll());
+                ->with('keys', DB::table('setting_keys')->get())
+                ->with('settings', $this->settingService->findAll());
     }
 
     /**
@@ -57,7 +57,7 @@ class SettingController extends Controller
      */
     public function store(SettingRequest $request)
     {
-        session()->flash('message',$this->settingService->storeSetting($request->all())->getContent());
+        session()->flash('message', $this->settingService->storeSetting($request->all())->getContent());
         return redirect(route('setting.index'));
     }
 
@@ -81,9 +81,9 @@ class SettingController extends Controller
     public function edit($id)
     {
             return view('admin.setting.index')
-                ->with('keys',DB::table('setting_keys')->get())
-                ->with('settings',$this->settingService->findAll())
-                ->with('setting_info',$this->settingService->findOne($id));
+                ->with('keys', DB::table('setting_keys')->get())
+                ->with('settings', $this->settingService->findAll())
+                ->with('setting_info', $this->settingService->findOne($id));
     }
 
     /**
@@ -95,7 +95,7 @@ class SettingController extends Controller
      */
     public function update(SettingRequest $request, $id)
     {
-        session()->flash('success',$this->settingService->updateSetting($request->all(),$id)->getContent());
+        session()->flash('success', $this->settingService->updateSetting($request->all(), $id)->getContent());
         return redirect(route('setting.index'));
     }
 
@@ -107,7 +107,7 @@ class SettingController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error',$this->settingService->destroySetting($id)->getContent());
+        session()->flash('error', $this->settingService->destroySetting($id)->getContent());
         return url('setting');
     }
 }

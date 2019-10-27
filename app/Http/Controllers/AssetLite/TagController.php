@@ -107,6 +107,5 @@ class TagController extends Controller
         $response = $this->tagService->deleteTag($id);
         Session::flash('message', $response->getContent());
         return redirect('/tags');
-
     }
 }

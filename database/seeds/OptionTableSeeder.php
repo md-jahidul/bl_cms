@@ -41,7 +41,5 @@ class OptionTableSeeder extends Seeder
 //                'option_id' => $faker->randomElement($op_id),
 //            ]);
 //        }
-
-
     }
 }

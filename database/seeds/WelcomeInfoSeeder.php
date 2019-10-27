@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +16,7 @@ class WelcomeInfoSeeder extends Seeder
         $welcome = [
             [
                 'guest_salutation' => "Good Morning",
-                'user_salutation' =>"Good Morning Fariha",
+                'user_salutation' => "Good Morning Fariha",
                 'guest_message' => "Get a new connection enjoy all day. Facebook browsing for just 25tk/day",
                 'user_message' => "Looks like it will be sunny and warm outside. Take your shades with you",
                 'icon' => "http://www.myiconfinder.com/uploads/iconsets/256-256-98e2a448aca3310dfd045e443106efba-weather.png"
@@ -28,6 +29,3 @@ class WelcomeInfoSeeder extends Seeder
         factory(App\Models\WelcomeInfo::class, 10)->create();
     }
 }
-
-
-

@@ -15,7 +15,7 @@ class PartnerCategoryTableSeeder extends Seeder
         $partnerCategoryEn = ["Hotels", "Restaurants", "Hospitals", "Services", "Fashion"];
         $partnerCategoryBn = ["হোটেল", "রেস্তোঁরাগুলি", "হাসপাতালগুলি", "পরিষেবাগুলি", "ফ্যাশন"];
 
-        foreach ($partnerCategoryEn as $key => $value){
+        foreach ($partnerCategoryEn as $key => $value) {
             PartnerCategory::create([
                 'name_en' => $value,
                 'name_bn' => $partnerCategoryBn[$key]

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -8,17 +9,15 @@
 
 namespace App\Services;
 
-
 use App\Repositories\SettingKeyRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use DB;
 
-
 class SettingKeyService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -66,5 +65,4 @@ class SettingKeyService
         $sliderImage->delete();
         return Response('Setting Key has been successfully deleted');
     }
-
 }

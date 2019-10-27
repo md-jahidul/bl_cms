@@ -32,7 +32,6 @@ class CreateSliderImagesTable extends Migration
                 ->on('sliders')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-
         });
     }
 

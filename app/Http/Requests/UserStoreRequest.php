@@ -25,7 +25,7 @@ class UserStoreRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$this->user,
+            'email' => 'required|email|unique:users,email,' . $this->user,
             'role_id' => 'required',
             'password' => 'required',
         ];

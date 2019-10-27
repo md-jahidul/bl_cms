@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -19,5 +20,4 @@ class InternetOffer extends Model
         'offer_code',
         'points'
     ];
-    
 }

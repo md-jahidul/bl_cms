@@ -14,28 +14,28 @@ class SettingKeysTableSeeder extends Seeder
     {
         DB::table('setting_keys')->insert([
             'title' => 'Offer',
-            'created_at' => NULL,
-            'updated_at' => NULL,
+            'created_at' => null,
+            'updated_at' => null,
         ]);
         DB::table('setting_keys')->insert([
             'title' => 'Short Cuts',
-            'created_at' => NULL,
-            'updated_at' => NULL,
+            'created_at' => null,
+            'updated_at' => null,
         ]);
         DB::table('setting_keys')->insert([
             'title' => 'SMS',
-            'created_at' => NULL,
-            'updated_at' => NULL,
+            'created_at' => null,
+            'updated_at' => null,
         ]);
         DB::table('setting_keys')->insert([
             'title' => 'Internet',
-            'created_at' => NULL,
-            'updated_at' => NULL,
+            'created_at' => null,
+            'updated_at' => null,
         ]);
         DB::table('setting_keys')->insert([
             'title' => 'Talk Time',
-            'created_at' => NULL,
-            'updated_at' => NULL,
+            'created_at' => null,
+            'updated_at' => null,
         ]);
     }
 }

@@ -16,13 +16,13 @@ class MenusTableSeeder extends Seeder
         $menu_english = ['Home','Offers','Apps & Services','Bussiness','Loyalty','Eshop'];
         $menu_bangla = ['হোম','অফার','অ্যাপ & সার্ভিস','বিজনেস','লয়াল্টি','ই-শপ'];
 
-        foreach ($menus as $key => $menu){
+        foreach ($menus as $key => $menu) {
             Menu::create([
                 'en_label_text' => $menu_english[$key],
                 'bn_label_text' => $menu_bangla[$key],
                 'parent_id' => 0,
-                'code' => str_replace( " ", "", $menu),
-                'url' => '/'. strtolower( str_replace( " ", "-", $menu) ) ,
+                'code' => str_replace(" ", "", $menu),
+                'url' => '/' . strtolower(str_replace(" ", "-", $menu)) ,
                 'external_site' => 0,
                 'status' => 1,
                 'display_order' => $key + 1
@@ -34,18 +34,17 @@ class MenusTableSeeder extends Seeder
         $sub_menu_english =  ['Prepaid','Postpaid','Propaid'];
         $sub_menu_bangla = ['প্রিপেইড','পোষ্টপেইড','প্রপেইড'];
 
-        foreach ($sub_menus as $key => $smenu){
+        foreach ($sub_menus as $key => $smenu) {
             Menu::create([
                 'en_label_text' => $sub_menu_english[$key],
                 'bn_label_text' => $sub_menu_bangla[$key],
                 'parent_id' => 2,
-                'code' => str_replace( " ", "", $smenu),
-                'url' => '/'. strtolower( str_replace( " ", "-", $smenu) ) ,
+                'code' => str_replace(" ", "", $smenu),
+                'url' => '/' . strtolower(str_replace(" ", "-", $smenu)) ,
                 'external_site' => 0,
                 'status' => 1,
                 'display_order' => $key + 1
             ]);
         }
-
     }
 }

@@ -24,13 +24,13 @@ class AmarOfferRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:200|unique:amar_offers,title,'.$this->id,
+            'title' => 'required|max:200|unique:amar_offers,title,' . $this->id,
             'internet' => 'required|numeric|min:0|max:500000',
             'minutes' => 'required|numeric|min:0|max:500000',
             'sms' => 'required|numeric|min:0|max:500000',
             'validity' => 'required|numeric|min:0|max:500000',
             'price' => 'required|numeric|min:0|max:500000',
-            'offer_code' => 'required|max:200|unique:amar_offers,offer_code,'.$this->id,
+            'offer_code' => 'required|max:200|unique:amar_offers,offer_code,' . $this->id,
             'tag' => 'max:200',
             'points' => 'required|numeric|min:0|max:500000'
         ];

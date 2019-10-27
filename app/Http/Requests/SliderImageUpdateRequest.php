@@ -24,13 +24,13 @@ class SliderImageUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'slider_id'=>'',
-            'title'=>'required|max:200|unique:slider_images,title,'.$this->id,
-            'description'=>'',
-            'image_url'=>'image|mimes:jpeg,jpg,png|dimensions:ratio=16/9',
-            'alt_text'=>'max:200|unique:slider_images,alt_text,'.$this->id,
-            'url_btn_label'=>'max:200',
-            'url'=>'max:200',
+            'slider_id' => '',
+            'title' => 'required|max:200|unique:slider_images,title,' . $this->id,
+            'description' => '',
+            'image_url' => 'image|mimes:jpeg,jpg,png|dimensions:ratio=16/9',
+            'alt_text' => 'max:200|unique:slider_images,alt_text,' . $this->id,
+            'url_btn_label' => 'max:200',
+            'url' => 'max:200',
         ];
     }
 

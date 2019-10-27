@@ -19,7 +19,7 @@ class MyblSliderComponentTypesTableSeeder extends Seeder
         foreach ($slider_types as $slider) {
             $slider_component_types[] = [
                 'name' => $slider,
-                'slug' => str_replace( " ", "", $slider)
+                'slug' => str_replace(" ", "", $slider)
             ];
         }
 

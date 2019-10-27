@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: BS23
@@ -7,7 +8,6 @@
  */
 
 namespace App\Services;
-
 
 use App\Repositories\AnswerOptionRepository;
 use App\Repositories\OptionRepository;

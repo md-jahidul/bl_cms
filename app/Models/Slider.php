@@ -23,12 +23,13 @@ class Slider extends Model
     ];
 
 
-    public function SliderComponentTypes(){
-        return $this->belongsTo(SliderComponentType::class,'component_id','id');
+    public function SliderComponentTypes()
+    {
+        return $this->belongsTo(SliderComponentType::class, 'component_id', 'id');
     }
 
-    public function sliderImages(){
+    public function sliderImages()
+    {
         return $this->hasMany(SliderImage::class)->orderBy('sequence', 'asc');
     }
-
 }

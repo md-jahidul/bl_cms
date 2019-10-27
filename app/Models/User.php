@@ -44,9 +44,11 @@ class User extends Authenticatable
      */
     public function shortcuts()
     {
-        return $this->belongsToMany(Shortcut::class,'shortcut_user',
-            'user_id','shortcut_id');
+        return $this->belongsToMany(
+            Shortcut::class,
+            'shortcut_user',
+            'user_id',
+            'shortcut_id'
+        );
     }
-
-
 }

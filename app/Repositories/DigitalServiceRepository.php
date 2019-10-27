@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -7,7 +8,6 @@
  */
 
 namespace App\Repositories;
-
 
 use App\Models\DigitalService;
 

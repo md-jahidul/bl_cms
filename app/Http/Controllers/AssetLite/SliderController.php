@@ -118,5 +118,4 @@ class SliderController extends Controller
         Session::flash('message', $response->getContent());
         return redirect('/sliders');
     }
-
 }

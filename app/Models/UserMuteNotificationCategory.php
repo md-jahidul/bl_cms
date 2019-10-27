@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-
 class UserMuteNotificationCategory extends Model
 {
 
@@ -26,6 +25,4 @@ class UserMuteNotificationCategory extends Model
         'user_id',
         'category_id',
     ];
-
-
 }

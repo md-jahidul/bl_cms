@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: BS23
@@ -8,14 +9,12 @@
 
 namespace App\Services;
 
-
 use App\Repositories\PrizeRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
 class PrizeService
 {
-
     use CrudTrait;
 
     /**
@@ -67,5 +66,4 @@ class PrizeService
         $prize->delete();
         return Response('Prize deleted successfully !');
     }
-
 }

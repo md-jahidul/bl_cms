@@ -23,9 +23,9 @@ class MyblSliderRequest extends FormRequest
      */
     public function rules()
     {
-       return [
+        return [
             'component_id' => 'required',
-            'title' => 'required|max:200|unique:sliders,title,'.$this->id,
+            'title' => 'required|max:200|unique:sliders,title,' . $this->id,
         ];
     }
 

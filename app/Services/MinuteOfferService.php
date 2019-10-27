@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -8,16 +9,14 @@
 
 namespace App\Services;
 
-
 use App\Repositories\MinuteOfferRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
-
 class MinuteOfferService
 {
-
     use CrudTrait;
+
     /**
      * @var $minuteOfferRepository
      */
@@ -66,5 +65,4 @@ class MinuteOfferService
         $data->delete();
         return Response('Minute Offer has been successfully deleted');
     }
-
 }

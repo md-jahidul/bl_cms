@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -8,14 +9,13 @@
 
 namespace App\Services;
 
-
 use App\Repositories\DigitalServiceRepository;
 use App\Traits\CrudTrait;
 
 class DigitalServicesService
 {
-
     use CrudTrait;
+
     /**
      * @var DigitalServiceRepository
      */
@@ -30,5 +30,4 @@ class DigitalServicesService
         $this->digitalServiceRepository = $digitalServiceRepository;
         $this->setActionRepository($digitalServiceRepository);
     }
-
 }

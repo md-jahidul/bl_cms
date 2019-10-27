@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -10,7 +11,6 @@ namespace App\Repositories;
 
 use App\Models\AlSliderComponentType;
 use App\Models\SliderComponentType;
-
 
 class MyblSliderComponentTypeRepository extends BaseRepository
 {

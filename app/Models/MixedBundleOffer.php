@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -22,5 +23,4 @@ class MixedBundleOffer extends Model
         'offer_code',
         'tag'
     ];
-
 }

@@ -23,12 +23,12 @@ class DemoController extends Controller
 
     public function fileUpload()
     {
-
     }
 
     public function uploadCustomerByExcel(Request $request)
     {
-        $validate = Validator::make($request->all(),
+        $validate = Validator::make(
+            $request->all(),
             [
                 'customer_file' => 'required|file|mimes:xlsx',
             ]
@@ -43,9 +43,9 @@ class DemoController extends Controller
         }
 
         try {
-
             $path = $request->file('customer_file')->store(
-                'customers/'.date('y-m-d'), 'public'
+                'customers/' . date('y-m-d'),
+                'public'
             );
 
             //dd(public_path('storage/' . $path));
@@ -53,7 +53,7 @@ class DemoController extends Controller
 
             $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
 
-            $file_path =Storage::disk('public')->path($path);
+            $file_path = Storage::disk('public')->path($path);
 
             $reader->open($file_path);
 
@@ -65,7 +65,7 @@ class DemoController extends Controller
 
                     $cells = $row->getCells();
 
-                    foreach ($cells as $cell){
+                    foreach ($cells as $cell) {
                         echo "<pre>";
                         print_r($cell->getValue());
                     }
@@ -73,14 +73,11 @@ class DemoController extends Controller
             }
 
             $reader->close();
-
         } catch (\Exception $e) {
             return [
                 'success' => false,
                 'message' => $e->getMessage()
             ];
-
         }
-
     }
 }

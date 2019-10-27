@@ -19,7 +19,7 @@ class CreateAlSlidersTable extends Migration
             $table->string('title_en');
             $table->string('title_bn');
             $table->string('short_code');
-            $table->string('slider_type')->default('single');                         // single, multiple 
+            $table->string('slider_type')->default('single');                         // single, multiple
             $table->json('other_attributes')->nullable();
             $table->foreign('component_id')
                     ->references('id')

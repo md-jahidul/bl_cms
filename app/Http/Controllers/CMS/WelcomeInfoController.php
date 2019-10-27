@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\CMS;
+
 use App\Http\Controllers\Controller;
 use App\Models\WelcomeInfo;
 use App\Services\WelcomeInfoService;
@@ -32,7 +33,7 @@ class WelcomeInfoController extends Controller
      */
     public function index()
     {
-        return view('admin.welcomeInfo.index')->with('welcomeInfo',$this->welcomeInfoService->findAll()->first());
+        return view('admin.welcomeInfo.index')->with('welcomeInfo', $this->welcomeInfoService->findAll()->first());
     }
 
     /**
@@ -42,7 +43,7 @@ class WelcomeInfoController extends Controller
      */
     public function create()
     {
-        return view('admin.welcomeInfo.create')->with('welcomeInfo',$this->welcomeInfoService->findAll()->first());
+        return view('admin.welcomeInfo.create')->with('welcomeInfo', $this->welcomeInfoService->findAll()->first());
     }
 
 
@@ -54,7 +55,7 @@ class WelcomeInfoController extends Controller
      */
     public function store(WelcomeInfoRequest $request)
     {
-        session()->flash('message',$this->welcomeInfoService->storeWelcomeInfo($request->all())->getContent());
+        session()->flash('message', $this->welcomeInfoService->storeWelcomeInfo($request->all())->getContent());
         return redirect(route('welcomeInfo.index'));
     }
 
@@ -72,8 +73,8 @@ class WelcomeInfoController extends Controller
      */
     public function edit($id)
     {
-       return view('admin.welcomeInfo.create')
-                ->with('welcomeInfo',$this->welcomeInfoService->findOne($id));
+        return view('admin.welcomeInfo.create')
+                ->with('welcomeInfo', $this->welcomeInfoService->findOne($id));
     }
 
 
@@ -86,7 +87,7 @@ class WelcomeInfoController extends Controller
      */
     public function update(WelcomeInfoRequest $request, WelcomeInfo $welcomeInfo)
     {
-        session()->flash('status',$this->welcomeInfoService->updateWelcomeInfo($request, $welcomeInfo)->getContent());
+        session()->flash('status', $this->welcomeInfoService->updateWelcomeInfo($request, $welcomeInfo)->getContent());
         return redirect(route('welcomeInfo.index'));
     }
 

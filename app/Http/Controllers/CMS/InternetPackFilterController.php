@@ -47,7 +47,8 @@ class InternetPackFilterController extends Controller
 
     public function savePriceFilter(Request $request)
     {
-        $validate = Validator::make($request->all(),
+        $validate = Validator::make(
+            $request->all(),
             [
                 'lower' => 'required|numeric|max:2000',
                 'upper' => 'numeric|gt:lower|max:2000'
@@ -56,19 +57,19 @@ class InternetPackFilterController extends Controller
 
         if ($validate->fails()) {
             $response = [
-                'success' =>'FAILED',
+                'success' => 'FAILED',
                 'errors'  => $validate->errors()->first()
             ];
             return response()->json($response, 422);
         }
 
-        return $this->service->addFilter($request,'price','tk.');
-
+        return $this->service->addFilter($request, 'price', 'tk.');
     }
 
     public function deleteFilter(Request $request)
     {
-        $validate = Validator::make($request->all(),
+        $validate = Validator::make(
+            $request->all(),
             [
                 'id' => 'required|exists:internet_pack_filters,id'
             ]
@@ -76,7 +77,7 @@ class InternetPackFilterController extends Controller
 
         if ($validate->fails()) {
             $response = [
-                'success' =>'FAILED',
+                'success' => 'FAILED',
                 'errors'  => $validate->errors()->first()
             ];
             return response()->json($response, 422);
@@ -87,7 +88,8 @@ class InternetPackFilterController extends Controller
 
     public function saveInternetFilter(Request $request)
     {
-        $validate = Validator::make($request->all(),
+        $validate = Validator::make(
+            $request->all(),
             [
                 'lower' => 'required|numeric|max:102400',
                 'upper' => 'numeric|gt:lower|max:102400'
@@ -96,20 +98,20 @@ class InternetPackFilterController extends Controller
 
         if ($validate->fails()) {
             $response = [
-                'success' =>'FAILED',
+                'success' => 'FAILED',
                 'errors'  => $validate->errors()->first()
             ];
             return response()->json($response, 422);
         }
 
-        return $this->service->addFilter($request,'internet','mb');
-
+        return $this->service->addFilter($request, 'internet', 'mb');
     }
 
 
     public function saveValidityFilter(Request $request)
     {
-        $validate = Validator::make($request->all(),
+        $validate = Validator::make(
+            $request->all(),
             [
                 'lower' => 'required|numeric|max:365',
                 'upper' => 'numeric|gt:lower|max:365'
@@ -118,13 +120,12 @@ class InternetPackFilterController extends Controller
 
         if ($validate->fails()) {
             $response = [
-                'success' =>'FAILED',
+                'success' => 'FAILED',
                 'errors'  => $validate->errors()->first()
             ];
             return response()->json($response, 422);
         }
 
-        return $this->service->addFilter($request,'validation','days');
-
+        return $this->service->addFilter($request, 'validation', 'days');
     }
 }

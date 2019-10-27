@@ -25,7 +25,8 @@ class AlSlider extends Model
         return $this->belongsTo(AlSliderComponentType::class, 'id');
     }
 
-    public function sliderImages(){
+    public function sliderImages()
+    {
         return $this->hasMany(AlSliderImage::class)->orderBy('sequence', 'asc');
     }
 }

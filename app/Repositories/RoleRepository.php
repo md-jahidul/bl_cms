@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -7,10 +8,10 @@
  */
 
 namespace App\Repositories;
+
 use App\Models\Role;
 
 class RoleRepository extends BaseRepository
 {
     public $modelName = Role::class;
-
 }

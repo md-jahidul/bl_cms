@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -8,16 +9,14 @@
 
 namespace App\Services;
 
-
 use App\Repositories\UssdRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
-
 class UssdService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -38,7 +37,7 @@ class UssdService
      * @return Response
      */
     public function storeUssd($data)
-    { 
+    {
         $this->save($data);
         return new Response("USSD Code has been successfully created");
     }
@@ -66,5 +65,4 @@ class UssdService
         $data->delete();
         return Response('USSD Code has been successfully deleted');
     }
-
 }

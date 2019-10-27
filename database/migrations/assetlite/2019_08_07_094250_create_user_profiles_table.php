@@ -37,7 +37,5 @@ class CreateUserProfilesTable extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('user_profiles');
         Schema::enableForeignKeyConstraints();
-
-
     }
 }

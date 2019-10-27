@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -8,16 +9,14 @@
 
 namespace App\Services;
 
-
 use App\Repositories\BannerRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
-
 class BannerService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -39,7 +38,7 @@ class BannerService
      */
     public function storeBanner($data)
     {
-        $data['image_path'] = 'storage/'.$data['image_path']->store('banner');
+        $data['image_path'] = 'storage/' . $data['image_path']->store('banner');
         $this->save($data);
         return new Response("Banner has been successfully created");
     }
@@ -52,18 +51,17 @@ class BannerService
     public function updateBanner($data, $banner)
     {
 
-        if(isset($data->image_path)){
+        if (isset($data->image_path)) {
             $data = $data->all();
-            $data['image_path'] = 'storage/'.$data['image_path']->store('banner');
+            $data['image_path'] = 'storage/' . $data['image_path']->store('banner');
             unlink($banner->image_path);
             $banner->update($data);
-        }else{
+        } else {
             $data->image_path = $banner->image_path;
             $banner->update($data->all());
         }
         
         return Response('Banner has been successfully updated');
-        
     }
 
     /**
@@ -78,5 +76,4 @@ class BannerService
         $banner->delete();
         return Response('banner has been successfully deleted');
     }
-
 }

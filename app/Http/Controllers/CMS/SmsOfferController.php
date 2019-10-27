@@ -34,7 +34,7 @@ class SmsOfferController extends Controller
      */
     public function index()
     {
-        return view('admin.offer-sms.index')->with('sms_offers',$this->smsOfferService->findAll());
+        return view('admin.offer-sms.index')->with('sms_offers', $this->smsOfferService->findAll());
     }
 
     /**
@@ -79,7 +79,7 @@ class SmsOfferController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.offer-sms.edit')->with('sms_offer',$this->smsOfferService->findOne($id));
+        return view('admin.offer-sms.edit')->with('sms_offer', $this->smsOfferService->findOne($id));
     }
 
     /**
@@ -92,7 +92,7 @@ class SmsOfferController extends Controller
     public function update(SmsOfferRequest $request, $id)
     {
         //dd($request,$id);
-        session()->flash('success',$this->smsOfferService->updateSmsOffer($request,$id)->getContent());
+        session()->flash('success', $this->smsOfferService->updateSmsOffer($request, $id)->getContent());
         return redirect(route('smsOffer.index'));
     }
 
@@ -104,7 +104,7 @@ class SmsOfferController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error',$this->smsOfferService->deleteSmsOffer($id)->getContent());
+        session()->flash('error', $this->smsOfferService->deleteSmsOffer($id)->getContent());
         return url('smsOffer');
     }
 }
