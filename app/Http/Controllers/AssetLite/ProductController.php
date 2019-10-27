@@ -56,10 +56,9 @@ class ProductController extends Controller
     public function create($type)
     {
         $type = ucfirst($type);
-
         $tags = $this->tagCategoryService->findAll();
 
-        return $tags;
+//        return $tags;
 
         return view('admin.product.create', compact('type', 'tags'));
     }

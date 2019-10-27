@@ -11,26 +11,26 @@ class ProductsTableSeeder extends Seeder
     public function getOfferInfo($name)
     {
         $obj = new stdClass();
-        
+
         switch ($name) {
             case 'internet':
                 $obj->sms_volume = rand(50, 500);
                 break;
-                
+
             case 'voice':
                 $obj->min_volume = rand(50, 500);
                 break;
-                
+
             case 'packages':
                 //$obj->min_volume = rand(50, 500);
                 break;
-            
+
             case 'bundles':
                 $obj->sms_volume = rand(50, 500);
                 $obj->min_volume = rand(50, 500);
                 $obj->internet_volume_mb = rand(100, 12000);
                 break;
-            
+
             case 'others':
                 break;
 
@@ -52,8 +52,8 @@ class ProductsTableSeeder extends Seeder
     public function run()
     {
         // Prepaid,
-        
-        
+
+
         /*
 
         Postpaid
@@ -97,7 +97,7 @@ class ProductsTableSeeder extends Seeder
                     'ussd' => '*' . rand(1000, 9999) . '*' . '1#',
                     'sim_category_id' => SimCategory::where('alias', 'postpaid')->first('id'),
                     'offer_category_id' => $offer->id,
-                    'is_home' => $showInHome,
+                    'show_in_home' => $showInHome,
                     'display_order' => $displayOrder
                 ]
             );
