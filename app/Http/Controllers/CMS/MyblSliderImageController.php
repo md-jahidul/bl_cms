@@ -49,7 +49,7 @@ class MyblSliderImageController extends Controller
     public function index($sliderId)
     {
         $slider_information = $this->sliderService->findOne($sliderId);
-        return view('admin.myblslider.images.index',compact('sliderId','slider_information'));
+        return view('admin.myblslider.images.index', compact('sliderId', 'slider_information'));
     }
 
 
@@ -61,7 +61,7 @@ class MyblSliderImageController extends Controller
     public function create($sliderId)
     {
         $slider_information = $this->sliderService->findOne($sliderId);
-        return view('admin.myblslider.images.create',compact('sliderId','slider_information'));
+        return view('admin.myblslider.images.create', compact('sliderId', 'slider_information'));
     }
 
     /**return redirect(route('myblslider.index'));
@@ -72,9 +72,8 @@ class MyblSliderImageController extends Controller
      */
     public function store(SliderImageStoreRequest $request)
     {
-        session()->flash('message',$this->sliderImageService->storeSliderImage($request->all())->getContent());
+        session()->flash('message', $this->sliderImageService->storeSliderImage($request->all())->getContent());
         return redirect()->back();
-
     }
 
     /**
@@ -113,7 +112,7 @@ class MyblSliderImageController extends Controller
     public function edit($sliderImageId)
     {
         $imageInfo = SliderImage::find($sliderImageId);
-        return view('admin.myblslider.images.edit',compact('imageInfo'));
+        return view('admin.myblslider.images.edit', compact('imageInfo'));
     }
 
     /**
@@ -125,7 +124,7 @@ class MyblSliderImageController extends Controller
      */
     public function update(SliderImageUpdateRequest $request, $id)
     {
-        session()->flash('success',$this->sliderImageService->updateSliderImage($request->all(), $id)->getContent());
+        session()->flash('success', $this->sliderImageService->updateSliderImage($request->all(), $id)->getContent());
         return redirect()->back();
     }
 
@@ -138,7 +137,7 @@ class MyblSliderImageController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error',$this->sliderImageService->deletesliderImage($id)->getContent());
+        session()->flash('error', $this->sliderImageService->deletesliderImage($id)->getContent());
         return redirect()->back();
     }
 }

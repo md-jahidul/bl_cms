@@ -12,6 +12,6 @@ class AppVersion extends Model
      * @var array
      */
     protected $fillable = [
-        'platform','current_version', 'force_update'
+        'platform','current_version', 'force_update', 'message'
     ];
 }
