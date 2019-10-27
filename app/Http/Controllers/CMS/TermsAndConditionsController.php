@@ -9,20 +9,20 @@ use App\Http\Controllers\Controller;
 
 class TermsAndConditionsController extends Controller
 {
-    public function  show()
+    public function show()
     {
-        $terms_conditions = TermsConditions::where('platform','app')->first();
+        $terms_conditions = TermsConditions::where('platform', 'app')->first();
 
-        return view('admin.terms-conditions.show',compact('terms_conditions'));
+        return view('admin.terms-conditions.show', compact('terms_conditions'));
     }
 
     public function store(SaveTermsAndConditionsRequest $request)
     {
-       TermsConditions::updateOrCreate([
+        TermsConditions::updateOrCreate([
            'platform' => 'app'
-       ],[
+        ], [
            'terms_conditions' => $request->terms_conditions
-       ]);
+        ]);
 
         return redirect()->back()->with('success', 'Terms and Conditions are Saved');
     }

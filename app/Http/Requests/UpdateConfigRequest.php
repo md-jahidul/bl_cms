@@ -40,7 +40,8 @@ class UpdateConfigRequest extends FormRequest
         ];
     }
 
-    public function messages() {
+    public function messages()
+    {
         return [
 //            'site_logo.required' => "Can't be save null value",
 //            'email.required' => "Can\'t be save null value",

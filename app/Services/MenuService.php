@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Repositories\MenuRepository;
 use App\Traits\CrudTrait;
@@ -42,7 +40,7 @@ class MenuService
      */
     public function storeMenu($data)
     {
-        $menu_count = count( $this->menuRepository->getChildMenus( $data['parent_id'] ) );
+        $menu_count = count($this->menuRepository->getChildMenus($data['parent_id']));
         $data['display_order'] = ++$menu_count;
         $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
         $this->save($data);
@@ -87,5 +85,4 @@ class MenuService
             'parent_id' => $menu->parent_id
         ];
     }
-
 }

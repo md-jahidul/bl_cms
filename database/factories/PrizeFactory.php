@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Prize::class, function (Faker $faker) {
 
     $position = array('1st', '2nd', '3rd',);
-    $random_keys = array_rand($position,3);
+    $random_keys = array_rand($position, 3);
 
     return [
         'title' => $faker->jobTitle,

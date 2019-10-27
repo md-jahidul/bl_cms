@@ -24,11 +24,11 @@ class HelpCenterRequest extends FormRequest
     public function rules()
     {
         return [
-            'value_exist'=>'required',
-            'title'=>'required|max:200|unique:help_centers,title,'.$this->id,
-            'icon'=>'required_if:value_exist,no|image|mimes:jpeg,jpg,png',
-            'redirect_link'=>'required|url',
-            'sequence'=>'required|numeric|min:0|max:999999999999999999|unique:help_centers,sequence,'.$this->id,
+            'value_exist' => 'required',
+            'title' => 'required|max:200|unique:help_centers,title,' . $this->id,
+            'icon' => 'required_if:value_exist,no|image|mimes:jpeg,jpg,png',
+            'redirect_link' => 'required|url',
+            'sequence' => 'required|numeric|min:0|max:999999999999999999|unique:help_centers,sequence,' . $this->id,
         ];
     }
 }

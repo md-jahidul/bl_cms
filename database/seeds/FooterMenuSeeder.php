@@ -8,14 +8,15 @@ class FooterMenuSeeder extends Seeder
 {
 
 
-    public function createSubmenu($sub_menus, $sub_menu_english, $sub_menu_bangla, $parentId){
-        foreach ($sub_menus as $key => $smenu){
+    public function createSubmenu($sub_menus, $sub_menu_english, $sub_menu_bangla, $parentId)
+    {
+        foreach ($sub_menus as $key => $smenu) {
             FooterMenu::create([
                 'en_label_text' => $sub_menu_english[$key],
                 'bn_label_text' => $sub_menu_bangla[$key],
                 'parent_id' => $parentId,
-                'code' => str_replace( " ", "", $smenu),
-                'url' => '/'. strtolower( str_replace( " ", "-", $smenu) ) ,
+                'code' => str_replace(" ", "", $smenu),
+                'url' => '/' . strtolower(str_replace(" ", "-", $smenu)) ,
                 'external_site' => 0,
                 'status' => 1,
                 'display_order' => $key + 1
@@ -34,13 +35,13 @@ class FooterMenuSeeder extends Seeder
         $menu_english = ['About','Offers','Apps And Service','Bussiness','Useful Links'];
         $menu_bangla = ['পরিচিতি','কভারেজ','অ্যাপ & সার্ভিস','বিজনেস','লয়াল্টি','ই-শপ'];
 
-        foreach ($menus as $key => $menu){
+        foreach ($menus as $key => $menu) {
             FooterMenu::create([
                 'en_label_text' => $menu_english[$key],
                 'bn_label_text' => $menu_bangla[$key],
                 'parent_id' => 0,
-                'code' => str_replace( " ", "", $menu),
-                'url' => '/'. strtolower( str_replace( " ", "-", $menu) ) ,
+                'code' => str_replace(" ", "", $menu),
+                'url' => '/' . strtolower(str_replace(" ", "-", $menu)) ,
                 'external_site' => 0,
                 'status' => 1,
                 'display_order' => $key + 1

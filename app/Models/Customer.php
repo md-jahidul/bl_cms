@@ -12,8 +12,4 @@ class Customer extends Model
      * @var array
      */
     protected $guarded = ['id'];
-
-
-
-
 }

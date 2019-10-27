@@ -22,8 +22,11 @@ class Shortcut extends Model
      */
     public function users()
     {
-        return $this->belongsToMany('App\Models\User','shortcut_user',
-            'shortcut_id','user_id');
+        return $this->belongsToMany(
+            'App\Models\User',
+            'shortcut_user',
+            'shortcut_id',
+            'user_id'
+        );
     }
-
 }

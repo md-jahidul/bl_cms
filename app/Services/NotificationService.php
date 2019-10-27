@@ -1,16 +1,15 @@
 <?php
-namespace App\Services;
 
+namespace App\Services;
 
 use App\Repositories\NotificationRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
-
 class NotificationService
 {
-
     use CrudTrait;
+
     /**
      * @var $NotificationRepository
      */
@@ -46,7 +45,6 @@ class NotificationService
         $notification = $this->findOne($id);
         $notification->update($data);
         return Response('Notification has been successfully updated');
-        
     }
 
     /**
@@ -80,9 +78,8 @@ class NotificationService
      * @param $user_phone
      * @return array
      */
-    public function checkMuteOfferForUser($category_id,$user_phone): array
+    public function checkMuteOfferForUser($category_id, $user_phone): array
     {
-        return $this->notificationRepository->checkMuteOfferForUser($category_id,$user_phone);
+        return $this->notificationRepository->checkMuteOfferForUser($category_id, $user_phone);
     }
-
 }

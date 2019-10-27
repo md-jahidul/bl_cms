@@ -38,9 +38,11 @@ class PushNotificationController extends Controller
     public function saveCustomerListFile(Request $request)
     {
         $file = $request->file('customer_file');
-        $path = $file->storeAs('uploads',
+        $path = $file->storeAs(
+            'uploads',
             "customer" . '.' . $file->getClientOriginalExtension(),
-            'public');
+            'public'
+        );
 
         return $path;
     }
@@ -77,14 +79,15 @@ class PushNotificationController extends Controller
 
             $customer_array = [];
             foreach ($reader->getSheetIterator() as $sheet) {
-                if ($sheet->getIndex() > 0) break;
+                if ($sheet->getIndex() > 0) {
+                    break;
+                }
 
                 foreach ($sheet->getRowIterator() as $row) {
                     $cells = $row->getCells();
                     $number = $cells[0]->getValue();
                     $customer_array [] = $number;
                 }
-
             }
             $reader->close();
 
@@ -111,7 +114,6 @@ class PushNotificationController extends Controller
 
                 NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
                     ->onQueue('notification');
-
             }
 
             return [
@@ -123,9 +125,7 @@ class PushNotificationController extends Controller
                 'success' => false,
                 'message' => $e->getMessage()
             ];
-
         }
-
     }
 
 
@@ -141,12 +141,10 @@ class PushNotificationController extends Controller
         $notification_id = $request->input('id');
         $category_id = $request->input('category_id');
 
-        if($request->filled('user_phone'))
-        {
-
+        if ($request->filled('user_phone')) {
             $phone_list = $request->input('user_phone');
 
-            $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id,$phone_list);
+            $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $phone_list);
 
             $notification = [
                 'title' => $request->input('title'),
@@ -162,7 +160,6 @@ class PushNotificationController extends Controller
 
             ];
         } else {
-
             $notification = [
                 'title' => $request->input('title'),
                 'body' => $request->input('message'),
@@ -181,7 +178,7 @@ class PushNotificationController extends Controller
         NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
             ->onQueue('notification');
 
-        session()->flash('success',"Notification has been sent successfully");
+        session()->flash('success', "Notification has been sent successfully");
 
         return redirect(route('notification.index'));
 
@@ -203,5 +200,4 @@ class PushNotificationController extends Controller
 
          session()->flash('success',"Notification send Failed");*/
     }
-
 }

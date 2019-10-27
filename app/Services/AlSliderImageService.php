@@ -1,6 +1,6 @@
 <?php
-namespace App\Services;
 
+namespace App\Services;
 
 use App\Repositories\AlSliderImageRepository;
 use App\Repositories\SliderImageRepository;
@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 class AlSliderImageService
 {
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -40,7 +41,7 @@ class AlSliderImageService
     {
         $count = count($this->alSliderImageRepository->findAll());
         $imageUrl = $this->imageUpload($data, 'image_url', $data['title_en'], 'slider-images');
-        $data['image_url'] = env('APP_URL', 'http://localhost:8000') . "/slider-images/".$imageUrl;
+        $data['image_url'] = env('APP_URL', 'http://localhost:8000') . "/slider-images/" . $imageUrl;
         $data['slider_id'] = $sliderId;
         $data['display_order'] = ++$count;
         $this->save($data);
@@ -61,9 +62,9 @@ class AlSliderImageService
     public function updateSliderImage($data, $id)
     {
         $sliderImage = $this->findOne($id);
-        if (!empty($data['image_url'])){
+        if (!empty($data['image_url'])) {
             $imageUrl = $this->imageUpload($data, 'image_url', $data['title_en'], 'slider-images');
-            $data['image_url'] = env('APP_URL', 'http://localhost:8000') . "/slider-images/".$imageUrl;
+            $data['image_url'] = env('APP_URL', 'http://localhost:8000') . "/slider-images/" . $imageUrl;
         }
         $sliderImage->update($data);
         return Response('Slider Image update successfully !');
@@ -80,5 +81,4 @@ class AlSliderImageService
         $sliderImage->delete();
         return Response('Slider Image delete successfully');
     }
-
 }

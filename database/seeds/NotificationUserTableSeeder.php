@@ -17,7 +17,7 @@ class NotificationUserTableSeeder extends Seeder
             'user_id' => 4,
             'notification_id' => 1,
 
-           ],
+            ],
 
             [
                 'user_id' => 5,
@@ -30,7 +30,7 @@ class NotificationUserTableSeeder extends Seeder
             'user_id' => 4,
             'notification_id' => 3,
 
-           ],
+            ],
 
             [
                 'user_id' => 5,

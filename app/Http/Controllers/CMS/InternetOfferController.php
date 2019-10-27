@@ -34,7 +34,7 @@ class InternetOfferController extends Controller
      */
     public function index()
     {
-        return view('admin.offer-internet.index')->with('internet_offers',$this->internetOfferService->findAll());
+        return view('admin.offer-internet.index')->with('internet_offers', $this->internetOfferService->findAll());
     }
 
     /**
@@ -80,7 +80,7 @@ class InternetOfferController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.offer-internet.edit')->with('internet_offer',$this->internetOfferService->findOne($id));
+        return view('admin.offer-internet.edit')->with('internet_offer', $this->internetOfferService->findOne($id));
     }
 
     /**
@@ -92,7 +92,7 @@ class InternetOfferController extends Controller
      */
     public function update(InternetOfferRequest $request, $id)
     {
-        session()->flash('success',$this->internetOfferService->updateInternetOffer($request,$id)->getContent());
+        session()->flash('success', $this->internetOfferService->updateInternetOffer($request, $id)->getContent());
         return redirect(route('internetOffer.index'));
     }
 
@@ -104,7 +104,7 @@ class InternetOfferController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error',$this->internetOfferService->destroyInternetOffer($id)->getContent());
+        session()->flash('error', $this->internetOfferService->destroyInternetOffer($id)->getContent());
         return url('internetOffer');
     }
 }

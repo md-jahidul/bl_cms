@@ -57,10 +57,10 @@ class ConfigPolicy
     public function update(User $user, Config $config)
     {
 //      dd($user);
-      if($user->email === 'assetlite@admin.com'){
-          return true;
-      }
-      return false;
+        if ($user->email === 'assetlite@admin.com') {
+            return true;
+        }
+        return false;
 //        return is_array($user->email, ['assetlite@admin.com']);
     }
 

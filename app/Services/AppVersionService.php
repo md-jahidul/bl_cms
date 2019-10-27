@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Repositories\AppVersionRepository;
@@ -61,7 +62,4 @@ class AppVersionService
         $appVersion = $this->appVersionRepository->findOne($id);
         return $appVersion->delete();
     }
-
-
-
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Repositories;
-
 
 use App\Models\Menu;
 
@@ -18,7 +16,7 @@ class MenuRepository extends BaseRepository
     public function menuTableSort($request)
     {
         $positions = $request->position;
-        foreach ($positions as $position){
+        foreach ($positions as $position) {
             $menu_id = $position[0];
             $new_position = $position[1];
             $update_menu = $this->model->findOrFail($menu_id);
@@ -27,5 +25,4 @@ class MenuRepository extends BaseRepository
         }
         return "success";
     }
-
 }

@@ -11,6 +11,6 @@ class Setting extends Model
     
     public function settingsKey()
     {
-        return $this->hasOne('App\Models\SettingKey','id','setting_key_id');
+        return $this->hasOne('App\Models\SettingKey', 'id', 'setting_key_id');
     }
 }

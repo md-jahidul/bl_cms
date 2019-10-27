@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -8,16 +9,14 @@
 
 namespace App\Services;
 
-
 use App\Repositories\InternetOfferRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
-
 class InternetOfferService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -66,5 +65,4 @@ class InternetOfferService
         $data->delete();
         return Response('Internet Offer has been successfully deleted');
     }
-
 }

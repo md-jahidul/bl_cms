@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Http\Helpers;
 use App\Repositories\MetaTagRepository;
@@ -32,7 +30,7 @@ class MetaTagService
 
     public function findMetaTag($id)
     {
-       return $this->metaTagRepository->metaTag($id);
+        return $this->metaTagRepository->metaTag($id);
     }
 
 
@@ -47,7 +45,4 @@ class MetaTagService
         $metaTag->update($data);
         return Response('Meta tag updated successfully');
     }
-
-
-
 }

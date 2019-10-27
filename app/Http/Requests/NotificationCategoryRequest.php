@@ -24,7 +24,7 @@ class NotificationCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|max:200|unique:notifications_category,name,'.$this->id
+            'name' => 'required|max:200|unique:notifications_category,name,' . $this->id
         ];
     }
 }

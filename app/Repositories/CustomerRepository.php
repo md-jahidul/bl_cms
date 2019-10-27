@@ -25,9 +25,4 @@ class CustomerRepository
     {
         $this->model = $model;
     }
-
-
-
-
-
 }

@@ -27,7 +27,7 @@ class ShortcutsTableSeeder extends Seeder
                 'created_at' => '2019-08-21 11:45:41',
                 'updated_at' => '2019-08-21 11:45:41',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 35,
                 'title' => 'FNF',
@@ -37,7 +37,7 @@ class ShortcutsTableSeeder extends Seeder
                 'created_at' => '2019-08-21 11:45:59',
                 'updated_at' => '2019-08-21 11:45:59',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 36,
                 'title' => 'Recharge',
@@ -47,7 +47,7 @@ class ShortcutsTableSeeder extends Seeder
                 'created_at' => '2019-08-21 11:46:19',
                 'updated_at' => '2019-08-21 11:46:19',
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 37,
                 'title' => 'Balance',
@@ -57,7 +57,7 @@ class ShortcutsTableSeeder extends Seeder
                 'created_at' => '2019-08-21 11:46:32',
                 'updated_at' => '2019-08-21 11:46:32',
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 38,
                 'title' => 'Transfer',
@@ -67,7 +67,7 @@ class ShortcutsTableSeeder extends Seeder
                 'created_at' => '2019-08-21 11:46:47',
                 'updated_at' => '2019-08-21 11:46:47',
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 39,
                 'title' => 'Shopping',
@@ -111,7 +111,5 @@ class ShortcutsTableSeeder extends Seeder
                     'updated_at' => '2019-08-21 11:47:30',
                 ),
         ));
-        
-        
     }
 }

@@ -32,6 +32,6 @@ class FaqCategorySeeder extends Seeder
             ],
         ];
 
-        \App\Models\FaqCategory::insert( $category);
+        \App\Models\FaqCategory::insert($category);
     }
 }

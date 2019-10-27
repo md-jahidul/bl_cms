@@ -14,7 +14,4 @@ class UssdCode extends Model
         'provider',
     ];
     //
-
-
-
 }

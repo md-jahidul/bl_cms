@@ -25,7 +25,7 @@ class Partner extends Model
 
     public function partnerCategory()
     {
-       return $this->belongsTo(PartnerCategory::class);
+        return $this->belongsTo(PartnerCategory::class);
     }
 
     public function partnerOffers()

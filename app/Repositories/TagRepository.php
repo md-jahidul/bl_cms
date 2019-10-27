@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: BS23
@@ -7,6 +8,7 @@
  */
 
 namespace App\Repositories;
+
 use App\Models\Tag;
 
 class TagRepository extends BaseRepository

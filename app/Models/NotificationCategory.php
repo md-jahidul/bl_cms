@@ -5,10 +5,8 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 
-
 class NotificationCategory extends Model
 {
-
     use Sluggable;
 
     /**
@@ -32,8 +30,9 @@ class NotificationCategory extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function notifications(){
-        return $this->hasMany(Notification::class,'category_id','id');
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'category_id', 'id');
     }
 
 

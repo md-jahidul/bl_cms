@@ -19,13 +19,13 @@ class PartnerOfferTableSeeder extends Seeder
         $getOfferMsgEn = "Type 8497 send SMS to 1020";
         $getOfferMsgBn = "৮৪৯৭ টাইপ করুন ১০২০ নম্বরে এসএমএস পাঠান";
         $countHomePageOffer = 0;
-        for ($i=0; $i < 30; $i++){
-            $randItem = rand(0,2);
-            $showInHome = rand(0,3) ? 1 : 0;
+        for ($i = 0; $i < 30; $i++) {
+            $randItem = rand(0, 2);
+            $showInHome = rand(0, 3) ? 1 : 0;
 
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
             PartnerOffer::create([
-                'partner_id' => rand(1,5),
+                'partner_id' => rand(1, 5),
                 'validity_en' => $validityEn[$randItem],
                 'validity_bn' => $validityBn[$randItem],
                 'offer_en' => $offerEn[$randItem],
@@ -35,7 +35,7 @@ class PartnerOfferTableSeeder extends Seeder
                 'btn_text_en' => 'View Details',
                 'btn_text_bn' => 'বিস্তারিত দেখুন',
                 'show_in_home' => $showInHome,
-                'is_active' => rand(0,6) ? 1 : 0,
+                'is_active' => rand(0, 6) ? 1 : 0,
                 'display_order' => $displayOrder,
                 'other_attributes' => json_encode(null),
             ]);

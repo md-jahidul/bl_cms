@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Repositories\CustomerRepository;
@@ -25,7 +26,4 @@ class CustomerService
     {
         $this->customerRepository = $customerRepository;
     }
-
-
-
 }

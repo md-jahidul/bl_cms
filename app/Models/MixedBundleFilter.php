@@ -11,42 +11,42 @@ class MixedBundleFilter extends Model
 
     public function scopePrice($builder)
     {
-        $type = OfferFilterType::where('slug','price')->first();
-        return $builder->where('offer_filter_type_id','=', $type->id);
+        $type = OfferFilterType::where('slug', 'price')->first();
+        return $builder->where('offer_filter_type_id', '=', $type->id);
     }
 
     public function scopeInternet($builder)
     {
-        $type = OfferFilterType::where('slug','internet')->first();
-        return $builder->where('offer_filter_type_id','=', $type->id);
+        $type = OfferFilterType::where('slug', 'internet')->first();
+        return $builder->where('offer_filter_type_id', '=', $type->id);
     }
 
     public function scopeMinutes($builder)
     {
-        $type = OfferFilterType::where('slug','minutes')->first();
-        return $builder->where('offer_filter_type_id','=', $type->id);
+        $type = OfferFilterType::where('slug', 'minutes')->first();
+        return $builder->where('offer_filter_type_id', '=', $type->id);
     }
 
     public function scopeSms($builder)
     {
-        $type = OfferFilterType::where('slug','sms')->first();
-        return $builder->where('offer_filter_type_id','=', $type->id);
+        $type = OfferFilterType::where('slug', 'sms')->first();
+        return $builder->where('offer_filter_type_id', '=', $type->id);
     }
 
     public function scopeValidity($builder)
     {
-        $type = OfferFilterType::where('slug','validation')->first();
-        return $builder->where('offer_filter_type_id','=', $type->id);
+        $type = OfferFilterType::where('slug', 'validation')->first();
+        return $builder->where('offer_filter_type_id', '=', $type->id);
     }
 
     public function scopeSort($builder)
     {
-        $type = OfferFilterType::where('slug','sort')->first();
-        return $builder->where('offer_filter_type_id','=', $type->id);
+        $type = OfferFilterType::where('slug', 'sort')->first();
+        return $builder->where('offer_filter_type_id', '=', $type->id);
     }
 
-    public function  scopeActive($builder)
+    public function scopeActive($builder)
     {
-        return $builder->where('is_active','=', true);
+        return $builder->where('is_active', '=', true);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -8,16 +9,14 @@
 
 namespace App\Services;
 
-
 use App\Repositories\HelpCenterRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
-
 class HelpCenterService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -39,7 +38,7 @@ class HelpCenterService
      */
     public function storeHelpCenter($data)
     {
-        $data['icon'] = 'storage/'.$data['icon']->store('Help_Center_Icon');
+        $data['icon'] = 'storage/' . $data['icon']->store('Help_Center_Icon');
         $this->save($data);
         return new Response("Help Center has been successfully created");
     }
@@ -51,10 +50,10 @@ class HelpCenterService
      */
     public function updateHelpCenter($request, $helpCenter)
     {
-        if(array_key_exists('icon', $request)){
-            $request['icon'] = 'storage/'.$request['icon']->store('Help_Center_Icon');
+        if (array_key_exists('icon', $request)) {
+            $request['icon'] = 'storage/' . $request['icon']->store('Help_Center_Icon');
             unlink($helpCenter->icon);
-        }else{
+        } else {
             $request['icon'] = $helpCenter->icon;
         }
         $helpCenter->update($request);
@@ -73,5 +72,4 @@ class HelpCenterService
         $helpCenter->delete();
         return Response('Help Center has been successfully deleted');
     }
-
 }

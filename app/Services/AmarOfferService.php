@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -8,16 +9,14 @@
 
 namespace App\Services;
 
-
 use App\Repositories\AmarOfferRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
-
 class AmarOfferService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -38,7 +37,7 @@ class AmarOfferService
      * @return Response
      */
     public function storeAmarOffer($data)
-    {   
+    {
         $this->save($data);
         return new Response("Amar Offer has been successfully created");
     }
@@ -66,5 +65,4 @@ class AmarOfferService
         $data->delete();
         return Response('Amar Offer has been successfully deleted');
     }
-
 }

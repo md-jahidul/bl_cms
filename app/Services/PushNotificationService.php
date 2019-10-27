@@ -1,6 +1,6 @@
 <?php
-namespace App\Services;
 
+namespace App\Services;
 
 /**
  * Class PushNotificationService
@@ -13,7 +13,8 @@ class PushNotificationService
      *
      * @return string
      */
-    public static function getHost() {
+    public static function getHost()
+    {
         return env('NOTIFICATION_HOST');
     }
 
@@ -22,7 +23,8 @@ class PushNotificationService
      *
      * @return string
      */
-    public static function getToken() {
+    public static function getToken()
+    {
         return env('NOTIFICATION_TOKEN');
     }
 
@@ -32,7 +34,6 @@ class PushNotificationService
         $res = static::post('/api/v1/push/notification', $data);
 
         return $res;
-
     }
 
     /**
@@ -45,7 +46,7 @@ class PushNotificationService
         return [
             //'X-Client-Token: '.static::getToken(),
             'Content-Type: application/json',
-            'app-key: '.static::getToken(),
+            'app-key: ' . static::getToken(),
             'Expect: 100-continue'
         ];
     }
@@ -105,7 +106,7 @@ class PushNotificationService
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, strtoupper($method));
         static::makeRequest($ch, $url, $body, $headers);
         $result = curl_exec($ch);
-        curl_close( $ch);
+        curl_close($ch);
         return $result;
     }
 
@@ -121,7 +122,7 @@ class PushNotificationService
      */
     private static function makeRequest($ch, $url, $body, $headers)
     {
-        $url = static::getHost().$url;
+        $url = static::getHost() . $url;
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -130,6 +131,4 @@ class PushNotificationService
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
     }
-
-
 }

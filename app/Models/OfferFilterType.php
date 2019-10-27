@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class OfferFilterType extends Model
 {
-
     use Sluggable;
 
     protected $guarded = ['id'];

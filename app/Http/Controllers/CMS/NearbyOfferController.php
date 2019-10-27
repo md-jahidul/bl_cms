@@ -9,7 +9,6 @@ use App\Services\NearbyOfferService;
 use Illuminate\Support\Facades\Session;
 use App\Models\NearbyOffer;
 
-
 class NearbyOfferController extends Controller
 {
     /**
@@ -36,7 +35,7 @@ class NearbyOfferController extends Controller
      */
     public function index()
     {
-        return view('admin.offer-nearby.index')->with('nearByOffers',$this->nearbyOfferService->findAll());
+        return view('admin.offer-nearby.index')->with('nearByOffers', $this->nearbyOfferService->findAll());
     }
 
     /**
@@ -46,7 +45,7 @@ class NearbyOfferController extends Controller
      */
     public function create()
     {
-       return view('admin.offer-nearby.create');
+        return view('admin.offer-nearby.create');
     }
 
     /**
@@ -57,7 +56,7 @@ class NearbyOfferController extends Controller
      */
     public function store(NearbyOfferRequest $request)
     {
-        session()->flash('message',$this->nearbyOfferService->storeNearbyOffer($request->all())->getContent());
+        session()->flash('message', $this->nearbyOfferService->storeNearbyOffer($request->all())->getContent());
         return redirect(route('nearByOffer.index'));
     }
 
@@ -81,7 +80,7 @@ class NearbyOfferController extends Controller
     public function edit($id)
     {
         return view('admin.offer-nearby.edit')
-                ->with('nearByOffer',$this->nearbyOfferService->findOne($id));
+                ->with('nearByOffer', $this->nearbyOfferService->findOne($id));
     }
 
     /**
@@ -91,9 +90,9 @@ class NearbyOfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(NearbyOfferRequest $request,NearbyOffer $nearByOffer)
+    public function update(NearbyOfferRequest $request, NearbyOffer $nearByOffer)
     {
-        session()->flash('success',$this->nearbyOfferService->updateNearbyOffer($request->all(),$nearByOffer)->getContent());
+        session()->flash('success', $this->nearbyOfferService->updateNearbyOffer($request->all(), $nearByOffer)->getContent());
         return redirect(route('nearByOffer.index'));
     }
 
@@ -105,7 +104,7 @@ class NearbyOfferController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error',$this->nearbyOfferService->deleteNearbyOffer($id)->getContent());
+        session()->flash('error', $this->nearbyOfferService->deleteNearbyOffer($id)->getContent());
         return url('nearByOffer');
     }
 }

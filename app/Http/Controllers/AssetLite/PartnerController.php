@@ -79,9 +79,9 @@ class PartnerController extends Controller
      */
     public function edit($id)
     {
-       $partner = $this->partnerService->findOne($id);
-       $partnerCategories = $this->partnerService->partnerCategories();
-       return view('admin.partner.edit', compact('partner', 'partnerCategories'));
+        $partner = $this->partnerService->findOne($id);
+        $partnerCategories = $this->partnerService->partnerCategories();
+        return view('admin.partner.edit', compact('partner', 'partnerCategories'));
     }
 
     /**

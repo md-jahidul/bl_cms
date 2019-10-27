@@ -24,11 +24,11 @@ class WelcomeInfoRequest extends FormRequest
     public function rules()
     {
         return [
-            'guest_salutation'=>'required|max:200',
-            'user_salutation'=>'required|max:200',
-            'guest_message'=>'required',
-            'user_message'=>'required',
-            'icon'=>'required_if:update,yes|image|mimes:jpeg,jpg,png'
+            'guest_salutation' => 'required|max:200',
+            'user_salutation' => 'required|max:200',
+            'guest_message' => 'required',
+            'user_message' => 'required',
+            'icon' => 'required_if:update,yes|image|mimes:jpeg,jpg,png'
         ];
     }
 }

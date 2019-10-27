@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -8,16 +9,14 @@
 
 namespace App\Services;
 
-
 use App\Repositories\SmsOfferRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
-
 class SmsOfferService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -67,5 +66,4 @@ class SmsOfferService
         $data->delete();
         return Response('SMS Offer has been successfully deleted');
     }
-
 }

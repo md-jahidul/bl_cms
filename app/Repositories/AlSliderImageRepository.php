@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -22,7 +23,7 @@ class AlSliderImageRepository extends BaseRepository
     public function sliderImageTableSort($request)
     {
         $positions = $request->position;
-        foreach ($positions as $position){
+        foreach ($positions as $position) {
             $menu_id = $position[0];
             $new_position = $position[1];
             $update_menu = $this->model->findOrFail($menu_id);

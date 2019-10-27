@@ -74,6 +74,6 @@ class FixedPageController extends Controller
         $component->is_active = $component->is_active ? 0 : 1;
         $component->save();
 
-        return redirect()->route('fixed-page-components',$pageId);
+        return redirect()->route('fixed-page-components', $pageId);
     }
 }

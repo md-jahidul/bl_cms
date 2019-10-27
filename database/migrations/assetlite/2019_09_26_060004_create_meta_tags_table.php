@@ -14,10 +14,10 @@ class CreateMetaTagsTable extends Migration
     public function up()
     {
         Schema::create('meta_tags', function (Blueprint $table) {
-            $table->bigIncrements('id');           
+            $table->bigIncrements('id');
             $table->string('title');
             $table->string('keywords');
-            $table->string('description')->nullable();           
+            $table->string('description')->nullable();
             $table->unsignedInteger('page_id');
             $table->timestamps();
         });
