@@ -11,6 +11,6 @@ class DigitalServiceTableSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\Models\DigitalService', 10)->create();
+//        factory('App\Models\DigitalService', 10)->create();
     }
 }

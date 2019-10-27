@@ -50,22 +50,27 @@ trait Authorizable
         return false;
     }
 
-    public function can_view($feature)
+    public function can_view($feature,$action = 'index')
     {
-        if(!count($this->roles)) {
-            return false;
-        }
 
-        foreach ( $this->roles as $role) {
-            $permission = $role->permissions
-                                ->where('controller', $feature . 'Controller');
-                                
-            if (count($permission) > 0) {
-                return true;
+        if(!$this->isAdmin()){
+            if(!count($this->roles)) {
+                return false;
             }
-        }
-        
-        return false;
+    
+            foreach ( $this->roles as $role) {
+                $permission = $role->permissions
+                                    ->where('controller', $feature . 'Controller')
+                                    ->where('action', $action);
+    
+                if (count($permission) > 0) {
+                    return true;
+                }
+            }            
+            return false;
+        }else{
+            return true;
+        }       
     }
 
     public function isAdmin()
@@ -78,14 +83,6 @@ trait Authorizable
 
         return false;
     }
-
-    /**
-     * Get the type of the user.
-     */
-    // public function role()
-    // {
-    //     return $this->belongsTo('Pondit\Authorize\Models\Role');
-    // }
 
 
     public function roles()

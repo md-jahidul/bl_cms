@@ -20,7 +20,7 @@
                             <table class="table table-striped table-bordered zero-configuration">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>#</th>
                                     <th> Name</th>
                                     <th>Actions</th>
                                 </tr>
@@ -28,7 +28,7 @@
                                 <tbody>
                                 @foreach($roles as $item)
                                     <tr>
-                                        <td>{{ $item->id }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>
                                             <a href="{{ url('/' . Config("authorization.route-prefix") . '/roles/' . $item->id . '/edit') }}" class="border-0 btn btn-outline-primary"

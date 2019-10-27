@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -8,16 +9,15 @@
 
 namespace App\Services;
 
-
 use App\Repositories\SliderImageRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use DB;
 
-
 class MyblSliderImageService
 {
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -48,9 +48,13 @@ class MyblSliderImageService
     {
         //dd($image);
         $image_data = $this->sliderImageRepository->sliderImage($image['slider_id']);
-        if(empty($image_data)){ $i = 1;}else{ $i = $image_data->sequence+1;}
+        if (empty($image_data)) {
+            $i = 1;
+        } else {
+            $i = $image_data->sequence + 1;
+        }
        
-        $image['image_url'] = 'storage/'.$image['image_url']->store('Slider_image');
+        $image['image_url'] = 'storage/' . $image['image_url']->store('Slider_image');
         $image['sequence'] = $i;
         $this->save($image);
         
@@ -71,11 +75,11 @@ class MyblSliderImageService
     public function updateSliderImage($data, $id)
     {
         $sliderImage = $this->findOne($id);
-        if(!isset($data['image_url'])){
+        if (!isset($data['image_url'])) {
             $data['image_url'] = $sliderImage->image_url;
-        }else{
+        } else {
             unlink($sliderImage->image_url);
-            $data['image_url'] = 'storage/'.$data['image_url']->store('Slider_image');
+            $data['image_url'] = 'storage/' . $data['image_url']->store('Slider_image');
         }
         $sliderImage->update($data);
         return new Response("Image has has been successfully updated");
@@ -95,5 +99,4 @@ class MyblSliderImageService
         $sliderImage->delete();
         return Response('Image has been successfully deleted');
     }
-
 }

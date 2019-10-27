@@ -5,12 +5,17 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Requests\StoreSliderRequest;
 use App\Services\AlSliderService;
 use App\Services\AlSliderComponentTypeService;
+use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
-class AlSliderController extends Controller
+class SliderController extends Controller
 {
     /**
      * @var AlSliderService
@@ -39,11 +44,11 @@ class AlSliderController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function singleSlider()
     {
@@ -58,7 +63,7 @@ class AlSliderController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function create()
     {
@@ -67,8 +72,8 @@ class AlSliderController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param StoreSliderRequest $request
+     * @return RedirectResponse|Redirector
      */
 
     public function store(StoreSliderRequest $request)
@@ -80,7 +85,7 @@ class AlSliderController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function edit($id, $type)
     {
@@ -92,7 +97,7 @@ class AlSliderController extends Controller
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      */
     public function update(Request $request, $id)
     {
@@ -104,8 +109,8 @@ class AlSliderController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Exception
+     * @return RedirectResponse|Redirector
+     * @throws Exception
      */
     public function destroy($id)
     {

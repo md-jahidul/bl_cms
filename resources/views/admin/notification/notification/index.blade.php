@@ -56,16 +56,16 @@
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-2 m-1">
+                                       {{-- <div class="col-md-2 m-1">
                                             <button data-id="{{$notification->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                        </div>
+                                        </div>--}}
 
                                         <div class="col-md-2 m-1">
                                             <a  role="button"
                                                 data-id=""
-                                                href="{{route('notification.show',$notification->id)}}" 
-                                                data-placement="right" 
-                                                class="showButton btn btn-outline-info" 
+                                                href="{{route('notification.show',$notification->id)}}"
+                                                data-placement="right"
+                                                class="showButton btn btn-outline-info"
                                                 onclick=""><i class="la la-paper-plane"></i></a>
                                         </div>
 
@@ -85,7 +85,7 @@
             <div class="card-content">
                 <div class="card-body">
                     <form class="form" method="POST" action="">
-                       
+
                         <div class="form-body">
                             <button type="button" class="close mt-1" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -94,7 +94,7 @@
                                 <i class="la la-key"></i>
                                  Send Notification
                             </h4>
-                            
+
                             <div class="row">
                                 <div class="col-6">
                                     <h4>
@@ -124,18 +124,18 @@
                                     <div class="form-group float-right" style="margin-top:26px;">
                                         <button class="btn btn-primary" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
                                     </div>
-                                </div> 
+                                </div>
 
                             </div>
                         </div>
-                        
+
                     </form>
                 </div>
-            </div>  
+            </div>
           </div>
       </div>
     </div>
-      
+
 </section>
 
 @endsection
@@ -146,7 +146,11 @@
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
-    <style></style>
+    <style>
+        table.dataTable tbody td {
+            max-height: 40px;
+        }
+    </style>
 @endpush
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
@@ -196,7 +200,7 @@
         //     $('#category').html($(this).attr('data-original-category'))
         //     $('#discription').html($(this).attr('data-original-discription'))
         // })
-       
+
         $(document).ready(function () {
             $('#Example1').DataTable({
                 dom: 'Bfrtip',

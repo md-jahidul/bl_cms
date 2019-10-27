@@ -11,14 +11,12 @@ use Illuminate\Support\Facades\Session;
 
 class QuestionController extends Controller
 {
-    /**
-     * @var $questionService
-     */
-    private $questionService;
 
-    private $tagService;
+    protected $questionService;
 
-    private $answerOptionService;
+    protected $tagService;
+
+    protected $answerOptionService;
 
 
     /**
@@ -32,7 +30,6 @@ class QuestionController extends Controller
         $this->questionService = $questionService;
         $this->tagService = $tagService;
         $this->answerOptionService = $answerOptionService;
-        $this->middleware('auth');
     }
 
     /**
@@ -42,8 +39,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
-       $questions = $this->questionService->findAll('', 'tag');
-       return view('admin.question.index', compact('questions'));
+        $questions = $this->questionService->findAll('', 'tag');
+        return view('admin.question.index', compact('questions'));
     }
 
     /**
@@ -60,7 +57,7 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -73,7 +70,7 @@ class QuestionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -84,7 +81,7 @@ class QuestionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -96,8 +93,8 @@ class QuestionController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param $id
+     * @param  Request $request
+     * @param  $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
@@ -108,7 +105,7 @@ class QuestionController extends Controller
     }
 
     /**
-     * @param $id
+     * @param  $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Exception
      */

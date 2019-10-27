@@ -167,6 +167,8 @@ return [
          */
         Collective\Html\HtmlServiceProvider::class,
 
+        //Pondit\Authorize\AuthorizeServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -230,6 +232,8 @@ return [
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+
+        'Helper' => App\Helpers\Helper::class,
 
 
     ],

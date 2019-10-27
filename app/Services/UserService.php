@@ -34,6 +34,11 @@ class UserService
        return $this->userRepository->getUserListForNotification();
     }
 
+    public function storeUser($data)
+    {
+
+    }
+
 
 
 

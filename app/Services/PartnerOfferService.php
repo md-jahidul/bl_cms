@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Models\PartnerCategory;
@@ -9,6 +10,7 @@ use Illuminate\Http\Response;
 class PartnerOfferService
 {
     use CrudTrait;
+
     /**
      * @var $partnerOfferRepository
      */
@@ -25,9 +27,9 @@ class PartnerOfferService
     }
 
 
-    public function itemList($partnerId,$isHome = false)
+    public function itemList($partnerId, $isHome = false)
     {
-        return $this->partnerOfferRepository->getPartnerOffer($partnerId,$isHome);
+        return $this->partnerOfferRepository->getPartnerOffer($partnerId, $isHome);
     }
 
     /**
@@ -57,7 +59,6 @@ class PartnerOfferService
      */
     public function updatePartnerOffer($data, $id)
     {
-
         $partnerOffer = $this->findOne($id);
         (isset($data['show_in_home'])) ? $data['show_in_home'] = 1 : $data['show_in_home'] = 0;
         $partnerOffer->update($data);
@@ -75,5 +76,4 @@ class PartnerOfferService
         $partnerOffer->delete();
         return Response('Partner offer delete successfully');
     }
-
 }

@@ -15,34 +15,39 @@ class RolesTableSeeder extends Seeder
         $roles = [
             [
                 'name' => 'My Bl Admin',
-                'alias' => 'mybl-admin',
+                'alias' => 'mybl_admin',
                 'user_type' => 'mybl',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
-                'name' => 'Guest 2',
-                'alias' => 'guest2',
-                'user_type' => 'mybl',
-                'created_at' => Carbon::now()->toDateTimeString(),
-                'updated_at' => Carbon::now()->toDateTimeString(),
-            ],
-
-            [
-                'name' => 'Asset Lite Admin',
-                'alias' => 'asset-lite',
-                'user_type' => 'mybl',
-                'created_at' => Carbon::now()->toDateTimeString(),
-                'updated_at' => Carbon::now()->toDateTimeString(),
-            ],
-            [
-                'name' => 'Guest 1',
-                'alias' => 'guest1',
+                'name' => 'Asset Lite Super Admin',
+                'alias' => 'assetlite_super_admin',
                 'user_type' => 'assetlite',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ],
-
+            [
+                'name' => 'Asset Lite Super User',
+                'alias' => 'assetlite_super_user',
+                'user_type' => 'assetlite',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ],
+            [
+                'name' => 'Asset Lite Power User',
+                'alias' => 'assetlite_power_user',
+                'user_type' => 'assetlite',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ],
+            [
+                'name' => 'Asset Lite User',
+                'alias' => 'assetlite_normal_user',
+                'user_type' => 'assetlite',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]
         ];
         DB::table('roles')->insert($roles);
     }

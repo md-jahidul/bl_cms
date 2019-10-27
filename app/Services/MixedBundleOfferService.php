@@ -11,6 +11,8 @@ namespace App\Services;
 
 use App\Repositories\MixedBundleOfferRepository;
 use App\Traits\CrudTrait;
+use Exception;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
 
@@ -35,17 +37,19 @@ class MixedBundleOfferService
 
     /**
      * Storing the banner resource
+     * @param $data
      * @return Response
      */
     public function storeMixedBundleOffer($data)
-    { 
+    {
         $this->save($data);
         return new Response("Mixed Bundle offer has been successfully created");
     }
 
     /**
      * Updating the banner
-     * @param $data
+     * @param $request
+     * @param $id
      * @return Response
      */
     public function updateMixedBundleOffer($request, $id)
@@ -57,8 +61,8 @@ class MixedBundleOfferService
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
-     * @throws \Exception
+     * @return ResponseFactory|Response
+     * @throws Exception
      */
     public function deleteMixedBundleOffer($id)
     {

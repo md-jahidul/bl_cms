@@ -26,11 +26,11 @@
                                         <label for="title" class="required">Title:</label>
                                         <input required value="{{ old("title") ? old("title") : '' }}" 
                                             required
-                                            maxlength="200" 
+                                            maxlength="100"
                                             data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                             data-validation-required-message="Title is required" 
                                             data-validation-regex-message="Title must start with alphabets"
-                                            data-validation-maxlength-message = "Title can not be more then 200 Characters"
+                                            data-validation-maxlength-message = "Title can not be more then 100 Characters"
                                             type="text"
                                             value="" id="title" class="form-control @error('title') is-invalid @enderror"
                                             placeholder="Enter title...." 
@@ -38,7 +38,7 @@
 
                                         <div class="help-block">
                                             <small class="text-info">
-                                                Title can not be more then 200 Characters
+                                                Title can not be more then 100 Characters
                                             </small>
                                         </div>
                                         @if ($errors->has('title'))
@@ -53,7 +53,7 @@
                                         <textarea
                                         required
                                         data-validation-required-message="Description is required" 
-                                        class="form-control" name="description" placeholder="Enter description..." id="description" rows="8">{{ old("description") ? old("description") : '' }}</textarea>
+                                        class="form-control" name="description" placeholder="Enter description..." id="description" rows="2">{{ old("description") ? old("description") : '' }}</textarea>
                                         <small id="description" class="form-text text-muted">Enter description...</small>
                                         <div class="help-block"></div>
                                         @error('description')
@@ -69,16 +69,16 @@
                                         <label for="first_action_text" class="required">First Action Text:</label>
                                         <input 
                                         required
-                                        maxlength="200" 
+                                        maxlength="100"
                                         data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
                                         data-validation-required-message="First Action Text is required" 
                                         data-validation-regex-message="First Action Text must start with alphabets"
-                                        data-validation-maxlength-message = "First Action Text can not be more then 200 Characters" 
+                                        data-validation-maxlength-message = "First Action Text can not be more then 100 Characters"
                                         
                                         type="text" value="{{ old("first_action_text") ? old("first_action_text") : '' }}" value="" id="first_action_text" class="form-control @error('first_action_text') is-invalid @enderror" placeholder="first action text.." name="first_action_text">
                                         <div class="help-block">
                                             <small class="text-info">
-                                                First Action Text can not be more then 200 Characters
+                                                First Action Text can not be more then 100 Characters
                                             </small>
                                         </div>
                                         @error('first_action_text')
@@ -94,16 +94,16 @@
                                         <label for="second_action_text" class="required">Second Action Text:</label>
                                         <input  
                                         required
-                                        maxlength="200" 
+                                        maxlength="100"
                                         data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
                                         data-validation-required-message="Second Action Text is required" 
                                         data-validation-regex-message="Second Action Text must start with alphabets"
-                                        data-validation-maxlength-message = "Second Action Text can not be more then 200 Characters"  
+                                        data-validation-maxlength-message = "Second Action Text can not be more then 100 Characters"
                                         
                                         type="text" value="{{ old("second_action_text") ? old("second_action_text") : '' }}" value="" id="second_action_text" class="form-control @error('second_action_text') is-invalid @enderror" placeholder="second action text.." name="second_action_text">
                                         <div class="help-block">
                                             <small class="text-info">
-                                                Second Action Text can not be more then 200 Characters
+                                                Second Action Text can not be more then 100 Characters
                                             </small>
                                         </div>
                                         @error('second_action_text')
@@ -114,55 +114,41 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group {{ $errors->has('first_action') ? ' error' : '' }}">
-                                        <label for="first_action" class="required">First Action:</label>
-                                        <input  
-                                        required
-                                        maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
-                                        data-validation-required-message="First Action is required" 
-                                        data-validation-regex-message="First Action must start with alphabets"
-                                        data-validation-maxlength-message = "First Action can not be more then 200 Characters"   
-                                        type="text" value="{{ old("first_action") ? old("first_action") : '' }}" value="" id="first_action" class="form-control @error('first_action') is-invalid @enderror" placeholder="first action.." name="first_action">
-                                        <div class="help-block">
-                                            <small class="text-info">
-                                                First Action can not be more then 200 Characters
-                                            </small>
-                                        </div>
-                                        @error('first_action')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                @php
+                                   $actionList = Helper::contextualCardActionList();
+                                @endphp
+
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="name" class="required">First Action:</label>
+                                        <select name="first_action" class="browser-default custom-select">
+                                            <option selected>Select First Action</option>
+                                            @foreach ($actionList as $key => $value)
+                                                <option value="{{ $key }}">
+                                                    {{ $value }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="form-group {{ $errors->has('second_action') ? ' error' : '' }}">
-                                        <label for="second_action" class="required">Second Action:</label>
-                                        <input  
-                                        
-                                        required
-                                        maxlength="200" 
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9/.;:><-])*)*"
-                                        data-validation-required-message="Second Action is required" 
-                                        data-validation-regex-message="Second Action must start with alphabets"
-                                        data-validation-maxlength-message = "Second Action can not be more then 200 Characters"
-                                        
-                                        value="{{ old("second_action") ? old("second_action") : '' }}" value="" id="second_action" class="form-control @error('second_action') is-invalid @enderror" placeholder="second action.." name="second_action">
-                                        <div class="help-block">
-                                            <small class="text-info">
-                                                Second Action can not be more then 200 Characters
-                                            </small>
-                                        </div>
-                                        @error('second_action')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="name" class="required">Second Action:</label>
+                                        <select name="second_action" class="browser-default custom-select">
+                                            <option selected>Select Second Action</option>
+                                            @foreach ($actionList as $key => $value)
+                                                <option value="{{ $key }}">
+                                                    {{ $value }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
+
+
                                 <div class="col-md-12 mb-1"> 
                                     <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt="" srcset="">
                                     <input type="hidden" value="no" name="value_exist">
