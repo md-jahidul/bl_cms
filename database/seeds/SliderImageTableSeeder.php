@@ -38,7 +38,7 @@ class SliderImageTableSeeder extends Seeder
         foreach ($digitalServiceSliders as $key => $digitalServiceSlider){
             AlSliderImage::create([
                 'id'    => $key + 4,
-                'slider_id' => 2,
+                'slider_id' => 3,
                 'title_en' =>  $digitalServiceSlider,
                 'title_bn' => $digitalServiceSlidersBn[$key],
                 'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/digital_service.png',
@@ -66,7 +66,7 @@ class SliderImageTableSeeder extends Seeder
         foreach ($testimonialSlidersEns as $key => $testimonialSlidersEn){
             AlSliderImage::create([
                 'id'    => $key + 9,
-                'slider_id' => 3,
+                'slider_id' => 5,
                 'title_en' =>  $testimonialSlidersEn,
                 'title_bn' =>  $testimonialSlidersEn,
                 'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/'.$userPic[$key],

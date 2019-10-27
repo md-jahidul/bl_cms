@@ -1,8 +1,6 @@
 <?php
-
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
 class MixedBundleOfferSeeder extends Seeder
 {
     /**
@@ -24,7 +22,6 @@ class MixedBundleOfferSeeder extends Seeder
                 'tag' => "Hot Offer",
                 'points' => 152
             ],
-
             [
                 'title' => '250MNN',
                 'internet' => 999,
@@ -36,7 +33,6 @@ class MixedBundleOfferSeeder extends Seeder
                 'tag' => "Exclusive",
                 'points' => 152
             ],
-
             [
                 'title' => '250MNN',
                 'internet' => 999,
@@ -48,7 +44,6 @@ class MixedBundleOfferSeeder extends Seeder
                 'tag' => "Hot Offer",
                 'points' => 152
             ],
-
             [
                 'title' => '250MNN',
                 'internet' => 999,
@@ -60,7 +55,6 @@ class MixedBundleOfferSeeder extends Seeder
                 'tag' => "Hot Offer",
                 'points' => 152
             ],
-
             [
                 'title' => '250MNN',
                 'internet' => 999,
@@ -72,7 +66,6 @@ class MixedBundleOfferSeeder extends Seeder
                 'tag' => "Exclusive",
                 'points' => 152
             ],
-
             [
                 'title' => '250MNN',
                 'internet' => 999,
@@ -85,7 +78,6 @@ class MixedBundleOfferSeeder extends Seeder
                 'points' => 152
             ]
         ];
-
         DB::table('mixed_bundle_offers')->insert($offers);
     }
 }

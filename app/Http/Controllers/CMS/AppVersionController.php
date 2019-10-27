@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AppVersionRequest;
 use App\Models\AppVersion;
 use App\Services\AppVersionService;
 use Illuminate\Http\Request;
@@ -54,10 +55,10 @@ class AppVersionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  AppVersionRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AppVersionRequest $request)
     {
         $response =  $this->appVersionService->createAppVersion($request);
 
@@ -67,8 +68,6 @@ class AppVersionController extends Controller
         }
 
         session()->flash('message', "Failed! Please try again");
-
-
     }
 
     /**

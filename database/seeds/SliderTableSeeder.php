@@ -13,9 +13,8 @@ class SliderTableSeeder extends Seeder
      */
     public function run()
     {
-        // $sliders = ['Hero','Explore Devices','Digital Services','Testimonial'];
-        $sliders = ['Hero', 'Digital Services', 'Testimonial', 'Lifestyle & benefits','Trending'];
-        $slidersBn = ['হিরো', 'ডিজিটাল পরিষেবা', 'প্রশংসাপত্র', 'লাইফস্টাইল এবং বেনিফিট', 'প্রবণতা'];
+        $sliders = ['Hero','Trending', 'Digital Services', 'Lifestyle & benefits', 'Testimonial'];
+        $slidersBn = ['হিরো','প্রবণতা', 'ডিজিটাল পরিষেবা', 'লাইফস্টাইল এবং বেনিফিট', 'প্রশংসাপত্র'];
 
         foreach ($sliders as $key => $slider) {
             $other_attributes = [
