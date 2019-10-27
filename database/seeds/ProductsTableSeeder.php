@@ -53,32 +53,6 @@ class ProductsTableSeeder extends Seeder
     {
         // Prepaid,
 
-
-        /*
-
-        Postpaid
-                $table->string('code');
-                $table->string('name');
-                $table->integer('price_tk')->nullable();
-                $table->string('ussd')->nullable();
-                $table->unsignedBigInteger('sim_category_id');
-                $table->unsignedBigInteger('offer_category_id');
-
-
-        Prepaid
-                $table->string('code');
-                $table->string('name');
-                $table->integer('price_tk')->nullable();
-                $table->integer('sms_volume')->nullable();
-                $table->integer('min_volume')->nullable();;
-                $table->integer('internet_volume_mb')->nullable();;
-                $table->string('validity_days')->nullable();
-                $table->string('ussd')->nullable();
-                $table->unsignedBigInteger('tag_category_id')->nullable();
-                $table->unsignedBigInteger('sim_category_id');
-                $table->unsignedBigInteger('offer_category_id');
-        */
-
         $countHomePageOffer = 0;
 
         for ($i = 0; $i < 20; $i++) {

@@ -4,12 +4,14 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\SimCategory;
 use App\Models\TagCategory;
 use App\Services\OfferCategoryService;
 use App\Services\ProductService;
 use App\Services\TagCategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -42,8 +44,7 @@ class ProductController extends Controller
      */
     public function index($type)
     {
-        $products = Product::category($type)->paginate(15);
-
+        $products = Product::category($type)->get();
         return view('admin.product.index', compact('products', 'type'));
     }
 
@@ -71,12 +72,16 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     * @param $type
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $type)
     {
-        //
+        $simId = SimCategory::where('alias', $type)->first()->id;
+        $response = $this->productService->storeProduct($request->all(), $simId);
+        Session::flash('message', $response->content());
+        return redirect("offers/$type");
     }
 
     /**
@@ -93,34 +98,42 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param $type
+     * @param int $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($type, $id)
     {
-        //
+        $product = $this->productService->findOne($id);
+        $tags = $this->tagCategoryService->findAll();
+        $offers = $this->offerCategoryService->findAll();
+        return view('admin.product.edit', compact('product', 'type', 'tags', 'offers'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param $type
+     * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $type, $id)
     {
-        //
+        $response = $this->productService->updateProduct($request->all(), $id);
+        Session::get('message', $response->content());
+        return redirect("offers/$type");
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($type, $id)
     {
-        //
+        $response = $this->productService->deleteProduct($id);
+        Session::flash('message', $response->getContent());
+        return url("offers/$type");
     }
 }

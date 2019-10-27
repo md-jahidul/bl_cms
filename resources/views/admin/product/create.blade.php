@@ -14,9 +14,9 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title"><strong>{{ $type }} offer create</strong></h5><hr>
+                    <h5 class="menu-title"><strong>{{ $type }} Offer Product Create</strong></h5><hr>
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('product.store', $type) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route('product.store', strtolower($type)) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('name') ? ' error' : '' }}">
@@ -31,7 +31,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('price_tk') ? ' error' : '' }}">
                                     <label for="price_tk" class="required">Offer Price</label>
-                                    <input type="text" name="price_tk"  class="form-control" placeholder="Enter offer price"
+                                    <input type="number" name="price_tk"  class="form-control" placeholder="Enter offer price"
                                            value="{{ old("price_tk") ? old("price_tk") : '' }}" required data-validation-required-message="Enter offer price">
                                     <div class="help-block"></div>
                                     @if ($errors->has('price_tk'))
@@ -52,7 +52,7 @@
                                 @if(strtolower($type) == 'prepaid')
                                     <div class="form-group col-md-6 {{ $errors->has('sms_volume') ? ' error' : '' }}">
                                         <label for="sms_volume" class="required">SMS Volume</label>.
-                                        <input type="text" name="sms_volume"  class="form-control" placeholder="Enter offer sms_volume bangla"
+                                        <input type="number" name="sms_volume"  class="form-control" placeholder="Enter offer sms_volume bangla"
                                                value="{{ old("sms_volume") ? old("sms_volume") : '' }}" required data-validation-required-message="Enter offer sms volume">
                                         <div class="help-block"></div>
                                         @if ($errors->has('sms_volume'))
@@ -62,7 +62,7 @@
 
                                     <div class="form-group col-md-6 {{ $errors->has('min_volume') ? ' error' : '' }}">
                                         <label for="min_volume" class="required">Minute Volume</label>
-                                        <input type="text" name="min_volume"  class="form-control" placeholder="Enter minute volume"
+                                        <input type="number" name="min_volume"  class="form-control" placeholder="Enter minute volume"
                                                value="{{ old("min_volume") ? old("min_volume") : '' }}" required data-validation-required-message="Enter minute volume">
                                         <div class="help-block"></div>
                                         @if ($errors->has('min_volume'))
@@ -73,7 +73,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('internet_volume_mb') ? ' error' : '' }}">
                                     <label for="internet_volume_mb" class="required">Internet Volume</label>
-                                    <input type="text" name="internet_volume_mb"  class="form-control" placeholder="Enter get send SMS text english"
+                                    <input type="number" name="internet_volume_mb"  class="form-control" placeholder="Enter get send SMS text english"
                                            value="{{ old("internet_volume_mb") ? old("internet_volume_mb") : '' }}" required data-validation-required-message="Enter internet volume mb">
                                     <div class="help-block"></div>
                                     @if ($errors->has('internet_volume_mb'))
@@ -90,16 +90,6 @@
                                         <div class="help-block">  {{ $errors->first('bonus') }}</div>
                                     @endif
                                 </div>
-
-{{--                                <div class="form-group col-md-6 {{ $errors->has('get_offer_msg_bn') ? ' error' : '' }}">--}}
-{{--                                    <label for="get_offer_msg_bn" class="required">Point</label>--}}
-{{--                                    <input type="text" name="get_offer_msg_bn"  class="form-control" placeholder="Enter get send SMS text bangla"--}}
-{{--                                           value="{{ old("get_offer_msg_bn") ? old("get_offer_msg_bn") : '' }}" required data-validation-required-message="Enter get send SMS text bangla">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('get_offer_msg_bn'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('get_offer_msg_bn') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
 
                                 <div class="form-group col-md-6 {{ $errors->has('validity_days') ? ' error' : '' }}">
                                     <label for="validity_days" class="required">Validity Days</label>
@@ -127,8 +117,8 @@
                                     <label for="tag_category_id" class="required">Tag</label>
                                     <select class="form-control" name="tag_category_id">
                                         <option>---Select Tag---</option>
-                                        @foreach($offers as $offer)
-                                            <option value="">Option 1</option>
+                                        @foreach($tags as $tag)
+                                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -139,7 +129,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="offer_category_id" class="required">Offer</label>
-                                    <select class="form-control">
+                                    <select class="form-control" name="offer_category_id">
                                         <option>---Select Offer---</option>
                                         @foreach($offers as $offer)
                                             <option value="{{ $offer->id }}">{{ $offer->name }}</option>

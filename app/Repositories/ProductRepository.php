@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -8,9 +9,8 @@
 
 namespace App\Repositories;
 
-use App\Models\AlSliderImage;
-use App\Models\PartnerOffer;
 use App\Models\Product;
+use App\Models\SimCategory;
 
 class ProductRepository extends BaseRepository
 {

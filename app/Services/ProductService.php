@@ -6,11 +6,13 @@ use App\Models\PartnerCategory;
 use App\Repositories\PartnerOfferRepository;
 use App\Repositories\ProductRepository;
 use App\Traits\CrudTrait;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
 class ProductService
 {
     use CrudTrait;
+
 
     /**
      * @var $partnerOfferRepository
@@ -37,12 +39,10 @@ class ProductService
      * @param $data
      * @return Response
      */
-    public function storeProduct($data, $partnerId)
+    public function storeProduct($data, $simId)
     {
-
-        $count = count($this->productRepository->findAll());
-        $data['partner_id'] = $partnerId;
-        $data['display_order'] = ++$count;
+        $data['sim_category_id'] = $simId;
+        $data['code'] = rand(10000, 12345);
         $this->save($data);
         return new Response('Partner offer added successfully');
     }
@@ -56,20 +56,18 @@ class ProductService
     /**
      * @param $data
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @return ResponseFactory|Response
      */
     public function updateProduct($data, $id)
     {
-
         $product = $this->findOne($id);
-        (isset($data['show_in_home'])) ? $data['show_in_home'] = 1 : $data['show_in_home'] = 0;
         $product->update($data);
-        return Response('Partner offer update successfully !');
+        return Response('Product update successfully !');
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @return ResponseFactory|Response
      * @throws \Exception
      */
     public function deleteProduct($id)
