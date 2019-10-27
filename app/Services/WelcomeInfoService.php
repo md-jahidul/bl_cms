@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Repositories\WelcomeInfoRepository;
@@ -7,7 +8,6 @@ use Illuminate\Http\Response;
 
 class WelcomeInfoService
 {
-
     use CrudTrait;
 
 
@@ -33,7 +33,7 @@ class WelcomeInfoService
      */
     public function storeWelcomeInfo($data)
     {
-        $data['icon'] = 'storage/'.$data['icon']->store('icon');
+        $data['icon'] = 'storage/' . $data['icon']->store('icon');
         $this->save($data);
         return new Response("Welcome Info has successfully been created");
     }
@@ -49,7 +49,7 @@ class WelcomeInfoService
         $data = $request->all();
         if (isset($request->all()['icon'])) {
             unlink($wellcomeInfo->icon);
-            $data['icon'] = 'storage/'.$request->all()['icon']->store('icon');
+            $data['icon'] = 'storage/' . $request->all()['icon']->store('icon');
             $wellcomeInfo->update($data);
         } else {
             $data['icon'] = $wellcomeInfo->icon;

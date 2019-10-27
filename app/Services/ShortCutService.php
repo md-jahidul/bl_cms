@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -15,8 +16,8 @@ use DB;
 
 class ShortCutService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -39,7 +40,7 @@ class ShortCutService
      */
     public function storeShortCut($shortCut)
     {
-        $shortCut['icon'] = 'storage/'.$shortCut['icon']->store('short_cuts_icon');
+        $shortCut['icon'] = 'storage/' . $shortCut['icon']->store('short_cuts_icon');
         $shortCut['component_identifier'] = strtolower(str_replace(" ", "_", $shortCut['title']));
         $this->save($shortCut);
         return new Response("Shortcut has been successfully created");
@@ -55,7 +56,7 @@ class ShortCutService
         $shortCut = $this->findOne($id);
         if (isset($request['icon'])) {
             unlink($shortCut->icon);
-            $request['icon'] = 'storage/'.$request['icon']->store('short_cuts_icon');
+            $request['icon'] = 'storage/' . $request['icon']->store('short_cuts_icon');
         } else {
             $request['icon'] = $shortCut->icon;
         }
@@ -72,7 +73,7 @@ class ShortCutService
      */
     public function destroyShortCut($id)
     {
-        $shortcut =$this->findOne($id);
+        $shortcut = $this->findOne($id);
         unlink($shortcut['icon']);
         $shortcut->delete();
         return Response('Shortcut has been successfully deleted');

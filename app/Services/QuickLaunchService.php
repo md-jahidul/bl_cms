@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services;
 
 use App\Http\Helpers;
@@ -44,7 +43,7 @@ class QuickLaunchService
     {
         $count = count($this->quickLaunchRepository->findAll());
         $imageUrl = $this->imageUpload($data, 'image_url', $data['title_en'], 'quick-launch-items');
-        $data['image_url'] = env('APP_URL', 'http://localhost:8000'). '/quick-launch-items/'.$imageUrl;
+        $data['image_url'] = env('APP_URL', 'http://localhost:8000') . '/quick-launch-items/' . $imageUrl;
         $data['display_order'] = ++$count;
         $this->save($data);
         return new Response('Quick Launch added successfully');
@@ -71,7 +70,7 @@ class QuickLaunchService
         $quickLaunch = $this->findOne($id);
         if (!empty($data['image_url'])) {
             $imageUrl = $this->imageUpload($data, 'image_url', $data['title_en'], 'quick-launch-items');
-            $data['image_url'] = env('APP_URL', 'http://localhost:8000'). '/quick-launch-items/'.$imageUrl;
+            $data['image_url'] = env('APP_URL', 'http://localhost:8000') . '/quick-launch-items/' . $imageUrl;
         }
         $quickLaunch->update($data);
         return Response('Quick launch updated successfully');

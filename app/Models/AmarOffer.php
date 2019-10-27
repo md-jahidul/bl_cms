@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AmarOffer extends Model
 {
-    protected $fillable =[
+    protected $fillable = [
         'title',
         'internet',
         'minutes',

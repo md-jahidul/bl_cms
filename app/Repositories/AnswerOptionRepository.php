@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: BS23
@@ -25,12 +26,12 @@ class AnswerOptionRepository extends BaseRepository
         $answer_data = $request->only('answer');
 
         $answer_array = [];
-        for ($i=1; $i <= $option_count; $i++) {
+        for ($i = 1; $i <= $option_count; $i++) {
             $ans =  (int) $answer_data['answer'][0];
             $answer_array[] = ( $i != $ans ) ? false : true;
         }
         if (!empty($option_data)) {
-            for ($i = 0; $i<$option_count; $i++) {
+            for ($i = 0; $i < $option_count; $i++) {
                 $this->model->create([
                     'question_id' => $questionId,
                     'option_text' => $option_data['option'][$i],
@@ -48,7 +49,7 @@ class AnswerOptionRepository extends BaseRepository
         $options = $this->model->where('question_id', $id)->get();
 
         $answer_array = [];
-        for ($i=1; $i <= $option_count; $i++) {
+        for ($i = 1; $i <= $option_count; $i++) {
             $ans =  (int) $answer_data['answer'][0];
             $answer_array[] = ( $i != $ans ) ? false : true;
         }

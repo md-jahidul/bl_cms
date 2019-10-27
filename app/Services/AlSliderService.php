@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Repositories\AlSliderRepository;
@@ -8,8 +9,8 @@ use Illuminate\Http\Response;
 
 class AlSliderService
 {
-
     use CrudTrait;
+
     /**
      * @var $alSliderRepository
      */

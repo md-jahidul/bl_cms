@@ -4,7 +4,6 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,7 +44,8 @@ class PermissionsController extends Controller
         $actions = [];
         $routes = Route::getRoutes();
         foreach ($routes as $route) {
-            if (preg_match("/^App(.*)/i", trim($route->getActionName())) == 0
+            if (
+                preg_match("/^App(.*)/i", trim($route->getActionName())) == 0
                 || preg_match("/^App\\\\Http\\\\Controllers\\\\Auth(.*)/i", trim($route->getActionName())) > 0
             ) {
                 continue;

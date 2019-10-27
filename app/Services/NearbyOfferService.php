@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -14,8 +15,8 @@ use Illuminate\Http\Response;
 
 class NearbyOfferService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -37,7 +38,7 @@ class NearbyOfferService
      */
     public function storeNearbyOffer($data)
     {
-        $data['image'] = 'storage/'.$data['image']->store('NearbyOffer_image');
+        $data['image'] = 'storage/' . $data['image']->store('NearbyOffer_image');
         $this->save($data);
         return new Response("Near By Offer has been successfully created");
     }
@@ -51,7 +52,7 @@ class NearbyOfferService
     {
         if (array_key_exists('image', $request)) {
             unlink($nearByOffer->image);
-            $request['image'] = 'storage/'.$request['image']->store('NearbyOffer_image');
+            $request['image'] = 'storage/' . $request['image']->store('NearbyOffer_image');
         } else {
             $request['image'] = $nearByOffer->image;
         }

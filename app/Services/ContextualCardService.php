@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -14,8 +15,8 @@ use Illuminate\Http\Response;
 
 class ContextualCardService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */
@@ -37,7 +38,7 @@ class ContextualCardService
      */
     public function storeContextualCard($data)
     {
-        $data['image_url'] = 'storage/'.$data['image_url']->store('contextualcard');
+        $data['image_url'] = 'storage/' . $data['image_url']->store('contextualcard');
         $this->save($data);
         return new Response("Contextual Card has been successfully created");
     }
@@ -52,7 +53,7 @@ class ContextualCardService
         
         $contextualCard = $this->findOne($id);
         if (isset($data['image_url'])) {
-            $data['image_url'] = 'storage/'.$data['image_url']->store('contextualCard');
+            $data['image_url'] = 'storage/' . $data['image_url']->store('contextualCard');
             unlink($contextualCard->image_url);
             $contextualCard->update($data);
         } else {

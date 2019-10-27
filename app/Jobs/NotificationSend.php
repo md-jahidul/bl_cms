@@ -12,7 +12,10 @@ use App\Services\PushNotificationService;
 
 class NotificationSend implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
 
     protected $notification;

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services;
 
 use App\Models\Config;
@@ -9,7 +8,6 @@ use App\Traits\CrudTrait;
 
 class ConfigService
 {
-
     use CrudTrait;
 
     /**
@@ -38,7 +36,7 @@ class ConfigService
             $config = $this->configRepository->updateConfig($key);
             $config->value = $value;
             if ($key == "site_logo") {
-                $config->value = env("APP_URL").'/images/logo/'.$imageUrl;
+                $config->value = env("APP_URL") . '/images/logo/' . $imageUrl;
             }
             $config->save();
         }

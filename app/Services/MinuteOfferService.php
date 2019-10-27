@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -14,8 +15,8 @@ use Illuminate\Http\Response;
 
 class MinuteOfferService
 {
-
     use CrudTrait;
+
     /**
      * @var $minuteOfferRepository
      */

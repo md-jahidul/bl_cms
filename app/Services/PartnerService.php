@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services;
 
 use App\Models\PartnerCategory;
@@ -45,7 +44,7 @@ class PartnerService
     public function storePartner($data)
     {
         $imageUrl = $this->imageUpload($data, "company_logo", $data['company_name_en'], 'images/partners-logo');
-        $data['company_logo'] = env('APP_URL', 'http://localhost:8000').'/images/partners-logo/'. $imageUrl;
+        $data['company_logo'] = env('APP_URL', 'http://localhost:8000') . '/images/partners-logo/' . $imageUrl;
         $this->save($data);
         return new Response('Partner added successfully');
     }
@@ -62,7 +61,7 @@ class PartnerService
         $partner = $this->findOne($id);
         if (!empty($data['company_logo'])) {
             $imageUrl = $this->imageUpload($data, "company_logo", $data['company_name_en'], 'images/partners-logo');
-            $data['company_logo'] = env('APP_URL', 'http://localhost:8000').'/images/partners-logo/'. $imageUrl;
+            $data['company_logo'] = env('APP_URL', 'http://localhost:8000') . '/images/partners-logo/' . $imageUrl;
         }
         $partner->update($data);
         return Response('Partner update successfully !');

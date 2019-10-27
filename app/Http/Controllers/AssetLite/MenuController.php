@@ -33,7 +33,7 @@ class MenuController extends Controller
 
     public function getBreadcrumbInfo($parent_id)
     {
-        $temp = (new Menu)->find($parent_id, ['id','en_label_text','parent_id'])->toArray();
+        $temp = (new Menu())->find($parent_id, ['id','en_label_text','parent_id'])->toArray();
         $this->menuItems[] = $temp;
         return $temp['parent_id'];
     }

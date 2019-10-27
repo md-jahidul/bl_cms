@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -15,8 +16,8 @@ use DB;
 
 class SettingKeyService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */

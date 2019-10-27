@@ -73,9 +73,9 @@ class UserShortcutController extends Controller
             $request = $request->all();
             foreach ($request['shortcut'] as $key => $short_cut) {
                 ShortcutUser::create([
-                    'user_id'=>auth()->user()->id,
-                    'shortcut_id'=>$short_cut,
-                    'serial'=>$key+1
+                    'user_id' => auth()->user()->id,
+                    'shortcut_id' => $short_cut,
+                    'serial' => $key + 1
                     ]);
                      //dd($request);
             }
@@ -92,7 +92,7 @@ class UserShortcutController extends Controller
         $request = $request->all();
         unset($request['_token']);
         unset($request['_method']);
-        if (count(array_unique($request))!=count($request)) {
+        if (count(array_unique($request)) != count($request)) {
             session()->flash('danger', "You cannot have priority twice");
             return redirect(route('UserShortcut.index'));
         }

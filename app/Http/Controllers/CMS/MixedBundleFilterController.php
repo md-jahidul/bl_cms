@@ -81,7 +81,7 @@ class MixedBundleFilterController extends Controller
 
         if ($validate->fails()) {
             $response = [
-                'success' =>'FAILED',
+                'success' => 'FAILED',
                 'errors'  => $validate->errors()->first()
             ];
             return response()->json($response, 422);
@@ -101,7 +101,7 @@ class MixedBundleFilterController extends Controller
 
         if ($validate->fails()) {
             $response = [
-                'success' =>'FAILED',
+                'success' => 'FAILED',
                 'errors'  => $validate->errors()->first()
             ];
             return response()->json($response, 422);
@@ -122,7 +122,7 @@ class MixedBundleFilterController extends Controller
 
         if ($validate->fails()) {
             $response = [
-                'success' =>'FAILED',
+                'success' => 'FAILED',
                 'errors'  => $validate->errors()->first()
             ];
             return response()->json($response, 422);
@@ -143,7 +143,7 @@ class MixedBundleFilterController extends Controller
 
         if ($validate->fails()) {
             $response = [
-                'success' =>'FAILED',
+                'success' => 'FAILED',
                 'errors'  => $validate->errors()->first()
             ];
             return response()->json($response, 422);
@@ -164,7 +164,7 @@ class MixedBundleFilterController extends Controller
 
         if ($validate->fails()) {
             $response = [
-                'success' =>'FAILED',
+                'success' => 'FAILED',
                 'errors'  => $validate->errors()->first()
             ];
             return response()->json($response, 422);
@@ -186,7 +186,7 @@ class MixedBundleFilterController extends Controller
 
         if ($validate->fails()) {
             $response = [
-                'success' =>'FAILED',
+                'success' => 'FAILED',
                 'errors'  => $validate->errors()->first()
             ];
             return response()->json($response, 422);
@@ -206,7 +206,7 @@ class MixedBundleFilterController extends Controller
 
         if ($validate->fails()) {
             $response = [
-                'success' =>'FAILED',
+                'success' => 'FAILED',
                 'errors'  => $validate->errors()->first()
             ];
             return response()->json($response, 422);

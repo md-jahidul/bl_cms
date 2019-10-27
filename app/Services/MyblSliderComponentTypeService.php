@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services;
 
 use App\Repositories\MyblSliderComponentTypeRepository;
@@ -8,8 +7,8 @@ use App\Traits\CrudTrait;
 
 class MyblSliderComponentTypeService
 {
-
     use CrudTrait;
+
     /**
      * @var $sliderRepository
      */

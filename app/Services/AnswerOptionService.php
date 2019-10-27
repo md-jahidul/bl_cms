@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services;
 
 use App\Repositories\AnswerOptionRepository;
@@ -9,6 +8,7 @@ use App\Traits\CrudTrait;
 class AnswerOptionService
 {
     use CrudTrait;
+
     /**
      * @var $answerOptionRepository
      */

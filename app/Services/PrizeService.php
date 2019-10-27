@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: BS23
@@ -14,7 +15,6 @@ use Illuminate\Http\Response;
 
 class PrizeService
 {
-
     use CrudTrait;
 
     /**

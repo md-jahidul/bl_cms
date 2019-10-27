@@ -44,7 +44,7 @@ class DemoController extends Controller
 
         try {
             $path = $request->file('customer_file')->store(
-                'customers/'.date('y-m-d'),
+                'customers/' . date('y-m-d'),
                 'public'
             );
 
@@ -53,7 +53,7 @@ class DemoController extends Controller
 
             $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
 
-            $file_path =Storage::disk('public')->path($path);
+            $file_path = Storage::disk('public')->path($path);
 
             $reader->open($file_path);
 

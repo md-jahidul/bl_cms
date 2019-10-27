@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 /**
@@ -45,7 +46,7 @@ class PushNotificationService
         return [
             //'X-Client-Token: '.static::getToken(),
             'Content-Type: application/json',
-            'app-key: '.static::getToken(),
+            'app-key: ' . static::getToken(),
             'Expect: 100-continue'
         ];
     }
@@ -121,7 +122,7 @@ class PushNotificationService
      */
     private static function makeRequest($ch, $url, $body, $headers)
     {
-        $url = static::getHost().$url;
+        $url = static::getHost() . $url;
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);

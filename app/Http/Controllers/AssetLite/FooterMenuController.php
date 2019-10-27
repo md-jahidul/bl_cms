@@ -39,7 +39,7 @@ class FooterMenuController extends Controller
      */
     public function getBreadcrumbInfo($parent_id)
     {
-        $temp = (new FooterMenu)->find($parent_id, ['id','en_label_text','parent_id'])->toArray();
+        $temp = (new FooterMenu())->find($parent_id, ['id','en_label_text','parent_id'])->toArray();
         $this->footerMenuItems[] = $temp;
         return $temp['parent_id'];
     }

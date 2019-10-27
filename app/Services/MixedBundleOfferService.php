@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -16,8 +17,8 @@ use Illuminate\Http\Response;
 
 class MixedBundleOfferService
 {
-
     use CrudTrait;
+
     /**
      * @var $mixedBundleOfferRepository
      */

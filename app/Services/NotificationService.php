@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Repositories\NotificationRepository;
@@ -7,8 +8,8 @@ use Illuminate\Http\Response;
 
 class NotificationService
 {
-
     use CrudTrait;
+
     /**
      * @var $NotificationRepository
      */

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Notification;
@@ -40,7 +41,7 @@ class NotificationRepository extends BaseRepository
      * @param $user_phone
      * @return array
      */
-    public function checkMuteOfferForUser($category_id, $user_phone):array
+    public function checkMuteOfferForUser($category_id, $user_phone): array
     {
         $user_ids = UserMuteNotificationCategory::where('category_id', $category_id)
                                                 ->select('user_id')

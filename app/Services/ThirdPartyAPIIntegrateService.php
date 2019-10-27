@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 class ThirdPartyAPIIntegrateService
@@ -42,7 +43,7 @@ class ThirdPartyAPIIntegrateService
     private static function makeHeader()
     {
         return [
-            'X-Client-Token: '.static::getToken(),
+            'X-Client-Token: ' . static::getToken(),
             'Content-Type: application/json',
             'Expect: 100-continue'
         ];
@@ -120,7 +121,7 @@ class ThirdPartyAPIIntegrateService
     private static function makeRequest($ch, $url, $body, $headers)
     {
 
-        $url = static::getHost().':'.static::getPort().$url;
+        $url = static::getHost() . ':' . static::getPort() . $url;
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);

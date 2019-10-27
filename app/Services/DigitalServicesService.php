@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: bs-205
@@ -13,8 +14,8 @@ use App\Traits\CrudTrait;
 
 class DigitalServicesService
 {
-
     use CrudTrait;
+
     /**
      * @var DigitalServiceRepository
      */
