@@ -122,7 +122,7 @@ class ProductsTableSeeder extends Seeder
                     'ussd' => '*' . rand(1000, 9999) . '*' . '1#',
                     'sim_category_id' => SimCategory::where('alias', 'prepaid')->first('id'),
                     'offer_category_id' => $offer->id,
-                    'is_home' => $showInHome,
+                    'show_in_home' => $showInHome,
                     'display_order' => $displayOrder
                 ]
             );
