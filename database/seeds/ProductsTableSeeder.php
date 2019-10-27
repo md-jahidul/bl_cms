@@ -44,6 +44,17 @@ class ProductsTableSeeder extends Seeder
         return $obj;
     }
 
+
+    public function showInHome($offerType)
+    {
+        if (in_array($offerType, ['internet', 'voice', 'bundles'])) {
+            return rand(0, 2) ? 1 : 0;
+        }
+
+        return 0;
+    }
+
+
     /**
      * Run the database seeds.
      *
@@ -85,7 +96,7 @@ class ProductsTableSeeder extends Seeder
             $offer = OfferCategory::whereIn('alias', ['internet','pacakages','others'])->inRandomOrder()->first();
             $offerInfo = $this->getOfferInfo($offer->alias);
 
-            $showInHome = rand(0, 6) ? 1 : 0;
+            $showInHome = $this->showInHome($offer->alias);
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
 
             factory(Product::class)->create(
@@ -107,7 +118,7 @@ class ProductsTableSeeder extends Seeder
             $offer = OfferCategory::inRandomOrder()->first();
             $offerInfo = $this->getOfferInfo($offer->alias);
 
-            $showInHome = rand(0, 6) ? 1 : 0;
+            $showInHome = $this->showInHome($offer->alias);
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
 
             factory(Product::class)->create(
