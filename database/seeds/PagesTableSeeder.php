@@ -14,7 +14,7 @@ class PagesTableSeeder extends Seeder
     public function run()
     {
 
-        $fixedPages = ['Home','Offers']; 
+        $fixedPages = ['Home','Offers'];
 
         foreach ($fixedPages as $key => $page) {
             $page_id = $key + 1;
@@ -27,10 +27,10 @@ class PagesTableSeeder extends Seeder
             ]);
 
             Page::create([
-                'title' => $page, 
-                'menu_id' => $page_id, 
+                'title' => $page,
+                'menu_id' => $page_id,
                 'page_type' => 'fixed'
             ]);
-        }       
+        }
     }
 }

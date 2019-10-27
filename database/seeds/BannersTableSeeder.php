@@ -17,7 +17,7 @@ class BannersTableSeeder extends Seeder
         \DB::table('banners')->delete();
         
         \DB::table('banners')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'name' => 'Net Pack',
@@ -28,7 +28,7 @@ class BannersTableSeeder extends Seeder
                 'created_at' => '2019-09-01 04:26:50',
                 'updated_at' => '2019-09-01 04:26:50',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'name' => 'Net Pack',
@@ -39,7 +39,7 @@ class BannersTableSeeder extends Seeder
                 'created_at' => '2019-09-01 04:27:28',
                 'updated_at' => '2019-09-01 04:27:28',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'name' => 'SMS Bundle',
@@ -50,7 +50,7 @@ class BannersTableSeeder extends Seeder
                 'created_at' => '2019-09-01 04:28:02',
                 'updated_at' => '2019-09-01 04:28:02',
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'name' => 'Talk Time',
@@ -61,7 +61,7 @@ class BannersTableSeeder extends Seeder
                 'created_at' => '2019-09-01 04:28:42',
                 'updated_at' => '2019-09-01 04:28:42',
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'name' => 'World Cup',
@@ -73,7 +73,5 @@ class BannersTableSeeder extends Seeder
                 'updated_at' => '2019-09-01 04:29:36',
             ),
         ));
-        
-        
     }
 }

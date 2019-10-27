@@ -46,6 +46,5 @@ class AmarOfferSeeder extends Seeder
             'points'=>'10'
            
         ]);
-       
     }
 }

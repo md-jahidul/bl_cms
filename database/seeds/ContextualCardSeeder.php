@@ -21,7 +21,7 @@ class ContextualCardSeeder extends Seeder
             "first_action"=> "recharge",
             "second_action"=> "emergency_balance",
             "image_url"=> "https://url.com"
-        ],
+            ],
             [
 
             "title"=> "Auto Renewal",
@@ -31,7 +31,7 @@ class ContextualCardSeeder extends Seeder
             "first_action"=> "recharge",
             "second_action"=> "cancel",
             "image_url"=> "https://url.com"
-        ]
+            ]
 
         ];
 

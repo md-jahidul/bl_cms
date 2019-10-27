@@ -17,7 +17,7 @@ class PermissionTableSeeder extends Seeder
      * @param $method
      * @param $action
      */
-    public function insert($role_id,$controller, $method, $action)
+    public function insert($role_id, $controller, $method, $action)
     {
         DB::table('permissions')->insert(
             [
@@ -41,10 +41,10 @@ class PermissionTableSeeder extends Seeder
     public function createPermissions($actions, $role, $callback1, $callback2)
     {
         foreach ($actions as $controller => $action) {
-            if ($callback1($role, $controller) ) {
+            if ($callback1($role, $controller)) {
                 foreach ($action as $method => $acts) {
                     foreach ($acts as $act) {
-                        if ($callback2($role, $act) ) {
+                        if ($callback2($role, $act)) {
                             $this->insert($role->id, $controller, $method, $act);
                         }
                     }
@@ -95,7 +95,7 @@ class PermissionTableSeeder extends Seeder
                   );
         };
 
-        $callback2 = function ($role,$act) {
+        $callback2 = function ($role, $act) {
             return ($role->alias != 'assetlite_normal_user') ||
                    ( $act != 'edit' &&
                      $act != 'update' &&
@@ -108,10 +108,10 @@ class PermissionTableSeeder extends Seeder
         foreach ($roles as $role) {
             $this->createPermissions(
                 $actions["App\Http\Controllers\AssetLite"],
-                $role, $callback1, $callback2
+                $role,
+                $callback1,
+                $callback2
             );
         }
-
-
     }
 }

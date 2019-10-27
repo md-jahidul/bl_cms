@@ -4,7 +4,6 @@ use App\Models\AlSliderImage;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
-
 class SliderImageTableSeeder extends Seeder
 {
     /**
@@ -15,7 +14,7 @@ class SliderImageTableSeeder extends Seeder
     public function run()
     {
 
-        for($i=1; $i < 4; $i++){
+        for ($i=1; $i < 4; $i++) {
             AlSliderImage::create([
                 'id'    => $i,
                 'slider_id' => 1,
@@ -35,7 +34,7 @@ class SliderImageTableSeeder extends Seeder
         $digitalServiceSliders = ["Banglaflix","Mobile TV","Gaan Mela","Boi Ghor","Others"];
         $digitalServiceSlidersBn = ["বাংলাফ্লিক্স", "মোবাইল টিভি", "গানের মেলা", "বোই ঘোড়", "অন্যরা"];
 
-        foreach ($digitalServiceSliders as $key => $digitalServiceSlider){
+        foreach ($digitalServiceSliders as $key => $digitalServiceSlider) {
             AlSliderImage::create([
                 'id'    => $key + 4,
                 'slider_id' => 3,
@@ -63,7 +62,7 @@ class SliderImageTableSeeder extends Seeder
 
         $feedBackBn = "বাংলালিংক সারা দেশে দ্রুততম ইন্টারনেট সরবরাহ করে, আমি কখনও বাংলালিংক ব্যবহার ব্যতীত সেরা অভিজ্ঞতা পাই না। এটি সর্বদা দুর্দান্ত সেবা, আমি সর্বদা বাংলালিংক ব্যবহার করব।";
 
-        foreach ($testimonialSlidersEns as $key => $testimonialSlidersEn){
+        foreach ($testimonialSlidersEns as $key => $testimonialSlidersEn) {
             AlSliderImage::create([
                 'id'    => $key + 9,
                 'slider_id' => 5,
@@ -83,6 +82,5 @@ class SliderImageTableSeeder extends Seeder
                 ]
             ]);
         }
-
     }
 }

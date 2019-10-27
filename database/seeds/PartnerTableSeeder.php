@@ -22,7 +22,7 @@ class PartnerTableSeeder extends Seeder
         $contactPersonMobile = "0191955522";
 
 
-        foreach ($companyNameEn as $key => $value){
+        foreach ($companyNameEn as $key => $value) {
             Partner::create([
                 'partner_category_id' => $key + 1,
                 'company_name_en' => $value,
@@ -31,7 +31,7 @@ class PartnerTableSeeder extends Seeder
                 'company_address' => $companyAddress,
                 'company_website' => 'https://'. $companyWebSite[$key],
                 'contact_person_name' => $contactPersonName,
-                'contact_person_email' =>  str_replace(" ", "",  strtolower($value)) . '@gmail.com',
+                'contact_person_email' =>  str_replace(" ", "", strtolower($value)) . '@gmail.com',
                 'contact_person_mobile' => $contactPersonMobile . $key,
                 'other_attributes' => [],
             ]);

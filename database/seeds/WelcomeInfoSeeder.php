@@ -28,6 +28,3 @@ class WelcomeInfoSeeder extends Seeder
         factory(App\Models\WelcomeInfo::class, 10)->create();
     }
 }
-
-
-

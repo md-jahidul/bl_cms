@@ -8,4 +8,3 @@ $factory->define(App\Models\WelcomeInfo::class, function (Faker\Generator $faker
         'user_message' => $faker->text
     ];
 });
-

@@ -6,8 +6,6 @@ use App\Models\Notification;
 use App\Models\NotificationCategory;
 use Faker\Generator as Faker;
 
-
-
 $factory->define(NotificationCategory::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
@@ -27,6 +25,3 @@ $factory->define(Notification::class, function (Faker $faker) {
 
     ];
 });
-
-
-

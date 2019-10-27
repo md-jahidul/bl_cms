@@ -37,6 +37,5 @@ class ConfigTableSeeder extends Seeder
                 'value' => $configValue[$index]
             ]);
         }
-
     }
 }
