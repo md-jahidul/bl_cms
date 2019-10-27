@@ -95,11 +95,11 @@ class AppVersionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param AppVersionRequest $request
      * @param AppVersion $app_version
      * @return void
      */
-    public function update(Request $request, AppVersion $app_version)
+    public function update(AppVersionRequest $request, AppVersion $app_version)
     {
         $response = $this->appVersionService->updateAppVersion($request, $app_version);
 
