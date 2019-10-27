@@ -31,7 +31,7 @@ class ShortCodesTableSeeder extends Seeder
             [
                 'component_title' => 'Trending Slider',
                 'component_type' => 'slider_multiple',
-                'component_id'   =>  null
+                'component_id'   =>  5
             ],
             [
                 'component_title' => 'Digital Service',
