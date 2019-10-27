@@ -54,7 +54,7 @@ class FooterMenuController extends Controller
     {
         $footerMenus = $this->footerMenuService->footerMenuList($parent_id);
         $footer_menu_id = $parent_id;
-        while ( $footer_menu_id != 0 ){
+        while ($footer_menu_id != 0) {
             $footer_menu_id = $this->getBreadcrumbInfo($footer_menu_id);
         }
         $footer_menu_items = $this->footerMenuItems;
@@ -71,7 +71,7 @@ class FooterMenuController extends Controller
     {
         $this->footerMenuItems[] = ['en_label_text' => 'Create'];
         $footer_menu_id = $parent_id;
-        while ( $footer_menu_id != 0 ){
+        while ($footer_menu_id != 0) {
             $footer_menu_id = $this->getBreadcrumbInfo($footer_menu_id);
         }
         $footer_menu_items = $this->footerMenuItems;
@@ -91,7 +91,7 @@ class FooterMenuController extends Controller
         $parentId = $request->parent_id;
         $response = $this->footerMenuService->storeFooterMenu($request->all());
         Session::flash('message', $response->getContent());
-        return redirect( ($parentId == 0) ? '/footer-menu' : "/footer-menu/$parentId/child-footer");
+        return redirect(($parentId == 0) ? '/footer-menu' : "/footer-menu/$parentId/child-footer");
     }
 
 
@@ -103,16 +103,16 @@ class FooterMenuController extends Controller
      */
     public function edit($id)
     {
-       $footerMenu = $this->footerMenuService->findOrFail($id);
+        $footerMenu = $this->footerMenuService->findOrFail($id);
 
         $this->footerMenuItems[] = ['en_label_text' => $footerMenu->en_label_text];
 
         $footer_menu_id = $footerMenu->parent_id;
-        while ( $footer_menu_id != 0 ){
+        while ($footer_menu_id != 0) {
             $footer_menu_id = $this->getBreadcrumbInfo($footer_menu_id);
         }
         $footer_menu_items = $this->footerMenuItems;
-       return view('admin.footer-menu.edit', compact('footerMenu', 'footer_menu_items'));
+        return view('admin.footer-menu.edit', compact('footerMenu', 'footer_menu_items'));
     }
 
     /**
@@ -124,10 +124,10 @@ class FooterMenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-       $parentId =  $request->parent_id;
-       $response = $this->footerMenuService->updateFooterMenu($request->all(), $id);
-       Session::flash('message', $response->getContent());
-       return redirect( ($parentId != 0) ? "footer-menu/$parentId/child-footer" : 'footer-menu' );
+        $parentId =  $request->parent_id;
+        $response = $this->footerMenuService->updateFooterMenu($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect(($parentId != 0) ? "footer-menu/$parentId/child-footer" : 'footer-menu');
     }
 
     /**
@@ -136,7 +136,7 @@ class FooterMenuController extends Controller
      */
     public function FooterMenuSortable(Request $request)
     {
-       return $this->footerMenuService->tableSort($request);
+        return $this->footerMenuService->tableSort($request);
     }
 
     /**

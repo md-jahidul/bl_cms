@@ -71,7 +71,7 @@ class PermissionsController extends Controller
      */
     public function getSelectedRoutes(Request $request)
     {
-        if($request->ajax()) {
+        if ($request->ajax()) {
             $role_id = $request->input('role_id');
             $selected = Role::findOrFail($role_id)->permissions()->select('namespace', 'controller', 'method', 'action')->get()->toArray();
             $selectedActions = [];
@@ -83,9 +83,9 @@ class PermissionsController extends Controller
         return response()->json(
             [
             'responseText' => 'Not a ajax request'
-            ], 500
+            ],
+            500
         );
-
     }
 
     /**
@@ -101,13 +101,12 @@ class PermissionsController extends Controller
         $actions = $request->input('actions');
         $data = [];
 
-        if(empty($actions))
-        {
+        if (empty($actions)) {
             Session::flash('message', 'You should select at least one permission!');
             return redirect(Config("authorization.route-prefix") . '/permissions');
         }
 
-        if(count($actions) > 0) {
+        if (count($actions) > 0) {
             foreach ($actions as $action) {
                 $parts = explode('-', $action);
                 $data[] = new Permission(

@@ -45,7 +45,6 @@ class ConfigController extends Controller
 
         $response = $this->configService->updateConfigData($request->all());
         Session::flash('message', $response->getContent());
-        return redirect( "/config");
+        return redirect("/config");
     }
-
 }

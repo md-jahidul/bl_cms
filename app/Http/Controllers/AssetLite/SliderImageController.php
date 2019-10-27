@@ -39,7 +39,7 @@ class SliderImageController extends Controller
 //        $this->alSliderImageService->itemList($sliderId, $type);
 
 //        return $sliderTitle;
-        return view('admin.slider-image.index', compact('slider_images', 'sliderItem', 'sliderId','type'));
+        return view('admin.slider-image.index', compact('slider_images', 'sliderItem', 'sliderId', 'type'));
     }
 
     /**
@@ -90,7 +90,7 @@ class SliderImageController extends Controller
 //        return $other_attributes;
 
 
-        return view('admin.slider-image.edit', compact('sliderImage','type', 'other_attributes'));
+        return view('admin.slider-image.edit', compact('sliderImage', 'type', 'other_attributes'));
     }
 
     /**
