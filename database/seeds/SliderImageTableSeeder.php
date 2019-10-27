@@ -14,7 +14,7 @@ class SliderImageTableSeeder extends Seeder
     public function run()
     {
 
-        for ($i=1; $i < 4; $i++) {
+        for ($i = 1; $i < 4; $i++) {
             AlSliderImage::create([
                 'id'    => $i,
                 'slider_id' => 1,
@@ -68,7 +68,7 @@ class SliderImageTableSeeder extends Seeder
                 'slider_id' => 5,
                 'title_en' =>  $testimonialSlidersEn,
                 'title_bn' =>  $testimonialSlidersEn,
-                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/'.$userPic[$key],
+                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/' . $userPic[$key],
                 'alt_text' => 'testimonial slider image',
                 'display_order' => count(AlSliderImage::get()) + 1,
                 'other_attributes' => [

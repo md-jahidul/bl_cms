@@ -58,7 +58,7 @@ class InternetPackFilterSeeder extends Seeder
                 'filter' => json_encode([
                     'unit'  => 'mb',
                     'lower' => 1024,
-                    'upper' => 1024*3,
+                    'upper' => 1024 * 3,
                 ]),
                 'created_at' => Carbon::now('UTC')->toDateTimeString()
             ],
@@ -66,7 +66,7 @@ class InternetPackFilterSeeder extends Seeder
                 'offer_filter_type_id' => 2,
                 'filter' => json_encode([
                     'unit'  => 'mb',
-                    'lower' => 1024*3,
+                    'lower' => 1024 * 3,
                     'upper' => null,
                 ]),
                 'created_at' => Carbon::now('UTC')->toDateTimeString()

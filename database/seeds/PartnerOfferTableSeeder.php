@@ -19,7 +19,7 @@ class PartnerOfferTableSeeder extends Seeder
         $getOfferMsgEn = "Type 8497 send SMS to 1020";
         $getOfferMsgBn = "৮৪৯৭ টাইপ করুন ১০২০ নম্বরে এসএমএস পাঠান";
         $countHomePageOffer = 0;
-        for ($i=0; $i < 30; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $randItem = rand(0, 2);
             $showInHome = rand(0, 3) ? 1 : 0;
 

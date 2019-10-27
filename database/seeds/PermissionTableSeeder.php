@@ -65,7 +65,8 @@ class PermissionTableSeeder extends Seeder
         $actions = array();
         $routes = Route::getRoutes();
         foreach ($routes as $route) {
-            if (preg_match("/^App(.*)/i", trim($route->getActionName())) == 0
+            if (
+                preg_match("/^App(.*)/i", trim($route->getActionName())) == 0
                 || preg_match("/^App\\\\Http\\\\Controllers\\\\Auth(.*)/i", trim($route->getActionName())) > 0
             ) {
                 continue;

@@ -13,7 +13,7 @@ class ConfigTableSeeder extends Seeder
      */
     public function run()
     {
-        $siteLogo     = env('APP_URL', 'http://localhost:8000')."/images/logo/bl-logo.png";
+        $siteLogo     = env('APP_URL', 'http://localhost:8000') . "/images/logo/bl-logo.png";
         $logoAltText  = "Banglalink Logo";
         $email        = "info@banglalink.net";
         $query_email  = "info@banglalink.net";

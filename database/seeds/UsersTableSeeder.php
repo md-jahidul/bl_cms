@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
                 'type' => 'mybl',
                 'phone' => '0191911111541',
                 'uid' => uniqid(),
-                'password' =>Hash::make('123456'),
+                'password' => Hash::make('123456'),
                 'device_token' => '122'
             ],
             [
@@ -52,7 +52,7 @@ class UsersTableSeeder extends Seeder
             ]
         ];
 
-        for ($i=0; $i < count($myblUsers); $i++) {
+        for ($i = 0; $i < count($myblUsers); $i++) {
             DB::table('users')->insert($myblUsers[$i]);
             DB::table('role_user')->insert(
                 [
@@ -104,7 +104,7 @@ class UsersTableSeeder extends Seeder
         ];
 
         // TODO : https://stackoverflow.com/questions/45269146/laravel-seeding-many-to-many-relationship
-        for ($i=0; $i < count($assetLiteUsers); $i++) {
+        for ($i = 0; $i < count($assetLiteUsers); $i++) {
             DB::table('users')->insert($assetLiteUsers[$i]);
             DB::table('role_user')->insert(
                 [
