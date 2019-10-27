@@ -42,7 +42,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('ussd') ? ' error' : '' }}">
                                     <label for="ussd" class="required">USSD Code</label>
-                                    <input type="text" name="ussd"  class="form-control" placeholder="Enter offer ussd english" maxlength="10"
+                                    <input type="text" name="ussd"  class="form-control" placeholder="Enter offer ussd english" maxlength="15"
                                            value="{{ $product->ussd }}" required data-validation-required-message="Enter offer ussd">
                                     <div class="help-block"></div>
                                     @if ($errors->has('ussd'))

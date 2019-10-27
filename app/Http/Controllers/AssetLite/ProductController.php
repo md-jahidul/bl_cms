@@ -50,7 +50,7 @@ class ProductController extends Controller
 
     public function trendingOfferHome()
     {
-        $trendingHomeOffers = Product::where('is_home', 1)->get();
+        $trendingHomeOffers = Product::where('show_in_home', 1)->get();
         return view('admin.product.home', compact('trendingHomeOffers'));
     }
 
@@ -121,7 +121,7 @@ class ProductController extends Controller
     public function update(Request $request, $type, $id)
     {
         $response = $this->productService->updateProduct($request->all(), $id);
-        Session::get('message', $response->content());
+        Session::flash('message', $response->content());
         return redirect("offers/$type");
     }
 
