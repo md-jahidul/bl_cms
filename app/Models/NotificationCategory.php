@@ -32,7 +32,7 @@ class NotificationCategory extends Model
      */
     public function notifications()
     {
-        return $this->hasMany(Notification::class, 'category_id', 'id');
+        return $this->hasMany(NotificationDraft::class, 'category_id', 'id');
     }
 
 

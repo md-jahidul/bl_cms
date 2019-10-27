@@ -3,12 +3,13 @@
 namespace App\Repositories;
 
 use App\Models\Notification;
+use App\Models\NotificationDraft;
 use App\Models\User;
 use App\Models\UserMuteNotificationCategory;
 
 class NotificationRepository extends BaseRepository
 {
-    public $modelName = Notification::class;
+    public $modelName = NotificationDraft::class;
 
 
     /**
