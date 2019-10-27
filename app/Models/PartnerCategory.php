@@ -10,6 +10,6 @@ class PartnerCategory extends Model
 
     public function partner()
     {
-       return $this->hasOne(Partner::class);
+        return $this->hasOne(Partner::class);
     }
 }

@@ -24,6 +24,4 @@ class ShortcutUser extends Model
         'shortcut_id',
         'serial'
     ];
-
-
 }

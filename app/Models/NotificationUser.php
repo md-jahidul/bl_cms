@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-
 class NotificationUser extends Model
 {
 
@@ -26,6 +25,4 @@ class NotificationUser extends Model
         'user_id',
         'notification_id',
     ];
-
-
 }

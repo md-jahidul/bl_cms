@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use App\Models\Role;
 
 trait Authorizable
@@ -8,7 +9,7 @@ trait Authorizable
     /**
      * @inheritdoc
      */
-    public function newFromBuilder($attributes = array(), $connection = NULL)
+    public function newFromBuilder($attributes = array(), $connection = null)
     {
         $instance = parent::newFromBuilder($attributes);
 
@@ -31,11 +32,11 @@ trait Authorizable
 
     public function isAuthorize($namespace, $controller, $method, $action)
     {
-        if(!count($this->roles)) {
+        if (!count($this->roles)) {
             return false;
         }
 
-        foreach ( $this->roles as $role) {
+        foreach ($this->roles as $role) {
             $permission = $role->permissions
                                 ->where('namespace', $namespace)
                                 ->where('controller', $controller)
@@ -50,15 +51,15 @@ trait Authorizable
         return false;
     }
 
-    public function can_view($feature,$action = 'index')
+    public function can_view($feature, $action = 'index')
     {
 
-        if(!$this->isAdmin()){
-            if(!count($this->roles)) {
+        if (!$this->isAdmin()) {
+            if (!count($this->roles)) {
                 return false;
             }
     
-            foreach ( $this->roles as $role) {
+            foreach ($this->roles as $role) {
                 $permission = $role->permissions
                                     ->where('controller', $feature . 'Controller')
                                     ->where('action', $action);
@@ -66,17 +67,17 @@ trait Authorizable
                 if (count($permission) > 0) {
                     return true;
                 }
-            }            
+            }
             return false;
-        }else{
+        } else {
             return true;
-        }       
+        }
     }
 
     public function isAdmin()
     {
-        foreach ($this->roles as $role) {            
-            if($role->id == 1 || $role->id == 2){
+        foreach ($this->roles as $role) {
+            if ($role->id == 1 || $role->id == 2) {
                 return true;
             }
         }

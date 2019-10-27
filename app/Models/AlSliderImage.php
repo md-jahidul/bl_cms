@@ -23,7 +23,8 @@ class AlSliderImage extends Model
         'other_attributes' => 'array'
     ];
 
-    public function slider(){
+    public function slider()
+    {
         return $this->belongsTo(AlSlider::class);
     }
 }

@@ -17,5 +17,4 @@ class AmarOffer extends Model
         'tag',
         'points'
     ];
-   
 }

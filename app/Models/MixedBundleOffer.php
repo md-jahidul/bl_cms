@@ -22,5 +22,4 @@ class MixedBundleOffer extends Model
         'offer_code',
         'tag'
     ];
-
 }

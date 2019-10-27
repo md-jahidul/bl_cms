@@ -32,8 +32,7 @@ class Notification extends Model
      */
     public function NotificationCategory()
     {
-        return $this->belongsTo(NotificationCategory::class,'category_id');
-        
+        return $this->belongsTo(NotificationCategory::class, 'category_id');
     }
 
 
@@ -42,9 +41,11 @@ class Notification extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(Notification::class,'notification_user',
-            'notification_id','user_id')->withTimestamps();
+        return $this->belongsToMany(
+            Notification::class,
+            'notification_user',
+            'notification_id',
+            'user_id'
+        )->withTimestamps();
     }
-
-
 }

@@ -12,7 +12,8 @@ class AlSliderComponentType extends Model
         'slug'
     ];
 
-    public function sliders(){
+    public function sliders()
+    {
         return $this->hasMany(AlSlider::class);
     }
 }

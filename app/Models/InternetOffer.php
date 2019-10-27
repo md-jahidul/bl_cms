@@ -19,5 +19,4 @@ class InternetOffer extends Model
         'offer_code',
         'points'
     ];
-    
 }
