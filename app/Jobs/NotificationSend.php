@@ -10,7 +10,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Services\PushNotificationService;
 
-
 class NotificationSend implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -18,9 +17,9 @@ class NotificationSend implements ShouldQueue
 
     protected $notification;
 
-    protected  $notification_id;
+    protected $notification_id;
 
-    protected  $user_phone;
+    protected $user_phone;
 
     /**
      * @var NotificationService
@@ -57,13 +56,10 @@ class NotificationSend implements ShouldQueue
         $response = PushNotificationService::sendNotification($this->notification);
 
 
-        if(json_decode($response)->status == "SUCCESS"){
-
-            if(isset($this->user_phone))
-            {
-                $this->notificationService->attachNotificationToUser($this->notification_id,  $this->user_phone);
+        if (json_decode($response)->status == "SUCCESS") {
+            if (isset($this->user_phone)) {
+                $this->notificationService->attachNotificationToUser($this->notification_id, $this->user_phone);
             }
-
         }
     }
 }

@@ -33,7 +33,7 @@ class ShortCutController extends Controller
      */
     public function index()
     {
-        return view('admin.short_cuts.index')->with('short_cuts',ShortCut::all());
+        return view('admin.short_cuts.index')->with('short_cuts', ShortCut::all());
     }
 
     /**
@@ -54,7 +54,7 @@ class ShortCutController extends Controller
      */
     public function store(ShortCutStoreRequest $request)
     {
-        session()->flash('message',$this->shortCutService->storeShortCut($request->all())->getContent());
+        session()->flash('message', $this->shortCutService->storeShortCut($request->all())->getContent());
         return redirect(route('short_cuts.index'));
     }
 
@@ -78,8 +78,8 @@ class ShortCutController extends Controller
     public function edit($id)
     {
         return view('admin.short_cuts.index')
-                    ->with('short_cuts',$this->shortCutService->findAll())
-                    ->with('short_cut_info',$this->shortCutService->findOne($id));
+                    ->with('short_cuts', $this->shortCutService->findAll())
+                    ->with('short_cut_info', $this->shortCutService->findOne($id));
     }
 
     /**
@@ -91,7 +91,7 @@ class ShortCutController extends Controller
      */
     public function update(ShortCutStoreRequest $request, $id)
     {
-        session()->flash('success',$this->shortCutService->updateShortCut($request->all(),$id)->getContent());
+        session()->flash('success', $this->shortCutService->updateShortCut($request->all(), $id)->getContent());
         return redirect(route('short_cuts.index'));
     }
 
@@ -104,7 +104,7 @@ class ShortCutController extends Controller
     public function destroy($id)
     {
         //return $id;
-        session()->flash('error',$this->shortCutService->destroyShortCut($id)->getContent());
+        session()->flash('error', $this->shortCutService->destroyShortCut($id)->getContent());
         return url('shortcuts');
     }
 }

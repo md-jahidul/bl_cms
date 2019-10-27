@@ -8,11 +8,9 @@
 
 namespace App\Services;
 
-
 use App\Repositories\BannerRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
-
 
 class BannerService
 {
@@ -52,18 +50,17 @@ class BannerService
     public function updateBanner($data, $banner)
     {
 
-        if(isset($data->image_path)){
+        if (isset($data->image_path)) {
             $data = $data->all();
             $data['image_path'] = 'storage/'.$data['image_path']->store('banner');
             unlink($banner->image_path);
             $banner->update($data);
-        }else{
+        } else {
             $data->image_path = $banner->image_path;
             $banner->update($data->all());
         }
         
         return Response('Banner has been successfully updated');
-        
     }
 
     /**
@@ -78,5 +75,4 @@ class BannerService
         $banner->delete();
         return Response('banner has been successfully deleted');
     }
-
 }

@@ -8,13 +8,11 @@
 
 namespace App\Services;
 
-
 use App\Repositories\MixedBundleOfferRepository;
 use App\Traits\CrudTrait;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
-
 
 class MixedBundleOfferService
 {
@@ -70,5 +68,4 @@ class MixedBundleOfferService
         $data->delete();
         return Response('Mixed Bundle has been successfully deleted');
     }
-
 }

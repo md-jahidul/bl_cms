@@ -8,11 +8,9 @@
 
 namespace App\Services;
 
-
 use App\Repositories\InternetOfferRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
-
 
 class InternetOfferService
 {
@@ -66,5 +64,4 @@ class InternetOfferService
         $data->delete();
         return Response('Internet Offer has been successfully deleted');
     }
-
 }

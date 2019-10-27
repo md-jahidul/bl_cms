@@ -8,7 +8,6 @@
 
 namespace App\Services;
 
-
 use App\Repositories\DigitalServiceRepository;
 use App\Traits\CrudTrait;
 
@@ -30,5 +29,4 @@ class DigitalServicesService
         $this->digitalServiceRepository = $digitalServiceRepository;
         $this->setActionRepository($digitalServiceRepository);
     }
-
 }

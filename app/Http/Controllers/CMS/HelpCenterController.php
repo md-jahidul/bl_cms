@@ -37,7 +37,7 @@ class HelpCenterController extends Controller
     {
         $helpCenters = HelpCenter::orderBy('sequence', 'asc')->get();
         //dd($helpCenterInfo);
-        return view('admin.help-center.index')->with('helpCenters',$helpCenters);
+        return view('admin.help-center.index')->with('helpCenters', $helpCenters);
         // return view('admin.help-center.index')->with('helpCenters',$this->helpCenterService->findAll());
     }
 
@@ -59,7 +59,7 @@ class HelpCenterController extends Controller
      */
     public function store(HelpCenterRequest $request)
     {
-        session()->flash('message',$this->helpCenterService->storeHelpCenter($request->all())->getContent());
+        session()->flash('message', $this->helpCenterService->storeHelpCenter($request->all())->getContent());
         return redirect(route('helpCenter.index'));
     }
 
@@ -82,7 +82,7 @@ class HelpCenterController extends Controller
      */
     public function edit(HelpCenter $helpCenter)
     {
-        return view('admin.help-center.edit')->with('helpCenter',$helpCenter);
+        return view('admin.help-center.edit')->with('helpCenter', $helpCenter);
     }
 
     /**
@@ -92,9 +92,9 @@ class HelpCenterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(HelpCenterRequest $request,helpCenter $helpCenter)
+    public function update(HelpCenterRequest $request, helpCenter $helpCenter)
     {
-        session()->flash('success',$this->helpCenterService->updateHelpCenter($request->all(),$helpCenter)->getContent());
+        session()->flash('success', $this->helpCenterService->updateHelpCenter($request->all(), $helpCenter)->getContent());
         return redirect(route('helpCenter.index'));
     }
 
@@ -106,7 +106,7 @@ class HelpCenterController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error',$this->helpCenterService->destroyHelpCenter($id)->getContent());
+        session()->flash('error', $this->helpCenterService->destroyHelpCenter($id)->getContent());
         return url('helpCenter');
     }
 
@@ -116,8 +116,7 @@ class HelpCenterController extends Controller
         foreach ($request->positions as $position) {
             $helpCenter = HelpCenter::FindorFail($position[0]);
             $helpCenter->update(['sequence' => $position[1]]);
-        } 
+        }
         return "success";
-        
     }
 }

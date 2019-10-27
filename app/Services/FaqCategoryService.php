@@ -8,7 +8,6 @@
 
 namespace App\Services;
 
-
 use App\Models\FaqCategory;
 use App\Models\FaqQuestion;
 use App\Repositories\NotificationCategoryRepository;
@@ -17,7 +16,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-
 
 class FaqCategoryService
 {
@@ -39,7 +37,6 @@ class FaqCategoryService
                 'status' => 'SUCCESS',
                 'message' => 'New FAQ Category Added Successfully'
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'status' => ' FAILED',
@@ -89,7 +86,6 @@ class FaqCategoryService
             'status' => 'SUCCESS',
             'message' => 'Successfully Updated'
         ]);
-
     }
 
     public function prepareDataForDatatable(Builder $itemBuilder, Request $request)
@@ -141,15 +137,13 @@ class FaqCategoryService
                 'status' => 'SUCCESS',
                 'message' => 'Successfully Deleted'
             ]);
-
         } catch (\Exception $e) {
             DB::rollback();
 
             return response()->json([
                 'status' => 'FAILED',
                 'message' => 'Successfully Updated'
-            ],500);
+            ], 500);
         }
     }
-
 }

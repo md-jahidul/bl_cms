@@ -3,7 +3,6 @@
 
 namespace App\Repositories;
 
-
 use App\Models\Config;
 
 class ConfigRepository extends BaseRepository

@@ -3,7 +3,6 @@
 
 namespace App\Services;
 
-
 use App\Models\MixedBundleFilter;
 use App\Models\OfferFilterType;
 use Illuminate\Database\Eloquent\Builder;
@@ -19,7 +18,8 @@ class MixedBundleFilterService
         $this->filter_types = OfferFilterType::all()->pluck('id', 'slug');
     }
 
-    public function getAll(){
+    public function getAll()
+    {
         return new MixedBundleFilter();
     }
 
@@ -36,9 +36,9 @@ class MixedBundleFilterService
             'data'  =>  []
         ];
 
-        $items->each(function($item) use (&$response){
+        $items->each(function ($item) use (&$response) {
 
-            $filter = json_decode($item->filter,true);
+            $filter = json_decode($item->filter, true);
 
             $response['data'][] = [
                 'id'      =>  $item->id,
@@ -54,10 +54,9 @@ class MixedBundleFilterService
 
         $response['data'] = $sorted->values()->all();
         return $response;
-
     }
 
-    public function addFilter(Request $request, $type,$unit)
+    public function addFilter(Request $request, $type, $unit)
     {
         $lower = $request->lower;
         $upper = $request->upper;
@@ -84,12 +83,11 @@ class MixedBundleFilterService
                 'message' => $e->getMessage()
             ], 500);
         }
-
     }
 
     public function delFilter(Request $request)
     {
-        try{
+        try {
             $filter = MixedBundleFilter::find($request->id);
             $filter->delete();
             $response = [
@@ -98,8 +96,7 @@ class MixedBundleFilterService
             ];
 
             return response()->json($response, 200);
-
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'status' => ' FAILED',
                 'message' => $e->getMessage()
@@ -112,16 +109,15 @@ class MixedBundleFilterService
     {
         DB::beginTransaction();
 
-        try{
-
+        try {
             // first delete previous data and save new data. Done with transaction.if fails revert operation
             DB::table('mixed_bundle_filters')
-                ->where('offer_filter_type_id',$this->filter_types['sort'])
+                ->where('offer_filter_type_id', $this->filter_types['sort'])
                 ->delete();
 
             //save
             $filters = $request->filters;
-            foreach ($filters as $filter){
+            foreach ($filters as $filter) {
                 MixedBundleFilter::create([
                     'offer_filter_type_id' => $this->filter_types['sort'],
                     'filter' => json_encode([
@@ -139,7 +135,6 @@ class MixedBundleFilterService
 
             return response()->json($response, 200);
         } catch (\Exception $e) {
-
             DB::rollBack();
 
             return response()->json([

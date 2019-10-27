@@ -36,7 +36,4 @@ class UserRepository extends BaseRepository
         $users = $this->model->get();
         return $users;
     }
-
-
-
 }

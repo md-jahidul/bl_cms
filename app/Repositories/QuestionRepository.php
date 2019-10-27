@@ -8,7 +8,6 @@
 
 namespace App\Repositories;
 
-
 use App\Models\AnswerOption;
 use App\Models\Option;
 use App\Models\Question;
@@ -21,8 +20,8 @@ class QuestionRepository extends BaseRepository
     public function createQuestion($request)
     {
         $question_data = $request->only('question_text', 'point', 'tag_id');
-        if (!empty($question_data)){
-           $questionId = $this->model->create($question_data);
+        if (!empty($question_data)) {
+            $questionId = $this->model->create($question_data);
         }
         return $questionId->id;
     }
@@ -30,11 +29,10 @@ class QuestionRepository extends BaseRepository
     public function questionUpdate($request, $id)
     {
         $question_data = $request->only('question_text', 'point', 'tag_id');
-        if (!empty($question_data)){
+        if (!empty($question_data)) {
             $question = $this->model->findOrfail($id);
             $question->update($question_data);
         }
         return $question->id;
     }
-
 }

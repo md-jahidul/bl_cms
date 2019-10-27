@@ -1,11 +1,9 @@
 <?php
 namespace App\Services;
 
-
 use App\Repositories\WelcomeInfoRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
-
 
 class WelcomeInfoService
 {
@@ -49,11 +47,11 @@ class WelcomeInfoService
     public function updateWelcomeInfo($request, $wellcomeInfo)
     {
         $data = $request->all();
-        if(isset($request->all()['icon'])){
+        if (isset($request->all()['icon'])) {
             unlink($wellcomeInfo->icon);
             $data['icon'] = 'storage/'.$request->all()['icon']->store('icon');
             $wellcomeInfo->update($data);
-        }else{
+        } else {
             $data['icon'] = $wellcomeInfo->icon;
             $wellcomeInfo->update($data);
         }
@@ -70,5 +68,4 @@ class WelcomeInfoService
         // $slider-other-attr->delete();
         // return Response('Slider deleted successfully !');
     }
-
 }

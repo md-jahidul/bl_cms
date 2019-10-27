@@ -8,12 +8,10 @@
 
 namespace App\Services;
 
-
 use App\Repositories\SettingKeyRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use DB;
-
 
 class SettingKeyService
 {
@@ -66,5 +64,4 @@ class SettingKeyService
         $sliderImage->delete();
         return Response('Setting Key has been successfully deleted');
     }
-
 }

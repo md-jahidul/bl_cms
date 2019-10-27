@@ -14,5 +14,4 @@ use App\Models\SimCategory;
 class SimCategoryRepository extends BaseRepository
 {
     public $modelName = SimCategory::class;
-
 }

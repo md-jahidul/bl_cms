@@ -33,5 +33,4 @@ class AppVersionRepository extends BaseRepository
     {
         return $this->model->get();
     }
-
 }

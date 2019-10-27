@@ -27,13 +27,11 @@ class NotificationRepository extends BaseRepository
 
         $user_ids = array_map(function ($user) {
             return $user['id'];
-
         }, $users->toArray());
 
         $notification->users()->attach($user_ids);
 
         return 'success';
-
     }
 
 
@@ -42,7 +40,7 @@ class NotificationRepository extends BaseRepository
      * @param $user_phone
      * @return array
      */
-    public function checkMuteOfferForUser($category_id,$user_phone):array
+    public function checkMuteOfferForUser($category_id, $user_phone):array
     {
         $user_ids = UserMuteNotificationCategory::where('category_id', $category_id)
                                                 ->select('user_id')
@@ -55,12 +53,9 @@ class NotificationRepository extends BaseRepository
 
         $mute_user_phone = array_map(function ($phone) {
             return $phone['phone'];
-
         }, $phone_list);
 
 
         return array_diff($user_phone, $mute_user_phone);
     }
-
-
 }

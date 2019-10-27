@@ -3,7 +3,6 @@
 
 namespace App\Services;
 
-
 use App\Http\Helpers;
 use App\Repositories\QuickLaunchRepository;
 use App\Traits\CrudTrait;
@@ -44,7 +43,7 @@ class QuickLaunchService
     public function storeQuickLaunchItem($data)
     {
         $count = count($this->quickLaunchRepository->findAll());
-        $imageUrl = $this->imageUpload($data, 'image_url' , $data['title_en'], 'quick-launch-items');
+        $imageUrl = $this->imageUpload($data, 'image_url', $data['title_en'], 'quick-launch-items');
         $data['image_url'] = env('APP_URL', 'http://localhost:8000'). '/quick-launch-items/'.$imageUrl;
         $data['display_order'] = ++$count;
         $this->save($data);
@@ -70,8 +69,8 @@ class QuickLaunchService
     public function updateQuickLaunch($data, $id)
     {
         $quickLaunch = $this->findOne($id);
-        if (!empty($data['image_url'])){
-            $imageUrl = $this->imageUpload($data, 'image_url' , $data['title_en'], 'quick-launch-items');
+        if (!empty($data['image_url'])) {
+            $imageUrl = $this->imageUpload($data, 'image_url', $data['title_en'], 'quick-launch-items');
             $data['image_url'] = env('APP_URL', 'http://localhost:8000'). '/quick-launch-items/'.$imageUrl;
         }
         $quickLaunch->update($data);
@@ -89,5 +88,4 @@ class QuickLaunchService
         $quickLaunch->delete();
         return Response('Quick launch deleted successfully !');
     }
-
 }

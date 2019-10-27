@@ -8,11 +8,9 @@
 
 namespace App\Services;
 
-
 use App\Repositories\MinuteOfferRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
-
 
 class MinuteOfferService
 {
@@ -66,5 +64,4 @@ class MinuteOfferService
         $data->delete();
         return Response('Minute Offer has been successfully deleted');
     }
-
 }

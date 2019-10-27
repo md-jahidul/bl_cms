@@ -65,6 +65,4 @@ class FaqCategoryController extends Controller
         }
         return $this->service->destroy($request, 'app');
     }
-
-
 }

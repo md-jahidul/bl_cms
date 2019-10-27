@@ -36,7 +36,7 @@ class NotificationCategoryController extends Controller
     public function index()
     {
         $notificationCategories = $this->notificationCategoryService->findAll();
-        return view('admin.notification.notification-category.index')->with('notificationCategories',$notificationCategories);
+        return view('admin.notification.notification-category.index')->with('notificationCategories', $notificationCategories);
     }
 
     /**
@@ -57,9 +57,8 @@ class NotificationCategoryController extends Controller
      */
     public function store(NotificationCategoryRequest $request)
     {
-        session()->flash('message',$this->notificationCategoryService->storeNotificationCategory($request->all())->getContent());
+        session()->flash('message', $this->notificationCategoryService->storeNotificationCategory($request->all())->getContent());
         return redirect(route('notificationCategory.index'));
-
     }
 
     /**
@@ -80,14 +79,13 @@ class NotificationCategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    { 
+    {
         $notificationCategories = $this->notificationCategoryService->findAll();
         $notificationCategory = $this->notificationCategoryService->findOne($id);
 
         return view('admin.notification.notification-category.index')
-                    ->with('notificationCategory',$notificationCategory)
-                    ->with('notificationCategories',$notificationCategories);
-        
+                    ->with('notificationCategory', $notificationCategory)
+                    ->with('notificationCategories', $notificationCategories);
     }
 
     /**
@@ -98,10 +96,9 @@ class NotificationCategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(NotificationCategoryRequest $request, $id)
-    { 
-        session()->flash('success',$this->notificationCategoryService->updateNotificationCategory($request->all(),$id)->getContent());
+    {
+        session()->flash('success', $this->notificationCategoryService->updateNotificationCategory($request->all(), $id)->getContent());
         return redirect(route('notificationCategory.index'));
-        
     }
 
     /**
@@ -112,8 +109,7 @@ class NotificationCategoryController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error',$this->notificationCategoryService->deleteNotificationCategory($id)->getContent());
+        session()->flash('error', $this->notificationCategoryService->deleteNotificationCategory($id)->getContent());
         return url('notificationCategory');
-        
     }
 }

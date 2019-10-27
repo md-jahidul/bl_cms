@@ -8,7 +8,6 @@
 
 namespace App\Traits;
 
-
 use Illuminate\Support\Facades\Storage;
 
 trait FileTrait
@@ -24,7 +23,8 @@ trait FileTrait
     protected function upload($file, $directoryPath)
     {
         $path = $file->store(
-            $directoryPath, $this->disk
+            $directoryPath,
+            $this->disk
         );
         return $path;
     }

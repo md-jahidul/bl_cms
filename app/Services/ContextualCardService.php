@@ -8,11 +8,9 @@
 
 namespace App\Services;
 
-
 use App\Repositories\ContextualCardRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
-
 
 class ContextualCardService
 {
@@ -53,17 +51,16 @@ class ContextualCardService
     {
         
         $contextualCard = $this->findOne($id);
-        if(isset($data['image_url'])){
+        if (isset($data['image_url'])) {
             $data['image_url'] = 'storage/'.$data['image_url']->store('contextualCard');
             unlink($contextualCard->image_url);
             $contextualCard->update($data);
-        }else{
+        } else {
             $data['image_url'] = $contextualCard->image_url;
             $contextualCard->update($data);
         }
         
         return Response('Contextual Card has been successfully updated');
-        
     }
 
     /**
@@ -78,5 +75,4 @@ class ContextualCardService
         $contextualCard->delete();
         return Response('Contextual Card has been successfully deleted');
     }
-
 }

@@ -8,7 +8,6 @@
 
 namespace App\Repositories;
 
-
 use App\Models\DigitalService;
 
 class DigitalServiceRepository extends BaseRepository

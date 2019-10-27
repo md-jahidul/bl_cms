@@ -8,11 +8,9 @@
 
 namespace App\Services;
 
-
 use App\Repositories\SmsOfferRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
-
 
 class SmsOfferService
 {
@@ -67,5 +65,4 @@ class SmsOfferService
         $data->delete();
         return Response('SMS Offer has been successfully deleted');
     }
-
 }

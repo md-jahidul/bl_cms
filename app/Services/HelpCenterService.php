@@ -8,11 +8,9 @@
 
 namespace App\Services;
 
-
 use App\Repositories\HelpCenterRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
-
 
 class HelpCenterService
 {
@@ -51,10 +49,10 @@ class HelpCenterService
      */
     public function updateHelpCenter($request, $helpCenter)
     {
-        if(array_key_exists('icon', $request)){
+        if (array_key_exists('icon', $request)) {
             $request['icon'] = 'storage/'.$request['icon']->store('Help_Center_Icon');
             unlink($helpCenter->icon);
-        }else{
+        } else {
             $request['icon'] = $helpCenter->icon;
         }
         $helpCenter->update($request);
@@ -73,5 +71,4 @@ class HelpCenterService
         $helpCenter->delete();
         return Response('Help Center has been successfully deleted');
     }
-
 }

@@ -61,7 +61,4 @@ class AppVersionService
         $appVersion = $this->appVersionRepository->findOne($id);
         return $appVersion->delete();
     }
-
-
-
 }

@@ -1,7 +1,6 @@
 <?php
 namespace App\Services;
 
-
 class ThirdPartyAPIIntegrateService
 {
     /**
@@ -9,7 +8,8 @@ class ThirdPartyAPIIntegrateService
      *
      * @return string
      */
-    public static function getHost() {
+    public static function getHost()
+    {
         return env('ASSET_HOST');
     }
 
@@ -18,7 +18,8 @@ class ThirdPartyAPIIntegrateService
      *
      * @return string
      */
-    public static function getPort() {
+    public static function getPort()
+    {
         return env('ASSET_PORT');
     }
 
@@ -28,7 +29,8 @@ class ThirdPartyAPIIntegrateService
      *
      * @return string
      */
-    public static function getToken() {
+    public static function getToken()
+    {
         return env('ASSET_TOKEN');
     }
 
@@ -101,7 +103,7 @@ class ThirdPartyAPIIntegrateService
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, strtoupper($method));
         static::makeRequest($ch, $url, $body, $headers);
         $result = curl_exec($ch);
-        curl_close( $ch);
+        curl_close($ch);
         return $result;
     }
 
@@ -151,7 +153,6 @@ class ThirdPartyAPIIntegrateService
 
           return $res;
       }*/
-
 }
 
 //print_r(ThirdPartyAPIIntegrateService::test());

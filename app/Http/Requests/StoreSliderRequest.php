@@ -29,7 +29,8 @@ class StoreSliderRequest extends FormRequest
         ];
     }
 
-    public function messages() {
+    public function messages()
+    {
         return [
             'title.required' => "Enter slider title",
             'slider_type_id.required' => 'Select slider type'

@@ -2,6 +2,7 @@
 
 
 namespace App\Repositories;
+
 use App\Models\FooterMenu;
 
 class FooterMenuRepository extends BaseRepository
@@ -16,7 +17,7 @@ class FooterMenuRepository extends BaseRepository
     public function footerTableSort($request)
     {
         $positions = $request->position;
-        foreach ($positions as $position){
+        foreach ($positions as $position) {
             $footer_id = $position[0];
             $new_position = $position[1];
             $update_menu = $this->model->findOrFail($footer_id);

@@ -3,7 +3,6 @@ namespace App\Services;
 
 use App\Repositories\UserRepository;
 
-
 class UserService
 {
 
@@ -20,7 +19,6 @@ class UserService
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
-
     }
 
 
@@ -31,15 +29,10 @@ class UserService
      */
     public function getUserListForNotification()
     {
-       return $this->userRepository->getUserListForNotification();
+        return $this->userRepository->getUserListForNotification();
     }
 
     public function storeUser($data)
     {
-
     }
-
-
-
-
 }

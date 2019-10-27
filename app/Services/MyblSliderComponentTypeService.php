@@ -24,5 +24,4 @@ class MyblSliderComponentTypeService
         $this->myblSliderTypeRepository = $myblSliderComponentTypeRepository;
         $this->setActionRepository($myblSliderComponentTypeRepository);
     }
-
 }

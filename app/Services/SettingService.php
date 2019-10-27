@@ -8,12 +8,10 @@
 
 namespace App\Services;
 
-
 use App\Repositories\SettingRepository ;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use DB;
-
 
 class SettingService
 {
@@ -47,10 +45,10 @@ class SettingService
         $setting = $this->settingRepository->is_exist($request['setting_key_id']);
         //dd($request);
         
-        if(isset($setting)){
+        if (isset($setting)) {
             $settings = $this->findOne($setting->id);
             $settings->update($request);
-        }else{
+        } else {
             $this->save($request);
         }
         return new Response("Setting has been successfully created");
@@ -79,5 +77,4 @@ class SettingService
         $setting->delete();
         return Response('Setting has been successfully deleted');
     }
-
 }

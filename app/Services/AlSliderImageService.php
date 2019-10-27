@@ -1,7 +1,6 @@
 <?php
 namespace App\Services;
 
-
 use App\Repositories\AlSliderImageRepository;
 use App\Repositories\SliderImageRepository;
 use App\Repositories\SliderRepository;
@@ -61,7 +60,7 @@ class AlSliderImageService
     public function updateSliderImage($data, $id)
     {
         $sliderImage = $this->findOne($id);
-        if (!empty($data['image_url'])){
+        if (!empty($data['image_url'])) {
             $imageUrl = $this->imageUpload($data, 'image_url', $data['title_en'], 'slider-images');
             $data['image_url'] = env('APP_URL', 'http://localhost:8000') . "/slider-images/".$imageUrl;
         }
@@ -80,5 +79,4 @@ class AlSliderImageService
         $sliderImage->delete();
         return Response('Slider Image delete successfully');
     }
-
 }

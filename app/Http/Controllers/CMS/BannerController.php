@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\CMS;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Banner;
@@ -37,7 +38,7 @@ class BannerController extends Controller
      */
     public function index()
     {
-        return view('admin.banner.index')->with('banners',$this->bannerService->findAll());
+        return view('admin.banner.index')->with('banners', $this->bannerService->findAll());
     }
 
     /**
@@ -58,7 +59,7 @@ class BannerController extends Controller
      */
     public function store(BannerStoreRequest $request)
     {
-        session()->flash('message',$this->bannerService->storeBanner($request->all())->getContent());
+        session()->flash('message', $this->bannerService->storeBanner($request->all())->getContent());
         return redirect(route('banner.index'));
     }
 
@@ -91,11 +92,10 @@ class BannerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(BannerUpdateRequest $request,Banner $banner)
-    { 
-        session()->flash('success',$this->bannerService->updateBanner($request, $banner)->getContent());
+    public function update(BannerUpdateRequest $request, Banner $banner)
+    {
+        session()->flash('success', $this->bannerService->updateBanner($request, $banner)->getContent());
         return redirect(route('banner.index'));
-        
     }
 
     /**
@@ -106,7 +106,7 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error',$this->bannerService->deleteBanner($id)->getContent());
+        session()->flash('error', $this->bannerService->deleteBanner($id)->getContent());
         return url('banner');
     }
 }

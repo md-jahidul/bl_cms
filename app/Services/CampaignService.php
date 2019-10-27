@@ -8,7 +8,6 @@
 
 namespace App\Services;
 
-
 use App\Repositories\CampaignRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
@@ -52,9 +51,9 @@ class CampaignService
      */
     public function updateCampaign($data, $id)
     {
-      $campaign = $this->findOne($id);
-      $campaign->update($data);
-      return Response('Campaign update successfully');
+        $campaign = $this->findOne($id);
+        $campaign->update($data);
+        return Response('Campaign update successfully');
     }
 
     /**
@@ -68,5 +67,4 @@ class CampaignService
         $campaign->delete();
         return Response('Campaign deleted successfully');
     }
-
 }

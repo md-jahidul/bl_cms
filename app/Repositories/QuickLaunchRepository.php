@@ -17,8 +17,7 @@ class QuickLaunchRepository extends BaseRepository
     public function quickLaunchTableSort($request)
     {
         $positions = $request->position;
-        foreach ($positions as $position){
-
+        foreach ($positions as $position) {
             $menu_id = $position[0];
             $new_position = $position[1];
             $update_menu = $this->model->findOrFail($menu_id);
@@ -29,5 +28,4 @@ class QuickLaunchRepository extends BaseRepository
 
         return "success";
     }
-
 }

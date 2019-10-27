@@ -15,7 +15,7 @@ class PartnerOfferRepository extends BaseRepository
 {
     public $modelName = PartnerOffer::class;
 
-    public function getPartnerOffer($partnerId,$isHome)
+    public function getPartnerOffer($partnerId, $isHome)
     {
         $query =  $this->model;
         $query = ($isHome) ? $query->where('show_in_home', 1)->orderBy('display_order')  : $query->where('partner_id', $partnerId)->orderBy('created_at');
@@ -25,7 +25,7 @@ class PartnerOfferRepository extends BaseRepository
     public function partnerOfferTableSort($request)
     {
         $positions = $request->position;
-        foreach ($positions as $position){
+        foreach ($positions as $position) {
             $menu_id = $position[0];
             $new_position = $position[1];
             $update_menu = $this->model->findOrFail($menu_id);
@@ -34,5 +34,4 @@ class PartnerOfferRepository extends BaseRepository
         }
         return "success";
     }
-
 }

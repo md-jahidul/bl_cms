@@ -11,7 +11,6 @@ namespace App\Repositories;
 use App\Models\AlSliderComponentType;
 use App\Models\SliderComponentType;
 
-
 class MyblSliderComponentTypeRepository extends BaseRepository
 {
     public $modelName = SliderComponentType::class;

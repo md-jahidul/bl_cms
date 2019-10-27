@@ -8,11 +8,9 @@
 
 namespace App\Services;
 
-
 use App\Repositories\NearbyOfferRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
-
 
 class NearbyOfferService
 {
@@ -38,7 +36,7 @@ class NearbyOfferService
      * @return Response
      */
     public function storeNearbyOffer($data)
-    {        
+    {
         $data['image'] = 'storage/'.$data['image']->store('NearbyOffer_image');
         $this->save($data);
         return new Response("Near By Offer has been successfully created");
@@ -51,10 +49,10 @@ class NearbyOfferService
      */
     public function updateNearbyOffer($request, $nearByOffer)
     {
-        if(array_key_exists('image', $request)){
+        if (array_key_exists('image', $request)) {
             unlink($nearByOffer->image);
             $request['image'] = 'storage/'.$request['image']->store('NearbyOffer_image');
-        }else{
+        } else {
             $request['image'] = $nearByOffer->image;
         }
         $nearByOffer->update($request);
@@ -73,5 +71,4 @@ class NearbyOfferService
         $data->delete();
         return Response('Near By Offer has been successfully deleted');
     }
-
 }

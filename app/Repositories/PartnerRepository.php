@@ -3,7 +3,6 @@
 
 namespace App\Repositories;
 
-
 use App\Models\Partner;
 
 class PartnerRepository extends BaseRepository

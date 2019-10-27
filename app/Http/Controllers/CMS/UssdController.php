@@ -34,7 +34,7 @@ class UssdController extends Controller
      */
     public function index()
     {
-        return view('admin.ussd-code.index')->with('ussd_cods',$this->ussdService->findAll());
+        return view('admin.ussd-code.index')->with('ussd_cods', $this->ussdService->findAll());
     }
 
     /**
@@ -44,7 +44,7 @@ class UssdController extends Controller
      */
     public function create()
     {
-       return view('admin.ussd-code.create');
+        return view('admin.ussd-code.create');
     }
 
     /**
@@ -69,7 +69,7 @@ class UssdController extends Controller
     public function show($id)
     {
         $ussd = $this->ussdService->findOne($id);
-        return view('admin.ussd-code.show')->with('ussd_code',$ussd);
+        return view('admin.ussd-code.show')->with('ussd_code', $ussd);
     }
 
     /**
@@ -80,7 +80,7 @@ class UssdController extends Controller
      */
     public function edit($id)
     {
-       return view('admin.ussd-code.edit')->with('ussd_code',$this->ussdService->findOne($id));
+        return view('admin.ussd-code.edit')->with('ussd_code', $this->ussdService->findOne($id));
     }
 
     /**
@@ -92,7 +92,7 @@ class UssdController extends Controller
      */
     public function update(UssdRequest $request, $id)
     {
-        session()->flash('success',$this->ussdService->updateUssd($request,$id)->getContent());
+        session()->flash('success', $this->ussdService->updateUssd($request, $id)->getContent());
         return redirect(route('ussd.index'));
     }
 
@@ -104,7 +104,7 @@ class UssdController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error',$this->ussdService->deleteUssd($id)->getContent());
+        session()->flash('error', $this->ussdService->deleteUssd($id)->getContent());
         return url('ussd');
     }
 }

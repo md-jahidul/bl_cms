@@ -34,7 +34,7 @@ class MixedBundleOfferController extends Controller
      */
     public function index()
     {
-        return view('admin.offer-mixedbundle.index')->with('mixedBundle_offers',$this->mixedBundleOfferService->findAll());
+        return view('admin.offer-mixedbundle.index')->with('mixedBundle_offers', $this->mixedBundleOfferService->findAll());
     }
 
     /**
@@ -80,7 +80,7 @@ class MixedBundleOfferController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.offer-mixedbundle.edit')->with('mixedBundle_offer',$this->mixedBundleOfferService->findOne($id));
+        return view('admin.offer-mixedbundle.edit')->with('mixedBundle_offer', $this->mixedBundleOfferService->findOne($id));
     }
 
     /**
@@ -92,7 +92,7 @@ class MixedBundleOfferController extends Controller
      */
     public function update(MixedBundleOfferRequest $request, $id)
     {
-        session()->flash('success',$this->mixedBundleOfferService->updateMixedBundleOffer($request,$id)->getContent());
+        session()->flash('success', $this->mixedBundleOfferService->updateMixedBundleOffer($request, $id)->getContent());
         return redirect(route('mixedBundleOffer.index'));
     }
 
@@ -104,7 +104,7 @@ class MixedBundleOfferController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error',$this->mixedBundleOfferService->deleteMixedBundleOffer($id)->getContent());
+        session()->flash('error', $this->mixedBundleOfferService->deleteMixedBundleOffer($id)->getContent());
         return url('mixedBundleOffer');
     }
 }

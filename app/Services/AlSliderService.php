@@ -1,12 +1,10 @@
 <?php
 namespace App\Services;
 
-
 use App\Repositories\AlSliderRepository;
 use App\Repositories\SliderRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
-
 
 class AlSliderService
 {
@@ -29,7 +27,7 @@ class AlSliderService
 
     public function allSingleSlider()
     {
-       return $this->alSliderRepository->singleSlider();
+        return $this->alSliderRepository->singleSlider();
     }
 
     public function allMultiSlider()
@@ -72,5 +70,4 @@ class AlSliderService
         $slider->delete();
         return Response('Slider deleted successfully !');
     }
-
 }

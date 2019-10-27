@@ -33,10 +33,11 @@ class NotificationController extends Controller
      * @param NotificationCategoryService $notificationCategoryService
      * @param UserService $userService
      */
-    public function __construct(NotificationService $notificationService,
-                                NotificationCategoryService $notificationCategoryService,
-                                UserService $userService)
-    {
+    public function __construct(
+        NotificationService $notificationService,
+        NotificationCategoryService $notificationCategoryService,
+        UserService $userService
+    ) {
         $this->notificationService = $notificationService;
         $this->notificationCategoryService = $notificationCategoryService;
         $this->userService = $userService;
@@ -55,8 +56,8 @@ class NotificationController extends Controller
         $notifications = $this->notificationService->findAll();
         $category =  $this->notificationCategoryService->findAll();
         return view('admin.notification.notification.index')
-                ->with('category',$category)
-                ->with('notifications',$notifications);
+                ->with('category', $category)
+                ->with('notifications', $notifications);
     }
 
     /**
@@ -67,7 +68,7 @@ class NotificationController extends Controller
     public function create()
     {
         $categories = $this->notificationCategoryService->findAll();
-        return view('admin.notification.notification.create')->with('categories',$categories);
+        return view('admin.notification.notification.create')->with('categories', $categories);
     }
 
     /**
@@ -79,9 +80,8 @@ class NotificationController extends Controller
     public function store(NotificationRequest $request)
     {
         $content = $this->notificationService->storeNotification($request->all())->getContent();
-        session()->flash('message',$content);
+        session()->flash('message', $content);
         return redirect(route('notification.index'));
-
     }
 
     /**
@@ -97,7 +97,7 @@ class NotificationController extends Controller
         $users = $this->userService->getUserListForNotification();
 
         return view('admin.notification.notification.show')
-            ->with('notification',$notification)
+            ->with('notification', $notification)
             ->with('users', $users);
     }
 
@@ -111,8 +111,8 @@ class NotificationController extends Controller
     {
         $categories = $this->notificationCategoryService->findAll();
         return view('admin.notification.notification.edit')
-                ->with('categories',$categories)
-                ->with('notification',$this->notificationService->findOne($id));
+                ->with('categories', $categories)
+                ->with('notification', $this->notificationService->findOne($id));
     }
 
     /**
@@ -124,8 +124,8 @@ class NotificationController extends Controller
      */
     public function update(NotificationRequest $request, $id)
     {
-        $content = $this->notificationService->updateNotification($request->all(),$id)->getContent();
-        session()->flash('success',$content);
+        $content = $this->notificationService->updateNotification($request->all(), $id)->getContent();
+        session()->flash('success', $content);
         return redirect(route('notification.index'));
     }
 
@@ -139,7 +139,7 @@ class NotificationController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error',$this->notificationService->deleteNotification($id)->getContent());
+        session()->flash('error', $this->notificationService->deleteNotification($id)->getContent());
         return url('notificationCategory');
     }
 }
