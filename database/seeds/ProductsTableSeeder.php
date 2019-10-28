@@ -14,7 +14,7 @@ class ProductsTableSeeder extends Seeder
 
         switch ($name) {
             case 'internet':
-                $obj->sms_volume = rand(50, 500);
+                $obj->internet_volume_mb = rand(100, 12000);
                 break;
 
             case 'voice':
