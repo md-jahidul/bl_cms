@@ -81,8 +81,8 @@
                                 <label for="name" class="required">Force Update:</label>
                                 <select name="force_update"  required data-validation-required-message="Platform is required"  class="browser-default custom-select">
                                     @if(isset($version))
-                                        <option value=1 @if($version->force_update == 1) selected="selected" @endif>true</option>
-                                        <option value=0 @if($version->force_update == 0) selected="selected" @endif>false</option>
+                                        <option value=1 @if($version->force_update == 1) selected="selected" @endif>Yes</option>
+                                        <option value=0 @if($version->force_update == 0) selected="selected" @endif>No</option>
                                     @else
                                         <option value=1>Yes</option>
                                         <option value=0>No</option>
