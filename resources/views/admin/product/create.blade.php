@@ -42,16 +42,6 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('price_tk') ? ' error' : '' }}">
-                                    <label for="price_tk">Offer Price</label>
-                                    <input type="text" name="price_tk"  class="form-control" placeholder="Enter offer price"
-                                           value="{{ old("price_tk") ? old("price_tk") : '' }}">
-                                    <div class="help-block"></div>
-{{--                                    @if ($errors->has('price_tk'))--}}
-{{--                                        <div class="help-block">{{ $errors->first('price_tk') }}</div>--}}
-{{--                                    @endif--}}
-                                </div>
-
                                 <div class="form-group col-md-6 {{ $errors->has('ussd_en') ? ' error' : '' }}">
                                     <label for="ussd_en">USSD Code English</label>
                                     <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd english"
@@ -70,6 +60,16 @@
 {{--                                    @if ($errors->has('ussd_bn'))--}}
 {{--                                        <div class="help-block">  {{ $errors->first('ussd_bn') }}</div>--}}
 {{--                                    @endif--}}
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('price_tk') ? ' error' : '' }}">
+                                    <label for="price_tk">Offer Price</label>
+                                    <input type="text" name="price_tk"  class="form-control" placeholder="Enter offer price"
+                                           value="{{ old("price_tk") ? old("price_tk") : '' }}">
+                                    <div class="help-block"></div>
+                                    {{--                                    @if ($errors->has('price_tk'))--}}
+                                    {{--                                        <div class="help-block">{{ $errors->first('price_tk') }}</div>--}}
+                                    {{--                                    @endif--}}
                                 </div>
 
                                 @if(strtolower($type) == 'prepaid')
@@ -167,9 +167,6 @@
                                     @endif
                                 </div>
 
-
-
-
                                 <div class="col-md-6">
                                     <label></label>
                                     <div class="form-group pt-1">
@@ -180,7 +177,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="title" class="required mr-1">Recharge</label>
+                                        <label for="title" class="mr-1">Recharge</label>
 
                                         <input type="radio" name="is_recharge" value="1" id="yes" checked>
                                         <label for="yes" class="mr-1">Yes</label>

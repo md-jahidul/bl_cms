@@ -50,7 +50,9 @@ class ProductController extends Controller
 
     public function trendingOfferHome()
     {
-        $trendingHomeOffers = Product::where('show_in_home', 1)->get();
+        $trendingHomeOffers = Product::where('show_in_home', 1)->orderBy('display_order')->get();
+
+//        return$trendingHomeOffers;
         return view('admin.product.home', compact('trendingHomeOffers'));
     }
 
@@ -82,6 +84,11 @@ class ProductController extends Controller
         $response = $this->productService->storeProduct($request->all(), $simId);
         Session::flash('success', $response->content());
         return redirect("offers/$type");
+    }
+
+    public function trendingOfferSortable(Request $request)
+    {
+        $this->productService->tableSortable($request);
     }
 
     /**

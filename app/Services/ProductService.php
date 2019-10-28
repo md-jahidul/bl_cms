@@ -30,11 +30,6 @@ class ProductService
     }
 
 
-    public function itemList($partnerId, $isHome = false)
-    {
-        return $this->partnerOfferRepository->getPartnerOffer($partnerId, $isHome);
-    }
-
     /**
      * @param $data
      * @return Response
@@ -49,7 +44,7 @@ class ProductService
 
     public function tableSortable($data)
     {
-        $this->productRepository->productTableSort($data);
+        $this->productRepository->productOfferTableSort($data);
         return new Response('update successfully');
     }
 

@@ -129,4 +129,5 @@ trait CrudTrait
         $image->move(public_path($directory), $imageName);
         return $imageUrl;
     }
+
 }
