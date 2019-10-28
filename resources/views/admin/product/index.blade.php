@@ -3,7 +3,6 @@
 @section('card_name', 'Product List')
 @section('breadcrumb')
     <li class="breadcrumb-item "><a href="{{ url('partners') }}"> Product List</a></li>
-    <li class="breadcrumb-item ">Partner Offer List</li>
 @endsection
 @section('action')
     <a href="{{ route("product.create", strtolower($type)) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
@@ -31,9 +30,9 @@
                                 @php $path = 'partner-offers-home'; @endphp
                                 <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}">
                                     <td width="3%">{{ $loop->iteration }}</td>
-                                    <td>{{ $product->name }}{!! $product->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+                                    <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                     <td>{{ $product->price_tk }} Tk</td>
-                                    <td>{{ $product->ussd }}</td>
+                                    <td>{{ $product->ussd_en }}</td>
                                     <td width="15%">
                                         <a href="{{ route('product.show', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>
                                         <a href="{{ route('product.edit', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

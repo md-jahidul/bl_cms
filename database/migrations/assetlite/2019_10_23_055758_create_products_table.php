@@ -20,7 +20,8 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->string('code');
-                $table->string('name');
+                $table->string('name_en');
+                $table->string('name_bn');
                 $table->string('text')->nullable();
                 $table->integer('price_tk')->nullable();
                 $table->integer('price_vat_included')->default(0);
@@ -31,12 +32,13 @@ class CreateProductsTable extends Migration
                 $table->tinyInteger('is_recharge')->default(0)->comment('yes = 1, no = 0');
                 $table->tinyInteger('show_in_home')->default(0);
                 $table->string('validity_days')->nullable();
-                $table->string('ussd', 20)->nullable();
-                $table->string('point')->nullable();
+                $table->string('ussd_en', 30)->nullable();
+                $table->string('ussd_bn', 30)->nullable();
+                $table->integer('point')->nullable();
                 $table->unsignedBigInteger('tag_category_id')->nullable();
                 $table->unsignedBigInteger('sim_category_id');
                 $table->unsignedBigInteger('offer_category_id');
-                $table->string('contextual_message')->nullable();
+                $table->text('contextual_message')->nullable();
                 $table->integer('like')->default(0);
                 $table->tinyInteger('status')->default(1);
                 $table->integer('display_order')->nullable();

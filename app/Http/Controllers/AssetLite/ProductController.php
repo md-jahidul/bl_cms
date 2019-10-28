@@ -87,13 +87,14 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param $type
+     * @param int $id
      * @return Response
      */
     public function show($type, $id)
     {
         $productDetails = $this->productService->findOne($id);
-        return view('admin.product.show', compact('productDetails'));
+        return view('admin.product.show', compact('productDetails', 'type'));
     }
 
     /**

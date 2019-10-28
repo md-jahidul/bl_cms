@@ -1,76 +1,89 @@
 @extends('layouts.admin')
-@section('title', 'Config Item List')
-@section('card_name', 'Config Item List')
-{{--@section('breadcrumb')--}}
-{{--    <li class="breadcrumb-item active">Config Item List</li>--}}
-{{--@endsection--}}
-{{--@section('action')--}}
-{{--@endsection--}}
+@section('title', 'Product Details')
+@section('card_name', 'Product Details')
+@section('breadcrumb')
+    <li class="breadcrumb-item "><a href="{{ url('partners') }}"> Product List</a></li>
+    <li class="breadcrumb-item active">Product Details</li>
+@endsection
+@section('action')
+    <a href="{{ route('product.list', $type) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Back </a>
+@endsection
 @section('content')
     <div class="row justify-content-md-center">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title" id="striped-row-layout-card-center"><i class="la la-gears"></i> Settings Page</h4>
+                    <h4 class="card-title" id="striped-row-layout-card-center"><i class="la la-th-list"></i> <strong>Product Details</strong></h4>
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 </div>
                 <hr class="mb-0">
                 <div class="card-content collpase show">
                     <div class="card-body">
-                        <form role="form" action="{{ url('config/update') }}" method="POST" class="form form-horizontal striped-rows" novalidate enctype="multipart/form-data">
-                            @csrf
-                            @method('put')
-                            <div class="form-body">
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th class="text-right" width="30%">Product Name</th>
+                                    <td>{{ $productDetails->name_en }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" width="30%">Product Name</th>
+                                    <td>{{ $productDetails->name_bn }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" width="30%">Offer Price</th>
+                                    <td>{{ $productDetails->price_tk }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" width="30%">Price Vat Included</th>
+                                    <td>{{ $productDetails->price_vat_included }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" width="30%">SMS Volume</th>
+                                    <td>{{ $productDetails->sms_volume }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" width="30%">Minute Volume</th>
+                                    <td>{{ $productDetails->min_volume }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" width="30%">Internet Volume MB</th>
+                                    <td>{{ $productDetails->internet_volume_mb }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" width="30%">Bonus</th>
+                                    <td>{{ $productDetails->bonus }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" width="30%">Show In Home</th>
+                                    <td><input type="checkbox" {{ $productDetails->show_in_home == 1 ? 'checked' : '' }} disabled></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" width="30%">USSD Code</th>
+                                    <td>{{ $productDetails->ussd }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" width="30%">Point</th>
+                                    <td>{{ $productDetails->point }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" width="30%">Status</th>
+                                    <td>
+                                        <strong class="{{ $productDetails->status == 1 ? 'success' : 'danger' }}">
+                                            {{ $productDetails->status == 1 ? 'Active' : 'Inactive' }}
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-right" width="30%"></th>
+                                    <td>
+                                        <a href="{{ route('product.edit', [$type, $productDetails->id]) }}" class="btn btn-outline-primary mr-1 border-0"><i class="la la-pencil-square"></i> Edit</a>
+                                        <a href="{{ route('product.list', $type) }}" class="btn btn-outline-warning border-0"><i class="la la-arrow-circle-left"></i> Back</a>
+                                    </td>
+                                </tr>
 
-{{--                                        <div class="form-group row profile-pic">--}}
-{{--                                            <label class="col-md-3 label-control pt-3"  for="row"></label>--}}
-{{--                                            <div class="pb-0">--}}
-{{--                                                <input type="file" name="site_logo" class="input-logo pl-2" style="display: none" placeholder="Enter logo alt text">--}}
-{{--                                                <a href="#" class="close-edit text-danger" style="display: none"><i class="la la-close" aria-hidden="true"></i></a>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="edit pt-3 pb-0">--}}
-{{--                                                <a href="#" class="edit-btn"><i class="la la-pencil" title="Change Logo" aria-hidden="true"></i></a>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                            </tbody>
+                        </table>
 
-                                <div class="form-group row {{ $errors->has('') ? ' error' : '' }}">
-                                    <label class="col-md-3 label-control" for="row">Name</label>
-                                    <div class="col-md-9">
-                                        <strong>Demo</strong>
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('price_tk'))
-                                            <div class="help-block">{{ $errors->first('price_tk') }}</div>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group row {{ $errors->has('') ? ' error' : '' }}">
-                                    <label class="col-md-3 label-control" for="row">Name</label>
-                                    <div class="col-md-9">
-                                        <strong>Demo</strong>
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('price_tk'))
-                                            <div class="help-block">{{ $errors->first('price_tk') }}</div>
-                                        @endif
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                            <hr>
-                            <div class="form-group row">
-                                <label class="col-md-3 label-control" for="eventRegInput5"></label>
-                                <div class="col-md-9 pt-0 pb-0">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="la la-check-square-o"></i> Save Changes
-                                    </button>
-                                    <a href="{{ url('/home') }}" class="btn btn-warning">
-                                        <i class="la la-arrow-circle-left"></i> Cancel
-                                    </a>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
