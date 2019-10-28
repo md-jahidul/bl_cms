@@ -21,9 +21,9 @@
                             @method('put')
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
-                                    <label for="name_en">Offer Name</label>
+                                    <label for="name_en" class="required">Offer Name</label>
                                     <input type="text" name="name_en"  class="form-control" placeholder="Enter offer name english"
-                                           value="{{ $product->name_en }}">
+                                           value="{{ $product->name_en }}" required data-validation-required-message="Enter offer name english">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_en'))
                                         <div class="help-block">{{ $errors->first('name_en') }}</div>
@@ -31,8 +31,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
-                                    <label for="name_bn">Offer Name Bangla</label>
+                                    <label for="name_bn" class="required">Offer Name Bangla</label>
                                     <input type="text" name="name_bn"  class="form-control" placeholder="Enter offer name bangla"
+                                           required data-validation-required-message="Enter offer name bangla"
                                            value="{{ $product->name_bn }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_bn'))
@@ -60,20 +61,20 @@
 
                                 @if(strtolower($type) == 'prepaid')
                                     <div class="form-group col-md-6 {{ $errors->has('sms_volume') ? ' error' : '' }}">
-                                        <label for="sms_volume" class="required">SMS Volume</label>.
+                                        <label for="sms_volume">SMS Volume</label>.
                                         <input type="number" name="sms_volume"  class="form-control" placeholder="Enter offer sms volume"
                                                value="{{ $product->sms_volume }}">
                                     </div>
 
                                     <div class="form-group col-md-6">
-                                        <label for="min_volume" class="required">Minute Volume</label>
+                                        <label for="min_volume">Minute Volume</label>
                                         <input type="number" name="min_v olume"  class="form-control" placeholder="Enter minute volume"
                                                value="{{ $product->min_volume }}">
                                     </div>
                                 @endif
 
                                 <div class="form-group col-md-6">
-                                    <label for="internet_volume_mb" class="required">Internet Volume</label>
+                                    <label for="internet_volume_mb">Internet Volume</label>
                                     <input type="number" name="internet_volume_mb"  class="form-control" placeholder="Enter internet volume mb"
                                            value="{{ $product->internet_volume_mb }}">
                                 </div>
@@ -85,19 +86,19 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="validity_days" class="required">Validity Days</label>
+                                    <label for="validity_days">Validity Days</label>
                                     <input type="text" name="validity_days"  class="form-control" placeholder="Enter validity days"
                                            value="{{ $product->validity_days }}">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('point') ? ' error' : '' }}">
-                                    <label for="point" class="required">Point</label>
+                                    <label for="point">Point</label>
                                     <input type="number" name="point"  class="form-control" placeholder="Enter point"
                                            value="{{ $product->point }}">
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="tag_category_id" class="required">Tag</label>
+                                    <label for="tag_category_id">Tag</label>
                                     <select class="form-control" name="tag_category_id">
                                         <option value="">---Select Tag---</option>
                                         @foreach($tags as $tag)
@@ -108,7 +109,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="offer_category_id" class="required">Offer</label>
-                                    <select class="form-control" name="offer_category_id">
+                                    <select class="form-control" name="offer_category_id"
+                                            required data-validation-required-message="Please select offer">
                                         <option value="">---Select Offer---</option>
                                         @foreach($offers as $offer)
                                             <option value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>
