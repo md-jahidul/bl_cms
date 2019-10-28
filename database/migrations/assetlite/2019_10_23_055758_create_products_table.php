@@ -28,7 +28,7 @@ class CreateProductsTable extends Migration
                 $table->integer('min_volume')->nullable();
                 $table->integer('internet_volume_mb')->nullable();
                 $table->string('bonus')->nullable();
-                $table->tinyInteger('is_recharge')->default('no')->comment('yes = 1, no = 0');
+                $table->tinyInteger('is_recharge')->default(0)->comment('yes = 1, no = 0');
                 $table->tinyInteger('show_in_home')->default(0);
                 $table->string('validity_days')->nullable();
                 $table->string('ussd', 20)->nullable();

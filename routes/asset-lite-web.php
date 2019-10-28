@@ -105,6 +105,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('offers/{type}/store', 'AssetLite\ProductController@store')->name('product.store');
     Route::get('offers/{type}/{id}/edit', 'AssetLite\ProductController@edit')->name('product.edit');
     Route::put('offers/{type}/{id}/update', 'AssetLite\ProductController@update')->name('product.update');
+    Route::get('offers/{type}/{id}/show', 'AssetLite\ProductController@show')->name('product.show');
     Route::get('offers/{type}/{id}', 'AssetLite\ProductController@destroy');
 
 

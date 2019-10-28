@@ -27,22 +27,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($products as $product)
-                            @php $path = 'partner-offers-home'; @endphp
-                            <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}">
-                                <td width="3%">{{ $loop->iteration }}</td>
-                                <td>{{ $product->name }}{!! $product->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
-                                <td>{{ $product->price_tk }} Tk</td>
-                                <td>{{ $product->ussd }}</td>
-                                <td width="15%">
-                                    <a href="#" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>
-                                    <a href="{{ route('product.edit', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("offers/$type/$product->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $product->id }}" title="Delete">
-                                        <i class="la la-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @foreach($products as $product)
+                                @php $path = 'partner-offers-home'; @endphp
+                                <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}">
+                                    <td width="3%">{{ $loop->iteration }}</td>
+                                    <td>{{ $product->name }}{!! $product->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+                                    <td>{{ $product->price_tk }} Tk</td>
+                                    <td>{{ $product->ussd }}</td>
+                                    <td width="15%">
+                                        <a href="{{ route('product.show', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>
+                                        <a href="{{ route('product.edit', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <a href="#" remove="{{ url("offers/$type/$product->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $product->id }}" title="Delete">
+                                            <i class="la la-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
