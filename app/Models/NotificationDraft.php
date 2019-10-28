@@ -42,7 +42,7 @@ class NotificationDraft extends Model
     public function users()
     {
         return $this->belongsToMany(
-            Notification::class,
+            NotificationUser::class,
             'notification_user',
             'notification_id',
             'user_id'

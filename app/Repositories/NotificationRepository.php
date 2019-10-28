@@ -17,21 +17,24 @@ class NotificationRepository extends BaseRepository
      *
      * @param $notification_id
      * @param $user_phone
+     * @param $notification_info
      * @return string
      */
-    public function attachmentNotificationToUser($notification_id, $user_phone)
+    public function attachmentNotificationToUser($notification_id, $user_phone, $notification_info)
     {
 
         $notification = $this->modelName::find($notification_id);
 
         $users = Customer::whereIn('phone', $user_phone)->select('id')->get();
 
+        $json_data['title'] = $notification_info['title'];
+        $json_data['message'] = $notification_info['body'];
 
         $user_ids = array_map(function ($user) {
             return $user['id'];
         }, $users->toArray());
 
-        $notification->users()->attach($user_ids);
+        $notification->users()->attach($user_ids, ['notification_info' => json_encode($json_data)]);
 
         return 'success';
     }
