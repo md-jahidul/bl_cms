@@ -35,9 +35,9 @@
                         @foreach ($versions as $version)
                             @php $index++; @endphp
                             @if($version->force_update == 1)
-                                @php $force_update = "true"; @endphp
+                                @php $force_update = "Yes"; @endphp
                             @else
-                                @php $force_update = "false"; @endphp
+                                @php $force_update = "No"; @endphp
                             @endif
                             <tr>
                                 <td width='5%'>{{$index}}</td>
