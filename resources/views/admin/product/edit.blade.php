@@ -32,7 +32,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('price_tk') ? ' error' : '' }}">
                                     <label for="price_tk" class="required">Offer Price</label>
-                                    <input type="number" name="price_tk"  class="form-control" placeholder="Enter offer price" max="8"
+                                    <input type="number" name="price_tk"  class="form-control" placeholder="Enter offer price" maxlength="8"
                                            value="{{ $product->price_tk }}" required data-validation-required-message="Enter offer price">
                                     <div class="help-block"></div>
                                     @if ($errors->has('price_tk'))
@@ -42,7 +42,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('ussd') ? ' error' : '' }}">
                                     <label for="ussd" class="required">USSD Code</label>
-                                    <input type="text" name="ussd"  class="form-control" placeholder="Enter offer ussd english" maxlength="8"
+                                    <input type="text" name="ussd"  class="form-control" placeholder="Enter offer ussd english" maxlength="15"
                                            value="{{ $product->ussd }}" required data-validation-required-message="Enter offer ussd">
                                     <div class="help-block"></div>
                                     @if ($errors->has('ussd'))

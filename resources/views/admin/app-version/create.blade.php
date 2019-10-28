@@ -12,8 +12,6 @@
     </li>
 @endsection
 
-dd($version);
-
 @section('content')
 
     <div class="card">
@@ -50,7 +48,6 @@ dd($version);
                             <div class="form-group">
                                 <label for="name" class="required">Select Platform:</label>
                                 <select name="platform" required data-validation-required-message="Platform is required"  class="browser-default custom-select">
-                                    <option selected>Select Platform</option>
                                     @if(isset($version))
                                         <option value="ios" @if($version->platform == "ios") selected="selected" @endif>ios</option>
                                         <option value="android" @if($version->platform == "android") selected="selected" @endif>android</option>
@@ -83,32 +80,41 @@ dd($version);
                             <div class="form-group">
                                 <label for="name" class="required">Force Update:</label>
                                 <select name="force_update"  required data-validation-required-message="Platform is required"  class="browser-default custom-select">
-                                    <option selected>Select force Update</option>
                                     @if(isset($version))
-                                        <option value=1 @if($version->force_update == 1) selected="selected" @endif>true</option>
-                                        <option value=0 @if($version->force_update == 0) selected="selected" @endif>false</option>
+                                        <option value=1 @if($version->force_update == 1) selected="selected" @endif>Yes</option>
+                                        <option value=0 @if($version->force_update == 0) selected="selected" @endif>No</option>
                                     @else
-                                        <option value=1>true</option>
-                                        <option value=0>false</option>
+                                        <option value=1>Yes</option>
+                                        <option value=0>No</option>
                                     @endif
                                 </select>
                             </div>
                         </div>
 
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="code" class="required">Message:</label>
-                                <input required data-validation-required-message="Message is required"  name="message"
-                                       value="@if(isset($version)){{$version->message}} @elseif(old("message")) {{old("message")}} @endif"
-                                       type="text"  class="form-control @error('message') is-invalid @enderror" placeholder="Enter message..">
-                                <small class="text-danger"> @error('message') {{ $message }} @enderror </small>
-                                <div class="help-block"></div>
-                            </div>
 
+                        <div class="col-6">
+                            <div class="form-group {{ $errors->has('message') ? ' error' : '' }}">
+                                <label for="message" class="required">Message:</label>
+                                @if(isset($version))
+                                    @php $app_msg = $version->message; @endphp
+                                @else
+                                    @php $app_msg = ''; @endphp
+                                @endif
+                                <textarea
+                                        required
+                                        data-validation-required-message="Message is required"
+                                        class="form-control" name="message" placeholder="Enter message..." id="message" rows="2">{{ old("message") ? old("message") : $app_msg }}</textarea>
+                                <div class="help-block"></div>
+                                @error('description')
+                                <span class="help-block" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                @enderror
+                            </div>
                         </div>
 
 
-                    <div class="col-4 mb-2" >
+                        <div class="col-4 mb-2" >
 
                         <button type="submit" id="submitForm" style="width:100%" class="btn @if(isset($version)) btn-success @else btn-info @endif ">
                             @if(isset($version)) Update Version @else Create Version @endif

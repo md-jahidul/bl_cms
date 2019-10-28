@@ -6,8 +6,11 @@ use App\Http\Requests\UpdateConfigRequest;
 use App\Models\Config;
 use App\Models\User;
 use App\Services\ConfigService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 
 class ConfigController extends Controller
@@ -26,7 +29,7 @@ class ConfigController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -36,13 +39,10 @@ class ConfigController extends Controller
 
     /**
      * @param UpdateConfigRequest $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return RedirectResponse|Redirector
      */
     public function update(UpdateConfigRequest $request)
     {
-        // $this->authorize('update', Config::class);
-
         $response = $this->configService->updateConfigData($request->all());
         Session::flash('message', $response->getContent());
         return redirect("/config");

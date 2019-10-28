@@ -50,7 +50,7 @@ class ProductController extends Controller
 
     public function trendingOfferHome()
     {
-        $trendingHomeOffers = Product::where('is_home', 1)->get();
+        $trendingHomeOffers = Product::where('show_in_home', 1)->get();
         return view('admin.product.home', compact('trendingHomeOffers'));
     }
 
@@ -80,7 +80,7 @@ class ProductController extends Controller
     {
         $simId = SimCategory::where('alias', $type)->first()->id;
         $response = $this->productService->storeProduct($request->all(), $simId);
-        Session::flash('message', $response->content());
+        Session::flash('success', $response->content());
         return redirect("offers/$type");
     }
 
@@ -121,7 +121,7 @@ class ProductController extends Controller
     public function update(Request $request, $type, $id)
     {
         $response = $this->productService->updateProduct($request->all(), $id);
-        Session::get('message', $response->content());
+        Session::flash('message', $response->content());
         return redirect("offers/$type");
     }
 
@@ -133,7 +133,7 @@ class ProductController extends Controller
     public function destroy($type, $id)
     {
         $response = $this->productService->deleteProduct($id);
-        Session::flash('message', $response->getContent());
+        Session::flash('error', $response->getContent());
         return url("offers/$type");
     }
 }

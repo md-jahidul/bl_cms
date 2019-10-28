@@ -22,7 +22,7 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width='10%'>Serial</th>
+                            <th width='5%'>Serial</th>
                             <th width='10%'>Platform</th>
                             <th width='10%'>Version</th>
                             <th width='10%'>Force Update</th>
@@ -35,12 +35,12 @@
                         @foreach ($versions as $version)
                             @php $index++; @endphp
                             @if($version->force_update == 1)
-                                @php $force_update = "true"; @endphp
+                                @php $force_update = "Yes"; @endphp
                             @else
-                                @php $force_update = "false"; @endphp
+                                @php $force_update = "No"; @endphp
                             @endif
                             <tr>
-                                <td width='10%'>{{$index}}</td>
+                                <td width='5%'>{{$index}}</td>
                                 <td width='10%'>{{$version->platform}}</td>
                                 <td width='10%'>{{$version->current_version}}</td>
                                 <td width='10%'>{{$force_update}}</td>
