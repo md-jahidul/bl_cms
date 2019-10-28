@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Notification;
+use App\Models\Customer;
 use App\Models\NotificationDraft;
 use App\Models\User;
 use App\Models\UserMuteNotificationCategory;
@@ -24,7 +24,7 @@ class NotificationRepository extends BaseRepository
 
         $notification = $this->modelName::find($notification_id);
 
-        $users = User::whereIn('phone', $user_phone)->select('id')->get();
+        $users = Customer::whereIn('phone', $user_phone)->select('id')->get();
 
 
         $user_ids = array_map(function ($user) {
@@ -49,7 +49,7 @@ class NotificationRepository extends BaseRepository
                                                 ->get()
                                                 ->toArray();
 
-        $phone_list = User::whereIn('id', $user_ids)
+        $phone_list = Customer::whereIn('id', $user_ids)
             ->select('phone')
             ->get()->toArray();
 
