@@ -13,10 +13,12 @@ class Product extends Model
     protected $fillable =
         [
             'code',
-            'name',
+            'name_en',
+            'name_bn',
             'price_tk',
             'price_vat_included',
-            'ussd',
+            'ussd_en',
+            'ussd_bn',
             'sms_volume',
             'min_volume',
             'internet_volume_mb',

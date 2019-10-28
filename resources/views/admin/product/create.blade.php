@@ -14,107 +14,130 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title"><strong>{{ $type }} Offer Product Create</strong></h5><hr>
+                    <h5 class="menu-title"><strong>{{ ucfirst($type) }} Offer Create</strong></h5><hr>
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('product.store', strtolower($type)) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('name') ? ' error' : '' }}">
-                                    <label for="name" class="required">Offer Name</label>
-                                    <input type="text" name="name"  class="form-control" placeholder="Enter offer validity english"
-                                           value="{{ old("name") ? old("name") : '' }}" required data-validation-required-message="Enter offer name">
+                                <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
+                                    <label for="name_en" class="required">Offer Name English</label>
+                                    <input type="text" name="name_en"  class="form-control" placeholder="Enter offer validity english"
+                                           required data-validation-required-message="Enter offer name english"
+                                           value="{{ old("name_en") ? old("name_en") : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('name'))
-                                        <div class="help-block">{{ $errors->first('name') }}</div>
+                                    @if ($errors->has('name_en'))
+                                        <div class="help-block">{{ $errors->first('name_en') }}</div>
+                                    @endif
+                                </div>
+
+
+                                <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
+                                    <label for="name_bn" class="required">Offer Name Bangla</label>
+                                    <input type="text" name="name_bn"  class="form-control" placeholder="Enter offer name bangla"
+                                           required data-validation-required-message="Enter offer name bangla"
+                                           value="{{ old("name_bn") ? old("name_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('name_bn'))
+                                        <div class="help-block">{{ $errors->first('name_bn') }}</div>
                                     @endif
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('price_tk') ? ' error' : '' }}">
-                                    <label for="price_tk" class="required">Offer Price</label>
-                                    <input type="number" name="price_tk"  class="form-control" placeholder="Enter offer price"
-                                           value="{{ old("price_tk") ? old("price_tk") : '' }}" required data-validation-required-message="Enter offer price">
+                                    <label for="price_tk">Offer Price</label>
+                                    <input type="text" name="price_tk"  class="form-control" placeholder="Enter offer price"
+                                           value="{{ old("price_tk") ? old("price_tk") : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('price_tk'))
-                                        <div class="help-block">{{ $errors->first('price_tk') }}</div>
-                                    @endif
+{{--                                    @if ($errors->has('price_tk'))--}}
+{{--                                        <div class="help-block">{{ $errors->first('price_tk') }}</div>--}}
+{{--                                    @endif--}}
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('ussd') ? ' error' : '' }}">
-                                    <label for="ussd" class="required">USSD Code</label>
-                                    <input type="text" name="ussd"  class="form-control" placeholder="Enter offer ussd english"
-                                           value="{{ old("ussd") ? old("ussd") : '' }}" required data-validation-required-message="Enter offer ussd">
+                                <div class="form-group col-md-6 {{ $errors->has('ussd_en') ? ' error' : '' }}">
+                                    <label for="ussd_en">USSD Code English</label>
+                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd english"
+                                           value="{{ old("ussd_en") ? old("ussd_en") : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('ussd'))
-                                        <div class="help-block">  {{ $errors->first('ussd') }}</div>
-                                    @endif
+{{--                                    @if ($errors->has('ussd_en'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('ussd_en') }}</div>--}}
+{{--                                    @endif--}}
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('ussd_bn') ? ' error' : '' }}">
+                                    <label for="ussd_bn">USSD Code Bangla</label>
+                                    <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd"
+                                           value="{{ old("ussd_bn") ? old("ussd_bn") : '' }}">
+                                    <div class="help-block"></div>
+{{--                                    @if ($errors->has('ussd_bn'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('ussd_bn') }}</div>--}}
+{{--                                    @endif--}}
                                 </div>
 
                                 @if(strtolower($type) == 'prepaid')
-                                    <div class="form-group col-md-6 {{ $errors->has('sms_volume') ? ' error' : '' }}">
-                                        <label for="sms_volume" class="required">SMS Volume</label>.
-                                        <input type="number" name="sms_volume"  class="form-control" placeholder="Enter offer sms_volume bangla"
-                                               value="{{ old("sms_volume") ? old("sms_volume") : '' }}" required data-validation-required-message="Enter offer sms volume">
+                                    <div class="form-group col-md-6">
+                                        <label for="sms_volume">SMS Volume</label>.
+                                        <input type="number" name="sms_volume"  class="form-control" placeholder="Enter offer sms volume"
+                                               value="{{ old("sms_volume") ? old("sms_volume") : '' }}" >
                                         <div class="help-block"></div>
-                                        @if ($errors->has('sms_volume'))
-                                            <div class="help-block">  {{ $errors->first('sms_volume') }}</div>
-                                        @endif
+{{--                                        @if ($errors->has('sms_volume'))--}}
+{{--                                            <div class="help-block">  {{ $errors->first('sms_volume') }}</div>--}}
+{{--                                        @endif--}}
                                     </div>
 
                                     <div class="form-group col-md-6 {{ $errors->has('min_volume') ? ' error' : '' }}">
-                                        <label for="min_volume" class="required">Minute Volume</label>
+                                        <label for="min_volume">Minute Volume</label>
                                         <input type="number" name="min_volume"  class="form-control" placeholder="Enter minute volume"
-                                               value="{{ old("min_volume") ? old("min_volume") : '' }}" required data-validation-required-message="Enter minute volume">
+                                               value="{{ old("min_volume") ? old("min_volume") : '' }}">
                                         <div class="help-block"></div>
-                                        @if ($errors->has('min_volume'))
-                                            <div class="help-block">  {{ $errors->first('min_volume') }}</div>
-                                        @endif
+{{--                                        @if ($errors->has('min_volume'))--}}
+{{--                                            <div class="help-block">  {{ $errors->first('min_volume') }}</div>--}}
+{{--                                        @endif--}}
                                     </div>
                                 @endif
 
-                                <div class="form-group col-md-6 {{ $errors->has('internet_volume_mb') ? ' error' : '' }}">
-                                    <label for="internet_volume_mb" class="required">Internet Volume</label>
-                                    <input type="number" name="internet_volume_mb"  class="form-control" placeholder="Enter get send SMS text english"
-                                           value="{{ old("internet_volume_mb") ? old("internet_volume_mb") : '' }}" required data-validation-required-message="Enter internet volume mb">
+                                <div class="form-group col-md-6">
+                                    <label for="internet_volume_mb">Internet Volume</label>
+                                    <input type="number" name="internet_volume_mb"  class="form-control" placeholder="Enter internet volume mb"
+                                           value="{{ old("internet_volume_mb") ? old("internet_volume_mb") : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('internet_volume_mb'))
-                                        <div class="help-block">  {{ $errors->first('internet_volume_mb') }}</div>
-                                    @endif
+{{--                                    @if ($errors->has('internet_volume_mb'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('internet_volume_mb') }}</div>--}}
+{{--                                    @endif--}}
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('bonus') ? ' error' : '' }}">
-                                    <label for="bonus" class="required">Bonus</label>
-                                    <input type="text" name="bonus"  class="form-control" placeholder="Enter get send SMS text english"
-                                           value="{{ old("bonus") ? old("bonus") : '' }}" required data-validation-required-message="Enter bonus">
+                                <div class="form-group col-md-6">
+                                    <label for="bonus">Bonus</label>
+                                    <input type="text" name="bonus"  class="form-control" placeholder="Enter bonus"
+                                           value="{{ old("bonus") ? old("bonus") : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('bonus'))
-                                        <div class="help-block">  {{ $errors->first('bonus') }}</div>
-                                    @endif
+{{--                                    @if ($errors->has('bonus'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('bonus') }}</div>--}}
+{{--                                    @endif--}}
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('validity_days') ? ' error' : '' }}">
-                                    <label for="validity_days" class="required">Validity Days</label>
-                                    <input type="text" name="validity_days"  class="form-control" placeholder="Enter alt text"
-                                           value="{{ old("validity_days") ? old("validity_days") : '' }}" required data-validation-required-message="Enter validity_days">
+                                    <label for="validity_days">Validity Days</label>
+                                    <input type="text" name="validity_days"  class="form-control" placeholder="Enter validity days"
+                                           value="{{ old("validity_days") ? old("validity_days") : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('validity_days'))
-                                        <div class="help-block">  {{ $errors->first('validity_days') }}</div>
-                                    @endif
+{{--                                    @if ($errors->has('validity_days'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('validity_days') }}</div>--}}
+{{--                                    @endif--}}
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('point') ? ' error' : '' }}">
-                                    <label for="point" class="required">Point</label>
-                                    <input type="text" name="point"  class="form-control" placeholder="Enter point"
-                                           value="{{ old("point") ? old("point") : '' }}" required data-validation-required-message="Enter point">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('point'))
-                                        <div class="help-block">{{ $errors->first('point') }}</div>
-                                    @endif
+                                    <label for="point">Point</label>
+                                    <input type="number" name="point"  class="form-control" placeholder="Enter point"
+                                           value="{{ old("point") ? old("point") : '' }}">
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('point'))--}}
+{{--                                        <div class="help-block">{{ $errors->first('point') }}</div>--}}
+{{--                                    @endif--}}
                                 </div>
 
 
 
                                 <div class="form-group col-md-6 {{ $errors->has('tag_category_id') ? ' error' : '' }}">
-                                    <label for="tag_category_id" class="required">Tag</label>
+                                    <label for="tag_category_id">Tag</label>
                                     <select class="form-control" name="tag_category_id">
                                         <option>---Select Tag---</option>
                                         @foreach($tags as $tag)
@@ -122,24 +145,28 @@
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('tag_category_id'))
-                                        <div class="help-block">  {{ $errors->first('tag_category_id') }}</div>
-                                    @endif
+{{--                                    @if ($errors->has('tag_category_id'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('tag_category_id') }}</div>--}}
+{{--                                    @endif--}}
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
-                                    <label for="offer_category_id" class="required">Offer</label>
-                                    <select class="form-control" name="offer_category_id">
-                                        <option>---Select Offer---</option>
+                                    <label for="offer_category_id" class="required">Offer Type</label>
+{{--                                    <input type="text" name="offer_category_id"  class="form-control" placeholder="Enter point" required--}}
+{{--                                           value="{{ old("point") ? old("point") : '' }}">--}}
+
+                                    <select class="form-control required" name="offer_category_id" required data-validation-required-message="Please select offer">
+                                        <option value="">---Select Offer Type---</option>
                                         @foreach($offers as $offer)
                                             <option value="{{ $offer->id }}">{{ $offer->name }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
                                     @if ($errors->has('offer_category_id'))
-                                        <div class="help-block">  {{ $errors->first('offer_category_id') }}</div>
+                                        <div class="help-block">{{ $errors->first('offer_category_id') }}</div>
                                     @endif
                                 </div>
+
 
 
 
@@ -166,8 +193,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="title" class="required mr-1">Status:</label>
-
+                                        <label for="title" class="mr-1">Status:</label>
                                         <input type="radio" name="status" value="1" id="active" checked>
                                         <label for="active" class="mr-1">Active</label>
 
