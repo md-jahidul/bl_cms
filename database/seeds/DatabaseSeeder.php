@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
 
 
         // ====My-Bl Seeder====
-        $this->call(NotificationsTableSeeder::class);
+        $this->call(NotificationsDraftTableSeeder::class);
         $this->call(AmarOfferSeeder::class);
         $this->call(SettingKeysTableSeeder::class);
         $this->call(InternetOfferSeeder::class);
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CurrentBalanceSeeder::class);
         $this->call(BonusTableSeeder::class);
         $this->call(ContextualCardSeeder::class);
-        $this->call(NotificationsTableSeeder::class);
+        $this->call(NotificationsDraftTableSeeder::class);
         $this->call(SettingKeysTableSeeder::class);
         $this->call(MyblSliderComponentTypesTableSeeder::class);
         $this->call(OfferFilterTypeTableSeeder::class);
@@ -64,7 +64,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MixedBundleOfferFilterSeeder::class);
         $this->call(TermsConditionsSeeder::class);
         $this->call(FaqCategorySeeder::class);
-
+        $this->call(CustomersTableSeeder::class);
         $this->call(MyBlSliderSeeder::class);
         $this->call(ShortcutSeeder::class);
         $this->call(PrivacyPolicySeeder::class);

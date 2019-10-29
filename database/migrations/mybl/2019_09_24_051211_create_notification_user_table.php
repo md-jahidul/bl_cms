@@ -19,6 +19,7 @@ class CreateNotificationUserTable extends Migration
             $table->bigInteger('notification_id');
             $table->tinyInteger('is_read')->default(0);
             $table->tinyInteger('is_seen')->default(0);
+            $table->json('notification_info')->nullable();
             $table->timestamps();
         });
     }

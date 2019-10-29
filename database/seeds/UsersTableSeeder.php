@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Rafiqul Hasan',
                 'email' => 'rafiq@admin.com',
-                'phone' => '01919415595',
+                'phone' => '01921508454',
                 'type' => 'mybl',
                 'uid' => uniqid(),
                 'password' => Hash::make('123456'),
@@ -44,7 +44,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'QA Team',
                 'email' => 'qa@admin.com',
-                'phone' => '01919415568',
+                'phone' => '01914758995',
                 'type' => 'mybl',
                 'uid' => uniqid(),
                 'password' => Hash::make('123456'),

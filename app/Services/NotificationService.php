@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Repositories\NotificationDraftRepository;
 use App\Repositories\NotificationRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
@@ -10,19 +11,25 @@ class NotificationService
 {
     use CrudTrait;
 
-    /**
-     * @var $NotificationRepository
-     */
+
+
     protected $notificationRepository;
 
     /**
-     * NotificationRepository constructor.
-     * @param NotificationRepository $notificationRepository
+     * @var $NotificationDraftRepository
      */
-    public function __construct(NotificationRepository $notificationRepository)
+    protected $notificationDraftRepository;
+
+    /**
+     * NotificationRepository constructor.
+     * @param NotificationDraftRepository $notificationDraftRepository
+     */
+    public function __construct(NotificationDraftRepository $notificationDraftRepository, NotificationRepository $notificationRepository)
     {
+        $this->notificationDraftRepository = $notificationDraftRepository;
+        $this->setActionRepository($notificationDraftRepository);
+
         $this->notificationRepository = $notificationRepository;
-        $this->setActionRepository($notificationRepository);
     }
 
     /**
