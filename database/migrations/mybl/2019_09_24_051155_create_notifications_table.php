@@ -16,6 +16,9 @@ class CreateNotificationsTable extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('status')->default('INPROGRESS');
+            $table->string('title')->nullable();
+            $table->text('body')->nullable();
+            $table->string('category_slug')->nullable();
             $table->timestamps();
         });
     }
