@@ -60,7 +60,7 @@ class NotificationSend implements ShouldQueue
 
         if (json_decode($response)->status == "SUCCESS") {
             if (isset($this->user_phone)) {
-                $this->notificationService->attachNotificationToUser($this->notification_id, $this->user_phone, $this->notification);
+                $this->notificationService->attachNotificationToUser($this->notification_id, $this->user_phone);
             }
         }
     }

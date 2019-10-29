@@ -65,12 +65,11 @@ class NotificationService
      *
      * @param $notification_id
      * @param $user_phone
-     * @param $notification_info
      * @return string
      */
-    public function attachNotificationToUser($notification_id, $user_phone, $notification_info)
+    public function attachNotificationToUser($notification_id, $user_phone)
     {
-        return $this->notificationRepository->attachmentNotificationToUser($notification_id, $user_phone, $notification_info);
+        return $this->notificationRepository->attachmentNotificationToUser($notification_id, $user_phone);
     }
 
 
