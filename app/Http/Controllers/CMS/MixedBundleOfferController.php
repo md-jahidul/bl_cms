@@ -26,6 +26,7 @@ class MixedBundleOfferController extends Controller
     public function __construct(MixedBundleOfferService $mixedBundleOfferService)
     {
         $this->mixedBundleOfferService = $mixedBundleOfferService;
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.

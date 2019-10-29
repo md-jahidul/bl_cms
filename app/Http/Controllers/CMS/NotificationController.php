@@ -41,6 +41,7 @@ class NotificationController extends Controller
         $this->notificationService = $notificationService;
         $this->notificationCategoryService = $notificationCategoryService;
         $this->userService = $userService;
+        $this->middleware('auth');
     }
 
 

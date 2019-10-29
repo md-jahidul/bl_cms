@@ -33,6 +33,7 @@ class PushNotificationController extends Controller
     public function __construct(NotificationService $notificationService)
     {
         $this->notificationService = $notificationService;
+        $this->middleware('auth');
     }
 
     public function saveCustomerListFile(Request $request)

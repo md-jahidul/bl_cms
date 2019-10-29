@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\NotificationCategoryService;
 use App\Http\Requests\NotificationCategoryRequest;
+use Illuminate\Http\Response;
 
 class NotificationCategoryController extends Controller
 {
@@ -21,17 +22,18 @@ class NotificationCategoryController extends Controller
 
     /**
      * NotificationcategoryService constructor.
-     * @param NotificationCategoryService $NotificationCategoryService
+     * @param NotificationCategoryService $notificationCategoryService
      */
     public function __construct(NotificationCategoryService $notificationCategoryService)
     {
         $this->notificationCategoryService = $notificationCategoryService;
+        $this->middleware('auth');
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -42,7 +44,7 @@ class NotificationCategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -52,8 +54,8 @@ class NotificationCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(NotificationCategoryRequest $request)
     {
@@ -65,7 +67,7 @@ class NotificationCategoryController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -76,7 +78,7 @@ class NotificationCategoryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -91,9 +93,9 @@ class NotificationCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(NotificationCategoryRequest $request, $id)
     {
@@ -105,7 +107,7 @@ class NotificationCategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

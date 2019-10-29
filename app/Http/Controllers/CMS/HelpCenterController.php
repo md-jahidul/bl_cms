@@ -26,6 +26,7 @@ class HelpCenterController extends Controller
     public function __construct(HelpCenterService $helpCenterService)
     {
         $this->helpCenterService = $helpCenterService;
+        $this->middleware('auth');
     }
 
     /**

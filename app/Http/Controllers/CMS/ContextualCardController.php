@@ -27,6 +27,7 @@ class ContextualCardController extends Controller
     public function __construct(ContextualCardService $contextualCardService)
     {
         $this->contextualCardService = $contextualCardService;
+        $this->middleware('auth');
     }
 
     /**
@@ -57,7 +58,7 @@ class ContextualCardController extends Controller
      */
     public function store(ContextualCardRequest $request)
     {
-        
+
         session()->flash('message', $this->contextualCardService->storeContextualCard($request->all())->getContent());
         return redirect(route('contextualcard.index'));
     }

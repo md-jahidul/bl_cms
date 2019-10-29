@@ -26,6 +26,7 @@ class CampaignController extends Controller
     {
         $this->campaignService = $campaignService;
         $this->tagService = $tagService;
+        $this->middleware('auth');
     }
 
 

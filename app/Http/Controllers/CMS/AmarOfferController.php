@@ -28,6 +28,7 @@ class AmarOfferController extends Controller
     public function __construct(AmarOfferService $amarOfferService)
     {
         $this->amarOfferService = $amarOfferService;
+        $this->middleware('auth');
     }
 
 

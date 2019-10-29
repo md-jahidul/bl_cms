@@ -26,6 +26,7 @@ class SmsOfferController extends Controller
     public function __construct(SmsOfferService $smsOfferService)
     {
         $this->smsOfferService = $smsOfferService;
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
