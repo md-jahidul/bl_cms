@@ -103,6 +103,7 @@ class PushNotificationController extends Controller
                     'title' => $request->input('title'),
                     'body' => $request->input('message'),
                     'category_slug' => $request->input('category_slug'),
+                    'category_name' => $request->input('category_name'),
                     "send_to_type" => "INDIVIDUALS",
                     "recipients" => $user_phone,
                     "is_interactive" => "Yes",
@@ -151,6 +152,7 @@ class PushNotificationController extends Controller
                 'title' => $request->input('title'),
                 'body' => $request->input('message'),
                 'category_slug' => $request->input('category_slug'),
+                'category_name' => $request->input('category_name'),
                 "send_to_type" => "INDIVIDUALS" ,
                 "recipients" => $user_phone,
                 "is_interactive" => "Yes",
@@ -166,6 +168,7 @@ class PushNotificationController extends Controller
                 'title' => $request->input('title'),
                 'body' => $request->input('message'),
                 'category_slug' => $request->input('category_slug'),
+                'category_name' => $request->input('category_name'),
                 "send_to_type" => "ALL",
                 "is_interactive" => "Yes",
                 "data" => [
