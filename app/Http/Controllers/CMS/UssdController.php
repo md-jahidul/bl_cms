@@ -26,6 +26,7 @@ class UssdController extends Controller
     public function __construct(UssdService $ussdService)
     {
         $this->ussdService = $ussdService;
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.

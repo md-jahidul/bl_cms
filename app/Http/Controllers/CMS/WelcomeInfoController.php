@@ -24,6 +24,7 @@ class WelcomeInfoController extends Controller
     public function __construct(WelcomeInfoService $welcomeInfoService)
     {
         $this->welcomeInfoService = $welcomeInfoService;
+        $this->middleware('auth');
     }
 
     /**

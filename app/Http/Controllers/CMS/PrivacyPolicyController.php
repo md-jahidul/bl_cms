@@ -11,6 +11,11 @@ use App\Http\Controllers\Controller;
 
 class PrivacyPolicyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function show()
     {
         $privacy_policy = PrivacyPolicy::where('platform', 'app')->first();

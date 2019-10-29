@@ -27,6 +27,7 @@ class MinuteOfferController extends Controller
     public function __construct(MinuteOfferService $minuteOfferService)
     {
         $this->minuteOfferService = $minuteOfferService;
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.

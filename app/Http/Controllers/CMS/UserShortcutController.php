@@ -11,6 +11,11 @@ use DB;
 
 class UserShortcutController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +36,7 @@ class UserShortcutController extends Controller
             $list_of_shortcuts[] = $single_data->tittle;
         }
         //dd(ShortCut::all());
-        
+
         return view('admin.short_cuts.add_shortcut')
                 ->with('short_cuts', ShortCut::all())
                 ->with('added_short_cuts', $data)
@@ -56,18 +61,18 @@ class UserShortcutController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         if (isset($request->all()['shortcut'])) {
             $request->validate([
                 'shortcut' => 'max:5',
             ]);
         }
-       
-        
+
+
         if (!empty(DB::table('shortcut_user')->where('user_id', auth()->user()->id)->get()->all())) {
             DB::table('shortcut_user')->where('user_id', auth()->user()->id)->delete();
         }
-         
+
          //dd($request->all()['shortcut']);
         if (isset($request->all()['shortcut'])) {
             $request = $request->all();
@@ -79,7 +84,7 @@ class UserShortcutController extends Controller
                     ]);
                      //dd($request);
             }
-                
+
             session()->flash('status', "short cuts has successfully been added");
         } else {
             session()->flash('danger', "All short cuts has successfully been removed");
@@ -88,7 +93,7 @@ class UserShortcutController extends Controller
     }
     public function serialUpdate(Request $request, $id)
     {
-        
+
         $request = $request->all();
         unset($request['_token']);
         unset($request['_method']);
@@ -100,7 +105,7 @@ class UserShortcutController extends Controller
             session()->flash('danger', "You cannot have 0 as priority");
             return redirect(route('UserShortcut.index'));
         }
-        
+
         foreach ($request as $key => $serial) {
             DB::table('shortcut_user')->where('shortcut_id', $key)->update(['serial' => $serial]);
         }

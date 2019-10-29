@@ -27,6 +27,7 @@ class NearbyOfferController extends Controller
     public function __construct(NearbyOfferService $nearbyOfferService)
     {
         $this->nearbyOfferService = $nearbyOfferService;
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.

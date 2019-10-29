@@ -26,6 +26,7 @@ class InternetOfferController extends Controller
     public function __construct(InternetOfferService $internetOfferService)
     {
         $this->internetOfferService = $internetOfferService;
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.

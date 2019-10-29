@@ -37,6 +37,7 @@ class MyblSliderImageController extends Controller
         $this->sliderImageService = $sliderImageService;
         $this->sliderService = $sliderService;
         $this->sliderTypeService = $sliderTypeService;
+        $this->middleware('auth');
     }
 
 
