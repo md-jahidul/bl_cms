@@ -18,6 +18,7 @@ class CreateNotificationsTable extends Migration
             $table->string('status')->default('INPROGRESS');
             $table->string('title')->nullable();
             $table->text('body')->nullable();
+            $table->string('category_name')->nullable();
             $table->string('category_slug')->nullable();
             $table->timestamps();
         });
