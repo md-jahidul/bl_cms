@@ -25,13 +25,13 @@ class CreateProductsTable extends Migration
                 $table->string('text')->nullable();
                 $table->integer('price_tk')->nullable();
                 $table->integer('price_vat_included')->default(0);
-                $table->integer('sms_volume')->nullable();
-                $table->integer('min_volume')->nullable();
-                $table->integer('internet_volume_mb')->nullable();
+//                $table->integer('sms_volume')->nullable();
+//                $table->integer('min_volume')->nullable();
+//                $table->integer('internet_volume_mb')->nullable();
                 $table->string('bonus')->nullable();
                 $table->tinyInteger('is_recharge')->default(0)->comment('yes = 1, no = 0');
                 $table->tinyInteger('show_in_home')->default(0);
-                $table->string('validity_days')->nullable();
+//                $table->string('validity_days')->nullable();
                 $table->string('ussd_en', 30)->nullable();
                 $table->string('ussd_bn', 30)->nullable();
                 $table->integer('point')->nullable();
@@ -42,6 +42,8 @@ class CreateProductsTable extends Migration
                 $table->integer('like')->default(0);
                 $table->tinyInteger('status')->default(1);
                 $table->integer('display_order')->nullable();
+
+                $table->json('offer_info')->nullable();
 
                 $table->foreign('tag_category_id')
                     ->references('id')
