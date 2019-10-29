@@ -30,6 +30,7 @@
                             <input type="hidden"  name="id" id="id" value="{{$notification->id}}">
                             <input type="hidden"  name="category_id" id="category_id" value="{{$notification->NotificationCategory->id}}">
                             <input type="hidden"  name="category_slug" id="category_slug" value="{{$notification->NotificationCategory->slug}}">
+                            <input type="hidden"  name="category_name" id="category_name" value="{{$notification->NotificationCategory->name}}">
 
                         </div>
                         <div class="form-group">
