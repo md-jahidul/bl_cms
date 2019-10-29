@@ -29,6 +29,7 @@
                             <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$notification->title}}">
                             <input type="hidden"  name="id" id="id" value="{{$notification->id}}">
                             <input type="hidden"  name="category_id" id="category_id" value="{{$notification->NotificationCategory->id}}">
+                            <input type="hidden"  name="category_slug" id="category_slug" value="{{$notification->NotificationCategory->slug}}">
 
                         </div>
                         <div class="form-group">
