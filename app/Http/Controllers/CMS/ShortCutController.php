@@ -24,6 +24,7 @@ class ShortCutController extends Controller
     public function __construct(ShortCutService $shortCutService)
     {
         $this->shortCutService = $shortCutService;
+        $this->middleware('auth');
     }
 
     /**

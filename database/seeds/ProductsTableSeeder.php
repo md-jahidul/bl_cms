@@ -14,7 +14,7 @@ class ProductsTableSeeder extends Seeder
 
         switch ($name) {
             case 'internet':
-                $obj->sms_volume = rand(50, 500);
+                $obj->internet_volume_mb = rand(100, 12000);
                 break;
 
             case 'voice':
@@ -76,10 +76,11 @@ class ProductsTableSeeder extends Seeder
             factory(Product::class)->create(
                 [
                     'code' => 'ABC' . $i,
-                    'name' => 'ABC' . $i,
+                    'name_en' => 'ABC' . $i,
+                    'name_bn' => 'ABC' . $i,
                     'price_tk' => rand(10, 100),
                     'internet_volume_mb' =>  $offerInfo->internet_volume_mb ?? null,
-                    'ussd' => '*' . rand(1000, 9999) . '*' . '1#',
+                    'ussd_en' => '*' . rand(1000, 9999) . '*' . '1#',
                     'sim_category_id' => SimCategory::where('alias', 'postpaid')->first('id'),
                     'offer_category_id' => $offer->id,
                     'show_in_home' => $showInHome,
@@ -98,13 +99,14 @@ class ProductsTableSeeder extends Seeder
             factory(Product::class)->create(
                 [
                     'code' => 'ABC' . $i,
-                    'name' => 'ABC' . $i,
+                    'name_en' => 'ABC' . $i,
+                    'name_bn' => 'ABC' . $i,
                     'price_tk' => rand(10, 100),
                     'sms_volume' => $offerInfo->sms_volume ?? null,
                     'min_volume' => $offerInfo->min_volume ?? null,
                     'internet_volume_mb' =>  $offerInfo->internet_volume_mb ?? null,
                     'validity_days' => rand(1, 10),
-                    'ussd' => '*' . rand(1000, 9999) . '*' . '1#',
+                    'ussd_en' => '*' . rand(1000, 9999) . '*' . '1#',
                     'sim_category_id' => SimCategory::where('alias', 'prepaid')->first('id'),
                     'offer_category_id' => $offer->id,
                     'show_in_home' => $showInHome,

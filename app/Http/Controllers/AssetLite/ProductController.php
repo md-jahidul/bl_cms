@@ -50,7 +50,7 @@ class ProductController extends Controller
 
     public function trendingOfferHome()
     {
-        $trendingHomeOffers = Product::where('is_home', 1)->get();
+        $trendingHomeOffers = Product::where('show_in_home', 1)->get();
         return view('admin.product.home', compact('trendingHomeOffers'));
     }
 
@@ -87,12 +87,14 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param $type
+     * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function show($type, $id)
     {
-        //
+        $productDetails = $this->productService->findOne($id);
+        return view('admin.product.show', compact('productDetails', 'type'));
     }
 
     /**
@@ -121,7 +123,7 @@ class ProductController extends Controller
     public function update(Request $request, $type, $id)
     {
         $response = $this->productService->updateProduct($request->all(), $id);
-        Session::get('message', $response->content());
+        Session::flash('message', $response->content());
         return redirect("offers/$type");
     }
 

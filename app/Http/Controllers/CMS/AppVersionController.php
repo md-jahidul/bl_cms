@@ -28,6 +28,7 @@ class AppVersionController extends Controller
     public function __construct(AppVersionService $appVersionService)
     {
         $this->appVersionService = $appVersionService;
+        $this->middleware('auth');
     }
 
     /**

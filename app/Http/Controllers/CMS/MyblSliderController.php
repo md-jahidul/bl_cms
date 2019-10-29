@@ -36,6 +36,7 @@ class MyblSliderController extends Controller
     {
         $this->sliderService = $sliderService;
         $this->sliderTypeService = $sliderTypeService;
+        $this->middleware('auth');
     }
 
 
