@@ -126,8 +126,6 @@ class ProductController extends Controller
         $durations = $this->durationCategoryService->findAll();
         $offerInfo = $product->offer_info;
 
-//        return $product;
-
         return view('admin.product.edit', compact('product', 'type', 'tags', 'offersType', 'offerInfo', 'durations'));
     }
 

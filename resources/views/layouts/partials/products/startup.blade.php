@@ -11,7 +11,7 @@
 
 <div class="form-group col-md-6 {{ $errors->has('internet_offer_mb') ? ' error' : '' }}">
     <label for="internet_offer_mb" class="required">Internet Offer (MB)</label>
-    <input type="text" name="offer_info[internet_offer_mb]"  class="form-control" placeholder="Enter internet offer in offer"
+    <input type="text" name="offer_info[internet_offer_mb]"  class="form-control" placeholder="Enter internet offer in MB"
            value="{{ (!empty($offerInfo['internet_offer_mb'])) ? $offerInfo['internet_offer_mb'] : old("offer_info.internet_offer_mb") ?? '' }}"
            required data-validation-required-message="Enter view list button label bangla ">
     <div class="help-block"></div>

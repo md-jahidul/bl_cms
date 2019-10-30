@@ -1,6 +1,6 @@
     <div class="form-group col-md-6 {{ $errors->has('internet_volume_mb') ? ' error' : '' }}">
-        <label for="internet_volume_mb" class="required">Internet Volume</label>
-        <input type="text" name="offer_info[internet_volume_mb]"  class="form-control" placeholder="Enter internet volume"
+        <label for="internet_volume_mb" class="required">Internet Volume (MB)</label>
+        <input type="text" name="offer_info[internet_volume_mb]"  class="form-control" placeholder="Enter internet volume in MB"
                value="{{ (!empty($offerInfo['internet_volume_mb'])) ? $offerInfo['internet_volume_mb'] : old("offer_info.internet_volume_mb") ?? '' }}"
                required data-validation-required-message="Enter view list button label bangla ">
         <div class="help-block"></div>
@@ -36,25 +36,25 @@
         @endif
     </div>
 
-    <div class="form-group col-md-6 {{ $errors->has('inspiration_quote_en') ? ' error' : '' }}">
-        <label for="inspiration_quote_en" class="required">Mini Tag English</label>
-        <input type="text" name="offer_info[inspiration_quote_en]"  class="form-control" placeholder="Enter mini tag english"
-               value="{{ (!empty($offerInfo['inspiration_quote_en'])) ? $offerInfo['inspiration_quote_en'] : old("offer_info.inspiration_quote_en") ?? '' }}"
-               required data-validation-required-message="Enter view list url">
-        <div class="help-block"></div>
-        @if ($errors->has('inspiration_quote_en'))
-            <div class="help-block">  {{ $errors->first('inspiration_quote_en') }}</div>
-        @endif
-    </div>
+{{--    <div class="form-group col-md-6 {{ $errors->has('inspiration_quote_en') ? ' error' : '' }}">--}}
+{{--        <label for="inspiration_quote_en" class="required">Mini Tag English</label>--}}
+{{--        <input type="text" name="offer_info[inspiration_quote_en]"  class="form-control" placeholder="Enter mini tag english"--}}
+{{--               value="{{ (!empty($offerInfo['inspiration_quote_en'])) ? $offerInfo['inspiration_quote_en'] : old("offer_info.inspiration_quote_en") ?? '' }}"--}}
+{{--               required data-validation-required-message="Enter view list url">--}}
+{{--        <div class="help-block"></div>--}}
+{{--        @if ($errors->has('inspiration_quote_en'))--}}
+{{--            <div class="help-block">  {{ $errors->first('inspiration_quote_en') }}</div>--}}
+{{--        @endif--}}
+{{--    </div>--}}
 
-    <div class="form-group col-md-12 {{ $errors->has('inspiration_quote_bn') ? ' error' : '' }}">
-        <label for="inspiration_quote_bn" class="required">Mini Tag Bangla</label>
-        <input type="text" name="offer_info[inspiration_quote_bn]"  class="form-control" placeholder="Enter mini tag bangla"
-               value="{{ (!empty($offerInfo['inspiration_quote_bn'])) ? $offerInfo['inspiration_quote_bn'] : old("offer_info.inspiration_quote_bn") ?? '' }}"
-               required data-validation-required-message="Enter view list url">
-        <div class="help-block"></div>
-        @if ($errors->has('inspiration_quote_bn'))
-            <div class="help-block">  {{ $errors->first('inspiration_quote_bn') }}</div>
-        @endif
-    </div>
+{{--    <div class="form-group col-md-12 {{ $errors->has('inspiration_quote_bn') ? ' error' : '' }}">--}}
+{{--        <label for="inspiration_quote_bn" class="required">Mini Tag Bangla</label>--}}
+{{--        <input type="text" name="offer_info[inspiration_quote_bn]"  class="form-control" placeholder="Enter mini tag bangla"--}}
+{{--               value="{{ (!empty($offerInfo['inspiration_quote_bn'])) ? $offerInfo['inspiration_quote_bn'] : old("offer_info.inspiration_quote_bn") ?? '' }}"--}}
+{{--               required data-validation-required-message="Enter view list url">--}}
+{{--        <div class="help-block"></div>--}}
+{{--        @if ($errors->has('inspiration_quote_bn'))--}}
+{{--            <div class="help-block">  {{ $errors->first('inspiration_quote_bn') }}</div>--}}
+{{--        @endif--}}
+{{--    </div>--}}
 
