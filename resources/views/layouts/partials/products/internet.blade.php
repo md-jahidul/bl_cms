@@ -9,6 +9,22 @@
         @endif
     </div>
 
+
+{{--    <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">--}}
+{{--        <label for="offer_category_id" class="required">Duration Type</label>--}}
+{{--        <select class="form-control required" name="offer_category_id" id="offer_type"--}}
+{{--                required data-validation-required-message="Please select offer">--}}
+{{--            <option value="">---Select Duration Type---</option>--}}
+{{--            @foreach($durations as $value)--}}
+{{--                <option value="{{ $value->id }}">{{ $value->name }}</option>--}}
+{{--            @endforeach--}}
+{{--        </select>--}}
+{{--        <div class="help-block"></div>--}}
+{{--        @if ($errors->has('offer_category_id'))--}}
+{{--            <div class="help-block">{{ $errors->first('offer_category_id') }}</div>--}}
+{{--        @endif--}}
+{{--    </div>--}}
+
     <div class="form-group col-md-6 {{ $errors->has('validity_days') ? ' error' : '' }}">
         <label for="validity_days" class="required">Validity Days</label>
         <input type="text" name="offer_info[validity_days]"  class="form-control" placeholder="Enter view list url"
