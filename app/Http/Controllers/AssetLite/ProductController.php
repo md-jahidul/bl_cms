@@ -117,6 +117,8 @@ class ProductController extends Controller
         $tags = $this->tagCategoryService->findAll();
         $offersType = $this->offerCategoryService->findAll();
 
+//        return $product;
+
         $offerInfo = $product->offer_info;
 
         return view('admin.product.edit', compact('product', 'type', 'tags', 'offersType', 'offerInfo'));

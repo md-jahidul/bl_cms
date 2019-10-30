@@ -174,13 +174,13 @@
 @push('page-js')
     <script type="text/javascript">
         $(function () {
-
             function domMupulate(selectedItemName, action='hide'){
                 var options = $('#offer_type option');
                 var optionTextArr = $.map(options ,function(option) {
-                    if( option.value !== '' &&  option.text !== selectedItemName ) { return  '#' + option.text.toLowerCase();  }
+                    if( option.value !== '' &&  option.text.toLowerCase() !== selectedItemName ) { return  '#' + option.text.toLowerCase();  }
                 });
                 var otherElements = optionTextArr.join(',');
+                debugger;
                 action == 'remove' ? $(otherElements).remove() : $(otherElements).hide();
                 $('#' + selectedItemName).show();
             }
@@ -194,7 +194,7 @@
             $('#save').on('click',function(e){
                 e.preventDefault();
                 let optionText = $("#offer_type option:selected").text();
-                domMupulate( optionText,'remove');
+                domMupulate( optionText.toLowerCase(),'remove');
                 $("#product_form").submit();
             });
         })

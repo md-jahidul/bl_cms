@@ -12,12 +12,20 @@ class DurationCategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        $durations = ['Days','Weekly','Bi weekly','Monthly'];
-        foreach ($durations as $duration) {
+        $durations = [
+            1 => 'Daily',
+            3 => '3 Days',
+            7 => 'Weekly',
+            15 => 'Bi weekly',
+            30 => 'Monthly'
+        ];
+
+        foreach ($durations as $key => $value) {
             factory(DurationCategory::class)->create(
                 [
-                    'name' => $duration,
-                    'alias' => strtolower(str_replace(' ', '_', $duration))
+                    'name' => $value,
+                    'alias' => strtolower(str_replace(' ', '_', $value)),
+                    'days' => $key
                 ]
             );
         }

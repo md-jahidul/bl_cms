@@ -15,7 +15,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title"><strong>{{ $type }} Offer Create</strong></h5><hr>
+                    <h5 class="menu-title"><strong>{{ $type }} Offer Edit</strong></h5><hr>
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('product.update', [strtolower($type), $product->id] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
@@ -77,8 +77,20 @@
                                 </div>
                             </div>
 
-                            <div class="row" id="internet">
+                            <div class="row {{ $product->offer_category_id == 1 ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
                                 @include('layouts.partials.products.internet')
+                            </div>
+                            <div class="row {{ $product->offer_category_id == 2 ? '' : 'd-none' }}" id="voice" data-offer-type="voice" style="display: none">
+                                @include('layouts.partials.products.voice')
+                            </div>
+                            <div class="row {{ $product->offer_category_id == 3 ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles" style="display: none">
+                                @include('layouts.partials.products.bundle')
+                            </div>
+                            <div class="row {{ $product->offer_category_id == 4 ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
+                                @include('layouts.partials.products.packages')
+                            </div>
+                            <div class="row {{ $product->offer_category_id == 6 ? '' : 'd-none' }}" id="startup" data-offer-type="startup">
+                                @include('layouts.partials.products.startup')
                             </div>
 
                             <div class="row">
