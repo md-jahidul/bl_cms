@@ -16,7 +16,7 @@ class CreateAppVersionsTable extends Migration
         Schema::create('app_versions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->enum('platform', ['ios','android','windows', 'others']);
-            $table->unsignedBigInteger('current_version');
+            $table->string('current_version');
             $table->string('message');
             $table->boolean('force_update')->default(false);
             $table->timestamps();
