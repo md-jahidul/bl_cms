@@ -19,8 +19,8 @@
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
-                                    <label for="name_en" class="required">Offer Name English</label>
-                                    <input type="text" name="name_en"  class="form-control" placeholder="Enter offer validity english"
+                                    <label for="name_en" class="required">Offer Name (English)</label>
+                                    <input type="text" name="name_en"  class="form-control" placeholder="Enter offer name in english"
                                            required data-validation-required-message="Enter offer name english"
                                            value="{{ old("name_en") ? old("name_en") : '' }}">
                                     <div class="help-block"></div>
@@ -31,8 +31,8 @@
 
 
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
-                                    <label for="name_bn" class="required">Offer Name Bangla</label>
-                                    <input type="text" name="name_bn"  class="form-control" placeholder="Enter offer name bangla"
+                                    <label for="name_bn" class="required">Offer Name (Bangla)</label>
+                                    <input type="text" name="name_bn"  class="form-control" placeholder="Enter offer name in bangla"
                                            required data-validation-required-message="Enter offer name bangla"
                                            value="{{ old("name_bn") ? old("name_bn") : '' }}">
                                     <div class="help-block"></div>
@@ -42,21 +42,21 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="ussd_en">USSD Code English</label>
-                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd english"
+                                    <label for="ussd_en">USSD Code (English)</label>
+                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd in english"
                                            value="{{ old("ussd_en") ? old("ussd_en") : '' }}">
                                     <div class="help-block"></div>
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="ussd_bn">USSD Code Bangla</label>
-                                    <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd"
+                                    <label for="ussd_bn">USSD Code (Bangla)</label>
+                                    <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd in bangla"
                                            value="{{ old("ussd_bn") ? old("ussd_bn") : '' }}">
                                 </div>
 
                                 <div class="form-group col-md-6 ">
                                     <label for="price_tk">Offer Price</label>
-                                        <input type="text" name="price_tk"  class="form-control" placeholder="Enter offer price"
+                                        <input type="text" name="price_tk"  class="form-control" placeholder="Enter offer price in taka"
                                            oninput="this.value =Number(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
                                            value="{{ old("price_tk") ? old("price_tk") : '' }}">
                                     <div class="help-block"></div>
@@ -119,9 +119,9 @@
                                     </select>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-6" >
                                     <label></label>
-                                    <div class="form-group pt-1">
+                                    <div class="form-group pt-1" id="show_in_home">
                                         <label for="show_in_home" class="mr-1">Show In Home:</label>
                                         <input type="checkbox" name="show_in_home" value="1" id="show_in_home">
                                     </div>
@@ -188,7 +188,10 @@
 
             $('#offer_type').change(function () {
                 // let optionText = $(this).children("option:selected").text();
+                let showInHome = $('#show_in_home');
                 let optionText =$("#offer_type option:selected").text();
+                (optionText.toLowerCase() == 'startup' ? showInHome.hide() : showInHome.show())
+
                 domMupulate(optionText.toLowerCase());
             });
 

@@ -56,6 +56,7 @@ class ProductService
     public function updateProduct($data, $id)
     {
         $product = $this->findOne($id);
+        $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0 );
         $product->update($data);
         return Response('Product update successfully !');
     }

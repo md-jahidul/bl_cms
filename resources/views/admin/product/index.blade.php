@@ -22,6 +22,7 @@
                             <th width="25%">Product Name</th>
                             <th>Price</th>
                             <th>USSD</th>
+                            <th width="8%" class="text-center">Show In Home</th>
                             <th class="">Action</th>
                         </tr>
                         </thead>
@@ -33,6 +34,7 @@
                                     <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                     <td>{{ $product->price_tk }} Tk</td>
                                     <td>{{ $product->ussd_en }}</td>
+                                    <td class="text-center"><input type="checkbox" {{ $product->show_in_home == 1 ? 'checked' : '' }} disabled></td>
                                     <td width="15%">
                                         <a href="{{ route('product.show', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>
                                         <a href="{{ route('product.edit', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
