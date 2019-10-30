@@ -12,24 +12,28 @@ class ProductsTableSeeder extends Seeder
     public function getOfferInfo($name)
     {
         $days = [ 1,3,7,15,30 ];
+        $validityDays = $days[ array_rand($days) ];
+        $durationCategory = DurationCategory::where('days', $validityDays)->first()->id;
 
         $obj = [];
         switch ($name) {
             case 'internet':
                 $obj = [
                     'internet_volume_mb' => 512 * rand(1, 20),
-                    'validity_days' => $days[ array_rand($days) ],
+                    'validity_days' => $validityDays,
                     'inspiration_quote_en' => '',
                     'inspiration_quote_bn' => '',
+                    'duration_category_id' => $durationCategory
                 ];
                 break;
 
             case 'voice':
                 $obj = [
                     'minute_volume' => 512 * rand(1, 20),
-                    'validity_days' => $days[ array_rand($days) ],
+                    'validity_days' => $validityDays,
                     'inspiration_quote_en' => 'Most Popular',
                     'inspiration_quote_bn' => 'সবচেয়ে জনপ্রিয়',
+                    'duration_category_id' => $durationCategory
                 ];
                 break;
 
@@ -104,11 +108,6 @@ class ProductsTableSeeder extends Seeder
             $offer = OfferCategory::whereIn('alias', ['internet','packages','others'])->inRandomOrder()->first();
             $offerInfo = $this->getOfferInfo($offer->alias);
 
-            $durationCategory = null;
-            if ($offer->alias == 'internet') {
-                $durationCategory = DurationCategory::where('days', $offerInfo['validity_days'])->first()->id;
-            }
-
             $showInHome = $this->showInHome($offer->alias);
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
 
@@ -122,11 +121,9 @@ class ProductsTableSeeder extends Seeder
                     'ussd_en' => '*' . rand(1000, 9999) . '*' . '1#',
                     'sim_category_id' => SimCategory::where('alias', 'postpaid')->first('id'),
                     'offer_category_id' => $offer->id,
-                    'duration_category_id' => $offer->id,
                     'show_in_home' => $showInHome,
                     'display_order' => $displayOrder,
-                    'offer_info' =>  $offerInfo,
-                    'duration_category_id' => $durationCategory
+                    'offer_info' =>  $offerInfo
                 ]
             );
         }
@@ -134,11 +131,6 @@ class ProductsTableSeeder extends Seeder
         for ($i = 0; $i < 30; $i++) {
             $offer = OfferCategory::inRandomOrder()->first();
             $offerInfo = $this->getOfferInfo($offer->alias);
-
-            $durationCategory = null;
-            if ($offer->alias == 'internet' || $offer->alias == 'voice') {
-                $durationCategory = DurationCategory::where('days', $offerInfo['validity_days'])->first()->id;
-            }
 
             $showInHome = $this->showInHome($offer->alias);
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
@@ -155,7 +147,6 @@ class ProductsTableSeeder extends Seeder
                     'show_in_home' => $showInHome,
                     'display_order' => $displayOrder,
                     'offer_info' =>  $offerInfo,
-                    'duration_category_id' => $durationCategory
                 ]
             );
         }

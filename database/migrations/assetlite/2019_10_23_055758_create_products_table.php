@@ -38,7 +38,6 @@ class CreateProductsTable extends Migration
                 $table->unsignedBigInteger('tag_category_id')->nullable();
                 $table->unsignedBigInteger('sim_category_id');
                 $table->unsignedBigInteger('offer_category_id');
-                $table->unsignedBigInteger('duration_category_id')->nullable();
                 $table->text('contextual_message')->nullable();
                 $table->integer('like')->default(0);
                 $table->tinyInteger('status')->default(1);
