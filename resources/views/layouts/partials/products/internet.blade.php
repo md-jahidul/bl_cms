@@ -10,20 +10,20 @@
     </div>
 
 
-{{--    <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">--}}
-{{--        <label for="offer_category_id" class="required">Duration Type</label>--}}
-{{--        <select class="form-control required" name="offer_category_id" id="offer_type"--}}
-{{--                required data-validation-required-message="Please select offer">--}}
-{{--            <option value="">---Select Duration Type---</option>--}}
-{{--            @foreach($durations as $value)--}}
-{{--                <option value="{{ $value->id }}">{{ $value->name }}</option>--}}
-{{--            @endforeach--}}
-{{--        </select>--}}
-{{--        <div class="help-block"></div>--}}
-{{--        @if ($errors->has('offer_category_id'))--}}
-{{--            <div class="help-block">{{ $errors->first('offer_category_id') }}</div>--}}
-{{--        @endif--}}
-{{--    </div>--}}
+    <div class="form-group col-md-6 {{ $errors->has('duration_category_id') ? ' error' : '' }}">
+        <label for="duration_category_id" class="required">Duration Type</label>
+        <select class="form-control required" name="offer_info[duration_category_id]"
+                required data-validation-required-message="Please select offer">
+            <option value="">---Select Duration Type---</option>
+            @foreach($durations as $value)
+                <option value="{{ $value->id }}" {{ $value->id == !empty($product->offer_info['duration_category_id']) ? 'selected' : '' }}>{{ $value->name }}</option>
+            @endforeach
+        </select>
+        <div class="help-block"></div>
+        @if ($errors->has('duration_category_id'))
+            <div class="help-block">{{ $errors->first('duration_category_id') }}</div>
+        @endif
+    </div>
 
     <div class="form-group col-md-6 {{ $errors->has('validity_days') ? ' error' : '' }}">
         <label for="validity_days" class="required">Validity Days</label>
@@ -47,7 +47,7 @@
         @endif
     </div>
 
-    <div class="form-group col-md-6 {{ $errors->has('inspiration_quote_bn') ? ' error' : '' }}">
+    <div class="form-group col-md-12 {{ $errors->has('inspiration_quote_bn') ? ' error' : '' }}">
         <label for="inspiration_quote_bn" class="required">Inspiration Quote Bangla</label>
         <input type="text" name="offer_info[inspiration_quote_bn]"  class="form-control" placeholder="Enter view list url"
                value="{{ (!empty($offerInfo['inspiration_quote_bn'])) ? $offerInfo['inspiration_quote_bn'] : old("offer_info.inspiration_quote_bn") ?? '' }}"

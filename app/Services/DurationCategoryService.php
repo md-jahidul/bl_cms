@@ -9,53 +9,53 @@
 
 namespace App\Services;
 
-use App\Repositories\SimCategoryRepository;
+use App\Repositories\DurationCategoryRepository;
 use App\Traits\CrudTrait;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
-class SimCategoryService
+class DurationCategoryService
 {
     use CrudTrait;
 
     /**
-     * @var $SimCategoryRepository
+     * @var $DurationCategoryRepository
      */
-    protected $simCategoryRepository;
+    protected $durationCategoryRepository;
 
     /**
-     * SimCategoryService constructor.
-     * @param SimCategoryRepository $simCategoryRepository
+     * DurationCategoryService constructor.
+     * @param DurationCategoryRepository $durationCategoryRepository
      */
-    public function __construct(SimCategoryRepository $simCategoryRepository)
+    public function __construct(DurationCategoryRepository $durationCategoryRepository)
     {
-        $this->simCategoryRepository = $simCategoryRepository;
-        $this->setActionRepository($simCategoryRepository);
+        $this->durationCategoryRepository = $durationCategoryRepository;
+        $this->setActionRepository($durationCategoryRepository);
     }
 
     /**
      * @param $data
      * @return Response
      */
-    public function storeSimCategory($data)
+    public function storeDurationCategory($data)
     {
         $data['alias'] = str_replace(" ", "_", strtolower($data['name']));
         $this->save($data);
-        return new Response('Sim category added successfully');
+        return new Response('Duration category added successfully');
     }
 
     /**
-     * Updating the SimCategory
+     * Updating the DurationCategory
      * @param $data
      * @return Response
      */
-    public function updateSimCategory($data, $id)
+    public function updateDurationCategory($data, $id)
     {
-        $simCategory = $this->findOne($id);
+        $durationCategory = $this->findOne($id);
         $data['alias'] = str_replace(" ", "_", strtolower($data['name']));
-        $simCategory->update($data);
-        return Response('Sim category updated successfully');
+        $durationCategory->update($data);
+        return Response('Duration category updated successfully');
     }
 
 
@@ -64,10 +64,10 @@ class SimCategoryService
      * @return ResponseFactory|Response
      * @throws Exception
      */
-    public function deleteSimCategory($id)
+    public function deleteDurationCategory($id)
     {
-        $simCategory = $this->findOne($id);
-        $simCategory->delete();
-        return Response('Sim category deleted successfully !');
+        $durationCategory = $this->findOne($id);
+        $durationCategory->delete();
+        return Response('Duration category deleted successfully !');
     }
 }

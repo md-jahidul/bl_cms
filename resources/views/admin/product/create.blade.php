@@ -96,17 +96,17 @@
                             </div>
 
                             <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="bonus">Bonus</label>
-                                    <input type="text" name="bonus"  class="form-control" placeholder="Enter bonus"
-                                           value="{{ old("bonus") ? old("bonus") : '' }}">
-                                </div>
+{{--                                <div class="form-group col-md-6">--}}
+{{--                                    <label for="bonus">Bonus</label>--}}
+{{--                                    <input type="text" name="bonus"  class="form-control" placeholder="Enter bonus"--}}
+{{--                                           value="{{ old("bonus") ? old("bonus") : '' }}">--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-6">
-                                    <label for="point">Point</label>
-                                    <input type="number" name="point"  class="form-control" placeholder="Enter point"
-                                           value="{{ old("point") ? old("point") : '' }}">
-                                </div>
+{{--                                <div class="form-group col-md-6">--}}
+{{--                                    <label for="point">Point</label>--}}
+{{--                                    <input type="number" name="point"  class="form-control" placeholder="Enter point"--}}
+{{--                                           value="{{ old("point") ? old("point") : '' }}">--}}
+{{--                                </div>--}}
 
 
                                 <div class="form-group col-md-6">
@@ -174,6 +174,7 @@
 @push('page-js')
     <script type="text/javascript">
         $(function () {
+
             function domMupulate(selectedItemName, action='hide'){
                 var options = $('#offer_type option');
                 var optionTextArr = $.map(options ,function(option) {
