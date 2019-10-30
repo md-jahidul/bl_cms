@@ -58,8 +58,12 @@
                                     <td><input type="checkbox" {{ $productDetails->show_in_home == 1 ? 'checked' : '' }} disabled></td>
                                 </tr>
                                 <tr>
+                                    <th class="text-right" width="30%">USSD Code English</th>
+                                    <td>{{ $productDetails->ussd_en }}</td>
+                                </tr>
+                                <tr>
                                     <th class="text-right" width="30%">USSD Code</th>
-                                    <td>{{ $productDetails->ussd }}</td>
+                                    <td>{{ $productDetails->ussd_bn }}</td>
                                 </tr>
                                 <tr>
                                     <th class="text-right" width="30%">Point</th>

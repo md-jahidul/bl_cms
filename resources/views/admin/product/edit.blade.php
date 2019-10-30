@@ -1,10 +1,11 @@
 @extends('layouts.admin')
-@section('title', "$type Offer Create")
-@section('card_name', "$type Offer Create")
+@php $type = ucfirst($type)  @endphp
+@section('title', "$type Offer Edit")
+@section('card_name', "$type Offer Edit")
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('product.list', $type) }}"> {{ $type }} List</a></li>
     {{--    <li class="breadcrumb-item active"> <a href="{{ route('partner-offer', [$parentId, $partnerName]) }}"> Partner Offer List</a></li>--}}
-    <li class="breadcrumb-item active"> {{ $type }} Offer Create</li>
+    <li class="breadcrumb-item active"> {{ $type }} Offer Edit</li>
 @endsection
 @section('action')
     <a href="{{ route('product.list', $type) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
@@ -14,7 +15,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title"><strong>{{ ucfirst($type) }} Offer Create</strong></h5><hr>
+                    <h5 class="menu-title"><strong>{{ $type }} Offer Create</strong></h5><hr>
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('product.update', [strtolower($type), $product->id] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
@@ -59,36 +60,31 @@
                                            value="{{ $product->price_tk }}">
                                 </div>
 
-                                @if(strtolower($type) == 'prepaid')
-                                    <div class="form-group col-md-6 {{ $errors->has('sms_volume') ? ' error' : '' }}">
-                                        <label for="sms_volume">SMS Volume</label>.
-                                        <input type="number" name="sms_volume"  class="form-control" placeholder="Enter offer sms volume"
-                                               value="{{ $product->sms_volume }}">
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label for="min_volume">Minute Volume</label>
-                                        <input type="number" name="min_v olume"  class="form-control" placeholder="Enter minute volume"
-                                               value="{{ $product->min_volume }}">
-                                    </div>
-                                @endif
-
-                                <div class="form-group col-md-6">
-                                    <label for="internet_volume_mb">Internet Volume</label>
-                                    <input type="number" name="internet_volume_mb"  class="form-control" placeholder="Enter internet volume mb"
-                                           value="{{ $product->internet_volume_mb }}">
+                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
+                                    <label for="offer_category_id" class="required">Offer Type</label>
+                                    <select class="form-control" name="offer_category_id"
+                                            required data-validation-required-message="Please select offer">
+                                        <option value="">---Select Offer Type---</option>
+                                        @foreach($offersType as $offer)
+                                            <option value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>
+                                                {{ $offer->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('offer_category_id'))
+                                        <div class="help-block">  {{ $errors->first('offer_category_id') }}</div>
+                                    @endif
                                 </div>
+                            </div>
 
+                            <div class="row" id="internet">
+                                @include('layouts.partials.products.internet')
+                            </div>
+
+                            <div class="row">
                                 <div class="form-group col-md-6 ">
                                     <label for="bonus">Bonus</label>
-                                    <input type="text" name="bonus"  class="form-control" placeholder="Enter bonus"
-                                           value="{{ $product->name }}">
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label for="validity_days">Validity Days</label>
-                                    <input type="text" name="validity_days"  class="form-control" placeholder="Enter validity days"
-                                           value="{{ $product->validity_days }}">
+                                    <input type="text" name="bonus"  class="form-control" placeholder="Enter bonus" value="{{ $product->name }}">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('point') ? ' error' : '' }}">
@@ -105,22 +101,6 @@
                                             <option value="{{ $tag->id }}" {{ ($tag->id == $product->tag_category_id ) ? 'selected' : '' }}>{{ $tag->name }}</option>
                                         @endforeach
                                     </select>
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
-                                    <label for="offer_category_id" class="required">Offer</label>
-                                    <select class="form-control" name="offer_category_id"
-                                            required data-validation-required-message="Please select offer">
-                                        <option value="">---Select Offer---</option>
-                                        @foreach($offers as $offer)
-                                            <option value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>
-                                                {{ $offer->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('offer_category_id'))
-                                        <div class="help-block">  {{ $errors->first('offer_category_id') }}</div>
-                                    @endif
                                 </div>
 
                                 <div class="col-md-6">
@@ -158,11 +138,12 @@
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
-                                                class="la la-check-square-o"></i> Save
+                                                class="la la-check-square-o"></i> Update
                                         </button>
                                     </div>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>

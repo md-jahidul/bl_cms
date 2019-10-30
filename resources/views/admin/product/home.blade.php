@@ -16,7 +16,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <h4 class="pb-1"><strong>{{ ucwords('Prepaid'." ". "Offers") }}</strong></h4>
-                    <table class="table table-striped table-bordered zero-configuration">
+                    <table class="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <td width="3%">#</td>
@@ -26,17 +26,17 @@
                             <th class="">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable">
                         @foreach($trendingHomeOffers as $trendingHomeOffer)
                             @php $path = 'partner-offers-home'; @endphp
                             <tr data-index="{{ $trendingHomeOffer->id }}" data-position="{{ $trendingHomeOffer->display_order }}">
                                 <td width="3%">{{ $loop->iteration }}</td>
-                                <td>{{ $trendingHomeOffer->name }}{!! $trendingHomeOffer->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+                                <td>{{ $trendingHomeOffer->name_en }}{!! $trendingHomeOffer->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                 <td>{{ $trendingHomeOffer->price_tk }} Tk</td>
-                                <td>{{ $trendingHomeOffer->ussd }}</td>
+                                <td>{{ $trendingHomeOffer->ussd_en }}</td>
                                 <td width="15%">
 {{--                                    <a href="#" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>--}}
-{{--                                    <a href="{{ route('product.edit', [$trendingHomeOffer->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>--}}
+{{--                                    <a href="" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>--}}
 {{--                                    <a href="#" remove="{{ url("offers/$trendingHomeOffer->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $trendingHomeOffer->id }}" title="Delete">--}}
 {{--                                        <i class="la la-trash"></i>--}}
 {{--                                    </a>--}}
@@ -54,18 +54,18 @@
 @stop
 
 @push('page-css')
-    {{--    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">--}}
+        <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
     <style>
         #sortable tr td{
-            padding-top: 5px !important;
-            padding-bottom: 5px !important;
+            padding-top: 7px !important;
+            padding-bottom: 7px !important;
         }
     </style>
 @endpush
 
 @push('page-js')
     <script>
-        var auto_save_url = "{{ url('/partner-offer/sortable') }}";
+        var auto_save_url = "{{ url('/trending-home/sortable') }}";
     </script>
 @endpush
 

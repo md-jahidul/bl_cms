@@ -30,7 +30,7 @@
                                 @php $path = 'partner-offers-home'; @endphp
                                 <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}">
                                     <td width="3%">{{ $loop->iteration }}</td>
-                                    <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+                                    <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                     <td>{{ $product->price_tk }} Tk</td>
                                     <td>{{ $product->ussd_en }}</td>
                                     <td width="15%">

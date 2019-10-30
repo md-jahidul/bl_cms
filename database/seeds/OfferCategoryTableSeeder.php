@@ -12,7 +12,7 @@ class OfferCategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        $offers = ['internet','voice','bundles','packages','others', 'startup', 'business'];
+        $offers = ['Internet','Voice','Bundles','Packages','Others', 'Startup', 'Business'];
         foreach ($offers as $offer) {
             factory(OfferCategory::class)->create(
                 [

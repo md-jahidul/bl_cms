@@ -34,7 +34,7 @@
                                             <a href="{{ url('/' . Config("authorization.route-prefix") . '/roles/' . $item->id . '/edit') }}" class="border-0 btn btn-outline-primary"
                                                title="Edit Role"><span class="la la-pencil" aria-hidden="true"></span></a>
 
-                                            @if($item->id > 2)
+                                            @if($item->id > 5)
                                                 {!! Form::open([
                                                     'method'=>'DELETE',
                                                     'url' => ['/' . Config("authorization.route-prefix") . '/roles', $item->id],

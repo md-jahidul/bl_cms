@@ -19,9 +19,6 @@ class Product extends Model
             'price_vat_included',
             'ussd_en',
             'ussd_bn',
-            'sms_volume',
-            'min_volume',
-            'internet_volume_mb',
             'bonus',
             'point',
             'validity_days',
@@ -34,7 +31,12 @@ class Product extends Model
             'like',
             'status',
             'display_order',
+            'offer_info',
         ];
+
+    protected $casts = [
+        'offer_info' => 'array'
+    ];
 
     public function sim_category()
     {

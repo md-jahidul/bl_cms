@@ -107,7 +107,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('offers/{type}/{id}/update', 'AssetLite\ProductController@update')->name('product.update');
     Route::get('offers/{type}/{id}/show', 'AssetLite\ProductController@show')->name('product.show');
     Route::get('offers/{type}/{id}', 'AssetLite\ProductController@destroy');
-
+    Route::get('trending-home', 'AssetLite\ProductController@trendingOfferHome')->name('trending-home');
+    Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
 
 
     // PARTNERS PAGES ====================================
@@ -126,7 +127,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('/partner-offer-home/sortable', 'AssetLite\PartnerOfferController@partnerOfferSortable');
 
     Route::get('partner-offers-home', 'AssetLite\PartnerOfferController@partnerOffersHome')->name('partner-offer-home');
-    Route::get('/trending-home', 'AssetLite\ProductController@trendingOfferHome')->name('trending-home');
+
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 
 
