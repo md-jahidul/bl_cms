@@ -1,6 +1,7 @@
 <div class="form-group col-md-6 {{ $errors->has('callrate_offer') ? ' error' : '' }}">
     <label for="callrate_offer" class="required">Call Rate (Paisa)</label>
     <input type="number" name="offer_info[callrate_offer]"  class="form-control" placeholder="Enter call rate in paisa"
+           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
            value="{{ (!empty($offerInfo['callrate_offer'])) ? $offerInfo['callrate_offer'] : old("offer_info.callrate_offer") ?? '' }}"
            required data-validation-required-message="Enter view list button label bangla ">
     <div class="help-block"></div>
@@ -23,6 +24,7 @@
 <div class="form-group col-md-6 {{ $errors->has('minute_offer') ? ' error' : '' }}">
     <label for="minute_offer" class="required">Minute Offer</label>
     <input type="number" name="offer_info[minute_offer]"  class="form-control" placeholder="Enter minute offer"
+           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
            value="{{ (!empty($offerInfo['minute_offer'])) ? $offerInfo['minute_offer'] : old("offer_info.minute_offer") ?? '' }}"
            required data-validation-required-message="Enter view list url">
     <div class="help-block"></div>
@@ -45,6 +47,7 @@
 <div class="form-group col-md-6 {{ $errors->has('validity_days') ? ' error' : '' }}">
     <label for="validity_days" class="required">Validity Days</label>
     <input type="number" name="offer_info[validity_days]"  class="form-control" placeholder="Enter validity days"
+           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
            value="{{ (!empty($offerInfo['validity_days'])) ? $offerInfo['validity_days'] : old("offer_info.validity_days") ?? '' }}"
            required data-validation-required-message="Enter view list url">
     <div class="help-block"></div>

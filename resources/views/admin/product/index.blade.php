@@ -22,7 +22,7 @@
                             <th width="25%">Product Name</th>
                             <th>Price</th>
                             <th>USSD</th>
-                            <th width="8%" class="text-center">Show In Home</th>
+                            <th width="8%" class="text-center">Trending Offer</th>
                             <th class="">Action</th>
                         </tr>
                         </thead>
