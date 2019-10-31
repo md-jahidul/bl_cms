@@ -13,9 +13,9 @@ class AmarOfferSeeder extends Seeder
     {
         DB::table('amar_offers')->insert([
             'title' => '30MB @ 1.5 TK / 4 Days (including all taxes)',
-            'internet' => '0',
-            'minutes' => '0',
-            'sms' => '0',
+            'internet' => '30',
+            'minutes' => '30',
+            'sms' => '50',
             'validity' => '30',
             'price' => '1.5',
             'offer_code' => '*5000*414#',
@@ -36,9 +36,9 @@ class AmarOfferSeeder extends Seeder
         ]);
         DB::table('amar_offers')->insert([
             'title' => 'Tk. 297 Bundle',
-            'internet' => '0',
-            'minutes' => '0',
-            'sms' => '0',
+            'internet' => '250',
+            'minutes' => '100',
+            'sms' => '50',
             'validity' => '30',
             'price' => '297',
             'offer_code' => '*166*297#',
