@@ -1,6 +1,6 @@
 <div class="form-group col-md-6 {{ $errors->has('callrate_offer') ? ' error' : '' }}">
     <label for="callrate_offer" class="required">Call Rate (Paisa)</label>
-    <input type="text" name="offer_info[callrate_offer]"  class="form-control" placeholder="Enter call rate in paisa"
+    <input type="number" name="offer_info[callrate_offer]"  class="form-control" placeholder="Enter call rate in paisa"
            value="{{ (!empty($offerInfo['callrate_offer'])) ? $offerInfo['callrate_offer'] : old("offer_info.callrate_offer") ?? '' }}"
            required data-validation-required-message="Enter view list button label bangla ">
     <div class="help-block"></div>

@@ -1,6 +1,6 @@
     <div class="form-group col-md-6 {{ $errors->has('internet_volume_mb') ? ' error' : '' }}">
         <label for="internet_volume_mb" class="required">Internet Volume (MB)</label>
-        <input type="text" name="offer_info[internet_volume_mb]"  class="form-control" placeholder="Enter internet volume in MB"
+        <input type="number" name="offer_info[internet_volume_mb]"  class="form-control" placeholder="Enter internet volume in MB"
                value="{{ (!empty($offerInfo['internet_volume_mb'])) ? $offerInfo['internet_volume_mb'] : old("offer_info.internet_volume_mb") ?? '' }}"
                required data-validation-required-message="Enter view list button label bangla ">
         <div class="help-block"></div>
@@ -27,7 +27,7 @@
 
     <div class="form-group col-md-6 {{ $errors->has('validity_days') ? ' error' : '' }}">
         <label for="validity_days" class="required">Validity (Days)</label>
-        <input type="text" name="offer_info[validity_days]"  class="form-control" placeholder="Enter validity in days"
+        <input type="number" name="offer_info[validity_days]"  class="form-control" placeholder="Enter validity in days"
                value="{{ (!empty($offerInfo['validity_days'])) ? $offerInfo['validity_days'] : old("offer_info.validity_days") ?? '' }}"
                required data-validation-required-message="Enter view list url">
         <div class="help-block"></div>
