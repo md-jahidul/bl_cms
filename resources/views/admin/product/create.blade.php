@@ -68,7 +68,12 @@
                                             required data-validation-required-message="Please select offer">
                                         <option value="">---Select Offer Type---</option>
                                         @foreach($offers as $offer)
-                                            <option value="{{ $offer->id }}">{{ $offer->name }}</option>
+
+                                            @if(strtolower($type) == 'postpaid' && $offer->id == 1 || $offer->id == 4 || $offer->id == 5)
+                                                <option value="{{ $offer->id }}">{{ $offer->name }}</option>
+                                            @elseif(strtolower($type) == 'prepaid')
+                                                <option value="{{ $offer->id }}">{{ $offer->name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>

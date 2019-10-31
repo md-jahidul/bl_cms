@@ -72,6 +72,7 @@ class ProductController extends Controller
         $tags = $this->tagCategoryService->findAll();
         $offers = $this->offerCategoryService->findAll();
         $durations = $this->durationCategoryService->findAll();
+
         return view('admin.product.create', compact('type', 'tags', 'offers', 'durations'));
     }
 
