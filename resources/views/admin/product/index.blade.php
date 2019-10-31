@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>{{ ucwords('Prepaid'." ". "Offers") }}</strong></h4>
+                    <h4 class="pb-1"><strong>{{ ucwords($type." ". "Offers") }}</strong></h4>
                     <table class="table table-striped table-bordered zero-configuration">
                         <thead>
                         <tr>

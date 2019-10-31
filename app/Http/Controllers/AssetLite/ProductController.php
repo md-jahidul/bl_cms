@@ -125,8 +125,13 @@ class ProductController extends Controller
         $offersType = $this->offerCategoryService->findAll();
         $durations = $this->durationCategoryService->findAll();
         $offerInfo = $product->offer_info;
-
         return view('admin.product.edit', compact('product', 'type', 'tags', 'offersType', 'offerInfo', 'durations'));
+    }
+
+    public function homeEdit($id)
+    {
+
+        return view('admin.product.home_offer_edit', compact(''));
     }
 
     /**

@@ -35,8 +35,8 @@
                                 <td>{{ $trendingHomeOffer->price_tk }} Tk</td>
                                 <td>{{ $trendingHomeOffer->ussd_en }}</td>
                                 <td width="15%">
-                                    <a href="#" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>
-                                    <a href="" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+{{--                                    <a href="{{route('product.show', [$trendingHomeOffer->sim_category->alias,$trendingHomeOffer->id])}}" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>--}}
+                                    <a href="{{ route('product.edit',[$trendingHomeOffer->sim_category->alias,$trendingHomeOffer->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
 {{--                                    <a href="#" remove="{{ url("offers/$trendingHomeOffer->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $trendingHomeOffer->id }}" title="Delete">--}}
 {{--                                        <i class="la la-trash"></i>--}}
 {{--                                    </a>--}}
