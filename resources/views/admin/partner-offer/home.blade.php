@@ -2,7 +2,7 @@
 @section('title', 'Partner Offer List')
 @section('card_name', 'Home Page Offer List')
 @section('breadcrumb')
-    <li class="breadcrumb-item "><a href="{{ url('partners') }}"> Partner List</a></li>
+    <li class="breadcrumb-item "><a href="{{ url('multiple-sliders') }}"> Slider List</a></li>
     <li class="breadcrumb-item ">Home Page Offer List</li>
 @endsection
 @section('action')

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\SimCategory;
 use App\Models\TagCategory;
+use App\Services\DurationCategoryService;
 use App\Services\OfferCategoryService;
 use App\Services\ProductService;
 use App\Services\TagCategoryService;
@@ -19,21 +20,25 @@ class ProductController extends Controller
     private $productService;
     private $tagCategoryService;
     private $offerCategoryService;
+    private $durationCategoryService;
 
     /**
-     * TagController constructor.
+     * ProductController constructor.
      * @param ProductService $productService
      * @param TagCategoryService $tagCategoryService
      * @param OfferCategoryService $offerCategoryService
+     * @param DurationCategoryService $durationCategoryService
      */
     public function __construct(
         ProductService $productService,
         TagCategoryService $tagCategoryService,
-        OfferCategoryService $offerCategoryService
+        OfferCategoryService $offerCategoryService,
+        DurationCategoryService $durationCategoryService
     ) {
         $this->productService = $productService;
         $this->tagCategoryService = $tagCategoryService;
         $this->offerCategoryService = $offerCategoryService;
+        $this->durationCategoryService = $durationCategoryService;
     }
 
     /**
@@ -68,7 +73,8 @@ class ProductController extends Controller
         $type = ucfirst($type);
         $tags = $this->tagCategoryService->findAll();
         $offers = $this->offerCategoryService->findAll();
-        return view('admin.product.create', compact('type', 'tags', 'offers'));
+        $durations = $this->durationCategoryService->findAll();
+        return view('admin.product.create', compact('type', 'tags', 'offers', 'durations'));
     }
 
     /**
@@ -80,6 +86,7 @@ class ProductController extends Controller
      */
     public function store(Request $request, $type)
     {
+
         $simId = SimCategory::where('alias', $type)->first()->id;
         $response = $this->productService->storeProduct($request->all(), $simId);
         Session::flash('success', $response->content());
@@ -116,10 +123,15 @@ class ProductController extends Controller
         $product = $this->productService->findOne($id);
         $tags = $this->tagCategoryService->findAll();
         $offersType = $this->offerCategoryService->findAll();
-
+        $durations = $this->durationCategoryService->findAll();
         $offerInfo = $product->offer_info;
+        return view('admin.product.edit', compact('product', 'type', 'tags', 'offersType', 'offerInfo', 'durations'));
+    }
 
-        return view('admin.product.edit', compact('product', 'type', 'tags', 'offersType', 'offerInfo'));
+    public function homeEdit($id)
+    {
+
+        return view('admin.product.home_offer_edit', compact(''));
     }
 
     /**

@@ -17,6 +17,7 @@ class CreateDurationCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('alias');
+            $table->integer('days');
             $table->timestamps();
         });
     }

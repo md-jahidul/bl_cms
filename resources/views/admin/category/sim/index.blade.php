@@ -30,8 +30,8 @@
                                     <td width="3%">{{ $loop->iteration }}</td>
                                     <td>{{ $simCategory->name }}</td>
                                     <td width="12%" class="text-center">
-                                        <a href="{{ url("sim-category/$simCategory->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ url("sim-category/destroy/$simCategory->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $simCategory->id }}" title="Delete">
+                                        <a href="{{--{{ url("sim-category/$simCategory->id/edit") }}--}}" role="button" onclick="return false;" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <a href="#" remove="{{ url("sim-category/destroy/$simCategory->id") }}" onclick="return false;" class="border-0 btn-sm btn-outline-danger {{--delete_btn--}}" data-id="{{ $simCategory->id }}" title="Delete">
                                             <i class="la la-trash"></i>
                                         </a>
                                     </td>

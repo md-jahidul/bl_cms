@@ -15,9 +15,9 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title"><strong>{{ $type }} Offer Create</strong></h5><hr>
+                    <h5 class="menu-title"><strong>{{ $type }} Offer Edit</strong></h5><hr>
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('product.update', [strtolower($type), $product->id] ) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" id="product_form" action="{{ route('product.update', [strtolower($type), $product->id] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="row">
@@ -62,12 +62,11 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="offer_category_id" class="required">Offer Type</label>
-                                    <select class="form-control" name="offer_category_id"
+                                    <select class="form-control" name="offer_category_id" id="offer_type"
                                             required data-validation-required-message="Please select offer">
                                         <option value="">---Select Offer Type---</option>
                                         @foreach($offersType as $offer)
-                                            <option value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>
-                                                {{ $offer->name }}</option>
+                                            <option value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>{{ $offer->name }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -77,21 +76,33 @@
                                 </div>
                             </div>
 
-                            <div class="row" id="internet">
+                            <div class="row {{ $product->offer_category_id == 1 ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
                                 @include('layouts.partials.products.internet')
+                            </div>
+                            <div class="row {{ $product->offer_category_id == 2 ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
+                                @include('layouts.partials.products.voice')
+                            </div>
+                            <div class="row {{ $product->offer_category_id == 3 ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
+                                @include('layouts.partials.products.bundle')
+                            </div>
+                            <div class="row {{ $product->offer_category_id == 4 ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
+                                @include('layouts.partials.products.packages')
+                            </div>
+                            <div class="row {{ $product->offer_category_id == 6 ? '' : 'd-none' }}" id="startup" data-offer-type="startup">
+                                @include('layouts.partials.products.startup')
                             </div>
 
                             <div class="row">
-                                <div class="form-group col-md-6 ">
-                                    <label for="bonus">Bonus</label>
-                                    <input type="text" name="bonus"  class="form-control" placeholder="Enter bonus" value="{{ $product->name }}">
-                                </div>
+{{--                                <div class="form-group col-md-6 ">--}}
+{{--                                    <label for="bonus">Bonus</label>--}}
+{{--                                    <input type="text" name="bonus"  class="form-control" placeholder="Enter bonus" value="{{ $product->name }}">--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-6 {{ $errors->has('point') ? ' error' : '' }}">
-                                    <label for="point">Point</label>
-                                    <input type="number" name="point"  class="form-control" placeholder="Enter point"
-                                           value="{{ $product->point }}">
-                                </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('point') ? ' error' : '' }}">--}}
+{{--                                    <label for="point">Point</label>--}}
+{{--                                    <input type="number" name="point"  class="form-control" placeholder="Enter point"--}}
+{{--                                           value="{{ $product->point }}">--}}
+{{--                                </div>--}}
 
                                 <div class="form-group col-md-6">
                                     <label for="tag_category_id">Tag</label>
@@ -105,9 +116,9 @@
 
                                 <div class="col-md-6">
                                     <label></label>
-                                    <div class="form-group pt-1">
+                                    <div class="form-group pt-1" id="show_in_home">
                                         <label for="show_in_home" class="mr-1">Show In Home:</label>
-                                        <input type="checkbox" name="show_in_home" value="1" id="show_in_home" {{ ($product->show_in_home == 1) ? 'checked' : '' }}>
+                                        <input type="checkbox" name="show_in_home" value="1" {{ ($product->show_in_home == 1) ? 'checked' : '' }}>
                                     </div>
                                 </div>
 
@@ -137,7 +148,7 @@
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary"><i
+                                        <button type="submit" id="update" class="btn btn-primary"><i
                                                 class="la la-check-square-o"></i> Update
                                         </button>
                                     </div>
@@ -157,7 +168,47 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
+    <script type="text/javascript">
+        $(function () {
 
+            var $offerType = $('#offer_type');
+
+            function domMupulate(selectedItemName, action='hide'){
+                let options =  $offerType.find('option');
+                let optionTextArr = $.map(options ,function(option) {
+                    if( option.value !== '' &&  option.text.toLowerCase() !== selectedItemName ) { return  '#' + option.text.toLowerCase();  }
+                });
+
+                let otherElements = optionTextArr.join(',');
+
+                if(action == 'hide'){
+                    $(otherElements).hide();
+                    $('#' + selectedItemName).removeClass('d-none')
+                        .show()
+                        .find('input').each(function(){
+                        $(this).val('');
+                    });
+                }else{
+                    $(otherElements).remove();
+                }
+            }
+
+            $offerType.change(function () {
+                let showInHome = $('#show_in_home');
+                let optionText =  $(this).find('option:selected').text();  //    $("#offer_type option:selected").text();
+                (optionText.toLowerCase() == 'startup' ? showInHome.hide() : showInHome.show())
+                domMupulate(optionText.toLowerCase());
+
+            });
+
+            $('#update').on('click',function(e){
+                e.preventDefault();
+                let optionText = $offerType.find('option:selected').text();
+                domMupulate( optionText.toLowerCase(),'remove');
+                $("#product_form").submit();
+            });
+        })
+    </script>
 @endpush
 
 
