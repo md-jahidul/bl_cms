@@ -56,8 +56,8 @@
 
                                 <div class="form-group col-md-6 ">
                                     <label for="price_tk">Offer Price</label>
-                                        <input type="text" name="price_tk"  class="form-control" placeholder="Enter offer price in taka"
-                                           oninput="this.value =Number(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+                                        <input type="text" name="price_tk"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
+                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
                                            value="{{ old("price_tk") ? old("price_tk") : '' }}">
                                     <div class="help-block"></div>
                                 </div>
@@ -181,7 +181,6 @@
                     if( option.value !== '' &&  option.text.toLowerCase() !== selectedItemName ) { return  '#' + option.text.toLowerCase();  }
                 });
                 var otherElements = optionTextArr.join(',');
-                debugger;
                 action == 'remove' ? $(otherElements).remove() : $(otherElements).hide();
                 $('#' + selectedItemName).show();
             }

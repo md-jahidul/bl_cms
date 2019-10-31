@@ -21,8 +21,8 @@ class ProductsTableSeeder extends Seeder
                 $obj = [
                     'internet_volume_mb' => 512 * rand(1, 20),
                     'validity_days' => $validityDays,
-                    'inspiration_quote_en' => '',
-                    'inspiration_quote_bn' => '',
+                    'inspiration_quote_en' => 'Most Popular',
+                    'inspiration_quote_bn' => 'সবচেয়ে জনপ্রিয়',
                     'duration_category_id' => $durationCategory
                 ];
                 break;
@@ -39,14 +39,14 @@ class ProductsTableSeeder extends Seeder
 
             case 'packages':
                 $obj = [
-                    'callrate_offer' =>  1,
-                    'sms_rate_offer' =>  1,
+                    'callrate_offer' => rand(1, 10),
+                    'sms_rate_offer' => rand(1, 10),
                 ];
                 break;
 
             case 'bundles':
                 $obj = [
-                    'minute_volume' => '550',
+                    'minute_volume' => rand(100, 1000),
                     'internet_volume_mb' => '250',
                     'sms_volume' => '150',
                     'validity_days' => '60',

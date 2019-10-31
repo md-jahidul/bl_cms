@@ -116,9 +116,9 @@
 
                                 <div class="col-md-6">
                                     <label></label>
-                                    <div class="form-group pt-1">
+                                    <div class="form-group pt-1" id="show_in_home">
                                         <label for="show_in_home" class="mr-1">Show In Home:</label>
-                                        <input type="checkbox" name="show_in_home" value="1" id="show_in_home" {{ ($product->show_in_home == 1) ? 'checked' : '' }}>
+                                        <input type="checkbox" name="show_in_home" value="1" {{ ($product->show_in_home == 1) ? 'checked' : '' }}>
                                     </div>
                                 </div>
 
@@ -194,7 +194,9 @@
             }
 
             $offerType.change(function () {
+                let showInHome = $('#show_in_home');
                 let optionText =  $(this).find('option:selected').text();  //    $("#offer_type option:selected").text();
+                (optionText.toLowerCase() == 'startup' ? showInHome.hide() : showInHome.show())
                 domMupulate(optionText.toLowerCase());
 
             });

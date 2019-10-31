@@ -31,7 +31,7 @@
                                     <td>{{ $durationCategory->name }}</td>
                                     <td width="12%" class="text-center">
                                         <a href="{{ url("duration-category/$durationCategory->id/edit") }}" onclick="return false;" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ url("tag-category/destroy/$durationCategory->id") }}" onclick="return false;" class="border-0 btn-sm btn-outline-danger delete_btn disabled" data-id="{{ $durationCategory->id }}" title="Delete">
+                                        <a href="#" remove="{{ url("tag-category/destroy/$durationCategory->id") }}" onclick="return false;" class="border-0 btn-sm btn-outline-danger {{--delete_btn--}} disabled" data-id="{{ $durationCategory->id }}" title="Delete">
                                             <i class="la la-trash"></i>
                                         </a>
                                     </td>
