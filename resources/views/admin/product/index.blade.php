@@ -36,7 +36,7 @@
                                     <td>{{ $product->ussd_en }}</td>
                                     <td class="text-center"><input type="checkbox" {{ $product->show_in_home == 1 ? 'checked' : '' }} disabled></td>
                                     <td width="15%">
-                                        <a href="{{ route('product.show', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>
+{{--                                        <a href="{{ route('product.show', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>--}}
                                         <a href="{{ route('product.edit', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         <a href="#" remove="{{ url("offers/$type/$product->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $product->id }}" title="Delete">
                                             <i class="la la-trash"></i>
