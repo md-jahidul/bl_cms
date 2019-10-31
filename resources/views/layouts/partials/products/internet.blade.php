@@ -47,7 +47,7 @@
         @endif
     </div>
 
-    <div class="form-group col-md-12 {{ $errors->has('inspiration_quote_bn') ? ' error' : '' }}">
+    <div class="form-group col-md-6 {{ $errors->has('inspiration_quote_bn') ? ' error' : '' }}">
         <label for="inspiration_quote_bn" class="required">Mini Tag Bangla</label>
         <input type="text" name="offer_info[inspiration_quote_bn]"  class="form-control" placeholder="Enter mini tag bangla"
                value="{{ (!empty($offerInfo['inspiration_quote_bn'])) ? $offerInfo['inspiration_quote_bn'] : old("offer_info.inspiration_quote_bn") ?? '' }}"
