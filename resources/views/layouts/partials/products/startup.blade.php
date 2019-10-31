@@ -31,16 +31,16 @@
     @endif
 </div>
 
-<div class="form-group col-md-6 {{ $errors->has('sms_offer') ? ' error' : '' }}">
-    <label for="sms_offer" class="required">SMS Offer</label>
-    <input type="number" name="offer_info[sms_offer]"  class="form-control" placeholder="Enter SMS offer"
-           value="{{ (!empty($offerInfo['sms_offer'])) ? $offerInfo['sms_offer'] : old("offer_info.sms_offer") ?? '' }}"
-           required data-validation-required-message="Enter view list url">
-    <div class="help-block"></div>
-    @if ($errors->has('sms_offer'))
-        <div class="help-block">  {{ $errors->first('sms_offer') }}</div>
-    @endif
-</div>
+{{--<div class="form-group col-md-6 {{ $errors->has('sms_offer') ? ' error' : '' }}">--}}
+{{--    <label for="sms_offer" class="required">SMS Offer</label>--}}
+{{--    <input type="number" name="offer_info[sms_offer]"  class="form-control" placeholder="Enter SMS offer"--}}
+{{--           value="{{ (!empty($offerInfo['sms_offer'])) ? $offerInfo['sms_offer'] : old("offer_info.sms_offer") ?? '' }}"--}}
+{{--           required data-validation-required-message="Enter view list url">--}}
+{{--    <div class="help-block"></div>--}}
+{{--    @if ($errors->has('sms_offer'))--}}
+{{--        <div class="help-block">  {{ $errors->first('sms_offer') }}</div>--}}
+{{--    @endif--}}
+{{--</div>--}}
 
 <div class="form-group col-md-6 {{ $errors->has('validity_days') ? ' error' : '' }}">
     <label for="validity_days" class="required">Validity Days</label>
