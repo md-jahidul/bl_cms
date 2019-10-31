@@ -110,7 +110,7 @@
                     </li>
                     <li class="{{ is_active_url('sim-categories') }}">
                         <a class="menu-item" href="{{ route('sim-categories.index') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                                class="la la-file"></i> Sim</a>
+                                class="la la-file"></i> Package</a>
                     </li>
 
                     <li class="{{ is_active_url('offer-categories') }}">

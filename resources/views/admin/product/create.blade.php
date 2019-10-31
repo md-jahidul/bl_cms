@@ -127,7 +127,7 @@
                                 <div class="col-md-6" >
                                     <label></label>
                                     <div class="form-group pt-1" id="show_in_home">
-                                        <label for="show_in_home" class="mr-1">Show In Home:</label>
+                                        <label for="show_in_home" class="mr-1">Trending Offer:</label>
                                         <input type="checkbox" name="show_in_home" value="1" id="show_in_home">
                                     </div>
                                 </div>
