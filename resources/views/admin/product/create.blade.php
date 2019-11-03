@@ -83,22 +83,27 @@
                                 </div>
                             </div>
 
-                            <div class="row" id="internet" data-offer-type="internet" style="display: none">
-                                @include('layouts.partials.products.internet')
-                            </div>
-                            <div class="row" id="voice" data-offer-type="voice" style="display: none">
-                                @include('layouts.partials.products.voice')
-                            </div>
-                            <div class="row" id="bundles" data-offer-type="bundles" style="display: none">
-                                @include('layouts.partials.products.bundle')
-                            </div>
+                                <div class="row" id="internet" data-offer-type="internet" style="display: none">
+                                    @include('layouts.partials.products.internet')
+                                </div>
+                                <div class="row" id="packages" data-offer-type="packages" style="display: none">
+                                    @include('layouts.partials.products.packages')
+                                </div>
 
-                            <div class="row" id="packages" data-offer-type="packages" style="display: none">
-                                @include('layouts.partials.products.packages')
-                            </div>
-                            <div class="row" id="startup" data-offer-type="startup" style="display: none">
-                                @include('layouts.partials.products.startup')
-                            </div>
+                            @if( strtolower($type) == 'prepaid')
+                                <div class="row" id="voice" data-offer-type="voice" style="display: none">
+                                    @include('layouts.partials.products.voice')
+                                </div>
+                                <div class="row" id="bundles" data-offer-type="bundles" style="display: none">
+                                    @include('layouts.partials.products.bundle')
+                                </div>
+                                <div class="row" id="startup" data-offer-type="startup" style="display: none">
+                                    @include('layouts.partials.products.startup')
+                                </div>
+                            @endif
+
+
+
 
                             <div class="row">
 {{--                                <div class="form-group col-md-6">--}}
@@ -117,7 +122,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="tag_category_id">Tag</label>
                                     <select class="form-control" name="tag_category_id">
-                                        <option>---Select Tag---</option>
+                                        <option value="0">---Select Tag---</option>
                                         @foreach($tags as $tag)
                                             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                                         @endforeach
@@ -185,6 +190,7 @@
                 var optionTextArr = $.map(options ,function(option) {
                     if( option.value !== '' &&  option.text.toLowerCase() !== selectedItemName ) { return  '#' + option.text.toLowerCase();  }
                 });
+
                 var otherElements = optionTextArr.join(',');
                 action == 'remove' ? $(otherElements).remove() : $(otherElements).hide();
                 $('#' + selectedItemName).show();
@@ -202,6 +208,7 @@
             $('#save').on('click',function(e){
                 e.preventDefault();
                 let optionText = $("#offer_type option:selected").text();
+                debugger
                 domMupulate( optionText.toLowerCase(),'remove');
                 $("#product_form").submit();
             });

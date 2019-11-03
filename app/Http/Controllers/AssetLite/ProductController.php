@@ -80,16 +80,21 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param $type
-     * @return Response
+     * @param string $jsonKey
+     * @return void
      */
-    public function store(Request $request, $type)
+
+    public function strToint($request, $jsonKey = "offer_info")
     {
         foreach ($request->offer_info as $key => $info) {
-            $data['offer_info'][$key] =  is_numeric($info) ? (int)$info : $info;
+            $data[$jsonKey][$key] =  is_numeric($info) ? (int)$info : $info;
             $request->merge($data);
         }
+    }
 
+    public function store(Request $request, $type)
+    {
+        $this->strToint($request);
         $simId = SimCategory::where('alias', $type)->first()->id;
         $response = $this->productService->storeProduct($request->all(), $simId);
         Session::flash('success', $response->content());
@@ -147,6 +152,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $type, $id)
     {
+        $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $id);
         Session::flash('message', $response->content());
         return redirect("offers/$type");
