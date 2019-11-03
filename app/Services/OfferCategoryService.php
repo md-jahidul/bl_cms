@@ -35,6 +35,15 @@ class OfferCategoryService
     }
 
     /**
+     * @param $type
+     * @return mixed
+     */
+    public function getOfferCategories($type)
+    {
+        return $this->offerCategoryRepository->getList($type);
+    }
+
+    /**
      * @param $data
      * @return Response
      */
@@ -70,4 +79,6 @@ class OfferCategoryService
         $offerCategory->delete();
         return Response('Offer category deleted successfully !');
     }
+
+
 }

@@ -20,6 +20,9 @@
                         <form role="form" id="product_form" action="{{ route('product.update', [strtolower($type), $product->id] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
+
+                            <input type="hidden" name="previous_page" value="{{ $previous_page  }}">
+
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
                                     <label for="name_en" class="required">Offer Name</label>
@@ -76,21 +79,25 @@
                                 </div>
                             </div>
 
-                            <div class="row {{ $product->offer_category_id == 1 ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
-                                @include('layouts.partials.products.internet')
-                            </div>
-                            <div class="row {{ $product->offer_category_id == 2 ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
-                                @include('layouts.partials.products.voice')
-                            </div>
-                            <div class="row {{ $product->offer_category_id == 3 ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
-                                @include('layouts.partials.products.bundle')
-                            </div>
-                            <div class="row {{ $product->offer_category_id == 4 ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
-                                @include('layouts.partials.products.packages')
-                            </div>
-                            <div class="row {{ $product->offer_category_id == 6 ? '' : 'd-none' }}" id="startup" data-offer-type="startup">
-                                @include('layouts.partials.products.startup')
-                            </div>
+                                <div class="row {{ $product->offer_category_id == 1 ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
+                                    @include('layouts.partials.products.internet')
+                                </div>
+                                <div class="row {{ $product->offer_category_id == 4 ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
+                                    @include('layouts.partials.products.packages')
+                                </div>
+
+                            @if(strtolower($type == 'prepaid'))
+                                <div class="row {{ $product->offer_category_id == 2 ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
+                                    @include('layouts.partials.products.voice')
+                                </div>
+                                <div class="row {{ $product->offer_category_id == 3 ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
+                                    @include('layouts.partials.products.bundle')
+                                </div>
+
+                                <div class="row {{ $product->offer_category_id == 6 ? '' : 'd-none' }}" id="startup" data-offer-type="startup">
+                                    @include('layouts.partials.products.startup')
+                                </div>
+                            @endif
 
                             <div class="row">
 {{--                                <div class="form-group col-md-6 ">--}}
@@ -117,7 +124,7 @@
                                 <div class="col-md-6">
                                     <label></label>
                                     <div class="form-group pt-1" id="show_in_home">
-                                        <label for="show_in_home" class="mr-1">Show In Home:</label>
+                                        <label for="show_in_home" class="mr-1">Trending Offer:</label>
                                         <input type="checkbox" name="show_in_home" value="1" {{ ($product->show_in_home == 1) ? 'checked' : '' }}>
                                     </div>
                                 </div>

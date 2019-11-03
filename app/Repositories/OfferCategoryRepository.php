@@ -14,4 +14,13 @@ use App\Models\OfferCategory;
 class OfferCategoryRepository extends BaseRepository
 {
     public $modelName = OfferCategory::class;
+
+    /**
+     * @param $type
+     * @return mixed
+     */
+    public function getList($type)
+    {
+        return $this->model->type($type)->get();
+    }
 }

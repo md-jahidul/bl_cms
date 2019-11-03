@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
+use App\Models\OfferCategory;
 use App\Models\Product;
 use App\Models\SimCategory;
 use App\Models\TagCategory;
@@ -13,6 +14,7 @@ use App\Services\TagCategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 
 class ProductController extends Controller
 {
@@ -68,11 +70,10 @@ class ProductController extends Controller
 
     public function create($type)
     {
-        $type = ucfirst($type);
-        $tags = $this->tagCategoryService->findAll();
-        $offers = $this->offerCategoryService->findAll();
-        $durations = $this->durationCategoryService->findAll();
 
+        $tags = $this->tagCategoryService->findAll();
+        $offers = $this->offerCategoryService->getOfferCategories($type);
+        $durations = $this->durationCategoryService->findAll();
         return view('admin.product.create', compact('type', 'tags', 'offers', 'durations'));
     }
 
@@ -128,12 +129,22 @@ class ProductController extends Controller
      */
     public function edit($type, $id)
     {
+        $previous_page = url()->previous();
+
         $product = $this->productService->findOne($id);
         $tags = $this->tagCategoryService->findAll();
-        $offersType = $this->offerCategoryService->findAll();
+        $offersType = $this->offerCategoryService->getOfferCategories($type);
         $durations = $this->durationCategoryService->findAll();
         $offerInfo = $product->offer_info;
-        return view('admin.product.edit', compact('product', 'type', 'tags', 'offersType', 'offerInfo', 'durations'));
+        return view('admin.product.edit', compact(
+            'product',
+            'type',
+            'tags',
+            'offersType',
+            'offerInfo',
+            'durations',
+            'previous_page'
+        ));
     }
 
     public function homeEdit($id)
@@ -152,10 +163,11 @@ class ProductController extends Controller
      */
     public function update(Request $request, $type, $id)
     {
+        $toPrevious = $request->previous_page;
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $id);
         Session::flash('message', $response->content());
-        return redirect("offers/$type");
+        return redirect($toPrevious);
     }
 
     /**
