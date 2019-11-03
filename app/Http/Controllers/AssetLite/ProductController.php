@@ -85,6 +85,11 @@ class ProductController extends Controller
      */
     public function store(Request $request, $type)
     {
+        foreach ($request->offer_info as $key => $info) {
+            $data['offer_info'][$key] =  is_numeric($info) ? (int)$info : $info;
+            $request->merge($data);
+        }
+
         $simId = SimCategory::where('alias', $type)->first()->id;
         $response = $this->productService->storeProduct($request->all(), $simId);
         Session::flash('success', $response->content());

@@ -108,7 +108,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('offers/{type}/{id}/show', 'AssetLite\ProductController@show')->name('product.show');
     Route::get('offers/{type}/{id}', 'AssetLite\ProductController@destroy');
     Route::get('trending-home', 'AssetLite\ProductController@trendingOfferHome')->name('trending-home');
-    Route::get('trending-home/{id}/edit', 'AssetLite\ProductController@homeEdit');
+//    Route::get('trending-home/{id}/edit', 'AssetLite\ProductController@homeEdit');
     Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
 
 
