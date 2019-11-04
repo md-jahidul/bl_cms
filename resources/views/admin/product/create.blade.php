@@ -86,6 +86,10 @@
                                     @include('layouts.partials.products.packages')
                                 </div>
 
+{{--                                <div class="row" id="others" data-offer-type="others" style="display: none">--}}
+{{--                                    @include('layouts.partials.products.other')--}}
+{{--                                </div>--}}
+
                             @if( strtolower($type) == 'prepaid')
                                 <div class="row" id="voice" data-offer-type="voice" style="display: none">
                                     @include('layouts.partials.products.voice')

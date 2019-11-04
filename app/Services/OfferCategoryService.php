@@ -43,6 +43,11 @@ class OfferCategoryService
         return $this->offerCategoryRepository->getList($type);
     }
 
+    public function packageChild()
+    {
+        return $this->offerCategoryRepository->child();
+    }
+
     /**
      * @param $data
      * @return Response
