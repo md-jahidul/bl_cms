@@ -24,7 +24,7 @@ class OtpConfigRequest extends FormRequest
     public function rules()
     {
         return [
-            'token_length'        => 'required',
+            'token_length_number' => 'required',
             'validation_time'     => 'required',
 
         ];
