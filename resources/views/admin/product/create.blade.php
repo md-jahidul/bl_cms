@@ -86,9 +86,9 @@
                                     @include('layouts.partials.products.packages')
                                 </div>
 
-{{--                                <div class="row" id="others" data-offer-type="others" style="display: none">--}}
-{{--                                    @include('layouts.partials.products.other')--}}
-{{--                                </div>--}}
+                                <div class="row" id="others" data-offer-type="others" style="display: none">
+                                    @include('layouts.partials.products.other')
+                                </div>
 
                             @if( strtolower($type) == 'prepaid')
                                 <div class="row" id="voice" data-offer-type="voice" style="display: none">
@@ -97,9 +97,9 @@
                                 <div class="row" id="bundles" data-offer-type="bundles" style="display: none">
                                     @include('layouts.partials.products.bundle')
                                 </div>
-                                <div class="row" id="startup" data-offer-type="startup" style="display: none">
-                                    @include('layouts.partials.products.startup')
-                                </div>
+{{--                                <div class="row" id="startup" data-offer-type="startup" style="display: none">--}}
+{{--                                    @include('layouts.partials.products.startup')--}}
+{{--                                </div>--}}
                             @endif
 
 
@@ -183,15 +183,26 @@
     <script type="text/javascript">
         $(function () {
 
-            function domMupulate(selectedItemName, action='hide'){
-                var options = $('#offer_type option');
-                var optionTextArr = $.map(options ,function(option) {
+            var $offerType = $('#offer_type');
+
+             function domMupulate(selectedItemName, action='hide'){
+                let options =  $offerType.find('option');
+                let optionTextArr = $.map(options ,function(option) {
                     if( option.value !== '' &&  option.text.toLowerCase() !== selectedItemName ) { return  '#' + option.text.toLowerCase();  }
                 });
 
-                var otherElements = optionTextArr.join(',');
-                action == 'remove' ? $(otherElements).remove() : $(otherElements).hide();
-                $('#' + selectedItemName).show();
+                let otherElements = optionTextArr.join(',');
+
+                if(action == 'hide'){
+                    $(otherElements).hide();
+                    $('#' + selectedItemName).removeClass('d-none')
+                        .show()
+                        .find('input').each(function(){
+                            $(this).val('');
+                        });
+                }else{
+                    $(otherElements).remove();
+                }
             }
 
             $('#offer_type').change(function () {

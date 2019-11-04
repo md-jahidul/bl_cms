@@ -180,25 +180,25 @@
 
             var $offerType = $('#offer_type');
 
-            function domMupulate(selectedItemName, action='hide'){
-                let options =  $offerType.find('option');
-                let optionTextArr = $.map(options ,function(option) {
-                    if( option.value !== '' &&  option.text.toLowerCase() !== selectedItemName ) { return  '#' + option.text.toLowerCase();  }
-                });
-
-                let otherElements = optionTextArr.join(',');
-
-                if(action == 'hide'){
-                    $(otherElements).hide();
-                    $('#' + selectedItemName).removeClass('d-none')
-                        .show()
-                        .find('input').each(function(){
-                        $(this).val('');
-                    });
-                }else{
-                    $(otherElements).remove();
-                }
-            }
+            // function domMupulate(selectedItemName, action='hide'){
+            //     let options =  $offerType.find('option');
+            //     let optionTextArr = $.map(options ,function(option) {
+            //         if( option.value !== '' &&  option.text.toLowerCase() !== selectedItemName ) { return  '#' + option.text.toLowerCase();  }
+            //     });
+            //
+            //     let otherElements = optionTextArr.join(',');
+            //
+            //     if(action == 'hide'){
+            //         $(otherElements).hide();
+            //         $('#' + selectedItemName).removeClass('d-none')
+            //             .show()
+            //             .find('input').each(function(){
+            //             $(this).val('');
+            //         });
+            //     }else{
+            //         $(otherElements).remove();
+            //     }
+            // }
 
             $offerType.change(function () {
                 let showInHome = $('#show_in_home');

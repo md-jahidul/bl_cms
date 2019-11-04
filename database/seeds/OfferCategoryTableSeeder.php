@@ -16,24 +16,23 @@ class OfferCategoryTableSeeder extends Seeder
         $offers = ['Internet','Voice','Bundles','Packages','Others'];
 
         $package_categories = [
-            [ 'name' => 'Startup offer', 'type' => 1, 'description' => 'Description 3'],
-            [ 'name' => 'Icon plan', 'type' => 2, 'description' => 'Description 1'],
-            [ 'name' => 'Icon package', 'type' => 2, 'description' => 'Description 2']
+            [ 'name' => 'Prepaid Plans', 'type' => 1, 'description' => 'Description 1'],
+            [ 'name' => 'Start-up offers', 'type' => 1, 'description' => 'Description 2'],
+            [ 'name' => 'Postpaid Plans', 'type' => 2, 'description' => 'Description 1'],
+            [ 'name' => 'Icon Plans', 'type' => 2, 'description' => 'Description 2'],
         ];
 
         $other_offer_categories = [
-            [ 'name' => 'Balance Transfer', 'type' => 1, 'description' => 'Description 3'],
-            [ 'name' => 'Emergency Balance', 'type' => 1, 'description' => 'Description 3'],
+            [ 'name' => 'Balance Transfer', 'type' => 1, 'description' => 'Description 1'],
+            [ 'name' => 'Emergency Balance', 'type' => 1, 'description' => 'Description 2'],
             [ 'name' => 'Amar Offer', 'type' => 1, 'description' => 'Description 3'],
-            [ 'name' => 'Bondho SIM Offer', 'type' => 1, 'description' => 'Description 3'],
-            [ 'name' => 'MFS Offers', 'type' => 2, 'description' => 'Description 1'],
-            [ 'name' => 'Device Offers', 'type' => 2, 'description' => 'Description 2'],
-            [ 'name' => 'MMP4G Offers', 'type' => 2, 'description' => 'Description 2']
+            [ 'name' => 'Bondho SIM Offer', 'type' => 1, 'description' => 'Description 4'],
+            [ 'name' => 'MNP offers', 'type' => 1, 'description' => 'Description 5'],
+            [ 'name' => 'Device Offers', 'type' => 1, 'description' => 'Description 6'],
+            [ 'name' => '4G offers', 'type' => 1, 'description' => 'Description 7'],
+            [ 'name' => 'Amar Offer', 'type' => 2, 'description' => 'Description 1'],
         ];
 
-//        $other_packages = [
-//            ['Balance Transfer','Emergency Balance','Amar Offer','Bondho SIM Offer','MFS Offers','Device Offers','MMP4G Offers']
-//        ];
 
         foreach ($offers as $offer) {
             $myOffer = factory(OfferCategory::class)->create(
