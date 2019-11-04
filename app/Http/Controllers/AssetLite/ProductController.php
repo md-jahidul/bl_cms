@@ -24,6 +24,8 @@ class ProductController extends Controller
     private $offerCategoryService;
     private $durationCategoryService;
 
+    protected $info = [];
+
     /**
      * ProductController constructor.
      * @param ProductService $productService
@@ -70,11 +72,22 @@ class ProductController extends Controller
 
     public function create($type)
     {
+        $package_id = SimCategory::where('alias', $type)->first()->id;
 
-        $tags = $this->tagCategoryService->findAll();
-        $offers = $this->offerCategoryService->getOfferCategories($type);
-        $durations = $this->durationCategoryService->findAll();
-        return view('admin.product.create', compact('type', 'tags', 'offers', 'durations'));
+        $this->info['type'] = $type;
+        $this->info['tags'] = $this->tagCategoryService->findAll();
+        $this->info['offers'] = $this->offerCategoryService->getOfferCategories($type);
+        $this->info['durations'] = $this->durationCategoryService->findAll();
+
+        foreach ($this->info['offers'] as $offer) {
+            $child = OfferCategory::where('parent_id', $offer->id)
+                                        ->where('type_id', $package_id)
+                                        ->get();
+            if (count($child)) {
+                $this->info[$offer->alias . '_offer_child'] = $child;
+            }
+        }
+        return view('admin.product.create', $this->info);
     }
 
     /**

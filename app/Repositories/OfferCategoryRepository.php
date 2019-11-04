@@ -21,6 +21,11 @@ class OfferCategoryRepository extends BaseRepository
      */
     public function getList($type)
     {
-        return $this->model->type($type)->get();
+        return $this->model->packageType($type)->get();
+    }
+
+    public function childPackage()
+    {
+        return $this->model->where('parent_id', 4)->get();
     }
 }

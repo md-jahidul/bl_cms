@@ -21,3 +21,18 @@
         <div class="help-block">  {{ $errors->first('sms_rate_offer') }}</div>
     @endif
 </div>
+
+{{--<div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">--}}
+{{--    <label for="offer_category_id" class="required">Offer Type</label>--}}
+{{--    <select class="form-control required" name="offer_category_id" id="offer_type"--}}
+{{--            required data-validation-required-message="Please select offer">--}}
+{{--        <option value="">---Select Offer Type---</option>--}}
+{{--        @foreach($packages_offer_child as $offer)--}}
+{{--            <option value="{{ $offer->id }}">{{ $offer->name }}</option>--}}
+{{--        @endforeach--}}
+{{--    </select>--}}
+{{--    <div class="help-block"></div>--}}
+{{--    @if ($errors->has('offer_category_id'))--}}
+{{--        <div class="help-block">{{ $errors->first('offer_category_id') }}</div>--}}
+{{--    @endif--}}
+{{--</div>--}}
