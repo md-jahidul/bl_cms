@@ -51,6 +51,10 @@ Route::group(['middleware' => ['appAdmin']], function () {
     Route::resource('app-version', 'CMS\AppVersionController');
     Route::get('app-version/destroy/{id}', 'CMS\AppVersionController@destroy');
 
+    //OTP config
+    Route::resource('otp-config', 'CMS\OtpController');
+    Route::get('otp-config/destroy/{id}', 'CMS\OtpController@destroy');
+
 
     //------ Slider -----------//
 
