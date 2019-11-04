@@ -28,7 +28,7 @@
                             <th width='15%'>Serial</th>
                             <th width='30%'>Token Length</th>
                             <th width='30%'>Validation Time (Sec)</th>
-                            <th width='20%'>Action</th>
+                            <th width='25%'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -40,7 +40,7 @@
                                 <td width='15%'>{{$index}}</td>
                                 <td width='30%'>{{$config->token_length_number}}</td>
                                 <td width='30%'>{{$config->validation_time}}</td>
-                                <td width='20%'>
+                                <td width='25%'>
                                     <div class="row justify-content-md-center no-gutters">
                                         <div class="col-md-3">
                                             <a role="button" href="{{route('otp-config.edit',$config->id)}}" class="btn btn-outline-success">
