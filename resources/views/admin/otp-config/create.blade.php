@@ -1,7 +1,7 @@
 @extends('layouts.admin')
-@php $cardname = isset($config)? 'Edit-OtpConfig':'Create-OtpConfig' @endphp
-@section('title', "OtpConfig")
-@section('card_name', "OtpConfig")
+@php $cardname = isset($config)? 'Edit OTP Config':'Create OTP Config' @endphp
+@section('title', "OTP Config")
+@section('card_name', "OTP Config")
 @section('breadcrumb')
     <li class="breadcrumb-item active">
         @if(isset($config))
@@ -71,7 +71,7 @@
                         </div>
 
 
-                        <div class="col-4 mb-2" >
+                        <div class="col-5 mb-2" >
 
                         <button type="submit" id="submitForm" style="width:100%" class="btn @if(isset($config)) btn-success @else btn-info @endif ">
                             @if(isset($config)) Update OTP Config @else Create OTP Config @endif
