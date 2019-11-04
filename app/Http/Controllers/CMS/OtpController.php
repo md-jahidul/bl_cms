@@ -4,7 +4,9 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppVersionRequest;
+use App\Http\Requests\OtpConfigRequest;
 use App\Models\AppVersion;
+use App\Models\OtpConfig;
 use App\Services\AppVersionService;
 use App\Services\OtpService;
 
@@ -56,15 +58,15 @@ class OtpController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  AppVersionRequest  $request
+     * @param OtpConfigRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AppVersionRequest $request)
+    public function store(OtpConfigRequest $request)
     {
-        $response =  $this->otpService->createAppVersion($request);
+        $response =  $this->otpService->createOtpConfig($request);
 
         if ($response) {
-            session()->flash('success', "app version created successfully");
+            session()->flash('success', "Created successfully");
             return redirect(route('otp-config.index'));
         }
 
@@ -85,24 +87,24 @@ class OtpController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param AppVersion $app_version
+     * @param OtpConfig $otp_config
      * @return \Illuminate\Http\Response
      */
-    public function edit(AppVersion $app_version)
+    public function edit(OtpConfig $otp_config)
     {
-        return view('admin.otp-config.create')->with('version', $app_version);
+        return view('admin.otp-config.create')->with('config', $otp_config);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param AppVersionRequest $request
-     * @param AppVersion $app_version
+     * @param OtpConfigRequest $request
+     * @param OtpConfig $otp_config
      * @return void
      */
-    public function update(AppVersionRequest $request, AppVersion $app_version)
+    public function update(OtpConfigRequest $request, OtpConfig $otp_config)
     {
-        $response = $this->otpService->updateOtpConfig($request, $app_version);
+        $response = $this->otpService->updateOtpConfig($request, $otp_config);
 
         if ($response) {
             session()->flash('success', "Updated successfully");

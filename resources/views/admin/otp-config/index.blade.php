@@ -5,9 +5,12 @@
     <li class="breadcrumb-item active">OTP Config</li>
 @endsection
 @section('action')
-    <a href="{{route('otp-config.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create OTP Config
-    </a>
+    @if(count($configs) == 0)
+        <a href="{{route('otp-config.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+            Create OTP Config
+        </a>
+    @endif
+
 @endsection
 
 @section('content')
@@ -22,9 +25,9 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width='5%'>Serial</th>
+                            <th width='15%'>Serial</th>
                             <th width='30%'>Token Length</th>
-                            <th width='30%'>Validation Time(sec)</th>
+                            <th width='30%'>Validation Time (Sec)</th>
                             <th width='20%'>Action</th>
                         </tr>
                         </thead>
@@ -34,9 +37,9 @@
                             @php $index++; @endphp
 
                             <tr>
-                                <td width='5%'>{{$index}}</td>
-                                <td width='10%'>{{$config->token_length}}</td>
-                                <td width='10%'>{{$config->validation_time}}</td>
+                                <td width='15%'>{{$index}}</td>
+                                <td width='30%'>{{$config->token_length}}</td>
+                                <td width='30%'>{{$config->validation_time}}</td>
                                 <td width='20%'>
                                     <div class="row justify-content-md-center no-gutters">
                                         <div class="col-md-3">

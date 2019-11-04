@@ -1,13 +1,13 @@
 @extends('layouts.admin')
-@php $cardname = isset($version)? 'Edit-AppVersion':'Create-AppVersion' @endphp
-@section('title', "AppVersion")
-@section('card_name', "AppVersion")
+@php $cardname = isset($config)? 'Edit-OtpConfig':'Create-OtpConfig' @endphp
+@section('title', "OtpConfig")
+@section('card_name', "OtpConfig")
 @section('breadcrumb')
     <li class="breadcrumb-item active">
-        @if(isset($version))
-            Edit App Version
+        @if(isset($config))
+            Edit OTP Config
             @else
-            Create App Version
+            Create OTP Config
         @endif
     </li>
 @endsection
@@ -17,10 +17,10 @@
     <div class="card">
         <div class="card-header">
             <h1 class="card-title">
-                @if(isset($version))
-                    Edit App Version
+                @if(isset($config))
+                    Edit OTP Config
                     @else
-                    Create App Version
+                    Create OTP Config
                 @endif
             </h1>
         </div>
@@ -28,14 +28,14 @@
         <!-- /.card-header -->
         <div class="card-body">
 
-            @if(isset($version))
-                <form novalidate action="{{ route('app-version.update',$version->id) }}" method="post" enctype="multipart/form-data">
+            @if(isset($config))
+                <form novalidate action="{{ route('otp-config.update',$config->id) }}" method="post" enctype="multipart/form-data">
                 @else
-                <form novalidate action="{{ route('app-version.store') }}" method="post" enctype="multipart/form-data">
+                <form novalidate action="{{ route('otp-config.store') }}" method="post" enctype="multipart/form-data">
             @endif 
 
             @csrf
-            @if(isset($version))
+            @if(isset($config))
                 @method('put')
                 @else
                 @method('post')
@@ -44,80 +44,37 @@
             <div class="row">
 
                     <div class="col-6">
+
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="name" class="required">Select Platform:</label>
-                                <select name="platform" required data-validation-required-message="Platform is required"  class="browser-default custom-select">
-                                    @if(isset($version))
-                                        <option value="ios" @if($version->platform == "ios") selected="selected" @endif>ios</option>
-                                        <option value="android" @if($version->platform == "android") selected="selected" @endif>android</option>
-                                        <option value="windows" @if($version->platform == "windows") selected="selected" @endif>windows</option>
-                                        <option value="others"  @if($version->platform == "others") selected="selected" @endif>others</option>
-                                    @else
-                                        <option value="ios">ios</option>
-                                        <option value="android">android</option>
-                                        <option value="windows">windows</option>
-                                        <option value="others">others</option>
-                                    @endif
-
-                                </select>
+                                <label for="code" class="required">Token Length:</label>
+                                <input required data-validation-required-message="Token Length is required"  name="token_length"
+                                       value="@if(isset($config)){{$config->token_length}} @elseif(old("token_length")) {{old("token_length")}} @endif"
+                                       type="text"  class="form-control @error('current_version') is-invalid @enderror" placeholder="Enter Token Length..">
+                                <small class="text-danger"> @error('token_length') {{ $message }} @enderror </small>
+                                <div class="help-block"></div>
                             </div>
+
                         </div>
 
+
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="code" class="required">Version:</label>
-                                <input required data-validation-required-message="Version is required"  name="current_version"
-                                       value="@if(isset($version)){{$version->current_version}} @elseif(old("current_version")) {{old("current_version")}} @endif"
-                                       type="text"  class="form-control @error('current_version') is-invalid @enderror" placeholder="Enter app version..">
+                                <label for="code" class="required">Validation Time (Sec):</label>
+                                <input required data-validation-required-message="Validation Time is required"  name="validation_time"
+                                       value="@if(isset($config)){{$config->validation_time}} @elseif(old("validation_time")) {{old("validation_time")}} @endif"
+                                       type="text"  class="form-control @error('current_version') is-invalid @enderror" placeholder="Enter Validation Time..">
                                 <small class="text-danger"> @error('current_version') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
 
                         </div>
 
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="name" class="required">Force Update:</label>
-                                <select name="force_update"  required data-validation-required-message="Platform is required"  class="browser-default custom-select">
-                                    @if(isset($version))
-                                        <option value=1 @if($version->force_update == 1) selected="selected" @endif>Yes</option>
-                                        <option value=0 @if($version->force_update == 0) selected="selected" @endif>No</option>
-                                    @else
-                                        <option value=1>Yes</option>
-                                        <option value=0>No</option>
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="col-6">
-                            <div class="form-group {{ $errors->has('message') ? ' error' : '' }}">
-                                <label for="message" class="required">Message:</label>
-                                @if(isset($version))
-                                    @php $app_msg = $version->message; @endphp
-                                @else
-                                    @php $app_msg = ''; @endphp
-                                @endif
-                                <textarea
-                                        required
-                                        data-validation-required-message="Message is required"
-                                        class="form-control" name="message" placeholder="Enter message..." id="message" rows="2">{{ old("message") ? old("message") : $app_msg }}</textarea>
-                                <div class="help-block"></div>
-                                @error('description')
-                                <span class="help-block" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                @enderror
-                            </div>
-                        </div>
-
 
                         <div class="col-4 mb-2" >
 
-                        <button type="submit" id="submitForm" style="width:100%" class="btn @if(isset($version)) btn-success @else btn-info @endif ">
-                            @if(isset($version)) Update Version @else Create Version @endif
+                        <button type="submit" id="submitForm" style="width:100%" class="btn @if(isset($config)) btn-success @else btn-info @endif ">
+                            @if(isset($config)) Update OTP Config @else Create OTP Config @endif
                         </button>
                     </div>
 
