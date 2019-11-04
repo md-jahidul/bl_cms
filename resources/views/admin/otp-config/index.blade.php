@@ -38,7 +38,7 @@
 
                             <tr>
                                 <td width='15%'>{{$index}}</td>
-                                <td width='30%'>{{$config->token_length}}</td>
+                                <td width='30%'>{{$config->token_length_number}}</td>
                                 <td width='30%'>{{$config->validation_time}}</td>
                                 <td width='20%'>
                                     <div class="row justify-content-md-center no-gutters">
