@@ -38,7 +38,7 @@
 
                             <tr>
                                 <td width='15%'>{{$index}}</td>
-                                <td width='30%'>{{$config->token_length}}</td>
+                                <td width='30%'>{{$config->token_length_number}}</td>
                                 <td width='30%'>{{$config->validation_time}}</td>
                                 <td width='20%'>
                                     <div class="row justify-content-md-center no-gutters">
@@ -87,10 +87,8 @@
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
-    <script>
-        
-       
 
+    <script>
         $(function () {
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
@@ -136,6 +134,7 @@
                 "bDestroy": true,
             });
         });
+
 
     </script>
 @endpush

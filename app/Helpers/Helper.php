@@ -4,11 +4,6 @@ namespace App\Helpers;
 
 class Helper
 {
-    public static function shout(string $string)
-    {
-        return strtoupper($string);
-    }
-
 
     /**
      * Contextual action list
@@ -18,7 +13,7 @@ class Helper
     {
 
         $list = [
-           "RECHARGE" =>  "RECHARGE",
+            "RECHARGE" =>  "RECHARGE",
             "RECHARGE_AMOUNT" =>  "RECHARGE_AMOUNT",
             "TAKE_LOAN" =>  "TAKE_LOAN",
             "TAKE_BALANCE_LOAN" =>  "TAKE_BALANCE_LOAN",
@@ -46,6 +41,27 @@ class Helper
             "SWITCH_LANGUAGE" =>  "SWITCH_LANGUAGE",
             "UPDATE" =>  "UPDATE"
 
+        ];
+
+        return $list;
+    }
+
+
+    /**
+     * OTP Token length list
+     *
+     * @return array
+     */
+    public static function tokenLengthList()
+    {
+        $list = [
+            "THREE"  =>  3,
+            "FOUR"   =>  4,
+            "FIVE"   =>  5,
+            "SIX"    =>  6,
+            "SEVEN"  =>  7,
+            "EIGHT"  =>  8 ,
+            "NINE"   =>  9
         ];
 
         return $list;

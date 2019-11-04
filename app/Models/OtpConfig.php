@@ -21,6 +21,6 @@ class OtpConfig extends Model
      * @var array
      */
     protected $fillable = [
-        'token_length','validation_time'
+        'token_length_number','token_length_string','validation_time'
     ];
 }
