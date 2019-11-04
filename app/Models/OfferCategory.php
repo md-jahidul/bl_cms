@@ -10,4 +10,9 @@ class OfferCategory extends Model
     {
         return  (strtolower( $type ) == 'prepaid') ? $query : $query->whereIn('alias', ['internet', 'packages', 'others']);
     }
+
+    public function type()
+    {
+        return $this->belongsTo(SimCategory::class);
+    }
 }

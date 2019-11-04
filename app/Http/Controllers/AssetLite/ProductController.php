@@ -130,7 +130,6 @@ class ProductController extends Controller
     public function edit($type, $id)
     {
         $previous_page = url()->previous();
-
         $product = $this->productService->findOne($id);
         $tags = $this->tagCategoryService->findAll();
         $offersType = $this->offerCategoryService->getOfferCategories($type);
@@ -163,11 +162,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, $type, $id)
     {
-        $toPrevious = $request->previous_page;
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $id);
         Session::flash('message', $response->content());
-        return redirect($toPrevious);
+        return redirect(request()->previous_page);
     }
 
     /**

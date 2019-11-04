@@ -19,20 +19,22 @@
                         <thead>
                         <tr>
                             <td width="3%">#</td>
-                            <th width="25%">Name</th>
-{{--                            <th width="25%"></th>--}}
+                            <th width="20%">Name</th>
+                            <th width="15%">Type</th>
+                            <th width="25%">Description</th>
                             <th class="">Action</th>
                         </tr>
                         </thead>
                         <tbody>
                             @foreach($offerCategories as $offerCategory)
                                 <tr data-index="{{ $offerCategory->id }}" data-position="{{ $offerCategory->display_order }}">
-                                    <td width="3%">{{ $loop->iteration }}</td>
-                                    <td>{{ $offerCategory->name }}
+                                    <td width="1%">{{ $loop->iteration }}</td>
+                                    <td width="5%">{{ $offerCategory->name }}
                                         {!!  (strtolower($offerCategory->alias) == 'packages' || strtolower($offerCategory->alias) == 'others') ? "<a href='".route('child_menu', [$offerCategory->id, $offerCategory->alias])."' class='btn btn-outline-primary float-md-right'> Child Menu</a>" : '' !!}
                                     </td>
-
-                                    <td width="12%" class="text-center">
+                                    <td width="6%">{{ $offerCategory->type->name ?? '' }}</td>
+                                    <td width="6%">{{ $offerCategory->type->description ?? '' }}</td>
+                                    <td width="1%" class="text-center">
                                         <a href="{{ url("offer-category/$offerCategory->id/edit") }}" role="button" onclick="return false;" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         <a href="#" remove="{{ url("offer-category/destroy/$offerCategory->id") }}" onclick="return false;" class="border-0 btn-sm btn-outline-danger {{--delete_btn--}}" data-id="{{ $offerCategory->id }}" title="Delete">
                                             <i class="la la-trash"></i>

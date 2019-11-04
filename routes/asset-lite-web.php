@@ -97,6 +97,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::resource('duration-categories', 'AssetLite\DurationCategoryController')->only(['index']);
     Route::resource('offer-categories', 'AssetLite\OfferCategoryController')->only(['index']);
 
+    // OFFER SUB MENU
+    Route::get('offer-categories/{id}/{type}', 'AssetLite\OfferCategoryController@index')->name('child_menu');
+
+
+
 
 
     // OFFERS PAGES ====================================
