@@ -115,6 +115,19 @@
         </ul>
     </li>
 
+    <li class=" nav-item"><a href="#"><i class="la la-cogs"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Config</span></a>
+        <ul class="menu-content">
+
+            <li class="{{ is_active_url('otp-config') . is_active_url('otp-config/create')}}">
+                <a class="menu-item" href="{{ route('otp-config.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-cog"></i>OTP Config</a>
+
+            </li>
+
+        </ul>
+    </li>
+
     <li class="{{ is_active_url('/terms-conditions') }} nav-item"><a href="{{route('terms-conditions.show')}}"><i
                 class="la la-legal"></i>
             <span class="menu-title">Terms and Conditions</span></a>
@@ -125,28 +138,28 @@
             <span class="menu-title">Privacy and Policy</span></a>
     </li>
 
-        <li class="{{ is_active_url('app-version') . is_active_url('app-version/create')}}">
-            <a class="menu-item" href="{{ route('app-version.index') }}" data-i18n="nav.templates.vert.classic_menu">
-                <i class="la la-code-fork"></i>App Version</a>
-        </li>
+    <li class="{{ is_active_url('app-version') . is_active_url('app-version/create')}}">
+        <a class="menu-item" href="{{ route('app-version.index') }}" data-i18n="nav.templates.vert.classic_menu">
+            <i class="la la-code-fork"></i>App Version</a>
+    </li>
 
-        <li class=" nav-item"><a href="#"><i class="la la-question"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">FAQ</span></a>
-            <ul class="menu-content">
-                <li class=" {{is_active_url('faq/category')}}">
-                    <a class="menu-item" href="{{ route('faq.category.index') }} "
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-list"></i> Category List
-                    </a>
-                </li>
-                <li class="{{is_active_url('faq/questions')}}">
-                    <a class="menu-item" href="{{ route('faq.questions.index') }} "
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-list"></i> Question List
-                    </a>
-                </li>
-            </ul>
-        </li>
+    <li class=" nav-item"><a href="#"><i class="la la-question"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">FAQ</span></a>
+        <ul class="menu-content">
+            <li class=" {{is_active_url('faq/category')}}">
+                <a class="menu-item" href="{{ route('faq.category.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i> Category List
+                </a>
+            </li>
+            <li class="{{is_active_url('faq/questions')}}">
+                <a class="menu-item" href="{{ route('faq.questions.index') }} "
+                   data-i18n="nav.templates.vert.classic_menu">
+                    <i class="la la-list"></i> Question List
+                </a>
+            </li>
+        </ul>
+    </li>
 
     @endif
     {{--------------------------------------------------------------------------------------------------------------------}}

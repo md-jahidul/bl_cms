@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\AppVersionRepository;
+use App\Repositories\OtpConfigRepository;
 
 class OtpService
 {
@@ -14,10 +15,10 @@ class OtpService
 
 
     /**
-     * AppVersionService constructor.
-     * @param AppVersionRepository $otpRepository
+     * OtpService constructor.
+     * @param OtpConfigRepository $otpRepository
      */
-    public function __construct(AppVersionRepository $otpRepository)
+    public function __construct(OtpConfigRepository $otpRepository)
     {
         $this->otpRepository = $otpRepository;
     }

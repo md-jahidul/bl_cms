@@ -38,9 +38,9 @@ class OtpController extends Controller
      */
     public function index()
     {
-        $versions = $this->otpService->getVersionInfo();
+        $configs = $this->otpService->getOtpConfigInfo();
 
-        return view('admin.app-version.index')->with('versions', $versions);
+        return view('admin.otp-config.index')->with('configs', $configs);
     }
 
     /**
@@ -50,7 +50,7 @@ class OtpController extends Controller
      */
     public function create()
     {
-        return view('admin.app-version.create');
+        return view('admin.otp-config.create');
     }
 
     /**
@@ -65,7 +65,7 @@ class OtpController extends Controller
 
         if ($response) {
             session()->flash('success', "app version created successfully");
-            return redirect(route('app-version.index'));
+            return redirect(route('otp-config.index'));
         }
 
         session()->flash('message', "Failed! Please try again");
@@ -90,7 +90,7 @@ class OtpController extends Controller
      */
     public function edit(AppVersion $app_version)
     {
-        return view('admin.app-version.create')->with('version', $app_version);
+        return view('admin.otp-config.create')->with('version', $app_version);
     }
 
     /**
@@ -102,11 +102,11 @@ class OtpController extends Controller
      */
     public function update(AppVersionRequest $request, AppVersion $app_version)
     {
-        $response = $this->otpService->updateAppVersion($request, $app_version);
+        $response = $this->otpService->updateOtpConfig($request, $app_version);
 
         if ($response) {
             session()->flash('success', "Updated successfully");
-            return redirect(route('app-version.index'));
+            return redirect(route('otp-config.index'));
         }
 
         session()->flash('message', "Failed! Please try again");
@@ -121,11 +121,11 @@ class OtpController extends Controller
      */
     public function destroy($id)
     {
-        $response = $this->otpService->deleteAppVersion($id);
+        $response = $this->otpService->deleteOtpConfig($id);
 
         if ($response) {
             session()->flash('error', "Deleted successfully");
-            return redirect(route('app-version.index'));
+            return redirect(route('otp-config.index'));
         }
 
         session()->flash('message', "Failed! Please try again");
