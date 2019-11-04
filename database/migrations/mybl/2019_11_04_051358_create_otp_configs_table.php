@@ -16,7 +16,7 @@ class CreateOtpConfigsTable extends Migration
         Schema::create('otp_configs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('token_length_string');
-            $table->integer('token_length_number');
+            $table->string('token_length_number');
             $table->bigInteger('validation_time');
             $table->timestamps();
         });
