@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@php $type = ucfirst($type)  @endphp
 @section('title', "$type Offer Create")
 @section('card_name', "$type Offer Create")
 @section('breadcrumb')
@@ -13,7 +14,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title"><strong>{{ ucfirst($type) }} Offer Create</strong></h5><hr>
+                    <h5 class="menu-title"><strong>{{ $type }} Offer Create</strong></h5><hr>
                     <div class="card-body card-dashboard">
                         <form id="product_form" role="form" action="{{ route('product.store', strtolower($type)) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
@@ -96,8 +97,6 @@
                                     @include('layouts.partials.products.startup')
                                 </div>
                             @endif
-
-
 
 
                             <div class="row">

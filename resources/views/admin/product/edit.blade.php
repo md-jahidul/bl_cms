@@ -8,7 +8,7 @@
     <li class="breadcrumb-item active"> {{ $type }} Offer Edit</li>
 @endsection
 @section('action')
-    <a href="{{ route('product.list', $type) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url($previous_page) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>

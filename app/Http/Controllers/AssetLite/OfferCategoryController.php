@@ -13,10 +13,19 @@ class OfferCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($parent_id = 0, $type = null)
     {
-        $offerCategories = OfferCategory::all();
-        return view('admin.category.offer.index', compact('offerCategories'));
+        // $type = OfferCategory::find($parent_id)->name;
+        $offerCategories = OfferCategory::where('parent_id', $parent_id)->with('type')->get();
+
+
+        $file = 'index';
+        if ($parent_id != 0) {
+            $file = 'child';
+            $type = OfferCategory::find($parent_id)->name;
+        }
+
+        return view('admin.category.offer.' . $file, compact('offerCategories', 'type'));
     }
 
     /**
