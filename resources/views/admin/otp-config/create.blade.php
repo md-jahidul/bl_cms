@@ -45,18 +45,46 @@
 
                     <div class="col-6">
 
+                        @php
+                            $tokenLengthList = Helper::tokenLengthList();
+                        @endphp
+
+
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="code" class="required">Token Length:</label>
-                                <input required data-validation-required-message="Token Length is required"  name="token_length"
-                                       value="@if(isset($config)){{$config->token_length}} @elseif(old("token_length")) {{old("token_length")}} @endif"
-                                       type="text"  class="form-control @error('current_version') is-invalid @enderror" placeholder="Enter Token Length..">
-                                <small class="text-danger"> @error('token_length') {{ $message }} @enderror </small>
-                                <div class="help-block"></div>
+                                <label for="name" class="required">Token Length(number):</label>
+                                <select name="token_length_number" class="browser-default custom-select">
+                                    @foreach ($tokenLengthList as $key => $value)
+                                        @if(isset($config))
+                                            <option value="{{ $value }}" {{ ( $value == $config->token_length_number) ? 'selected' : '' }}>
+                                        @else
+                                            <option value="{{ $value }}">
+                                                @endif
+                                                {{ $value }}
+                                            </option>
+                                            @endforeach
+                                </select>
                             </div>
-
                         </div>
 
+
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name" class="required">Token Length(String):</label>
+                                <select name="token_length_string" class="browser-default custom-select">
+                                    @foreach ($tokenLengthList as $key => $value)
+                                        @if(isset($config))
+                                        <option value="{{ $key }}" {{ ( $key == $config->token_length_string) ? 'selected' : '' }}>
+                                        @else
+                                        <option value="{{ $key }}">
+                                        @endif
+                                            {{ $key }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="col-6">
                             <div class="form-group">
@@ -64,7 +92,7 @@
                                 <input required data-validation-required-message="Validation Time is required"  name="validation_time"
                                        value="@if(isset($config)){{$config->validation_time}} @elseif(old("validation_time")) {{old("validation_time")}} @endif"
                                        type="text"  class="form-control @error('current_version') is-invalid @enderror" placeholder="Enter Validation Time..">
-                                <small class="text-danger"> @error('current_version') {{ $message }} @enderror </small>
+                                <small class="text-danger"> @error('validation_time') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
                             </div>
 
