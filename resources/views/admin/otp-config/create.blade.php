@@ -121,8 +121,6 @@
         $(document).ready(function(){
             $("#token_length_string").change(function(){
                 var token = $(this).children("option:selected").text();
-                alert("You have selected  - " + token);
-
                 $('#token_length_number').val(token);
             });
         });
