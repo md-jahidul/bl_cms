@@ -52,13 +52,13 @@
 
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="name" class="required">Token Length(number):</label>
-                                <select name="token_length_number" class="browser-default custom-select">
+                                <label for="name" class="required">Token Length:</label>
+                                <select name="token_length_string" id="token_length_string"   class="browser-default custom-select token">
                                     @foreach ($tokenLengthList as $key => $value)
                                         @if(isset($config))
-                                            <option value="{{ $value }}" {{ ( $value == $config->token_length_number) ? 'selected' : '' }}>
+                                            <option value="{{ $key }}" {{ ( $key == $config->token_length_string) ? 'selected' : '' }}>
                                         @else
-                                            <option value="{{ $value }}">
+                                            <option value="{{ $key }}">
                                                 @endif
                                                 {{ $value }}
                                             </option>
@@ -67,24 +67,7 @@
                             </div>
                         </div>
 
-
-
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="name" class="required">Token Length(String):</label>
-                                <select name="token_length_string" class="browser-default custom-select">
-                                    @foreach ($tokenLengthList as $key => $value)
-                                        @if(isset($config))
-                                        <option value="{{ $key }}" {{ ( $key == $config->token_length_string) ? 'selected' : '' }}>
-                                        @else
-                                        <option value="{{ $key }}">
-                                        @endif
-                                            {{ $key }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                        <input type="hidden" name="token_length_number" id="token_length_number">
 
                         <div class="col-6">
                             <div class="form-group">
@@ -128,6 +111,25 @@
    
 @endpush
 @push('page-js')
+
+    <script>
+
+        var token_string = $('#token_length_string').text();
+
+        $('#token_length_number').val(token_string);
+
+        $(document).ready(function(){
+            $("#token_length_string").change(function(){
+                var token = $(this).children("option:selected").text();
+                alert("You have selected  - " + token);
+
+                $('#token_length_number').val(token);
+            });
+        });
+        
+    </script>
+
+
 
     
 @endpush

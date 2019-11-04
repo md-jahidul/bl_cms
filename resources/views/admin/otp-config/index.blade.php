@@ -87,10 +87,8 @@
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
-    <script>
-        
-       
 
+    <script>
         $(function () {
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
@@ -136,6 +134,7 @@
                 "bDestroy": true,
             });
         });
+
 
     </script>
 @endpush
