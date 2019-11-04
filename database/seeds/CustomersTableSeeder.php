@@ -31,10 +31,19 @@ class CustomersTableSeeder extends Seeder
             [
                 'name' => 'Rupok Biswas',
                 'email' => 'rupok@admin.com',
-                'phone' => '01919415565',
+                'phone' => '01913243757',
                 'uid' => uniqid(),
                 'device_token' =>  "c3DAuP4BnZQ:APA91bHtwS1dFC9CKZ5MdbSnZvGByhyIxATakCPnUBYWgyJY7L59A70KzBR5DdXlhQ1yVOxxmZcVXdQ_rHUojjB666us6WEo9gFuPCyQOgmTNqYSArVS2kxAWq68iY15_EIYQaKUGSvs"
             ],
+
+            [
+                'name' => 'Rupok Bishas',
+                'email' => 'rupok@admin.com',
+                'phone' => '01913243746',
+                'uid' => uniqid(),
+                'device_token' =>  "c3DAuP4BnZQ:APA91bHtwS1dFC9CKZ5MdbSnZvGByhyIxATakCPnUBYWgyJY7L59A70KzBR5DdXlhQ1yVOxxmZcVXdQ_rHUojjB666us6WEo9gFuPCyQOgmTNqYSArVS2kxAWq68iY15_EIYQaKUGSvs"
+            ],
+
             [
                 'name' => 'QA Team',
                 'email' => 'qa@admin.com',
