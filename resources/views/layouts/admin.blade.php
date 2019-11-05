@@ -133,6 +133,7 @@
 <!-- END PAGE LEVEL JS-->
 
 <script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
 
 
 

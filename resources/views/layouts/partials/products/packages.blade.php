@@ -14,7 +14,8 @@
 </div>
 
 
-<slot class="{{ strtolower($type) == 'prepaid' ? 'prepaid_plans' : 'postpaid_plans' }}" style="display: none">
+
+<slot id="{{ strtolower($type) == 'prepaid' ? 'prepaid_plans' : 'postpaid_plans' }}" style="display: none">
     <div class="form-group col-md-6 {{ $errors->has('view_list_btn_text_bn') ? ' error' : '' }}">
         <label for="view_list_btn_text_bn" class="required">Call Rate (Paisa)</label>
         <input type="text" name="offer_info[callrate_offer]"  class="form-control" placeholder="Enter call rate in paisa"
@@ -41,71 +42,17 @@
 
 
 
-<slot class="icon_plans" style="display: none">
-    @include('layouts.partials.products.package.icon_plan')
-</slot>
+
 
 @if(strtolower($type) == 'prepaid')
-    <slot class="start_up_offers" style="display: none">
+    <slot id="start_up_offers" class="d-none">
         @include('layouts.partials.products.package.startup')
     </slot>
+@else
+    <slot id="icon_plans" class="d-none">
+        @include('layouts.partials.products.package.icon_plan')
+    </slot>
 @endif
-
-
-@push('page-js')
-    <script type="text/javascript">
-        $(function () {
-            var $offerType = $('#package_type');
-
-            function domMupulate(selectedItemName, action='hide'){
-                let options =  $offerType.find('option');
-
-                let optionTextArr = $.map(options ,function(option) {
-                    // option.text.replace(/ |-/g,"_").toLowerCase();
-                    // console.log(option.text.replace(/ |-/g,"_").toLowerCase())
-                    if( option.value !== '' &&  option.text.replace(/ |-/g,"_").toLowerCase() !== selectedItemName ) { return  '.' + option.text.replace(/ |-/g,"_").toLowerCase();  }
-                });
-                debugger
-
-                let otherElements = optionTextArr.join(',');
-
-                if(action == 'hide'){
-                    $(otherElements).hide();
-                    $('.' + selectedItemName).removeClass('d-none')
-                        .show()
-                        .find('input').each(function(){
-                        $(this).val('');
-                    });
-                }else{
-                    $(otherElements).remove();
-                }
-            }
-
-            $('#package_type').change(function () {
-                // let optionText = $(this).children("option:selected").text();
-                let showInHome = $('#show_in_home');
-                let optionText =$("#package_type option:selected").text().replace(/ |-/g,"_").toLowerCase();
-
-                // console.log(optionText)
-
-                (optionText.toLowerCase() == 'startup' ? showInHome.hide() : showInHome.show())
-                // debugger
-
-                domMupulate(optionText);
-            });
-
-            $('#save').on('click',function(e){
-                e.preventDefault();
-                let optionText = $("#offer_type option:selected").text();
-                // debugger
-                domMupulate( optionText.toLowerCase(),'remove');
-                $("#product_form").submit();
-            });
-        })
-    </script>
-
-@endpush
-
 
 
 
