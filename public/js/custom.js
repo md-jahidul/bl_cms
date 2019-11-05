@@ -1,4 +1,4 @@
-var Product = (function () {
+(function () {
 
     var confirmPopupParams = {
         title: 'Are you sure?',
@@ -80,8 +80,4 @@ var Product = (function () {
             saveNewPositions();
         }
     });
-
-
-
-
 })();

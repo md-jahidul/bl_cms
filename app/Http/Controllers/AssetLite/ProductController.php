@@ -143,26 +143,31 @@ class ProductController extends Controller
      */
     public function edit($type, $id)
     {
-        $previous_page = url()->previous();
-        $product = $this->productService->findOne($id);
-        $tags = $this->tagCategoryService->findAll();
-        $offersType = $this->offerCategoryService->getOfferCategories($type);
-        $durations = $this->durationCategoryService->findAll();
-        $offerInfo = $product->offer_info;
-        return view('admin.product.edit', compact(
-            'product',
-            'type',
-            'tags',
-            'offersType',
-            'offerInfo',
-            'durations',
-            'previous_page'
-        ));
+        $package_id = SimCategory::where('alias', $type)->first()->id;
+        $this->info['previous_page'] = url()->previous();
+        $this->info['type'] = $type;
+        $this->info['product'] = $this->productService->findOne($id);
+        $this->info['tags'] = $this->tagCategoryService->findAll();
+        $this->info['offersType'] = $this->offerCategoryService->getOfferCategories($type);
+        $this->info['durations'] = $this->durationCategoryService->findAll();
+        $this->info['offerInfo'] = $this->info['product']['offer_info'];
+
+        foreach ($this->info['offersType'] as $offer) {
+            $child = OfferCategory::where('parent_id', $offer->id)
+                ->where('type_id', $package_id)
+                ->get();
+            if (count($child)) {
+                $this->info[$offer->alias . '_offer_child'] = $child;
+            }
+        }
+
+        return $this->info;
+
+        return view('admin.product.edit', $this->info);
     }
 
     public function homeEdit($id)
     {
-
         return view('admin.product.home_offer_edit', compact(''));
     }
 
