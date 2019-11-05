@@ -114,7 +114,7 @@
 
     <script>
 
-        var token_string = $('#token_length_string option:nth-child(1)').text();
+        var token_string = $('#token_length_string option:selected').text();
 
         $('#token_length_number').val(token_string);
 
