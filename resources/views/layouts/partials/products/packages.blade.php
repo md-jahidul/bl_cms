@@ -1,6 +1,6 @@
 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
     <label for="offer_category_id" class="required">Package Offer Types</label>
-    <select class="form-control required" name="offer_category_id" id="package_type"
+    <select class="form-control required" name="package_offer_type" id="package_type"
             required data-validation-required-message="Please select offer">
         <option value="">---Select Offer Type---</option>
         @foreach($packages_offer_child as $offer)

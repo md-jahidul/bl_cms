@@ -109,6 +109,8 @@ class ProductController extends Controller
 
     public function store(Request $request, $type)
     {
+
+//        return $request->all();
         $this->strToint($request);
         $simId = SimCategory::where('alias', $type)->first()->id;
         $response = $this->productService->storeProduct($request->all(), $simId);
@@ -161,7 +163,7 @@ class ProductController extends Controller
             }
         }
 
-        return $this->info;
+//        return $this->info;
 
         return view('admin.product.edit', $this->info);
     }

@@ -10,7 +10,7 @@ var product = (function () {
         },
         'modifyDom' : function modifyDom(selectedItemName, $select, action='hide')
         {
-            let selectBy = $select.attr('id') == 'other_offer_type' ? '.' : '#';
+            let selectBy = '#';
             // debugger
             let options =  $select.find('option');
             let optionTextArr = $.map(options ,function (option) {
@@ -19,6 +19,7 @@ var product = (function () {
                 }
             });
 
+            debugger
             let otherElements = optionTextArr.join(',');
             if (action == 'hide') {
                 $(otherElements).hide();
@@ -42,7 +43,6 @@ var product = (function () {
         {
             e.preventDefault();
             var that = this;
-
             $selects.forEach(function ($select) {
                 let optionText = that.getOptionAliasText($select);
                 that.modifyDom(optionText, $select, 'remove');
