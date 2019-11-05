@@ -25,7 +25,7 @@ class OtpConfigRequest extends FormRequest
     {
         return [
             'token_length_number' => 'required',
-            'validation_time'     => 'required',
+            'validation_time'     => 'numeric|required|min:120|max:600',
 
         ];
     }

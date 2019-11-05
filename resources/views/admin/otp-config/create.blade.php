@@ -114,13 +114,15 @@
 
     <script>
 
-        var token_string = $('#token_length_string').text();
+        var token_string = $('#token_length_string option:nth-child(1)').text();
 
         $('#token_length_number').val(token_string);
 
         $(document).ready(function(){
             $("#token_length_string").change(function(){
                 var token = $(this).children("option:selected").text();
+                console.log(token);
+                console.log("second");
                 $('#token_length_number').val(token);
             });
         });
