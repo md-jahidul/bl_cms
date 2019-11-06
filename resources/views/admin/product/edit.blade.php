@@ -87,7 +87,7 @@
                                 </div>
 
                                 <div class="row {{ $product->offer_category_id == 9 ? '' : 'd-none' }}" id="others" data-offer-type="others">
-                                    @include('layouts.partials.products.other_edit')
+                                    @include('layouts.partials.products.other')
                                 </div>
 
                             @if(strtolower($type == 'prepaid'))

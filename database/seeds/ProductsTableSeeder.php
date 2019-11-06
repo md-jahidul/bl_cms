@@ -57,6 +57,14 @@ class ProductsTableSeeder extends Seeder
                 break;
 
             case 'others':
+                $obj = [
+                    'other_offer_type_id' => 12,
+                    'description' => 'Life will be much easier now, 
+                                      because Banglalink is introducing balance transfer service! Easily 
+                                      transfer credit to your friends and family who use Banglalink number,
+                                      anytime you want.'
+                ];
+
                 break;
 
             case 'startup':
@@ -72,7 +80,7 @@ class ProductsTableSeeder extends Seeder
 
                 break;
 
-            case 'bussiness':
+            case 'business':
                 break;
         }
 
@@ -104,8 +112,10 @@ class ProductsTableSeeder extends Seeder
     {
         $countHomePageOffer = 0;
 
+        /** Loop For PostPaid Product Create */
         for ($i = 0; $i < 20; $i++) {
             $offer = OfferCategory::whereIn('alias', ['internet','packages','others'])->inRandomOrder()->first();
+
             $offerInfo = $this->getOfferInfo($offer->alias);
 
             $showInHome = $this->showInHome($offer->alias);
@@ -127,6 +137,8 @@ class ProductsTableSeeder extends Seeder
                 ]
             );
         }
+
+        /** Loop For PrePaid Product Create */
 
         for ($i = 0; $i < 30; $i++) {
             $offer = OfferCategory::inRandomOrder()->first();
@@ -152,63 +164,6 @@ class ProductsTableSeeder extends Seeder
         }
     }
 }
-/*
 
-
-offer_info
-
-internet
-        offer_info {
-            internet_volume_mb :
-            validity_days :
-            inspiration_quote_en :
-            inspiration_quote_bn :
-        }
-
-
-voice
-        offer_info {
-            minute_volume :
-            validity_days :
-            inspiration_quote_en :
-            inspiration_quote_bn :
-        }
-
-
-bundle
-
-        offer_info {
-            minute_volume :
-            internet_volume_mb :
-            sms_volume :
-            validity_days :
-            inspiration_quote_en :
-            inspiration_quote_bn :
-        }
-
-
-
-Packages
-        offer_info{
-            callrate_offer :  1
-            sms_rate_offer :  1
-        }
-
-
-
-Startup {
-    callrate_offer :  1
-    internet_offer_mb :
-    minute_offer :
-    sms_offer :
-    validity_days :
-    callrate_short_note_en :
-    callrate_short_note_bn :
-    gb_short_note_en :
-    gb_short_note_bn :
-
-}
-
-*/
 
 

@@ -23,21 +23,20 @@
     @endif
 </div>
 
-{{--<input value="{{ $offertype }}">--}}
 {{--Amar Offer--}}
-<slot class="d-none" id="amar_offer">
-    <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-        <label for="title" class="required">Title</label>
-        <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
-               oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-               value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"
-               required data-validation-required-message="Enter view list url">
-        <div class="help-block"></div>
-        @if ($errors->has('title'))
-            <div class="help-block">  {{ $errors->first('title') }}</div>
-        @endif
-    </div>
-    <div class="form-group col-md-12 {{ $errors->has('description') ? ' error' : '' }}">
+<slot class="{{ $offertype == 17 ? '' : 'd-none' }}" id="amar_offer">
+    {{--<div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">--}}
+        {{--<label for="title" class="required">Title</label>--}}
+        {{--<input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"--}}
+               {{--oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"--}}
+               {{--value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"--}}
+               {{--required data-validation-required-message="Enter view list url">--}}
+        {{--<div class="help-block"></div>--}}
+        {{--@if ($errors->has('title'))--}}
+            {{--<div class="help-block">  {{ $errors->first('title') }}</div>--}}
+        {{--@endif--}}
+    {{--</div>--}}
+    <div class="form-group col-md-6 {{ $errors->has('description') ? ' error' : '' }}">
         <label for="description" class="required">Description</label>
         <textarea type="text" name="offer_info[description]"  class="form-control" placeholder="Enter SMS rate in paisa"
                   required data-validation-required-message="Enter view list url">{{ (!empty($product->offer_info['description'])) ? $product->offer_info['description'] : old("offer_info.description") ?? '' }}</textarea>
@@ -50,11 +49,34 @@
 
 @if(strtolower($type) == 'prepaid')
     {{-- Balance transfer || || Device Offers || MNP Offer || 4G Offers--}}
-    <slot class="d-none" id="balance_transfer">
+    <slot class="{{ $offertype == 10 ? '' : 'd-none' }}" id="balance_transfer">
+        {{--<div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">--}}
+            {{--<label for="title" class="required">Title</label>--}}
+            {{--<input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"--}}
+                   {{--oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"--}}
+                   {{--value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"--}}
+                   {{--required data-validation-required-message="Enter view list url">--}}
+            {{--<div class="help-block"></div>--}}
+            {{--@if ($errors->has('title'))--}}
+                {{--<div class="help-block">  {{ $errors->first('title') }}</div>--}}
+            {{--@endif--}}
+        {{--</div>--}}
+        <div class="form-group col-md-6 {{ $errors->has('description') ? ' error' : '' }}">
+            <label for="description" class="required">Description</label>
+            <textarea type="text" name="offer_info[description]"  class="form-control" placeholder="Enter SMS rate in paisa"
+                      required data-validation-required-message="Enter view list url">{{ (!empty($product->offer_info['description'])) ? $product->offer_info['description'] : old("offer_info.description") ?? '' }}</textarea>
+            <div class="help-block"></div>
+            @if ($errors->has('description'))
+                <div class="help-block">  {{ $errors->first('description') }}</div>
+            @endif
+        </div>
+    </slot>
+
+    {{--Emergency Balance--}}
+    <slot class="{{ $offertype == 11 ? '' : 'd-none' }}" id="emergency_balance">
         <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
             <label for="title" class="required">Title</label>
             <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                   oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
                    value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"
                    required data-validation-required-message="Enter view list url">
             <div class="help-block"></div>
@@ -73,12 +95,11 @@
         </div>
     </slot>
 
-    {{--Emergency Balance--}}
-    <slot class="d-none" id="emergency_balance">
+    {{-- MFS Offers --}}
+    <slot class="{{ $offertype == 18 ? '' : 'd-none' }}" id="mfs_offers">
         <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
             <label for="title" class="required">Title</label>
             <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                   oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
                    value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"
                    required data-validation-required-message="Enter view list url">
             <div class="help-block"></div>
@@ -98,11 +119,10 @@
     </slot>
 
     {{--Device Offers--}}
-    <slot class="d-none" id="device_offers">
+    <slot class="{{ $offertype == 15 ? '' : 'd-none' }}" id="device_offers">
         <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
             <label for="title" class="required">Title</label>
             <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                   oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
                    value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"
                    required data-validation-required-message="Enter view list url">
             <div class="help-block"></div>
@@ -112,7 +132,7 @@
         </div>
         <div class="form-group col-md-12 {{ $errors->has('description') ? ' error' : '' }}">
             <label for="description" class="required">Description</label>
-            <textarea type="text" name="offer_info[description]"  class="form-control" placeholder="Enter SMS rate in paisa"
+            <textarea name="offer_info[description]"  class="form-control" placeholder="Enter SMS rate in paisa"
                       required data-validation-required-message="Enter view list url">{{ (!empty($product->offer_info['description'])) ? $product->offer_info['description'] : old("offer_info.description") ?? '' }}</textarea>
             <div class="help-block"></div>
             @if ($errors->has('description'))
@@ -122,19 +142,19 @@
     </slot>
 
     {{--MNP Offer--}}
-    <slot class="d-none" id="mnp_offers">
-        <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-            <label for="title" class="required">Title</label>
-            <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                   oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                   value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"
-                   required data-validation-required-message="Enter view list url">
-            <div class="help-block"></div>
-            @if ($errors->has('title'))
-                <div class="help-block">  {{ $errors->first('title') }}</div>
-            @endif
-        </div>
-        <div class="form-group col-md-12 {{ $errors->has('description') ? ' error' : '' }}">
+    <slot class="{{ $offertype == 14 ? '' : 'd-none' }}" id="mnp_offers">
+        {{--<div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">--}}
+            {{--<label for="title" class="required">Title</label>--}}
+            {{--<input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"--}}
+                   {{--oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"--}}
+                   {{--value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"--}}
+                   {{--required data-validation-required-message="Enter view list url">--}}
+            {{--<div class="help-block"></div>--}}
+            {{--@if ($errors->has('title'))--}}
+                {{--<div class="help-block">  {{ $errors->first('title') }}</div>--}}
+            {{--@endif--}}
+        {{--</div>--}}
+        <div class="form-group col-md-6 {{ $errors->has('description') ? ' error' : '' }}">
             <label for="description" class="required">Description</label>
             <textarea type="text" name="offer_info[description]"  class="form-control" placeholder="Enter SMS rate in paisa"
                       required data-validation-required-message="Enter view list url">{{ (!empty($product->offer_info['description'])) ? $product->offer_info['description'] : old("offer_info.description") ?? '' }}</textarea>
@@ -146,11 +166,10 @@
     </slot>
 
     {{--4G Offers--}}
-    <slot class="d-none" id="4g_offers">
+    <slot class="{{ $offertype == 16 ? '' : 'd-none' }}" id="4g_offers">
         <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
             <label for="title" class="required">Title</label>
             <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                   oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
                    value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"
                    required data-validation-required-message="Enter view list url">
             <div class="help-block"></div>
@@ -170,12 +189,9 @@
     </slot>
 @endif
 
-
-
-
 {{--Bondho SIM Offer--}}
 @if(strtolower($type) == 'prepaid')
-    <slot class="d-none" id="bondho_sim_offer">
+    <slot class="{{ $offertype == 13 ? '' : 'd-none' }}" id="bondho_sim_offer">
         <div class="form-group col-md-6 {{ $errors->has('internet_offer_mb') ? ' error' : '' }}">
             <label for="internet_offer_mb" class="required">Internet Volume (MB)</label>
             <input type="number" name="offer_info[internet_offer_mb]"  class="form-control" placeholder="Enter internet offer in MB"
@@ -200,6 +216,7 @@
         </div>
     </slot>
 @endif
+
 
 
 

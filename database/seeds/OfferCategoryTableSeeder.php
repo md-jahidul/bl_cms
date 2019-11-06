@@ -31,6 +31,7 @@ class OfferCategoryTableSeeder extends Seeder
             [ 'name' => 'Device Offers', 'type' => 1, 'description' => 'Description 6'],
             [ 'name' => '4G offers', 'type' => 1, 'description' => 'Description 7'],
             [ 'name' => 'Amar Offer', 'type' => 2, 'description' => 'Description 1'],
+            [ 'name' => 'MFS Offers', 'type' => 1, 'description' => 'Description 8'],
         ];
 
 
@@ -60,8 +61,6 @@ class OfferCategoryTableSeeder extends Seeder
                     factory(OfferCategory::class)->create(
                         [
                             'name' => $other_package['name'],
-//                            'alias' => strtolower(str_replace(' ', '_', $other_package['name'])),
-
                             'alias' => strtolower(str_replace(str_split('\/:*?" -<>|'),'_', $other_package['name'])),
                             'type_id' => $other_package['type'],
                             'parent_id' => $myOffer->id

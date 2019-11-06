@@ -4,8 +4,10 @@
         $offertype = $product->offer_info['other_offer_type_id'];
     }elseif(isset($product->offer_info['package_offer_type_id'])){
         $offertype = $product->offer_info['package_offer_type_id'];
+    }else{
+        $offertype = '';
     }
-    isset($product->offer_info) ? $product : $offertype = null
+    isset($product->offer_info) ? $product : $offertype = ''
 @endphp
 
 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
@@ -49,11 +51,8 @@
 </slot>
 
 
-
-
-
 @if(strtolower($type) == 'prepaid')
-    <slot id="start_up_offers" class="d-none">
+    <slot id="start_up_offers" class="{{ $offertype == 6 ? '' : 'd-none' }}">
         @include('layouts.partials.products.package.startup')
     </slot>
 @else

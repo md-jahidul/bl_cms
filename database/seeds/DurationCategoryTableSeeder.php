@@ -15,6 +15,8 @@ class DurationCategoryTableSeeder extends Seeder
         $durations = [
             1 => 'Daily',
             3 => '3 Days',
+            4 => '4 Days',
+            5 => '5 Days',
             7 => 'Weekly',
             15 => 'Bi weekly',
             30 => 'Monthly'
