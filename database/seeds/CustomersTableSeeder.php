@@ -52,6 +52,13 @@ class CustomersTableSeeder extends Seeder
                 'device_token' =>  "d0Z-Mro4aIg:APA91bHXRkkZHxKVWws7cC-T2kWcu6srvLPWswPqd3Lah7EWbPz8sMwBhg5v2Z1c1Vv1glFY3KukwO4EcRUPlVWKrt8iTjoUDOWVcguVs_b2GgVaJRB4vzT4A2relAs09m3WOcv_BOaD"
             ],
             [
+                'name' => 'Farzana Eti',
+                'email' => 'farzan@admin.com',
+                'phone' => '01962852741',
+                'uid' => uniqid(),
+                'device_token' =>  "d0Z-Mro4aIg:APA91bHXRkkZHxKVWws7cC-T2kWcu6srvLPWswPqd3Lah7EWbPz8sMwBhg5v2Z1c1Vv1glFY3KukwO4EcRUPlVWKrt8iTjoUDOWVcguVs_b2GgVaJRB4vzT4A2relAs09m3WOcv_BOaD"
+            ],
+            [
                 'name' => 'My-bl',
                 'email' => 'mybl-admin18@admin.com',
                 'phone' => '01940035918',
@@ -66,6 +73,7 @@ class CustomersTableSeeder extends Seeder
                 'uid' => uniqid(),
                 'device_token' => '122'
             ],
+
             [
                 'name' => 'Pritom',
                 'email' => 'mybl-admin1111@admin.com',
