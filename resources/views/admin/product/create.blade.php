@@ -67,9 +67,9 @@
                                     <label for="offer_category_id" class="required">Offer Type</label>
                                     <select class="form-control required" name="offer_category_id" id="offer_type"
                                             required data-validation-required-message="Please select offer">
-                                        <option value="">---Select Offer Type---</option>
+                                        <option data-alias="" value="">---Select Offer Type---</option>
                                         @foreach($offers as $offer)
-                                            <option value="{{ $offer->id }}">{{ $offer->name }}</option>
+                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}">{{ $offer->name }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -97,9 +97,6 @@
                                 <div class="row" id="bundles" data-offer-type="bundles" style="display: none">
                                     @include('layouts.partials.products.bundle')
                                 </div>
-{{--                                <div class="row" id="startup" data-offer-type="startup" style="display: none">--}}
-{{--                                    @include('layouts.partials.products.startup')--}}
-{{--                                </div>--}}
                             @endif
 
 

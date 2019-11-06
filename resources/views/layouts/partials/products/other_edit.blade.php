@@ -25,7 +25,7 @@
 
 {{--<input value="{{ $offertype }}">--}}
 {{--Amar Offer--}}
-<slot class="d-none" id="amar_offer">
+<slot class="{{ $offertype == 12 ? '' : 'd-none' }}" id="amar_offer">
     <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
         <label for="title" class="required">Title</label>
         <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
@@ -50,7 +50,7 @@
 
 @if(strtolower($type) == 'prepaid')
     {{-- Balance transfer || || Device Offers || MNP Offer || 4G Offers--}}
-    <slot class="d-none" id="balance_transfer">
+    <slot class="{{ $offertype == 10 ? '' : 'd-none' }}" id="balance_transfer">
         <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
             <label for="title" class="required">Title</label>
             <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
@@ -74,7 +74,7 @@
     </slot>
 
     {{--Emergency Balance--}}
-    <slot class="d-none" id="emergency_balance">
+    <slot class="{{ $offertype == 11 ? '' : 'd-none' }}" id="emergency_balance">
         <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
             <label for="title" class="required">Title</label>
             <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
@@ -98,7 +98,7 @@
     </slot>
 
     {{--Device Offers--}}
-    <slot class="d-none" id="device_offers">
+    <slot class="{{ $offertype == 15 ? '' : 'd-none' }}" id="device_offers">
         <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
             <label for="title" class="required">Title</label>
             <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
@@ -122,7 +122,7 @@
     </slot>
 
     {{--MNP Offer--}}
-    <slot class="d-none" id="mnp_offers">
+    <slot class="{{ $offertype == 14 ? '' : 'd-none' }}" id="mnp_offers">
         <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
             <label for="title" class="required">Title</label>
             <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
@@ -146,7 +146,7 @@
     </slot>
 
     {{--4G Offers--}}
-    <slot class="d-none" id="4g_offers">
+    <slot class="{{ $offertype == 16 ? '' : 'd-none' }}" id="4g_offers">
         <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
             <label for="title" class="required">Title</label>
             <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
@@ -175,7 +175,7 @@
 
 {{--Bondho SIM Offer--}}
 @if(strtolower($type) == 'prepaid')
-    <slot class="d-none" id="bondho_sim_offer">
+    <slot class="{{ $offertype == 13 ? '' : 'd-none' }}" id="bondho_sim_offer">
         <div class="form-group col-md-6 {{ $errors->has('internet_offer_mb') ? ' error' : '' }}">
             <label for="internet_offer_mb" class="required">Internet Volume (MB)</label>
             <input type="number" name="offer_info[internet_offer_mb]"  class="form-control" placeholder="Enter internet offer in MB"
@@ -200,6 +200,3 @@
         </div>
     </slot>
 @endif
-
-
-

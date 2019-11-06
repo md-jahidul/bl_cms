@@ -23,7 +23,7 @@
     @endif
 </div>
 
-<slot id="{{ strtolower($type) == 'prepaid' ? 'prepaid_plans' : 'postpaid_plans' }}" class="{{ ($offertype == 5 || $offertype == 7) ? '' : 'd-none' }}">
+<slot id="{{ strtolower($type) == 'prepaid' ? 'prepaid_plans' : 'postpaid_plans' }}" class="d-none">
     <div class="form-group col-md-6 {{ $errors->has('view_list_btn_text_bn') ? ' error' : '' }}">
         <label for="view_list_btn_text_bn" class="required">Call Rate (Paisa)</label>
         <input type="text" name="offer_info[callrate_offer]"  class="form-control" placeholder="Enter call rate in paisa"
@@ -57,7 +57,7 @@
         @include('layouts.partials.products.package.startup')
     </slot>
 @else
-    <slot id="icon_plans" class="{{ $offertype == 8 ? '' : 'd-none' }}">
+    <slot id="icon_plans" class="{{ $offertype == 12 ? '' : 'd-none' }}">
         @include('layouts.partials.products.package.icon_plan')
     </slot>
 @endif

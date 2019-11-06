@@ -11,15 +11,18 @@ var product = (function () {
         'modifyDom' : function modifyDom(selectedItemName, $select, action='hide')
         {
             let selectBy = '#';
-            // debugger
+
             let options =  $select.find('option');
             let optionTextArr = $.map(options ,function (option) {
-                if ( option.value !== '' &&  option.text.replace(/ |-/g,"_").toLowerCase() !== selectedItemName ) {
-                    return  selectBy + option.text.replace(/ |-/g,"_").toLowerCase();
+
+                if ( option.value !== '' &&  option.getAttribute('data-alias')/*.replace(/ |-/g,"_")*/ !== selectedItemName ) {
+                    return  selectBy + option.getAttribute('data-alias');
+                        // .replace(/ |-/g,"_");
                 }
             });
 
-            debugger
+            // debugger;
+
             let otherElements = optionTextArr.join(',');
             if (action == 'hide') {
                 $(otherElements).hide();
@@ -35,9 +38,8 @@ var product = (function () {
         'getOptionAliasText' : function getOptionAText($select)
         {
             return $select.find('option:selected')
-                        .text()
-                        .replace(/ |-/g,"_")
-                        .toLowerCase();
+                        .attr('data-alias')
+                        // .replace(/ |-/g,"_");
         },
         'save' : function save(e, $selects, form_id)
         {

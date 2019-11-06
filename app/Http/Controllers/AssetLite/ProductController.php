@@ -88,6 +88,8 @@ class ProductController extends Controller
             }
         }
 
+//        return $this->info;
+
         return view('admin.product.create', $this->info);
     }
 
@@ -111,7 +113,7 @@ class ProductController extends Controller
     {
 
 //        return $request->all();
-        $this->strToint($request);
+        $this->strToint($request)       ;
         $simId = SimCategory::where('alias', $type)->first()->id;
         $response = $this->productService->storeProduct($request->all(), $simId);
         Session::flash('success', $response->content());
@@ -145,14 +147,19 @@ class ProductController extends Controller
      */
     public function edit($type, $id)
     {
+        $product = $this->productService->findOne($id);
+
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['previous_page'] = url()->previous();
         $this->info['type'] = $type;
-        $this->info['product'] = $this->productService->findOne($id);
+        $this->info['product'] = $product;
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offersType'] = $this->offerCategoryService->getOfferCategories($type);
         $this->info['durations'] = $this->durationCategoryService->findAll();
-        $this->info['offerInfo'] = $this->info['product']['offer_info'];
+        $this->info['offerInfo'] = $product['offer_info'];
+
+
+
 
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
@@ -186,7 +193,8 @@ class ProductController extends Controller
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $id);
         Session::flash('message', $response->content());
-        return redirect(request()->previous_page);
+        return (strpos(request()->previous_page, 'trending-home') !== false) ? redirect(request()->previous_page) : redirect( route('product.list', $type) );
+        // return redirect(request()->previous_page);
     }
 
     /**
