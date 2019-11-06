@@ -12,11 +12,14 @@ class TagCategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        $tags = ['Best Offer','Hot Offer','Eid Offer'];
-        foreach ($tags as $tag) {
+        $tagsEn = ['Best Offer','Hot Offer','Eid Offer', 'Most Popular'];
+        $tagsBn = ['সেরা অফার', 'হট অফার', 'ঈদ অফার', 'সবচেয়ে জনপ্রিয়'];
+        foreach ($tagsEn as $key=>$tag)
+        {
             factory(TagCategory::class)->create(
                 [
-                    'name' => $tag,
+                    'name_en' => $tag,
+                    'name_bn' => $tagsBn[$key],
                     'alias' => strtolower(str_replace(' ', '_', $tag))
                 ]
             );

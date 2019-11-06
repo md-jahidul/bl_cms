@@ -93,9 +93,17 @@ Route::middleware('authorize', 'auth')->group(function () {
     // OFFER CATEGORY PAGES ====================================
     Route::resource('tag-category', 'AssetLite\TagCategoryController')->except(['show', 'destroy']);
     Route::get('tag-category/destroy/{id}', 'AssetLite\TagCategoryController@destroy');
+
     Route::resource('sim-categories', 'AssetLite\SimCategoryController')->only(['index']);
-    Route::resource('duration-categories', 'AssetLite\DurationCategoryController')->only(['index']);
-    Route::resource('offer-categories', 'AssetLite\OfferCategoryController')->only(['index']);
+
+    Route::resource('duration-categories', 'AssetLite\DurationCategoryController')->except(['show', 'destroy']);
+    Route::get('duration-category/destroy/{id}', 'AssetLite\TagCategoryController@destroy');
+
+    Route::resource('offer-categories', 'AssetLite\OfferCategoryController')->only(['index', 'edit', 'update']);
+    Route::get('offer-categories/{parent_id}/{type}/edit/{id}', 'AssetLite\OfferCategoryController@childEdit');
+    Route::put('offer-categories/{parent_id}/update/{id}', 'AssetLite\OfferCategoryController@childUpdate')->name('child-category');
+
+
 
     // OFFER SUB MENU
     Route::get('offer-categories/{id}/{type}', 'AssetLite\OfferCategoryController@index')->name('child_menu');
