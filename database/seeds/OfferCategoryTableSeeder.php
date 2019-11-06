@@ -38,7 +38,7 @@ class OfferCategoryTableSeeder extends Seeder
             $myOffer = factory(OfferCategory::class)->create(
                 [
                     'name' => $offer,
-                    'alias' => strtolower(str_replace(' ', '_', $offer))
+                    'alias' => strtolower(str_replace(' |-', '_', $offer))
                 ]
             );
 
@@ -47,7 +47,7 @@ class OfferCategoryTableSeeder extends Seeder
                     factory(OfferCategory::class)->create(
                         [
                             'name' => $category['name'],
-                            'alias' => strtolower(str_replace(' ', '_', $category['name'])),
+                            'alias' => strtolower(str_replace(str_split('\/:*?" -<>|'), '_', $category['name'])),
                             'type_id' => $category['type'],
                             'parent_id' => $myOffer->id
                         ]
@@ -60,7 +60,9 @@ class OfferCategoryTableSeeder extends Seeder
                     factory(OfferCategory::class)->create(
                         [
                             'name' => $other_package['name'],
-                            'alias' => strtolower(str_replace(' ', '_', $other_package['name'])),
+//                            'alias' => strtolower(str_replace(' ', '_', $other_package['name'])),
+
+                            'alias' => strtolower(str_replace(str_split('\/:*?" -<>|'),'_', $other_package['name'])),
                             'type_id' => $other_package['type'],
                             'parent_id' => $myOffer->id
                         ]

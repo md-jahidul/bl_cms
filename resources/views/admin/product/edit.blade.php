@@ -69,7 +69,7 @@
                                             required data-validation-required-message="Please select offer">
                                         <option value="">---Select Offer Type---</option>
                                         @foreach($offersType as $offer)
-                                            <option value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>{{ $offer->name }}</option>
+                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>{{ $offer->name }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -86,16 +86,16 @@
                                     @include('layouts.partials.products.packages')
                                 </div>
 
+                                <div class="row {{ $product->offer_category_id == 9 ? '' : 'd-none' }}" id="others" data-offer-type="others">
+                                    @include('layouts.partials.products.other_edit')
+                                </div>
+
                             @if(strtolower($type == 'prepaid'))
                                 <div class="row {{ $product->offer_category_id == 2 ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
                                     @include('layouts.partials.products.voice')
                                 </div>
                                 <div class="row {{ $product->offer_category_id == 3 ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
                                     @include('layouts.partials.products.bundle')
-                                </div>
-
-                                <div class="row {{ $product->offer_category_id == 6 ? '' : 'd-none' }}" id="startup" data-offer-type="startup">
-                                    @include('layouts.partials.products.startup')
                                 </div>
                             @endif
 
@@ -155,7 +155,7 @@
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
-                                        <button type="submit" id="update" class="btn btn-primary"><i
+                                        <button type="submit" id="save" class="btn btn-primary"><i
                                                 class="la la-check-square-o"></i> Update
                                         </button>
                                     </div>

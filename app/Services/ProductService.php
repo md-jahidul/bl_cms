@@ -39,7 +39,7 @@ class ProductService
         $data['sim_category_id'] = $simId;
         $data['code'] = rand(10000, 12345);
         $this->save($data);
-        return new Response('Partner offer added successfully');
+        return new Response('Product added successfully');
     }
 
     public function tableSortable($data)
