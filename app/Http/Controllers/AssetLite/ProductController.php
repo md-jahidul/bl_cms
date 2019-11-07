@@ -170,7 +170,7 @@ class ProductController extends Controller
             }
         }
 
-        return $this->info;
+//        return $this->info;
 
         return view('admin.product.edit', $this->info);
     }
