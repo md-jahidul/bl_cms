@@ -15,7 +15,8 @@ class CreateTagCategoriesTable extends Migration
     {
         Schema::create('tag_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name_en');
+            $table->string('name_bn');
             $table->string('alias');
             $table->timestamps();
         });

@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SimCategoryTableSeeder::class);
         $this->call(OfferCategoryTableSeeder::class);
         $this->call(DurationCategoryTableSeeder::class);
-        $this->call(ProductsTableSeeder::class);
+//        $this->call(ProductsTableSeeder::class);
 
 
 

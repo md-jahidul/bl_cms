@@ -20,7 +20,7 @@
                         <tr>
                             <td width="3%">#</td>
                             <th width="25%">Name</th>
-                            <th class="">Action</th>
+                            {{--<th class="">Action</th>--}}
                         </tr>
                         </thead>
                         <tbody>
@@ -29,12 +29,12 @@
                                 <tr data-index="{{ $simCategory->id }}" data-position="{{ $simCategory->display_order }}">
                                     <td width="3%">{{ $loop->iteration }}</td>
                                     <td>{{ $simCategory->name }}</td>
-                                    <td width="12%" class="text-center">
-                                        <a href="{{--{{ url("sim-category/$simCategory->id/edit") }}--}}" role="button" onclick="return false;" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ url("sim-category/destroy/$simCategory->id") }}" onclick="return false;" class="border-0 btn-sm btn-outline-danger {{--delete_btn--}}" data-id="{{ $simCategory->id }}" title="Delete">
-                                            <i class="la la-trash"></i>
-                                        </a>
-                                    </td>
+                                    {{--<td width="12%" class="text-center">--}}
+                                        {{--<a href="--}}{{--{{ url("sim-category/$simCategory->id/edit") }}--}}{{--" role="button" onclick="return false;" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>--}}
+                                        {{--<a href="#" remove="{{ url("sim-category/destroy/$simCategory->id") }}" onclick="return false;" class="border-0 btn-sm btn-outline-danger --}}{{--delete_btn--}}{{--" data-id="{{ $simCategory->id }}" title="Delete">--}}
+                                            {{--<i class="la la-trash"></i>--}}
+                                        {{--</a>--}}
+                                    {{--</td>--}}
                                 </tr>
                             @endforeach
                         </tbody>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDurationCategoriesTable extends Migration
+class CreateProductDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateDurationCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('duration_categories', function (Blueprint $table) {
+        Schema::create('product_details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name_en');
-            $table->string('name_bn');
-            $table->string('alias');
-            $table->integer('days')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ class CreateDurationCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('duration_categories');
+        Schema::dropIfExists('product_details');
     }
 }

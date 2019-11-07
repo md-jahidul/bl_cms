@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class OfferCategory extends Model
 {
+    protected $fillable = ['name_en', 'name_bn'];
+
     public function scopePackageType($query, $type = 'prepaid')
     {
         return  (strtolower($type) == 'prepaid') ? $query->where('parent_id', 0) : $query->whereIn('alias', ['internet', 'packages', 'others'])->where('parent_id', 0);

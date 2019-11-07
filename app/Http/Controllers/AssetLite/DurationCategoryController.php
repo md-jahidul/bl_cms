@@ -4,11 +4,28 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
 use App\Models\DurationCategory;
+use App\Services\DurationCategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
 
 class DurationCategoryController extends Controller
 {
+
+    /**
+     * @var $tagCategoryService
+     */
+    private $durationCategoryService;
+
+    /**
+     * DurationCategoryController constructor.
+     * @param DurationCategoryService $durationCategoryService
+     */
+    public function __construct(DurationCategoryService $durationCategoryService)
+    {
+        $this->durationCategoryService = $durationCategoryService;
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +44,7 @@ class DurationCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.category.duration.create');
     }
 
     /**
@@ -38,51 +55,42 @@ class DurationCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $response = $this->durationCategoryService->storeDurationCategory($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect('/duration-categories');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\DurationCategory  $durationCategory
-     * @return Response
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(DurationCategory $durationCategory)
+    public function edit($id)
     {
-        //
+        $duration = $this->durationCategoryService->findOne($id);
+        return view('admin.category.duration.edit', compact('duration'));
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\DurationCategory  $durationCategory
-     * @return Response
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function edit(DurationCategory $durationCategory)
+    public function update(Request $request, $id)
     {
-        //
+        $response = $this->durationCategoryService->updateDurationCategory($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect('/duration-categories');
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\DurationCategory  $durationCategory
-     * @return Response
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     * @throws \Exception
      */
-    public function update(Request $request, DurationCategory $durationCategory)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\DurationCategory  $durationCategory
-     * @return Response
-     */
-    public function destroy(DurationCategory $durationCategory)
-    {
-        //
+        $response = $this->durationCategoryService->deleteDurationCategory($id);
+        Session::flash('message', $response->getContent());
+        return url('/duration-categories');
     }
 }

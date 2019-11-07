@@ -69,7 +69,7 @@
                                             required data-validation-required-message="Please select offer">
                                         <option value="">---Select Offer Type---</option>
                                         @foreach($offersType as $offer)
-                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>{{ $offer->name }}</option>
+                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>{{ $offer->name_en }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -87,7 +87,7 @@
                                 </div>
 
                                 <div class="row {{ $product->offer_category_id == 9 ? '' : 'd-none' }}" id="others" data-offer-type="others">
-                                    @include('layouts.partials.products.other_edit')
+                                    @include('layouts.partials.products.other')
                                 </div>
 
                             @if(strtolower($type == 'prepaid'))
@@ -116,7 +116,7 @@
                                     <select class="form-control" name="tag_category_id">
                                         <option value="">---Select Tag---</option>
                                         @foreach($tags as $tag)
-                                            <option value="{{ $tag->id }}" {{ ($tag->id == $product->tag_category_id ) ? 'selected' : '' }}>{{ $tag->name }}</option>
+                                            <option value="{{ $tag->id }}" {{ ($tag->id == $product->tag_category_id ) ? 'selected' : '' }}>{{ $tag->name_en }}</option>
                                         @endforeach
                                     </select>
                                 </div>
