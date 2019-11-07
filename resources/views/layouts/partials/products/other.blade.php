@@ -14,7 +14,7 @@
             required data-validation-required-message="Please select offer">
         <option value="">---Select Offer Type---</option>
         @foreach($others_offer_child as $offer)
-            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ $offertype == $offer->id ? 'selected' : '' }}>{{ $offer->name }}</option>
+            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ $offertype == $offer->id ? 'selected' : '' }}>{{ $offer->name_en }}</option>
         @endforeach
     </select>
     <div class="help-block"></div>

@@ -69,7 +69,7 @@
                                             required data-validation-required-message="Please select offer">
                                         <option data-alias="" value="">---Select Offer Type---</option>
                                         @foreach($offers as $offer)
-                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}">{{ $offer->name }}</option>
+                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}">{{ $offer->name_en }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -119,7 +119,7 @@
                                     <select class="form-control" name="tag_category_id">
                                         <option value="0">---Select Tag---</option>
                                         @foreach($tags as $tag)
-                                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                            <option value="{{ $tag->id }}">{{ $tag->name_en }}</option>
                                         @endforeach
                                     </select>
                                 </div>
