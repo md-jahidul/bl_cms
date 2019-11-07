@@ -43,7 +43,7 @@ class ProductService
         $data['sim_category_id'] = $simId;
         $data['code'] = rand(10000, 12345);
         $productId = $this->save($data);
-        $this->productDetailRepository->insertProductDetail($productId->id);
+//        $this->productDetailRepository->insertProductDetail($productId->id);
         return new Response('Product added successfully');
     }
 
