@@ -5,6 +5,9 @@
     }elseif (isset($product->offer_info['package_offer_type_id'])){
         $offertype = $product->offer_info['package_offer_type_id'];
     }
+
+    isset($offertype) ? $offertype : $offertype = '';
+
     isset($product->offer_info) ? $product : $offertype = null
 @endphp
 

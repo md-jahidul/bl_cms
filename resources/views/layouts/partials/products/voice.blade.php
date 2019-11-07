@@ -16,7 +16,7 @@
             required data-validation-required-message="Please select offer">
         <option value="">---Select Duration Type---</option>
         @foreach($durations as $value)
-            <option value="{{ $value->id }}" {{ $value->id == !empty($product->offer_info['duration_category_id']) ? 'selected' : '' }}>{{ $value->name }}</option> {{--{{ !empty($value == $product->duration_category_id) ? 'selected' : '' }}--}}
+            <option value="{{ $value->id }}" {{ $value->id == !empty($product->offer_info['duration_category_id']) ? 'selected' : '' }}>{{ $value->name_en }}</option> {{--{{ !empty($value == $product->duration_category_id) ? 'selected' : '' }}--}}
         @endforeach
     </select>
     <div class="help-block"></div>
