@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\PartnerCategory;
 use App\Repositories\PartnerOfferRepository;
+use App\Repositories\ProductDetailRepository;
 use App\Repositories\ProductRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -18,14 +19,17 @@ class ProductService
      * @var $partnerOfferRepository
      */
     protected $productRepository;
+    protected $productDetailRepository;
 
     /**
-     * PartnerOfferService constructor.
+     * ProductService constructor.
      * @param ProductRepository $productRepository
+     * @param ProductDetailRepository $productDetailRepository
      */
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductRepository $productRepository, ProductDetailRepository $productDetailRepository)
     {
         $this->productRepository = $productRepository;
+        $this->productDetailRepository = $productDetailRepository;
         $this->setActionRepository($productRepository);
     }
 
@@ -38,7 +42,8 @@ class ProductService
     {
         $data['sim_category_id'] = $simId;
         $data['code'] = rand(10000, 12345);
-        $this->save($data);
+        $productId = $this->save($data);
+        $this->productDetailRepository->insertProductDetail($productId->id);
         return new Response('Product added successfully');
     }
 
@@ -55,6 +60,8 @@ class ProductService
      */
     public function updateProduct($data, $id)
     {
+
+//        dd($data);
         $product = $this->findOne($id);
         $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0 );
         $product->update($data);

@@ -90,7 +90,7 @@
                                     @include('layouts.partials.products.other')
                                 </div>
 
-                            @if(strtolower($type == 'prepaid'))
+                            @if(strtolower($type) == 'prepaid')
                                 <div class="row {{ $product->offer_category_id == 2 ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
                                     @include('layouts.partials.products.voice')
                                 </div>
