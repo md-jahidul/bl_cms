@@ -54,4 +54,9 @@ class Product extends Model
     {
         return $this->hasOne(ProductDetail::class);
     }
+
+    public function related_product()
+    {
+        return $this->hasMany(RelatedProduct::class);
+    }
 }

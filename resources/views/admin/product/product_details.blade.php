@@ -1,3 +1,15 @@
+@php
+    function match($id,$relatedProducts){
+        foreach ($relatedProducts as $relatedProduct)
+        {
+            if($relatedProduct->related_product_id == $id){
+                return true;
+            }
+        }
+        return false;
+    }
+@endphp
+
 @extends('layouts.admin')
 @php $type = ucfirst($type)  @endphp
 @section('title', "$type Offer Edit")
@@ -24,7 +36,7 @@
                                 <input type="hidden" name="product_details_id" value="{{ $productDetail->product_details->id }}">
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
                                     <label for="name_en" class="">Offer Name</label>
-                                    <input type="text" name="name_en"  class="form-control" placeholder="Enter offer name english" readonly
+                                    <input type="text" class="form-control" placeholder="Enter offer name english" readonly
                                            value="{{ $productDetail->name_en }}" required data-validation-required-message="Enter offer name english">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_en'))
@@ -34,15 +46,15 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="ussd">USSD Code English</label>
-                                    <input type="text" name="ussd"  class="form-control" placeholder="Enter offer ussd english" maxlength="25" readonly
+                                    <input type="text" class="form-control" placeholder="Enter offer ussd english" maxlength="25" readonly
                                            value="{{ $productDetail->ussd_en }}">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('balance_check') ? ' error' : '' }}">
-                                    <label for="balance_check" class="required">Balance Check</label>
+                                    <label for="balance_check" class="required">Balance Check (USSD)</label>
                                     <input type="text" name="balance_check"  class="form-control" placeholder="Enter offer name bangla"
                                            required data-validation-required-message="Enter offer name bangla"
-                                           value="{{ old("balance_check") ? old("balance_check") : '' }}">
+                                           value="{{ $productDetail->product_details->balance_check }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('balance_check'))
                                         <div class="help-block">{{ $errors->first('balance_check') }}</div>
@@ -54,9 +66,10 @@
                                 <div class="form-group select-role col-md-6 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
                                     <label for="role_id" class="required">Related Product</label>
                                     <div class="role-select">
-                                        <select class="select2 form-control" multiple="multiple" name="related_product_id[]">
+                                        <select class="select2 form-control" multiple="multiple" name="related_product_id[]" required
+                                                data-validation-required-message="Please select related product">
                                             @foreach($products as $product)
-                                                <option value="{{ $product->id }}">{{$product->name_en}} </option>
+                                                <option value="{{ $product->id }}" {{ match($product->id,$productDetail->related_product) ? 'selected' : '' }}>{{$product->name_en}} </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -66,14 +79,25 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-12 {{ $errors->has('balance_check') ? ' error' : '' }}">
-                                    <label for="balance_check" class="required">Details</label>
-                                    <textarea type="text" name="balance_check"  class="form-control" placeholder="Enter offer name bangla"
-                                           required data-validation-required-message="Enter offer name bangla" id="details"
-                                              value="{{ old("balance_check") ? old("balance_check") : '' }}"></textarea>
+                                @if($productDetail->offer_category_id == 4)
+                                    <div class="form-group col-md-12 {{ $errors->has('details') ? ' error' : '' }}">
+                                        <label for="details" class="required">Details</label>
+                                        <textarea type="text" name="details"  class="form-control" placeholder="Enter short details" rows="5"
+                                               required data-validation-required-message="Enter short details">{{ $productDetail->product_details->details }}</textarea>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('details'))
+                                            <div class="help-block">{{ $errors->first('details') }}</div>
+                                        @endif
+                                    </div>
+                                @endif
+
+                                <div class="form-group col-md-12 {{ $errors->has('offer_details') ? ' error' : '' }}">
+                                    <label for="offer_details" class="required">Offer Details</label>
+                                    <textarea type="text" name="offer_details"  class="form-control" placeholder="Enter offer name bangla"
+                                           required data-validation-required-message="Enter offer name bangla" id="details">{{ $productDetail->product_details->offer_details }}</textarea>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('balance_check'))
-                                        <div class="help-block">{{ $errors->first('balance_check') }}</div>
+                                    @if ($errors->has('offer_details'))
+                                        <div class="help-block">{{ $errors->first('offer_details') }}</div>
                                     @endif
                                 </div>
 

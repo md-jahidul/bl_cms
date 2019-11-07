@@ -5,6 +5,8 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Controllers\Controller;
 use App\Models\OfferCategory;
 use App\Models\Product;
+use App\Models\ProductDetail;
+use App\Models\RelatedProduct;
 use App\Models\SimCategory;
 use App\Models\TagCategory;
 use App\Services\DurationCategoryService;
@@ -197,7 +199,7 @@ class ProductController extends Controller
     public function productDetailsEdit($type, $id)
     {
         $products = Product::where('id', '!=', $id)->get();
-        $productDetail = $this->productService->findOne($id, 'product_details');
+        $productDetail = $this->productService->findOne($id, ["related_product", 'product_details']);
 
 //        return $productDetail;
         return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
@@ -205,8 +207,36 @@ class ProductController extends Controller
 
     public function productDetailsUpdate(Request $request, $type, $id)
     {
+//        return $request->all();
+
         $productDetailsId = $request->product_details_id;
-        return 'success';
+        $productDetails = ProductDetail::findOrFail($productDetailsId);
+
+        $products = RelatedProduct::where('product_id', $id)->get();
+
+        if (count($products) > 0)
+        {
+            foreach ($products as $product) {
+                $productId = RelatedProduct::findOrFail($product->id);
+                $productId->delete();
+            }
+        }
+
+        foreach (request()->related_product_id as $item) {
+            RelatedProduct::create([
+                'product_id' => $id,
+                'related_product_id' => $item
+            ]);
+        }
+
+        $productDetails->update([
+            'balance_check' => $request->balance_check,
+            'details'       => $request->details,
+            'offer_details'       => $request->offer_details
+        ]);
+
+        return redirect("offers/$type");
+
     }
 
 
