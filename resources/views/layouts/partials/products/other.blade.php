@@ -27,7 +27,7 @@
 </div>
 
 {{--Amar Offer--}}
-<slot class="{{ $offertype == 17 ? '' : 'd-none' }}" id="amar_offer">
+<slot class="{{ $offertype == 12 ? '' : 'd-none' }}" id="amar_offer">
     {{--<div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">--}}
         {{--<label for="title" class="required">Title</label>--}}
         {{--<input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"--}}

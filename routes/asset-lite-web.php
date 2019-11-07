@@ -119,6 +119,10 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('offers/{type}/{id}/edit/', 'AssetLite\ProductController@edit')->name('product.edit');
     Route::put('offers/{type}/{id}/update', 'AssetLite\ProductController@update')->name('product.update');
     Route::get('offers/{type}/{id}/show', 'AssetLite\ProductController@show')->name('product.show');
+
+    Route::get('offers/{type}/{id}/details', 'AssetLite\ProductController@productDetailsEdit')->name('product.details');
+    Route::put('offers/{type}/{id}/details/update', 'AssetLite\ProductController@productDetailsUpdate')->name('product.details-update');
+
     Route::get('offers/{type}/{id}', 'AssetLite\ProductController@destroy');
     Route::get('trending-home', 'AssetLite\ProductController@trendingOfferHome')->name('trending-home');
 //    Route::get('trending-home/{id}/edit', 'AssetLite\ProductController@homeEdit');

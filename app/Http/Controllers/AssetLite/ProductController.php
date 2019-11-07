@@ -158,9 +158,6 @@ class ProductController extends Controller
         $this->info['durations'] = $this->durationCategoryService->findAll();
         $this->info['offerInfo'] = $product['offer_info'];
 
-
-
-
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
                 ->where('type_id', $package_id)
@@ -196,6 +193,22 @@ class ProductController extends Controller
         return (strpos(request()->previous_page, 'trending-home') !== false) ? redirect(request()->previous_page) : redirect( route('product.list', $type) );
         // return redirect(request()->previous_page);
     }
+
+    public function productDetailsEdit($type, $id)
+    {
+        $products = Product::where('id', '!=', $id)->get();
+        $productDetail = $this->productService->findOne($id, 'product_details');
+
+//        return $productDetail;
+        return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
+    }
+
+    public function productDetailsUpdate(Request $request, $type, $id)
+    {
+        $productDetailsId = $request->product_details_id;
+        return 'success';
+    }
+
 
     /**
      * @param $id

@@ -1,3 +1,11 @@
+@php
+    if (isset($product->offer_info['duration_category_id'])){
+        $offertype = $product->offer_info['duration_category_id'];
+    }else{
+        $offertype = '';
+    }
+@endphp
+
 <div class="form-group col-md-6 {{ $errors->has('minute_volume') ? ' error' : '' }}">
     <label for="minute_volume" class="required">Minute Volume</label>
     <input type="text" name="offer_info[minute_volume]"  class="form-control" placeholder="Enter minute volume"
@@ -16,7 +24,7 @@
             required data-validation-required-message="Please select offer">
         <option value="">---Select Duration Type---</option>
         @foreach($durations as $value)
-            <option value="{{ $value->id }}" {{ $value->id == !empty($product->offer_info['duration_category_id']) ? 'selected' : '' }}>{{ $value->name_en }}</option> {{--{{ !empty($value == $product->duration_category_id) ? 'selected' : '' }}--}}
+            <option value="{{ $value->id }}" {{ $value->id == $offertype ? 'selected' : '' }}>{{ $value->name_en }}</option> {{--{{ !empty($value == $product->duration_category_id) ? 'selected' : '' }}--}}
         @endforeach
     </select>
     <div class="help-block"></div>

@@ -1,3 +1,11 @@
+@php
+    if (isset($product->offer_info['duration_category_id'])){
+        $offertype = $product->offer_info['duration_category_id'];
+    }else{
+        $offertype = '';
+    }
+@endphp
+
     <div class="form-group col-md-6 {{ $errors->has('internet_volume_mb') ? ' error' : '' }}">
         <label for="internet_volume_mb" class="required">Internet Volume (MB)</label>
         <input type="number" name="offer_info[internet_volume_mb]"  class="form-control" placeholder="Enter internet volume in MB"
@@ -17,7 +25,7 @@
                 required data-validation-required-message="Please select offer">
             <option value="">---Select Duration Type---</option>
             @foreach($durations as $value)
-                <option value="{{ $value->id }}" {{ $value->id == !empty($product->offer_info['duration_category_id']) ? 'selected' : '' }}>{{ $value->name_en }}</option>
+                <option value="{{ $value->id }}" {{ $value->id == $offertype ? 'selected' : '' }}>{{ $value->name_en }}</option>
             @endforeach
         </select>
         <div class="help-block"></div>
