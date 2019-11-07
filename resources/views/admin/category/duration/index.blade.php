@@ -32,8 +32,8 @@
                                     <td>{{ $durationCategory->name_en }}</td>
                                     <td>{{ $durationCategory->name_bn }}</td>
                                     <td width="12%" class="text-center">
-                                        <a href="{{ url("duration-category/$durationCategory->id/edit") }}" onclick="return false;" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ url("duration-category/destroy/$durationCategory->id") }}" onclick="return false;" class="border-0 btn-sm btn-outline-danger {{--delete_btn--}} disabled" data-id="{{ $durationCategory->id }}" title="Delete">
+                                        <a href="{{ url("duration-categories/$durationCategory->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <a href="#" remove="{{ url("duration-category/destroy/$durationCategory->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $durationCategory->id }}" title="Delete">
                                             <i class="la la-trash"></i>
                                         </a>
                                     </td>

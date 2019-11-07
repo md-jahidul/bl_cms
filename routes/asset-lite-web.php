@@ -97,7 +97,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::resource('sim-categories', 'AssetLite\SimCategoryController')->only(['index']);
 
     Route::resource('duration-categories', 'AssetLite\DurationCategoryController')->except(['show', 'destroy']);
-    Route::get('duration-category/destroy/{id}', 'AssetLite\TagCategoryController@destroy');
+    Route::get('duration-category/destroy/{id}', 'AssetLite\DurationCategoryController@destroy');
 
     Route::resource('offer-categories', 'AssetLite\OfferCategoryController')->only(['index', 'edit', 'update']);
     Route::get('offer-categories/{parent_id}/{type}/edit/{id}', 'AssetLite\OfferCategoryController@childEdit');
