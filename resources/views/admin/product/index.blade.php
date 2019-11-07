@@ -22,7 +22,7 @@
                             <th width="25%">Product Name</th>
                             <th>Price</th>
                             <th>USSD</th>
-                            <th class="text-center" width="8%">Details</th>
+                            {{--<th class="text-center" width="8%">Details</th>--}}
                             <th width="8%" class="text-center">Trending Offer</th>
                             <th class="">Action</th>
                         </tr>
@@ -35,7 +35,7 @@
                                     <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                     <td>{{ $product->price_tk }} Tk</td>
                                     <td>{{ $product->ussd_en }}</td>
-                                    <td class="text-center"><a href="{{ route('product.details', [$type, $product->id]) }}" class="btn-sm btn-outline-primary border">Details</a></td>
+{{--                                    <td class="text-center"><a href="{{ route('product.details', [$type, $product->id]) }}" class="btn-sm btn-outline-primary border">Details</a></td>--}}
 
                                     <td class="text-center"><input type="checkbox" {{ $product->show_in_home == 1 ? 'checked' : '' }} disabled></td>
                                     <td width="15%">
