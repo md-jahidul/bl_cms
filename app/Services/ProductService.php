@@ -53,6 +53,12 @@ class ProductService
         return new Response('update successfully');
     }
 
+    public function findRelatedProduct($type, $id)
+    {
+        $products = $this->productRepository->relatedProducts($type, $id);
+        return $products;
+    }
+
     /**
      * @param $data
      * @param $id

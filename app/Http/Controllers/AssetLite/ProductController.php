@@ -198,17 +198,13 @@ class ProductController extends Controller
 
     public function productDetailsEdit($type, $id)
     {
-        $products = Product::where('id', '!=', $id)->get();
+        $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->findOne($id, ["related_product", 'product_details']);
-
-//        return $productDetail;
         return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
     }
 
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-//        return $request->all();
-
         $productDetailsId = $request->product_details_id;
         $productDetails = ProductDetail::findOrFail($productDetailsId);
 
