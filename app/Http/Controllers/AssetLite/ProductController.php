@@ -13,6 +13,7 @@ use App\Services\DurationCategoryService;
 use App\Services\OfferCategoryService;
 use App\Services\ProductService;
 use App\Services\TagCategoryService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
@@ -56,6 +57,22 @@ class ProductController extends Controller
     public function index($type)
     {
         $products = Product::category($type)->get();
+
+//        $to = date('d/m/Y h:m');
+//        $product = Product::first();
+//
+//        $fromDate = "2016-10-01";
+//        $toDate   = "2016-10-31";
+//        $current = Carbon::now('Asia/Dhaka');
+//
+////        $reservations = Product::where('start_date', '<=', $current)->where('end_date', '>=', $current)->get();
+//
+////        $data = Product::whereBetween(date('13/11/2019 : 00:13'), [$product->start_date.' 00:00:00',$product->end_date.' 23:59:59'])->get();
+//
+//
+//        return $current . "<br>" .$current;
+////        return $reservations;
+
         return view('admin.product.index', compact('products', 'type'));
     }
 

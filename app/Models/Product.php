@@ -17,6 +17,8 @@ class Product extends Model
             'name_bn',
             'price_tk',
             'price_vat_included',
+            'start_date',
+            'end_date',
             'ussd_en',
             'ussd_bn',
             'bonus',
@@ -35,7 +37,7 @@ class Product extends Model
         ];
 
     protected $casts = [
-        'offer_info' => 'array'
+        'offer_info' => 'array',
     ];
 
     public function sim_category()

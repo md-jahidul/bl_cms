@@ -1,4 +1,4 @@
-@extends('layouts.product')
+@extends('layouts.admin')
 @php $type = ucfirst($type)  @endphp
 @section('title', "$type Offer Create")
 @section('card_name', "$type Offer Create")
@@ -41,30 +41,28 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
-                                    <label for="name_bn" class="required">Start Date</label>
+                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                    <label for="start_date" class="required">Start Date</label>
                                     <div class='input-group'>
-                                        <input type='text' class="form-control" id="start_date" />
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">
-                                              <span class="la la-calendar"></span>
-                                            </span>
-                                        </div>
+                                        <input type='text' class="form-control" name="start_date" id="start_date"
+                                               required data-validation-required-message="Please select start date"
+                                               placeholder="Please select start date" />
                                     </div>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('name_bn'))
-                                        <div class="help-block">{{ $errors->first('name_bn') }}</div>
+                                    @if ($errors->has('start_date'))
+                                        <div class="help-block">{{ $errors->first('start_date') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
-                                    <label for="name_bn" class="required">End Date</label>
-                                    <input type="text" name="name_bn" id="end_date" class="form-control" placeholder="Enter offer name in Bangla"
-                                           required data-validation-required-message="Enter offer name bangla"
-                                           value="{{ old("name_bn") ? old("name_bn") : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                    <label for="end_date" class="required">End Date</label>
+                                    <input type="text" name="end_date" id="end_date" class="form-control"
+                                           placeholder="Please select end date"
+                                           required data-validation-required-message="Please select end date"
+                                           value="{{ old("end_date") ? old("end_date") : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('name_bn'))
-                                        <div class="help-block">{{ $errors->first('name_bn') }}</div>
+                                    @if ($errors->has('end_date'))
+                                        <div class="help-block">{{ $errors->first('end_date') }}</div>
                                     @endif
                                 </div>
 
@@ -204,47 +202,17 @@
         </div>
     </section>
 
-
-    <form id="form" name="form" class="form-inline">
-        <div class="form-group">
-            <label for="startDate">Start Date</label>
-            <input id="startDate" name="startDate" type="text" class="form-control" />
-            &nbsp;
-            <label for="endDate">End Date</label>
-            <input id="endDate" name="endDate" type="text" class="form-control" />
-        </div>
-    </form>
-
-
 @stop
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
-    {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">--}}
-
-    {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/css/bootstrap-datetimepicker.min.css">--}}
-    {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">--}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 @endpush
 @push('page-js')
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
-    {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>--}}
-
-
-
-
-    {{--<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>--}}
-    {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>--}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
-    {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>--}}
-    {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/js/bootstrap-datetimepicker.min.js"></script>--}}
-
-
-
 
     <script type="text/javascript">
         // $(function () {
@@ -266,119 +234,27 @@
         //         // minDate: startDate,
         //     });
         // });
-
-
-
-
-
-
-
         $(function () {
-
-            var bindDateRangeValidation = function (f, s, e) {
-                if(!(f instanceof jQuery)){
-                    console.log("Not passing a jQuery object");
-                }
-
-                var jqForm = f,
-                    startDateId = s,
-                    endDateId = e;
-
-                var checkDateRange = function (startDate, endDate) {
-                    var isValid = (startDate != "" && endDate != "") ? startDate <= endDate : true;
-                    return isValid;
-                }
-
-                var bindValidator = function () {
-                    var bstpValidate = jqForm.data('bootstrapValidator');
-                    var validateFields = {
-                        startDate: {
-                            validators: {
-                                notEmpty: { message: 'This field is required.' },
-                                callback: {
-                                    message: 'Start Date must less than or equal to End Date.',
-                                    callback: function (startDate, validator, $field) {
-                                        return checkDateRange(startDate, $('#' + endDateId).val())
-                                    }
-                                }
-                            }
-                        },
-                        endDate: {
-                            validators: {
-                                notEmpty: { message: 'This field is required.' },
-                                callback: {
-                                    message: 'End Date must greater than or equal to Start Date.',
-                                    callback: function (endDate, validator, $field) {
-                                        return checkDateRange($('#' + startDateId).val(), endDate);
-                                    }
-                                }
-                            }
-                        },
-                        customize: {
-                            validators: {
-                                customize: { message: 'customize.' }
-                            }
-                        }
-                    }
-                    if (!bstpValidate) {
-                        jqForm.bootstrapValidator({
-                            excluded: [':disabled'],
-                        })
-                    }
-
-                    jqForm.bootstrapValidator('addField', startDateId, validateFields.startDate);
-                    jqForm.bootstrapValidator('addField', endDateId, validateFields.endDate);
-
-                };
-
-                var hookValidatorEvt = function () {
-                    var dateBlur = function (e, bundleDateId, action) {
-                        jqForm.bootstrapValidator('revalidateField', e.target.id);
-                    }
-
-                    $('#' + startDateId).on("dp.change dp.update blur", function (e) {
-                        $('#' + endDateId).data("DateTimePicker").setMinDate(e.date);
-                        dateBlur(e, endDateId);
-                    });
-
-                    $('#' + endDateId).on("dp.change dp.update blur", function (e) {
-                        $('#' + startDateId).data("DateTimePicker").setMaxDate(e.date);
-                        dateBlur(e, startDateId);
-                    });
-                }
-
-                bindValidator();
-                hookValidatorEvt();
-            };
-            var sd = new Date(), ed = new Date();
-
-
-            $('#startDate').datetimepicker({
-
-                format : 'DD/MM/YYYY HH:mm',
-                defaultDate: sd,
-                minDate: ed
+                var startDate = $('#start_date').val()
+                var date = new Date();
+                date.setDate(date.getDate());
+            $('#start_date').datetimepicker({
+                format : 'DD/MM/YYYY HH:mm:ss',
+                // showClose: true,
+                minDate: date,
             });
+            $('#end_date').datetimepicker({
+                format : 'DD/MM/YYYY HH:mm:ss',
+                useCurrent: false, //Important! See issue #1075
 
-            $('#endDate').datetimepicker({
-                format : 'DD/MM/YYYY HH:mm',
-                defaultDate: ed,
-                minDate: sd
             });
-
-            //passing 1.jquery form object, 2.start date dom Id, 3.end date dom Id
-            bindDateRangeValidation($("#form"), 'startDate', 'endDate');
+            $("#start_date").on("dp.change", function (e) {
+                $('#end_date').data("DateTimePicker").minDate(e.date);
+            });
+            $("#end_date").on("dp.change", function (e) {
+                $('#start_date').data("DateTimePicker").maxDate(e.date);
+            });
         });
-
-
-
-
-
-
-
-
-
-
     </script>
 @endpush
 
