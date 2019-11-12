@@ -6,7 +6,7 @@
     <li class="breadcrumb-item active"> Duration Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('duration-categories.create') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('duration-categories') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -36,8 +36,8 @@
                                 </div>
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary"><i
-                                                    class="la la-check-square-o"></i> SAVE
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="la la-check-square-o"></i> SAVE
                                         </button>
                                     </div>
                                 </div>

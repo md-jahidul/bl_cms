@@ -77,41 +77,27 @@
                                         <div class="help-block">{{ $errors->first('offer_category_id') }}</div>
                                     @endif
                                 </div>
-                            </div>
 
-                                <div class="row" id="internet" data-offer-type="internet" style="display: none">
+                                <slot id="internet" data-offer-type="internet" style="display: none">
                                     @include('layouts.partials.products.internet')
-                                </div>
-                                <div class="row" id="packages" data-offer-type="packages" style="display: none">
+                                </slot>
+                                <slot id="packages" data-offer-type="packages" style="display: none">
                                     @include('layouts.partials.products.packages')
-                                </div>
+                                </slot>
 
-                                <div class="row" id="others" data-offer-type="others" style="display: none">
+                                <slot id="others" data-offer-type="others" style="display: none">
                                     @include('layouts.partials.products.other')
-                                </div>
+                                </slot>
 
-                            @if( strtolower($type) == 'prepaid')
-                                <div class="row" id="voice" data-offer-type="voice" style="display: none">
-                                    @include('layouts.partials.products.voice')
-                                </div>
-                                <div class="row" id="bundles" data-offer-type="bundles" style="display: none">
-                                    @include('layouts.partials.products.bundle')
-                                </div>
-                            @endif
+                                @if( strtolower($type) == 'prepaid')
+                                    <slot id="voice" data-offer-type="voice" style="display: none">
+                                        @include('layouts.partials.products.voice')
+                                    </slot>
+                                    <slot id="bundles" data-offer-type="bundles" style="display: none">
+                                        @include('layouts.partials.products.bundle')
+                                    </slot>
+                                @endif
 
-
-                            <div class="row">
-{{--                                <div class="form-group col-md-6">--}}
-{{--                                    <label for="bonus">Bonus</label>--}}
-{{--                                    <input type="text" name="bonus"  class="form-control" placeholder="Enter bonus"--}}
-{{--                                           value="{{ old("bonus") ? old("bonus") : '' }}">--}}
-{{--                                </div>--}}
-
-{{--                                <div class="form-group col-md-6">--}}
-{{--                                    <label for="point">Point</label>--}}
-{{--                                    <input type="number" name="point"  class="form-control" placeholder="Enter point"--}}
-{{--                                           value="{{ old("point") ? old("point") : '' }}">--}}
-{{--                                </div>--}}
 
 
                                 <div class="form-group col-md-6">
@@ -158,11 +144,32 @@
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button id="save" class="btn btn-primary"><i
-                                                class="la la-check-square-o"></i> Save
+                                                    class="la la-check-square-o"></i> Save
                                         </button>
                                     </div>
                                 </div>
+
                             </div>
+
+
+
+
+                            {{--<div class="row">--}}
+{{--                                <div class="form-group col-md-6">--}}
+{{--                                    <label for="bonus">Bonus</label>--}}
+{{--                                    <input type="text" name="bonus"  class="form-control" placeholder="Enter bonus"--}}
+{{--                                           value="{{ old("bonus") ? old("bonus") : '' }}">--}}
+{{--                                </div>--}}
+
+{{--                                <div class="form-group col-md-6">--}}
+{{--                                    <label for="point">Point</label>--}}
+{{--                                    <input type="number" name="point"  class="form-control" placeholder="Enter point"--}}
+{{--                                           value="{{ old("point") ? old("point") : '' }}">--}}
+{{--                                </div>--}}
+
+
+
+                            {{--</div>--}}
 
                         </form>
                     </div>

@@ -3,6 +3,7 @@
 @section('card_name', 'Offer Category List')
 @section('breadcrumb')
     <li class="breadcrumb-item "><a href="{{ url('offer-categories') }}"> Offer Categories List</a></li>
+    <li class="breadcrumb-item ">{{ ucfirst($type) }} Child Menu List</li>
 @endsection
 @section('action')
 {{--    <a href="{{ route("offer-categories.create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}

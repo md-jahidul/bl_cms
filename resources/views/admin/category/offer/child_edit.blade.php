@@ -3,10 +3,11 @@
 @section('card_name', 'Offer Category Edit')
 @section('breadcrumb')
     <li class="breadcrumb-item active"><a href="{{ url('offer-categories') }}">Offer Categories List</a></li>
-    <li class="breadcrumb-item active"> Offer Category Edit</li>
+    <li class="breadcrumb-item active"><a href="{{ url("offer-categories/$parent_id/$type") }}">{{ ucfirst($type) }} Child Menu List</a></li>
+    <li class="breadcrumb-item active"> {{ ucfirst($type) }} Sub Menu Edit</li>
 @endsection
 @section('action')
-    <a href="{{ url('offer-categories') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url("offer-categories/$parent_id/$type") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>

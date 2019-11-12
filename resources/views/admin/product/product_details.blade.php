@@ -12,15 +12,15 @@
 
 @extends('layouts.admin')
 @php $type = ucfirst($type)  @endphp
-@section('title', "$type Offer Edit")
-@section('card_name', "$type Offer Edit")
+@section('title', "$type Offer ")
+@section('card_name', "$type Offer Details")
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('product.list', $type) }}"> {{ $type }} List</a></li>
     {{--    <li class="breadcrumb-item active"> <a href="{{ route('partner-offer', [$parentId, $partnerName]) }}"> Partner Offer List</a></li>--}}
-    <li class="breadcrumb-item active"> {{ $type }} Offer Edit</li>
+    <li class="breadcrumb-item active"> {{ $type }} Offer Details</li>
 @endsection
 @section('action')
-    <a href="#" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url("offers/$type") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>

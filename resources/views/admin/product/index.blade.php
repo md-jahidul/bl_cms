@@ -2,7 +2,7 @@
 @section('title', 'Product List')
 @section('card_name', 'Product List')
 @section('breadcrumb')
-    <li class="breadcrumb-item "><a href="{{ url('partners') }}"> Product List</a></li>
+    <li class="breadcrumb-item ">Product List</li>
 @endsection
 @section('action')
     <a href="{{ route("product.create", strtolower($type)) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
