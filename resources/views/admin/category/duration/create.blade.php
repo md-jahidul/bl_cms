@@ -2,7 +2,7 @@
 @section('title', 'Duration Category Create')
 @section('card_name', 'Duration Category Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ url('duration-category') }}">Duration Categories List</a></li>
+    <li class="breadcrumb-item active"><a href="{{ url('duration-categories') }}">Duration Categories List</a></li>
     <li class="breadcrumb-item active"> Duration Create</li>
 @endsection
 @section('action')
