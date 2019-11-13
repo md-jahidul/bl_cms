@@ -59,7 +59,7 @@
                                     <input type="text" name="end_date" id="end_date" class="form-control"
                                            placeholder="Please select end date"
                                            required data-validation-required-message="Please select end date"
-                                           value="{{ old("end_date") ? old("end_date") : '' }}">
+                                           value="{{ old("end_date") ? old("end_date") : '' }}" autocomplete="0">
                                     <div class="help-block"></div>
                                     @if ($errors->has('end_date'))
                                         <div class="help-block">{{ $errors->first('end_date') }}</div>
