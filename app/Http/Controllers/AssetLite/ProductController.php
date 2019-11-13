@@ -212,6 +212,8 @@ class ProductController extends Controller
 
     public function productDetailsUpdate(Request $request, $type, $id)
     {
+
+
         $productDetailsId = $request->product_details_id;
         $productDetails = ProductDetail::findOrFail($productDetailsId);
 
@@ -232,11 +234,9 @@ class ProductController extends Controller
             ]);
         }
 
-        $productDetails->update([
-            'balance_check' => $request->balance_check,
-            'details'       => $request->details,
-            'offer_details'       => $request->offer_details
-        ]);
+        $productDetails['balance_check'] = $request->balance_check;
+
+        $productDetails->update($request->all());
 
         return redirect("offers/$type");
 

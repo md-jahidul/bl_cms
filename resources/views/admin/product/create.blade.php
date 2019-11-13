@@ -87,6 +87,16 @@
                                     <div class="help-block"></div>
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    <label for="tag_category_id">Tag</label>
+                                    <select class="form-control" name="tag_category_id">
+                                        <option value="">---Select Tag---</option>
+                                        @foreach($tags as $tag)
+                                            <option value="{{ $tag->id }}">{{ $tag->name_en }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="offer_category_id" class="required">Offer Type</label>
                                     <select class="form-control required" name="offer_category_id" id="offer_type"
@@ -101,6 +111,8 @@
                                         <div class="help-block">{{ $errors->first('offer_category_id') }}</div>
                                     @endif
                                 </div>
+
+
 
                                 <slot id="internet" data-offer-type="internet" style="display: none">
                                     @include('layouts.partials.products.internet')
@@ -124,15 +136,7 @@
 
 
 
-                                <div class="form-group col-md-6">
-                                    <label for="tag_category_id">Tag</label>
-                                    <select class="form-control" name="tag_category_id">
-                                        <option value="">---Select Tag---</option>
-                                        @foreach($tags as $tag)
-                                            <option value="{{ $tag->id }}">{{ $tag->name_en }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+
 
                                 <div class="col-md-6" >
                                     <label></label>

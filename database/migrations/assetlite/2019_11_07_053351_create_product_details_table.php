@@ -17,8 +17,10 @@ class CreateProductDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('product_id');
             $table->string('balance_check')->nullable();
-            $table->text('details', 50)->nullable();
-            $table->text('offer_details')->nullable();
+            $table->text('details_en')->nullable();
+            $table->text('details_bn')->nullable();
+            $table->text('offer_details_en')->nullable();
+            $table->text('offer_details_bn')->nullable();
 
             $table->foreign('product_id')
                 ->references('id')
