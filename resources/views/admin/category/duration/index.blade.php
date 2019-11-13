@@ -19,8 +19,9 @@
                         <thead>
                         <tr>
                             <td width="3%">#</td>
-                            <th width="25%">Name English</th>
-                            <th width="25%">Name Bangla</th>
+                            <th width="25%">Title English</th>
+                            <th width="25%">Title Bangla</th>
+                            <th width="25%">Days</th>
                             <th class="">Action</th>
                         </tr>
                         </thead>
@@ -31,6 +32,7 @@
                                     <td width="3%">{{ $loop->iteration }}</td>
                                     <td>{{ $durationCategory->name_en }}</td>
                                     <td>{{ $durationCategory->name_bn }}</td>
+                                    <td>{{ $durationCategory->days }}</td>
                                     <td width="12%" class="text-center">
                                         <a href="{{ url("duration-categories/$durationCategory->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         <a href="#" remove="{{ url("duration-category/destroy/$durationCategory->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $durationCategory->id }}" title="Delete">

@@ -34,6 +34,8 @@ class DurationCategoryController extends Controller
     public function index()
     {
         $durationCategories = DurationCategory::all();
+
+//        return $durationCategories;
         return view('admin.category.duration.index', compact('durationCategories'));
     }
 

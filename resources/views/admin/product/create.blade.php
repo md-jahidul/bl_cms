@@ -222,7 +222,16 @@
 
 
 
+        $('.duration_categories').change(function () {
+            let durationOntion = $(this).find('option:selected').attr('data-alias')
+            let durationDays = $(this).find('option:selected').attr('data-days')
+            let validityField = $('.validity_days');
 
+            if (durationOntion) {
+                validityField.val(durationDays).prop('readonly', true);
+            }
+
+        })
 
 
 

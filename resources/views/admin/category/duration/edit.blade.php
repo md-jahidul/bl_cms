@@ -36,6 +36,17 @@
                                         <div class="help-block">  {{ $errors->first('name_bn') }}</div>
                                     @endif
                                 </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('days') ? ' error' : '' }}">
+                                    <label for="days" class="required">Days</label>
+                                    <input type="number" name="days"  class="form-control" placeholder="Enter days"
+                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+                                           value="{{ $duration->days }}" required data-validation-required-message="Enter days">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('days'))
+                                        <div class="help-block">  {{ $errors->first('days') }}</div>
+                                    @endif
+                                </div>
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
