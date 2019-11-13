@@ -56,22 +56,39 @@ class ProductController extends Controller
      */
     public function index($type)
     {
+        $mytime = Carbon::now('Asia/Dhaka');
+        $dateTime = $mytime->toDateTimeString();
+        $currentSecends = strtotime($dateTime);
+
+
         $products = Product::category($type)->get();
+
+
+
+
+//        print_r($time_diff);die();
 
 //        $to = date('d/m/Y h:m');
 //        $product = Product::first();
-//
 //        $fromDate = "2016-10-01";
 //        $toDate   = "2016-10-31";
 //        $current = Carbon::now('Asia/Dhaka');
+
+//        $reservations = Product::where('start_date', '<=', $time_diff)->where('end_date', '>=', $time_diff)->first();
+
+//        return $products;
+
+//        $new_date = date('Y-m-d H:i:s', $reservations->start_date);
+
+//        return $new_date;
+
+//        $data = Product::whereBetween('start_date', [$product->start_date.' 00:00:00',$product->end_date.' 23:59:59'])
+//            ->get();
 //
-////        $reservations = Product::where('start_date', '<=', $current)->where('end_date', '>=', $current)->get();
-//
-////        $data = Product::whereBetween(date('13/11/2019 : 00:13'), [$product->start_date.' 00:00:00',$product->end_date.' 23:59:59'])->get();
-//
-//
-//        return $current . "<br>" .$current;
-////        return $reservations;
+//        return $data;
+
+
+
 
         return view('admin.product.index', compact('products', 'type'));
     }
@@ -131,7 +148,9 @@ class ProductController extends Controller
     public function store(Request $request, $type)
     {
 
-//        return $request->all();
+
+
+
         $this->strToint($request)       ;
         $simId = SimCategory::where('alias', $type)->first()->id;
         $response = $this->productService->storeProduct($request->all(), $simId);
@@ -185,8 +204,6 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
-
-//        return $this->info;
 
         return view('admin.product.edit', $this->info);
     }
