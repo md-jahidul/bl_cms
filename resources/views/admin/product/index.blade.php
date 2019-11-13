@@ -22,6 +22,7 @@
                             <th width="25%">Product Name</th>
                             <th>Price</th>
                             <th>USSD</th>
+                            <th>Offer Type</th>
                             <th class="text-center" width="8%">Details</th>
                             <th width="8%" class="text-center">Trending Offer</th>
                             <th class="">Action</th>
@@ -35,6 +36,7 @@
                                     <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                     <td>{{ $product->price_tk }} Tk</td>
                                     <td>{{ $product->ussd_en }}</td>
+                                    <td>{{ $product->offer_category->name_en }}</td>
 
                                     <td class="text-center">
                                         @if($product->offer_category_id == 2 || $product->offer_category_id == 4)

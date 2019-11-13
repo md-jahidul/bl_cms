@@ -50,17 +50,18 @@
                                            value="{{ $productDetail->ussd_en }}">
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('balance_check') ? ' error' : '' }}">
-                                    <label for="balance_check" class="required">Balance Check (USSD)</label>
-                                    <input type="text" name="balance_check"  class="form-control" placeholder="Enter offer name bangla"
-                                           required data-validation-required-message="Enter offer name bangla"
-                                           value="{{ $productDetail->product_details->balance_check }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('balance_check'))
-                                        <div class="help-block">{{ $errors->first('balance_check') }}</div>
-                                    @endif
-                                </div>
-
+                                @if(strtolower($type) == 'prepaid')
+                                    <div class="form-group col-md-6 {{ $errors->has('balance_check') ? ' error' : '' }}">
+                                        <label for="balance_check" class="required">Balance Check (USSD)</label>
+                                        <input type="text" name="balance_check"  class="form-control" placeholder="Enter offer name bangla"
+                                               required data-validation-required-message="Enter offer name bangla"
+                                               value="{{ $productDetail->product_details->balance_check }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('balance_check'))
+                                            <div class="help-block">{{ $errors->first('balance_check') }}</div>
+                                        @endif
+                                    </div>
+                                @endif
 
 
                                 <div class="form-group select-role col-md-6 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">

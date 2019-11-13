@@ -56,13 +56,11 @@ class ProductController extends Controller
      */
     public function index($type)
     {
-        $mytime = Carbon::now('Asia/Dhaka');
-        $dateTime = $mytime->toDateTimeString();
-        $currentSecends = strtotime($dateTime);
+        $products = Product::category($type)->with(['offer_category' => function ($query) {
+            $query->select('id','name_en');
+        }])->get();
 
-        $products = Product::category($type)->get();
-
-
+//        return $products;
         return view('admin.product.index', compact('products', 'type'));
     }
 

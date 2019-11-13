@@ -199,7 +199,6 @@
 
     <script type="text/javascript">
         $(function () {
-                var startDate = $('#start_date').val()
                 var date = new Date();
                 date.setDate(date.getDate());
             $('#start_date').datetimepicker({
@@ -220,8 +219,6 @@
                 $('#start_date').data("DateTimePicker").maxDate(e.date);
             });
 
-
-
         $('.duration_categories').change(function () {
             let durationOntion = $(this).find('option:selected').attr('data-alias')
             let durationDays = $(this).find('option:selected').attr('data-days')
@@ -230,12 +227,7 @@
             if (durationOntion) {
                 validityField.val(durationDays).prop('readonly', true);
             }
-
         })
-
-
-
-
 
         });
     </script>

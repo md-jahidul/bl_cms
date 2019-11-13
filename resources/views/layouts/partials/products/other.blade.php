@@ -27,7 +27,7 @@
 </div>
 
 {{--Amar Offer--}}
-<slot class="{{ $offertype == 12 ? '' : 'd-none' }}" id="amar_offer">
+<slot class="{{ $offertype == 12 || $offertype == 17 ? '' : 'd-none' }}" id="amar_offer">
     <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
         <label for="description_en" class="required">Description (English)</label>
         <textarea type="text" name="offer_info[description_en]"  class="form-control" placeholder="Enter description in english"

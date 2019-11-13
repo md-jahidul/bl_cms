@@ -45,6 +45,11 @@ class Product extends Model
         return $this->belongsTo(SimCategory::class);
     }
 
+    public function offer_category()
+    {
+        return $this->belongsTo(OfferCategory::class);
+    }
+
     public function scopeCategory($query, $type)
     {
         return $query->whereHas('sim_category', function ($q) use ($type) {
