@@ -75,16 +75,7 @@
 
     {{--Emergency Balance--}}
     <slot class="{{ $offertype == 11 ? '' : 'd-none' }}" id="emergency_balance">
-        <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-            <label for="title" class="required">Title</label>
-            <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                   value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"
-                   required data-validation-required-message="Enter view list url">
-            <div class="help-block"></div>
-            @if ($errors->has('title'))
-                <div class="help-block">  {{ $errors->first('title') }}</div>
-            @endif
-        </div>
+
         <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
             <label for="description_en" class="required">Description (English)</label>
             <textarea type="text" name="offer_info[description_en]"  class="form-control" placeholder="Enter description in english"
@@ -108,16 +99,7 @@
 
     {{-- MFS Offers --}}
     <slot class="{{ $offertype == 18 ? '' : 'd-none' }}" id="mfs_offers">
-        <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-            <label for="title" class="required">Title</label>
-            <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                   value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"
-                   required data-validation-required-message="Enter view list url">
-            <div class="help-block"></div>
-            @if ($errors->has('title'))
-                <div class="help-block">  {{ $errors->first('title') }}</div>
-            @endif
-        </div>
+
         <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
             <label for="description_en" class="required">Description (English)</label>
             <textarea type="text" name="offer_info[description_en]"  class="form-control" placeholder="Enter description in english"
@@ -141,16 +123,6 @@
 
     {{--Device Offers--}}
     <slot class="{{ $offertype == 15 ? '' : 'd-none' }}" id="device_offers">
-        <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-            <label for="title" class="required">Title</label>
-            <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                   value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"
-                   required data-validation-required-message="Enter view list url">
-            <div class="help-block"></div>
-            @if ($errors->has('title'))
-                <div class="help-block">  {{ $errors->first('title') }}</div>
-            @endif
-        </div>
         <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
             <label for="description_en" class="required">Description (English)</label>
             <textarea type="text" name="offer_info[description_en]"  class="form-control" placeholder="Enter description in english"
@@ -197,16 +169,7 @@
 
     {{--4G Offers--}}
     <slot class="{{ $offertype == 16 ? '' : 'd-none' }}" id="4g_offers">
-        <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-            <label for="title" class="required">Title</label>
-            <input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                   value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"
-                   required data-validation-required-message="Enter view list url">
-            <div class="help-block"></div>
-            @if ($errors->has('title'))
-                <div class="help-block">  {{ $errors->first('title') }}</div>
-            @endif
-        </div>
+
         <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
             <label for="description_en" class="required">Description (English)</label>
             <textarea type="text" name="offer_info[description_en]"  class="form-control" placeholder="Enter description in english"
