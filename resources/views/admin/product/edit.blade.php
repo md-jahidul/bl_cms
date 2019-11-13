@@ -214,12 +214,14 @@
             date.setDate(date.getDate());
             $('#start_date').datetimepicker({
                 format : 'YYYY-MM-DD HH:mm:ss',
-                // showClose: true,
+                showClose: true,
                 // minDate: date,
             });
             $('#end_date').datetimepicker({
                 format : 'YYYY-MM-DD HH:mm:ss',
+
                 useCurrent: false, //Important! See issue #1075
+                showClose: true,
 
             });
             // $("#start_date").on("dp.change", function (e) {

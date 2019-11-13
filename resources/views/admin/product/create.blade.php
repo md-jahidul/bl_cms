@@ -147,7 +147,6 @@
                                         <label for="title" class="mr-1">Recharge</label>
                                         <input type="radio" name="is_recharge" value="1" id="yes" checked>
                                         <label for="yes" class="mr-1">Yes</label>
-
                                         <input type="radio" name="is_recharge" value="0" id="no">
                                         <label for="no">No</label>
                                     </div>
@@ -201,11 +200,12 @@
                 date.setDate(date.getDate());
             $('#start_date').datetimepicker({
                 format : 'YYYY/MM/DD HH:mm:ss',
-                // showClose: true,
+                showClose: true,
                 minDate: date,
             });
             $('#end_date').datetimepicker({
                 format : 'YYYY/MM/DD HH:mm:ss',
+                showClose: true,
                 useCurrent: false, //Important! See issue #1075
 
             });
@@ -215,6 +215,15 @@
             $("#end_date").on("dp.change", function (e) {
                 $('#start_date').data("DateTimePicker").maxDate(e.date);
             });
+
+
+
+
+
+
+
+
+
         });
     </script>
 @endpush
