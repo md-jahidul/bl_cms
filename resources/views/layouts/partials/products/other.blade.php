@@ -28,24 +28,23 @@
 
 {{--Amar Offer--}}
 <slot class="{{ $offertype == 12 ? '' : 'd-none' }}" id="amar_offer">
-    {{--<div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">--}}
-        {{--<label for="title" class="required">Title</label>--}}
-        {{--<input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"--}}
-               {{--oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"--}}
-               {{--value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"--}}
-               {{--required data-validation-required-message="Enter view list url">--}}
-        {{--<div class="help-block"></div>--}}
-        {{--@if ($errors->has('title'))--}}
-            {{--<div class="help-block">  {{ $errors->first('title') }}</div>--}}
-        {{--@endif--}}
-    {{--</div>--}}
-    <div class="form-group col-md-6 {{ $errors->has('description') ? ' error' : '' }}">
-        <label for="description" class="required">Description</label>
-        <textarea type="text" name="offer_info[description]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                  required data-validation-required-message="Enter view list url">{{ (!empty($product->offer_info['description'])) ? $product->offer_info['description'] : old("offer_info.description") ?? '' }}</textarea>
+    <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
+        <label for="description_en" class="required">Description (English)</label>
+        <textarea type="text" name="offer_info[description_en]"  class="form-control" placeholder="Enter description in english"
+                  required data-validation-required-message="Enter description in english">{{ (!empty($product->offer_info['description_en'])) ? $product->offer_info['description_en'] : old("offer_info.description_en") ?? '' }}</textarea>
         <div class="help-block"></div>
-        @if ($errors->has('description'))
-            <div class="help-block">  {{ $errors->first('description') }}</div>
+        @if ($errors->has('description_en'))
+            <div class="help-block">  {{ $errors->first('description_en') }}</div>
+        @endif
+    </div>
+
+    <div class="form-group col-md-6 {{ $errors->has('description_bn') ? ' error' : '' }}">
+        <label for="description_bn" class="required">Description (Bangla)</label>
+        <textarea type="text" name="offer_info[description_bn]"  class="form-control" placeholder="Enter description in bangla"
+                  required data-validation-required-message="Enter description in bangla">{{ (!empty($product->offer_info['description_bn'])) ? $product->offer_info['description_bn'] : old("offer_info.description_bn") ?? '' }}</textarea>
+        <div class="help-block"></div>
+        @if ($errors->has('description_bn'))
+            <div class="help-block">  {{ $errors->first('description_bn') }}</div>
         @endif
     </div>
 </slot>
@@ -53,24 +52,23 @@
 @if(strtolower($type) == 'prepaid')
     {{-- Balance transfer || || Device Offers || MNP Offer || 4G Offers--}}
     <slot class="{{ $offertype == 10 ? '' : 'd-none' }}" id="balance_transfer">
-        {{--<div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">--}}
-            {{--<label for="title" class="required">Title</label>--}}
-            {{--<input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"--}}
-                   {{--oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"--}}
-                   {{--value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"--}}
-                   {{--required data-validation-required-message="Enter view list url">--}}
-            {{--<div class="help-block"></div>--}}
-            {{--@if ($errors->has('title'))--}}
-                {{--<div class="help-block">  {{ $errors->first('title') }}</div>--}}
-            {{--@endif--}}
-        {{--</div>--}}
-        <div class="form-group col-md-6 {{ $errors->has('description') ? ' error' : '' }}">
-            <label for="description" class="required">Description</label>
-            <textarea type="text" name="offer_info[description]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                      required data-validation-required-message="Enter view list url">{{ (!empty($product->offer_info['description'])) ? $product->offer_info['description'] : old("offer_info.description") ?? '' }}</textarea>
+        <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
+            <label for="description_en" class="required">Description (English)</label>
+            <textarea type="text" name="offer_info[description_en]"  class="form-control" placeholder="Enter description in english"
+                      required data-validation-required-message="Enter description in english">{{ (!empty($product->offer_info['description_en'])) ? $product->offer_info['description_en'] : old("offer_info.description_en") ?? '' }}</textarea>
             <div class="help-block"></div>
-            @if ($errors->has('description'))
-                <div class="help-block">  {{ $errors->first('description') }}</div>
+            @if ($errors->has('description_en'))
+                <div class="help-block">  {{ $errors->first('description_en') }}</div>
+            @endif
+        </div>
+
+        <div class="form-group col-md-6 {{ $errors->has('description_bn') ? ' error' : '' }}">
+            <label for="description_bn" class="required">Description (Bangla)</label>
+            <textarea type="text" name="offer_info[description_bn]"  class="form-control" placeholder="Enter description in bangla"
+                      required data-validation-required-message="Enter description in bangla">{{ (!empty($product->offer_info['description_bn'])) ? $product->offer_info['description_bn'] : old("offer_info.description_bn") ?? '' }}</textarea>
+            <div class="help-block"></div>
+            @if ($errors->has('description_bn'))
+                <div class="help-block">  {{ $errors->first('description_bn') }}</div>
             @endif
         </div>
     </slot>
@@ -87,13 +85,23 @@
                 <div class="help-block">  {{ $errors->first('title') }}</div>
             @endif
         </div>
-        <div class="form-group col-md-12 {{ $errors->has('description') ? ' error' : '' }}">
-            <label for="description" class="required">Description</label>
-            <textarea type="text" name="offer_info[description]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                      required data-validation-required-message="Enter view list url">{{ (!empty($product->offer_info['description'])) ? $product->offer_info['description'] : old("offer_info.description") ?? '' }}</textarea>
+        <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
+            <label for="description_en" class="required">Description (English)</label>
+            <textarea type="text" name="offer_info[description_en]"  class="form-control" placeholder="Enter description in english"
+                      required data-validation-required-message="Enter description in english">{{ (!empty($product->offer_info['description_en'])) ? $product->offer_info['description_en'] : old("offer_info.description_en") ?? '' }}</textarea>
             <div class="help-block"></div>
-            @if ($errors->has('description'))
-                <div class="help-block">  {{ $errors->first('description') }}</div>
+            @if ($errors->has('description_en'))
+                <div class="help-block">  {{ $errors->first('description_en') }}</div>
+            @endif
+        </div>
+
+        <div class="form-group col-md-6 {{ $errors->has('description_bn') ? ' error' : '' }}">
+            <label for="description_bn" class="required">Description (Bangla)</label>
+            <textarea type="text" name="offer_info[description_bn]"  class="form-control" placeholder="Enter description in bangla"
+                      required data-validation-required-message="Enter description in bangla">{{ (!empty($product->offer_info['description_bn'])) ? $product->offer_info['description_bn'] : old("offer_info.description_bn") ?? '' }}</textarea>
+            <div class="help-block"></div>
+            @if ($errors->has('description_bn'))
+                <div class="help-block">  {{ $errors->first('description_bn') }}</div>
             @endif
         </div>
     </slot>
@@ -110,13 +118,23 @@
                 <div class="help-block">  {{ $errors->first('title') }}</div>
             @endif
         </div>
-        <div class="form-group col-md-12 {{ $errors->has('description') ? ' error' : '' }}">
-            <label for="description" class="required">Description</label>
-            <textarea type="text" name="offer_info[description]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                      required data-validation-required-message="Enter view list url">{{ (!empty($product->offer_info['description'])) ? $product->offer_info['description'] : old("offer_info.description") ?? '' }}</textarea>
+        <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
+            <label for="description_en" class="required">Description (English)</label>
+            <textarea type="text" name="offer_info[description_en]"  class="form-control" placeholder="Enter description in english"
+                      required data-validation-required-message="Enter description in english">{{ (!empty($product->offer_info['description_en'])) ? $product->offer_info['description_en'] : old("offer_info.description_en") ?? '' }}</textarea>
             <div class="help-block"></div>
-            @if ($errors->has('description'))
-                <div class="help-block">  {{ $errors->first('description') }}</div>
+            @if ($errors->has('description_en'))
+                <div class="help-block">  {{ $errors->first('description_en') }}</div>
+            @endif
+        </div>
+
+        <div class="form-group col-md-6 {{ $errors->has('description_bn') ? ' error' : '' }}">
+            <label for="description_bn" class="required">Description (Bangla)</label>
+            <textarea type="text" name="offer_info[description_bn]"  class="form-control" placeholder="Enter description in bangla"
+                      required data-validation-required-message="Enter description in bangla">{{ (!empty($product->offer_info['description_bn'])) ? $product->offer_info['description_bn'] : old("offer_info.description_bn") ?? '' }}</textarea>
+            <div class="help-block"></div>
+            @if ($errors->has('description_bn'))
+                <div class="help-block">  {{ $errors->first('description_bn') }}</div>
             @endif
         </div>
     </slot>
@@ -133,37 +151,46 @@
                 <div class="help-block">  {{ $errors->first('title') }}</div>
             @endif
         </div>
-        <div class="form-group col-md-12 {{ $errors->has('description') ? ' error' : '' }}">
-            <label for="description" class="required">Description</label>
-            <textarea name="offer_info[description]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                      required data-validation-required-message="Enter view list url">{{ (!empty($product->offer_info['description'])) ? $product->offer_info['description'] : old("offer_info.description") ?? '' }}</textarea>
+        <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
+            <label for="description_en" class="required">Description (English)</label>
+            <textarea type="text" name="offer_info[description_en]"  class="form-control" placeholder="Enter description in english"
+                      required data-validation-required-message="Enter description in english">{{ (!empty($product->offer_info['description_en'])) ? $product->offer_info['description_en'] : old("offer_info.description_en") ?? '' }}</textarea>
             <div class="help-block"></div>
-            @if ($errors->has('description'))
-                <div class="help-block">  {{ $errors->first('description') }}</div>
+            @if ($errors->has('description_en'))
+                <div class="help-block">  {{ $errors->first('description_en') }}</div>
+            @endif
+        </div>
+
+        <div class="form-group col-md-6 {{ $errors->has('description_bn') ? ' error' : '' }}">
+            <label for="description_bn" class="required">Description (Bangla)</label>
+            <textarea type="text" name="offer_info[description_bn]"  class="form-control" placeholder="Enter description in bangla"
+                      required data-validation-required-message="Enter description in bangla">{{ (!empty($product->offer_info['description_bn'])) ? $product->offer_info['description_bn'] : old("offer_info.description_bn") ?? '' }}</textarea>
+            <div class="help-block"></div>
+            @if ($errors->has('description_bn'))
+                <div class="help-block">  {{ $errors->first('description_bn') }}</div>
             @endif
         </div>
     </slot>
 
     {{--MNP Offer--}}
     <slot class="{{ $offertype == 14 ? '' : 'd-none' }}" id="mnp_offers">
-        {{--<div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">--}}
-            {{--<label for="title" class="required">Title</label>--}}
-            {{--<input type="text" name="offer_info[title]"  class="form-control" placeholder="Enter SMS rate in paisa"--}}
-                   {{--oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"--}}
-                   {{--value="{{ (!empty($product->offer_info['title'])) ? $product->offer_info['title'] : old("offer_info.title") ?? '' }}"--}}
-                   {{--required data-validation-required-message="Enter view list url">--}}
-            {{--<div class="help-block"></div>--}}
-            {{--@if ($errors->has('title'))--}}
-                {{--<div class="help-block">  {{ $errors->first('title') }}</div>--}}
-            {{--@endif--}}
-        {{--</div>--}}
-        <div class="form-group col-md-6 {{ $errors->has('description') ? ' error' : '' }}">
-            <label for="description" class="required">Description</label>
-            <textarea type="text" name="offer_info[description]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                      required data-validation-required-message="Enter view list url">{{ (!empty($product->offer_info['description'])) ? $product->offer_info['description'] : old("offer_info.description") ?? '' }}</textarea>
+        <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
+            <label for="description_en" class="required">Description (English)</label>
+            <textarea type="text" name="offer_info[description_en]"  class="form-control" placeholder="Enter description in english"
+                      required data-validation-required-message="Enter description in english">{{ (!empty($product->offer_info['description_en'])) ? $product->offer_info['description_en'] : old("offer_info.description_en") ?? '' }}</textarea>
             <div class="help-block"></div>
-            @if ($errors->has('description'))
-                <div class="help-block">  {{ $errors->first('description') }}</div>
+            @if ($errors->has('description_en'))
+                <div class="help-block">  {{ $errors->first('description_en') }}</div>
+            @endif
+        </div>
+
+        <div class="form-group col-md-6 {{ $errors->has('description_bn') ? ' error' : '' }}">
+            <label for="description_bn" class="required">Description (Bangla)</label>
+            <textarea type="text" name="offer_info[description_bn]"  class="form-control" placeholder="Enter description in bangla"
+                      required data-validation-required-message="Enter description in bangla">{{ (!empty($product->offer_info['description_bn'])) ? $product->offer_info['description_bn'] : old("offer_info.description_bn") ?? '' }}</textarea>
+            <div class="help-block"></div>
+            @if ($errors->has('description_bn'))
+                <div class="help-block">  {{ $errors->first('description_bn') }}</div>
             @endif
         </div>
     </slot>
@@ -180,13 +207,23 @@
                 <div class="help-block">  {{ $errors->first('title') }}</div>
             @endif
         </div>
-        <div class="form-group col-md-12 {{ $errors->has('description') ? ' error' : '' }}">
-            <label for="description" class="required">Description</label>
-            <textarea type="text" name="offer_info[description]"  class="form-control" placeholder="Enter SMS rate in paisa"
-                      required data-validation-required-message="Enter view list url">{{ (!empty($product->offer_info['description'])) ? $product->offer_info['description'] : old("offer_info.description") ?? '' }}</textarea>
+        <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
+            <label for="description_en" class="required">Description (English)</label>
+            <textarea type="text" name="offer_info[description_en]"  class="form-control" placeholder="Enter description in english"
+                      required data-validation-required-message="Enter description in english">{{ (!empty($product->offer_info['description_en'])) ? $product->offer_info['description_en'] : old("offer_info.description_en") ?? '' }}</textarea>
             <div class="help-block"></div>
-            @if ($errors->has('description'))
-                <div class="help-block">  {{ $errors->first('description') }}</div>
+            @if ($errors->has('description_en'))
+                <div class="help-block">  {{ $errors->first('description_en') }}</div>
+            @endif
+        </div>
+
+        <div class="form-group col-md-6 {{ $errors->has('description_bn') ? ' error' : '' }}">
+            <label for="description_bn" class="required">Description (Bangla)</label>
+            <textarea type="text" name="offer_info[description_bn]"  class="form-control" placeholder="Enter description in bangla"
+                      required data-validation-required-message="Enter description in bangla">{{ (!empty($product->offer_info['description_bn'])) ? $product->offer_info['description_bn'] : old("offer_info.description_bn") ?? '' }}</textarea>
+            <div class="help-block"></div>
+            @if ($errors->has('description_bn'))
+                <div class="help-block">  {{ $errors->first('description_bn') }}</div>
             @endif
         </div>
     </slot>
