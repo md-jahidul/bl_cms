@@ -73,7 +73,7 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="ussd">USSD Code English</label>
-                                    <input type="text" name="ussd"  class="form-control" placeholder="Enter offer ussd english" maxlength="25"
+                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd english" maxlength="25"
                                            value="{{ $product->ussd_en }}">
                                 </div>
 
