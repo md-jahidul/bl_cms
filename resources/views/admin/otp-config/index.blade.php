@@ -129,7 +129,7 @@
                 dom: 'Bfrtip',
                 buttons: [],
                 paging: true,
-                searching: true,
+                searching: false,
                 "pageLength": 10,
                 "bDestroy": true,
             });
