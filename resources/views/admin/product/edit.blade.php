@@ -230,6 +230,18 @@
             // $("#end_date").on("dp.change", function (e) {
             //     $('#start_date').data("DateTimePicker").maxDate(e.date);
             // });
+
+
+
+            $('.duration_categories').change(function () {
+                let durationOntion = $(this).find('option:selected').attr('data-alias')
+                let durationDays = $(this).find('option:selected').attr('data-days')
+                let validityField = $('.validity_days');
+
+                if (durationOntion) {
+                    validityField.val(durationDays).prop('readonly', true);
+                }
+            })
         });
     </script>
 @endpush
