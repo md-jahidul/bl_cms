@@ -30,7 +30,7 @@
                                         type="text" value="@if(old('title')){{old('title')}}@endif" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title." name="title">
                                         <div class="help-block">
                                             <small class="text-info">
-                                                Title can not be more then 200 charecters
+                                                Title can not be more then 200 characters
                                             </small>
                                         </div>
                                         @error('title')
@@ -97,7 +97,7 @@
                                         type="text" min="0" value="@if(old('type')){{old('type')}}@endif" id="type" class="form-control @error('type') is-invalid @enderror" placeholder="Enter type...." name="type">
                                         <div class="help-block">
                                             <small class="text-info">
-                                                Type can not be more then 200 charecters
+                                                Type can not be more then 200 characters
                                             </small>
                                         </div>
                                         @error('type')
@@ -115,12 +115,12 @@
                                         required
                                         data-validation-required-message="Offer is required"
                                         maxlength="200"
-                                        data-validation-maxlength-message = "Offer can not be more then 200 charecters"
+                                        data-validation-maxlength-message = "Offer can not be more then 200 characters"
 
                                         type="text" min="0" value="@if(old('offer')){{old('offer')}}@endif" id="Offer" class="form-control @error('offer') is-invalid @enderror" placeholder="Enter Offer...." name="offer">
                                         <div class="help-block">
                                             <small class="text-info">
-                                                Offer can not be more then 200 charecters
+                                                Offer can not be more then 200 characters
                                             </small>
                                         </div>
                                         @error('offer')
@@ -155,15 +155,9 @@
                                     <div class="form-group">
                                         <label for="validity" class="required">Validity:</label>
                                         <input
-
-                                        {{-- required --}}
-                                        {{-- maxlength="50"
-                                        data-validation-maxlength-message = "Validity can not be more then 50 digits"
-                                        data-validation-required-message="Validity is required"
-                                        placeholder="Enter validity in day" --}}
                                         type="date" value="@if(old('validity')){{old('validity')}}@endif" id="validity" class="form-control @error('validity') is-invalid @enderror" placeholder="" name="validity">
                                         <div class="help-block">
-                                            <small class="text-info">Enter Validation on day.</small>
+                                            <small class="text-info">Select Expiry date</small>
                                         </div>
                                         @error('validity')
                                             <span class="invalid-feedback" role="alert">
