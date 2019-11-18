@@ -14,7 +14,7 @@ class InternetOfferSeeder extends Seeder
     public function run()
     {
         $offers = [[
-            'title' => '250MNN',
+            'title' => 'INTERNET_OFFER_1',
             'volume' => 250.00,
             'validity' => 10,
             'price' => 120.00,
@@ -23,7 +23,7 @@ class InternetOfferSeeder extends Seeder
         ],
 
             [
-                'title' => '250MNN',
+                'title' => 'INTERNET_OFFER_2',
                 'volume' => 1024.00,
                 'validity' => 30,
                 'price' => 320.00,

@@ -1,16 +1,16 @@
 @extends('layouts.admin')
-@section('title', 'Neare By Offer')
-@section('card_name', 'Neare By Offer')
+@section('title', 'Near By Offer')
+@section('card_name', 'Near By Offer')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Neare By Offer List</li>
+    <li class="breadcrumb-item active">Near By Offer List</li>
 @endsection
 @section('action')
     <a href="{{route('nearByOffer.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-       Create Near By Offer 
+       Create Near By Offer
     </a>
 @endsection
 @section('content')
-   
+
     <section>
         <div class="card">
             <div class="card-header">
@@ -49,18 +49,14 @@
                                     <td width="2%">{{$nearByOffer->offer}}</td>
                                     <td width="2%">{{$nearByOffer->offer_code}}</td>
                                     <td width="2%">{{$nearByOffer->validity}}</td>
-                                    
+
                                     <td width="2%"><img style="height:25px;width:50px" src="{{asset($nearByOffer->image)}}" alt="" srcset=""> </td>
                                     <td width="40%">
-                                        <div class="row justify-content-md-center no-gutters">
-                                            <div class="col-md-6">
-                                                <a role="button" href="{{route('nearByOffer.edit',$nearByOffer->id)}}" class="btn btn-outline-success">
-                                                    <i class="la la-pencil"></i>
-                                                </a>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <button data-id="{{$nearByOffer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                            </div>
+                                        <div class="btn-group" role="group">
+                                            <a role="button" href="{{route('nearByOffer.edit',$nearByOffer->id)}}" class="btn btn-outline-success">
+                                                <i class="la la-pencil"></i>
+                                            </a>
+                                            <button data-id="{{$nearByOffer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -91,8 +87,8 @@
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
-        
-       
+
+
 
         $(function () {
             $('.delete').click(function () {
