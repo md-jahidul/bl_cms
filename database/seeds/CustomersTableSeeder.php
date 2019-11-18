@@ -79,6 +79,7 @@ class CustomersTableSeeder extends Seeder
                 'name' => 'mybl user',
                 'email' => 'mybl-admin43@admin.com',
                 'phone' => '01902796143',
+                'customer_account_id' => '1591',
                 'uid' => uniqid(),
                 'device_token' => '125'
             ],
