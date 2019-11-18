@@ -15,11 +15,11 @@ class CreateInternetOffersTable extends Migration
     {
         Schema::create('internet_offers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
+            $table->string('title')->unique();
             $table->bigInteger('volume');
             $table->string('validity');
             $table->bigInteger('price')->unsigned();
-            $table->text('offer_code');
+            $table->string('offer_code')->unique();
             $table->bigInteger('points')->unsigned();
             $table->timestamps();
         });

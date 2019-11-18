@@ -1,11 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Minut Offer')
-@section('card_name', "Minut Offer")
-@section('breadcrumb')
-    <li class="breadcrumb-item active">
-        Create Minut Offer
-    </li>
-@endsection
+@section('title', 'Minutes Offer')
+@section('card_name', "Minutes Offer")
 
 @section('content')
     <section>
@@ -17,7 +12,7 @@
                         @csrf
                         @method('post')
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Create Minute Offer.</h4>
+                            <h4 class="form-section"><i class="la la-paperclip"></i>Create Minutes Offer.</h4>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -26,8 +21,6 @@
                                         required
                                         data-validation-required-message="Title is required"
                                         maxlength="200"
-                                        data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                        data-validation-regex-message="Title must start with alphabets"
                                         data-validation-maxlength-message = "Title can not be more then 200 characters"
                                         type="text" value="@if(old('title')){{old('title')}}@endif" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
                                         <div class="help-block">

@@ -6,11 +6,11 @@
 @endsection
 @section('action')
     <a href="{{route('amarOffer.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create Amar Offer 
+        Create Amar Offer
     </a>
 @endsection
 @section('content')
-   
+
     <section>
         <div class="card">
             <div class="card-header">
@@ -41,21 +41,16 @@
                                 <td width="20%">{{$amarOffer->offer_code}}</td>
                                 <td width="10%">{{$amarOffer->points}}</td>
                                 <td width="20%">
-                                    <div class="row justify-content-md-center no-gutters">
-                                        <div class="col-md-3">
-                                            <a role="button" href="{{route('amarOffer.show',$amarOffer->id)}}" class="btn btn-outline-info">
-                                                <i class="la la-info"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <a role="button" href="{{route('amarOffer.edit',$amarOffer->id)}}" class="btn btn-outline-success">
-                                                <i class="la la-pencil"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <button data-id="{{$amarOffer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                        </div>
+                                    <div class="btn-group" role="group">
+                                        <a role="button" href="{{route('amarOffer.show',$amarOffer->id)}}" class="btn btn-outline-info">
+                                            <i class="la la-info"></i>
+                                        </a>
+                                        <a role="button" href="{{route('amarOffer.edit',$amarOffer->id)}}" class="btn btn-outline-success">
+                                            <i class="la la-pencil"></i>
+                                        </a>
+                                        <button data-id="{{$amarOffer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                     </div>
+
                                 </td>
                             </tr>
 
@@ -85,8 +80,8 @@
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
-        
-       
+
+
 
         $(function () {
             $('.delete').click(function () {
