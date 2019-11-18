@@ -78,7 +78,7 @@
                                         value="{{ old("provider") ? old("provider") : '' }}" id="Provider" class="form-control @error('provider') is-invalid @enderror" 
                                         placeholder="Provider.." 
                                         name="provider">
-                                        
+
                                         @error('provider')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
