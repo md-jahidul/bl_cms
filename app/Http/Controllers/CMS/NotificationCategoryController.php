@@ -48,7 +48,7 @@ class NotificationCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.notification.notification-category.create');
     }
 
     /**
