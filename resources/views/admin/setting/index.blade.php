@@ -1,31 +1,31 @@
 @extends('layouts.admin')
-@section('title', 'Setting')
-@section('card_name', 'Setting')
-@section('breadcrumb')
-    <li class="breadcrumb-item active">Setting List</li>
-@endsection
+@section('title', 'Settings')
+@section('card_name', 'Settings')
+{{--@section('breadcrumb')
+    <li class="breadcrumb-item active">Settings List</li>
+@endsection--}}
 
 @section('content')
-<div class="card mb-0 px-1" style="box-shadow:none;">        
+<div class="card mb-0 px-1" style="box-shadow:none;">
     <div class="card-content">
         <div class="card-body">
             <form class="form" method="POST" action="@if(isset($setting_info)) {{route('setting.update',$setting_info->id)}} @else {{route('setting.store')}} @endif" novalidate>
                 @csrf
-                @if(isset($setting_info)) 
+                @if(isset($setting_info))
                     @method('put')
                 @else
                     @method('post')
                 @endif
                 <div class="form-body">
-                    <h4 class="form-section"><i class="la la-key"></i>Setting Key</h4>
+                    <h4 class="form-section"><i class="la la-key"></i>Add Settings</h4>
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
-                                    <label class="required">Setting Key :
+                                    <label class="required">Settings key :
                                     </label>
                                     <div class="controls">
                                       <select name="setting_key_id" id="select" required class="form-control">
-                                        <option value="">Select Your City</option>
+                                        <option value="">Select Settings Key</option>
                                         @foreach ($keys as $key)
                                             <option @if(isset($setting_info)) @if($setting_info->setting_key_id == $key->id) selected @endif @endif value="{{$key->id}}">{{$key->title}}</option>
                                         @endforeach
@@ -37,16 +37,16 @@
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="limit" class="required">Limit:</label>
-                                <input 
+                                <input
                                 type="number"
                                 required
-                                maxlength="5" 
+                                maxlength="5"
                                 data-validation-maxlength-message = "Limit can never be more then 5 digits"
-                                data-validation-required-message="Limit is required"  
+                                data-validation-required-message="Limit is required"
                                 @if(isset($setting_info)) value="{{$setting_info->limit}}"@else value="{{ old("limit") ? old("limit") : '' }}" @endif style="width:100%;height:100%" min="0" type="number" id="limit" class="form-control @error('limit') is-invalid @enderror" placeholder="Set Limite..." name="limit">
                                 <div class="help-block"> <small class="text-info">limit can never be more then 5 digits</small></div>
                                 <small class="text-danger"> @error('limit') {{ $message }} @enderror </small>
-                                
+
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </form>
         </div>
     </div>
@@ -88,7 +88,7 @@
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        
+
                                         <div class="col-md-2">
                                             <button data-id="{{$setting->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
@@ -105,7 +105,7 @@
 
 </section>
 
-   
+
 
 
 @endsection
@@ -145,7 +145,7 @@
                             success: function (res) {
                                 Swal.fire(
                                     'Deleted!',
-                                    'Your file has been deleted.',
+                                    'Your Settings has been deleted.',
                                     'success',
                                 );
                                 setTimeout(redirect, 2000)
@@ -161,7 +161,7 @@
 
 
 
-       
+
         $(document).ready(function () {
             $('#Example1').DataTable({
                 dom: 'Bfrtip',
@@ -176,6 +176,6 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
     <script>
-        
+
     </script>
 @endpush
