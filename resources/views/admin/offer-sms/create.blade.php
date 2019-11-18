@@ -128,7 +128,7 @@
                                         data-validation-required-message="Validity is required"
                                         type="number" min="0" value="@if(old('validity')){{old('validity')}}@endif" id="validity" class="form-control @error('validity') is-invalid @enderror" placeholder="" name="validity">
                                         <div class="help-block">
-                                            <small id="validity" class="form-text text-info">Enter Validation on day.</small>
+                                            <small id="validity" class="form-text text-info">Enter Validity on day.</small>
                                         </div>
                                         @error('validity')
                                             <span class="invalid-feedback" role="alert">
