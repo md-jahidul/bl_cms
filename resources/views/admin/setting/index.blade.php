@@ -43,7 +43,7 @@
                                 maxlength="5"
                                 data-validation-maxlength-message = "Limit can never be more then 5 digits"
                                 data-validation-required-message="Limit is required"
-                                @if(isset($setting_info)) value="{{$setting_info->limit}}"@else value="{{ old("limit") ? old("limit") : '' }}" @endif style="width:100%;height:100%" min="0" type="number" id="limit" class="form-control @error('limit') is-invalid @enderror" placeholder="Set Limite..." name="limit">
+                                @if(isset($setting_info)) value="{{$setting_info->limit}}"@else value="{{ old("limit") ? old("limit") : '' }}" @endif style="width:100%;height:100%" min="0" type="number" id="limit" class="form-control @error('limit') is-invalid @enderror" placeholder="Set Limit" name="limit">
                                 <div class="help-block"> <small class="text-info">limit can never be more then 5 digits</small></div>
                                 <small class="text-danger"> @error('limit') {{ $message }} @enderror </small>
 
@@ -82,16 +82,11 @@
                                 <td width="50%">{{$setting->settingsKey->title}}</td>
                                 <td width="10%">{{$setting->limit}}</td>
                                 <td width="30%">
-                                    <div class="row justify-content-md-center">
-                                        <div class="col-md-2">
-                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('setting.edit',$setting->id)}}" class="btn-pancil btn btn-outline-success" >
-                                                <i class="la la-pencil"></i>
-                                            </a>
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <button data-id="{{$setting->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                        </div>
+                                    <div class="btn-group" role="group">
+                                        <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('setting.edit',$setting->id)}}" class="btn-pancil btn btn-outline-success" >
+                                            <i class="la la-pencil"></i>
+                                        </a>
+                                        <button data-id="{{$setting->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                     </div>
                                 </td>
                             </tr>
