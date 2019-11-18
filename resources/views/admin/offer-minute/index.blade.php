@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Minute Offer')
-@section('card_name', 'Minute Offer')
+@section('title', 'Minutes Offer')
+@section('card_name', 'Minutes Offer')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Minute Offer List</li>
+    <li class="breadcrumb-item active">Minutes Offer List</li>
 @endsection
 @section('action')
     <a href="{{route('minuteOffer.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create Minute Offer
+        Create Minutes Offer
     </a>
 @endsection
 @section('content')
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">Minute Offer List</h1>
+                        <h1 class="card-title pl-1">Minutes Offer List</h1>
                     </div>
                 </div>
             </div>
