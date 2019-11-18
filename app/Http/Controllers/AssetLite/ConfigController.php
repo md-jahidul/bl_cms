@@ -47,4 +47,5 @@ class ConfigController extends Controller
         Session::flash('message', $response->getContent());
         return redirect("/config");
     }
+
 }

@@ -41,6 +41,8 @@ class PartnerOfferService
 
         $count = count($this->partnerOfferRepository->findAll());
         $data['partner_id'] = $partnerId;
+        $imageUrl = $this->imageUpload($data, 'campaign_img', $data['offer_en'], 'images/campaign-image/');
+        $data['campaign_img'] = env('APP_URL', 'http://localhost') . "/images/campaign-image/" . $imageUrl;
         $data['display_order'] = ++$count;
         $this->save($data);
         return new Response('Partner offer added successfully');
@@ -61,6 +63,10 @@ class PartnerOfferService
     {
         $partnerOffer = $this->findOne($id);
         (isset($data['show_in_home'])) ? $data['show_in_home'] = 1 : $data['show_in_home'] = 0;
+        if (!empty($data['campaign_img'])) {
+            $imageUrl = $this->imageUpload($data, 'campaign_img', $data['offer_en'], 'images/campaign-image/');
+            $data['campaign_img'] = env('APP_URL', 'http://localhost:8000') . "/images/campaign-image/" . $imageUrl;
+        }
         $partnerOffer->update($data);
         return Response('Partner offer update successfully !');
     }

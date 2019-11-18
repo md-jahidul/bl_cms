@@ -23,6 +23,7 @@
                             <th>Price</th>
                             <th>USSD</th>
                             <th>Offer Type</th>
+                            <th>Date Range</th>
                             <th class="text-center" width="8%">Details</th>
                             <th width="8%" class="text-center">Trending Offer</th>
                             <th class="">Action</th>
@@ -37,6 +38,7 @@
                                     <td>{{ $product->price_tk }} Tk</td>
                                     <td>{{ $product->ussd_en }}</td>
                                     <td>{{ $product->offer_category->name_en }}</td>
+                                    <td>{{ $product->end_date ? '' : '' }} <span class="badge badge-success badge-pill mr-1"></td>
 
                                     <td class="text-center">
                                         @if($product->offer_category_id == 2 || $product->offer_category_id == 4)

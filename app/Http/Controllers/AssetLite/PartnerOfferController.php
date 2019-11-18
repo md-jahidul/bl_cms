@@ -32,6 +32,7 @@ class PartnerOfferController extends Controller
     public function index($parentId, $partnerName)
     {
         $partnerOffers = $this->partnerOfferService->itemList($parentId);
+
         return view('admin.partner-offer.index', compact('partnerOffers', 'parentId', 'partnerName'));
     }
 
@@ -59,6 +60,8 @@ class PartnerOfferController extends Controller
      */
     public function store(StorePartnerOfferRequest $request, $partnerId, $partnerName)
     {
+//        return $request->all();
+
         $response = $this->partnerOfferService->storePartnerOffer($request->all(), $partnerId);
         Session::flash('message', $response->getContent());
         return redirect("partner-offer/$partnerId/$partnerName");
@@ -92,6 +95,8 @@ class PartnerOfferController extends Controller
     public function edit($partnerId, $partnerName, $id)
     {
         $partnerOffer = $this->partnerOfferService->findOne($id);
+
+//        return $partnerOffer;
         return view('admin.partner-offer.edit', compact('partnerOffer', 'partnerId', 'partnerName', 'path'));
     }
 

@@ -56,12 +56,15 @@ class ProductController extends Controller
      */
     public function index($type)
     {
+        $bdTimeZone = Carbon::now('Asia/Dhaka');
+        $dateTime = $bdTimeZone->toDateTimeString();
+        $currentSecends = strtotime($dateTime);
+
         $products = Product::category($type)->with(['offer_category' => function ($query) {
             $query->select('id','name_en');
         }])->get();
 
-//        return $products;
-        return view('admin.product.index', compact('products', 'type'));
+        return view('admin.product.index', compact('products', 'type', 'currentSecends'));
     }
 
     public function trendingOfferHome()

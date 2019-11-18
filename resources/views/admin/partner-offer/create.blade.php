@@ -100,12 +100,31 @@
                                 </div>
 
 
+                                <div class="col-md-6 pt-2">
+                                    <div class="form-group">
+                                        <label for="is_campaign" class="mr-1">Is Campaign:</label>
+                                        <input type="checkbox" name="is_campaign" value="1" id="is_campaign">
+                                    </div>
+                                </div>
 
-                                <div class="col-md-12">
+                                <div class="form-group col-md-6 mb-0">
+                                    <label for="campaign_img">Campaign Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="campaign_img" class="custom-file-input" id="image">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                </div>
+
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="show_in_home" class="mr-1">Show In Home:</label>
                                         <input type="checkbox" name="show_in_home" value="1" id="show_in_home">
                                     </div>
+                                </div>
+
+                                <div class="form-group col-md-6 mb-0">
+                                    <img style="height:70px;width:70px;display:none" id="imgDisplay">
                                 </div>
 
                                 <div class="col-md-12">
@@ -123,7 +142,7 @@
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary"><i
+                                        <button type="submit" id="save" class="btn btn-primary"><i
                                                 class="la la-check-square-o"></i> Save
                                         </button>
                                     </div>
@@ -142,7 +161,22 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
+    <script>
+        $(function () {
+            let isCampain = $('#is_campaign');
+            let campaignImg = $('#campaign_image');
+                campaignImg.find('input');
 
+            $(isCampain).click(function(){
+                if($(this).prop("checked")){
+                    campaignImg.removeClass('d-none');
+                }
+                else {
+                    campaignImg.addClass('d-none');
+                }
+            });
+        })
+    </script>
 @endpush
 
 

@@ -37,6 +37,19 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('config', 'AssetLite\ConfigController@index');
     Route::put('config/update', 'AssetLite\ConfigController@update');
 
+    // Priyojon Landing Page ====================================
+//    Route::get('priyojon-landing', 'AssetLite\PriyojonLandingController@index');
+//    Route::get('priyojon-landing/{id}/edit', 'AssetLite\PriyojonLandingController@edit')
+//        ->name('priyojon_landing_edit');
+//    Route::put('priyojon-landing/{id}update', 'AssetLite\PriyojonLandingController@update')
+//        ->name('priyojon_landing_update');
+
+    Route::get('priyojon/{id}/child-menu/create', 'AssetLite\PriyojonController@create');
+    Route::resource('priyojon', 'AssetLite\PriyojonController')->only(['update','edit']);
+    Route::get('priyojon/{id?}/{child_menu?}', 'AssetLite\PriyojonController@index');
+//    Route::get('/menu-auto-save', 'AssetLite\MenuController@parentMenuSortable');
+//    Route::get('menu/{parentId}/destroy/{id}', 'AssetLite\MenuController@destroy');
+
     // MENU PAGES ====================================
     Route::get('menu/{id}/child-menu/create', 'AssetLite\MenuController@create');
     Route::resource('menu', 'AssetLite\MenuController')->only(['update','edit','store']);
@@ -105,10 +118,8 @@ Route::middleware('authorize', 'auth')->group(function () {
 
 
 
-    // OFFER SUB MENU
+    // OFFER SUB MENU ===========================
     Route::get('offer-categories/{id}/{type}', 'AssetLite\OfferCategoryController@index')->name('child_menu');
-
-
 
 
 

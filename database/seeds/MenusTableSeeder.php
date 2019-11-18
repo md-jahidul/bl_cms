@@ -12,8 +12,8 @@ class MenusTableSeeder extends Seeder
      */
     public function run()
     {
-        $menus = ['Home','Offers','Apps And Services','Bussiness','Loyalty','Eshop'];
-        $menu_english = ['Home','Offers','Apps & Services','Bussiness','Loyalty','Eshop'];
+        $menus = ['Home','Offers','Apps And Services','Business','Loyalty','Eshop'];
+        $menu_english = ['Home','Offers','Apps & Services','Business','Loyalty','Eshop'];
         $menu_bangla = ['হোম','অফার','অ্যাপ & সার্ভিস','বিজনেস','লয়াল্টি','ই-শপ'];
 
         foreach ($menus as $key => $menu) {

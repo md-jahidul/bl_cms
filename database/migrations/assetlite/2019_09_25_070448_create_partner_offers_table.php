@@ -24,6 +24,8 @@ class CreatePartnerOffersTable extends Migration
             $table->string('get_offer_msg_bn');
             $table->string('btn_text_en');
             $table->string('btn_text_bn');
+            $table->string('campaign_img')->nullable();
+            $table->tinyInteger('is_campaign')->default(0);
             $table->tinyInteger('show_in_home')->default(0);
             $table->tinyInteger('is_active');
             $table->integer('display_order')->default(0);
