@@ -5,12 +5,13 @@
     <li class="breadcrumb-item active">Mixed Bundle List</li>
 @endsection
 @section('action')
-    <a href="{{route('mixedBundleOffer.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create Mixed Bundle 
+    <a href="{{route('mixedBundleOffer.create')}}" class="btn btn-primary  round btn-glow px-2"><i
+            class="la la-plus"></i>
+        Create Mixed Bundle
     </a>
 @endsection
 @section('content')
-   
+
     <section>
         <div class="card">
             <div class="card-header">
@@ -39,9 +40,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($mixedBundle_offers as $mixedBundle_offer)
+                        @foreach ($mixedBundle_offers as $sl => $mixedBundle_offer)
                             <tr>
-                                <td width="2%">{{$mixedBundle_offer->id}}</td>
+                                <td width="2%">{{ ++$sl }}</td>
                                 <td width="40%">{{$mixedBundle_offer->title}}</td>
                                 <td width="2%">{{$mixedBundle_offer->internet}}</td>
                                 <td width="2%">{{$mixedBundle_offer->minutes}}</td>
@@ -52,15 +53,15 @@
                                 <td width="20%">{{$mixedBundle_offer->offer_code}}</td>
                                 {{-- <td>{{$mixedBundle_offer->tag}}</td> --}}
                                 <td width="30%">
-                                    <div class="row justify-content-md-center no-gutters">
-                                        <div class="col-md-6">
-                                            <a role="button" href="{{route('mixedBundleOffer.edit',$mixedBundle_offer->id)}}" class="btn btn-outline-success">
-                                                <i class="la la-pencil"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <button data-id="{{$mixedBundle_offer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                        </div>
+                                    <div class="btn-group" role="group">
+                                        <a role="button"
+                                           href="{{route('mixedBundleOffer.edit',$mixedBundle_offer->id)}}"
+                                           class="btn btn-outline-success">
+                                            <i class="la la-pencil"></i>
+                                        </a>
+                                        <a role="button" href="#" data-id="{{$mixedBundle_offer->id}}" class="btn btn-outline-danger delete">
+                                            <i class="la la-trash"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -82,21 +83,24 @@
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
     <style></style>
 @endpush
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
+    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js"
+            type="text/javascript"></script>
+    <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js"
+            type="text/javascript"></script>
     <script>
-        
-       
+
 
         $(function () {
-            $('.delete').click(function () {
-                var id = $(this).attr('data-id');
+            $('.delete').click(function (e) {
+                e.preventDefault();
+                let id = $(this).attr('data-id');
 
                 Swal.fire({
                     title: 'Are you sure?',
@@ -110,7 +114,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('mixedBundleOffer/destroy') }}/"+id,
+                            url: "{{ url('mixedBundleOffer/destroy') }}/" + id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -119,6 +123,7 @@
                                     'success',
                                 );
                                 setTimeout(redirect, 2000)
+
                                 function redirect() {
                                     window.location.href = "{{ url('mixedBundleOffer/') }}"
                                 }
