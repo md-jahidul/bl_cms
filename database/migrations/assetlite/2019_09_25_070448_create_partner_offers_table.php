@@ -29,6 +29,7 @@ class CreatePartnerOffersTable extends Migration
             $table->tinyInteger('show_in_home')->default(0);
             $table->tinyInteger('is_active');
             $table->integer('display_order')->default(0);
+            $table->integer('campaign_order')->default(0);
             $table->json('other_attributes')->nullable();
             $table->foreign('partner_id')
                 ->references('id')

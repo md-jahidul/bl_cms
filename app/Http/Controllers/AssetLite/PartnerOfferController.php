@@ -73,9 +73,10 @@ class PartnerOfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function campaignOfferList()
     {
-        //
+        $campaignOffers = $this->partnerOfferService->campaignOffers();
+        return view('admin.partner-offer.campaign', compact('campaignOffers'));
     }
 
     /**
@@ -83,7 +84,15 @@ class PartnerOfferController extends Controller
      */
     public function partnerOfferSortable(Request $request)
     {
-        $this->partnerOfferService->tableSortable($request);
+        $this->partnerOfferService->partnerOfferSortable($request);
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function campaignOfferSortable(Request $request)
+    {
+        $this->partnerOfferService->campaignOfferSortable($request);
     }
 
     /**
@@ -95,7 +104,6 @@ class PartnerOfferController extends Controller
     public function edit($partnerId, $partnerName, $id)
     {
         $partnerOffer = $this->partnerOfferService->findOne($id);
-
         return view('admin.partner-offer.edit', compact('partnerOffer', 'partnerId', 'partnerName', 'path'));
     }
 

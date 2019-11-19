@@ -32,6 +32,11 @@ class PartnerOfferService
         return $this->partnerOfferRepository->getPartnerOffer($partnerId, $isHome);
     }
 
+    public function campaignOffers()
+    {
+       return $this->partnerOfferRepository->campaigin();
+    }
+
     /**
      * @param $data
      * @return Response
@@ -48,9 +53,15 @@ class PartnerOfferService
         return new Response('Partner offer added successfully');
     }
 
-    public function tableSortable($data)
+    public function partnerOfferSortable($data)
     {
-        $this->partnerOfferRepository->partnerOfferTableSort($data);
+        $this->partnerOfferRepository->sortable($data);
+        return new Response('update successfully');
+    }
+
+    public function campaignOfferSortable($data)
+    {
+        $this->partnerOfferRepository->sortable($data, 'campaign_order');
         return new Response('update successfully');
     }
 
@@ -64,10 +75,12 @@ class PartnerOfferService
 
         $partnerOffer = $this->findOne($id);
         $data['show_in_home'] = (isset($data['show_in_home'])) ? 1 : 0;
+
         if (!empty($data['campaign_img'])) {
             $imageUrl = $this->imageUpload($data, 'campaign_img', $data['offer_en'], 'images/campaign-image/');
             $data['campaign_img'] = env('APP_URL', 'http://localhost:8000') . "/images/campaign-image/" . $imageUrl;
         }
+
         $partnerOffer->update($data);
         return Response('Partner offer update successfully !');
     }

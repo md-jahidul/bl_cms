@@ -38,12 +38,6 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('config/update', 'AssetLite\ConfigController@update');
 
     // Priyojon Landing Page ====================================
-//    Route::get('priyojon-landing', 'AssetLite\PriyojonLandingController@index');
-//    Route::get('priyojon-landing/{id}/edit', 'AssetLite\PriyojonLandingController@edit')
-//        ->name('priyojon_landing_edit');
-//    Route::put('priyojon-landing/{id}update', 'AssetLite\PriyojonLandingController@update')
-//        ->name('priyojon_landing_update');
-
     Route::get('priyojon/{id}/child-menu/create', 'AssetLite\PriyojonController@create');
     Route::resource('priyojon', 'AssetLite\PriyojonController')->only(['update','edit']);
     Route::get('priyojon/{id?}/{child_menu?}', 'AssetLite\PriyojonController@index');
@@ -114,7 +108,8 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::resource('offer-categories', 'AssetLite\OfferCategoryController')->only(['index', 'edit', 'update']);
     Route::get('offer-categories/{parent_id}/{type}/edit/{id}', 'AssetLite\OfferCategoryController@childEdit');
-    Route::put('offer-categories/{parent_id}/update/{id}', 'AssetLite\OfferCategoryController@childUpdate')->name('child-category');
+    Route::put('offer-categories/{parent_id}/update/{id}', 'AssetLite\OfferCategoryController@childUpdate')
+        ->name('child-category');
 
 
 
@@ -132,7 +127,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('offers/{type}/{id}/show', 'AssetLite\ProductController@show')->name('product.show');
 
     Route::get('offers/{type}/{id}/details', 'AssetLite\ProductController@productDetailsEdit')->name('product.details');
-    Route::put('offers/{type}/{id}/details/update', 'AssetLite\ProductController@productDetailsUpdate')->name('product.details-update');
+    Route::put('offers/{type}/{id}/details/update', 'AssetLite\ProductController@productDetailsUpdate')
+        ->name('product.details-update');
 
     Route::get('offers/{type}/{id}', 'AssetLite\ProductController@destroy');
     Route::get('trending-home', 'AssetLite\ProductController@trendingOfferHome')->name('trending-home');
@@ -154,8 +150,9 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('partner_offer_update');
     Route::get('partner-offer/{partner_id}/{partner}/offer/destroy/{id}', 'AssetLite\PartnerOfferController@destroy');
     Route::get('/partner-offer-home/sortable', 'AssetLite\PartnerOfferController@partnerOfferSortable');
-
     Route::get('partner-offers-home', 'AssetLite\PartnerOfferController@partnerOffersHome')->name('partner-offer-home');
+    Route::get('campaign-offers', "AssetLite\PartnerOfferController@campaignOfferList")->name('campaign-offers.list');
+    Route::get('campaign-offer/sortable', "AssetLite\PartnerOfferController@campaignOfferSortable");
 
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 

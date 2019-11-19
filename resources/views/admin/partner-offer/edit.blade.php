@@ -16,7 +16,7 @@
                 <div class="card-body card-dashboard">
                     <h4 class="menu-title"><strong>{{ ucwords($partnerName) }} offer edit</strong></h4><hr>
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('partner_offer_update', [$partnerId, $partnerName, $partnerOffer->id]) }}" method="POST" novalidate>
+                        <form role="form" action="{{ route('partner_offer_update', [$partnerId, $partnerName, $partnerOffer->id]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="row">
