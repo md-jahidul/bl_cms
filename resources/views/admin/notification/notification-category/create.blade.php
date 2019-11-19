@@ -2,7 +2,19 @@
 @section('title', 'Notification Category')
 @section('card_name', 'Notification Category')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Notification Category List</li>
+
+    @if(isset($notificationCategory))
+        <li class="breadcrumb-item active">Update Notification Category</li>
+    @else
+        <li class="breadcrumb-item active">Create Notification Category</li>
+    @endif
+
+@endsection
+
+@section('action')
+    <a href="{{route('notificationCategory.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Notification Category List
+    </a>
 @endsection
 
 @section('content')
@@ -18,16 +30,10 @@
                         @method('post')
                     @endif
                     <div class="form-body">
-                        <h4 class="form-section"><i class="la la-key"></i>
-                            @if(isset($notificationCategory))
-                                Edit "{{$notificationCategory->name}}" Category
-                            @else
-                                Create Notification Category
-                            @endif
-                        </h4>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="name" class="required">Category Name :</label>
+
+                        <div class="col-5">
+                            <div class="form-group">
+                                <label for="name" class="required">Enter Category Name:</label>
                                 <input type="text"
                                        required
 
@@ -39,12 +45,16 @@
 
                             </div>
 
-                            <div class="col-md-2">
-                                <div class="form-group" style="margin-top:26px">
-                                    <button class="btn btn-outline-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
-                                </div>
-                            </div>
                         </div>
+
+
+                        <div class="col-5 mb-2" >
+
+                            <button type="submit" id="submitForm" style="width:100%" class="btn @if(isset($notificationCategory)) btn-success @else btn-info @endif ">
+                                @if(isset($notificationCategory)) Update Notification Category @else Create Notification Category @endif
+                            </button>
+                        </div>
+
                     </div>
 
                 </form>

@@ -16,7 +16,7 @@
     <div class="card card-info mt-0" style="box-shadow: 0px 0px">
         <div class="card-content">
             <div class="card-body card-dashboard">
-                <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
+                <table class="table table-striped table-bordered  no-footer dataTable" id="notification_cat" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
                         <th width="10%">ID</th>
@@ -110,7 +110,7 @@
         })
 
         $(document).ready(function () {
-            $('#Example1').DataTable({
+            $('#notification_cat').DataTable({
                 dom: 'Bfrtip',
                 buttons: [],
                 paging: true,
