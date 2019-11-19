@@ -61,8 +61,9 @@ class PartnerOfferService
      */
     public function updatePartnerOffer($data, $id)
     {
+
         $partnerOffer = $this->findOne($id);
-        (isset($data['show_in_home'])) ? $data['show_in_home'] = 1 : $data['show_in_home'] = 0;
+        $data['show_in_home'] = (isset($data['show_in_home'])) ? 1 : 0;
         if (!empty($data['campaign_img'])) {
             $imageUrl = $this->imageUpload($data, 'campaign_img', $data['offer_en'], 'images/campaign-image/');
             $data['campaign_img'] = env('APP_URL', 'http://localhost:8000') . "/images/campaign-image/" . $imageUrl;

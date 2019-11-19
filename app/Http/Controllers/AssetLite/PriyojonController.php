@@ -61,7 +61,7 @@ class PriyojonController extends Controller
      */
     public function edit($id)
     {
-        $priyojonLanding = Priyojon::findOrFail($id);
+        $priyojonLanding = $this->priyojonService->findOne($id);
 
         $menu_id = $priyojonLanding->parent_id;
         while ($menu_id != 0) {
