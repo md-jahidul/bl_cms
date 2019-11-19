@@ -5,64 +5,18 @@
     <li class="breadcrumb-item active">Notification Category List</li>
 @endsection
 
-@section('content')
-<div class="card mb-0 px-1" style="box-shadow:none;">        
-    <div class="card-content">
-        <div class="card-body">
-            <form class="form" method="POST" action="@if(isset($notificationCategory)) {{route('notificationCategory.update',$notificationCategory->id)}} @else {{route('notificationCategory.store')}} @endif" novalidate >
-                @csrf
-                @if(isset($notificationCategory)) 
-                    @method('put')
-                @else
-                    @method('post')
-                @endif
-                <div class="form-body">
-                    <h4 class="form-section"><i class="la la-key"></i>
-                        @if(isset($notificationCategory))
-                            Edit "{{$notificationCategory->name}}" Category
-                        @else
-                            Create Notification Category 
-                        @endif
-                    </h4>
-                    <div class="row">
-                        <div class="col-md-10">
-                           <label for="name" class="required">Notification Category :</label>
-                            <input type="text" 
-                            required
-                            maxlength="50" 
-                            data-validation-regex-regex="(([aA-zZ' '])([0-9/.-<>'',\|:[]{}!@#$%^&*()_-+=`~*])*)*"
-                            data-validation-required-message="Name is required" 
-                            data-validation-regex-message="Name must start with alphabets"
-                            data-validation-maxlength-message = "Name can not be more then 50 Characters" 
-                             
-                            value="@if(isset($notificationCategory)) {{$notificationCategory->name}} @elseif(old("name")) {{old("name")}} @endif" name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Notification Category..">  
-                            @if(isset($notificationCategory))
-                                <input type="hidden" name="id" value="{{$notificationCategory->id}}">
-                            @endif
-                            <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
-                            <div class="help-block">
-                                <small class="text-info"> Notification category can not be more then 50 characters</small><br>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-2">
-                            <div class="form-group" style="margin-top:26px">
-                                <button class="btn btn-outline-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-            </form>
-        </div>
-    </div>
-</div>
+@section('action')
+    <a href="{{route('notificationCategory.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Create Notification Category
+    </a>
+@endsection
 
+@section('content')
 <section>
     <div class="card card-info mt-0" style="box-shadow: 0px 0px">
         <div class="card-content">
             <div class="card-body card-dashboard">
-                <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
+                <table class="table table-striped table-bordered  no-footer dataTable" id="notification_cat" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
                         <th width="10%">ID</th>
@@ -156,7 +110,7 @@
         })
 
         $(document).ready(function () {
-            $('#Example1').DataTable({
+            $('#notification_cat').DataTable({
                 dom: 'Bfrtip',
                 buttons: [],
                 paging: true,

@@ -48,7 +48,7 @@ class NotificationCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.notification.notification-category.create');
     }
 
     /**
@@ -85,7 +85,7 @@ class NotificationCategoryController extends Controller
         $notificationCategories = $this->notificationCategoryService->findAll();
         $notificationCategory = $this->notificationCategoryService->findOne($id);
 
-        return view('admin.notification.notification-category.index')
+        return view('admin.notification.notification-category.create')
                     ->with('notificationCategory', $notificationCategory)
                     ->with('notificationCategories', $notificationCategories);
     }
