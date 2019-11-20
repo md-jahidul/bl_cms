@@ -10,7 +10,7 @@
     </a>
 
     <a href="{{ route('partner-offer-home') }}" class="btn btn-instagram  round btn-glow px-2"><i class="la la-list"></i>
-        View home page offers
+        Home Page Offers
     </a>
 
     <a href="{{ url('partners/create') }}" class="btn btn-success  round btn-glow px-2"><i class="la la-plus"></i>

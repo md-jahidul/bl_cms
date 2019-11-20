@@ -114,6 +114,10 @@
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('campaign_img'))
+                                        <div class="help-block">  {{ $errors->first('campaign_img') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-6">

@@ -42,7 +42,7 @@
 
                                     <td class="text-center">
                                         @if($product->offer_category_id == 2 || $product->offer_category_id == 4)
-                                             <a href="{{ route('product.details', [$type, $product->id]) }}" class="btn-sm btn-outline-primary border">Details</a>
+                                             <a href="{{ route('product.details', [strtolower($type), $product->id]) }}" class="btn-sm btn-outline-primary border">Details</a>
                                         @endif
                                     </td>
 

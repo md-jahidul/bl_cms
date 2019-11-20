@@ -154,6 +154,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('campaign-offers', "AssetLite\PartnerOfferController@campaignOfferList")->name('campaign-offers.list');
     Route::get('campaign-offer/sortable', "AssetLite\PartnerOfferController@campaignOfferSortable");
 
+    Route::get('partner-offers/{partner}/{id}/details', 'AssetLite\PartnerOfferController@offerDetailsEdit')
+        ->name('offer.details');
+    Route::put('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
+        ->name('offer.details-update');
+
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 
 

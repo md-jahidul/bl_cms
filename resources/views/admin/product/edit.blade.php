@@ -63,8 +63,8 @@
                                     <label for="end_date" class="required">End Date</label>
                                     <input type="text" name="end_date" id="end_date" class="form-control"
                                            placeholder="Please select end date"
-                                           required data-validation-required-message="Please select end date"
-                                           value="{{ date('Y-m-d H:i:s', $product->end_date) }}">
+                                           {{--required data-validation-required-message="Please select end date"--}}
+                                           value="{{ (!empty($product->end_date)) ? date('Y-m-d H:i:s', $product->end_date) : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('end_date'))
                                         <div class="help-block">{{ $errors->first('end_date') }}</div>

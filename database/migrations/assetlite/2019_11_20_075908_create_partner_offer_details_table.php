@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductDetailsTable extends Migration
+class CreatePartnerOfferDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,21 @@ class CreateProductDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_details', function (Blueprint $table) {
+        Schema::create('partner_offer_details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('partner_offer_id');
             $table->text('details_en')->nullable();
             $table->text('details_bn')->nullable();
             $table->text('offer_details_en')->nullable();
             $table->text('offer_details_bn')->nullable();
-            $table->json('other_attributes')->nullable();
-            $table->foreign('product_id')
+            $table->string('eligible_customer_en')->nullable();
+            $table->string('eligible_customer_bn')->nullable();
+            $table->string('avail_en')->nullable();
+            $table->string('avail_bn')->nullable();
+
+            $table->foreign('partner_offer_id')
                 ->references('id')
-                ->on('products')
+                ->on('partner_offers')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
@@ -38,6 +42,6 @@ class CreateProductDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_details');
+        Schema::dropIfExists('partner_offer_details');
     }
 }

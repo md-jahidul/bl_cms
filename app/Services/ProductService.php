@@ -40,16 +40,10 @@ class ProductService
      */
     public function storeProduct($data, $simId)
     {
-
-
-
         $data['sim_category_id'] = $simId;
         $data['code'] = rand(10000, 12345);
         $data['start_date'] = strtotime($data['start_date']);
-        $data['end_date'] = strtotime($data['end_date']);
-
-//        dd($data);
-
+        $data['end_date'] = (isset($data['end_date'])) ? strtotime($data['end_date']) : "";
         $productId = $this->save($data);
         $this->productDetailRepository->insertProductDetail($productId->id);
         return new Response('Product added successfully');

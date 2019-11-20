@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use App\Models\PartnerCategory;
+use App\Models\PartnerOfferDetail;
+use App\Repositories\PartnerOfferDetailRepository;
 use App\Repositories\PartnerOfferRepository;
+use App\Repositories\ProductDetailRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
@@ -15,14 +18,17 @@ class PartnerOfferService
      * @var $partnerOfferRepository
      */
     protected $partnerOfferRepository;
+    protected $partnerOfferDetailRepository;
 
     /**
      * PartnerOfferService constructor.
      * @param PartnerOfferRepository $partnerOfferRepository
+     * @param PartnerOfferDetailRepository $partnerOfferDetailRepository
      */
-    public function __construct(PartnerOfferRepository $partnerOfferRepository)
+    public function __construct(PartnerOfferRepository $partnerOfferRepository, PartnerOfferDetailRepository $partnerOfferDetailRepository)
     {
         $this->partnerOfferRepository = $partnerOfferRepository;
+        $this->partnerOfferDetailRepository = $partnerOfferDetailRepository;
         $this->setActionRepository($partnerOfferRepository);
     }
 
@@ -46,10 +52,16 @@ class PartnerOfferService
 
         $count = count($this->partnerOfferRepository->findAll());
         $data['partner_id'] = $partnerId;
-        $imageUrl = $this->imageUpload($data, 'campaign_img', $data['offer_en'], 'images/campaign-image/');
-        $data['campaign_img'] = env('APP_URL', 'http://localhost') . "/images/campaign-image/" . $imageUrl;
+        if (!empty($data['campaign_img'])) {
+            $imageUrl = $this->imageUpload($data, 'campaign_img', $data['offer_en'], 'images/campaign-image/');
+            $data['campaign_img'] = env('APP_URL', 'http://localhost') . "/images/campaign-image/" . $imageUrl;
+        }
         $data['display_order'] = ++$count;
-        $this->save($data);
+        $offerId = $this->save($data);
+
+
+
+        $this->partnerOfferDetailRepository->insertOfferDetail($offerId->id);
         return new Response('Partner offer added successfully');
     }
 

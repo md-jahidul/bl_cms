@@ -58,7 +58,7 @@
                                     <label for="end_date" class="required">End Date</label>
                                     <input type="text" name="end_date" id="end_date" class="form-control"
                                            placeholder="Please select end date"
-                                           required data-validation-required-message="Please select end date"
+                                           {{--required data-validation-required-message="Please select end date"--}}
                                            value="{{ old("end_date") ? old("end_date") : '' }}" autocomplete="0">
                                     <div class="help-block"></div>
                                     @if ($errors->has('end_date'))

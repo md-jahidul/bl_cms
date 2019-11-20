@@ -33,10 +33,7 @@ class ProductRepository extends BaseRepository
 
     public function relatedProducts($type, $id)
     {
-
         $products = $this->model::category($type)->where('id', '!=', $id)->get();
-
-
         return $products;
     }
 }

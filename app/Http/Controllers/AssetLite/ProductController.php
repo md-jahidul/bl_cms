@@ -110,18 +110,17 @@ class ProductController extends Controller
 
     public function strToint($request, $jsonKey = "offer_info")
     {
-        foreach ($request->offer_info as $key => $info) {
-            $data[$jsonKey][$key] =  is_numeric($info) ? (int)$info : $info;
-            $request->merge($data);
+        if (!empty($request->offer_info))
+        {
+            foreach ($request->offer_info as $key => $info) {
+                $data[$jsonKey][$key] =  is_numeric($info) ? (int)$info : $info;
+                $request->merge($data);
+            }
         }
     }
 
     public function store(Request $request, $type)
     {
-
-
-
-
         $this->strToint($request)       ;
         $simId = SimCategory::where('alias', $type)->first()->id;
         $response = $this->productService->storeProduct($request->all(), $simId);
@@ -157,6 +156,8 @@ class ProductController extends Controller
     public function edit($type, $id)
     {
         $product = $this->productService->findOne($id);
+
+//        return date('Y-m-d H:i:s', $product->end_date);
 
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['previous_page'] = url()->previous();
@@ -197,21 +198,21 @@ class ProductController extends Controller
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $id);
         Session::flash('message', $response->content());
-        return (strpos(request()->previous_page, 'trending-home') !== false) ? redirect(request()->previous_page) : redirect( route('product.list', $type) );
+        return ( strpos(request()->previous_page, 'trending-home') !== false) ? redirect( request()->previous_page ) : redirect( route('product.list', $type) );
         // return redirect(request()->previous_page);
     }
 
     public function productDetailsEdit($type, $id)
     {
+
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->findOne($id, ["related_product", 'product_details']);
+
         return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
     }
 
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-
-
         $productDetailsId = $request->product_details_id;
         $productDetails = ProductDetail::findOrFail($productDetailsId);
 
