@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\PartnerOffer;
+use App\Models\PartnerOfferDetail;
 use Illuminate\Database\Seeder;
 
 class PartnerOfferTableSeeder extends Seeder
@@ -24,7 +25,7 @@ class PartnerOfferTableSeeder extends Seeder
             $showInHome = rand(0, 3) ? 1 : 0;
 
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
-            PartnerOffer::create([
+            $partner = PartnerOffer::create([
                 'partner_id' => rand(1, 5),
                 'validity_en' => $validityEn[$randItem],
                 'validity_bn' => $validityBn[$randItem],
@@ -38,6 +39,10 @@ class PartnerOfferTableSeeder extends Seeder
                 'is_active' => rand(0, 6) ? 1 : 0,
                 'display_order' => $displayOrder,
                 'other_attributes' => json_encode(null),
+            ]);
+
+            PartnerOfferDetail::create([
+                'partner_offer_id' => $partner->id
             ]);
         }
     }
