@@ -21,7 +21,7 @@ class CreateLinkAccountsTable extends Migration
             $table->string('email')->nullable();
             $table->string('uid')->nullable();
             $table->bigInteger('customer_account_id')->nullable();
-            $table->bigInteger('sequence')->unsigned();
+            $table->bigInteger('sequence')->unsigned()->nullable();
             $table->timestamps();
         });
     }
