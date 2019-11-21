@@ -9,6 +9,7 @@ use App\Repositories\ProductRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use phpDocumentor\Reflection\Types\Null_;
 
 class ProductService
 {
@@ -43,7 +44,7 @@ class ProductService
         $data['sim_category_id'] = $simId;
         $data['code'] = rand(10000, 12345);
         $data['start_date'] = strtotime($data['start_date']);
-        $data['end_date'] = (isset($data['end_date'])) ? strtotime($data['end_date']) : "";
+        $data['end_date'] = (isset($data['end_date'])) ? strtotime($data['end_date']) : Null;
         $productId = $this->save($data);
         $this->productDetailRepository->insertProductDetail($productId->id);
         return new Response('Product added successfully');
