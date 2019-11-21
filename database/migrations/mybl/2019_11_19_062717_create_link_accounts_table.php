@@ -16,7 +16,7 @@ class CreateLinkAccountsTable extends Migration
         Schema::create('link_accounts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('customer_id');
-            $table->string('phone');
+            $table->string('mobile');
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('uid')->nullable();
