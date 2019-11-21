@@ -145,7 +145,6 @@
                     $('#imgDisplay').css('display', 'block');
                     $('#imgDisplay').attr('src', e.target.result);
 
-                    console.log(e.target.result);
                 }
                 reader.readAsDataURL(input.files[0]);
             }
