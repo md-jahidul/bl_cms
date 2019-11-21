@@ -33,7 +33,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     //Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 
-    // CONFIG PAGES ====================================
+    // CONFIG  ====================================
     Route::get('config', 'AssetLite\ConfigController@index');
     Route::put('config/update', 'AssetLite\ConfigController@update');
 
@@ -44,14 +44,14 @@ Route::middleware('authorize', 'auth')->group(function () {
 //    Route::get('/menu-auto-save', 'AssetLite\MenuController@parentMenuSortable');
 //    Route::get('menu/{parentId}/destroy/{id}', 'AssetLite\MenuController@destroy');
 
-    // MENU PAGES ====================================
+    // MENU  ====================================
     Route::get('menu/{id}/child-menu/create', 'AssetLite\MenuController@create');
     Route::resource('menu', 'AssetLite\MenuController')->only(['update','edit','store']);
     Route::get('menu/{id?}/{child_menu?}', 'AssetLite\MenuController@index');
     Route::get('/menu-auto-save', 'AssetLite\MenuController@parentMenuSortable');
     Route::get('menu/{parentId}/destroy/{id}', 'AssetLite\MenuController@destroy');
 
-    // FOOTER MENU PAGES ====================================
+    // FOOTER MENU  ====================================
     Route::get('footer-menu/{id}/child-footer/create', 'AssetLite\FooterMenuController@create');
     Route::resource('footer-menu', 'AssetLite\FooterMenuController')->only(['update','edit','store']);
     Route::get('footer-menu/{parentId}/destroy/{id}', 'AssetLite\FooterMenuController@destroy');
@@ -64,22 +64,22 @@ Route::middleware('authorize', 'auth')->group(function () {
     //     Route::get('/{id}/child-footer/create', 'AssetLite\FooterMenuController@create');
     // });
 
-    // QUICK LAUNCH PAGES ====================================
+    // QUICK LAUNCH  ====================================
     Route::resource('quick-launch', 'AssetLite\QuickLaunchController')->except(['show', 'destroy']);
     Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
     Route::get('/quick-launch-sortable', 'AssetLite\QuickLaunchController@quickLaunchSortable');
 
-    // META TAG PAGES ====================================
+    // META TAG  ====================================
     Route::resource('meta-tag', 'AssetLite\MetaTagController');
     //Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 
 
-    // CONFIG PAGES ====================================
+    // CONFIG  ====================================
     Route::get('config', 'AssetLite\ConfigController@index');
     Route::put('config/update', 'AssetLite\ConfigController@update');
 
-    // SLIDERS PAGES ====================================
+    // SLIDERS  ====================================
     Route::get('single-sliders', 'AssetLite\SliderController@singleSlider');
     Route::get('multiple-sliders', 'AssetLite\SliderController@multiSlider');
     Route::get('sliders/{id}/{type}/edit', 'AssetLite\SliderController@edit');
@@ -97,7 +97,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
 
 
-    // OFFER CATEGORY PAGES ====================================
+    // OFFER CATEGORY  ===============================
     Route::resource('tag-category', 'AssetLite\TagCategoryController')->except(['show', 'destroy']);
     Route::get('tag-category/destroy/{id}', 'AssetLite\TagCategoryController@destroy');
 
@@ -112,13 +112,12 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('child-category');
 
 
-
-    // OFFER SUB MENU ===========================
+    // OFFER SUB MENU =====================================
     Route::get('offer-categories/{id}/{type}', 'AssetLite\OfferCategoryController@index')->name('child_menu');
 
 
 
-    // OFFERS PAGES ====================================
+    // OFFERS  ======================================
     Route::get('offers/{type}', 'AssetLite\ProductController@index')->name('product.list');
     Route::get('offers/{type}/create', 'AssetLite\ProductController@create')->name('product.create');
     Route::post('offers/{type}/store', 'AssetLite\ProductController@store')->name('product.store');
@@ -136,7 +135,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
 
 
-    // PARTNERS PAGES ====================================
+    // PARTNERS  ====================================
     Route::resource('partners', 'AssetLite\PartnerController')->except(['show', 'destroy']);
     Route::get('partner/destroy/{id}', 'AssetLite\PartnerController@destroy');
 
@@ -162,7 +161,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 
 
-    // Fixed PAGES ====================================
+    // Fixed  ====================================
     Route::get('fixed-pages', 'AssetLite\FixedPageController@index');
     Route::get('fixed-page/{id}/components', 'AssetLite\FixedPageController@components')->name('fixed-page-components');
     Route::get('fixed-pages/{id}/meta-tags', 'AssetLite\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');

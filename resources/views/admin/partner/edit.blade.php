@@ -94,20 +94,48 @@
                                 </div>
 
 
-                                <div class="form-group col-md-4 {{ $errors->has('company_logo') ? ' error' : '' }}">
-                                    <label for="file" class=""></label><br>
+                                <div class="form-group col-md-5 {{ $errors->has('company_logo') ? ' error' : '' }}">
                                     <label for="file">Select Company Logo</label>
-                                    <label id="projectinput7" class="file center-block ml-2">
-                                        <input type="file" id="file" name="company_logo">
-                                    </label><br>
+                                    <div class="custom-file">
+                                        <input type="file" name="company_logo" class="custom-file-input" id="image" accept="image/*" />
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    {{--<label for="file" class=""></label><br>--}}
+                                    {{--<label for="file">Select Company Logo</label>--}}
+                                    {{--<label id="projectinput7" class="file center-block ml-2">--}}
+                                        {{--<input type="file" id="file" name="company_logo">--}}
+                                    {{--</label><br>--}}
+                                    {{--<span class="text-primary">Please given file type (.png, .jpg)</span>--}}
                                     @if ($errors->has('company_logo'))
                                         <div class="help-block">  {{ $errors->first('company_logo') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-group col-md-1 pt-1">
-                                    <img class="img-thumbnail" src="{{ $partner->company_logo }}" height="80" width="80">
+                                    <img class="" src="{{ $partner->company_logo }}" height="60" width="105" id="imgDisplay">
                                 </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('google_play_link') ? ' error' : '' }}">
+                                    <label for="google_play_link" class="required">Google Play Store Link</label>
+                                    <input type="url" name="google_play_link"  class="form-control" placeholder="Enter google play store lonk"
+                                           value="{{ $partner->google_play_link }}" required data-validation-required-message="Enter google play store lonk"/>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('google_play_link'))
+                                        <div class="help-block">  {{ $errors->first('google_play_link') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('apple_app_store_link') ? ' error' : '' }}">
+                                    <label for="apple_app_store_link" class="required">Apple App Store Link</label>
+                                    <input type="url" name="apple_app_store_link" class="form-control" placeholder="Enter apple app store link"
+                                           value="{{ $partner->apple_app_store_link }}" required data-validation-required-message="Enter apple app store link">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('apple_app_store_link'))
+                                        <div class="help-block">  {{ $errors->first('apple_app_store_link') }}</div>
+                                    @endif
+                                </div>
+
 
 
                                 <div class="form-group col-md-12 {{ $errors->has('company_address') ? ' error' : '' }}">

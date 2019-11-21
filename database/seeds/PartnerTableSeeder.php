@@ -33,6 +33,8 @@ class PartnerTableSeeder extends Seeder
                 'contact_person_name' => $contactPersonName,
                 'contact_person_email' =>  str_replace(" ", "", strtolower($value)) . '@gmail.com',
                 'contact_person_mobile' => $contactPersonMobile . $key,
+                'google_play_link' => "https://play.google.com/store/apps/details?id=com.arena.banglalinkmela.app",
+                'apple_app_store_link' => "https://apps.apple.com/us/app/my-banglalink/id934133022",
                 'other_attributes' => [],
             ]);
         }

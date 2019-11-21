@@ -107,14 +107,14 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-6 mb-0">
+                                <div class="form-group col-md-6 mb-0" id="camImage">
                                     <label for="campaign_img">Campaign Image</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="campaign_img" class="custom-file-input" id="image">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-                                    <div class="help-block"></div>
+                                    {{--<div class="custom-file">--}}
+                                        {{--<input type="file" name="campaign_img" class="custom-file-input" id="image">--}}
+                                        {{--<label class="custom-file-label" for="inputGroupFile01">Choose file</label>--}}
+                                    {{--</div>--}}
+                                    {{--<span class="text-primary">Please given file type (.png, .jpg)</span>--}}
+                                    {{--<div class="help-block"></div>--}}
                                     @if ($errors->has('campaign_img'))
                                         <div class="help-block">  {{ $errors->first('campaign_img') }}</div>
                                     @endif
@@ -168,15 +168,32 @@
     <script>
         $(function () {
             let isCampain = $('#is_campaign');
-            let campaignImg = $('#campaign_image');
-                campaignImg.find('input');
+            let campaignImg = $('#image');
+                // campaignImg.find('input');
+
+               var imageDomRequerd = ' <div class="custom-file">\n' +
+                              '                                        <input type="file" name="campaign_img" class="custom-file-input" id="image" required>\n' +
+                              '      <label class="custom-file-label" for="inputGroupFile01">Choose file</label>\n' +
+                              '  </div>\n' +
+                              '  <span class="text-primary">Please given file type (.png, .jpg)</span>\n' +
+                              '  <div class="help-block"></div>'
+               var imageDom = ' <div class="custom-file">\n' +
+                              '                                        <input type="file" name="campaign_img" class="custom-file-input" id="image">\n' +
+                              '      <label class="custom-file-label" for="inputGroupFile01">Choose file</label>\n' +
+                              '  </div>\n' +
+                              '  <span class="text-primary">Please given file type (.png, .jpg)</span>\n'
+
 
             $(isCampain).click(function(){
                 if($(this).prop("checked")){
-                    campaignImg.removeClass('d-none');
+                    $('#camImage').append(imageDom)
+                    campaignImg.prop('required', true);
+                    $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
                 }
                 else {
-                    campaignImg.addClass('d-none');
+                    $('#camImage').append(imageDom)
+                    // campaignImg.removeAttr('required')
+                    $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
                 }
             });
         })
