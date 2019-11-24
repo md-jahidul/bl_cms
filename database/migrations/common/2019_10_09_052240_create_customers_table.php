@@ -21,6 +21,7 @@ class CreateCustomersTable extends Migration
             $table->bigInteger('customer_account_id')->nullable();
             $table->string('name')->nullable();
             $table->string('email')->nullable();
+            $table->string('msisdn')->nullable();
             $table->date('birth_date')->nullable();
             $table->string('profile_image')->nullable();
             $table->timestamps();
