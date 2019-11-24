@@ -8,7 +8,7 @@
     <li class="breadcrumb-item active"> {{ $partner }} Offer Details</li>
 @endsection
 @section('action')
-    <a href="{{ url("offers/$partner") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ route("partner-offer", [$partnerOfferDetail->partner_id, strtolower($partner)]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>

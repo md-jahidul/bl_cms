@@ -135,7 +135,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
 
 
-    // PARTNERS  ====================================
+    // PARTNERS ====================================
     Route::resource('partners', 'AssetLite\PartnerController')->except(['show', 'destroy']);
     Route::get('partner/destroy/{id}', 'AssetLite\PartnerController@destroy');
 

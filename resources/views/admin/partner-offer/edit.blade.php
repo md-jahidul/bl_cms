@@ -100,32 +100,40 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-6 pt-2">
-                                    <div class="form-group">
-                                        <label for="is_campaign" class="mr-1">Is Campaign:</label>
-                                        <input type="checkbox" name="is_campaign" value="1" id="is_campaign" {{ ($partnerOffer->is_campaign == 1) ? 'checked' : '' }}>
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-6 mb-0">
-                                    <label for="campaign_img">Campaign Image</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="campaign_img" class="custom-file-input" id="image">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-                                </div>
-
-                                <div class="col-md-6">
+                                <div class="col-md-4 pt-2">
                                     <div class="form-group">
                                         <label for="show_in_home" class="mr-1">Show In Home:</label>
-                                        <input type="checkbox" name="show_in_home" value="1" id="show_in_home" {{ ($partnerOffer->show_in_home == 1) ? 'checked' : '' }}>
+                                        <input type="checkbox" name="show_in_home" value="1" id="show_in_home">
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-6 mb-0">
-                                    <img src="{{ $partnerOffer->campaign_img }}" style="height:70px;width:70px;" id="imgDisplay">
+                                <div class="col-md-2 pt-2">
+                                    <div class="form-group">
+                                        <label for="is_campaign" class="mr-1">Is Campaign:</label>
+                                        <input type="checkbox" name="is_campaign" value="1" id="is_campaign" {{ ($partnerOffer->is_campaign == 1) ? 'checked' : "" }}>
+                                    </div>
                                 </div>
+
+                                <div class="form-group col-md-4 mb-0">
+                                    <label for="campaign_img"></label>
+                                    <div class="custom-file {{ ($partnerOffer->campaign_img != '') ? '' : "d-none" }}">
+                                        <input type="file" name="campaign_img" class="custom-file-input" id="image">
+                                        <label class="custom-file-label" for="inputGroupFile01">Please Choose Campaign Image</label>
+                                        <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    </div>
+                                    <div class="help-block">
+                                        <ul role="alert" class="d-none text-danger" id="imgRequired"><li>Enter button label bangla</li></ul>
+                                    </div>
+                                    @if ($errors->has('campaign_img'))
+                                        <div class="help-block">  {{ $errors->first('campaign_img') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-1 mb-0 {{ ($partnerOffer->is_campaign == 1) ? '' : "d-none" }}" id="showImg">
+                                    <img width="140" height="80" id="imgDisplay" src="{{ asset('images/campaign-image/' . $partnerOffer->campaign_img) }}">
+                                </div>
+
+
 
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -159,7 +167,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
-
+    <script src="{{ asset('js/custom-js/offer.js') }}" type="text/javascript"></script>
 @endpush
 
 
