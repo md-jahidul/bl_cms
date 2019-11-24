@@ -9,10 +9,14 @@ class ProductDetail extends Model
     protected $fillable =
         [
             'product_id',
-            'balance_check',
             'details_en',
             'details_bn',
             'offer_details_en',
-            'offer_details_bn'
+            'offer_details_bn',
+            'other_attributes'
         ];
+
+    protected $casts = [
+        'other_attributes' => 'array'
+    ];
 }

@@ -67,4 +67,10 @@ class Product extends Model
         return $this->hasMany(RelatedProduct::class);
     }
 
+    public function other_related_product()
+    {
+        return $this->hasMany(OtherRelatedProduct::class);
+    }
+
+
 }

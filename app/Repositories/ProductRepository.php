@@ -31,6 +31,11 @@ class ProductRepository extends BaseRepository
         }
     }
 
+    /**
+     * @param $type
+     * @param $id
+     * @return mixed
+     */
     public function relatedProducts($type, $id)
     {
         $products = $this->model::category($type)->where('id', '!=', $id)->get();

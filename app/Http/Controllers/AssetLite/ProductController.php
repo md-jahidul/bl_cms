@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
 use App\Models\OfferCategory;
+use App\Models\OtherRelatedProduct;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\RelatedProduct;
@@ -11,6 +12,7 @@ use App\Models\SimCategory;
 use App\Models\TagCategory;
 use App\Services\DurationCategoryService;
 use App\Services\OfferCategoryService;
+use App\Services\ProductDetailService;
 use App\Services\ProductService;
 use App\Services\TagCategoryService;
 use Carbon\Carbon;
@@ -23,6 +25,7 @@ class ProductController extends Controller
 {
 
     private $productService;
+    private $productDetailService;
     private $tagCategoryService;
     private $offerCategoryService;
     private $durationCategoryService;
@@ -32,17 +35,20 @@ class ProductController extends Controller
     /**
      * ProductController constructor.
      * @param ProductService $productService
+     * @param ProductDetailService $productDetailService
      * @param TagCategoryService $tagCategoryService
      * @param OfferCategoryService $offerCategoryService
      * @param DurationCategoryService $durationCategoryService
      */
     public function __construct(
         ProductService $productService,
+        ProductDetailService $productDetailService,
         TagCategoryService $tagCategoryService,
         OfferCategoryService $offerCategoryService,
         DurationCategoryService $durationCategoryService
     ) {
         $this->productService = $productService;
+        $this->productDetailService = $productDetailService;
         $this->tagCategoryService = $tagCategoryService;
         $this->offerCategoryService = $offerCategoryService;
         $this->durationCategoryService = $durationCategoryService;
@@ -202,38 +208,38 @@ class ProductController extends Controller
         // return redirect(request()->previous_page);
     }
 
+    /**
+     * @param $type
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function productDetailsEdit($type, $id)
     {
 
         $products = $this->productService->findRelatedProduct($type, $id);
-        $productDetail = $this->productService->findOne($id, ["related_product", 'product_details']);
+        $productDetail = $this->productService->findOne($id, ['other_related_product' => function ($query) {
+            $query->where('other_offer_id', 13);
+        }, "related_product", 'product_details',
+        ]);
+
+//        return $productDetail;
+
 
         return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
     }
 
     public function productDetailsUpdate(Request $request, $type, $id)
     {
+//        return $request->all();
+
         $productDetailsId = $request->product_details_id;
-        $productDetails = ProductDetail::findOrFail($productDetailsId);
+        $productDetails = $this->productDetailService->findOne($productDetailsId);
+        $this->productDetailService->updateOtherRelatedProduct($request, $id);
+        $this->productDetailService->updateRelatedProduct($request, $id);
 
-        $products = RelatedProduct::where('product_id', $id)->get();
+        $productDetails['other_attributes'] = $request->other_attributes;
 
-        if (count($products) > 0)
-        {
-            foreach ($products as $product) {
-                $productId = RelatedProduct::findOrFail($product->id);
-                $productId->delete();
-            }
-        }
-
-        foreach (request()->related_product_id as $item) {
-            RelatedProduct::create([
-                'product_id' => $id,
-                'related_product_id' => $item
-            ]);
-        }
-
-        $productDetails['balance_check'] = $request->balance_check;
+//        return $request->all();
 
         $productDetails->update($request->all());
 
