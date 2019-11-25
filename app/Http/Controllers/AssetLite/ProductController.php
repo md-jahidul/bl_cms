@@ -30,6 +30,7 @@ class ProductController extends Controller
     private $offerCategoryService;
     private $durationCategoryService;
 
+
     protected $info = [];
 
     /**
@@ -67,7 +68,7 @@ class ProductController extends Controller
         $currentSecends = strtotime($dateTime);
 
         $products = Product::category($type)->with(['offer_category' => function ($query) {
-            $query->select('id','name_en');
+            $query->select('id', 'name_en');
         }])->get();
 
         return view('admin.product.index', compact('products', 'type', 'currentSecends'));
@@ -217,14 +218,9 @@ class ProductController extends Controller
     {
 
         $products = $this->productService->findRelatedProduct($type, $id);
-        $productDetail = $this->productService->findOne($id, ['other_related_product' => function ($query) {
-            $query->where('other_offer_id', 13);
-        }, "related_product", 'product_details',
+        $productDetail = $this->productService->findOne($id, [
+            'other_related_product', "related_product", 'product_details',
         ]);
-
-//        return $productDetail;
-
-
         return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
     }
 

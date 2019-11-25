@@ -1,4 +1,5 @@
 @php
+    use App\Enums\OtherOfferType;
     function match($id,$relatedProducts){
         foreach ($relatedProducts as $relatedProduct)
         {
@@ -54,36 +55,47 @@
                                 </div>
 
 
-                                @if($productDetail->offer_category_id == 1)
-                                    <div class="col-md-6 text-right">
+                                @if($productDetail->offer_category_id == \App\Enums\OtherOfferType::INTERNET)
+                                    <div class="col-md-12 text-center">
                                         <h2><strong class="text-danger"> Under Construction</strong></h2>
                                     </div>
-                                @elseif($productDetail->offer_category_id == 2)
+                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::VOICE)
                                     @include('layouts.partials.product-details.voice')
-                                @elseif($productDetail->offer_category_id == 3)
-                                    <div class="col-md-6 text-right">
+
+                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::BUNDLES)
+                                   <div class="col-md-12 text-center">
                                         <h2><strong class="text-danger"> Under Construction</strong></h2>
                                     </div>
-                                @elseif($productDetail->offer_category_id == 4)
-                                    @include('layouts.partials.product-details.packages')
-                                @elseif($productDetail->offer_category_id == 5)
-                                    <div class="col-md-6 text-right">
+
+                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::PREPAID_PLANS)
+                                    <div class="col-md-12 text-center">
                                         <h2><strong class="text-danger"> Under Construction</strong></h2>
                                     </div>
-                                @elseif($productDetail->offer_category_id == 6)
-                                    <div class="col-md-6 text-right">
+
+                                @elseif( $productDetail->offer_category_id == \App\Enums\OtherOfferType::PACKAGES &&
+                                         $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OtherOfferType::START_UP_OFFERS)
+                                    <div class="col-md-12 text-center">
                                         <h2><strong class="text-danger"> Under Construction</strong></h2>
                                     </div>
-                                @elseif($productDetail->offer_category_id == 7)
-                                    <div class="col-md-6 text-right">
+                                    {{--@include('layouts.partials.product-details.packages.start_up_offer')--}}
+
+                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::POSTPAID_PLANS)
+                                    <div class="col-md-12 text-center">
                                         <h2><strong class="text-danger"> Under Construction</strong></h2>
                                     </div>
-                                @elseif($productDetail->offer_category_id == 8)
-                                    <div class="col-md-6 text-right">
+
+                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::ICON_PLANS)
+                                    <div class="col-md-12 text-center">
                                         <h2><strong class="text-danger"> Under Construction</strong></h2>
                                     </div>
-                                @elseif($productDetail->offer_category_id == 9)
+
+                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::OTHERS &&
+                                        $productDetail->offer_info['other_offer_type_id'] == \App\Enums\OtherOfferType::BONDHO_SIM_OFFER)
                                     @include('layouts.partials.product-details.other-details.bondho_sim')
+
+                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::OTHERS &&
+                                        $productDetail->offer_info['other_offer_type_id'] == \App\Enums\OtherOfferType::FOUR_G_OFFERS)
+                                    @include('layouts.partials.product-details.other-details.4g_offer')
                                 @endif
 
                                 <div class="form-actions col-md-12">
@@ -120,6 +132,8 @@
 @endpush
 @push('page-js')
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/editors/editor-ckeditor.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
     <script>
         $(function () {
             $("textarea#details").summernote({
@@ -132,7 +146,7 @@
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['view', ['fullscreen']]
                 ],
-                height:200
+                height:100
             })
         })
     </script>

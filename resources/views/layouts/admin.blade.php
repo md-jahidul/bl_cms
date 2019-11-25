@@ -104,7 +104,7 @@
 <script src="{{ asset('theme/vendors/js/tables/datatable/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/vendors/js/forms/select/selectize.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('/theme/js/core/app-menu.js')}}" type="text/javascript"></script>
-<script src="{{asset('/theme/js/core/app.js')}}" type="text/javascript"></script>
+{{--<script src="{{asset('/theme/js/core/app.js')}}" type="text/javascript"></script>--}}
 <script src="{{asset('/theme/js/scripts/customizer.js')}}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/scripts/forms/select/form-select2.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/core/app.js') }}" type="text/javascript"></script>
