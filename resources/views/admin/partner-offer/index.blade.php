@@ -36,7 +36,7 @@
                             <tr data-index="{{ $partnerOffer->id }}" data-position="{{ $partnerOffer->display_order }}">
                                 <td width="3%">{{ $index + 1 }}</td>
                                 <td><img class="" src="{{ $partnerOffer->partner->company_logo }}" alt="Slider Image" height="40" width="50" /></td>
-                                <td>{{ $partnerOffer->validity_en }} {!! $partnerOffer->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+                                <td>{{ $partnerOffer->validity_en }} {!! $partnerOffer->is_active == 0 ? '<span class="text-danger"> ( Inactive )</span>' : '' !!}</td>
                                 <td>{{ $partnerOffer->get_offer_msg_en }}</td>
                                 <td>{{ $partnerOffer->offer_en }}</td>
                                 <td class="text-center"><a href="{{ route('offer.details', [$partnerName, $partnerOffer->id]) }}" class="btn-sm btn-outline-primary border">Details</a></td>

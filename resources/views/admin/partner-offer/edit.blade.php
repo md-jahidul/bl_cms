@@ -130,7 +130,7 @@
                                 </div>
 
                                 <div class="form-group col-md-1 mb-0 {{ ($partnerOffer->is_campaign == 1) ? '' : "d-none" }}" id="showImg">
-                                    <img width="140" height="80" id="imgDisplay" src="{{ asset('images/campaign-image/' . $partnerOffer->campaign_img) }}">
+                                    <img width="140" height="80" id="imgDisplay" src="{{ ($partnerOffer->campaign_img != '') ? asset('images/campaign-image/'.$partnerOffer->campaign_img) : asset('images/campaign-image/'.'campaign-placeholder.png') }}">
                                 </div>
 
 
@@ -148,7 +148,7 @@
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary"><i
+                                        <button type="submit" id="save" class="btn btn-primary"><i
                                                 class="la la-check-square-o"></i> Update
                                         </button>
                                     </div>

@@ -4,7 +4,9 @@ use Illuminate\Database\Seeder;
 use App\Models\SimCategory;
 use App\Models\OfferCategory;
 use App\Models\Product;
+use App\Models\ProductDetail;
 use App\Models\DurationCategory;
+
 
 class ProductsTableSeeder extends Seeder
 {
@@ -39,6 +41,7 @@ class ProductsTableSeeder extends Seeder
 
             case 'packages':
                 $obj = [
+//                    'package_offer_type_id' =>
                     'callrate_offer' => rand(1, 10),
                     'sms_rate_offer' => rand(1, 10),
                 ];
@@ -57,13 +60,13 @@ class ProductsTableSeeder extends Seeder
                 break;
 
             case 'others':
-                $obj = [
-                    'other_offer_type_id' => 12,
-                    'description' => 'Life will be much easier now, 
-                                      because Banglalink is introducing balance transfer service! Easily 
-                                      transfer credit to your friends and family who use Banglalink number,
-                                      anytime you want.'
-                ];
+//                $obj = [
+//                    'other_offer_type_id' => 12,
+//                    'description' => 'Life will be much easier now,
+//                                      because Banglalink is introducing balance transfer service! Easily
+//                                      transfer credit to your friends and family who use Banglalink number,
+//                                      anytime you want.'
+//                ];
 
                 break;
 
@@ -121,13 +124,12 @@ class ProductsTableSeeder extends Seeder
             $showInHome = $this->showInHome($offer->alias);
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
 
-            factory(Product::class)->create(
+            $postpaidProduct = factory(Product::class)->create(
                 [
                     'code' => 'ABC' . $i,
                     'name_en' => 'ABC' . $i,
                     'name_bn' => 'ABC' . $i,
                     'price_tk' => rand(10, 100),
-                //  'internet_volume_mb' =>  $offerInfo->internet_volume_mb ?? null,
                     'ussd_en' => '*' . rand(1000, 9999) . '*' . '1#',
                     'sim_category_id' => SimCategory::where('alias', 'postpaid')->first('id'),
                     'offer_category_id' => $offer->id,
@@ -136,6 +138,10 @@ class ProductsTableSeeder extends Seeder
                     'offer_info' =>  $offerInfo
                 ]
             );
+
+            ProductDetail::create([
+                'product_id' => $postpaidProduct->id
+            ]);
         }
 
         /** Loop For PrePaid Product Create */
@@ -147,7 +153,7 @@ class ProductsTableSeeder extends Seeder
             $showInHome = $this->showInHome($offer->alias);
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
 
-            factory(Product::class)->create(
+            $prePaidProduct = factory(Product::class)->create(
                 [
                     'code' => 'ABC' . $i,
                     'name_en' => 'ABC' . $i,
@@ -158,9 +164,14 @@ class ProductsTableSeeder extends Seeder
                     'offer_category_id' => $offer->id,
                     'show_in_home' => $showInHome,
                     'display_order' => $displayOrder,
-                    'offer_info' =>  $offerInfo,
+                    'offer_info' => $offerInfo,
                 ]
             );
+
+            ProductDetail::create([
+                'product_id' => $prePaidProduct->id
+            ]);
+
         }
     }
 }

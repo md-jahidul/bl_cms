@@ -3,7 +3,7 @@
 @section('title', "$partner Offer ")
 @section('card_name', "$partner Offer Details")
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('product.list', $partner) }}"> {{ $partner }} List</a></li>
+    <li class="breadcrumb-item"><a href="{{ route("partner-offer", [$partnerOfferDetail->partner_id, strtolower($partner)]) }}"> {{ $partner }} List</a></li>
     {{--    <li class="breadcrumb-item active"> <a href="{{ route('partner-offer', [$parentId, $partnerName]) }}"> Partner Offer List</a></li>--}}
     <li class="breadcrumb-item active"> {{ $partner }} Offer Details</li>
 @endsection
