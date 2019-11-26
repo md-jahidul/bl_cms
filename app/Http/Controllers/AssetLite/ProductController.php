@@ -98,8 +98,8 @@ class ProductController extends Controller
 
         foreach ($this->info['offers'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
-                                        ->where('type_id', $package_id)
-                                        ->get();
+                ->where('type_id', $package_id)
+                ->get();
             if (count($child)) {
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
@@ -117,10 +117,9 @@ class ProductController extends Controller
 
     public function strToint($request, $jsonKey = "offer_info")
     {
-        if (!empty($request->offer_info))
-        {
+        if (!empty($request->offer_info)) {
             foreach ($request->offer_info as $key => $info) {
-                $data[$jsonKey][$key] =  is_numeric($info) ? (int)$info : $info;
+                $data[$jsonKey][$key] = is_numeric($info) ? (int)$info : $info;
                 $request->merge($data);
             }
         }
@@ -128,7 +127,7 @@ class ProductController extends Controller
 
     public function store(Request $request, $type)
     {
-        $this->strToint($request)       ;
+        $this->strToint($request);
         $simId = SimCategory::where('alias', $type)->first()->id;
         $response = $this->productService->storeProduct($request->all(), $simId);
         Session::flash('success', $response->content());
@@ -205,7 +204,7 @@ class ProductController extends Controller
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $id);
         Session::flash('message', $response->content());
-        return ( strpos(request()->previous_page, 'trending-home') !== false) ? redirect( request()->previous_page ) : redirect( route('product.list', $type) );
+        return (strpos(request()->previous_page, 'trending-home') !== false) ? redirect(request()->previous_page) : redirect(route('product.list', $type));
         // return redirect(request()->previous_page);
     }
 
@@ -221,6 +220,9 @@ class ProductController extends Controller
         $productDetail = $this->productService->findOne($id, [
             'other_related_product', "related_product", 'product_details',
         ]);
+
+//        return $productDetail;
+
         return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
     }
 

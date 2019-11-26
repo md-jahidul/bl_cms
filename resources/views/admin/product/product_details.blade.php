@@ -74,10 +74,10 @@
 
                                 @elseif( $productDetail->offer_category_id == \App\Enums\OtherOfferType::PACKAGES &&
                                          $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OtherOfferType::START_UP_OFFERS)
-                                    <div class="col-md-12 text-center">
-                                        <h2><strong class="text-danger"> Under Construction</strong></h2>
-                                    </div>
-                                    {{--@include('layouts.partials.product-details.packages.start_up_offer')--}}
+                                    {{--<div class="col-md-12 text-center">--}}
+                                        {{--<h2><strong class="text-danger"> Under Construction</strong></h2>--}}
+                                    {{--</div>--}}
+                                    @include('layouts.partials.product-details.packages.start_up_offer_structure_2')
 
                                 @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::POSTPAID_PLANS)
                                     <div class="col-md-12 text-center">
@@ -142,9 +142,9 @@
                     ['font', ['strikethrough', 'superscript', 'subscript']],
                     ['fontsize', ['fontsize']],
                     ['color', ['color']],
-                    ['table', ['table']],
+                    // ['table', ['table']],
                     ['para', ['ul', 'ol', 'paragraph']],
-                    ['view', ['fullscreen']]
+                    ['view', ['fullscreen', 'codeview']]
                 ],
                 height:100
             })
