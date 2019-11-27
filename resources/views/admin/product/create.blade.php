@@ -65,6 +65,13 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    <label for="ussd_en">USSD Code (English)</label>
+                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd code in English"
+                                           value="{{ old("ussd_en") ? old("ussd_en") : '' }}">
+                                    <div class="help-block"></div>
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
                                     <label for="end_date">End Date</label>
                                     <input type="text" name="end_date" id="end_date" class="form-control"
@@ -74,13 +81,6 @@
                                     @if ($errors->has('end_date'))
                                         <div class="help-block">{{ $errors->first('end_date') }}</div>
                                     @endif
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label for="ussd_en">USSD Code (English)</label>
-                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd code in English"
-                                           value="{{ old("ussd_en") ? old("ussd_en") : '' }}">
-                                    <div class="help-block"></div>
                                 </div>
 
                                 <div class="form-group col-md-6">

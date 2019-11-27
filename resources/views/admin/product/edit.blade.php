@@ -70,6 +70,12 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    <label for="ussd">USSD Code English</label>
+                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd english" maxlength="25"
+                                           value="{{ $product->ussd_en }}">
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
                                     <label for="end_date">End Date</label>
                                     <input type="text" name="end_date" id="end_date" class="form-control"
@@ -79,12 +85,6 @@
                                     @if ($errors->has('end_date'))
                                         <div class="help-block">{{ $errors->first('end_date') }}</div>
                                     @endif
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label for="ussd">USSD Code English</label>
-                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd english" maxlength="25"
-                                           value="{{ $product->ussd_en }}">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('ussd_bn') ? ' error' : '' }}">
@@ -97,6 +97,16 @@
                                     <label for="price_tk">Offer Price</label>
                                     <input type="number" name="price_tk"  class="form-control" placeholder="Enter offer price" maxlength="8"
                                            value="{{ $product->price_tk }}">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="tag_category_id">Tag</label>
+                                    <select class="form-control" name="tag_category_id">
+                                        <option value="">---Select Tag---</option>
+                                        @foreach($tags as $tag)
+                                            <option value="{{ $tag->id }}" {{ ($tag->id == $product->tag_category_id ) ? 'selected' : '' }}>{{ $tag->name_en }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
@@ -113,49 +123,29 @@
                                         <div class="help-block">  {{ $errors->first('offer_category_id') }}</div>
                                     @endif
                                 </div>
-                            </div>
+                            {{--</div>--}}
 
-                                <div class="row {{ $product->offer_category_id == 1 ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
+                                <slot class="{{ $product->offer_category_id == 1 ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
                                     @include('layouts.partials.products.internet')
-                                </div>
-                                <div class="row {{ $product->offer_category_id == 4 ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
+                                </slot>
+                                <slot class="{{ $product->offer_category_id == 4 ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
                                     @include('layouts.partials.products.packages')
-                                </div>
+                                </slot>
 
-                                <div class="row {{ $product->offer_category_id == 9 ? '' : 'd-none' }}" id="others" data-offer-type="others">
+                                <slot class="{{ $product->offer_category_id == 9 ? '' : 'd-none' }}" id="others" data-offer-type="others">
                                     @include('layouts.partials.products.other')
-                                </div>
+                                </slot>
 
                             @if(strtolower($type) == 'prepaid')
-                                <div class="row {{ $product->offer_category_id == 2 ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
+                                <slot class="{{ $product->offer_category_id == 2 ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
                                     @include('layouts.partials.products.voice')
-                                </div>
-                                <div class="row {{ $product->offer_category_id == 3 ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
+                                </slot>
+                                <slot class="{{ $product->offer_category_id == 3 ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
                                     @include('layouts.partials.products.bundle')
-                                </div>
+                                </slot>
                             @endif
 
-                            <div class="row">
-{{--                                <div class="form-group col-md-6 ">--}}
-{{--                                    <label for="bonus">Bonus</label>--}}
-{{--                                    <input type="text" name="bonus"  class="form-control" placeholder="Enter bonus" value="{{ $product->name }}">--}}
-{{--                                </div>--}}
-
-{{--                                <div class="form-group col-md-6 {{ $errors->has('point') ? ' error' : '' }}">--}}
-{{--                                    <label for="point">Point</label>--}}
-{{--                                    <input type="number" name="point"  class="form-control" placeholder="Enter point"--}}
-{{--                                           value="{{ $product->point }}">--}}
-{{--                                </div>--}}
-
-                                <div class="form-group col-md-6">
-                                    <label for="tag_category_id">Tag</label>
-                                    <select class="form-control" name="tag_category_id">
-                                        <option value="">---Select Tag---</option>
-                                        @foreach($tags as $tag)
-                                            <option value="{{ $tag->id }}" {{ ($tag->id == $product->tag_category_id ) ? 'selected' : '' }}>{{ $tag->name_en }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                            {{--<div class="row">--}}
 
                                 <div class="col-md-6">
                                     <label></label>
