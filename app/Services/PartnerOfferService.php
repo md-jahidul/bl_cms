@@ -94,16 +94,12 @@ class PartnerOfferService
             $imageUrl = $this->imageUpload($data, 'campaign_img', $data['validity_en'], 'images/campaign-image/');
             $data['campaign_img'] = "images/campaign-image/" . $imageUrl;
 
-            ($partnerOffer->campaign_img != '') ? unlink(public_path($partnerOffer->campaign_img)) : '';
+//            ($partnerOffer->campaign_img != '') ? unlink(public_path($partnerOffer->campaign_img)) : '';
         }
         if ($data['is_campaign'] == 0 && !empty($partnerOffer->campaign_img)) {
             unlink(public_path('images/campaign-image/' . $partnerOffer->campaign_img));
             $data['campaign_img'] = null;
         }
-
-//        else {
-//            ($partnerOffer->campaign_img == '') ? $partnerOffer->campaign_img : $imgFullPath;
-//        }
 
         $partnerOffer->update($data);
         return Response('Partner offer update successfully !');
