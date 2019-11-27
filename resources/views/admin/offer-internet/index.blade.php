@@ -26,26 +26,30 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width='5%'>ID</th>
+                            <th width='5%'>SL</th>
+                            <th width='15%'>Product Code</th>
                             <th width='20%'>Title</th>
                             <th width='10%'>Volume</th>
                             <th width='10%'>Validity</th>
                             <th width='10%'>Price</th>
-                            <th width='15%'>Offer Code</th>
-                            <th width='10%'>Points</th>
+                            <th width='10%'>USSD Code</th>
+                            <th width='10%'>Tag</th>
                             <th width='20%'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($internet_offers as $internet_offer)
+                        @foreach ($internet_offers as $key=>$internet_offer)
                             <tr>
-                                <td width='5%'>{{$internet_offer->id}}</td>
+                                <td width='5%'>{{++$key}}</td>
+                                <td width='15%'>{{$internet_offer->offer_code}}</td>
                                 <td width='20%'>{{$internet_offer->title}}</td>
-                                <td width='10%'>{{$internet_offer->volume}}</td>
+                                <td width='10%'>{{$internet_offer->volume}} MB</td>
                                 <td width='10%'>{{$internet_offer->validity}}</td>
                                 <td width='10%'>{{$internet_offer->price}}</td>
-                                <td width='15%'>{{$internet_offer->offer_code}}</td>
-                                <td width='10%'>{{$internet_offer->points}}</td>
+                                <td width='10%'>{{$internet_offer->ussd_code}}</td>
+                                <td width='10%'>
+                                    <span class="badge badge-default bg-primary">{{ $internet_offer->tag }}</span>
+                                </td>
                                 <td width='20%'>
                                     <div class="btn-group" role="group">
                                         <a role="button" href="{{route('internetOffer.edit',$internet_offer->id)}}" class="btn btn-outline-success">

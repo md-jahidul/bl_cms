@@ -7,6 +7,12 @@
     </li>
 @endsection
 
+@section('action')
+    <a href="{{route('internetOffer.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-arrow-left"></i>
+        Back to List
+    </a>
+@endsection
+
 @section('content')
     <section>
 
@@ -19,17 +25,17 @@
                         <div class="form-body">
                             <h4 class="form-section"><i class="la la-paperclip"></i>Edit Internet offer.</h4>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="title">Title:<small class="text-danger">*</small></label>
                                         <input
                                         required
                                         data-validation-required-message="title is required"
-                                        maxlength="200"
+                                        maxlength="40"
                                         data-validation-maxlength-message = "Title can not be more then 200 characters"
                                         type="text" value="{{$internet_offer->title}}" id="title" class="form-control @error('title') is-invalid @enderror" placeholder="Enter title...." name="title">
                                         <div class="help-block">
-                                            <small class="text-info">Title can not be more then 200 characters</small>
+                                            <small class="text-info">Title can not be more then 40 characters</small>
                                         </div>
                                         @error('title')
                                             <span class="invalid-feedback" role="alert">
@@ -37,6 +43,26 @@
                                             </span>
                                         @enderror
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="category" class="required">Category:</label>
+                                        <select  class="form-control" name="category_id" required id="category" >
+                                            <option value="">Select category</option>
+                                            @foreach($offer_category as $category)
+                                                <option value="{{ $category->id }}" @if($category->id == $internet_offer->id)selected @endif > {{$category->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block">
+                                            <small id="category" class="form-text text-info">Select Category Type</small>
+                                        </div>
+                                        @error('category')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+
                                 </div>
                                 <input type="hidden" name="id" value="{{$internet_offer->id}}">
                                 <div class="col-md-4">
@@ -50,7 +76,7 @@
 
                                         type="number" min="0" value="{{$internet_offer->volume}}" id="volume" class="form-control @error('volume') is-invalid @enderror" placeholder="Enter volume...." name="volume">
                                         <div class="help-block">
-                                            <small id="volume" class="form-text text-info">Enter volue in MB.</small>
+                                            <small id="volume" class="form-text text-info">Enter Volume in MB.</small>
                                         </div>
                                         @error('volume')
                                             <span class="invalid-feedback" role="alert">
@@ -64,13 +90,8 @@
                                     <div class="form-group">
                                         <label for="price">Price:<small class="text-danger">*</small></label>
                                         <input
-
                                         required
-                                        maxlength="50"
-                                        data-validation-maxlength-message = "Price can never be more then 50 digits"
-                                        data-validation-required-message="Price is required"
-
-                                        type="number" min="0" value="{{$internet_offer->price}}" id="price" class="form-control @error('price') is-invalid @enderror" placeholder="Price.." name="price">
+                                        type="number" min="0" step="0.5" value="{{$internet_offer->price}}" id="price" class="form-control @error('price') is-invalid @enderror" placeholder="Price.." name="price">
                                         <div class="help-block">
                                             <small id="price" class="form-text text-info">Enter price in BDT.</small>
                                         </div>
@@ -90,31 +111,13 @@
                                         required
                                         data-validation-required-message="Offer Code is required"
                                         maxlength="200"
-                                        data-validation-maxlength-message = "Offer Code can not be more then 200 charecters"
+                                        data-validation-maxlength-message = "Offer Code can not be more then 200 characters"
 
                                         type="text" value="{{$internet_offer->offer_code}}" id="offer_code" class="form-control @error('offer_code') is-invalid @enderror" placeholder="Offer code.." name="offer_code">
                                         <div class="help-block">
                                             <small id="validity" class="form-text text-info">Offer Code must have *,# and number in it.</small>
                                         </div>
                                         @error('offer_code')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="points">Points:<small class="text-danger">*</small></label>
-                                        <input
-                                        required
-                                        maxlength="50000"
-                                        data-validation-maxlength-message = "Points can never be more then 50000 digits"
-                                        data-validation-required-message="Points is required"
-                                        type="number" min="0" value="{{$internet_offer->points}}" id="points" class="form-control @error('points') is-invalid @enderror" placeholder="Points.." name="points">
-                                        <div class="help-block"></div>
-                                        @error('points')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -140,12 +143,28 @@
                                         @enderror
                                     </div>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="tag">Tag:</label>
+                                        <input
+                                            type="text" value="{{$internet_offer->tag}}" id="tag" class="form-control @error('tag') is-invalid @enderror" placeholder="" name="tag">
+                                        <div class="help-block">
+                                            <small id="tag" class="form-text text-info">Enter Product tag</small>
+                                        </div>
+                                        @error('tag')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success round px-2">
-                            <i class="la la-check-square-o"></i> Save
+                            <i class="la la-check-square-o"></i> Update
                             </button>
                         </div>
                     </form>
