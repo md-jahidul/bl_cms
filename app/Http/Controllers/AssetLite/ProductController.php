@@ -201,7 +201,7 @@ class ProductController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $type, $id)
+    public function update(ProductStoreRequest $request, $type, $id)
     {
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $id);
