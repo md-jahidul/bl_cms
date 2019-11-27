@@ -42,7 +42,7 @@ class ProductService
     public function storeProduct($data, $simId)
     {
         $data['sim_category_id'] = $simId;
-//        $data['code'] = rand(10000, 12345);
+        $data['code'] = str_replace(' ', '', strtoupper($data['code']));
         $data['start_date'] = strtotime($data['start_date']);
         $data['end_date'] = (isset($data['end_date'])) ? strtotime($data['end_date']) : null;
         $productId = $this->save($data);
