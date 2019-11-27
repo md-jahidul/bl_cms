@@ -10,7 +10,7 @@ class MyBlInternetOffer extends Model
 
     public function category()
     {
-        return $this->belongsTo(\MyBlInternetOfferCategorySeeder::class, 'category_id');
+        return $this->belongsTo(MyBlInternetOffersCategory::class, 'category_id');
     }
 
 }
