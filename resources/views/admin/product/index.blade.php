@@ -20,7 +20,7 @@
                         <tr>
                             <td width="3%">#</td>
                             <th width="25%">Product Name</th>
-                            <th>Price</th>
+                            <th>Product ID</th>
                             <th>USSD</th>
                             <th>Offer Type</th>
                             {{--<th>Date Range</th>--}}
@@ -35,7 +35,7 @@
                                 <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}">
                                     <td width="3%">{{ $loop->iteration }}</td>
                                     <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
-                                    <td>{{ $product->price_tk }} Tk</td>
+                                    <td>{{ $product->code }}</td>
                                     <td>{{ $product->ussd_en }}</td>
                                     <td>{{ $product->offer_category->name_en }}</td>
                                     {{--<td>{{ $product->end_date ? '' : '' }} <span class="badge badge-success badge-pill mr-1"></td>--}}

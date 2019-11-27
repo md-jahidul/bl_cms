@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductStoreRequest;
 use App\Models\OfferCategory;
 use App\Models\OtherRelatedProduct;
 use App\Models\Product;
@@ -47,8 +48,7 @@ class ProductController extends Controller
         TagCategoryService $tagCategoryService,
         OfferCategoryService $offerCategoryService,
         DurationCategoryService $durationCategoryService
-    )
-    {
+    ) {
         $this->productService = $productService;
         $this->productDetailService = $productDetailService;
         $this->tagCategoryService = $tagCategoryService;
@@ -71,6 +71,8 @@ class ProductController extends Controller
         $products = Product::category($type)->with(['offer_category' => function ($query) {
             $query->select('id', 'name_en');
         }])->get();
+
+//        return $products;
 
         return view('admin.product.index', compact('products', 'type', 'currentSecends'));
     }
@@ -126,7 +128,7 @@ class ProductController extends Controller
         }
     }
 
-    public function store(Request $request, $type)
+    public function store(ProductStoreRequest $request, $type)
     {
         $this->strToint($request);
         $simId = SimCategory::where('alias', $type)->first()->id;
@@ -180,6 +182,8 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
+
+//        return $this->info;
 
         return view('admin.product.edit', $this->info);
     }

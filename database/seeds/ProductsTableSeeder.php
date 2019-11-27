@@ -11,10 +11,46 @@ use App\Models\DurationCategory;
 class ProductsTableSeeder extends Seeder
 {
 
+    public function prepaidPlan($packages)
+    {
+        $days = [1, 3, 7, 15, 30];
+        $validityDays = $days[array_rand($days)];
+
+        $rate = [1, 10];
+        $ratePaisa = $rate[array_rand($rate)];
+
+        if ($packages == 5) {
+            return [
+                'callrate_offer' => $ratePaisa,
+                'sms_rate_offer' => $ratePaisa,
+                'package_offer_type_id' => 5
+            ];
+        } else {
+            return [
+                'callrate_offer' => $ratePaisa,
+                'internet_offer_mb' => rand(1024, 3072),
+                'minute_offer' => rand(100, 500),
+                'validity_days' => $validityDays,
+                'callrate_short_note_en' => "*Including all",
+                'callrate_short_note_bn' => "*সব সহ",
+                'gb_short_note_en' => "* Up To 12 GB",
+                'gb_short_note_bn' => "* ১২ জিবি পর্যন্ত",
+                'balance_check' => '*' . rand(1000, 8888) . '*' . '1#',
+                'package_offer_type_id' => 6
+            ];
+        }
+
+    }
+
+
     public function getOfferInfo($name)
     {
-        $days = [ 1,3,7,15,30 ];
-        $validityDays = $days[ array_rand($days) ];
+        $days = [1, 3, 7, 15, 30];
+        $validityDays = $days[array_rand($days)];
+
+        $packageId = [5, 6];
+        $packages = $packageId[array_rand($packageId)];
+
         $durationCategory = DurationCategory::where('days', $validityDays)->first()->id;
 
         $obj = [];
@@ -40,11 +76,9 @@ class ProductsTableSeeder extends Seeder
                 break;
 
             case 'packages':
-                $obj = [
-//                    'package_offer_type_id' =>
-                    'callrate_offer' => rand(1, 10),
-                    'sms_rate_offer' => rand(1, 10),
-                ];
+
+                $obj = $this->prepaidPlan($packages);
+
                 break;
 
             case 'bundles':
@@ -60,13 +94,13 @@ class ProductsTableSeeder extends Seeder
                 break;
 
             case 'others':
-//                $obj = [
-//                    'other_offer_type_id' => 12,
-//                    'description' => 'Life will be much easier now,
-//                                      because Banglalink is introducing balance transfer service! Easily
-//                                      transfer credit to your friends and family who use Banglalink number,
-//                                      anytime you want.'
-//                ];
+                $obj = [
+                    'other_offer_type_id' => 12,
+                    'description' => 'Life will be much easier now,
+                                      because Banglalink is introducing balance transfer service! Easily
+                                      transfer credit to your friends and family who use Banglalink number,
+                                      anytime you want.'
+                ];
 
                 break;
 
@@ -117,7 +151,7 @@ class ProductsTableSeeder extends Seeder
 
         /** Loop For PostPaid Product Create */
         for ($i = 0; $i < 20; $i++) {
-            $offer = OfferCategory::whereIn('alias', ['internet','packages','others'])->inRandomOrder()->first();
+            $offer = OfferCategory::whereIn('alias', ['internet', 'packages', 'others'])->inRandomOrder()->first();
 
             $offerInfo = $this->getOfferInfo($offer->alias);
 
@@ -135,7 +169,7 @@ class ProductsTableSeeder extends Seeder
                     'offer_category_id' => $offer->id,
                     'show_in_home' => $showInHome,
                     'display_order' => $displayOrder,
-                    'offer_info' =>  $offerInfo
+                    'offer_info' => $offerInfo
                 ]
             );
 
