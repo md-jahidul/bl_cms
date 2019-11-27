@@ -116,7 +116,7 @@
 
                                 <div class="form-group col-md-4 mb-0">
                                     <label for="campaign_img"></label>
-                                    <div class="custom-file {{ ($partnerOffer->campaign_img != '') ? '' : "d-none" }}">
+                                    <div class="custom-file {{ ($partnerOffer->is_campaign == 1) ? '' : "d-none" }}">
                                         <input type="file" name="campaign_img" class="custom-file-input" id="image">
                                         <label class="custom-file-label" for="inputGroupFile01">Please Choose Campaign Image</label>
                                         <span class="text-primary">Please given file type (.png, .jpg)</span>
@@ -130,7 +130,7 @@
                                 </div>
 
                                 <div class="form-group col-md-1 mb-0 {{ ($partnerOffer->is_campaign == 1) ? '' : "d-none" }}" id="showImg">
-                                    <img width="140" height="80" id="imgDisplay" src="{{ asset('images/campaign-image/' . $partnerOffer->campaign_img) }}">
+                                    <img width="140" height="80" id="imgDisplay" src="{{ ($partnerOffer->campaign_img != '') ? asset($partnerOffer->campaign_img) : asset('images/campaign-image/'.'campaign-placeholder.png') }}">
                                 </div>
 
 

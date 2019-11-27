@@ -47,7 +47,8 @@ class ProductController extends Controller
         TagCategoryService $tagCategoryService,
         OfferCategoryService $offerCategoryService,
         DurationCategoryService $durationCategoryService
-    ) {
+    )
+    {
         $this->productService = $productService;
         $this->productDetailService = $productDetailService;
         $this->tagCategoryService = $tagCategoryService;
@@ -162,9 +163,6 @@ class ProductController extends Controller
     public function edit($type, $id)
     {
         $product = $this->productService->findOne($id);
-
-//        return date('Y-m-d H:i:s', $product->end_date);
-
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['previous_page'] = url()->previous();
         $this->info['type'] = $type;
@@ -205,7 +203,6 @@ class ProductController extends Controller
         $response = $this->productService->updateProduct($request->all(), $id);
         Session::flash('message', $response->content());
         return (strpos(request()->previous_page, 'trending-home') !== false) ? redirect(request()->previous_page) : redirect(route('product.list', $type));
-        // return redirect(request()->previous_page);
     }
 
     /**
@@ -236,9 +233,6 @@ class ProductController extends Controller
         $this->productDetailService->updateRelatedProduct($request, $id);
 
         $productDetails['other_attributes'] = $request->other_attributes;
-
-//        return $request->all();
-
         $productDetails->update($request->all());
 
         return redirect("offers/$type");

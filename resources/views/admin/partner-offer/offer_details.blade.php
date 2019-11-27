@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @php $partner = ucfirst($partner)  @endphp
 @section('title', "$partner Offer ")
-@section('card_name', "$partner Offer Details")
+{{--@section('card_name', "$partner Offer Details")--}}
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('product.list', $partner) }}"> {{ $partner }} List</a></li>
-    {{--    <li class="breadcrumb-item active"> <a href="{{ route('partner-offer', [$parentId, $partnerName]) }}"> Partner Offer List</a></li>--}}
+    <li class="breadcrumb-item "><a href="{{ url('partners') }}"> Partner List</a></li>
+    <li class="breadcrumb-item"><a href="{{ route("partner-offer", [$partnerOfferDetail->partner_id, strtolower($partner)]) }}"> {{ $partner }} List</a></li>
     <li class="breadcrumb-item active"> {{ $partner }} Offer Details</li>
 @endsection
 @section('action')
@@ -15,7 +15,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title"><strong>Product Details Page</strong></h5><hr>
+                    <h4 class="menu-title"><strong>{{ $partner }} Details Page</strong></h4><hr>
                     <div class="card-body card-dashboard">
                         <form role="form" id="product_form" action="{{ route('offer.details-update', [strtolower($partner)] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf

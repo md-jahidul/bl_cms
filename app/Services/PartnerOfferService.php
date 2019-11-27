@@ -56,7 +56,7 @@ class PartnerOfferService
         $data['partner_id'] = $partnerId;
         if (!empty($data['campaign_img'])) {
             $imageUrl = $this->imageUpload($data, 'campaign_img', $data['offer_en'], 'images/campaign-image/');
-            $data['campaign_img'] = $imageUrl;
+            $data['campaign_img'] = "/images/campaign-image/" . $imageUrl;
         }
         $data['display_order'] = ++$count;
         $offerId = $this->save($data);
@@ -91,16 +91,16 @@ class PartnerOfferService
         $data['show_in_home'] = (isset($data['show_in_home'])) ? 1 : 0;
 
         if (!empty($data['campaign_img'])) {
-            $imageUrl = $this->imageUpload($data, 'campaign_img', $data['offer_en'], 'images/campaign-image/');
-            $imgFullPath = $imageUrl;
-            $data['campaign_img'] = $imageUrl;
+            $imageUrl = $this->imageUpload($data, 'campaign_img', $data['validity_en'], 'images/campaign-image/');
+            $data['campaign_img'] = "images/campaign-image/" . $imageUrl;
+
+            ($partnerOffer->campaign_img != '') ? unlink(public_path($partnerOffer->campaign_img)) : '';
         }
-        if ($data['is_campaign'] == 0) {
+        if ($data['is_campaign'] == 0 && !empty($partnerOffer->campaign_img)) {
             unlink(public_path('images/campaign-image/' . $partnerOffer->campaign_img));
             $data['campaign_img'] = null;
-        } else {
-            ($partnerOffer->campaign_img == '') ? $partnerOffer->campaign_img : $imgFullPath;
         }
+
 
         $partnerOffer->update($data);
         return Response('Partner offer update successfully !');

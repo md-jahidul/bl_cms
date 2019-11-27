@@ -10,7 +10,7 @@
         }else {
             $('#showImg').addClass('d-none')
             campaignImg.parent().addClass('d-none')
-            // alert('unclicked');
+            imgRequired.addClass('d-none');
         }
     })
 
