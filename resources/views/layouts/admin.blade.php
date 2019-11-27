@@ -73,8 +73,8 @@
 <div class="app-content content">
     <div class="content-wrapper">
         <div class="content-header row">
-            <div class="content-header-left col-md-7 col-12 mb-2 breadcrumb-new">
-                <h3 class="content-header-title mb-0 d-inline-block">@yield('card_name')</h3>
+            <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
+                <h3 class="content-header-title mb-0 mr-0 d-inline-block">@yield('card_name')</h3>
                 <div class="row breadcrumbs-top d-inline-block">
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb mb-1">
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            <div class="content-header-right col-md-5 col-12">
+            <div class="content-header-right col-md-6 col-12">
                 <div class="dropdown float-md-right">
                     @yield('action')
                 </div>
@@ -104,7 +104,7 @@
 <script src="{{ asset('theme/vendors/js/tables/datatable/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/vendors/js/forms/select/selectize.min.js') }}" type="text/javascript"></script>
 <script src="{{asset('/theme/js/core/app-menu.js')}}" type="text/javascript"></script>
-<script src="{{asset('/theme/js/core/app.js')}}" type="text/javascript"></script>
+{{--<script src="{{asset('/theme/js/core/app.js')}}" type="text/javascript"></script>--}}
 <script src="{{asset('/theme/js/scripts/customizer.js')}}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/scripts/forms/select/form-select2.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/core/app.js') }}" type="text/javascript"></script>
@@ -133,8 +133,6 @@
 <!-- END PAGE LEVEL JS-->
 
 <script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
-
 
 
 @stack('page-js')
@@ -147,7 +145,6 @@
                     $('#imgDisplay').css('display', 'block');
                     $('#imgDisplay').attr('src', e.target.result);
 
-                    console.log(e.target.result);
                 }
                 reader.readAsDataURL(input.files[0]);
             }

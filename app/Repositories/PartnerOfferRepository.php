@@ -23,14 +23,19 @@ class PartnerOfferRepository extends BaseRepository
         return $query->with('partner')->get();
     }
 
-    public function partnerOfferTableSort($request)
+    public function campaigin()
+    {
+       return $this->model->where('is_campaign', 1)->orderBy('campaign_order')->get();
+    }
+
+    public function sortable($request, $orderColumn = 'display_order')
     {
         $positions = $request->position;
         foreach ($positions as $position) {
             $menu_id = $position[0];
             $new_position = $position[1];
             $update_menu = $this->model->findOrFail($menu_id);
-            $update_menu['display_order'] = $new_position;
+            $update_menu[$orderColumn] = $new_position;
             $update_menu->update();
         }
         return "success";

@@ -16,6 +16,8 @@ class PartnerOffer extends Model
         'get_offer_msg_bn',
         'btn_text_en',
         'btn_text_bn',
+        'campaign_img',
+        'is_campaign',
         'show_in_home',
         'is_active',
         'display_order',
@@ -26,4 +28,10 @@ class PartnerOffer extends Model
     {
         return $this->belongsTo(Partner::class);
     }
+
+    public function partner_offer_details()
+    {
+        return $this->hasOne(PartnerOfferDetail::class);
+    }
+
 }

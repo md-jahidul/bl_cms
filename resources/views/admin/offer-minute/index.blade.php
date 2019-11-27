@@ -1,22 +1,22 @@
 @extends('layouts.admin')
-@section('title', 'Minute Offer')
-@section('card_name', 'Minute Offer')
+@section('title', 'Minutes Offer')
+@section('card_name', 'Minutes Offer')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Minute Offer List</li>
+    <li class="breadcrumb-item active">Minutes Offer List</li>
 @endsection
 @section('action')
     <a href="{{route('minuteOffer.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create Minute Offer
+        Create Minutes Offer
     </a>
 @endsection
 @section('content')
-   
+
     <section>
         <div class="card">
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-10">
-                        <h1 class="card-title pl-1">Minute Offer List</h1>
+                        <h1 class="card-title pl-1">Minutes Offer List</h1>
                     </div>
                 </div>
             </div>
@@ -47,15 +47,11 @@
                                 <td width='15%'>{{$minute_offer->offer_code}}</td>
                                 <td width='10%'>{{$minute_offer->points}}</td>
                                 <td width='20%'>
-                                    <div class="row justify-content-md-center no-gutters">
-                                        <div class="col-md-5">
-                                            <a role="button" href="{{route('minuteOffer.edit',$minute_offer->id)}}" class="btn btn-outline-success">
-                                                <i class="la la-pencil"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <button data-id="{{$minute_offer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                        </div>
+                                    <div class="btn-group" role="group">
+                                        <a role="button" href="{{route('minuteOffer.edit',$minute_offer->id)}}" class="btn btn-outline-success">
+                                            <i class="la la-pencil"></i>
+                                        </a>
+                                        <button data-id="{{$minute_offer->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -86,8 +82,8 @@
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
-        
-       
+
+
 
         $(function () {
             $('.delete').click(function () {

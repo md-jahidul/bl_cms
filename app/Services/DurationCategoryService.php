@@ -40,7 +40,7 @@ class DurationCategoryService
      */
     public function storeDurationCategory($data)
     {
-        $data['alias'] = str_replace(" ", "_", strtolower($data['name']));
+        $data['alias'] = str_replace(" ", "_", strtolower($data['name_en']));
         $this->save($data);
         return new Response('Duration category added successfully');
     }
@@ -53,7 +53,7 @@ class DurationCategoryService
     public function updateDurationCategory($data, $id)
     {
         $durationCategory = $this->findOne($id);
-        $data['alias'] = str_replace(" ", "_", strtolower($data['name']));
+        $data['alias'] = str_replace(" ", "_", strtolower($data['name_en']));
         $durationCategory->update($data);
         return Response('Duration category updated successfully');
     }

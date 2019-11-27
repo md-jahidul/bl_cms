@@ -33,18 +33,25 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     //Route::get('/get-digital-service', 'API\DigitalServiceController@getDigitalServices');
 
-    // CONFIG PAGES ====================================
+    // CONFIG  ====================================
     Route::get('config', 'AssetLite\ConfigController@index');
     Route::put('config/update', 'AssetLite\ConfigController@update');
 
-    // MENU PAGES ====================================
+    // Priyojon Landing Page ====================================
+    Route::get('priyojon/{id}/child-menu/create', 'AssetLite\PriyojonController@create');
+    Route::resource('priyojon', 'AssetLite\PriyojonController')->only(['update','edit']);
+    Route::get('priyojon/{id?}/{child_menu?}', 'AssetLite\PriyojonController@index');
+//    Route::get('/menu-auto-save', 'AssetLite\MenuController@parentMenuSortable');
+//    Route::get('menu/{parentId}/destroy/{id}', 'AssetLite\MenuController@destroy');
+
+    // MENU  ====================================
     Route::get('menu/{id}/child-menu/create', 'AssetLite\MenuController@create');
     Route::resource('menu', 'AssetLite\MenuController')->only(['update','edit','store']);
     Route::get('menu/{id?}/{child_menu?}', 'AssetLite\MenuController@index');
     Route::get('/menu-auto-save', 'AssetLite\MenuController@parentMenuSortable');
     Route::get('menu/{parentId}/destroy/{id}', 'AssetLite\MenuController@destroy');
 
-    // FOOTER MENU PAGES ====================================
+    // FOOTER MENU  ====================================
     Route::get('footer-menu/{id}/child-footer/create', 'AssetLite\FooterMenuController@create');
     Route::resource('footer-menu', 'AssetLite\FooterMenuController')->only(['update','edit','store']);
     Route::get('footer-menu/{parentId}/destroy/{id}', 'AssetLite\FooterMenuController@destroy');
@@ -57,22 +64,22 @@ Route::middleware('authorize', 'auth')->group(function () {
     //     Route::get('/{id}/child-footer/create', 'AssetLite\FooterMenuController@create');
     // });
 
-    // QUICK LAUNCH PAGES ====================================
+    // QUICK LAUNCH  ====================================
     Route::resource('quick-launch', 'AssetLite\QuickLaunchController')->except(['show', 'destroy']);
     Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
     Route::get('/quick-launch-sortable', 'AssetLite\QuickLaunchController@quickLaunchSortable');
 
-    // META TAG PAGES ====================================
+    // META TAG  ====================================
     Route::resource('meta-tag', 'AssetLite\MetaTagController');
     //Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 
 
-    // CONFIG PAGES ====================================
+    // CONFIG  ====================================
     Route::get('config', 'AssetLite\ConfigController@index');
     Route::put('config/update', 'AssetLite\ConfigController@update');
 
-    // SLIDERS PAGES ====================================
+    // SLIDERS  ====================================
     Route::get('single-sliders', 'AssetLite\SliderController@singleSlider');
     Route::get('multiple-sliders', 'AssetLite\SliderController@multiSlider');
     Route::get('sliders/{id}/{type}/edit', 'AssetLite\SliderController@edit');
@@ -90,34 +97,46 @@ Route::middleware('authorize', 'auth')->group(function () {
 
 
 
-    // OFFER CATEGORY PAGES ====================================
+    // OFFER CATEGORY  ===============================
     Route::resource('tag-category', 'AssetLite\TagCategoryController')->except(['show', 'destroy']);
     Route::get('tag-category/destroy/{id}', 'AssetLite\TagCategoryController@destroy');
-    Route::resource('sim-categories', 'AssetLite\SimCategoryController')->only(['index']);
-    Route::resource('duration-categories', 'AssetLite\DurationCategoryController')->only(['index']);
-    Route::resource('offer-categories', 'AssetLite\OfferCategoryController')->only(['index']);
 
-    // OFFER SUB MENU
+    Route::resource('sim-categories', 'AssetLite\SimCategoryController')->only(['index']);
+
+    Route::resource('duration-categories', 'AssetLite\DurationCategoryController')->except(['show', 'destroy']);
+    Route::get('duration-category/destroy/{id}', 'AssetLite\DurationCategoryController@destroy');
+
+    Route::resource('offer-categories', 'AssetLite\OfferCategoryController')->only(['index', 'edit', 'update']);
+    Route::get('offer-categories/{parent_id}/{type}/edit/{id}', 'AssetLite\OfferCategoryController@childEdit');
+    Route::put('offer-categories/{parent_id}/update/{id}', 'AssetLite\OfferCategoryController@childUpdate')
+        ->name('child-category');
+
+
+    // OFFER SUB MENU =====================================
     Route::get('offer-categories/{id}/{type}', 'AssetLite\OfferCategoryController@index')->name('child_menu');
 
 
 
-
-
-    // OFFERS PAGES ====================================
+    // OFFERS  ======================================
     Route::get('offers/{type}', 'AssetLite\ProductController@index')->name('product.list');
     Route::get('offers/{type}/create', 'AssetLite\ProductController@create')->name('product.create');
     Route::post('offers/{type}/store', 'AssetLite\ProductController@store')->name('product.store');
     Route::get('offers/{type}/{id}/edit/', 'AssetLite\ProductController@edit')->name('product.edit');
     Route::put('offers/{type}/{id}/update', 'AssetLite\ProductController@update')->name('product.update');
     Route::get('offers/{type}/{id}/show', 'AssetLite\ProductController@show')->name('product.show');
+
+    Route::get('offers/{type}/{id}/{offerType}/details', 'AssetLite\ProductController@productDetailsEdit')
+        ->name('product.details');
+    Route::put('offers/{type}/{id}/details/update', 'AssetLite\ProductController@productDetailsUpdate')
+        ->name('product.details-update');
+
     Route::get('offers/{type}/{id}', 'AssetLite\ProductController@destroy');
     Route::get('trending-home', 'AssetLite\ProductController@trendingOfferHome')->name('trending-home');
 //    Route::get('trending-home/{id}/edit', 'AssetLite\ProductController@homeEdit');
     Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
 
 
-    // PARTNERS PAGES ====================================
+    // PARTNERS ====================================
     Route::resource('partners', 'AssetLite\PartnerController')->except(['show', 'destroy']);
     Route::get('partner/destroy/{id}', 'AssetLite\PartnerController@destroy');
 
@@ -131,13 +150,19 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('partner_offer_update');
     Route::get('partner-offer/{partner_id}/{partner}/offer/destroy/{id}', 'AssetLite\PartnerOfferController@destroy');
     Route::get('/partner-offer-home/sortable', 'AssetLite\PartnerOfferController@partnerOfferSortable');
-
     Route::get('partner-offers-home', 'AssetLite\PartnerOfferController@partnerOffersHome')->name('partner-offer-home');
+    Route::get('campaign-offers', "AssetLite\PartnerOfferController@campaignOfferList")->name('campaign-offers.list');
+    Route::get('campaign-offer/sortable', "AssetLite\PartnerOfferController@campaignOfferSortable");
+
+    Route::get('partner-offers/{partner}/{id}/details', 'AssetLite\PartnerOfferController@offerDetailsEdit')
+        ->name('offer.details');
+    Route::put('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
+        ->name('offer.details-update');
 
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 
 
-    // Fixed PAGES ====================================
+    // Fixed  ====================================
     Route::get('fixed-pages', 'AssetLite\FixedPageController@index');
     Route::get('fixed-page/{id}/components', 'AssetLite\FixedPageController@components')->name('fixed-page-components');
     Route::get('fixed-pages/{id}/meta-tags', 'AssetLite\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');

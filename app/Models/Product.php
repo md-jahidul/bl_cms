@@ -17,6 +17,8 @@ class Product extends Model
             'name_bn',
             'price_tk',
             'price_vat_included',
+            'start_date',
+            'end_date',
             'ussd_en',
             'ussd_bn',
             'bonus',
@@ -35,12 +37,17 @@ class Product extends Model
         ];
 
     protected $casts = [
-        'offer_info' => 'array'
+        'offer_info' => 'array',
     ];
 
     public function sim_category()
     {
         return $this->belongsTo(SimCategory::class);
+    }
+
+    public function offer_category()
+    {
+        return $this->belongsTo(OfferCategory::class);
     }
 
     public function scopeCategory($query, $type)
@@ -49,4 +56,21 @@ class Product extends Model
             $q->where('alias', $type);
         });
     }
+
+    public function product_details()
+    {
+        return $this->hasOne(ProductDetail::class);
+    }
+
+    public function related_product()
+    {
+        return $this->hasMany(RelatedProduct::class);
+    }
+
+    public function other_related_product()
+    {
+        return $this->hasMany(OtherRelatedProduct::class);
+    }
+
+
 }

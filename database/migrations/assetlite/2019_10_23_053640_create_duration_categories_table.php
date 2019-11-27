@@ -15,9 +15,10 @@ class CreateDurationCategoriesTable extends Migration
     {
         Schema::create('duration_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name_en');
+            $table->string('name_bn');
             $table->string('alias');
-            $table->integer('days');
+            $table->integer('days')->nullable();
             $table->timestamps();
         });
     }

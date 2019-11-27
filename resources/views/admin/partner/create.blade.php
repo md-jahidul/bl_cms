@@ -93,21 +93,6 @@
                                     </fieldset>
                                 </div>
 
-
-{{--                                <div class="form-group col-md-6 {{ $errors->has('company_logo') ? ' error' : '' }}">--}}
-{{--                                    <label for="file" class=""></label><br>--}}
-{{--                                    <label for="file" class="required">Select Company Logo</label>--}}
-
-{{--                                    <label id="projectinput7" class="file center-block ml-2">--}}
-{{--                                        <input type="file" id="file" name="company_logo" accept="image/png,image/jpg,image/jpeg" required>--}}
-{{--                                    </label><br>--}}
-{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
-
-{{--                                    @if ($errors->has('company_logo'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('company_logo') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
                                 <div class="form-group col-md-6 mb-0 {{ $errors->has('company_logo') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Company logo</label>
                                     <div class="custom-file">
@@ -125,6 +110,26 @@
                                     <div class="form-group col-md-6 mt-1">
                                         <img style="height:70px;width:70px;display:none" id="imgDisplay">
                                     </div>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('google_play_link') ? ' error' : '' }}">
+                                    <label for="google_play_link" class="required">Google Play Store Link</label>
+                                    <input type="url" name="google_play_link"  class="form-control" placeholder="Enter google play store lonk"
+                                           value="{{ old("google_play_link") ? old("google_play_link") : '' }}" required data-validation-required-message="Enter google play store lonk"/>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('google_play_link'))
+                                        <div class="help-block">  {{ $errors->first('google_play_link') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('apple_app_store_link') ? ' error' : '' }}">
+                                    <label for="apple_app_store_link" class="required">Apple App Store Link</label>
+                                    <input type="url" name="apple_app_store_link" class="form-control" placeholder="Enter apple app store link"
+                                           value="{{ old("apple_app_store_link") ? old("apple_app_store_link") : '' }}" required data-validation-required-message="Enter apple app store link">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('apple_app_store_link'))
+                                        <div class="help-block">  {{ $errors->first('apple_app_store_link') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="form-group col-md-12 {{ $errors->has('company_address') ? ' error' : '' }}">

@@ -5,9 +5,9 @@
     <li class="breadcrumb-item "><a href="{{ url('duration-categories') }}"> Duration Categories List</a></li>
 @endsection
 @section('action')
-{{--    <a href="{{ url("duration-category/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
-{{--        Add Duration--}}
-{{--    </a>--}}
+    <a href="{{ url("duration-categories/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Add Duration
+    </a>
 @endsection
 @section('content')
     <section>
@@ -19,7 +19,9 @@
                         <thead>
                         <tr>
                             <td width="3%">#</td>
-                            <th width="25%">Name</th>
+                            <th width="25%">Title English</th>
+                            <th width="25%">Title Bangla</th>
+                            <th width="25%">Days</th>
                             <th class="">Action</th>
                         </tr>
                         </thead>
@@ -28,10 +30,12 @@
                                 @php $path = 'partner-offers-home'; @endphp
                                 <tr data-index="{{ $durationCategory->id }}" data-position="{{ $durationCategory->display_order }}">
                                     <td width="3%">{{ $loop->iteration }}</td>
-                                    <td>{{ $durationCategory->name }}</td>
+                                    <td>{{ $durationCategory->name_en }}</td>
+                                    <td>{{ $durationCategory->name_bn }}</td>
+                                    <td>{{ $durationCategory->days }}</td>
                                     <td width="12%" class="text-center">
-                                        <a href="{{ url("duration-category/$durationCategory->id/edit") }}" onclick="return false;" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ url("tag-category/destroy/$durationCategory->id") }}" onclick="return false;" class="border-0 btn-sm btn-outline-danger {{--delete_btn--}} disabled" data-id="{{ $durationCategory->id }}" title="Delete">
+                                        <a href="{{ url("duration-categories/$durationCategory->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <a href="#" remove="{{ url("duration-category/destroy/$durationCategory->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $durationCategory->id }}" title="Delete">
                                             <i class="la la-trash"></i>
                                         </a>
                                     </td>

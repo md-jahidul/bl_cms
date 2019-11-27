@@ -30,4 +30,15 @@ class ProductRepository extends BaseRepository
             $update_menu->update();
         }
     }
+
+    /**
+     * @param $type
+     * @param $id
+     * @return mixed
+     */
+    public function relatedProducts($type, $id)
+    {
+        $products = $this->model::category($type)->where('id', '!=', $id)->get();
+        return $products;
+    }
 }

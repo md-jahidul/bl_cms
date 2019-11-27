@@ -30,7 +30,6 @@
                                     @endif
                                 </div>
 
-
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
                                     <label for="name_bn" class="required">Offer Name (Bangla)</label>
                                     <input type="text" name="name_bn"  class="form-control" placeholder="Enter offer name in Bangla"
@@ -39,6 +38,30 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_bn'))
                                         <div class="help-block">{{ $errors->first('name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                    <label for="start_date" class="required">Start Date</label>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" name="start_date" id="start_date"
+                                               required data-validation-required-message="Please select start date"
+                                               placeholder="Please select start date" />
+                                    </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('start_date'))
+                                        <div class="help-block">{{ $errors->first('start_date') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                    <label for="end_date">End Date</label>
+                                    <input type="text" name="end_date" id="end_date" class="form-control"
+                                           placeholder="Please select end date"
+                                           value="{{ old("end_date") ? old("end_date") : '' }}" autocomplete="0">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('end_date'))
+                                        <div class="help-block">{{ $errors->first('end_date') }}</div>
                                     @endif
                                 </div>
 
@@ -63,13 +86,23 @@
                                     <div class="help-block"></div>
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    <label for="tag_category_id">Tag</label>
+                                    <select class="form-control" name="tag_category_id">
+                                        <option value="">---Select Tag---</option>
+                                        @foreach($tags as $tag)
+                                            <option value="{{ $tag->id }}">{{ $tag->name_en }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="offer_category_id" class="required">Offer Type</label>
                                     <select class="form-control required" name="offer_category_id" id="offer_type"
                                             required data-validation-required-message="Please select offer">
-                                        <option value="">---Select Offer Type---</option>
+                                        <option data-alias="" value="">---Select Offer Type---</option>
                                         @foreach($offers as $offer)
-                                            <option value="{{ $offer->id }}">{{ $offer->name }}</option>
+                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}">{{ $offer->name_en }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -77,55 +110,32 @@
                                         <div class="help-block">{{ $errors->first('offer_category_id') }}</div>
                                     @endif
                                 </div>
-                            </div>
 
-                                <div class="row" id="internet" data-offer-type="internet" style="display: none">
+
+
+                                <slot id="internet" data-offer-type="internet" style="display: none">
                                     @include('layouts.partials.products.internet')
-                                </div>
-                                <div class="row" id="packages" data-offer-type="packages" style="display: none">
+                                </slot>
+                                <slot id="packages" data-offer-type="packages" style="display: none">
                                     @include('layouts.partials.products.packages')
-                                </div>
+                                </slot>
 
-                                <div class="row" id="others" data-offer-type="others" style="display: none">
+                                <slot id="others" data-offer-type="others" style="display: none">
                                     @include('layouts.partials.products.other')
-                                </div>
+                                </slot>
 
-                            @if( strtolower($type) == 'prepaid')
-                                <div class="row" id="voice" data-offer-type="voice" style="display: none">
-                                    @include('layouts.partials.products.voice')
-                                </div>
-                                <div class="row" id="bundles" data-offer-type="bundles" style="display: none">
-                                    @include('layouts.partials.products.bundle')
-                                </div>
-{{--                                <div class="row" id="startup" data-offer-type="startup" style="display: none">--}}
-{{--                                    @include('layouts.partials.products.startup')--}}
-{{--                                </div>--}}
-                            @endif
+                                @if( strtolower($type) == 'prepaid')
+                                    <slot id="voice" data-offer-type="voice" style="display: none">
+                                        @include('layouts.partials.products.voice')
+                                    </slot>
+                                    <slot id="bundles" data-offer-type="bundles" style="display: none">
+                                        @include('layouts.partials.products.bundle')
+                                    </slot>
+                                @endif
 
 
-                            <div class="row">
-{{--                                <div class="form-group col-md-6">--}}
-{{--                                    <label for="bonus">Bonus</label>--}}
-{{--                                    <input type="text" name="bonus"  class="form-control" placeholder="Enter bonus"--}}
-{{--                                           value="{{ old("bonus") ? old("bonus") : '' }}">--}}
-{{--                                </div>--}}
-
-{{--                                <div class="form-group col-md-6">--}}
-{{--                                    <label for="point">Point</label>--}}
-{{--                                    <input type="number" name="point"  class="form-control" placeholder="Enter point"--}}
-{{--                                           value="{{ old("point") ? old("point") : '' }}">--}}
-{{--                                </div>--}}
 
 
-                                <div class="form-group col-md-6">
-                                    <label for="tag_category_id">Tag</label>
-                                    <select class="form-control" name="tag_category_id">
-                                        <option value="0">---Select Tag---</option>
-                                        @foreach($tags as $tag)
-                                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
 
                                 <div class="col-md-6" >
                                     <label></label>
@@ -140,7 +150,6 @@
                                         <label for="title" class="mr-1">Recharge</label>
                                         <input type="radio" name="is_recharge" value="1" id="yes" checked>
                                         <label for="yes" class="mr-1">Yes</label>
-
                                         <input type="radio" name="is_recharge" value="0" id="no">
                                         <label for="no">No</label>
                                     </div>
@@ -161,10 +170,11 @@
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button id="save" class="btn btn-primary"><i
-                                                class="la la-check-square-o"></i> Save
+                                                    class="la la-check-square-o"></i> Save
                                         </button>
                                     </div>
                                 </div>
+
                             </div>
 
                         </form>
@@ -178,9 +188,48 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 @endpush
 @push('page-js')
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+                var date = new Date();
+                date.setDate(date.getDate());
+            $('#start_date').datetimepicker({
+                format : 'YYYY/MM/DD HH:mm:ss',
+                showClose: true,
+                minDate: date,
+            });
+            $('#end_date').datetimepicker({
+                format : 'YYYY/MM/DD HH:mm:ss',
+                showClose: true,
+                useCurrent: false, //Important! See issue #1075
+
+            });
+            $("#start_date").on("dp.change", function (e) {
+                $('#end_date').data("DateTimePicker").minDate(e.date);
+            });
+            $("#end_date").on("dp.change", function (e) {
+                $('#start_date').data("DateTimePicker").maxDate(e.date);
+            });
+
+        $('.duration_categories').change(function () {
+            let durationOntion = $(this).find('option:selected').attr('data-alias')
+            let durationDays = $(this).find('option:selected').attr('data-days')
+            let validityField = $('.validity_days');
+
+            if (durationOntion) {
+                validityField.val(durationDays).prop('readonly', true);
+            }
+        })
+
+        });
+    </script>
 @endpush
 
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Requests\StorePartnerOfferRequest;
+use App\Models\PartnerOfferDetail;
+use App\Services\PartnerOfferDetailService;
 use App\Services\PartnerOfferService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,11 +17,14 @@ class PartnerOfferController extends Controller
      * @var $partnerOfferService
      */
     private $partnerOfferService;
+    private $partnerOfferDetailService;
 
-    public function __construct(PartnerOfferService $partnerOfferService)
-    {
+    public function __construct(
+        PartnerOfferService $partnerOfferService,
+        PartnerOfferDetailService $partnerOfferDetailService
+    ) {
         $this->partnerOfferService = $partnerOfferService;
-        $this->middleware('auth');
+        $this->partnerOfferDetailService = $partnerOfferDetailService;
     }
 
     /**
@@ -32,6 +37,9 @@ class PartnerOfferController extends Controller
     public function index($parentId, $partnerName)
     {
         $partnerOffers = $this->partnerOfferService->itemList($parentId);
+
+//        return $partnerName;
+
         return view('admin.partner-offer.index', compact('partnerOffers', 'parentId', 'partnerName'));
     }
 
@@ -70,9 +78,10 @@ class PartnerOfferController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function campaignOfferList()
     {
-        //
+        $campaignOffers = $this->partnerOfferService->campaignOffers();
+        return view('admin.partner-offer.campaign', compact('campaignOffers'));
     }
 
     /**
@@ -80,7 +89,15 @@ class PartnerOfferController extends Controller
      */
     public function partnerOfferSortable(Request $request)
     {
-        $this->partnerOfferService->tableSortable($request);
+        $this->partnerOfferService->partnerOfferSortable($request);
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function campaignOfferSortable(Request $request)
+    {
+        $this->partnerOfferService->campaignOfferSortable($request);
     }
 
     /**
@@ -92,6 +109,8 @@ class PartnerOfferController extends Controller
     public function edit($partnerId, $partnerName, $id)
     {
         $partnerOffer = $this->partnerOfferService->findOne($id);
+
+//        return $partnerOffer;
         return view('admin.partner-offer.edit', compact('partnerOffer', 'partnerId', 'partnerName', 'path'));
     }
 
@@ -107,6 +126,25 @@ class PartnerOfferController extends Controller
         $response = $this->partnerOfferService->updatePartnerOffer($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect(isset($redirect) ? $redirect : "partner-offer/$partnerId/$partnerName");
+    }
+
+    /**
+     * @param $type
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function offerDetailsEdit($partner, $id)
+    {
+        $partnerOfferDetail = $this->partnerOfferService->findOne($id, ['partner_offer_details']);
+        return view('admin.partner-offer.offer_details', compact('partner', 'partnerOfferDetail', 'products'));
+    }
+
+    public function offerDetailsUpdate(Request $request, $partnet)
+    {
+        $response = $this->partnerOfferDetailService
+            ->updatePartnerOfferDetails($request->all(), $request->offer_details_id);
+        Session::flash('message', $response->getContent());
+        return redirect()->route('partner-offer', [$request->partner_id, $partnet]);
     }
 
     /**

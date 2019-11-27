@@ -88,3 +88,14 @@
         <div class="help-block">  {{ $errors->first('gb_short_note_bn') }}</div>
     @endif
 </div>
+
+<div class="form-group col-md-6 {{ $errors->has('balance_check') ? ' error' : '' }}">
+    <label for="balance_check" class="required">Balance Check</label>
+    <input type="text" name="offer_info[balance_check]"  class="form-control" placeholder="Enter balance check USSD code"
+           value="{{ (!empty($offerInfo['balance_check'])) ? $offerInfo['balance_check'] : old("offer_info.balance_check") ?? '' }}"
+           required data-validation-required-message="Enter view list url">
+    <div class="help-block"></div>
+    @if ($errors->has('balance_check'))
+        <div class="help-block">  {{ $errors->first('balance_check') }}</div>
+    @endif
+</div>

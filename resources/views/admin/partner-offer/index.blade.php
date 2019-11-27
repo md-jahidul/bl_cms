@@ -16,15 +16,17 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <h4 class="pb-1"><strong>{{ ucwords($partnerName." ". "Offers") }}</strong></h4>
-                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
-                           id="Example1" role="grid" aria-describedby="Example1_info" style="">
+                    {{--<table class="table table-striped table-bordered alt-pagination no-footer dataTable"--}}
+                           {{--id="Example1" role="grid" aria-describedby="Example1_info" style="">--}}
+                        <table class="table table-striped table-bordered zero-configuration">
                         <thead>
                         <tr>
                             <td width="3%">#</td>
-                            <th>Company Logo</th>
-                            <th width="25%">Validity</th>
+                            <th width="4%">Company Logo</th>
+                            <th width="20%">Validity</th>
                             <th>Get Send SMS</th>
                             <th>Offer Percentage</th>
+                            <th class="text-center" width="2%">Offer Details</th>
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
@@ -34,12 +36,13 @@
                             <tr data-index="{{ $partnerOffer->id }}" data-position="{{ $partnerOffer->display_order }}">
                                 <td width="3%">{{ $index + 1 }}</td>
                                 <td><img class="" src="{{ $partnerOffer->partner->company_logo }}" alt="Slider Image" height="40" width="50" /></td>
-                                <td>{{ $partnerOffer->validity_en }} {!! $partnerOffer->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
+                                <td>{{ $partnerOffer->validity_en }} {!! $partnerOffer->is_active == 0 ? '<span class="text-danger"> ( Inactive )</span>' : '' !!}</td>
                                 <td>{{ $partnerOffer->get_offer_msg_en }}</td>
                                 <td>{{ $partnerOffer->offer_en }}</td>
-                                <td class="action" width="8%">
-                                    <a href="{{ route('partner_offer_edit', [ $partnerOffer->partner_id, $partnerName, $partnerOffer->id, null ] ) }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("partner-offer/$partnerOffer->partner_id/$partnerName/offer/destroy/$partnerOffer->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $partnerOffer->id }}" title="Delete">
+                                <td class="text-center"><a href="{{ route('offer.details', [$partnerName, $partnerOffer->id]) }}" class="btn-sm btn-outline-primary border">Details</a></td>
+                                <td class="action" width="12%">
+                                    <a href="{{ route('partner_offer_edit', [ $partnerOffer->partner_id, $partnerName, $partnerOffer->id, null ] ) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" remove="{{ url("partner-offer/$partnerOffer->partner_id/$partnerName/offer/destroy/$partnerOffer->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $partnerOffer->id }}" title="Delete">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>
@@ -56,7 +59,7 @@
 @stop
 
 @push('page-css')
-    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+    {{--<link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">--}}
     <style>
         #sortable tr td{
             padding-top: 5px !important;

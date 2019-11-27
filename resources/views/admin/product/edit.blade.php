@@ -45,9 +45,34 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                    <label for="start_date" class="required">Start Date</label>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" name="start_date" id="start_date"
+                                               value="{{ date('Y-m-d H:i:s', $product->start_date) }}"
+                                               required data-validation-required-message="Please select start date"
+                                               placeholder="Please select start date" />
+                                    </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('start_date'))
+                                        <div class="help-block">{{ $errors->first('start_date') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                    <label for="end_date">End Date</label>
+                                    <input type="text" name="end_date" id="end_date" class="form-control"
+                                           placeholder="Please select end date"
+                                           value="{{ (!empty($product->end_date)) ? date('Y-m-d H:i:s', $product->end_date) : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('end_date'))
+                                        <div class="help-block">{{ $errors->first('end_date') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6">
                                     <label for="ussd">USSD Code English</label>
-                                    <input type="text" name="ussd"  class="form-control" placeholder="Enter offer ussd english" maxlength="25"
+                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd english" maxlength="25"
                                            value="{{ $product->ussd_en }}">
                                 </div>
 
@@ -69,7 +94,7 @@
                                             required data-validation-required-message="Please select offer">
                                         <option value="">---Select Offer Type---</option>
                                         @foreach($offersType as $offer)
-                                            <option value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>{{ $offer->name }}</option>
+                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>{{ $offer->name_en }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -86,16 +111,16 @@
                                     @include('layouts.partials.products.packages')
                                 </div>
 
-                            @if(strtolower($type == 'prepaid'))
+                                <div class="row {{ $product->offer_category_id == 9 ? '' : 'd-none' }}" id="others" data-offer-type="others">
+                                    @include('layouts.partials.products.other')
+                                </div>
+
+                            @if(strtolower($type) == 'prepaid')
                                 <div class="row {{ $product->offer_category_id == 2 ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
                                     @include('layouts.partials.products.voice')
                                 </div>
                                 <div class="row {{ $product->offer_category_id == 3 ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
                                     @include('layouts.partials.products.bundle')
-                                </div>
-
-                                <div class="row {{ $product->offer_category_id == 6 ? '' : 'd-none' }}" id="startup" data-offer-type="startup">
-                                    @include('layouts.partials.products.startup')
                                 </div>
                             @endif
 
@@ -116,7 +141,7 @@
                                     <select class="form-control" name="tag_category_id">
                                         <option value="">---Select Tag---</option>
                                         @foreach($tags as $tag)
-                                            <option value="{{ $tag->id }}" {{ ($tag->id == $product->tag_category_id ) ? 'selected' : '' }}>{{ $tag->name }}</option>
+                                            <option value="{{ $tag->id }}" {{ ($tag->id == $product->tag_category_id ) ? 'selected' : '' }}>{{ $tag->name_en }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -155,7 +180,7 @@
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
-                                        <button type="submit" id="update" class="btn btn-primary"><i
+                                        <button type="submit" id="save" class="btn btn-primary"><i
                                                 class="la la-check-square-o"></i> Update
                                         </button>
                                     </div>
@@ -173,9 +198,51 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 @endpush
 @push('page-js')
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            var startDate = $('#start_date').val()
+            var date = new Date();
+            date.setDate(date.getDate());
+            $('#start_date').datetimepicker({
+                format : 'YYYY-MM-DD HH:mm:ss',
+                showClose: true,
+                // minDate: date,
+            });
+            $('#end_date').datetimepicker({
+                format : 'YYYY-MM-DD HH:mm:ss',
+
+                useCurrent: false, //Important! See issue #1075
+                showClose: true,
+
+            });
+            // $("#start_date").on("dp.change", function (e) {
+            //     $('#end_date').data("DateTimePicker").minDate(e.date);
+            // });
+            // $("#end_date").on("dp.change", function (e) {
+            //     $('#start_date').data("DateTimePicker").maxDate(e.date);
+            // });
+
+
+
+            $('.duration_categories').change(function () {
+                let durationOntion = $(this).find('option:selected').attr('data-alias')
+                let durationDays = $(this).find('option:selected').attr('data-days')
+                let validityField = $('.validity_days');
+
+                if (durationOntion) {
+                    validityField.val(durationDays).prop('readonly', true);
+                }
+            })
+        });
+    </script>
 @endpush
 
 

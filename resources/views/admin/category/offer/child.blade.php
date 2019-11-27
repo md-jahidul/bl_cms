@@ -3,6 +3,7 @@
 @section('card_name', 'Offer Category List')
 @section('breadcrumb')
     <li class="breadcrumb-item "><a href="{{ url('offer-categories') }}"> Offer Categories List</a></li>
+    <li class="breadcrumb-item ">{{ ucfirst($type) }} Child Menu List</li>
 @endsection
 @section('action')
 {{--    <a href="{{ route("offer-categories.create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
@@ -18,27 +19,28 @@
                     <table class="table table-striped table-bordered zero-configuration">
                         <thead>
                         <tr>
-                            <td width="3%">#</td>
-                            <th width="20%">Name</th>
-                            <th width="15%">Type</th>
-                            <th width="25%">Description</th>
-                            <th class="">Action</th>
+                            <td>#</td>
+                            <th width="25%">Name</th>
+                            <th width="25%">Type</th>
+                            {{--<th width="25%">{{ $type }}</th>--}}
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                             @foreach($offerCategories as $offerCategory)
+                                @php $type = strtolower($type) @endphp
                                 <tr data-index="{{ $offerCategory->id }}" data-position="{{ $offerCategory->display_order }}">
                                     <td width="1%">{{ $loop->iteration }}</td>
-                                    <td width="5%">{{ $offerCategory->name }}
+                                    <td width="15%">{{ $offerCategory->name_en }}
                                         {!!  (strtolower($offerCategory->alias) == 'packages' || strtolower($offerCategory->alias) == 'others') ? "<a href='".route('child_menu', [$offerCategory->id, $offerCategory->alias])."' class='btn btn-outline-primary float-md-right'> Child Menu</a>" : '' !!}
                                     </td>
-                                    <td width="6%">{{ $offerCategory->type->name ?? '' }}</td>
-                                    <td width="6%">{{ $offerCategory->type->description ?? '' }}</td>
-                                    <td width="1%" class="text-center">
-                                        <a href="{{ url("offer-category/$offerCategory->id/edit") }}" role="button" onclick="return false;" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ url("offer-category/destroy/$offerCategory->id") }}" onclick="return false;" class="border-0 btn-sm btn-outline-danger {{--delete_btn--}}" data-id="{{ $offerCategory->id }}" title="Delete">
-                                            <i class="la la-trash"></i>
-                                        </a>
+                                    <td width="20%">{{ $offerCategory->type->name ?? '' }}</td>
+                                    {{--<td width="6%">{{ $offerCategory->type->description ?? '' }}</td>--}}
+                                    <td width="3%" class="text-center">
+                                        <a href="{{ url("offer-categories/$parent_id/$type/edit/$offerCategory->id") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        {{--<a href="#" remove="{{ url("offer-category/destroy/$offerCategory->id") }}" onclick="return false;" class="border-0 btn-sm btn-outline-danger --}}{{--delete_btn--}}{{--" data-id="{{ $offerCategory->id }}" title="Delete">--}}
+                                            {{--<i class="la la-trash"></i>--}}
+                                        {{--</a>--}}
                                     </td>
                                 </tr>
                             @endforeach

@@ -4,10 +4,12 @@ namespace App\Services;
 
 use App\Models\PartnerCategory;
 use App\Repositories\PartnerOfferRepository;
+use App\Repositories\ProductDetailRepository;
 use App\Repositories\ProductRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use phpDocumentor\Reflection\Types\Null_;
 
 class ProductService
 {
@@ -18,14 +20,17 @@ class ProductService
      * @var $partnerOfferRepository
      */
     protected $productRepository;
+    protected $productDetailRepository;
 
     /**
-     * PartnerOfferService constructor.
+     * ProductService constructor.
      * @param ProductRepository $productRepository
+     * @param ProductDetailRepository $productDetailRepository
      */
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(ProductRepository $productRepository, ProductDetailRepository $productDetailRepository)
     {
         $this->productRepository = $productRepository;
+        $this->productDetailRepository = $productDetailRepository;
         $this->setActionRepository($productRepository);
     }
 
@@ -38,14 +43,23 @@ class ProductService
     {
         $data['sim_category_id'] = $simId;
         $data['code'] = rand(10000, 12345);
-        $this->save($data);
-        return new Response('Partner offer added successfully');
+        $data['start_date'] = strtotime($data['start_date']);
+        $data['end_date'] = (isset($data['end_date'])) ? strtotime($data['end_date']) : Null;
+        $productId = $this->save($data);
+        $this->productDetailRepository->insertProductDetail($productId->id);
+        return new Response('Product added successfully');
     }
 
     public function tableSortable($data)
     {
         $this->productRepository->productOfferTableSort($data);
         return new Response('update successfully');
+    }
+
+    public function findRelatedProduct($type, $id)
+    {
+        $products = $this->productRepository->relatedProducts($type, $id);
+        return $products;
     }
 
     /**
@@ -57,9 +71,12 @@ class ProductService
     {
         $product = $this->findOne($id);
         $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0 );
+        $data['start_date'] = strtotime($data['start_date']);
+        $data['end_date'] = strtotime($data['end_date']);
         $product->update($data);
         return Response('Product update successfully !');
     }
+
 
     /**
      * @param $id

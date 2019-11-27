@@ -16,6 +16,8 @@ class Partner extends Model
         'contact_person_name',
         'contact_person_email',
         'contact_person_mobile',
+        'google_play_link',
+        'apple_app_store_link',
         'other_attributes',
     ];
 

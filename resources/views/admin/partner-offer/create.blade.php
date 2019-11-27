@@ -100,12 +100,37 @@
                                 </div>
 
 
-
-                                <div class="col-md-12">
+                                <div class="col-md-4 pt-2">
                                     <div class="form-group">
                                         <label for="show_in_home" class="mr-1">Show In Home:</label>
                                         <input type="checkbox" name="show_in_home" value="1" id="show_in_home">
                                     </div>
+                                </div>
+
+                                <div class="col-md-2 pt-2">
+                                    <div class="form-group">
+                                        <label for="is_campaign" class="mr-1">Is Campaign:</label>
+                                        <input type="checkbox" name="is_campaign" value="1" id="is_campaign">
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4 mb-0">
+                                    <label for="campaign_img"></label>
+                                    <div class="custom-file d-none">
+                                        <input type="file" name="campaign_img" class="custom-file-input" id="image">
+                                        <label class="custom-file-label" for="inputGroupFile01">Please Choose Campaign Image</label>
+                                        <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    </div>
+                                    <div class="help-block">
+                                        <ul role="alert" class="d-none text-danger" id="imgRequired"><li>Enter button label bangla</li></ul>
+                                    </div>
+                                    @if ($errors->has('campaign_img'))
+                                        <div class="help-block">  {{ $errors->first('campaign_img') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-1 mb-0 d-none" id="showImg">
+                                    <img width="140" height="80" id="imgDisplay">
                                 </div>
 
                                 <div class="col-md-12">
@@ -120,11 +145,10 @@
                                     </div>
                                 </div>
 
-
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary"><i
-                                                class="la la-check-square-o"></i> Save
+                                        <button type="submit" id="save" class="btn btn-primary">
+                                            <i class="la la-check-square-o"></i> Save
                                         </button>
                                     </div>
                                 </div>
@@ -142,7 +166,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
-
+    <script src="{{ asset('js/custom-js/offer.js') }}" type="text/javascript"></script>
 @endpush
 
 

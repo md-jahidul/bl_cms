@@ -12,6 +12,9 @@
 	'use strict';
 
 	// Input, Select, Textarea validations except submit button
+
+	// debugger;
+
 	$("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
 
 	// Square Checkbox & Radio

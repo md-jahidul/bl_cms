@@ -18,13 +18,22 @@
                             @csrf
                             {{method_field('PUT')}}
                             <div class="row">
-                                <div class="form-group col-md-12 {{ $errors->has('name') ? ' error' : '' }}">
-                                    <label for="name" class="required">Name</label>
-                                    <input type="text" name="name"  class="form-control" placeholder="Enter name" value="{{ $tag->name }}"
-                                            required data-validation-required-message="Enter slider name">
+                                <div class="form-group col-md-12 {{ $errors->has('name_en') ? ' error' : '' }}">
+                                    <label for="name_en" class="required">Name (English)</label>
+                                    <input type="text" name="name_en"  class="form-control" placeholder="Enter duration name in english"
+                                           value="{{ old("name_en") ? old("name_en") : '' }}" required data-validation-required-message="Enter duration name in english">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('name'))
-                                        <div class="help-block">  {{ $errors->first('name') }}</div>
+                                    @if ($errors->has('name_en'))
+                                        <div class="help-block">  {{ $errors->first('name_en') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-12 {{ $errors->has('name_bn') ? ' error' : '' }}">
+                                    <label for="name_bn" class="required">Name (Bangla)</label>
+                                    <input type="text" name="name_bn"  class="form-control" placeholder="Enter duration name in bangla"
+                                           value="{{ old("name_bn") ? old("name_bn") : '' }}" required data-validation-required-message="Enter duration name in bangla">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('name_bn'))
+                                        <div class="help-block">  {{ $errors->first('name_bn') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-actions col-md-12 ">

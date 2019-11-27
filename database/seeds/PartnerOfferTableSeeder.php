@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\PartnerOffer;
+use App\Models\PartnerOfferDetail;
 use Illuminate\Database\Seeder;
 
 class PartnerOfferTableSeeder extends Seeder
@@ -19,12 +20,22 @@ class PartnerOfferTableSeeder extends Seeder
         $getOfferMsgEn = "Type 8497 send SMS to 1020";
         $getOfferMsgBn = "৮৪৯৭ টাইপ করুন ১০২০ নম্বরে এসএমএস পাঠান";
         $countHomePageOffer = 0;
+
+        $detailsEn = "Life will be much easier now, because Banglalink is introducing balance transfer service! Easily transfer credit to your friends and family who use Banglalink number, anytime you want.";
+        $detailsBn = 'জীবন এখন অনেক সহজ হবে, কারণ বাংলালিংক চালু করছে ব্যালান্স ট্রান্সফার সার্ভিস! আপনার পছন্দসই যে কোনও সময় বাংলালিংক নম্বর ব্যবহার করা আপনার বন্ধু এবং পরিবারের কাছে সহজেই ক্রেডিট স্থানান্তর করুন।';
+        $offerDetailsEn = '<ul><li style="box-sizing: inherit; margin: 0px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-stretch: inherit; font-size: 16px; line-height: 24px; font-family: inherit; vertical-align: baseline; color: rgb(51, 69, 90); position: relative;">10% flat discount on any Zantrik service</li><li style="box-sizing: inherit; margin: 0px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-stretch: inherit; font-size: 16px; line-height: 24px; font-family: inherit; vertical-align: baseline; color: rgb(51, 69, 90); position: relative;">25% discount on Zantrik membership card for Icon, Signature and Platinum</li></ul>';
+        $offerDetailsBn = '<ul><li style="box-sizing: inherit; line-height: 24px; margin: 0px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-stretch: inherit; font-size: 16px; font-family: inherit; vertical-align: baseline; color: rgb(51, 69, 90); position: relative;"><span style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: 24px; white-space: pre-wrap; background-color: rgb(248, 249, 250);"><span style="font-size: 18px;">যান্ত্রিক যে কোনও পরিষেবাতে 10% ফ্ল্যাট ছাড় discount</span><br></span></li><li style="box-sizing: inherit; line-height: 24px; margin: 0px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-stretch: inherit; font-size: 16px; font-family: inherit; vertical-align: baseline; color: rgb(51, 69, 90); position: relative;"><span style="color: rgb(34, 34, 34); font-family: arial, sans-serif; font-size: 18px; white-space: pre-wrap; background-color: rgb(248, 249, 250);">আইকন, স্বাক্ষর এবং প্ল্যাটিনামের জন্য জান্ত্র্রিক সদস্যপদ কার্ডে 25% ছাড়</span></li></ul>';
+        $eligibleCoustomerEn = "Silver, Gold & Platium";
+        $eligibleCoustomerBn = "সিলভার, সোনার ও প্লাটিয়াম";
+
+
         for ($i = 0; $i < 30; $i++) {
             $randItem = rand(0, 2);
             $showInHome = rand(0, 3) ? 1 : 0;
+            $randSMS = rand(2000, 2100);
 
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
-            PartnerOffer::create([
+            $partner = PartnerOffer::create([
                 'partner_id' => rand(1, 5),
                 'validity_en' => $validityEn[$randItem],
                 'validity_bn' => $validityBn[$randItem],
@@ -38,6 +49,18 @@ class PartnerOfferTableSeeder extends Seeder
                 'is_active' => rand(0, 6) ? 1 : 0,
                 'display_order' => $displayOrder,
                 'other_attributes' => json_encode(null),
+            ]);
+
+            PartnerOfferDetail::create([
+                'partner_offer_id' => $partner->id,
+                'details_en' => $detailsEn,
+                'details_bn' => $detailsBn,
+                'offer_details_en'   => $offerDetailsEn,
+                'offer_details_bn'   => $offerDetailsBn,
+                'eligible_customer_en'   => $eligibleCoustomerEn,
+                'eligible_customer_bn'   => $eligibleCoustomerBn,
+                'avail_en'   => "Type SARAH And Send An SMS To $randSMS",
+                'avail_bn'   => "সারাহ টাইপ করুন এবং $randSMS এ একটি এসএমএস প্রেরণ করুন",
             ]);
         }
     }

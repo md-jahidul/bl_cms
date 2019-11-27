@@ -4,13 +4,18 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
 use App\Models\OfferCategory;
+use App\Models\OtherRelatedProduct;
 use App\Models\Product;
+use App\Models\ProductDetail;
+use App\Models\RelatedProduct;
 use App\Models\SimCategory;
 use App\Models\TagCategory;
 use App\Services\DurationCategoryService;
 use App\Services\OfferCategoryService;
+use App\Services\ProductDetailService;
 use App\Services\ProductService;
 use App\Services\TagCategoryService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
@@ -20,26 +25,32 @@ class ProductController extends Controller
 {
 
     private $productService;
+    private $productDetailService;
     private $tagCategoryService;
     private $offerCategoryService;
     private $durationCategoryService;
+
 
     protected $info = [];
 
     /**
      * ProductController constructor.
      * @param ProductService $productService
+     * @param ProductDetailService $productDetailService
      * @param TagCategoryService $tagCategoryService
      * @param OfferCategoryService $offerCategoryService
      * @param DurationCategoryService $durationCategoryService
      */
     public function __construct(
         ProductService $productService,
+        ProductDetailService $productDetailService,
         TagCategoryService $tagCategoryService,
         OfferCategoryService $offerCategoryService,
         DurationCategoryService $durationCategoryService
-    ) {
+    )
+    {
         $this->productService = $productService;
+        $this->productDetailService = $productDetailService;
         $this->tagCategoryService = $tagCategoryService;
         $this->offerCategoryService = $offerCategoryService;
         $this->durationCategoryService = $durationCategoryService;
@@ -53,8 +64,15 @@ class ProductController extends Controller
      */
     public function index($type)
     {
-        $products = Product::category($type)->get();
-        return view('admin.product.index', compact('products', 'type'));
+        $bdTimeZone = Carbon::now('Asia/Dhaka');
+        $dateTime = $bdTimeZone->toDateTimeString();
+        $currentSecends = strtotime($dateTime);
+
+        $products = Product::category($type)->with(['offer_category' => function ($query) {
+            $query->select('id', 'name_en');
+        }])->get();
+
+        return view('admin.product.index', compact('products', 'type', 'currentSecends'));
     }
 
     public function trendingOfferHome()
@@ -81,13 +99,12 @@ class ProductController extends Controller
 
         foreach ($this->info['offers'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
-                                        ->where('type_id', $package_id)
-                                        ->get();
+                ->where('type_id', $package_id)
+                ->get();
             if (count($child)) {
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
-
         return view('admin.product.create', $this->info);
     }
 
@@ -101,9 +118,11 @@ class ProductController extends Controller
 
     public function strToint($request, $jsonKey = "offer_info")
     {
-        foreach ($request->offer_info as $key => $info) {
-            $data[$jsonKey][$key] =  is_numeric($info) ? (int)$info : $info;
-            $request->merge($data);
+        if (!empty($request->offer_info)) {
+            foreach ($request->offer_info as $key => $info) {
+                $data[$jsonKey][$key] = is_numeric($info) ? (int)$info : $info;
+                $request->merge($data);
+            }
         }
     }
 
@@ -143,14 +162,15 @@ class ProductController extends Controller
      */
     public function edit($type, $id)
     {
+        $product = $this->productService->findOne($id);
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['previous_page'] = url()->previous();
         $this->info['type'] = $type;
-        $this->info['product'] = $this->productService->findOne($id);
+        $this->info['product'] = $product;
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offersType'] = $this->offerCategoryService->getOfferCategories($type);
         $this->info['durations'] = $this->durationCategoryService->findAll();
-        $this->info['offerInfo'] = $this->info['product']['offer_info'];
+        $this->info['offerInfo'] = $product['offer_info'];
 
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
@@ -160,8 +180,6 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
-
-        return $this->info;
 
         return view('admin.product.edit', $this->info);
     }
@@ -184,8 +202,43 @@ class ProductController extends Controller
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $id);
         Session::flash('message', $response->content());
-        return redirect(request()->previous_page);
+        return (strpos(request()->previous_page, 'trending-home') !== false) ? redirect(request()->previous_page) : redirect(route('product.list', $type));
     }
+
+    /**
+     * @param $type
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function productDetailsEdit($type, $id)
+    {
+
+        $products = $this->productService->findRelatedProduct($type, $id);
+        $productDetail = $this->productService->findOne($id, [
+            'other_related_product', "related_product", 'product_details',
+        ]);
+
+//        return $productDetail;
+
+        return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
+    }
+
+    public function productDetailsUpdate(Request $request, $type, $id)
+    {
+//        return $request->all();
+
+        $productDetailsId = $request->product_details_id;
+        $productDetails = $this->productDetailService->findOne($productDetailsId);
+        $this->productDetailService->updateOtherRelatedProduct($request, $id);
+        $this->productDetailService->updateRelatedProduct($request, $id);
+
+        $productDetails['other_attributes'] = $request->other_attributes;
+        $productDetails->update($request->all());
+
+        return redirect("offers/$type");
+
+    }
+
 
     /**
      * @param $id

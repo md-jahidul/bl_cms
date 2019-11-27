@@ -1,10 +1,22 @@
+@php
+
+    if (isset($product->offer_info['other_offer_type_id'])){
+        $offertype = $product->offer_info['other_offer_type_id'];
+    }elseif(isset($product->offer_info['package_offer_type_id'])){
+        $offertype = $product->offer_info['package_offer_type_id'];
+    }else{
+        $offertype = '';
+    }
+    isset($product->offer_info) ? $product : $offertype = ''
+@endphp
+
 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
     <label for="offer_category_id" class="required">Package Offer Types</label>
-    <select class="form-control required" name="offer_category_id" id="package_type"
+    <select class="form-control required" name="offer_info[package_offer_type_id]" id="package_type"
             required data-validation-required-message="Please select offer">
         <option value="">---Select Offer Type---</option>
         @foreach($packages_offer_child as $offer)
-            <option value="{{ $offer->id }}">{{ $offer->name }}</option>
+            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ $offer->id == $offertype ? 'selected' : '' }}>{{ $offer->name_en }}</option>
         @endforeach
     </select>
     <div class="help-block"></div>
@@ -13,9 +25,7 @@
     @endif
 </div>
 
-
-
-<slot id="{{ strtolower($type) == 'prepaid' ? 'prepaid_plans' : 'postpaid_plans' }}" style="display: none">
+<slot id="{{ strtolower($type) == 'prepaid' ? 'prepaid_plans' : 'postpaid_plans' }}" class="{{ ($offertype == 5 || $offertype == 7) ? '' : 'd-none' }}">
     <div class="form-group col-md-6 {{ $errors->has('view_list_btn_text_bn') ? ' error' : '' }}">
         <label for="view_list_btn_text_bn" class="required">Call Rate (Paisa)</label>
         <input type="text" name="offer_info[callrate_offer]"  class="form-control" placeholder="Enter call rate in paisa"
@@ -41,15 +51,12 @@
 </slot>
 
 
-
-
-
 @if(strtolower($type) == 'prepaid')
-    <slot id="start_up_offers" class="d-none">
+    <slot id="start_up_offers" class="{{ $offertype == 6 ? '' : 'd-none' }}">
         @include('layouts.partials.products.package.startup')
     </slot>
 @else
-    <slot id="icon_plans" class="d-none">
+    <slot id="icon_plans" class="{{ $offertype == 8 ? '' : 'd-none' }}">
         @include('layouts.partials.products.package.icon_plan')
     </slot>
 @endif

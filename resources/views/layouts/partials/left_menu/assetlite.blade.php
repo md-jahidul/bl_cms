@@ -60,21 +60,26 @@
                                 <span class="menu-title" data-i18n="nav.templates.main">Footer menu</span></a>
                         </li>
                     @endif
+
+                    <li class="{{ is_active_url('/priyojon') }} nav-item"><a href="{{ url('priyojon') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Priyojon Landing</span></a>
+                    </li>
+
                 </ul>
             </li>
         @endif
 
-        @if( auth()->user()->can_view('AlSlider', 'singleSlider') || auth()->user()->can_view('AlSlider', 'multiSlider') )
+        @if( auth()->user()->can_view('Slider', 'singleSlider') || auth()->user()->can_view('Slider', 'multiSlider') )
             <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Slider Management</span></a>
                 <ul class="menu-content">
-                    @if( auth()->user()->can_view('AlSlider', 'singleSlider') )
+                    @if( auth()->user()->can_view('Slider', 'singleSlider') )
                         <li class="{{ is_active_url('single-sliders') . is_active_url('sliders/create')}}">
                             <a class="menu-item" href="{{ url('single-sliders') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-file-image-o"></i> Single slider</a>
                         </li>
                     @endif
 
-                    @if(  auth()->user()->can_view('AlSlider', 'multiSlider') )
+                    @if(  auth()->user()->can_view('Slider', 'multiSlider') )
                         <li class="{{ is_active_url('multiple-sliders') . is_active_url('sliders/create')}}">
                             <a class="menu-item" href="{{ url('multiple-sliders/') }}" data-i18n="nav.templates.vert.classic_menu"><i class="la la-file-image-o"></i> Multiple slider</a>
                         </li>
@@ -100,7 +105,7 @@
         @endif
 
         @if( auth()->user()->can_view('Product') )
-            <li class="nav-item"><a href="#"><i class="la la-gift"></i>
+            <li class="nav-item"><a href="#"><i class="la la-gittip"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Offer Categories</span></a>
                 <ul class="menu-content">
 

@@ -1194,7 +1194,6 @@
     }
 
     $.fn.jqBootstrapValidation = function (method) {
-
         if (defaults.methods[method]) {
             return defaults.methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if (typeof method === 'object' || !method) {
