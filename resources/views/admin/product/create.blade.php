@@ -30,6 +30,17 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('code') ? ' error' : '' }}">
+                                    <label for="code" class="required">Product ID</label>
+                                    <input type="text" name="code" class="form-control" placeholder="Enter product code"
+                                           required data-validation-required-message="Enter product code"
+                                           value="{{ old("code") ? old("code") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('code'))
+                                        <div class="help-block">{{ $errors->first('code') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
                                     <label for="name_bn" class="required">Offer Name (Bangla)</label>
                                     <input type="text" name="name_bn"  class="form-control" placeholder="Enter offer name in Bangla"

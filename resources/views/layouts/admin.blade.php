@@ -10,7 +10,7 @@
           content="">
     <meta name="author" content="">
     <title>
-        @yield('title') - @if(Auth::user()->role_id == '1'|| Auth::user()->role_id == '2') MyBL @else AssetLite @endif CMS
+        @yield('title')
     </title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="apple-touch-icon" href="{{asset('theme/assets/images/ico/apple-icon-120.png')}}">
@@ -74,7 +74,7 @@
     <div class="content-wrapper">
         <div class="content-header row">
             <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-                <h3 class="content-header-title mb-0 mr-0 d-inline-block">@yield('card_name')</h3>
+                <h3 class="content-header-title mb-0 d-inline-block">@yield('card_name')</h3>
                 <div class="row breadcrumbs-top d-inline-block">
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb mb-1">
