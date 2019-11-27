@@ -81,7 +81,7 @@ class CustomersTableSeeder extends Seeder
                 'phone' => '01902796143',
                 'customer_account_id' => '1591',
                 'uid' => uniqid(),
-                'device_token' => '125'
+                'device_token' => 'c9LSjMOIATY:APA91bFB9sze2LoPgz1QkMT1GB9TVpwH7UuMYTMiAz0eVVTS0ynkiTZ8VtyQ5NrzebCpUMCt3YFpof-gC2W5rHb0qcnPot8HCtC1RJ_o6oBzpkHA_y5MsYyfgLD0msbWo1PPCQAagHvl'
             ],
 
             [
