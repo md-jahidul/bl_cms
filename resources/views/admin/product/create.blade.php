@@ -212,7 +212,7 @@
                 var date = new Date();
                 date.setDate(date.getDate());
             $('#start_date').datetimepicker({
-                format : 'YYYY/MM/DD HH:mm:ss',
+                format : 'YYYY-MM-DD HH:mm:ss',
                 showClose: true,
                 minDate: date,
             });
