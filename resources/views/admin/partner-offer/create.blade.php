@@ -21,8 +21,8 @@
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('validity_en') ? ' error' : '' }}">
                                     <label for="validity_en" class="required">Offer Validity (English)</label>
-                                    <input type="text" name="validity_en"  class="form-control" placeholder="Enter offer validity english"
-                                           value="{{ old("validity_en") ? old("validity_en") : '' }}" required data-validation-required-message="Enter offer validity english">
+                                    <input type="text" name="validity_en"  class="form-control" placeholder="Enter offer validity in English"
+                                           value="{{ old("validity_en") ? old("validity_en") : '' }}" required data-validation-required-message="Enter offer validity in English">
                                     <div class="help-block"></div>
                                     @if ($errors->has('validity_en'))
                                         <div class="help-block">{{ $errors->first('validity_en') }}</div>
@@ -31,8 +31,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('validity_bn') ? ' error' : '' }}">
                                     <label for="validity_bn" class="required">Offer Validity (Bangla)</label>
-                                    <input type="text" name="validity_bn"  class="form-control" placeholder="Enter offer validity bangla"
-                                           value="{{ old("validity_bn") ? old("validity_bn") : '' }}" required data-validation-required-message="Enter offer validity bangla">
+                                    <input type="text" name="validity_bn"  class="form-control" placeholder="Enter offer validity in Bangla"
+                                           value="{{ old("validity_bn") ? old("validity_bn") : '' }}" required data-validation-required-message="Enter offer validity in Bangla">
                                     <div class="help-block"></div>
                                     @if ($errors->has('validity_bn'))
                                         <div class="help-block">{{ $errors->first('validity_bn') }}</div>
@@ -41,8 +41,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_en') ? ' error' : '' }}">
                                     <label for="offer_en" class="required">Offer (English)</label>
-                                    <input type="text" name="offer_en"  class="form-control" placeholder="Enter offer percentage english"
-                                           value="{{ old("offer_en") ? old("offer_en") : '' }}" required data-validation-required-message="Enter offer percentage english">
+                                    <input type="text" name="offer_en"  class="form-control" placeholder="Enter offer percentage in English"
+                                           value="{{ old("offer_en") ? old("offer_en") : '' }}" required data-validation-required-message="Enter offer percentage in English">
                                     <div class="help-block"></div>
                                     @if ($errors->has('offer_en'))
                                         <div class="help-block">  {{ $errors->first('offer_en') }}</div>
@@ -51,8 +51,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_bn') ? ' error' : '' }}">
                                     <label for="offer_bn" class="required">Offer (Bangla)</label>
-                                    <input type="text" name="offer_bn"  class="form-control" placeholder="Enter offer percentage bangla"
-                                           value="{{ old("offer_bn") ? old("offer_bn") : '' }}" required data-validation-required-message="Enter offer percentage bangla">
+                                    <input type="text" name="offer_bn"  class="form-control" placeholder="Enter offer percentage in Bangla"
+                                           value="{{ old("offer_bn") ? old("offer_bn") : '' }}" required data-validation-required-message="Enter offer percentage in Bangla">
                                     <div class="help-block"></div>
                                     @if ($errors->has('offer_bn'))
                                         <div class="help-block">  {{ $errors->first('offer_bn') }}</div>
@@ -61,8 +61,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('get_offer_msg_en') ? ' error' : '' }}">
                                     <label for="get_offer_msg_en" class="required">Subscription SMS Info (English)</label>
-                                    <input type="text" name="get_offer_msg_en"  class="form-control" placeholder="Enter get send SMS text english"
-                                           value="{{ old("get_offer_msg_en") ? old("get_offer_msg_en") : '' }}" required data-validation-required-message="Enter get send SMS text english">
+                                    <input type="text" name="get_offer_msg_en"  class="form-control" placeholder="Enter get send SMS text in English"
+                                           value="{{ old("get_offer_msg_en") ? old("get_offer_msg_en") : '' }}" required data-validation-required-message="Enter get send SMS text in English">
                                     <div class="help-block"></div>
                                     @if ($errors->has('get_offer_msg_en'))
                                         <div class="help-block">  {{ $errors->first('get_offer_msg_en') }}</div>
@@ -71,8 +71,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('get_offer_msg_bn') ? ' error' : '' }}">
                                     <label for="get_offer_msg_bn" class="required">Subscription SMS Info (Bangla)</label>
-                                    <input type="text" name="get_offer_msg_bn"  class="form-control" placeholder="Enter get send SMS text bangla"
-                                           value="{{ old("get_offer_msg_bn") ? old("get_offer_msg_bn") : '' }}" required data-validation-required-message="Enter get send SMS text bangla">
+                                    <input type="text" name="get_offer_msg_bn"  class="form-control" placeholder="Enter get send SMS text in Bangla"
+                                           value="{{ old("get_offer_msg_bn") ? old("get_offer_msg_bn") : '' }}" required data-validation-required-message="Enter get send SMS text in Bangla">
                                     <div class="help-block"></div>
                                     @if ($errors->has('get_offer_msg_bn'))
                                         <div class="help-block">  {{ $errors->first('get_offer_msg_bn') }}</div>
@@ -81,8 +81,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('btn_text_en') ? ' error' : '' }}">
                                     <label for="btn_text_en" class="required">Button Label (English)</label>
-                                    <input type="text" name="btn_text_en"  class="form-control" placeholder="Enter alt text"
-                                           value="{{ old("btn_text_en") ? old("btn_text_en") : '' }}" required data-validation-required-message="Enter button label english">
+                                    <input type="text" name="btn_text_en"  class="form-control" placeholder="Enter button label in English"
+                                           value="{{ old("btn_text_en") ? old("btn_text_en") : '' }}" required data-validation-required-message="Enter button label in Bnglish">
                                     <div class="help-block"></div>
                                     @if ($errors->has('btn_text_en'))
                                         <div class="help-block">  {{ $errors->first('btn_text_en') }}</div>
@@ -91,8 +91,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('btn_text_bn') ? ' error' : '' }}">
                                     <label for="btn_text_bn" class="required">Button Label (Bangla)</label>
-                                    <input type="text" name="btn_text_bn"  class="form-control" placeholder="Enter alt text"
-                                           value="{{ old("btn_text_bn") ? old("btn_text_bn") : '' }}" required data-validation-required-message="Enter button label bangla">
+                                    <input type="text" name="btn_text_bn"  class="form-control" placeholder="Enter button label in Bangla"
+                                           value="{{ old("btn_text_bn") ? old("btn_text_bn") : '' }}" required data-validation-required-message="Enter button label in Bangla">
                                     <div class="help-block"></div>
                                     @if ($errors->has('btn_text_bn'))
                                         <div class="help-block">  {{ $errors->first('btn_text_bn') }}</div>
@@ -122,7 +122,7 @@
                                         <span class="text-primary">Please given file type (.png, .jpg)</span>
                                     </div>
                                     <div class="help-block">
-                                        <ul role="alert" class="d-none text-danger" id="imgRequired"><li>Enter button label bangla</li></ul>
+                                        <ul role="alert" class="d-none text-danger" id="imgRequired"><li>Please Choose Campaign Image</li></ul>
                                     </div>
                                     @if ($errors->has('campaign_img'))
                                         <div class="help-block">  {{ $errors->first('campaign_img') }}</div>
@@ -130,7 +130,7 @@
                                 </div>
 
                                 <div class="form-group col-md-1 mb-0 d-none" id="showImg">
-                                    <img width="140" height="80" id="imgDisplay">
+                                    <img width="140" height="80" id="imgDisplay" src="{{ asset('images/campaign-image/campaign-placeholder.png') }}">
                                 </div>
 
                                 <div class="col-md-12">
