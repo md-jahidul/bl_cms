@@ -9,9 +9,9 @@
 
 namespace App\Repositories;
 
-use App\Models\InternetOffer;
+use App\Models\MyBlInternetOffer;
 
 class InternetOfferRepository extends BaseRepository
 {
-    public $modelName = InternetOffer::class;
+    public $modelName = MyBlInternetOffer::class;
 }

@@ -24,12 +24,11 @@ class InternetOfferRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:200|unique:internet_offers,title,' . $this->id,
-            'volume' => 'required|numeric|min:0|max:999999999999999999',
-            'validity' => 'required|numeric|min:1|max:999999999999999999',
-            'price' => 'required|numeric|min:1|max:999999999999999999',
-            'offer_code' => 'required|unique:internet_offers,offer_code,' . $this->id,
-            'points' => 'required|numeric|min:1|max:999999999999999999'
+            'title' => 'required|max:40|unique:internet_offers,title,' . $this->id,
+            'volume' => 'required|numeric|min:0|max:5120',
+            'validity' => 'required|numeric|min:1|max:30',
+            'price' => 'required|numeric|min:1|max:2000',
+            'offer_code' => 'required|unique:my_bl_internet_offers,offer_code,' . $this->id,
         ];
     }
 }
