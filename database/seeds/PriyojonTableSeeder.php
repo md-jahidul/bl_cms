@@ -32,8 +32,7 @@ class PriyojonTableSeeder extends Seeder
         $subMenuEn = ['About Priojon', 'Partners', 'Benefits',];
         $subMenuBn = ['প্রিজোন সম্পর্কে', 'অংশীদার', 'সুবিধা',];
 
-        foreach ($subMenuEn as $key => $value)
-        {
+        foreach ($subMenuEn as $key => $value) {
             Priyojon::create([
                 'parent_id' => 1,
                 'title_en' => $value,
@@ -44,14 +43,12 @@ class PriyojonTableSeeder extends Seeder
         $subMenuEn = ['About', 'Redeem Point'];
         $subMenuBn = ['সম্পর্কে', 'রিডিম পয়েন্ট'];
 
-        foreach ($subMenuEn as $key => $value)
-        {
+        foreach ($subMenuEn as $key => $value) {
             Priyojon::create([
                 'parent_id' => 2,
                 'title_en' => $value,
                 'title_bn' => $subMenuBn[$key],
             ]);
         }
-
     }
 }

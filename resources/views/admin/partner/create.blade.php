@@ -18,8 +18,8 @@
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('company_name_en') ? ' error' : '' }}">
                                     <label for="company_name_en" class="required">Company Name (English)</label>
-                                    <input type="text" name="company_name_en"  class="form-control" placeholder="Enter company name english"
-                                           value="{{ old("company_name_en") ? old("company_name_en") : '' }}" required data-validation-required-message="Enter company name english">
+                                    <input type="text" name="company_name_en"  class="form-control" placeholder="Enter company name in English"
+                                           value="{{ old("company_name_en") ? old("company_name_en") : '' }}" required data-validation-required-message="Enter company name in English">
                                     <div class="help-block"></div>
                                     @if ($errors->has('company_name_en'))
                                         <div class="help-block">  {{ $errors->first('company_name_en') }}</div>
@@ -29,7 +29,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('company_name_bn') ? ' error' : '' }}">
                                     <label for="company_name_bn" class="required">Company Name (Bangla)</label>
                                     <input type="text" name="company_name_bn"  class="form-control" placeholder="Enter company name bangla"
-                                           value="{{ old("company_name_bn") ? old("company_name_bn") : '' }}" required data-validation-required-message="Enter company name bangla">
+                                           value="{{ old("company_name_bn") ? old("company_name_bn") : '' }}" required data-validation-required-message="Enter company name in Bangla">
                                     <div class="help-block"></div>
                                     @if ($errors->has('company_name_bn'))
                                         <div class="help-block">  {{ $errors->first('company_name_bn') }}</div>
@@ -114,8 +114,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('google_play_link') ? ' error' : '' }}">
                                     <label for="google_play_link" class="required">Google Play Store Link</label>
-                                    <input type="url" name="google_play_link"  class="form-control" placeholder="Enter google play store lonk"
-                                           value="{{ old("google_play_link") ? old("google_play_link") : '' }}" required data-validation-required-message="Enter google play store lonk"/>
+                                    <input type="url" name="google_play_link"  class="form-control" placeholder="Enter google play store link"
+                                           value="{{ old("google_play_link") ? old("google_play_link") : '' }}" required data-validation-required-message="Enter google play store link"/>
                                     <div class="help-block"></div>
                                     @if ($errors->has('google_play_link'))
                                         <div class="help-block">  {{ $errors->first('google_play_link') }}</div>

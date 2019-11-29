@@ -30,6 +30,17 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('code') ? ' error' : '' }}">
+                                    <label for="code" class="required">Product ID</label>
+                                    <input type="text" name="code" class="form-control" placeholder="Enter product code"
+                                           required data-validation-required-message="Enter product code"
+                                           value="{{ old("code") ? old("code") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('code'))
+                                        <div class="help-block">{{ $errors->first('code') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
                                     <label for="name_bn" class="required">Offer Name (Bangla)</label>
                                     <input type="text" name="name_bn"  class="form-control" placeholder="Enter offer name in Bangla"
@@ -54,6 +65,13 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    <label for="ussd_en">USSD Code (English)</label>
+                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd code in English"
+                                           value="{{ old("ussd_en") ? old("ussd_en") : '' }}">
+                                    <div class="help-block"></div>
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
                                     <label for="end_date">End Date</label>
                                     <input type="text" name="end_date" id="end_date" class="form-control"
@@ -63,13 +81,6 @@
                                     @if ($errors->has('end_date'))
                                         <div class="help-block">{{ $errors->first('end_date') }}</div>
                                     @endif
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label for="ussd_en">USSD Code (English)</label>
-                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd code in English"
-                                           value="{{ old("ussd_en") ? old("ussd_en") : '' }}">
-                                    <div class="help-block"></div>
                                 </div>
 
                                 <div class="form-group col-md-6">
@@ -201,7 +212,7 @@
                 var date = new Date();
                 date.setDate(date.getDate());
             $('#start_date').datetimepicker({
-                format : 'YYYY/MM/DD HH:mm:ss',
+                format : 'YYYY-MM-DD HH:mm:ss',
                 showClose: true,
                 minDate: date,
             });

@@ -51,9 +51,7 @@ class UpdateConfigRequest extends FormRequest
 //            'facebook.required' => "Can\'t be save null value",
 //            'twitter.required' => "Can\'t be save null value",
 //            'linked
-//
-//
-//in.required' => "Can\'t be save null value",
+
         ];
     }
 }

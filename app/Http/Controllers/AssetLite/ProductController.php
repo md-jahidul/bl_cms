@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductStoreRequest;
 use App\Models\OfferCategory;
 use App\Models\OtherRelatedProduct;
 use App\Models\Product;
@@ -47,8 +48,7 @@ class ProductController extends Controller
         TagCategoryService $tagCategoryService,
         OfferCategoryService $offerCategoryService,
         DurationCategoryService $durationCategoryService
-    )
-    {
+    ) {
         $this->productService = $productService;
         $this->productDetailService = $productDetailService;
         $this->tagCategoryService = $tagCategoryService;
@@ -71,6 +71,8 @@ class ProductController extends Controller
         $products = Product::category($type)->with(['offer_category' => function ($query) {
             $query->select('id', 'name_en');
         }])->get();
+
+//        return $products;
 
         return view('admin.product.index', compact('products', 'type', 'currentSecends'));
     }
@@ -126,7 +128,7 @@ class ProductController extends Controller
         }
     }
 
-    public function store(Request $request, $type)
+    public function store(ProductStoreRequest $request, $type)
     {
         $this->strToint($request);
         $simId = SimCategory::where('alias', $type)->first()->id;
@@ -181,6 +183,8 @@ class ProductController extends Controller
             }
         }
 
+//        return $this->info;
+
         return view('admin.product.edit', $this->info);
     }
 
@@ -197,7 +201,7 @@ class ProductController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $type, $id)
+    public function update(ProductStoreRequest $request, $type, $id)
     {
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $id);

@@ -19,14 +19,14 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->string('code');
+                $table->string('code')->unique();
                 $table->string('name_en');
                 $table->string('name_bn');
                 $table->string('text')->nullable();
                 $table->integer('price_tk')->nullable();
                 $table->integer('price_vat_included')->default(0);
                 $table->bigInteger('start_date')->nullable();
-                $table->string('end_date')->nullable();
+                $table->bigInteger('end_date')->default(null)->nullable();
 //                $table->integer('internet_volume_mb')->nullable();
                 $table->string('bonus')->nullable();
                 $table->tinyInteger('is_recharge')->default(0)->comment('yes = 1, no = 0');

@@ -146,7 +146,7 @@
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['view', ['fullscreen', 'codeview']]
                 ],
-                height:100
+                height:200
             })
         })
     </script>

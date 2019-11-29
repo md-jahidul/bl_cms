@@ -42,9 +42,9 @@ class ProductService
     public function storeProduct($data, $simId)
     {
         $data['sim_category_id'] = $simId;
-        $data['code'] = rand(10000, 12345);
+        $data['code'] = str_replace(' ', '', strtoupper($data['code']));
         $data['start_date'] = strtotime($data['start_date']);
-        $data['end_date'] = (isset($data['end_date'])) ? strtotime($data['end_date']) : Null;
+        $data['end_date'] = ($data['end_date'] != '') ? strtotime($data['end_date']) : null;
         $productId = $this->save($data);
         $this->productDetailRepository->insertProductDetail($productId->id);
         return new Response('Product added successfully');
@@ -72,7 +72,7 @@ class ProductService
         $product = $this->findOne($id);
         $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0 );
         $data['start_date'] = strtotime($data['start_date']);
-        $data['end_date'] = strtotime($data['end_date']);
+        $data['end_date'] = ($data['end_date'] != '') ? strtotime($data['end_date']) : null;
         $product->update($data);
         return Response('Product update successfully !');
     }

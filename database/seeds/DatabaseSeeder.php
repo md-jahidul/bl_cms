@@ -71,5 +71,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MyBlSliderSeeder::class);
         $this->call(ShortcutSeeder::class);
         $this->call(PrivacyPolicySeeder::class);
+
+        $this->call(MyBlInternetOfferCategorySeeder::class);
     }
 }
