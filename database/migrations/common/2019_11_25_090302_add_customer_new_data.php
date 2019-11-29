@@ -19,7 +19,7 @@ class AddCustomerNewData extends Migration
             $table->enum('gender', ['Male', 'Female', 'Other'])->nullable();
             $table->string('alternate_phone')->nullable();
             $table->string('mobile')->nullable();
-            $table->text('address');
+            $table->text('address')->nullable();
             $table->string('district')->nullable();
             $table->string('thana')->nullable();
 
