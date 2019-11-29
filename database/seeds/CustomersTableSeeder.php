@@ -93,6 +93,13 @@ class CustomersTableSeeder extends Seeder
                 'device_token' => 'ejtk9Uf-Dz4:APA91bHhl21TrWXd_OT0ATjjfGcmkULEIHgKVvf4f2GX85OuXmPDAO5hKJT0WwEd9RSWxLuSgKdchGOOPo-xCqKhm1_PeZrR1nVOyLX60CkD79iAkdPrd6QeebHnkKHuxi86bvpIa9Cg'
             ],
 
+            [
+                'name' => 'Bl device',
+                'email' => 'mybl-adminbl12@admin.com',
+                'phone' => '01968993479',
+                'uid' => uniqid(),
+                'device_token' => '122'
+            ],
 
             [
                 'name' => 'Pritom',
