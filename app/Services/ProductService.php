@@ -2,14 +2,12 @@
 
 namespace App\Services;
 
-use App\Models\PartnerCategory;
-use App\Repositories\PartnerOfferRepository;
 use App\Repositories\ProductDetailRepository;
 use App\Repositories\ProductRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
-use phpDocumentor\Reflection\Types\Null_;
+
 
 class ProductService
 {
@@ -34,17 +32,15 @@ class ProductService
         $this->setActionRepository($productRepository);
     }
 
-
     /**
      * @param $data
+     * @param $simId
      * @return Response
      */
     public function storeProduct($data, $simId)
     {
         $data['sim_category_id'] = $simId;
         $data['code'] = str_replace(' ', '', strtoupper($data['code']));
-        $data['start_date'] = strtotime($data['start_date']);
-        $data['end_date'] = ($data['end_date'] != '') ? strtotime($data['end_date']) : null;
         $productId = $this->save($data);
         $this->productDetailRepository->insertProductDetail($productId->id);
         return new Response('Product added successfully');
@@ -56,10 +52,14 @@ class ProductService
         return new Response('update successfully');
     }
 
+    /**
+     * @param $type
+     * @param $id
+     * @return mixed
+     */
     public function findRelatedProduct($type, $id)
     {
-        $products = $this->productRepository->relatedProducts($type, $id);
-        return $products;
+        return $this->productRepository->relatedProducts($type, $id);
     }
 
     /**
@@ -70,9 +70,7 @@ class ProductService
     public function updateProduct($data, $id)
     {
         $product = $this->findOne($id);
-        $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0 );
-        $data['start_date'] = strtotime($data['start_date']);
-        $data['end_date'] = ($data['end_date'] != '') ? strtotime($data['end_date']) : null;
+        $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0);
         $product->update($data);
         return Response('Product update successfully !');
     }
