@@ -11,6 +11,8 @@ class AlSliderImage extends Model
         'slider_id',
         'title_en',
         'title_bn',
+        'start_date',
+        'end_date',
         'alt_text',
         'redirect_url',
         'is_active',

@@ -18,6 +18,8 @@ class CreateAlSliderImagesTable extends Migration
             $table->unsignedBigInteger('slider_id');
             $table->string('title_en');
             $table->string('title_bn');
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->string('image_url');
             $table->string('alt_text');
             $table->integer('display_order')->nullable();

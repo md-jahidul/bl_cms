@@ -145,9 +145,6 @@
                                 @endif
 
 
-
-
-
                                 <div class="col-md-6" >
                                     <label></label>
                                     <div class="form-group pt-1" id="show_in_home">
@@ -200,47 +197,12 @@
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 @endpush
 @push('page-js')
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
-
-    <script type="text/javascript">
-        $(function () {
-                var date = new Date();
-                date.setDate(date.getDate());
-            $('#start_date').datetimepicker({
-                format : 'YYYY-MM-DD HH:mm:ss',
-                showClose: true,
-                minDate: date,
-            });
-            $('#end_date').datetimepicker({
-                format : 'YYYY/MM/DD HH:mm:ss',
-                showClose: true,
-                useCurrent: false, //Important! See issue #1075
-
-            });
-            $("#start_date").on("dp.change", function (e) {
-                $('#end_date').data("DateTimePicker").minDate(e.date);
-            });
-            $("#end_date").on("dp.change", function (e) {
-                $('#start_date').data("DateTimePicker").maxDate(e.date);
-            });
-
-        $('.duration_categories').change(function () {
-            let durationOntion = $(this).find('option:selected').attr('data-alias')
-            let durationDays = $(this).find('option:selected').attr('data-days')
-            let validityField = $('.validity_days');
-
-            if (durationOntion) {
-                validityField.val(durationDays).prop('readonly', true);
-            }
-        })
-
-        });
-    </script>
+    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
 @endpush
 
 
