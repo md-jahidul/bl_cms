@@ -137,7 +137,6 @@
             $('#start_date').datetimepicker({
                 format : 'YYYY-MM-DD HH:mm:ss',
                 showClose: true,
-
             });
             $('#end_date').datetimepicker({
                 format : 'YYYY-MM-DD HH:mm:ss',

@@ -18,6 +18,8 @@ class CreatePartnerOffersTable extends Migration
             $table->unsignedInteger('partner_id');
             $table->string('validity_en');
             $table->string('validity_bn');
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->string('offer_en');
             $table->string('offer_bn');
             $table->string('get_offer_msg_en');

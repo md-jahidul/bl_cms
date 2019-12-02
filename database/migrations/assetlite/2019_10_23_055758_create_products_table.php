@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
                 $table->string('name_en');
                 $table->string('name_bn');
                 $table->string('text')->nullable();
-                $table->integer('price_tk')->nullable();
+                $table->double('price_tk', 10, 2)->nullable();
                 $table->integer('price_vat_included')->default(0);
                 $table->dateTime('start_date')->nullable();
                 $table->dateTime('end_date')->nullable();
