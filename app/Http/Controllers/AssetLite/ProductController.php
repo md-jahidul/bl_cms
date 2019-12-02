@@ -7,18 +7,21 @@ use App\Http\Requests\ProductStoreRequest;
 use App\Models\OfferCategory;
 use App\Models\OtherRelatedProduct;
 use App\Models\Product;
+use App\Models\ProductCore;
 use App\Models\ProductDetail;
 use App\Models\RelatedProduct;
 use App\Models\SimCategory;
 use App\Models\TagCategory;
 use App\Services\DurationCategoryService;
 use App\Services\OfferCategoryService;
+use App\Services\ProductCoreService;
 use App\Services\ProductDetailService;
 use App\Services\ProductService;
 use App\Services\TagCategoryService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 
@@ -26,6 +29,7 @@ class ProductController extends Controller
 {
 
     private $productService;
+    private $productCoreService;
     private $productDetailService;
     private $tagCategoryService;
     private $offerCategoryService;
@@ -37,6 +41,7 @@ class ProductController extends Controller
     /**
      * ProductController constructor.
      * @param ProductService $productService
+     * @param ProductCoreService $productCoreService
      * @param ProductDetailService $productDetailService
      * @param TagCategoryService $tagCategoryService
      * @param OfferCategoryService $offerCategoryService
@@ -44,12 +49,15 @@ class ProductController extends Controller
      */
     public function __construct(
         ProductService $productService,
+        ProductCoreService $productCoreService,
         ProductDetailService $productDetailService,
         TagCategoryService $tagCategoryService,
         OfferCategoryService $offerCategoryService,
         DurationCategoryService $durationCategoryService
-    ) {
+    )
+    {
         $this->productService = $productService;
+        $this->productCoreService = $productCoreService;
         $this->productDetailService = $productDetailService;
         $this->tagCategoryService = $tagCategoryService;
         $this->offerCategoryService = $offerCategoryService;
@@ -64,17 +72,12 @@ class ProductController extends Controller
      */
     public function index($type)
     {
-        $bdTimeZone = Carbon::now('Asia/Dhaka');
-        $dateTime = $bdTimeZone->toDateTimeString();
-        $currentSecends = strtotime($dateTime);
 
-        $products = Product::category($type)->with(['offer_category' => function ($query) {
+        $products = Product::category($type)->with(['product_core', 'offer_category' => function ($query) {
             $query->select('id', 'name_en');
         }])->get();
 
-//        return $products;
-
-        return view('admin.product.index', compact('products', 'type', 'currentSecends'));
+        return view('admin.product.index', compact('products', 'type'));
     }
 
     public function trendingOfferHome()
@@ -92,6 +95,8 @@ class ProductController extends Controller
 
     public function create($type)
     {
+
+        $this->info['productCoreCodes'] = ProductCore::select('product_code')->get();
         $package_id = SimCategory::where('alias', $type)->first()->id;
 
         $this->info['type'] = $type;
@@ -128,8 +133,14 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * @param ProductStoreRequest $request
+     * @param $type
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function store(ProductStoreRequest $request, $type)
     {
+        $this->productCoreService->storeProductCore($request->product_code);
         $this->strToint($request);
         $simId = SimCategory::where('alias', $type)->first()->id;
         $response = $this->productService->storeProduct($request->all(), $simId);
@@ -137,6 +148,9 @@ class ProductController extends Controller
         return redirect("offers/$type");
     }
 
+    /**
+     * @param Request $request
+     */
     public function trendingOfferSortable(Request $request)
     {
         $this->productService->tableSortable($request);
@@ -182,9 +196,6 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
-
-//        return $this->info;
-
         return view('admin.product.edit', $this->info);
     }
 
@@ -201,7 +212,7 @@ class ProductController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(ProductStoreRequest $request, $type, $id)
+    public function update(Request $request, $type, $id)
     {
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $id);
@@ -221,26 +232,24 @@ class ProductController extends Controller
         $productDetail = $this->productService->findOne($id, [
             'other_related_product', "related_product", 'product_details',
         ]);
-
-//        return $productDetail;
-
         return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
     }
 
+    /**
+     * @param Request $request
+     * @param $type
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-//        return $request->all();
-
         $productDetailsId = $request->product_details_id;
         $productDetails = $this->productDetailService->findOne($productDetailsId);
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
-
         $productDetails['other_attributes'] = $request->other_attributes;
         $productDetails->update($request->all());
-
         return redirect("offers/$type");
-
     }
 
 

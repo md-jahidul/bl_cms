@@ -30,14 +30,18 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('code') ? ' error' : '' }}">
-                                    <label for="code" class="required">Product ID</label>
-                                    <input type="text" name="code" class="form-control" placeholder="Enter product code"
-                                           required data-validation-required-message="Enter product code"
-                                           value="{{ old("code") ? old("code") : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                    <label for="product_code" class="required">Product ID</label>
+                                    <select id="select-beast" name="product_code"
+                                            required data-validation-required-message="Please select product code">
+                                        <option value="">Select product code</option>
+                                        @foreach($productCoreCodes as $productCodes)
+                                            <option value="{{ $productCodes->product_code }}">{{ $productCodes->product_code }}</option>
+                                        @endforeach
+                                    </select>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('code'))
-                                        <div class="help-block">{{ $errors->first('code') }}</div>
+                                    @if ($errors->has('product_code'))
+                                        <div class="help-block">{{ $errors->first('product_code') }}</div>
                                     @endif
                                 </div>
 
@@ -56,6 +60,7 @@
                                     <label for="start_date" class="required">Start Date</label>
                                     <div class='input-group'>
                                         <input type='text' class="form-control" name="start_date" id="start_date"
+                                               value="{{ old("start_date") ? old("start_date") : '' }}"
                                                required data-validation-required-message="Please select start date"
                                                placeholder="Please select start date" />
                                     </div>
@@ -197,12 +202,31 @@
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/selectize/selectize.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.default.css') }}">
+
 @endpush
 @push('page-js')
+    <script src="{{ asset('app-assets/vendors/js/forms/select/selectize.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/select/form-selectize.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
+
+    <script>
+        $(function () {
+            $('#select-beast').selectize({
+                create: true,
+            });
+
+
+
+
+        })
+    </script>
 @endpush
 
 

@@ -16,6 +16,7 @@ class CreatePartnerOffersTable extends Migration
         Schema::create('partner_offers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('partner_id');
+            $table->string('product_code')->nullable();
             $table->string('validity_en');
             $table->string('validity_bn');
             $table->dateTime('start_date')->nullable();

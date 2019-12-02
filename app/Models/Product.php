@@ -12,7 +12,7 @@ class Product extends Model
 {
     protected $fillable =
         [
-            'code',
+            'product_code',
             'name_en',
             'name_bn',
             'price_tk',
@@ -39,6 +39,11 @@ class Product extends Model
     protected $casts = [
         'offer_info' => 'array',
     ];
+
+    public function product_core()
+    {
+        return $this->belongsTo(ProductCore::class, 'product_code', 'product_code');
+    }
 
     public function sim_category()
     {

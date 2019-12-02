@@ -40,7 +40,7 @@ class ProductService
     public function storeProduct($data, $simId)
     {
         $data['sim_category_id'] = $simId;
-        $data['code'] = str_replace(' ', '', strtoupper($data['code']));
+        $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
         $productId = $this->save($data);
         $this->productDetailRepository->insertProductDetail($productId->id);
         return new Response('Product added successfully');
