@@ -14,7 +14,7 @@ class AddAdditionalCustomerIdToAdditionalAccountsTable extends Migration
     public function up()
     {
         Schema::table('additional_accounts', function (Blueprint $table) {
-            $table->unsignedBigInteger('additional_customer_id');
+            $table->unsignedBigInteger('additional_customer_id')->nullable();
         });
     }
 
