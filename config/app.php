@@ -162,9 +162,13 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
+        Collective\Html\HtmlServiceProvider::class,
+
+        //Pondit\Authorize\AuthorizeServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -174,6 +178,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        'BenSampo\Enum\EnumServiceProvider'
+
 
     ],
 
@@ -225,6 +232,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+
+        'Helper' => App\Helpers\Helper::class,
+
 
     ],
 
