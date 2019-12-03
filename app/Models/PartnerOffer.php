@@ -10,6 +10,8 @@ class PartnerOffer extends Model
         'partner_id',
         'validity_en',
         'validity_bn',
+        'start_date',
+        'end_date',
         'offer_en',
         'offer_bn',
         'get_offer_msg_en',

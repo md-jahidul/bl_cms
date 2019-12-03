@@ -36,9 +36,9 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('code') ? ' error' : '' }}">
                                     <label for="code" class="required">Product ID</label>
-                                    <input type="text" name="code" class="form-control" placeholder="Enter product code"
-                                           required data-validation-required-message="Enter product code"
-                                           value="{{ $product->code }}">
+                                    <input type="text" class="form-control" placeholder="Enter product code"
+                                           required data-validation-required-message="Enter product code" readonly
+                                           value="{{ $product->product_code }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('code'))
                                         <div class="help-block">{{ $errors->first('code') }}</div>

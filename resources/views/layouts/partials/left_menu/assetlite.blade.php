@@ -135,7 +135,7 @@
 
         @if( auth()->user()->can_view('Product') )
             <li class="nav-item"><a href="#"><i class="la la-gift"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">Offer Management</span></a>
+                    <span class="menu-title" data-i18n="nav.templates.main">Product Management</span></a>
                 <ul class="menu-content">
 
                     <li class="{{ is_active_url('offers/prepaid') . is_active_url('offers/prepaid/create') }}">
@@ -152,9 +152,20 @@
         @endif
 
         @if( auth()->user()->can_view('Partner') )
-            <li class="{{ is_active_url('partners') . is_active_url('partners/create')}}">
-                <a class="menu-item" href="{{ url('partners') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                        class="la la-magic"></i> Partner and Offers</a>
+            <li class="nav-item"><a href="#"><i class="la la-gift"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Offer Management</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('partners') . is_active_url('partners/create')}}">
+                        <a class="menu-item" href="{{ url('partners') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-magic"></i> Partner and Offers</a>
+                    </li>
+
+                    <li class="{{ is_active_url('about-priyojon') }}">
+                        <a class="menu-item" href="{{ url('about-priyojon') }}" data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-exclamation-circle"></i>About Priyojon
+                        </a>
+                    </li>
+                </ul>
             </li>
         @endif
 

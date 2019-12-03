@@ -24,7 +24,7 @@ class ProductStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|unique:products,code,' . $this->id,
+            'product_code' => 'required|unique:products',
         ];
     }
 }

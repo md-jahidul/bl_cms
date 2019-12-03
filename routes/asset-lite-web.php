@@ -159,6 +159,9 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
         ->name('offer.details-update');
 
+    // PRIYOJON ================================
+
+
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 
 
