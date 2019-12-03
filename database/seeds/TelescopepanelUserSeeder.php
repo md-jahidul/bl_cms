@@ -14,7 +14,10 @@ class TelescopepanelUserSeeder extends Seeder
      */
     public function run()
     {
-        User::where('email', 'admin@telescope.com')->first()->delete();
+        $exist = User::where('email', 'admin@telescope.com')->first();
+        if ($exist) {
+            $exist->delete();
+        }
         $user = User::create([
             'name' => 'Telescope user',
             'email' => 'admin@telescope.com',
