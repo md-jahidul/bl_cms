@@ -35,15 +35,15 @@
     @endif
 </div>
 
-@if(strtolower($type) == 'prepaid')
-    <div class="form-group col-md-6 {{ $errors->has('balance_check') ? ' error' : '' }}">
-        <label for="balance_check" class="required">Balance Check (USSD)</label>
-        <input type="text" name="other_attributes[balance_check]"  class="form-control" placeholder="Enter offer name bangla"
-               required data-validation-required-message="Enter offer name bangla"
-               value="{{ $productDetail->product_details->other_attributes['balance_check'] }}">
-        <div class="help-block"></div>
-        @if ($errors->has('balance_check'))
-            <div class="help-block">{{ $errors->first('balance_check') }}</div>
-        @endif
-    </div>
-@endif
+{{--@if(strtolower($type) == 'prepaid')--}}
+    {{--<div class="form-group col-md-6 {{ $errors->has('balance_check') ? ' error' : '' }}">--}}
+        {{--<label for="balance_check" class="required">Balance Check (USSD)</label>--}}
+        {{--<input type="text" name="other_attributes[balance_check]"  class="form-control" placeholder="Enter offer name bangla"--}}
+               {{--required data-validation-required-message="Enter offer name bangla"--}}
+               {{--value="{{ $productDetail->product_details->other_attributes['balance_check'] }}">--}}
+        {{--<div class="help-block"></div>--}}
+        {{--@if ($errors->has('balance_check'))--}}
+            {{--<div class="help-block">{{ $errors->first('balance_check') }}</div>--}}
+        {{--@endif--}}
+    {{--</div>--}}
+{{--@endif--}}

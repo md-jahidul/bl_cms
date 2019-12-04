@@ -19,6 +19,7 @@ class CreateProductCoresTable extends Migration
             $table->string('product_name')->nullable();
             $table->text('product_short_dec')->nullable();
             $table->string('ussd_activation_code')->nullable();
+            $table->string('balance_check_ussd')->nullable();
             $table->string('ussd_short_dec')->nullable();
             $table->double('product_price', 10, 2)->nullable();
             $table->double('product_total_price', 10, 2)->nullable();
@@ -30,14 +31,19 @@ class CreateProductCoresTable extends Migration
             $table->integer('product_content_type')->nullable();
             $table->string('product_family')->nullable();
             $table->integer('product_sms_count')->nullable();
-            $table->integer('product_minute')->nullable();
-            $table->integer('product_mb')->nullable();
+            $table->integer('internet_volume_mb')->nullable();
+            $table->integer('minute_volume')->nullable();
+            $table->integer('sms_volume')->nullable();
+            $table->integer('call_rate')->nullable();
+            $table->integer('sms_rate')->nullable();
+
+            $table->integer('product_type_id')->nullable();
 
             $table->tinyInteger('is_bundle')->default(0);
             $table->tinyInteger('is_reactivable')->default(0);
             $table->tinyInteger('status')->default(1)->comment('active = 1, inactive = 0');
             $table->integer('product_segment')->default(1)->comment('both = 1, b2b = 2, b2c = 3');
-            $table->integer('product_package')->default(1)->comment('prepaid = 1, postpaid = 2, propaid = 3');
+            $table->integer('product_sim_package')->default(1)->comment('prepaid = 1, postpaid = 2, propaid = 3');
 
             $table->timestamps();
         });

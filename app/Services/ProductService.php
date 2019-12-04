@@ -39,7 +39,9 @@ class ProductService
      */
     public function storeProduct($data, $simId)
     {
+//        dd($data);
         $data['sim_category_id'] = $simId;
+        $data['offer_category_id'] = $data['product_type_id'];
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
         $productId = $this->save($data);
         $this->productDetailRepository->insertProductDetail($productId->id);
@@ -69,7 +71,7 @@ class ProductService
      */
     public function updateProduct($data, $id)
     {
-        $product = $this->findOne($id);
+        $product = $this->productRepository->findProduct($id);
         $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0);
         $product->update($data);
         return Response('Product update successfully !');

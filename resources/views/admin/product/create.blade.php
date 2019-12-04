@@ -71,9 +71,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="ussd_en">USSD Code (English)</label>
-                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd code in English"
-                                           value="{{ old("ussd_en") ? old("ussd_en") : '' }}">
+                                    <label for="ussd_activation_code">USSD Code (English)</label>
+                                    <input type="text" name="ussd_activation_code"  class="form-control" placeholder="Enter offer ussd code in English"
+                                           value="{{ old("ussd_activation_code") ? old("ussd_activation_code") : '' }}">
                                     <div class="help-block"></div>
                                 </div>
 
@@ -95,10 +95,10 @@
                                 </div>
 
                                 <div class="form-group col-md-6 ">
-                                    <label for="price_tk">Offer Price</label>
-                                        <input type="text" name="price_tk"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
+                                    <label for="product_price">Offer Price</label>
+                                        <input type="text" name="product_price"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
                                            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                                           value="{{ old("price_tk") ? old("price_tk") : '' }}">
+                                           value="{{ old("product_price") ? old("product_price") : '' }}">
                                     <div class="help-block"></div>
                                 </div>
 
@@ -114,7 +114,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="offer_category_id" class="required">Offer Type</label>
-                                    <select class="form-control required" name="offer_category_id" id="offer_type"
+                                    <select class="form-control required" name="product_type_id" id="offer_type"
                                             required data-validation-required-message="Please select offer">
                                         <option data-alias="" value="">---Select Offer Type---</option>
                                         @foreach($offers as $offer)

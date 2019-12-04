@@ -1,13 +1,13 @@
 @php
 
-    if (isset($product->offer_info['other_offer_type_id'])){
-        $offertype = $product->offer_info['other_offer_type_id'];
-    }elseif(isset($product->offer_info['package_offer_type_id'])){
-        $offertype = $product->offer_info['package_offer_type_id'];
+    if (isset($product->product->offer_info['other_offer_type_id'])){
+        $offertype = $product->product->offer_info['other_offer_type_id'];
+    }elseif(isset($product->product->offer_info['package_offer_type_id'])){
+        $offertype = $product->product->offer_info['package_offer_type_id'];
     }else{
         $offertype = '';
     }
-    isset($product->offer_info) ? $product : $offertype = ''
+    isset($product->product->offer_info) ? $product : $offertype = ''
 @endphp
 
 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
@@ -28,24 +28,24 @@
 <slot id="{{ strtolower($type) == 'prepaid' ? 'prepaid_plans' : 'postpaid_plans' }}" class="{{ ($offertype == 5 || $offertype == 7) ? '' : 'd-none' }}">
     <div class="form-group col-md-6 {{ $errors->has('view_list_btn_text_bn') ? ' error' : '' }}">
         <label for="view_list_btn_text_bn" class="required">Call Rate (Paisa)</label>
-        <input type="text" name="offer_info[callrate_offer]"  class="form-control" placeholder="Enter call rate in paisa"
+        <input type="text" name="call_rate"  class="form-control" placeholder="Enter call rate in paisa"
                oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-               value="{{ (!empty($offerInfo['callrate_offer'])) ? $offerInfo['callrate_offer'] : old("other_attributes.callrate_offer") ?? '' }}"
+               value="{{ (!empty($product->call_rate)) ? $product->call_rate : old("call_rate") ?? '' }}"
                required data-validation-required-message="Enter view list button label bangla ">
         <div class="help-block"></div>
-        @if ($errors->has('callrate_offer'))
-            <div class="help-block">  {{ $errors->first('callrate_offer') }}</div>
+        @if ($errors->has('call_rate'))
+            <div class="help-block">  {{ $errors->first('call_rate') }}</div>
         @endif
     </div>
-    <div class="form-group col-md-6 {{ $errors->has('sms_rate_offer') ? ' error' : '' }}">
-        <label for="sms_rate_offer" class="required">SMS Rate (Paisa)</label>
-        <input type="text" name="offer_info[sms_rate_offer]"  class="form-control" placeholder="Enter SMS rate in paisa"
+    <div class="form-group col-md-6 {{ $errors->has('sms_rate') ? ' error' : '' }}">
+        <label for="sms_rate" class="required">SMS Rate (Paisa)</label>
+        <input type="text" name="sms_rate"  class="form-control" placeholder="Enter SMS rate in paisa"
                oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-               value="{{ (!empty($offerInfo['sms_rate_offer'])) ? $offerInfo['sms_rate_offer'] : old("offer_info.sms_rate_offer") ?? '' }}"
+               value="{{ (!empty($product->sms_rate)) ? $product->sms_rate : old("sms_rate") ?? '' }}"
                required data-validation-required-message="Enter view list url">
         <div class="help-block"></div>
-        @if ($errors->has('sms_rate_offer'))
-            <div class="help-block">  {{ $errors->first('sms_rate_offer') }}</div>
+        @if ($errors->has('sms_rate'))
+            <div class="help-block">  {{ $errors->first('sms_rate') }}</div>
         @endif
     </div>
 </slot>

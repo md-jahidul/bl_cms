@@ -17,7 +17,7 @@
                 <div class="card-body card-dashboard">
                     <h5 class="menu-title"><strong>{{ $type }} Offer Edit</strong></h5><hr>
                     <div class="card-body card-dashboard">
-                        <form role="form" id="product_form" action="{{ route('product.update', [strtolower($type), $product->id] ) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" id="product_form" action="{{ route('product.update', [strtolower($type), $product->product_code] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
 
@@ -27,7 +27,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
                                     <label for="name_en" class="required">Offer Name</label>
                                     <input type="text" name="name_en"  class="form-control" placeholder="Enter offer name english"
-                                           value="{{ $product->name_en }}" required data-validation-required-message="Enter offer name english">
+                                           value="{{ $product->product->name_en }}" required data-validation-required-message="Enter offer name english">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_en'))
                                         <div class="help-block">{{ $errors->first('name_en') }}</div>
@@ -38,7 +38,7 @@
                                     <label for="code" class="required">Product ID</label>
                                     <input type="text" class="form-control" placeholder="Enter product code"
                                            required data-validation-required-message="Enter product code" readonly
-                                           value="{{ $product->product_code }}">
+                                           value="{{ $product->product->product_code }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('code'))
                                         <div class="help-block">{{ $errors->first('code') }}</div>
@@ -49,7 +49,7 @@
                                     <label for="name_bn" class="required">Offer Name Bangla</label>
                                     <input type="text" name="name_bn"  class="form-control" placeholder="Enter offer name bangla"
                                            required data-validation-required-message="Enter offer name bangla"
-                                           value="{{ $product->name_bn }}">
+                                           value="{{ $product->product->name_bn }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_bn'))
                                         <div class="help-block">{{ $errors->first('name_bn') }}</div>
@@ -60,7 +60,7 @@
                                     <label for="start_date" class="required">Start Date</label>
                                     <div class='input-group'>
                                         <input type='text' class="form-control" name="start_date" id="start_date"
-                                               value="{{ $product->start_date }}"
+                                               value="{{ $product->product->start_date }}"
                                                {{--value="{{ date('Y-m-d H:i:s', $product->start_date) }}"--}}
                                                required data-validation-required-message="Please select start date"
                                                placeholder="Please select start date" />
@@ -73,15 +73,15 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="ussd">USSD Code English</label>
-                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd english" maxlength="25"
-                                           value="{{ $product->ussd_en }}">
+                                    <input type="text" name="ussd_activation_code"  class="form-control" placeholder="Enter offer ussd english" maxlength="25"
+                                           value="{{ $product->ussd_activation_code }}">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
                                     <label for="end_date">End Date</label>
                                     <input type="text" name="end_date" id="end_date" class="form-control"
                                            placeholder="Please select end date"
-                                           value="{{ (!empty($product->end_date)) ? $product->end_date : '' }}" autocomplete="off">
+                                           value="{{ (!empty($product->product->end_date)) ? $product->end_date : '' }}" autocomplete="off">
                                     <div class="help-block"></div>
                                     @if ($errors->has('end_date'))
                                         <div class="help-block">{{ $errors->first('end_date') }}</div>
@@ -91,13 +91,13 @@
                                 <div class="form-group col-md-6 {{ $errors->has('ussd_bn') ? ' error' : '' }}">
                                     <label for="ussd_bn">USSD Code Bangla</label>
                                     <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd bangla" maxlength="25"
-                                           value="{{ $product->ussd_bn }}">
+                                           value="{{ $product->product->ussd_bn }}">
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="price_tk">Offer Price</label>
-                                    <input type="number" name="price_tk"  class="form-control" placeholder="Enter offer price" maxlength="8"
-                                           value="{{ $product->price_tk }}">
+                                    <label for="product_price">Offer Price</label>
+                                    <input type="number" name="product_price"  class="form-control" placeholder="Enter offer price" maxlength="8"
+                                           value="{{ $product->product_price }}">
                                 </div>
 
                                 <div class="form-group col-md-6">
@@ -105,43 +105,43 @@
                                     <select class="form-control" name="tag_category_id">
                                         <option value="">---Select Tag---</option>
                                         @foreach($tags as $tag)
-                                            <option value="{{ $tag->id }}" {{ ($tag->id == $product->tag_category_id ) ? 'selected' : '' }}>{{ $tag->name_en }}</option>
+                                            <option value="{{ $tag->id }}" {{ ($tag->id == $product->product->tag_category_id ) ? 'selected' : '' }}>{{ $tag->name_en }}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
-                                    <label for="offer_category_id" class="required">Offer Type</label>
-                                    <select class="form-control" name="offer_category_id" id="offer_type"
+                                <div class="form-group col-md-6 {{ $errors->has('product_type_id') ? ' error' : '' }}">
+                                    <label for="product_type_id" class="required">Offer Type</label>
+                                    <select class="form-control" name="product_type_id" id="offer_type"
                                             required data-validation-required-message="Please select offer">
                                         <option value="">---Select Offer Type---</option>
                                         @foreach($offersType as $offer)
-                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ ($offer->id == $product->offer_category_id ) ? 'selected' : '' }}>{{ $offer->name_en }}</option>
+                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}" {{ ($offer->id     == $product->product_type_id ) ? 'selected' : '' }}>{{ $offer->name_en }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('offer_category_id'))
-                                        <div class="help-block">  {{ $errors->first('offer_category_id') }}</div>
+                                    @if ($errors->has('product_type_id'))
+                                        <div class="help-block">  {{ $errors->first('product_type_id') }}</div>
                                     @endif
                                 </div>
                             {{--</div>--}}
 
-                                <slot class="{{ $product->offer_category_id == 1 ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
+                                <slot class="{{ $product->product_type_id == 1 ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
                                     @include('layouts.partials.products.internet')
                                 </slot>
-                                <slot class="{{ $product->offer_category_id == 4 ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
+                                <slot class="{{ $product->product_type_id == 4 ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
                                     @include('layouts.partials.products.packages')
                                 </slot>
 
-                                <slot class="{{ $product->offer_category_id == 9 ? '' : 'd-none' }}" id="others" data-offer-type="others">
+                                <slot class="{{ $product->product_type_id == 9 ? '' : 'd-none' }}" id="others" data-offer-type="others">
                                     @include('layouts.partials.products.other')
                                 </slot>
 
                             @if(strtolower($type) == 'prepaid')
-                                <slot class="{{ $product->offer_category_id == 2 ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
+                                <slot class="{{ $product->product_type_id == 2 ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
                                     @include('layouts.partials.products.voice')
                                 </slot>
-                                <slot class="{{ $product->offer_category_id == 3 ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
+                                <slot class="{{ $product->product_type_id == 3 ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
                                     @include('layouts.partials.products.bundle')
                                 </slot>
                             @endif

@@ -34,9 +34,20 @@ class ProductCoreService
      * @param $simId
      * @return Response
      */
-    public function storeProductCore($data)
+    public function storeProductCore($data, $simId)
     {
-        return $this->productCoreRepository->insertProductCore($data);
+        return $this->productCoreRepository->insertProductCore($data, $simId);
+    }
+
+    public function findProductCore($id)
+    {
+        return $this->productCoreRepository->findWithProduct($id);
+    }
+
+    public function updateProductCore($data, $id)
+    {
+        $product = $this->productCoreRepository->findOneProductCore($id);
+        $product->update($data);
     }
 
 }

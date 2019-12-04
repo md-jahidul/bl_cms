@@ -54,8 +54,7 @@ class ProductController extends Controller
         TagCategoryService $tagCategoryService,
         OfferCategoryService $offerCategoryService,
         DurationCategoryService $durationCategoryService
-    )
-    {
+    ) {
         $this->productService = $productService;
         $this->productCoreService = $productCoreService;
         $this->productDetailService = $productDetailService;
@@ -73,9 +72,29 @@ class ProductController extends Controller
     public function index($type)
     {
 
+//        $slider->data = DB::table('partner_offers as po')
+//            ->where('po.show_in_home',1)
+//            ->where('po.is_active',1)
+//            ->join('partners as p', 'po.partner_id', '=', 'p.id')
+//            ->join('partner_categories as pc', 'p.partner_category_id', '=', 'pc.id') // you may add more joins
+//            ->select('po.*', 'pc.name_en AS offer_type_en', 'pc.name_bn AS offer_type_bn', 'p.company_name_en','p.company_name_bn','p.company_logo')
+//            ->orderBy('po.display_order')
+//            ->get();
+
+//        $products = DB::table('products')
+//            ->join('product_cores as pc', 'products.product_code', '=', 'pc.product_code')
+//            ->join('offer_categories as oc', 'pc.product_type_id', '=', 'oc.id') // you may add more joins
+//            ->select('products.*', 'pc.id as product_core_id','pc.*', 'oc.name_en as offer_type', 'oc.alias as offer_type_alias')
+////            ->orderBy('po.display_order')
+//            ->get();
+
         $products = Product::category($type)->with(['product_core', 'offer_category' => function ($query) {
             $query->select('id', 'name_en');
         }])->get();
+
+//        $products = Product::with('product_core', 'offer_category')->get();
+
+//        return $products;
 
         return view('admin.product.index', compact('products', 'type'));
     }
@@ -140,9 +159,10 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
-        $this->productCoreService->storeProductCore($request->product_code);
-        $this->strToint($request);
         $simId = SimCategory::where('alias', $type)->first()->id;
+        $this->productCoreService->storeProductCore($request->all(), $simId);
+
+        $this->strToint($request);
         $response = $this->productService->storeProduct($request->all(), $simId);
         Session::flash('success', $response->content());
         return redirect("offers/$type");
@@ -178,7 +198,10 @@ class ProductController extends Controller
      */
     public function edit($type, $id)
     {
-        $product = $this->productService->findOne($id);
+        $product = $this->productCoreService->findProductCore($id);
+
+//        return $product->product->offer_info['duration_category_id'];
+
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['previous_page'] = url()->previous();
         $this->info['type'] = $type;
@@ -186,7 +209,9 @@ class ProductController extends Controller
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offersType'] = $this->offerCategoryService->getOfferCategories($type);
         $this->info['durations'] = $this->durationCategoryService->findAll();
-        $this->info['offerInfo'] = $product['offer_info'];
+        $this->info['offerInfo'] = $product->product['offer_info'];
+
+//        return $this->info;
 
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
@@ -214,6 +239,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, $type, $id)
     {
+//        return $request->all();
+
+        $this->productCoreService->updateProductCore($request->all(), $id);
+
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $id);
         Session::flash('message', $response->content());
@@ -227,11 +256,16 @@ class ProductController extends Controller
      */
     public function productDetailsEdit($type, $id)
     {
-
         $products = $this->productService->findRelatedProduct($type, $id);
-        $productDetail = $this->productService->findOne($id, [
-            'other_related_product', "related_product", 'product_details',
-        ]);
+
+        $productDetail = Product::with( 'other_related_product', "related_product", 'product_details')->category($type)->get();
+
+//        $productDetail = $this->productService->findOne($id, [
+//            'other_related_product', "related_product", 'product_details', 'product_core'
+//        ]);
+
+//        return $productDetail;
+
         return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
     }
 

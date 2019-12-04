@@ -23,14 +23,14 @@ class CreateProductsTable extends Migration
                 $table->string('name_en');
                 $table->string('name_bn');
                 $table->string('text')->nullable();
-                $table->double('price_tk', 10, 2)->nullable();
-                $table->integer('price_vat_included')->default(0);
+//                $table->double('price_tk', 10, 2)->nullable();
+//                $table->integer('price_vat_included')->default(0);
                 $table->dateTime('start_date')->nullable();
                 $table->dateTime('end_date')->nullable();
                 $table->string('bonus')->nullable();
                 $table->tinyInteger('is_recharge')->default(0)->comment('yes = 1, no = 0');
                 $table->tinyInteger('show_in_home')->default(0);
-                $table->string('ussd_en', 30)->nullable();
+//                $table->string('ussd_en', 30)->nullable();
                 $table->string('ussd_bn', 30)->nullable();
                 $table->integer('point')->nullable();
                 $table->unsignedBigInteger('tag_category_id')->nullable();
@@ -38,10 +38,16 @@ class CreateProductsTable extends Migration
                 $table->unsignedBigInteger('offer_category_id');
                 $table->text('contextual_message')->nullable();
                 $table->integer('like')->default(0);
-                $table->tinyInteger('status')->default(1);
+//                $table->tinyInteger('status')->default(1);
                 $table->integer('display_order')->nullable();
 
                 $table->json('offer_info')->nullable();
+
+//                $table->foreign('product_code')
+//                    ->references('product_code')
+//                    ->on('product_cores')
+//                    ->onDelete('cascade')
+//                    ->onUpdate('cascade');
 
                 $table->foreign('tag_category_id')
                     ->references('id')
