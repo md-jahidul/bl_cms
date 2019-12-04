@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Models\Priyojon;
+use App\Services\AboutPriyojonService;
 use App\Services\PriyojonService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,9 +13,11 @@ class PriyojonController extends Controller
 {
 
     /**
-     * @var $menuService
+     * @var PriyojonService
+     * @var AboutPriyojonService
      */
     private $priyojonService;
+    private $aboutPriyojonService;
 
     /**
      * @var array $menuItems
@@ -22,13 +25,15 @@ class PriyojonController extends Controller
     protected $priyojonItems = [];
 
 
-    /***
+    /**
      * PriyojonController constructor.
      * @param PriyojonService $priyojonService
+     * @param AboutPriyojonService $aboutPriyojonService
      */
-    public function __construct(PriyojonService $priyojonService)
+    public function __construct(PriyojonService $priyojonService, AboutPriyojonService $aboutPriyojonService)
     {
         $this->priyojonService = $priyojonService;
+        $this->aboutPriyojonService = $aboutPriyojonService;
         $this->middleware('auth');
     }
 
@@ -83,5 +88,21 @@ class PriyojonController extends Controller
         $response = $this->priyojonService->updatePriyojon($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect(($parentId != 0) ? "priyojon/$parentId/child-menu" : 'priyojon');
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function aboutPriyojon()
+    {
+        $details = $this->aboutPriyojonService->findAboutDetail('about_priyojon');
+        return view('admin.priyojon.about_priyojon', compact('details'));
+    }
+
+    public function aboutPriyojonUpdate(Request $request)
+    {
+        $response = $this->aboutPriyojonService->updateAboutPriyojon($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect(route('about-priyojon'));
     }
 }
