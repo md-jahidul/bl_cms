@@ -25,9 +25,6 @@ class ProductCoreRepository extends BaseRepository
                 $data['name'] = $data['name_en'];
                 $data['code'] = str_replace(' ', '', strtoupper($data['product_core_code']));
                 $data['sim_type'] = $simId;
-
-//                dd($data);
-
                 $this->model->create($data);
             }
         }

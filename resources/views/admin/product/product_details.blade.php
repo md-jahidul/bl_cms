@@ -1,5 +1,4 @@
-    @php
-    use App\Enums\OtherOfferType;
+@php
     function match($id,$relatedProducts){
         foreach ($relatedProducts as $relatedProduct)
         {
@@ -30,7 +29,7 @@
                 <div class="card-body card-dashboard">
                     <h5 class="menu-title"><strong>Product Details Page</strong></h5><hr>
                     <div class="card-body card-dashboard">
-                        <form role="form" id="product_form" action="{{--{{ route('product.details-update', [strtolower($type), $productDetail->id] ) }}--}}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" id="product_form" action="{{ route('product.details-update', [strtolower($type), $productDetail->id] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="row">
@@ -51,15 +50,15 @@
                                 <div class="form-group col-md-6">
                                     <label for="ussd">USSD Code English</label>
                                     <input type="text" class="form-control" placeholder="Enter offer ussd english" maxlength="25" readonly
-                                           value="{{ $productDetail->ussd_en }}">
+                                           value="{{ $productDetail->product_core->activation_ussd }}">
                                 </div>
 
 
-                                @if($productDetail->product_core->product_type_id == \App\Enums\OtherOfferType::INTERNET)
+                                @if($productDetail->offer_category_id == \App\Enums\OtherOfferType::INTERNET)
                                     <div class="col-md-12 text-center">
                                         <h2><strong class="text-danger"> Under Construction</strong></h2>
                                     </div>
-                                @elseif($productDetail->product_core->product_type_id == \App\Enums\OtherOfferType::VOICE)
+                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::VOICE)
                                     @include('layouts.partials.product-details.voice')
 
                                 @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::BUNDLES)

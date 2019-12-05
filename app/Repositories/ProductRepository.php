@@ -32,6 +32,11 @@ class ProductRepository extends BaseRepository
         }
     }
 
+    public function productDetails($id)
+    {
+        return $this->model->where('product_core_code', $id)->with('other_related_product', "related_product", 'product_details')->first();
+    }
+
     /**
      * @param $type
      * @param $id
@@ -60,4 +65,5 @@ class ProductRepository extends BaseRepository
     {
         return $this->model->category($type)->where('product_core_code', $id)->with('product_core')->first();
     }
+
 }

@@ -69,7 +69,7 @@
             <label for="minute_volume" class="required">Minute Volume</label>
             <input type="text" name="minute_volume"  class="form-control" placeholder="Enter minute volume"
                    oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                   value="{{ (!empty($product->minute_volume)) ? $product->minute_volume : old("minute_volume") ?? '' }}"
+                   value="{{ (!empty($product->product_core->minute_volume)) ? $product->product_core->minute_volume : old("minute_volume") ?? '' }}"
                    required data-validation-required-message="Enter view list url">
             <div class="help-block"></div>
             @if ($errors->has('minute_volume'))
@@ -81,7 +81,7 @@
             <label for="internet_volume_mb" class="required">Internet Volume (MB)</label>
             <input type="number" name="internet_volume_mb"  class="form-control" placeholder="Enter internet volume in MB"
                    oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                   value="{{ (!empty($product->internet_volume_mb)) ? $product->internet_volume_mb : old("internet_volume_mb") ?? '' }}"
+                   value="{{ (!empty($product->product_core->internet_volume_mb)) ? $product->product_core->internet_volume_mb : old("internet_volume_mb") ?? '' }}"
                    required data-validation-required-message="Enter view list button label bangla ">
             <div class="help-block"></div>
             @if ($errors->has('internet_volume_mb'))

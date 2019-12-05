@@ -2,7 +2,7 @@
     <label for="view_list_btn_text_bn" class="required">Call Rate (Paisa)</label>
     <input type="text" name="call_rate"  class="form-control" placeholder="Enter call rate in paisa"
            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-           value="{{ (!empty($product->call_rate)) ? $product->call_rate : old("call_rate") ?? '' }}"
+           value="{{ (!empty($product->product_core->call_rate)) ? $product->product_core->call_rate : old("call_rate") ?? '' }}"
            required data-validation-required-message="Enter view list button label bangla ">
     <div class="help-block"></div>
     @if ($errors->has('call_rate'))
@@ -14,7 +14,7 @@
     <label for="internet_volume_mb" class="required">Internet Volume (MB)</label>
     <input type="number" name="internet_volume_mb"  class="form-control" placeholder="Enter internet volume in MB"
            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-           value="{{ (!empty($product->internet_volume_mb)) ? $product->internet_volume_mb : old("internet_volume_mb") ?? '' }}"
+           value="{{ (!empty($product->product_core->internet_volume_mb)) ? $product->product_core->internet_volume_mb : old("internet_volume_mb") ?? '' }}"
            required data-validation-required-message="Enter view list button label bangla ">
     <div class="help-block"></div>
     @if ($errors->has('internet_volume_mb'))
@@ -26,7 +26,7 @@
     <label for="minute_volume" class="required">Minute Volume</label>
     <input type="text" name="minute_volume"  class="form-control" placeholder="Enter minute volume"
            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-           value="{{ (!empty($product->minute_volume)) ? $product->minute_volume : old("minute_volume") ?? '' }}"
+           value="{{ (!empty($product->product_core->minute_volume)) ? $product->product_core->minute_volume : old("minute_volume") ?? '' }}"
            required data-validation-required-message="Enter view list url">
     <div class="help-block"></div>
     @if ($errors->has('minute_volume'))
@@ -34,15 +34,15 @@
     @endif
 </div>
 
-<div class="form-group col-md-6 {{ $errors->has('product_validity') ? ' error' : '' }}">
-    <label for="product_validity" class="required">Validity Days</label>
-    <input type="number" name="product_validity"  class="form-control product_validity" placeholder="Enter validity days" id="product_validity"
+<div class="form-group col-md-6 {{ $errors->has('validity') ? ' error' : '' }}">
+    <label for="validity" class="required">Validity Days</label>
+    <input type="number" name="validity"  class="form-control validity" placeholder="Enter validity days" id="validity"
            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-           value="{{ (!empty($product->product_validity)) ? $product->product_validity : old("product_validity") ?? '' }}"
+           value="{{ (!empty($product->product_core->validity)) ? $product->product_core->validity : old("validity") ?? '' }}"
            required data-validation-required-message="Enter view list url">
     <div class="help-block"></div>
-    @if ($errors->has('product_validity'))
-        <div class="help-block">  {{ $errors->first('product_validity') }}</div>
+    @if ($errors->has('validity'))
+        <div class="help-block">  {{ $errors->first('validity') }}</div>
     @endif
 </div>
 
@@ -94,7 +94,7 @@
     <label for="balance_check_ussd" class="required">Balance Check</label>
     <input type="text" name="balance_check_ussd"  class="form-control" placeholder="Enter balance check USSD"
            {{--oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"--}}
-           value="{{ (!empty($product->balance_check_ussd)) ? $product->balance_check_ussd : old("balance_check_ussd") ?? '' }}"
+           value="{{ (!empty($product->product_core->balance_check_ussd)) ? $product->product_core->balance_check_ussd : old("balance_check_ussd") ?? '' }}"
            required data-validation-required-message="Enter balance check USSD">
     <div class="help-block"></div>
     @if ($errors->has('balance_check_ussd'))

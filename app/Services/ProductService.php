@@ -68,17 +68,27 @@ class ProductService
      * @param $id
      * @return ResponseFactory|Response
      */
-    public function updateProduct($data, $id)
+    public function updateProduct($data, $type, $id)
     {
-        $product = $this->productRepository->findProduct($id);
+        $product = $this->productRepository->findByCode($type, $id);
         $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0);
         $product->update($data);
         return Response('Product update successfully !');
     }
 
+    /**
+     * @param $type
+     * @param $id
+     * @return mixed
+     */
     public function findProduct($type, $id)
     {
         return $this->productRepository->findByCode($type, $id);
+    }
+
+    public function detailsProduct($id)
+    {
+        return $this->productRepository->productDetails($id);
     }
 
 

@@ -36,7 +36,7 @@
                                             required data-validation-required-message="Please select product code">
                                         <option value="">Select product code</option>
                                         @foreach($productCoreCodes as $productCodes)
-                                            <option value="{{ $productCodes->product_core_code }}">{{ $productCodes->product_core_code }}</option>
+                                            <option value="{{ $productCodes->code }}">{{ $productCodes->code }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -196,7 +196,6 @@
             </div>
         </div>
     </section>
-
 @stop
 
 @push('page-css')
@@ -221,10 +220,6 @@
             $('#select-beast').selectize({
                 create: true,
             });
-
-
-
-
         })
     </script>
 @endpush

@@ -17,7 +17,7 @@
                 <div class="card-body card-dashboard">
                     <h5 class="menu-title"><strong>{{ $type }} Offer Edit</strong></h5><hr>
                     <div class="card-body card-dashboard">
-                        <form role="form" id="product_form" action="{{ route('product.update', [strtolower($type), $product->product_code] ) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" id="product_form" action="{{ route('product.update', [strtolower($type), $product->product_core_code] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
 
@@ -47,7 +47,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
                                     <label for="name_bn" class="required">Offer Name Bangla</label>
-                                    <input type="text" name="name_bn"  class="form-control" placeholder="Enter offer name bangla"
+                                    <input type="text" name="name_bn" class="form-control" placeholder="Enter offer name bangla"
                                            required data-validation-required-message="Enter offer name bangla"
                                            value="{{ $product->name_bn }}">
                                     <div class="help-block"></div>
@@ -73,8 +73,8 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="ussd">USSD Code English</label>
-                                    <input type="text" name="ussd_activation_code"  class="form-control" placeholder="Enter offer ussd english" maxlength="25"
-                                           value="{{ $product->product_core->activation_ussd }}">
+                                    <input type="text" name="activation_ussd"  class="form-control" placeholder="Enter offer ussd english" maxlength="25"
+                                           value="{{ $product->product_core['activation_ussd'] }}">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
@@ -111,8 +111,8 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('product_type_id') ? ' error' : '' }}">
-                                    <label for="product_type_id" class="required">Offer Type</label>
-                                    <select class="form-control" name="product_type_id" id="offer_type"
+                                    <label for="offer_category_id" class="required">Offer Type</label>
+                                    <select class="form-control" name="offer_category_id" id="offer_type"
                                             required data-validation-required-message="Please select offer">
                                         <option value="">---Select Offer Type---</option>
                                         @foreach($offersType as $offer)
@@ -120,20 +120,20 @@
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('product_type_id'))
-                                        <div class="help-block">  {{ $errors->first('product_type_id') }}</div>
+                                    @if ($errors->has('offer_category_id'))
+                                        <div class="help-block">  {{ $errors->first('offer_category_id') }}</div>
                                     @endif
                                 </div>
                             {{--</div>--}}
 
-                                <slot class="{{ $product->product_type_id == 1 ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
+                                <slot class="{{ $product->offer_category_id == 1 ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
                                     @include('layouts.partials.products.internet')
                                 </slot>
-                                <slot class="{{ $product->product_type_id == 4 ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
+                                <slot class="{{ $product->offer_category_id == 4 ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
                                     @include('layouts.partials.products.packages')
                                 </slot>
 
-                                <slot class="{{ $product->product_type_id == 9 ? '' : 'd-none' }}" id="others" data-offer-type="others">
+                                <slot class="{{ $product->offer_category_id == 9 ? '' : 'd-none' }}" id="others" data-offer-type="others">
                                     @include('layouts.partials.products.other')
                                 </slot>
 
@@ -141,7 +141,7 @@
                                 <slot class="{{ $product->offer_category_id == 2 ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
                                     @include('layouts.partials.products.voice')
                                 </slot>
-                                <slot class="{{ $product->product_type_id == 3 ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
+                                <slot class="{{ $product->offer_category_id == 3 ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
                                     @include('layouts.partials.products.bundle')
                                 </slot>
                             @endif
