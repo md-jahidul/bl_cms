@@ -41,8 +41,7 @@ class ProductService
     {
 //        dd($data);
         $data['sim_category_id'] = $simId;
-        $data['offer_category_id'] = $data['product_type_id'];
-        $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+        $data['product_core_code'] = str_replace(' ', '', strtoupper($data['product_core_code']));
         $productId = $this->save($data);
         $this->productDetailRepository->insertProductDetail($productId->id);
         return new Response('Product added successfully');

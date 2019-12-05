@@ -37,7 +37,7 @@
                                         <td width="3%">{{ $loop->iteration }}</td>
                                         <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                         <td>{{ $product->product_code }}</td>
-                                        <td>{{ $product->product_core->ussd_activation_code }}</td>
+                                        <td>{{ $product->product_core->activation_code }}</td>
                                         <td>{{ $product->offer_category->name_en }}</td>
                                         {{--<td>{{ $product->end_date ? '' : '' }} <span class="badge badge-success badge-pill mr-1"></td>--}}
 

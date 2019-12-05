@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+use App\Repositories\ProductCoreRepository;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
@@ -181,4 +183,11 @@ Route::middleware('authorize', 'auth')->group(function () {
 //     Route::resource('prizes','AssetLite\PrizeController');
 
     Route::get('/home', 'AssetLite\HomeController@index')->name('home');
+
+
+
+    Route::get('/test/excel', function (\App\Services\ProductCoreService $service) {
+
+        $service->mapDataFromExcel('/home/bs104/Desktop/product_sample.xlsx');
+    });
 });

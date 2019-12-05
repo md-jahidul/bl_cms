@@ -32,11 +32,11 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
                                     <label for="product_code" class="required">Product ID</label>
-                                    <select id="select-beast" name="product_code"
+                                    <select id="select-beast" name="product_core_code"
                                             required data-validation-required-message="Please select product code">
                                         <option value="">Select product code</option>
                                         @foreach($productCoreCodes as $productCodes)
-                                            <option value="{{ $productCodes->product_code }}">{{ $productCodes->product_code }}</option>
+                                            <option value="{{ $productCodes->product_core_code }}">{{ $productCodes->product_core_code }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -71,9 +71,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="ussd_activation_code">USSD Code (English)</label>
-                                    <input type="text" name="ussd_activation_code"  class="form-control" placeholder="Enter offer ussd code in English"
-                                           value="{{ old("ussd_activation_code") ? old("ussd_activation_code") : '' }}">
+                                    <label for="activation_ussd">USSD Code (English)</label>
+                                    <input type="text" name="activation_ussd"  class="form-control" placeholder="Enter offer ussd code in English"
+                                           value="{{ old("activation_ussd") ? old("activation_ussd") : '' }}">
                                     <div class="help-block"></div>
                                 </div>
 
@@ -95,10 +95,10 @@
                                 </div>
 
                                 <div class="form-group col-md-6 ">
-                                    <label for="product_price">Offer Price</label>
-                                        <input type="text" name="product_price"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
+                                    <label for="price">Offer Price</label>
+                                        <input type="text" name="price"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
                                            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                                           value="{{ old("product_price") ? old("product_price") : '' }}">
+                                           value="{{ old("price") ? old("price") : '' }}">
                                     <div class="help-block"></div>
                                 </div>
 
@@ -114,7 +114,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="offer_category_id" class="required">Offer Type</label>
-                                    <select class="form-control required" name="product_type_id" id="offer_type"
+                                    <select class="form-control required" name="offer_category_id" id="offer_type"
                                             required data-validation-required-message="Please select offer">
                                         <option data-alias="" value="">---Select Offer Type---</option>
                                         @foreach($offers as $offer)

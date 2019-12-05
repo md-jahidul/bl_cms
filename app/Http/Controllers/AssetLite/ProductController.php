@@ -94,7 +94,7 @@ class ProductController extends Controller
 
 //        $products = Product::with('product_core', 'offer_category')->get();
 
-//        return $products;
+        return $products;
 
         return view('admin.product.index', compact('products', 'type'));
     }
@@ -115,7 +115,8 @@ class ProductController extends Controller
     public function create($type)
     {
 
-        $this->info['productCoreCodes'] = ProductCore::select('product_code')->get();
+        $this->info['productCoreCodes'] = ProductCore::select('code')->get();
+
         $package_id = SimCategory::where('alias', $type)->first()->id;
 
         $this->info['type'] = $type;
@@ -159,6 +160,8 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
+//        return $request->all();
+
         $simId = SimCategory::where('alias', $type)->first()->id;
         $this->productCoreService->storeProductCore($request->all(), $simId);
 

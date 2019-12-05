@@ -7,19 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class ProductCore extends Model
 {
     protected $fillable = [
-        'product_code',
-        'product_name',
-        'product_short_dec',
-        'ussd_activation_code',
+        'code',
+        'name',
+        'sim_type',
+        'activation_ussd',
         'balance_check_ussd',
-        'ussd_short_dec',
-        'product_price',
-        'product_total_price',
-        'product_vat',
-        'product_validity',
-        'product_validity_unit',
-        'product_content_type',
-        'product_family',
+        'price',
+        'mrp_price',
+        'vat',
+        'validity',
+        'validity_unit',
+        'content_type',
+        'family_name',
         'product_sms_count',
         'internet_volume_mb',
         'minute_volume',
@@ -34,11 +33,13 @@ class ProductCore extends Model
         'product_sim_package',
     ];
 
+    protected $guarded = ['id'];
+
+
     public function product()
     {
         return $this->hasOne(Product::class, 'product_code', 'product_code');
     }
-
 
     public function sim_category()
     {

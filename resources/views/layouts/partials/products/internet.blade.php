@@ -33,15 +33,15 @@
         @endif
     </div>
 
-    <div class="form-group col-md-6 {{ $errors->has('product_validity') ? ' error' : '' }}">
-        <label for="product_validity" class="required">Validity (Days)</label>
-        <input type="number" name="product_validity"  class="form-control validity_days" placeholder="Enter validity in days"
+    <div class="form-group col-md-6 {{ $errors->has('validity') ? ' error' : '' }}">
+        <label for="validity" class="required">Validity (Days)</label>
+        <input type="number" name="validity"  class="form-control validity_days" placeholder="Enter validity in days"
                oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-               value="{{ (!empty($product->product_validity)) ? $product->product_validity : old("product_validity") ?? '' }}"
+               value="{{ (!empty($product->validity)) ? $product->validity : old("validity") ?? '' }}"
                required data-validation-required-message="Enter view list url">
         <div class="help-block"></div>
-        @if ($errors->has('product_validity'))
-            <div class="help-block">  {{ $errors->first('product_validity') }}</div>
+        @if ($errors->has('validity'))
+            <div class="help-block">  {{ $errors->first('validity') }}</div>
         @endif
     </div>
 

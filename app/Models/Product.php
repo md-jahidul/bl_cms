@@ -12,7 +12,7 @@ class Product extends Model
 {
     protected $fillable =
         [
-            'product_code',
+            'product_core_code',
             'name_en',
             'name_bn',
             'price_tk',
@@ -42,7 +42,7 @@ class Product extends Model
 
     public function product_core()
     {
-        return $this->belongsTo(ProductCore::class, 'product_code', 'product_code');
+        return $this->belongsTo(ProductCore::class, 'product__core_code', 'code');
     }
 
     public function sim_category()
