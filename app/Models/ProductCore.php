@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductCore extends Model
 {
-    protected $fillable = ['product_code'];
+    protected $guarded = ['id'];
 
     public function products()
     {
         return $this->hasOne(Product::class, 'product_code', 'product_code');
     }
+
 
 }
