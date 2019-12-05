@@ -23,8 +23,6 @@ class CreateAboutPriyojonsTable extends Migration
             $table->json('other_attributes')->nullable();
             $table->timestamps();
         });
-
-        \App\Models\AboutPriyojon::create();
     }
 
     /**

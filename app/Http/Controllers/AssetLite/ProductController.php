@@ -77,6 +77,8 @@ class ProductController extends Controller
             $query->select('id', 'name_en');
         }])->get();
 
+//        return $products;
+
         return view('admin.product.index', compact('products', 'type'));
     }
 

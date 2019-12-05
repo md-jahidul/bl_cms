@@ -71,11 +71,11 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <img src="{{ ($details->left_side_img != '') ? asset("$details->left_side_img") : asset("images/about-priyojon/about-placeholder.png") }}" id="leftImg" height="300" width="560">
+                                    <img src="{{ ($details->left_side_img != '') ? asset("$details->left_side_img") : asset("images/about-priyojon/about-placeholder.png") }}" id="leftImg" height="300" width="490">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('right_side_ing') ? ' error' : '' }}">
-                                    <img src="{{ ($details->right_side_ing != '') ? asset("$details->right_side_ing") : asset("images/about-priyojon/about-placeholder.png") }}" id="rightImg" height="300" width="560">
+                                    <img src="{{ ($details->right_side_ing != '') ? asset("$details->right_side_ing") : asset("images/about-priyojon/about-placeholder.png") }}" id="rightImg" height="300" width="490">
                                 </div>
                                 
                            
