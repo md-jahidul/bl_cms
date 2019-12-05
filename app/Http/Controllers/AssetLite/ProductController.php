@@ -135,11 +135,8 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
-//        return $request->all();
-
         $simId = SimCategory::where('alias', $type)->first()->id;
         $this->productCoreService->storeProductCore($request->all(), $simId);
-
         $this->strToint($request);
         $response = $this->productService->storeProduct($request->all(), $simId);
         Session::flash('success', $response->content());
