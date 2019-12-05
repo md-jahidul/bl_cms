@@ -54,8 +54,7 @@ class ProductController extends Controller
         TagCategoryService $tagCategoryService,
         OfferCategoryService $offerCategoryService,
         DurationCategoryService $durationCategoryService
-    )
-    {
+    ) {
         $this->productService = $productService;
         $this->productCoreService = $productCoreService;
         $this->productDetailService = $productDetailService;
@@ -72,13 +71,9 @@ class ProductController extends Controller
      */
     public function index($type)
     {
-
         $products = Product::category($type)->with(['product_core', 'offer_category' => function ($query) {
             $query->select('id', 'name_en');
         }])->get();
-
-//        return $products;
-
         return view('admin.product.index', compact('products', 'type'));
     }
 
@@ -97,10 +92,8 @@ class ProductController extends Controller
 
     public function create($type)
     {
-
-        $this->info['productCoreCodes'] = ProductCore::select('product_code')->get();
+        $this->info['productCoreCodes'] = ProductCore::select('code')->get();
         $package_id = SimCategory::where('alias', $type)->first()->id;
-
         $this->info['type'] = $type;
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offers'] = $this->offerCategoryService->getOfferCategories($type);
@@ -142,9 +135,9 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
-        $this->productCoreService->storeProductCore($request->product_code);
-        $this->strToint($request);
         $simId = SimCategory::where('alias', $type)->first()->id;
+        $this->productCoreService->storeProductCore($request->all(), $simId);
+        $this->strToint($request);
         $response = $this->productService->storeProduct($request->all(), $simId);
         Session::flash('success', $response->content());
         return redirect("offers/$type");
@@ -180,7 +173,7 @@ class ProductController extends Controller
      */
     public function edit($type, $id)
     {
-        $product = $this->productService->findOne($id);
+        $product = $this->productService->findProduct($type, $id);
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['previous_page'] = url()->previous();
         $this->info['type'] = $type;
@@ -216,8 +209,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, $type, $id)
     {
+        $this->productCoreService->updateProductCore($request->all(), $id);
+
         $this->strToint($request);
-        $response = $this->productService->updateProduct($request->all(), $id);
+        $response = $this->productService->updateProduct($request->all(), $type, $id);
         Session::flash('message', $response->content());
         return (strpos(request()->previous_page, 'trending-home') !== false) ? redirect(request()->previous_page) : redirect(route('product.list', $type));
     }
@@ -229,11 +224,8 @@ class ProductController extends Controller
      */
     public function productDetailsEdit($type, $id)
     {
-
         $products = $this->productService->findRelatedProduct($type, $id);
-        $productDetail = $this->productService->findOne($id, [
-            'other_related_product', "related_product", 'product_details',
-        ]);
+        $productDetail = $this->productService->detailsProduct($id);
         return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
     }
 

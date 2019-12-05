@@ -12,18 +12,18 @@ class Product extends Model
 {
     protected $fillable =
         [
-            'product_code',
+            'product_core_code',
             'name_en',
             'name_bn',
             'price_tk',
-            'price_vat_included',
+//            'price_vat_included',
             'start_date',
             'end_date',
             'ussd_en',
             'ussd_bn',
             'bonus',
             'point',
-            'validity_days',
+//            'validity_days',
             'is_recharge',
             'show_in_home',
             'tag_category_id',
@@ -42,7 +42,7 @@ class Product extends Model
 
     public function product_core()
     {
-        return $this->belongsTo(ProductCore::class, 'product_code', 'product_code');
+        return $this->belongsTo(ProductCore::class, 'product_core_code', 'code');
     }
 
     public function sim_category()

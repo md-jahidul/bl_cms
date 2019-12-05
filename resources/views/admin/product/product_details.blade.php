@@ -1,5 +1,4 @@
 @php
-    use App\Enums\OtherOfferType;
     function match($id,$relatedProducts){
         foreach ($relatedProducts as $relatedProduct)
         {
@@ -51,7 +50,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="ussd">USSD Code English</label>
                                     <input type="text" class="form-control" placeholder="Enter offer ussd english" maxlength="25" readonly
-                                           value="{{ $productDetail->ussd_en }}">
+                                           value="{{ $productDetail->product_core->activation_ussd }}">
                                 </div>
 
 

@@ -17,7 +17,7 @@
                 <div class="card-body card-dashboard">
                     <h5 class="menu-title"><strong>{{ $type }} Offer Edit</strong></h5><hr>
                     <div class="card-body card-dashboard">
-                        <form role="form" id="product_form" action="{{ route('product.update', [strtolower($type), $product->id] ) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" id="product_form" action="{{ route('product.update', [strtolower($type), $product->product_core_code] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
 
@@ -38,7 +38,7 @@
                                     <label for="code" class="required">Product ID</label>
                                     <input type="text" class="form-control" placeholder="Enter product code"
                                            required data-validation-required-message="Enter product code" readonly
-                                           value="{{ $product->product_code }}">
+                                           value="{{ $product->product_core_code }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('code'))
                                         <div class="help-block">{{ $errors->first('code') }}</div>
@@ -47,7 +47,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
                                     <label for="name_bn" class="required">Offer Name Bangla</label>
-                                    <input type="text" name="name_bn"  class="form-control" placeholder="Enter offer name bangla"
+                                    <input type="text" name="name_bn" class="form-control" placeholder="Enter offer name bangla"
                                            required data-validation-required-message="Enter offer name bangla"
                                            value="{{ $product->name_bn }}">
                                     <div class="help-block"></div>
@@ -73,8 +73,8 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="ussd">USSD Code English</label>
-                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd english" maxlength="25"
-                                           value="{{ $product->ussd_en }}">
+                                    <input type="text" name="activation_ussd"  class="form-control" placeholder="Enter offer ussd english" maxlength="25"
+                                           value="{{ $product->product_core['activation_ussd'] }}">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
@@ -95,9 +95,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="price_tk">Offer Price</label>
-                                    <input type="number" name="price_tk"  class="form-control" placeholder="Enter offer price" maxlength="8"
-                                           value="{{ $product->price_tk }}">
+                                    <label for="price">Offer Price</label>
+                                    <input type="number" name="price"  class="form-control" placeholder="Enter offer price" maxlength="8"
+                                           value="{{ $product->product_core->price }}">
                                 </div>
 
                                 <div class="form-group col-md-6">
@@ -110,7 +110,7 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('product_type_id') ? ' error' : '' }}">
                                     <label for="offer_category_id" class="required">Offer Type</label>
                                     <select class="form-control" name="offer_category_id" id="offer_type"
                                             required data-validation-required-message="Please select offer">

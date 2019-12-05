@@ -3,12 +3,12 @@
 @section('title', "About Priyojon")
 @section('card_name', "About Priyojon")
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{--{{ route('product.list', ) }}--}}"> List</a></li>
+    {{--<li class="breadcrumb-item"><a href="--}}{{--{{ route('product.list', ) }}--}}{{--"> List</a></li>--}}
     {{--    <li class="breadcrumb-item active"> <a href="{{ route('partner-offer', [$parentId, $partnerName]) }}"> Partner Offer List</a></li>--}}
     <li class="breadcrumb-item active">About Priyojon Details</li>
 @endsection
 @section('action')
-    <a href="{{ url("offers/") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    {{--<a href="{{ url("offers/") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>--}}
 @endsection
 @section('content')
     <section>
