@@ -76,6 +76,11 @@ class ProductService
         return Response('Product update successfully !');
     }
 
+    public function findProduct($type, $id)
+    {
+        return $this->productRepository->findByCode($type, $id);
+    }
+
 
     /**
      * @param $id

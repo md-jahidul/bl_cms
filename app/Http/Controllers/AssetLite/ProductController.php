@@ -94,7 +94,7 @@ class ProductController extends Controller
 
 //        $products = Product::with('product_core', 'offer_category')->get();
 
-        return $products;
+//        return $products;
 
         return view('admin.product.index', compact('products', 'type'));
     }
@@ -201,8 +201,14 @@ class ProductController extends Controller
      */
     public function edit($type, $id)
     {
-        $product = $this->productCoreService->findProductCore($id);
 
+//        dd($id);
+//        $product = $this->productCoreService->findProductCore($id);
+
+        $product = $this->productService->findProduct($type, $id);
+
+//        return $product;
+//
 //        return $product->product->offer_info['duration_category_id'];
 
         $package_id = SimCategory::where('alias', $type)->first()->id;

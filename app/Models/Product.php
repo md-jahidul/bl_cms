@@ -19,7 +19,7 @@ class Product extends Model
 //            'price_vat_included',
             'start_date',
             'end_date',
-//            'ussd_en',
+            'ussd_en',
             'ussd_bn',
             'bonus',
             'point',
@@ -31,7 +31,7 @@ class Product extends Model
             'offer_category_id',
             'contextual_message',
             'like',
-//            'status',
+            'status',
             'display_order',
             'offer_info',
         ];
@@ -42,7 +42,7 @@ class Product extends Model
 
     public function product_core()
     {
-        return $this->belongsTo(ProductCore::class, 'product__core_code', 'code');
+        return $this->belongsTo(ProductCore::class, 'product_core_code', 'code');
     }
 
     public function sim_category()

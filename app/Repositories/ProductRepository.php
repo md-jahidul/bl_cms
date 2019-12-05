@@ -56,7 +56,8 @@ class ProductRepository extends BaseRepository
         return $products;
     }
 
-    public function findProduct($id){
-        return $this->model->where('product_code', $id)->first();
+    public function findByCode($type, $id)
+    {
+        return $this->model->category($type)->where('product_core_code', $id)->with('product_core')->first();
     }
 }
