@@ -36,7 +36,7 @@
                                             required data-validation-required-message="Please select product code">
                                         <option value="">Select product code</option>
                                         @foreach($productCoreCodes as $productCodes)
-                                            <option value="{{ $productCodes->product_code }}">{{ $productCodes->product_code }}</option>
+                                            <option value="{{ $productCodes->code }}">{{ $productCodes->code }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -71,9 +71,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="ussd_en">USSD Code (English)</label>
-                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd code in English"
-                                           value="{{ old("ussd_en") ? old("ussd_en") : '' }}">
+                                    <label for="activation_ussd">USSD Code (English)</label>
+                                    <input type="text" name="activation_ussd"  class="form-control" placeholder="Enter offer ussd code in English"
+                                           value="{{ old("activation_ussd") ? old("activation_ussd") : '' }}">
                                     <div class="help-block"></div>
                                 </div>
 
@@ -95,10 +95,10 @@
                                 </div>
 
                                 <div class="form-group col-md-6 ">
-                                    <label for="price_tk">Offer Price</label>
-                                        <input type="text" name="price_tk"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
+                                    <label for="price">Offer Price</label>
+                                        <input type="text" name="price"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
                                            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                                           value="{{ old("price_tk") ? old("price_tk") : '' }}">
+                                           value="{{ old("price") ? old("price") : '' }}">
                                     <div class="help-block"></div>
                                 </div>
 
@@ -196,7 +196,6 @@
             </div>
         </div>
     </section>
-
 @stop
 
 @push('page-css')
@@ -221,10 +220,6 @@
             $('#select-beast').selectize({
                 create: true,
             });
-
-
-
-
         })
     </script>
 @endpush
