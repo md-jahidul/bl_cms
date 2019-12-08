@@ -20,20 +20,20 @@ class CreateProductCoresTable extends Migration
             $table->string('commercial_name_en')->nullable();
             $table->string('commercial_name_bn')->nullable();
             $table->text('short_description')->nullable();
-            $table->string('sim_type')->comment('Prepaid,Postpaid,Propaid');
+            $table->tinyInteger('sim_type')->comment('prepaid = 1,postpaid = 2,propaid = 3');
             $table->string('content_type')->nullable();
             $table->string('family_name')->nullable();
             $table->string('activation_ussd')->nullable();
             $table->string('balance_check_ussd')->nullable();
             $table->double('mrp_price', 10, 2)->nullable();
             $table->double('price', 10, 2)->nullable();
-            $table->double('tax', 10, 2)->nullable();
+            $table->double('vat', 10, 2)->nullable();
             $table->integer('validity')->nullable();
             $table->string('validity_unit')->nullable();
-            $table->integer('sms_volume')->nullable();
-            $table->integer('data_volume')->nullable();
+            $table->integer('internet_volume_mb')->nullable();
             $table->string('data_volume_unit')->nullable();
-            $table->integer('voice_volume')->nullable();
+            $table->integer('sms_volume')->nullable();
+            $table->integer('minute_volume')->nullable();
             $table->integer('call_rate')->nullable()->comment('Paisa per second');
             $table->integer('sms_rate')->nullable()->comment('Paisa per sms');
 
