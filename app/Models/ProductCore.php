@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductCore extends Model
 {
     protected $fillable = [
-        'code',
+        'product_code',
         'name',
         'sim_type',
         'activation_ussd',

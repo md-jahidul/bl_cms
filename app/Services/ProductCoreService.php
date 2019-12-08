@@ -37,7 +37,7 @@ class ProductCoreService
             'sim_type' => 0,
             'content_type' => 1,
             'family_name' => 2,
-            'code' => 3,
+            'product_code' => 3,
             'name' => 4,
             'commercial_name_en' => 5,
             'commercial_name_bn' => 6,

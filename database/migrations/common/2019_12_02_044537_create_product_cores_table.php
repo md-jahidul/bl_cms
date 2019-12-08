@@ -15,7 +15,7 @@ class CreateProductCoresTable extends Migration
     {
         Schema::create('product_cores', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('code')->unique();
+            $table->string('product_code')->unique();
             $table->string('name')->nullable();
             $table->string('commercial_name_en')->nullable();
             $table->string('commercial_name_bn')->nullable();
@@ -49,7 +49,7 @@ class CreateProductCoresTable extends Migration
             $table->string('segment')->nullable()->comment('both = 1, b2b = 2, b2c = 3');
             $table->timestamps();
 
-            $table->index(['code', 'content_type']);
+            $table->index(['product_code', 'content_type']);
         });
     }
 

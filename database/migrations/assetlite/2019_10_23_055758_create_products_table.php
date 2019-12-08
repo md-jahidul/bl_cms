@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('product_core_code')->unique();
+            $table->string('product_code')->unique();
             $table->string('name_en');
             $table->string('name_bn');
             $table->string('text')->nullable();

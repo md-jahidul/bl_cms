@@ -17,7 +17,7 @@
                 <div class="card-body card-dashboard">
                     <h5 class="menu-title"><strong>{{ $type }} Offer Edit</strong></h5><hr>
                     <div class="card-body card-dashboard">
-                        <form role="form" id="product_form" action="{{ route('product.update', [strtolower($type), $product->product_core_code] ) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" id="product_form" action="{{ route('product.update', [strtolower($type), $product->product_code] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
 
@@ -34,14 +34,14 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('code') ? ' error' : '' }}">
-                                    <label for="code" class="required">Product ID</label>
+                                <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                    <label for="product_code" class="required">Product ID</label>
                                     <input type="text" class="form-control" placeholder="Enter product code"
                                            required data-validation-required-message="Enter product code" readonly
-                                           value="{{ $product->product_core_code }}">
+                                           value="{{ $product->product_code }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('code'))
-                                        <div class="help-block">{{ $errors->first('code') }}</div>
+                                    @if ($errors->has('product_code'))
+                                        <div class="help-block">{{ $errors->first('product_code') }}</div>
                                     @endif
                                 </div>
 

@@ -32,7 +32,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
                                     <label for="product_code" class="required">Product ID</label>
-                                    <select id="select-beast" name="product_core_code"
+                                    <select id="select-beast" name="product_code"
                                             required data-validation-required-message="Please select product code">
                                         <option value="">Select product code</option>
                                         @foreach($productCoreCodes as $productCodes)

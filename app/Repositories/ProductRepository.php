@@ -34,7 +34,7 @@ class ProductRepository extends BaseRepository
 
     public function productDetails($id)
     {
-        return $this->model->where('product_core_code', $id)->with('other_related_product', "related_product", 'product_details')->first();
+        return $this->model->where('product_code', $id)->with('other_related_product', "related_product", 'product_details')->first();
     }
 
     /**
@@ -63,7 +63,7 @@ class ProductRepository extends BaseRepository
 
     public function findByCode($type, $id)
     {
-        return $this->model->category($type)->where('product_core_code', $id)->with('product_core')->first();
+        return $this->model->category($type)->where('product_code', $id)->with('product_core')->first();
     }
 
 }

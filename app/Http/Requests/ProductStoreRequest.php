@@ -24,7 +24,7 @@ class ProductStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_core_code' => 'required|unique:products',
+            'product_code' => 'required|unique:products',
         ];
     }
 }
