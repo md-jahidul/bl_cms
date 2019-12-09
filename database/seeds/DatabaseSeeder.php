@@ -74,6 +74,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(MyBlInternetOfferCategorySeeder::class);
         $this->call(TelescopepanelUserSeeder::class);
-        $this->call(MyBlProductCategorySeeder::class);
+/*        $this->call(MyBlProductCategorySeeder::class);*/
     }
 }
