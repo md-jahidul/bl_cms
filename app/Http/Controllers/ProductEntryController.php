@@ -6,6 +6,7 @@ use App\Models\MyBlProductCategory;
 use App\Models\SimCategory;
 use App\Services\ProductCoreService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProductEntryController extends Controller
@@ -43,7 +44,7 @@ class ProductEntryController extends Controller
     public function searchProductCodes(Request $request)
     {
         $search_term = $request->term;
-        $codes = $this->service->searchProductCodes($search_term)->pluck('code');
+        $codes = $this->service->searchProductCodes($search_term)->pluck('product_code');
 
         $data = [];
 
@@ -68,26 +69,15 @@ class ProductEntryController extends Controller
 
     public function uploadProductByExcel(Request $request)
     {
-        $validate = Validator::make(
-            $request->all(),
-            [
-                'product_file' => 'required|file|mimes:xlsx',
-            ]
-        );
-
-        if ($validate->fails()) {
-            $response = [
-                'success' => 'FAILED',
-                'errors' => $validate->errors()->first()
-            ];
-            return response()->json($response, 422);
-        }
-
         try {
-            $path = $request->file('product_file')->store(
-                'products/' . date('y-m-d'),
+            $file = $request->file('product_file');
+            $path = $file->storeAs(
+                'products/' . strtotime(now() . '/'),
+                "products" . '.' . $file->getClientOriginalExtension(),
                 'public'
             );
+
+            $path = Storage::disk('public')->path($path);
 
             $this->service->mapDataFromExcel($path);
 
@@ -103,5 +93,4 @@ class ProductEntryController extends Controller
             return response()->json($response, 500);
         }
     }
-
 }

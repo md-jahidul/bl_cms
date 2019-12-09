@@ -21,9 +21,9 @@ class MyBlProductService
     public function searchMissingCoreProductsBykeyword($keyword)
     {
         return DB::table('product_cores AS t1')
-                        ->select('*')
-                        ->where('code', 'like', '%' . $keyword . '%')
-                        ->leftJoin('my_bl_products AS t2', 't2.product_code', '=', 't1.code')
+                        ->select('t1.*')
+                        ->where('t1.product_code', 'like', '%' . $keyword . '%')
+                        ->leftJoin('my_bl_products AS t2', 't2.product_code', '=', 't1.product_code')
                         ->whereNull('t2.product_code')->get();
     }
 
@@ -31,7 +31,6 @@ class MyBlProductService
     {
         return MyBlProduct::create([
             'product_code' => $request->product_code,
-            'category_id' => $request->category_id,
             'tag'         => $request->product_tag,
             'description' => $request->product_description,
         ]);

@@ -32,7 +32,7 @@
                             </div>
 
                             <div class="row" id="extra_info_div">
-                                <div class="col-md-6">
+{{--                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="category">Product Category</label>
                                         <select name="category_id" id="category" class="form-control" required>
@@ -42,7 +42,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div>--}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="product_tag">Product Tag</label>
@@ -134,6 +134,12 @@
             function loadBasicInfo(info) {
                 let $container = `<div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="content_type">Content Type</label>
+                                        <input type="text" readonly name="content_type" class="form-control" value="` + info.content_type.toUpperCase() + `">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="commercial_name_en">Commercial Name -En</label>
                                         <input type="text" readonly name="commercial_name_en" class="form-control" value="` + info.commercial_name_en + `">
                                     </div>
@@ -142,12 +148,6 @@
                                     <div class="form-group">
                                         <label for="commercial_name_bn">Commercial Name -Bn</label>
                                         <input type="text" readonly name="commercial_name_bn" class="form-control" value="` + info.commercial_name_bn + `">
-                                    </div>
-                                </div>
-                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="content_type">Content Type</label>
-                                        <input type="text" readonly name="content_type" class="form-control" value="` + info.content_type.toUpperCase() + `">
                                     </div>
                                 </div>
                                 <div class="col-md-6">

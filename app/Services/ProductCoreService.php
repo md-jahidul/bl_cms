@@ -160,11 +160,11 @@ class ProductCoreService
      */
     public function searchProductCodes($keyword)
     {
-        return ProductCore::where('code', 'like', '%' . $keyword . '%')->get();
+        return ProductCore::where('product_code', 'like', '%' . $keyword . '%')->get();
     }
 
     public function getProductDetails($product_code)
     {
-        return ProductCore::where('code', $product_code)->first();
+        return ProductCore::where('product_code', $product_code)->first();
     }
 }

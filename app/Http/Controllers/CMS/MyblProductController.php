@@ -20,6 +20,7 @@ class MyblProductController extends Controller
     public function __construct(MyBlProductService $service)
     {
         $this->service = $service;
+        $this->middleware('auth');
     }
 
     public function create()
@@ -33,7 +34,7 @@ class MyblProductController extends Controller
     public function searchMissingCoreProductCodes(Request $request)
     {
         $search_term = $request->term;
-        $codes = $this->service->searchMissingCoreProductsBykeyword($search_term)->pluck('code');
+        $codes = $this->service->searchMissingCoreProductsBykeyword($search_term)->pluck('product_code');
 
         $data = [];
 
