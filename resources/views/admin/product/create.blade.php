@@ -102,6 +102,14 @@
                                     <div class="help-block"></div>
                                 </div>
 
+                                <div class="form-group col-md-6 ">
+                                    <label for="price">Vat</label>
+                                        <input type="text" name="vat"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
+                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+                                           value="{{ old("price") ? old("price") : '' }}">
+                                    <div class="help-block"></div>
+                                </div>
+
                                 <div class="form-group col-md-6">
                                     <label for="tag_category_id">Tag</label>
                                     <select class="form-control" name="tag_category_id">

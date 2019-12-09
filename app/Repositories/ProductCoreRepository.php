@@ -22,19 +22,11 @@ class ProductCoreRepository extends BaseRepository
         if (isset($data)) {
             $productCode = $this->model->where('product_code', $data)->first();
             if (empty($productCode)) {
-                $coreData['name'] = $data['name_en'];
-                $coreData['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
-                $coreData['sim_type'] = $simId;
-                $coreData['activation_ussd'] = $data['activation_ussd'] ?? null;
-                $coreData['balance_check_ussd'] = $data['balance_check_ussd'] ?? null;
-                $coreData['mrp_price'] = $data['price'] ?? null;
-                $coreData['validity'] = $data['validity'] ?? null;
-                $coreData['internet_volume_mb'] = $data['internet_volume_mb'] ?? null;
-                $coreData['minute_volume'] = $data['minute_volume'] ?? null;
-                $coreData['sms_volume'] = $data['sms_volume'] ?? null;
-                $coreData['call_rate'] = $data['call_rate'] ?? null;
-                $coreData['sms_rate'] = $data['sms_rate'] ?? null;
-                $this->model->create($coreData);
+                $data['name'] = $data['name_en'];
+                $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+                $data['mrp_price'] = $data['price'] + $data['vat'];
+                $data['sim_type'] = $simId;
+                $this->model->create($data);
             }
         }
     }
