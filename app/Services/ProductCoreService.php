@@ -48,8 +48,9 @@ class ProductCoreService
             'offer_id' => 10,
             'sms_volume' => 11,
             'minute_volume' => 12,
+            'data_volume' => 13,
             'internet_volume_mb' => 13,
-            'internet_volume_unit' => 14,
+            'data_volume_unit' => 14,
             'validity' => 15,
             'validity_unit' => 16,
             'mrp_price' => 17,
@@ -156,6 +157,14 @@ class ProductCoreService
                                         $data [$field] = $data_volume;
                                     }
                                     break;
+                                case "data_volume":
+                                    $data_volume = $cells [$index]->getValue();
+
+                                    if ($data_volume == '') {
+                                        $data_volume = 0;
+                                    }
+                                    $data [$field] = $data_volume;
+                                    break;
                                 case "sms_volume":
                                 case "minute_volume":
                                     $volume = $cells [$index]->getValue();
@@ -165,6 +174,8 @@ class ProductCoreService
                                     $data [$field] = $volume;
                                     break;
                                 case "internet_volume_unit":
+                                    $data_volume_unit = $cells [$index]->getValue();
+                                    $data [$field] = $data_volume_unit;
                                     break;
 
                                 default:
