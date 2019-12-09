@@ -58,6 +58,9 @@ class ProductCoreService
             'show_in_app' => 20,
             'is_amar_offer' => 21,
             'is_auto_renewable' => 22,
+            'is_recharge_offer' => 23,
+            'is_gift_offer' => 24,
+            'is_social_pack' => 25,
         ];
     }
 
@@ -119,15 +122,47 @@ class ProductCoreService
                                     }
                                     $data [$field] = $sim_type;
                                     break;
+                                case "is_amar_offer":
+                                case "show_in_app":
+                                    $type = strtolower($cells [$index]->getValue());
+                                    if ($type == 'yes') {
+                                        $flag = 1;
+                                    } elseif ($type == 'no') {
+                                        $flag = 0;
+                                    } else {
+                                        break;
+                                    }
+                                    $data [$field] = $flag;
+                                    break;
+                                case "is_auto_renewable":
+                                case "is_recharge_offer":
+                                case "is_gift_offer":
+                                case "is_social_pack":
+                                    $value = ($cells [$index]->getValue() != '') ?
+                                        $cells [$index]->getValue() : 0;
+                                    $data [$field] = $value;
+                                    break;
                                 case "internet_volume_mb":
                                     $data_volume = $cells [$index]->getValue();
-                                    $data_unit   = $cells [$index + 1]->getValue();
+
+                                    if ($data_volume == '') {
+                                        $data_volume = 0;
+                                    }
+                                    $data_unit = $cells [$index + 1]->getValue();
                                     if ($data_unit == 'GB') {
                                         $volume = $data_volume * 1024;
                                         $data [$field] = $volume;
                                     } else {
                                         $data [$field] = $data_volume;
                                     }
+                                    break;
+                                case "sms_volume":
+                                case "minute_volume":
+                                    $volume = $cells [$index]->getValue();
+                                    if ($volume == '') {
+                                        $volume = 0;
+                                    }
+                                    $data [$field] = $volume;
                                     break;
                                 case "internet_volume_unit":
                                     break;
@@ -137,15 +172,22 @@ class ProductCoreService
                                         $cells [$index]->getValue() : null;
                             }
                         }
+                        try {
+                            $product_code = $data['product_code'];
+                            unset($data['product_code']);
+                            ProductCore::updateOrCreate([
+                                'product_code' => $product_code
+                            ], $data);
 
-                        $insert_data [] = $data;
+                        } catch (\Exception $e) {
+                            dd($e->getMessage());
+                            continue;
+                        }
                     }
                     $row_number++;
                 }
             }
             $reader->close();
-
-            $this->insertBatch($insert_data);
             return true;
         } catch (\Exception $e) {
             dd($e->getMessage());
