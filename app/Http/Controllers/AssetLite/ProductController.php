@@ -19,11 +19,17 @@ use App\Services\ProductDetailService;
 use App\Services\ProductService;
 use App\Services\TagCategoryService;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
+use Illuminate\View\View;
 
 class ProductController extends Controller
 {
@@ -131,7 +137,7 @@ class ProductController extends Controller
     /**
      * @param ProductStoreRequest $request
      * @param $type
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      */
     public function store(ProductStoreRequest $request, $type)
     {
@@ -220,7 +226,7 @@ class ProductController extends Controller
     /**
      * @param $type
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function productDetailsEdit($type, $id)
     {
@@ -233,12 +239,11 @@ class ProductController extends Controller
      * @param Request $request
      * @param $type
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-        $productDetailsId = $request->product_details_id;
-        $productDetails = $this->productDetailService->findOne($productDetailsId);
+        $productDetails = $this->productDetailService->findOne($request->product_details_id);
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
         $productDetails['other_attributes'] = $request->other_attributes;
@@ -249,8 +254,8 @@ class ProductController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
-     * @throws \Exception
+     * @return UrlGenerator|string
+     * @throws Exception
      */
     public function destroy($type, $id)
     {

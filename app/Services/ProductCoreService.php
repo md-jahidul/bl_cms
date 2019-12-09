@@ -48,7 +48,6 @@ class ProductCoreService
             'sms_volume' => 11,
             'voice_volume' => 12,
             'data_volume' => 13,
-            'data_volume_unit' => 14,
             'validity' => 15,
             'validity_unit' => 16,
             'mrp_price' => 17,
