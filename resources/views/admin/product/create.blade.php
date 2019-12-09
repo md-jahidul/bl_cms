@@ -36,7 +36,7 @@
                                             required data-validation-required-message="Please select product code">
                                         <option value="">Select product code</option>
                                         @foreach($productCoreCodes as $productCodes)
-                                            <option value="{{ $productCodes->code }}">{{ $productCodes->code }}</option>
+                                            <option value="{{ $productCodes->product_code }}">{{ $productCodes->product_code }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -161,9 +161,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="title" class="mr-1">Recharge</label>
-                                        <input type="radio" name="is_recharge" value="1" id="yes" checked>
+                                        <input type="radio" name="is_recharge" value="1" id="yes">
                                         <label for="yes" class="mr-1">Yes</label>
-                                        <input type="radio" name="is_recharge" value="0" id="no">
+                                        <input type="radio" name="is_recharge" value="0" id="no" checked>
                                         <label for="no">No</label>
                                     </div>
                                 </div>
