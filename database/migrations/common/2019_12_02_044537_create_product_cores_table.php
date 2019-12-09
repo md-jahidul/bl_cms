@@ -31,12 +31,10 @@ class CreateProductCoresTable extends Migration
             $table->integer('validity')->nullable();
             $table->string('validity_unit')->nullable();
             $table->integer('internet_volume_mb')->nullable();
-            $table->string('data_volume_unit')->nullable();
             $table->integer('sms_volume')->nullable();
             $table->integer('minute_volume')->nullable();
             $table->integer('call_rate')->nullable()->comment('Paisa per second');
             $table->integer('sms_rate')->nullable()->comment('Paisa per sms');
-
             $table->tinyInteger('is_bundle')->nullable();
             $table->tinyInteger('is_auto_renewable')->nullable();
             $table->tinyInteger('is_recharge_offer')->nullable();
@@ -44,6 +42,7 @@ class CreateProductCoresTable extends Migration
             $table->tinyInteger('show_in_app')->nullable();
             $table->string('offer_id')->nullable();
             $table->tinyInteger('is_amar_offer')->nullable();
+            $table->tinyInteger('is_social_pack')->default(false);
             $table->json('other_info')->nullable();
             $table->tinyInteger('status')->default(1)->comment('active = 1, inactive = 0');
             $table->string('segment')->nullable()->comment('both = 1, b2b = 2, b2c = 3');

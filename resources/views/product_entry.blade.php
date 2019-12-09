@@ -1,13 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Notification')
-@section('card_name', 'Notification')
+@section('title', 'Core Product Entry')
+@section('card_name', 'Product Entry')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Notification Send</li>
-@endsection
-@section('action')
-    <a href="{{route('notification.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Notification List
-    </a>
+    <li class="breadcrumb-item active">Core Product Entry Panel</li>
 @endsection
 @section('content')
 
@@ -22,41 +17,13 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
 
-                    <form class="form" method="POST" {{--action="{{route('notification.send')}}"--}} id="sendNotificationForm" enctype="multipart/form-data">
+                    <form class="form" method="POST"  id="uploadProduct" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label for="title">Title</label>
-                            <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$notification->title}}">
-                            <input type="hidden"  name="id" id="id" value="{{$notification->id}}">
-                            <input type="hidden"  name="category_id" id="category_id" value="{{$notification->NotificationCategory->id}}">
-                            <input type="hidden"  name="category_slug" id="category_slug" value="{{$notification->NotificationCategory->slug}}">
-                            <input type="hidden"  name="category_name" id="category_name" value="{{$notification->NotificationCategory->name}}">
-
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea class="form-control col-md-12" name="message" id="message"> {{$notification->body}}</textarea>
-                        </div>
-
-                        <div class="form-group">
-
-{{--                            <label for="message">Select User</label> </br>
-
-                            <select id="user-multiple-selected" name="user_phone[]" multiple="multiple" style="width: auto">
-
-                                @foreach ($users as $user)
-                                    <option value="{{$user->phone}}">{{$user->phone}}({{$user->name}})</option>
-                                @endforeach
-
-                            </select>--}}
-                            <label for="message">Upload Customer List</label> <a href="{{ asset('sample-format/customers.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
-                            <input type="file" class="dropify" name="customer_file" data-height="80"
+                            <label for="message">Upload Product List</label> <a href="{{ asset('sample-format/product_sample.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
+                            <input type="file" class="dropify" name="product_file" data-height="80"
                                    data-allowed-file-extensions="xlsx" required/>
-
                         </div>
-
-
-
                         <div class="col-md-12" >
                             <div class="form-group float-right" style="margin-top:15px;">
                                 <button class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
@@ -76,7 +43,7 @@
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css"
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
     <style>
 
@@ -96,11 +63,6 @@
 
     <script>
         $(function () {
-            $('#user-multiple-selected').multiselect({
-                    includeSelectAllOption: true
-                }
-            );
-
             $('.dropify').dropify({
                 messages: {
                     'default': 'Browse for an Excel File to upload',
@@ -111,7 +73,7 @@
             });
 
             /* file handled  */
-            $('#sendNotificationForm').submit(function (e) {
+            $('#uploadProduct').submit(function (e) {
                 e.preventDefault();
 
                 swal.fire({
@@ -126,7 +88,7 @@
                 let formData = new FormData($(this)[0]);
 
                 $.ajax({
-                    url: '{{ route('notification.send')}}',
+                    url: '{{ route('core-product.save')}}',
                     type: 'POST',
                     cache: false,
                     contentType: false,
@@ -136,13 +98,11 @@
 
                         if (result.success) {
                             swal.fire({
-                                title: 'Notification sent Successfully!',
+                                title: 'Product Upload Successfully!',
                                 type: 'success',
                                 timer: 2000,
                                 showConfirmButton: false
                             });
-
-                            window.location.href = '{{route("notification.index")}}';
 
                         } else {
                             swal.close();
@@ -155,7 +115,7 @@
                     },
                     error: function (data) {
                         swal.fire({
-                            title: 'Failed to send Notifications',
+                            title: 'Failed to upload Products',
                             type: 'error',
                         });
                     }
