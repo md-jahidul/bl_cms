@@ -39,13 +39,10 @@ class PartnerOfferTableSeeder extends Seeder
                 'partner_id' => rand(1, 5),
                 'validity_en' => $validityEn[$randItem],
                 'validity_bn' => $validityBn[$randItem],
-
-
+                'start_date' => "2019-12-10 20:52:54",
                 'offer_scale' => "Upto",
                 'offer_value' => $offerValue[$randItem],
                 'offer_unit' => "Percentage",
-
-
                 'get_offer_msg_en' => $getOfferMsgEn,
                 'get_offer_msg_bn' => $getOfferMsgBn,
                 'btn_text_en' => 'View Details',

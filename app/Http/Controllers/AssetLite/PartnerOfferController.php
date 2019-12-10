@@ -108,7 +108,7 @@ class PartnerOfferController extends Controller
     public function edit($partnerId, $partnerName, $id)
     {
         $partnerOffer = $this->partnerOfferService->findOne($id);
-        return view('admin.partner-offer.edit', compact('partnerOffer', 'partnerId', 'partnerName', 'path'));
+        return view('admin.partner-offer.edit', compact('partnerOffer', 'partnerId', 'partnerName'));
     }
 
     /**
