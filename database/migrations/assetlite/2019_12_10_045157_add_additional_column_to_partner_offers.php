@@ -28,7 +28,8 @@ class AddAdditionalColumnToPartnerOffers extends Migration
     public function down()
     {
         Schema::table('partner_offers', function (Blueprint $table) {
-            //
+            $table->dropColumn('offer_en');
+            $table->dropColumn('offer_bn');
         });
     }
 }
