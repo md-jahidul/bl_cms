@@ -55,16 +55,12 @@
 
 
                                 @if($productDetail->offer_category_id == \App\Enums\OtherOfferType::INTERNET)
-                                    <div class="col-md-12 text-center">
-                                        <h2><strong class="text-danger"> Under Construction</strong></h2>
-                                    </div>
+                                    @include('layouts.partials.product-details.voice')
                                 @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::VOICE)
                                     @include('layouts.partials.product-details.voice')
 
                                 @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::BUNDLES)
-                                   <div class="col-md-12 text-center">
-                                        <h2><strong class="text-danger"> Under Construction</strong></h2>
-                                    </div>
+                                    @include('layouts.partials.product-details.voice')
 
                                 @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::PREPAID_PLANS)
                                     <div class="col-md-12 text-center">
