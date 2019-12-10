@@ -26,8 +26,9 @@ class StorePartnerOfferRequest extends FormRequest
         return [
             'validity_en' => 'required',
             'validity_bn' => 'required',
-            'offer_en' => 'required',
-            'offer_bn' => 'required',
+            'offer_scale' => 'required',
+            'offer_value' => 'required',
+            'offer_unit' => 'required',
             'get_offer_msg_en' => 'required',
             'get_offer_msg_bn' => 'required',
             'btn_text_en' => 'required',
@@ -41,8 +42,6 @@ class StorePartnerOfferRequest extends FormRequest
         return [
             'validity_en.required' => "Enter offer validity english.",
             'validity_bn.required' => "Enter offer validity bangla.",
-            'offer_en.required' => "Enter offer percentage english.",
-            'offer_bn.required' => "Enter offer percentage bangla.",
             'get_offer_msg_en.required' => "Enter get send SMS text english.",
             'get_offer_msg_bn.required' => "Enter get send SMS text bangla.",
             'btn_text_en.required' => "Enter button label english.",

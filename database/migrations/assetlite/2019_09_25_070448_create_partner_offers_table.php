@@ -21,8 +21,6 @@ class CreatePartnerOffersTable extends Migration
             $table->string('validity_bn');
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
-            $table->string('offer_en');
-            $table->string('offer_bn');
             $table->string('get_offer_msg_en');
             $table->string('get_offer_msg_bn');
             $table->string('btn_text_en');
