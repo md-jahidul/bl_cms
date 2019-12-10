@@ -47,6 +47,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 //    Route::get('menu/{parentId}/destroy/{id}', 'AssetLite\MenuController@destroy');
 
     // MENU  ====================================
+    Route::get('menu/create', 'AssetLite\MenuController@create');
     Route::get('menu/{id}/child-menu/create', 'AssetLite\MenuController@create');
     Route::resource('menu', 'AssetLite\MenuController')->only(['update','edit','store']);
     Route::get('menu/{id?}/{child_menu?}', 'AssetLite\MenuController@index');
@@ -169,7 +170,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 
-
+    // Product Core Mapping To Product
     Route::get('/core-product/mapping','AssetLite\ProductController@coreDataMappingProduct');
 
 
