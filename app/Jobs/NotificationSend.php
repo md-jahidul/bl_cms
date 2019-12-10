@@ -57,10 +57,10 @@ class NotificationSend implements ShouldQueue
     public function handle()
     {
         $response = PushNotificationService::sendNotification($this->notification);
-
-        if (json_decode($response)->status == "SUCCESS") {
+        $formatted_response = json_decode($response);
+        if ($formatted_response->status == "SUCCESS") {
             if (isset($this->user_phone)) {
-                $this->notificationService->attachNotificationToUser($this->notification_id, $this->user_phone);
+                $this->notificationService->attachNotificationToUser($formatted_response->notification_id, $this->user_phone);
             }
         }
     }
