@@ -251,6 +251,11 @@ class ProductController extends Controller
         return redirect("offers/$type");
     }
 
+    public function coreDataMappingProduct()
+    {
+       return $this->productService->coreData();
+    }
+
 
     /**
      * @param $id

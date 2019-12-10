@@ -170,6 +170,9 @@ Route::middleware('authorize', 'auth')->group(function () {
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 
 
+    Route::get('/core-product/mapping','AssetLite\ProductController@coreDataMappingProduct');
+
+
     // Fixed  ====================================
     Route::get('fixed-pages', 'AssetLite\FixedPageController@index');
     Route::get('fixed-page/{id}/components', 'AssetLite\FixedPageController@components')->name('fixed-page-components');
