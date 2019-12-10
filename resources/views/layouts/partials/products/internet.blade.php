@@ -49,8 +49,7 @@
         <label for="balance_check_ussd" class="required">Balance Check</label>
         <input type="text" name="balance_check_ussd"  class="form-control" placeholder="Enter balance check USSD"
                {{--oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"--}}
-               value="{{ (!empty($product->product_core->balance_check_ussd)) ? $product->product_core->balance_check_ussd : old("balance_check_ussd") ?? '' }}"
-               required data-validation-required-message="Enter balance check USSD">
+               value="{{ (!empty($product->product_core->balance_check_ussd)) ? $product->product_core->balance_check_ussd : old("balance_check_ussd") ?? '' }}">
         <div class="help-block"></div>
         @if ($errors->has('balance_check_ussd'))
             <div class="help-block">  {{ $errors->first('balance_check_ussd') }}</div>

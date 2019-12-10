@@ -124,6 +124,7 @@ class ProductService
             'name_en' => $data['commercial_name_en'] ?? "N/A",
             'name_bn' => $data['commercial_name_bn'] ?? "N/A",
             'ussd_bn' => $data['activation_ussd'] ?? null,
+            'start_date' => "2019-12-10 20:12:10" ?? null,
             'sim_category_id' => $data['sim_type'] ?? null,
             'offer_category_id' => $offerId ?? null,
             'is_recharge' => $data['is_recharge_offer'] ?? null,

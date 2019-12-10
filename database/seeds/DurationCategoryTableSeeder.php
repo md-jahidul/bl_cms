@@ -14,6 +14,7 @@ class DurationCategoryTableSeeder extends Seeder
     {
         $durations = [
             1 => 'Daily',
+            2 => '2 Days',
             3 => '3 Days',
             4 => '4 Days',
             5 => '5 Days',
@@ -22,7 +23,7 @@ class DurationCategoryTableSeeder extends Seeder
             30 => 'Monthly'
         ];
 
-        $durationsBn = ['দৈনিক', '৩ দিন', '৪ দিন', '৫ দিন', 'সাপ্তাহিক', 'দ্বি সাপ্তাহিক', 'মাসিক'];
+        $durationsBn = ['দৈনিক', '২ দিন', '৩ দিন', '৪ দিন', '৫ দিন', 'সাপ্তাহিক', 'দ্বি সাপ্তাহিক', 'মাসিক'];
 
         $i = 0;
         foreach ($durations as $key => $value) {

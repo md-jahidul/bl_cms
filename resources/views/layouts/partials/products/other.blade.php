@@ -1,12 +1,10 @@
 @php
-    if (isset($product->product->offer_info['other_offer_type_id'])){
-        $offertype = $product->product->offer_info['other_offer_type_id'];
-    }elseif (isset($product->product->offer_info['package_offer_type_id'])){
-        $offertype = $product->product->offer_info['package_offer_type_id'];
+    if (isset($product->offer_info['other_offer_type_id'])){
+        $offertype = $product->offer_info['other_offer_type_id'];
+    }elseif (isset($product->offer_info['package_offer_type_id'])){
+        $offertype = $product->offer_info['package_offer_type_id'];
     }
-
     isset($offertype) ? $offertype : $offertype = '';
-
     isset($product->offer_info) ? $product : $offertype = null
 @endphp
 
