@@ -173,6 +173,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     // Product Core Mapping To Product
     Route::get('/core-product/mapping','AssetLite\ProductController@coreDataMappingProduct');
 
+    Route::get('product-details-update', 'AssetLite\ProductController@updateDetails');
+
 
     // Fixed  ====================================
     Route::get('fixed-pages', 'AssetLite\FixedPageController@index');

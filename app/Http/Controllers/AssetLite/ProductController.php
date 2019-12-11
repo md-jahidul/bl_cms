@@ -255,7 +255,19 @@ class ProductController extends Controller
 
     public function coreDataMappingProduct()
     {
-       return $this->productService->coreData();
+        // TODO: Product Create with Product Details Data
+        return $this->productService->coreData();
+    }
+
+    public function updateDetails()
+    {
+        $products = Product::all();
+        foreach ($products as $product) {
+            ProductDetail::create([
+                'product_id' => $product->id
+            ]);
+        }
+        return "Insert Successfully";
     }
 
 
