@@ -250,24 +250,8 @@ class ProductController extends Controller
         $this->productDetailService->updateRelatedProduct($request, $id);
         $productDetails['other_attributes'] = $request->other_attributes;
         $productDetails->update($request->all());
+        Session::flash('success', 'Product Details update successfully!');
         return redirect("offers/$type");
-    }
-
-    public function coreDataMappingProduct()
-    {
-        // TODO: Product Create with Product Details Data
-        return $this->productService->coreData();
-    }
-
-    public function updateDetails()
-    {
-        $products = Product::all();
-        foreach ($products as $product) {
-            ProductDetail::create([
-                'product_id' => $product->id
-            ]);
-        }
-        return "Insert Successfully";
     }
 
 
@@ -281,5 +265,26 @@ class ProductController extends Controller
         $response = $this->productService->deleteProduct($id);
         Session::flash('error', $response->getContent());
         return url("offers/$type");
+    }
+
+    /**
+     * @return string
+     * Product Core Data mapping To Product table
+     */
+    public function coreDataMappingProduct()
+    {
+        return $this->productService->coreData();
+    }
+
+    // TODO: Temporary use this methods for Product Details
+    public function updateDetails()
+    {
+        $products = Product::all();
+        foreach ($products as $product) {
+            ProductDetail::create([
+                'product_id' => $product->id
+            ]);
+        }
+        return "Insert Successfully";
     }
 }

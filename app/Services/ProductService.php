@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\ProductDetail;
 use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDetailRepository;
 use App\Repositories\ProductRepository;
@@ -119,7 +120,7 @@ class ProductService
      */
     public function insertProduct($data, $offerId)
     {
-        $this->save([
+        $product = $this->save([
             'product_code' => $data['product_code'] ?? null,
             'name_en' => $data['commercial_name_en'] ?? "N/A",
             'name_bn' => $data['commercial_name_bn'] ?? "N/A",
@@ -129,9 +130,10 @@ class ProductService
             'offer_category_id' => $offerId ?? null,
             'is_recharge' => $data['is_recharge_offer'] ?? null,
             'status' => $data['status'],
-//            'offer_info' => [
-//                'duration_category_id' =>
-//            ]
+        ]);
+
+        ProductDetail::create([
+            'product_id' => $product->id
         ]);
     }
 

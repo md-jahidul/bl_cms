@@ -21,6 +21,7 @@ class ProductCoreRepository extends BaseRepository
     {
         if (isset($data)) {
             $productCode = $this->model->where('product_code', $data)->first();
+
             if (empty($productCode)) {
                 $data['name'] = $data['name_en'];
                 $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
