@@ -73,13 +73,13 @@ class ProductController extends Controller
      * Display a listing of the resource.
      *
      * @param $type
-     * @return Response
+     * @return Factory|View
      */
     public function index($type)
     {
         $products = Product::category($type)->with(['product_core', 'offer_category' => function ($query) {
             $query->select('id', 'name_en');
-        }])->get();
+        }])->latest()->get();
         return view('admin.product.index', compact('products', 'type'));
     }
 
