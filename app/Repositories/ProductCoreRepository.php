@@ -17,21 +17,10 @@ class ProductCoreRepository extends BaseRepository
 {
     public $modelName = ProductCore::class;
 
-    public function insertProductCore($data, $simId)
-    {
-        if (isset($data)) {
-            $productCode = $this->model->where('product_code', $data)->first();
-
-            if (empty($productCode)) {
-                $data['name'] = $data['name_en'];
-                $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
-                $data['mrp_price'] = $data['price'] + $data['vat'];
-                $data['sim_type'] = $simId;
-                $this->model->create($data);
-            }
-        }
-    }
-
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function findWithProduct($id)
     {
         return $this->model->where('product_code', $id)->with(['product', 'offer_category' => function ($query) {

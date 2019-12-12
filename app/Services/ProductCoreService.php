@@ -66,12 +66,46 @@ class ProductCoreService
     }
 
     /**
+     * @param $typeId
+     * @return string
+     */
+    public function getType($typeId)
+    {
+        switch ($typeId) {
+            case "1":
+                $offerId = "data";
+                break;
+            case '2':
+                $offerId = "voice";
+                break;
+            case '3':
+                $offerId = "mix";
+                break;
+            default:
+        }
+        return $offerId;
+    }
+
+    /**
      * @param $data
      * @return Response
      */
     public function storeProductCore($data, $simId)
     {
-        return $this->productCoreRepository->insertProductCore($data, $simId);
+        $productCode = $this->productCoreRepository
+            ->findByProperties(['product_code' => $data['product_code']])
+            ->first();
+        if (empty($productCode)) {
+            $data['name'] = $data['name_en'];
+            $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+            $data['mrp_price'] = $data['price'] + $data['vat'];
+            $data['is_recharge_offer'] = $data['is_recharge'];
+            $data['commercial_name_en'] = $data['name_en'];
+            $data['commercial_name_bn'] = $data['name_bn'];
+            $data['content_type'] = $this->getType($data['offer_category_id']);
+            $data['sim_type'] = $simId;
+            $this->save($data);
+        }
     }
 
     public function findProductCore($id)

@@ -33,8 +33,7 @@ class ProductService
         ProductRepository $productRepository,
         ProductDetailRepository $productDetailRepository,
         ProductCoreRepository $productCoreRepository
-    )
-    {
+    ) {
         $this->productRepository = $productRepository;
         $this->productCoreRepository = $productCoreRepository;
         $this->productDetailRepository = $productDetailRepository;
@@ -48,7 +47,6 @@ class ProductService
      */
     public function storeProduct($data, $simId)
     {
-//        dd($data);
         $data['sim_category_id'] = $simId;
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
         $productId = $this->save($data);
@@ -112,6 +110,18 @@ class ProductService
         return Response('Product delete successfully');
     }
 
+    public function unusedProductCore()
+    {
+        $productCoreCode = $this->productCoreRepository->findByProperties([], ['product_code'])->toArray();
+        $productCode = $this->productRepository->findByProperties([], ['product_code'])->toArray();
+        $unusedProductCode = [];
+        foreach ($productCoreCode as $key => $product) {
+            if (!in_array($product, $productCode)) {
+                array_push($unusedProductCode, $product);
+            }
+        }
+        return $unusedProductCode;
+    }
 
     /**
      * @param $data
