@@ -220,4 +220,5 @@ class ProductCoreService
     {
         return ProductCore::where('product_code', $product_code)->first();
     }
+
 }

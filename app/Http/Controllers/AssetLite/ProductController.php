@@ -187,10 +187,6 @@ class ProductController extends Controller
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offersType'] = $this->offerCategoryService->getOfferCategories($type);
         $this->info['durations'] = $this->durationCategoryService->findAll();
-//        $this->info['offerInfo'] = $product['offer_info'];
-
-//        return $this->info;
-
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
                 ->where('type_id', $package_id)
@@ -254,6 +250,10 @@ class ProductController extends Controller
         return redirect("offers/$type");
     }
 
+    public function existProductCore($productCode)
+    {
+        return $this->productCoreService->findProductCore($productCode);
+    }
 
     /**
      * @param $id
