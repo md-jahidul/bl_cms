@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\ProductDetail;
+use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDetailRepository;
 use App\Repositories\ProductRepository;
 use App\Traits\CrudTrait;
@@ -18,16 +20,22 @@ class ProductService
      * @var $partnerOfferRepository
      */
     protected $productRepository;
+    protected $productCoreRepository;
     protected $productDetailRepository;
 
     /**
      * ProductService constructor.
      * @param ProductRepository $productRepository
      * @param ProductDetailRepository $productDetailRepository
+     * @param ProductCoreRepository $productCoreRepository
      */
-    public function __construct(ProductRepository $productRepository, ProductDetailRepository $productDetailRepository)
-    {
+    public function __construct(
+        ProductRepository $productRepository,
+        ProductDetailRepository $productDetailRepository,
+        ProductCoreRepository $productCoreRepository
+    ) {
         $this->productRepository = $productRepository;
+        $this->productCoreRepository = $productCoreRepository;
         $this->productDetailRepository = $productDetailRepository;
         $this->setActionRepository($productRepository);
     }
@@ -39,7 +47,6 @@ class ProductService
      */
     public function storeProduct($data, $simId)
     {
-//        dd($data);
         $data['sim_category_id'] = $simId;
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
         $productId = $this->save($data);
@@ -91,7 +98,6 @@ class ProductService
         return $this->productRepository->productDetails($id);
     }
 
-
     /**
      * @param $id
      * @return ResponseFactory|Response
@@ -103,4 +109,75 @@ class ProductService
         $product->delete();
         return Response('Product delete successfully');
     }
+
+    public function unusedProductCore()
+    {
+        $productCoreCode = $this->productCoreRepository->findByProperties([], ['product_code'])->toArray();
+        $productCode = $this->productRepository->findByProperties([], ['product_code'])->toArray();
+        $unusedProductCode = [];
+        foreach ($productCoreCode as $key => $product) {
+            if (!in_array($product, $productCode)) {
+                array_push($unusedProductCode, $product);
+            }
+        }
+        return $unusedProductCode;
+    }
+
+    /**
+     * @param $data
+     * @param $offerId
+     * Mapping Product Core Data to Product and insert
+     */
+    public function insertProduct($data, $offerId)
+    {
+        $product = $this->save([
+            'product_code' => $data['product_code'] ?? null,
+            'name_en' => $data['commercial_name_en'] ?? "N/A",
+            'name_bn' => $data['commercial_name_bn'] ?? "N/A",
+            'ussd_bn' => $data['activation_ussd'] ?? null,
+            'start_date' => "2019-12-10 20:12:10" ?? null,
+            'sim_category_id' => $data['sim_type'] ?? null,
+            'offer_category_id' => $offerId ?? null,
+            'is_recharge' => $data['is_recharge_offer'] ?? null,
+            'status' => $data['status'],
+        ]);
+
+        ProductDetail::create([
+            'product_id' => $product->id
+        ]);
+    }
+
+    /**
+     * @param $coreProduct
+     * Check Offer Type and separate product insert method call
+     */
+    public function getOfferInfo($coreProduct)
+    {
+        $type = $coreProduct->content_type;
+        switch ($type) {
+            case 'data':
+                $offerId = 1; // Internet Offer
+                $this->insertProduct($coreProduct, $offerId);
+                break;
+            case 'voice':
+                $offerId = 2; // Voice Offer
+                $this->insertProduct($coreProduct, $offerId);
+                break;
+            case 'mix':
+                $offerId = 3; // Bundle Offer
+                $this->insertProduct($coreProduct, $offerId);
+                break;
+        }
+    }
+
+
+    public function coreData()
+    {
+        $coreData = $this->productCoreRepository->findAll();
+        foreach ($coreData as $coreProduct) {
+            $this->getOfferInfo($coreProduct);
+        }
+        return "Insert Success";
+    }
+
 }

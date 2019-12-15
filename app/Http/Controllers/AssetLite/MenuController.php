@@ -45,6 +45,8 @@ class MenuController extends Controller
      */
     public function index($parent_id = 0)
     {
+//        return "Index page";
+
         $menus = $this->menuService->menuList($parent_id);
         $menu_id = $parent_id;
         while ($menu_id != 0) {
