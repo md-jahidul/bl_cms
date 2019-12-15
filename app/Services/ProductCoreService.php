@@ -82,6 +82,7 @@ class ProductCoreService
                 $offerId = "mix";
                 break;
             default:
+                $offerId = null;
         }
         return $offerId;
     }

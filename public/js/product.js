@@ -89,7 +89,7 @@ var product = (function () {
     /**
      * @param type
      * @param data
-     * Push existing Product Core Data on Offer type Dom
+     * Push existing Product Core Data on Offer type Component
      */
     function checkType(type, data)
     {
@@ -111,7 +111,7 @@ var product = (function () {
                 validity.val(data.validity);
                 break;
             case 'voice':
-                $offerType.val('2')
+                $offerType.val('2');
                 product.select_change($offerType);
                 productBasicInfo(data);
                 minuteVolume.val(data.minute_volume);
@@ -119,7 +119,7 @@ var product = (function () {
                 balanceCheckUSSD.val(data.balance_check_ussd);
                 break;
             case 'mix':
-                $offerType.val('3')
+                $offerType.val('3');
                 product.select_change($offerType);
                 productBasicInfo(data);
                 minuteVolume.val(data.minute_volume);
@@ -129,7 +129,7 @@ var product = (function () {
                 balanceCheckUSSD.val(data.balance_check_ussd);
                 break;
             default:
-                console.log('Offer Type Not found ');
+                console.log('Offer Type Not found');
         }
     }
 
