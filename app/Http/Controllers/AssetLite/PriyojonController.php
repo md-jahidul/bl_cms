@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Models\Priyojon;
-use App\Services\AboutPriyojonService;
+use App\Services\AboutPageService;
 use App\Services\PriyojonService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
@@ -16,10 +16,10 @@ class PriyojonController extends Controller
 
     /**
      * @var PriyojonService
-     * @var AboutPriyojonService
+     * @var AboutPageService
      */
     private $priyojonService;
-    private $aboutPriyojonService;
+    private $aboutPageService;
 
     /**
      * @var array $menuItems
@@ -30,12 +30,12 @@ class PriyojonController extends Controller
     /**
      * PriyojonController constructor.
      * @param PriyojonService $priyojonService
-     * @param AboutPriyojonService $aboutPriyojonService
+     * @param AboutPageService $aboutPageService
      */
-    public function __construct(PriyojonService $priyojonService, AboutPriyojonService $aboutPriyojonService)
+    public function __construct(PriyojonService $priyojonService, AboutPageService $aboutPageService)
     {
         $this->priyojonService = $priyojonService;
-        $this->aboutPriyojonService = $aboutPriyojonService;
+        $this->aboutPageService = $aboutPageService;
         $this->middleware('auth');
     }
 
@@ -95,32 +95,34 @@ class PriyojonController extends Controller
     /**
      * @return Factory|View
      */
-    public function aboutPriyojon()
+    public function aboutPriyojon($slug)
     {
-        $details = $this->aboutPriyojonService->findAboutDetail('about_priyojon');
-        return view('admin.about-pages.about_priyojon', compact('details'));
+        $details = $this->aboutPageService->findAboutDetail($slug);
+        return ($slug == 'about_priyojon') ? view('admin.about-pages.about_priyojon', compact('details')) :
+                                            view('admin.about-pages.about_reward_point', compact('details'));
     }
 
-    public function aboutPriyojonUpdate(Request $request)
-    {
-        $response = $this->aboutPriyojonService->updateAboutPriyojon($request->all());
-        Session::flash('message', $response->getContent());
-        return redirect(route('about-priyojon'));
-    }
+//    public function aboutPriyojonUpdate(Request $request)
+//    {
+//        $response = $this->aboutPageService->updateAboutPage($request->all());
+//        Session::flash('message', $response->getContent());
+//        return redirect(route('about-priyojon'));
+//    }
 
     /**
      * @return Factory|View
      */
-    public function aboutRewardPoint()
-    {
-        $details = $this->aboutPriyojonService->findAboutDetail('about_reword_points');
-        return view('admin.about-pages.about_reward_point', compact('details'));
-    }
+//    public function aboutRewardPoint()
+//    {
+//        $details = $this->aboutPageService->findAboutDetail('about_reword_points');
+//        return view('admin.about-pages.about_reward_point', compact('details'));
+//    }
 
-    public function aboutRewardPointUpdate(Request $request)
-    {
-        $response = $this->aboutPriyojonService->updateAboutPriyojon($request->all());
-        Session::flash('message', $response->getContent());
-        return redirect(route('about-priyojon'));
-    }
+//    public function aboutRewardPointUpdate(Request $request)
+//    {
+////        dd($request->all());
+//        $response = $this->aboutPageService->aboutRewardPointUpdate($request->all());
+//        Session::flash('message', $response->getContent());
+//        return redirect(route('about-reward'));
+//    }
 }

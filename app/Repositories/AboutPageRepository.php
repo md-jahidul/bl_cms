@@ -12,7 +12,7 @@ namespace App\Repositories;
 use App\Models\AboutPage;
 use App\Models\Prize;
 
-class AboutPriyojonRepository extends BaseRepository
+class AboutPageRepository extends BaseRepository
 {
     public $modelName = AboutPage::class;
 

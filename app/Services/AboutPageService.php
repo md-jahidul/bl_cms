@@ -9,12 +9,12 @@
 
 namespace App\Services;
 
-use App\Repositories\AboutPriyojonRepository;
+use App\Repositories\AboutPageRepository;
 use App\Repositories\PrizeRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
-class AboutPriyojonService
+class AboutPageService
 {
     use CrudTrait;
 
@@ -25,9 +25,9 @@ class AboutPriyojonService
 
     /**
      * AboutPriyojonService constructor.
-     * @param AboutPriyojonRepository $aboutPriyojonRepository
+     * @param AboutPageRepository $aboutPriyojonRepository
      */
-    public function __construct(AboutPriyojonRepository $aboutPriyojonRepository)
+    public function __construct(AboutPageRepository $aboutPriyojonRepository)
     {
         $this->aboutPriyojonRepository = $aboutPriyojonRepository;
         $this->setActionRepository($aboutPriyojonRepository);
@@ -64,7 +64,7 @@ class AboutPriyojonService
      * @param $id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function updateAboutPriyojon($data)
+    public function updateAboutPage($data)
     {
 
         $this->aboutImgUpload($data, 'images/about-priyojon');
@@ -87,8 +87,8 @@ class AboutPriyojonService
 
     public function updateAboutReward($data)
     {
-
-        return Response('About page not found!');
+        $this->aboutImgUpload($data, 'images/about-reward' );
+        return Response('Update successfully!');
     }
 
 }
