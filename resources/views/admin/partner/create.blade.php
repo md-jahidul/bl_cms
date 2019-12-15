@@ -47,9 +47,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('contact_person_name') ? ' error' : '' }}">
-                                    <label for="contact_person_name" class="required">Contact Person Name</label>
+                                    <label for="contact_person_name" >Contact Person Name</label>
                                     <input type="text" name="contact_person_name"  class="form-control" placeholder="Enter contact person name"
-                                           value="{{ old("contact_person_name") ? old("contact_person_name") : '' }}" required data-validation-required-message="Enter contact person name">
+                                           value="{{ old("contact_person_name") ? old("contact_person_name") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('contact_person_name'))
                                         <div class="help-block">  {{ $errors->first('contact_person_name') }}</div>
@@ -57,9 +57,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('contact_person_email') ? ' error' : '' }}">
-                                    <label for="contact_person_email" class="required">Contact Person Email</label>
+                                    <label for="contact_person_email">Contact Person Email</label>
                                     <input type="text" name="contact_person_email"  class="form-control" placeholder="Enter contact person name"
-                                           value="{{ old("contact_person_email") ? old("contact_person_email") : '' }}" required data-validation-required-message="Enter contact person eamil">
+                                           value="{{ old("contact_person_email") ? old("contact_person_email") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('contact_person_email'))
                                         <div class="help-block">  {{ $errors->first('contact_person_email') }}</div>
