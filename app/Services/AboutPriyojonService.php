@@ -34,11 +34,29 @@ class AboutPriyojonService
     }
 
     /**
+     * @param $slug
      * @return mixed
      */
-    public function findAboutDetail()
+    public function findAboutDetail($slug)
     {
-        return $this->aboutPriyojonRepository->findDetail('about_priyojon');
+        return $this->aboutPriyojonRepository->findDetail($slug);
+    }
+
+    public function aboutImgUpload($data, $fileLocation)
+    {
+        $aboutDetail = $this->aboutPriyojonRepository->findDetail($data['slug']);
+        if ($aboutDetail != null) {
+            if (!empty($data['left_side_img'])) {
+                $url = $this->imageUpload($data, 'left_side_img', "about_image_left", $fileLocation);
+                $data['left_side_img'] = "$fileLocation/" . $url;
+            }
+            if (!empty($data['right_side_ing'])) {
+                $url = $this->imageUpload($data, 'right_side_ing', "about_image_right", $fileLocation);
+                $data['right_side_ing'] = "$fileLocation/" . $url;
+            }
+            $aboutDetail->update($data);
+            return Response('About priyojon updated successfully');
+        }
     }
 
     /**
@@ -48,19 +66,29 @@ class AboutPriyojonService
      */
     public function updateAboutPriyojon($data)
     {
-        $aboutDetail = $this->aboutPriyojonRepository->findDetail($data['slug']);
-        if ($aboutDetail != null) {
-            if (!empty($data['left_side_img'])) {
-                $url = $this->imageUpload($data, 'left_side_img', "about_image_left", 'images/about-priyojon');
-                $data['left_side_img'] = "/images/about-priyojon/" . $url;
-            }
-            if (!empty($data['right_side_ing'])) {
-                $url = $this->imageUpload($data, 'right_side_ing', "about_image_right", 'images/about-priyojon');
-                $data['right_side_ing'] = "/images/about-priyojon/" . $url;
-            }
-            $aboutDetail->update($data);
-        }
-        return Response('About priyojon updated successfully');
+
+        $this->aboutImgUpload($data, 'images/about-priyojon');
+
+//        $aboutDetail = $this->aboutPriyojonRepository->findDetail($data['slug']);
+//        if ($aboutDetail != null) {
+//            if (!empty($data['left_side_img'])) {
+//                $url = $this->imageUpload($data, 'left_side_img', "about_image_left", 'images/about-priyojon');
+//                $data['left_side_img'] = "/images/about-priyojon/" . $url;
+//            }
+//            if (!empty($data['right_side_ing'])) {
+//                $url = $this->imageUpload($data, 'right_side_ing', "about_image_right", 'images/about-priyojon');
+//                $data['right_side_ing'] = "/images/about-priyojon/" . $url;
+//            }
+//            $aboutDetail->update($data);
+//            return Response('About priyojon updated successfully');
+//        }
+        return Response('About page not found!');
+    }
+
+    public function updateAboutReward($data)
+    {
+
+        return Response('About page not found!');
     }
 
 }

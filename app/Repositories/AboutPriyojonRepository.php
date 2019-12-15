@@ -9,12 +9,12 @@
 
 namespace App\Repositories;
 
-use App\Models\AboutPriyojon;
+use App\Models\AboutPage;
 use App\Models\Prize;
 
 class AboutPriyojonRepository extends BaseRepository
 {
-    public $modelName = AboutPriyojon::class;
+    public $modelName = AboutPage::class;
 
     public function findDetail($key)
     {

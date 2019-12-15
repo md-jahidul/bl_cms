@@ -159,11 +159,20 @@
                         <a class="menu-item" href="{{ url('partners') }}" data-i18n="nav.templates.vert.classic_menu"><i
                                     class="la la-magic"></i> Partner and Offers</a>
                     </li>
+                </ul>
+            </li>
 
+            <li class="nav-item"><a href="#"><i class="la la-info"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">About Page</span></a>
+                <ul class="menu-content">
                     <li class="{{ is_active_url('about-priyojon') }}">
                         <a class="menu-item" href="{{ url('about-priyojon') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-exclamation-circle"></i>About Priyojon
                         </a>
+                    </li>
+                    <li class="{{ is_active_url('about-reward')}}">
+                        <a class="menu-item" href="{{ url('about-reward') }}" data-i18n="nav.templates.vert.classic_menu">
+                            <i class="la la-exclamation-circle"></i> About Reward Point</a>
                     </li>
                 </ul>
             </li>

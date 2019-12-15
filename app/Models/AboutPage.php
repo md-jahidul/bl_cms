@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AboutPriyojon extends Model
+class AboutPage extends Model
 {
     protected $fillable = [
         'slug',

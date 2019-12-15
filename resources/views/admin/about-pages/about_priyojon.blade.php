@@ -77,8 +77,8 @@
                                 <div class="form-group col-md-6 {{ $errors->has('right_side_ing') ? ' error' : '' }}">
                                     <img src="{{ ($details->right_side_ing != '') ? asset("$details->right_side_ing") : asset("images/about-priyojon/about-placeholder.png") }}" id="rightImg" height="300" width="490">
                                 </div>
-                                
-                           
+
+
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">

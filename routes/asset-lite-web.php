@@ -162,10 +162,14 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
         ->name('offer.details-update');
 
-    // PRIYOJON ================================
+    // About Pages ================================
     Route::get('about-priyojon', 'AssetLite\PriyojonController@aboutPriyojon')->name('about-priyojon');
     Route::put('about-priyojon/update', 'AssetLite\PriyojonController@aboutPriyojonUpdate')
         ->name('about-priyojon.update');
+    
+    Route::get('about-reward', 'AssetLite\PriyojonController@aboutRewardPoint')->name('about-reward');
+    Route::put('about-reward/update', 'AssetLite\PriyojonController@aboutRewardPointUpdate')
+        ->name('about-reward.update');
 
 
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');

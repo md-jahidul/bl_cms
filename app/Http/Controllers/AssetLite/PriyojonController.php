@@ -5,9 +5,11 @@ namespace App\Http\Controllers\AssetLite;
 use App\Models\Priyojon;
 use App\Services\AboutPriyojonService;
 use App\Services\PriyojonService;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class PriyojonController extends Controller
 {
@@ -46,7 +48,7 @@ class PriyojonController extends Controller
 
     /**
      * @param int $parent_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index($parent_id = 0)
     {
@@ -62,7 +64,7 @@ class PriyojonController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function edit($id)
     {
@@ -91,15 +93,31 @@ class PriyojonController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function aboutPriyojon()
     {
         $details = $this->aboutPriyojonService->findAboutDetail('about_priyojon');
-        return view('admin.priyojon.about_priyojon', compact('details'));
+        return view('admin.about-pages.about_priyojon', compact('details'));
     }
 
     public function aboutPriyojonUpdate(Request $request)
+    {
+        $response = $this->aboutPriyojonService->updateAboutPriyojon($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect(route('about-priyojon'));
+    }
+
+    /**
+     * @return Factory|View
+     */
+    public function aboutRewardPoint()
+    {
+        $details = $this->aboutPriyojonService->findAboutDetail('about_reword_points');
+        return view('admin.about-pages.about_reward_point', compact('details'));
+    }
+
+    public function aboutRewardPointUpdate(Request $request)
     {
         $response = $this->aboutPriyojonService->updateAboutPriyojon($request->all());
         Session::flash('message', $response->getContent());
