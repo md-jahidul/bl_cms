@@ -48,8 +48,9 @@ class ProductCoreService
             'offer_id' => 10,
             'sms_volume' => 11,
             'minute_volume' => 12,
+            'data_volume' => 13,
             'internet_volume_mb' => 13,
-            'internet_volume_unit' => 14,
+            'data_volume_unit' => 14,
             'validity' => 15,
             'validity_unit' => 16,
             'mrp_price' => 17,
@@ -65,12 +66,47 @@ class ProductCoreService
     }
 
     /**
+     * @param $typeId
+     * @return string
+     */
+    public function getType($typeId)
+    {
+        switch ($typeId) {
+            case "1":
+                $offerId = "data";
+                break;
+            case '2':
+                $offerId = "voice";
+                break;
+            case '3':
+                $offerId = "mix";
+                break;
+            default:
+                $offerId = null;
+        }
+        return $offerId;
+    }
+
+    /**
      * @param $data
      * @return Response
      */
     public function storeProductCore($data, $simId)
     {
-        return $this->productCoreRepository->insertProductCore($data, $simId);
+        $productCode = $this->productCoreRepository
+            ->findByProperties(['product_code' => $data['product_code']])
+            ->first();
+        if (empty($productCode)) {
+            $data['name'] = $data['name_en'];
+            $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+            $data['mrp_price'] = $data['price'] + $data['vat'];
+            $data['is_recharge_offer'] = $data['is_recharge'];
+            $data['commercial_name_en'] = $data['name_en'];
+            $data['commercial_name_bn'] = $data['name_bn'];
+            $data['content_type'] = $this->getType($data['offer_category_id']);
+            $data['sim_type'] = $simId;
+            $this->save($data);
+        }
     }
 
     public function findProductCore($id)
@@ -156,6 +192,14 @@ class ProductCoreService
                                         $data [$field] = $data_volume;
                                     }
                                     break;
+                                case "data_volume":
+                                    $data_volume = $cells [$index]->getValue();
+
+                                    if ($data_volume == '') {
+                                        $data_volume = 0;
+                                    }
+                                    $data [$field] = $data_volume;
+                                    break;
                                 case "sms_volume":
                                 case "minute_volume":
                                     $volume = $cells [$index]->getValue();
@@ -165,6 +209,8 @@ class ProductCoreService
                                     $data [$field] = $volume;
                                     break;
                                 case "internet_volume_unit":
+                                    $data_volume_unit = $cells [$index]->getValue();
+                                    $data [$field] = $data_volume_unit;
                                     break;
 
                                 default:
@@ -209,4 +255,5 @@ class ProductCoreService
     {
         return ProductCore::where('product_code', $product_code)->first();
     }
+
 }

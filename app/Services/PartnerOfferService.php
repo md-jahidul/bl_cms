@@ -55,7 +55,7 @@ class PartnerOfferService
         $count = count($this->partnerOfferRepository->findAll());
         $data['partner_id'] = $partnerId;
         if (!empty($data['campaign_img'])) {
-            $imageUrl = $this->imageUpload($data, 'campaign_img', $data['offer_en'], 'images/campaign-image/');
+            $imageUrl = $this->imageUpload($data, 'campaign_img', $data['offer_scale'], 'images/campaign-image/');
             $data['campaign_img'] = "/images/campaign-image/" . $imageUrl;
         }
         $data['display_order'] = ++$count;

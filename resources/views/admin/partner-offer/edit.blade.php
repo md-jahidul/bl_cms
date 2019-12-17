@@ -74,27 +74,42 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('offer_en') ? ' error' : '' }}">
-                                    <label for="offer_en" class="required">Offer (English)</label>
-                                    <input type="text" name="offer_en" class="form-control"
-                                           placeholder="Enter offer percentage in English"
-                                           value="{{ $partnerOffer->offer_en }}" required
-                                           data-validation-required-message="Enter offer percentage in English">
+                                <div class="form-group col-md-6 {{ $errors->has('offer_scale') ? ' error' : '' }}">
+                                    <label for="offer_scale" class="required">Offer Scale</label>
+                                    <select class="form-control required" name="offer_scale" id="offer_type"
+                                            required data-validation-required-message="Please select offer scale">
+                                        <option data-alias="" value="">---Select Offer Type---</option>
+                                        <option value="Upto" {{ ($partnerOffer->offer_scale == "Upto") ? 'selected' : "" }}>Upto</option>
+                                        <option value="Minimum" {{ ($partnerOffer->offer_scale == "Minimum") ? 'selected' : "" }}>Minimum</option>
+                                        <option value="Fixed" {{ ($partnerOffer->offer_scale == "Fixed") ? 'selected' : "" }}>Fixed</option>
+                                    </select>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('offer_en'))
-                                        <div class="help-block">  {{ $errors->first('offer_en') }}</div>
+                                    @if ($errors->has('offer_scale'))
+                                        <div class="help-block">{{ $errors->first('offer_scale') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('offer_bn') ? ' error' : '' }}">
-                                    <label for="offer_bn" class="required">Offer (Bangla)</label>
-                                    <input type="text" name="offer_bn" class="form-control"
-                                           placeholder="Enter offer percentage in Bangla"
-                                           value="{{ $partnerOffer->offer_bn }}" required
-                                           data-validation-required-message="Enter offer percentage in Bangla">
+                                <div class="form-group col-md-6 {{ $errors->has('offer_value') ? ' error' : '' }}">
+                                    <label for="offer_value" class="required">Offer Value</label>
+                                    <input type="number" name="offer_value"  class="form-control" placeholder="Enter offer percentage in English"
+                                           value="{{ $partnerOffer->offer_value }}" required data-validation-required-message="Enter offer value">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('offer_bn'))
-                                        <div class="help-block">  {{ $errors->first('offer_bn') }}</div>
+                                    @if ($errors->has('offer_value'))
+                                        <div class="help-block">  {{ $errors->first('offer_value') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('offer_unit') ? ' error' : '' }}">
+                                    <label for="offer_unit" class="required">Offer Unit</label>
+                                    <select class="form-control required" name="offer_unit" id="offer_unit"
+                                        required data-validation-required-message="Please select offer unit">
+                                        <option data-alias="" value="">---Select Offer Unit---</option>
+                                        <option value="Percentage" {{ ($partnerOffer->offer_unit == "Percentage") ? 'selected' : "" }}>Percentage</option>
+                                        <option value="Taka" {{ ($partnerOffer->offer_unit == "Taka") ? 'selected' : "" }}>Taka</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('offer_unit'))
+                                        <div class="help-block">{{ $errors->first('offer_unit') }}</div>
                                     @endif
                                 </div>
 
@@ -148,14 +163,14 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-4 pt-2">
+                                <div class="col-md-6 pt-2">
                                     <div class="form-group">
                                         <label for="show_in_home" class="mr-1">Show In Home:</label>
                                         <input type="checkbox" name="show_in_home" value="1" id="show_in_home">
                                     </div>
                                 </div>
 
-                                <div class="col-md-2 pt-2">
+                                <div class="col-md-6 pt-2">
                                     <div class="form-group">
                                         <label for="is_campaign" class="mr-1">Is Campaign:</label>
                                         <input type="checkbox" name="is_campaign" value="1"

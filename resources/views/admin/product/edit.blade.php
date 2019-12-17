@@ -96,8 +96,17 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="price">Offer Price</label>
-                                    <input type="number" name="price"  class="form-control" placeholder="Enter offer price" maxlength="8"
+                                    <input type="number" name="price"  class="form-control" placeholder="Enter offer price" step="0.001"
+                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
                                            value="{{ $product->product_core->price }}">
+                                </div>
+
+                                <div class="form-group col-md-6 ">
+                                    <label for="price">Vat</label>
+                                    <input type="text" name="vat"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
+                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+                                           value="{{ $product->product_core->vat }}">
+                                    <div class="help-block"></div>
                                 </div>
 
                                 <div class="form-group col-md-6">

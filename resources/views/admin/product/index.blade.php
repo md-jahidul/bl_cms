@@ -19,14 +19,15 @@
                         <thead>
                             <tr>
                                 <td width="3%">#</td>
-                                <th width="25%">Product Name</th>
-                                <th>Product ID</th>
+                                <th width="20%">Product Name</th>
+                                <th width="4%">Product ID</th>
                                 <th>USSD</th>
                                 <th>Offer Type</th>
                                 {{--<th>Date Range</th>--}}
                                 <th class="text-center" width="8%">Details</th>
                                 <th width="8%" class="text-center">Trending Offer</th>
-                                <th class="">Action</th>
+                                <th width="5%" class="text-center">Recharge Offer</th>
+                                <th width="12%" class="">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,7 +35,7 @@
                                 {{--@if($product->product != '')--}}
                                     @php $path = 'partner-offers-home'; @endphp
                                     <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}">
-                                        <td width="3%">{{ $loop->iteration }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                         <td>{{ $product->product_code }}</td>
                                         <td>{{ $product->product_core['activation_ussd'] }}</td>
@@ -46,7 +47,8 @@
                                         </td>
 
                                         <td class="text-center"><input type="checkbox" {{ $product->show_in_home == 1 ? 'checked' : '' }} disabled></td>
-                                        <td width="15%">
+                                        <td class="text-center"><input type="checkbox" {{ $product->is_recharge == 1 ? 'checked' : '' }} disabled></td>
+                                        <td>
                                             <a href="{{ route('product.show', [$type, $product->id]) }}" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>
                                             <a href="{{ route('product.edit', [$type, $product->product_code]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                             <a href="#" remove="{{ url("offers/$type/$product->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $product->id }}" title="Delete">

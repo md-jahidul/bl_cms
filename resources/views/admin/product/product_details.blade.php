@@ -55,27 +55,19 @@
 
 
                                 @if($productDetail->offer_category_id == \App\Enums\OtherOfferType::INTERNET)
-                                    <div class="col-md-12 text-center">
-                                        <h2><strong class="text-danger"> Under Construction</strong></h2>
-                                    </div>
+                                    @include('layouts.partials.product-details.voice')
                                 @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::VOICE)
                                     @include('layouts.partials.product-details.voice')
 
                                 @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::BUNDLES)
-                                   <div class="col-md-12 text-center">
-                                        <h2><strong class="text-danger"> Under Construction</strong></h2>
-                                    </div>
+                                    @include('layouts.partials.product-details.voice')
 
-                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::PREPAID_PLANS)
-                                    <div class="col-md-12 text-center">
-                                        <h2><strong class="text-danger"> Under Construction</strong></h2>
-                                    </div>
+                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::PACKAGES &&
+                                        $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OtherOfferType::PREPAID_PLANS)
+                                    @include('layouts.partials.product-details.packages.prepaid_plan')
 
                                 @elseif( $productDetail->offer_category_id == \App\Enums\OtherOfferType::PACKAGES &&
                                          $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OtherOfferType::START_UP_OFFERS)
-                                    {{--<div class="col-md-12 text-center">--}}
-                                        {{--<h2><strong class="text-danger"> Under Construction</strong></h2>--}}
-                                    {{--</div>--}}
                                     @include('layouts.partials.product-details.packages.start_up_offer_structure_2')
 
                                 @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::POSTPAID_PLANS)

@@ -23,9 +23,10 @@
                         <tr>
                             <td width="3%">#</td>
                             <th width="4%">Company Logo</th>
+                            <th>Offer Unit</th>
+                            <th>Offer Value</th>
                             <th width="20%">Validity</th>
                             <th>Get Send SMS</th>
-                            <th>Offer Percentage</th>
                             <th class="text-center" width="2%">Offer Details</th>
                             <th class="text-right">Action</th>
                         </tr>
@@ -36,12 +37,14 @@
                             <tr data-index="{{ $partnerOffer->id }}" data-position="{{ $partnerOffer->display_order }}">
                                 <td width="3%">{{ $index + 1 }}</td>
                                 <td><img class="" src="{{ $partnerOffer->partner->company_logo }}" alt="Slider Image" height="40" width="50" /></td>
+                                <td>{{ $partnerOffer->offer_scale  }}</td>
+                                <td>{{ $partnerOffer->offer_value  }} ({{ $partnerOffer->offer_unit }})</td>
+
                                 <td>{{ $partnerOffer->validity_en }} {!! $partnerOffer->is_active == 0 ? '<span class="text-danger"> ( Inactive )</span>' : '' !!}</td>
                                 <td>{{ $partnerOffer->get_offer_msg_en }}</td>
-                                <td>{{ $partnerOffer->offer_en }}</td>
                                 <td class="text-center"><a href="{{ route('offer.details', [$partnerName, $partnerOffer->id]) }}" class="btn-sm btn-outline-primary border">Details</a></td>
                                 <td class="action" width="12%">
-                                    <a href="{{ route('partner_offer_edit', [ $partnerOffer->partner_id, $partnerName, $partnerOffer->id, null ] ) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="{{ route('partner_offer_edit', [ $partnerOffer->partner_id, $partnerName, $partnerOffer->id] ) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="#" remove="{{ url("partner-offer/$partnerOffer->partner_id/$partnerName/offer/destroy/$partnerOffer->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $partnerOffer->id }}" title="Delete">
                                         <i class="la la-trash"></i>
                                     </a>

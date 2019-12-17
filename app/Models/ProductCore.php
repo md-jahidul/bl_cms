@@ -6,6 +6,41 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductCore extends Model
 {
+    protected $fillable = [
+        'product_code',
+        'name',
+        'commercial_name_en',
+        'commercial_name_bn',
+        'short_description',
+        'sim_type',
+        'content_type',
+        'family_name',
+        'activation_ussd',
+        'balance_check_ussd',
+        'mrp_price',
+        'price',
+        'vat',
+        'validity',
+        'validity_unit',
+        'internet_volume_mb',
+        'data_volume',
+        'data_volume_unit',
+        'sms_volume',
+        'minute_volume',
+        'call_rate',
+        'sms_rate',
+        'is_bundle',
+        'is_auto_renewable',
+        'is_recharge_offer',
+        'is_gift_offer',
+        'show_in_app',
+        'offer_id',
+        'is_amar_offer',
+        'other_info',
+        'status',
+        'segment',
+    ];
+
     protected $guarded = ['id'];
 
 
