@@ -74,7 +74,7 @@ class AboutPageService
     {
         if ($data['slug'] == "priyojon") {
             $this->aboutPageUpdate($data, '/images/about-priyojon');
-        } elseif ($data['slug'] == "reword_points") {
+        } elseif ($data['slug'] == "reward_points") {
             $this->aboutPageUpdate($data, '/images/about-reward');
         }
         return Response('About page updated successfully');
