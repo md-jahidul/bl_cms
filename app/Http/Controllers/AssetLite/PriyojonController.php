@@ -6,8 +6,10 @@ use App\Models\Priyojon;
 use App\Services\AboutPageService;
 use App\Services\PriyojonService;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -82,7 +84,7 @@ class PriyojonController extends Controller
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      */
     public function update(Request $request, $id)
     {
@@ -93,36 +95,23 @@ class PriyojonController extends Controller
     }
 
     /**
+     * @param $slug
      * @return Factory|View
      */
-    public function aboutPriyojon($slug)
+    public function aboutPageView($slug)
     {
         $details = $this->aboutPageService->findAboutDetail($slug);
-        return ($slug == 'about_priyojon') ? view('admin.about-pages.about_priyojon', compact('details')) :
-                                            view('admin.about-pages.about_reward_point', compact('details'));
+        return view('admin.about-pages.about_page', compact('slug', 'details'));
     }
 
-//    public function aboutPriyojonUpdate(Request $request)
-//    {
-//        $response = $this->aboutPageService->updateAboutPage($request->all());
-//        Session::flash('message', $response->getContent());
-//        return redirect(route('about-priyojon'));
-//    }
-
     /**
-     * @return Factory|View
+     * @param Request $request
+     * @return RedirectResponse|Redirector
      */
-//    public function aboutRewardPoint()
-//    {
-//        $details = $this->aboutPageService->findAboutDetail('about_reword_points');
-//        return view('admin.about-pages.about_reward_point', compact('details'));
-//    }
-
-//    public function aboutRewardPointUpdate(Request $request)
-//    {
-////        dd($request->all());
-//        $response = $this->aboutPageService->aboutRewardPointUpdate($request->all());
-//        Session::flash('message', $response->getContent());
-//        return redirect(route('about-reward'));
-//    }
+    public function aboutPageUpdate(Request $request)
+    {
+        $response = $this->aboutPageService->updateAboutPage($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect(route('about-page', $request->slug));
+    }
 }

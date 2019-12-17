@@ -12,6 +12,7 @@ namespace App\Services;
 use App\Repositories\AboutPageRepository;
 use App\Repositories\PrizeRepository;
 use App\Traits\CrudTrait;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
 class AboutPageService
@@ -21,16 +22,16 @@ class AboutPageService
     /**
      * @var $prizeService
      */
-    protected $aboutPriyojonRepository;
+    protected $aboutPageRepository;
 
     /**
-     * AboutPriyojonService constructor.
-     * @param AboutPageRepository $aboutPriyojonRepository
+     * AboutPageService constructor.
+     * @param AboutPageRepository $aboutPageRepository
      */
-    public function __construct(AboutPageRepository $aboutPriyojonRepository)
+    public function __construct(AboutPageRepository $aboutPageRepository)
     {
-        $this->aboutPriyojonRepository = $aboutPriyojonRepository;
-        $this->setActionRepository($aboutPriyojonRepository);
+        $this->aboutPageRepository = $aboutPageRepository;
+        $this->setActionRepository($aboutPageRepository);
     }
 
     /**
@@ -39,12 +40,17 @@ class AboutPageService
      */
     public function findAboutDetail($slug)
     {
-        return $this->aboutPriyojonRepository->findDetail($slug);
+        return $this->aboutPageRepository->findDetail($slug);
     }
 
-    public function aboutImgUpload($data, $fileLocation)
+    /**
+     * @param $data
+     * @param $fileLocation
+     * @return ResponseFactory|Response
+     */
+    public function aboutPageUpdate($data, $fileLocation)
     {
-        $aboutDetail = $this->aboutPriyojonRepository->findDetail($data['slug']);
+        $aboutDetail = $this->aboutPageRepository->findDetail($data['slug']);
         if ($aboutDetail != null) {
             if (!empty($data['left_side_img'])) {
                 $url = $this->imageUpload($data, 'left_side_img', "about_image_left", $fileLocation);
@@ -55,40 +61,23 @@ class AboutPageService
                 $data['right_side_ing'] = "$fileLocation/" . $url;
             }
             $aboutDetail->update($data);
-            return Response('About priyojon updated successfully');
+        } else {
+            return Response('About page not found');
         }
     }
 
     /**
      * @param $data
-     * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @return ResponseFactory|Response
      */
     public function updateAboutPage($data)
     {
-
-        $this->aboutImgUpload($data, 'images/about-priyojon');
-
-//        $aboutDetail = $this->aboutPriyojonRepository->findDetail($data['slug']);
-//        if ($aboutDetail != null) {
-//            if (!empty($data['left_side_img'])) {
-//                $url = $this->imageUpload($data, 'left_side_img', "about_image_left", 'images/about-priyojon');
-//                $data['left_side_img'] = "/images/about-priyojon/" . $url;
-//            }
-//            if (!empty($data['right_side_ing'])) {
-//                $url = $this->imageUpload($data, 'right_side_ing', "about_image_right", 'images/about-priyojon');
-//                $data['right_side_ing'] = "/images/about-priyojon/" . $url;
-//            }
-//            $aboutDetail->update($data);
-//            return Response('About priyojon updated successfully');
-//        }
-        return Response('About page not found!');
-    }
-
-    public function updateAboutReward($data)
-    {
-        $this->aboutImgUpload($data, 'images/about-reward' );
-        return Response('Update successfully!');
+        if ($data['slug'] == "priyojon") {
+            $this->aboutPageUpdate($data, '/images/about-priyojon');
+        } elseif ($data['slug'] == "reword_points") {
+            $this->aboutPageUpdate($data, '/images/about-reward');
+        }
+        return Response('About page updated successfully');
     }
 
 }

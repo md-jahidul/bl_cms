@@ -14,4 +14,8 @@ class AboutPage extends Model
         'right_side_ing',
         'other_attributes',
     ];
+
+    protected $casts = [
+        'other_attributes' => 'array',
+    ];
 }

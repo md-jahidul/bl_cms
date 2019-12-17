@@ -163,9 +163,9 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('offer.details-update');
 
     // About Pages ================================
-    Route::get('about-page/{slug}', 'AssetLite\PriyojonController@aboutPriyojon')->name('about-priyojon');
-    Route::put('about-priyojon/update', 'AssetLite\PriyojonController@aboutPriyojonUpdate')
-        ->name('about-priyojon.update');
+    Route::get('about-page/{slug}', 'AssetLite\PriyojonController@aboutPageView')->name('about-page');
+    Route::put('about-page/update', 'AssetLite\PriyojonController@aboutPageUpdate')
+        ->name('about-page.update');
 
 //    Route::get('about-reward', 'AssetLite\PriyojonController@aboutRewardPoint')->name('about-reward');
 //    Route::put('about-reward/update', 'AssetLite\PriyojonController@aboutRewardPointUpdate')
