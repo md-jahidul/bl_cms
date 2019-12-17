@@ -17,4 +17,9 @@ class OfferCategory extends Model
     {
         return $this->belongsTo(SimCategory::class);
     }
+
+    public function children()
+    {
+        return $this->hasMany(OfferCategory::class, 'parent_id', 'id');
+    }
 }
