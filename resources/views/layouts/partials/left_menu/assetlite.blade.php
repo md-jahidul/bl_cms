@@ -170,8 +170,8 @@
                             <i class="la la-exclamation-circle"></i>About Priyojon
                         </a>
                     </li>
-                    <li class="{{ is_active_url('about-page/reword_points')}}">
-                        <a class="menu-item" href="{{ url('about-page/reword_points') }}" data-i18n="nav.templates.vert.classic_menu">
+                    <li class="{{ is_active_url('about-page/reward_points')}}">
+                        <a class="menu-item" href="{{ url('about-page/reward_points') }}" data-i18n="nav.templates.vert.classic_menu">
                             <i class="la la-exclamation-circle"></i> About Reward Point</a>
                     </li>
                 </ul>

@@ -42,7 +42,7 @@
                                     @endif
                                 </div>
 
-                                @if($slug == 'reword_points')
+                                @if($slug == 'reward_points')
                                     <div class="form-group col-md-6 {{ $errors->has('left_card_title_en') ? ' error' : '' }}">
                                         <label for="left_card_title_en" class="required">Card-1 Title (English)</label>
                                         <input type="text" name="other_attributes[left_card_title_en]"  class="form-control" placeholder="Enter title in English"
