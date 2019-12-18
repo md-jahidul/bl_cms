@@ -17,11 +17,11 @@
                 <div class="card-body card-dashboard">
                     <h5 class="menu-title"><strong>About Priyojon Details</strong></h5><hr>
                     <div class="card-body card-dashboard">
-                        <form role="form" id="product_form" action="{{ route('about-priyojon.update') }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" id="product_form" action="{{ route('about-page.update') }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="row">
-                                <input type="hidden" name="slug" value="about_priyojon">
+                                <input type="hidden" name="slug" value="{{ $slug }}">
                                 <div class="form-group col-md-6 {{ $errors->has('details_en') ? ' error' : '' }}">
                                     <label for="details_en" class="required">Details (English)</label>
                                     <textarea type="text" name="details_en"  class="form-control" placeholder="Enter offer details in english"
@@ -41,6 +41,48 @@
                                         <div class="help-block">{{ $errors->first('details_bn') }}</div>
                                     @endif
                                 </div>
+
+                                @if($slug == 'reword_points')
+                                    <div class="form-group col-md-6 {{ $errors->has('left_card_title_en') ? ' error' : '' }}">
+                                        <label for="left_card_title_en" class="required">Card-1 Title (English)</label>
+                                        <input type="text" name="other_attributes[left_card_title_en]"  class="form-control" placeholder="Enter title in English"
+                                               value="{{ $details->other_attributes['left_card_title_en'] }}" required data-validation-required-message="Enter title in English">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('left_card_title_en'))
+                                            <div class="help-block">  {{ $errors->first('left_card_title_en') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('right_card_title_en') ? ' error' : '' }}">
+                                        <label for="right_card_title_en" class="required">Card-2 Title (English)</label>
+                                        <input type="text" name="other_attributes[right_card_title_en]"  class="form-control" placeholder="Enter title in Eangla"
+                                               value="{{ $details->other_attributes['right_card_title_en'] }}" required data-validation-required-message="Enter title in English">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('right_card_title_en'))
+                                            <div class="help-block">  {{ $errors->first('right_card_title_en') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('left_card_title_bn') ? ' error' : '' }}">
+                                        <label for="left_card_title_bn" class="required">Card-1 Title (Bangla)</label>
+                                        <input type="text" name="other_attributes[left_card_title_bn]"  class="form-control" placeholder="Enter title in Bangla"
+                                               value="{{ $details->other_attributes['left_card_title_bn'] }}" required data-validation-required-message="Enter title in Bangla">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('left_card_title_bn'))
+                                            <div class="help-block">  {{ $errors->first('left_card_title_bn') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('right_card_title_bn') ? ' error' : '' }}">
+                                        <label for="right_card_title_bn" class="required">Card-2 Title (Bangla)</label>
+                                        <input type="text" name="other_attributes[right_card_title_bn]"  class="form-control" placeholder="Enter title in Bangla"
+                                               value="{{ $details->other_attributes['right_card_title_bn'] }}" required data-validation-required-message="Enter title in Bangla">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('right_card_title_bn'))
+                                            <div class="help-block">  {{ $errors->first('right_card_title_bn') }}</div>
+                                        @endif
+                                    </div>
+                                @endif
 
                                 <div class="form-group col-md-6 {{ $errors->has('left_side_img') ? ' error' : '' }}">
                                     <label for="alt_text" class="">left Side Image</label>
@@ -77,8 +119,8 @@
                                 <div class="form-group col-md-6 {{ $errors->has('right_side_ing') ? ' error' : '' }}">
                                     <img src="{{ ($details->right_side_ing != '') ? asset("$details->right_side_ing") : asset("images/about-priyojon/about-placeholder.png") }}" id="rightImg" height="300" width="490">
                                 </div>
-                                
-                           
+
+
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
