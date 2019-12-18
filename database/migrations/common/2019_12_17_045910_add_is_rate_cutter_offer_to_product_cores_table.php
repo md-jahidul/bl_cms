@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddIsApproveToAdditionalAccountsTable extends Migration
+class AddIsRateCutterOfferToProductCoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddIsApproveToAdditionalAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::table('additional_accounts', function (Blueprint $table) {
-            $table->tinyInteger('is_approve');
+        Schema::table('product_cores', function (Blueprint $table) {
+            $table->tinyInteger('is_rate_cutter_offer')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddIsApproveToAdditionalAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::table('additional_accounts', function (Blueprint $table) {
-            $table->dropColumn('is_approve');
+        Schema::table('product_cores', function (Blueprint $table) {
+            $table->dropColumn('is_rate_cutter_offer');
         });
     }
 }

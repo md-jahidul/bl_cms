@@ -17,6 +17,8 @@ class AddAdditionalColumnToPartnerOffers extends Migration
             $table->string('offer_scale', 50)->nullable()->after('validity_bn');
             $table->integer('offer_value')->nullable()->after('validity_bn');
             $table->string('offer_unit')->nullable()->after('validity_bn');
+            $table->dropColumn('offer_en');
+            $table->dropColumn('offer_bn');
         });
     }
 
@@ -27,9 +29,6 @@ class AddAdditionalColumnToPartnerOffers extends Migration
      */
     public function down()
     {
-        Schema::table('partner_offers', function (Blueprint $table) {
-            $table->dropColumn('offer_en');
-            $table->dropColumn('offer_bn');
-        });
+        Schema::dropIfExists('partner_offers');
     }
 }

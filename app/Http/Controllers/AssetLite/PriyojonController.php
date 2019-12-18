@@ -3,21 +3,25 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Models\Priyojon;
-use App\Services\AboutPriyojonService;
+use App\Services\AboutPageService;
 use App\Services\PriyojonService;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class PriyojonController extends Controller
 {
 
     /**
      * @var PriyojonService
-     * @var AboutPriyojonService
+     * @var AboutPageService
      */
     private $priyojonService;
-    private $aboutPriyojonService;
+    private $aboutPageService;
 
     /**
      * @var array $menuItems
@@ -28,12 +32,12 @@ class PriyojonController extends Controller
     /**
      * PriyojonController constructor.
      * @param PriyojonService $priyojonService
-     * @param AboutPriyojonService $aboutPriyojonService
+     * @param AboutPageService $aboutPageService
      */
-    public function __construct(PriyojonService $priyojonService, AboutPriyojonService $aboutPriyojonService)
+    public function __construct(PriyojonService $priyojonService, AboutPageService $aboutPageService)
     {
         $this->priyojonService = $priyojonService;
-        $this->aboutPriyojonService = $aboutPriyojonService;
+        $this->aboutPageService = $aboutPageService;
         $this->middleware('auth');
     }
 
@@ -46,7 +50,7 @@ class PriyojonController extends Controller
 
     /**
      * @param int $parent_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index($parent_id = 0)
     {
@@ -62,7 +66,7 @@ class PriyojonController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function edit($id)
     {
@@ -80,7 +84,7 @@ class PriyojonController extends Controller
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      */
     public function update(Request $request, $id)
     {
@@ -91,18 +95,23 @@ class PriyojonController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param $slug
+     * @return Factory|View
      */
-    public function aboutPriyojon()
+    public function aboutPageView($slug)
     {
-        $details = $this->aboutPriyojonService->findAboutDetail('about_priyojon');
-        return view('admin.priyojon.about_priyojon', compact('details'));
+        $details = $this->aboutPageService->findAboutDetail($slug);
+        return view('admin.about-pages.about_page', compact('slug', 'details'));
     }
 
-    public function aboutPriyojonUpdate(Request $request)
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Redirector
+     */
+    public function aboutPageUpdate(Request $request)
     {
-        $response = $this->aboutPriyojonService->updateAboutPriyojon($request->all());
+        $response = $this->aboutPageService->updateAboutPage($request->all());
         Session::flash('message', $response->getContent());
-        return redirect(route('about-priyojon'));
+        return redirect(route('about-page', $request->slug));
     }
 }

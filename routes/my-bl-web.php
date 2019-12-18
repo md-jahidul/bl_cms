@@ -184,5 +184,8 @@ Route::group(['middleware' => ['appAdmin']], function () {
     });
     Route::post('core-product', 'ProductEntryController@uploadProductByExcel')->name('core-product.save');
 
+    Route::get('store-locations/entry', 'StoreLocatorEntryController@create');
+    Route::post('store-locations', 'StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
+
     Route::get('core-product/test', 'ProductEntryController@test');
 });

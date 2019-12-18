@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AboutPriyojon extends Model
+class AboutPage extends Model
 {
     protected $fillable = [
         'slug',
@@ -13,5 +13,9 @@ class AboutPriyojon extends Model
         'left_side_img',
         'right_side_ing',
         'other_attributes',
+    ];
+
+    protected $casts = [
+        'other_attributes' => 'array',
     ];
 }
