@@ -3,6 +3,8 @@
 use App\Models\Partner;
 use Illuminate\Database\Seeder;
 
+use App\Models\PartnerOffer;
+
 class PartnerTableSeeder extends Seeder
 {
     /**
@@ -12,6 +14,9 @@ class PartnerTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Partner::truncate();
+
         $companyNameEn =  ['Sheraton','Burger King','Labaid', 'Patho', 'Aarong'];
         $companyNameBn =  ['শেরাটন', 'বার্গার কিং', 'ল্যাবাইড', 'পাঠো', 'আড়ং'];
         $companyLogo =    ['logo-sheraton.png','logo-buger-king.png','logo-labaid.png','logo-patho.png','logo-aarong.png'];
@@ -27,7 +32,7 @@ class PartnerTableSeeder extends Seeder
                 'partner_category_id' => $key + 1,
                 'company_name_en' => $value,
                 'company_name_bn' => $companyNameBn[$key],
-                'company_logo' => env('APP_URL', 'http://localhost:8000') . '/images/partners-logo/' . $companyLogo[$key],
+                'company_logo' => 'assetlite/images/partners-logo/' . $companyLogo[$key],
                 'company_address' => $companyAddress,
                 'company_website' => 'https://' . $companyWebSite[$key],
                 'contact_person_name' => $contactPersonName,

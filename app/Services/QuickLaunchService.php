@@ -5,12 +5,16 @@ namespace App\Services;
 use App\Http\Helpers;
 use App\Repositories\QuickLaunchRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
+use Exception;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 
 class QuickLaunchService
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var QuickLaunchRepository
@@ -42,8 +46,9 @@ class QuickLaunchService
     public function storeQuickLaunchItem($data)
     {
         $count = count($this->quickLaunchRepository->findAll());
-        $imageUrl = $this->imageUpload($data, 'image_url', $data['title_en'], 'quick-launch-items');
-        $data['image_url'] = env('APP_URL', 'http://localhost:8000') . '/quick-launch-items/' . $imageUrl;
+        if (request()->hasFile('image_url')) {
+            $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/quick-launch-items/');
+        }
         $data['display_order'] = ++$count;
         $this->save($data);
         return new Response('Quick Launch added successfully');
@@ -63,14 +68,14 @@ class QuickLaunchService
     /**
      * @param $data
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @return ResponseFactory|Response
      */
     public function updateQuickLaunch($data, $id)
     {
         $quickLaunch = $this->findOne($id);
-        if (!empty($data['image_url'])) {
-            $imageUrl = $this->imageUpload($data, 'image_url', $data['title_en'], 'quick-launch-items');
-            $data['image_url'] = env('APP_URL', 'http://localhost:8000') . '/quick-launch-items/' . $imageUrl;
+        if (request()->hasFile('image_url')) {
+            $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/quick-launch-items/');
+            $this->deleteFile($quickLaunch->image_url);
         }
         $quickLaunch->update($data);
         return Response('Quick launch updated successfully');
@@ -78,12 +83,13 @@ class QuickLaunchService
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
-     * @throws \Exception
+     * @return ResponseFactory|Response
+     * @throws Exception
      */
     public function deleteQuickLaunch($id)
     {
         $quickLaunch = $this->findOne($id);
+        $this->deleteFile($quickLaunch->image_url);
         $quickLaunch->delete();
         return Response('Quick launch deleted successfully !');
     }

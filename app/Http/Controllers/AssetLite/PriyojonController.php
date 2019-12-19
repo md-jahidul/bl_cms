@@ -77,7 +77,6 @@ class PriyojonController extends Controller
             $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
         $menu_items = $this->priyojonItems;
-
         return view('admin.config.priyojon.edit', compact('priyojonLanding', 'menu_items'));
     }
 
