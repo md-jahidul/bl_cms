@@ -39,9 +39,6 @@ class PartnerOfferController extends Controller
     public function index($parentId, $partnerName)
     {
         $partnerOffers = $this->partnerOfferService->itemList($parentId);
-
-//        return $partnerOffers;
-
         return view('admin.partner-offer.index', compact('partnerOffers', 'parentId', 'partnerName'));
     }
 

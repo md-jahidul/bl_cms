@@ -27,7 +27,7 @@
                         @foreach ($quickLaunchItems as $key=>$quickLaunchItem)
                             <tr data-index="{{ $quickLaunchItem->id }}" data-position="{{ $quickLaunchItem->display_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <td width="6%" class="text-center"><img src="{{ $quickLaunchItem->image_url }}" alt="image" height="30" width="30"></td>
+                                <td width="6%" class="text-center"><img src="{{ config('filesystems.file_base_url') . $quickLaunchItem->image_url }}" alt="image" height="30" width="30"></td>
                                 <td width="20%">{{$quickLaunchItem->title_en}} {!! $quickLaunchItem->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                 <td>{{$quickLaunchItem->link}}</td>
                                 <td class="action" width="8%">

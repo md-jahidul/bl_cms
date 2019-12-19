@@ -56,16 +56,6 @@
                                     @endif
                                 </div>
 
-{{--                                <div class="form-group col-md-6 mt-1">--}}
-{{--                                    <label for="file">Select File</label>--}}
-{{--                                    <label id="projectinput7" class="file center-block ml-1">--}}
-{{--                                        <input type="file" id="file" name="image_url">--}}
-{{--                                        <span class="file-custom"></span>--}}
-{{--                                    </label>--}}
-{{--                                    <img src="{{ $quickLaunch->image_url }}" height="50" width="50"><br>--}}
-{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
-{{--                                </div>--}}
-
                                 <div class="form-group col-md-6 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <div class="custom-file">
                                         <input type="file" name="image_url" class="custom-file-input" id="image">
@@ -75,7 +65,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <img src="{{ $quickLaunch->image_url }}" style="height:70px;width:70px;" id="imgDisplay">
+                                    <img src="{{ config('filesystems.file_base_url') . $quickLaunch->image_url }}" style="height:70px;width:70px;" id="imgDisplay">
                                 </div>
 
                                 <div class="col-md-12 mt-1">

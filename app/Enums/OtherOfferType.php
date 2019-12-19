@@ -29,5 +29,4 @@ final class OtherOfferType extends Enum
     const FOUR_G_OFFERS = 16;
     const AMAR_OFFER_POSTPAID = 17;
     const MFS_OFFERS = 18;
-
 }

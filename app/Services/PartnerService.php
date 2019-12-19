@@ -6,11 +6,15 @@ use App\Models\PartnerCategory;
 use App\Repositories\PartnerRepository;
 use App\Repositories\PrizeRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
+use Exception;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
 class PartnerService
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var $partnerRepository
@@ -28,7 +32,6 @@ class PartnerService
         $this->setActionRepository($partnerRepository);
     }
 
-
     /**
      * @return mixed
      */
@@ -43,8 +46,9 @@ class PartnerService
      */
     public function storePartner($data)
     {
-        $imageUrl = $this->imageUpload($data, "company_logo", $data['company_name_en'], 'images/partners-logo');
-        $data['company_logo'] = env('APP_URL', 'http://localhost:8000') . '/images/partners-logo/' . $imageUrl;
+        if (request()->hasFile('company_logo')) {
+            $data['company_logo'] = $this->upload($data['company_logo'], 'assetlite/images/partners-logo');
+        }
         $this->save($data);
         return new Response('Partner added successfully');
     }
@@ -54,27 +58,28 @@ class PartnerService
     /**
      * @param $data
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @return ResponseFactory|Response
      */
     public function updatePartner($data, $id)
     {
         $partner = $this->findOne($id);
-        if (!empty($data['company_logo'])) {
-            $imageUrl = $this->imageUpload($data, "company_logo", $data['company_name_en'], 'images/partners-logo');
-            $data['company_logo'] = env('APP_URL', 'http://localhost:8000') . '/images/partners-logo/' . $imageUrl;
+        if (request()->hasFile('company_logo')) {
+            $data['company_logo'] = $this->upload($data['company_logo'], 'assetlite/images/partners-logo');
+            $this->deleteFile($partner['company_logo']);
         }
         $partner->update($data);
-        return Response('Partner update successfully !');
+        return Response('Partner update successfully!');
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
-     * @throws \Exception
+     * @return ResponseFactory|Response
+     * @throws Exception
      */
     public function deletePartner($id)
     {
         $partner = $this->findOne($id);
+        $this->deleteFile($partner['company_logo']);
         $partner->delete();
         return Response('Partner delete successfully');
     }

@@ -33,7 +33,7 @@
                         @foreach($slider_images as $index=>$slider_image)
                             <tr data-index="{{ $slider_image->id }}" data-position="{{ $slider_image->display_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <td><img class="" src="{{ $slider_image->image_url }}" alt="Slider Image" height="50" width="50" /></td>
+                                <td><img class="" src="{{ config('filesystems.file_base_url') . $slider_image->image_url }}" alt="Slider Image" height="50" width="50" /></td>
                                 <td>{{ $slider_image->title_en }} {!! $slider_image->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
 {{--                                <td>{{ $slider_image->description }}</td>--}}
                                 <td>{{ $slider_image->alt_text }}</td>

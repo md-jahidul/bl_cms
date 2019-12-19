@@ -199,7 +199,7 @@
                                 <div class="form-group col-md-1 mb-0 {{ ($partnerOffer->is_campaign == 1) ? '' : "d-none" }}"
                                      id="showImg">
                                     <img width="140" height="80" id="imgDisplay"
-                                         src="{{ ($partnerOffer->campaign_img != '') ? asset($partnerOffer->campaign_img) : asset('images/campaign-image/'.'campaign-placeholder.png') }}">
+                                         src="{{ ($partnerOffer->campaign_img != '') ? config('filesystems.file_base_url') . $partnerOffer->campaign_img : config('filesystems.file_base_url'). 'assetlite/images/campaign-image/campaign-placeholder.png' }}">
                                 </div>
 
 

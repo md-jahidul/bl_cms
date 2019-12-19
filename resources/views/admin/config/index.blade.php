@@ -28,7 +28,7 @@
                                         <div class="form-group row profile-pic">
                                             <label class="col-md-3 label-control pt-3"  for="row">{{ $title }}</label>
                                             <div class="pb-0">
-                                                <img src="{{ $config->value }}" height="60" width="50">
+                                                <img src="{{ config('filesystems.file_base_url') . $config->value }}" height="55" width="50" id="imgDisplay">
                                                     <input type="file" name="site_logo" class="input-logo pl-2" style="display: none" placeholder="Enter logo alt text">
                                                     <a href="#" class="close-edit text-danger" style="display: none"><i class="la la-close" aria-hidden="true"></i></a>
                                             </div>
@@ -89,41 +89,6 @@
 
 @push('page-js')
     <script>
-        $(document).ready(function () {
-            $('#Example1').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy', className: 'copyButton',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'excel', className: 'excel',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'pdf', className: 'pdf', "charset": "utf-8",
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'print', className: 'print',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                ],
-                paging: true,
-                searching: true,
-                "bDestroy": true,
-            });
-        });
-
         (function () {
             $(".edit-btn").on('click', function () {
                 $('.edit-btn').hide();

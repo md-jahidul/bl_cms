@@ -41,7 +41,7 @@
                             @php(  $partnerName = str_replace(" ", "-", strtolower( $partner->company_name_en ) ))
                             <tr>
                                 <td class="pt-2">{{ ++$key }}</td>
-                                <td><img src="{{ $partner->company_logo }}" height="50" width="50"></td>
+                                <td><img src="{{ config('filesystems.file_base_url') . $partner->company_logo }}" height="50" width="50"></td>
                                 <td class="pt-2">{{ $partner->company_name_en }}</td>
                                 <td class="pt-2">{{ $partner->partnerCategory->name_en }}</td>
                                 <td class="pt-2">{{ $partner->contact_person_mobile }}</td>
