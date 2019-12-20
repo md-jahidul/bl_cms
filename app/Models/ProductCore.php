@@ -39,6 +39,7 @@ class ProductCore extends Model
         'other_info',
         'status',
         'segment',
+        'validity_in_days'
     ];
 
     protected $guarded = ['id'];
