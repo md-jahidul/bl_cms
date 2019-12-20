@@ -115,8 +115,16 @@ class PushNotificationController extends Controller
                     ]
                 ];
 
-                NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
-                    ->onQueue('notification');
+/*                NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+                    ->onQueue('notification');*/
+
+                $response = PushNotificationService::sendNotification($notification);
+                $formatted_response = json_decode($response);
+                if ($formatted_response->status == "SUCCESS") {
+                    if (isset($user_phone)) {
+                        $this->notificationService->attachNotificationToUser($formatted_response->notification_id, $user_phone);
+                    }
+                }
             }
 
             return [

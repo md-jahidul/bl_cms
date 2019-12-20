@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\CMS;
 
-use App\Models\MyBlProduct;
 use App\Models\MyBlProductCategory;
 use App\Models\SimCategory;
 use App\Http\Controllers\Controller;

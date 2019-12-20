@@ -62,6 +62,7 @@ class ProductCoreService
             'is_recharge_offer' => 23,
             'is_gift_offer' => 24,
             'is_social_pack' => 25,
+            'validity_in_days' => 26,
         ];
     }
 
@@ -89,7 +90,8 @@ class ProductCoreService
 
     /**
      * @param $data
-     * @return Response
+     * @param $simId
+     * @return void
      */
     public function storeProductCore($data, $simId)
     {
@@ -131,11 +133,13 @@ class ProductCoreService
             $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
             $file_path = $excel_path;
             $reader->open($file_path);
-            $insert_data = [];
             foreach ($reader->getSheetIterator() as $sheet) {
                 $row_number = 1;
                 foreach ($sheet->getRowIterator() as $row) {
                     $data = [];
+                    $validity = 0;
+                    $unit = 'days';
+                    $validity_in_days = 0;
                     if ($row_number != 1) {
                         $cells = $row->getCells();
                         foreach ($this->config as $field => $index) {
@@ -212,6 +216,15 @@ class ProductCoreService
                                     $data_volume_unit = $cells [$index]->getValue();
                                     $data [$field] = $data_volume_unit;
                                     break;
+                                case "validity_in_days":
+                                    $validity = $cells [$this->config['validity']]->getValue();
+                                    $unit = $cells [$this->config['validity_unit']]->getValue();
+
+                                    if (strtolower($unit) == 'hours') {
+                                        $validity = round($validity / 24);
+                                    }
+                                    $data [$field] = $validity;
+                                    break;
 
                                 default:
                                     $data [$field] = ($cells [$index]->getValue() != '') ?
@@ -224,7 +237,6 @@ class ProductCoreService
                             ProductCore::updateOrCreate([
                                 'product_code' => $product_code
                             ], $data);
-
                         } catch (\Exception $e) {
                             dd($e->getMessage());
                             continue;
@@ -255,5 +267,4 @@ class ProductCoreService
     {
         return ProductCore::where('product_code', $product_code)->first();
     }
-
 }
