@@ -6,11 +6,15 @@ use App\Repositories\AlSliderImageRepository;
 use App\Repositories\SliderImageRepository;
 use App\Repositories\SliderRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
+use Exception;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
 class AlSliderImageService
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var $sliderRepository
@@ -40,8 +44,9 @@ class AlSliderImageService
     public function storeSliderImage($data, $sliderId)
     {
         $count = count($this->alSliderImageRepository->findAll());
-        $imageUrl = $this->imageUpload($data, 'image_url', $data['title_en'], 'slider-images');
-        $data['image_url'] = env('APP_URL', 'http://localhost:8000') . "/slider-images/" . $imageUrl;
+        if (request()->hasFile('image_url')) {
+            $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/slider-images');
+        }
         $data['slider_id'] = $sliderId;
         $data['display_order'] = ++$count;
         $this->save($data);
@@ -57,14 +62,15 @@ class AlSliderImageService
     /**
      * @param $data
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @return ResponseFactory|Response
      */
     public function updateSliderImage($data, $id)
     {
         $sliderImage = $this->findOne($id);
-        if (!empty($data['image_url'])) {
-            $imageUrl = $this->imageUpload($data, 'image_url', $data['title_en'], 'slider-images');
-            $data['image_url'] = env('APP_URL', 'http://localhost:8000') . "/slider-images/" . $imageUrl;
+        if (request()->hasFile('image_url')) {
+            $imageUrl = $this->upload($data['image_url'], 'assetlite/images/slider-images');
+            $data['image_url'] = $imageUrl;
+            $this->deleteFile($sliderImage['image_url']);
         }
         $sliderImage->update($data);
         return Response('Slider Image update successfully !');
@@ -72,12 +78,13 @@ class AlSliderImageService
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
-     * @throws \Exception
+     * @return ResponseFactory|Response
+     * @throws Exception
      */
     public function deleteSliderImage($id)
     {
         $sliderImage = $this->findOne($id);
+        $this->deleteFile($sliderImage['image_url']);
         $sliderImage->delete();
         return Response('Slider Image delete successfully');
     }

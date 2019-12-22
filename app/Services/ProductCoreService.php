@@ -62,16 +62,53 @@ class ProductCoreService
             'is_recharge_offer' => 23,
             'is_gift_offer' => 24,
             'is_social_pack' => 25,
+            'validity_in_days' => 26,
         ];
     }
 
     /**
+     * @param $typeId
+     * @return string
+     */
+    public function getType($typeId)
+    {
+        switch ($typeId) {
+            case "1":
+                $offerId = "data";
+                break;
+            case '2':
+                $offerId = "voice";
+                break;
+            case '3':
+                $offerId = "mix";
+                break;
+            default:
+                $offerId = null;
+        }
+        return $offerId;
+    }
+
+    /**
      * @param $data
-     * @return Response
+     * @param $simId
+     * @return void
      */
     public function storeProductCore($data, $simId)
     {
-        return $this->productCoreRepository->insertProductCore($data, $simId);
+        $productCode = $this->productCoreRepository
+            ->findByProperties(['product_code' => $data['product_code']])
+            ->first();
+        if (empty($productCode)) {
+            $data['name'] = $data['name_en'];
+            $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+            $data['mrp_price'] = $data['price'] + $data['vat'];
+//            $data['is_recharge_offer'] = $data['is_recharge'];
+            $data['commercial_name_en'] = $data['name_en'];
+            $data['commercial_name_bn'] = $data['name_bn'];
+            $data['content_type'] = $this->getType($data['offer_category_id']);
+            $data['sim_type'] = $simId;
+            $this->save($data);
+        }
     }
 
     public function findProductCore($id)
@@ -96,11 +133,13 @@ class ProductCoreService
             $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
             $file_path = $excel_path;
             $reader->open($file_path);
-            $insert_data = [];
             foreach ($reader->getSheetIterator() as $sheet) {
                 $row_number = 1;
                 foreach ($sheet->getRowIterator() as $row) {
                     $data = [];
+                    $validity = 0;
+                    $unit = 'days';
+                    $validity_in_days = 0;
                     if ($row_number != 1) {
                         $cells = $row->getCells();
                         foreach ($this->config as $field => $index) {
@@ -177,6 +216,15 @@ class ProductCoreService
                                     $data_volume_unit = $cells [$index]->getValue();
                                     $data [$field] = $data_volume_unit;
                                     break;
+                                case "validity_in_days":
+                                    $validity = $cells [$this->config['validity']]->getValue();
+                                    $unit = $cells [$this->config['validity_unit']]->getValue();
+
+                                    if (strtolower($unit) == 'hours') {
+                                        $validity = round($validity / 24);
+                                    }
+                                    $data [$field] = ($validity == "") ? null : $validity;
+                                    break;
 
                                 default:
                                     $data [$field] = ($cells [$index]->getValue() != '') ?
@@ -189,7 +237,6 @@ class ProductCoreService
                             ProductCore::updateOrCreate([
                                 'product_code' => $product_code
                             ], $data);
-
                         } catch (\Exception $e) {
                             dd($e->getMessage());
                             continue;

@@ -1,5 +1,4 @@
 @php
-
     if (isset($product->offer_info['other_offer_type_id'])){
         $offertype = $product->offer_info['other_offer_type_id'];
     }elseif(isset($product->offer_info['package_offer_type_id'])){
@@ -26,28 +25,8 @@
 </div>
 
 <slot id="{{ strtolower($type) == 'prepaid' ? 'prepaid_plans' : 'postpaid_plans' }}" class="{{ ($offertype == 5 || $offertype == 7) ? '' : 'd-none' }}">
-    <div class="form-group col-md-6 {{ $errors->has('view_list_btn_text_bn') ? ' error' : '' }}">
-        <label for="view_list_btn_text_bn" class="required">Call Rate (Paisa)</label>
-        <input type="text" name="call_rate"  class="form-control" placeholder="Enter call rate in paisa"
-               oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-               value="{{ (!empty($product->product_core->call_rate)) ? $product->product_core->call_rate : old("call_rate") ?? '' }}"
-               required data-validation-required-message="Enter view list button label bangla ">
-        <div class="help-block"></div>
-        @if ($errors->has('call_rate'))
-            <div class="help-block">  {{ $errors->first('call_rate') }}</div>
-        @endif
-    </div>
-    <div class="form-group col-md-6 {{ $errors->has('sms_rate') ? ' error' : '' }}">
-        <label for="sms_rate" class="required">SMS Rate (Paisa)</label>
-        <input type="text" name="sms_rate"  class="form-control" placeholder="Enter SMS rate in paisa"
-               oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-               value="{{ (!empty($product->product_core->sms_rate)) ? $product->product_core->sms_rate : old("sms_rate") ?? '' }}"
-               required data-validation-required-message="Enter view list url">
-        <div class="help-block"></div>
-        @if ($errors->has('sms_rate'))
-            <div class="help-block">  {{ $errors->first('sms_rate') }}</div>
-        @endif
-    </div>
+    @include('layouts.partials.products.common-field.call_rate')
+    @include('layouts.partials.products.common-field.sms_rate')
 </slot>
 
 

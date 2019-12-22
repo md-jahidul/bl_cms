@@ -63,29 +63,9 @@
 {{--Bondho SIM Offer--}}
 @if(strtolower($type) == 'prepaid')
     <slot class="{{ $offertype == 13 ? '' : 'd-none' }}" id="bondho_sim_offer">
-        <div class="form-group col-md-6 {{ $errors->has('minute_volume') ? ' error' : '' }}">
-            <label for="minute_volume" class="required">Minute Volume</label>
-            <input type="text" name="minute_volume"  class="form-control" placeholder="Enter minute volume"
-                   oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                   value="{{ (!empty($product->product_core->minute_volume)) ? $product->product_core->minute_volume : old("minute_volume") ?? '' }}"
-                   required data-validation-required-message="Enter view list url">
-            <div class="help-block"></div>
-            @if ($errors->has('minute_volume'))
-                <div class="help-block">  {{ $errors->first('minute_volume') }}</div>
-            @endif
-        </div>
+        @include('layouts.partials.products.common-field.minute_volume')
 
-        <div class="form-group col-md-6 {{ $errors->has('internet_volume_mb') ? ' error' : '' }}">
-            <label for="internet_volume_mb" class="required">Internet Volume (MB)</label>
-            <input type="number" name="internet_volume_mb"  class="form-control" placeholder="Enter internet volume in MB"
-                   oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                   value="{{ (!empty($product->product_core->internet_volume_mb)) ? $product->product_core->internet_volume_mb : old("internet_volume_mb") ?? '' }}"
-                   required data-validation-required-message="Enter view list button label bangla ">
-            <div class="help-block"></div>
-            @if ($errors->has('internet_volume_mb'))
-                <div class="help-block">  {{ $errors->first('internet_volume_mb') }}</div>
-            @endif
-        </div>
+        @include('layouts.partials.products.common-field.internet_volume')
     </slot>
 @endif
 

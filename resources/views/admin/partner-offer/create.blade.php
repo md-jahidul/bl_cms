@@ -173,7 +173,7 @@
 
 
                                 <div class="form-group col-md-1 mb-0 d-none" id="showImg">
-                                    <img width="140" height="80" id="imgDisplay" src="{{ asset('images/campaign-image/campaign-placeholder.png') }}">
+                                    <img width="140" height="80" id="imgDisplay" src="{{ config('filesystems.file_base_url') . 'assetlite/images/campaign-image/campaign-placeholder.png' }}">
                                 </div>
 
                                 <div class="col-md-12">

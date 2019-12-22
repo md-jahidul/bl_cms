@@ -21,7 +21,7 @@
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
                                     <label for="name_en" class="required">Offer Name (English)</label>
-                                    <input type="text" name="name_en"  class="form-control" placeholder="Enter offer name in English"
+                                    <input type="text" name="name_en" id="name_en" class="form-control" placeholder="Enter offer name in English"
                                            required data-validation-required-message="Enter offer name english"
                                            value="{{ old("name_en") ? old("name_en") : '' }}">
                                     <div class="help-block"></div>
@@ -32,11 +32,12 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
                                     <label for="product_code" class="required">Product ID</label>
-                                    <select id="select-beast" name="product_code"
+                                    <select id="product_core" name="product_code"
+                                            data-url="{{ url('product-core/match') }}"
                                             required data-validation-required-message="Please select product code">
                                         <option value="">Select product code</option>
                                         @foreach($productCoreCodes as $productCodes)
-                                            <option value="{{ $productCodes->product_code }}">{{ $productCodes->product_code }}</option>
+                                            <option value="{{ $productCodes['product_code'] }}">{{ $productCodes['product_code'] }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
@@ -47,7 +48,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
                                     <label for="name_bn" class="required">Offer Name (Bangla)</label>
-                                    <input type="text" name="name_bn"  class="form-control" placeholder="Enter offer name in Bangla"
+                                    <input type="text" name="name_bn" id="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
                                            required data-validation-required-message="Enter offer name bangla"
                                            value="{{ old("name_bn") ? old("name_bn") : '' }}">
                                     <div class="help-block"></div>
@@ -72,7 +73,7 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="activation_ussd">USSD Code (English)</label>
-                                    <input type="text" name="activation_ussd"  class="form-control" placeholder="Enter offer ussd code in English"
+                                    <input type="text" name="activation_ussd" id="activation_ussd" class="form-control" placeholder="Enter offer ussd code in English"
                                            value="{{ old("activation_ussd") ? old("activation_ussd") : '' }}">
                                     <div class="help-block"></div>
                                 </div>
@@ -96,7 +97,7 @@
 
                                 <div class="form-group col-md-6 ">
                                     <label for="price">Offer Price</label>
-                                        <input type="text" name="price"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
+                                        <input type="text" name="price" id="price"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
                                            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
                                            value="{{ old("price") ? old("price") : '' }}">
                                     <div class="help-block"></div>
@@ -104,7 +105,7 @@
 
                                 <div class="form-group col-md-6 ">
                                     <label for="price">Vat</label>
-                                        <input type="text" name="vat"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
+                                        <input type="text" name="vat" id="vat" class="form-control" placeholder="Enter offer price in taka" step="0.001"
                                            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
                                            value="{{ old("price") ? old("price") : '' }}">
                                     <div class="help-block"></div>
@@ -157,24 +158,41 @@
                                     </slot>
                                 @endif
 
+                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
+                                    <label for="purchase_option" class="required">Purchase Option</label>
+                                    <select class="form-control required" name="purchase_option" id="offer_type"
+                                        required data-validation-required-message="Please select purchase option">
+                                        <option data-alias="" value="">---Select Purchase Option---</option>
+                                        <option value="recharge">Recharge</option>
+                                        <option value="balance">Balance</option>
+                                        <option value="all">All</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('purchase_option'))
+                                        <div class="help-block">{{ $errors->first('purchase_option') }}</div>
+                                    @endif
+                                </div>
 
-                                <div class="col-md-6" >
+                                <div class="col-md-6">
                                     <label></label>
-                                    <div class="form-group pt-1" id="show_in_home">
+                                    <div class="form-group" id="show_in_home">
                                         <label for="trending" class="mr-1">Trending Offer:</label>
                                         <input type="checkbox" name="show_in_home" value="1" id="trending">
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="title" class="mr-1">Recharge</label>
-                                        <input type="radio" name="is_recharge" value="1" id="yes">
-                                        <label for="yes" class="mr-1">Yes</label>
-                                        <input type="radio" name="is_recharge" value="0" id="no" checked>
-                                        <label for="no">No</label>
-                                    </div>
-                                </div>
+{{--                                TODO: Savely Delete Recharge --}}
+{{--                                <div class="col-md-6">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="title" class="mr-1">Recharge</label>--}}
+{{--                                        <input type="radio" name="is_recharge" value="1" id="yes">--}}
+{{--                                        <label for="yes" class="mr-1">Yes</label>--}}
+{{--                                        <input type="radio" name="is_recharge" value="0" id="no" checked>--}}
+{{--                                        <label for="no">No</label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+
+
 
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -213,7 +231,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/selectize/selectize.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.default.css') }}">
-
 @endpush
 @push('page-js')
     <script src="{{ asset('app-assets/vendors/js/forms/select/selectize.min.js') }}" type="text/javascript"></script>
@@ -225,7 +242,7 @@
 
     <script>
         $(function () {
-            $('#select-beast').selectize({
+            $('#product_core').selectize({
                 create: true,
             });
         })

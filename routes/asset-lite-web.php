@@ -162,16 +162,21 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
         ->name('offer.details-update');
 
-    // PRIYOJON ================================
-    Route::get('about-priyojon', 'AssetLite\PriyojonController@aboutPriyojon')->name('about-priyojon');
-    Route::put('about-priyojon/update', 'AssetLite\PriyojonController@aboutPriyojonUpdate')
-        ->name('about-priyojon.update');
+    // About Pages ================================
+    Route::get('about-page/{slug}', 'AssetLite\PriyojonController@aboutPageView')->name('about-page');
+    Route::put('about-page/update', 'AssetLite\PriyojonController@aboutPageUpdate')
+        ->name('about-page.update');
 
+//    Route::get('about-reward', 'AssetLite\PriyojonController@aboutRewardPoint')->name('about-reward');
+//    Route::put('about-reward/update', 'AssetLite\PriyojonController@aboutRewardPointUpdate')
+//        ->name('about-reward.update');
 
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 
     // Product Core Mapping To Product
-    Route::get('/core-product/mapping','AssetLite\ProductController@coreDataMappingProduct');
+    Route::get('/core-product/mapping', 'AssetLite\ProductController@coreDataMappingProduct');
+    Route::get('product-core/match/{productCode}', 'AssetLite\ProductController@existProductCore')
+        ->name('product-core/check');
 
     Route::get('product-details-update', 'AssetLite\ProductController@updateDetails');
 

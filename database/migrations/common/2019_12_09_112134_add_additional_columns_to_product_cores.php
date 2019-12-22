@@ -16,7 +16,6 @@ class AddAdditionalColumnsToProductCores extends Migration
         Schema::table('product_cores', function (Blueprint $table) {
             $table->double('data_volume', 10, 2)->nullable()->after('validity_unit');
             $table->string('data_volume_unit')->nullable()->after('validity_unit');
-            ;
         });
     }
 

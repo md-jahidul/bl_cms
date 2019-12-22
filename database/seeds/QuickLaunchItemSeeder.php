@@ -13,6 +13,8 @@ class QuickLaunchItemSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('quick_launch_items')->truncate();
+
         $quick_launch_items = [];
         $items = ["New connection","Packages","Roaming", "Digital Services","Helpline","My BL App","Helpline","Bondho SIM Offer","Banglalink Advance","eShop","Lifestyle & Benefits","Banglalink 4G"];
         $item_bn_text = ["নিউ কানেকশন","প্যাকেজ","রোমিং", "ডিজিটাল সার্ভিসেস","হেল্পলাইন","মাই বিএল অ্যাপ","হেল্পলাইন","বন্ধু সিম অফার","বাংলালিংক অ্যাডভান্স","ই-শপ","লাইফস্টাইল & বেনিফিটস","বাংলালিংক 4G"];
@@ -21,9 +23,9 @@ class QuickLaunchItemSeeder extends Seeder
             $quick_launch_items[] = [
                 'title_en' => $item,
                 'title_bn' => $item_bn_text[$key],
-                'image_url' => env('APP_URL', 'http://localhost:8000') . '/quick-launch-items/' . strtolower(str_replace(" ", "-", $item)) . '.png',
+                'image_url' => 'assetlite/images/quick-launch-items/' . strtolower(str_replace(" ", "-", $item)) . '.png',
                 'alt_text' => $item,
-                'link' => env('APP_URL', 'http://localhost:8000') . strtolower(str_replace(" ", "-", $item)),
+                'link' => strtolower(str_replace(" ", "-", $item)),
                 'status' => 1,
                 'display_order' => ++$key
             ];

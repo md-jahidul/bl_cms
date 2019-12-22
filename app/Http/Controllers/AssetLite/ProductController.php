@@ -73,13 +73,13 @@ class ProductController extends Controller
      * Display a listing of the resource.
      *
      * @param $type
-     * @return Response
+     * @return Factory|View
      */
     public function index($type)
     {
         $products = Product::category($type)->with(['product_core', 'offer_category' => function ($query) {
             $query->select('id', 'name_en');
-        }])->get();
+        }])->latest()->get();
         return view('admin.product.index', compact('products', 'type'));
     }
 
@@ -98,7 +98,7 @@ class ProductController extends Controller
 
     public function create($type)
     {
-        $this->info['productCoreCodes'] = ProductCore::select('product_code')->get();
+        $this->info['productCoreCodes'] = $this->productService->unusedProductCore();
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['type'] = $type;
         $this->info['tags'] = $this->tagCategoryService->findAll();
@@ -187,10 +187,6 @@ class ProductController extends Controller
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offersType'] = $this->offerCategoryService->getOfferCategories($type);
         $this->info['durations'] = $this->durationCategoryService->findAll();
-//        $this->info['offerInfo'] = $product['offer_info'];
-
-//        return $this->info;
-
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
                 ->where('type_id', $package_id)
@@ -199,6 +195,9 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
+
+//        return  $this->info;
+
         return view('admin.product.edit', $this->info);
     }
 
@@ -218,7 +217,6 @@ class ProductController extends Controller
     public function update(Request $request, $type, $id)
     {
         $this->productCoreService->updateProductCore($request->all(), $id);
-
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $type, $id);
         Session::flash('message', $response->content());
@@ -250,26 +248,14 @@ class ProductController extends Controller
         $this->productDetailService->updateRelatedProduct($request, $id);
         $productDetails['other_attributes'] = $request->other_attributes;
         $productDetails->update($request->all());
+        Session::flash('success', 'Product Details update successfully!');
         return redirect("offers/$type");
     }
 
-    public function coreDataMappingProduct()
+    public function existProductCore($productCode)
     {
-        // TODO: Product Create with Product Details Data
-        return $this->productService->coreData();
+        return $this->productCoreService->findProductCore($productCode);
     }
-
-    public function updateDetails()
-    {
-        $products = Product::all();
-        foreach ($products as $product) {
-            ProductDetail::create([
-                'product_id' => $product->id
-            ]);
-        }
-        return "Insert Successfully";
-    }
-
 
     /**
      * @param $id
@@ -281,5 +267,28 @@ class ProductController extends Controller
         $response = $this->productService->deleteProduct($id);
         Session::flash('error', $response->getContent());
         return url("offers/$type");
+    }
+
+    /**
+     * @return string
+     * Product Core Data mapping To Product table
+     */
+    public function coreDataMappingProduct()
+    {
+        return $this->productService->coreData();
+    }
+
+    // TODO: Temporary use this methods for Product Details
+    public function updateDetails()
+    {
+        $products = Product::all();
+
+        ProductDetail::truncate();
+        foreach ($products as $product) {
+            ProductDetail::create([
+                'product_id' => $product->id
+            ]);
+        }
+        return "Insert Successfully";
     }
 }

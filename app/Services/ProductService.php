@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\ProductDetail;
 use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDetailRepository;
 use App\Repositories\ProductRepository;
@@ -32,8 +33,7 @@ class ProductService
         ProductRepository $productRepository,
         ProductDetailRepository $productDetailRepository,
         ProductCoreRepository $productCoreRepository
-    )
-    {
+    ) {
         $this->productRepository = $productRepository;
         $this->productCoreRepository = $productCoreRepository;
         $this->productDetailRepository = $productDetailRepository;
@@ -47,7 +47,6 @@ class ProductService
      */
     public function storeProduct($data, $simId)
     {
-//        dd($data);
         $data['sim_category_id'] = $simId;
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
         $productId = $this->save($data);
@@ -111,6 +110,18 @@ class ProductService
         return Response('Product delete successfully');
     }
 
+    public function unusedProductCore()
+    {
+        $productCoreCode = $this->productCoreRepository->findByProperties([], ['product_code'])->toArray();
+        $productCode = $this->productRepository->findByProperties([], ['product_code'])->toArray();
+        $unusedProductCode = [];
+        foreach ($productCoreCode as $key => $product) {
+            if (!in_array($product, $productCode)) {
+                array_push($unusedProductCode, $product);
+            }
+        }
+        return $unusedProductCode;
+    }
 
     /**
      * @param $data
@@ -119,7 +130,7 @@ class ProductService
      */
     public function insertProduct($data, $offerId)
     {
-        $this->save([
+        $product = $this->save([
             'product_code' => $data['product_code'] ?? null,
             'name_en' => $data['commercial_name_en'] ?? "N/A",
             'name_bn' => $data['commercial_name_bn'] ?? "N/A",
@@ -129,9 +140,10 @@ class ProductService
             'offer_category_id' => $offerId ?? null,
             'is_recharge' => $data['is_recharge_offer'] ?? null,
             'status' => $data['status'],
-//            'offer_info' => [
-//                'duration_category_id' =>
-//            ]
+        ]);
+
+        ProductDetail::create([
+            'product_id' => $product->id
         ]);
     }
 
