@@ -171,7 +171,6 @@ Route::middleware('authorize', 'auth')->group(function () {
 //    Route::put('about-reward/update', 'AssetLite\PriyojonController@aboutRewardPointUpdate')
 //        ->name('about-reward.update');
 
-
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 
     // Product Core Mapping To Product
