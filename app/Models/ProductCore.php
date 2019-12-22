@@ -36,6 +36,7 @@ class ProductCore extends Model
         'show_in_app',
         'offer_id',
         'is_amar_offer',
+        'purchase_option',
         'other_info',
         'status',
         'segment',

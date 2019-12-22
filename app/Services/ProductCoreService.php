@@ -102,7 +102,7 @@ class ProductCoreService
             $data['name'] = $data['name_en'];
             $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
             $data['mrp_price'] = $data['price'] + $data['vat'];
-            $data['is_recharge_offer'] = $data['is_recharge'];
+//            $data['is_recharge_offer'] = $data['is_recharge'];
             $data['commercial_name_en'] = $data['name_en'];
             $data['commercial_name_bn'] = $data['name_bn'];
             $data['content_type'] = $this->getType($data['offer_category_id']);
