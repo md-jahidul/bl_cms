@@ -10,10 +10,5 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .idea
-/public/images/quick-launch-items
-/public/images/slider-images
-/public/images/partners-logo
-/public/images/about-priyojon
-/public/images/about-reward
-/public/images/campaign-image
-/public/uploads/
+
+/public/uploads
