@@ -30,6 +30,7 @@ class Product extends Model
             'like',
             'status',
             'display_order',
+            'purchase_option',
             'offer_info',
         ];
 

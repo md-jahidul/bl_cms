@@ -157,6 +157,21 @@
 
                             {{--<div class="row">--}}
 
+                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
+                                    <label for="purchase_option" class="required">Purchase Option</label>
+                                    <select class="form-control required" name="purchase_option" id="offer_type"
+                                            required data-validation-required-message="Please select purchase option">
+                                        <option data-alias="" value="">---Select Purchase Option---</option>
+                                        <option value="recharge" {{ ("recharge" == $product->purchase_option ) ? 'selected' : '' }}>Recharge</option>
+                                        <option value="balance" {{ ("balance" == $product->purchase_option ) ? 'selected' : '' }}>Balance</option>
+                                        <option value="all" {{ ("all" == $product->purchase_option ) ? 'selected' : '' }}>All</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('purchase_option'))
+                                        <div class="help-block">{{ $errors->first('purchase_option') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="col-md-6">
                                     <label></label>
                                     <div class="form-group pt-1" id="show_in_home">
@@ -165,15 +180,16 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="title" class="mr-1">Recharge</label>
-                                        <input type="radio" name="is_recharge" value="1" id="yes" {{ ($product->status == 1) ? 'checked' : '' }}>
-                                        <label for="yes" class="mr-1">Yes</label>
-                                        <input type="radio" name="is_recharge" value="0" id="no" {{ ($product->is_recharge == 0) ? 'checked' : '' }}>
-                                        <label for="no">No</label>
-                                    </div>
-                                </div>
+{{--                                TODO: Savely Delete Recharge --}}
+{{--                                <div class="col-md-6">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="title" class="mr-1">Recharge</label>--}}
+{{--                                        <input type="radio" name="is_recharge" value="1" id="yes" {{ ($product->status == 1) ? 'checked' : '' }}>--}}
+{{--                                        <label for="yes" class="mr-1">Yes</label>--}}
+{{--                                        <input type="radio" name="is_recharge" value="0" id="no" {{ ($product->is_recharge == 0) ? 'checked' : '' }}>--}}
+{{--                                        <label for="no">No</label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
 
                                 <div class="col-md-6">
