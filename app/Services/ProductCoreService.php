@@ -223,7 +223,7 @@ class ProductCoreService
                                     if (strtolower($unit) == 'hours') {
                                         $validity = round($validity / 24);
                                     }
-                                    $data [$field] = $validity;
+                                    $data [$field] = ($validity == "") ? null : $validity;
                                     break;
 
                                 default:
