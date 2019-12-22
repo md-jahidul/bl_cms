@@ -42,7 +42,7 @@
                                     @endif
                                 </div>
 
-                                @if($slug == 'reword_points')
+                                @if($slug == 'reward_points')
                                     <div class="form-group col-md-6 {{ $errors->has('left_card_title_en') ? ' error' : '' }}">
                                         <label for="left_card_title_en" class="required">Card-1 Title (English)</label>
                                         <input type="text" name="other_attributes[left_card_title_en]"  class="form-control" placeholder="Enter title in English"
@@ -113,11 +113,13 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <img src="{{ ($details->left_side_img != '') ? asset("$details->left_side_img") : asset("images/about-priyojon/about-placeholder.png") }}" id="leftImg" height="300" width="490">
+                                    <img src="{{ ($details->left_side_img != '') ? config('filesystems.file_base_url') . $details->left_side_img : config('filesystems.file_base_url') . "assetlite/images/about-priyojon/about-placeholder.png" }}"
+                                         id="leftImg" height="300" width="490">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('right_side_ing') ? ' error' : '' }}">
-                                    <img src="{{ ($details->right_side_ing != '') ? asset("$details->right_side_ing") : asset("images/about-priyojon/about-placeholder.png") }}" id="rightImg" height="300" width="490">
+                                    <img src="{{ ($details->left_side_img != '') ? config('filesystems.file_base_url') . $details->right_side_ing : config('filesystems.file_base_url') . "assetlite/images/about-priyojon/about-placeholder.png" }}"
+                                         id="rightImg" height="300" width="490">
                                 </div>
 
 

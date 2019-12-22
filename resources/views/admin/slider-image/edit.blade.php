@@ -89,7 +89,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <img src="{{ $sliderImage->image_url }}" style="height:70px;width:70px;" id="imgDisplay">
+                                    <img src="{{ config('filesystems.file_base_url') .$sliderImage->image_url }}" style="height:70px;width:70px;" id="imgDisplay">
                                 </div>
 
 

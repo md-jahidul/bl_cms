@@ -4,8 +4,11 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Requests\StoreQuickLaunch;
 use App\Services\QuickLaunchService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 
 class QuickLaunchController extends Controller
@@ -30,7 +33,7 @@ class QuickLaunchController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -41,7 +44,7 @@ class QuickLaunchController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -49,27 +52,14 @@ class QuickLaunchController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreQuickLaunch $request
+     * @return RedirectResponse|Redirector
      */
     public function store(StoreQuickLaunch $request)
     {
         $response = $this->quickLaunchService->storeQuickLaunchItem($request->all());
         Session::flash('message', $response->getContent());
         return redirect('quick-launch');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     public function quickLaunchSortable(Request $request)
@@ -81,7 +71,7 @@ class QuickLaunchController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -94,7 +84,7 @@ class QuickLaunchController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {

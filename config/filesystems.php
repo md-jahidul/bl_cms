@@ -76,6 +76,8 @@ return [
         'test' => 'test',
         'task_attachments' => 'task_attachments',
         'monthly_update_attachments' => 'monthly_update_attachments',
-    ]
+    ],
+
+    'file_base_url' => env('FILE_BASE_URL', '/uploads/')
 
 ];

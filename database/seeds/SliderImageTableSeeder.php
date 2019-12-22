@@ -13,6 +13,7 @@ class SliderImageTableSeeder extends Seeder
      */
     public function run()
     {
+        AlSliderImage::truncate();
 
         for ($i = 1; $i < 4; $i++) {
             AlSliderImage::create([
@@ -20,7 +21,7 @@ class SliderImageTableSeeder extends Seeder
                 'slider_id' => 1,
                 'title_en' =>  "Extra internet for all Banglalink users " . $i ,
                 'title_bn' => "সমস্ত বাংলালিংক ব্যবহারকারীদের জন্য অতিরিক্ত ইন্টারনেট" . $i ,
-                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/hero.png',
+                'image_url' => 'assetlite/images/slider-images/hero.jpg',
                 'alt_text' => 'Hero slider image',
                 'display_order' => count(AlSliderImage::get()) + 1,
                 'other_attributes' => [
@@ -40,7 +41,8 @@ class SliderImageTableSeeder extends Seeder
                 'slider_id' => 3,
                 'title_en' =>  $digitalServiceSlider,
                 'title_bn' => $digitalServiceSlidersBn[$key],
-                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/digital_service.png',
+                'start_date' => "2019-12-19 13:58:55",
+                'image_url' => 'assetlite/images/slider-images/digital_service.png',
                 'alt_text' => 'Digital service slider image',
                 'display_order' => count(AlSliderImage::get()) + 1,
                 'other_attributes' => [
@@ -68,7 +70,7 @@ class SliderImageTableSeeder extends Seeder
                 'slider_id' => 5,
                 'title_en' =>  $testimonialSlidersEn,
                 'title_bn' =>  $testimonialSlidersEn,
-                'image_url' => env('APP_URL', 'http://localhost:8000') . '/slider-images/' . $userPic[$key],
+                'image_url' => 'assetlite/images/slider-images/' . $userPic[$key],
                 'alt_text' => 'testimonial slider image',
                 'display_order' => count(AlSliderImage::get()) + 1,
                 'other_attributes' => [

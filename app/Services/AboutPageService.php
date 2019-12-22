@@ -12,12 +12,14 @@ namespace App\Services;
 use App\Repositories\AboutPageRepository;
 use App\Repositories\PrizeRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
 class AboutPageService
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var $prizeService
@@ -52,13 +54,13 @@ class AboutPageService
     {
         $aboutDetail = $this->aboutPageRepository->findDetail($data['slug']);
         if ($aboutDetail != null) {
-            if (!empty($data['left_side_img'])) {
-                $url = $this->imageUpload($data, 'left_side_img', "about_image_left", $fileLocation);
-                $data['left_side_img'] = "$fileLocation/" . $url;
+            if (request()->hasFile('left_side_img')) {
+                $data['left_side_img'] = $this->upload($data['left_side_img'], $fileLocation);
+                $this->deleteFile($aboutDetail['left_side_img']);
             }
-            if (!empty($data['right_side_ing'])) {
-                $url = $this->imageUpload($data, 'right_side_ing', "about_image_right", $fileLocation);
-                $data['right_side_ing'] = "$fileLocation/" . $url;
+            if (request()->hasFile('right_side_ing')) {
+                $data['right_side_ing'] = $this->upload($data['right_side_ing'], $fileLocation);
+                $this->deleteFile($aboutDetail['right_side_ing']);
             }
             $aboutDetail->update($data);
         } else {
@@ -73,9 +75,9 @@ class AboutPageService
     public function updateAboutPage($data)
     {
         if ($data['slug'] == "priyojon") {
-            $this->aboutPageUpdate($data, '/images/about-priyojon');
-        } elseif ($data['slug'] == "reword_points") {
-            $this->aboutPageUpdate($data, '/images/about-reward');
+            $this->aboutPageUpdate($data, 'assetlite/images/about-priyojon');
+        } elseif ($data['slug'] == "reward_points") {
+            $this->aboutPageUpdate($data, 'assetlite/images/about-reward');
         }
         return Response('About page updated successfully');
     }

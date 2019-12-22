@@ -101,19 +101,12 @@
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                    {{--<label for="file" class=""></label><br>--}}
-                                    {{--<label for="file">Select Company Logo</label>--}}
-                                    {{--<label id="projectinput7" class="file center-block ml-2">--}}
-                                        {{--<input type="file" id="file" name="company_logo">--}}
-                                    {{--</label><br>--}}
-                                    {{--<span class="text-primary">Please given file type (.png, .jpg)</span>--}}
                                     @if ($errors->has('company_logo'))
                                         <div class="help-block">  {{ $errors->first('company_logo') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-group col-md-1 pt-1">
-                                    <img class="" src="{{ $partner->company_logo }}" height="60" width="105" id="imgDisplay">
+                                    <img class="" src="{{ config('filesystems.file_base_url') . $partner->company_logo }}" height="60" width="105" id="imgDisplay">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('google_play_link') ? ' error' : '' }}">
