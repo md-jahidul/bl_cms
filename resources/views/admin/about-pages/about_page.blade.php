@@ -149,16 +149,18 @@
     <script>
         $(function () {
             $("textarea#details").summernote({
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    // ['table', ['table']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['view', ['fullscreen', 'codeview']]
-                ],
+                plugins: "table colorpicker",
+                    toolbar: [
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['strikethrough', 'superscript', 'subscript']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['table', ['table']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['view', ['fullscreen', 'codeview']]
+                    ],
                 height:200
+
             })
 
             function readURL(input, imgField) {
