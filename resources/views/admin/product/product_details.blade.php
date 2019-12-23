@@ -91,8 +91,8 @@
 
                                 <div class="clearfix col-md-12"></div>
 
-                                
-                                
+
+
                                 <div class="form-group col-md-6 mt-1 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                     <span>Upload banner image</span>
                                     <div class="custom-file">
@@ -103,9 +103,12 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-
                                     @if( !empty($productDetail->product_details->banner_image_url) )
-                                    <img src="{{ config('filesystems.file_base_url') . optional($productDetail->product_details)->banner_image_url }}" style="height:70px;width:70px;margin-top:10px;" id="imgDisplay">
+                                        <img src="{{ config('filesystems.file_base_url') . optional($productDetail->product_details)->banner_image_url }}" style="height:70px;width:70px;margin-top:10px;" id="imgDisplay">
+                                    @else
+                                        <div class="form-group col-md-6">
+                                            <img style="height:70px;width:70px;display:none" id="imgDisplay">
+                                        </div>
                                     @endif
                                 </div>
 
@@ -120,7 +123,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6"></div>
-                                
+
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
