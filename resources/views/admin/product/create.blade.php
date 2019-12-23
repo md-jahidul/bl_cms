@@ -158,24 +158,41 @@
                                     </slot>
                                 @endif
 
+                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
+                                    <label for="purchase_option" class="required">Purchase Option</label>
+                                    <select class="form-control required" name="purchase_option" id="offer_type"
+                                        required data-validation-required-message="Please select purchase option">
+                                        <option data-alias="" value="">---Select Purchase Option---</option>
+                                        <option value="recharge">Recharge</option>
+                                        <option value="balance">Balance</option>
+                                        <option value="all">All</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('purchase_option'))
+                                        <div class="help-block">{{ $errors->first('purchase_option') }}</div>
+                                    @endif
+                                </div>
 
-                                <div class="col-md-6" >
+                                <div class="col-md-6">
                                     <label></label>
-                                    <div class="form-group pt-1" id="show_in_home">
+                                    <div class="form-group" id="show_in_home">
                                         <label for="trending" class="mr-1">Trending Offer:</label>
                                         <input type="checkbox" name="show_in_home" value="1" id="trending">
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="title" class="mr-1">Recharge</label>
-                                        <input type="radio" name="is_recharge" value="1" id="yes">
-                                        <label for="yes" class="mr-1">Yes</label>
-                                        <input type="radio" name="is_recharge" value="0" id="no" checked>
-                                        <label for="no">No</label>
-                                    </div>
-                                </div>
+{{--                                TODO: Savely Delete Recharge --}}
+{{--                                <div class="col-md-6">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="title" class="mr-1">Recharge</label>--}}
+{{--                                        <input type="radio" name="is_recharge" value="1" id="yes">--}}
+{{--                                        <label for="yes" class="mr-1">Yes</label>--}}
+{{--                                        <input type="radio" name="is_recharge" value="0" id="no" checked>--}}
+{{--                                        <label for="no">No</label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+
+
 
                                 <div class="col-md-6">
                                     <div class="form-group">

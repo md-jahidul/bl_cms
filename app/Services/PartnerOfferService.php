@@ -59,7 +59,7 @@ class PartnerOfferService
         $count = count($this->partnerOfferRepository->findAll());
         $data['partner_id'] = $partnerId;
         if (request()->hasFile('campaign_img')) {
-            $data['campaign_img'] = $this->upload($data['campaign_img'], 'assetlite/images/campaign-image/');
+            $data['campaign_img'] = $this->upload($data['campaign_img'], 'assetlite/images/campaign-image');
         }
         $data['display_order'] = ++$count;
         $offerId = $this->save($data);

@@ -195,6 +195,9 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
+
+//        return  $this->info;
+
         return view('admin.product.edit', $this->info);
     }
 
@@ -281,6 +284,8 @@ class ProductController extends Controller
     public function updateDetails()
     {
         $products = Product::all();
+
+        ProductDetail::truncate();
         foreach ($products as $product) {
             ProductDetail::create([
                 'product_id' => $product->id
