@@ -13,6 +13,10 @@ class PartnerOfferTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        PartnerOffer::truncate();
+        PartnerOfferDetail::truncate();
+
         $validityEn = ["Vaild till 8 March 2019", "Vaild till 10 April 2019", "Vaild till 29 May 2019"];
         $validityBn = ["8 ই মার্চ 2019 অবধি বৈধ", "10 এপ্রিল 2019 পর্যন্ত বৈধ", "29 মে 2019 অবধি বৈধ"];
         $offerValue = [10, 15, 20, 25];

@@ -282,6 +282,8 @@ class ProductController extends Controller
     public function updateDetails()
     {
         $products = Product::all();
+
+        ProductDetail::truncate();
         foreach ($products as $product) {
             ProductDetail::create([
                 'product_id' => $product->id
