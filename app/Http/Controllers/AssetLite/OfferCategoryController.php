@@ -6,9 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Models\OfferCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Services\OfferCategoryService;
 
 class OfferCategoryController extends Controller
 {
+    private $offerCategoryService;
+
+
+    /**
+     * OfferCategoryController constructor.
+     * @param OfferCategoryService $offerCategoryService
+     */
+    public function __construct(OfferCategoryService $offerCategoryService)
+    {
+        $this->offerCategoryService = $offerCategoryService;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -106,8 +120,11 @@ class OfferCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $offer = OfferCategory::findOrFail($id);
-        $offer->update($request->all());
+        //$offer = OfferCategory::findOrFail($id);
+        //$offer->update($request->all());
+
+        $this->offerCategoryService->updateOfferCategory($request->all(), $id);
+        
         Session::flash('message', 'Offer Update successfully!');
         return redirect('offer-categories');
     }

@@ -77,7 +77,7 @@
                                     @endif
                                 </div>
 
-                                @include('layouts.partials.slider_types.' . $type )
+                                {{-- @include('layouts.partials.slider_types.' . $type ) --}}
 
 
                                 <div class="form-group col-md-6 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">

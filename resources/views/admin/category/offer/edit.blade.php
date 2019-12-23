@@ -14,7 +14,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route("offer-categories.update", $offer->id) }}" method="POST" novalidate>
+                        <form role="form" action="{{ route("offer-categories.update", $offer->id) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             {{method_field('PUT')}}
                             <div class="row">
@@ -37,6 +37,34 @@
                                         <div class="help-block">  {{ $errors->first('name_bn') }}</div>
                                     @endif
                                 </div>
+                                
+                                <div class="form-group col-md-6 mt-1 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                    <div class="custom-file">
+                                        <input type="file" name="banner_image_url" class="custom-file-input" id="image">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    @if( !empty($offer->banner_image_url) )
+                                    <img src="{{ config('filesystems.file_base_url') . $offer->banner_image_url }}" style="height:70px;width:70px;" id="imgDisplay">
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
+                                    <label for="banner_alt_text" class="required">Alt Text</label>
+                                    <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
+                                           value="{{ $offer->banner_alt_text }}" required data-validation-required-message="Enter image alter text">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_alt_text'))
+                                        <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6"></div>
+
+
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i

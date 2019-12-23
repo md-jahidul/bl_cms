@@ -243,11 +243,13 @@ class ProductController extends Controller
      */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-        $productDetails = $this->productDetailService->findOne($request->product_details_id);
+        //$productDetails = $this->productDetailService->findOne($request->product_details_id);
+
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
-        $productDetails['other_attributes'] = $request->other_attributes;
-        $productDetails->update($request->all());
+
+        $this->productDetailService->updateProductDetails($request->all(), $id);
+
         Session::flash('success', 'Product Details update successfully!');
         return redirect("offers/$type");
     }
