@@ -90,8 +90,6 @@
                                 @endif
 
                                 <div class="clearfix col-md-12"></div>
-
-                                
                                 
                                 <div class="form-group col-md-6 mt-1 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                     <span>Upload banner image</span>
