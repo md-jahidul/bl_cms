@@ -7,11 +7,13 @@ use App\Models\RelatedProduct;
 use App\Repositories\PartnerOfferDetailRepository;
 use App\Repositories\ProductDetailRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 
 
 class ProductDetailService
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var $partnerOfferDetailRepository
@@ -62,8 +64,7 @@ class ProductDetailService
     public function updateRelatedProduct($requset, $id)
     {
         $products = RelatedProduct::where('product_id', $id)->get();
-        if (count($products) > 0)
-        {
+        if (count($products) > 0) {
             foreach ($products as $product) {
                 $productId = RelatedProduct::findOrFail($product->id);
                 $productId->delete();
@@ -90,22 +91,13 @@ class ProductDetailService
     {
         $productDetails = $this->findOne($id);
         if (!empty($data['banner_image_url'])) {
-            if( !empty($data['banner_alt_text']) ){
-                $image_name_alt_text = str_replace(" ", "_", strtolower($data['banner_alt_text']));
-            }
-            else{
-                $image_name_alt_text = 'product_banner';
-            }
-            $imageUrl = $this->imageUpload($data, "banner_image_url", $image_name_alt_text, '/uploads/assetlite/images/banner/product_details');
-            $data['banner_image_url'] = '/assetlite/images/banner/product_details/' . $imageUrl;
+            $data['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/product_details');
         }
-
-        if( !empty($data['other_attributes']) ){
+        if (!empty($data['other_attributes'])) {
             $data['other_attributes'] = str_replace(" ", "_", strtolower($data['other_attributes']));
         }
-        
         $productDetails->update($data);
-        
+
         return Response('Product Details update successfully!');
     }
 
