@@ -70,8 +70,8 @@ class OfferCategoryService
         $offerCategory = $this->findOne($id);
         
         if (!empty($data['banner_image_url'])) {
-            $imageUrl = $this->imageUpload($data, "banner_image_url", $data['name_en'], '/uploads/images/banner/offer_image');
-            $data['banner_image_url'] = '/images/banner/offer_image/' . $imageUrl;
+            $imageUrl = $this->imageUpload($data, "banner_image_url", $data['name_en'], '/uploads/assetlite/images/banner/offer_image');
+            $data['banner_image_url'] = '/assetlite/images/banner/offer_image/' . $imageUrl;
         }
 
         if( !empty($data['alias']) ){

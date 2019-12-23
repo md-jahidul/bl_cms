@@ -96,8 +96,8 @@ class ProductDetailService
             else{
                 $image_name_alt_text = 'product_banner';
             }
-            $imageUrl = $this->imageUpload($data, "banner_image_url", $image_name_alt_text, '/uploads/images/banner/product_details');
-            $data['banner_image_url'] = '/images/banner/product_details/' . $imageUrl;
+            $imageUrl = $this->imageUpload($data, "banner_image_url", $image_name_alt_text, '/uploads/assetlite/images/banner/product_details');
+            $data['banner_image_url'] = '/assetlite/images/banner/product_details/' . $imageUrl;
         }
 
         if( !empty($data['other_attributes']) ){
