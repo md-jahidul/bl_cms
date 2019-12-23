@@ -61,8 +61,6 @@ class PartnerOfferService
         if (request()->hasFile('campaign_img')) {
             $data['campaign_img'] = $this->upload($data['campaign_img'], 'assetlite/images/campaign-image');
         }
-
-        dd($data);
         $data['display_order'] = ++$count;
         $offerId = $this->save($data);
         $this->partnerOfferDetailRepository->insertOfferDetail($offerId->id);
