@@ -24,7 +24,7 @@
                                 <input type="hidden" name="slug" value="{{ $slug }}">
                                 <div class="form-group col-md-6 {{ $errors->has('details_en') ? ' error' : '' }}">
                                     <label for="details_en" class="required">Details (English)</label>
-                                    <textarea type="text" name="details_en"  class="form-control details" placeholder="Enter offer details in english"
+                                    <textarea type="text" name="details_en"  class="form-control tinymce" placeholder="Enter offer details in english"
                                               required data-validation-required-message="Enter offer details in english">{{ $details->details_en }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_en'))
@@ -34,7 +34,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('details_bn') ? ' error' : '' }}">
                                     <label for="details_bn" class="required">Details (Bangla)</label>
-                                    <textarea type="text" name="details_bn"  class="form-control details" placeholder="Enter offer details in english"
+                                    <textarea type="text" name="details_bn"  class="form-control tinymce" placeholder="Enter offer details in english"
                                               required data-validation-required-message="Enter offer details in english">{{ $details->details_bn }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_bn'))
@@ -142,20 +142,15 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
+{{--    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">--}}
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/tinymce/tinymce.min.css') }}">
 @endpush
 @push('page-js')
-    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
     <script>
         $(function () {
-
-            tinymce.init({
-                selector: '.details'
-            });
-
             // $("textarea#details").tinymce.init
 
             // $("textarea#details").summernote({
