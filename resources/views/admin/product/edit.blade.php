@@ -1,3 +1,4 @@
+@php use App\Enums\OfferType @endphp
 @extends('layouts.admin')
 @php $type = ucfirst($type)  @endphp
 @section('title', "$type Offer Edit")
@@ -135,22 +136,25 @@
                                 </div>
                             {{--</div>--}}
 
-                                <slot class="{{ $product->offer_category_id == 1 ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
+                                <slot class="{{ $product->offer_category_id == OfferType::INTERNET ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
                                     @include('layouts.partials.products.internet')
                                 </slot>
-                                <slot class="{{ $product->offer_category_id == 4 ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
+                                <slot class="{{ $product->offer_category_id == OfferType::PACKAGES ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
                                     @include('layouts.partials.products.packages')
                                 </slot>
 
-                                <slot class="{{ $product->offer_category_id == 9 ? '' : 'd-none' }}" id="others" data-offer-type="others">
+                                <slot class="{{ $product->offer_category_id == OfferType::OTHERS ? '' : 'd-none' }}" id="others" data-offer-type="others">
                                     @include('layouts.partials.products.other')
                                 </slot>
 
                             @if(strtolower($type) == 'prepaid')
-                                <slot class="{{ $product->offer_category_id == 2 ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
+                                <slot id="call_rate" data-offer-type="call_rate" class="{{ $product->offer_category_id == OfferType::CALL_RATE ? '' : 'd-none' }}">
+                                    @include('layouts.partials.products.call_rate')
+                                </slot>
+                                <slot class="{{ $product->offer_category_id == OfferType::VOICE ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
                                     @include('layouts.partials.products.voice')
                                 </slot>
-                                <slot class="{{ $product->offer_category_id == 3 ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
+                                <slot class="{{ $product->offer_category_id == OfferType::BUNDLES ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
                                     @include('layouts.partials.products.bundle')
                                 </slot>
                             @endif
