@@ -148,7 +148,7 @@
                                 </slot>
 
                             @if(strtolower($type) == 'prepaid')
-                                <slot id="call_rate" data-offer-type="call_rate" class="{{ $product->offer_category_id == OfferType::CALL_RATE ? '' : 'd-none' }}">
+                                <slot class="{{ $product->offer_category_id == OfferType::CALL_RATE ? '' : 'd-none' }}" id="call_rate" data-offer-type="call_rate">
                                     @include('layouts.partials.products.call_rate')
                                 </slot>
                                 <slot class="{{ $product->offer_category_id == OfferType::VOICE ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
