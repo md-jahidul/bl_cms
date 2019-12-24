@@ -281,16 +281,15 @@ class ProductController extends Controller
     }
 
     // TODO: Temporary use this methods for Product Details
-    public function updateDetails()
-    {
-        $products = Product::all();
-
-        ProductDetail::truncate();
-        foreach ($products as $product) {
-            ProductDetail::create([
-                'product_id' => $product->id
-            ]);
-        }
-        return "Insert Successfully";
-    }
+//    public function updateDetails()
+//    {
+//        $products = Product::all();
+//        ProductDetail::truncate();
+//        foreach ($products as $product) {
+//            ProductDetail::create([
+//                'product_id' => $product->id
+//            ]);
+//        }
+//        return "Insert Successfully";
+//    }
 }
