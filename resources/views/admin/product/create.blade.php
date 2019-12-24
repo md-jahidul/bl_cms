@@ -150,6 +150,9 @@
                                 </slot>
 
                                 @if( strtolower($type) == 'prepaid')
+                                    <slot id="call_rate" data-offer-type="call_rate" style="display: none">
+                                        @include('layouts.partials.products.call_rate')
+                                    </slot>
                                     <slot id="voice" data-offer-type="voice" style="display: none">
                                         @include('layouts.partials.products.voice')
                                     </slot>
@@ -181,7 +184,7 @@
                                     </div>
                                 </div>
 
-{{--                                TODO: Savely Delete Recharge --}}
+{{--                                TODO: Check Delete Recharge --}}
 {{--                                <div class="col-md-6">--}}
 {{--                                    <div class="form-group">--}}
 {{--                                        <label for="title" class="mr-1">Recharge</label>--}}

@@ -24,8 +24,8 @@
                                 <input type="hidden" name="slug" value="{{ $slug }}">
                                 <div class="form-group col-md-6 {{ $errors->has('details_en') ? ' error' : '' }}">
                                     <label for="details_en" class="required">Details (English)</label>
-                                    <textarea type="text" name="details_en"  class="form-control" placeholder="Enter offer details in english"
-                                              required data-validation-required-message="Enter offer details in english" id="details">{{ $details->details_en }}</textarea>
+                                    <textarea type="text" name="details_en"  class="form-control details" placeholder="Enter offer details in english"
+                                              required data-validation-required-message="Enter offer details in english">{{ $details->details_en }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_en'))
                                         <div class="help-block">{{ $errors->first('details_en') }}</div>
@@ -34,8 +34,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('details_bn') ? ' error' : '' }}">
                                     <label for="details_bn" class="required">Details (Bangla)</label>
-                                    <textarea type="text" name="details_bn"  class="form-control" placeholder="Enter offer details in english"
-                                              required data-validation-required-message="Enter offer details in english" id="details">{{ $details->details_bn }}</textarea>
+                                    <textarea type="text" name="details_bn"  class="form-control details" placeholder="Enter offer details in english"
+                                              required data-validation-required-message="Enter offer details in english">{{ $details->details_bn }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_bn'))
                                         <div class="help-block">{{ $errors->first('details_bn') }}</div>
@@ -153,7 +153,7 @@
         $(function () {
 
             tinymce.init({
-                selector: '#details'
+                selector: '.details'
             });
 
             // $("textarea#details").tinymce.init
@@ -193,7 +193,6 @@
                 var imgField = '#rightImg';
                 readURL(this, imgField);
             });
-
         })
     </script>
 @endpush
