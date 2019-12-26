@@ -148,7 +148,7 @@
                                 </slot>
 
                             @if(strtolower($type) == 'prepaid')
-                                <slot id="call_rate" data-offer-type="call_rate" class="{{ $product->offer_category_id == OfferType::CALL_RATE ? '' : 'd-none' }}">
+                                <slot class="{{ $product->offer_category_id == OfferType::CALL_RATE ? '' : 'd-none' }}" id="call_rate" data-offer-type="call_rate">
                                     @include('layouts.partials.products.call_rate')
                                 </slot>
                                 <slot class="{{ $product->offer_category_id == OfferType::VOICE ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
@@ -179,8 +179,8 @@
                                 <div class="col-md-6">
                                     <label></label>
                                     <div class="form-group pt-1" id="show_in_home">
-                                        <label for="show_in_home" class="mr-1">Trending Offer:</label>
-                                        <input type="checkbox" name="show_in_home" value="1" {{ ($product->show_in_home == 1) ? 'checked' : '' }}>
+                                        <label for="trending" class="mr-1">Trending Offer:</label>
+                                        <input type="checkbox" name="show_in_home" value="1" {{ ($product->show_in_home == 1) ? 'checked' : '' }} id="trending">
                                     </div>
                                 </div>
 

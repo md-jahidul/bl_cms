@@ -41,6 +41,7 @@ class PartnerOfferTableSeeder extends Seeder
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
             $partner = PartnerOffer::create([
                 'partner_id' => rand(1, 5),
+                'product_code' => strtoupper(uniqid()),
                 'validity_en' => $validityEn[$randItem],
                 'validity_bn' => $validityBn[$randItem],
                 'start_date' => "2019-12-10 20:52:54",

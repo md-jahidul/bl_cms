@@ -23,7 +23,11 @@ class StorePartnerOfferRequest extends FormRequest
      */
     public function rules()
     {
+//        dd($this->partner_offer);
+
         return [
+            // TODO: Product Code Unique check on Edit
+//            'product_code' => 'required|unique:partner_offers,product_code,' . $this->user,
             'validity_en' => 'required',
             'validity_bn' => 'required',
             'offer_scale' => 'required',
