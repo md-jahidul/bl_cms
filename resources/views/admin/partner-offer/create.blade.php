@@ -19,6 +19,16 @@
                         <form role="form" action="{{ route('partner_offer_store', [$parentId, $partnerName]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             <div class="row">
+                                <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                    <label for="product_code" class="required">Product Code</label>
+                                    <input type="text" name="product_code"  class="form-control" placeholder="Enter unique product code"
+                                           value="{{ old("product_code") ? old("product_code") : '' }}" required data-validation-required-message="Enter unique product code">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('product_code'))
+                                        <div class="help-block">{{ $errors->first('product_code') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('validity_en') ? ' error' : '' }}">
                                     <label for="validity_en" class="required">Offer Validity (English)</label>
                                     <input type="text" name="validity_en"  class="form-control" placeholder="Enter offer validity in English"
@@ -142,14 +152,26 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-6 pt-2">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="show_in_home" class="mr-1">Show In Home:</label>
                                         <input type="checkbox" name="show_in_home" value="1" id="show_in_home">
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 pt-2 pr-0">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="title" class="required mr-1">Status:</label>
+
+                                        <input type="radio" name="is_active" value="1" id="input-radio-15" checked>
+                                        <label for="input-radio-15" class="mr-1">Active</label>
+
+                                        <input type="radio" name="is_active" value="0" id="input-radio-16">
+                                        <label for="input-radio-16">Inactive</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 pr-0 pt-1">
                                     <div class="form-group">
                                         <label for="is_campaign" class="mr-1">Is Campaign:</label>
                                         <input type="checkbox" name="is_campaign" value="1" id="is_campaign">
@@ -176,17 +198,7 @@
                                     <img width="140" height="80" id="imgDisplay" src="{{ config('filesystems.file_base_url') . 'assetlite/images/campaign-image/campaign-placeholder.png' }}">
                                 </div>
 
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="title" class="required mr-1">Status:</label>
 
-                                        <input type="radio" name="is_active" value="1" id="input-radio-15" checked>
-                                        <label for="input-radio-15" class="mr-1">Active</label>
-
-                                        <input type="radio" name="is_active" value="0" id="input-radio-16">
-                                        <label for="input-radio-16">Inactive</label>
-                                    </div>
-                                </div>
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">

@@ -8,6 +8,7 @@ class PartnerOffer extends Model
 {
     protected $fillable = [
         'partner_id',
+        'product_code',
         'validity_en',
         'validity_bn',
         'start_date',

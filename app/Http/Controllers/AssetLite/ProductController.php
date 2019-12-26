@@ -180,6 +180,9 @@ class ProductController extends Controller
     public function edit($type, $id)
     {
         $product = $this->productService->findProduct($type, $id);
+
+//        dd(gettype($id));
+
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['previous_page'] = url()->previous();
         $this->info['type'] = $type;

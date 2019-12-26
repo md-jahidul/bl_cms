@@ -179,8 +179,8 @@
                                 <div class="col-md-6">
                                     <label></label>
                                     <div class="form-group pt-1" id="show_in_home">
-                                        <label for="show_in_home" class="mr-1">Trending Offer:</label>
-                                        <input type="checkbox" name="show_in_home" value="1" {{ ($product->show_in_home == 1) ? 'checked' : '' }}>
+                                        <label for="trending" class="mr-1">Trending Offer:</label>
+                                        <input type="checkbox" name="show_in_home" value="1" {{ ($product->show_in_home == 1) ? 'checked' : '' }} id="trending">
                                     </div>
                                 </div>
 
