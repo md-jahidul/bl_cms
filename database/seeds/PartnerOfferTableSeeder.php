@@ -37,8 +37,8 @@ class PartnerOfferTableSeeder extends Seeder
             $randItem = rand(0, 2);
             $showInHome = rand(0, 3) ? 1 : 0;
             $randSMS = rand(2000, 2100);
-
             $displayOrder = $showInHome ? ++$countHomePageOffer : 0;
+
             $partner = PartnerOffer::create([
                 'partner_id' => rand(1, 5),
                 'product_code' => strtoupper(uniqid()),

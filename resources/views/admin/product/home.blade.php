@@ -21,7 +21,7 @@
                         <tr>
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <th width="25%">Product Name</th>
-                            <th>Price</th>
+                            <th>Total Price</th>
                             <th>USSD</th>
                             <th class="">Action</th>
                         </tr>
@@ -32,8 +32,8 @@
                             <tr data-index="{{ $trendingHomeOffer->id }}" data-position="{{ $trendingHomeOffer->display_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $trendingHomeOffer->name_en }}{!! $trendingHomeOffer->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
-                                <td>{{ $trendingHomeOffer->price_tk }} Tk</td>
-                                <td>{{ $trendingHomeOffer->ussd_en }}</td>
+                                <td>{{ $trendingHomeOffer->product_core->mrp_price }} Tk</td>
+                                <td>{{ $trendingHomeOffer->product_core->activation_ussd }}</td>
                                 <td width="15%">
 {{--                                    <a href="{{route('product.show', [$trendingHomeOffer->sim_category->alias,$trendingHomeOffer->id])}}" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>--}}
                                     <a href="{{ route('product.edit',[$trendingHomeOffer->sim_category->alias,$trendingHomeOffer->product_code]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
