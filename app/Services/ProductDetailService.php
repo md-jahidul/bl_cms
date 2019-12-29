@@ -106,19 +106,14 @@ class ProductDetailService
             $data['other_attributes'] = str_replace(" ", "_", strtolower($data['other_attributes']));
         }
 
-
         $bondhoSimOffers = $this->productRepository->countBondhoSimOffer();
-
 
         foreach ($bondhoSimOffers as $bondhoSimOffer) {
             $productDetails = $this->productDetailRepository->findOneByProperties(['product_id' => $bondhoSimOffer->id]);
-
-//            dd($productDetails);
             $productDetails->update($data);
         }
 
         $productDetails->update($data);
-
         return Response('Product Details update successfully!');
     }
 
