@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Enums\OfferType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\OfferCategory;
@@ -150,6 +151,13 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
+        $bondhoSimOffer = $this->productService->findBondhoSim();
+
+        if ($request->offer_info['other_offer_type_id'] == OfferType::BONDHO_SIM_OFFER && count($bondhoSimOffer) > 4) {
+            Session::flash('error', 'Maximum 4 Bondho SIM offer can be created');
+            return redirect()->back();
+        }
+
         $simId = SimCategory::where('alias', $type)->first()->id;
         $this->productCoreService->storeProductCore($request->all(), $simId);
         $this->strToint($request);

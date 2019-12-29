@@ -9,6 +9,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\OfferType;
 use App\Models\Product;
 use App\Models\SimCategory;
 use Illuminate\Support\Facades\DB;
@@ -53,6 +54,12 @@ class ProductRepository extends BaseRepository
             ->where('product_code', $id)
             ->with('product_core')
             ->first();
+    }
+
+    public function countBondhoSimOffer()
+    {
+       return $this->model->where('offer_info->other_offer_type_id', OfferType::BONDHO_SIM_OFFER)
+           ->get();
     }
 
 }
