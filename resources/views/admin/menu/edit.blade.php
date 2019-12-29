@@ -46,8 +46,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('bn_label_text') ? ' error' : '' }}">
                                     <label for="title" class="required">Bangla Label</label>
-                                    <input type="text" name="bn_label_text"  class="form-control" placeholder="Enter bangla label"
-                                           value="{{ $menu->bn_label_text }}" required data-validation-required-message="Enter footer menu bangla label">
+                                    <input type="text" name="bn_label_text"  class="form-control" placeholder="Enter label in Bangla"
+                                           value="{{ $menu->bn_label_text }}" required data-validation-required-message="Enter label in Bangla">
                                     <div class="help-block"></div>
                                     @if ($errors->has('bn_label_text'))
                                         <div class="help-block">  {{ $errors->first('bn_label_text') }}</div>

@@ -38,7 +38,7 @@ class StoreSliderImageRequest extends FormRequest
     {
         return [
             'title.required' => "Enter english title",
-            'description.required' => "Enter bangla english",
+            'description.required' => "Enter description in Bangla",
             'alt_text.required' => "Enter alt ext",
             'url_btn_label.required' => "Enter button url",
             'redirect_url.required' => "Enter redirect url",
