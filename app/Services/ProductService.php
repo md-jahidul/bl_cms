@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\OfferType;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Repositories\ProductCoreRepository;
@@ -11,6 +12,7 @@ use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 
 class ProductService
@@ -147,6 +149,14 @@ class ProductService
         ProductDetail::create([
             'product_id' => $product->id
         ]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function findBondhoSim()
+    {
+        return $this->productRepository->countBondhoSimOffer();
     }
 
     /**

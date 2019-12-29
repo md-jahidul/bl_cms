@@ -49,7 +49,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="ussd">USSD Code English</label>
                                     <input type="text" class="form-control" placeholder="Enter offer ussd english" maxlength="25" readonly
-                                           value="{{ $productDetail->product_core->activation_ussd }}">
+                                           value="{{ $productDetail->product_core['activation_ussd'] }}">
                                 </div>
 
 
@@ -148,27 +148,44 @@
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/tinymce/tinymce.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 @endpush
 @push('page-js')
     <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
 {{--    <script>--}}
-{{--        $(function () {--}}
-{{--            $("textarea#details").summernote({--}}
-{{--                toolbar: [--}}
-{{--                    ['style', ['bold', 'italic', 'underline', 'clear']],--}}
-{{--                    ['font', ['strikethrough', 'superscript', 'subscript']],--}}
-{{--                    ['fontsize', ['fontsize']],--}}
-{{--                    ['color', ['color']],--}}
-{{--                    // ['table', ['table']],--}}
-{{--                    ['para', ['ul', 'ol', 'paragraph']],--}}
-{{--                    ['view', ['fullscreen', 'codeview']]--}}
-{{--                ],--}}
-{{--                height:200--}}
-{{--            })--}}
-{{--        })--}}
+{{--        $('#save').click(function(event) {--}}
+{{--            event.preventDefault()--}}
+{{--            for (i=0; i < tinymce.editors.length; i++){--}}
+{{--                var content = tinymce.editors[i].getContent(); // get the content--}}
+
+{{--                if (content == ''){--}}
+{{--                   console.log("Not empty")--}}
+{{--                }--}}
+
+{{--                // $('#description').val(content); // put it in the textarea--}}
+{{--            }--}}
+{{--        });--}}
 {{--    </script>--}}
+
+    <script>
+        $(function () {
+            $("textarea#details").summernote({
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    // ['table', ['table']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['view', ['fullscreen', 'codeview']]
+                ],
+                height:200
+            })
+        })
+    </script>
 @endpush
 
 
