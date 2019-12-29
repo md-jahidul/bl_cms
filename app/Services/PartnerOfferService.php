@@ -46,7 +46,7 @@ class PartnerOfferService
 
     public function campaignOffers()
     {
-        return $this->partnerOfferRepository->campaigin();
+        return $this->partnerOfferRepository->campaign();
     }
 
     /**
@@ -59,9 +59,10 @@ class PartnerOfferService
         $count = count($this->partnerOfferRepository->findAll());
         $data['partner_id'] = $partnerId;
         if (request()->hasFile('campaign_img')) {
-            $data['campaign_img'] = $this->upload($data['campaign_img'], 'assetlite/images/campaign-image/');
+            $data['campaign_img'] = $this->upload($data['campaign_img'], 'assetlite/images/campaign-image');
         }
         $data['display_order'] = ++$count;
+        $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
         $offerId = $this->save($data);
         $this->partnerOfferDetailRepository->insertOfferDetail($offerId->id);
         return new Response('Partner offer added successfully');

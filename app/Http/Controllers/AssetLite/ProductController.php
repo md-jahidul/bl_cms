@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Enums\OfferType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\OfferCategory;
@@ -80,12 +81,21 @@ class ProductController extends Controller
         $products = Product::category($type)->with(['product_core', 'offer_category' => function ($query) {
             $query->select('id', 'name_en');
         }])->latest()->get();
+
         return view('admin.product.index', compact('products', 'type'));
     }
 
     public function trendingOfferHome()
     {
-        $trendingHomeOffers = Product::where('show_in_home', 1)->orderBy('display_order')->get();
+        $trendingHomeOffers = Product::where('show_in_home', 1)
+            ->with(['product_core' => function ($query) {
+                $query->select('product_code', 'activation_ussd', 'mrp_price');
+            }, 'offer_category' => function ($query) {
+                $query->select('id', 'name_en');
+            }])
+            ->orderBy('display_order')
+            ->get();
+
         return view('admin.product.home', compact('trendingHomeOffers'));
     }
 
@@ -141,6 +151,13 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
+        $bondhoSimOffer = $this->productService->findBondhoSim();
+
+        if ($request->offer_info['other_offer_type_id'] == OfferType::BONDHO_SIM_OFFER && count($bondhoSimOffer) > 4) {
+            Session::flash('error', 'Maximum 4 Bondho SIM offer can be created');
+            return redirect()->back();
+        }
+
         $simId = SimCategory::where('alias', $type)->first()->id;
         $this->productCoreService->storeProductCore($request->all(), $simId);
         $this->strToint($request);
@@ -175,7 +192,7 @@ class ProductController extends Controller
      *
      * @param $type
      * @param int $id
-     * @return Response
+     * @return Factory|View
      */
     public function edit($type, $id)
     {
@@ -195,15 +212,7 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
-
-//        return  $this->info;
-
         return view('admin.product.edit', $this->info);
-    }
-
-    public function homeEdit($id)
-    {
-        return view('admin.product.home_offer_edit', compact(''));
     }
 
     /**
@@ -243,11 +252,13 @@ class ProductController extends Controller
      */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-        $productDetails = $this->productDetailService->findOne($request->product_details_id);
+        //$productDetails = $this->productDetailService->findOne($request->product_details_id);
+
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
-        $productDetails['other_attributes'] = $request->other_attributes;
-        $productDetails->update($request->all());
+
+        $this->productDetailService->updateProductDetails($request->all(), $id);
+
         Session::flash('success', 'Product Details update successfully!');
         return redirect("offers/$type");
     }
@@ -279,16 +290,15 @@ class ProductController extends Controller
     }
 
     // TODO: Temporary use this methods for Product Details
-    public function updateDetails()
-    {
-        $products = Product::all();
-
-        ProductDetail::truncate();
-        foreach ($products as $product) {
-            ProductDetail::create([
-                'product_id' => $product->id
-            ]);
-        }
-        return "Insert Successfully";
-    }
+//    public function updateDetails()
+//    {
+//        $products = Product::all();
+//        ProductDetail::truncate();
+//        foreach ($products as $product) {
+//            ProductDetail::create([
+//                'product_id' => $product->id
+//            ]);
+//        }
+//        return "Insert Successfully";
+//    }
 }

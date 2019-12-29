@@ -10,8 +10,8 @@
 
 <div class="form-group col-md-6 {{ $errors->has('description_bn') ? ' error' : '' }}">
     <label for="description_bn" class="required">Description (Bangla)</label>
-    <textarea type="text" name="offer_info[description_bn]"  class="form-control" placeholder="Enter description in bangla"
-              required data-validation-required-message="Enter description in bangla">{{ (!empty($product->offer_info['description_bn'])) ? $product->offer_info['description_bn'] : old("offer_info.description_bn") ?? '' }}</textarea>
+    <textarea type="text" name="offer_info[description_bn]"  class="form-control" placeholder="Enter description in Bangla"
+              required data-validation-required-message="Enter description in Bangla">{{ (!empty($product->offer_info['description_bn'])) ? $product->offer_info['description_bn'] : old("offer_info.description_bn") ?? '' }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('description_bn'))
         <div class="help-block">  {{ $errors->first('description_bn') }}</div>

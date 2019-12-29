@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Enums\OfferType;
+use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDetailRepository;
@@ -9,6 +11,8 @@ use App\Repositories\ProductRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 
 class ProductService
@@ -138,13 +142,21 @@ class ProductService
             'start_date' => "2019-12-10 20:12:10" ?? null,
             'sim_category_id' => $data['sim_type'] ?? null,
             'offer_category_id' => $offerId ?? null,
-            'is_recharge' => $data['is_recharge_offer'] ?? null,
+            'is_recharge' => $data['is_recharge_offer'] ?? 0,
             'status' => $data['status'],
         ]);
 
         ProductDetail::create([
             'product_id' => $product->id
         ]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function findBondhoSim()
+    {
+        return $this->productRepository->countBondhoSimOffer();
     }
 
     /**
@@ -173,6 +185,9 @@ class ProductService
 
     public function coreData()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        Product::truncate();
+        ProductDetail::truncate();
         $coreData = $this->productCoreRepository->findAll();
         foreach ($coreData as $coreProduct) {
             $this->getOfferInfo($coreProduct);

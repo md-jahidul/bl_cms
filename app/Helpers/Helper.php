@@ -39,7 +39,8 @@ class Helper
             "INTERNET_CONFIGURATION" =>   "INTERNET_CONFIGURATION",
             "SWITCH_ACCOUNT" => "SWITCH_ACCOUNT",
             "SWITCH_LANGUAGE" =>  "SWITCH_LANGUAGE",
-            "UPDATE" =>  "UPDATE"
+            "UPDATE" =>  "UPDATE",
+            "CANCEL" =>  "CANCEL"
 
         ];
 

@@ -25,7 +25,7 @@ class PartnerOfferRepository extends BaseRepository
 
     public function campaigin()
     {
-       return $this->model->where('is_campaign', 1)->orderBy('campaign_order')->get();
+        return $this->model->where('is_campaign', 1)->orderBy('campaign_order')->get();
     }
 
     public function sortable($request, $orderColumn = 'display_order')
