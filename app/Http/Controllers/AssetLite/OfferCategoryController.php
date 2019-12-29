@@ -4,9 +4,11 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
 use App\Models\OfferCategory;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Services\OfferCategoryService;
+use Illuminate\View\View;
 
 class OfferCategoryController extends Controller
 {
@@ -78,20 +80,18 @@ class OfferCategoryController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\OfferCategory  $offerCategory
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return Factory|View
      */
     public function edit($id)
     {
         $offer = OfferCategory::findOrFail($id);
-        return view('admin.category.offer.edit', compact('offer', 'parent_id'));
+        return view('admin.category.offer.edit', compact('offer'));
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function childEdit($parent_id,$type,$id)
     {
@@ -101,7 +101,7 @@ class OfferCategoryController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View3
+     * @return Factory|\Illuminate\View\View3
      */
     public function childUpdate(Request $request, $parent_id, $id)
     {
@@ -124,7 +124,7 @@ class OfferCategoryController extends Controller
         //$offer->update($request->all());
 
         $this->offerCategoryService->updateOfferCategory($request->all(), $id);
-        
+
         Session::flash('message', 'Offer Update successfully!');
         return redirect('offer-categories');
     }
