@@ -13,10 +13,10 @@ class AddColumnOfferCategoriesTable extends Migration
      */
     public function up()
     {
-       Schema::table('offer_categories', function (Blueprint $table) {
-           $table->string('banner_image_url')->nullable()->after('type_id');
-           $table->string('banner_alt_text')->nullable()->after('banner_image_url');
-       });
+        Schema::table('offer_categories', function (Blueprint $table) {
+            $table->string('banner_image_url')->nullable()->after('type_id');
+            $table->string('banner_alt_text')->nullable()->after('banner_image_url');
+        });
     }
 
     /**

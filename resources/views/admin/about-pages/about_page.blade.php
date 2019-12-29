@@ -142,32 +142,13 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
-{{--    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">--}}
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/tinymce/tinymce.min.css') }}">
 @endpush
 @push('page-js')
-{{--    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
     <script>
         $(function () {
-            // $("textarea#details").tinymce.init
-
-            // $("textarea#details").summernote({
-            //     plugins: "table colorpicker",
-            //         toolbar: [
-            //             ['style', ['bold', 'italic', 'underline', 'clear']],
-            //             ['font', ['strikethrough', 'superscript', 'subscript']],
-            //             ['fontsize', ['fontsize']],
-            //             ['color', ['color']],
-            //             ['table', ['table']],
-            //             ['para', ['ul', 'ol', 'paragraph']],
-            //             ['view', ['fullscreen', 'codeview']]
-            //         ],
-            //     height:200
-            //
-            // })
-
             function readURL(input, imgField) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
