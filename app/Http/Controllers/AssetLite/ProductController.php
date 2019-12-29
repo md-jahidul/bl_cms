@@ -80,6 +80,7 @@ class ProductController extends Controller
         $products = Product::category($type)->with(['product_core', 'offer_category' => function ($query) {
             $query->select('id', 'name_en');
         }])->latest()->get();
+
         return view('admin.product.index', compact('products', 'type'));
     }
 
