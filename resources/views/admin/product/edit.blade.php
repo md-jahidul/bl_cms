@@ -48,8 +48,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
                                     <label for="name_bn" class="required">Offer Name Bangla</label>
-                                    <input type="text" name="name_bn" class="form-control" placeholder="Enter offer name bangla"
-                                           required data-validation-required-message="Enter offer name bangla"
+                                    <input type="text" name="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
+                                           required data-validation-required-message="Enter offer name in Bangla"
                                            value="{{ $product->name_bn }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_bn'))
@@ -91,7 +91,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('ussd_bn') ? ' error' : '' }}">
                                     <label for="ussd_bn">USSD Code Bangla</label>
-                                    <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd bangla" maxlength="25"
+                                    <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd in Bangla" maxlength="25"
                                            value="{{ $product->ussd_bn }}">
                                 </div>
 

@@ -19,7 +19,7 @@
 
 <div class="form-group col-md-6 {{ $errors->has('callrate_short_note_bn') ? ' error' : '' }}">
     <label for="callrate_short_note_bn" class="required">Call Rate Short Note Bangla</label>
-    <input type="text" name="offer_info[callrate_short_note_bn]"  class="form-control" placeholder="Enter call rate short note in bangla"
+    <input type="text" name="offer_info[callrate_short_note_bn]"  class="form-control" placeholder="Enter call rate short note in Bangla"
            value="{{ (!empty($offerInfo['callrate_short_note_bn'])) ? $offerInfo['callrate_short_note_bn'] : old("offer_info.callrate_short_note_bn") ?? '' }}"
            required data-validation-required-message="Enter view list url">
     <div class="help-block"></div>
@@ -41,7 +41,7 @@
 
 <div class="form-group col-md-6 {{ $errors->has('gb_short_note_bn') ? ' error' : '' }}">
     <label for="gb_short_note_bn" class="required">Internet Short Note Bangla</label>
-    <input type="text" name="offer_info[gb_short_note_bn]"  class="form-control" placeholder="Enter internet short note in bangla"
+    <input type="text" name="offer_info[gb_short_note_bn]"  class="form-control" placeholder="Enter internet short note in Bangla"
            value="{{ (!empty($offerInfo['gb_short_note_bn'])) ? $offerInfo['gb_short_note_bn'] : old("offer_info.gb_short_note_bn") ?? '' }}"
            required data-validation-required-message="Enter view list url">
     <div class="help-block"></div>

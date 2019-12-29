@@ -37,7 +37,7 @@ class StoreFooterMenuRequest extends FormRequest
         return [
             'title.required' => "Enter footer menu title",
             'en_label_text.required' => "Enter footer menu english",
-            'bn_label_text.required' => "Enter footer menu bangla",
+            'bn_label_text.required' => "Enter footer menu in Bangla",
             'url.required' => "Enter footer menu url",
         ];
     }

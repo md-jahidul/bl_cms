@@ -45,11 +45,11 @@ class StorePartnerOfferRequest extends FormRequest
     {
         return [
             'validity_en.required' => "Enter offer validity english.",
-            'validity_bn.required' => "Enter offer validity bangla.",
+            'validity_bn.required' => "Enter offer validity in Bangla.",
             'get_offer_msg_en.required' => "Enter get send SMS text english.",
-            'get_offer_msg_bn.required' => "Enter get send SMS text bangla.",
+            'get_offer_msg_bn.required' => "Enter get send SMS text in Bangla.",
             'btn_text_en.required' => "Enter button label english.",
-            'btn_text_bn.required' => "Enter button label bangla",
+            'btn_text_bn.required' => "Enter button label in Bangla",
         ];
     }
 }

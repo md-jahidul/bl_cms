@@ -28,7 +28,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('company_name_bn') ? ' error' : '' }}">
                                     <label for="company_name_bn" class="required">Company Name (Bangla)</label>
-                                    <input type="text" name="company_name_bn"  class="form-control" placeholder="Enter company name bangla"
+                                    <input type="text" name="company_name_bn"  class="form-control" placeholder="Enter company name in Bangla"
                                            value="{{ $partner->company_name_bn }}" required data-validation-required-message="Enter company name in Bangla">
                                     <div class="help-block"></div>
                                     @if ($errors->has('company_name_bn'))

@@ -80,12 +80,21 @@ class ProductController extends Controller
         $products = Product::category($type)->with(['product_core', 'offer_category' => function ($query) {
             $query->select('id', 'name_en');
         }])->latest()->get();
+
         return view('admin.product.index', compact('products', 'type'));
     }
 
     public function trendingOfferHome()
     {
-        $trendingHomeOffers = Product::where('show_in_home', 1)->orderBy('display_order')->get();
+        $trendingHomeOffers = Product::where('show_in_home', 1)
+            ->with(['product_core' => function ($query) {
+                $query->select('product_code', 'activation_ussd', 'mrp_price');
+            }, 'offer_category' => function ($query) {
+                $query->select('id', 'name_en');
+            }])
+            ->orderBy('display_order')
+            ->get();
+
         return view('admin.product.home', compact('trendingHomeOffers'));
     }
 
@@ -175,14 +184,11 @@ class ProductController extends Controller
      *
      * @param $type
      * @param int $id
-     * @return Response
+     * @return Factory|View
      */
     public function edit($type, $id)
     {
         $product = $this->productService->findProduct($type, $id);
-
-//        dd(gettype($id));
-
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['previous_page'] = url()->previous();
         $this->info['type'] = $type;
@@ -198,15 +204,7 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
-
-//        return  $this->info;
-
         return view('admin.product.edit', $this->info);
-    }
-
-    public function homeEdit($id)
-    {
-        return view('admin.product.home_offer_edit', compact(''));
     }
 
     /**

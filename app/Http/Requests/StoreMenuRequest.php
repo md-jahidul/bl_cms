@@ -37,7 +37,7 @@ class StoreMenuRequest extends FormRequest
         return [
             'code.required' => "Enter menu title",
             'en_label_text.required' => "Enter menu english",
-            'bn_label_text.required' => "Enter menu bangla",
+            'bn_label_text.required' => "Enter menu in Bangla",
             'url.required' => "Enter menu url",
         ];
     }
