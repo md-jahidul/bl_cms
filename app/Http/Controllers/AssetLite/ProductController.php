@@ -152,12 +152,10 @@ class ProductController extends Controller
     public function store(ProductStoreRequest $request, $type)
     {
         $bondhoSimOffer = $this->productService->findBondhoSim();
-
-        if ($request->offer_info['other_offer_type_id'] == OfferType::BONDHO_SIM_OFFER && count($bondhoSimOffer) > 4) {
+        if (count($bondhoSimOffer) > 4 && isset($request->offer_info['other_offer_type_id']) == OfferType::BONDHO_SIM_OFFER) {
             Session::flash('error', 'Maximum 4 Bondho SIM offer can be created');
             return redirect()->back();
         }
-
         $simId = SimCategory::where('alias', $type)->first()->id;
         $this->productCoreService->storeProductCore($request->all(), $simId);
         $this->strToint($request);
@@ -241,6 +239,9 @@ class ProductController extends Controller
     {
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
+
+//        return $productDetail;
+
         return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
     }
 
@@ -252,6 +253,8 @@ class ProductController extends Controller
      */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
+
+
         //$productDetails = $this->productDetailService->findOne($request->product_details_id);
 
         $this->productDetailService->updateOtherRelatedProduct($request, $id);

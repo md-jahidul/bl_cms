@@ -28,7 +28,7 @@
                                 @php $path = 'partner-offers-home'; @endphp
                                 <tr data-index="{{ $tag->id }}" data-position="{{ $tag->display_order }}">
                                     <td width="3%">{{ $loop->iteration }}</td>
-                                    <td>{{ $tag->name_en }}</td>
+                                    <td style="color: {{ $tag->tag_color }}">{{ $tag->name_en }}</td>
                                     <td width="12%" class="text-center">
                                         <a href="{{ url("tag-category/$tag->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         <a href="#" remove="{{ url("tag-category/destroy/$tag->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $tag->id }}" title="Delete">
