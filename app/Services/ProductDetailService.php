@@ -102,15 +102,16 @@ class ProductDetailService
         if (!empty($data['banner_image_url'])) {
             $data['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/product_details');
         }
-        if (!empty($data['other_attributes'])) {
-            $data['other_attributes'] = str_replace(" ", "_", strtolower($data['other_attributes']));
-        }
 
         $bondhoSimOffers = $this->productRepository->countBondhoSimOffer();
 
-        foreach ($bondhoSimOffers as $bondhoSimOffer) {
-            $productDetails = $this->productDetailRepository->findOneByProperties(['product_id' => $bondhoSimOffer->id]);
-            $productDetails->update($data);
+        if (isset($data['other_offer_type_id'])) {
+            foreach ($bondhoSimOffers as $bondhoSimOffer) {
+                if ($bondhoSimOffer->offer_info['other_offer_type_id'] == 13) {
+                    $productDetails = $this->productDetailRepository->findOneByProperties(['product_id' => $bondhoSimOffer->id]);
+                    $productDetails->update($data);
+                }
+            }
         }
 
         $productDetails->update($data);
