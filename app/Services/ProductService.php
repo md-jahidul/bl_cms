@@ -146,7 +146,7 @@ class ProductService
             'status' => $data['status'],
         ]);
 
-        ProductDetail::create([
+        ProductDetail::updateOrCreate([
             'product_id' => $product->id
         ]);
     }

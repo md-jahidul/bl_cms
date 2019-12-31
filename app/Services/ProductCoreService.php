@@ -62,7 +62,10 @@ class ProductCoreService
             'is_recharge_offer' => 23,
             'is_gift_offer' => 24,
             'is_social_pack' => 25,
-            'validity_in_days' => 26,
+            'purchase_option' => 26,
+            'is_rate_cutter_offer' => 27,
+            'assetlite_offer_type' => 28,
+            'validity_in_days' => 29,
         ];
     }
 
@@ -119,6 +122,7 @@ class ProductCoreService
     public function updateProductCore($data, $id)
     {
         $product = $this->productCoreRepository->findOneProductCore($id);
+        $data['mrp_price'] = $data['price'] + $data['vat'];
         $product->update($data);
     }
 
@@ -241,8 +245,11 @@ class ProductCoreService
                             dd($e->getMessage());
                             continue;
                         }
+
+//                        dd($data);
                     }
                     $row_number++;
+
                 }
             }
             $reader->close();
