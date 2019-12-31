@@ -131,8 +131,9 @@ class ProductService
      * @param $data
      * @param $offerId
      * Mapping Product Core Data to Product and insert
+     * @param null $offerInfo
      */
-    public function insertProduct($data, $offerId)
+    public function insertProduct($data, $offerId, $offerInfo = null)
     {
         $product = $this->save([
             'product_code' => $data['product_code'] ?? null,
@@ -144,6 +145,8 @@ class ProductService
             'offer_category_id' => $offerId ?? null,
             'is_recharge' => $data['is_recharge_offer'] ?? 0,
             'status' => $data['status'],
+            'purchase_option' =>  $data['purchase_option'],
+            'offer_info' =>  $offerInfo
         ]);
 
         ProductDetail::updateOrCreate([
@@ -165,9 +168,9 @@ class ProductService
      */
     public function getOfferInfo($coreProduct)
     {
-        $type = $coreProduct->content_type;
-        switch ($type) {
-            case 'data':
+        $type = $coreProduct->assetlite_offer_type;
+        switch (strtolower($type)) {
+            case 'internet':
                 $offerId = 1; // Internet Offer
                 $this->insertProduct($coreProduct, $offerId);
                 break;
@@ -175,10 +178,17 @@ class ProductService
                 $offerId = 2; // Voice Offer
                 $this->insertProduct($coreProduct, $offerId);
                 break;
-            case 'mix':
+            case 'bundle':
                 $offerId = 3; // Bundle Offer
                 $this->insertProduct($coreProduct, $offerId);
                 break;
+            case 'startup':
+                $offerId = 4; // Bundle Offer
+                $this->insertProduct($coreProduct, $offerId, ['package_offer_type_id' => 6]);
+                break;
+//            default:
+//                $offerId = null; // Bundle Offer
+//                $this->insertProduct($coreProduct, $offerId);
         }
     }
 
