@@ -131,6 +131,11 @@ class ProductCoreService
         ProductCore::insert($data);
     }
 
+    protected function contentTypeMap($contentType)
+    {
+        dd($contentType);
+    }
+
     public function mapDataFromExcel($excel_path)
     {
         try {
