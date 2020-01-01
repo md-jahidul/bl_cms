@@ -43,7 +43,8 @@ class ProductCore extends Model
         'validity_in_days',
         'purchase_option',
         'is_rate_cutter_offer',
-        'assetlite_offer_type'
+        'assetlite_offer_type',
+        'app_offer_section'
 
     ];
 
