@@ -239,9 +239,6 @@ class ProductController extends Controller
     {
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
-
-//        return $productDetail;
-
         return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
     }
 
@@ -253,8 +250,6 @@ class ProductController extends Controller
      */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-
-
         //$productDetails = $this->productDetailService->findOne($request->product_details_id);
 
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
@@ -284,12 +279,17 @@ class ProductController extends Controller
     }
 
     /**
+     * @param $type
      * @return string
      * Product Core Data mapping To Product table
      */
-    public function coreDataMappingProduct()
+    public function coreDataMappingProduct($type)
     {
-        return $this->productService->coreData();
+        $this->productService->coreData();
+        return \response([
+            "url" => url("offers/$type"),
+            "success" => true
+        ]);
     }
 
     // TODO: Temporary use this methods for Product Details

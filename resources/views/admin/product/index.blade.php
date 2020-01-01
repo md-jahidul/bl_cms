@@ -5,6 +5,9 @@
     <li class="breadcrumb-item ">Product List</li>
 @endsection
 @section('action')
+    <a href="#" id="syncBtn" class="btn btn-outline-blue-grey round btn-glow px-2">
+        Sync Core Product
+    </a>
     <a href="{{ route("product.create", strtolower($type)) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add Product
     </a>
@@ -81,6 +84,63 @@
 @push('page-js')
     <script>
         var auto_save_url = "{{ url('/partner-offer/sortable') }}";
+
+        $('#syncBtn').click(function (e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                html: jQuery('#syncBtn').html(),
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Sync it!'
+            }).then((result) => {
+                if (result.value) {
+                    swal.fire({
+                        title: 'Data Processing. Please Wait...',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        onOpen: () => {
+                            swal.showLoading();
+                        }
+                    });
+
+                    $.ajax({
+                        url: '{{ route('core-product-mapping', strtolower($type))}}',
+                        type: 'Get',
+                        success: function (result) {
+                            if (result.success) {
+                                swal.fire({
+                                    title: 'Core Product Sync Successfully!',
+                                    type: 'success',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function () {
+                                    window.location.replace(result.url);
+                                }, 2000)
+                            } else {
+                                swal.close();
+                                swal.fire({
+                                    title: result.message,
+                                    type: 'error',
+                                });
+                            }
+
+                        },
+                        error: function (data) {
+                            swal.fire({
+                                title: 'Failed to sync',
+                                type: 'error',
+                            });
+                        }
+                    });
+                }
+            });
+
+        });
+
     </script>
 @endpush
 
