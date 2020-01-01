@@ -25,6 +25,16 @@
                             @csrf
                             @method('put')
                             <div class="row">
+                                <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                    <label for="product_code" class="required">Product Code</label>
+                                    <input type="text" class="form-control" placeholder="Enter offer validity in English" readonly
+                                           value="{{ $partnerOffer->product_code }}" required data-validation-required-message="Enter offer validity in English">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('product_code'))
+                                        <div class="help-block">{{ $errors->first('product_code') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('validity_en') ? ' error' : '' }}">
                                     <label for="validity_en" class="required">Offer Validity (English)</label>
                                     <input type="text" name="validity_en" class="form-control"
@@ -163,14 +173,26 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-6 pt-2">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="show_in_home" class="mr-1">Show In Home:</label>
                                         <input type="checkbox" name="show_in_home" value="1" id="show_in_home">
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 pt-2">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="title" class="required mr-1">Status:</label>
+                                        <input type="radio" name="is_active" value="1"
+                                               id="active" {{ ($partnerOffer->is_active == 1) ? 'checked' : '' }}>
+                                        <label for="active" class="mr-1">Active</label>
+                                        <input type="radio" name="is_active" value="0"
+                                               id="inactive" {{ ($partnerOffer->is_active == 0) ? 'checked' : '' }}>
+                                        <label for="inactive">Inactive</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 pt-1">
                                     <div class="form-group">
                                         <label for="is_campaign" class="mr-1">Is Campaign:</label>
                                         <input type="checkbox" name="is_campaign" value="1"
@@ -203,17 +225,7 @@
                                 </div>
 
 
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="title" class="required mr-1">Status:</label>
-                                        <input type="radio" name="is_active" value="1"
-                                               id="active" {{ ($partnerOffer->is_active == 1) ? 'checked' : '' }}>
-                                        <label for="active" class="mr-1">Active</label>
-                                        <input type="radio" name="is_active" value="0"
-                                               id="inactive" {{ ($partnerOffer->is_active == 0) ? 'checked' : '' }}>
-                                        <label for="inactive">Inactive</label>
-                                    </div>
-                                </div>
+
 
 
                                 <div class="form-actions col-md-12">

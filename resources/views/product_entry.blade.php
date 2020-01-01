@@ -96,6 +96,8 @@
                     data: formData,
                     success: function (result) {
 
+                        console.log(result)
+
                         if (result.success) {
                             swal.fire({
                                 title: 'Product Upload Successfully!',

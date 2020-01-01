@@ -36,11 +36,15 @@ class ProductCore extends Model
         'show_in_app',
         'offer_id',
         'is_amar_offer',
-        'purchase_option',
+        'is_social_pack',
         'other_info',
         'status',
         'segment',
-        'validity_in_days'
+        'validity_in_days',
+        'purchase_option',
+        'is_rate_cutter_offer',
+        'assetlite_offer_type'
+
     ];
 
     protected $guarded = ['id'];

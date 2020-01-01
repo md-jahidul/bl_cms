@@ -11,7 +11,7 @@
 
 <div class="form-group col-md-12 {{ $errors->has('details_bn') ? ' error' : '' }}">
     <label for="details_bn" class="">Details (Bangla)</label>
-    <textarea type="text" name="details_bn"  class="form-control ckeditor" placeholder="Enter short details in bangla" rows="5" id="ckeditor"
+    <textarea type="text" name="details_bn"  class="form-control ckeditor" placeholder="Enter short details in Bangla" rows="5" id="ckeditor"
               >{{ $productDetail->product_details->details_bn }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('details_bn'))

@@ -27,8 +27,10 @@ class Helper
             "AUTO_RENEWAL" => "AUTO_RENEWAL",
             "UPDATE_PROFILE" =>  "UPDATE_PROFILE",
             "ADD_FNF" => "ADD_FNF",
+            "BACKUP" => "BACKUP",
             "BACKUP_CONTACT" => "BACKUP_CONTACT",
             "VAS" => "VAS",
+            "SUBSCRIBE" =>  "SUBSCRIBE",
             "SUBSCRIBE_VAS" =>  "SUBSCRIBE_VAS",
             "COLLECT_POINT" =>  "COLLECT_POINT",
             "SUBSCRIVE_DIGITAL_SERVICE" =>  "SUBSCRIVE_DIGITAL_SERVICE",
@@ -39,8 +41,8 @@ class Helper
             "INTERNET_CONFIGURATION" =>   "INTERNET_CONFIGURATION",
             "SWITCH_ACCOUNT" => "SWITCH_ACCOUNT",
             "SWITCH_LANGUAGE" =>  "SWITCH_LANGUAGE",
-            "UPDATE" =>  "UPDATE"
-
+            "UPDATE" =>  "UPDATE",
+            "CANCEL" =>  "CANCEL",
         ];
 
         return $list;

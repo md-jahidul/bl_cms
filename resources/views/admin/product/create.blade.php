@@ -49,7 +49,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
                                     <label for="name_bn" class="required">Offer Name (Bangla)</label>
                                     <input type="text" name="name_bn" id="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
-                                           required data-validation-required-message="Enter offer name bangla"
+                                           required data-validation-required-message="Enter offer name in Bangla"
                                            value="{{ old("name_bn") ? old("name_bn") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_bn'))
@@ -150,6 +150,9 @@
                                 </slot>
 
                                 @if( strtolower($type) == 'prepaid')
+                                    <slot id="call_rate" data-offer-type="call_rate" style="display: none">
+                                        @include('layouts.partials.products.call_rate')
+                                    </slot>
                                     <slot id="voice" data-offer-type="voice" style="display: none">
                                         @include('layouts.partials.products.voice')
                                     </slot>
@@ -181,7 +184,7 @@
                                     </div>
                                 </div>
 
-{{--                                TODO: Savely Delete Recharge --}}
+{{--                                TODO: Check Delete Recharge --}}
 {{--                                <div class="col-md-6">--}}
 {{--                                    <div class="form-group">--}}
 {{--                                        <label for="title" class="mr-1">Recharge</label>--}}

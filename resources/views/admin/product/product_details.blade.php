@@ -16,7 +16,6 @@
 @section('card_name', "$type Offer Details")
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('product.list', $type) }}"> {{ $type }} List</a></li>
-    {{--    <li class="breadcrumb-item active"> <a href="{{ route('partner-offer', [$parentId, $partnerName]) }}"> Partner Offer List</a></li>--}}
     <li class="breadcrumb-item active"> {{ $type }} Offer Details</li>
 @endsection
 @section('action')
@@ -50,46 +49,54 @@
                                 <div class="form-group col-md-6">
                                     <label for="ussd">USSD Code English</label>
                                     <input type="text" class="form-control" placeholder="Enter offer ussd english" maxlength="25" readonly
-                                           value="{{ $productDetail->product_core->activation_ussd }}">
+                                           value="{{ $productDetail->product_core['activation_ussd'] }}">
                                 </div>
 
 
-                                @if($productDetail->offer_category_id == \App\Enums\OtherOfferType::INTERNET)
+                                @if($productDetail->offer_category_id == \App\Enums\OfferType::INTERNET)
                                     @include('layouts.partials.product-details.voice')
-                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::VOICE)
-                                    @include('layouts.partials.product-details.voice')
-
-                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::BUNDLES)
+                                @elseif($productDetail->offer_category_id == \App\Enums\OfferType::VOICE)
                                     @include('layouts.partials.product-details.voice')
 
-                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::PACKAGES &&
-                                        $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OtherOfferType::PREPAID_PLANS)
+                                @elseif($productDetail->offer_category_id == \App\Enums\OfferType::BUNDLES)
+                                    @include('layouts.partials.product-details.voice')
+
+                                @elseif($productDetail->offer_category_id == \App\Enums\OfferType::PACKAGES &&
+                                        $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OfferType::PREPAID_PLANS)
                                     @include('layouts.partials.product-details.packages.prepaid_plan')
 
-                                @elseif( $productDetail->offer_category_id == \App\Enums\OtherOfferType::PACKAGES &&
-                                         $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OtherOfferType::START_UP_OFFERS)
+                                @elseif( $productDetail->offer_category_id == \App\Enums\OfferType::PACKAGES &&
+                                         $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OfferType::START_UP_OFFERS)
                                     @include('layouts.partials.product-details.packages.start_up_offer_structure_2')
 
-                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::POSTPAID_PLANS)
+                                @elseif($productDetail->offer_category_id == \App\Enums\OfferType::POSTPAID_PLANS)
                                     <div class="col-md-12 text-center">
                                         <h2><strong class="text-danger"> Under Construction</strong></h2>
                                     </div>
 
-                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::ICON_PLANS)
+                                @elseif($productDetail->offer_category_id == \App\Enums\OfferType::ICON_PLANS)
                                     <div class="col-md-12 text-center">
                                         <h2><strong class="text-danger"> Under Construction</strong></h2>
                                     </div>
 
-                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::OTHERS &&
-                                        $productDetail->offer_info['other_offer_type_id'] == \App\Enums\OtherOfferType::BONDHO_SIM_OFFER)
+                                @elseif($productDetail->offer_category_id == \App\Enums\OfferType::OTHERS &&
+                                        $productDetail->offer_info['other_offer_type_id'] == \App\Enums\OfferType::BONDHO_SIM_OFFER)
                                     @include('layouts.partials.product-details.other-details.bondho_sim')
 
-                                @elseif($productDetail->offer_category_id == \App\Enums\OtherOfferType::OTHERS &&
-                                        $productDetail->offer_info['other_offer_type_id'] == \App\Enums\OtherOfferType::FOUR_G_OFFERS)
+                                @elseif($productDetail->offer_category_id == \App\Enums\OfferType::OTHERS &&
+                                        $productDetail->offer_info['other_offer_type_id'] == \App\Enums\OfferType::FOUR_G_OFFERS)
                                     @include('layouts.partials.product-details.other-details.4g_offer')
                                 @endif
 
-                                <div class="clearfix col-md-12"></div>
+                                <div class="form-group col-md-6 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
+                                    <label for="banner_alt_text" class="required">Alt Text</label>
+                                    <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
+                                           value="{{ optional($productDetail->product_details)->banner_alt_text}}" required data-validation-required-message="Enter image alter text">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_alt_text'))
+                                        <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
+                                    @endif
+                                </div>
 
                                 <div class="form-group col-md-6 mt-1 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                     <span>Upload banner image</span>
@@ -109,19 +116,6 @@
                                         </div>
                                     @endif
                                 </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
-                                    <label for="banner_alt_text" class="required">Alt Text</label>
-                                    <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
-                                           value="{{ optional($productDetail->product_details)->banner_alt_text}}" required data-validation-required-message="Enter image alter text">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('banner_alt_text'))
-                                        <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6"></div>
-
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
@@ -153,12 +147,29 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/tinymce/tinymce.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 @endpush
 @push('page-js')
+    <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('app-assets/js/scripts/editors/editor-ckeditor.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('app-assets/vendors/js/editors/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+
+{{--    <script>--}}
+{{--        $('#save').click(function(event) {--}}
+{{--            event.preventDefault()--}}
+{{--            for (i=0; i < tinymce.editors.length; i++){--}}
+{{--                var content = tinymce.editors[i].getContent(); // get the content--}}
+
+{{--                if (content == ''){--}}
+{{--                   console.log("Not empty")--}}
+{{--                }--}}
+
+{{--                // $('#description').val(content); // put it in the textarea--}}
+{{--            }--}}
+{{--        });--}}
+{{--    </script>--}}
+
     <script>
         $(function () {
             $("textarea#details").summernote({

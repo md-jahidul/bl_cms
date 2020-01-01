@@ -1,3 +1,4 @@
+@php use App\Enums\OfferType @endphp
 @extends('layouts.admin')
 @php $type = ucfirst($type)  @endphp
 @section('title', "$type Offer Edit")
@@ -47,8 +48,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
                                     <label for="name_bn" class="required">Offer Name Bangla</label>
-                                    <input type="text" name="name_bn" class="form-control" placeholder="Enter offer name bangla"
-                                           required data-validation-required-message="Enter offer name bangla"
+                                    <input type="text" name="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
+                                           required data-validation-required-message="Enter offer name in Bangla"
                                            value="{{ $product->name_bn }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_bn'))
@@ -90,7 +91,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('ussd_bn') ? ' error' : '' }}">
                                     <label for="ussd_bn">USSD Code Bangla</label>
-                                    <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd bangla" maxlength="25"
+                                    <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd in Bangla" maxlength="25"
                                            value="{{ $product->ussd_bn }}">
                                 </div>
 
@@ -135,22 +136,25 @@
                                 </div>
                             {{--</div>--}}
 
-                                <slot class="{{ $product->offer_category_id == 1 ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
+                                <slot class="{{ $product->offer_category_id == OfferType::INTERNET ? '' : 'd-none' }}" id="internet" data-offer-type="internet">
                                     @include('layouts.partials.products.internet')
                                 </slot>
-                                <slot class="{{ $product->offer_category_id == 4 ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
+                                <slot class="{{ $product->offer_category_id == OfferType::PACKAGES ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
                                     @include('layouts.partials.products.packages')
                                 </slot>
 
-                                <slot class="{{ $product->offer_category_id == 9 ? '' : 'd-none' }}" id="others" data-offer-type="others">
+                                <slot class="{{ $product->offer_category_id == OfferType::OTHERS ? '' : 'd-none' }}" id="others" data-offer-type="others">
                                     @include('layouts.partials.products.other')
                                 </slot>
 
                             @if(strtolower($type) == 'prepaid')
-                                <slot class="{{ $product->offer_category_id == 2 ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
+                                <slot class="{{ $product->offer_category_id == OfferType::CALL_RATE ? '' : 'd-none' }}" id="call_rate" data-offer-type="call_rate">
+                                    @include('layouts.partials.products.call_rate')
+                                </slot>
+                                <slot class="{{ $product->offer_category_id == OfferType::VOICE ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
                                     @include('layouts.partials.products.voice')
                                 </slot>
-                                <slot class="{{ $product->offer_category_id == 3 ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
+                                <slot class="{{ $product->offer_category_id == OfferType::BUNDLES ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
                                     @include('layouts.partials.products.bundle')
                                 </slot>
                             @endif
@@ -175,8 +179,8 @@
                                 <div class="col-md-6">
                                     <label></label>
                                     <div class="form-group pt-1" id="show_in_home">
-                                        <label for="show_in_home" class="mr-1">Trending Offer:</label>
-                                        <input type="checkbox" name="show_in_home" value="1" {{ ($product->show_in_home == 1) ? 'checked' : '' }}>
+                                        <label for="trending" class="mr-1">Trending Offer:</label>
+                                        <input type="checkbox" name="show_in_home" value="1" {{ ($product->show_in_home == 1) ? 'checked' : '' }} id="trending">
                                     </div>
                                 </div>
 

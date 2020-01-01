@@ -23,6 +23,7 @@
                         <tr>
                             <td width="3%">#</td>
                             <th width="4%">Company Logo</th>
+                            <th width="5%">Product Code</th>
                             <th>Offer Unit</th>
                             <th>Offer Value</th>
                             <th width="20%">Validity</th>
@@ -37,6 +38,7 @@
                             <tr data-index="{{ $partnerOffer->id }}" data-position="{{ $partnerOffer->display_order }}">
                                 <td width="3%">{{ $index + 1 }}</td>
                                 <td><img class="" src="{{ config('filesystems.file_base_url') . $partnerOffer->partner->company_logo }}" alt="Slider Image" height="40" width="50" /></td>
+                                <td>{{ $partnerOffer->product_code  }}</td>
                                 <td>{{ $partnerOffer->offer_scale  }}</td>
                                 <td>{{ $partnerOffer->offer_value  }} ({{ $partnerOffer->offer_unit }})</td>
 
