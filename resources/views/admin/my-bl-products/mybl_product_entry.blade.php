@@ -96,6 +96,8 @@
                                 showConfirmButton: false
                             });
 
+                            $('#product_list').DataTable().ajax.reload();
+
                         } else {
                             swal.close();
                             swal.fire({

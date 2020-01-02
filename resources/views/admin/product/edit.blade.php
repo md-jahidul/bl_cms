@@ -156,7 +156,31 @@
                                 </slot>
                             @endif
 
-                            {{--<div class="row">--}}
+                                <div class="form-group col-md-6 {{ $errors->has('duration_category_id') ? ' error' : '' }}">
+                                    <label for="duration_category_id">Validity Unit</label>
+                                    <select class="form-control required duration_categories" name="validity_unit">
+                                        <option value="">---Select Duration Type---</option>
+                                        <option value="hour" {{ $product->product_core['validity_unit'] == "hour" ? 'selected' : '' }}>Hour</option>
+                                        <option value="hours" {{ $product->product_core['validity_unit'] == "hours" ? 'selected' : '' }}>Hours</option>
+                                        <option value="day" {{ $product->product_core['validity_unit'] == "day" ? 'selected' : '' }}>Day</option>
+                                        <option value="days" {{ $product->product_core['validity_unit'] == "days" ? 'selected' : '' }}>Days</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('duration_category_id'))
+                                        <div class="help-block">{{ $errors->first('duration_category_id') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('validity') ? ' error' : '' }}">
+                                    <label for="validity">Validity</label>
+                                    <input type="number" name="validity" class="form-control validity" placeholder="Enter validity"
+                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+                                           value="{{ (!empty($product->product_core->validity)) ? $product->product_core->validity : old("validity") ?? '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('validity'))
+                                        <div class="help-block">  {{ $errors->first('validity') }}</div>
+                                    @endif
+                                </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="purchase_option" class="required">Purchase Option</label>
