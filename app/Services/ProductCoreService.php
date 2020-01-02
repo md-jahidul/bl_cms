@@ -2,11 +2,14 @@
 
 namespace App\Services;
 
+use App\Models\MyBlProduct;
 use App\Models\ProductCore;
 use App\Repositories\ProductCoreRepository;
 use App\Traits\CrudTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class ProductCoreService
@@ -20,6 +23,7 @@ class ProductCoreService
     /**
      * @var array
      */
+
     protected $config;
 
     /**
@@ -30,40 +34,6 @@ class ProductCoreService
     {
         $this->productCoreRepository = $productCoreRepository;
         $this->setActionRepository($productCoreRepository);
-        $this->config = [
-            'sim_type' => 0,
-            'content_type' => 1,
-            'family_name' => 2,
-            'product_code' => 3,
-            'name' => 4,
-            'commercial_name_en' => 5,
-            'commercial_name_bn' => 6,
-            'short_description' => 7,
-            'activation_ussd' => 8,
-            'balance_check_ussd' => 9,
-            'offer_id' => 10,
-            'sms_volume' => 11,
-            'minute_volume' => 12,
-            'data_volume' => 13,
-            'internet_volume_mb' => 13,
-            'data_volume_unit' => 14,
-            'validity' => 15,
-            'validity_unit' => 16,
-            'mrp_price' => 17,
-            'price' => 18,
-            'vat' => 19,
-            'show_in_app' => 20,
-            'is_amar_offer' => 21,
-            'is_auto_renewable' => 22,
-            'is_recharge_offer' => 23,
-            'is_gift_offer' => 24,
-            'is_social_pack' => 25,
-            'purchase_option' => 26,
-            'is_rate_cutter_offer' => 27,
-            'assetlite_offer_type' => 28,
-            'app_offer_section' => 29,
-            'validity_in_days' => 30,
-        ];
     }
 
     /**
@@ -86,6 +56,24 @@ class ProductCoreService
                 $offerId = null;
         }
         return $offerId;
+    }
+
+    public function getSimtype($id)
+    {
+        switch ($id) {
+            case "1":
+                $type = "prepaid";
+                break;
+            case '2':
+                $type = "postpaid";
+                break;
+            case '3':
+                $type = "propaid";
+                break;
+            default:
+                $type = null;
+        }
+        return $type;
     }
 
     /**
@@ -123,23 +111,26 @@ class ProductCoreService
         $product->update($data);
     }
 
-    public function mapDataFromExcel($excel_path)
+    public function mapMyBlProduct($excel_path)
     {
+        $config = config('productMapping.mybl.columns');
         try {
             $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
             $file_path = $excel_path;
             $reader->open($file_path);
+
             foreach ($reader->getSheetIterator() as $sheet) {
                 $row_number = 1;
                 foreach ($sheet->getRowIterator() as $row) {
-                    $data = [];
+                    $core_data = [];
+                    $mybl_data = [];
                     if ($row_number != 1) {
                         $cells = $row->getCells();
-                        foreach ($this->config as $field => $index) {
+                        foreach ($config as $field => $index) {
                             switch ($field) {
                                 case "family_name":
                                 case "content_type":
-                                    $data [$field] = ($cells [$index]->getValue() != '') ?
+                                    $core_data [$field] = ($cells [$index]->getValue() != '') ?
                                         strtolower($cells [$index]->getValue()) : null;
                                     break;
                                 case "sim_type":
@@ -153,10 +144,10 @@ class ProductCoreService
                                     } else {
                                         $sim_type = null;
                                     }
-                                    $data [$field] = $sim_type;
+                                    $core_data [$field] = $sim_type;
                                     break;
-                                case "is_amar_offer":
-                                case "show_in_app":
+                                case "is_auto_renewable":
+                                case "is_recharge_offer":
                                     $type = strtolower($cells [$index]->getValue());
                                     if ($type == 'yes') {
                                         $flag = 1;
@@ -165,15 +156,7 @@ class ProductCoreService
                                     } else {
                                         break;
                                     }
-                                    $data [$field] = $flag;
-                                    break;
-                                case "is_auto_renewable":
-                                case "is_recharge_offer":
-                                case "is_gift_offer":
-                                case "is_social_pack":
-                                    $value = ($cells [$index]->getValue() != '') ?
-                                        $cells [$index]->getValue() : 0;
-                                    $data [$field] = $value;
+                                    $core_data[$field] = $flag;
                                     break;
                                 case "internet_volume_mb":
                                     $data_volume = $cells [$index]->getValue();
@@ -184,9 +167,9 @@ class ProductCoreService
                                     $data_unit = $cells [$index + 1]->getValue();
                                     if ($data_unit == 'GB') {
                                         $volume = $data_volume * 1024;
-                                        $data [$field] = $volume;
+                                        $core_data [$field] = $volume;
                                     } else {
-                                        $data [$field] = $data_volume;
+                                        $core_data [$field] = $data_volume;
                                     }
                                     break;
                                 case "data_volume":
@@ -195,7 +178,7 @@ class ProductCoreService
                                     if ($data_volume == '') {
                                         $data_volume = 0;
                                     }
-                                    $data [$field] = $data_volume;
+                                    $core_data [$field] = $data_volume;
                                     break;
                                 case "sms_volume":
                                 case "minute_volume":
@@ -203,48 +186,134 @@ class ProductCoreService
                                     if ($volume == '') {
                                         $volume = 0;
                                     }
-                                    $data [$field] = $volume;
+                                    $core_data [$field] = $volume;
                                     break;
                                 case "internet_volume_unit":
                                     $data_volume_unit = $cells [$index]->getValue();
-                                    $data [$field] = $data_volume_unit;
+                                    $core_data [$field] = $data_volume_unit;
                                     break;
                                 case "validity_in_days":
-                                    $validity = $cells [$this->config['validity']]->getValue();
-                                    $unit = $cells [$this->config['validity_unit']]->getValue();
+                                    $validity = $cells [$config['validity']]->getValue();
+                                    $unit = $cells [$config['validity_unit']]->getValue();
 
                                     if (strtolower($unit) == 'hours') {
                                         $validity = round($validity / 24);
                                     }
-                                    $data [$field] = ($validity == "") ? null : $validity;
+                                    $core_data [$field] = ($validity == "") ? null : $validity;
+                                    break;
+                                case "is_rate_cutter_offer":
+                                case "is_amar_offer":
+                                    $type = strtolower($cells [$index]->getValue());
+                                    if ($type == 'yes') {
+                                        $flag = 1;
+                                    } elseif ($type == 'no') {
+                                        $flag = 0;
+                                    } else {
+                                        break;
+                                    }
+                                    $mybl_data[$field] = $flag;
+                                    break;
+                                case "offer_section_title":
+                                    $title = $cells [$index]->getValue();
+                                    $mybl_data[$field] = $title;
+                                    $mybl_data['offer_section_slug'] = str_replace(' ', '-', strtolower($title));
+                                    break;
+                                case "tag":
+                                    $tag = $cells [$index]->getValue();
+                                    $mybl_data[$field] = $tag;
                                     break;
 
                                 default:
-                                    $data [$field] = ($cells [$index]->getValue() != '') ?
+                                    $core_data [$field] = ($cells [$index]->getValue() != '') ?
                                         $cells [$index]->getValue() : null;
                             }
                         }
+
                         try {
-                            $product_code = $data['product_code'];
-                            unset($data['product_code']);
+                            $product_code = $core_data['product_code'];
+                            $core_product = ProductCore::where('product_code', $product_code)->first();
+
+                            if ($core_product) {
+                                if ($core_product->platform == 'web') {
+                                    $core_data ['platform'] = 'all';
+                                }
+                            } else {
+                                $core_data['platform'] = 'app';
+                            }
+
                             ProductCore::updateOrCreate([
                                 'product_code' => $product_code
-                            ], $data);
-                        } catch (\Exception $e) {
+                            ], $core_data);
+
+                            MyBlProduct::updateOrCreate([
+                                'product_code' => $product_code
+                            ], $mybl_data);
+                        } catch (Exception $e) {
                             dd($e->getMessage());
                             continue;
                         }
                     }
                     $row_number++;
-
                 }
             }
             $reader->close();
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             dd($e->getMessage());
             Log::error('Product Entry Error' . $e->getMessage());
+            return 0;
         }
+    }
+
+    public function getMyblProducts(Request $request)
+    {
+        $draw = $request->get('draw');
+        $start = $request->get('start');
+        $length = $request->get('length');
+
+        $builder = new MyBlProduct();
+        if ($request->status) {
+            $builder = MyBlProduct::where('status', $request->status);
+        }
+
+        $builder = $builder->whereHas(
+            'details',
+            function ($q) use ($request) {
+                if ($request->product_code) {
+                    $q->where('product_code', $request->product_code);
+                }
+                if ($request->sim_type) {
+                    $q->where('sim_type', $request->sim_type);
+                }
+                if ($request->content_type) {
+                    $q->where('content_type', $request->content_type);
+                }
+            }
+        );
+
+        $all_items_count = $builder->count();
+        $items = $builder->skip($start)->take($length)->get();
+
+        $response = [
+            'draw' => $draw,
+            'recordsTotal' => $all_items_count,
+            'recordsFiltered' => $all_items_count,
+            'data' => []
+        ];
+
+        $items->each(function ($item) use (&$response) {
+            $response['data'][] = [
+                'product_code' => $item->product_code,
+                'connection_type' => $item->details->sim_type,
+                'name' => $item->details->name,
+                'description' => $item->details->short_description,
+                'content_type' => ucfirst($item->details->content_type),
+                'family_name' => ucfirst($item->details->family_name),
+                'status' => $item->details->status
+            ];
+        });
+
+        return $response;
     }
 
 

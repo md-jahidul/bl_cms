@@ -162,9 +162,12 @@ Route::group(['middleware' => ['appAdmin']], function () {
     Route::delete('faq/questions/delete', 'CMS\FaqQuestionsController@delete')->name('faq.questions.delete');
 
 
-    Route::get('core-product/entry', 'ProductEntryController@index');
-    Route::get('core-product/details', 'ProductEntryController@getProductDetails')->name('product.details.info');
+    Route::get('mybl/core-product/entry', 'CMS\MyblProductEntryController@index');
+    Route::post('mybl/core-product', 'CMS\MyblProductEntryController@uploadProductByExcel')
+                                         ->name('mybl.core-product.save');
+    Route::get('mybl/core-product/details', 'ProductEntryController@getProductDetails')->name('product.details.info');
 
+    Route::get('mybl/products', 'CMS\MyblProductEntryController@getMyblProducts')->name('mybl.products.list');
     Route::get('mybl/product/create', 'CMS\MyblProductController@create');
     Route::post('mybl/product/store', 'CMS\MyblProductController@store')->name('mybl.product.store');
     Route::get('mybl/product/search', 'CMS\MyblProductController@searchMissingCoreProductCodes')->name('product.data');
@@ -182,7 +185,6 @@ Route::group(['middleware' => ['appAdmin']], function () {
             ]
         ];
     });
-    Route::post('core-product', 'ProductEntryController@uploadProductByExcel')->name('core-product.save');
 
     Route::get('store-locations/entry', 'StoreLocatorEntryController@create');
     Route::post('store-locations', 'StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
