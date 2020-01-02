@@ -4,13 +4,9 @@ namespace App\Services;
 
 use App\Models\ProductCore;
 use App\Repositories\ProductCoreRepository;
-use App\Repositories\ProductDetailRepository;
-use App\Repositories\ProductRepository;
 use App\Traits\CrudTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
 class ProductCoreService
@@ -60,13 +56,13 @@ class ProductCoreService
             'is_amar_offer' => 21,
             'is_auto_renewable' => 22,
             'is_recharge_offer' => 23,
-            'purchase_option' => 23,
             'is_gift_offer' => 24,
             'is_social_pack' => 25,
-//            'purchase_option' => 26,
+            'purchase_option' => 26,
             'is_rate_cutter_offer' => 27,
             'assetlite_offer_type' => 28,
-            'validity_in_days' => 29,
+            'app_offer_section' => 29,
+            'validity_in_days' => 30,
         ];
     }
 
@@ -127,30 +123,6 @@ class ProductCoreService
         $product->update($data);
     }
 
-    public function insertBatch($data)
-    {
-        ProductCore::insert($data);
-    }
-
-//    protected function contentTypeMap($contentType)
-//    {
-//        switch (strtolower(str_replace(' ', '_', $contentType))) {
-//            case "data_loan":
-//            case "data":
-//                $value = "internet";
-//                break;
-//            case "voice":
-//                $value = "voice";
-//                break;
-//            case "mix":
-//                $value = "bundle";
-//                break;
-//            default:
-//                $value = null;
-//        }
-//        return $value;
-//    }
-
     public function mapDataFromExcel($excel_path)
     {
         try {
@@ -161,9 +133,6 @@ class ProductCoreService
                 $row_number = 1;
                 foreach ($sheet->getRowIterator() as $row) {
                     $data = [];
-                    $validity = 0;
-                    $unit = 'days';
-                    $validity_in_days = 0;
                     if ($row_number != 1) {
                         $cells = $row->getCells();
                         foreach ($this->config as $field => $index) {
@@ -208,6 +177,7 @@ class ProductCoreService
                                     break;
                                 case "internet_volume_mb":
                                     $data_volume = $cells [$index]->getValue();
+
                                     if ($data_volume == '') {
                                         $data_volume = 0;
                                     }
@@ -249,14 +219,6 @@ class ProductCoreService
                                     $data [$field] = ($validity == "") ? null : $validity;
                                     break;
 
-//                                case "purchase_option":
-////                                    dd($cells [$index]->getValue());
-//                                    $contentType = $cells [$index]->getValue();
-//                                    $value = $this->contentTypeMap($contentType);
-//                                    $data [$field] = $value;
-////                                    dd($data_volume);
-//                                    break;
-
                                 default:
                                     $data [$field] = ($cells [$index]->getValue() != '') ?
                                         $cells [$index]->getValue() : null;
@@ -272,8 +234,6 @@ class ProductCoreService
                             dd($e->getMessage());
                             continue;
                         }
-
-                     # dd($data);
                     }
                     $row_number++;
 
