@@ -24,48 +24,49 @@
 </div>
 
 {{--Amar Offer--}}
-<slot class="{{ $offertype == 12 || $offertype == 17 ? '' : 'd-none' }}" id="amar_offer">
+<slot class="{{ $offertype == \App\Enums\OfferType::AMAR_OFFER_PREPAID || $offertype == \App\Enums\OfferType::AMAR_OFFER_POSTPAID ? '' : 'd-none' }}" id="amar_offer">
     @include('layouts.partials.products.other.other_detail_field')
 </slot>
 
 @if(strtolower($type) == 'prepaid')
     {{-- Balance transfer --}}
-    <slot class="{{ $offertype == 10 ? '' : 'd-none' }}" id="balance_transfer">
+    <slot class="{{ $offertype == \App\Enums\OfferType::BALANCE_TRANSFER ? '' : 'd-none' }}" id="balance_transfer">
         @include('layouts.partials.products.other.other_detail_field')
     </slot>
 
     {{--Emergency Balance--}}
-    <slot class="{{ $offertype == 11 ? '' : 'd-none' }}" id="emergency_balance">
+    <slot class="{{ $offertype == \App\Enums\OfferType::EMERGENCY_BALANCE ? '' : 'd-none' }}" id="emergency_balance">
         @include('layouts.partials.products.other.other_detail_field')
     </slot>
 
     {{-- MFS Offers --}}
-    <slot class="{{ $offertype == 18 ? '' : 'd-none' }}" id="mfs_offers">
+    <slot class="{{ $offertype == \App\Enums\OfferType::MFS_OFFERS ? '' : 'd-none' }}" id="mfs_offers">
         @include('layouts.partials.products.other.other_detail_field')
     </slot>
 
     {{--Device Offers--}}
-    <slot class="{{ $offertype == 15 ? '' : 'd-none' }}" id="device_offers">
+    <slot class="{{ $offertype == \App\Enums\OfferType::DEVICE_OFFERS ? '' : 'd-none' }}" id="device_offers">
         @include('layouts.partials.products.other.other_detail_field')
     </slot>
 
     {{--MNP Offer--}}
-    <slot class="{{ $offertype == 14 ? '' : 'd-none' }}" id="mnp_offers">
+    <slot class="{{ $offertype == \App\Enums\OfferType::MNP_OFFERS ? '' : 'd-none' }}" id="mnp_offers">
         @include('layouts.partials.products.other.other_detail_field')
     </slot>
 
     {{--4G Offers--}}
-    <slot class="{{ $offertype == 16 ? '' : 'd-none' }}" id="4g_offers">
+    <slot class="{{ $offertype == \App\Enums\OfferType::FOUR_G_OFFERS ? '' : 'd-none' }}" id="4g_offers">
         @include('layouts.partials.products.other.other_detail_field')
     </slot>
 @endif
 
 {{--Bondho SIM Offer--}}
 @if(strtolower($type) == 'prepaid')
-    <slot class="{{ $offertype == 13 ? '' : 'd-none' }}" id="bondho_sim_offer">
+    <slot class="{{ $offertype == \App\Enums\OfferType::BONDHO_SIM_OFFER ? '' : 'd-none' }}" id="bondho_sim_offer">
         @include('layouts.partials.products.common-field.minute_volume')
-
         @include('layouts.partials.products.common-field.internet_volume')
+        @include('layouts.partials.products.common-field.duration_type')
+        @include('layouts.partials.products.common-field.validity')
     </slot>
 @endif
 

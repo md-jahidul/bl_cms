@@ -151,6 +151,8 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
+//        dd($request->all());
+
         $bondhoSimOffer = $this->productService->findBondhoSim();
         if (count($bondhoSimOffer) > 4 && isset($request->offer_info['other_offer_type_id']) == OfferType::BONDHO_SIM_OFFER) {
             Session::flash('error', 'Maximum 4 Bondho SIM offer can be created');
@@ -210,6 +212,8 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
+
+//        return $this->info;
         return view('admin.product.edit', $this->info);
     }
 

@@ -166,9 +166,9 @@
                                     <select class="form-control required" name="purchase_option" id="offer_type"
                                             required data-validation-required-message="Please select purchase option">
                                         <option data-alias="" value="">---Select Purchase Option---</option>
-                                        <option value="recharge" {{ ("recharge" == $product->purchase_option ) ? 'selected' : '' }}>Recharge</option>
                                         <option value="balance" {{ ("balance" == $product->purchase_option ) ? 'selected' : '' }}>Balance</option>
-                                        <option value="all" {{ ("all" == $product->purchase_option ) ? 'selected' : '' }}>All</option>
+                                        <option value="recharge" {{ ("recharge" == $product->purchase_option) ? 'selected' : '' }}>Recharge</option>
+                                        <option value="all" {{ ("all" == $product->purchase_option) ? 'selected' : '' }}>All</option>
                                     </select>
                                     <div class="help-block"></div>
                                     @if ($errors->has('purchase_option'))

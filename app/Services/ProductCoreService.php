@@ -60,9 +60,10 @@ class ProductCoreService
             'is_amar_offer' => 21,
             'is_auto_renewable' => 22,
             'is_recharge_offer' => 23,
+            'purchase_option' => 23,
             'is_gift_offer' => 24,
             'is_social_pack' => 25,
-            'purchase_option' => 26,
+//            'purchase_option' => 26,
             'is_rate_cutter_offer' => 27,
             'assetlite_offer_type' => 28,
             'validity_in_days' => 29,
@@ -131,10 +132,24 @@ class ProductCoreService
         ProductCore::insert($data);
     }
 
-    protected function contentTypeMap($contentType)
-    {
-        dd($contentType);
-    }
+//    protected function contentTypeMap($contentType)
+//    {
+//        switch (strtolower(str_replace(' ', '_', $contentType))) {
+//            case "data_loan":
+//            case "data":
+//                $value = "internet";
+//                break;
+//            case "voice":
+//                $value = "voice";
+//                break;
+//            case "mix":
+//                $value = "bundle";
+//                break;
+//            default:
+//                $value = null;
+//        }
+//        return $value;
+//    }
 
     public function mapDataFromExcel($excel_path)
     {
@@ -193,7 +208,6 @@ class ProductCoreService
                                     break;
                                 case "internet_volume_mb":
                                     $data_volume = $cells [$index]->getValue();
-
                                     if ($data_volume == '') {
                                         $data_volume = 0;
                                     }
@@ -234,6 +248,14 @@ class ProductCoreService
                                     }
                                     $data [$field] = ($validity == "") ? null : $validity;
                                     break;
+
+//                                case "purchase_option":
+////                                    dd($cells [$index]->getValue());
+//                                    $contentType = $cells [$index]->getValue();
+//                                    $value = $this->contentTypeMap($contentType);
+//                                    $data [$field] = $value;
+////                                    dd($data_volume);
+//                                    break;
 
                                 default:
                                     $data [$field] = ($cells [$index]->getValue() != '') ?
