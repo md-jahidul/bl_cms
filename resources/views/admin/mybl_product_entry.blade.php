@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Core Product Entry')
-@section('card_name', 'Product Entry')
+@section('title', 'MyBl Product Entry')
+@section('card_name', 'MyBl Product Entry')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Core Product Entry Panel</li>
+    <li class="breadcrumb-item active">MyBl Product Entry Panel</li>
 @endsection
 @section('content')
 
@@ -20,7 +20,7 @@
                     <form class="form" method="POST"  id="uploadProduct" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label for="message">Upload Product List</label> <a href="{{ asset('sample-format/product_sample.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
+                            <label for="message">Upload Product List</label> <a href="{{ asset('sample-format/mybl-final-format.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
                             <input type="file" class="dropify" name="product_file" data-height="80"
                                    data-allowed-file-extensions="xlsx" required/>
                         </div>
@@ -87,7 +87,7 @@
                 let formData = new FormData($(this)[0]);
 
                 $.ajax({
-                    url: '{{ route('core-product.save')}}',
+                    url: '{{ route('mybl.core-product.save')}}',
                     type: 'POST',
                     cache: false,
                     contentType: false,
