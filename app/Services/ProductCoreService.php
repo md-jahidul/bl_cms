@@ -311,6 +311,7 @@ class ProductCoreService
                 'description' => $item->details->short_description,
                 'content_type' => ucfirst($item->details->content_type),
                 'family_name' => ucfirst($item->details->family_name),
+                'offer_section' => ucfirst($item->offer_section_title),
                 'status' => $item->details->status
             ];
         });

@@ -34,6 +34,7 @@
             <th>Short Description</th>
             <th>Content Type</th>
             <th>Family Name</th>
+            <th>Offer Section</th>
             <th>Status</th>
             <th class="filter_data">Actions</th>
         </tr>
@@ -117,6 +118,13 @@
                         width: '150px',
                         render: function (data, type, row) {
                             return row.family_name;
+                        }
+                    },
+                    {
+                        name: 'offer_section',
+                        width: '150px',
+                        render: function (data, type, row) {
+                            return row.offer_section;
                         }
                     },
                     {
