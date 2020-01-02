@@ -26,9 +26,9 @@
 
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
-                                    <label for="name_en" class="required">Offer Name</label>
+                                    <label for="name_en">Offer Name</label>
                                     <input type="text" name="name_en"  class="form-control" placeholder="Enter offer name english"
-                                           value="{{ $product->name_en }}" required data-validation-required-message="Enter offer name english">
+                                           value="{{ $product->name_en }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_en'))
                                         <div class="help-block">{{ $errors->first('name_en') }}</div>
@@ -47,9 +47,8 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
-                                    <label for="name_bn" class="required">Offer Name Bangla</label>
+                                    <label for="name_bn">Offer Name Bangla</label>
                                     <input type="text" name="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
-                                           required data-validation-required-message="Enter offer name in Bangla"
                                            value="{{ $product->name_bn }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_bn'))
@@ -58,12 +57,10 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
-                                    <label for="start_date" class="required">Start Date</label>
+                                    <label for="start_date">Start Date</label>
                                     <div class='input-group'>
                                         <input type='text' class="form-control" name="start_date" id="start_date"
                                                value="{{ $product->start_date }}"
-                                               {{--value="{{ date('Y-m-d H:i:s', $product->start_date) }}"--}}
-                                               required data-validation-required-message="Please select start date"
                                                placeholder="Please select start date" />
                                     </div>
                                     <div class="help-block"></div>
