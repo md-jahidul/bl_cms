@@ -36,7 +36,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('days') ? ' error' : '' }}">
-                                    <label for="days" class="required">Days</label>
+                                    <label for="days" class="required">Validity Unit</label>
                                     <input type="number" name="days" class="form-control" placeholder="Enter days"
                                            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
                                            value="{{ old("days") ? old("days") : '' }}" required data-validation-required-message="Enter days">
