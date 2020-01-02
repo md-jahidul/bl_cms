@@ -32,6 +32,10 @@ class Product extends Model
             'display_order',
             'purchase_option',
             'offer_info',
+            'is_gift_offer',
+            'is_amar_offer',
+            'is_social_pack',
+            'is_auto_renewable'
         ];
 
     protected $casts = [
