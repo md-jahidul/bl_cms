@@ -162,10 +162,12 @@ Route::group(['middleware' => ['appAdmin']], function () {
     Route::delete('faq/questions/delete', 'CMS\FaqQuestionsController@delete')->name('faq.questions.delete');
 
 
-    Route::get('mybl/core-product/entry', 'MyblProductEntryController@index');
-    Route::post('mybl/core-product', 'MyblProductEntryController@uploadProductByExcel')->name('mybl.core-product.save');
+    Route::get('mybl/core-product/entry', 'CMS\MyblProductEntryController@index');
+    Route::post('mybl/core-product', 'CMS\MyblProductEntryController@uploadProductByExcel')
+                                         ->name('mybl.core-product.save');
     Route::get('mybl/core-product/details', 'ProductEntryController@getProductDetails')->name('product.details.info');
 
+    Route::get('mybl/products', 'CMS\MyblProductEntryController@getMyblProducts')->name('mybl.products.list');
     Route::get('mybl/product/create', 'CMS\MyblProductController@create');
     Route::post('mybl/product/store', 'CMS\MyblProductController@store')->name('mybl.product.store');
     Route::get('mybl/product/search', 'CMS\MyblProductController@searchMissingCoreProductCodes')->name('product.data');

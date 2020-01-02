@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
-use App\Models\MyBlProductCategory;
-use App\Models\SimCategory;
+use App\Http\Controllers\Controller;
 use App\Services\ProductCoreService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class MyblProductEntryController extends Controller
 {
@@ -45,7 +43,7 @@ class MyblProductEntryController extends Controller
     }
     public function index()
     {
-        return view('admin.mybl_product_entry');
+        return view('admin.my-bl-products.mybl_product_entry');
     }
 
     public function uploadProductByExcel(Request $request)
@@ -73,5 +71,10 @@ class MyblProductEntryController extends Controller
             ];
             return response()->json($response, 500);
         }
+    }
+
+    public function getMyblProducts(Request $request)
+    {
+        return $this->service->getMyblProducts($request);
     }
 }

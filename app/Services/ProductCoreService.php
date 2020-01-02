@@ -9,6 +9,7 @@ use App\Traits\CrudTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class ProductCoreService
@@ -55,6 +56,24 @@ class ProductCoreService
                 $offerId = null;
         }
         return $offerId;
+    }
+
+    public function getSimtype($id)
+    {
+        switch ($id) {
+            case "1":
+                $type = "prepaid";
+                break;
+            case '2':
+                $type = "postpaid";
+                break;
+            case '3':
+                $type = "propaid";
+                break;
+            default:
+                $type = null;
+        }
+        return $type;
     }
 
     /**
@@ -244,6 +263,57 @@ class ProductCoreService
             Log::error('Product Entry Error' . $e->getMessage());
             return 0;
         }
+    }
+
+    public function getMyblProducts(Request $request)
+    {
+        $draw = $request->get('draw');
+        $start = $request->get('start');
+        $length = $request->get('length');
+
+        $builder = new MyBlProduct();
+        if ($request->status) {
+            $builder = MyBlProduct::where('status', $request->status);
+        }
+
+        $builder = $builder->whereHas(
+            'details',
+            function ($q) use ($request) {
+                if ($request->product_code) {
+                    $q->where('product_code', $request->product_code);
+                }
+                if ($request->sim_type) {
+                    $q->where('sim_type', $request->sim_type);
+                }
+                if ($request->content_type) {
+                    $q->where('content_type', $request->content_type);
+                }
+            }
+        );
+
+        $all_items_count = $builder->count();
+        $items = $builder->skip($start)->take($length)->get();
+
+        $response = [
+            'draw' => $draw,
+            'recordsTotal' => $all_items_count,
+            'recordsFiltered' => $all_items_count,
+            'data' => []
+        ];
+
+        $items->each(function ($item) use (&$response) {
+            $response['data'][] = [
+                'product_code' => $item->product_code,
+                'connection_type' => $item->details->sim_type,
+                'name' => $item->details->name,
+                'description' => $item->details->short_description,
+                'content_type' => ucfirst($item->details->content_type),
+                'family_name' => ucfirst($item->details->family_name),
+                'status' => $item->details->status
+            ];
+        });
+
+        return $response;
     }
 
 
