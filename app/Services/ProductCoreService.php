@@ -323,14 +323,17 @@ class ProductCoreService
     protected function offerType($contentType)
     {
         switch (strtolower($contentType)) {
-            case "data":
+            case "internet":
                 $offerId = 1;
                 break;
             case "voice":
                 $offerId = 2;
                 break;
-            case "mix":
+            case "bundle":
                 $offerId = 3;
+                break;
+            case "startup":
+                $offerId = 4;
                 break;
             default:
                 $offerId = null;
@@ -360,11 +363,19 @@ class ProductCoreService
                                 case "content_type":
                                     $contentType = ($cells [$index]->getValue() != '') ?
                                         strtolower($cells [$index]->getValue()) : null;
-                                    $offerId = $this->offerType($contentType);
                                     $core_data [$field] = $contentType;
-                                    $assetLiteProduct['offer_category_id'] = $offerId;
-
                                     break;
+
+                                case "assetlite_offer_type":
+                                    $contentType = ($cells [$index]->getValue() != '') ?
+                                        strtolower($cells [$index]->getValue()) : null;
+                                    $offerId = $this->offerType($contentType);
+                                    $assetLiteProduct['offer_category_id'] = $offerId;
+                                    if ($offerId == 4) {
+                                        $assetLiteProduct['offer_info'] = ['package_offer_type_id' => 6];
+                                    }
+                                    break;
+
                                 case "sim_type":
                                     $type = strtolower($cells [$index]->getValue());
                                     if ($type == 'prepaid') {
