@@ -485,7 +485,7 @@ class ProductCoreService
                                 $productId = Product::updateOrCreate([
                                     'product_code' => $product_code
                                 ], $assetLiteProduct);
-                                ProductDetail::create([
+                                ProductDetail::updateOrCreate([
                                     'product_id' => $productId->id
                                 ]);
                             }
