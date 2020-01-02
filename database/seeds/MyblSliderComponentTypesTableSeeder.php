@@ -12,7 +12,7 @@ class MyblSliderComponentTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        $slider_types = ['Home', 'Dashboard'];
+        $slider_types = ['Home', 'Dashboard', 'Internet Package', 'Mixed Bundle', 'Usage History'];
 
         $slider_component_types = [];
 
