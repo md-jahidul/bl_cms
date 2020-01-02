@@ -134,20 +134,14 @@
             function loadBasicInfo(info) {
                 let $container = `<div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="content_type">Title</label>
+                                        <input type="text" readonly name="name" class="form-control" value="` + info.name.toUpperCase() + `">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="content_type">Content Type</label>
                                         <input type="text" readonly name="content_type" class="form-control" value="` + info.content_type.toUpperCase() + `">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="commercial_name_en">Commercial Name -En</label>
-                                        <input type="text" readonly name="commercial_name_en" class="form-control" value="` + info.commercial_name_en + `">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="commercial_name_bn">Commercial Name -Bn</label>
-                                        <input type="text" readonly name="commercial_name_bn" class="form-control" value="` + info.commercial_name_bn + `">
                                     </div>
                                 </div>
                                 <div class="col-md-6">

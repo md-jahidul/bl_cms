@@ -135,23 +135,25 @@ class ProductService
      */
     public function insertProduct($data, $offerId, $offerInfo = null)
     {
-        $product = $this->save([
-            'product_code' => $data['product_code'] ?? null,
-            'name_en' => $data['commercial_name_en'] ?? "N/A",
-            'name_bn' => $data['commercial_name_bn'] ?? "N/A",
-            'ussd_bn' => $data['activation_ussd'] ?? null,
-            'start_date' => "2019-12-10 20:12:10" ?? null,
-            'sim_category_id' => $data['sim_type'] ?? null,
-            'offer_category_id' => $offerId ?? null,
-            'is_recharge' => $data['is_recharge_offer'] ?? 0,
-            'status' => $data['status'],
-            'purchase_option' =>  $data['purchase_option'],
-            'offer_info' =>  $offerInfo
-        ]);
+        $product = Product::updateOrCreate(
+            ['product_code' => $data['product_code'] ?? null,],
+            [
+                'name_en' => $data['commercial_name_en'] ?? "",
+                'name_bn' => $data['commercial_name_bn'] ?? "",
+                'ussd_bn' => $data['activation_ussd'] ?? null,
+                'start_date' => "2019-12-10 20:12:10" ?? null,
+                'sim_category_id' => $data['sim_type'] ?? null,
+                'offer_category_id' => $offerId ?? null,
+                'is_recharge' => $data['is_recharge_offer'] ?? 0,
+                'status' => $data['status'],
+                'purchase_option' => $data['purchase_option'],
+                'offer_info' => $offerInfo
+            ]
+        );
 
-        ProductDetail::updateOrCreate([
-            'product_id' => $product->id
-        ]);
+        ProductDetail::updateOrCreate(
+            ['product_id' => $product->id]
+        );
     }
 
     /**
@@ -195,9 +197,6 @@ class ProductService
 
     public function coreData()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        Product::truncate();
-        ProductDetail::truncate();
         $coreData = $this->productCoreRepository->findAll();
         foreach ($coreData as $coreProduct) {
             $this->getOfferInfo($coreProduct);

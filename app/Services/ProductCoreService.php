@@ -4,13 +4,9 @@ namespace App\Services;
 
 use App\Models\ProductCore;
 use App\Repositories\ProductCoreRepository;
-use App\Repositories\ProductDetailRepository;
-use App\Repositories\ProductRepository;
 use App\Traits\CrudTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
 class ProductCoreService
@@ -65,7 +61,8 @@ class ProductCoreService
             'purchase_option' => 26,
             'is_rate_cutter_offer' => 27,
             'assetlite_offer_type' => 28,
-            'validity_in_days' => 29,
+            'app_offer_section' => 29,
+            'validity_in_days' => 30,
         ];
     }
 
@@ -126,11 +123,6 @@ class ProductCoreService
         $product->update($data);
     }
 
-    public function insertBatch($data)
-    {
-        ProductCore::insert($data);
-    }
-
     public function mapDataFromExcel($excel_path)
     {
         try {
@@ -141,9 +133,6 @@ class ProductCoreService
                 $row_number = 1;
                 foreach ($sheet->getRowIterator() as $row) {
                     $data = [];
-                    $validity = 0;
-                    $unit = 'days';
-                    $validity_in_days = 0;
                     if ($row_number != 1) {
                         $cells = $row->getCells();
                         foreach ($this->config as $field => $index) {
@@ -245,8 +234,6 @@ class ProductCoreService
                             dd($e->getMessage());
                             continue;
                         }
-
-                     # dd($data);
                     }
                     $row_number++;
 
