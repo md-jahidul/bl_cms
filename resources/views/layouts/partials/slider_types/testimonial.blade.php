@@ -42,6 +42,26 @@
     @endif
 </div>
 
+<div class="form-group col-md-6 {{ $errors->has('feedback_en') ? ' error' : '' }}">
+    <label for="feedback_en" class="required">Feedback (English)</label>
+    <textarea type="text" name="other_attributes[feedback_en]" rows="5"  class="form-control" placeholder="Enter user feedback in English"
+              required data-validation-required-message="Enter user feedback">{{ (!empty($other_attributes['feedback_en'])) ? $other_attributes['feedback_en'] : old("other_attributes.feedback_en") ?? '' }}</textarea>
+    <div class="help-block"></div>
+    @if ($errors->has('feedback_en'))
+        <div class="help-block">  {{ $errors->first('feedback_en') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-6 {{ $errors->has('feedback_bn') ? ' error' : '' }}">
+    <label for="feedback_bn" class="required">Feedback (Bangla)</label>
+    <textarea type="text" name="other_attributes[feedback_bn]" rows="5"  class="form-control" placeholder="Enter user feedback in Bangla"
+              required data-validation-required-message="Enter user feedback">{{ (!empty($other_attributes['feedback_bn'])) ? $other_attributes['feedback_bn'] : old("other_attributes.feedback_bn") ?? '' }}</textarea>
+    <div class="help-block"></div>
+    @if ($errors->has('feedback_bn'))
+        <div class="help-block">  {{ $errors->first('feedback_bn') }}</div>
+    @endif
+</div>
+
 <div class="form-group col-md-6 {{ $errors->has('rating') ? ' error' : '' }}">
     <label for="rating" class="required">Rating</label>
     <input type="text" name="other_attributes[rating]"  class="form-control" placeholder="Enter rating out of 5" min="1" max="5"
@@ -52,26 +72,6 @@
     <div class="help-block"></div>
     @if ($errors->has('rating'))
         <div class="help-block">  {{ $errors->first('rating') }}</div>
-    @endif
-</div>
-
-<div class="form-group col-md-6 {{ $errors->has('feedback_en') ? ' error' : '' }}">
-    <label for="feedback_en" class="required">Feedback</label>
-    <textarea type="text" name="other_attributes[feedback_en]" rows="5"  class="form-control" placeholder="Enter user feedback"
-              required data-validation-required-message="Enter user feedback">{{ (!empty($other_attributes['feedback_en'])) ? $other_attributes['feedback_en'] : old("other_attributes.feedback_en") ?? '' }}</textarea>
-    <div class="help-block"></div>
-    @if ($errors->has('feedback_en'))
-        <div class="help-block">  {{ $errors->first('feedback_en') }}</div>
-    @endif
-</div>
-
-<div class="form-group col-md-6 {{ $errors->has('feedback_bn') ? ' error' : '' }}">
-    <label for="feedback_bn" class="required">Feedback Bangla</label>
-    <textarea type="text" name="other_attributes[feedback_bn]" rows="5"  class="form-control" placeholder="Enter user feedback"
-              required data-validation-required-message="Enter user feedback">{{ (!empty($other_attributes['feedback_bn'])) ? $other_attributes['feedback_bn'] : old("other_attributes.feedback_bn") ?? '' }}</textarea>
-    <div class="help-block"></div>
-    @if ($errors->has('feedback_bn'))
-        <div class="help-block">  {{ $errors->first('feedback_bn') }}</div>
     @endif
 </div>
 

@@ -6,6 +6,7 @@ use App\Repositories\AlSliderRepository;
 use App\Repositories\SliderRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 
 class AlSliderService
 {
@@ -26,14 +27,13 @@ class AlSliderService
         $this->setActionRepository($alSliderRepository);
     }
 
-    public function allSingleSlider()
+    /**
+     * @param $type
+     * @return AlSliderRepository|Collection|null
+     */
+    public function sliders($type)
     {
-        return $this->alSliderRepository->singleSlider();
-    }
-
-    public function allMultiSlider()
-    {
-        return $this->alSliderRepository->multiSlider();
+        return $this->alSliderRepository->findByProperties(['slider_type' => $type]);
     }
 
     /**
