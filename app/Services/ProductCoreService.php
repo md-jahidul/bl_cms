@@ -377,7 +377,6 @@ class ProductCoreService
                                         $assetLiteProduct['offer_info'] = ['package_offer_type_id' => 6];
                                     }
                                     break;
-
                                 case "sim_type":
                                     $type = strtolower($cells [$index]->getValue());
                                     if ($type == 'prepaid') {
@@ -405,10 +404,20 @@ class ProductCoreService
                                     $core_data [$field] = $cells [$index]->getValue();
                                     $assetLiteProduct['is_auto_renewable'] = $cells [$index]->getValue();
                                     break;
-                                case "is_recharge_offer":
-                                    $type = strtolower($cells [$index]->getValue());
-                                    $assetLiteProduct['purchase_option'] = ($type == 1) ? 'recharge' : 'all';
+                                case "recharge_product_code":
+//                                    dd($cells [$index]->getValue());
+                                    $type = $cells [$index]->getValue();
+                                    $assetLiteProduct['purchase_option'] = ($type == "") ? 'all' : 'recharge';
                                     $core_data[$field] = $type;
+                                    break;
+
+                                case "rate_cutter_offer":
+                                    $type = $cells [$index]->getValue();
+                                    $assetLiteProduct['rate_cutter_offer'] = ($type == "") ? null : 1;
+                                    break;
+                                case "rate_cutter_unit":
+                                    $type = $cells [$index]->getValue();
+                                    $assetLiteProduct['rate_cutter_unit'] = ($type == "") ? null : $type;
                                     break;
                                 case "internet_volume_mb":
                                     $data_volume = $cells [$index]->getValue();
@@ -431,6 +440,7 @@ class ProductCoreService
                                     }
                                     $core_data [$field] = $data_volume;
                                     break;
+                                case "vat":
                                 case "sms_volume":
                                 case "minute_volume":
                                     $volume = $cells [$index]->getValue();
@@ -489,6 +499,8 @@ class ProductCoreService
                             } else {
                                 $core_data['platform'] = 'web';
                             }
+
+//                            dd($core_data);
 
                             ProductCore::updateOrCreate([
                                 'product_code' => $product_code

@@ -78,9 +78,14 @@ class ProductController extends Controller
      */
     public function index($type)
     {
-        $products = Product::category($type)->with(['product_core', 'offer_category' => function ($query) {
-            $query->select('id', 'name_en');
-        }])->latest()->get();
+        $products = Product::category($type)
+            ->with(['product_core', 'offer_category' => function ($query) {
+                $query->select('id', 'name_en');
+            }])
+            ->latest()
+            ->get();
+
+//        return $products;
 
         return view('admin.product.index', compact('products', 'type'));
     }
@@ -151,8 +156,6 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
-//        dd($request->all());
-
         $bondhoSimOffer = $this->productService->findBondhoSim();
         if (count($bondhoSimOffer) > 4 && isset($request->offer_info['other_offer_type_id']) == OfferType::BONDHO_SIM_OFFER) {
             Session::flash('error', 'Maximum 4 Bondho SIM offer can be created');
@@ -256,7 +259,6 @@ class ProductController extends Controller
 
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
-
         $this->productDetailService->updateProductDetails($request->all(), $id);
 
         Session::flash('success', 'Product Details update successfully!');
