@@ -406,9 +406,18 @@ class ProductCoreService
                                     break;
                                 case "recharge_product_code":
 //                                    dd($cells [$index]->getValue());
-                                    $type = strtolower($cells [$index]->getValue());
-                                    $assetLiteProduct['purchase_option'] = ($type == "") ? 'recharge' : 'all';
+                                    $type = $cells [$index]->getValue();
+                                    $assetLiteProduct['purchase_option'] = ($type == "") ? 'all' : 'recharge';
                                     $core_data[$field] = $type;
+                                    break;
+
+                                case "rate_cutter_offer":
+                                    $type = $cells [$index]->getValue();
+                                    $assetLiteProduct['rate_cutter_offer'] = ($type == "") ? null : 1;
+                                    break;
+                                case "rate_cutter_unit":
+                                    $type = $cells [$index]->getValue();
+                                    $assetLiteProduct['rate_cutter_unit'] = ($type == "") ? null : $type;
                                     break;
                                 case "internet_volume_mb":
                                     $data_volume = $cells [$index]->getValue();
@@ -431,6 +440,7 @@ class ProductCoreService
                                     }
                                     $core_data [$field] = $data_volume;
                                     break;
+                                case "vat":
                                 case "sms_volume":
                                 case "minute_volume":
                                     $volume = $cells [$index]->getValue();
@@ -463,11 +473,11 @@ class ProductCoreService
                                     }
                                     $assetLiteProduct[$field] = $flag;
                                     break;
-//                                case "is_gift_offer":
-//                                    $giftOffer = strtolower($cells [$index]->getValue());
-//                                    $core_data [$field] = $giftOffer;
-//                                    $assetLiteProduct[$field] = $giftOffer;
-//                                    break;
+                                case "is_gift_offer":
+                                    $giftOffer = strtolower($cells [$index]->getValue());
+                                    $core_data [$field] = $giftOffer;
+                                    $assetLiteProduct[$field] = $giftOffer;
+                                    break;
                                 case "is_social_pack":
                                     $assetLiteProduct [$field] = ($cells [$index]->getValue() != '') ?
                                         $cells [$index]->getValue() : null;
@@ -490,7 +500,7 @@ class ProductCoreService
                                 $core_data['platform'] = 'web';
                             }
 
-                            dd($core_data);
+//                            dd($core_data);
 
                             ProductCore::updateOrCreate([
                                 'product_code' => $product_code
