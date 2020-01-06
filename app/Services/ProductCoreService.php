@@ -375,7 +375,6 @@ class ProductCoreService
                                         $assetLiteProduct['offer_info'] = ['package_offer_type_id' => 6];
                                     }
                                     break;
-
                                 case "sim_type":
                                     $type = strtolower($cells [$index]->getValue());
                                     if ($type == 'prepaid') {
@@ -403,9 +402,10 @@ class ProductCoreService
                                     $core_data [$field] = $cells [$index]->getValue();
                                     $assetLiteProduct['is_auto_renewable'] = $cells [$index]->getValue();
                                     break;
-                                case "is_recharge_offer":
+                                case "recharge_product_code":
+//                                    dd($cells [$index]->getValue());
                                     $type = strtolower($cells [$index]->getValue());
-                                    $assetLiteProduct['purchase_option'] = ($type == 1) ? 'recharge' : 'all';
+                                    $assetLiteProduct['purchase_option'] = ($type == "") ? 'recharge' : 'all';
                                     $core_data[$field] = $type;
                                     break;
                                 case "internet_volume_mb":
@@ -461,11 +461,11 @@ class ProductCoreService
                                     }
                                     $assetLiteProduct[$field] = $flag;
                                     break;
-                                case "is_gift_offer":
-                                    $giftOffer = strtolower($cells [$index]->getValue());
-                                    $core_data [$field] = $giftOffer;
-                                    $assetLiteProduct[$field] = $giftOffer;
-                                    break;
+//                                case "is_gift_offer":
+//                                    $giftOffer = strtolower($cells [$index]->getValue());
+//                                    $core_data [$field] = $giftOffer;
+//                                    $assetLiteProduct[$field] = $giftOffer;
+//                                    break;
                                 case "is_social_pack":
                                     $assetLiteProduct [$field] = ($cells [$index]->getValue() != '') ?
                                         $cells [$index]->getValue() : null;
@@ -487,6 +487,8 @@ class ProductCoreService
                             } else {
                                 $core_data['platform'] = 'web';
                             }
+
+                            dd($core_data);
 
                             ProductCore::updateOrCreate([
                                 'product_code' => $product_code

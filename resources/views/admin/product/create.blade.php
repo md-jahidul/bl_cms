@@ -158,32 +158,6 @@
                                     </slot>
                                 @endif
 
-                                <div class="form-group col-md-6 {{ $errors->has('duration_category_id') ? ' error' : '' }}">
-                                    <label for="duration_category_id">Validity Unit</label>
-                                    <select class="form-control required duration_categories" name="validity_unit">
-                                        <option value="">---Select Duration Type---</option>
-                                        <option value="hour">Hour</option>
-                                        <option value="hours">Hours</option>
-                                        <option value="day">Day</option>
-                                        <option value="days">Days</option>
-                                    </select>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('duration_category_id'))
-                                        <div class="help-block">{{ $errors->first('duration_category_id') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('validity') ? ' error' : '' }}">
-                                    <label for="validity">Validity</label>
-                                    <input type="number" name="validity" class="form-control validity" placeholder="Enter validity"
-                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                                           value="{{ old("validity") ? old("validity") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('validity'))
-                                        <div class="help-block">  {{ $errors->first('validity') }}</div>
-                                    @endif
-                                </div>
-
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="purchase_option" class="required">Purchase Option</label>
                                     <select class="form-control required" name="purchase_option" id="offer_type"
@@ -207,19 +181,6 @@
                                     </div>
                                 </div>
 
-{{--                                TODO: Check Delete Recharge --}}
-{{--                                <div class="col-md-6">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label for="title" class="mr-1">Recharge</label>--}}
-{{--                                        <input type="radio" name="is_recharge" value="1" id="yes">--}}
-{{--                                        <label for="yes" class="mr-1">Yes</label>--}}
-{{--                                        <input type="radio" name="is_recharge" value="0" id="no" checked>--}}
-{{--                                        <label for="no">No</label>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-
-
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="title" class="mr-1">Status:</label>
@@ -231,7 +192,6 @@
                                     </div>
                                 </div>
 
-
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button id="save" class="btn btn-primary"><i
@@ -239,9 +199,7 @@
                                         </button>
                                     </div>
                                 </div>
-
                             </div>
-
                         </form>
                     </div>
                 </div>
