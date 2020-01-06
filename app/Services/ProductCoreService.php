@@ -243,6 +243,8 @@ class ProductCoreService
                                 $core_data['platform'] = 'app';
                             }
 
+                            //dd($core_data);
+
                             ProductCore::updateOrCreate([
                                 'product_code' => $product_code
                             ], $core_data);
