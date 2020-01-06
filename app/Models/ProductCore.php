@@ -8,6 +8,8 @@ class ProductCore extends Model
 {
     protected $fillable = [
         'product_code',
+        'renew_product_code',
+        'recharge_product_code',
         'name',
         'commercial_name_en',
         'commercial_name_bn',
