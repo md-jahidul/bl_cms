@@ -13,6 +13,7 @@ use App\Models\ProductDetail;
 use App\Models\RelatedProduct;
 use App\Models\SimCategory;
 use App\Models\TagCategory;
+use App\Models\ProductPriceSlab;
 use App\Services\DurationCategoryService;
 use App\Services\OfferCategoryService;
 use App\Services\ProductCoreService;
@@ -204,6 +205,8 @@ class ProductController extends Controller
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offersType'] = $this->offerCategoryService->getOfferCategories($type);
         $this->info['durations'] = $this->durationCategoryService->findAll();
+        $this->info['price_slabs'] = ProductPriceSlab::get();
+
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
                 ->where('type_id', $package_id)

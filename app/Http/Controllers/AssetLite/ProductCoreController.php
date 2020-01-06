@@ -194,6 +194,7 @@ class ProductCoreController extends Controller
     {
         $product = $this->productCoreService->findProductCore($id);
         $sim_package = SimCategory::where('id', $product->sim_type)->first();
+        dd(SimCategory::latest()->all()->name);
         $package_id = $sim_package->id;
         
         $this->info['previous_page'] = url()->previous();
@@ -202,6 +203,7 @@ class ProductCoreController extends Controller
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offersType'] = $this->offerCategoryService->getOfferCategories($sim_package->alias);
         $this->info['durations'] = $this->durationCategoryService->findAll();
+        $this->info['sim_type'] = SimCategory::latest()->get()->name;
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
                 ->where('type_id', $package_id)

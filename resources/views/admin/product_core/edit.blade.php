@@ -25,13 +25,13 @@
                             <input type="hidden" name="previous_page" value="{{ $previous_page  }}">
 
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
-                                    <label for="name_en" class="required">Offer Name</label>
-                                    <input type="text" name="name_en"  class="form-control" placeholder="Enter offer name english"
-                                           value="{{ $product->name_en }}" required data-validation-required-message="Enter offer name english">
+                                <div class="form-group col-md-6 {{ $errors->has('name') ? ' error' : '' }}">
+                                    <label for="name" class="required">Offer Name</label>
+                                    <input type="text" name="name"  class="form-control" placeholder="Enter offer name english"
+                                           value="{{ $product->name }}" required data-validation-required-message="Enter offer name english">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('name_en'))
-                                        <div class="help-block">{{ $errors->first('name_en') }}</div>
+                                    @if ($errors->has('name'))
+                                        <div class="help-block">{{ $errors->first('name') }}</div>
                                     @endif
                                 </div>
 
@@ -46,23 +46,45 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
-                                    <label for="name_bn" class="required">Offer Name Bangla</label>
-                                    <input type="text" name="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
-                                           required data-validation-required-message="Enter offer name in Bangla"
-                                           value="{{ $product->name_bn }}">
+                                <div class="form-group col-md-6 {{ $errors->has('commercial_name_en') ? ' error' : '' }}">
+                                    <label for="commercial_name_en" class="required">Commercial Name English</label>
+                                    <input type="text" name="commercial_name_en"  class="form-control" placeholder="Enter offer name english"
+                                           value="{{ $product->commercial_name_en }}" required data-validation-required-message="Enter offer name english">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('name_bn'))
-                                        <div class="help-block">{{ $errors->first('name_bn') }}</div>
+                                    @if ($errors->has('commercial_name_en'))
+                                        <div class="help-block">{{ $errors->first('commercial_name_en') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('commercial_name_bn') ? ' error' : '' }}">
+                                    <label for="commercial_name_bn" class="required">Commercial Name Bangla</label>
+                                    <input type="text" name="commercial_name_bn" class="form-control" placeholder="Enter offer name in Bangla"
+                                           required data-validation-required-message="Enter offer name in Bangla"
+                                           value="{{ $product->commercial_name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('commercial_name_bn'))
+                                        <div class="help-block">{{ $errors->first('commercial_name_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('short_description') ? ' error' : '' }}">
+                                    <label for="short_description" class="required">Short Description</label>
+                                    <input type="text" name="short_description" class="form-control" placeholder="Enter offer name in Bangla"
+                                           required data-validation-required-message="Enter offer name in Bangla"
+                                           value="{{ $product->short_description }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('short_description'))
+                                        <div class="help-block">{{ $errors->first('short_description') }}</div>
+                                    @endif
+                                </div>
+
+
+
+                                {{-- <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
                                     <label for="start_date" class="required">Start Date</label>
                                     <div class='input-group'>
                                         <input type='text' class="form-control" name="start_date" id="start_date"
                                                value="{{ $product->start_date }}"
-                                               {{--value="{{ date('Y-m-d H:i:s', $product->start_date) }}"--}}
                                                required data-validation-required-message="Please select start date"
                                                placeholder="Please select start date" />
                                     </div>
@@ -70,15 +92,18 @@
                                     @if ($errors->has('start_date'))
                                         <div class="help-block">{{ $errors->first('start_date') }}</div>
                                     @endif
-                                </div>
+                                </div> --}}
+
+
 
                                 <div class="form-group col-md-6">
-                                    <label for="ussd">USSD Code English</label>
+                                    <label for="ussd">USSD Code</label>
                                     <input type="text" name="activation_ussd"  class="form-control" placeholder="Enter offer ussd english" maxlength="25"
                                            value="{{ $product->activation_ussd }}">
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                
+                                {{-- <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
                                     <label for="end_date">End Date</label>
                                     <input type="text" name="end_date" id="end_date" class="form-control"
                                            placeholder="Please select end date"
@@ -93,10 +118,17 @@
                                     <label for="ussd_bn">USSD Code Bangla</label>
                                     <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd in Bangla" maxlength="25"
                                            value="{{ $product->ussd_bn }}">
+                                </div>  --}}
+
+                                <div class="form-group col-md-6">
+                                    <label for="price">Mrp Price</label>
+                                    <input type="number" name="price"  class="form-control" placeholder="Enter offer price" step="0.001"
+                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+                                           value="{{ $product->mrp_price }}">
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="price">Offer Price</label>
+                                    <label for="price">Price</label>
                                     <input type="number" name="price"  class="form-control" placeholder="Enter offer price" step="0.001"
                                            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
                                            value="{{ $product->price }}">
@@ -110,7 +142,7 @@
                                     <div class="help-block"></div>
                                 </div>
 
-                                <div class="form-group col-md-6">
+                                {{-- <div class="form-group col-md-6">
                                     <label for="tag_category_id">Tag</label>
                                     <select class="form-control" name="tag_category_id">
                                         <option value="">---Select Tag---</option>
@@ -118,7 +150,7 @@
                                             <option value="{{ $tag->id }}" {{ ($tag->id == $product->tag_category_id ) ? 'selected' : '' }}>{{ $tag->name_en }}</option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group col-md-6 {{ $errors->has('product_type_id') ? ' error' : '' }}">
                                     <label for="offer_category_id" class="required">Offer Type</label>
@@ -161,7 +193,7 @@
 
                             {{--<div class="row">--}}
 
-                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
+                                {{-- <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="purchase_option" class="required">Purchase Option</label>
                                     <select class="form-control required" name="purchase_option" id="offer_type"
                                             required data-validation-required-message="Please select purchase option">
@@ -182,7 +214,7 @@
                                         <label for="trending" class="mr-1">Trending Offer:</label>
                                         <input type="checkbox" name="show_in_home" value="1" {{ ($product->show_in_home == 1) ? 'checked' : '' }} id="trending">
                                     </div>
-                                </div>
+                                </div> --}}
 
 {{--                                TODO: Savely Delete Recharge --}}
 {{--                                <div class="col-md-6">--}}
