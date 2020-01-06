@@ -23,7 +23,7 @@ class PartnerOfferRepository extends BaseRepository
         return $query->with('partner')->get();
     }
 
-    public function campaigin()
+    public function campaign()
     {
         return $this->model->where('is_campaign', 1)->orderBy('campaign_order')->get();
     }

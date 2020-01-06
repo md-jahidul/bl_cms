@@ -93,4 +93,37 @@ class ProductEntryController extends Controller
             return response()->json($response, 500);
         }
     }
+
+    public function assetliteCoreProductForm()
+    {
+        return view('admin.core-product.core_product_entry');
+    }
+
+    public function assetliteCoreProductStore(Request $request)
+    {
+        try {
+            $file = $request->file('excel_file');
+//            dd($file);
+            $path = $file->storeAs(
+                'products/' . strtotime(now()),
+                "products" . '.' . $file->getClientOriginalExtension(),
+                'public'
+            );
+
+            $path = Storage::disk('public')->path($path);
+//            dd($path);
+            $this->service->mapAssetliteProduct($path);
+
+            $response = [
+                'success' => 'SUCCESS'
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 'FAILED',
+                'errors' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
+    }
 }

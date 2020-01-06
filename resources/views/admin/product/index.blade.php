@@ -5,9 +5,9 @@
     <li class="breadcrumb-item ">Product List</li>
 @endsection
 @section('action')
-    <a href="#" id="syncBtn" class="btn btn-outline-blue-grey round btn-glow px-2">
-        Sync Core Product
-    </a>
+{{--    <a href="#" id="syncBtn" class="btn btn-outline-blue-grey round btn-glow px-2">--}}
+{{--        Sync Core Product--}}
+{{--    </a>--}}
     <a href="{{ route("product.create", strtolower($type)) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add Product
     </a>

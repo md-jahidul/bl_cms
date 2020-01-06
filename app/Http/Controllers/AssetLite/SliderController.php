@@ -52,13 +52,17 @@ class SliderController extends Controller
      */
     public function singleSlider()
     {
-        $sliders = $this->alSliderService->allSingleSlider();
+        $sliders = $this->alSliderService->sliders('single');
+//        return $sliders;
         return view('admin.slider.index', compact('sliders'));
     }
 
+    /**
+     * @return Factory|View
+     */
     public function multiSlider()
     {
-        $sliders = $this->alSliderService->allMultiSlider();
+        $sliders = $this->alSliderService->sliders('multiple');
         return view('admin.slider.multi-slider', compact('sliders'));
     }
 
