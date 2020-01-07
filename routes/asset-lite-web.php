@@ -208,4 +208,8 @@ Route::middleware('authorize', 'auth')->group(function () {
 
         $service->mapDataFromExcel('/home/bs104/Desktop/product_sample.xlsx');
     });
+
+    // Product core ============================================
+    Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
+    Route::get('product-core/{id}/edit/', 'AssetLite\ProductCoreController@edit')->name('product.core.edit');
 });

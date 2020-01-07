@@ -15,7 +15,9 @@ class PartnerOfferDetail extends Model
         'eligible_customer_en',
         'eligible_customer_bn',
         'avail_en',
-        'avail_bn'
+        'avail_bn',
+        'banner_image_url',
+        'banner_alt_text'
     ];
 }
 

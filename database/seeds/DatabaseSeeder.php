@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
 //        $this->call(ProductsTableSeeder::class);
 
         $this->call(PriyojonTableSeeder::class);
+        $this->call(ProductSlabsTableSeeder::class);
 
 
 

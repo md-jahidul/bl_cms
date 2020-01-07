@@ -13,7 +13,6 @@ use App\Models\ProductDetail;
 use App\Models\RelatedProduct;
 use App\Models\SimCategory;
 use App\Models\TagCategory;
-use App\Models\ProductPriceSlab;
 use App\Services\DurationCategoryService;
 use App\Services\OfferCategoryService;
 use App\Services\ProductCoreService;
@@ -33,7 +32,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\View\View;
 
-class ProductController extends Controller
+class ProductCoreController extends Controller
 {
 
     private $productService;
@@ -77,18 +76,11 @@ class ProductController extends Controller
      * @param $type
      * @return Factory|View
      */
-    public function index($type)
+    public function index()
     {
-        $products = Product::category($type)
-            ->with(['product_core', 'offer_category' => function ($query) {
-                $query->select('id', 'name_en');
-            }])
-            ->latest()
-            ->get();
+        $products = ProductCore::latest()->get();
 
-//        return $products;
-
-        return view('admin.product.index', compact('products', 'type'));
+        return view('admin.product_core.index', compact('products'));
     }
 
     public function trendingOfferHome()
@@ -198,18 +190,20 @@ class ProductController extends Controller
      * @param int $id
      * @return Factory|View
      */
-    public function edit($type, $id)
+    public function edit($id)
     {
-        $product = $this->productService->findProduct($type, $id);
-        $package_id = SimCategory::where('alias', $type)->first()->id;
+        $product = $this->productCoreService->findProductCore($id);
+        $sim_package = SimCategory::where('id', $product->sim_type)->first();
+        dd(SimCategory::latest()->all()->name);
+        $package_id = $sim_package->id;
+        
         $this->info['previous_page'] = url()->previous();
-        $this->info['type'] = $type;
+        $this->info['type'] = $sim_package->alias;
         $this->info['product'] = $product;
         $this->info['tags'] = $this->tagCategoryService->findAll();
-        $this->info['offersType'] = $this->offerCategoryService->getOfferCategories($type);
+        $this->info['offersType'] = $this->offerCategoryService->getOfferCategories($sim_package->alias);
         $this->info['durations'] = $this->durationCategoryService->findAll();
-        $this->info['price_slabs'] = ProductPriceSlab::get();
-
+        $this->info['sim_type'] = SimCategory::latest()->get()->name;
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
                 ->where('type_id', $package_id)
@@ -218,7 +212,7 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
-        return view('admin.product.edit', $this->info);
+        return view('admin.product_core.edit', $this->info);
     }
 
     /**
@@ -262,6 +256,7 @@ class ProductController extends Controller
 
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
+
         $this->productDetailService->updateProductDetails($request->all(), $id);
 
         Session::flash('success', 'Product Details update successfully!');
