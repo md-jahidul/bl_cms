@@ -26,7 +26,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title"><strong>Product Details Page</strong></h5><hr>
+                    <h4 class="menu-title"><strong>{{ ucfirst($offerType) }} Details Page</strong></h4><hr>
                     <div class="card-body card-dashboard">
                         <form role="form" id="product_form" action="{{ route('product.details-update', [strtolower($type), $productDetail->id] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf

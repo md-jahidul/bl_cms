@@ -3,9 +3,6 @@
 
 @include('layouts.partials.product-details.common-field.offer-details')
 
-
-
-
 {{--<div class="form-group select-role col-md-6 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">--}}
 {{--    <label for="role_id" class="required">Show More Product</label>--}}
 {{--    <div class="role-select">--}}
