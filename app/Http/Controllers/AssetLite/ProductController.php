@@ -243,11 +243,11 @@ class ProductController extends Controller
      * @param $id
      * @return Factory|View
      */
-    public function productDetailsEdit($type, $id)
+    public function productDetailsEdit($type, $id, $offerType)
     {
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
-        return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
+        return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType'));
     }
 
     /**
@@ -298,17 +298,4 @@ class ProductController extends Controller
             "success" => true
         ]);
     }
-
-    // TODO: Temporary use this methods for Product Details
-//    public function updateDetails()
-//    {
-//        $products = Product::all();
-//        ProductDetail::truncate();
-//        foreach ($products as $product) {
-//            ProductDetail::create([
-//                'product_id' => $product->id
-//            ]);
-//        }
-//        return "Insert Successfully";
-//    }
 }
