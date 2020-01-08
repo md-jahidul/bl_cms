@@ -109,7 +109,7 @@ class ProductCoreService
     public function updateProductCore($data, $id)
     {
         $product = $this->productCoreRepository->findOneProductCore($id);
-        $data['mrp_price'] = $data['price'] + $data['vat'];
+        $data['mrp_price'] = round($data['price'] + $data['vat']);
         $product->update($data);
     }
 
