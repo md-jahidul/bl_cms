@@ -259,7 +259,6 @@ class ProductController extends Controller
     public function productDetailsUpdate(Request $request, $type, $id)
     {
         //$productDetails = $this->productDetailService->findOne($request->product_details_id);
-
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
         $this->productDetailService->updateProductDetails($request->all(), $id);
