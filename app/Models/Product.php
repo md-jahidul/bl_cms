@@ -38,6 +38,7 @@ class Product extends Model
             'is_social_pack',
             'is_auto_renewable',
             'rate_cutter_offer',
+            'rate_cutter_unit'
         ];
 
     protected $casts = [
