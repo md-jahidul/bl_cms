@@ -67,8 +67,9 @@ return [
             'rate_cutter_offer'    => 26,
             'rate_cutter_unit'     => 27,
             'assetlite_offer_type' => 28,
-            'validity_in_days'     => 29,
-
+            'short_text'           => 29,
+            'sms_rate_unit'        => 30,
+            'validity_in_days'     => 31,
         ]
     ]
 ];

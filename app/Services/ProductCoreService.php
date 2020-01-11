@@ -405,11 +405,18 @@ class ProductCoreService
                                     $assetLiteProduct['is_auto_renewable'] = $cells [$index]->getValue();
                                     break;
                                 case "recharge_product_code":
-//                                    dd($cells [$index]->getValue());
                                     $type = $cells [$index]->getValue();
                                     $assetLiteProduct['purchase_option'] = ($type == "") ? 'all' : 'recharge';
                                     $core_data[$field] = $type;
                                     break;
+
+                                case "short_text":
+                                    if(!empty($cells[$index]->getValue())){
+                                        $assetLiteProduct['offer_info'] = [
+                                            'short_text' => $cells[$index]->getValue()
+                                        ];
+                                    }
+                                    break;        
 
                                 case "rate_cutter_offer":
                                     $type = $cells [$index]->getValue();
@@ -419,6 +426,7 @@ class ProductCoreService
                                     $type = $cells [$index]->getValue();
                                     $assetLiteProduct['rate_cutter_unit'] = ($type == "") ? null : $type;
                                     break;
+                                    
                                 case "internet_volume_mb":
                                     $data_volume = $cells [$index]->getValue();
                                     if ($data_volume == '') {
