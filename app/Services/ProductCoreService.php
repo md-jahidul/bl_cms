@@ -406,7 +406,7 @@ class ProductCoreService
                                     break;
                                 case "recharge_product_code":
                                     $type = $cells [$index]->getValue();
-                                    $assetLiteProduct['purchase_option'] = ($type == "") ? 'all' : 'recharge';
+                                    $assetLiteProduct['purchase_option'] = ($type == "") ? 'balance' : 'recharge';
                                     $core_data[$field] = $type;
                                     break;
 
