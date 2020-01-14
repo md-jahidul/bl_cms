@@ -37,9 +37,9 @@
                                     <input type="hidden" name="other_offer_type_id" value="{{ $productDetail->offer_info['other_offer_type_id'] }}">
                                 @endif
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
-                                    <label for="name_en" class="">Offer Name</label>
+                                    <label for="name_en">Offer Name</label>
                                     <input type="text" class="form-control" placeholder="Enter offer name english" readonly
-                                           value="{{ $productDetail->name_en }}" required data-validation-required-message="Enter offer name english">
+                                           value="{{ $productDetail->name_en }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_en'))
                                         <div class="help-block">{{ $errors->first('name_en') }}</div>

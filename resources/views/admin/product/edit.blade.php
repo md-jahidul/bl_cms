@@ -218,9 +218,8 @@
 
 
                                 <div class="form-group col-md-6 {{ $errors->has('price_slabs_id') ? ' error' : '' }}">
-                                    <label for="price_slabs_id" class="required">Price Slabs Type</label>
-                                    <select class="form-control" name="price_slabs_id" id="offer_type"
-                                            required data-validation-required-message="Please select range">
+                                    <label for="price_slabs_id">Price Slabs Type</label>
+                                    <select class="form-control" name="price_slabs_id" id="offer_type">
                                         <option value="">---Select Offer Type---</option>
                                         @foreach($price_slabs as $slab)
                                             <option value="{{ $slab->id }}" {{ ($slab->id == $product->price_slabs_id ) ? 'selected' : '' }}>{{ $slab->range_name }}</option>

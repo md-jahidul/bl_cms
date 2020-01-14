@@ -9,6 +9,7 @@ use App\Services\PushNotificationService;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -120,6 +121,9 @@ class PushNotificationController extends Controller
 
                 $response = PushNotificationService::sendNotification($notification);
                 $formatted_response = json_decode($response);
+
+                Log::info($response);
+
                 if ($formatted_response->status == "SUCCESS") {
                     if (isset($user_phone)) {
                         $this->notificationService->attachNotificationToUser($formatted_response->notification_id, $user_phone);

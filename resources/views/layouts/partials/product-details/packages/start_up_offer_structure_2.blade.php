@@ -45,25 +45,25 @@
     @endif
 </div>
 
-<div class="form-group col-md-6 {{ $errors->has('recharge_benefits_en') ? ' error' : '' }}">
-    <label for="recharge_benefits_en">Recharge Benefits Info (English)</label>
-    <input name="other_attributes[recharge_benefits_en]"  class="form-control" placeholder="Enter offer details in english"
-           value="{{ $productDetail->product_details->other_attributes['recharge_benefits_en'] }}" id="details">
-    <div class="help-block"></div>
-    @if ($errors->has('recharge_benefits_en'))
-        <div class="help-block">{{ $errors->first('recharge_benefits_en') }}</div>
-    @endif
-</div>
+{{--<div class="form-group col-md-6 {{ $errors->has('recharge_benefits_offer') ? ' error' : '' }}">--}}
+{{--    <label for="recharge_benefits_offer">Recharge Benefits Offer</label>--}}
+{{--    <input name="other_attributes[recharge_benefits_offer]"  class="form-control" placeholder="Enter offer details in english"--}}
+{{--           value="{{ $productDetail->product_details->other_attributes['recharge_benefits_offer'] }}" id="details">--}}
+{{--    <div class="help-block"></div>--}}
+{{--    @if ($errors->has('recharge_benefits_offer'))--}}
+{{--        <div class="help-block">{{ $errors->first('recharge_benefits_offer') }}</div>--}}
+{{--    @endif--}}
+{{--</div>--}}
 
-<div class="form-group col-md-6 {{ $errors->has('recharge_benefits_bn') ? ' error' : '' }}">
-    <label for="recharge_benefits_bn">Recharge Benefits Info (Bangla)</label>
-    <input name="other_attributes[recharge_benefits_bn]"  class="form-control" placeholder="Enter offer details in english"
-           value="{{ $productDetail->product_details->other_attributes['recharge_benefits_bn'] }}" id="details">
-    <div class="help-block"></div>
-    @if ($errors->has('recharge_benefits_bn'))
-        <div class="help-block">{{ $errors->first('recharge_benefits_bn') }}</div>
-    @endif
-</div>
+{{--<div class="form-group col-md-6 {{ $errors->has('recharge_benefits_bn') ? ' error' : '' }}">--}}
+{{--    <label for="recharge_benefits_bn">Recharge Benefits Info (Bangla)</label>--}}
+{{--    <input name="other_attributes[recharge_benefits_bn]"  class="form-control" placeholder="Enter offer details in english"--}}
+{{--           value="{{ $productDetail->product_details->other_attributes['recharge_benefits_bn'] }}" id="details">--}}
+{{--    <div class="help-block"></div>--}}
+{{--    @if ($errors->has('recharge_benefits_bn'))--}}
+{{--        <div class="help-block">{{ $errors->first('recharge_benefits_bn') }}</div>--}}
+{{--    @endif--}}
+{{--</div>--}}
 
 <div class="form-group select-role col-md-6 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
     <label for="role_id">Related Product</label>
