@@ -13,6 +13,7 @@ use App\Models\ProductDetail;
 use App\Models\RelatedProduct;
 use App\Models\SimCategory;
 use App\Models\TagCategory;
+use App\Models\ProductPriceSlab;
 use App\Services\DurationCategoryService;
 use App\Services\OfferCategoryService;
 use App\Services\ProductCoreService;
@@ -78,9 +79,14 @@ class ProductController extends Controller
      */
     public function index($type)
     {
-        $products = Product::category($type)->with(['product_core', 'offer_category' => function ($query) {
-            $query->select('id', 'name_en');
-        }])->latest()->get();
+        $products = Product::category($type)
+            ->with(['product_core', 'offer_category' => function ($query) {
+                $query->select('id', 'name_en');
+            }])
+            ->latest()
+            ->get();
+
+//        return $products;
 
         return view('admin.product.index', compact('products', 'type'));
     }
@@ -202,6 +208,8 @@ class ProductController extends Controller
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offersType'] = $this->offerCategoryService->getOfferCategories($type);
         $this->info['durations'] = $this->durationCategoryService->findAll();
+        $this->info['price_slabs'] = ProductPriceSlab::get();
+
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
                 ->where('type_id', $package_id)
@@ -235,11 +243,11 @@ class ProductController extends Controller
      * @param $id
      * @return Factory|View
      */
-    public function productDetailsEdit($type, $id)
+    public function productDetailsEdit($type, $id, $offerType)
     {
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
-        return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
+        return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType'));
     }
 
     /**
@@ -251,10 +259,8 @@ class ProductController extends Controller
     public function productDetailsUpdate(Request $request, $type, $id)
     {
         //$productDetails = $this->productDetailService->findOne($request->product_details_id);
-
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
-
         $this->productDetailService->updateProductDetails($request->all(), $id);
 
         Session::flash('success', 'Product Details update successfully!');
@@ -291,17 +297,4 @@ class ProductController extends Controller
             "success" => true
         ]);
     }
-
-    // TODO: Temporary use this methods for Product Details
-//    public function updateDetails()
-//    {
-//        $products = Product::all();
-//        ProductDetail::truncate();
-//        foreach ($products as $product) {
-//            ProductDetail::create([
-//                'product_id' => $product->id
-//            ]);
-//        }
-//        return "Insert Successfully";
-//    }
 }

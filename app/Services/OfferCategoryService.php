@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Repositories\OfferCategoryRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
@@ -18,6 +19,7 @@ use Illuminate\Http\Response;
 class OfferCategoryService
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var $offerCategoryRepository
@@ -70,8 +72,9 @@ class OfferCategoryService
         $offerCategory = $this->findOne($id);
         
         if (!empty($data['banner_image_url'])) {
-            $imageUrl = $this->imageUpload($data, "banner_image_url", $data['name_en'], '/uploads/assetlite/images/banner/offer_image');
-            $data['banner_image_url'] = '/assetlite/images/banner/offer_image/' . $imageUrl;
+            // $imageUrl = $this->imageUpload($data, "banner_image_url", $data['name_en'], '/uploads/assetlite/images/banner/offer_image');
+            // $data['banner_image_url'] = '/assetlite/images/banner/offer_image/' . $imageUrl;
+            $data['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/offer_image');
         }
 
         if( !empty($data['alias']) ){

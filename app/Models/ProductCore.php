@@ -8,6 +8,8 @@ class ProductCore extends Model
 {
     protected $fillable = [
         'product_code',
+        'renew_product_code',
+        'recharge_product_code',
         'name',
         'commercial_name_en',
         'commercial_name_bn',
@@ -39,12 +41,8 @@ class ProductCore extends Model
         'is_social_pack',
         'other_info',
         'status',
-        'segment',
         'validity_in_days',
-        'purchase_option',
-        'is_rate_cutter_offer',
-        'assetlite_offer_type',
-        'app_offer_section'
+        'platform'
 
     ];
 

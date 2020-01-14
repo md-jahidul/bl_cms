@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Core Product Entry')
-@section('card_name', 'Product Entry')
+@section('title', 'Store Location Entry')
+@section('card_name', 'Store Loaction Entry')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Core Product Entry Panel</li>
+    <li class="breadcrumb-item active">Store Location Entry Panel</li>
 @endsection
 @section('content')
 
@@ -20,8 +20,8 @@
                     <form class="form" method="POST"  id="uploadProduct" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label for="message">Upload Product List</label> <a href="{{ asset('sample-format/product_sample.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
-                            <input type="file" class="dropify" name="product_file" data-height="80"
+                            <label for="message">Upload Product List</label> <a href="{{ asset('sample-format/store_locations.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
+                            <input type="file" class="dropify" name="excel_file" data-height="80"
                                    data-allowed-file-extensions="xlsx" required/>
                         </div>
                         <div class="col-md-12" >
@@ -43,9 +43,10 @@
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css"
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
     <style>
+
         .multiselect-container{
             width: 250px;
         }
@@ -87,19 +88,18 @@
                 let formData = new FormData($(this)[0]);
 
                 $.ajax({
-                    url: '{{ route('core-product.save')}}',
+                    url: '{{ route('core-product-store')}}',
                     type: 'POST',
                     cache: false,
                     contentType: false,
                     processData: false,
                     data: formData,
                     success: function (result) {
-
                         console.log(result)
 
                         if (result.success) {
                             swal.fire({
-                                title: 'Product Upload Successfully!',
+                                title: 'Stores Upload Successfully!',
                                 type: 'success',
                                 timer: 2000,
                                 showConfirmButton: false
@@ -116,7 +116,7 @@
                     },
                     error: function (data) {
                         swal.fire({
-                            title: 'Failed to upload Products',
+                            title: 'Failed to upload Stores',
                             type: 'error',
                         });
                     }

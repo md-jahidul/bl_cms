@@ -26,7 +26,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title"><strong>Product Details Page</strong></h5><hr>
+                    <h4 class="menu-title"><strong>{{ ucfirst($offerType) }} Details Page</strong></h4><hr>
                     <div class="card-body card-dashboard">
                         <form role="form" id="product_form" action="{{ route('product.details-update', [strtolower($type), $productDetail->id] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
@@ -37,9 +37,9 @@
                                     <input type="hidden" name="other_offer_type_id" value="{{ $productDetail->offer_info['other_offer_type_id'] }}">
                                 @endif
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
-                                    <label for="name_en" class="">Offer Name</label>
+                                    <label for="name_en">Offer Name</label>
                                     <input type="text" class="form-control" placeholder="Enter offer name english" readonly
-                                           value="{{ $productDetail->name_en }}" required data-validation-required-message="Enter offer name english">
+                                           value="{{ $productDetail->name_en }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_en'))
                                         <div class="help-block">{{ $errors->first('name_en') }}</div>
@@ -89,9 +89,9 @@
                                 @endif
 
                                 <div class="form-group col-md-6 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
-                                    <label for="banner_alt_text" class="required">Alt Text</label>
+                                    <label for="banner_alt_text">Alt Text</label>
                                     <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
-                                           value="{{ optional($productDetail->product_details)->banner_alt_text}}" required data-validation-required-message="Enter image alter text">
+                                           value="{{ optional($productDetail->product_details)->banner_alt_text}}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('banner_alt_text'))
                                         <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>

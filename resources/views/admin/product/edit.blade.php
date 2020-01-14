@@ -26,9 +26,9 @@
 
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
-                                    <label for="name_en" class="required">Offer Name</label>
+                                    <label for="name_en">Offer Name</label>
                                     <input type="text" name="name_en"  class="form-control" placeholder="Enter offer name english"
-                                           value="{{ $product->name_en }}" required data-validation-required-message="Enter offer name english">
+                                           value="{{ $product->name_en }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_en'))
                                         <div class="help-block">{{ $errors->first('name_en') }}</div>
@@ -47,9 +47,8 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
-                                    <label for="name_bn" class="required">Offer Name Bangla</label>
+                                    <label for="name_bn">Offer Name Bangla</label>
                                     <input type="text" name="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
-                                           required data-validation-required-message="Enter offer name in Bangla"
                                            value="{{ $product->name_bn }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_bn'))
@@ -58,12 +57,10 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
-                                    <label for="start_date" class="required">Start Date</label>
+                                    <label for="start_date">Start Date</label>
                                     <div class='input-group'>
                                         <input type='text' class="form-control" name="start_date" id="start_date"
                                                value="{{ $product->start_date }}"
-                                               {{--value="{{ date('Y-m-d H:i:s', $product->start_date) }}"--}}
-                                               required data-validation-required-message="Please select start date"
                                                placeholder="Please select start date" />
                                     </div>
                                     <div class="help-block"></div>
@@ -159,16 +156,40 @@
                                 </slot>
                             @endif
 
-                            {{--<div class="row">--}}
+                                <div class="form-group col-md-6 {{ $errors->has('duration_category_id') ? ' error' : '' }}">
+                                    <label for="duration_category_id">Validity Unit</label>
+                                    <select class="form-control required duration_categories" name="validity_unit">
+                                        <option value="">---Select Duration Type---</option>
+                                        <option value="hour" {{ $product->product_core['validity_unit'] == "hour" ? 'selected' : '' }}>Hour</option>
+                                        <option value="hours" {{ $product->product_core['validity_unit'] == "hours" ? 'selected' : '' }}>Hours</option>
+                                        <option value="day" {{ $product->product_core['validity_unit'] == "day" ? 'selected' : '' }}>Day</option>
+                                        <option value="days" {{ $product->product_core['validity_unit'] == "days" ? 'selected' : '' }}>Days</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('duration_category_id'))
+                                        <div class="help-block">{{ $errors->first('duration_category_id') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('validity') ? ' error' : '' }}">
+                                    <label for="validity">Validity</label>
+                                    <input type="number" name="validity" class="form-control validity" placeholder="Enter validity"
+                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+                                           value="{{ (!empty($product->product_core->validity)) ? $product->product_core->validity : old("validity") ?? '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('validity'))
+                                        <div class="help-block">  {{ $errors->first('validity') }}</div>
+                                    @endif
+                                </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="purchase_option" class="required">Purchase Option</label>
                                     <select class="form-control required" name="purchase_option" id="offer_type"
                                             required data-validation-required-message="Please select purchase option">
                                         <option data-alias="" value="">---Select Purchase Option---</option>
-                                        <option value="recharge" {{ ("recharge" == $product->purchase_option ) ? 'selected' : '' }}>Recharge</option>
                                         <option value="balance" {{ ("balance" == $product->purchase_option ) ? 'selected' : '' }}>Balance</option>
-                                        <option value="all" {{ ("all" == $product->purchase_option ) ? 'selected' : '' }}>All</option>
+                                        <option value="recharge" {{ ("recharge" == $product->purchase_option) ? 'selected' : '' }}>Recharge</option>
+                                        <option value="all" {{ ("all" == $product->purchase_option) ? 'selected' : '' }}>All</option>
                                     </select>
                                     <div class="help-block"></div>
                                     @if ($errors->has('purchase_option'))
@@ -194,6 +215,21 @@
 {{--                                        <label for="no">No</label>--}}
 {{--                                    </div>--}}
 {{--                                </div>--}}
+
+
+                                <div class="form-group col-md-6 {{ $errors->has('price_slabs_id') ? ' error' : '' }}">
+                                    <label for="price_slabs_id">Price Slabs Type</label>
+                                    <select class="form-control" name="price_slabs_id" id="offer_type">
+                                        <option value="">---Select Offer Type---</option>
+                                        @foreach($price_slabs as $slab)
+                                            <option value="{{ $slab->id }}" {{ ($slab->id == $product->price_slabs_id ) ? 'selected' : '' }}>{{ $slab->range_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('price_slabs_id'))
+                                        <div class="help-block">  {{ $errors->first('price_slabs_id') }}</div>
+                                    @endif
+                                </div>
 
 
                                 <div class="col-md-6">

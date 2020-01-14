@@ -40,10 +40,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
-                                    <label for="start_date" class="required">Start Date</label>
+                                    <label for="start_date">Start Date</label>
                                     <div class='input-group'>
                                         <input type='text' class="form-control" name="start_date" id="start_date"
-                                               required data-validation-required-message="Please select start date"
                                                placeholder="Please select start date" />
                                     </div>
                                     <div class="help-block"></div>
@@ -73,9 +72,7 @@
                                     @endif
                                 </div>
 
-                                @include('layouts.partials.slider_types.'.$type )
-
-                                <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Slider Image</label>
                                     <div class="custom-file">
                                         <input type="file" name="image_url" class="custom-file-input" id="image"
@@ -90,12 +87,14 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-1">
                                     <img style="height:70px;width:70px;display:none" id="imgDisplay">
                                 </div>
 
+                                @include('layouts.partials.slider_types.'.$type )
 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <label for="alt_text"></label>
                                     <div class="form-group">
                                         <label for="title" class="required mr-1">Status:</label>
 

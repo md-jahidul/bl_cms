@@ -174,6 +174,9 @@ Route::middleware('authorize', 'auth')->group(function () {
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
 
     // Product Core Mapping To Product
+    Route::get('/core-product/entry', 'ProductEntryController@assetliteCoreProductForm');
+    Route::post('/core-product/store', 'ProductEntryController@assetliteCoreProductStore')
+        ->name('core-product-store');
     Route::get('/core-product/mapping/{offerType}', 'AssetLite\ProductController@coreDataMappingProduct')
         ->name('core-product-mapping');
     Route::get('product-core/match/{productCode}', 'AssetLite\ProductController@existProductCore')
@@ -205,4 +208,8 @@ Route::middleware('authorize', 'auth')->group(function () {
 
         $service->mapDataFromExcel('/home/bs104/Desktop/product_sample.xlsx');
     });
+
+    // Product core ============================================
+    Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
+    Route::get('product-core/{id}/edit/', 'AssetLite\ProductCoreController@edit')->name('product.core.edit');
 });

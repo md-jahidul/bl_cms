@@ -11,8 +11,10 @@ namespace App\Services;
 
 use App\Repositories\ShortCutRepository ;
 use App\Traits\CrudTrait;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use DB;
+use Illuminate\Support\Facades\Log;
 
 class ShortCutService
 {
@@ -48,27 +50,32 @@ class ShortCutService
 
     /**
      * Updating the banner
-     * @param $data
+     * @param $request
+     * @param $id
      * @return Response
      */
     public function updateShortCut($request, $id)
     {
         $shortCut = $this->findOne($id);
         if (isset($request['icon'])) {
-            unlink($shortCut->icon);
+            try {
+                unlink($shortCut->icon);
+            } catch (\Exception $e) {
+                Log::error('cannot remove shortcut icons');
+            }
             $request['icon'] = 'storage/' . $request['icon']->store('short_cuts_icon');
         } else {
             $request['icon'] = $shortCut->icon;
         }
         $request['component_identifier'] = strtolower(str_replace(" ", "_", $request['title']));
         $shortCut->update($request);
-        
+
         return new Response("Shortcut has been successfully updated");
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @return ResponseFactory|Response
      * @throws \Exception
      */
     public function destroyShortCut($id)

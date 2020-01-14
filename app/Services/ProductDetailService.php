@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\OtherRelatedProduct;
 use App\Models\RelatedProduct;
+use App\Models\ProductDetail;
 use App\Repositories\PartnerOfferDetailRepository;
 use App\Repositories\ProductDetailRepository;
 use App\Repositories\ProductRepository;
