@@ -124,9 +124,6 @@ class PushNotificationController extends Controller
 
                 Log::info($response);
 
-               // log::info($user_phone);
-
-
                 if ($formatted_response->status == "SUCCESS") {
                     if (isset($user_phone)) {
                         $this->notificationService->attachNotificationToUser($formatted_response->notification_id, $user_phone);
