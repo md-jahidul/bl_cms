@@ -45,15 +45,15 @@
     @endif
 </div>
 
-{{--<div class="form-group col-md-6 {{ $errors->has('recharge_benefits_offer') ? ' error' : '' }}">--}}
-{{--    <label for="recharge_benefits_offer">Recharge Benefits Offer</label>--}}
-{{--    <input name="other_attributes[recharge_benefits_offer]"  class="form-control" placeholder="Enter offer details in english"--}}
-{{--           value="{{ $productDetail->product_details->other_attributes['recharge_benefits_offer'] }}" id="details">--}}
-{{--    <div class="help-block"></div>--}}
-{{--    @if ($errors->has('recharge_benefits_offer'))--}}
-{{--        <div class="help-block">{{ $errors->first('recharge_benefits_offer') }}</div>--}}
-{{--    @endif--}}
-{{--</div>--}}
+<div class="form-group col-md-6">
+    <label for="ussd">Recharge Benefits Offer</label>
+    <select class="select2 form-control">
+        @foreach($products as $product)
+            <option value="{{$product}}">Alaska</option>
+        @endforeach
+    </select>
+</div>
+
 
 {{--<div class="form-group col-md-6 {{ $errors->has('recharge_benefits_bn') ? ' error' : '' }}">--}}
 {{--    <label for="recharge_benefits_bn">Recharge Benefits Info (Bangla)</label>--}}
