@@ -13,6 +13,7 @@ use App\Repositories\SliderImageRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use DB;
+use Illuminate\Support\Facades\Log;
 
 class MyblSliderImageService
 {
@@ -53,11 +54,11 @@ class MyblSliderImageService
         } else {
             $i = $image_data->sequence + 1;
         }
-       
+
         $image['image_url'] = 'storage/' . $image['image_url']->store('Slider_image');
         $image['sequence'] = $i;
         $this->save($image);
-        
+
         return new Response("Image has been successfully added");
     }
 
@@ -78,14 +79,16 @@ class MyblSliderImageService
         if (!isset($data['image_url'])) {
             $data['image_url'] = $sliderImage->image_url;
         } else {
-            unlink($sliderImage->image_url);
+            try {
+                unlink($sliderImage->image_url);
+            } catch (\Exception $e) {
+                Log::error('Slider Image not found' . $e->getMessage());
+            }
             $data['image_url'] = 'storage/' . $data['image_url']->store('Slider_image');
         }
         $sliderImage->update($data);
         return new Response("Image has has been successfully updated");
     }
-
-
 
 
     /**
