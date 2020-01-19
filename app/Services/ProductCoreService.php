@@ -11,7 +11,12 @@ use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
+/**
+ * Class ProductCoreService
+ * @package App\Services
+ */
 class ProductCoreService
 {
     use CrudTrait;
@@ -328,6 +333,31 @@ class ProductCoreService
 
     public function getProductDetails($product_code)
     {
-        return ProductCore::where('product_code', $product_code)->first();
+        return MyBlProduct::with('details')->where('product_code', $product_code)->first();
+    }
+
+    /*
+     *  Update my-bl products
+     */
+
+    /**
+     * @param Request $request
+     * @return void
+     */
+    public function updateMyblProducts(Request $request, $product_code)
+    {
+       // dd($request->has('media'));
+/*        dd($request->file('media'));
+        if ($request->file('media')) {*/
+            $file = $request->media;
+            $path = $file->storeAs(
+                'products/images',
+                $product_code . '.' . $file->getClientOriginalExtension(),
+                'public'
+            );
+
+
+           return $path;
+       /* }*/
     }
 }

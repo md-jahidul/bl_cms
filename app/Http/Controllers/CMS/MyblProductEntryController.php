@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Models\MyBlInternetOffersCategory;
+use App\Models\MyBlProduct;
 use App\Services\ProductCoreService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class MyblProductEntryController extends Controller
 {
@@ -37,9 +40,17 @@ class MyblProductEntryController extends Controller
         return $data;
     }
 
-    public function getProductDetails(Request $request)
+    public function getProductDetails($product_code)
     {
-        return $this->service->getProductDetails($request->product_code);
+        $product = MyBlProduct::where('product_code', $product_code)->first();
+        if (!$product) {
+            throw new NotFoundHttpException();
+        }
+        $details = $this->service->getProductDetails($product_code);
+
+        $internet_categories = MyBlInternetOffersCategory::all()->sortBy('sort');
+
+        return view('admin.my-bl-products.product-details', compact('details', 'internet_categories'));
     }
     public function index()
     {
@@ -76,5 +87,10 @@ class MyblProductEntryController extends Controller
     public function getMyblProducts(Request $request)
     {
         return $this->service->getMyblProducts($request);
+    }
+
+    public function updateMyblProducts(Request $request)
+    {
+        return $this->service->updateMyblProducts($request,  'TK9USSD35MB4D');
     }
 }

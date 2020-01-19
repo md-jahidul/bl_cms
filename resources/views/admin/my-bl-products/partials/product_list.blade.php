@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-4">
             <select name="content_type" class="form-control filter" id="content_type">
-                <option value=""> Please Select Connection Type</option>
+                <option value=""> Please Select Content Type</option>
                 <option value="data">DATA</option>
                 <option value="mix">MIX</option>
                 <option value="data loan">DATA LOAN</option>
@@ -136,7 +136,7 @@
                         className: 'filter_data',
                         width: '150px',
                         render: function (data, type, row) {
-                            let detail_question_url = "{{ URL('mybl/products/details/') }}" + "/" + row.product_code;
+                            let detail_question_url = "{{ URL('mybl/products/') }}" + "/" + row.product_code;
                             return `<div class="btn-group" role="group" aria-label="Basic example">
                             <a href=" ` + detail_question_url + ` "class="btn btn-sm btn-icon btn-outline-success edit"><i class="la la-eye"></i></a>
                           </div>`
