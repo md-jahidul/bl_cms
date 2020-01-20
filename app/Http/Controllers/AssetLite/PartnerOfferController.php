@@ -13,6 +13,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use App\Http\Controllers\AssetLite\ConfigController;
+use Illuminate\Support\Facades\Validator;
 
 class PartnerOfferController extends Controller
 {
@@ -135,6 +137,19 @@ class PartnerOfferController extends Controller
 
     public function offerDetailsUpdate(Request $request, $partnet)
     {
+        $image_upload_size = ConfigController::adminImageUploadSize();
+        $image_upload_type = ConfigController::adminImageUploadType();
+        
+        # Check Image upload validation
+        $validator = Validator::make($request->all(), [
+            'banner_image_url' => 'required|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+        ]);
+        if ($validator->fails()) {
+            Session::flash('error', $validator->messages()->first());
+            return redirect()->route('partner-offer', [$request->partner_id, $partnet]);
+        }
+
+
         $response = $this->partnerOfferDetailService
             ->updatePartnerOfferDetails($request->all(), $request->offer_details_id);
         Session::flash('message', $response->getContent());

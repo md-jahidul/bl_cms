@@ -28,9 +28,13 @@ class ConfigTableSeeder extends Seeder
         $linkedin     = "https://linkedin.com/banglalink-page-ln";
         $googlePlayLink = 'https://play.google.com/store/apps/details?id=com.arena.banglalinkmela.app';
         $appleAppStoreLink = 'https://apps.apple.com/us/app/my-banglalink/id934133022';
+        $imageUploadSize = 2;
+        $imageUploadType = 'jpeg,png';
+        $adminImageUploadSize = 5;
+        $adminImageUploadType = 'jpeg,png';
 
-        $configKeys = ['site_logo', 'logo_alt_text', 'email', 'query_email', 'mobile_number', 'address', 'copy_right_en', 'copy_right_bn', 'facebook_url', 'twitter_url', 'linkedin_url', 'google_play_link', 'apple_app_store_link'];
-        $configValue = [$siteLogo, $logoAltText, $email, $query_email, $mobileNumber, $address, $copyRight, $copyRightBangla, $facebook, $twitter, $linkedin, $googlePlayLink, $appleAppStoreLink];
+        $configKeys = ['site_logo', 'logo_alt_text', 'email', 'query_email', 'mobile_number', 'address', 'copy_right_en', 'copy_right_bn', 'facebook_url', 'twitter_url', 'linkedin_url', 'google_play_link', 'apple_app_store_link', 'image_upload_size', 'image_upload_type', 'admin_image_upload_size', 'admin_image_upload_type' ];
+        $configValue = [$siteLogo, $logoAltText, $email, $query_email, $mobileNumber, $address, $copyRight, $copyRightBangla, $facebook, $twitter, $linkedin, $googlePlayLink, $appleAppStoreLink, $imageUploadSize, $imageUploadType, $adminImageUploadSize, $adminImageUploadType];
 
         foreach ($configKeys as $index => $keyItem) {
             Config::create([

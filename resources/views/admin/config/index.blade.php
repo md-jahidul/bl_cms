@@ -36,6 +36,54 @@
                                                 <a href="#" class="edit-btn"><i class="la la-pencil" title="Change Logo" aria-hidden="true"></i></a>
                                             </div>
                                         </div>
+                                    <!-- customer image upload size -->
+                                    @elseif($config->key == "image_upload_size")
+                                        <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                            <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="row{{$key}}" class="form-control"  value="{{ old($config->key) ?? $config->value }}" required data-validation-required-message="Enter {{$title}}" placeholder="Enter {{ $title }}" name="{{ $config->key }}">
+                                                <div class="help-block"><small>Please enter file size upto 2M. </small></div>
+                                                @if ($errors->has($config->key))
+                                                    <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    <!-- customer image upload type -->
+                                    @elseif($config->key == "image_upload_type")
+                                        <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                            <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="row{{$key}}" class="form-control"  value="{{ old($config->key) ?? $config->value }}" required data-validation-required-message="Enter {{$title}}" placeholder="Enter {{ $title }}" name="{{ $config->key }}">
+                                                <div class="help-block"><small>Please enter file type with comma(,) separated.</small></div>
+                                                @if ($errors->has($config->key))
+                                                    <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    <!-- Admin user image upload size -->
+                                    @elseif($config->key == "admin_image_upload_size")
+                                        <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                            <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="row{{$key}}" class="form-control"  value="{{ old($config->key) ?? $config->value }}" required data-validation-required-message="Enter {{$title}}" placeholder="Enter {{ $title }}" name="{{ $config->key }}">
+                                                <div class="help-block"><small>Please enter file size upto 2M. </small></div>
+                                                @if ($errors->has($config->key))
+                                                    <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    <!-- Admin user image upload type -->
+                                    @elseif($config->key == "admin_image_upload_type")
+                                        <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                            <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="row{{$key}}" class="form-control"  value="{{ old($config->key) ?? $config->value }}" required data-validation-required-message="Enter {{$title}}" placeholder="Enter {{ $title }}" name="{{ $config->key }}">
+                                                <div class="help-block"><small>Please enter file type with comma(,) separated.</small></div>
+                                                @if ($errors->has($config->key))
+                                                    <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
                                     @else
                                         <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
                                             <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
