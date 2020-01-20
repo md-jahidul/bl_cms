@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
 use App\Models\Product;
 use App\Models\ProductCore;
@@ -11,9 +12,15 @@ use App\Traits\CrudTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 
+/**
+ * Class ProductCoreService
+ * @package App\Services
+ */
 class ProductCoreService
 {
     use CrudTrait;
@@ -60,6 +67,10 @@ class ProductCoreService
         return $offerId;
     }
 
+    /**
+     * @param $id
+     * @return string|null
+     */
     public function getSimtype($id)
     {
         switch ($id) {
@@ -101,11 +112,19 @@ class ProductCoreService
         }
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function findProductCore($id)
     {
         return $this->productCoreRepository->findWithProduct($id);
     }
 
+    /**
+     * @param $data
+     * @param $id
+     */
     public function updateProductCore($data, $id)
     {
         $product = $this->productCoreRepository->findOneProductCore($id);
@@ -113,6 +132,10 @@ class ProductCoreService
         $product->update($data);
     }
 
+    /**
+     * @param $excel_path
+     * @return bool|int
+     */
     public function mapMyBlProduct($excel_path)
     {
         $config = config('productMapping.mybl.columns');
@@ -269,6 +292,10 @@ class ProductCoreService
         }
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function getMyblProducts(Request $request)
     {
         $draw = $request->get('draw');
@@ -308,12 +335,15 @@ class ProductCoreService
         $items->each(function ($item) use (&$response) {
             $response['data'][] = [
                 'product_code' => $item->product_code,
+                'renew_product_code' => $item->details->renew_product_code,
+                'recharge_product_code' => $item->details->recharge_product_code,
                 'connection_type' => $item->details->sim_type,
                 'name' => $item->details->name,
                 'description' => $item->details->short_description,
                 'content_type' => ucfirst($item->details->content_type),
                 'family_name' => ucfirst($item->details->family_name),
                 'offer_section' => ucfirst($item->offer_section_title),
+                'show_in_home' => ($item->show_in_home) ? 'Yes' : 'No',
                 'status' => $item->details->status
             ];
         });
@@ -322,6 +352,10 @@ class ProductCoreService
     }
 
 
+    /**
+     * @param $contentType
+     * @return int|null
+     */
     protected function offerType($contentType)
     {
         switch (strtolower($contentType)) {
@@ -343,6 +377,10 @@ class ProductCoreService
         return $offerId;
     }
 
+    /**
+     * @param $excel_path
+     * @return bool|int
+     */
     public function mapAssetliteProduct($excel_path)
     {
         $config = config('productMapping.assetlite.columns');
@@ -411,12 +449,12 @@ class ProductCoreService
                                     break;
 
                                 case "short_text":
-                                    if(!empty($cells[$index]->getValue())){
+                                    if (!empty($cells[$index]->getValue())) {
                                         $assetLiteProduct['offer_info'] = [
                                             'short_text' => $cells[$index]->getValue()
                                         ];
                                     }
-                                    break;        
+                                    break;
 
                                 case "rate_cutter_offer":
                                     $type = $cells [$index]->getValue();
@@ -426,7 +464,7 @@ class ProductCoreService
                                     $type = $cells [$index]->getValue();
                                     $assetLiteProduct['rate_cutter_unit'] = ($type == "") ? null : $type;
                                     break;
-                                    
+
                                 case "internet_volume_mb":
                                     $data_volume = $cells [$index]->getValue();
                                     if ($data_volume == '') {
@@ -544,6 +582,10 @@ class ProductCoreService
      *  product search by code
      *  return products that contains the keyword in product code
      */
+    /**
+     * @param $keyword
+     * @return mixed
+     */
     public function searchProductCodes($keyword)
     {
         return ProductCore::where('product_code', 'like', '%' . $keyword . '%')->get();
@@ -551,6 +593,40 @@ class ProductCoreService
 
     public function getProductDetails($product_code)
     {
-        return ProductCore::where('product_code', $product_code)->first();
+        return MyBlProduct::with('details')->where('product_code', $product_code)->first();
+    }
+
+    /*
+     *  Update my-bl products
+     */
+
+    /**
+     * @param Request $request
+     * @param $product_code
+     * @return RedirectResponse
+     */
+    public function updateMyblProducts(Request $request, $product_code)
+    {
+        if ($request->file('media')) {
+            $file = $request->media;
+            $path = $file->storeAs(
+                'products/images',
+                $product_code . '.' . $file->getClientOriginalExtension(),
+                'public'
+            );
+
+            $data['media'] = $path;
+        }
+
+        $data['offer_section_slug'] = $request->offer_section_slug;
+        $offer = MyBlInternetOffersCategory::where('slug', $request->offer_section_slug)->first();
+        $data['offer_section_title'] = $offer->name;
+        $data['tag'] = $request->tag;
+        $data['show_in_home'] = isset($request->show_in_app) ? true : false;
+        $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
+
+        MyBlProduct::where('product_code', $product_code)->update($data);
+
+        return Redirect::back()->with('success', 'Product updated Successfully');
     }
 }

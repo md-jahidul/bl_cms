@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-4">
             <select name="content_type" class="form-control filter" id="content_type">
-                <option value=""> Please Select Connection Type</option>
+                <option value=""> Please Select Content Type</option>
                 <option value="data">DATA</option>
                 <option value="mix">MIX</option>
                 <option value="data loan">DATA LOAN</option>
@@ -30,12 +30,11 @@
         <tr>
             <th>Sl.</th>
             <th>Product Code</th>
+            <th>Renew Product Code</th>
+            <th>Recharge Product Code</th>
             <th>Name</th>
             <th>Short Description</th>
-            <th>Content Type</th>
-            <th>Family Name</th>
-            <th>Offer Section</th>
-            <th>Status</th>
+            <th>Show in Home</th>
             <th class="filter_data">Actions</th>
         </tr>
         </thead>
@@ -91,6 +90,22 @@
                     },
 
                     {
+                        name: 'renew_product_code',
+                        width: '150px',
+                        render: function (data, type, row) {
+                            return row.renew_product_code;
+                        }
+                    },
+
+                    {
+                        name: 'recharge_product_code',
+                        width: '150px',
+                        render: function (data, type, row) {
+                            return row.recharge_product_code;
+                        }
+                    },
+
+                    {
                         name: 'name',
                         width: '150px',
                         render: function (data, type, row) {
@@ -107,44 +122,18 @@
                     },
 
                     {
-                        name: 'content_type',
+                        name: 'show_in_home',
                         width: '150px',
                         render: function (data, type, row) {
-                            return row.content_type;
+                            return row.show_in_home;
                         }
                     },
-                    {
-                        name: 'family_name',
-                        width: '150px',
-                        render: function (data, type, row) {
-                            return row.family_name;
-                        }
-                    },
-                    {
-                        name: 'offer_section',
-                        width: '150px',
-                        render: function (data, type, row) {
-                            return row.offer_section;
-                        }
-                    },
-                    {
-                        name: 'status',
-                        width: '150px',
-                        render: function (data, type, row) {
-                            if (row.status === 1) {
-                                return 'Active';
-                            }
-
-                            return 'InActive';
-                        }
-                    },
-
                     {
                         name: 'actions',
                         className: 'filter_data',
                         width: '150px',
                         render: function (data, type, row) {
-                            let detail_question_url = "{{ URL('mybl/products/details/') }}" + "/" + row.product_code;
+                            let detail_question_url = "{{ URL('mybl/products/') }}" + "/" + row.product_code;
                             return `<div class="btn-group" role="group" aria-label="Basic example">
                             <a href=" ` + detail_question_url + ` "class="btn btn-sm btn-icon btn-outline-success edit"><i class="la la-eye"></i></a>
                           </div>`
