@@ -618,9 +618,11 @@ class ProductCoreService
             $data['media'] = $path;
         }
 
-        $data['offer_section_slug'] = $request->offer_section_slug;
-        $offer = MyBlInternetOffersCategory::where('slug', $request->offer_section_slug)->first();
-        $data['offer_section_title'] = $offer->name;
+        if ($request->has('offer_section_slug')) {
+            $data['offer_section_slug'] = $request->offer_section_slug;
+            $offer = MyBlInternetOffersCategory::where('slug', $request->offer_section_slug)->first();
+            $data['offer_section_title'] = $offer->name;
+        }
         $data['tag'] = $request->tag;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
