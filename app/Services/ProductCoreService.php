@@ -241,7 +241,7 @@ class ProductCoreService
                                 case "offer_section_title":
                                     $title = $cells [$index]->getValue();
                                     $mybl_data[$field] = $title;
-                                    $mybl_data['offer_section_slug'] = str_replace(' ', '-', strtolower($title));
+                                    $mybl_data['offer_section_slug'] = str_replace(' ', '_', strtolower($title));
                                     break;
                                 case "tag":
                                     $tag = $cells [$index]->getValue();
