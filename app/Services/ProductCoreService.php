@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
 use App\Models\Product;
 use App\Models\ProductCore;
@@ -11,8 +12,10 @@ use App\Traits\CrudTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -311,11 +314,14 @@ class ProductCoreService
         $items->each(function ($item) use (&$response) {
             $response['data'][] = [
                 'product_code' => $item->product_code,
+                'renew_product_code' => $item->details->renew_product_code,
+                'recharge_product_code' => $item->details->recharge_product_code,
                 'connection_type' => $item->details->sim_type,
                 'name' => $item->details->name,
                 'description' => $item->details->short_description,
                 'content_type' => ucfirst($item->details->content_type),
                 'family_name' => ucfirst($item->details->family_name),
+                'show_in_home' => ($item->show_in_home) ? 'Yes' : 'No',
                 'status' => $item->details->status
             ];
         });
@@ -342,6 +348,10 @@ class ProductCoreService
         return $offerId;
     }
 
+    /**
+     * @param $excel_path
+     * @return bool|int
+     */
     public function mapAssetliteProduct($excel_path)
     {
         $config = config('productMapping.assetlite.columns');
@@ -531,13 +541,12 @@ class ProductCoreService
 
     /**
      * @param Request $request
-     * @return void
+     * @param $product_code
+     * @return RedirectResponse
      */
     public function updateMyblProducts(Request $request, $product_code)
     {
-       // dd($request->has('media'));
-/*        dd($request->file('media'));
-        if ($request->file('media')) {*/
+        if ($request->file('media')) {
             $file = $request->media;
             $path = $file->storeAs(
                 'products/images',
@@ -545,8 +554,18 @@ class ProductCoreService
                 'public'
             );
 
+            $data['media'] = $path;
+        }
 
-           return $path;
-       /* }*/
+        $data['offer_section_slug'] = $request->offer_section_slug;
+        $offer = MyBlInternetOffersCategory::where('slug', $request->offer_section_slug)->first();
+        $data['offer_section_title'] = $offer->name;
+        $data['tag'] = $request->tag;
+        $data['show_in_home'] = isset($request->show_in_app) ? true : false;
+        $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
+
+        MyBlProduct::where('product_code', $product_code)->update($data);
+
+        return Redirect::back()->with('success', 'Product updated Successfully');
     }
 }

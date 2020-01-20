@@ -178,7 +178,12 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Tag </label>
-                                        <input class="form-control" name="tag" placeholder="e.g. Hot, New etc">
+                                        <input class="form-control" name="tag" value="{{ $details->tag }}" placeholder="e.g. Hot, New etc">
+                                        @if($errors->has('tag'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('tag') }}</small>
+                                            </p>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-4 icheck_minimal skin mt-2">
@@ -190,19 +195,25 @@
                                 </div>
                                 <div class="col-md-4 icheck_minimal skin mt-2">
                                     <fieldset>
-                                        <input type="checkbox" id="is_rate_cutter_offer" value="1" name="is_rate_cutter_offer"
+                                        <input type="checkbox" id="is_rate_cutter_offer" value="1"
+                                               name="is_rate_cutter_offer"
                                                @if($details->is_rate_cutter_offer) checked @endif>
                                         <label for="show_in_home">Is Rate Cutter offer</label>
                                     </fieldset>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        @if($errors->has('media'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('media') }}</small>
+                                            </p>
+                                        @endif
                                         @if ($details->media)
                                             <input type="file"
                                                    id="input-file-now-custom-1"
                                                    class="dropify"
                                                    name="media"
-                                                   data-default-file="{{asset( $details->media )}}"
+                                                   data-default-file="{{ url('storage/' .$details->media) }}"
                                             />
                                         @else
                                             <input type="file" id="input-file-now" name="media" class="dropify"/>

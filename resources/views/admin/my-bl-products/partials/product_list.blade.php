@@ -30,11 +30,11 @@
         <tr>
             <th>Sl.</th>
             <th>Product Code</th>
+            <th>Renew Product Code</th>
+            <th>Recharge Product Code</th>
             <th>Name</th>
             <th>Short Description</th>
-            <th>Content Type</th>
-            <th>Family Name</th>
-            <th>Status</th>
+            <th>Show in Home</th>
             <th class="filter_data">Actions</th>
         </tr>
         </thead>
@@ -90,6 +90,22 @@
                     },
 
                     {
+                        name: 'renew_product_code',
+                        width: '150px',
+                        render: function (data, type, row) {
+                            return row.renew_product_code;
+                        }
+                    },
+
+                    {
+                        name: 'recharge_product_code',
+                        width: '150px',
+                        render: function (data, type, row) {
+                            return row.recharge_product_code;
+                        }
+                    },
+
+                    {
                         name: 'name',
                         width: '150px',
                         render: function (data, type, row) {
@@ -106,31 +122,12 @@
                     },
 
                     {
-                        name: 'content_type',
+                        name: 'show_in_home',
                         width: '150px',
                         render: function (data, type, row) {
-                            return row.content_type;
+                            return row.show_in_home;
                         }
                     },
-                    {
-                        name: 'family_name',
-                        width: '150px',
-                        render: function (data, type, row) {
-                            return row.family_name;
-                        }
-                    },
-                    {
-                        name: 'status',
-                        width: '150px',
-                        render: function (data, type, row) {
-                            if (row.status === 1) {
-                                return 'Active';
-                            }
-
-                            return 'InActive';
-                        }
-                    },
-
                     {
                         name: 'actions',
                         className: 'filter_data',
