@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Helpers\Helper;
+use App\Http\Controllers\AssetLite\ConfigController;
 
 class StoreSliderImageRequest extends FormRequest
 {
@@ -24,8 +25,9 @@ class StoreSliderImageRequest extends FormRequest
      */
     public function rules()
     {   
-        $image_upload_size = Helper::getImageUploadSize();
-        $image_upload_type = Helper::getimageUploadType();
+
+        $image_upload_size = ConfigController::adminImageUploadSize();
+        $image_upload_type = ConfigController::adminImageUploadType();
 
         return [
             'title_bn' => 'required',

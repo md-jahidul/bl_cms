@@ -48,4 +48,89 @@ class ConfigController extends Controller
         return redirect("/config");
     }
 
+
+    /**
+     * Get image upload size form config table for frontend customer
+     * @return [number] [Image size in KB]
+     */
+    public static function customerImageUploadSize(){
+
+        $config_key = Config::where('key', '=', 'image_upload_size')->first();
+
+        if( !empty($config_key) ){
+            $file_size = ((int)$config_key->value * 1024);
+            return $file_size;
+        }
+        else{
+            return null;
+        }
+
+    }
+
+    /**
+     * [Image upload type for frontend customer]
+     * @return [mixed] [description]
+     */
+    public static function customerImageUploadType($type_array = false){
+
+        $config_key = Config::where('key', '=', 'image_upload_type')->first();
+
+        if( !empty($config_key) ){
+
+            if( $type_array ){
+                return explode(',', $config_key->value);
+            }
+            else{
+                return $config_key->value;
+            }
+        }
+        else{
+            return '';
+        }
+
+    }
+
+
+
+    /**
+     * Get image upload size form config table for cms admin user
+     * @return [number] [Image size in KB]
+     */
+    public static function adminImageUploadSize(){
+
+        $config_key = Config::where('key', '=', 'admin_image_upload_size')->first();
+
+        if( !empty($config_key) ){
+            $file_size = ((int)$config_key->value * 1024);
+            return $file_size;
+        }
+        else{
+            return null;
+        }
+
+    }
+
+    /**
+     * [Image upload type for cms admin user]
+     * @return [mixed] [description]
+     */
+    public static function adminImageUploadType($type_array = false){
+
+        $config_key = Config::where('key', '=', 'admin_image_upload_type')->first();
+
+        if( !empty($config_key) ){
+
+            if( $type_array ){
+                return explode(',', $config_key->value);
+            }
+            else{
+                return $config_key->value;
+            }
+        }
+        else{
+            return '';
+        }
+
+    }
+
 }
