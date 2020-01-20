@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Helpers;
+use App\Models\Config;
 
 class Helper
 {
@@ -73,4 +74,5 @@ class Helper
             "EIGHT"  =>  8
         ];
     }
+
 }

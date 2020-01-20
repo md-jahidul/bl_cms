@@ -217,20 +217,6 @@
 {{--                                </div>--}}
 
 
-                                <div class="form-group col-md-6 {{ $errors->has('price_slabs_id') ? ' error' : '' }}">
-                                    <label for="price_slabs_id">Price Slabs Type</label>
-                                    <select class="form-control" name="price_slabs_id" id="offer_type">
-                                        <option value="">---Select Offer Type---</option>
-                                        @foreach($price_slabs as $slab)
-                                            <option value="{{ $slab->id }}" {{ ($slab->id == $product->price_slabs_id ) ? 'selected' : '' }}>{{ $slab->range_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('price_slabs_id'))
-                                        <div class="help-block">  {{ $errors->first('price_slabs_id') }}</div>
-                                    @endif
-                                </div>
-
 
                                 <div class="col-md-6">
                                     <div class="form-group">

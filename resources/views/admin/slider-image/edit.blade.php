@@ -10,6 +10,10 @@
     <a href="{{ route('slider_images', [$sliderImage->slider_id, $type]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+        @endforeach
+    @endif
     <section>
         <div class="card">
             <div class="card-content collapse show">
