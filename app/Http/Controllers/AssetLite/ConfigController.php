@@ -75,7 +75,7 @@ class ConfigController extends Controller
             return $file_size;
         }
         else{
-            return null;
+            return (1 * 1024);
         }
 
     }
@@ -98,7 +98,7 @@ class ConfigController extends Controller
             }
         }
         else{
-            return '';
+            return 'jpeg,png';
         }
 
     }
