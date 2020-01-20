@@ -45,37 +45,14 @@
     @endif
 </div>
 
-<div class="form-group col-md-6">
-    <label for="ussd">Recharge Benefits Offer</label>
-    <select class="select2 form-control">
-        @foreach($products as $product)
-            <option value="{{$product}}">Alaska</option>
-        @endforeach
-    </select>
-</div>
-
-
-{{--<div class="form-group col-md-6 {{ $errors->has('recharge_benefits_bn') ? ' error' : '' }}">--}}
-{{--    <label for="recharge_benefits_bn">Recharge Benefits Info (Bangla)</label>--}}
-{{--    <input name="other_attributes[recharge_benefits_bn]"  class="form-control" placeholder="Enter offer details in english"--}}
-{{--           value="{{ $productDetail->product_details->other_attributes['recharge_benefits_bn'] }}" id="details">--}}
-{{--    <div class="help-block"></div>--}}
-{{--    @if ($errors->has('recharge_benefits_bn'))--}}
-{{--        <div class="help-block">{{ $errors->first('recharge_benefits_bn') }}</div>--}}
-{{--    @endif--}}
+{{--<div class="form-group col-md-6">--}}
+{{--    <label for="ussd">Recharge Benefits Offer</label>--}}
+{{--    <select class="select2 form-control">--}}
+{{--        @foreach($products as $product)--}}
+{{--            @if($product->purchase_option == "recharge")--}}
+{{--                <option value="{{$product->product_code}}">{{ $product->product_code }}</option>--}}
+{{--            @endif--}}
+{{--        @endforeach--}}
+{{--    </select>--}}
 {{--</div>--}}
 
-<div class="form-group select-role col-md-6 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
-    <label for="role_id">Related Product</label>
-    <div class="role-select">
-        <select class="select2 form-control" multiple="multiple" name="related_product_id[]">
-            @foreach($products as $product)
-                <option value="{{ $product->id }}" {{ match($product->id,$productDetail->related_product) ? 'selected' : '' }}>{{$product->name_en}} </option>
-            @endforeach
-        </select>
-    </div>
-    <div class="help-block"></div>
-    @if ($errors->has('role_id'))
-        <div class="help-block">  {{ $errors->first('role_id') }}</div>
-    @endif
-</div>

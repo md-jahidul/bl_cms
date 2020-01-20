@@ -184,7 +184,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="purchase_option" class="required">Purchase Option</label>
-                                    <select class="form-control required" name="purchase_option" id="offer_type"
+                                    <select class="form-control required" name="purchase_option"
                                             required data-validation-required-message="Please select purchase option">
                                         <option data-alias="" value="">---Select Purchase Option---</option>
                                         <option value="balance" {{ ("balance" == $product->purchase_option ) ? 'selected' : '' }}>Balance</option>

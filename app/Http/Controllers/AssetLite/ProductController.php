@@ -247,6 +247,9 @@ class ProductController extends Controller
     {
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
+
+//        return $productDetail;
+
         return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType'));
     }
 
@@ -258,7 +261,8 @@ class ProductController extends Controller
      */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-        //$productDetails = $this->productDetailService->findOne($request->product_details_id);
+//        return $request->all();
+
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
         $this->productDetailService->updateProductDetails($request->all(), $id);

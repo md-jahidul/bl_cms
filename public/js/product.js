@@ -55,8 +55,9 @@ var product = (function () {
     let $offerType = $('#offer_type');
     let $packageType = $('#package_type');
     let $otherOfferType = $('#other_offer_type');
+    let $startupOfferDetails = $('#design_structure');
 
-    $removeDomSelect = [$offerType, $packageType, $otherOfferType];
+    $removeDomSelect = [$offerType, $packageType, $otherOfferType, $startupOfferDetails];
     $removeDomSelect.forEach(function ($ele) {
         $ele.on('change', function () {
             product.select_change($ele);

@@ -121,31 +121,4 @@
 </div>
 
 
-<div class="form-group select-role col-md-6 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
-    <label for="role_id" class="required">Related Product</label>
-    <div class="role-select">
-        <select class="select2 form-control" multiple="multiple" name="related_product_id[]" required
-                data-validation-required-message="Please select related product">
-            @foreach($products as $product)
-                <option value="{{ $product->id }}" {{ match($product->id,$productDetail->related_product) ? 'selected' : '' }}>{{$product->name_en}} </option>
-            @endforeach
-        </select>
-    </div>
-    <div class="help-block"></div>
-    @if ($errors->has('role_id'))
-        <div class="help-block">  {{ $errors->first('role_id') }}</div>
-    @endif
-</div>
 
-@if(strtolower($type) == 'prepaid')
-    <div class="form-group col-md-6 {{ $errors->has('balance_check') ? ' error' : '' }}">
-        <label for="balance_check" class="required">Balance Check (USSD)</label>
-        <input type="text" name="other_attributes[balance_check]"  class="form-control" placeholder="Enter offer name bangla"
-               required data-validation-required-message="Enter offer name bangla"
-               value="{{ $productDetail->product_details->other_attributes['balance_check'] }}">
-        <div class="help-block"></div>
-        @if ($errors->has('balance_check'))
-            <div class="help-block">{{ $errors->first('balance_check') }}</div>
-        @endif
-    </div>
-@endif
