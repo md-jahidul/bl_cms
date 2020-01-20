@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Helpers;
+use App\Models\Config;
 
 class Helper
 {
@@ -66,4 +67,48 @@ class Helper
 
         return $list;
     }
+
+    /**
+     * Get image upload size form config table
+     * @return [number] [Image size in KB]
+     */
+    public static function getImageUploadSize(){
+
+        $config_key = Config::where('key', '=', 'image_upload_size')->first();
+
+        if( !empty($config_key) ){
+            $file_size = ((int)$config_key->value * 1024);
+            return $file_size;
+        }
+        else{
+            return null;
+        }
+
+    }
+
+    /**
+     * [Image upload type]
+     * @return [mixed] [description]
+     */
+    public static function getimageUploadType($type_array = false){
+
+        $config_key = Config::where('key', '=', 'image_upload_type')->first();
+
+        if( !empty($config_key) ){
+
+            $type_list = unserialize($config_key->value);
+
+            if( $type_array == false ){
+                return implode(',', $type_list);
+            }
+            else{
+                return $type_list;
+            }
+        }
+        else{
+            return '';
+        }
+
+    }
+
 }
