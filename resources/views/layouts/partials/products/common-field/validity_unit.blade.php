@@ -9,9 +9,9 @@
 @endphp
 
 <div class="form-group col-md-6 {{ $errors->has('duration_category_id') ? ' error' : '' }}">
-    <label for="duration_category_id" class="required">Validity Unit</label>
+    <label for="duration_category_id" class="required validity_unit">Validity Unit</label>
     <select class="form-control required duration_categories" name="validity_unit" required>
-        <option value="">---Select Duration Type---</option>
+        <option value="">---Select Validity Unit---</option>
         @foreach($validityUnits as $value)
             <option value="{{ $value }}" {{ $value == $validityType ? 'selected' : '' }}>{{ ucfirst($value) }}</option>
         @endforeach

@@ -101,6 +101,7 @@ var product = (function () {
         let smsRate = $(".sms_rate");
         let smsVolume = $(".sms_volume");
         let validity = $(".validity");
+        let validityUnit = $("#validity_unit");
         let $offerType = $("#offer_type");
         switch (type) {
             case 'data':
@@ -110,6 +111,7 @@ var product = (function () {
                 internetVolumeMb.val(data.internet_volume_mb);
                 balanceCheckUSSD.val(data.balance_check_ussd);
                 validity.val(data.validity);
+                validityUnit.val(data.validity_unit);
                 break;
             case 'voice':
                 $offerType.val('2');
@@ -117,6 +119,7 @@ var product = (function () {
                 productBasicInfo(data);
                 minuteVolume.val(data.minute_volume);
                 validity.val(data.validity);
+                validityUnit.val(data.validity_unit);
                 balanceCheckUSSD.val(data.balance_check_ussd);
                 break;
             case 'mix':
@@ -127,6 +130,7 @@ var product = (function () {
                 internetVolumeMb.val(data.internet_volume_mb);
                 smsVolume.val(data.sms_volume);
                 validity.val(data.validity);
+                validityUnit.val(data.validity_unit);
                 balanceCheckUSSD.val(data.balance_check_ussd);
                 break;
             default:
@@ -143,6 +147,8 @@ var product = (function () {
             method: "GET",
             url: requestUrl + '/' + selectedProductCode,
         }).done(function (data) {
+
+            console.log(data)
             checkType(data.content_type, data)
         });
     })
