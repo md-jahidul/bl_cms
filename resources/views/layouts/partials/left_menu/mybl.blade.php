@@ -2,6 +2,38 @@
 {{---------------------------------------------------------My-BL App--------------------------------------------------}}
 {{--------------------------------------------------------------------------------------------------------------------}}
 @if(Auth::user()->type == 'mybl')
+
+    @if( auth()->user()->can_view('User') || auth()->user()->can_view('Role') || auth()->user()->can_view('Role') )
+        <li class="nav-item"><a href="#"><i class="la la-users"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
+            <ul class="menu-content">
+                @if( auth()->user()->can_view('User') )
+                    <li class="{{ is_active_url('authorize/users')}}">
+                        <a class="menu-item" href="{{ url('authorize/users') }}"
+                           data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-user"></i> User</a>
+                    </li>
+                @endif
+
+
+                @if( auth()->user()->can_view('Roles') )
+                    <li class="{{ is_active_url('authorize/roles')}}">
+                        <a class="menu-item" href="{{ url('authorize/roles') }}"
+                           data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-cubes"></i> Role</a>
+                    </li>
+                @endif
+                @if( auth()->user()->can_view('Permissions') )
+                    <li class="{{ is_active_url('authorize/permissions')}}">
+                        <a class="menu-item" href="{{ url('authorize/permissions') }}"
+                           data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-check-square"></i> Permission</a>
+                    </li>
+                @endif
+            </ul>
+        </li>
+    @endif
+
     <li class="{{ is_active_url('/helpCenter') }} {{ is_active_url('helpCenter/create') }} nav-item"><a
             href="{{route('helpCenter.index')}}"><i class="la la-ambulance"></i>
             <span class="menu-title" data-i18n="nav.dash.main">Help Center</span></a>
