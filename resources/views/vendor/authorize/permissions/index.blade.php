@@ -24,6 +24,10 @@
             return str_replace('App\Http\Controllers\AssetLite','AssetLite Features',$str);
         }
 
+         if($str == 'App\Http\Controllers\CMS'){
+            return str_replace('App\Http\Controllers\CMS','Admin Panel Features',$str);
+        }
+
         $sortableItems = "/parentFooterSortable|parentMenuSortable|partnerOfferSortable|sliderImageSortable|quickLaunchSortable/";
         $search = ['/index/','/create/','/store/','/show/','/edit/','/update/','/destroy/','/App\\Http\\Controllers\\AssetLite/', $sortableItems];
         $replace = ['Show List','View Create Form','Insert Data','Show Details','View Edit Form','Update Data','Delete','AssetLite Features','Ordering'];

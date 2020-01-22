@@ -3,7 +3,7 @@
 {{--------------------------------------------------------------------------------------------------------------------}}
 @if(Auth::user()->type == 'assetlite')
 
-    @if( auth()->user()->can_view('User') || auth()->user()->can_view('Role') || auth()->user()->can_view('Role') )
+    @if( auth()->user()->can_view('User') || auth()->user()->can_view('Role') || auth()->user()->can_view('Permissions') )
         <li class="nav-item"><a href="#"><i class="la la-users"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
             <ul class="menu-content">
