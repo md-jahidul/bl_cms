@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
+use App\Helpers\Helper;
 
 class SliderImageController extends Controller
 {
@@ -86,7 +87,7 @@ class SliderImageController extends Controller
      * @return Response
      */
     public function edit($parentId, $type, $id)
-    {
+    {   
         $sliderImage = AlSliderImage::find($id);
         $other_attributes = $sliderImage->other_attributes;
         return view('admin.slider-image.edit', compact('sliderImage', 'type', 'other_attributes'));
@@ -101,6 +102,8 @@ class SliderImageController extends Controller
      */
     public function update(StoreSliderImageRequest $request, $parentId, $type, $id)
     {
+        // TODO: Done:check file size validation
+
         $response = $this->alSliderImageService->updateSliderImage($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect("slider/$parentId/$type");

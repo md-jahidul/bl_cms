@@ -48,7 +48,7 @@ class ProductRepository extends BaseRepository
         return $this->model::category($type)
             ->where('id', '!=', $id)
             ->productCore()
-            ->select('id', 'product_code', 'name_en', 'name_bn', 'purchase_option')
+            ->select('id', 'product_code', 'name_en', 'name_bn', 'special_product', 'purchase_option')
             ->get();
     }
 

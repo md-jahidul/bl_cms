@@ -26,6 +26,12 @@ var product = (function () {
                     .find('input').each(function () {
                         $(this).val('');
                     });
+
+                // Remove product details editor data
+                $('.note-editable').each(function () {
+                    $(this).children().remove();
+                });
+
             } else {
                 $(otherElements).remove();
             }
@@ -77,7 +83,6 @@ var product = (function () {
         let activationUssd = $('#activation_ussd');
         let price = $('#price');
         let vat = $('#vat');
-
         return [
             nameEn.val(data.commercial_name_en),
             nameBn.val(data.commercial_name_bn),
@@ -103,6 +108,7 @@ var product = (function () {
         let validity = $(".validity");
         let validityUnit = $("#validity_unit");
         let $offerType = $("#offer_type");
+
         switch (type) {
             case 'data':
                 $offerType.val('1');
@@ -147,8 +153,8 @@ var product = (function () {
             method: "GET",
             url: requestUrl + '/' + selectedProductCode,
         }).done(function (data) {
-
-            console.log(data)
+            console.log(data.validity_unit);
+            console.log(data);
             checkType(data.content_type, data)
         });
     })

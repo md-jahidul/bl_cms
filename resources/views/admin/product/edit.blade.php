@@ -199,9 +199,17 @@
 
                                 <div class="col-md-6">
                                     <label></label>
-                                    <div class="form-group pt-1" id="show_in_home">
+                                    <div class="form-group" id="show_in_home">
                                         <label for="trending" class="mr-1">Trending Offer:</label>
                                         <input type="checkbox" name="show_in_home" value="1" {{ ($product->show_in_home == 1) ? 'checked' : '' }} id="trending">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label></label>
+                                    <div class="form-group" id="show_in_home">
+                                        <label for="special_product" class="mr-1">Is Special Product:</label>
+                                        <input type="checkbox" name="special_product" value="1" id="special_product" {{ ($product->special_product == 1) ? 'checked' : '' }}>
                                     </div>
                                 </div>
 
@@ -216,20 +224,6 @@
 {{--                                    </div>--}}
 {{--                                </div>--}}
 
-
-                                <div class="form-group col-md-6 {{ $errors->has('price_slabs_id') ? ' error' : '' }}">
-                                    <label for="price_slabs_id">Price Slabs Type</label>
-                                    <select class="form-control" name="price_slabs_id" id="offer_type">
-                                        <option value="">---Select Offer Type---</option>
-                                        @foreach($price_slabs as $slab)
-                                            <option value="{{ $slab->id }}" {{ ($slab->id == $product->price_slabs_id ) ? 'selected' : '' }}>{{ $slab->range_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('price_slabs_id'))
-                                        <div class="help-block">  {{ $errors->first('price_slabs_id') }}</div>
-                                    @endif
-                                </div>
 
 
                                 <div class="col-md-6">

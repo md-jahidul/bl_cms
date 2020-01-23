@@ -8,6 +8,16 @@
         }
         return false;
     }
+
+    function specialProductMatch($id,$relatedProducts){
+        foreach ($relatedProducts as $relatedProduct)
+        {
+            if ((int)$relatedProduct == $id) {
+                return true;
+            }
+        }
+        return false;
+    }
 @endphp
 
 @extends('layouts.admin')
@@ -52,8 +62,8 @@
                                         <select id="design_structure" class="form-control" name="other_attributes[design_structure]"
                                                 required data-validation-required-message="Please select design structure">
                                             <option>---Please Select Structure---</option>
-                                            <option data-alias="structure_1" value="structure_1">Structure 1</option>
-                                            <option data-alias="structure_2" value="structure_2">Structure 2</option>
+                                            <option data-alias="structure_1" value="structure_1" {{ $productDetail->product_details->other_attributes['design_structure'] == 'structure_1' ? "selected" : "" }}>Structure 1</option>
+                                            <option data-alias="structure_2" value="structure_2" {{ $productDetail->product_details->other_attributes['design_structure'] == 'structure_2' ? "selected" : "" }}>Structure 2</option>
                                         </select>
                                         <div class="help-block"></div>
                                         @if ($errors->has('design_structure'))

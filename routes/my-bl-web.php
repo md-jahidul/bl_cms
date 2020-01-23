@@ -14,7 +14,7 @@
 
 
 
-Route::group(['middleware' => ['appAdmin']], function () {
+Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
 
     //------ shortcuts -----------//
 
@@ -162,30 +162,17 @@ Route::group(['middleware' => ['appAdmin']], function () {
     Route::delete('faq/questions/delete', 'CMS\FaqQuestionsController@delete')->name('faq.questions.delete');
 
 
-    Route::get('mybl/core-product/entry', 'CMS\MyblProductEntryController@index');
+    Route::get('mybl/core-product', 'CMS\MyblProductEntryController@index')->name('mybl.product.index');
     Route::post('mybl/core-product', 'CMS\MyblProductEntryController@uploadProductByExcel')
                                          ->name('mybl.core-product.save');
+    Route::get('mybl/products', 'CMS\MyblProductEntryController@getMyblProducts')
+        ->name('mybl.products.list');
     Route::get('mybl/core-product/details', 'ProductEntryController@getProductDetails')->name('product.details.info');
+    Route::get('mybl/products/{product_code}', 'CMS\MyblProductEntryController@getProductDetails')
+          ->name('mybl.products.details');
 
-    Route::get('mybl/products', 'CMS\MyblProductEntryController@getMyblProducts')->name('mybl.products.list');
-    Route::get('mybl/product/create', 'CMS\MyblProductController@create');
-    Route::post('mybl/product/store', 'CMS\MyblProductController@store')->name('mybl.product.store');
-    Route::get('mybl/product/search', 'CMS\MyblProductController@searchMissingCoreProductCodes')->name('product.data');
-    Route::get('mybl/product', function () {
-        return [
-            "results" => [
-              [
-                  "id" => 1,
-                  "text" => "test 1",
-              ],
-                [
-                    "id" => 2,
-                    "text" => "test 2",
-                ]
-            ]
-        ];
-    });
-
+    Route::put('mybl/products/{product_code}', 'CMS\MyblProductEntryController@updateMyblProducts')
+        ->name('mybl.product.update');
     Route::get('store-locations/entry', 'StoreLocatorEntryController@create');
     Route::post('store-locations', 'StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
 

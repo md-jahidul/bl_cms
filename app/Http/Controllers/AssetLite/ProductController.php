@@ -157,9 +157,6 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
-
-        return $request->all();
-
         $bondhoSimOffer = $this->productService->findBondhoSim();
         if (count($bondhoSimOffer) > 4 && isset($request->offer_info['other_offer_type_id']) == OfferType::BONDHO_SIM_OFFER) {
             Session::flash('error', 'Maximum 4 Bondho SIM offer can be created');
@@ -250,8 +247,8 @@ class ProductController extends Controller
     {
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
-
 //        return $productDetail;
+//        return $productDetail->product_details->other_attributes['special_product_id'];
 
         return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType'));
     }
@@ -264,8 +261,6 @@ class ProductController extends Controller
      */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-//        return $request->all();
-
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
         $this->productDetailService->updateProductDetails($request->all(), $id);

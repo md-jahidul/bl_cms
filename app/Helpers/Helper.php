@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Helpers;
+use App\Models\Config;
 
 class Helper
 {
@@ -12,7 +13,7 @@ class Helper
     public static function contextualCardActionList()
     {
 
-        $list = [
+        return [
             "RECHARGE" =>  "RECHARGE",
             "RECHARGE_AMOUNT" =>  "RECHARGE_AMOUNT",
             "TAKE_LOAN" =>  "TAKE_LOAN",
@@ -44,11 +45,20 @@ class Helper
             "UPDATE" =>  "UPDATE",
             "CANCEL" =>  "CANCEL",
         ];
-
-        return $list;
     }
 
-
+    /**
+     * Contextual action list
+     * @return array
+     */
+    public static function sliderActionList()
+    {
+        return [
+            "BUY_INTERNET" =>  "Go To Internet Offers" ,
+            "BUY_MIXED_BUNDLE_OFFER" => "Go To Mixed Bundle Offers",
+            "ADD_FNF" =>  "Go To FNF"
+        ];
+    }
     /**
      * OTP Token length list
      *
@@ -56,14 +66,13 @@ class Helper
      */
     public static function tokenLengthList()
     {
-        $list = [
+        return [
             "FOUR"   =>  4,
             "FIVE"   =>  5,
             "SIX"    =>  6,
             "SEVEN"  =>  7,
             "EIGHT"  =>  8
         ];
-
-        return $list;
     }
+
 }
