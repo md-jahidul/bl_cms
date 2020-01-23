@@ -176,5 +176,9 @@ Route::group(['middleware' => ['appAdmin']], function () {
     Route::get('store-locations/entry', 'StoreLocatorEntryController@create');
     Route::post('store-locations', 'StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
 
-    Route::get('core-product/test', 'ProductEntryController@test');
+    /*
+     *  Feed
+     */
+
+    Route::get('feed/category', 'CMS\Feed\FeedCategoryController@index')->name('feed.category.index');
 });
