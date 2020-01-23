@@ -9,7 +9,18 @@
 @section('action')
     <a href="{{ route('slider_images', [$sliderImage->slider_id, $type]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
+
+
 @section('content')
+    @if(Session::has('error'))
+        <div class="alert bg-danger alert-dismissible mb-2">
+            {{ Session::get('error') }}
+            @php
+                Session::forget('error');
+            @endphp
+        </div>
+    @endif
+
     @if ($errors->any())
         @foreach ($errors->all() as $error)
         @endforeach

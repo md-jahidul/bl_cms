@@ -93,7 +93,7 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('slider_image_store');
     Route::get('slider/{slider_id}/{type}/image/{id}', 'AssetLite\SliderImageController@edit')
         ->name('slider_image_edit');
-    Route::put('slider/{slider_id}/{type}/image/{id}/update', 'AssetLite\SliderImageController@update')
+    Route::match(['put', 'post'], 'slider/{slider_id}/{type}/image/{id}/update', 'AssetLite\SliderImageController@update')
         ->name('slider_image_update');
     Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'AssetLite\SliderImageController@destroy');
     Route::get('/slider-image-sortable', 'AssetLite\SliderImageController@sliderImageSortable');

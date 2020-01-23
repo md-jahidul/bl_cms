@@ -7,6 +7,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
 class Handler extends ExceptionHandler
 {
@@ -50,6 +51,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        // dd($request);
+        if ($exception instanceof \Illuminate\Http\Exceptions\PostTooLargeException) {
+            
+            return redirect()->back()->withError("File size limit exceeded for server. Max limit ".ini_get("upload_max_filesize")."B", 'addNote');
+        }
+
         if (!App::environment('local')) {
             // The environment is not local
             if ($this->isHttpException($exception)) {
@@ -58,6 +65,8 @@ class Handler extends ExceptionHandler
                 }
             }
         }
+
+
 
         return parent::render($request, $exception);
     }
