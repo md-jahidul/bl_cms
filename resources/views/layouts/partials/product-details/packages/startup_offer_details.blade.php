@@ -1,6 +1,5 @@
 
-<slot id="structure_1" class="{!! $productDetail->product_details->other_attributes['design_structure'] == 'structure_1' ? "" : "d-none" !!}"
-      data-offer-type="structure_1">
+<slot id="structure_1" class="{!! !empty($productDetail->product_details->other_attributes['design_structure']) == 'structure_1' ? "" : "d-none" !!}" data-offer-type="structure_1">
     @include('layouts.partials.product-details.packages.start_up_offer_structure_1')
     <div class="form-group select-role col-md-6 {{ $errors->has('role_id') ? ' error' : '' }}">
         <label for="role_id">Special Offer</label>
@@ -20,7 +19,7 @@
     </div>
 </slot>
 
-<slot id="structure_2" class="{!! $productDetail->product_details->other_attributes['design_structure'] == 'structure_2' ? "" : "d-none" !!}" data-offer-type="structure_2">
+<slot id="structure_2" class="{!! !empty($productDetail->product_details->other_attributes['design_structure']) == 'structure_2' ? "" : "d-none" !!}" data-offer-type="structure_2">
     @include('layouts.partials.product-details.packages.start_up_offer_structure_2')
     <div class="form-group col-md-6">
         <label for="ussd">Recharge Benefits Offer</label>
