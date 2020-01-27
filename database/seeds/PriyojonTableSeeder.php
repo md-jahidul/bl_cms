@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Priyojon;
+use App\Models\AboutPage;
 
 class PriyojonTableSeeder extends Seeder
 {

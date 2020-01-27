@@ -14,7 +14,7 @@
 
 
 
-Route::group(['middleware' => ['appAdmin']], function () {
+Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
 
     //------ shortcuts -----------//
 
@@ -160,4 +160,21 @@ Route::group(['middleware' => ['appAdmin']], function () {
     Route::get('faq/questions/{id}', 'CMS\FaqQuestionsController@show')->name('faq.questions.show');
     Route::patch('faq/questions/{id}/update', 'CMS\FaqQuestionsController@update')->name('faq.questions.update');
     Route::delete('faq/questions/delete', 'CMS\FaqQuestionsController@delete')->name('faq.questions.delete');
+
+
+    Route::get('mybl/core-product', 'CMS\MyblProductEntryController@index')->name('mybl.product.index');
+    Route::post('mybl/core-product', 'CMS\MyblProductEntryController@uploadProductByExcel')
+                                         ->name('mybl.core-product.save');
+    Route::get('mybl/products', 'CMS\MyblProductEntryController@getMyblProducts')
+        ->name('mybl.products.list');
+    Route::get('mybl/core-product/details', 'ProductEntryController@getProductDetails')->name('product.details.info');
+    Route::get('mybl/products/{product_code}', 'CMS\MyblProductEntryController@getProductDetails')
+          ->name('mybl.products.details');
+
+    Route::put('mybl/products/{product_code}', 'CMS\MyblProductEntryController@updateMyblProducts')
+        ->name('mybl.product.update');
+    Route::get('store-locations/entry', 'StoreLocatorEntryController@create');
+    Route::post('store-locations', 'StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
+
+    Route::get('core-product/test', 'ProductEntryController@test');
 });

@@ -54,6 +54,24 @@
                                 <div class="help-block"></div>
                             </div>
 
+                            @php
+                                $actionList = Helper::sliderActionList();
+                            @endphp
+
+                            <div class="form-group col-md-6 mb-2">
+                                <label for="redirect_url" >Slider Action </label>
+                                <select name="redirect_url" class="browser-default custom-select">
+                                    <option value="">Select Action</option>
+                                    @foreach ($actionList as $key => $value)
+                                        <option value="{{ $key }}" {{ ( $key == $imageInfo->redirect_url) ? 'selected' : '' }}>
+                                            {{ $value }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <div class="help-block"></div>
+                            </div>
+
+
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="is_active">Active Status:</label>

@@ -12,18 +12,15 @@ class Product extends Model
 {
     protected $fillable =
         [
-            'code',
+            'product_code',
             'name_en',
             'name_bn',
-            'price_tk',
-            'price_vat_included',
             'start_date',
             'end_date',
             'ussd_en',
             'ussd_bn',
             'bonus',
             'point',
-            'validity_days',
             'is_recharge',
             'show_in_home',
             'tag_category_id',
@@ -33,12 +30,24 @@ class Product extends Model
             'like',
             'status',
             'display_order',
+            'purchase_option',
             'offer_info',
+            'is_gift_offer',
+            'is_amar_offer',
+            'is_social_pack',
+            'is_auto_renewable',
+            'rate_cutter_offer',
+            'rate_cutter_unit'
         ];
 
     protected $casts = [
         'offer_info' => 'array',
     ];
+
+    public function product_core()
+    {
+        return $this->belongsTo(ProductCore::class, 'product_code', 'product_code');
+    }
 
     public function sim_category()
     {

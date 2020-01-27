@@ -4,9 +4,16 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Requests\StorePartnerRequest;
 use App\Services\PartnerService;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
+use App\Http\Controllers\AssetLite\ConfigController;
+use Illuminate\Support\Facades\Validator;
 
 class PartnerController extends Controller
 {
@@ -28,7 +35,7 @@ class PartnerController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Factory|View
      */
     public function index()
     {
@@ -39,7 +46,7 @@ class PartnerController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Factory|View
      */
     public function create()
     {
@@ -50,11 +57,23 @@ class PartnerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StorePartnerRequest $request
+     * @return RedirectResponse|Redirector
      */
     public function store(StorePartnerRequest $request)
     {
+        $image_upload_size = ConfigController::adminImageUploadSize();
+        $image_upload_type = ConfigController::adminImageUploadType();
+        
+        # Check Image upload validation
+        $validator = Validator::make($request->all(), [
+            'company_logo' => 'required|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+        ]);
+        if ($validator->fails()) {
+            Session::flash('error', $validator->messages()->first());
+            return redirect('partners');
+        }
+        
         $response = $this->partnerService->storePartner($request->all());
         Session::flash('message', $response->getContent());
         return redirect('partners');
@@ -64,7 +83,7 @@ class PartnerController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -75,7 +94,7 @@ class PartnerController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -89,10 +108,23 @@ class PartnerController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(StorePartnerRequest $request, $id)
     {
+
+        $image_upload_size = ConfigController::adminImageUploadSize();
+        $image_upload_type = ConfigController::adminImageUploadType();
+        
+        # Check Image upload validation
+        $validator = Validator::make($request->all(), [
+            'company_logo' => 'required|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+        ]);
+        if ($validator->fails()) {
+            Session::flash('error', $validator->messages()->first());
+            return redirect('partners');
+        }
+
         $response = $this->partnerService->updatePartner($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect('partners');
@@ -100,7 +132,7 @@ class PartnerController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      * @throws \Exception
      */
     public function destroy($id)

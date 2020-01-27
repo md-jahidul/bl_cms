@@ -23,11 +23,16 @@ class StorePartnerOfferRequest extends FormRequest
      */
     public function rules()
     {
+//        dd($this->partner_offer);
+
         return [
+            // TODO: Product Code Unique check on Edit
+//            'product_code' => 'required|unique:partner_offers,product_code,' . $this->user,
             'validity_en' => 'required',
             'validity_bn' => 'required',
-            'offer_en' => 'required',
-            'offer_bn' => 'required',
+            'offer_scale' => 'required',
+            'offer_value' => 'required',
+            'offer_unit' => 'required',
             'get_offer_msg_en' => 'required',
             'get_offer_msg_bn' => 'required',
             'btn_text_en' => 'required',
@@ -40,13 +45,11 @@ class StorePartnerOfferRequest extends FormRequest
     {
         return [
             'validity_en.required' => "Enter offer validity english.",
-            'validity_bn.required' => "Enter offer validity bangla.",
-            'offer_en.required' => "Enter offer percentage english.",
-            'offer_bn.required' => "Enter offer percentage bangla.",
+            'validity_bn.required' => "Enter offer validity in Bangla.",
             'get_offer_msg_en.required' => "Enter get send SMS text english.",
-            'get_offer_msg_bn.required' => "Enter get send SMS text bangla.",
+            'get_offer_msg_bn.required' => "Enter get send SMS text in Bangla.",
             'btn_text_en.required' => "Enter button label english.",
-            'btn_text_bn.required' => "Enter button label bangla",
+            'btn_text_bn.required' => "Enter button label in Bangla",
         ];
     }
 }

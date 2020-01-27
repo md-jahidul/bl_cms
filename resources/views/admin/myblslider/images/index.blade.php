@@ -48,14 +48,14 @@
                                 </td>
                                 <td class="action">
                                     <form action="{{route('myblslider.images.destroy',$slider_image->id)}}"
-                                          id="del_form"
+                                          id="del_form_{{$slider_image->id}}"
                                           method="post">
                                         @csrf
                                         @method('delete')
                                         <a href="{{route('myblslider.images.edit', $slider_image->id )}}"
                                            role="button" class="btn btn-outline-info border-0"><i class="la la-pencil"
                                                                                                   aria-hidden="true"></i></a>
-                                        <a href="#"
+                                        <a href="#" data-id="{{ $slider_image->id }}"
                                            role="button" class="btn btn-outline-danger border-0 del"><i
                                                 class="la la-remove"
                                                 aria-hidden="true"></i></a>
@@ -92,6 +92,9 @@
             $(document).on('click', '.del', function (e) {
                 e.preventDefault();
 
+                let id = $(this).data('id');
+                console.log(id);
+
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -102,8 +105,10 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
+                    console.log(result);
                     if (result.value) {
-                        $("#del_form").submit();
+                        console.log("#del_form_" + id)
+                        $("#del_form_" + id).submit();
                     }
                 })
             })

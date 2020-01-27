@@ -19,6 +19,16 @@
                         <form role="form" action="{{ route('partner_offer_store', [$parentId, $partnerName]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             <div class="row">
+                                <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                    <label for="product_code" class="required">Product Code</label>
+                                    <input type="text" name="product_code"  class="form-control" placeholder="Enter unique product code"
+                                           value="{{ old("product_code") ? old("product_code") : '' }}" required data-validation-required-message="Enter unique product code">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('product_code'))
+                                        <div class="help-block">{{ $errors->first('product_code') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('validity_en') ? ' error' : '' }}">
                                     <label for="validity_en" class="required">Offer Validity (English)</label>
                                     <input type="text" name="validity_en"  class="form-control" placeholder="Enter offer validity in English"
@@ -39,23 +49,66 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('offer_en') ? ' error' : '' }}">
-                                    <label for="offer_en" class="required">Offer (English)</label>
-                                    <input type="text" name="offer_en"  class="form-control" placeholder="Enter offer percentage in English"
-                                           value="{{ old("offer_en") ? old("offer_en") : '' }}" required data-validation-required-message="Enter offer percentage in English">
+                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                    <label for="start_date" class="required">Start Date</label>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" name="start_date" id="start_date"
+                                               required data-validation-required-message="Please select start date"
+                                               placeholder="Please select start date" />
+                                    </div>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('offer_en'))
-                                        <div class="help-block">  {{ $errors->first('offer_en') }}</div>
+                                    @if ($errors->has('start_date'))
+                                        <div class="help-block">{{ $errors->first('start_date') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('offer_bn') ? ' error' : '' }}">
-                                    <label for="offer_bn" class="required">Offer (Bangla)</label>
-                                    <input type="text" name="offer_bn"  class="form-control" placeholder="Enter offer percentage in Bangla"
-                                           value="{{ old("offer_bn") ? old("offer_bn") : '' }}" required data-validation-required-message="Enter offer percentage in Bangla">
+                                <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                    <label for="end_date">End Date</label>
+                                    <input type="text" name="end_date" id="end_date" class="form-control"
+                                           placeholder="Please select end date"
+                                           value="{{ old("end_date") ? old("end_date") : '' }}" autocomplete="off">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('offer_bn'))
-                                        <div class="help-block">  {{ $errors->first('offer_bn') }}</div>
+                                    @if ($errors->has('end_date'))
+                                        <div class="help-block">{{ $errors->first('end_date') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('offer_scale') ? ' error' : '' }}">
+                                    <label for="offer_scale" class="required">Offer Scale</label>
+                                    <select class="form-control required" name="offer_scale" id="offer_type"
+                                        required data-validation-required-message="Please select offer scale">
+                                        <option data-alias="" value="">---Select Offer Type---</option>
+                                        <option value="Upto">Upto</option>
+                                        <option value="Minimum">Minimum</option>
+                                        <option value="Fixed">Fixed</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('offer_scale'))
+                                        <div class="help-block">{{ $errors->first('offer_scale') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('offer_value') ? ' error' : '' }}">
+                                    <label for="offer_value" class="required">Offer Value</label>
+                                    <input type="number" name="offer_value"  class="form-control" placeholder="Enter offer discount value"
+                                           value="{{ old("offer_value") ? old("offer_value") : '' }}" required data-validation-required-message="Enter offer discount value">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('offer_value'))
+                                        <div class="help-block">  {{ $errors->first('offer_value') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('offer_unit') ? ' error' : '' }}">
+                                    <label for="offer_unit" class="required">Offer Unit</label>
+                                    <select class="form-control required" name="offer_unit" id="offer_unit"
+                                        required data-validation-required-message="Please select offer unit">
+                                        <option data-alias="" value="">---Select Offer Unit---</option>
+                                        <option value="Percentage">Percentage</option>
+                                        <option value="Taka">Taka</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('offer_unit'))
+                                        <div class="help-block">{{ $errors->first('offer_unit') }}</div>
                                     @endif
                                 </div>
 
@@ -99,15 +152,26 @@
                                     @endif
                                 </div>
 
-
-                                <div class="col-md-4 pt-2">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="show_in_home" class="mr-1">Show In Home:</label>
                                         <input type="checkbox" name="show_in_home" value="1" id="show_in_home">
                                     </div>
                                 </div>
 
-                                <div class="col-md-2 pt-2">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="title" class="required mr-1">Status:</label>
+
+                                        <input type="radio" name="is_active" value="1" id="input-radio-15" checked>
+                                        <label for="input-radio-15" class="mr-1">Active</label>
+
+                                        <input type="radio" name="is_active" value="0" id="input-radio-16">
+                                        <label for="input-radio-16">Inactive</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 pr-0 pt-1">
                                     <div class="form-group">
                                         <label for="is_campaign" class="mr-1">Is Campaign:</label>
                                         <input type="checkbox" name="is_campaign" value="1" id="is_campaign">
@@ -129,21 +193,12 @@
                                     @endif
                                 </div>
 
+
                                 <div class="form-group col-md-1 mb-0 d-none" id="showImg">
-                                    <img width="140" height="80" id="imgDisplay" src="{{ asset('images/campaign-image/campaign-placeholder.png') }}">
+                                    <img width="140" height="80" id="imgDisplay" src="{{ config('filesystems.file_base_url') . 'assetlite/images/campaign-image/campaign-placeholder.png' }}">
                                 </div>
 
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="title" class="required mr-1">Status:</label>
 
-                                        <input type="radio" name="is_active" value="1" id="input-radio-15" checked>
-                                        <label for="input-radio-15" class="mr-1">Active</label>
-
-                                        <input type="radio" name="is_active" value="0" id="input-radio-16">
-                                        <label for="input-radio-16">Inactive</label>
-                                    </div>
-                                </div>
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
@@ -164,11 +219,14 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
 @endpush
 @push('page-js')
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
     <script src="{{ asset('js/custom-js/offer.js') }}" type="text/javascript"></script>
 @endpush
-
 
 
 

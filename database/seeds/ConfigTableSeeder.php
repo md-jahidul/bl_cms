@@ -13,7 +13,9 @@ class ConfigTableSeeder extends Seeder
      */
     public function run()
     {
-        $siteLogo     = env('APP_URL', 'http://localhost:8000') . "/images/logo/bl-logo.png";
+        Config::truncate();
+
+        $siteLogo     = "assetlite/images/logo/bl-logo.png";
         $logoAltText  = "Banglalink Logo";
         $email        = "info@banglalink.net";
         $query_email  = "info@banglalink.net";
@@ -25,11 +27,14 @@ class ConfigTableSeeder extends Seeder
         $twitter      = "https://twitter.com/banglalink-page";
         $linkedin     = "https://linkedin.com/banglalink-page-ln";
         $googlePlayLink = 'https://play.google.com/store/apps/details?id=com.arena.banglalinkmela.app';
-        $appleAppstoreLink = 'https://apps.apple.com/us/app/my-banglalink/id934133022';
+        $appleAppStoreLink = 'https://apps.apple.com/us/app/my-banglalink/id934133022';
+        $imageUploadSize = 2;
+        $imageUploadType = 'jpeg,png';
+        $adminImageUploadSize = 5;
+        $adminImageUploadType = 'jpeg,png';
 
-
-        $configKeys = ['site_logo','logo_alt_text', 'email', 'query_email', 'mobile_number', 'address', 'copy_right_en', 'copy_right_bn', 'facebook_url', 'twitter_url', 'linkedin_url', 'google_play_link', 'apple_app_store_link'];
-        $configValue = [$siteLogo, $logoAltText, $email, $query_email, $mobileNumber, $address, $copyRight,$copyRightBangla, $facebook, $twitter, $linkedin,$googlePlayLink,$appleAppstoreLink];
+        $configKeys = ['site_logo', 'logo_alt_text', 'email', 'query_email', 'mobile_number', 'address', 'copy_right_en', 'copy_right_bn', 'facebook_url', 'twitter_url', 'linkedin_url', 'google_play_link', 'apple_app_store_link', 'image_upload_size', 'image_upload_type', 'admin_image_upload_size', 'admin_image_upload_type' ];
+        $configValue = [$siteLogo, $logoAltText, $email, $query_email, $mobileNumber, $address, $copyRight, $copyRightBangla, $facebook, $twitter, $linkedin, $googlePlayLink, $appleAppStoreLink, $imageUploadSize, $imageUploadType, $adminImageUploadSize, $adminImageUploadType];
 
         foreach ($configKeys as $index => $keyItem) {
             Config::create([

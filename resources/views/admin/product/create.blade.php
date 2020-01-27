@@ -20,9 +20,8 @@
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
-                                    <label for="name_en" class="required">Offer Name (English)</label>
-                                    <input type="text" name="name_en"  class="form-control" placeholder="Enter offer name in English"
-                                           required data-validation-required-message="Enter offer name english"
+                                    <label for="name_en">Offer Name (English)</label>
+                                    <input type="text" name="name_en" id="name_en" class="form-control" placeholder="Enter offer name in English"
                                            value="{{ old("name_en") ? old("name_en") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_en'))
@@ -30,21 +29,25 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('code') ? ' error' : '' }}">
-                                    <label for="code" class="required">Product ID</label>
-                                    <input type="text" name="code" class="form-control" placeholder="Enter product code"
-                                           required data-validation-required-message="Enter product code"
-                                           value="{{ old("code") ? old("code") : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                    <label for="product_code" class="required">Product ID</label>
+                                    <select id="product_core" name="product_code"
+                                            data-url="{{ url('product-core/match') }}"
+                                            required data-validation-required-message="Please select product code">
+                                        <option value="">Select product code</option>
+                                        @foreach($productCoreCodes as $productCodes)
+                                            <option value="{{ $productCodes['product_code'] }}">{{ $productCodes['product_code'] }}</option>
+                                        @endforeach
+                                    </select>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('code'))
-                                        <div class="help-block">{{ $errors->first('code') }}</div>
+                                    @if ($errors->has('product_code'))
+                                        <div class="help-block">{{ $errors->first('product_code') }}</div>
                                     @endif
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
-                                    <label for="name_bn" class="required">Offer Name (Bangla)</label>
-                                    <input type="text" name="name_bn"  class="form-control" placeholder="Enter offer name in Bangla"
-                                           required data-validation-required-message="Enter offer name bangla"
+                                    <label for="name_bn">Offer Name (Bangla)</label>
+                                    <input type="text" name="name_bn" id="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
                                            value="{{ old("name_bn") ? old("name_bn") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_bn'))
@@ -53,10 +56,10 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
-                                    <label for="start_date" class="required">Start Date</label>
+                                    <label for="start_date">Start Date</label>
                                     <div class='input-group'>
                                         <input type='text' class="form-control" name="start_date" id="start_date"
-                                               required data-validation-required-message="Please select start date"
+                                               value="{{ old("start_date") ? old("start_date") : '' }}"
                                                placeholder="Please select start date" />
                                     </div>
                                     <div class="help-block"></div>
@@ -66,9 +69,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="ussd_en">USSD Code (English)</label>
-                                    <input type="text" name="ussd_en"  class="form-control" placeholder="Enter offer ussd code in English"
-                                           value="{{ old("ussd_en") ? old("ussd_en") : '' }}">
+                                    <label for="activation_ussd">USSD Code (English)</label>
+                                    <input type="text" name="activation_ussd" id="activation_ussd" class="form-control" placeholder="Enter offer ussd code in English"
+                                           value="{{ old("activation_ussd") ? old("activation_ussd") : '' }}">
                                     <div class="help-block"></div>
                                 </div>
 
@@ -90,10 +93,18 @@
                                 </div>
 
                                 <div class="form-group col-md-6 ">
-                                    <label for="price_tk">Offer Price</label>
-                                        <input type="text" name="price_tk"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
+                                    <label for="price">Offer Price</label>
+                                        <input type="text" name="price" id="price"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
                                            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                                           value="{{ old("price_tk") ? old("price_tk") : '' }}">
+                                           value="{{ old("price") ? old("price") : '' }}">
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="form-group col-md-6 ">
+                                    <label for="price">Vat</label>
+                                        <input type="text" name="vat" id="vat" class="form-control" placeholder="Enter offer price in taka" step="0.001"
+                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+                                           value="{{ old("price") ? old("price") : '' }}">
                                     <div class="help-block"></div>
                                 </div>
 
@@ -136,6 +147,9 @@
                                 </slot>
 
                                 @if( strtolower($type) == 'prepaid')
+                                    <slot id="call_rate" data-offer-type="call_rate" style="display: none">
+                                        @include('layouts.partials.products.call_rate')
+                                    </slot>
                                     <slot id="voice" data-offer-type="voice" style="display: none">
                                         @include('layouts.partials.products.voice')
                                     </slot>
@@ -144,22 +158,26 @@
                                     </slot>
                                 @endif
 
-
-                                <div class="col-md-6" >
-                                    <label></label>
-                                    <div class="form-group pt-1" id="show_in_home">
-                                        <label for="trending" class="mr-1">Trending Offer:</label>
-                                        <input type="checkbox" name="show_in_home" value="1" id="trending">
-                                    </div>
+                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
+                                    <label for="purchase_option" class="required">Purchase Option</label>
+                                    <select class="form-control required" name="purchase_option" id="offer_type"
+                                        required data-validation-required-message="Please select purchase option">
+                                        <option data-alias="" value="">---Select Purchase Option---</option>
+                                        <option value="recharge">Recharge</option>
+                                        <option value="balance">Balance</option>
+                                        <option value="all">All</option>
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('purchase_option'))
+                                        <div class="help-block">{{ $errors->first('purchase_option') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="title" class="mr-1">Recharge</label>
-                                        <input type="radio" name="is_recharge" value="1" id="yes" checked>
-                                        <label for="yes" class="mr-1">Yes</label>
-                                        <input type="radio" name="is_recharge" value="0" id="no">
-                                        <label for="no">No</label>
+                                    <label></label>
+                                    <div class="form-group" id="show_in_home">
+                                        <label for="trending" class="mr-1">Trending Offer:</label>
+                                        <input type="checkbox" name="show_in_home" value="1" id="trending">
                                     </div>
                                 </div>
 
@@ -174,7 +192,6 @@
                                     </div>
                                 </div>
 
-
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button id="save" class="btn btn-primary"><i
@@ -182,27 +199,38 @@
                                         </button>
                                     </div>
                                 </div>
-
                             </div>
-
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
 @stop
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/selectize/selectize.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.default.css') }}">
 @endpush
 @push('page-js')
+    <script src="{{ asset('app-assets/vendors/js/forms/select/selectize.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/select/form-selectize.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
+
+    <script>
+        $(function () {
+            $('#product_core').selectize({
+                create: true,
+            });
+        })
+    </script>
 @endpush
 
 

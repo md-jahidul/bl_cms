@@ -6,9 +6,15 @@ use App\Http\Requests\StorePartnerOfferRequest;
 use App\Models\PartnerOfferDetail;
 use App\Services\PartnerOfferDetailService;
 use App\Services\PartnerOfferService;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
+use App\Http\Controllers\AssetLite\ConfigController;
+use Illuminate\Support\Facades\Validator;
 
 class PartnerOfferController extends Controller
 {
@@ -28,18 +34,13 @@ class PartnerOfferController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
      * @param $parentId
      * @param $partnerName
-     * @return \Illuminate\Http\Response
+     * @return Factory|View
      */
     public function index($parentId, $partnerName)
     {
         $partnerOffers = $this->partnerOfferService->itemList($parentId);
-
-//        return $partnerName;
-
         return view('admin.partner-offer.index', compact('partnerOffers', 'parentId', 'partnerName'));
     }
 
@@ -50,9 +51,9 @@ class PartnerOfferController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param $parentId
+     * @param $partnerName
+     * @return Factory|View
      */
     public function create($parentId, $partnerName)
     {
@@ -60,10 +61,10 @@ class PartnerOfferController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StorePartnerOfferRequest $request
+     * @param $partnerId
+     * @param $partnerName
+     * @return RedirectResponse|Redirector
      */
     public function store(StorePartnerOfferRequest $request, $partnerId, $partnerName)
     {
@@ -73,10 +74,7 @@ class PartnerOfferController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Factory|View
      */
     public function campaignOfferList()
     {
@@ -101,25 +99,23 @@ class PartnerOfferController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $partnerId
+     * @param $partnerName
+     * @param $id
+     * @return Factory|View
      */
     public function edit($partnerId, $partnerName, $id)
     {
         $partnerOffer = $this->partnerOfferService->findOne($id);
-
-//        return $partnerOffer;
-        return view('admin.partner-offer.edit', compact('partnerOffer', 'partnerId', 'partnerName', 'path'));
+        return view('admin.partner-offer.edit', compact('partnerOffer', 'partnerId', 'partnerName'));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param StorePartnerOfferRequest $request
+     * @param $partnerId
+     * @param $partnerName
+     * @param $id
+     * @return RedirectResponse|Redirector
      */
     public function update(StorePartnerOfferRequest $request, $partnerId, $partnerName, $id)
     {
@@ -131,7 +127,7 @@ class PartnerOfferController extends Controller
     /**
      * @param $type
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function offerDetailsEdit($partner, $id)
     {
@@ -141,6 +137,19 @@ class PartnerOfferController extends Controller
 
     public function offerDetailsUpdate(Request $request, $partnet)
     {
+        $image_upload_size = ConfigController::adminImageUploadSize();
+        $image_upload_type = ConfigController::adminImageUploadType();
+        
+        # Check Image upload validation
+        $validator = Validator::make($request->all(), [
+            'banner_image_url' => 'required|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+        ]);
+        if ($validator->fails()) {
+            Session::flash('error', $validator->messages()->first());
+            return redirect()->route('partner-offer', [$request->partner_id, $partnet]);
+        }
+
+
         $response = $this->partnerOfferDetailService
             ->updatePartnerOfferDetails($request->all(), $request->offer_details_id);
         Session::flash('message', $response->getContent());

@@ -2,30 +2,42 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Enums\OfferType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\OfferCategory;
 use App\Models\OtherRelatedProduct;
 use App\Models\Product;
+use App\Models\ProductCore;
 use App\Models\ProductDetail;
 use App\Models\RelatedProduct;
 use App\Models\SimCategory;
 use App\Models\TagCategory;
+use App\Models\ProductPriceSlab;
 use App\Services\DurationCategoryService;
 use App\Services\OfferCategoryService;
+use App\Services\ProductCoreService;
 use App\Services\ProductDetailService;
 use App\Services\ProductService;
 use App\Services\TagCategoryService;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
+use Illuminate\View\View;
 
 class ProductController extends Controller
 {
 
     private $productService;
+    private $productCoreService;
     private $productDetailService;
     private $tagCategoryService;
     private $offerCategoryService;
@@ -37,6 +49,7 @@ class ProductController extends Controller
     /**
      * ProductController constructor.
      * @param ProductService $productService
+     * @param ProductCoreService $productCoreService
      * @param ProductDetailService $productDetailService
      * @param TagCategoryService $tagCategoryService
      * @param OfferCategoryService $offerCategoryService
@@ -44,12 +57,14 @@ class ProductController extends Controller
      */
     public function __construct(
         ProductService $productService,
+        ProductCoreService $productCoreService,
         ProductDetailService $productDetailService,
         TagCategoryService $tagCategoryService,
         OfferCategoryService $offerCategoryService,
         DurationCategoryService $durationCategoryService
     ) {
         $this->productService = $productService;
+        $this->productCoreService = $productCoreService;
         $this->productDetailService = $productDetailService;
         $this->tagCategoryService = $tagCategoryService;
         $this->offerCategoryService = $offerCategoryService;
@@ -60,26 +75,33 @@ class ProductController extends Controller
      * Display a listing of the resource.
      *
      * @param $type
-     * @return Response
+     * @return Factory|View
      */
     public function index($type)
     {
-        $bdTimeZone = Carbon::now('Asia/Dhaka');
-        $dateTime = $bdTimeZone->toDateTimeString();
-        $currentSecends = strtotime($dateTime);
-
-        $products = Product::category($type)->with(['offer_category' => function ($query) {
-            $query->select('id', 'name_en');
-        }])->get();
+        $products = Product::category($type)
+            ->with(['product_core', 'offer_category' => function ($query) {
+                $query->select('id', 'name_en');
+            }])
+            ->latest()
+            ->get();
 
 //        return $products;
 
-        return view('admin.product.index', compact('products', 'type', 'currentSecends'));
+        return view('admin.product.index', compact('products', 'type'));
     }
 
     public function trendingOfferHome()
     {
-        $trendingHomeOffers = Product::where('show_in_home', 1)->orderBy('display_order')->get();
+        $trendingHomeOffers = Product::where('show_in_home', 1)
+            ->with(['product_core' => function ($query) {
+                $query->select('product_code', 'activation_ussd', 'mrp_price');
+            }, 'offer_category' => function ($query) {
+                $query->select('id', 'name_en');
+            }])
+            ->orderBy('display_order')
+            ->get();
+
         return view('admin.product.home', compact('trendingHomeOffers'));
     }
 
@@ -92,8 +114,8 @@ class ProductController extends Controller
 
     public function create($type)
     {
+        $this->info['productCoreCodes'] = $this->productService->unusedProductCore();
         $package_id = SimCategory::where('alias', $type)->first()->id;
-
         $this->info['type'] = $type;
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offers'] = $this->offerCategoryService->getOfferCategories($type);
@@ -128,15 +150,29 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * @param ProductStoreRequest $request
+     * @param $type
+     * @return RedirectResponse|Redirector
+     */
     public function store(ProductStoreRequest $request, $type)
     {
-        $this->strToint($request);
+        $bondhoSimOffer = $this->productService->findBondhoSim();
+        if (count($bondhoSimOffer) > 4 && isset($request->offer_info['other_offer_type_id']) == OfferType::BONDHO_SIM_OFFER) {
+            Session::flash('error', 'Maximum 4 Bondho SIM offer can be created');
+            return redirect()->back();
+        }
         $simId = SimCategory::where('alias', $type)->first()->id;
+        $this->productCoreService->storeProductCore($request->all(), $simId);
+        $this->strToint($request);
         $response = $this->productService->storeProduct($request->all(), $simId);
         Session::flash('success', $response->content());
         return redirect("offers/$type");
     }
 
+    /**
+     * @param Request $request
+     */
     public function trendingOfferSortable(Request $request)
     {
         $this->productService->tableSortable($request);
@@ -160,11 +196,11 @@ class ProductController extends Controller
      *
      * @param $type
      * @param int $id
-     * @return Response
+     * @return Factory|View
      */
     public function edit($type, $id)
     {
-        $product = $this->productService->findOne($id);
+        $product = $this->productService->findProduct($type, $id);
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['previous_page'] = url()->previous();
         $this->info['type'] = $type;
@@ -172,7 +208,7 @@ class ProductController extends Controller
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offersType'] = $this->offerCategoryService->getOfferCategories($type);
         $this->info['durations'] = $this->durationCategoryService->findAll();
-        $this->info['offerInfo'] = $product['offer_info'];
+        $this->info['price_slabs'] = ProductPriceSlab::get();
 
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
@@ -182,15 +218,7 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
-
-//        return $this->info;
-
         return view('admin.product.edit', $this->info);
-    }
-
-    public function homeEdit($id)
-    {
-        return view('admin.product.home_offer_edit', compact(''));
     }
 
     /**
@@ -201,10 +229,11 @@ class ProductController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(ProductStoreRequest $request, $type, $id)
+    public function update(Request $request, $type, $id)
     {
+        $this->productCoreService->updateProductCore($request->all(), $id);
         $this->strToint($request);
-        $response = $this->productService->updateProduct($request->all(), $id);
+        $response = $this->productService->updateProduct($request->all(), $type, $id);
         Session::flash('message', $response->content());
         return (strpos(request()->previous_page, 'trending-home') !== false) ? redirect(request()->previous_page) : redirect(route('product.list', $type));
     }
@@ -212,47 +241,60 @@ class ProductController extends Controller
     /**
      * @param $type
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
-    public function productDetailsEdit($type, $id)
+    public function productDetailsEdit($type, $id, $offerType)
     {
-
         $products = $this->productService->findRelatedProduct($type, $id);
-        $productDetail = $this->productService->findOne($id, [
-            'other_related_product', "related_product", 'product_details',
-        ]);
-
-//        return $productDetail;
-
-        return view('admin.product.product_details', compact('type', 'productDetail', 'products'));
+        $productDetail = $this->productService->detailsProduct($id);
+        return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType'));
     }
 
+    /**
+     * @param Request $request
+     * @param $type
+     * @param $id
+     * @return RedirectResponse|Redirector
+     */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-//        return $request->all();
-
-        $productDetailsId = $request->product_details_id;
-        $productDetails = $this->productDetailService->findOne($productDetailsId);
+        //$productDetails = $this->productDetailService->findOne($request->product_details_id);
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
+        $this->productDetailService->updateProductDetails($request->all(), $id);
 
-        $productDetails['other_attributes'] = $request->other_attributes;
-        $productDetails->update($request->all());
-
+        Session::flash('success', 'Product Details update successfully!');
         return redirect("offers/$type");
-
     }
 
+    public function existProductCore($productCode)
+    {
+        return $this->productCoreService->findProductCore($productCode);
+    }
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
-     * @throws \Exception
+     * @return UrlGenerator|string
+     * @throws Exception
      */
     public function destroy($type, $id)
     {
         $response = $this->productService->deleteProduct($id);
         Session::flash('error', $response->getContent());
         return url("offers/$type");
+    }
+
+    /**
+     * @param $type
+     * @return string
+     * Product Core Data mapping To Product table
+     */
+    public function coreDataMappingProduct($type)
+    {
+        $this->productService->coreData();
+        return \response([
+            "url" => url("offers/$type"),
+            "success" => true
+        ]);
     }
 }

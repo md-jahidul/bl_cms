@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+use App\Repositories\ProductCoreRepository;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
@@ -45,6 +47,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 //    Route::get('menu/{parentId}/destroy/{id}', 'AssetLite\MenuController@destroy');
 
     // MENU  ====================================
+    Route::get('menu/create', 'AssetLite\MenuController@create');
     Route::get('menu/{id}/child-menu/create', 'AssetLite\MenuController@create');
     Route::resource('menu', 'AssetLite\MenuController')->only(['update','edit','store']);
     Route::get('menu/{id?}/{child_menu?}', 'AssetLite\MenuController@index');
@@ -159,7 +162,27 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
         ->name('offer.details-update');
 
+    // About Pages ================================
+    Route::get('about-page/{slug}', 'AssetLite\PriyojonController@aboutPageView')->name('about-page');
+    Route::put('about-page/update', 'AssetLite\PriyojonController@aboutPageUpdate')
+        ->name('about-page.update');
+
+//    Route::get('about-reward', 'AssetLite\PriyojonController@aboutRewardPoint')->name('about-reward');
+//    Route::put('about-reward/update', 'AssetLite\PriyojonController@aboutRewardPointUpdate')
+//        ->name('about-reward.update');
+
     //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
+
+    // Product Core Mapping To Product
+    Route::get('/core-product/entry', 'ProductEntryController@assetliteCoreProductForm');
+    Route::post('/core-product/store', 'ProductEntryController@assetliteCoreProductStore')
+        ->name('core-product-store');
+    Route::get('/core-product/mapping/{offerType}', 'AssetLite\ProductController@coreDataMappingProduct')
+        ->name('core-product-mapping');
+    Route::get('product-core/match/{productCode}', 'AssetLite\ProductController@existProductCore')
+        ->name('product-core/check');
+
+    Route::get('product-details-update', 'AssetLite\ProductController@updateDetails');
 
 
     // Fixed  ====================================
@@ -178,4 +201,15 @@ Route::middleware('authorize', 'auth')->group(function () {
 //     Route::resource('prizes','AssetLite\PrizeController');
 
     Route::get('/home', 'AssetLite\HomeController@index')->name('home');
+
+
+
+    Route::get('/test/excel', function (\App\Services\ProductCoreService $service) {
+
+        $service->mapDataFromExcel('/home/bs104/Desktop/product_sample.xlsx');
+    });
+
+    // Product core ============================================
+    Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
+    Route::get('product-core/{id}/edit/', 'AssetLite\ProductCoreController@edit')->name('product.core.edit');
 });

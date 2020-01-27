@@ -36,6 +36,9 @@ class PermissionsController extends Controller
                         ->pluck('name', 'id');
 
         $actions = $this->getRoutes();
+
+//        return $actions;
+
         return view('vendor.authorize.permissions.index', compact('roles', 'actions'));
     }
 
@@ -59,9 +62,18 @@ class PermissionsController extends Controller
         }
         ksort($actions);
 
-        if ($actions['App\Http\Controllers\CMS']) {
-            unset($actions['App\Http\Controllers\CMS']);
+        if (Auth::user()->type == 'mybl') {
+            if ($actions['App\Http\Controllers\AssetLite'] && $actions['App\Http\Controllers']) {
+                unset($actions['App\Http\Controllers\AssetLite']);
+                unset($actions['App\Http\Controllers']);
+            }
+        } else {
+            if ($actions['App\Http\Controllers\CMS'] && $actions['App\Http\Controllers']) {
+                unset($actions['App\Http\Controllers\CMS']);
+                unset($actions['App\Http\Controllers']);
+            }
         }
+
         return $actions;
     }
 

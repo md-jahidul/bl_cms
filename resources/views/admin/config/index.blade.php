@@ -28,12 +28,60 @@
                                         <div class="form-group row profile-pic">
                                             <label class="col-md-3 label-control pt-3"  for="row">{{ $title }}</label>
                                             <div class="pb-0">
-                                                <img src="{{ $config->value }}" height="60" width="50">
+                                                <img src="{{ config('filesystems.file_base_url') . $config->value }}" height="55" width="50" id="imgDisplay">
                                                     <input type="file" name="site_logo" class="input-logo pl-2" style="display: none" placeholder="Enter logo alt text">
                                                     <a href="#" class="close-edit text-danger" style="display: none"><i class="la la-close" aria-hidden="true"></i></a>
                                             </div>
                                             <div class="edit pt-3 pb-0">
                                                 <a href="#" class="edit-btn"><i class="la la-pencil" title="Change Logo" aria-hidden="true"></i></a>
+                                            </div>
+                                        </div>
+                                    <!-- customer image upload size -->
+                                    @elseif($config->key == "image_upload_size")
+                                        <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                            <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="row{{$key}}" class="form-control"  value="{{ old($config->key) ?? $config->value }}" required data-validation-required-message="Enter {{$title}}" placeholder="Enter {{ $title }}" name="{{ $config->key }}">
+                                                <div class="help-block"><small>Please enter file size upto 2M. </small></div>
+                                                @if ($errors->has($config->key))
+                                                    <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    <!-- customer image upload type -->
+                                    @elseif($config->key == "image_upload_type")
+                                        <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                            <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="row{{$key}}" class="form-control"  value="{{ old($config->key) ?? $config->value }}" required data-validation-required-message="Enter {{$title}}" placeholder="Enter {{ $title }}" name="{{ $config->key }}">
+                                                <div class="help-block"><small>Please enter file type with comma(,) separated.</small></div>
+                                                @if ($errors->has($config->key))
+                                                    <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    <!-- Admin user image upload size -->
+                                    @elseif($config->key == "admin_image_upload_size")
+                                        <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                            <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="row{{$key}}" class="form-control"  value="{{ old($config->key) ?? $config->value }}" required data-validation-required-message="Enter {{$title}}" placeholder="Enter {{ $title }}" name="{{ $config->key }}">
+                                                <div class="help-block"><small>Please enter file size upto 2M. </small></div>
+                                                @if ($errors->has($config->key))
+                                                    <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    <!-- Admin user image upload type -->
+                                    @elseif($config->key == "admin_image_upload_type")
+                                        <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                            <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="row{{$key}}" class="form-control"  value="{{ old($config->key) ?? $config->value }}" required data-validation-required-message="Enter {{$title}}" placeholder="Enter {{ $title }}" name="{{ $config->key }}">
+                                                <div class="help-block"><small>Please enter file type with comma(,) separated.</small></div>
+                                                @if ($errors->has($config->key))
+                                                    <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                                @endif
                                             </div>
                                         </div>
                                     @else
@@ -89,41 +137,6 @@
 
 @push('page-js')
     <script>
-        $(document).ready(function () {
-            $('#Example1').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy', className: 'copyButton',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'excel', className: 'excel',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'pdf', className: 'pdf', "charset": "utf-8",
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'print', className: 'print',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                ],
-                paging: true,
-                searching: true,
-                "bDestroy": true,
-            });
-        });
-
         (function () {
             $(".edit-btn").on('click', function () {
                 $('.edit-btn').hide();

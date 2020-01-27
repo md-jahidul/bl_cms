@@ -36,8 +36,8 @@ class StoreQuickLaunch extends FormRequest
     public function messages()
     {
         return [
-            'en_title.required' => "Enter english title",
-            'bn_title.required' => "Enter bangla english",
+            'en_title.required' => "Enter title in English",
+            'bn_title.required' => "Enter title in Bangla",
             'alt_text.required' => "Enter alt ext",
             'link.required' => "Enter link",
             'status.required' => "Please checked status",

@@ -10,6 +10,10 @@
     <a href="{{ route('slider_images', [$sliderImage->slider_id, $type]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+        @endforeach
+    @endif
     <section>
         <div class="card">
             <div class="card-content collapse show">
@@ -77,10 +81,7 @@
                                     @endif
                                 </div>
 
-                                @include('layouts.partials.slider_types.' . $type )
-
-
-                                <div class="form-group col-md-6 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                <div class="form-group col-md-5 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <div class="custom-file">
                                         <input type="file" name="image_url" class="custom-file-input" id="image">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
@@ -88,9 +89,11 @@
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    <img src="{{ $sliderImage->image_url }}" style="height:70px;width:70px;" id="imgDisplay">
+                                <div class="form-group col-md-1">
+                                    <img src="{{ config('filesystems.file_base_url') .$sliderImage->image_url }}" style="height:70px;width:70px;" id="imgDisplay">
                                 </div>
+
+                                 @include('layouts.partials.slider_types.' . $type )
 
 
                                 <div class="col-md-12">

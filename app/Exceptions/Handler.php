@@ -49,7 +49,11 @@ class Handler extends ExceptionHandler
      * @return Response
      */
     public function render($request, Exception $exception)
-    {
+    {	
+	if ($exception instanceof \Illuminate\Http\Exceptions\PostTooLargeException) {
+		return redirect()->back()->with('error', 'File size too large!');
+        }
+
         if (!App::environment('local')) {
             // The environment is not local
             if ($this->isHttpException($exception)) {

@@ -26,7 +26,7 @@ class AddIsApproveToAdditionalAccountsTable extends Migration
     public function down()
     {
         Schema::table('additional_accounts', function (Blueprint $table) {
-            $table->dropColumn('paid');
+            $table->dropColumn('is_approve');
         });
     }
 }

@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
 //        $this->call(ProductsTableSeeder::class);
 
         $this->call(PriyojonTableSeeder::class);
+        $this->call(ProductSlabsTableSeeder::class);
 
 
 
@@ -73,5 +74,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PrivacyPolicySeeder::class);
 
         $this->call(MyBlInternetOfferCategorySeeder::class);
+        $this->call(TelescopepanelUserSeeder::class);
+/*        $this->call(MyBlProductCategorySeeder::class);*/
     }
 }

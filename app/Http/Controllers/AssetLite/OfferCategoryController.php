@@ -4,11 +4,29 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
 use App\Models\OfferCategory;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Services\OfferCategoryService;
+use Illuminate\View\View;
+use App\Http\Controllers\AssetLite\ConfigController;
+use Illuminate\Support\Facades\Validator;
 
 class OfferCategoryController extends Controller
 {
+    private $offerCategoryService;
+
+
+    /**
+     * OfferCategoryController constructor.
+     * @param OfferCategoryService $offerCategoryService
+     */
+    public function __construct(OfferCategoryService $offerCategoryService)
+    {
+        $this->offerCategoryService = $offerCategoryService;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -64,20 +82,18 @@ class OfferCategoryController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\OfferCategory  $offerCategory
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return Factory|View
      */
     public function edit($id)
     {
         $offer = OfferCategory::findOrFail($id);
-        return view('admin.category.offer.edit', compact('offer', 'parent_id'));
+        return view('admin.category.offer.edit', compact('offer'));
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function childEdit($parent_id,$type,$id)
     {
@@ -87,7 +103,7 @@ class OfferCategoryController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View3
+     * @return Factory|\Illuminate\View\View3
      */
     public function childUpdate(Request $request, $parent_id, $id)
     {
@@ -106,8 +122,22 @@ class OfferCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $offer = OfferCategory::findOrFail($id);
-        $offer->update($request->all());
+        //$offer = OfferCategory::findOrFail($id);
+        
+        $image_upload_size = ConfigController::adminImageUploadSize();
+        $image_upload_type = ConfigController::adminImageUploadType();
+        
+        # Check Image upload validation
+        $validator = Validator::make($request->all(), [
+            'banner_image_url' => 'required|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+        ]);
+        if ($validator->fails()) {
+            Session::flash('error', $validator->messages()->first());
+            return redirect('offer-categories');
+        }
+
+        $this->offerCategoryService->updateOfferCategory($request->all(), $id);
+
         Session::flash('message', 'Offer Update successfully!');
         return redirect('offer-categories');
     }

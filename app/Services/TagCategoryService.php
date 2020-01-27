@@ -40,7 +40,7 @@ class TagCategoryService
      */
     public function storeTagCategory($data)
     {
-        $data['alias'] = str_replace(" ", "_", strtolower($data['name']));
+        $data['alias'] = str_replace(" ", "_", strtolower($data['name_en']));
         $this->save($data);
         return new Response('Tag category added successfully');
     }
@@ -53,7 +53,7 @@ class TagCategoryService
     public function updateTagCategory($data, $id)
     {
         $TagCategory = $this->findOne($id);
-        $data['alias'] = str_replace(" ", "_", strtolower($data['name']));
+        $data['alias'] = str_replace(" ", "_", strtolower($data['name_en']));
         $TagCategory->update($data);
         return Response('Tag category updated successfully');
     }

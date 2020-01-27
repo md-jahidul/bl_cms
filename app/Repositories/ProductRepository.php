@@ -9,8 +9,10 @@
 
 namespace App\Repositories;
 
+use App\Enums\OfferType;
 use App\Models\Product;
 use App\Models\SimCategory;
+use Illuminate\Support\Facades\DB;
 
 class ProductRepository extends BaseRepository
 {
@@ -31,6 +33,11 @@ class ProductRepository extends BaseRepository
         }
     }
 
+    public function productDetails($id)
+    {
+        return $this->model->where('product_code', $id)->with('other_related_product', "related_product", 'product_details')->first();
+    }
+
     /**
      * @param $type
      * @param $id
@@ -38,7 +45,21 @@ class ProductRepository extends BaseRepository
      */
     public function relatedProducts($type, $id)
     {
-        $products = $this->model::category($type)->where('id', '!=', $id)->get();
-        return $products;
+        return $this->model::category($type)->where('id', '!=', $id)->get();
     }
+
+    public function findByCode($type, $id)
+    {
+        return $this->model->category($type)
+            ->where('product_code', $id)
+            ->with('product_core')
+            ->first();
+    }
+
+    public function countBondhoSimOffer()
+    {
+       return $this->model->where('offer_info->other_offer_type_id', OfferType::BONDHO_SIM_OFFER)
+           ->get();
+    }
+
 }
