@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <form role="form" action="{{ url('config/update') }}" method="POST" class="form form-horizontal striped-rows" novalidate enctype="multipart/form-data">
                             @csrf
-                            @method('put')
+                            @method('post')
                             <div class="form-body">
                                 @foreach($configs as $key =>$config)
                                     @php($title = ucfirst(str_replace('_', ' ', $config->key )))
@@ -29,7 +29,7 @@
                                             <label class="col-md-3 label-control pt-3"  for="row">{{ $title }}</label>
                                             <div class="pb-0">
                                                 <img src="{{ config('filesystems.file_base_url') . $config->value }}" height="55" width="50" id="imgDisplay">
-                                                    <input type="file" name="site_logo" class="input-logo pl-2" style="display: none" placeholder="Enter logo alt text">
+                                                    <input type="file" name="site_logo" class="input-logo pl-2" style="display: none" placeholder="Enter logo alt text" value="{{ old($config->key) ?? $config->value }}">
                                                     <a href="#" class="close-edit text-danger" style="display: none"><i class="la la-close" aria-hidden="true"></i></a>
                                             </div>
                                             <div class="edit pt-3 pb-0">
@@ -63,7 +63,7 @@
                                     <!-- Admin user image upload size -->
                                     @elseif($config->key == "admin_image_upload_size")
                                         <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
-                                            <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
+                                            <label class="col-md-3 label-control" for="row{{$key}}">CMS image upload size</label>
                                             <div class="col-md-9">
                                                 <input type="text" id="row{{$key}}" class="form-control"  value="{{ old($config->key) ?? $config->value }}" required data-validation-required-message="Enter {{$title}}" placeholder="Enter {{ $title }}" name="{{ $config->key }}">
                                                 <div class="help-block"><small>Please enter file size upto 2M. </small></div>
@@ -75,7 +75,7 @@
                                     <!-- Admin user image upload type -->
                                     @elseif($config->key == "admin_image_upload_type")
                                         <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
-                                            <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
+                                            <label class="col-md-3 label-control" for="row{{$key}}">CMS image upload type</label>
                                             <div class="col-md-9">
                                                 <input type="text" id="row{{$key}}" class="form-control"  value="{{ old($config->key) ?? $config->value }}" required data-validation-required-message="Enter {{$title}}" placeholder="Enter {{ $title }}" name="{{ $config->key }}">
                                                 <div class="help-block"><small>Please enter file type with comma(,) separated.</small></div>

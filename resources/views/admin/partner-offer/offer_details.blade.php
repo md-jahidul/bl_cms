@@ -19,7 +19,7 @@
                     <div class="card-body card-dashboard">
                         <form role="form" id="product_form" action="{{ route('offer.details-update', [strtolower($partner)] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
-                            @method('put')
+                            @method('post')
                             {{-- {{ dd($partnerOfferDetail) }} --}}
                             <div class="row">
                                 <input type="hidden" name="partner_id" value="{{ $partnerOfferDetail->partner_id }}">

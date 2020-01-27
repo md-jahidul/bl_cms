@@ -49,7 +49,7 @@ class ConfigController extends Controller
         
         # Check Image upload validation
         $validator = Validator::make($request->all(), [
-            'site_logo' => 'required|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+            'site_logo' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
         ]);
         if ($validator->fails()) {
             Session::flash('error', $validator->messages()->first());
