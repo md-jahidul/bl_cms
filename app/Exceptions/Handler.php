@@ -54,7 +54,7 @@ class Handler extends ExceptionHandler
         // dd($request);
         if ($exception instanceof \Illuminate\Http\Exceptions\PostTooLargeException) {
             
-            return redirect()->back()->withError("File size limit exceeded for server. Max limit ".ini_get("upload_max_filesize")."B", 'addNote');
+            return redirect()->back()->withError("Server file size limit exceeded. Max limit ".ini_get("upload_max_filesize")."B", 'addNote');
         }
 
         if (!App::environment('local')) {

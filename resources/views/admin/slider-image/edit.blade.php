@@ -33,7 +33,7 @@
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route("slider_image_update", [ $sliderImage->slider_id, $type, $sliderImage->id ]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
-                            {{method_field('PUT')}}
+                            {{method_field('POST')}}
 
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">

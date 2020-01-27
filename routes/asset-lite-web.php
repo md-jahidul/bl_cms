@@ -37,7 +37,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     // CONFIG  ====================================
     Route::get('config', 'AssetLite\ConfigController@index');
-    Route::put('config/update', 'AssetLite\ConfigController@update');
+    Route::post('config/update', 'AssetLite\ConfigController@update');
 
     // Priyojon Landing Page ====================================
     Route::get('priyojon/{id}/child-menu/create', 'AssetLite\PriyojonController@create');
@@ -93,7 +93,7 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('slider_image_store');
     Route::get('slider/{slider_id}/{type}/image/{id}', 'AssetLite\SliderImageController@edit')
         ->name('slider_image_edit');
-    Route::match(['put', 'post'], 'slider/{slider_id}/{type}/image/{id}/update', 'AssetLite\SliderImageController@update')
+    Route::post('slider/{slider_id}/{type}/image/{id}/update', 'AssetLite\SliderImageController@update')
         ->name('slider_image_update');
     Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'AssetLite\SliderImageController@destroy');
     Route::get('/slider-image-sortable', 'AssetLite\SliderImageController@sliderImageSortable');
@@ -140,7 +140,8 @@ Route::middleware('authorize', 'auth')->group(function () {
 
 
     // PARTNERS ====================================
-    Route::resource('partners', 'AssetLite\PartnerController')->except(['show', 'destroy']);
+    Route::resource('partners', 'AssetLite\PartnerController')->except(['show', 'destroy', 'update']);
+    Route::post('partners/{id}', 'AssetLite\PartnerController@update');
     Route::get('partner/destroy/{id}', 'AssetLite\PartnerController@destroy');
 
     Route::get('partner-offer/{partner_id}/{type}', 'AssetLite\PartnerOfferController@index')->name('partner-offer');
@@ -159,7 +160,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::get('partner-offers/{partner}/{id}/details', 'AssetLite\PartnerOfferController@offerDetailsEdit')
         ->name('offer.details');
-    Route::put('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
+    Route::post('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
         ->name('offer.details-update');
 
     // About Pages ================================

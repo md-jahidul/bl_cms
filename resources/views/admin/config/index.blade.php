@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <form role="form" action="{{ url('config/update') }}" method="POST" class="form form-horizontal striped-rows" novalidate enctype="multipart/form-data">
                             @csrf
-                            @method('put')
+                            @method('post')
                             <div class="form-body">
                                 @foreach($configs as $key =>$config)
                                     @php($title = ucfirst(str_replace('_', ' ', $config->key )))
@@ -29,7 +29,7 @@
                                             <label class="col-md-3 label-control pt-3"  for="row">{{ $title }}</label>
                                             <div class="pb-0">
                                                 <img src="{{ config('filesystems.file_base_url') . $config->value }}" height="55" width="50" id="imgDisplay">
-                                                    <input type="file" name="site_logo" class="input-logo pl-2" style="display: none" placeholder="Enter logo alt text">
+                                                    <input type="file" name="site_logo" class="input-logo pl-2" style="display: none" placeholder="Enter logo alt text" value="{{ old($config->key) ?? $config->value }}">
                                                     <a href="#" class="close-edit text-danger" style="display: none"><i class="la la-close" aria-hidden="true"></i></a>
                                             </div>
                                             <div class="edit pt-3 pb-0">
