@@ -61,9 +61,9 @@
                                         <label for="design_structure" class="required">Design Structure</label>
                                         <select id="design_structure" class="form-control" name="other_attributes[design_structure]"
                                                 required data-validation-required-message="Please select design structure">
-                                            <option>---Please Select Structure---</option>
-                                            <option data-alias="structure_1" value="structure_1" {{ !empty($productDetail->product_details->other_attributes['design_structure']) == 'structure_1' ? "selected" : "" }}>Structure 1</option>
-                                            <option data-alias="structure_2" value="structure_2" {{ !empty($productDetail->product_details->other_attributes['design_structure']) == 'structure_2' ? "selected" : "" }}>Structure 2</option>
+                                            <option value="">---Please Select Structure---</option>
+                                            <option data-alias="structure_1" value="structure_1" {{ $productDetail->product_details->other_attributes['design_structure'] == 'structure_1' ? "selected" : "" }}>Structure 1</option>
+                                            <option data-alias="structure_2" value="structure_2" {{ $productDetail->product_details->other_attributes['design_structure'] == 'structure_2' ? "selected" : "" }}>Structure 2</option>
                                         </select>
                                         <div class="help-block"></div>
                                         @if ($errors->has('design_structure'))
