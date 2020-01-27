@@ -4,12 +4,14 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Requests\StoreQuickLaunch;
 use App\Services\QuickLaunchService;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class QuickLaunchController extends Controller
 {
@@ -33,18 +35,18 @@ class QuickLaunchController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return Factory|View
      */
-    public function index()
+    public function index($type)
     {
-        $quickLaunchItems = $this->quickLaunchService->itemList();
+        $quickLaunchItems = $this->quickLaunchService->itemList($type);
         return view('admin.quick-launch-item.index', compact('quickLaunchItems'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return Factory|View
      */
     public function create()
     {
