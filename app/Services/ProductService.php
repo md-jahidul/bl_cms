@@ -185,7 +185,7 @@ class ProductService
                 $this->insertProduct($coreProduct, $offerId);
                 break;
             case 'startup':
-                $offerId = 4; // Bundle Offer
+                $offerId = 4; // Startup Offer
                 $this->insertProduct($coreProduct, $offerId, ['package_offer_type_id' => 6]);
                 break;
 //            default:
