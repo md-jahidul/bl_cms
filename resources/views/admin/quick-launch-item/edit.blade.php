@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 @section('title', 'Quick Launch Create')
-@section('card_name', 'Quick Launch Edit')
+@section('card_name', "Quick Launch $type Edit")
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('quick-launch') }}"> Quick Launch List</a></li>
-    <li class="breadcrumb-item active"> Quick Launch Edit</li>
+    <li class="breadcrumb-item active"> <a href="{{ url("quick-launch/$type") }}"> Quick Launch {{ $type }} List</a></li>
+    <li class="breadcrumb-item active"> Quick Launch {{ $type }} Edit</li>
 @endsection
 @section('action')
-    <a href="{{ url('quick-launch') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url("quick-launch/$type") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -14,7 +14,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ url("quick-launch/$quickLaunch->id") }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route("quick-launch.update", [$type, $quickLaunch->id]) }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">English Title</label>
@@ -92,9 +92,6 @@
                             {{method_field('PUT')}}
                         </form>
                     </div>
-
-
-                    </form>
                 </div>
             </div>
         </div>

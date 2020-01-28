@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 @section('title', 'Quick Launch Create')
-@section('card_name', 'Quick Launch Create')
+@section('card_name', "Quick Launch Create")
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('quick-launch') }}"> Quick Launch List</a></li>
-    <li class="breadcrumb-item active"> Quick Launch Create</li>
+    <li class="breadcrumb-item active"> <a href="{{ url("quick-launch/$type") }}"> Quick Launch {{ $type }} List</a></li>
+    <li class="breadcrumb-item active"> Quick Launch {{ ucfirst($type) }}</li>
 @endsection
 @section('action')
-    <a href="{{ url('quick-launch') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url("quick-launch/$type") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -14,7 +14,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('quick-launch.store') }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route('quick-launch.store', $type) }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">English Title</label>
@@ -55,24 +55,6 @@
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>
                                     @endif
                                 </div>
-
-{{--                                <div class="form-group col-md-6 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">--}}
-{{--                                    <label for="file" class="required">Select File</label>--}}
-
-{{--                                    <label id="projectinput7" class="file center-block ml-2">--}}
-{{--                                        <input type="file" id="file" name="image_url" required>--}}
-{{--                                    </label><br>--}}
-{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
-{{--                                    @if ($errors->has('image_url'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
-
-{{--                                <div class="controls">--}}
-{{--                                    <input type="file" name="file" class="form-control" required="" aria-invalid="false">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                </div>--}}
 
                                 <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Quick Launch Icon</label>

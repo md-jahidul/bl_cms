@@ -39,12 +39,12 @@
         <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Quick launch Management</span></a>
             <ul class="menu-content">
-                <li class="{{ is_active_url('/quick-launch') }} nav-item"><a href="{{ url('quick-launch/panel') }}"><i
+                <li class="{{ is_active_url('quick-launch/panel') }} nav-item"><a href="{{ url('quick-launch/panel') }}"><i
                             class="la la-automobile"></i>
                         <span class="menu-title" data-i18n="nav.templates.main">Quick launch Panel</span></a>
                 </li>
 
-                <li class="{{ is_active_url('/quick-launch-button') }} nav-item"><a href="{{ url('quick-launch/button') }}"><i
+                <li class="{{ is_active_url('quick-launch/button') }} nav-item"><a href="{{ url('quick-launch/button') }}"><i
                             class="la la-automobile"></i>
                         <span class="menu-title" data-i18n="nav.templates.main">Quick launch Button</span></a>
                 </li>
