@@ -87,7 +87,7 @@ class SliderImageController extends Controller
      * @return Response
      */
     public function edit($parentId, $type, $id)
-    {   
+    {
         $sliderImage = AlSliderImage::find($id);
         $other_attributes = $sliderImage->other_attributes;
         return view('admin.slider-image.edit', compact('sliderImage', 'type', 'other_attributes'));
