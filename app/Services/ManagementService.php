@@ -48,7 +48,6 @@ class ManagementService
         if (request()->hasFile('image_url')) {
             $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/about-us/');
         }
-        $data['display_order'] = ++$count;
         $this->save($data);
         return new Response('ManagementInfo added successfully');
     }
