@@ -213,4 +213,22 @@ Route::middleware('authorize', 'auth')->group(function () {
     // Product core ============================================
     Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
     Route::get('product-core/{id}/edit/', 'AssetLite\ProductCoreController@edit')->name('product.core.edit');
+
+    // eCarrer ============================================
+    Route::get('life-at-banglalink/general', 'AssetLite\EcarrerController@generalIndex')->name('life.at.banglalink.general');
+    Route::get('life-at-banglalink/general/create', 'AssetLite\EcarrerController@generalCreate')->name('life.at.banglalink.general.create');
+    Route::post('life-at-banglalink/general/store', 'AssetLite\EcarrerController@generalStore')->name('life.at.banglalink.general.store');
+    Route::get('life-at-banglalink/general/{id}/edit', 'AssetLite\EcarrerController@generalEdit')->name('life.at.banglalink.general.edit');
+    Route::post('life-at-banglalink/general/{id}/update', 'AssetLite\EcarrerController@generalUpdate')->name('life.at.banglalink.general.update');
+    Route::get('life-at-banglalink/general/destroy/{id}', 'AssetLite\EcarrerController@generalDestroy')->name('life.at.banglalink.general.destroy');
+
+
+    // eCarrer Items ============================================
+    Route::get('ecarrer-items/{parent_id}/list', 'AssetLite\EcarrerItemController@index')->name('ecarrer.items.list');
+    Route::get('ecarrer-items/{parent_id}/create', 'AssetLite\EcarrerItemController@create')->name('ecarrer.items.create');
+    Route::post('ecarrer-items/{parent_id}/store', 'AssetLite\EcarrerItemController@store')->name('ecarrer.items.store');
+    Route::get('ecarrer-items/{parent_id}/{id}/edit', 'AssetLite\EcarrerItemController@edit')->name('ecarrer.items.edit');
+
+    Route::post('ecarrer-items/{parent_id}/{id}/update', 'AssetLite\EcarrerItemController@update')->name('ecarrer.items.update');
+    Route::get('ecarrer-items/{parent_id}/destroy/{id}', 'AssetLite\EcarrerItemController@destroy')->name('ecarrer.items.destroy');
 });
