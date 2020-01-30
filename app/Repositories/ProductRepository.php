@@ -45,7 +45,11 @@ class ProductRepository extends BaseRepository
      */
     public function relatedProducts($type, $id)
     {
-        return $this->model::category($type)->where('id', '!=', $id)->get();
+        return $this->model::category($type)
+            ->where('id', '!=', $id)
+            ->productCore()
+            ->select('id', 'product_code', 'name_en', 'name_bn', 'special_product', 'purchase_option')
+            ->get();
     }
 
     public function findByCode($type, $id)
@@ -58,8 +62,8 @@ class ProductRepository extends BaseRepository
 
     public function countBondhoSimOffer()
     {
-       return $this->model->where('offer_info->other_offer_type_id', OfferType::BONDHO_SIM_OFFER)
-           ->get();
+        return $this->model->where('offer_info->other_offer_type_id', OfferType::BONDHO_SIM_OFFER)
+            ->get();
     }
 
 }

@@ -37,7 +37,8 @@ class Product extends Model
             'is_social_pack',
             'is_auto_renewable',
             'rate_cutter_offer',
-            'rate_cutter_unit'
+            'rate_cutter_unit',
+            'special_product'
         ];
 
     protected $casts = [
@@ -47,6 +48,29 @@ class Product extends Model
     public function product_core()
     {
         return $this->belongsTo(ProductCore::class, 'product_code', 'product_code');
+    }
+
+    public function scopeProductCore($query)
+    {
+        return $query->with(['product_core' => function ($q) {
+            $q->select(
+                'product_code',
+                'activation_ussd as ussd_en',
+                'balance_check_ussd',
+                'price',
+                'vat',
+                'mrp_price as price_tk',
+                'validity as validity_days',
+                'validity_unit',
+                'internet_volume_mb',
+                'sms_volume',
+                'minute_volume',
+                'call_rate as callrate_offer',
+                'sms_rate as sms_rate_offer',
+                'renew_product_code',
+                'recharge_product_code'
+            );
+        }]);
     }
 
     public function sim_category()

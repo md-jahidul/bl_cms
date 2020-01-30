@@ -8,6 +8,16 @@
         }
         return false;
     }
+
+    function specialProductMatch($id,$relatedProducts){
+        foreach ($relatedProducts as $relatedProduct)
+        {
+            if ((int)$relatedProduct == $id) {
+                return true;
+            }
+        }
+        return false;
+    }
 @endphp
 
 @extends('layouts.admin')
@@ -46,12 +56,27 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    <label for="ussd">USSD Code English</label>
-                                    <input type="text" class="form-control" placeholder="Enter offer ussd english" maxlength="25" readonly
-                                           value="{{ $productDetail->product_core['activation_ussd'] }}">
-                                </div>
-
+                                @if($productDetail->offer_category_id == \App\Enums\OfferType::PACKAGES && $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OfferType::START_UP_OFFERS)
+                                    <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                        <label for="design_structure" class="required">Design Structure</label>
+                                        <select id="design_structure" class="form-control" name="other_attributes[design_structure]"
+                                                required data-validation-required-message="Please select design structure">
+                                            <option>---Please Select Structure---</option>
+                                            <option data-alias="structure_1" value="structure_1" {{ $productDetail->product_details->other_attributes['design_structure'] == 'structure_1' ? "selected" : "" }}>Structure 1</option>
+                                            <option data-alias="structure_2" value="structure_2" {{ $productDetail->product_details->other_attributes['design_structure'] == 'structure_2' ? "selected" : "" }}>Structure 2</option>
+                                        </select>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('design_structure'))
+                                            <div class="help-block">{{ $errors->first('design_structure') }}</div>
+                                        @endif
+                                    </div>
+                                @else
+                                    <div class="form-group col-md-6">
+                                        <label for="ussd">USSD Code English</label>
+                                        <input type="text" class="form-control" placeholder="Enter offer ussd english" maxlength="25" readonly
+                                               value="{{ $productDetail->product_core['activation_ussd'] }}">
+                                    </div>
+                                @endif
 
                                 @if($productDetail->offer_category_id == \App\Enums\OfferType::INTERNET)
                                     @include('layouts.partials.product-details.voice')
@@ -67,7 +92,8 @@
 
                                 @elseif( $productDetail->offer_category_id == \App\Enums\OfferType::PACKAGES &&
                                          $productDetail->offer_info['package_offer_type_id'] == \App\Enums\OfferType::START_UP_OFFERS)
-                                    @include('layouts.partials.product-details.packages.start_up_offer_structure_2')
+
+                                    @include('layouts.partials.product-details.packages.startup_offer_details')
 
                                 @elseif($productDetail->offer_category_id == \App\Enums\OfferType::POSTPAID_PLANS)
                                     <div class="col-md-12 text-center">
@@ -98,7 +124,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 mt-1 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                     <span>Upload banner image</span>
                                     <div class="custom-file">
                                         <input type="file" name="banner_image_url" class="custom-file-input" id="image">
@@ -151,6 +177,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 @endpush
 @push('page-js')
+    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
@@ -184,6 +211,23 @@
                 ],
                 height:200
             })
+
+            // $('#design_structure').change(function () {
+            //     if($(this).val() === 'structure_1') {
+            //         // alert($(this).val());
+            //         $('#structure_1').show();
+            //         $('#structure_2').hide();
+            //     }else if ($(this).val() === 'structure_2'){
+            //         $('#structure_2').show();
+            //         $('#structure_1').hide();
+            //     }
+            // })
+            //
+            // $('#save').click(function () {
+            //
+            //     $(this).submit();
+            // })
+
         })
     </script>
 @endpush

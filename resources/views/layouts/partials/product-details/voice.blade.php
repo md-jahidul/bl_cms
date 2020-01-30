@@ -7,7 +7,7 @@
     <div class="role-select">
         <select class="select2 form-control" multiple="multiple" name="related_product_id[]">
             @foreach($products as $product)
-                <option value="{{ $product->id }}" {{ match($product->id,$productDetail->related_product) ? 'selected' : '' }}>{{$product->name_en}} </option>
+                <option value="{{ $product->id }}" {{ match($product->id,$productDetail->related_product) ? 'selected' : '' }}>{{$product->name_en . '/' . $product->product_code}}</option>
             @endforeach
         </select>
     </div>
