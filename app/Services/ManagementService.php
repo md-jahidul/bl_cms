@@ -46,7 +46,7 @@ class ManagementService
     {
         $count = count($this->managementRepository->findAll());
         if (request()->hasFile('image_url')) {
-            $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/quick-launch-items/');
+            $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/about-us/');
         }
         $data['display_order'] = ++$count;
         $this->save($data);
@@ -63,7 +63,7 @@ class ManagementService
     {
         $quickLaunch = $this->findOne($id);
         if (request()->hasFile('image_url')) {
-            $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/quick-launch-items/');
+            $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/about-us/');
             $this->deleteFile($quickLaunch->image_url);
         }
         $quickLaunch->update($data);

@@ -13,9 +13,10 @@ class CreateAboutUsManangementTable extends Migration
      */
     public function up()
     {
-        Schema::create('about_us_manangement', function (Blueprint $table) {
+        Schema::create('about_us_manangements', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('name_bn')->nullable();
             $table->string('designation');
             $table->string('designation_bn')->nullable();
             $table->string('profile_image')->nullable();

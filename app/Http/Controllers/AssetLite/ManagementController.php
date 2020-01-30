@@ -25,7 +25,7 @@ class ManagementController extends Controller
     public function __construct(ManagementService $managementService)
     {
         $this->managementService = $managementService;
-        $this->middleware('auth');
+       // $this->middleware('auth');
     }
 
 
@@ -54,11 +54,11 @@ class ManagementController extends Controller
      * @param StoreQuickLaunch $request
      * @return RedirectResponse|Redirector
      */
-    public function store(StoreQuickLaunch $request)
+    public function store(Request $request)
     {
-        $response = $this->managementService->storeQuickLaunchItem($request->all());
+        $response = $this->managementService->storeManagementInfo($request->all());
         Session::flash('message', $response->getContent());
-        return redirect('quick-launch');
+        return redirect('management');
     }
 
 

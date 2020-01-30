@@ -13,7 +13,7 @@ class CreateAboutUsBanglalinkTable extends Migration
      */
     public function up()
     {
-        Schema::create('about_us_banglalink', function (Blueprint $table) {
+        Schema::create('about_us_banglalinks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('banglalink_info');
             $table->text('banglalink_info_bn')->nullable();
