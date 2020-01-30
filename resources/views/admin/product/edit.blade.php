@@ -207,24 +207,19 @@
 
                                 <div class="col-md-6">
                                     <label></label>
+                                    <div class="form-group">
+                                        <label for="is_amar_offer" class="mr-1">Is Amar Offer:</label>
+                                        <input type="checkbox" name="is_amar_offer" value="1" id="is_amar_offer" {{ ($product->is_amar_offer == 1) ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label></label>
                                     <div class="form-group" id="show_in_home">
                                         <label for="special_product" class="mr-1">Is Special Product:</label>
                                         <input type="checkbox" name="special_product" value="1" id="special_product" {{ ($product->special_product == 1) ? 'checked' : '' }}>
                                     </div>
                                 </div>
-
-{{--                                TODO: Savely Delete Recharge --}}
-{{--                                <div class="col-md-6">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label for="title" class="mr-1">Recharge</label>--}}
-{{--                                        <input type="radio" name="is_recharge" value="1" id="yes" {{ ($product->status == 1) ? 'checked' : '' }}>--}}
-{{--                                        <label for="yes" class="mr-1">Yes</label>--}}
-{{--                                        <input type="radio" name="is_recharge" value="0" id="no" {{ ($product->is_recharge == 0) ? 'checked' : '' }}>--}}
-{{--                                        <label for="no">No</label>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-
 
                                 <div class="col-md-6">
                                     <div class="form-group">
