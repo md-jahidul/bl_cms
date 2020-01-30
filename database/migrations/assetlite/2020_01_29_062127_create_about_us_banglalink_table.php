@@ -16,8 +16,9 @@ class CreateAboutUsBanglalinkTable extends Migration
         Schema::create('about_us_banglalink', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('banglalink_info');
-            $table->text('banner_image');
-            $table->text('content_image');
+            $table->text('banglalink_info_bn')->nullable();
+            $table->text('banner_image')->nullable();
+            $table->text('content_image')->nullable();
             $table->timestamps();
         });
     }

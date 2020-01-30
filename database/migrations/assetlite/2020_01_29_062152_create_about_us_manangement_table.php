@@ -17,9 +17,11 @@ class CreateAboutUsManangementTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('designation');
-            $table->string('profile_image');
-            $table->string('banner_image');
-            $table->text('personal_details');
+            $table->string('designation_bn')->nullable();
+            $table->string('profile_image')->nullable();
+            $table->string('banner_image')->nullable();
+            $table->text('personal_details')->nullable();
+            $table->text('personal_details_bn')->nullable();
             $table->string('twitter_link')->nullable();
             $table->string('linkedin_link')->nullable();
             $table->string('facebook_link')->nullable();
