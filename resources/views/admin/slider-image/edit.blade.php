@@ -46,11 +46,10 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
-                                    <label for="start_date" class="required">Start Date</label>
+                                    <label for="start_date">Start Date</label>
                                     <div class='input-group'>
                                         <input type='text' class="form-control" name="start_date" id="start_date"
                                                value="{{ $sliderImage->start_date }}"
-                                               required data-validation-required-message="Please select start date"
                                                placeholder="Please select start date" />
                                     </div>
                                     <div class="help-block"></div>
