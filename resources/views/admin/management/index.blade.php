@@ -20,10 +20,10 @@
                            id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width='5%'>Serial</th>
+                            <th width='5%'>ID</th>
                             <th width='10%'>Name</th>
                             <th width='10%'>Designation</th>
-                            <th width='10%'>Personal Details</th>
+                            <th width='30%'>Personal Details</th>
                             <th width='20%'>Action</th>
                         </tr>
                         </thead>
