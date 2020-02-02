@@ -11,35 +11,48 @@
 @section('content')
     <section>
         <div class="card">
+            <div class="card-header">
+
+            </div>
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
+                           id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                            <th width="3%" class="text-center">Image</th>
-                            <th>Title</th>
-                            <th>Link</th>
-                            <th class="text-right">Action</th>
+                            <th width='5%'>Serial</th>
+                            <th width='10%'>Platform</th>
+                            <th width='10%'>Version</th>
+                            <th width='10%'>Force Update</th>
+                            <th width='30%'>Message</th>
+                            <th width='20%'>Action</th>
                         </tr>
                         </thead>
-                        <tbody id="sortable">
-                        @foreach ($quickLaunchItems as $key=>$quickLaunchItem)
-                            <tr data-index="{{ $quickLaunchItem->id }}" data-position="{{ $quickLaunchItem->display_order }}">
-                                <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <td width="6%" class="text-center"><img src="{{ config('filesystems.file_base_url') . $quickLaunchItem->image_url }}" alt="image" height="30" width="30"></td>
-                                <td width="20%">{{$quickLaunchItem->title_en}} {!! $quickLaunchItem->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
-                                <td>{{$quickLaunchItem->link}}</td>
-                                <td class="action" width="8%">
-                                    <a href="{{ url("about-us/$quickLaunchItem->id/edit") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("about-us/destroy/$quickLaunchItem->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $quickLaunchItem->id }}" title="Delete the user">
-                                        <i class="la la-trash"></i>
-                                    </a>
+                        <tbody>
+                            <tr>
+                                <td width='5%'>{{$index}}</td>
+                                <td width='10%'>{{$version->platform}}</td>
+                                <td width='10%'>{{$version->current_version}}</td>
+                                <td width='10%'>{{$force_update}}</td>
+                                <td width='30%'>{{$version->message}}</td>
+                                <td width='20%'>
+                                    <div class="row justify-content-md-center no-gutters">
+                                        <div class="col-md-3">
+                                            <a role="button" href="{{route('about-us.edit',$version->id)}}" class="btn btn-outline-success">
+                                                <i class="la la-pencil"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button data-id="{{$version->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
+
                         @endforeach
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>

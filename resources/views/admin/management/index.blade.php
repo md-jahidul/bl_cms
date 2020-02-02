@@ -5,47 +5,62 @@
 @endsection
 @section('action')
     <a href="{{ url('management/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Add Quick Launch
+        Add Management
     </a>
 @endsection
 @section('content')
     <section>
         <div class="card">
+            <div class="card-header">
+
+            </div>
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
+                           id="Example1" role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                            <th width="3%" class="text-center">Image</th>
-                            <th>Title</th>
-                            <th>Link</th>
-                            <th class="text-right">Action</th>
+                            <th width='5%'>Serial</th>
+                            <th width='10%'>Name</th>
+                            <th width='10%'>Designation</th>
+                            <th width='10%'>Personal Details</th>
+                            <th width='20%'>Action</th>
                         </tr>
                         </thead>
-                        <tbody id="sortable">
-                        @foreach ($management as $key=>$manage)
-                            <tr data-index="{{ $manage->id }}" data-position="{{ $manage->display_order }}">
-                                <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <td width="6%" class="text-center"><img src="{{ config('filesystems.file_base_url') . $manage->image_url }}" alt="image" height="30" width="30"></td>
-                                <td width="20%">{{$manage->title_en}} {!! $manage->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
-                                <td>{{$manage->link}}</td>
-                                <td class="action" width="8%">
-                                    <a href="{{ url("management/$manage->id/edit") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("management/destroy/$manage->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $manage->id }}" title="Delete the user">
-                                        <i class="la la-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                        <tbody>
+
+                        @php $index = 0; @endphp
+                        @foreach ($management as $manage)
+                            @php $index++; @endphp
+
+                        <tr>
+                            <td width='5%'>{{$index}}</td>
+                            <td width='10%'>{{$manage->name}}</td>
+                            <td width='10%'>{{$manage->designation}}</td>
+                            <td width='30%'>{{$manage->personal_details}}</td>
+                            <td width='20%'>
+                                <div class="row justify-content-md-center no-gutters">
+                                    <div class="col-md-3">
+                                        <a role="button" href="{{route('management.edit',$manage->id)}}" class="btn btn-outline-success">
+                                            <i class="la la-pencil"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button data-id="{{$manage->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
                         @endforeach
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
 
     </section>
-
 @stop
 
 @push('page-css')
@@ -58,50 +73,77 @@
     </style>
 @endpush
 
+@section('content_right_side_bar')
+    <h1>
+        List
+    </h1>
+@endsection
+
+
+@push('style')
+    <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
+    <style></style>
+@endpush
+
+
 @push('page-js')
+    <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
+    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
+    <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
+
+
+
+        $(function () {
+            $('.delete').click(function () {
+                var id = $(this).attr('data-id');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    html: jQuery('.delete_btn').html(),
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: "{{ url('management/destroy') }}/"+id,
+                            methods: "get",
+                            success: function (res) {
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success',
+                                );
+                                setTimeout(redirect, 2000)
+                                function redirect() {
+                                    window.location.href = "{{ url('management/') }}"
+                                }
+                            }
+                        })
+                    }
+                })
+            })
+        })
+
         $(document).ready(function () {
             $('#Example1').DataTable({
                 dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy', className: 'copyButton',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'excel', className: 'excel',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'pdf', className: 'pdf', "charset": "utf-8",
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'print', className: 'print',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                ],
+                buttons: [],
                 paging: true,
                 searching: true,
+                "pageLength": 10,
                 "bDestroy": true,
             });
         });
 
     </script>
-
-    <script>
-        var auto_save_url = "{{ url('management-sortable') }}";
-    </script>
 @endpush
-
 
 
 

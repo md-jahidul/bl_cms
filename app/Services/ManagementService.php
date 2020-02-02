@@ -45,8 +45,12 @@ class ManagementService
     public function storeManagementInfo($data)
     {
         $count = count($this->managementRepository->findAll());
-        if (request()->hasFile('image_url')) {
-            $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/about-us/');
+        if (request()->hasFile('profile_image')) {
+            $data['profile_image'] = $this->upload($data['profile_image'], 'assetlite/images/about-us/');
+        }
+
+        if (request()->hasFile('banner_image')) {
+            $data['banner_image'] = $this->upload($data['banner_image'], 'assetlite/images/about-us/');
         }
         $this->save($data);
         return new Response('ManagementInfo added successfully');
@@ -54,19 +58,30 @@ class ManagementService
 
 
     /**
-     * @param $data
-     * @param $id
-     * @return ResponseFactory|Response
+     * @param $request
+     * @param $management
+     * @return bool
      */
-    public function updateManagementInfo($data, $id)
+    public function updateManagementInfo($request, $management)
     {
-        $quickLaunch = $this->findOne($id);
+        $data = $request->all();
+
         if (request()->hasFile('image_url')) {
             $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/about-us/');
-            $this->deleteFile($quickLaunch->image_url);
+            $this->deleteFile($management->image_url);
         }
-        $quickLaunch->update($data);
-        return Response('ManagementInfo updated successfully');
+
+        if (request()->hasFile('profile_image')) {
+            $data['profile_image'] = $this->upload($data['profile_image'], 'assetlite/images/about-us/');
+            $this->deleteFile($management->profile_image);
+        }
+
+        if (request()->hasFile('banner_image')) {
+            $data['banner_image'] = $this->upload($data['banner_image'], 'assetlite/images/about-us/');
+            $this->deleteFile($management->banner_image);
+        }
+
+        return $management->update($data);
     }
 
     /**
@@ -76,9 +91,10 @@ class ManagementService
      */
     public function deleteManagementInfo($id)
     {
-        $quickLaunch = $this->findOne($id);
-        $this->deleteFile($quickLaunch->image_url);
-        $quickLaunch->delete();
-        return Response('ManagementInfo deleted successfully !');
+        $management = $this->findOne($id);
+        $this->deleteFile($management->image_url);
+
+        return $management->delete();
+      //  return Response('ManagementInfo deleted successfully !');
     }
 }
