@@ -86,15 +86,15 @@ class ManagementService
 
     /**
      * @param $id
-     * @return ResponseFactory|Response
+     * @return bool|null
      * @throws Exception
      */
     public function deleteManagementInfo($id)
     {
         $management = $this->findOne($id);
-        $this->deleteFile($management->image_url);
+        $this->deleteFile($management->profile_image);
+        $this->deleteFile($management->banner_image);
 
         return $management->delete();
-      //  return Response('ManagementInfo deleted successfully !');
     }
 }
