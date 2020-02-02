@@ -46,7 +46,9 @@ class EcarrerItemController extends Controller
 	 */
 	public function create($parent_id){
 
-		return view('admin.ecarrer-items.create', compact('parent_id'));
+		$ecarrer_section_slug = $this->ecarrerItemService->getEcarrerSectionSlugByID($parent_id);
+
+		return view('admin.ecarrer-items.create', compact('parent_id', 'ecarrer_section_slug'));
 	}
 
 	/**
@@ -67,6 +69,7 @@ class EcarrerItemController extends Controller
 		    Session::flash('error', $validator->messages()->first());
 		    return redirect("ecarrer-items/$parent_id/list");
 		}
+		
 
 		$this->ecarrerItemService->storeEcarrerItem($request->all(), $parent_id);
 
@@ -85,7 +88,9 @@ class EcarrerItemController extends Controller
 		# TODO: Validation check
 		$ecarrer_item = $this->ecarrerItemService->getSingleItemByIds($parent_id, $id);
 
-		return view('admin.ecarrer-items.edit', compact('ecarrer_item', 'parent_id'));
+		$ecarrer_section_slug = $this->ecarrerItemService->getEcarrerSectionSlugByID($parent_id);
+
+		return view('admin.ecarrer-items.edit', compact('ecarrer_item', 'parent_id', 'ecarrer_section_slug'));
 
 	}
 

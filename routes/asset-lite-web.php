@@ -231,4 +231,16 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::post('ecarrer-items/{parent_id}/{id}/update', 'AssetLite\EcarrerItemController@update')->name('ecarrer.items.update');
     Route::get('ecarrer-items/{parent_id}/destroy/{id}', 'AssetLite\EcarrerItemController@destroy')->name('ecarrer.items.destroy');
+
+    // eCarrer Life at banglalink teams =========================================================
+    Route::get('life-at-banglalink/teams', 'AssetLite\EcarrerController@teamsIndex')->name('life.at.banglalink.teams');
+    Route::get('life-at-banglalink/teams/create', 'AssetLite\EcarrerController@teamsCreate')->name('life.at.banglalink.teams.create');
+    Route::post('life-at-banglalink/teams/store', 'AssetLite\EcarrerController@teamsStore')->name('life.at.banglalink.teams.store');
+
+    Route::get('life-at-banglalink/teams/{id}/edit', 'AssetLite\EcarrerController@teamsEdit')->name('life.at.banglalink.teams.edit');
+    
+    Route::post('life-at-banglalink/teams/{id}/update', 'AssetLite\EcarrerController@teamsUpdate')->name('life.at.banglalink.teams.update');
+    Route::get('life-at-banglalink/teams/destroy/{id}', 'AssetLite\EcarrerController@teamsDestroy')->name('life.at.banglalink.teams.destroy');
+
+
 });

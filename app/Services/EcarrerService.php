@@ -46,12 +46,12 @@ class EcarrerService
 
         # Life at Banglalink General section
         $data['category'] = 'life_at_bl_general';
+        # This section has child item available
+        $data['has_items'] = 1;
 
         $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
 
         if (!empty($data['image_url'])) {
-            // $imageUrl = $this->imageUpload($data, "banner_image_url", $data['name_en'], '/uploads/assetlite/images/banner/offer_image');
-            // $data['banner_image_url'] = '/assetlite/images/banner/offer_image/' . $imageUrl;
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
         }
 
@@ -120,5 +120,63 @@ class EcarrerService
         return Response('Section deleted successfully !');
     }
 
+
+    /**
+     * Life at bl teams sections
+     * @return [type] [description]
+     */
+    public function ecarrerSectionsList($categoryTypes){
+
+        return $this->ecarrerPortalRepository->getSectionsByCategory($categoryTypes);
+
+    }
+
+
+    /**
+     * store teams section on create
+     * @param  [type] $request [description]
+     * @return [type]          [description]
+     */
+    public function storeEcarrerSection($data, $data_types = null){
+
+        # Life at Banglalink General section
+        $data['category'] = !empty($data_types['category']) ? $data_types['category'] : null;
+        # This section has child item available
+        $data['has_items'] = !empty($data_types['has_items']) ? $data_types['has_items'] : 0;
+
+        $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
+
+        if (!empty($data['image_url'])) {
+            $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
+        }
+
+        $this->save($data);
+        return new Response('Section created successfully');
+
+    }
+
+
+
+    /**
+     * [updateEcarrerGeneralSection description]
+     * @param  [type] $data [description]
+     * @param  [type] $id   [description]
+     * @return [type]       [description]
+     */
+    public function updateEcarrerSection($data, $id)
+    {
+        $general_section = $this->findOne($id);
+
+        $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
+
+        if (!empty($data['image_url'])) {
+           
+            $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
+        }
+
+        $general_section->update($data);
+
+        return Response('Section updated successfully');
+    }
 
 }

@@ -67,8 +67,14 @@
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="carrer_parent_item" value="{{$parent_id}}">
+                                <!-- Include additional field layout for individual section requirement -->
+                                @if( $ecarrer_section_slug == 'life_at_bl_teams' )
+                                    @include('admin.ecarrer-items.additional.call_to_actions')
+                                @endif
 
+
+
+                                <input type="hidden" name="carrer_parent_item" value="{{$parent_id}}">
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i

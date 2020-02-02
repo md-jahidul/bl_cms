@@ -213,8 +213,8 @@
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> General</a>
                                 </li>
-                                <li class="{{ is_active_url('product-core') . is_active_url('product-core') }}">
-                                    <a class="menu-item" href="{{ route('product.core.list') }}"
+                                <li class="{{ is_active_url('life-at-banglalink/teams') . is_active_url('life-at-banglalink/teams') }}">
+                                    <a class="menu-item" href="{{ route('life.at.banglalink.teams') }}"
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> Teams</a>
                                 </li>

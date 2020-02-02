@@ -24,6 +24,7 @@ class CreateEcarrerPortalsTable extends Migration
             $table->string('category', 50);
             $table->longText('additional_info')->nullable();
             $table->tinyInteger('is_active')->default(1)->comment('active = 1, inactive = 0');
+            $table->tinyInteger('has_items')->default(0)->comment('Has child items = 1, No child items = 0');
             $table->timestamps();
             $table->softDeletes();
         });

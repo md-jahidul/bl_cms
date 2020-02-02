@@ -21,12 +21,20 @@ class EcarrerItemService
     protected $ecarrerPortalItemRepository;
 
     /**
+     * [$ecarrerPortalRepository description]
+     * @var [type]
+     */
+    protected $ecarrerPortalRepository;
+
+
+    /**
      * PrizeService constructor.
      * @param PrizeRepository $prizeRepository
      */
-    public function __construct(EcarrerPortalItemRepository $ecarrerPortalItemRepository)
+    public function __construct(EcarrerPortalItemRepository $ecarrerPortalItemRepository, EcarrerPortalRepository $ecarrerPortalRepository)
     {
         $this->ecarrerPortalItemRepository = $ecarrerPortalItemRepository;
+        $this->ecarrerPortalRepository = $ecarrerPortalRepository;
         $this->setActionRepository($ecarrerPortalItemRepository);
     }
 
@@ -43,6 +51,38 @@ class EcarrerItemService
 
         if (!empty($data['image_url'])) {
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
+        }
+
+        $call_to_action_buttons = [];
+        if ( isset($data['call_to_action_label_1']) && !empty($data['call_to_action_label_1']) ) {
+            
+            if( !empty($data['call_to_action_count'])){
+
+                for ($i=1; $i <= $data['call_to_action_count']; $i++) { 
+
+                    $buttons = [];
+                    
+                    if( isset($data['call_to_action_label_'.$i]) ){
+                        $buttons['label'] = $data['call_to_action_label_'.$i];
+                    }
+
+                    if( isset($data['call_to_action_url_'.$i]) ){
+                        $buttons['link'] = $data['call_to_action_url_'.$i];
+                    }
+
+                    if( !empty($buttons) ){
+                        $call_to_action_buttons['button_'.$i] = $buttons;
+                    }
+
+                }
+            }
+        }
+
+        if( !empty($call_to_action_buttons) ){
+            $data['call_to_action'] = serialize($call_to_action_buttons);
+        }
+        else{
+            $data['call_to_action'] = null;
         }
 
         $this->save($data);
@@ -72,6 +112,15 @@ class EcarrerItemService
 
     }
 
+    /**
+     * Get Ecarrer section slug by sectionid
+     * @return [type] [description]
+     */
+    public function getEcarrerSectionSlugByID($section_id){
+
+        return $this->ecarrerPortalRepository->getSectionSlugByID($section_id);
+
+    }
 
 
     /**
@@ -87,6 +136,38 @@ class EcarrerItemService
         if (!empty($data['image_url'])) {
            
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
+        }
+
+        $call_to_action_buttons = [];
+        if ( isset($data['call_to_action_label_1']) && !empty($data['call_to_action_label_1']) ) {
+            
+            if( !empty($data['call_to_action_count'])){
+
+                for ($i=1; $i <= $data['call_to_action_count']; $i++) { 
+
+                    $buttons = [];
+                    
+                    if( isset($data['call_to_action_label_'.$i]) ){
+                        $buttons['label'] = $data['call_to_action_label_'.$i];
+                    }
+
+                    if( isset($data['call_to_action_url_'.$i]) ){
+                        $buttons['link'] = $data['call_to_action_url_'.$i];
+                    }
+
+                    if( !empty($buttons) ){
+                        $call_to_action_buttons['button_'.$i] = $buttons;
+                    }
+
+                }
+            }
+        }
+
+        if( !empty($call_to_action_buttons) ){
+            $data['call_to_action'] = serialize($call_to_action_buttons);
+        }
+        else{
+            $data['call_to_action'] = null;
         }
 
         $ecarrer_item->update($data);

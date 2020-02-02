@@ -19,10 +19,10 @@ class CreateEcarrerPortalItemsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('ecarrer_portals_id')->comment('ecarrer_portals table foreign key');
             $table->string('title')->nullable();
-            $table->string('description')->nullable();
-            $table->string('image')->nullable();
-            $table->string('video')->nullable();
-            $table->string('call_to_action')->nullable();
+            $table->string('description', 2000)->nullable();
+            $table->string('image', 2000)->nullable();
+            $table->string('video', 2000)->nullable();
+            $table->string('call_to_action', 2000)->nullable();
             $table->longText('additional_info')->nullable();
             $table->tinyInteger('is_active')->default(1)->comment('active = 1, inactive = 0');
 

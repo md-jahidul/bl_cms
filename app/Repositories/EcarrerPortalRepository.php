@@ -22,6 +22,15 @@ class EcarrerPortalRepository extends BaseRepository
      * @return [type]           [description]
      */
     public function getSectionsByCategory($category){
-    		return $this->model::with('portalItems')->where('category', '=', $category)->get();
+    		return $this->model::with('portalItems')->where('category', '=', $category)->whereNull('deleted_at')->get();
+    }
+
+    /**
+     * [getSectionSlugByID description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function getSectionSlugByID($id){
+        return $this->model::where('id', $id)->whereNull('deleted_at')->first()->category;
     }
 }

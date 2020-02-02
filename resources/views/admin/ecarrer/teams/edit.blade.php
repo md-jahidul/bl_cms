@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Item Edit')
-@section('card_name', 'Item Edit')
+@section('title', 'Section Edit')
+@section('card_name', 'Section Edit')
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url("ecarrer-items/$parent_id/list") }}">Item List</a></li>
-    <li class="breadcrumb-item active"> {{$ecarrer_item->title}}</li>
+    <li class="breadcrumb-item"><a href="{{ url('life-at-banglalink/teams') }}">Section List</a></li>
+    <li class="breadcrumb-item active"> {{$sections->title}}</li>
 @endsection
 @section('action')
-    <a href="{{ url("ecarrer-items/$parent_id/list") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
+    <a href="{{ url("life-at-banglalink/teams") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
 @endsection
 @section('content')
     <section>
@@ -16,30 +16,32 @@
 
 
                     <div class="card-body card-dashboard">
-                        <form id="general_section" role="form" action="{{ url("ecarrer-items/$parent_id/$ecarrer_item->id/update") }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form id="general_section" role="form" action="{{ url("life-at-banglalink/teams/$sections->id/update") }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             {{method_field('POST')}}
                             <div class="row">
-                                <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+                                <input type="hidden" name="section_category" value="{{ $sections->category }}">
                                 <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
                                     <label for="title" class="required">Title (English)</label>
                                     <input type="text" name="title"  class="form-control section_name" placeholder="Enter title (english)"
-                                           value="{{ $ecarrer_item->title }}" required data-validation-required-message="Enter slider title (english)">
+                                           value="{{ $sections->title }}" required data-validation-required-message="Enter slider title (english)">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title'))
                                         <div class="help-block">  {{ $errors->first('title') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Description</label>
-                                        <textarea name="description" class="form-control" rows="5"
-                                                  placeholder="Enter description">{{ $ecarrer_item->description }}</textarea>
-                                    </div>
+                                <div class="form-group col-md-6 {{ $errors->has('slug') ? ' error' : '' }}">
+                                    <label for="slug" class="required">Slug</label>
+                                    <input type="text" name="slug"  class="form-control section_slug"
+                                           value="{{ $sections->slug }}" required readonly  data-validation-required-message="Slug name can not be emply">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('slug'))
+                                        <div class="help-block">  {{ $errors->first('slug') }}</div>
+                                    @endif
                                 </div>
 
-                                <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                {{-- <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="">Banner Image (optional)</label>
                                     <div class="custom-file">
                                         <input type="file" name="image_url" class="custom-file-input" id="image">
@@ -54,32 +56,38 @@
                                 </div>
 
                                 <div class="form-group col-md-1">
-                                    @if( !empty($ecarrer_item->image) )
-                                        <img style="height:70px;width:70px;display:block" src="{{ config('filesystems.file_base_url') . $ecarrer_item->image}}" id="imgDisplay">
+                                    @if( !empty($sections->image) )
+                                        <img style="height:70px;width:70px;display:block" src="{{ config('filesystems.file_base_url') . $sections->image}}" id="imgDisplay">
                                     @else
                                         <img style="height:70px;width:70px;display:none" id="imgDisplay">
                                     @endif
                                     
                                 </div>
 
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Description (Optional)</label>
+                                        <textarea name="description" class="form-control" rows="5"
+                                                  placeholder="Enter description">{{ $sections->description }}</textarea>
+                                    </div>
+                                </div> --}}
+
+
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
                                     <div class="form-group">
                                         <label for="title" class="required mr-1">Status:</label>
 
-                                        <input type="radio" name="is_active" value="1" id="input-radio-15" @if( $ecarrer_item->is_active == 1 ) checked @endif>
+                                        <input type="radio" name="is_active" value="1" id="input-radio-15" @if( $sections->is_active == 1 ) checked @endif>
                                         <label for="input-radio-15" class="mr-1">Active</label>
 
-                                        <input type="radio" name="is_active" value="0" id="input-radio-16" @if( $ecarrer_item->is_active == 0 ) checked @endif>
+                                        <input type="radio" name="is_active" value="0" id="input-radio-16" @if( $sections->is_active == 0 ) checked @endif>
                                         <label for="input-radio-16">Inactive</label>
                                     </div>
                                 </div>
 
 
-                                <!-- Include additional field layout for individual section requirement -->
-                                @if( $ecarrer_section_slug == 'life_at_bl_teams' )
-                                    @include('admin.ecarrer-items.additional.call_to_actions')
-                                @endif
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
@@ -90,7 +98,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="id" value="{{ $ecarrer_item->id }}"/>
+                            <input type="hidden" name="id" value="{{ $sections->id }}"/>
                         </form>
 
                     </div>
