@@ -34,7 +34,7 @@
                             @php $index++; @endphp
 
                         <tr>
-                            <td width='5%'>{{$index}}</td>
+                            <td width='5%'>{{$manage->id}}</td>
                             <td width='10%'>{{$manage->name}}</td>
                             <td width='10%'>{{$manage->designation}}</td>
                             <td width='30%'>{{$manage->personal_details}}</td>

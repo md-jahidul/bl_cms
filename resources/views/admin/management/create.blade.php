@@ -119,8 +119,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('twitter_link') ? ' error' : '' }}">
                                     <label for="twitter_link" >Twitter link</label>
                                     <input type="text" name="twitter_link"  class="form-control" placeholder="Enter link"
-                                           value="@if(isset($manage)){{$manage->twitter_link}} @elseif(old("twitter_link")) {{old("twitter_link")}} @endif"
-                                           required data-validation-required-message="Enter twitter_link">
+                                           value="@if(isset($manage)){{$manage->twitter_link}} @elseif(old("twitter_link")) {{old("twitter_link")}} @endif">
                                     <div class="help-block"></div>
                                     @if ($errors->has('twitter_link'))
                                         <div class="help-block">  {{ $errors->first('twitter_link') }}</div>
@@ -130,8 +129,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('linkedin_link') ? ' error' : '' }}">
                                     <label for="linkedin_link" >Linkedin link</label>
                                     <input type="text" name="linkedin_link"  class="form-control" placeholder="Enter link"
-                                           value="@if(isset($manage)){{$manage->linkedin_link}} @elseif(old("linkedin_link")) {{old("linkedin_link")}} @endif"
-                                           required data-validation-required-message="Enter linkedin_link">
+                                           value="@if(isset($manage)){{$manage->linkedin_link}} @elseif(old("linkedin_link")) {{old("linkedin_link")}} @endif">
                                     <div class="help-block"></div>
                                     @if ($errors->has('linkedin_link'))
                                         <div class="help-block">  {{ $errors->first('linkedin_link') }}</div>
@@ -141,8 +139,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('facebook_link') ? ' error' : '' }}">
                                     <label for="facebook_link" >Facebook link</label>
                                     <input type="text" name="facebook_link"  class="form-control" placeholder="Enter link"
-                                           value="@if(isset($manage)){{$manage->facebook_link}} @elseif(old("facebook_link")) {{old("facebook_link")}} @endif"
-                                           required data-validation-required-message="Enter facebook_link">
+                                           value="@if(isset($manage)){{$manage->facebook_link}} @elseif(old("facebook_link")) {{old("facebook_link")}} @endif">
                                     <div class="help-block"></div>
                                     @if ($errors->has('facebook_link'))
                                         <div class="help-block">  {{ $errors->first('facebook_link') }}</div>
@@ -153,8 +150,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('others_link') ? ' error' : '' }}">
                                     <label for="others_link" >Others link</label>
                                     <input type="text" name="others_link"  class="form-control" placeholder="Enter link"
-                                           value="@if(isset($manage)){{$manage->others_link}} @elseif(old("others_link")) {{old("others_link")}} @endif"
-                                           required data-validation-required-message="Enter others_link">
+                                           value="@if(isset($manage)){{$manage->others_link}} @elseif(old("others_link")) {{old("others_link")}} @endif">
                                     <div class="help-block"></div>
                                     @if ($errors->has('others_link'))
                                         <div class="help-block">  {{ $errors->first('others_link') }}</div>
@@ -164,39 +160,46 @@
                                 <div class="form-group col-md-6 {{ $errors->has('profile_image') ? ' error' : '' }}">
                                     <label for="alt_text" >Profile Image</label>
                                     <div class="custom-file">
-                                        <input type="file" name="profile_image" class="custom-file-input" id="profile_image"
-                                               value="@if(isset($manage)){{config('filesystems.file_base_url') . $manage->profile_image}} @elseif(old("profile_image")) {{old("profile_image")}} @endif"
-                                               required data-validation-required-message="Enter alt text">
+                                        <input type="file" name="profile_image" class="custom-file-input" id="profile_image">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
+                                    {{--@if ($errors->has('alt_text'))
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>
-                                    @endif
+                                    @endif--}}
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image') ? ' error' : '' }}">
                                     <label for="alt_text" >Banner Image</label>
                                     <div class="custom-file">
-                                        <input type="file" name="banner_image" class="custom-file-input" id="image"
-                                               value="@if(isset($manage)){{config('filesystems.file_base_url') . $manage->banner_image}} @elseif(old("banner_image")) {{old("banner_image")}} @endif"
-                                               required data-validation-required-message="Enter alt text">
+                                        <input type="file" name="banner_image" class="custom-file-input" id="image">
                                         <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
+                                    {{--@if ($errors->has('alt_text'))
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+                                    @endif--}}
+                                </div>
+
+                                <div class="form-group col-md-6">
+
+                                    @if(isset($manage))
+                                    <img style="height:80px;width:100px;display:none"
+                                         src="{{ config('filesystems.file_base_url') . $manage->profile_image }}" id="profile_image_Display">
+                                    @else
+                                    <img style="height:80px;width:100px;display:none" id="profile_image_Display">
                                     @endif
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <img style="height:70px;width:70px;display:none" id="profile_image_Display">
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <img style="height:70px;width:70px;display:none" id="imgDisplay">
+                                    @if(isset($manage))
+                                    <img style="height:80px;width:100px;display:none"
+                                         src="{{ config('filesystems.file_base_url') . $manage->banner_image }}" id="imgDisplay">
+                                    @else
+                                    <img style="height:80px;width:100px;display:none" id="imgDisplay">
+                                    @endif
                                 </div>
 
 
