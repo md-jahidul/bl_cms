@@ -23,7 +23,7 @@ class CreateEcarrerPortalItemsTable extends Migration
             $table->string('image', 2000)->nullable();
             $table->string('video', 2000)->nullable();
             $table->string('call_to_action', 2000)->nullable();
-            $table->longText('additional_info')->nullable();
+            $table->json('additional_info')->nullable();
             $table->tinyInteger('is_active')->default(1)->comment('active = 1, inactive = 0');
 
             $table->timestamps();

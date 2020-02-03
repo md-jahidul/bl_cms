@@ -31,13 +31,10 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Description</label>
-                                        <textarea name="description" class="form-control" rows="5"
-                                                  placeholder="Enter description">{{ $ecarrer_item->description }}</textarea>
-                                    </div>
-                                </div>
+                                <!-- Include additional field layout for individual section requirement -->
+                                @if( $ecarrer_section_slug != 'life_at_bl_events' )
+                                    @include('admin.ecarrer-items.additional.description')
+                                @endif
 
                                 <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="">Banner Image (optional)</label>

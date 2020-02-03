@@ -109,7 +109,7 @@ class EcarrerService
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      * @throws \Exception
      */
-    public function generalDelete($id)
+    public function sectionDelete($id)
     {
         $section = $this->findOne($id);
         $data['deleted_at'] = Carbon::now();
@@ -145,6 +145,7 @@ class EcarrerService
         $data['has_items'] = !empty($data_types['has_items']) ? $data_types['has_items'] : 0;
         $data['route_slug'] = !empty($data_types['route_slug']) ? $data_types['route_slug'] : null;
         $data['category_type'] = !empty($data_types['category_type']) ? $data_types['category_type'] : null;
+        $data['additional_info'] = !empty($data_types['additional_info']) ? $data_types['additional_info'] : null;
 
         $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
 
@@ -165,7 +166,7 @@ class EcarrerService
      * @param  [type] $id   [description]
      * @return [type]       [description]
      */
-    public function updateEcarrerSection($data, $id)
+    public function updateEcarrerSection($data, $id, $data_types = null)
     {
         $general_section = $this->findOne($id);
 
@@ -175,6 +176,8 @@ class EcarrerService
            
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
         }
+
+        $data['additional_info'] = !empty($data_types['additional_info']) ? $data_types['additional_info'] : null;        
 
         $general_section->update($data);
 
