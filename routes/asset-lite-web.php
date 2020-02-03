@@ -37,7 +37,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     // CONFIG  ====================================
     Route::get('config', 'AssetLite\ConfigController@index');
-    Route::put('config/update', 'AssetLite\ConfigController@update');
+    Route::post('config/update', 'AssetLite\ConfigController@update');
 
     // Priyojon Landing Page ====================================
     Route::get('priyojon/{id}/child-menu/create', 'AssetLite\PriyojonController@create');
@@ -93,7 +93,7 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('slider_image_store');
     Route::get('slider/{slider_id}/{type}/image/{id}', 'AssetLite\SliderImageController@edit')
         ->name('slider_image_edit');
-    Route::put('slider/{slider_id}/{type}/image/{id}/update', 'AssetLite\SliderImageController@update')
+    Route::post('slider/{slider_id}/{type}/image/{id}/update', 'AssetLite\SliderImageController@update')
         ->name('slider_image_update');
     Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'AssetLite\SliderImageController@destroy');
     Route::get('/slider-image-sortable', 'AssetLite\SliderImageController@sliderImageSortable');
@@ -140,7 +140,8 @@ Route::middleware('authorize', 'auth')->group(function () {
 
 
     // PARTNERS ====================================
-    Route::resource('partners', 'AssetLite\PartnerController')->except(['show', 'destroy']);
+    Route::resource('partners', 'AssetLite\PartnerController')->except(['show', 'destroy', 'update']);
+    Route::post('partners/{id}', 'AssetLite\PartnerController@update');
     Route::get('partner/destroy/{id}', 'AssetLite\PartnerController@destroy');
 
     Route::get('partner-offer/{partner_id}/{type}', 'AssetLite\PartnerOfferController@index')->name('partner-offer');
@@ -159,7 +160,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::get('partner-offers/{partner}/{id}/details', 'AssetLite\PartnerOfferController@offerDetailsEdit')
         ->name('offer.details');
-    Route::put('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
+    Route::post('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
         ->name('offer.details-update');
 
     // About Pages ================================
@@ -212,4 +213,44 @@ Route::middleware('authorize', 'auth')->group(function () {
     // Product core ============================================
     Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
     Route::get('product-core/{id}/edit/', 'AssetLite\ProductCoreController@edit')->name('product.core.edit');
+
+    // eCarrer ============================================
+    Route::get('life-at-banglalink/general', 'AssetLite\EcarrerController@generalIndex')->name('life.at.banglalink.general');
+    Route::get('life-at-banglalink/general/create', 'AssetLite\EcarrerController@generalCreate')->name('life.at.banglalink.general.create');
+    Route::post('life-at-banglalink/general/store', 'AssetLite\EcarrerController@generalStore')->name('life.at.banglalink.general.store');
+    Route::get('life-at-banglalink/general/{id}/edit', 'AssetLite\EcarrerController@generalEdit')->name('life.at.banglalink.general.edit');
+    Route::post('life-at-banglalink/general/{id}/update', 'AssetLite\EcarrerController@generalUpdate')->name('life.at.banglalink.general.update');
+    Route::get('life-at-banglalink/general/destroy/{id}', 'AssetLite\EcarrerController@generalDestroy')->name('life.at.banglalink.general.destroy');
+
+
+    // eCarrer Items ============================================
+    Route::get('ecarrer-items/{parent_id}/list', 'AssetLite\EcarrerItemController@index')->name('ecarrer.items.list');
+    Route::get('ecarrer-items/{parent_id}/create', 'AssetLite\EcarrerItemController@create')->name('ecarrer.items.create');
+    Route::post('ecarrer-items/{parent_id}/store', 'AssetLite\EcarrerItemController@store')->name('ecarrer.items.store');
+    Route::get('ecarrer-items/{parent_id}/{id}/edit', 'AssetLite\EcarrerItemController@edit')->name('ecarrer.items.edit');
+
+    Route::post('ecarrer-items/{parent_id}/{id}/update', 'AssetLite\EcarrerItemController@update')->name('ecarrer.items.update');
+    Route::get('ecarrer-items/{parent_id}/destroy/{id}', 'AssetLite\EcarrerItemController@destroy')->name('ecarrer.items.destroy');
+
+    // eCarrer Life at banglalink teams =========================================================
+    Route::get('life-at-banglalink/teams', 'AssetLite\EcarrerController@teamsIndex')->name('life.at.banglalink.teams');
+    Route::get('life-at-banglalink/teams/create', 'AssetLite\EcarrerController@teamsCreate')->name('life.at.banglalink.teams.create');
+    Route::post('life-at-banglalink/teams/store', 'AssetLite\EcarrerController@teamsStore')->name('life.at.banglalink.teams.store');
+
+    Route::get('life-at-banglalink/teams/{id}/edit', 'AssetLite\EcarrerController@teamsEdit')->name('life.at.banglalink.teams.edit');
+    
+    Route::post('life-at-banglalink/teams/{id}/update', 'AssetLite\EcarrerController@teamsUpdate')->name('life.at.banglalink.teams.update');
+    Route::get('life-at-banglalink/teams/destroy/{id}', 'AssetLite\EcarrerController@teamsDestroy')->name('life.at.banglalink.teams.destroy');
+
+
+    // eCarrer Life at banglalink diversity =========================================================
+    Route::get('life-at-banglalink/diversity', 'AssetLite\EcarrerController@diversityIndex')->name('life.at.banglalink.diversity');
+    Route::get('life-at-banglalink/diversity/create', 'AssetLite\EcarrerController@diversityCreate')->name('life.at.banglalink.diversity.create');
+    Route::post('life-at-banglalink/diversity/store', 'AssetLite\EcarrerController@diversityStore')->name('life.at.banglalink.diversity.store');
+
+    Route::get('life-at-banglalink/diversity/{id}/edit', 'AssetLite\EcarrerController@diversityEdit')->name('life.at.banglalink.diversity.edit');
+    
+    Route::post('life-at-banglalink/diversity/{id}/update', 'AssetLite\EcarrerController@diversityUpdate')->name('life.at.banglalink.diversity.update');
+    Route::get('life-at-banglalink/diversity/destroy/{id}', 'AssetLite\EcarrerController@diversityDestroy')->name('life.at.banglalink.diversity.destroy');
+
 });

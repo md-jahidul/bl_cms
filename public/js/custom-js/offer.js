@@ -7,7 +7,7 @@
         if ($(isCampain).prop("checked")) {
             campaignImg.parent().removeClass('d-none')
             $('#showImg').removeClass('d-none')
-        }else {
+        } else {
             $('#showImg').addClass('d-none')
             campaignImg.parent().addClass('d-none')
             imgRequired.addClass('d-none');
@@ -19,11 +19,11 @@
             if (campaignImg.val() === '') {
                 e.preventDefault();
                 imgRequired.removeClass('d-none');
-            }else {
+            } else {
                 // $('#form_submit').submit();
                 imgRequired.addClass('d-none');
             }
-        }else {
+        } else {
             $('#showImg').addClass('d-none');
             campaignImg.val('');
             imgRequired.addClass('d-none');

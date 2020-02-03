@@ -1,24 +1,33 @@
 <div class="col-md-12 mt-5" >
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <select name="sim_type" class="form-control filter" id="sim_type">
-                <option value=""> Please Select Connection Type</option>
+                <option value=""> Connection Type</option>
                 <option value="1">PREPAID</option>
                 <option value="2">POSTPAID</option>
             </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <input class="form-control filter" name="product_code" placeholder="Enter Product Code to Filter" id="product_code"/>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <select name="content_type" class="form-control filter" id="content_type">
-                <option value=""> Please Select Content Type</option>
+                <option value=""> Content Type</option>
                 <option value="data">DATA</option>
-                <option value="mix">MIX</option>
+                <option value="bundle">BUNDLES</option>
+                <option value="rate_cutter">RATE CUTTER</option>
+                <option value="recharge_offer">RECHARGE OFFER</option>
                 <option value="data loan">DATA LOAN</option>
                 <option value="gift">GIFT</option>
                 <option value="volume request">VOLUME REQUEST</option>
                 <option value="volume transfer">VOLUME TRANSFER</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select name="show_in_home" class="form-control filter" id="show_in_home">
+                <option value=""> Show in Home</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
             </select>
         </div>
     </div>
@@ -32,9 +41,9 @@
             <th>Product Code</th>
             <th>Renew Product Code</th>
             <th>Recharge Product Code</th>
-            <th>Name</th>
-            <th>Short Description</th>
+            <th>Description</th>
             <th>Show in Home</th>
+            <th>Attached Image</th>
             <th class="filter_data">Actions</th>
         </tr>
         </thead>
@@ -69,6 +78,9 @@
                         },
                         content_type: function () {
                             return $("#content_type").val();
+                        },
+                        show_in_home: function () {
+                            return $("#show_in_home").val();
                         }
                     }
                 },
@@ -83,7 +95,6 @@
 
                     {
                         name: 'product_code',
-                        width: '150px',
                         render: function (data, type, row) {
                             return row.product_code;
                         }
@@ -91,7 +102,6 @@
 
                     {
                         name: 'renew_product_code',
-                        width: '150px',
                         render: function (data, type, row) {
                             return row.renew_product_code;
                         }
@@ -99,23 +109,21 @@
 
                     {
                         name: 'recharge_product_code',
-                        width: '150px',
                         render: function (data, type, row) {
                             return row.recharge_product_code;
                         }
                     },
 
-                    {
+/*                    {
                         name: 'name',
                         width: '150px',
                         render: function (data, type, row) {
                             return row.name;
                         }
-                    },
+                    },*/
 
                     {
                         name: 'description',
-                        width: '150px',
                         render: function (data, type, row) {
                             return row.description;
                         }
@@ -123,15 +131,19 @@
 
                     {
                         name: 'show_in_home',
-                        width: '150px',
                         render: function (data, type, row) {
                             return row.show_in_home;
                         }
                     },
                     {
+                        name: 'Attached Image',
+                        render: function (data, type, row) {
+                            return row.media;
+                        }
+                    },
+                    {
                         name: 'actions',
                         className: 'filter_data',
-                        width: '150px',
                         render: function (data, type, row) {
                             let detail_question_url = "{{ URL('mybl/products/') }}" + "/" + row.product_code;
                             return `<div class="btn-group" role="group" aria-label="Basic example">

@@ -15,6 +15,8 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ url("partners/$partner->id") }}" method="POST" novalidate enctype="multipart/form-data">
+                            @csrf
+                            @method('POST')
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('company_name_en') ? ' error' : '' }}">
                                     <label for="company_name_en" class="required">Company Name (English)</label>
@@ -69,7 +71,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('contact_person_mobile') ? ' error' : '' }}">
                                     <label for="contact_person_mobile">Contact Person Mobile Number</label>
                                     <input type="text" name="contact_person_mobile"  class="form-control" placeholder="Enter contact person name"
-                                           value="{{ $partner->contact_person_mobile }}" required data-validation-required-message="Enter contact person mobile number">
+                                           value="{{ $partner->contact_person_mobile }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('contact_person_mobile'))
                                         <div class="help-block">  {{ $errors->first('contact_person_mobile') }}</div>

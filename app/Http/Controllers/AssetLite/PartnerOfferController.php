@@ -142,7 +142,7 @@ class PartnerOfferController extends Controller
         
         # Check Image upload validation
         $validator = Validator::make($request->all(), [
-            'banner_image_url' => 'required|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+            'banner_image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
         ]);
         if ($validator->fails()) {
             Session::flash('error', $validator->messages()->first());

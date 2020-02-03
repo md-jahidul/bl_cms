@@ -184,7 +184,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="purchase_option" class="required">Purchase Option</label>
-                                    <select class="form-control required" name="purchase_option" id="offer_type"
+                                    <select class="form-control required" name="purchase_option"
                                             required data-validation-required-message="Please select purchase option">
                                         <option data-alias="" value="">---Select Purchase Option---</option>
                                         <option value="balance" {{ ("balance" == $product->purchase_option ) ? 'selected' : '' }}>Balance</option>
@@ -199,9 +199,17 @@
 
                                 <div class="col-md-6">
                                     <label></label>
-                                    <div class="form-group pt-1" id="show_in_home">
+                                    <div class="form-group" id="show_in_home">
                                         <label for="trending" class="mr-1">Trending Offer:</label>
                                         <input type="checkbox" name="show_in_home" value="1" {{ ($product->show_in_home == 1) ? 'checked' : '' }} id="trending">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label></label>
+                                    <div class="form-group" id="show_in_home">
+                                        <label for="special_product" class="mr-1">Is Special Product:</label>
+                                        <input type="checkbox" name="special_product" value="1" id="special_product" {{ ($product->special_product == 1) ? 'checked' : '' }}>
                                     </div>
                                 </div>
 

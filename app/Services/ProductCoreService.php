@@ -306,6 +306,9 @@ class ProductCoreService
         if ($request->status) {
             $builder = MyBlProduct::where('status', $request->status);
         }
+        if ($request->show_in_home != null) {
+            $builder = $builder->where('show_in_home', $request->show_in_home);
+        }
 
         $builder = $builder->whereHas(
             'details',
@@ -316,8 +319,23 @@ class ProductCoreService
                 if ($request->sim_type) {
                     $q->where('sim_type', $request->sim_type);
                 }
+
                 if ($request->content_type) {
-                    $q->where('content_type', $request->content_type);
+                    if ($request->content_type == 'bundle') {
+                        $q->where(function ($q) {
+                            $q->where('content_type', 'mix')
+                                ->orWhere('content_type', 'voice')
+                                ->orWhere('content_type', 'sms');
+                        });
+                        $q->where('is_recharge_offer', '<>', 1);
+                        $q->whereNull('call_rate');
+                    } elseif ($request->content_type == 'recharge_offer') {
+                        $q->whereNotNull('recharge_product_code');
+                    } elseif ($request->content_type == 'rate_cutter') {
+                        $q->whereNotNull('call_rate');
+                    } else {
+                        $q->where('content_type', $request->content_type);
+                    }
                 }
             }
         );
@@ -344,6 +362,7 @@ class ProductCoreService
                 'family_name' => ucfirst($item->details->family_name),
                 'offer_section' => ucfirst($item->offer_section_title),
                 'show_in_home' => ($item->show_in_home) ? 'Yes' : 'No',
+                'media' => ($item->media) ? 'Yes' : 'No',
                 'status' => $item->details->status
             ];
         });
@@ -444,7 +463,7 @@ class ProductCoreService
                                     break;
                                 case "recharge_product_code":
                                     $type = $cells [$index]->getValue();
-                                    $assetLiteProduct['purchase_option'] = ($type == "") ? 'all' : 'recharge';
+                                    $assetLiteProduct['purchase_option'] = ($type != "") ? 'recharge' : '';
                                     $core_data[$field] = $type;
                                     break;
 
