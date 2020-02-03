@@ -41,7 +41,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                {{-- <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="">Banner Image (optional)</label>
                                     <div class="custom-file">
                                         <input type="file" name="image_url" class="custom-file-input" id="image">
@@ -71,7 +71,7 @@
                                         <textarea name="description" class="form-control" rows="5"
                                                   placeholder="Enter description">{{ $general_section->description }}</textarea>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
                                 <div class="col-md-6">
