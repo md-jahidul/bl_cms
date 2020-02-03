@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Quick Launch Create')
-@section('card_name', 'Quick Launch Create')
+@section('title', 'About Us')
+@section('card_name', 'About Us')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('quick-launch') }}"> Quick Launch List</a></li>
-    <li class="breadcrumb-item active"> Quick Launch Create</li>
+    <li class="breadcrumb-item active"> <a href="{{ url('about-us') }}"> About Us</a></li>
+    <li class="breadcrumb-item active"> About Us</li>
 @endsection
 @section('action')
-    <a href="{{ url('quick-launch') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('about-us') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -14,100 +14,113 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('quick-launch.store') }}" method="POST" novalidate enctype="multipart/form-data">
+                        @if(isset($about))
+                        <form novalidate action="{{ route('about-us.update',$about->id) }}" method="post" enctype="multipart/form-data">
+                         @else
+                        <form novalidate action="{{ route('about-us.store') }}" method="post" enctype="multipart/form-data">
+                            @endif
+
+                            @csrf
+                            @if(isset($about))
+                                @method('put')
+                            @else
+                                @method('post')
+                            @endif
+
+                            @if(isset($about))
+                                @php $banglalink_info = $about->banglalink_info; @endphp
+                            @else
+                                @php $banglalink_info = ''; @endphp
+                            @endif
+
+                            @if(isset($about))
+                                @php $banglalink_info_bn = $about->banglalink_info_bn; @endphp
+                            @else
+                                @php $banglalink_info_bn = ''; @endphp
+                            @endif
+
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                    <label for="title_en" class="required">English Title</label>
-                                    <input type="text" name="title_en"  class="form-control" placeholder="Enter english title"
-                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Enter english title">
+
+                                <div class="form-group col-md-6 {{ $errors->has('banglalink_info') ? ' error' : '' }}">
+                                    <label for="banglalink_info" class="required">About Banglalink (English)</label>
+                                    <textarea
+                                        required
+                                        data-validation-required-message="About Banglalink is required"
+                                        class="form-control" name="banglalink_info" placeholder="Enter About Banglalink in English" id="banglalink_info"
+                                        rows="4">{{ old("banglalink_info") ? old("banglalink_info") : $banglalink_info  }}</textarea>
+
                                     <div class="help-block"></div>
-                                    @if ($errors->has('title_en'))
-                                        <div class="help-block">  {{ $errors->first('title_en') }}</div>
+                                    @if ($errors->has('banglalink_info'))
+                                        <div class="help-block">  {{ $errors->first('banglalink_info') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                    <label for="title_bn" class="required">Bangla Title</label>
-                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter bangla title"
-                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Enter bangla title">
+
+                                <div class="form-group col-md-6 {{ $errors->has('banglalink_info_bn') ? ' error' : '' }}">
+                                    <label for="banglalink_info_bn" class="required">About Banglalink (Bangla)</label>
+                                    <textarea
+                                        required
+                                        data-validation-required-message="About Banglalink is required"
+                                        class="form-control" name="banglalink_info_bn" placeholder="Enter About Banglalink in Bangla" id="banglalink_info_bn"
+                                        rows="4">{{ old("banglalink_info_bn") ? old("banglalink_info_bn") : $banglalink_info_bn }}</textarea>
+
                                     <div class="help-block"></div>
-                                    @if ($errors->has('title_bn'))
-                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                    @if ($errors->has('banglalink_info_bn'))
+                                        <div class="help-block">  {{ $errors->first('banglalink_info_bn') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('link') ? ' error' : '' }}">
-                                    <label for="link" class="required">Link</label>
-                                    <input type="text" name="link"  class="form-control" placeholder="Enter english title"
-                                           value="{{ old("link") ? old("link") : '' }}" required data-validation-required-message="Enter link">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('link'))
-                                        <div class="help-block">  {{ $errors->first('link') }}</div>
-                                    @endif
-                                </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text" class="required">Alt Text</label>
-                                    <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text"
-                                           value="{{ old("alt_text") ? old("alt_text") : '' }}" required data-validation-required-message="Enter alt text">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
-                                    @endif
-                                </div>
-
-{{--                                <div class="form-group col-md-6 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">--}}
-{{--                                    <label for="file" class="required">Select File</label>--}}
-
-{{--                                    <label id="projectinput7" class="file center-block ml-2">--}}
-{{--                                        <input type="file" id="file" name="image_url" required>--}}
-{{--                                    </label><br>--}}
-{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
-{{--                                    @if ($errors->has('image_url'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
-
-{{--                                <div class="controls">--}}
-{{--                                    <input type="file" name="file" class="form-control" required="" aria-invalid="false">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                </div>--}}
-
-                                <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="alt_text" class="required">Quick Launch Icon</label>
+                                <div class="form-group col-md-6 {{ $errors->has('content_image') ? ' error' : '' }}">
+                                    <label for="alt_text" >Content Image</label>
                                     <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input" id="image" required data-validation-required-message="Enter alt text">
+                                        <input type="file" name="content_image" class="custom-file-input" id="profile_image">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
+                                    {{--@if ($errors->has('alt_text'))
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+                                    @endif--}}
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_image') ? ' error' : '' }}">
+                                    <label for="alt_text" >Banner Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="banner_image" class="custom-file-input" id="image">
+                                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <div class="help-block"></div>
+                                    {{--@if ($errors->has('alt_text'))
+                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+                                    @endif--}}
+                                </div>
+
+                                <div class="form-group col-md-6">
+
+                                    @if(isset($about))
+                                        <img style="height:80px;width:100px;display:none"
+                                             src="{{ config('filesystems.file_base_url') . $about->content_image }}" id="profile_image_Display">
+                                    @else
+                                        <img style="height:80px;width:100px;display:none" id="profile_image_Display">
                                     @endif
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <img style="height:70px;width:70px;display:none" id="imgDisplay">
+                                    @if(isset($about))
+                                        <img style="height:80px;width:100px;display:none"
+                                             src="{{ config('filesystems.file_base_url') . $about->banner_image }}" id="imgDisplay">
+                                    @else
+                                        <img style="height:80px;width:100px;display:none" id="imgDisplay">
+                                    @endif
                                 </div>
 
-                                <div class="col-md-12">
-                                    <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-                                        <label for="title" class="required mr-1">Status:</label>
-                                        <input type="radio" name="status" value="1" id="input-radio-15" checked>
-                                        <label for="input-radio-15" class="mr-1">Active</label>
-                                        <input type="radio" name="status" value="0" id="input-radio-16">
-                                        <label for="input-radio-16">Inactive</label>
-                                        @if ($errors->has('status'))
-                                            <div class="help-block">  {{ $errors->first('status') }}</div>
-                                        @endif
-                                    </div>
-                                </div>
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary"><i
-                                                class="la la-check-square-o"></i> SAVE
+                                        <button type="submit" id="submitForm" style="width:100%" class="btn @if(isset($about)) btn-success @else btn-info @endif ">
+                                            @if(isset($about)) <i class="la la-check-square-o"></i> Update @else <i class="la la-check-square-o"></i> SAVE @endif
                                         </button>
                                     </div>
                                 </div>

@@ -40,16 +40,21 @@ class AboutUsService
     }
 
     /**
-     * @param $data
+     * @param $request
      * @return Response
      */
-    public function storeAboutUsInfo($data)
+    public function storeAboutUsInfo($request)
     {
-        $count = count($this->aboutUsRepository->findAll());
-        if (request()->hasFile('image_url')) {
-            $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/quick-launch-items/');
+        $data = $request->all();
+
+        if (request()->hasFile('content_image')) {
+            $data['content_image'] = $this->upload($data['content_image'], 'assetlite/images/about-us/');
         }
-        $data['display_order'] = ++$count;
+
+        if (request()->hasFile('banner_image')) {
+            $data['banner_image'] = $this->upload($data['banner_image'], 'assetlite/images/about-us/');
+        }
+
         $this->save($data);
         return new Response('About Us Info added successfully');
     }
@@ -62,12 +67,19 @@ class AboutUsService
      */
     public function updateAboutUsInfo($data, $id)
     {
-        $quickLaunch = $this->findOne($id);
-        if (request()->hasFile('image_url')) {
-            $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/quick-launch-items/');
-            $this->deleteFile($quickLaunch->image_url);
+        $aboutUs = $this->findOne($id);
+
+        if (request()->hasFile('content_image')) {
+            $data['content_image'] = $this->upload($data['content_image'], 'assetlite/images/about-us/');
+            $this->deleteFile($aboutUs->content_image);
         }
-        $quickLaunch->update($data);
+
+        if (request()->hasFile('banner_image')) {
+            $data['banner_image'] = $this->upload($data['banner_image'], 'assetlite/images/about-us/');
+            $this->deleteFile($aboutUs->banner_image);
+        }
+
+        $aboutUs->update($data);
         return Response('About Us Info updated successfully');
     }
 
@@ -78,9 +90,10 @@ class AboutUsService
      */
     public function deleteAboutUsInfo($id)
     {
-        $quickLaunch = $this->findOne($id);
-        $this->deleteFile($quickLaunch->image_url);
-        $quickLaunch->delete();
+        $aboutUs = $this->findOne($id);
+        $this->deleteFile($aboutUs->content_image);
+        $this->deleteFile($aboutUs->banner_image);
+        $aboutUs->delete();
         return Response('About Us Info deleted successfully !');
     }
 }

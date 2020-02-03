@@ -66,11 +66,6 @@ class ManagementService
     {
         $data = $request->all();
 
-        if (request()->hasFile('image_url')) {
-            $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/about-us/');
-            $this->deleteFile($management->image_url);
-        }
-
         if (request()->hasFile('profile_image')) {
             $data['profile_image'] = $this->upload($data['profile_image'], 'assetlite/images/about-us/');
             $this->deleteFile($management->profile_image);

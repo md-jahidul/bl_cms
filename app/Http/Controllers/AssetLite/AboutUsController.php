@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Models\AboutUsBanglalink;
 use App\Services\AboutUsService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,7 +26,6 @@ class AboutUsController extends Controller
     public function __construct(AboutUsService $aboutUsService)
     {
         $this->aboutUsService = $aboutUsService;
-        $this->middleware('auth');
     }
 
 
@@ -36,8 +36,8 @@ class AboutUsController extends Controller
      */
     public function index()
     {
-        $quickLaunchItems = $this->aboutUsService->itemList();
-        return view('admin.about-us.index', compact('quickLaunchItems'));
+        $aboutUs = $this->aboutUsService->getAboutUsInfo();
+        return view('admin.about-us.index', compact('aboutUs'));
     }
 
     /**
@@ -51,41 +51,45 @@ class AboutUsController extends Controller
     }
 
     /**
-     * @param StoreQuickLaunch $request
+     * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function store(StoreQuickLaunch $request)
+    public function store(Request $request)
     {
-        $response = $this->aboutUsService->storeQuickLaunchItem($request->all());
+        $response = $this->aboutUsService->storeAboutUsInfo($request);
         Session::flash('message', $response->getContent());
-        return redirect('quick-launch');
+        return redirect('about-us');
     }
 
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param AboutUsBanglalink $aboutUs
      * @return Response
      */
-    public function edit($id)
+    public function edit(AboutUsBanglalink $aboutUs)
     {
-        $quickLaunch = $this->aboutUsService->findOne($id);
-        return view('admin.about-us.edit', compact('quickLaunch'));
+        return view('admin.about-us.create')->with('about', $aboutUs);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param AboutUsBanglalink $aboutUs
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, AboutUsBanglalink $aboutUs)
     {
-        $response = $this->aboutUsService->updateQuickLaunch($request->all(), $id);
-        Session::flash('message', $response->getContent());
-        return redirect('/quick-launch');
+        $response = $this->aboutUsService->updateAboutUsInfo($request, $aboutUs);
+
+        if ($response) {
+             session()->flash('success', "Updated successfully");
+             return redirect(route('about-us.index'));
+        }
+
+        session()->flash('message', "Failed! Please try again");
     }
 
     /**
@@ -95,8 +99,13 @@ class AboutUsController extends Controller
      */
     public function destroy($id)
     {
-        $response = $this->aboutUsService->deleteQuickLaunch($id);
-        Session::flash('message', $response->getContent());
-        return url('quick-launch');
+        $response = $this->aboutUsService->deleteAboutUsInfo($id);
+        if ($response) {
+            session()->flash('error', "Deleted successfully");
+            return redirect(route('about-us.index'));
+        }
+
+        session()->flash('message', "Failed! Please try again");
     }
+
 }
