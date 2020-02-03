@@ -35,8 +35,9 @@ class EcarrerItemController extends Controller
 	public function index($parent_id){
 
      $all_items = $this->ecarrerItemService->getItems($parent_id);
+     $route_slug = $this->ecarrerItemService->getParentRouteSlug($parent_id);
 		
-     return view('admin.ecarrer-items.index', compact('parent_id', 'all_items'));
+     return view('admin.ecarrer-items.index', compact('parent_id', 'all_items', 'route_slug'));
 
 	}
 

@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active">Item list</li>
 @endsection
 @section('action')
-    <a href="{{ url("life-at-banglalink/general") }}" class="btn btn-info round btn-glow px-2">Go back Section</a>
+    <a href="{{ url("$route_slug") }}" class="btn btn-info round btn-glow px-2">Go back Section</a>
     <a href="{{ url("ecarrer-items/$parent_id/create") }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
         Add New Item
     </a>

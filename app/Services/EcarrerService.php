@@ -42,23 +42,23 @@ class EcarrerService
      * @param  [type] $request [description]
      * @return [type]          [description]
      */
-    public function storeEcarrerGeneralSection($data){
+    // public function storeEcarrerGeneralSection($data){
 
-        # Life at Banglalink General section
-        $data['category'] = 'life_at_bl_general';
-        # This section has child item available
-        $data['has_items'] = 1;
+    //     # Life at Banglalink General section
+    //     $data['category'] = 'life_at_bl_general';
+    //     # This section has child item available
+    //     $data['has_items'] = 1;
 
-        $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
+    //     $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
 
-        if (!empty($data['image_url'])) {
-            $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
-        }
+    //     if (!empty($data['image_url'])) {
+    //         $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
+    //     }
 
-        $this->save($data);
-        return new Response('Section created successfully');
+    //     $this->save($data);
+    //     return new Response('Section created successfully');
 
-    }
+    // }
 
     /**
      * Get all general section for life of banglalink
@@ -87,21 +87,21 @@ class EcarrerService
      * @param  [type] $id   [description]
      * @return [type]       [description]
      */
-    public function updateEcarrerGeneralSection($data, $id)
-    {
-        $general_section = $this->findOne($id);
+    // public function updateEcarrerGeneralSection($data, $id)
+    // {
+    //     $general_section = $this->findOne($id);
 
-        $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
+    //     $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
 
-        if (!empty($data['image_url'])) {
+    //     if (!empty($data['image_url'])) {
            
-            $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
-        }
+    //         $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
+    //     }
 
-        $general_section->update($data);
+    //     $general_section->update($data);
 
-        return Response('Section updated successfully');
-    }
+    //     return Response('Section updated successfully');
+    // }
 
 
     /**
@@ -143,6 +143,8 @@ class EcarrerService
         $data['category'] = !empty($data_types['category']) ? $data_types['category'] : null;
         # This section has child item available
         $data['has_items'] = !empty($data_types['has_items']) ? $data_types['has_items'] : 0;
+        $data['route_slug'] = !empty($data_types['route_slug']) ? $data_types['route_slug'] : null;
+        $data['category_type'] = !empty($data_types['category_type']) ? $data_types['category_type'] : null;
 
         $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
 
@@ -177,6 +179,28 @@ class EcarrerService
         $general_section->update($data);
 
         return Response('Section updated successfully');
+    }
+
+
+    /**
+     * [getRouteSlug description]
+     * @param  [type] $request [description]
+     * @return [type]          [description]
+     */
+    public function getRouteSlug($path){
+        if( !empty($path) ){
+            $match = explode('/', $path);
+            if( !empty($match[0]) && !empty($match[1]) ){
+                return $match[0].'/'.$match[1];
+            }
+            else{
+                return null;
+            }
+        }
+        else{
+            return null;
+        }
+        
     }
 
 }

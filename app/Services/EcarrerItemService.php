@@ -189,5 +189,15 @@ class EcarrerItemService
         return Response('Item deleted successfully !');
     }
 
+    /**
+     * [getParentSlug description]
+     * @param  [type] $parent_id [description]
+     * @return [type]            [description]
+     */
+    public function getParentRouteSlug($section_id){
+
+        return $this->ecarrerPortalRepository->getParentRouteSlugByID($section_id);
+
+    }
 
 }

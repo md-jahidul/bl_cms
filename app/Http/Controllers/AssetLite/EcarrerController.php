@@ -39,9 +39,11 @@ class EcarrerController extends Controller
 	 */
 	public function generalIndex(){
 
-     $general_section = $this->ecarrerService->generalSections();
+     $categoryTypes = 'life_at_bl_general';
+
+     $sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
 		
-     return view('admin.ecarrer.general.index', compact('general_section'));
+     return view('admin.ecarrer.general.index', compact('sections'));
 
 	}
 
@@ -74,7 +76,12 @@ class EcarrerController extends Controller
 		    return redirect('life-at-banglalink/general');
 		}
 
-		$this->ecarrerService->storeEcarrerGeneralSection($request->all());
+		$data_types['category'] = 'life_at_bl_general';
+		$data_types['has_items'] = 1;
+		# route slug
+		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+
+		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
 		Session::flash('message', 'Section created successfully!');
 		return redirect('life-at-banglalink/general');
@@ -88,8 +95,9 @@ class EcarrerController extends Controller
 	 */
 	public function generalEdit($id){
 
-		$general_section = $this->ecarrerService->generalSectionById($id);
-		return view('admin.ecarrer.general.edit', compact('general_section'));
+		$section = $this->ecarrerService->generalSectionById($id);
+
+		return view('admin.ecarrer.general.edit', compact('section'));
 
 	}
 
@@ -115,7 +123,7 @@ class EcarrerController extends Controller
 		    return redirect('life-at-banglalink/general');
 		}
 
-		$this->ecarrerService->updateEcarrerGeneralSection($request->all(), $id);
+		$this->ecarrerService->updateEcarrerSection($request->all(), $id);
 
 		Session::flash('message', 'Section updated successfully!');
 		return redirect('life-at-banglalink/general');
@@ -176,6 +184,8 @@ class EcarrerController extends Controller
 
 		$data_types['category'] = 'life_at_bl_teams';
 		$data_types['has_items'] = 1;
+		# route slug
+		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
 
 		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
@@ -224,5 +234,100 @@ class EcarrerController extends Controller
 
 	}
 
+
+
+
+	/**
+	 * Life at banglalink diversity section list
+	 * @return [type] [description]
+	 */
+	public function diversityIndex(){
+
+		$categoryTypes = 'life_at_bl_diversity';
+
+		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
+		
+		return view('admin.ecarrer.diversity.index', compact('sections'));
+
+	}
+
+	/**
+	 * eCarrer life at banglalink diversity
+	 * @return [type] [description]
+	 */
+	public function diversityCreate(){
+
+		return view('admin.ecarrer.diversity.create');
+	}
+
+	/**
+	 * eCarrer life at banglalink diversity store on create
+	 * @return [type] [description]
+	 */
+	public function diversityStore(Request $request){
+
+		$validator = Validator::make($request->all(), [
+		    'title' => 'required',
+		    'slug' => 'required'
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('life-at-banglalink/diversity');
+		}
+
+		$data_types['category'] = 'life_at_bl_diversity';
+		$data_types['has_items'] = 1;
+		# route slug
+		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+
+		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
+
+		Session::flash('message', 'Section created successfully!');
+		return redirect('life-at-banglalink/diversity');
+	}
+
+
+	/**
+	 * eCarrer life at banglalink diversity
+	 * @return [type] [description]
+	 */
+	public function diversityEdit($id){
+
+		$sections = $this->ecarrerService->generalSectionById($id);
+		return view('admin.ecarrer.diversity.edit', compact('sections'));
+	}
+
+
+	/**
+	 * Update general section
+	 * @param  Request $request [description]
+	 * @param  [type]  $id      [description]
+	 * @return [type]           [description]
+	 */
+	public function diversityUpdate(Request $request, $id){
+
+		$image_upload_size = ConfigController::adminImageUploadSize();
+		$image_upload_type = ConfigController::adminImageUploadType();
+		
+		# Check Image upload validation
+		$validator = Validator::make($request->all(), [
+		    'title' => 'required',
+		    'slug' => 'required',
+		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('life-at-banglalink/diversity');
+		}
+
+		$this->ecarrerService->updateEcarrerSection($request->all(), $id);
+
+		Session::flash('message', 'Section updated successfully!');
+		return redirect('life-at-banglalink/diversity');
+
+	}
+
+
+	
 
 }

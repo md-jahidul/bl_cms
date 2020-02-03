@@ -249,4 +249,14 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('life-at-banglalink/teams/destroy/{id}', 'AssetLite\EcarrerController@teamsDestroy')->name('life.at.banglalink.teams.destroy');
 
 
+    // eCarrer Life at banglalink diversity =========================================================
+    Route::get('life-at-banglalink/diversity', 'AssetLite\EcarrerController@diversityIndex')->name('life.at.banglalink.diversity');
+    Route::get('life-at-banglalink/diversity/create', 'AssetLite\EcarrerController@diversityCreate')->name('life.at.banglalink.diversity.create');
+    Route::post('life-at-banglalink/diversity/store', 'AssetLite\EcarrerController@diversityStore')->name('life.at.banglalink.diversity.store');
+
+    Route::get('life-at-banglalink/diversity/{id}/edit', 'AssetLite\EcarrerController@diversityEdit')->name('life.at.banglalink.diversity.edit');
+    
+    Route::post('life-at-banglalink/diversity/{id}/update', 'AssetLite\EcarrerController@diversityUpdate')->name('life.at.banglalink.diversity.update');
+    Route::get('life-at-banglalink/diversity/destroy/{id}', 'AssetLite\EcarrerController@diversityDestroy')->name('life.at.banglalink.diversity.destroy');
+
 });

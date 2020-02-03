@@ -33,4 +33,9 @@ class EcarrerPortalRepository extends BaseRepository
     public function getSectionSlugByID($id){
         return $this->model::where('id', $id)->whereNull('deleted_at')->first()->category;
     }
+
+
+    public function getParentRouteSlugByID($id){
+    	return $this->model::where('id', $id)->whereNull('deleted_at')->first()->route_slug;
+    }
 }
