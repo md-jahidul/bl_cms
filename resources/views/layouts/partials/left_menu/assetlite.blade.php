@@ -218,13 +218,13 @@
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> Teams</a>
                                 </li>
-                                <li class="{{ is_active_url('product-core') . is_active_url('product-core') }}">
-                                    <a class="menu-item" href="{{ route('product.core.list') }}"
+                                <li class="{{ is_active_url('life-at-banglalink/diversity') . is_active_url('life-at-banglalink/diversity') }}">
+                                    <a class="menu-item" href="{{ route('life.at.banglalink.diversity') }}"
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> Diversity</a>
                                 </li>
                                 <li class="{{ is_active_url('product-core') . is_active_url('product-core') }}">
-                                    <a class="menu-item" href="{{ route('product.core.list') }}"
+                                    <a class="menu-item" href="#"
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> Events and Activites</a>
                                 </li>
@@ -232,12 +232,12 @@
                             </ul>
                 </li>
                 <li class="{{ is_active_url('offers/postpaid') . is_active_url('offers/postpaid/create') }}">
-                    <a class="menu-item" href="{{ route('product.list','postpaid') }}"
+                    <a class="menu-item" href="#"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Programs</a>
                 </li>
                 <li class="{{ is_active_url('offers/postpaid') . is_active_url('offers/postpaid/create') }}">
-                    <a class="menu-item" href="{{ route('product.list','postpaid') }}"
+                    <a class="menu-item" href="#"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Vacancy</a>
                 </li>

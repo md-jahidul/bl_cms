@@ -1,30 +1,24 @@
 @extends('layouts.admin')
-@section('title', 'Section Edit')
-@section('card_name', 'Section Edit')
+@section('title', 'Section Create')
+@section('card_name', 'Section Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('life-at-banglalink/general') }}">Section List</a></li>
-    <li class="breadcrumb-item active"> {{$section->title}}</li>
+    <li class="breadcrumb-item active"> Section Create</li>
 @endsection
 @section('action')
-    <a href="{{ url("life-at-banglalink/general") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
+    <a href="{{ url('life-at-banglalink/diversity') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-
-
                     <div class="card-body card-dashboard">
-                        <form id="general_section" role="form" action="{{ url("life-at-banglalink/general/$section->id/update") }}" method="POST" novalidate enctype="multipart/form-data">
-                            @csrf
-                            {{method_field('POST')}}
+                        <form id="general_section" role="form" action="{{ route('life.at.banglalink.diversity.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
-                                <input type="hidden" name="section_category" value="{{ $section->category }}">
                                 <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="title" class="required">Title (English)</label>
-                                    <input type="text" name="title"  class="form-control section_name" placeholder="Enter title (english)"
-                                           value="{{ $section->title }}" required data-validation-required-message="Enter slider title (english)">
+                                    <label for="title" class="required">Give a name of the section</label>
+                                    <input type="text" name="title"  class="form-control section_name" placeholder="Section name"
+                                           value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Please enter Section name">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title'))
                                         <div class="help-block">  {{ $errors->first('title') }}</div>
@@ -34,7 +28,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('slug') ? ' error' : '' }}">
                                     <label for="slug" class="required">Slug</label>
                                     <input type="text" name="slug"  class="form-control section_slug"
-                                           value="{{ $section->slug }}" required readonly  data-validation-required-message="Slug name can not be emply">
+                                           value="{{ old("slug") ? old("slug") : '' }}" required readonly  data-validation-required-message="Slug name can not be emply">
                                     <div class="help-block"></div>
                                     @if ($errors->has('slug'))
                                         <div class="help-block">  {{ $errors->first('slug') }}</div>
@@ -56,38 +50,30 @@
                                 </div>
 
                                 <div class="form-group col-md-1">
-                                    @if( !empty($section->image) )
-                                        <img style="height:70px;width:70px;display:block" src="{{ config('filesystems.file_base_url') . $section->image}}" id="imgDisplay">
-                                    @else
-                                        <img style="height:70px;width:70px;display:none" id="imgDisplay">
-                                    @endif
-                                    
-                                </div>
-
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Description (Optional)</label>
-                                        <textarea name="description" class="form-control" rows="5"
-                                                  placeholder="Enter description">{{ $section->description }}</textarea>
-                                    </div>
+                                    <img style="height:70px;width:70px;display:none" id="imgDisplay">
                                 </div> --}}
 
+                                
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Description</label>
+                                        <textarea name="description" class="form-control" rows="5"
+                                                  placeholder="Enter description"></textarea>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
                                     <div class="form-group">
                                         <label for="title" class="required mr-1">Status:</label>
 
-                                        <input type="radio" name="is_active" value="1" id="input-radio-15" @if( $section->is_active == 1 ) checked @endif>
+                                        <input type="radio" name="is_active" value="1" id="input-radio-15" checked>
                                         <label for="input-radio-15" class="mr-1">Active</label>
 
-                                        <input type="radio" name="is_active" value="0" id="input-radio-16" @if( $section->is_active == 0 ) checked @endif>
+                                        <input type="radio" name="is_active" value="0" id="input-radio-16">
                                         <label for="input-radio-16">Inactive</label>
                                     </div>
                                 </div>
-
-
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
@@ -98,17 +84,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="id" value="{{ $section->id }}"/>
+                            @csrf
                         </form>
-
                     </div>
+
+
+                    </form>
                 </div>
             </div>
         </div>
     </section>
+
 @stop
 
-
+@push('page-css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+@endpush
 @push('page-js')
     
     <script type="text/javascript">
@@ -131,6 +122,9 @@
     </script>
 
 @endpush
+
+
+
 
 
 

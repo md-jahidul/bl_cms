@@ -17,11 +17,13 @@ class CreateEcarrerPortalsTable extends Migration
     {
         Schema::create('ecarrer_portals', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title', 200);
-            $table->string('slug', 200);
+            $table->string('title');
+            $table->string('slug');
             $table->string('description')->nullable();
             $table->string('image')->nullable();
             $table->string('category', 50);
+            $table->string('route_slug')->nullable();
+            $table->string('category_type', 50)->nullable();
             $table->longText('additional_info')->nullable();
             $table->tinyInteger('is_active')->default(1)->comment('active = 1, inactive = 0');
             $table->tinyInteger('has_items')->default(0)->comment('Has child items = 1, No child items = 0');
