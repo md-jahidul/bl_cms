@@ -264,4 +264,15 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('life-at-banglalink/events/{id}/update', 'AssetLite\EcarrerController@eventsUpdate')->name('life.at.banglalink.events.update');
     Route::get('life-at-banglalink/events/destroy/{id}', 'AssetLite\EcarrerController@eventsDestroy')->name('life.at.banglalink.events.destroy');
 
+
+    // eCarrer Life at banglalink Events & Activities =========================================================
+    Route::get('life-at-banglalink/topbanner', 'AssetLite\EcarrerController@topbannerIndex')->name('life.at.banglalink.topbanner');
+    Route::get('life-at-banglalink/topbanner/create', 'AssetLite\EcarrerController@topbannerCreate')->name('life.at.banglalink.topbanner.create');
+    Route::post('life-at-banglalink/topbanner/store', 'AssetLite\EcarrerController@topbannerStore')->name('life.at.banglalink.topbanner.store');
+
+    Route::get('life-at-banglalink/topbanner/{id}/edit', 'AssetLite\EcarrerController@topbannerEdit')->name('life.at.banglalink.topbanner.edit');
+    
+    Route::post('life-at-banglalink/topbanner/{id}/update', 'AssetLite\EcarrerController@topbannerUpdate')->name('life.at.banglalink.topbanner.update');
+    Route::get('life-at-banglalink/topbanner/destroy/{id}', 'AssetLite\EcarrerController@topbannerDestroy')->name('life.at.banglalink.topbanner.destroy');
+
 });

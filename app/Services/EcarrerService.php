@@ -144,7 +144,6 @@ class EcarrerService
         # This section has child item available
         $data['has_items'] = !empty($data_types['has_items']) ? $data_types['has_items'] : 0;
         $data['route_slug'] = !empty($data_types['route_slug']) ? $data_types['route_slug'] : null;
-        $data['category_type'] = !empty($data_types['category_type']) ? $data_types['category_type'] : null;
         $data['additional_info'] = !empty($data_types['additional_info']) ? $data_types['additional_info'] : null;
 
         $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));

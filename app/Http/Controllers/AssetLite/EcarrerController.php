@@ -393,7 +393,6 @@ class EcarrerController extends Controller
 		# route slug
 		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
 
-		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
 
 		$additional_info = null;
 		if( $request->filled('sider_info') ){
@@ -470,6 +469,113 @@ class EcarrerController extends Controller
 		$response = $this->ecarrerService->sectionDelete($id);
 		Session::flash('message', $response->getContent());
 		return redirect("life-at-banglalink/events");
+
+	}
+
+
+
+	/**
+	 * Life at banglalink topbanner section list
+	 * @return [type] [description]
+	 */
+	public function topbannerIndex(){
+
+		$categoryTypes = 'life_at_bl_topbanner';
+
+		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
+		
+		return view('admin.ecarrer.topbanner.index', compact('sections'));
+
+	}
+
+	/**
+	 * eCarrer life at banglalink topbanner
+	 * @return [type] [description]
+	 */
+	public function topbannerCreate(){
+
+		return view('admin.ecarrer.topbanner.create');
+	}
+
+	/**
+	 * eCarrer life at banglalink topbanner store on create
+	 * @return [type] [description]
+	 */
+	public function topbannerStore(Request $request){
+
+		$validator = Validator::make($request->all(), [
+		    'title' => 'required',
+		    'slug' => 'required'
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('life-at-banglalink/topbanner');
+		}
+
+		$data_types['category'] = 'life_at_bl_topbanner';
+		$data_types['has_items'] = 0;
+		# route slug
+		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+	
+		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
+
+		Session::flash('message', 'Banner created successfully!');
+		return redirect('life-at-banglalink/topbanner');
+	}
+
+
+	/**
+	 * eCarrer life at banglalink topbanner
+	 * @return [type] [description]
+	 */
+	public function topbannerEdit($id){
+
+		$sections = $this->ecarrerService->generalSectionById($id);
+		return view('admin.ecarrer.topbanner.edit', compact('sections'));
+	}
+
+
+	/**
+	 * Update general section
+	 * @param  Request $request [description]
+	 * @param  [type]  $id      [description]
+	 * @return [type]           [description]
+	 */
+	public function topbannerUpdate(Request $request, $id){
+
+		$image_upload_size = ConfigController::adminImageUploadSize();
+		$image_upload_type = ConfigController::adminImageUploadType();
+		
+		# Check Image upload validation
+		$validator = Validator::make($request->all(), [
+		    'title' => 'required',
+		    // 'slug' => 'required',
+		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('life-at-banglalink/topbanner');
+		}
+
+		$data_types = null;
+
+		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
+
+		Session::flash('message', 'Banner updated successfully!');
+		return redirect('life-at-banglalink/topbanner');
+
+	}
+
+	/**
+	 * [topbannerDestroy description]
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
+	public function topbannerDestroy($id){
+
+		$response = $this->ecarrerService->sectionDelete($id);
+		Session::flash('message', $response->getContent());
+		return redirect("life-at-banglalink/topbanner");
 
 	}
 
