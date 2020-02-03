@@ -1,11 +1,11 @@
 @extends('layouts.admin')
-@section('title', 'Item Create')
-@section('card_name', 'Item Create')
+@section('title', 'Section Create')
+@section('card_name', 'Section Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> Item Create</li>
+    <li class="breadcrumb-item active"> Section Create</li>
 @endsection
 @section('action')
-    <a href="{{ url("ecarrer-items/$parent_id/list") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('life-at-banglalink/events') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -13,10 +13,10 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form id="general_section" role="form" action="{{ route('ecarrer.items.store', $parent_id) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form id="events_section" role="form" action="{{ route('life.at.banglalink.events.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="title" class="required">Title</label>
+                                    <label for="title" class="required">Give a name of the section</label>
                                     <input type="text" name="title"  class="form-control section_name" placeholder="Section name"
                                            value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Please enter Section name">
                                     <div class="help-block"></div>
@@ -25,14 +25,28 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('slug') ? ' error' : '' }}">
+                                    <label for="slug" class="required">Slug</label>
+                                    <input type="text" name="slug"  class="form-control section_slug"
+                                           value="{{ old("slug") ? old("slug") : '' }}" required readonly  data-validation-required-message="Slug name can not be emply">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('slug'))
+                                        <div class="help-block">  {{ $errors->first('slug') }}</div>
+                                    @endif
+                                </div>
 
-                                <!-- Include additional field layout for individual section requirement -->
-                                @if( $ecarrer_section_slug != 'life_at_bl_events' )
-                                    @include('admin.ecarrer-items.additional.description')
-                                @endif
+                                <div class="form-group col-md-6 {{ $errors->has('sliding_speed') ? ' error' : '' }}">
+                                    <label for="sliding_speed" class="required">Sliding Speed</label>
+                                    <input type="text" name="sider_info[sliding_speed]" oninput="this.value =Number(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"  class="form-control" placeholder="Enter sliding speed (sec)"  min="1" max="300"
+                                           value="{{ (!empty($sider_info['sliding_speed'])) ? $sider_info['sliding_speed'] : old("sider_info.sliding_speed") ?? '' }}"
+                                           required data-validation-required-message="Enter slider info">
+                                    <div class="help-block"><small>Default value 10</small></div>
+                                    @if ($errors->has('sliding_speed'))
+                                        <div class="help-block">  {{ $errors->first('sliding_speed') }}</div>
+                                    @endif
+                                </div>
 
-
-                                <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                {{-- <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="">Banner Image (optional)</label>
                                     <div class="custom-file">
                                         <input type="file" name="image_url" class="custom-file-input" id="image">
@@ -50,6 +64,14 @@
                                     <img style="height:70px;width:70px;display:none" id="imgDisplay">
                                 </div>
 
+                                
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Description (Optional)</label>
+                                        <textarea name="description" class="form-control" rows="5"
+                                                  placeholder="Enter description"></textarea>
+                                    </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
@@ -64,14 +86,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Include additional field layout for individual section requirement -->
-                                @if( $ecarrer_section_slug == 'life_at_bl_teams' )
-                                    @include('admin.ecarrer-items.additional.call_to_actions')
-                                @endif
-
-
-
-                                <input type="hidden" name="carrer_parent_item" value="{{$parent_id}}">
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
@@ -99,6 +113,24 @@
 @endpush
 @push('page-js')
     
+    <script type="text/javascript">
+        jQuery(document).ready(function($){
+
+
+            $('input.section_name').on('keyup', function(){
+                var sectionName = $('#events_section').find('.section_name').val();
+                var sectionNameLower = sectionName.toLowerCase();
+                var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
+
+                $('#events_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
+
+                // console.log(sectionNameRemoveSpace);
+            });
+
+            
+
+        });
+    </script>
 
 @endpush
 

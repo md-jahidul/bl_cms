@@ -253,4 +253,15 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('life-at-banglalink/diversity/{id}/update', 'AssetLite\EcarrerController@diversityUpdate')->name('life.at.banglalink.diversity.update');
     Route::get('life-at-banglalink/diversity/destroy/{id}', 'AssetLite\EcarrerController@diversityDestroy')->name('life.at.banglalink.diversity.destroy');
 
+
+    // eCarrer Life at banglalink Events & Activities =========================================================
+    Route::get('life-at-banglalink/events', 'AssetLite\EcarrerController@eventsIndex')->name('life.at.banglalink.events');
+    Route::get('life-at-banglalink/events/create', 'AssetLite\EcarrerController@eventsCreate')->name('life.at.banglalink.events.create');
+    Route::post('life-at-banglalink/events/store', 'AssetLite\EcarrerController@eventsStore')->name('life.at.banglalink.events.store');
+
+    Route::get('life-at-banglalink/events/{id}/edit', 'AssetLite\EcarrerController@eventsEdit')->name('life.at.banglalink.events.edit');
+    
+    Route::post('life-at-banglalink/events/{id}/update', 'AssetLite\EcarrerController@eventsUpdate')->name('life.at.banglalink.events.update');
+    Route::get('life-at-banglalink/events/destroy/{id}', 'AssetLite\EcarrerController@eventsDestroy')->name('life.at.banglalink.events.destroy');
+
 });
