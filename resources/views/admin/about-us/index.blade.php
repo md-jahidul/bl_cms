@@ -37,11 +37,11 @@
                                 <td width='5%'>{{$about->id}}</td>
                                 <td width='30%'>{{$about->banglalink_info}}</td>
                                 <td width='20%'>
-                                    <img style="height:80px;width:100px;display:none"
+                                    <img style="height:80px;width:100px;"
                                          src="{{ config('filesystems.file_base_url') . $about->content_image }}" id="profile_image_Display">
                                 </td>
                                 <td width='20%'>
-                                    <img style="height:80px;width:100px;display:none"
+                                    <img style="height:80px;width:100px;"
                                          src="{{ config('filesystems.file_base_url') . $about->content_image }}" id="profile_image_Display">
                                 </td>
                                 <td width='20%'>
