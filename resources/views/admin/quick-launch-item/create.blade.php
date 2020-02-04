@@ -18,8 +18,8 @@
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">English Title</label>
-                                    <input type="text" name="title_en"  class="form-control" placeholder="Enter english title"
-                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Enter english title">
+                                    <input type="text" name="title_en"  class="form-control" placeholder="Enter title in English"
+                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Enter title in English">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_en'))
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -28,8 +28,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                     <label for="title_bn" class="required">Bangla Title</label>
-                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter bangla title"
-                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Enter bangla title">
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title in Bangla"
+                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Enter title in Bangla">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
@@ -38,7 +38,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('link') ? ' error' : '' }}">
                                     <label for="link" class="required">Link</label>
-                                    <input type="text" name="link"  class="form-control" placeholder="Enter english title"
+                                    <input type="text" name="link"  class="form-control" placeholder="example: /quick-recharge"
                                            value="{{ old("link") ? old("link") : '' }}" required data-validation-required-message="Enter link">
                                     <div class="help-block"></div>
                                     @if ($errors->has('link'))
@@ -59,7 +59,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Quick Launch Icon</label>
                                     <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input" id="image" required data-validation-required-message="Enter alt text">
+                                        <input type="file" name="image_url" class="custom-file-input" id="image" required data-validation-required-message="Select a quick launch icon">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>

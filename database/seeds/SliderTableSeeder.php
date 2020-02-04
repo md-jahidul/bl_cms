@@ -13,8 +13,11 @@ class SliderTableSeeder extends Seeder
      */
     public function run()
     {
-        $sliders = ['Hero','Trending', 'Digital Services', 'Lifestyle & benefits', 'Testimonial'];
-        $slidersBn = ['হিরো','প্রবণতা', 'ডিজিটাল পরিষেবা', 'লাইফস্টাইল এবং বেনিফিট', 'প্রশংসাপত্র'];
+        DB::statement("SET FOREIGN_KEY_CHECKS =0;");
+        AlSlider::truncate();
+
+        $sliders = ['Hero','Trending', 'Digital Services', 'Lifestyle & benefits', 'Testimonial', 'About-Media'];
+        $slidersBn = ['হিরো','প্রবণতা', 'ডিজিটাল পরিষেবা', 'লাইফস্টাইল এবং বেনিফিট', 'প্রশংসাপত্র', 'সম্বন্ধে-মিডিয়া'];
 
         foreach ($sliders as $key => $slider) {
             $other_attributes = [
@@ -35,5 +38,6 @@ class SliderTableSeeder extends Seeder
                 'other_attributes' => ($slider == 'Digital Services' || $slider == 'Lifestyle & benefits' || $slider == 'Trending') ? $other_attributes : ['sliding_speed' => 10]
             ]);
         }
+        DB::statement("SET FOREIGN_KEY_CHECKS =1;");
     }
 }

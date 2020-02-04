@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(AmarOfferSeeder::class);
+        $this->call(AmarOfferDetailsSeeder::class);
 
         // ====Common Seeder====
         $this->call(RolesTableSeeder::class);

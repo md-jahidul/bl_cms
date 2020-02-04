@@ -30,7 +30,6 @@ class QuickLaunchController extends Controller
     public function __construct(QuickLaunchService $quickLaunchService)
     {
         $this->quickLaunchService = $quickLaunchService;
-        $this->middleware('auth');
     }
 
     /**

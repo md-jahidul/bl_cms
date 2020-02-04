@@ -78,6 +78,17 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('quick-launch/{type}/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
     Route::get('/quick-launch-sortable', 'AssetLite\QuickLaunchController@quickLaunchSortable');
 
+
+    // About Us  ====================================
+    Route::resource('about-us', 'AssetLite\AboutUsController')->except(['show', 'destroy']);
+    Route::get('about-us/destroy/{id}', 'AssetLite\AboutUsController@destroy');
+
+    Route::resource('management', 'AssetLite\ManagementController')->except(['show', 'destroy']);
+    Route::get('management/destroy/{id}', 'AssetLite\ManagementController@destroy');
+
+
+
+
     // META TAG  ====================================
     Route::resource('meta-tag', 'AssetLite\MetaTagController');
     //Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
@@ -143,6 +154,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('trending-home', 'AssetLite\ProductController@trendingOfferHome')->name('trending-home');
 //    Route::get('trending-home/{id}/edit', 'AssetLite\ProductController@homeEdit');
     Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
+    
+    //amar offer details......
+    Route::get('amaroffer/details', 'AssetLite\AmarOfferController@index')->name('amaroffer.list');
+    Route::get('amaroffer/edit/{id}', 'AssetLite\AmarOfferController@edit')->name('amaroffer.edit');
+    Route::put('amaroffer/update/{id}', 'AssetLite\AmarOfferController@update')->name('amaroffer.update');
 
 
     // PARTNERS ====================================
@@ -220,6 +236,18 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
     Route::get('product-core/{id}/edit/', 'AssetLite\ProductCoreController@edit')->name('product.core.edit');
 
+    
+    
+    // Easy Payment Card ============================================
+    Route::get('easy-payment-card', 'AssetLite\EasyPaymentCardController@index');
+    Route::post('easy-payment-card-list', 'AssetLite\EasyPaymentCardController@getEasyPaymentCardList')->name('easypaymentcard.list.ajax');
+    Route::post('upload-payment-card-excel', 'AssetLite\EasyPaymentCardController@uploadCardByExcel')
+                                         ->name('payment.card.excel.save');
+    Route::get('payment-card-status-change', 'AssetLite\EasyPaymentCardController@cardStatusChange')
+                                         ->name('payment.card.status.change');
+    Route::get('delete-easy-payment-card/{id}', 'AssetLite\EasyPaymentCardController@deletePaymentCard');
+
+
     // eCarrer ============================================
     Route::get('life-at-banglalink/general', 'AssetLite\EcarrerController@generalIndex')->name('life.at.banglalink.general');
     Route::get('life-at-banglalink/general/create', 'AssetLite\EcarrerController@generalCreate')->name('life.at.banglalink.general.create');
@@ -280,5 +308,6 @@ Route::middleware('authorize', 'auth')->group(function () {
     
     Route::post('life-at-banglalink/topbanner/{id}/update', 'AssetLite\EcarrerController@topbannerUpdate')->name('life.at.banglalink.topbanner.update');
     Route::get('life-at-banglalink/topbanner/destroy/{id}', 'AssetLite\EcarrerController@topbannerDestroy')->name('life.at.banglalink.topbanner.destroy');
+
 
 });

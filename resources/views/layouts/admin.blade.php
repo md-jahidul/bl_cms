@@ -154,6 +154,25 @@
             readURL(this);
         });
 
+
+        function readImageURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#profile_image_Display').css('display', 'block');
+                    $('#profile_image_Display').attr('src', e.target.result);
+
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#profile_image").change(function() {
+            readImageURL(this);
+        });
+
+
+
         /**
          * On number type input ignore plus, minus operators. only allow digits
          *

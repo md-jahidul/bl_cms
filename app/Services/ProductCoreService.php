@@ -477,6 +477,7 @@ class ProductCoreService
 
                                 case "rate_cutter_offer":
                                     $type = $cells [$index]->getValue();
+                                    $core_data['call_rate'] = ($type == "") ? null : $type;
                                     $assetLiteProduct['rate_cutter_offer'] = ($type == "") ? null : 1;
                                     break;
                                 case "rate_cutter_unit":

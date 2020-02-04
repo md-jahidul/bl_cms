@@ -28,6 +28,8 @@
                         <tbody>
                         @foreach($sliders as $key=>$slider)
                             @php( $sliderType = str_replace(" ", "-", strtolower( $slider->type->name ) ))
+                            {{ $sliderType }}
+
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $slider->title_en }}</td>
