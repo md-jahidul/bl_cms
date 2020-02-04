@@ -20,6 +20,8 @@ class EcarrerController extends Controller
 	 * # life_at_bl_teams
 	 * # life_at_bl_events
 	 * # life_at_bl_diversity
+	 * # life_at_bl_topbanner
+	 * # life_at_bl_contact
 	 */
 
 	/**
@@ -69,7 +71,7 @@ class EcarrerController extends Controller
 		
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
-		    'title' => 'required',
+		    'title_en' => 'required',
 		    'slug' => 'required',
 		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
 		]);
@@ -116,7 +118,7 @@ class EcarrerController extends Controller
 		
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
-		    'title' => 'required',
+		    'title_en' => 'required',
 		    'slug' => 'required',
 		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
 		]);
@@ -176,7 +178,7 @@ class EcarrerController extends Controller
 	public function teamsStore(Request $request){
 
 		$validator = Validator::make($request->all(), [
-		    'title' => 'required',
+		    'title_en' => 'required',
 		    'slug' => 'required'
 		]);
 		if ($validator->fails()) {
@@ -220,7 +222,7 @@ class EcarrerController extends Controller
 		
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
-		    'title' => 'required',
+		    'title_en' => 'required',
 		    'slug' => 'required',
 		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
 		]);
@@ -276,7 +278,7 @@ class EcarrerController extends Controller
 	public function diversityStore(Request $request){
 
 		$validator = Validator::make($request->all(), [
-		    'title' => 'required',
+		    'title_en' => 'required',
 		    'slug' => 'required'
 		]);
 		if ($validator->fails()) {
@@ -320,7 +322,7 @@ class EcarrerController extends Controller
 		
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
-		    'title' => 'required',
+		    'title_en' => 'required',
 		    'slug' => 'required',
 		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
 		]);
@@ -380,7 +382,7 @@ class EcarrerController extends Controller
 	public function eventsStore(Request $request){
 
 		$validator = Validator::make($request->all(), [
-		    'title' => 'required',
+		    'title_en' => 'required',
 		    'slug' => 'required'
 		]);
 		if ($validator->fails()) {
@@ -434,7 +436,7 @@ class EcarrerController extends Controller
 		
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
-		    'title' => 'required',
+		    'title_en' => 'required',
 		    'slug' => 'required',
 		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
 		]);
@@ -504,8 +506,7 @@ class EcarrerController extends Controller
 	public function topbannerStore(Request $request){
 
 		$validator = Validator::make($request->all(), [
-		    'title' => 'required',
-		    'slug' => 'required'
+		    'title_en' => 'required'
 		]);
 		if ($validator->fails()) {
 		    Session::flash('error', $validator->messages()->first());
@@ -548,7 +549,7 @@ class EcarrerController extends Controller
 		
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
-		    'title' => 'required',
+		    'title_en' => 'required',
 		    // 'slug' => 'required',
 		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
 		]);
@@ -578,6 +579,136 @@ class EcarrerController extends Controller
 		return redirect("life-at-banglalink/topbanner");
 
 	}
+
+
+	/**
+	 * Life at banglalink contact section list
+	 * @return [type] [description]
+	 */
+	public function contactIndex(){
+
+		$categoryTypes = 'life_at_bl_contact';
+
+		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
+		
+		return view('admin.ecarrer.contact.index', compact('sections'));
+
+	}
+
+	/**
+	 * eCarrer life at banglalink contact
+	 * @return [type] [description]
+	 */
+	public function contactCreate(){
+
+		return view('admin.ecarrer.contact.create');
+	}
+
+	/**
+	 * eCarrer life at banglalink contact store on create
+	 * @return [type] [description]
+	 */
+	public function contactStore(Request $request){
+
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    'slug' => 'required'
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('life-at-banglalink/contact');
+		}
+
+		$data_types['category'] = 'life_at_bl_contact';
+
+		$category_type = $request->input('category_type', null);
+		if( !empty($category_type) && $category_type == 'connect_us_social' ){
+			$data_types['has_items'] = 1;
+		}
+		else if(!empty($category_type) && $category_type == 'contact_us'){
+			$data_types['has_items'] = 0;
+		}
+		else{
+			$data_types['has_items'] = 0;
+		}
+
+		
+		# route slug
+		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+	
+		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
+
+		Session::flash('message', 'Section created successfully!');
+		return redirect('life-at-banglalink/contact');
+	}
+
+
+	/**
+	 * eCarrer life at banglalink contact
+	 * @return [type] [description]
+	 */
+	public function contactEdit($id){
+
+		$sections = $this->ecarrerService->generalSectionById($id);
+		return view('admin.ecarrer.contact.edit', compact('sections'));
+	}
+
+
+	/**
+	 * Update general section
+	 * @param  Request $request [description]
+	 * @param  [type]  $id      [description]
+	 * @return [type]           [description]
+	 */
+	public function contactUpdate(Request $request, $id){
+
+		$image_upload_size = ConfigController::adminImageUploadSize();
+		$image_upload_type = ConfigController::adminImageUploadType();
+		
+		# Check Image upload validation
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    // 'slug' => 'required',
+		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('life-at-banglalink/contact');
+		}
+
+		$data_types = null;
+
+		$category_type = $request->input('category_type', null);
+		if( !empty($category_type) && $category_type == 'connect_us_social' ){
+			$data_types['has_items'] = 1;
+		}
+		else if(!empty($category_type) && $category_type == 'contact_us'){
+			$data_types['has_items'] = 0;
+		}
+		else{
+			$data_types['has_items'] = 0;
+		}
+
+		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
+
+		Session::flash('message', 'Section updated successfully!');
+		return redirect('life-at-banglalink/contact');
+
+	}
+
+	/**
+	 * [contactDestroy description]
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
+	public function contactDestroy($id){
+
+		$response = $this->ecarrerService->sectionDelete($id);
+		Session::flash('message', $response->getContent());
+		return redirect("life-at-banglalink/contact");
+
+	}
+
 
 
 }
