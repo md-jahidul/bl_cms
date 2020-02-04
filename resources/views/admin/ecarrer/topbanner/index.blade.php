@@ -21,7 +21,7 @@
                         <tr>
                             <th width="3%">SL</th>
                             <th>Title</th>
-                            <th width="30%">Slug</th>
+                            <th width="30%">Alt Text</th>
                             <th width="15%">Status</th>
                             <th width="22%">Action</th>
                         </tr>
@@ -32,8 +32,8 @@
                             {{-- @php( $sectionType = str_replace(" ", "-", strtolower( $section->type->name ) )) --}}
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td>{{ $section->title }}</td>
-                                <td>{{ $section->slug }}</td>
+                                <td>{{ $section->title_en }}</td>
+                                <td>{{ $section->alt_text }}</td>
                                 <td>{{ ($section->is_active == 1) ? 'Acive' : 'Inactive' }}</td>
                                 <td class="text-center" width="22%">
                                     <a href="{{ url("life-at-banglalink/topbanner/$section->id/edit") }}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

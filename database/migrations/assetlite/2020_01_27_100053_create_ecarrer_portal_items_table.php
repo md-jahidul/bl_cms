@@ -18,10 +18,14 @@ class CreateEcarrerPortalItemsTable extends Migration
         Schema::create('ecarrer_portal_items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('ecarrer_portals_id')->comment('ecarrer_portals table foreign key');
-            $table->string('title')->nullable();
-            $table->string('description', 2000)->nullable();
+            $table->string('title_en')->nullable();
+            $table->string('title_bn')->nullable();
+            $table->string('description_en', 2000)->nullable();
+            $table->string('description_bn', 2000)->nullable();
             $table->string('image', 2000)->nullable();
             $table->string('video', 2000)->nullable();
+            $table->string('alt_text')->nullable();
+            $table->string('alt_links')->nullable();
             $table->string('call_to_action', 2000)->nullable();
             $table->json('additional_info')->nullable();
             $table->tinyInteger('is_active')->default(1)->comment('active = 1, inactive = 0');
