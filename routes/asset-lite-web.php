@@ -78,6 +78,17 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('quick-launch/{type}/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
     Route::get('/quick-launch-sortable', 'AssetLite\QuickLaunchController@quickLaunchSortable');
 
+
+    // About Us  ====================================
+    Route::resource('about-us', 'AssetLite\AboutUsController')->except(['show', 'destroy']);
+    Route::get('about-us/destroy/{id}', 'AssetLite\AboutUsController@destroy');
+
+    Route::resource('management', 'AssetLite\ManagementController')->except(['show', 'destroy']);
+    Route::get('management/destroy/{id}', 'AssetLite\ManagementController@destroy');
+
+
+
+
     // META TAG  ====================================
     Route::resource('meta-tag', 'AssetLite\MetaTagController');
     //Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
