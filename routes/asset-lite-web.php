@@ -68,8 +68,14 @@ Route::middleware('authorize', 'auth')->group(function () {
     // });
 
     // QUICK LAUNCH  ====================================
-    Route::resource('quick-launch', 'AssetLite\QuickLaunchController')->except(['show', 'destroy']);
-    Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
+    Route::prefix('quick-launch/{type}')->group(function () {
+        Route::get('/', 'AssetLite\QuickLaunchController@index');
+        Route::get('/create', 'AssetLite\QuickLaunchController@create');
+        Route::post('/store', 'AssetLite\QuickLaunchController@store')->name('quick-launch.store');
+        Route::get('/{id}/edit', 'AssetLite\QuickLaunchController@edit');
+        Route::put('/{id}/update', 'AssetLite\QuickLaunchController@update')->name('quick-launch.update');
+    });
+    Route::get('quick-launch/{type}/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
     Route::get('/quick-launch-sortable', 'AssetLite\QuickLaunchController@quickLaunchSortable');
 
 

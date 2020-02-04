@@ -73,7 +73,6 @@ class ProductCoreController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param $type
      * @return Factory|View
      */
     public function index()
@@ -196,7 +195,7 @@ class ProductCoreController extends Controller
         $sim_package = SimCategory::where('id', $product->sim_type)->first();
         dd(SimCategory::latest()->all()->name);
         $package_id = $sim_package->id;
-        
+
         $this->info['previous_page'] = url()->previous();
         $this->info['type'] = $sim_package->alias;
         $this->info['product'] = $product;

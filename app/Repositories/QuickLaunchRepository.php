@@ -8,9 +8,9 @@ class QuickLaunchRepository extends BaseRepository
 {
     public $modelName = QuickLaunchItem::class;
 
-    public function getQuickLaunch()
+    public function getQuickLaunch($type)
     {
-        return $this->model->orderBy('display_order', 'ASC')->get();
+        return $this->model->where('type', $type)->orderBy('display_order', 'ASC')->get();
     }
 
     public function quickLaunchTableSort($request)
