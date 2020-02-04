@@ -15,6 +15,8 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ url("partners/$partner->id") }}" method="POST" novalidate enctype="multipart/form-data">
+                            @csrf
+                            @method('POST')
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('company_name_en') ? ' error' : '' }}">
                                     <label for="company_name_en" class="required">Company Name (English)</label>

@@ -32,7 +32,9 @@ return [
             'is_rate_cutter_offer'  => 25,
             'offer_section_title'   => 26,
             'tag'                   => 27,
-            'validity_in_days'      => 28,
+            'call_rate'             => 28,
+            'call_rate_unit'        => 29,
+            'validity_in_days'      => 30,
         ]
     ],
     'assetlite' => [

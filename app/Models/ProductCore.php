@@ -30,6 +30,7 @@ class ProductCore extends Model
         'sms_volume',
         'minute_volume',
         'call_rate',
+        'call_rate_unit',
         'sms_rate',
         'is_bundle',
         'is_auto_renewable',

@@ -3,7 +3,7 @@
 {{--------------------------------------------------------------------------------------------------------------------}}
 @if(Auth::user()->type == 'assetlite')
 
-    @if( auth()->user()->can_view('User') || auth()->user()->can_view('Role') || auth()->user()->can_view('Role') )
+    @if( auth()->user()->can_view('User') || auth()->user()->can_view('Role') || auth()->user()->can_view('Permissions') )
         <li class="nav-item"><a href="#"><i class="la la-users"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
             <ul class="menu-content">
@@ -173,6 +173,11 @@
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Postpaid</a>
                 </li>
+                <li class="{{ is_active_url('amaroffer/details') . is_active_url('amaroffer/create') }}">
+                    <a class="menu-item" href="{{ route('amaroffer.list') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> Amar Offer Details</a>
+                </li>
 
             </ul>
         </li>
@@ -206,7 +211,62 @@
             </ul>
         </li>
     @endif
+    
+    <!-- // eCarrer portal -->
+    {{-- @if( auth()->user()->can_view('Slider', 'singleSlider') || auth()->user()->can_view('Slider', 'multiSlider') ) --}}
+        <li class="nav-item"><a href="#"><i class="la la-bell"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">eCarrer</span></a>
+            <ul class="menu-content">
 
+                <li class="{{ is_active_url('life-at-banglalink/topbanner') .' '. is_active_url('life-at-banglalink/topbanner') }}">
+                    <a class="menu-item" href="{{ route('life.at.banglalink.topbanner') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> Top Banner</a>
+                </li>
+
+                <li class="{{ is_active_url('life.at.banglalink.general') .' '. is_active_url('life.at.banglalink.general') }}">
+                    <a class="menu-item" href="{{ route('product.core.list') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> Life at Banglalink</a>
+                            <ul class="menu-content">
+
+                                <li class="{{ is_active_url('life-at-banglalink/general') .' '. is_active_url('life-at-banglalink/general') }}">
+                                    <a class="menu-item" href="{{ route('life.at.banglalink.general') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> General</a>
+                                </li>
+                                <li class="{{ is_active_url('life-at-banglalink/teams') .' '. is_active_url('life-at-banglalink/teams') }}">
+                                    <a class="menu-item" href="{{ route('life.at.banglalink.teams') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Teams</a>
+                                </li>
+                                <li class="{{ is_active_url('life-at-banglalink/diversity') .' '. is_active_url('life-at-banglalink/diversity') }}">
+                                    <a class="menu-item" href="{{ route('life.at.banglalink.diversity') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Diversity</a>
+                                </li>
+                                <li class="{{ is_active_url('life-at-banglalink/events') .' '. is_active_url('life-at-banglalink/events') }}">
+                                    <a class="menu-item" href="{{ route('life.at.banglalink.events') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Events and Activites</a>
+                                </li>
+                                
+                            </ul>
+                </li>
+                <li class="{{ is_active_url('offers/postpaid') . is_active_url('offers/postpaid/create') }}">
+                    <a class="menu-item" href="#"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> Programs</a>
+                </li>
+                <li class="{{ is_active_url('offers/postpaid') . is_active_url('offers/postpaid/create') }}">
+                    <a class="menu-item" href="#"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> Vacancy</a>
+                </li>
+
+            </ul>
+        </li>
+    {{-- @endif --}}
 
     @if( auth()->user()->can_view('Product') )
         <li class="nav-item"><a href="#"><i class="la la-gift"></i>
@@ -225,6 +285,14 @@
                 </li> -->
 
             </ul>
+        </li>
+    @endif
+    @if( auth()->user()->can_view('Product') )
+        <li class="{{ is_active_url('/easy-payment-card') }} nav-item">
+            <a href="{{ url('easy-payment-card') }}">
+                <i class="la la-credit-card"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Easy Payment Card</span>
+            </a>
         </li>
     @endif
 
