@@ -184,7 +184,6 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-
                                     @if(isset($manage))
                                     <img style="height:80px;width:100px;"
                                          src="{{ config('filesystems.file_base_url') . $manage->profile_image }}" id="profile_image_Display">
