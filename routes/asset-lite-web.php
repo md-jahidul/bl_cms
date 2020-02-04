@@ -309,5 +309,16 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('life-at-banglalink/topbanner/{id}/update', 'AssetLite\EcarrerController@topbannerUpdate')->name('life.at.banglalink.topbanner.update');
     Route::get('life-at-banglalink/topbanner/destroy/{id}', 'AssetLite\EcarrerController@topbannerDestroy')->name('life.at.banglalink.topbanner.destroy');
 
+    // eCarrer Contact us  =========================================================
+    Route::get('life-at-banglalink/contact', 'AssetLite\EcarrerController@contactIndex')->name('life.at.banglalink.contact');
+    Route::get('life-at-banglalink/contact/create', 'AssetLite\EcarrerController@contactCreate')->name('life.at.banglalink.contact.create');
+    Route::post('life-at-banglalink/contact/store', 'AssetLite\EcarrerController@contactStore')->name('life.at.banglalink.contact.store');
+
+    Route::get('life-at-banglalink/contact/{id}/edit', 'AssetLite\EcarrerController@contactEdit')->name('life.at.banglalink.contact.edit');
+    
+    Route::post('life-at-banglalink/contact/{id}/update', 'AssetLite\EcarrerController@contactUpdate')->name('life.at.banglalink.contact.update');
+    Route::get('life-at-banglalink/contact/destroy/{id}', 'AssetLite\EcarrerController@contactDestroy')->name('life.at.banglalink.contact.destroy');
+
+
 
 });

@@ -54,7 +54,7 @@ class EcarrerItemService
         }
 
         $call_to_action_buttons = [];
-        if ( isset($data['call_to_action_label_1']) && !empty($data['call_to_action_label_1']) ) {
+        if ( isset($data['call_to_action_label_en_1']) && !empty($data['call_to_action_label_en_1']) ) {
             
             if( !empty($data['call_to_action_count'])){
 
@@ -62,8 +62,12 @@ class EcarrerItemService
 
                     $buttons = [];
                     
-                    if( isset($data['call_to_action_label_'.$i]) ){
-                        $buttons['label'] = $data['call_to_action_label_'.$i];
+                    if( isset($data['call_to_action_label_en_'.$i]) ){
+                        $buttons['label_en'] = $data['call_to_action_label_en_'.$i];
+                    }
+
+                    if( isset($data['call_to_action_label_bn_'.$i]) ){
+                        $buttons['label_bn'] = $data['call_to_action_label_bn_'.$i];
                     }
 
                     if( isset($data['call_to_action_url_'.$i]) ){
@@ -139,7 +143,7 @@ class EcarrerItemService
         }
 
         $call_to_action_buttons = [];
-        if ( isset($data['call_to_action_label_1']) && !empty($data['call_to_action_label_1']) ) {
+        if ( isset($data['call_to_action_label_en_1']) && !empty($data['call_to_action_label_en_1']) ) {
             
             if( !empty($data['call_to_action_count'])){
 
@@ -147,8 +151,12 @@ class EcarrerItemService
 
                     $buttons = [];
                     
-                    if( isset($data['call_to_action_label_'.$i]) ){
-                        $buttons['label'] = $data['call_to_action_label_'.$i];
+                    if( isset($data['call_to_action_label_en_'.$i]) ){
+                        $buttons['label_en'] = $data['call_to_action_label_en_'.$i];
+                    }
+
+                    if( isset($data['call_to_action_label_bn_'.$i]) ){
+                        $buttons['label_bn'] = $data['call_to_action_label_bn_'.$i];
                     }
 
                     if( isset($data['call_to_action_url_'.$i]) ){
@@ -170,9 +178,11 @@ class EcarrerItemService
             $data['call_to_action'] = null;
         }
 
+        // dd($data);
+
         $ecarrer_item->update($data);
 
-        return Response('Section updated successfully');
+        return Response('Item updated successfully');
     }
 
 

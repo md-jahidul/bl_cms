@@ -237,34 +237,34 @@
                 <span class="menu-title" data-i18n="nav.templates.main">eCarrer</span></a>
             <ul class="menu-content">
 
-                <li class="{{ is_active_url('life-at-banglalink/topbanner') .' '. is_active_url('life-at-banglalink/topbanner') }}">
+                <li class="{{ request()->is('life-at-banglalink/topbanner*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('life.at.banglalink.topbanner') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Top Banner</a>
                 </li>
 
-                <li class="{{ is_active_url('life.at.banglalink.general') .' '. is_active_url('life.at.banglalink.general') }}">
+                <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('product.core.list') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Life at Banglalink</a>
                             <ul class="menu-content">
 
-                                <li class="{{ is_active_url('life-at-banglalink/general') .' '. is_active_url('life-at-banglalink/general') }}">
+                                <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
                                     <a class="menu-item" href="{{ route('life.at.banglalink.general') }}"
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> General</a>
                                 </li>
-                                <li class="{{ is_active_url('life-at-banglalink/teams') .' '. is_active_url('life-at-banglalink/teams') }}">
+                                <li class="{{ request()->is('life-at-banglalink/teams*') ? 'active' : '' }}">
                                     <a class="menu-item" href="{{ route('life.at.banglalink.teams') }}"
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> Teams</a>
                                 </li>
-                                <li class="{{ is_active_url('life-at-banglalink/diversity') .' '. is_active_url('life-at-banglalink/diversity') }}">
+                                <li class="{{ request()->is('life-at-banglalink/diversity*') ? 'active' : '' }}">
                                     <a class="menu-item" href="{{ route('life.at.banglalink.diversity') }}"
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> Diversity</a>
                                 </li>
-                                <li class="{{ is_active_url('life-at-banglalink/events') .' '. is_active_url('life-at-banglalink/events') }}">
+                                <li class="{{ request()->is('life-at-banglalink/events*') ? 'active' : '' }}">
                                     <a class="menu-item" href="{{ route('life.at.banglalink.events') }}"
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> Events and Activites</a>
@@ -272,15 +272,20 @@
                                 
                             </ul>
                 </li>
-                <li class="{{ is_active_url('offers/postpaid') . is_active_url('offers/postpaid/create') }}">
+                <li class="{{ is_active_url('offers/postpaid') .' '. is_active_url('offers/postpaid/create') }}">
                     <a class="menu-item" href="#"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Programs</a>
                 </li>
-                <li class="{{ is_active_url('offers/postpaid') . is_active_url('offers/postpaid/create') }}">
+                <li class="{{ is_active_url('offers/postpaid') .' '. is_active_url('offers/postpaid/create') }}">
                     <a class="menu-item" href="#"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Vacancy</a>
+                </li>
+                <li class="{{ request()->is('life-at-banglalink/contact*') ? 'active' : '' }}">
+                    <a class="menu-item" href="{{ route('life.at.banglalink.contact') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> Contact & Connect us</a>
                 </li>
 
             </ul>
