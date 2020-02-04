@@ -162,6 +162,11 @@
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Postpaid</a>
                 </li>
+                <li class="{{ is_active_url('amaroffer/details') . is_active_url('amaroffer/create') }}">
+                    <a class="menu-item" href="{{ route('amaroffer.list') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> Amar Offer Details</a>
+                </li>
 
             </ul>
         </li>
@@ -214,6 +219,14 @@
                 </li> -->
 
             </ul>
+        </li>
+    @endif
+    @if( auth()->user()->can_view('Product') )
+        <li class="{{ is_active_url('/easy-payment-card') }} nav-item">
+            <a href="{{ url('easy-payment-card') }}">
+                <i class="la la-credit-card"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Easy Payment Card</span>
+            </a>
         </li>
     @endif
 

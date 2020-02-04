@@ -137,6 +137,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('trending-home', 'AssetLite\ProductController@trendingOfferHome')->name('trending-home');
 //    Route::get('trending-home/{id}/edit', 'AssetLite\ProductController@homeEdit');
     Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
+    
+    //amar offer details......
+    Route::get('amaroffer/details', 'AssetLite\AmarOfferController@index')->name('amaroffer.list');
+    Route::get('amaroffer/edit/{id}', 'AssetLite\AmarOfferController@edit')->name('amaroffer.edit');
+    Route::put('amaroffer/update/{id}', 'AssetLite\AmarOfferController@update')->name('amaroffer.update');
 
 
     // PARTNERS ====================================
@@ -213,4 +218,14 @@ Route::middleware('authorize', 'auth')->group(function () {
     // Product core ============================================
     Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
     Route::get('product-core/{id}/edit/', 'AssetLite\ProductCoreController@edit')->name('product.core.edit');
+    
+    
+    // Easy Payment Card ============================================
+    Route::get('easy-payment-card', 'AssetLite\EasyPaymentCardController@index');
+    Route::post('easy-payment-card-list', 'AssetLite\EasyPaymentCardController@getEasyPaymentCardList')->name('easypaymentcard.list.ajax');
+    Route::post('upload-payment-card-excel', 'AssetLite\EasyPaymentCardController@uploadCardByExcel')
+                                         ->name('payment.card.excel.save');
+    Route::get('payment-card-status-change', 'AssetLite\EasyPaymentCardController@cardStatusChange')
+                                         ->name('payment.card.status.change');
+    Route::get('delete-easy-payment-card/{id}', 'AssetLite\EasyPaymentCardController@deletePaymentCard');
 });
