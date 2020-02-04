@@ -100,7 +100,7 @@
                                 <div class="form-group col-md-6">
 
                                     @if(isset($about))
-                                        <img style="height:80px;width:100px;display:none"
+                                        <img style="height:80px;width:100px;"
                                              src="{{ config('filesystems.file_base_url') . $about->content_image }}" id="profile_image_Display">
                                     @else
                                         <img style="height:80px;width:100px;display:none" id="profile_image_Display">
@@ -109,7 +109,7 @@
 
                                 <div class="form-group col-md-6">
                                     @if(isset($about))
-                                        <img style="height:80px;width:100px;display:none"
+                                        <img style="height:80px;width:100px;"
                                              src="{{ config('filesystems.file_base_url') . $about->banner_image }}" id="imgDisplay">
                                     @else
                                         <img style="height:80px;width:100px;display:none" id="imgDisplay">
