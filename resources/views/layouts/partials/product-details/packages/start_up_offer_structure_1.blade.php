@@ -23,7 +23,7 @@
 <div class="form-group col-md-6 {{ $errors->has('ft_recharge_detail_en') ? ' error' : '' }}">
     <label for="ft_recharge_detail_en" >Details of First-time Recharge (English)</label>
     <textarea type="text" name="other_attributes[ft_recharge_detail_en]"  class="form-control" placeholder="Enter offer details in english"
-              required data-validation-required-message="Enter offer details in english" id="details">{{ $productDetail->product_details->offer_details_en }}</textarea>
+              required data-validation-required-message="Enter offer details in english" id="details">{{ $productDetail->product_details->other_attributes['ft_recharge_detail_en'] }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('ft_recharge_detail_en'))
         <div class="help-block">{{ $errors->first('ft_recharge_detail_en') }}</div>
@@ -33,7 +33,7 @@
 <div class="form-group col-md-6 {{ $errors->has('ft_recharge_detail_bn') ? ' error' : '' }}">
     <label for="ft_recharge_detail_bn" >Details of First-time Recharge (Bangla)</label>
     <textarea type="text" name="other_attributes[ft_recharge_detail_bn]"  class="form-control" placeholder="Enter offer details in english"
-              required data-validation-required-message="Enter offer details in english" id="details">{{ $productDetail->product_details->offer_details_bn }}</textarea>
+              required data-validation-required-message="Enter offer details in english" id="details">{{ $productDetail->product_details->other_attributes['ft_recharge_detail_bn'] }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('ft_recharge_detail_bn'))
         <div class="help-block">{{ $errors->first('ft_recharge_detail_bn') }}</div>
@@ -45,7 +45,7 @@
     <label for="offer_details_en" >Details of 1GB Every Month (English)</label>
     <textarea type="text" name="other_attributes[one_gb_detail_en]"  class="form-control"
               placeholder="Enter offer details in english"
-              id="details">{{ $productDetail->product_details->offer_details_en }}</textarea>
+              id="details">{{ $productDetail->product_details->other_attributes['one_gb_detail_en'] }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('one_gb_detail_en'))
         <div class="help-block">{{ $errors->first('one_gb_detail_en') }}</div>
@@ -55,7 +55,7 @@
 <div class="form-group col-md-6 {{ $errors->has('one_gb_detail_bn') ? ' error' : '' }}">
     <label for="one_gb_detail_bn" >Details of 1GB Every Month (Bangla)</label>
     <textarea type="text" name="other_attributes[one_gb_detail_bn]"  class="form-control" placeholder="Enter offer details in english"
-              required data-validation-required-message="Enter offer details in english" id="details">{{ $productDetail->product_details->offer_details_bn }}</textarea>
+              required data-validation-required-message="Enter offer details in english" id="details">{{ $productDetail->product_details->other_attributes['one_gb_detail_bn'] }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('one_gb_detail_bn'))
         <div class="help-block">{{ $errors->first('one_gb_detail_bn') }}</div>
@@ -65,7 +65,7 @@
 <div class="form-group col-md-6 {{ $errors->has('extra_validity_details_en') ? ' error' : '' }}">
     <label for="extra_validity_details_en" >Extra validity offers Details (English)</label>
     <textarea type="text" name="other_attributes[extra_validity_details_en]"  class="form-control" placeholder="Enter offer details in english"
-              required data-validation-required-message="Enter offer details in english" id="details">{{ $productDetail->product_details->offer_details_en }}</textarea>
+              required data-validation-required-message="Enter offer details in english" id="details">{{ $productDetail->product_details->other_attributes['extra_validity_details_en'] }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('extra_validity_details_en'))
         <div class="help-block">{{ $errors->first('extra_validity_details_en') }}</div>
@@ -75,7 +75,7 @@
 <div class="form-group col-md-6 {{ $errors->has('offer_details_bn') ? ' error' : '' }}">
     <label for="offer_details_bn" >Extra validity offers Details (Bangla)</label>
     <textarea type="text" name="other_attributes[extra_validity_details_bn]"  class="form-control" placeholder="Enter offer details in english"
-              required data-validation-required-message="Enter offer details in english" id="details">{{ $productDetail->product_details->offer_details_bn }}</textarea>
+              required data-validation-required-message="Enter offer details in english" id="details">{{ $productDetail->product_details->other_attributes['extra_validity_details_bn'] }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('offer_details_bn'))
         <div class="help-block">{{ $errors->first('offer_details_bn') }}</div>

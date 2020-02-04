@@ -247,11 +247,6 @@ class ProductController extends Controller
     {
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
-
-//        return $productDetail;
-
-//        return $productDetail->product_details->other_attributes['recharge_benefits_code'];
-
         return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType'));
     }
 
