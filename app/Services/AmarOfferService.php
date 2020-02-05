@@ -23,8 +23,8 @@ class AmarOfferService
     protected $amarOfferRepository;
 
     /**
-     * DigitalServicesService constructor.
-     * @param AmarOfferRepository $sliderRepository
+     * AmarOfferService constructor.
+     * @param AmarOfferRepository $amarOfferRepository
      */
     public function __construct(AmarOfferRepository $amarOfferRepository)
     {
