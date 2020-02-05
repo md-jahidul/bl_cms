@@ -1277,7 +1277,8 @@ class EcarrerController extends Controller
 		    Session::flash('error', $validator->messages()->first());
 		    return redirect('programs/photogallery');
 		}
-
+		
+		$data_types = null;
 		$additional_info = null;
 		if( $request->filled('sider_info') ){
 			$additional_info['sider_info'] = $request->input('sider_info');
@@ -1304,6 +1305,145 @@ class EcarrerController extends Controller
 		$response = $this->ecarrerService->sectionDelete($id);
 		Session::flash('message', $response->getContent());
 		return redirect("programs/photogallery");
+
+	}
+
+
+	/**
+	 * Programs sapbatches section list
+	 * @return [type] [description]
+	 */
+	public function sapbatchesIndex(){
+
+		$categoryTypes = 'programs_sapbatches';
+
+		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
+		
+		return view('admin.ecarrer.sapbatches.index', compact('sections'));
+
+	}
+
+	/**
+	 * eCarrer programs sapbatches
+	 * @return [type] [description]
+	 */
+	public function sapbatchesCreate(){
+
+		return view('admin.ecarrer.sapbatches.create');
+	}
+
+	/**
+	 * eCarrer life at banglalink sapbatches store on create
+	 * @return [type] [description]
+	 */
+	public function sapbatchesStore(Request $request){
+
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    'slug' => 'required'
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('programs/sapbatches');
+		}
+
+		$data_types['category'] = 'programs_sapbatches';
+
+		if( $request->filled('category_type') && $request->input('category_type') == 'batch_title' ){
+			$data_types['has_items'] = 0;
+		}
+		else{
+			$data_types['has_items'] = 1;
+		}
+		
+		# route slug
+		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+
+
+		$additional_info = null;
+		if( $request->filled('sider_info') ){
+			$additional_info['sider_info'] = $request->input('sider_info');
+		}
+
+		if( !empty($additional_info) ){
+			$data_types['additional_info'] = json_encode($additional_info);
+		}
+	
+		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
+
+		Session::flash('message', 'Section created successfully!');
+		return redirect('programs/sapbatches');
+	}
+
+
+	/**
+	 * eCarrer life at banglalink sapbatches
+	 * @return [type] [description]
+	 */
+	public function sapbatchesEdit($id){
+
+		$sections = $this->ecarrerService->generalSectionById($id);
+		return view('admin.ecarrer.sapbatches.edit', compact('sections'));
+	}
+
+
+	/**
+	 * Update general section
+	 * @param  Request $request [description]
+	 * @param  [type]  $id      [description]
+	 * @return [type]           [description]
+	 */
+	public function sapbatchesUpdate(Request $request, $id){
+
+		$image_upload_size = ConfigController::adminImageUploadSize();
+		$image_upload_type = ConfigController::adminImageUploadType();
+		
+		# Check Image upload validation
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    'slug' => 'required',
+		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('programs/sapbatches');
+		}
+
+		$data_types = null;
+		$additional_info = null;
+		if( $request->filled('sider_info') ){
+			$additional_info['sider_info'] = $request->input('sider_info');
+		}
+
+		if( !empty($additional_info) ){
+			$data_types['additional_info'] = json_encode($additional_info);
+		}
+
+
+		if( $request->filled('category_type') && $request->input('category_type') == 'batch_title' ){
+			$data_types['has_items'] = 0;
+		}
+		else{
+			$data_types['has_items'] = 1;
+		}
+
+		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
+
+		Session::flash('message', 'Section updated successfully!');
+		return redirect('programs/sapbatches');
+
+	}
+
+	/**
+	 * [sapbatchesDestroy description]
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
+	public function sapbatchesDestroy($id){
+
+		$response = $this->ecarrerService->sectionDelete($id);
+		Session::flash('message', $response->getContent());
+		return redirect("programs/sapbatches");
 
 	}
 

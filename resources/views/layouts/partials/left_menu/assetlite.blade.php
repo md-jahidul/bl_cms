@@ -246,7 +246,7 @@
                 <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('product.core.list') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-5"></i> Life at Banglalink</a>
+                            class="la la-magic"></i> Life at Banglalink</a>
                             <ul class="menu-content">
 
                                 <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
@@ -292,7 +292,11 @@
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> Photo Gallery</a>
                                 </li>
-
+                                <li class="{{ request()->is('programs/sapbatches*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.sapbatches') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> SAP Previous Batches</a>
+                                </li>
                             </ul>
                 </li>
                 <li class="{{ is_active_url('vacancy/pioneer') .' '. is_active_url('vacancy/pioneer') }}">
