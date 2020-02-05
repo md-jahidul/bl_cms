@@ -85,7 +85,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::resource('management', 'AssetLite\ManagementController')->except(['show', 'destroy']);
     Route::get('management/destroy/{id}', 'AssetLite\ManagementController@destroy');
-
+    Route::get('management-sortable', 'AssetLite\ManagementController@managementSortable');
 
 
 
@@ -154,11 +154,25 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('trending-home', 'AssetLite\ProductController@trendingOfferHome')->name('trending-home');
 //    Route::get('trending-home/{id}/edit', 'AssetLite\ProductController@homeEdit');
     Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
-    
+
     //amar offer details......
     Route::get('amaroffer/details', 'AssetLite\AmarOfferController@index')->name('amaroffer.list');
     Route::get('amaroffer/edit/{id}', 'AssetLite\AmarOfferController@edit')->name('amaroffer.edit');
     Route::put('amaroffer/update/{id}', 'AssetLite\AmarOfferController@update')->name('amaroffer.update');
+    
+    // Device offers
+    Route::get('device-offer', 'AssetLite\DeviceOfferController@index');
+    Route::post('device-offer-list', 'AssetLite\DeviceOfferController@deviceOfferList')
+            ->name('deviceoffer.list.ajax');
+    
+    Route::post('upload-device-offer-excel', 'AssetLite\DeviceOfferController@uploadOfferByExcel')
+                                         ->name('device.offer.excel.save');
+    
+    Route::get('device-offer-status-change', 'AssetLite\DeviceOfferController@offerStatusChange')
+                                         ->name('offer.status.change');
+    Route::get('delete-device-offer/{id}', 'AssetLite\DeviceOfferController@deleteDeviceOffer');
+    
+    
 
 
     // PARTNERS ====================================
@@ -236,8 +250,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
     Route::get('product-core/{id}/edit/', 'AssetLite\ProductCoreController@edit')->name('product.core.edit');
 
-    
-    
+
+
     // Easy Payment Card ============================================
     Route::get('easy-payment-card', 'AssetLite\EasyPaymentCardController@index');
     Route::post('easy-payment-card-list', 'AssetLite\EasyPaymentCardController@getEasyPaymentCardList')->name('easypaymentcard.list.ajax');
@@ -245,7 +259,7 @@ Route::middleware('authorize', 'auth')->group(function () {
                                          ->name('payment.card.excel.save');
     Route::get('payment-card-status-change', 'AssetLite\EasyPaymentCardController@cardStatusChange')
                                          ->name('payment.card.status.change');
-    Route::get('delete-easy-payment-card/{id}', 'AssetLite\EasyPaymentCardController@deletePaymentCard');
+    Route::get('delete-easy-payment-card/{id?}', 'AssetLite\EasyPaymentCardController@deletePaymentCard');
 
 
     // eCarrer ============================================
@@ -272,7 +286,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('life-at-banglalink/teams/store', 'AssetLite\EcarrerController@teamsStore')->name('life.at.banglalink.teams.store');
 
     Route::get('life-at-banglalink/teams/{id}/edit', 'AssetLite\EcarrerController@teamsEdit')->name('life.at.banglalink.teams.edit');
-    
+
     Route::post('life-at-banglalink/teams/{id}/update', 'AssetLite\EcarrerController@teamsUpdate')->name('life.at.banglalink.teams.update');
     Route::get('life-at-banglalink/teams/destroy/{id}', 'AssetLite\EcarrerController@teamsDestroy')->name('life.at.banglalink.teams.destroy');
 
@@ -283,7 +297,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('life-at-banglalink/diversity/store', 'AssetLite\EcarrerController@diversityStore')->name('life.at.banglalink.diversity.store');
 
     Route::get('life-at-banglalink/diversity/{id}/edit', 'AssetLite\EcarrerController@diversityEdit')->name('life.at.banglalink.diversity.edit');
-    
+
     Route::post('life-at-banglalink/diversity/{id}/update', 'AssetLite\EcarrerController@diversityUpdate')->name('life.at.banglalink.diversity.update');
     Route::get('life-at-banglalink/diversity/destroy/{id}', 'AssetLite\EcarrerController@diversityDestroy')->name('life.at.banglalink.diversity.destroy');
 
@@ -294,7 +308,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('life-at-banglalink/events/store', 'AssetLite\EcarrerController@eventsStore')->name('life.at.banglalink.events.store');
 
     Route::get('life-at-banglalink/events/{id}/edit', 'AssetLite\EcarrerController@eventsEdit')->name('life.at.banglalink.events.edit');
-    
+
     Route::post('life-at-banglalink/events/{id}/update', 'AssetLite\EcarrerController@eventsUpdate')->name('life.at.banglalink.events.update');
     Route::get('life-at-banglalink/events/destroy/{id}', 'AssetLite\EcarrerController@eventsDestroy')->name('life.at.banglalink.events.destroy');
 
@@ -305,7 +319,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('life-at-banglalink/topbanner/store', 'AssetLite\EcarrerController@topbannerStore')->name('life.at.banglalink.topbanner.store');
 
     Route::get('life-at-banglalink/topbanner/{id}/edit', 'AssetLite\EcarrerController@topbannerEdit')->name('life.at.banglalink.topbanner.edit');
-    
+
     Route::post('life-at-banglalink/topbanner/{id}/update', 'AssetLite\EcarrerController@topbannerUpdate')->name('life.at.banglalink.topbanner.update');
     Route::get('life-at-banglalink/topbanner/destroy/{id}', 'AssetLite\EcarrerController@topbannerDestroy')->name('life.at.banglalink.topbanner.destroy');
 
@@ -315,7 +329,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('life-at-banglalink/contact/store', 'AssetLite\EcarrerController@contactStore')->name('life.at.banglalink.contact.store');
 
     Route::get('life-at-banglalink/contact/{id}/edit', 'AssetLite\EcarrerController@contactEdit')->name('life.at.banglalink.contact.edit');
-    
+
     Route::post('life-at-banglalink/contact/{id}/update', 'AssetLite\EcarrerController@contactUpdate')->name('life.at.banglalink.contact.update');
     Route::get('life-at-banglalink/contact/destroy/{id}', 'AssetLite\EcarrerController@contactDestroy')->name('life.at.banglalink.contact.destroy');
 
