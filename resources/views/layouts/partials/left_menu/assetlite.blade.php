@@ -194,7 +194,7 @@
                        data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Banglalink</a>
                 </li>
                 <li class="{{ is_active_url('management') . is_active_url('management/create') }}">
-                    <a class="menu-item" href="{{ url('management/create') }}"
+                    <a class="menu-item" href="{{ url('management') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Management</a>
                 </li>
 
