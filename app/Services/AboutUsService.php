@@ -61,13 +61,13 @@ class AboutUsService
 
 
     /**
-     * @param $data
-     * @param $id
+     * @param $request
+     * @param $aboutUs
      * @return ResponseFactory|Response
      */
-    public function updateAboutUsInfo($data, $id)
+    public function updateAboutUsInfo($request, $aboutUs)
     {
-        $aboutUs = $this->findOne($id);
+        $data = $request->all();
 
         if (request()->hasFile('content_image')) {
             $data['content_image'] = $this->upload($data['content_image'], 'assetlite/images/about-us/');
