@@ -38,7 +38,6 @@ class ProductCore extends Model
         'is_gift_offer',
         'show_in_app',
         'offer_id',
-        'is_amar_offer',
         'is_social_pack',
         'other_info',
         'status',

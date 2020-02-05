@@ -19,6 +19,9 @@ class QuickLaunchItemSeeder extends Seeder
         $items = ["New connection","Packages","Roaming", "Digital Services","Helpline","My BL App","Helpline","Bondho SIM Offer","Banglalink Advance","eShop","Lifestyle & Benefits","Banglalink 4G"];
         $item_bn_text = ["নিউ কানেকশন","প্যাকেজ","রোমিং", "ডিজিটাল সার্ভিসেস","হেল্পলাইন","মাই বিএল অ্যাপ","হেল্পলাইন","বন্ধু সিম অফার","বাংলালিংক অ্যাডভান্স","ই-শপ","লাইফস্টাইল & বেনিফিটস","বাংলালিংক 4G"];
 
+        $qlButtonItemsEn = ["Quick Recharge","Amar Offer","Customer Care", "Internet offer","Dowload MyBl App"];
+        $qlButtonItemsBn = ["কুইক রিচার্জ", "আমার অফার", "কাস্টমার কেয়ার", "ইন্টারনেট অফার", "মাইবিএল অ্যাপ ডাউনলোড করুন"];
+
         foreach ($items as $key => $item) {
             $quick_launch_items[] = [
                 'title_en' => $item,
@@ -26,6 +29,20 @@ class QuickLaunchItemSeeder extends Seeder
                 'image_url' => 'assetlite/images/quick-launch-items/' . strtolower(str_replace(" ", "-", $item)) . '.png',
                 'alt_text' => $item,
                 'link' => strtolower(str_replace(" ", "-", $item)),
+                'type' => 'panel',
+                'status' => 1,
+                'display_order' => ++$key
+            ];
+        }
+
+        foreach ($qlButtonItemsEn as $key => $item) {
+            $quick_launch_items[] = [
+                'title_en' => $item,
+                'title_bn' => $qlButtonItemsBn[$key],
+                'image_url' => 'assetlite/images/quick-launch-items/' . strtolower(str_replace(" ", "-", $item)) . '.svg',
+                'alt_text' => $item,
+                'link' => strtolower(str_replace(" ", "-", $item)),
+                'type' => 'button',
                 'status' => 1,
                 'display_order' => ++$key
             ];

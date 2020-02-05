@@ -14,9 +14,12 @@
             <select name="content_type" class="form-control filter" id="content_type">
                 <option value=""> Content Type</option>
                 <option value="data">DATA</option>
-                <option value="bundle">BUNDLES</option>
+                <option value="mix">MIX BUNDLES</option>
+                <option value="voice">VOICE BUNDLES</option>
+                <option value="sms">SMS BUNDLES</option>
                 <option value="rate_cutter">RATE CUTTER</option>
                 <option value="recharge_offer">RECHARGE OFFER</option>
+                <option value="ma loan">MA LOAN</option>
                 <option value="data loan">DATA LOAN</option>
                 <option value="gift">GIFT</option>
                 <option value="volume request">VOLUME REQUEST</option>

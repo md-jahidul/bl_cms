@@ -35,9 +35,20 @@
     @endif
 
     @if( auth()->user()->can_view('QuickLaunch') )
-        <li class="{{ is_active_url('/quick-launch') }} nav-item"><a href="{{ url('quick-launch') }}"><i
-                    class="la la-automobile"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Quick launch</span></a>
+
+        <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Quick launch Management</span></a>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('quick-launch/panel') }} nav-item"><a href="{{ url('quick-launch/panel') }}"><i
+                            class="la la-automobile"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Quick launch Panel</span></a>
+                </li>
+
+                <li class="{{ is_active_url('quick-launch/button') }} nav-item"><a href="{{ url('quick-launch/button') }}"><i
+                            class="la la-automobile"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Quick launch Button</span></a>
+                </li>
+            </ul>
         </li>
     @endif
 
@@ -162,10 +173,34 @@
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Postpaid</a>
                 </li>
+                <li class="{{ is_active_url('amaroffer/details') . is_active_url('amaroffer/create') }}">
+                    <a class="menu-item" href="{{ route('amaroffer.list') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> Amar Offer Details</a>
+                </li>
 
             </ul>
         </li>
     @endif
+
+
+
+        <li class="nav-item"><a href="#"><i class="la la-align-justify"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">About Banglalink</span></a>
+            <ul class="menu-content">
+
+                <li class="{{ is_active_url('about-us/create') . is_active_url('about-us/create') }}">
+                    <a class="menu-item" href="{{ url('about-us/create') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Banglalink</a>
+                </li>
+                <li class="{{ is_active_url('management') . is_active_url('management/create') }}">
+                    <a class="menu-item" href="{{ url('management') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Management</a>
+                </li>
+
+            </ul>
+        </li>
+
 
     @if( auth()->user()->can_view('Partner') )
         <li class="nav-item"><a href="#"><i class="la la-gift"></i>
@@ -196,6 +231,98 @@
         </li>
     @endif
 
+    <!-- // eCarrer portal -->
+    {{-- @if( auth()->user()->can_view('Slider', 'singleSlider') || auth()->user()->can_view('Slider', 'multiSlider') ) --}}
+        <li class="nav-item"><a href="#"><i class="la la-bell"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">eCarrer</span></a>
+            <ul class="menu-content">
+
+                <li class="{{ request()->is('life-at-banglalink/topbanner*') ? 'active' : '' }}">
+                    <a class="menu-item" href="{{ route('life.at.banglalink.topbanner') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> Top Banner</a>
+                </li>
+
+                <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
+                    <a class="menu-item" href="{{ route('product.core.list') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-5"></i> Life at Banglalink</a>
+                            <ul class="menu-content">
+
+                                <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('life.at.banglalink.general') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> General</a>
+                                </li>
+                                <li class="{{ request()->is('life-at-banglalink/teams*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('life.at.banglalink.teams') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Teams</a>
+                                </li>
+                                <li class="{{ request()->is('life-at-banglalink/diversity*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('life.at.banglalink.diversity') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Diversity</a>
+                                </li>
+                                <li class="{{ request()->is('life-at-banglalink/events*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('life.at.banglalink.events') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Events and Activites</a>
+                                </li>
+
+                            </ul>
+                </li>
+                <li class="{{ is_active_url('programs/progeneral') .' '. is_active_url('programs/progeneral/create') }}">
+                    <a class="menu-item" href="#"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> Programs</a>
+                            <ul class="menu-content">
+                                <li class="{{ request()->is('programs/progeneral*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.progeneral') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> General</a>
+                                </li>
+                                <li class="{{ request()->is('programs/proiconbox*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.proiconbox') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Box Icon Section</a>
+                                </li>
+                                <li class="{{ request()->is('programs/photogallery*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.photogallery') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Photo Gallery</a>
+                                </li>
+                                
+                            </ul>
+                </li>
+                <li class="{{ is_active_url('vacancy/pioneer') .' '. is_active_url('vacancy/pioneer') }}">
+                    <a class="menu-item" href="#"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> Vacancy</a>
+
+                        <ul class="menu-content">
+                            <li class="{{ request()->is('vacancy/pioneer*') ? 'active' : '' }}">
+                                <a class="menu-item" href="{{ route('vacancy.pioneer') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-safari"></i> General</a>
+                            </li>
+                            <li class="{{ request()->is('vacancy/viconbox*') ? 'active' : '' }}">
+                                <a class="menu-item" href="{{ route('vacancy.viconbox') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-safari"></i> Box Icon Section</a>
+                            </li>
+                            
+                        </ul>
+                </li>
+                <li class="{{ request()->is('life-at-banglalink/contact*') ? 'active' : '' }}">
+                    <a class="menu-item" href="{{ route('life.at.banglalink.contact') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> Contact & Connect us</a>
+                </li>
+
+            </ul>
+        </li>
+    {{-- @endif --}}
 
     @if( auth()->user()->can_view('Product') )
         <li class="nav-item"><a href="#"><i class="la la-gift"></i>
@@ -214,6 +341,14 @@
                 </li> -->
 
             </ul>
+        </li>
+    @endif
+    @if( auth()->user()->can_view('Product') )
+        <li class="{{ is_active_url('/easy-payment-card') }} nav-item">
+            <a href="{{ url('easy-payment-card') }}">
+                <i class="la la-credit-card"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Easy Payment Card</span>
+            </a>
         </li>
     @endif
 
