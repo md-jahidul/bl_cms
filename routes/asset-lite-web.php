@@ -159,6 +159,20 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('amaroffer/details', 'AssetLite\AmarOfferController@index')->name('amaroffer.list');
     Route::get('amaroffer/edit/{id}', 'AssetLite\AmarOfferController@edit')->name('amaroffer.edit');
     Route::put('amaroffer/update/{id}', 'AssetLite\AmarOfferController@update')->name('amaroffer.update');
+    
+    // Device offers
+    Route::get('device-offer', 'AssetLite\DeviceOfferController@index');
+    Route::post('device-offer-list', 'AssetLite\DeviceOfferController@deviceOfferList')
+            ->name('deviceoffer.list.ajax');
+    
+    Route::post('upload-device-offer-excel', 'AssetLite\DeviceOfferController@uploadOfferByExcel')
+                                         ->name('device.offer.excel.save');
+    
+    Route::get('device-offer-status-change', 'AssetLite\DeviceOfferController@offerStatusChange')
+                                         ->name('offer.status.change');
+    Route::get('delete-device-offer/{id}', 'AssetLite\DeviceOfferController@deleteDeviceOffer');
+    
+    
 
 
     // PARTNERS ====================================
@@ -245,7 +259,7 @@ Route::middleware('authorize', 'auth')->group(function () {
                                          ->name('payment.card.excel.save');
     Route::get('payment-card-status-change', 'AssetLite\EasyPaymentCardController@cardStatusChange')
                                          ->name('payment.card.status.change');
-    Route::get('delete-easy-payment-card/{id}', 'AssetLite\EasyPaymentCardController@deletePaymentCard');
+    Route::get('delete-easy-payment-card/{id?}', 'AssetLite\EasyPaymentCardController@deletePaymentCard');
 
 
     // eCarrer ============================================

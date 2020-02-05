@@ -306,11 +306,18 @@
             </ul>
         </li>
     @endif
+    
     @if( auth()->user()->can_view('Product') )
         <li class="{{ is_active_url('/easy-payment-card') }} nav-item">
             <a href="{{ url('easy-payment-card') }}">
                 <i class="la la-credit-card"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Easy Payment Card</span>
+            </a>
+        </li>
+        <li class="{{ is_active_url('/device-offer') }} nav-item">
+            <a href="{{ url('device-offer') }}">
+                <i class="la la-credit-card"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Device Offers</span>
             </a>
         </li>
     @endif

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Easy Payment Card')
-@section('card_name', 'Easy Payment Card')
+@section('title', 'Device Offer')
+@section('card_name', 'Device Offer')
 
 @section('content')
     <section>
@@ -15,14 +15,14 @@
                 <div class="card-body card-dashboard">
                     <div class="row">
                         <div class="col-md-12">
-                            <form class="form" method="POST"  id="uploadPaymentCard" enctype="multipart/form-data">
+                            <form class="form" method="POST"  id="uploadDeviceOffer" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="message">Upload Payment Card List</label> <a href="{{ asset('sample-format/Easy-Peyment-Card.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
-                                    <input type="file" class="dropify" name="card_file" data-height="80"
+                                    <label for="message">Upload Device Offer List</label> <a href="{{ asset('sample-format/Device-Offer.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
+                                    <input type="file" class="dropify" name="offer_file" data-height="80"
                                            data-allowed-file-extensions="xlsx" required/>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12" >
                                     <div class="form-group float-right" style="margin-top:15px;">
                                         <button class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
                                     </div>
@@ -30,7 +30,7 @@
                             </form>
                         </div>
                     </div>
-                    @include('admin.easy-payment-card.partials.card_list')
+                    @include('admin.device-offer.partials.offer_list')
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@
             });
 
             /* file handled  */
-            $('#uploadPaymentCard').submit(function (e) {
+            $('#uploadDeviceOffer').submit(function (e) {
                 e.preventDefault();
 
                 swal.fire({
@@ -79,22 +79,22 @@
                 let formData = new FormData($(this)[0]);
 
                 $.ajax({
-                    url: '{{ route("payment.card.excel.save")}}',
+                    url: '{{ route("device.offer.excel.save")}}',
                     type: 'POST',
                     cache: false,
                     contentType: false,
                     processData: false,
                     data: formData,
                     success: function (result) {
-                        if (result.success == 1) {
+                        if (result.success) {
                             swal.fire({
-                                title: result.message,
+                                title: 'Device offer excel is uploaded successfully!',
                                 type: 'success',
                                 timer: 2000,
                                 showConfirmButton: false
                             });
 
-                            $('#payment_card_list').DataTable().ajax.reload();
+                            $('#device_offer_list').DataTable().ajax.reload();
 
                         } else {
                             swal.close();
@@ -108,7 +108,7 @@
                     },
                     error: function (data) {
                         swal.fire({
-                            title: 'Failed to upload payment card excel',
+                            title: 'Failed to upload device offer excel',
                             type: 'error',
                         });
                     }
