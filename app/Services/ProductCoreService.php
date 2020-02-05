@@ -37,7 +37,7 @@ class ProductCoreService
 
     /**
      * ProductCoreService constructor.
-     * @param ProductCoreRepository $productCoreRepository
+     * @param  ProductCoreRepository  $productCoreRepository
      */
     public function __construct(ProductCoreRepository $productCoreRepository)
     {
@@ -287,13 +287,13 @@ class ProductCoreService
             return true;
         } catch (Exception $e) {
             dd($e->getMessage());
-            Log::error('Product Entry Error' . $e->getMessage());
+            Log::error('Product Entry Error'.$e->getMessage());
             return 0;
         }
     }
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return array
      */
     public function getMyblProducts(Request $request)
@@ -310,9 +310,11 @@ class ProductCoreService
             $builder = $builder->where('show_in_home', $request->show_in_home);
         }
 
+        $bundles = ['mix', 'voice', 'sms'];
+
         $builder = $builder->whereHas(
             'details',
-            function ($q) use ($request) {
+            function ($q) use ($request, $bundles) {
                 if ($request->product_code) {
                     $q->where('product_code', $request->product_code);
                 }
@@ -321,12 +323,8 @@ class ProductCoreService
                 }
 
                 if ($request->content_type) {
-                    if ($request->content_type == 'bundle') {
-                        $q->where(function ($q) {
-                            $q->where('content_type', 'mix')
-                                ->orWhere('content_type', 'voice')
-                                ->orWhere('content_type', 'sms');
-                        });
+                    if (in_array($request->content_type, $bundles)) {
+                        $q->where('content_type', $request->content_type);
                         $q->where('is_recharge_offer', '<>', 1);
                         $q->whereNull('call_rate');
                     } elseif ($request->content_type == 'recharge_offer') {
@@ -592,7 +590,7 @@ class ProductCoreService
             return true;
         } catch (Exception $e) {
             dd($e->getMessage());
-            Log::error('Product Entry Error' . $e->getMessage());
+            Log::error('Product Entry Error'.$e->getMessage());
             return 0;
         }
     }
@@ -608,7 +606,7 @@ class ProductCoreService
      */
     public function searchProductCodes($keyword)
     {
-        return ProductCore::where('product_code', 'like', '%' . $keyword . '%')->get();
+        return ProductCore::where('product_code', 'like', '%'.$keyword.'%')->get();
     }
 
     public function getProductDetails($product_code)
@@ -621,7 +619,7 @@ class ProductCoreService
      */
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @param $product_code
      * @return RedirectResponse
      */
@@ -631,7 +629,7 @@ class ProductCoreService
             $file = $request->media;
             $path = $file->storeAs(
                 'products/images',
-                $product_code . '.' . $file->getClientOriginalExtension(),
+                $product_code.'.'.$file->getClientOriginalExtension(),
                 'public'
             );
 
