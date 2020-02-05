@@ -16,7 +16,13 @@
                         <form id="general_section" role="form" action="{{ route('ecarrer.items.store', $parent_id) }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                    <label for="title_en" class="required">Title (English)</label>
+                                    <label for="title_en" class="required">
+                                        @if( $ecarrer_section_slug == 'programs_sapbatches' )
+                                            Name (English)
+                                        @else
+                                            Title (English)
+                                        @endif
+                                    </label>
                                     <input type="text" name="title_en"  class="form-control section_name" placeholder="Section name"
                                            value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Please enter Section name">
                                     <div class="help-block"></div>
@@ -27,7 +33,13 @@
                                 
                                 @if( $ecarrer_section_slug != 'life_at_bl_contact' )
                                     <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                        <label for="title_bn" class="required1">Title (Bangla)</label>
+                                        <label for="title_bn" class="required1">
+                                            @if( $ecarrer_section_slug == 'programs_sapbatches' )
+                                                Name (Bangla)
+                                            @else
+                                                Title (Bangla)
+                                            @endif
+                                        </label>
                                         <input type="text" name="title_bn"  class="form-control section_name" placeholder="Section name"
                                                value="{{ old("title_bn") ? old("title_bn") : '' }}" data-validation-required-message="Please enter Section name">
                                         <div class="help-block"></div>
@@ -94,7 +106,7 @@
                                 @endif
 
 
-                                @if( isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial' )
+                                @if( (isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial') || $ecarrer_section_slug == 'programs_sapbatches' )
                                     @include('admin.ecarrer-items.additional.testimonial_text')
                                 @endif
 

@@ -375,4 +375,15 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('programs/photogallery/destroy/{id}', 'AssetLite\EcarrerController@photogalleryDestroy')->name('programs.photogallery.destroy');
 
 
+    // eCarrer Programs SAP Previous Batches =========================================================
+    Route::get('programs/sapbatches', 'AssetLite\EcarrerController@sapbatchesIndex')->name('programs.sapbatches');
+    Route::get('programs/sapbatches/create', 'AssetLite\EcarrerController@sapbatchesCreate')->name('programs.sapbatches.create');
+    Route::post('programs/sapbatches/store', 'AssetLite\EcarrerController@sapbatchesStore')->name('programs.sapbatches.store');
+
+    Route::get('programs/sapbatches/{id}/edit', 'AssetLite\EcarrerController@sapbatchesEdit')->name('programs.sapbatches.edit');
+    
+    Route::post('programs/sapbatches/{id}/update', 'AssetLite\EcarrerController@sapbatchesUpdate')->name('programs.sapbatches.update');
+    Route::get('programs/sapbatches/destroy/{id}', 'AssetLite\EcarrerController@sapbatchesDestroy')->name('programs.sapbatches.destroy');
+
+
 });
