@@ -2,11 +2,11 @@
 @section('title', 'About Banglalink')
 @section('card_name', 'About Banglalink')
 @section('breadcrumb')
-    {{--<li class="breadcrumb-item active"> <a href="{{ url('about-us') }}"> About Banglalink</a></li>--}}
+    <li class="breadcrumb-item active"> <a href="{{ url('about-us') }}"> About Banglalink</a></li>
     <li class="breadcrumb-item active"> About Banglalink</li>
 @endsection
 @section('action')
-   {{-- <a href="{{ url('about-us') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>--}}
+    <a href="{{ url('about-us') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>

@@ -6,7 +6,7 @@
 @section('action')
     @if(count($aboutUs) == 0)
         <a href="{{ url('about-us/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-            Add About US
+            Add About Banglalink
         </a>
     @endif
 @endsection
