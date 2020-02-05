@@ -186,10 +186,10 @@
 
 
         <li class="nav-item"><a href="#"><i class="la la-align-justify"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">About Us</span></a>
+                <span class="menu-title" data-i18n="nav.templates.main">About Banglalink</span></a>
             <ul class="menu-content">
 
-                <li class="{{ is_active_url('about-us') . is_active_url('about-us/create') }}">
+                <li class="{{ is_active_url('about-us/create') . is_active_url('about-us/create') }}">
                     <a class="menu-item" href="{{ url('about-us/create') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Banglalink</a>
                 </li>
@@ -230,7 +230,7 @@
             </ul>
         </li>
     @endif
-    
+
     <!-- // eCarrer portal -->
     {{-- @if( auth()->user()->can_view('Slider', 'singleSlider') || auth()->user()->can_view('Slider', 'multiSlider') ) --}}
         <li class="nav-item"><a href="#"><i class="la la-bell"></i>
@@ -269,7 +269,7 @@
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> Events and Activites</a>
                                 </li>
-                                
+
                             </ul>
                 </li>
                 <li class="{{ is_active_url('offers/postpaid') .' '. is_active_url('offers/postpaid/create') }}">
