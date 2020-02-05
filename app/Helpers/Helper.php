@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Helpers;
+
 use App\Models\Config;
 
 class Helper
@@ -75,4 +76,23 @@ class Helper
         ];
     }
 
+    /**
+     * @param $view_url
+     * @return string
+     */
+    public static function getYoutubeEmbedUrl($view_url)
+    {
+        $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
+        $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+        $youtube_id = null;
+
+        if (preg_match($longUrlRegex, $view_url, $matches)) {
+            $youtube_id = $matches[count($matches) - 1];
+        }
+
+        if (preg_match($shortUrlRegex, $view_url, $matches)) {
+            $youtube_id = $matches[count($matches) - 1];
+        }
+        return 'https://www.youtube.com/embed/' . $youtube_id . '?rel=0&enablejsapi=1' ;
+    }
 }

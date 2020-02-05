@@ -5,9 +5,8 @@ namespace App\Enums;
 use BenSampo\Enum\Enum;
 
 /**
- * @method static static OptionOne()
- * @method static static OptionTwo()
- * @method static static OptionThree()
+ * Class OfferType
+ * @package App\Enums
  */
 final class OfferType extends Enum
 {
