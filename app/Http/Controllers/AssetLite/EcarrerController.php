@@ -22,6 +22,8 @@ class EcarrerController extends Controller
 	 * # life_at_bl_diversity
 	 * # life_at_bl_topbanner
 	 * # life_at_bl_contact
+	 * # vacancy_pioneer
+	 * # vacancy_viconbox
 	 */
 
 	/**
@@ -711,4 +713,599 @@ class EcarrerController extends Controller
 
 
 
-}
+	/**
+	 * Life at banglalink pioneer section list
+	 * @return [type] [description]
+	 */
+	public function pioneerIndex(){
+
+		$categoryTypes = 'vacancy_pioneer';
+
+		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
+		
+		return view('admin.ecarrer.pioneer.index', compact('sections'));
+
+	}
+
+	/**
+	 * eCarrer life at banglalink pioneer
+	 * @return [type] [description]
+	 */
+	public function pioneerCreate(){
+
+		return view('admin.ecarrer.pioneer.create');
+	}
+
+	/**
+	 * eCarrer life at banglalink pioneer store on create
+	 * @return [type] [description]
+	 */
+	public function pioneerStore(Request $request){
+
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    'slug' => 'required'
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('vacancy/pioneer');
+		}
+
+		$data_types['category'] = 'vacancy_pioneer';
+
+		$data_types['has_items'] = 0;
+		
+		# route slug
+		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+	
+		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
+
+		Session::flash('message', 'Section created successfully!');
+		return redirect('vacancy/pioneer');
+	}
+
+
+	/**
+	 * eCarrer life at banglalink pioneer
+	 * @return [type] [description]
+	 */
+	public function pioneerEdit($id){
+
+		$sections = $this->ecarrerService->generalSectionById($id);
+		return view('admin.ecarrer.pioneer.edit', compact('sections'));
+	}
+
+
+	/**
+	 * Update general section
+	 * @param  Request $request [description]
+	 * @param  [type]  $id      [description]
+	 * @return [type]           [description]
+	 */
+	public function pioneerUpdate(Request $request, $id){
+
+		$image_upload_size = ConfigController::adminImageUploadSize();
+		$image_upload_type = ConfigController::adminImageUploadType();
+		
+		# Check Image upload validation
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    // 'slug' => 'required',
+		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('vacancy/pioneer');
+		}
+
+		$data_types = null;
+
+		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
+
+		Session::flash('message', 'Section updated successfully!');
+		return redirect('vacancy/pioneer');
+
+	}
+
+	/**
+	 * [pioneerDestroy description]
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
+	public function pioneerDestroy($id){
+
+		$response = $this->ecarrerService->sectionDelete($id);
+		Session::flash('message', $response->getContent());
+		return redirect("vacancy/pioneer");
+
+	}
+
+
+	/**
+	 * Life at banglalink viconbox section list
+	 * @return [type] [description]
+	 */
+	public function viconboxIndex(){
+
+		$categoryTypes = 'vacancy_viconbox';
+
+		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
+		
+		return view('admin.ecarrer.viconbox.index', compact('sections'));
+
+	}
+
+	/**
+	 * eCarrer life at banglalink viconbox
+	 * @return [type] [description]
+	 */
+	public function viconboxCreate(){
+
+		return view('admin.ecarrer.viconbox.create');
+	}
+
+	/**
+	 * eCarrer life at banglalink viconbox store on create
+	 * @return [type] [description]
+	 */
+	public function viconboxStore(Request $request){
+
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    'slug' => 'required'
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('vacancy/viconbox');
+		}
+
+		$data_types['category'] = 'vacancy_viconbox';
+
+		$data_types['has_items'] = 0;
+		
+		# route slug
+		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+	
+		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
+
+		Session::flash('message', 'Item created successfully!');
+		return redirect('vacancy/viconbox');
+	}
+
+
+	/**
+	 * eCarrer life at banglalink viconbox
+	 * @return [type] [description]
+	 */
+	public function viconboxEdit($id){
+
+		$sections = $this->ecarrerService->generalSectionById($id);
+		return view('admin.ecarrer.viconbox.edit', compact('sections'));
+	}
+
+
+	/**
+	 * Update general section
+	 * @param  Request $request [description]
+	 * @param  [type]  $id      [description]
+	 * @return [type]           [description]
+	 */
+	public function viconboxUpdate(Request $request, $id){
+
+		$image_upload_size = ConfigController::adminImageUploadSize();
+		$image_upload_type = ConfigController::adminImageUploadType();
+		
+		# Check Image upload validation
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    // 'slug' => 'required',
+		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('vacancy/viconbox');
+		}
+
+		$data_types = null;
+
+		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
+
+		Session::flash('message', 'Item updated successfully!');
+		return redirect('vacancy/viconbox');
+
+	}
+
+	/**
+	 * [viconboxDestroy description]
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
+	public function viconboxDestroy($id){
+
+		$response = $this->ecarrerService->sectionDelete($id);
+		Session::flash('message', $response->getContent());
+		return redirect("vacancy/viconbox");
+
+	}
+
+
+	/**
+	 * programs progeneral section list
+	 * @return [type] [description]
+	 */
+	public function progeneralIndex(){
+
+		$categoryTypes = 'programs_progeneral';
+
+		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
+		
+		return view('admin.ecarrer.progeneral.index', compact('sections'));
+
+	}
+
+	/**
+	 * eCarrer programs progeneral
+	 * @return [type] [description]
+	 */
+	public function progeneralCreate(){
+
+		return view('admin.ecarrer.progeneral.create');
+	}
+
+	/**
+	 * eCarrer programs progeneral store on create
+	 * @return [type] [description]
+	 */
+	public function progeneralStore(Request $request){
+
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    'slug' => 'required'
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('programs/progeneral');
+		}
+
+		$data_types['category'] = 'programs_progeneral';
+
+		$data_types['has_items'] = 1;
+		
+		# route slug
+		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+
+		# Additional info
+		$additional_info = null;
+		if( $request->filled('programs_sections') ){
+			$additional_info['additional_type'] = $request->input('programs_sections');
+		}
+
+		if( !empty($additional_info) ){
+			$data_types['additional_info'] = json_encode($additional_info);
+		}
+
+	
+		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
+
+		Session::flash('message', 'Section created successfully!');
+		return redirect('programs/progeneral');
+	}
+
+
+	/**
+	 * eCarrer programs progeneral
+	 * @return [type] [description]
+	 */
+	public function progeneralEdit($id){
+
+		$sections = $this->ecarrerService->generalSectionById($id);
+		return view('admin.ecarrer.progeneral.edit', compact('sections'));
+	}
+
+
+	/**
+	 * Update general section
+	 * @param  Request $request [description]
+	 * @param  [type]  $id      [description]
+	 * @return [type]           [description]
+	 */
+	public function progeneralUpdate(Request $request, $id){
+
+		$image_upload_size = ConfigController::adminImageUploadSize();
+		$image_upload_type = ConfigController::adminImageUploadType();
+		
+		# Check Image upload validation
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    // 'slug' => 'required',
+		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('programs/progeneral');
+		}
+
+		$data_types = null;
+
+		$additional_info = null;
+		if( $request->filled('programs_sections') ){
+			$additional_info['additional_type'] = $request->input('programs_sections');
+		}
+
+		if( !empty($additional_info) ){
+			$data_types['additional_info'] = json_encode($additional_info);
+		}
+
+		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
+
+		Session::flash('message', 'Section updated successfully!');
+		return redirect('programs/progeneral');
+
+	}
+
+	/**
+	 * [progeneralDestroy description]
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
+	public function progeneralDestroy($id){
+
+		$response = $this->ecarrerService->sectionDelete($id);
+		Session::flash('message', $response->getContent());
+		return redirect("programs/progeneral");
+
+	}
+
+
+	/**
+	 * programs proiconbox section list
+	 * @return [type] [description]
+	 */
+	public function proiconboxIndex(){
+
+		$categoryTypes = 'programs_proiconbox';
+
+		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
+		
+		return view('admin.ecarrer.proiconbox.index', compact('sections'));
+
+	}
+
+	/**
+	 * eCarrer programs proiconbox
+	 * @return [type] [description]
+	 */
+	public function proiconboxCreate(){
+
+		return view('admin.ecarrer.proiconbox.create');
+	}
+
+	/**
+	 * eCarrer programs proiconbox store on create
+	 * @return [type] [description]
+	 */
+	public function proiconboxStore(Request $request){
+
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    'slug' => 'required'
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('programs/proiconbox');
+		}
+
+		$data_types['category'] = 'programs_proiconbox';
+
+		$data_types['has_items'] = 1;
+		
+		# route slug
+		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+
+		# Additional info
+		$additional_info = null;
+		if( $request->filled('programs_sections') ){
+			$additional_info['additional_type'] = $request->input('programs_sections');
+		}
+
+		if( !empty($additional_info) ){
+			$data_types['additional_info'] = json_encode($additional_info);
+		}
+
+	
+		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
+
+		Session::flash('message', 'Section created successfully!');
+		return redirect('programs/proiconbox');
+	}
+
+
+	/**
+	 * eCarrer programs proiconbox
+	 * @return [type] [description]
+	 */
+	public function proiconboxEdit($id){
+
+		$sections = $this->ecarrerService->generalSectionById($id);
+		return view('admin.ecarrer.proiconbox.edit', compact('sections'));
+	}
+
+
+	/**
+	 * Update general section
+	 * @param  Request $request [description]
+	 * @param  [type]  $id      [description]
+	 * @return [type]           [description]
+	 */
+	public function proiconboxUpdate(Request $request, $id){
+
+		$image_upload_size = ConfigController::adminImageUploadSize();
+		$image_upload_type = ConfigController::adminImageUploadType();
+		
+		# Check Image upload validation
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    // 'slug' => 'required',
+		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('programs/proiconbox');
+		}
+
+		$data_types = null;
+
+		$additional_info = null;
+		if( $request->filled('programs_sections') ){
+			$additional_info['additional_type'] = $request->input('programs_sections');
+		}
+
+		if( !empty($additional_info) ){
+			$data_types['additional_info'] = json_encode($additional_info);
+		}
+
+		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
+
+		Session::flash('message', 'Section updated successfully!');
+		return redirect('programs/proiconbox');
+
+	}
+
+	/**
+	 * [proiconboxDestroy description]
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
+	public function proiconboxDestroy($id){
+
+		$response = $this->ecarrerService->sectionDelete($id);
+		Session::flash('message', $response->getContent());
+		return redirect("programs/proiconbox");
+
+	}
+
+
+	/**
+	 * Programs photogallery section list
+	 * @return [type] [description]
+	 */
+	public function photogalleryIndex(){
+
+		$categoryTypes = 'programs_photogallery';
+
+		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
+		
+		return view('admin.ecarrer.photogallery.index', compact('sections'));
+
+	}
+
+	/**
+	 * eCarrer programs photogallery
+	 * @return [type] [description]
+	 */
+	public function photogalleryCreate(){
+
+		return view('admin.ecarrer.photogallery.create');
+	}
+
+	/**
+	 * eCarrer life at banglalink photogallery store on create
+	 * @return [type] [description]
+	 */
+	public function photogalleryStore(Request $request){
+
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    'slug' => 'required'
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('programs/photogallery');
+		}
+
+		$data_types['category'] = 'programs_photogallery';
+		$data_types['has_items'] = 1;
+		# route slug
+		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+
+
+		$additional_info = null;
+		if( $request->filled('sider_info') ){
+			$additional_info['sider_info'] = $request->input('sider_info');
+		}
+
+		if( !empty($additional_info) ){
+			$data_types['additional_info'] = json_encode($additional_info);
+		}
+	
+		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
+
+		Session::flash('message', 'Section created successfully!');
+		return redirect('programs/photogallery');
+	}
+
+
+	/**
+	 * eCarrer life at banglalink photogallery
+	 * @return [type] [description]
+	 */
+	public function photogalleryEdit($id){
+
+		$sections = $this->ecarrerService->generalSectionById($id);
+		return view('admin.ecarrer.photogallery.edit', compact('sections'));
+	}
+
+
+	/**
+	 * Update general section
+	 * @param  Request $request [description]
+	 * @param  [type]  $id      [description]
+	 * @return [type]           [description]
+	 */
+	public function photogalleryUpdate(Request $request, $id){
+
+		$image_upload_size = ConfigController::adminImageUploadSize();
+		$image_upload_type = ConfigController::adminImageUploadType();
+		
+		# Check Image upload validation
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    'slug' => 'required',
+		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('programs/photogallery');
+		}
+
+		$additional_info = null;
+		if( $request->filled('sider_info') ){
+			$additional_info['sider_info'] = $request->input('sider_info');
+		}
+
+		if( !empty($additional_info) ){
+			$data_types['additional_info'] = json_encode($additional_info);
+		}
+
+		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
+
+		Session::flash('message', 'Section updated successfully!');
+		return redirect('programs/photogallery');
+
+	}
+
+	/**
+	 * [photogalleryDestroy description]
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
+	public function photogalleryDestroy($id){
+
+		$response = $this->ecarrerService->sectionDelete($id);
+		Session::flash('message', $response->getContent());
+		return redirect("programs/photogallery");
+
+	}
+
+
+} // Class end

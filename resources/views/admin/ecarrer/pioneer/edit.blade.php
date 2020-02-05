@@ -2,11 +2,11 @@
 @section('title', 'Section Edit')
 @section('card_name', 'Section Edit')
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('life-at-banglalink/topbanner') }}">Section List</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('vacancy/pioneer') }}">Section List</a></li>
     <li class="breadcrumb-item active"> {{$sections->title_en}}</li>
 @endsection
 @section('action')
-    <a href="{{ url("life-at-banglalink/topbanner") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
+    <a href="{{ url("vacancy/pioneer") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
 @endsection
 @section('content')
     <section>
@@ -16,7 +16,7 @@
 
 
                     <div class="card-body card-dashboard">
-                        <form id="topbanner_section" role="form" action="{{ url("life-at-banglalink/topbanner/$sections->id/update") }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form id="pioneer_section" role="form" action="{{ url("vacancy/pioneer/$sections->id/update") }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             {{method_field('POST')}}
                             <div class="row">
@@ -42,9 +42,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                    <label for="title_bn" class="required1">Title_bn (Bangla)</label>
-                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title_bn (english)"
-                                           value="{{ $sections->title_bn }}" data-validation-required-message="Enter slider title_bn (english)">
+                                    <label for="title_bn" class="required">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control section_name" placeholder="Section name"
+                                           value="{{ $sections->title_bn }}" required data-validation-required-message="Please enter Section name">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
@@ -84,23 +84,44 @@
                                     
                                 </div>
 
+                                
 
-                                {{-- <div class="col-md-12">
+
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Description (Optional)</label>
-                                        <textarea name="description" class="form-control" rows="5"
-                                                  placeholder="Enter description">{{ $sections->description }}</textarea>
+                                        <label for="exampleInputPassword1">Description (Optional) (English)</label>
+                                        <textarea name="description_en" class="form-control" rows="5"
+                                                  placeholder="Enter description">{{ $sections->description_en }}</textarea>
                                     </div>
-                                </div> --}}
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Description (Optional) (Bangla)</label>
+                                        <textarea name="description_bn" class="form-control" rows="5"
+                                                  placeholder="Enter description">{{ $sections->description_bn }}</textarea>
+                                    </div>
+                                </div>
                                 
                                 <div class="form-group col-md-6">
-                                    <label for="category_type">Select Banner for</label>
+                                    <label for="category_type">Select section type</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
-                                            <option value="life_at_banglalink">Life at Banglalink</option>
-                                            <option value="programs">Programs</option>
-                                            <option value="vacancy">Vacancy</option>
+                                            <option value="how_we_hire" @if($sections->category_type == 'how_we_hire') selected @endif>How we hire</option>
+                                            <option value="bottom_news_media" @if($sections->category_type == 'bottom_news_media') selected @endif>Bottom News media section</option>
                                         </select>
                                 </div>
+
+
+                                <div class="form-group col-md-6 {{ $errors->has('video') ? ' error' : '' }}">
+                                    <label for="video" class="required1">Youtube embeded video url</label>
+                                    <input type="text" name="video"  class="form-control section_name" placeholder="Youtube video url"
+                                           value="{{ $sections->video }}" data-validation-required-message="Please enter Section name">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('video'))
+                                        <div class="help-block">  {{ $errors->first('video') }}</div>
+                                    @endif
+                                </div>
+
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
@@ -140,23 +161,23 @@
 @push('page-js')
 
 <script type="text/javascript">
-        jQuery(document).ready(function($){
+    jQuery(document).ready(function($){
 
 
-            $('input.section_name').on('keyup', function(){
-                var sectionName = $('#topbanner_section').find('.section_name').val();
-                var sectionNameLower = sectionName.toLowerCase();
-                var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
+        $('input.section_name').on('keyup', function(){
+            var sectionName = $('#pioneer_section').find('.section_name').val();
+            var sectionNameLower = sectionName.toLowerCase();
+            var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
 
-                $('#topbanner_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
+            $('#pioneer_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
 
-                // console.log(sectionNameRemoveSpace);
-            });
-
-            
-
+            // console.log(sectionNameRemoveSpace);
         });
-    </script>    
+
+        
+
+    });
+</script>
 
 @endpush
 
