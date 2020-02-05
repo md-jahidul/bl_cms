@@ -15,30 +15,43 @@
                     <div class="card-body card-dashboard">
                         <form id="general_section" role="form" action="{{ route('ecarrer.items.store', $parent_id) }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="title" class="required">Title</label>
-                                    <input type="text" name="title"  class="form-control section_name" placeholder="Section name"
-                                           value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Please enter Section name">
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="title_en" class="required">Title (English)</label>
+                                    <input type="text" name="title_en"  class="form-control section_name" placeholder="Section name"
+                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Please enter Section name">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('title'))
-                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @if ($errors->has('title_en'))
+                                        <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
+                                
+                                @if( $ecarrer_section_slug != 'life_at_bl_contact' )
+                                    <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                        <label for="title_bn" class="required">Title (Bangla)</label>
+                                        <input type="text" name="title_bn"  class="form-control section_name" placeholder="Section name"
+                                               value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Please enter Section name">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('title_bn'))
+                                            <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                        @endif
+                                    </div>
+                                @endif
 
 
                                 <!-- Include additional field layout for individual section requirement -->
-                                @if( $ecarrer_section_slug != 'life_at_bl_events' )
+                                {{-- dd($ecarrer_section_slug) --}}
+                                @if( ($ecarrer_section_slug != 'life_at_bl_events') && ($ecarrer_section_slug != 'life_at_bl_contact') )
                                     @include('admin.ecarrer-items.additional.description')
                                 @endif
 
 
                                 <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="alt_text" class="">Banner Image (optional)</label>
+                                    <label for="alt_text" class="">Image (optional)</label>
                                     <div class="custom-file">
                                         <input type="file" name="image_url" class="custom-file-input" id="image">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
 
                                     <div class="help-block"></div>
                                     @if ($errors->has('image_url'))
@@ -48,6 +61,16 @@
 
                                 <div class="form-group col-md-1">
                                     <img style="height:70px;width:70px;display:none" id="imgDisplay">
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text" class="required1">Alt text</label>
+                                    <input type="text" name="alt_text"  class="form-control" placeholder="Section name"
+                                           value="{{ old("alt_text") ? old("alt_text") : '' }}" required data-validation-required-message="Please enter Section name">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text'))
+                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+                                    @endif
                                 </div>
 
 
@@ -69,7 +92,11 @@
                                     @include('admin.ecarrer-items.additional.call_to_actions')
                                 @endif
 
-
+                                
+                                <!-- Include additional field layout for individual section requirement -->
+                                @if( $ecarrer_section_slug == 'life_at_bl_contact' )
+                                    @include('admin.ecarrer-items.additional.alter_text_links')
+                                @endif
 
                                 <input type="hidden" name="carrer_parent_item" value="{{$parent_id}}">
                                 <div class="form-actions col-md-12 ">

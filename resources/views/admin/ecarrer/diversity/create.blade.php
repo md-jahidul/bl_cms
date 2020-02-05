@@ -15,13 +15,13 @@
                     <div class="card-body card-dashboard">
                         <form id="general_section" role="form" action="{{ route('life.at.banglalink.diversity.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="title" class="required">Give a name of the section</label>
-                                    <input type="text" name="title"  class="form-control section_name" placeholder="Section name"
-                                           value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Please enter Section name">
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="title_en" class="required">Title (English)</label>
+                                    <input type="text" name="title_en"  class="form-control section_name" placeholder="Section name"
+                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Please enter Section name">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('title'))
-                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @if ($errors->has('title_en'))
+                                        <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
 
@@ -32,6 +32,16 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('slug'))
                                         <div class="help-block">  {{ $errors->first('slug') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn" class="required1">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Section name"
+                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Please enter Section name">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
 
@@ -54,10 +64,18 @@
                                 </div> --}}
 
                                 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Description</label>
-                                        <textarea name="description" class="form-control" rows="5"
+                                        <label for="exampleInputPassword1">Description (English)</label>
+                                        <textarea name="description_en" class="form-control" rows="5"
+                                                  placeholder="Enter description"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Description (Bangla)</label>
+                                        <textarea name="description_bn" class="form-control" rows="5"
                                                   placeholder="Enter description"></textarea>
                                     </div>
                                 </div>

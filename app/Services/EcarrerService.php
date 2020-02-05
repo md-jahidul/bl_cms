@@ -146,8 +146,10 @@ class EcarrerService
         $data['route_slug'] = !empty($data_types['route_slug']) ? $data_types['route_slug'] : null;
         $data['additional_info'] = !empty($data_types['additional_info']) ? $data_types['additional_info'] : null;
 
-        $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
-
+        if( !empty($data['slug']) ){
+            $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
+        }
+        
         if (!empty($data['image_url'])) {
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
         }
@@ -169,11 +171,17 @@ class EcarrerService
     {
         $general_section = $this->findOne($id);
 
-        $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
-
+        if( !empty($data['slug']) ){
+            $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
+        }
+        
         if (!empty($data['image_url'])) {
            
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
+        }
+
+        if( isset($data_types['has_items']) ){
+            $data['has_items'] = $data_types['has_items'];
         }
 
         $data['additional_info'] = !empty($data_types['additional_info']) ? $data_types['additional_info'] : null;        
