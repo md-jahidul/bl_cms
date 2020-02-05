@@ -156,23 +156,21 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
 
     //amar offer details......
-    Route::get('amaroffer/details', 'AssetLite\AmarOfferController@index')->name('amaroffer.list');
-    Route::get('amaroffer/edit/{id}', 'AssetLite\AmarOfferController@edit')->name('amaroffer.edit');
-    Route::put('amaroffer/update/{id}', 'AssetLite\AmarOfferController@update')->name('amaroffer.update');
-    
+    Route::get('amaroffer/details', 'AssetLite\AmarOfferController@amarOfferDetails')->name('amaroffer.list');
+    Route::get('amaroffer/edit/{type}', 'AssetLite\AmarOfferController@edit')->name('amaroffer.edit');
+    Route::put('amaroffer/update/{type}', 'AssetLite\AmarOfferController@update')->name('amaroffer.update');
+
     // Device offers
     Route::get('device-offer', 'AssetLite\DeviceOfferController@index');
     Route::post('device-offer-list', 'AssetLite\DeviceOfferController@deviceOfferList')
-            ->name('deviceoffer.list.ajax');
-    
+           ->name('deviceoffer.list.ajax');
+
     Route::post('upload-device-offer-excel', 'AssetLite\DeviceOfferController@uploadOfferByExcel')
-                                         ->name('device.offer.excel.save');
-    
+           ->name('device.offer.excel.save');
+
     Route::get('device-offer-status-change', 'AssetLite\DeviceOfferController@offerStatusChange')
-                                         ->name('offer.status.change');
+           ->name('offer.status.change');
     Route::get('delete-device-offer/{id}', 'AssetLite\DeviceOfferController@deleteDeviceOffer');
-    
-    
 
 
     // PARTNERS ====================================
@@ -340,7 +338,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('vacancy/pioneer/store', 'AssetLite\EcarrerController@pioneerStore')->name('vacancy.pioneer.store');
 
     Route::get('vacancy/pioneer/{id}/edit', 'AssetLite\EcarrerController@pioneerEdit')->name('vacancy.pioneer.edit');
-    
+
     Route::post('vacancy/pioneer/{id}/update', 'AssetLite\EcarrerController@pioneerUpdate')->name('vacancy.pioneer.update');
     Route::get('vacancy/pioneer/destroy/{id}', 'AssetLite\EcarrerController@pioneerDestroy')->name('vacancy.pioneer.destroy');
 
@@ -351,7 +349,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('vacancy/viconbox/store', 'AssetLite\EcarrerController@viconboxStore')->name('vacancy.viconbox.store');
 
     Route::get('vacancy/viconbox/{id}/edit', 'AssetLite\EcarrerController@viconboxEdit')->name('vacancy.viconbox.edit');
-    
+
     Route::post('vacancy/viconbox/{id}/update', 'AssetLite\EcarrerController@viconboxUpdate')->name('vacancy.viconbox.update');
     Route::get('vacancy/viconbox/destroy/{id}', 'AssetLite\EcarrerController@viconboxDestroy')->name('vacancy.viconbox.destroy');
 
@@ -362,7 +360,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('programs/progeneral/store', 'AssetLite\EcarrerController@progeneralStore')->name('programs.progeneral.store');
 
     Route::get('programs/progeneral/{id}/edit', 'AssetLite\EcarrerController@progeneralEdit')->name('programs.progeneral.edit');
-    
+
     Route::post('programs/progeneral/{id}/update', 'AssetLite\EcarrerController@progeneralUpdate')->name('programs.progeneral.update');
     Route::get('programs/progeneral/destroy/{id}', 'AssetLite\EcarrerController@progeneralDestroy')->name('programs.progeneral.destroy');
 
@@ -373,7 +371,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('programs/proiconbox/store', 'AssetLite\EcarrerController@proiconboxStore')->name('programs.proiconbox.store');
 
     Route::get('programs/proiconbox/{id}/edit', 'AssetLite\EcarrerController@proiconboxEdit')->name('programs.proiconbox.edit');
-    
+
     Route::post('programs/proiconbox/{id}/update', 'AssetLite\EcarrerController@proiconboxUpdate')->name('programs.proiconbox.update');
     Route::get('programs/proiconbox/destroy/{id}', 'AssetLite\EcarrerController@proiconboxDestroy')->name('programs.proiconbox.destroy');
 
@@ -384,7 +382,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('programs/photogallery/store', 'AssetLite\EcarrerController@photogalleryStore')->name('programs.photogallery.store');
 
     Route::get('programs/photogallery/{id}/edit', 'AssetLite\EcarrerController@photogalleryEdit')->name('programs.photogallery.edit');
-    
+
     Route::post('programs/photogallery/{id}/update', 'AssetLite\EcarrerController@photogalleryUpdate')->name('programs.photogallery.update');
     Route::get('programs/photogallery/destroy/{id}', 'AssetLite\EcarrerController@photogalleryDestroy')->name('programs.photogallery.destroy');
 
