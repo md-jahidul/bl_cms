@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active"> Section Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('life-at-banglalink/events') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('programs/progeneral') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -13,7 +13,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form id="events_section" role="form" action="{{ route('life.at.banglalink.events.store') }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form id="progeneral_section" role="form" action="{{ route('programs.progeneral.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title (English)</label>
@@ -35,55 +35,37 @@
                                     @endif
                                 </div>
 
+                                
+
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                    <label for="title_bn" class="required">Title (Bangla)</label>
-                                    <input type="text" name="title_bn"  class="form-control" placeholder="Section name"
-                                           value="{{ old("title_bn") ? old("title_bn") : '' }}"  data-validation-required-message="Please enter Section name">
+                                    <label for="title_bn" class="required1">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control section_name" placeholder="Section name"
+                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" data-validation-required-message="Please enter Section name">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('sliding_speed') ? ' error' : '' }}">
-                                    <label for="sliding_speed" class="required">Sliding Speed</label>
-                                    <input type="text" name="sider_info[sliding_speed]" oninput="this.value =Number(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"  class="form-control" placeholder="Enter sliding speed (sec)"  min="1" max="300"
-                                           value="{{ (!empty($sider_info['sliding_speed'])) ? $sider_info['sliding_speed'] : old("sider_info.sliding_speed") ?? '' }}"
-                                           required data-validation-required-message="Enter slider info">
-                                    <div class="help-block"><small>Default value 10</small></div>
-                                    @if ($errors->has('sliding_speed'))
-                                        <div class="help-block">  {{ $errors->first('sliding_speed') }}</div>
-                                    @endif
+                                <div class="form-group col-md-6">
+                                    <label for="category_type">Select Programs category</label>
+                                    <select class="form-control" name="category_type" aria-invalid="false">
+                                            <option value="sap">Strategic Assistant Program</option>
+                                            <option value="ennovators">Ennovators</option>
+                                            <option value="aip">Advanced Internship Program</option>
+                                        </select>
                                 </div>
-
                                 
-
-                                {{-- <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="alt_text" class="">Banner Image (optional)</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input" id="image">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('image_url'))
-                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
-                                    @endif
+                                <div class="form-group col-md-6">
+                                    <label for="category_type">Specify section type</label>
+                                    <select class="form-control" name="programs_sections" aria-invalid="false">
+                                            <option value="programs_news_section">Programs news section</option>
+                                            <option value="programs_steps">Programs steps section</option>
+                                            <option value="programs_events">Programs Events section</option>
+                                            <option value="programs_testimonial">Programs testimonial section</option>
+                                        </select>
                                 </div>
-
-                                <div class="form-group col-md-1">
-                                    <img style="height:70px;width:70px;display:none" id="imgDisplay">
-                                </div>
-
                                 
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Description (Optional)</label>
-                                        <textarea name="description" class="form-control" rows="5"
-                                                  placeholder="Enter description"></textarea>
-                                    </div>
-                                </div> --}}
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
@@ -124,25 +106,25 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
-    
-    <script type="text/javascript">
-        jQuery(document).ready(function($){
+
+<script type="text/javascript">
+    jQuery(document).ready(function($){
 
 
-            $('input.section_name').on('keyup', function(){
-                var sectionName = $('#events_section').find('.section_name').val();
-                var sectionNameLower = sectionName.toLowerCase();
-                var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
+        $('input.section_name').on('keyup', function(){
+            var sectionName = $('#progeneral_section').find('.section_name').val();
+            var sectionNameLower = sectionName.toLowerCase();
+            var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
 
-                $('#events_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
+            $('#progeneral_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
 
-                // console.log(sectionNameRemoveSpace);
-            });
-
-            
-
+            // console.log(sectionNameRemoveSpace);
         });
-    </script>
+
+        
+
+    });
+</script>
 
 @endpush
 

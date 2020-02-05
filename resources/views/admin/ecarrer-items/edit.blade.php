@@ -35,7 +35,7 @@
                                     <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                         <label for="title_bn" class="required1">Title (Bangla)</label>
                                         <input type="text" name="title_bn"  class="form-control" placeholder="Enter title_bn (english)"
-                                               value="{{ $ecarrer_item->title_bn }}" required data-validation-required-message="Enter slider title_bn (bangla)">
+                                               value="{{ $ecarrer_item->title_bn }}">
                                         <div class="help-block"></div>
                                         @if ($errors->has('title_bn'))
                                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>
@@ -44,7 +44,7 @@
                                 @endif
 
                                 <!-- Include additional field layout for individual section requirement -->
-                                @if( $ecarrer_section_slug != 'life_at_bl_events' && ($ecarrer_section_slug != 'life_at_bl_contact') )
+                                @if( ($ecarrer_section_slug != 'life_at_bl_events') && ($ecarrer_section_slug != 'life_at_bl_contact') && ($ecarrer_section_slug != 'programs_photogallery') )
                                     @include('admin.ecarrer-items.additional.description')
                                 @endif
 
@@ -96,13 +96,17 @@
 
 
                                 <!-- Include additional field layout for individual section requirement -->
-                                @if( $ecarrer_section_slug == 'life_at_bl_teams' )
+                                @if( $ecarrer_section_slug == 'life_at_bl_teams' || ( isset($parent_data->check_type) && $parent_data->check_type == 'programs_news_section' ) )
                                     @include('admin.ecarrer-items.additional.call_to_actions')
                                 @endif
 
                                 <!-- Include additional field layout for individual section requirement -->
                                 @if( $ecarrer_section_slug == 'life_at_bl_contact' )
                                     @include('admin.ecarrer-items.additional.alter_text_links')
+                                @endif
+
+                                @if( isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial' )
+                                    @include('admin.ecarrer-items.additional.testimonial_text')
                                 @endif
 
                                 <div class="form-actions col-md-12 ">
