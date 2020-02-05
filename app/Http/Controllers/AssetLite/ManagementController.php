@@ -111,42 +111,11 @@ class ManagementController extends Controller
         session()->flash('message', "Failed! Please try again");
     }
 
-
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
+     * @param Request $request
      */
-   /* public function edit($id)
+    public function managementSortable(Request $request)
     {
-        $management = $this->managementService->findOne($id);
-        return view('admin.management.edit', compact('management'));
-    }*/
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    /*public function update(Request $request, $id)
-    {
-        $response = $this->managementService->updateQuickLaunch($request->all(), $id);
-        Session::flash('message', $response->getContent());
-        return redirect('/about-us');
-    }*/
-
-    /**
-     * @param $id
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
-     * @throws \Exception
-     */
-    /*public function destroy($id)
-    {
-        $response = $this->managementService->deleteQuickLaunch($id);
-        Session::flash('message', $response->getContent());
-        return url('about-us');
-    }*/
+        $this->managementService->tableSortable($request);
+    }
 }
