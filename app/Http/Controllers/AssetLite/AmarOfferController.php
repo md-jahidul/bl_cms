@@ -32,8 +32,6 @@ class AmarOfferController extends Controller
     public function amarOfferDetails()
     {
         $offerDetails = $this->amarOfferDetailsService->amarOfferDetailsList();
-
-//        return $offerDetails;
         return view('admin.amar-offer-details.index', compact('offerDetails'));
     }
 

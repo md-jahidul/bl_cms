@@ -18,11 +18,11 @@
                             <form class="form" method="POST"  id="uploadPaymentCard" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="message">Upload Product List</label> <a href="{{ asset('sample-format/Easy-Peyment-Card.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
-                                    <input type="file" class="dropify" name="product_file" data-height="80"
+                                    <label for="message">Upload Payment Card List</label> <a href="{{ asset('sample-format/Easy-Peyment-Card.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
+                                    <input type="file" class="dropify" name="card_file" data-height="80"
                                            data-allowed-file-extensions="xlsx" required/>
                                 </div>
-                                <div class="col-md-12" >
+                                <div class="col-md-12">
                                     <div class="form-group float-right" style="margin-top:15px;">
                                         <button class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
                                     </div>
@@ -86,9 +86,9 @@
                     processData: false,
                     data: formData,
                     success: function (result) {
-                        if (result.success) {
+                        if (result.success == 1) {
                             swal.fire({
-                                title: 'Payment card excel is uploaded successfully!',
+                                title: result.message,
                                 type: 'success',
                                 timer: 2000,
                                 showConfirmButton: false

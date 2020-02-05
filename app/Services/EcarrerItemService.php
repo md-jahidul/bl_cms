@@ -54,7 +54,7 @@ class EcarrerItemService
         }
 
         $call_to_action_buttons = [];
-        if ( isset($data['call_to_action_label_1']) && !empty($data['call_to_action_label_1']) ) {
+        if ( isset($data['call_to_action_label_en_1']) && !empty($data['call_to_action_label_en_1']) ) {
             
             if( !empty($data['call_to_action_count'])){
 
@@ -62,8 +62,12 @@ class EcarrerItemService
 
                     $buttons = [];
                     
-                    if( isset($data['call_to_action_label_'.$i]) ){
-                        $buttons['label'] = $data['call_to_action_label_'.$i];
+                    if( isset($data['call_to_action_label_en_'.$i]) ){
+                        $buttons['label_en'] = $data['call_to_action_label_en_'.$i];
+                    }
+
+                    if( isset($data['call_to_action_label_bn_'.$i]) ){
+                        $buttons['label_bn'] = $data['call_to_action_label_bn_'.$i];
                     }
 
                     if( isset($data['call_to_action_url_'.$i]) ){
@@ -83,6 +87,10 @@ class EcarrerItemService
         }
         else{
             $data['call_to_action'] = null;
+        }
+
+        if( !empty($data['additional_info'])  ){
+            $data['additional_info'] = json_encode($data['additional_info']);
         }
 
         $this->save($data);
@@ -122,6 +130,15 @@ class EcarrerItemService
 
     }
 
+    /**
+     * [getEcarrerParentDataByID description]
+     * @param  [type] $section_id [description]
+     * @return [type]             [description]
+     */
+    public function getEcarrerParentDataByID($section_id){
+        return $this->ecarrerPortalRepository->getSectionDataByID($section_id);
+    }
+
 
     /**
      * [updateEcarrerGeneralSection description]
@@ -139,7 +156,7 @@ class EcarrerItemService
         }
 
         $call_to_action_buttons = [];
-        if ( isset($data['call_to_action_label_1']) && !empty($data['call_to_action_label_1']) ) {
+        if ( isset($data['call_to_action_label_en_1']) && !empty($data['call_to_action_label_en_1']) ) {
             
             if( !empty($data['call_to_action_count'])){
 
@@ -147,8 +164,12 @@ class EcarrerItemService
 
                     $buttons = [];
                     
-                    if( isset($data['call_to_action_label_'.$i]) ){
-                        $buttons['label'] = $data['call_to_action_label_'.$i];
+                    if( isset($data['call_to_action_label_en_'.$i]) ){
+                        $buttons['label_en'] = $data['call_to_action_label_en_'.$i];
+                    }
+
+                    if( isset($data['call_to_action_label_bn_'.$i]) ){
+                        $buttons['label_bn'] = $data['call_to_action_label_bn_'.$i];
                     }
 
                     if( isset($data['call_to_action_url_'.$i]) ){
@@ -170,9 +191,14 @@ class EcarrerItemService
             $data['call_to_action'] = null;
         }
 
+        if( !empty($data['additional_info'])  ){
+            $data['additional_info'] = json_encode($data['additional_info']);
+        }
+        
+
         $ecarrer_item->update($data);
 
-        return Response('Section updated successfully');
+        return Response('Item updated successfully');
     }
 
 

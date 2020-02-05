@@ -49,7 +49,17 @@ class EcarrerItemController extends Controller
 
 		$ecarrer_section_slug = $this->ecarrerItemService->getEcarrerSectionSlugByID($parent_id);
 
-		return view('admin.ecarrer-items.create', compact('parent_id', 'ecarrer_section_slug'));
+		$parent_data = $this->ecarrerItemService->getEcarrerParentDataByID($parent_id);
+
+		if( !empty($parent_data->additional_info) ){
+			$check_type = json_decode($parent_data->additional_info);
+
+			if( !empty($check_type->additional_type) ){
+				$parent_data->check_type = $check_type->additional_type;
+			}
+		}
+
+		return view('admin.ecarrer-items.create', compact('parent_id', 'ecarrer_section_slug', 'parent_data'));
 	}
 
 	/**
@@ -63,14 +73,13 @@ class EcarrerItemController extends Controller
 		
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
-		    'title' => 'required',
+		    'title_en' => 'required',
 		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
 		]);
 		if ($validator->fails()) {
 		    Session::flash('error', $validator->messages()->first());
 		    return redirect("ecarrer-items/$parent_id/list");
 		}
-		
 
 		$this->ecarrerItemService->storeEcarrerItem($request->all(), $parent_id);
 
@@ -91,7 +100,17 @@ class EcarrerItemController extends Controller
 
 		$ecarrer_section_slug = $this->ecarrerItemService->getEcarrerSectionSlugByID($parent_id);
 
-		return view('admin.ecarrer-items.edit', compact('ecarrer_item', 'parent_id', 'ecarrer_section_slug'));
+		$parent_data = $this->ecarrerItemService->getEcarrerParentDataByID($parent_id);
+
+		if( !empty($parent_data->additional_info) ){
+			$check_type = json_decode($parent_data->additional_info);
+
+			if( !empty($check_type->additional_type) ){
+				$parent_data->check_type = $check_type->additional_type;
+			}
+		}
+
+		return view('admin.ecarrer-items.edit', compact('ecarrer_item', 'parent_id', 'ecarrer_section_slug', 'parent_data'));
 
 	}
 
@@ -109,7 +128,7 @@ class EcarrerItemController extends Controller
 		
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
-		    'title' => 'required',
+		    'title_en' => 'required',
 		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
 		]);
 		if ($validator->fails()) {

@@ -1,6 +1,5 @@
-<div class="col-md-12 mt-5" >
     <div class="row">
-        <div class="col-md-3 col-xs-12">
+        <div class="col-md-offset-1 col-md-3 col-xs-12">
             <select name="division" class="form-control filter" id="division">
                 <option value=""> Select Devision</option>
                 @foreach($divisions as $div)
@@ -8,11 +7,14 @@
                 @endforeach
             </select>
         </div>
+        <div class="col-md-8 col-xs-12">
+            <a href="javascript:;" class="btn btn-danger all_card_delete float-right">Delete All</a>
+        </div>
 
     </div>
-</div>
 
-<div class="col-md-12 mt-3">
+
+<div class="col-md-12 mt-1">
     <table class="table table-striped table-bordered dataTable"
            id="payment_card_list" role="grid">
         <thead>
@@ -93,6 +95,48 @@
                         if (result.success == 1) {
                             swal.fire({
                                 title: 'Payment card is deleted!',
+                                type: 'success',
+                                timer: 3000,
+                                showConfirmButton: false
+                            });
+
+                            $('#payment_card_list').DataTable().ajax.reload();
+
+                        } else {
+                            swal.close();
+                            swal.fire({
+                                title: result.message,
+                                timer: 3000,
+                                type: 'error',
+                            });
+                        }
+
+                    },
+                    error: function (data) {
+                        swal.fire({
+                            title: 'Delete process failed!',
+                            type: 'error',
+                        });
+                    }
+                });
+            }
+            e.preventDefault();
+        });
+        
+        
+        //delete all easy payment card
+        $('.all_card_delete').on('click', function (e) {
+            var deleteUrl = "{{ URL('delete-easy-payment-card') }}";
+            var cnfrm = confirm("Do you want to delete all cards?");
+            if (cnfrm) {
+                $.ajax({
+                    url: deleteUrl,
+                    cache: false,
+                    type: "GET",
+                    success: function (result) {
+                        if (result.success == 1) {
+                            swal.fire({
+                                title: 'All payment cards are deleted!',
                                 type: 'success',
                                 timer: 3000,
                                 showConfirmButton: false

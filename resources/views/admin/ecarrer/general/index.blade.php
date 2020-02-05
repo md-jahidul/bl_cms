@@ -32,7 +32,7 @@
                             {{-- @php( $sectionType = str_replace(" ", "-", strtolower( $section->type->name ) )) --}}
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td>{{ $section->title }}</td>
+                                <td>{{ $section->title_en }}</td>
                                 <td>{{ $section->slug }}</td>
                                 <td>{{ ($section->is_active == 1) ? 'Acive' : 'Inactive' }}</td>
                                 <td class="text-center" width="22%">
