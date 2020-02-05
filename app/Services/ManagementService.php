@@ -45,6 +45,7 @@ class ManagementService
     public function storeManagementInfo($data)
     {
         $count = count($this->managementRepository->findAll());
+
         if (request()->hasFile('profile_image')) {
             $data['profile_image'] = $this->upload($data['profile_image'], 'assetlite/images/about-us/');
         }
@@ -52,6 +53,9 @@ class ManagementService
         if (request()->hasFile('banner_image')) {
             $data['banner_image'] = $this->upload($data['banner_image'], 'assetlite/images/about-us/');
         }
+
+        $data['display_order'] = ++$count;
+
         $this->save($data);
         return new Response('ManagementInfo added successfully');
     }
@@ -91,5 +95,15 @@ class ManagementService
         $this->deleteFile($management->banner_image);
 
         return $management->delete();
+    }
+
+    /**
+     * @param $data
+     * @return Response
+     */
+    public function tableSortable($data)
+    {
+        $this->managementRepository->sortManangementInfo($data);
+        return new Response('update successfully');
     }
 }

@@ -219,6 +219,7 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
+
         return view('admin.product.edit', $this->info);
     }
 

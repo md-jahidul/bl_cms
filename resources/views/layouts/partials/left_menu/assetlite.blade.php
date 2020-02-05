@@ -190,11 +190,11 @@
             <ul class="menu-content">
 
                 <li class="{{ is_active_url('about-us') . is_active_url('about-us/create') }}">
-                    <a class="menu-item" href="{{ url('about-us/create') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Banglalink</a>
+                    <a class="menu-item" href="{{ url('about-us') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Banglalink</a>
                 </li>
                 <li class="{{ is_active_url('management') . is_active_url('management/create') }}">
-                    <a class="menu-item" href="{{ url('management/create') }}"
+                    <a class="menu-item" href="{{ url('management') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Management</a>
                 </li>
 
@@ -230,7 +230,7 @@
             </ul>
         </li>
     @endif
-    
+
     <!-- // eCarrer portal -->
     {{-- @if( auth()->user()->can_view('Slider', 'singleSlider') || auth()->user()->can_view('Slider', 'multiSlider') ) --}}
         <li class="nav-item"><a href="#"><i class="la la-bell"></i>
@@ -269,7 +269,7 @@
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> Events and Activites</a>
                                 </li>
-                                
+
                             </ul>
                 </li>
                 <li class="{{ is_active_url('programs/progeneral') .' '. is_active_url('programs/progeneral/create') }}">
@@ -297,7 +297,6 @@
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> SAP Previous Batches</a>
                                 </li>
-                                
                             </ul>
                 </li>
                 <li class="{{ is_active_url('vacancy/pioneer') .' '. is_active_url('vacancy/pioneer') }}">
@@ -316,7 +315,7 @@
                                    data-i18n="nav.templates.vert.classic_menu"><i
                                         class="la la-safari"></i> Box Icon Section</a>
                             </li>
-                            
+
                         </ul>
                 </li>
                 <li class="{{ request()->is('life-at-banglalink/contact*') ? 'active' : '' }}">
@@ -348,11 +347,18 @@
             </ul>
         </li>
     @endif
+
     @if( auth()->user()->can_view('Product') )
         <li class="{{ is_active_url('/easy-payment-card') }} nav-item">
             <a href="{{ url('easy-payment-card') }}">
                 <i class="la la-credit-card"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Easy Payment Card</span>
+            </a>
+        </li>
+        <li class="{{ is_active_url('/device-offer') }} nav-item">
+            <a href="{{ url('device-offer') }}">
+                <i class="la la-credit-card"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Device Offers</span>
             </a>
         </li>
     @endif

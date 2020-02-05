@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 
-@php 
-$types = array(1=> 'Internet', 2 => 'Voice', 3 => 'Bundle');
-$detailsType = $types[$detailsData->type];
-@endphp
+{{--@php --}}
+{{--$types = array(1=> 'Internet', 2 => 'Voice', 3 => 'Bundle');--}}
+{{--$detailsType = $types[$detailsData->type];--}}
+{{--@endphp--}}
 
-@section('title', "Edit Amar Offer Details: $detailsType")
-@section('card_name', "Amar Offer Details ($detailsType)")
+@section('title', "Edit Amar Offer Details: $detailsData->type")
+@section('card_name', "Amar Offer Details ($detailsData->type)")
 @section('breadcrumb')
-<li class="breadcrumb-item active"> Edit Amar Offer Details ({{ $types[$detailsData->type] }})</li>
+<li class="breadcrumb-item active"> Edit Amar Offer Details {{ $detailsData->type }}</li>
 @endsection
 @section('action')
 <a href="{{ url("amaroffer/details") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
@@ -18,25 +18,25 @@ $detailsType = $types[$detailsData->type];
     <div class="card">
         <div class="card-content collapse show">
             <div class="card-body card-dashboard">
-                <h4 class="menu-title"><strong>Amar Offer Details: {{ ucfirst($detailsType) }} </strong></h4><hr>
+                <h4 class="menu-title"><strong>Amar Offer Details Edit {{ ucfirst($detailsData->type) }} </strong></h4><hr>
                 <div class="card-body card-dashboard">
-                    <form role="form" id="product_form" action="{{ route('amaroffer.update', [$detailsData->id] ) }}" method="POST" novalidate enctype="multipart/form-data">
+                    <form role="form" id="product_form" action="{{ route('amaroffer.update', [$detailsData->type] ) }}" method="POST" novalidate enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <div class="row">
                             <input type="hidden" name="product_details_id" value="{{ $detailsData->id }}">
                             <div class="form-group col-md-6 ">
-                                <label for="offer_details_en">Offer Details (English)</label>
-                                <textarea type="text" name="offer_details_en"  class="form-control details">{{ $detailsData->details_en }}</textarea>
+                                <label for="details_en">Offer Details (English)</label>
+                                <textarea type="text" name="details_en"  class="form-control details">{{ $detailsData->details_en }}</textarea>
                                 <div class="help-block"></div>
                             </div>
 
                             <div class="form-group col-md-6 ">
-                                <label for="offer_details_bn">Offer Details (Bangla)</label>
-                                <textarea type="text" name="offer_details_bn"  class="form-control details">{{ $detailsData->details_bn }}</textarea>
+                                <label for="details_bn">Offer Details (Bangla)</label>
+                                <textarea type="text" name="details_bn"  class="form-control details">{{ $detailsData->details_bn }}</textarea>
                                 <div class="help-block"></div>
                             </div>
-                            
+
                             <div class="form-actions col-md-12">
                                     <div class="pull-right">
                                         <button type="submit" id="save" class="btn btn-primary"><i class="la la-check-square-o"></i> Update
