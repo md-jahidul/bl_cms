@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'About US List')
-@section('card_name', 'About US List')
+@section('title', 'About Banglalink')
+@section('card_name', 'About Banglalink')
 @section('breadcrumb')
 @endsection
 @section('action')
