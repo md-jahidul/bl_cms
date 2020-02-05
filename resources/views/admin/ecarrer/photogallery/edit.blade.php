@@ -2,11 +2,11 @@
 @section('title', 'Section Edit')
 @section('card_name', 'Section Edit')
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url('life-at-banglalink/topbanner') }}">Section List</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('programs/photogallery') }}">Section List</a></li>
     <li class="breadcrumb-item active"> {{$sections->title_en}}</li>
 @endsection
 @section('action')
-    <a href="{{ url("life-at-banglalink/topbanner") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
+    <a href="{{ url("programs/photogallery") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
 @endsection
 @section('content')
     <section>
@@ -16,13 +16,13 @@
 
 
                     <div class="card-body card-dashboard">
-                        <form id="topbanner_section" role="form" action="{{ url("life-at-banglalink/topbanner/$sections->id/update") }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form id="photogallery_section" role="form" action="{{ url("programs/photogallery/$sections->id/update") }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             {{method_field('POST')}}
                             <div class="row">
                                 <input type="hidden" name="section_category" value="{{ $sections->category }}">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                    <label for="title_en" class="required">Title (English)</label>
+                                    <label for="title_en" class="required">Title_en (English)</label>
                                     <input type="text" name="title_en"  class="form-control section_name" placeholder="Enter title_en (english)"
                                            value="{{ $sections->title_en }}" required data-validation-required-message="Enter slider title_en (english)">
                                     <div class="help-block"></div>
@@ -51,56 +51,29 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text" class="required1">Alt text</label>
-                                    <input type="text" name="alt_text"  class="form-control section_alt_text"
-                                           value="{{ $sections->alt_text }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+                                @if( !empty($sections->additional_info) )
+                                    @php $additional_info = json_decode($sections->additional_info); @endphp
+                                @endif
+                                <div class="form-group col-md-6 {{ $errors->has('sliding_speed') ? ' error' : '' }}">
+                                    <label for="sliding_speed" class="required">Sliding Speed</label>
+                                    <input type="text" name="sider_info[sliding_speed]" oninput="this.value =Number(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"  class="form-control" placeholder="Enter sliding speed (sec)"  min="1" max="300"
+                                           value="{{ ( !empty( $additional_info->sider_info->sliding_speed ) ) ? $additional_info->sider_info->sliding_speed : old("additional_info.sider_info.sliding_speed") ?? '' }}"
+                                           required data-validation-required-message="Enter price info">
+                                    <div class="help-block"><small>Default value 10</small></div>
+                                    @if ($errors->has('sliding_speed'))
+                                        <div class="help-block">  {{ $errors->first('sliding_speed') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="alt_text" class="">Banner Image (optional)</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input" id="image">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('image_url'))
-                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-1">
-                                    @if( !empty($sections->image) )
-                                        <img style="height:70px;width:70px;display:block" src="{{ config('filesystems.file_base_url') . $sections->image}}" id="imgDisplay">
-                                    @else
-                                        <img style="height:70px;width:70px;display:none" id="imgDisplay">
-                                    @endif
-                                    
-                                </div>
-
-
-                                {{-- <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Description (Optional)</label>
-                                        <textarea name="description" class="form-control" rows="5"
-                                                  placeholder="Enter description">{{ $sections->description }}</textarea>
-                                    </div>
-                                </div> --}}
-                                
                                 <div class="form-group col-md-6">
-                                    <label for="category_type">Select Banner for</label>
+                                    <label for="category_type">Select Programs category</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
-                                            <option value="life_at_banglalink">Life at Banglalink</option>
-                                            <option value="programs">Programs</option>
-                                            <option value="vacancy">Vacancy</option>
+                                            <option value="sap" @if($sections->category_type == 'sap') selected @endif>Strategic Assistant Program</option>
+                                            <option value="ennovators" @if($sections->category_type == 'ennovators') selected @endif>Ennovators</option>
+                                            <option value="aip" @if($sections->category_type == 'aip') selected @endif>Advanced Internship Program</option>
                                         </select>
                                 </div>
+
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
@@ -138,17 +111,17 @@
 
 
 @push('page-js')
-
-<script type="text/javascript">
+    
+    <script type="text/javascript">
         jQuery(document).ready(function($){
 
 
             $('input.section_name').on('keyup', function(){
-                var sectionName = $('#topbanner_section').find('.section_name').val();
+                var sectionName = $('#photogallery_section').find('.section_name').val();
                 var sectionNameLower = sectionName.toLowerCase();
                 var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
 
-                $('#topbanner_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
+                $('#photogallery_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
 
                 // console.log(sectionNameRemoveSpace);
             });
@@ -156,7 +129,7 @@
             
 
         });
-    </script>    
+    </script>
 
 @endpush
 

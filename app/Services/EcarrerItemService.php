@@ -89,6 +89,10 @@ class EcarrerItemService
             $data['call_to_action'] = null;
         }
 
+        if( !empty($data['additional_info'])  ){
+            $data['additional_info'] = json_encode($data['additional_info']);
+        }
+
         $this->save($data);
         return new Response('eCarrer item created successfully');
 
@@ -124,6 +128,15 @@ class EcarrerItemService
 
         return $this->ecarrerPortalRepository->getSectionSlugByID($section_id);
 
+    }
+
+    /**
+     * [getEcarrerParentDataByID description]
+     * @param  [type] $section_id [description]
+     * @return [type]             [description]
+     */
+    public function getEcarrerParentDataByID($section_id){
+        return $this->ecarrerPortalRepository->getSectionDataByID($section_id);
     }
 
 
@@ -178,7 +191,10 @@ class EcarrerItemService
             $data['call_to_action'] = null;
         }
 
-        // dd($data);
+        if( !empty($data['additional_info'])  ){
+            $data['additional_info'] = json_encode($data['additional_info']);
+        }
+        
 
         $ecarrer_item->update($data);
 

@@ -25,6 +25,26 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('slug') ? ' error' : '' }}">
+                                    <label for="slug" class="required">Slug</label>
+                                    <input type="text" name="slug"  class="form-control section_slug"
+                                           value="{{ old("slug") ? old("slug") : '' }}" required readonly  data-validation-required-message="Slug name can not be emply">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('slug'))
+                                        <div class="help-block">  {{ $errors->first('slug') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn" class="required1">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Section name"
+                                           value="{{ old("title_bn") ? old("title_bn") : '' }}"  data-validation-required-message="Please enter Section name">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text" class="required1">Alt text</label>
                                     <input type="text" name="alt_text"  class="form-control section_alt_text"
@@ -103,6 +123,24 @@
 @endpush
 @push('page-js')
 
+<script type="text/javascript">
+    jQuery(document).ready(function($){
+
+
+        $('input.section_name').on('keyup', function(){
+            var sectionName = $('#topbanner_section').find('.section_name').val();
+            var sectionNameLower = sectionName.toLowerCase();
+            var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
+
+            $('#topbanner_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
+
+            // console.log(sectionNameRemoveSpace);
+        });
+
+        
+
+    });
+</script>
 
 @endpush
 

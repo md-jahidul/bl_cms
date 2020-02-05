@@ -246,7 +246,7 @@
                 <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('product.core.list') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-magic"></i> Life at Banglalink</a>
+                            class="la la-5"></i> Life at Banglalink</a>
                             <ul class="menu-content">
 
                                 <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
@@ -272,15 +272,47 @@
 
                             </ul>
                 </li>
-                <li class="{{ is_active_url('offers/postpaid') .' '. is_active_url('offers/postpaid/create') }}">
+                <li class="{{ is_active_url('programs/progeneral') .' '. is_active_url('programs/progeneral/create') }}">
                     <a class="menu-item" href="#"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Programs</a>
+                            <ul class="menu-content">
+                                <li class="{{ request()->is('programs/progeneral*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.progeneral') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> General</a>
+                                </li>
+                                <li class="{{ request()->is('programs/proiconbox*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.proiconbox') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Box Icon Section</a>
+                                </li>
+                                <li class="{{ request()->is('programs/photogallery*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.photogallery') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Photo Gallery</a>
+                                </li>
+                                
+                            </ul>
                 </li>
-                <li class="{{ is_active_url('offers/postpaid') .' '. is_active_url('offers/postpaid/create') }}">
+                <li class="{{ is_active_url('vacancy/pioneer') .' '. is_active_url('vacancy/pioneer') }}">
                     <a class="menu-item" href="#"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Vacancy</a>
+
+                        <ul class="menu-content">
+                            <li class="{{ request()->is('vacancy/pioneer*') ? 'active' : '' }}">
+                                <a class="menu-item" href="{{ route('vacancy.pioneer') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-safari"></i> General</a>
+                            </li>
+                            <li class="{{ request()->is('vacancy/viconbox*') ? 'active' : '' }}">
+                                <a class="menu-item" href="{{ route('vacancy.viconbox') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-safari"></i> Box Icon Section</a>
+                            </li>
+                            
+                        </ul>
                 </li>
                 <li class="{{ request()->is('life-at-banglalink/contact*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('life.at.banglalink.contact') }}"
