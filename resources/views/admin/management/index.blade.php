@@ -11,9 +11,6 @@
 @section('content')
     <section>
         <div class="card">
-            <div class="card-header">
-
-            </div>
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
