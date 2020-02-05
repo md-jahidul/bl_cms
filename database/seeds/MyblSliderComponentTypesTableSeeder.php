@@ -12,7 +12,8 @@ class MyblSliderComponentTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        $slider_types = ['Home', 'Dashboard', 'Internet', 'Bundle', 'History'];
+        $slider_types = ['Home', 'Dashboard', 'Internet', 'Bundle', 'History', 'Recharge Offers',
+            'Special Call Rate', 'Minute Packs', 'SMS Packs'];
 
         $slider_component_types = [];
 
