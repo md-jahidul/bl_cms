@@ -170,7 +170,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     
     Route::get('device-offer-status-change', 'AssetLite\DeviceOfferController@offerStatusChange')
                                          ->name('offer.status.change');
-    Route::get('delete-device-offer/{id}', 'AssetLite\DeviceOfferController@deleteDeviceOffer');
+    Route::get('delete-device-offer/{id?}', 'AssetLite\DeviceOfferController@deleteDeviceOffer');
     
     
 

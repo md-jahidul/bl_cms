@@ -1,10 +1,8 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: bs-205
- * Date: 18/08/19
- * Time: 17:23
+ * User: Bulbul Mahmud Nito
+ * Date: 05/01/2020
  */
 
 namespace App\Services;
@@ -38,8 +36,8 @@ class EasyPaymentCardService
      */
     public function getDivisions()
     {
-        $divisions = $this->paymentCardRepository->getDivisionList();
-        return $divisions;
+        $response = $this->paymentCardRepository->getDivisionList();
+        return $response;
     }
     
     /**

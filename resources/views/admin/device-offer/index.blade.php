@@ -22,9 +22,9 @@
                                     <input type="file" class="dropify" name="offer_file" data-height="80"
                                            data-allowed-file-extensions="xlsx" required/>
                                 </div>
-                                <div class="col-md-12" >
-                                    <div class="form-group float-right" style="margin-top:15px;">
-                                        <button class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
+                                <div class="col-md-12 text-center">
+                                    <div class="form-group">
+                                        <button class="btn btn-success" type="submit">Upload</button>
                                     </div>
                                 </div>
                             </form>

@@ -1,5 +1,5 @@
     <div class="row">
-        <div class="col-md-offset-1 col-md-3 col-xs-12">
+        <div class="col-md-3 col-xs-12">
             <select name="division" class="form-control filter" id="division">
                 <option value=""> Select Devision</option>
                 @foreach($divisions as $div)
@@ -40,7 +40,91 @@
 <script>
     $(function () {
 
-        //change show/hide status of easy payment card
+        $("#payment_card_list").dataTable({
+            scrollX: true,
+            processing: true,
+            searching: false,
+            serverSide: true,
+            ordering: false,
+            autoWidth: false,
+            pageLength: 20,
+            lengthChange: false,
+            ajax: {
+                url: '{{ route("easypaymentcard.list.ajax") }}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    division: function () {
+                        return $("#division").val();
+                    }
+                }
+            },
+            columns: [
+
+                {
+                    name: 'sl',
+                    render: function () {
+                        return null;
+                    }
+                },
+                {
+                    name: 'code',
+                    render: function (data, type, row) {
+                        return row.code;
+                    }
+                },
+                {
+                    name: 'division',
+                    render: function (data, type, row) {
+                        return row.division;
+                    }
+                },
+                {
+                    name: 'area',
+                    render: function (data, type, row) {
+                        return row.area;
+                    }
+                },
+                {
+                    name: 'branch_name',
+                    render: function (data, type, row) {
+                        return row.branch_name;
+                    }
+                },
+                {
+                    name: 'address',
+                    render: function (data, type, row) {
+                        return row.address;
+                    }
+                },
+                {
+                    name: 'status',
+                    render: function (data, type, row) {
+                        return row.status;
+                    }
+                },
+                {
+                    name: 'actions',
+                    className: 'filter_data',
+                    render: function (data, type, row) {
+                        let detail_question_url = "{{ URL('delete-easy-payment-card') }}" + "/" + row.id;
+                        return `<div class="btn-group" role="group" aria-label="Delete">
+                        <a href=" ` + detail_question_url + ` "class="btn btn-sm btn-icon btn-outline-danger delete_card"><i class="la la-trash"></i></a>
+                      </div>`
+                    }
+                }
+            ],
+            "fnCreatedRow": function (row, data, index) {
+                $('td', row).eq(0).html(index + 1);
+            }
+
+        });
+
+        $(document).on('change', '.filter', function (e) {
+            $('#payment_card_list').DataTable().ajax.reload();
+        });
+        
+                //change show/hide status of easy payment card
         $("#payment_card_list").on('click', '.card_change_status', function (e) {
             var cardId = $(this).attr('href');
 
@@ -165,91 +249,6 @@
             e.preventDefault();
         });
 
-
-
-        $("#payment_card_list").dataTable({
-            scrollX: true,
-            processing: true,
-            searching: false,
-            serverSide: true,
-            ordering: false,
-            autoWidth: false,
-            pageLength: 20,
-            lengthChange: false,
-            ajax: {
-                url: '{{ route("easypaymentcard.list.ajax") }}',
-                method: 'POST',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    division: function () {
-                        return $("#division").val();
-                    }
-                }
-            },
-            columns: [
-
-                {
-                    name: 'sl',
-                    render: function () {
-                        return null;
-                    }
-                },
-                {
-                    name: 'code',
-                    render: function (data, type, row) {
-                        return row.code;
-                    }
-                },
-                {
-                    name: 'division',
-                    render: function (data, type, row) {
-                        return row.division;
-                    }
-                },
-                {
-                    name: 'area',
-                    render: function (data, type, row) {
-                        return row.area;
-                    }
-                },
-                {
-                    name: 'branch_name',
-                    render: function (data, type, row) {
-                        return row.branch_name;
-                    }
-                },
-                {
-                    name: 'address',
-                    render: function (data, type, row) {
-                        return row.address;
-                    }
-                },
-                {
-                    name: 'status',
-                    render: function (data, type, row) {
-                        return row.status;
-                    }
-                },
-                {
-                    name: 'actions',
-                    className: 'filter_data',
-                    render: function (data, type, row) {
-                        let detail_question_url = "{{ URL('delete-easy-payment-card') }}" + "/" + row.id;
-                        return `<div class="btn-group" role="group" aria-label="Delete">
-                        <a href=" ` + detail_question_url + ` "class="btn btn-sm btn-icon btn-outline-danger delete_card"><i class="la la-trash"></i></a>
-                      </div>`
-                    }
-                }
-            ],
-            "fnCreatedRow": function (row, data, index) {
-                $('td', row).eq(0).html(index + 1);
-            }
-
-        });
-
-        $(document).on('change', '.filter', function (e) {
-            $('#payment_card_list').DataTable().ajax.reload();
-        });
     });
 </script>
 
