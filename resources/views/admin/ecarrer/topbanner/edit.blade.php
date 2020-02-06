@@ -24,7 +24,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title (English)</label>
                                     <input type="text" name="title_en"  class="form-control section_name" placeholder="Enter title_en (english)"
-                                           value="{{ $sections->title_en }}" required data-validation-required-message="Enter slider title_en (english)">
+                                           value="{{ $sections->title_en }}" required readonly data-validation-required-message="Enter slider title_en (english)">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_en'))
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -93,14 +93,14 @@
                                     </div>
                                 </div> --}}
                                 
-                                <div class="form-group col-md-6">
+                                {{-- <div class="form-group col-md-6">
                                     <label for="category_type">Select Banner for</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
                                             <option value="life_at_banglalink">Life at Banglalink</option>
                                             <option value="programs">Programs</option>
                                             <option value="vacancy">Vacancy</option>
                                         </select>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>

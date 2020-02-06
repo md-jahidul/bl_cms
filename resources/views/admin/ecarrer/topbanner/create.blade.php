@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active"> Section Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('life-at-banglalink/topbanner') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    {{-- <a href="{{ url('life-at-banglalink/topbanner') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a> --}}
 @endsection
 @section('content')
     <section>
@@ -18,7 +18,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Give a name of the section</label>
                                     <input type="text" name="title_en"  class="form-control section_name" placeholder="Section name"
-                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Please enter Section name">
+                                           value="{{ old("title_en") ? old("title_en") : '' }}" required readonly data-validation-required-message="Please enter Section name">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_en'))
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -38,7 +38,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                     <label for="title_bn" class="required1">Title (Bangla)</label>
                                     <input type="text" name="title_bn"  class="form-control" placeholder="Section name"
-                                           value="{{ old("title_bn") ? old("title_bn") : '' }}"  data-validation-required-message="Please enter Section name">
+                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" >
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
@@ -74,14 +74,14 @@
                                 </div>
 
                                 
-                                <div class="form-group col-md-6">
+                                {{-- <div class="form-group col-md-6">
                                     <label for="category_type">Select Banner for</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
                                             <option value="life_at_banglalink">Life at Banglalink</option>
                                             <option value="programs">Programs</option>
                                             <option value="vacancy">Vacancy</option>
                                         </select>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
