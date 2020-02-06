@@ -398,4 +398,15 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('programs/sapbatches/destroy/{id}', 'AssetLite\EcarrerController@sapbatchesDestroy')->name('programs.sapbatches.destroy');
 
 
+    // eCarrer Programs Ennovators Previous Batches =========================================================
+    Route::get('programs/ennovatorbatches', 'AssetLite\EcarrerController@ennovatorbatchesIndex')->name('programs.ennovatorbatches');
+    Route::get('programs/ennovatorbatches/create', 'AssetLite\EcarrerController@ennovatorbatchesCreate')->name('programs.ennovatorbatches.create');
+    Route::post('programs/ennovatorbatches/store', 'AssetLite\EcarrerController@ennovatorbatchesStore')->name('programs.ennovatorbatches.store');
+
+    Route::get('programs/ennovatorbatches/{id}/edit', 'AssetLite\EcarrerController@ennovatorbatchesEdit')->name('programs.ennovatorbatches.edit');
+    
+    Route::post('programs/ennovatorbatches/{id}/update', 'AssetLite\EcarrerController@ennovatorbatchesUpdate')->name('programs.ennovatorbatches.update');
+    Route::get('programs/ennovatorbatches/destroy/{id}', 'AssetLite\EcarrerController@ennovatorbatchesDestroy')->name('programs.ennovatorbatches.destroy');
+
+
 });
