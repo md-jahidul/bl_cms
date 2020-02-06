@@ -250,7 +250,10 @@ class ProductController extends Controller
     {
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
-        return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType'));
+        $otherAttributes = $productDetail->product_details->other_attributes;
+//        return $otherAttributes['design_structure'];
+
+        return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType', 'otherAttributes'));
     }
 
     /**
