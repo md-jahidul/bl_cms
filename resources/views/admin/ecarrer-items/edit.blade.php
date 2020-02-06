@@ -46,7 +46,7 @@
                                                 Title (Bangla)
                                             @endif
                                         </label>
-                                        <input type="text" name="title_bn"  class="form-control" placeholder="Enter title_bn (english)"
+                                        <input type="text" name="title_bn"  class="form-control" placeholder="Enter text (bangla)"
                                                value="{{ $ecarrer_item->title_bn }}">
                                         <div class="help-block"></div>
                                         @if ($errors->has('title_bn'))

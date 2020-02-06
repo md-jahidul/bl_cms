@@ -297,6 +297,11 @@
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> SAP Previous Batches</a>
                                 </li>
+                                <li class="{{ request()->is('programs/ennovatorbatches*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.ennovatorbatches') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Ennovators Previous Batches</a>
+                                </li>
                             </ul>
                 </li>
                 <li class="{{ is_active_url('vacancy/pioneer') .' '. is_active_url('vacancy/pioneer') }}">

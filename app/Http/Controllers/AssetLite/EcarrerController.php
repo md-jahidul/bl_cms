@@ -519,8 +519,9 @@ class EcarrerController extends Controller
 		$data_types['has_items'] = 0;
 		# route slug
 		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
-	
-		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
+		
+		# do not store now
+		// $this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
 		Session::flash('message', 'Banner created successfully!');
 		return redirect('life-at-banglalink/topbanner');
@@ -551,7 +552,7 @@ class EcarrerController extends Controller
 		
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
-		    'title_en' => 'required',
+		    // 'title_en' => 'required',
 		    // 'slug' => 'required',
 		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
 		]);
@@ -562,7 +563,7 @@ class EcarrerController extends Controller
 
 		$data_types = null;
 
-		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
+		$this->ecarrerService->updateEcarrerSection($request->except(['title_en', 'slug']), $id, $data_types);
 
 		Session::flash('message', 'Banner updated successfully!');
 		return redirect('life-at-banglalink/topbanner');
@@ -1444,6 +1445,145 @@ class EcarrerController extends Controller
 		$response = $this->ecarrerService->sectionDelete($id);
 		Session::flash('message', $response->getContent());
 		return redirect("programs/sapbatches");
+
+	}
+
+
+	/**
+	 * Programs ennovatorbatches section list
+	 * @return [type] [description]
+	 */
+	public function ennovatorbatchesIndex(){
+
+		$categoryTypes = 'programs_ennovatorbatches';
+
+		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
+		
+		return view('admin.ecarrer.ennovatorbatches.index', compact('sections'));
+
+	}
+
+	/**
+	 * eCarrer programs ennovatorbatches
+	 * @return [type] [description]
+	 */
+	public function ennovatorbatchesCreate(){
+
+		return view('admin.ecarrer.ennovatorbatches.create');
+	}
+
+	/**
+	 * eCarrer life at banglalink ennovatorbatches store on create
+	 * @return [type] [description]
+	 */
+	public function ennovatorbatchesStore(Request $request){
+
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    'slug' => 'required'
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('programs/ennovatorbatches');
+		}
+
+		$data_types['category'] = 'programs_ennovatorbatches';
+
+		if( $request->filled('category_type') && $request->input('category_type') == 'batch_title' ){
+			$data_types['has_items'] = 0;
+		}
+		else{
+			$data_types['has_items'] = 1;
+		}
+		
+		# route slug
+		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+
+
+		$additional_info = null;
+		if( $request->filled('sider_info') ){
+			$additional_info['sider_info'] = $request->input('sider_info');
+		}
+
+		if( !empty($additional_info) ){
+			$data_types['additional_info'] = json_encode($additional_info);
+		}
+	
+		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
+
+		Session::flash('message', 'Section created successfully!');
+		return redirect('programs/ennovatorbatches');
+	}
+
+
+	/**
+	 * eCarrer life at banglalink ennovatorbatches
+	 * @return [type] [description]
+	 */
+	public function ennovatorbatchesEdit($id){
+
+		$sections = $this->ecarrerService->generalSectionById($id);
+		return view('admin.ecarrer.ennovatorbatches.edit', compact('sections'));
+	}
+
+
+	/**
+	 * Update general section
+	 * @param  Request $request [description]
+	 * @param  [type]  $id      [description]
+	 * @return [type]           [description]
+	 */
+	public function ennovatorbatchesUpdate(Request $request, $id){
+
+		$image_upload_size = ConfigController::adminImageUploadSize();
+		$image_upload_type = ConfigController::adminImageUploadType();
+		
+		# Check Image upload validation
+		$validator = Validator::make($request->all(), [
+		    'title_en' => 'required',
+		    'slug' => 'required',
+		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('programs/ennovatorbatches');
+		}
+
+		$data_types = null;
+		$additional_info = null;
+		if( $request->filled('sider_info') ){
+			$additional_info['sider_info'] = $request->input('sider_info');
+		}
+
+		if( !empty($additional_info) ){
+			$data_types['additional_info'] = json_encode($additional_info);
+		}
+
+
+		if( $request->filled('category_type') && $request->input('category_type') == 'batch_title' ){
+			$data_types['has_items'] = 0;
+		}
+		else{
+			$data_types['has_items'] = 1;
+		}
+
+		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
+
+		Session::flash('message', 'Section updated successfully!');
+		return redirect('programs/ennovatorbatches');
+
+	}
+
+	/**
+	 * [ennovatorbatchesDestroy description]
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
+	public function ennovatorbatchesDestroy($id){
+
+		$response = $this->ecarrerService->sectionDelete($id);
+		Session::flash('message', $response->getContent());
+		return redirect("programs/ennovatorbatches");
 
 	}
 
