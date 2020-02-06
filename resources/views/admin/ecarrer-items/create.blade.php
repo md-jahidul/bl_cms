@@ -17,7 +17,7 @@
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">
-                                        @if( $ecarrer_section_slug == 'programs_sapbatches' )
+                                        @if( ($ecarrer_section_slug == 'programs_sapbatches') || ($ecarrer_section_slug == 'programs_ennovatorbatches') )
                                             Name (English)
                                         @else
                                             Title (English)
@@ -34,7 +34,7 @@
                                 @if( $ecarrer_section_slug != 'life_at_bl_contact' )
                                     <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                         <label for="title_bn" class="required1">
-                                            @if( $ecarrer_section_slug == 'programs_sapbatches' )
+                                            @if( ($ecarrer_section_slug == 'programs_sapbatches') || ($ecarrer_section_slug == 'programs_ennovatorbatches') )
                                                 Name (Bangla)
                                             @else
                                                 Title (Bangla)
@@ -106,7 +106,7 @@
                                 @endif
 
 
-                                @if( (isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial') || $ecarrer_section_slug == 'programs_sapbatches' )
+                                @if( (isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial') || ($ecarrer_section_slug == 'programs_sapbatches') || ($ecarrer_section_slug == 'programs_ennovatorbatches') )
                                     @include('admin.ecarrer-items.additional.testimonial_text')
                                 @endif
 
