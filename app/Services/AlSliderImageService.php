@@ -76,6 +76,11 @@ class AlSliderImageService
             $data['image_url'] = $imageUrl;
             $this->deleteFile($sliderImage['image_url']);
         }
+        if (request()->hasFile('mobile_view_img')) {
+            $imageUrl = $this->upload($data['mobile_view_img'], 'assetlite/images/slider-images');
+            $data['mobile_view_img'] = $imageUrl;
+            $this->deleteFile($sliderImage['mobile_view_img']);
+        }
         $sliderImage->update($data);
         return Response('Slider Image update successfully !');
     }
