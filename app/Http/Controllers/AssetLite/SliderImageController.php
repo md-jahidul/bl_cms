@@ -90,6 +90,9 @@ class SliderImageController extends Controller
     {
         $sliderImage = AlSliderImage::find($id);
         $other_attributes = $sliderImage->other_attributes;
+
+//        return $sliderImage;
+
         return view('admin.slider-image.edit', compact('sliderImage', 'type', 'other_attributes'));
     }
 
@@ -102,7 +105,7 @@ class SliderImageController extends Controller
      */
     public function update(StoreSliderImageRequest $request, $parentId, $type, $id)
     {
-        // TODO: Done:check file size validation        
+        // TODO: Done:check file size validation
         $response = $this->alSliderImageService->updateSliderImage($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect("slider/$parentId/$type");
