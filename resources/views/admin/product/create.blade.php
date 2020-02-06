@@ -184,14 +184,6 @@
                                 <div class="col-md-6">
                                     <label></label>
                                     <div class="form-group">
-                                        <label for="is_amar_offer" class="mr-1">Is Amar Offer:</label>
-                                        <input type="checkbox" name="is_amar_offer" value="1" id="is_amar_offer">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label></label>
-                                    <div class="form-group">
                                         <label for="special_product" class="mr-1">Is Special Product:</label>
                                         <input type="checkbox" name="special_product" value="1" id="special_product">
                                     </div>
