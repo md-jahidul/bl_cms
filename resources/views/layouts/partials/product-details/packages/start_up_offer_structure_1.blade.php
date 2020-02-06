@@ -1,3 +1,13 @@
+{{--@php--}}
+{{--    if (isset($productDetail->product_details->other_attributes['ft_recharge_detail_en'])){--}}
+{{--        $offer = $productDetail->product_details->other_attributes['ft_recharge_detail_en'];--}}
+{{--    } elseif (isset($productDetail->product_details->other_attributes['one_gb_detail_bn'])){--}}
+{{--        $offer = $productDetail->product_details->other_attributes['ft_recharge_detail_en'];--}}
+{{--    } else{--}}
+{{--        $offer = '';--}}
+{{--    }--}}
+{{--@endphp--}}
+
 
 <div class="form-group col-md-6 {{ $errors->has('details_en') ? ' error' : '' }}">
     <label for="details_en" >Details (English)</label>
@@ -23,7 +33,7 @@
 <div class="form-group col-md-6 {{ $errors->has('ft_recharge_detail_en') ? ' error' : '' }}">
     <label for="ft_recharge_detail_en" >Details of First-time Recharge (English)</label>
     <textarea type="text" name="other_attributes[ft_recharge_detail_en]"  class="form-control" placeholder="Enter offer details in english"
-              required data-validation-required-message="Enter offer details in english" id="details">{{ $productDetail->product_details->other_attributes['ft_recharge_detail_en'] }}</textarea>
+              required data-validation-required-message="Enter offer details in english" id="details">{{ !empty($productDetail->product_details->other_attributes['ft_recharge_detail_en']) }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('ft_recharge_detail_en'))
         <div class="help-block">{{ $errors->first('ft_recharge_detail_en') }}</div>
