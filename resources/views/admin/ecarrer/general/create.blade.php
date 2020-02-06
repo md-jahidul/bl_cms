@@ -72,6 +72,15 @@
                                     </div>
                                 </div> --}}
 
+                                <div class="form-group col-md-6">
+                                    <label for="category_type">Select section type</label>
+                                    <select class="form-control" name="category_type" aria-invalid="false">
+                                            <option value="news_on_top">Life at banglalink section</option>
+                                            <option value="values_section">Values section</option>
+                                            <option value="campus_section">We at campus section</option>
+                                        </select>
+                                </div>
+
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
                                     <div class="form-group">
