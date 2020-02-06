@@ -41,7 +41,7 @@
                                             @endif
                                         </label>
                                         <input type="text" name="title_bn"  class="form-control section_name" placeholder="Section name"
-                                               value="{{ old("title_bn") ? old("title_bn") : '' }}" data-validation-required-message="Please enter Section name">
+                                               value="{{ old("title_bn") ? old("title_bn") : '' }}">
                                         <div class="help-block"></div>
                                         @if ($errors->has('title_bn'))
                                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>

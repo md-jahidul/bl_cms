@@ -44,7 +44,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                     <label for="title_bn" class="required1">Title_bn (English)</label>
                                     <input type="text" name="title_bn"  class="form-control section_name" placeholder="Enter title_bn (english)"
-                                           value="{{ $sections->title_bn }}" data-validation-required-message="Enter slider title_bn (english)">
+                                           value="{{ $sections->title_bn }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
