@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active"> Section Create</li>
 @endsection
 @section('action')
-    {{-- <a href="{{ url('life-at-banglalink/topbanner') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a> --}}
+    <a href="{{ url('programs/ennovatorbatches') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -13,12 +13,12 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form id="topbanner_section" role="form" action="{{ route('life.at.banglalink.topbanner.store') }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form id="ennovatorbatches_section" role="form" action="{{ route('programs.ennovatorbatches.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                    <label for="title_en" class="required">Give a name of the section</label>
+                                    <label for="title_en" class="required">Title (English)</label>
                                     <input type="text" name="title_en"  class="form-control section_name" placeholder="Section name"
-                                           value="{{ old("title_en") ? old("title_en") : '' }}" required readonly data-validation-required-message="Please enter Section name">
+                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Please enter Section name">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_en'))
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -38,50 +38,21 @@
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                     <label for="title_bn" class="required1">Title (Bangla)</label>
                                     <input type="text" name="title_bn"  class="form-control" placeholder="Section name"
-                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" >
+                                           value="{{ old("title_bn") ? old("title_bn") : '' }}"  data-validation-required-message="Please enter Section name">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text" class="required1">Alt text</label>
-                                    <input type="text" name="alt_text"  class="form-control section_alt_text"
-                                           value="{{ old("alt_text") ? old("alt_text") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
-                                    @endif
-                                </div>
 
-                                <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="alt_text" class="">Banner Image (optional)</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input" id="image">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('image_url'))
-                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-1">
-                                    <img style="height:70px;width:70px;display:none" id="imgDisplay">
-                                </div>
-
-                                
-                                {{-- <div class="form-group col-md-6">
-                                    <label for="category_type">Select Banner for</label>
+                                <div class="form-group col-md-6">
+                                    <label for="category_type">Batch Content</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
-                                            <option value="life_at_banglalink">Life at Banglalink</option>
-                                            <option value="programs">Programs</option>
-                                            <option value="vacancy">Vacancy</option>
+                                            <option value="batch_content">Previous Batch Content</option>
+                                            <option value="batch_title">Previus Batch Title</option>
                                         </select>
-                                </div> --}}
+                                </div>
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
@@ -122,25 +93,25 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
+    
+    <script type="text/javascript">
+        jQuery(document).ready(function($){
 
-<script type="text/javascript">
-    jQuery(document).ready(function($){
 
+            $('input.section_name').on('keyup', function(){
+                var sectionName = $('#ennovatorbatches_section').find('.section_name').val();
+                var sectionNameLower = sectionName.toLowerCase();
+                var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
 
-        $('input.section_name').on('keyup', function(){
-            var sectionName = $('#topbanner_section').find('.section_name').val();
-            var sectionNameLower = sectionName.toLowerCase();
-            var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
+                $('#ennovatorbatches_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
 
-            $('#topbanner_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
+                // console.log(sectionNameRemoveSpace);
+            });
 
-            // console.log(sectionNameRemoveSpace);
+            
+
         });
-
-        
-
-    });
-</script>
+    </script>
 
 @endpush
 
