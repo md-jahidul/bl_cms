@@ -77,6 +77,10 @@
             padding-top: 0 !important;
             padding-bottom: 0 !important;
         }
+
+        table.dataTable {
+            border-spacing: 1px;
+        }
     </style>
 @endpush
 
