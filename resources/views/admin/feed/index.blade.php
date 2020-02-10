@@ -1,11 +1,12 @@
 @extends('layouts.admin')
 @section('title', 'Feed| List')
 @section('card_name', 'Feeds')
-{{--@section('action')
-    <a href="" class="btn btn-info btn-glow px-2">
-        Add Category
-    </a>
-@endsection--}}
+@section('action')
+    <a href="{{route('feed.create', 'youtube')}}" class="btn btn-social btn-min-width mb-1 mr-1 btn-outline-pinterest">
+        <i class="la la-youtube"></i> Add Youtube </a>
+    <a href="{{ route('feed.create' ,'facebook') }}" class="btn btn-social btn-min-width mb-1 mr-1 btn-outline-facebook">
+        <span class="la la-facebook font-medium-4"></span> Add Facebook </a>
+@endsection
 
 @section('content')
     <section class="row-separator-form-layouts">
@@ -36,7 +37,7 @@
                                     <td>{{ $feed->source }}</td>
                                     <td>{{ $feed->title }}</td>
                                     <td>
-                                        <div class="badge badge-glow badge-pill badge-border border-info info">
+                                        <div class="badge badge-info">
                                             <span>{{ strtoupper($feed->status) }}</span>
                                         </div>
                                     </td>
@@ -50,7 +51,7 @@
                                             </div>
                                             @if(auth()->id() == $feed->created_by)
                                                 <div class="col-md-3 col-sm-6">
-                                                    <a role="button" title="Edit" href="#"
+                                                    <a role="button" title="Edit" href="{{ route('feed.edit' , $feed->id) }}"
                                                        class=" btn btn-sm btn-outline-primary">
                                                         <i class="la la-pencil"></i>
                                                     </a>

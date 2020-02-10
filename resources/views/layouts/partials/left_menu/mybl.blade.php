@@ -251,8 +251,8 @@
     <li class=" nav-item"><a href="#"><i class="la la-newspaper-o"></i>
             <span class="menu-title">Feed</span></a>
         <ul class="menu-content">
-            <li class="{{is_active_url('faq/questions')}}">
-                <a class="menu-item" href="{{ route('faq.questions.index') }} ">
+            <li class="{{is_active_url('feed')}}">
+                <a class="menu-item" href="{{ route('feed.index') }} ">
                     <i class="la la-list"></i> Feed List
                 </a>
             </li>

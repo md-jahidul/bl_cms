@@ -52,7 +52,7 @@ class FeedController extends Controller
 
     public function index(Request $request)
     {
-        $feeds = $this->service->getFeedsWithPagination($request, 15);
+        $feeds = $this->service->getFeedsWithPagination($request, 10);
 
         //dd($feeds->toArray());
 
@@ -68,5 +68,28 @@ class FeedController extends Controller
         ];
 
         return view($source_view_mapping[strtolower($feed->source)], compact('feed'));
+    }
+
+    public function edit(Feed $feed)
+    {
+        $source_view_mapping = [
+            'youtube' => 'admin.feed.youtube.edit',
+            'facebook' => 'admin.feed.facebook.edit',
+            'custom' => 'admin.feed.custom.edit',
+        ];
+
+        $category = FeedCategory::orderBy('sort', 'asc')->get();
+
+        return view($source_view_mapping[strtolower($feed->source)], compact('feed', 'category'));
+    }
+
+    public function update(Feed $feed, Request $request)
+    {
+        try {
+            return $this->service->updateYoutubeFeed($feed, $request);
+        } catch (\Exception $e) {
+            $request->session()->flash('error', $e->getMessage());
+            return redirect()->route("feed.show", $feed);
+        }
     }
 }

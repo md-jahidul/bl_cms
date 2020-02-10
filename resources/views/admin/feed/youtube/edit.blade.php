@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Feed| Youtube')
-@section('card_name', 'Feed Entry- Youtube')
+@section('card_name', 'Feed Edit- Youtube')
 @section('action')
     <a href="{{route('feed.index')}}" class="btn btn-info btn-glow px-2">
         Back to list
@@ -16,9 +16,10 @@
                         <form class="form form-horizontal"
                               id="feed_form"
                               method="POST"
-                              action="{{route('feed.store', $source)}}"
+                              action="{{route('feed.update', $feed)}}"
                               enctype="multipart/form-data">
                             {{csrf_field()}}
+                            {{ method_field('PUT') }}
                             <div class="form-body">
                                 <div class="form-group row">
                                     <label class="col-md-2 label-control" for="category">Category</label>
@@ -30,7 +31,8 @@
                                         >
                                             <option value="">Select category</option>
                                             @foreach($category as $cat)
-                                                <option value="{{$cat->id}}"> {{ $cat->title }}</option>
+                                                <option @if($feed->category_id == $cat->id) selected
+                                                        @endif value="{{$cat->id}}"> {{ $cat->title }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -41,7 +43,7 @@
                                         <input type="text"
                                                id="title"
                                                class="form-control"
-                                               placeholder="Give a title"
+                                               value="{{ $feed->title }}"
                                                required
                                                name="title">
                                     </div>
@@ -53,8 +55,7 @@
                                                   rows="4"
                                                   name="description"
                                                   id="description"
-                                                  placeholder="Give a short description"
-                                        ></textarea>
+                                        >{{ $feed->description }}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -65,7 +66,7 @@
                                                id="video_url"
                                                name="video_url"
                                                required
-                                               placeholder="Provide Youtube Video Link e.g. https://www.youtube.com/watch?v=5G_afAb8pLs"
+                                               value="{{ $feed->video_url }}"
                                         >
                                     </div>
                                 </div>
@@ -76,14 +77,17 @@
                                                class="dropify"
                                                name="preview_image"
                                                data-height="80"
-                                               data-allowed-file-extensions='["jpg", "jpeg" , "png"]' />
+                                               @if($feed->preview_image)
+                                               data-default-file="{{ url('storage/' .$feed->preview_image) }}"
+                                               @endif
+                                               data-allowed-file-extensions='["jpg", "jpeg" , "png"]'/>
                                     </div>
                                 </div>
                             </div>
                             <div class="row justify-content-start">
                                 <div class="offset-md-2 col-md-2">
                                     <button type="submit" class="btn btn-primary btn-sm btn-block">
-                                        <i class="la la-check"></i> Save
+                                        <i class="la la-check"></i> Update
                                     </button>
                                 </div>
                             </div>

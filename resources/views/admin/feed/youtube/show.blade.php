@@ -30,8 +30,8 @@
                                     @if($feed->status == \App\Enums\FeedStatus::PENDING && $feed->created_by == auth()->id())
                                         <div class="form-group pull-right">
                                             <!-- Outline buttons -->
-                                            <button type="button" class="btn btn-outline-info btn-min-width mr-1 mb-1">EDIT</button>
-                                            <button type="button" class="btn btn-outline-success btn-min-width mr-1 mb-1">APPROVED</button>
+                                            <a type="button" href="{{ route('feed.edit', $feed) }}" class="btn btn-outline-info btn-min-width mr-1 mb-1">EDIT</a>
+                                            <a type="button" class="btn btn-outline-success btn-min-width mr-1 mb-1">APPROVED</a>
                                         </div>
                                     @endif
                                 </div>

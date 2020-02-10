@@ -184,6 +184,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
 
     Route::get('feed', 'CMS\Feed\FeedController@index')->name('feed.index');
     Route::get('feed/details/{feed}', 'CMS\Feed\FeedController@show')->name('feed.show');
+    Route::get('feed/edit/{feed}', 'CMS\Feed\FeedController@edit')->name('feed.edit');
+    Route::put('feed/update/{feed}', 'CMS\Feed\FeedController@update')->name('feed.update');
     Route::get('feed/{source}', 'CMS\Feed\FeedController@create')->name('feed.create');
     Route::post('feed/{source}', 'CMS\Feed\FeedController@store')->name('feed.store');
 });
