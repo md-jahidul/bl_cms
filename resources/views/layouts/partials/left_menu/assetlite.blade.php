@@ -368,7 +368,33 @@
         </li>
     @endif
 
-    {{--        TODO:: Quiz Management using 2nd priority  --}}
+    @if( auth()->user()->can_view('Product') )
+        <li class="nav-item"><a href="#"><i class="la la-apple"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">App & Service</span></a>
+            <ul class="menu-content">
+
+                <li class="{{ is_active_url('product-core') . is_active_url('product-core') }}">
+                    <a class="menu-item" href="{{ route('product.core.list') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-taxi"></i> App & Service Tab</a>
+                </li>
+
+                <li class="{{ is_active_url('product-core') . is_active_url('product-core') }}">
+                    <a class="menu-item" href="{{ route('product.core.list') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-tasks"></i> App & Service Category</a>
+                </li>
+                <li class="{{ is_active_url('offers/postpaid') . is_active_url('offers/postpaid/create') }}">
+                    <a class="menu-item" href="{{ route('product.list','postpaid') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> App Service Products</a>
+                </li>
+
+            </ul>
+        </li>
+    @endif
+
+    {{--        TODO:: Quiz Management using 3nd priority  --}}
     {{--        @if( auth()->user()->can_view('Tag') || auth()->user()->can_view('Campaign') || auth()->user()->can_view('Question') || auth()->user()->can_view('Prize'))--}}
     {{--            <li class="nav-item"><a href="#"><i class="la la-question"></i>--}}
     {{--                    <span class="menu-title" data-i18n="nav.templates.main">Quiz Management</span></a>--}}
