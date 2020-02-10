@@ -24,6 +24,11 @@ class EcarrerController extends Controller
 	 * # life_at_bl_contact
 	 * # vacancy_pioneer
 	 * # vacancy_viconbox
+	 * # programs_progeneral
+	 * # programs_proiconbox
+	 * # programs_photogallery
+	 * # programs_sapbatches
+	 * # programs_ennovatorbatches
 	 */
 
 	/**
@@ -101,9 +106,9 @@ class EcarrerController extends Controller
 	 */
 	public function generalEdit($id){
 
-		$section = $this->ecarrerService->generalSectionById($id);
+		$sections = $this->ecarrerService->generalSectionById($id);
 
-		return view('admin.ecarrer.general.edit', compact('section'));
+		return view('admin.ecarrer.general.edit', compact('sections'));
 
 	}
 
