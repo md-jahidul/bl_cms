@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class DigitalServiceTableSeeder extends Seeder
+class AppServiceTabTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class DigitalServiceTableSeeder extends Seeder
      */
     public function run()
     {
-//        factory('App\Models\DigitalService', 10)->create();
+        //
     }
 }

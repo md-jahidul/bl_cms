@@ -393,7 +393,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('programs/sapbatches/store', 'AssetLite\EcarrerController@sapbatchesStore')->name('programs.sapbatches.store');
 
     Route::get('programs/sapbatches/{id}/edit', 'AssetLite\EcarrerController@sapbatchesEdit')->name('programs.sapbatches.edit');
-    
+
     Route::post('programs/sapbatches/{id}/update', 'AssetLite\EcarrerController@sapbatchesUpdate')->name('programs.sapbatches.update');
     Route::get('programs/sapbatches/destroy/{id}', 'AssetLite\EcarrerController@sapbatchesDestroy')->name('programs.sapbatches.destroy');
 
@@ -404,9 +404,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('programs/ennovatorbatches/store', 'AssetLite\EcarrerController@ennovatorbatchesStore')->name('programs.ennovatorbatches.store');
 
     Route::get('programs/ennovatorbatches/{id}/edit', 'AssetLite\EcarrerController@ennovatorbatchesEdit')->name('programs.ennovatorbatches.edit');
-    
+
     Route::post('programs/ennovatorbatches/{id}/update', 'AssetLite\EcarrerController@ennovatorbatchesUpdate')->name('programs.ennovatorbatches.update');
     Route::get('programs/ennovatorbatches/destroy/{id}', 'AssetLite\EcarrerController@ennovatorbatchesDestroy')->name('programs.ennovatorbatches.destroy');
 
+    // App & Service =========================================================
+    Route::resource('app-service/tabs', 'AppServiceTabController');
 
 });
