@@ -31,6 +31,7 @@
                                                            min="10"
                                                            max="1000"
                                                            name="amount[]"
+                                                           required
                                                            value="{{$amount->amount }}">
                                                 </td>
                                             </tr>
