@@ -15,6 +15,11 @@ class CreateAppServiceCategoriesTable extends Migration
     {
         Schema::create('app_service_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('app_service_tab_id');
+            $table->string('title_en');
+            $table->string('title_bn');
+            $table->string('alias');
+            $table->json('other_attributes')->nullable();
             $table->timestamps();
         });
     }
