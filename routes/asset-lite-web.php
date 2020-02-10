@@ -409,6 +409,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('programs/ennovatorbatches/destroy/{id}', 'AssetLite\EcarrerController@ennovatorbatchesDestroy')->name('programs.ennovatorbatches.destroy');
 
     // App & Service =========================================================
-    Route::resource('app-service/tabs', 'AppServiceTabController');
+    Route::resource('app-service/tabs', 'AssetLite\AppServiceTabController');
+    Route::get('app-service/tabs/destroy/{id}', 'AssetLite\AppServiceTabController@destroy');
 
 });
