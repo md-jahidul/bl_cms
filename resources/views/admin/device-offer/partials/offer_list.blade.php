@@ -1,5 +1,7 @@
-    <div class="row">
-        <div class="col-md-3 col-xs-12">
+<div class="row mt-2">
+
+    <div class="col-md-12 col-xs-12">
+        <div class="col-md-3 col-xs-12 pull-left">
             <select name="brand" class="form-control filter" id="brand">
                 <option value=""> Select Brand</option>
                 @foreach($brands as $b)
@@ -7,30 +9,33 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-8 col-xs-12">
+        <div class="col-md-8 col-xs-12 pull-right">
             <a href="javascript:;" class="btn btn-danger all_offer_delete float-right">Delete All</a>
         </div>
 
     </div>
 
-<div class="col-md-12 mt-1">
-    <table class="table table-striped table-bordered dataTable"
-           id="device_offer_list" role="grid">
-        <thead>
-            <tr>
-                <th>SL.</th>
-                <th>brand</th>
-                <th>model</th>
-                <th>Free Data</th>
-                <th>Bonus Data</th>
-                <th>Available Shop</th>
-                <th>Status</th>
-                <th class="filter_data">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+
+
+    <div class="col-md-12">
+        <table class="table table-striped table-bordered dataTable"
+               id="device_offer_list" role="grid">
+            <thead>
+                <tr>
+                    <th>SL.</th>
+                    <th>brand</th>
+                    <th>model</th>
+                    <th>Free Data</th>
+                    <th>Bonus Data</th>
+                    <th>Available Shop</th>
+                    <th>Status</th>
+                    <th class="filter_data">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 @push('page-js')
@@ -39,7 +44,7 @@
 <script>
     $(function () {
 
- 
+
 
 
 
@@ -126,10 +131,10 @@
         $(document).on('change', '.filter', function (e) {
             $('#device_offer_list').DataTable().ajax.reload();
         });
-        
-        
-        
-               //change show/hide status of device offer
+
+
+
+        //change show/hide status of device offer
         $("#device_offer_list").on('click', '.offer_change_status', function (e) {
             var offerId = $(this).attr('href');
 
@@ -213,7 +218,7 @@
         });
         //delete all device offer
         $('.all_offer_delete').on('click', function (e) {
-            var deleteUrl =  "{{ URL('delete-device-offer') }}";
+            var deleteUrl = "{{ URL('delete-device-offer') }}";
             var cnfrm = confirm("Do you want to delete all offer?");
             if (cnfrm) {
                 $.ajax({
@@ -251,7 +256,7 @@
             }
             e.preventDefault();
         });
-        
+
     });
 </script>
 

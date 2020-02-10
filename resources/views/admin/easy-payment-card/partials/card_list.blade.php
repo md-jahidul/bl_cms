@@ -1,5 +1,6 @@
-    <div class="row">
-        <div class="col-md-3 col-xs-12">
+<div class="row  mt-2">
+    <div class="col-md-12">
+        <div class="col-md-3 col-xs-12 pull-left">
             <select name="division" class="form-control filter" id="division">
                 <option value=""> Select Devision</option>
                 @foreach($divisions as $div)
@@ -7,14 +8,12 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-8 col-xs-12">
+        <div class="col-md-8 col-xs-12 pull-right">
             <a href="javascript:;" class="btn btn-danger all_card_delete float-right">Delete All</a>
         </div>
-
     </div>
-
-
-<div class="col-md-12 mt-1">
+    
+    <div class="col-md-12">
     <table class="table table-striped table-bordered dataTable"
            id="payment_card_list" role="grid">
         <thead>
@@ -33,6 +32,11 @@
         </tbody>
     </table>
 </div>
+
+</div>
+
+
+
 
 @push('page-js')
 
@@ -123,8 +127,8 @@
         $(document).on('change', '.filter', function (e) {
             $('#payment_card_list').DataTable().ajax.reload();
         });
-        
-                //change show/hide status of easy payment card
+
+        //change show/hide status of easy payment card
         $("#payment_card_list").on('click', '.card_change_status', function (e) {
             var cardId = $(this).attr('href');
 
@@ -206,8 +210,8 @@
             }
             e.preventDefault();
         });
-        
-        
+
+
         //delete all easy payment card
         $('.all_card_delete').on('click', function (e) {
             var deleteUrl = "{{ URL('delete-easy-payment-card') }}";
