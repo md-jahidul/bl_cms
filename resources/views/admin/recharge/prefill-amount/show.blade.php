@@ -38,7 +38,6 @@
                                         @endforeach
                                         </tbody>
                                     </table>
-                                    {{--                            <button class="btn btn-success pull-right mb-2" type="submit"> Update</button>--}}
                                 </form>
                             @endif
                         </div>
