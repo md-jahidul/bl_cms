@@ -182,6 +182,47 @@
             </ul>
         </li>
     @endif
+    
+        @if( auth()->user()->can_view('Product') )
+        <li class="nav-item"><a href="#"><i class="la la-briefcase"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Business</span></a>
+            <ul class="menu-content">
+
+                <li class="{{ is_active_url('business-general-setup') }}">
+                    <a class="menu-item" href="{{ url('tag-category') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> General Setup</a>
+                </li>
+                <li class="{{ is_active_url('business-package') }}">
+                    <a class="menu-item" href="{{ route('sim-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Package</a>
+                </li>
+
+                <li class="{{ is_active_url('offer-categories') }}">
+                    <a class="menu-item" href="{{ route('offer-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Internet</a>
+                </li>
+
+                <li class="{{ is_active_url('duration-categories') }}">
+                    <a class="menu-item" href="{{ route('duration-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Business Solution</a>
+                </li>
+                <li class="{{ is_active_url('duration-categories') }}">
+                    <a class="menu-item" href="{{ route('duration-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> IOT</a>
+                </li>
+                <li class="{{ is_active_url('duration-categories') }}">
+                    <a class="menu-item" href="{{ route('duration-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Others</a>
+                </li>
+
+            </ul>
+        </li>
+    @endif
 
 
 
