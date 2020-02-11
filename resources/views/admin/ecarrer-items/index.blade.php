@@ -32,7 +32,7 @@
                             {{-- @php( $itemsType = str_replace(" ", "-", strtolower( $items->type->name ) )) --}}
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td>{{ $items->title }}</td>
+                                <td>{{ $items->title_en }}</td>
                                 <td>{{ ($items->is_active == 1) ? 'Acive' : 'Inactive' }}</td>
                                 <td class="text-center" width="22%">
                                     <a href="{{ url("ecarrer-items/$parent_id/$items->id/edit") }}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

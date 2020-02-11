@@ -5,9 +5,9 @@
     <li class="breadcrumb-item active">Life at banglalink</li>
 @endsection
 @section('action')
-    <a href="{{ url('life-at-banglalink/topbanner/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    {{-- <a href="{{ url('life-at-banglalink/topbanner/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add New Banner
-    </a>
+    </a> --}}
 @endsection
 @section('content')
     <section>
@@ -32,12 +32,12 @@
                             {{-- @php( $sectionType = str_replace(" ", "-", strtolower( $section->type->name ) )) --}}
                             <tr>
                                 <td>{{ ++$key }}</td>
-                                <td>{{ $section->title }}</td>
+                                <td>{{ $section->title_en }}</td>
                                 <td>{{ $section->slug }}</td>
                                 <td>{{ ($section->is_active == 1) ? 'Acive' : 'Inactive' }}</td>
                                 <td class="text-center" width="22%">
                                     <a href="{{ url("life-at-banglalink/topbanner/$section->id/edit") }}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="{{ url("life-at-banglalink/topbanner/destroy/$section->id") }}" role="button" class="btn btn-outline-success border-0" onclick="return confirm('Are you sure?');"><i class="la la-trash" aria-hidden="true"></i></a>
+                                    {{-- <a href="{{ url("life-at-banglalink/topbanner/destroy/$section->id") }}" role="button" class="btn btn-outline-success border-0" onclick="return confirm('Are you sure?');"><i class="la la-trash" aria-hidden="true"></i></a> --}}
                                     
                                     @if( $section->has_items == 1 )
                                         <a href="{{ url("ecarrer-items/$section->id/list") }}" class="btn btn-outline-warning"><i class="la la-edit"></i> Section Items <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{--{{ $childNumber }}--}}</span></a>

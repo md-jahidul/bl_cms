@@ -3,7 +3,7 @@
 @section('card_name', 'Section Edit')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ url('life-at-banglalink/events') }}">Section List</a></li>
-    <li class="breadcrumb-item active"> {{$sections->title}}</li>
+    <li class="breadcrumb-item active"> {{$sections->title_en}}</li>
 @endsection
 @section('action')
     <a href="{{ url("life-at-banglalink/events") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
@@ -21,13 +21,13 @@
                             {{method_field('POST')}}
                             <div class="row">
                                 <input type="hidden" name="section_category" value="{{ $sections->category }}">
-                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="title" class="required">Title (English)</label>
-                                    <input type="text" name="title"  class="form-control section_name" placeholder="Enter title (english)"
-                                           value="{{ $sections->title }}" required data-validation-required-message="Enter slider title (english)">
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="title_en" class="required">Title_en (English)</label>
+                                    <input type="text" name="title_en"  class="form-control section_name" placeholder="Enter title_en (english)"
+                                           value="{{ $sections->title_en }}" required data-validation-required-message="Enter slider title_en (english)">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('title'))
-                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @if ($errors->has('title_en'))
+                                        <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
 
@@ -38,6 +38,16 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('slug'))
                                         <div class="help-block">  {{ $errors->first('slug') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn" class="required">Title_bn (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title_bn (english)"
+                                           value="{{ $sections->title_bn }}" data-validation-required-message="Enter slider title_bn (english)">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
 

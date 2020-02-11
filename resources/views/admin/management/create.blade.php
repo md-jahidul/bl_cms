@@ -91,7 +91,7 @@
                                     <label for="personal_details" class="required">Personal Details (English)</label>
                                     <textarea
                                         required
-                                        data-validation-required-message="Personal Details is required"
+                                        data-validation-required-message="Personal Details (English) is required"
                                         class="form-control" name="personal_details" placeholder="Enter Personal Details in English" id="personal_details"
                                         rows="4">{{ old("personal_details") ? old("personal_details") : $personal_details  }}</textarea>
 
@@ -106,7 +106,7 @@
                                     <label for="personal_details_bn" class="required">Personal Details (Bangla)</label>
                                     <textarea
                                         required
-                                        data-validation-required-message="Personal Details is required"
+                                        data-validation-required-message="Personal Details (Bangla) is required"
                                         class="form-control" name="personal_details_bn" placeholder="Enter Personal Details in Bangla" id="personal_details_bn"
                                         rows="4">{{ old("personal_details_bn") ? old("personal_details_bn") : $personal_details_bn }}</textarea>
 
@@ -184,7 +184,6 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-
                                     @if(isset($manage))
                                     <img style="height:80px;width:100px;"
                                          src="{{ config('filesystems.file_base_url') . $manage->profile_image }}" id="profile_image_Display">

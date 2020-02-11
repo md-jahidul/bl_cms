@@ -15,13 +15,13 @@
                     <div class="card-body card-dashboard">
                         <form id="events_section" role="form" action="{{ route('life.at.banglalink.events.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="title" class="required">Give a name of the section</label>
-                                    <input type="text" name="title"  class="form-control section_name" placeholder="Section name"
-                                           value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Please enter Section name">
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="title_en" class="required">Title (English)</label>
+                                    <input type="text" name="title_en"  class="form-control section_name" placeholder="Section name"
+                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Please enter Section name">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('title'))
-                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @if ($errors->has('title_en'))
+                                        <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
 
@@ -35,6 +35,16 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn" class="required">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Section name"
+                                           value="{{ old("title_bn") ? old("title_bn") : '' }}"  data-validation-required-message="Please enter Section name">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('sliding_speed') ? ' error' : '' }}">
                                     <label for="sliding_speed" class="required">Sliding Speed</label>
                                     <input type="text" name="sider_info[sliding_speed]" oninput="this.value =Number(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"  class="form-control" placeholder="Enter sliding speed (sec)"  min="1" max="300"
@@ -45,6 +55,8 @@
                                         <div class="help-block">  {{ $errors->first('sliding_speed') }}</div>
                                     @endif
                                 </div>
+
+                                
 
                                 {{-- <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="">Banner Image (optional)</label>

@@ -208,6 +208,7 @@ class ProductController extends Controller
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offersType'] = $this->offerCategoryService->getOfferCategories($type);
         $this->info['durations'] = $this->durationCategoryService->findAll();
+        $this->info['offerInfo'] = $product->offer_info;
         $this->info['price_slabs'] = ProductPriceSlab::get();
 
         foreach ($this->info['offersType'] as $offer) {
@@ -218,6 +219,7 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
+
         return view('admin.product.edit', $this->info);
     }
 
@@ -231,6 +233,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $type, $id)
     {
+//        return $request;
         $this->productCoreService->updateProductCore($request->all(), $id);
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $type, $id);
@@ -247,12 +250,10 @@ class ProductController extends Controller
     {
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
+        $otherAttributes = $productDetail->product_details->other_attributes;
+//        return $otherAttributes['design_structure'];
 
-//        return $productDetail;
-
-//        return $productDetail->product_details->other_attributes['recharge_benefits_code'];
-
-        return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType'));
+        return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType', 'otherAttributes'));
     }
 
     /**

@@ -5,66 +5,60 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Controllers\Controller;
 
 use App\Models\AmarOfferDetails;
+use App\Services\AmarOfferDetailsService;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View;
 
 class AmarOfferController extends Controller
 {
 
-    private $amarOfferDetails;
-
-
+    private $amarOfferDetailsService;
 
     /**
      * AmarOfferController constructor.
-     * @param AmarOfferDetails $amarOfferDetails
+     * @param AmarOfferDetailsService $amarOfferDetailsService
      */
-    public function __construct(AmarOfferDetails $amarOfferDetails) {
-        $this->amarOfferDetails = $amarOfferDetails;
+    public function __construct(AmarOfferDetailsService $amarOfferDetailsService)
+    {
+        $this->amarOfferDetailsService = $amarOfferDetailsService;
     }
 
     /**
-     * Display a listing of the resource.
-     * 
-     * @param $type
-     * @return Factory|View
-     * @Bulbul Mahmud Nito || 02/02/2020
+     * @return Factory|View|void
      */
-    public function index()
+    public function amarOfferDetails()
     {
-        $offerDetails = $this->amarOfferDetails->orderBy('type')->get();
-
+        $offerDetails = $this->amarOfferDetailsService->amarOfferDetailsList();
         return view('admin.amar-offer-details.index', compact('offerDetails'));
     }
 
 
     /**
-     * Edit the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     * @Bulbul Mahmud Nito || 02/02/2020
+     * @param $id
+     * @return Factory|View
      */
-    public function edit($id)
+    public function edit($type)
     {
-        $detailsData = $this->amarOfferDetails->findOrFail($id);
+        $detailsData = $this->amarOfferDetailsService->findByType($type);
         return view('admin.amar-offer-details.edit', compact('detailsData'));
     }
-    
+
     /**
-     * Update/save the specified resource.
-     *
      * @param Request $request
-     * @param int $id
-     * @return Redirect
-     * @Bulbul Mahmud Nito || 02/02/2020
+     * @param $id
+     * @return RedirectResponse|Redirector
      */
-    public function update(Request $request, $id){
-        $details = $this->amarOfferDetails->findOrFail($id);
-        $details->details_en = $request->offer_details_en;
-        $details->details_bn = $request->offer_details_bn;
+    public function update(Request $request, $type)
+    {
+        $details = $this->amarOfferDetailsService->findByType($type);
+        $details->details_en = $request->details_en;
+        $details->details_bn = $request->details_bn;
         $details->save();
         return redirect("amaroffer/details");
     }
 
-    
+
 }

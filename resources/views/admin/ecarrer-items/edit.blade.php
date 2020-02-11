@@ -3,7 +3,7 @@
 @section('card_name', 'Item Edit')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ url("ecarrer-items/$parent_id/list") }}">Item List</a></li>
-    <li class="breadcrumb-item active"> {{$ecarrer_item->title}}</li>
+    <li class="breadcrumb-item active"> {{$ecarrer_item->title_en}}</li>
 @endsection
 @section('action')
     <a href="{{ url("ecarrer-items/$parent_id/list") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
@@ -21,18 +21,42 @@
                             {{method_field('POST')}}
                             <div class="row">
                                 <input type="hidden" name="parent_id" value="{{ $parent_id }}">
-                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="title" class="required">Title (English)</label>
-                                    <input type="text" name="title"  class="form-control section_name" placeholder="Enter title (english)"
-                                           value="{{ $ecarrer_item->title }}" required data-validation-required-message="Enter slider title (english)">
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="title_en" class="required">
+                                        @if( $ecarrer_section_slug == 'programs_sapbatches' )
+                                            Name (Bangla)
+                                        @else
+                                            Title (Bangla)
+                                        @endif
+                                    </label>
+                                    <input type="text" name="title_en"  class="form-control section_name" placeholder="Enter title_en (english)"
+                                           value="{{ $ecarrer_item->title_en }}" required data-validation-required-message="Enter slider title_en (english)">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('title'))
-                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @if ($errors->has('title_en'))
+                                        <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
+                                
+                                @if( $ecarrer_section_slug != 'life_at_bl_contact' )
+                                    <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                        <label for="title_bn" class="required1">
+                                            @if( $ecarrer_section_slug == 'programs_sapbatches' )
+                                                Name (Bangla)
+                                            @else
+                                                Title (Bangla)
+                                            @endif
+                                        </label>
+                                        <input type="text" name="title_bn"  class="form-control" placeholder="Enter text (bangla)"
+                                               value="{{ $ecarrer_item->title_bn }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('title_bn'))
+                                            <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                        @endif
+                                    </div>
+                                @endif
 
                                 <!-- Include additional field layout for individual section requirement -->
-                                @if( $ecarrer_section_slug != 'life_at_bl_events' )
+                                @if( ($ecarrer_section_slug != 'life_at_bl_events') && ($ecarrer_section_slug != 'life_at_bl_contact') && ($ecarrer_section_slug != 'programs_photogallery') )
                                     @include('admin.ecarrer-items.additional.description')
                                 @endif
 
@@ -59,6 +83,16 @@
                                     
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text" class="required1">Alt text</label>
+                                    <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt_text (english)"
+                                           value="{{ $ecarrer_item->alt_text }}" required data-validation-required-message="Enter slider alt_text (bangla)">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text'))
+                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
                                     <div class="form-group">
@@ -74,8 +108,17 @@
 
 
                                 <!-- Include additional field layout for individual section requirement -->
-                                @if( $ecarrer_section_slug == 'life_at_bl_teams' )
+                                @if( $ecarrer_section_slug == 'life_at_bl_teams' || ( isset($parent_data->check_type) && $parent_data->check_type == 'programs_news_section' ) )
                                     @include('admin.ecarrer-items.additional.call_to_actions')
+                                @endif
+
+                                <!-- Include additional field layout for individual section requirement -->
+                                @if( $ecarrer_section_slug == 'life_at_bl_contact' )
+                                    @include('admin.ecarrer-items.additional.alter_text_links')
+                                @endif
+
+                                @if( (isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial') || $ecarrer_section_slug == 'programs_sapbatches' )
+                                    @include('admin.ecarrer-items.additional.testimonial_text')
                                 @endif
 
                                 <div class="form-actions col-md-12 ">

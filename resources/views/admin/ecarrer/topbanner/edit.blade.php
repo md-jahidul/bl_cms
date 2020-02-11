@@ -3,7 +3,7 @@
 @section('card_name', 'Section Edit')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ url('life-at-banglalink/topbanner') }}">Section List</a></li>
-    <li class="breadcrumb-item active"> {{$sections->title}}</li>
+    <li class="breadcrumb-item active"> {{$sections->title_en}}</li>
 @endsection
 @section('action')
     <a href="{{ url("life-at-banglalink/topbanner") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
@@ -21,23 +21,43 @@
                             {{method_field('POST')}}
                             <div class="row">
                                 <input type="hidden" name="section_category" value="{{ $sections->category }}">
-                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="title" class="required">Title (English)</label>
-                                    <input type="text" name="title"  class="form-control section_name" placeholder="Enter title (english)"
-                                           value="{{ $sections->title }}" required data-validation-required-message="Enter slider title (english)">
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="title_en" class="required">Title (English)</label>
+                                    <input type="text" name="title_en"  class="form-control section_name" placeholder="Enter title_en (english)"
+                                           value="{{ $sections->title_en }}" required readonly data-validation-required-message="Enter slider title_en (english)">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('title'))
-                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @if ($errors->has('title_en'))
+                                        <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('slug') ? ' error' : '' }}">
-                                    <label for="slug" class="required1">Alt text</label>
+                                    <label for="slug" class="required">Slug</label>
                                     <input type="text" name="slug"  class="form-control section_slug"
-                                           value="{{ $sections->slug }}">
+                                           value="{{ $sections->slug }}" required readonly  data-validation-required-message="Slug name can not be emply">
                                     <div class="help-block"></div>
                                     @if ($errors->has('slug'))
                                         <div class="help-block">  {{ $errors->first('slug') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn" class="required1">Title_bn (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title_bn (english)"
+                                           value="{{ $sections->title_bn }}" data-validation-required-message="Enter slider title_bn (english)">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text" class="required1">Alt text</label>
+                                    <input type="text" name="alt_text"  class="form-control section_alt_text"
+                                           value="{{ $sections->alt_text }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text'))
+                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
                                     @endif
                                 </div>
 
@@ -73,14 +93,14 @@
                                     </div>
                                 </div> --}}
                                 
-                                <div class="form-group col-md-6">
+                                {{-- <div class="form-group col-md-6">
                                     <label for="category_type">Select Banner for</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
                                             <option value="life_at_banglalink">Life at Banglalink</option>
                                             <option value="programs">Programs</option>
                                             <option value="vacancy">Vacancy</option>
                                         </select>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
@@ -118,7 +138,25 @@
 
 
 @push('page-js')
-    
+
+<script type="text/javascript">
+        jQuery(document).ready(function($){
+
+
+            $('input.section_name').on('keyup', function(){
+                var sectionName = $('#topbanner_section').find('.section_name').val();
+                var sectionNameLower = sectionName.toLowerCase();
+                var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
+
+                $('#topbanner_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
+
+                // console.log(sectionNameRemoveSpace);
+            });
+
+            
+
+        });
+    </script>    
 
 @endpush
 

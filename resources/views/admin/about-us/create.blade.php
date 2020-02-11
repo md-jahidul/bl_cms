@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'About Us')
-@section('card_name', 'About Us')
+@section('title', 'About Banglalink')
+@section('card_name', 'About Banglalink')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('about-us') }}"> About Us</a></li>
-    <li class="breadcrumb-item active"> About Us</li>
+    <li class="breadcrumb-item active"> <a href="{{ url('about-us') }}"> About Banglalink</a></li>
+    <li class="breadcrumb-item active"> About Banglalink</li>
 @endsection
 @section('action')
     <a href="{{ url('about-us') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
@@ -45,7 +45,7 @@
                                     <label for="banglalink_info" class="required">About Banglalink (English)</label>
                                     <textarea
                                         required
-                                        data-validation-required-message="About Banglalink is required"
+                                        data-validation-required-message="About Banglalink (English) is required"
                                         class="form-control" name="banglalink_info" placeholder="Enter About Banglalink in English" id="banglalink_info"
                                         rows="4">{{ old("banglalink_info") ? old("banglalink_info") : $banglalink_info  }}</textarea>
 
@@ -60,7 +60,7 @@
                                     <label for="banglalink_info_bn" class="required">About Banglalink (Bangla)</label>
                                     <textarea
                                         required
-                                        data-validation-required-message="About Banglalink is required"
+                                        data-validation-required-message="About Banglalink (Bangla) is required"
                                         class="form-control" name="banglalink_info_bn" placeholder="Enter About Banglalink in Bangla" id="banglalink_info_bn"
                                         rows="4">{{ old("banglalink_info_bn") ? old("banglalink_info_bn") : $banglalink_info_bn }}</textarea>
 

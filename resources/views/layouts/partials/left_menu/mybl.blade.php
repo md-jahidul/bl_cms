@@ -184,12 +184,16 @@
 
     @if( auth()->user()->can_view('Otp') )
         <li class=" nav-item"><a href="#"><i class="la la-cogs"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Config</span></a>
+                <span class="menu-title">Config</span></a>
             <ul class="menu-content">
-
                 <li class="{{ is_active_url('otp-config') . is_active_url('otp-config/create')}}">
                     <a class="menu-item" href="{{ route('otp-config.index') }}" data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-cog"></i>OTP Config</a>
+                </li>
+
+                <li class="{{ is_active_url('recharge/prefill-amounts')}}">
+                    <a class="menu-item" href="{{ route('recharge.prefill-amounts.index') }}">
+                        <i class="la la-money"></i>Recharge Prefill Amount</a>
 
                 </li>
 
