@@ -18,7 +18,7 @@ class CreatePrefillRechargeAmountsTable extends Migration
     {
         Schema::create('prefill_recharge_amounts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('amount');
+            $table->integer('amount')->unique();
             $table->integer('sort');
             $table->timestamps();
         });
