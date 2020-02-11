@@ -24,6 +24,11 @@ class EcarrerController extends Controller
 	 * # life_at_bl_contact
 	 * # vacancy_pioneer
 	 * # vacancy_viconbox
+	 * # programs_progeneral
+	 * # programs_proiconbox
+	 * # programs_photogallery
+	 * # programs_sapbatches
+	 * # programs_ennovatorbatches
 	 */
 
 	/**
@@ -101,9 +106,9 @@ class EcarrerController extends Controller
 	 */
 	public function generalEdit($id){
 
-		$section = $this->ecarrerService->generalSectionById($id);
+		$sections = $this->ecarrerService->generalSectionById($id);
 
-		return view('admin.ecarrer.general.edit', compact('section'));
+		return view('admin.ecarrer.general.edit', compact('sections'));
 
 	}
 
@@ -189,7 +194,19 @@ class EcarrerController extends Controller
 		}
 
 		$data_types['category'] = 'life_at_bl_teams';
-		$data_types['has_items'] = 1;
+		
+		$category_type = $request->input('category_type', null);
+		if( !empty($category_type) && $category_type == 'teams_title' ){
+			$data_types['has_items'] = 0;
+		}
+		else if(!empty($category_type) && $category_type == 'teams_tab_section'){
+			$data_types['has_items'] = 1;
+		}
+		else{
+			$data_types['has_items'] = 1;
+		}
+
+		
 		# route slug
 		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
 
@@ -233,7 +250,21 @@ class EcarrerController extends Controller
 		    return redirect('life-at-banglalink/teams');
 		}
 
-		$this->ecarrerService->updateEcarrerSection($request->all(), $id);
+
+		$data_types = null;
+
+		$category_type = $request->input('category_type', null);
+		if( !empty($category_type) && $category_type == 'teams_title' ){
+			$data_types['has_items'] = 0;
+		}
+		else if(!empty($category_type) && $category_type == 'teams_tab_section'){
+			$data_types['has_items'] = 1;
+		}
+		else{
+			$data_types['has_items'] = 1;
+		}
+
+		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
 
 		Session::flash('message', 'Section updated successfully!');
 		return redirect('life-at-banglalink/teams');
@@ -519,8 +550,9 @@ class EcarrerController extends Controller
 		$data_types['has_items'] = 0;
 		# route slug
 		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
-	
-		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
+		
+		# do not store now
+		// $this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
 		Session::flash('message', 'Banner created successfully!');
 		return redirect('life-at-banglalink/topbanner');
@@ -551,7 +583,7 @@ class EcarrerController extends Controller
 		
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
-		    'title_en' => 'required',
+		    // 'title_en' => 'required',
 		    // 'slug' => 'required',
 		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
 		]);
@@ -562,7 +594,7 @@ class EcarrerController extends Controller
 
 		$data_types = null;
 
-		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
+		$this->ecarrerService->updateEcarrerSection($request->except(['title_en', 'slug']), $id, $data_types);
 
 		Session::flash('message', 'Banner updated successfully!');
 		return redirect('life-at-banglalink/topbanner');
