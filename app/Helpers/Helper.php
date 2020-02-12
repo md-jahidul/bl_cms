@@ -48,10 +48,10 @@ class Helper
     }
 
     /**
-     * Contextual action list
+     * Navigation action list
      * @return array
      */
-    public static function sliderActionList()
+    public static function navigationActionList()
     {
         return [
             "AMAR_OFFER"              => "Amar Offer",

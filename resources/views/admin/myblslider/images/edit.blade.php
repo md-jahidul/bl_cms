@@ -55,7 +55,7 @@
                             </div>
 
                             @php
-                                $actionList = Helper::sliderActionList();
+                                $actionList = Helper::navigationActionList();
                             @endphp
 
                             <div class="form-group col-md-6 mb-2">
