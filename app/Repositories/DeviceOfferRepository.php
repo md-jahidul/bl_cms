@@ -1,36 +1,34 @@
 <?php
 
 /**
- * Created by PhpStorm.
  * User: Bulbul Mahmud Nito
  * Date: 05/01/2020
  */
 
 namespace App\Repositories;
 
-use App\Models\EasyPaymentCard;
+use App\Models\DeviceOffer;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
-use Illuminate\Support\Facades\Validator;
 
-class EasyPaymentCardRepository extends BaseRepository {
+class DeviceOfferRepository extends BaseRepository {
 
-    public $modelName = EasyPaymentCard::class;
+    public $modelName = DeviceOffer::class;
 
-    public function getDivisionList() {
-        $divisions = $this->model->select('division')->groupBy('division')->get();
-        return $divisions;
+    public function getBrandList() {
+        $response = $this->model->select('brand')->groupBy('brand')->get();
+        return $response;
     }
 
-    public function getPaymentCardList($request) {
+    public function getDeviceOfferList($request) {
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');
 
-        $builder = $this->model->where('division', '!=', NULL);
+        $builder = $this->model->where('brand', '!=', NULL);
 
-        if ($request->division != null) {
-            $builder->where('division', $request->division);
+        if ($request->brand != null) {
+            $builder->where('brand', $request->brand);
         }
 
 
@@ -46,17 +44,26 @@ class EasyPaymentCardRepository extends BaseRepository {
         ];
 
         $items->each(function ($item) use (&$response) {
-            $statusBtn = "<a href='$item->id' class='btn-sm btn-success card_change_status'>Showing</a>";
+            $statusBtn = "<a href='$item->id' class='btn-sm btn-success offer_change_status'>Showing</a>";
             if ($item->status == 0) {
-                $statusBtn = "<a href='$item->id' class='btn-sm btn-warning card_change_status'>Hidden</a>";
+                $statusBtn = "<a href='$item->id' class='btn-sm btn-warning offer_change_status'>Hidden</a>";
             }
+            
+            $freeData = "<small><strong>One:</strong> " . $item->free_data_one .
+                "<br>" . "<strong>Two:</strong> " . $item->free_data_two .
+                "<br>" . "<strong>Three:</strong> " . $item->free_data_three . "</small>";
+            
+            $bonusData = "<small><strong>One:</strong> " . $item->bonus_data_one .
+                "<br>" . "<strong>Two:</strong> " . $item->bonus_data_two .
+                "<br>" . "<strong>Three:</strong> " . $item->bonus_data_three . "</small>";
+            
             $response['data'][] = [
                 'id' => $item->id,
-                'code' => $item->code,
-                'division' => $item->division,
-                'area' => $item->area,
-                'branch_name' => $item->branch_name,
-                'address' => "<small>".$item->address,"</small>",
+                'brand' => $item->brand,
+                'model' => $item->model,
+                'free_data' => $freeData,
+                'bonus_data' => $bonusData,
+                'available_shop' => $item->available_shop,
                 'status' => $statusBtn
             ];
         });
@@ -65,14 +72,15 @@ class EasyPaymentCardRepository extends BaseRepository {
     }
 
     public function saveExcelFile($request) {
+        
         try {
 
             $request->validate([
-                'card_file' => 'required|mimes:xls,xlsx'
+                'offer_file' => 'required|mimes:xls,xlsx'
             ]);
 
             $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
-            $path = $request->file('card_file')->getRealPath();
+            $path = $request->file('offer_file')->getRealPath();
             $reader->open($path);
 
             $insertdata = [];
@@ -83,16 +91,20 @@ class EasyPaymentCardRepository extends BaseRepository {
                     $cells = $row->getCells();
                     $totalCell = count($cells);
 
-                    if ($totalCell != 5) {
+                    if ($totalCell != 9) {
                         $formatCheck = false;
                     }
                     if ($rowNumber > 1) {
                         $insertdata[] = array(
-                            'code' => $cells[0]->getValue(),
-                            'division' => $cells[1]->getValue(),
-                            'area' => $cells[2]->getValue(),
-                            'branch_name' => $cells[3]->getValue(),
-                            'address' => $cells[4]->getValue(),
+                            'brand' => $cells[0]->getValue(),
+                            'model' => $cells[1]->getValue(),
+                            'free_data_one' => $cells[2]->getValue(),
+                            'free_data_two' => $cells[3]->getValue(),
+                            'free_data_three' => $cells[4]->getValue(),
+                            'bonus_data_one' => $cells[5]->getValue(),
+                            'bonus_data_two' => $cells[6]->getValue(),
+                            'bonus_data_three' => $cells[7]->getValue(),
+                            'available_shop' => $cells[8]->getValue()
                         );
                     }
                     $rowNumber++;
@@ -104,7 +116,7 @@ class EasyPaymentCardRepository extends BaseRepository {
                 $this->model->insert($insertdata);
                 $response = [
                     'success' => 1,
-                    'message' => "Payment card excel is uploaded successfully!"
+                    'message' => "Device offer excel is uploaded successfully!"
                 ];
             } else {
                 $response = [
@@ -124,10 +136,10 @@ class EasyPaymentCardRepository extends BaseRepository {
         }
     }
 
-    public function statusChange($cardId) {
+    public function statusChange($offerId) {
         try {
 
-            $card = $this->model->findOrFail($cardId);
+            $card = $this->model->findOrFail($offerId);
 
             $status = $card->status == 1 ? 0 : 1;
             $card->status = $status;
@@ -146,11 +158,11 @@ class EasyPaymentCardRepository extends BaseRepository {
         }
     }
 
-    public function deleteCards($cardId) {
+    public function deleteOffer($offerId) {
         try {
-            if ($cardId > 0) {
-                $card = $this->model->findOrFail($cardId);
-                $card->delete();
+            if ($offerId > 0) {
+                $offer = $this->model->findOrFail($offerId);
+                $offer->delete();
             } else {
                $this->model->truncate();
             }

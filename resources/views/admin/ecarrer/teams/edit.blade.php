@@ -51,37 +51,13 @@
                                     @endif
                                 </div>
 
-                                {{-- <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="alt_text" class="">Banner Image (optional)</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input" id="image">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('image_url'))
-                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
-                                    @endif
+                                <div class="form-group col-md-6">
+                                    <label for="category_type">Select teams type</label>
+                                    <select class="form-control" name="category_type" aria-invalid="false">
+                                            <option value="teams_tab_section" @if($sections->category_type == 'teams_tab_section') selected @endif>Teams tabs section</option>
+                                            <option value="teams_title" @if($sections->category_type == 'teams_title') selected @endif>Teams main title</option>
+                                        </select>
                                 </div>
-
-                                <div class="form-group col-md-1">
-                                    @if( !empty($sections->image) )
-                                        <img style="height:70px;width:70px;display:block" src="{{ config('filesystems.file_base_url') . $sections->image}}" id="imgDisplay">
-                                    @else
-                                        <img style="height:70px;width:70px;display:none" id="imgDisplay">
-                                    @endif
-                                    
-                                </div>
-
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Description (Optional)</label>
-                                        <textarea name="description" class="form-control" rows="5"
-                                                  placeholder="Enter description">{{ $sections->description }}</textarea>
-                                    </div>
-                                </div> --}}
 
 
                                 <div class="col-md-6">

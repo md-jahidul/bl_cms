@@ -1,6 +1,7 @@
-<div class="col-md-12 mt-5" >
-    <div class="row">
-        <div class="col-md-3 col-xs-12">
+<div class="row mt-2">
+
+    <div class="col-md-12 col-xs-12">
+        <div class="col-md-3 col-xs-12 pull-left">
             <select name="brand" class="form-control filter" id="brand">
                 <option value=""> Select Brand</option>
                 @foreach($brands as $b)
@@ -8,28 +9,33 @@
                 @endforeach
             </select>
         </div>
+        <div class="col-md-8 col-xs-12 pull-right">
+            <a href="javascript:;" class="btn btn-danger all_offer_delete float-right">Delete All</a>
+        </div>
 
     </div>
-</div>
 
-<div class="col-md-12 mt-3">
-    <table class="table table-striped table-bordered dataTable"
-           id="device_offer_list" role="grid">
-        <thead>
-            <tr>
-                <th>SL.</th>
-                <th>brand</th>
-                <th>model</th>
-                <th>Free Data</th>
-                <th>Bonus Data</th>
-                <th>Available Shop</th>
-                <th>Status</th>
-                <th class="filter_data">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+
+
+    <div class="col-md-12">
+        <table class="table table-striped table-bordered dataTable"
+               id="device_offer_list" role="grid">
+            <thead>
+                <tr>
+                    <th>SL.</th>
+                    <th>brand</th>
+                    <th>model</th>
+                    <th>Free Data</th>
+                    <th>Bonus Data</th>
+                    <th>Available Shop</th>
+                    <th>Status</th>
+                    <th class="filter_data">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 @push('page-js')
@@ -38,88 +44,7 @@
 <script>
     $(function () {
 
-        //change show/hide status of easy payment card
-        $("#device_offer_list").on('click', '.offer_change_status', function (e) {
-            var offerId = $(this).attr('href');
 
-            $.ajax({
-                url: '{{ route("offer.status.change")}}',
-                cache: false,
-                type: "GET",
-                data: {
-                    offerId: offerId
-                },
-                success: function (result) {
-                    if (result.success == 1) {
-                        swal.fire({
-                            title: 'Device offer status is changed!',
-                            type: 'success',
-                            timer: 3000,
-                            showConfirmButton: false
-                        });
-
-                        $('#device_offer_list').DataTable().ajax.reload();
-
-                    } else {
-                        swal.close();
-                        swal.fire({
-                            title: result.message,
-                            timer: 3000,
-                            type: 'error',
-                        });
-                    }
-
-                },
-                error: function (data) {
-                    swal.fire({
-                        title: 'Status change process failed!',
-                        type: 'error',
-                    });
-                }
-            });
-            e.preventDefault();
-        });
-
-        //delete easy payment card
-        $("#device_offer_list").on('click', '.delete_offer', function (e) {
-            var deleteUrl = $(this).attr('href');
-            var cnfrm = confirm("Do you want to delete this offer?");
-            if (cnfrm) {
-                $.ajax({
-                    url: deleteUrl,
-                    cache: false,
-                    type: "GET",
-                    success: function (result) {
-                        if (result.success == 1) {
-                            swal.fire({
-                                title: 'Device offer is deleted!',
-                                type: 'success',
-                                timer: 3000,
-                                showConfirmButton: false
-                            });
-
-                            $('#device_offer_list').DataTable().ajax.reload();
-
-                        } else {
-                            swal.close();
-                            swal.fire({
-                                title: result.message,
-                                timer: 3000,
-                                type: 'error',
-                            });
-                        }
-
-                    },
-                    error: function (data) {
-                        swal.fire({
-                            title: 'Delete process failed!',
-                            type: 'error',
-                        });
-                    }
-                });
-            }
-            e.preventDefault();
-        });
 
 
 
@@ -206,6 +131,132 @@
         $(document).on('change', '.filter', function (e) {
             $('#device_offer_list').DataTable().ajax.reload();
         });
+
+
+
+        //change show/hide status of device offer
+        $("#device_offer_list").on('click', '.offer_change_status', function (e) {
+            var offerId = $(this).attr('href');
+
+            $.ajax({
+                url: '{{ route("offer.status.change")}}',
+                cache: false,
+                type: "GET",
+                data: {
+                    offerId: offerId
+                },
+                success: function (result) {
+                    if (result.success == 1) {
+                        swal.fire({
+                            title: 'Device offer status is changed!',
+                            type: 'success',
+                            timer: 3000,
+                            showConfirmButton: false
+                        });
+
+                        $('#device_offer_list').DataTable().ajax.reload();
+
+                    } else {
+                        swal.close();
+                        swal.fire({
+                            title: result.message,
+                            timer: 3000,
+                            type: 'error',
+                        });
+                    }
+
+                },
+                error: function (data) {
+                    swal.fire({
+                        title: 'Status change process failed!',
+                        type: 'error',
+                    });
+                }
+            });
+            e.preventDefault();
+        });
+
+        //delete device offer
+        $("#device_offer_list").on('click', '.delete_offer', function (e) {
+            var deleteUrl = $(this).attr('href');
+            var cnfrm = confirm("Do you want to delete this offer?");
+            if (cnfrm) {
+                $.ajax({
+                    url: deleteUrl,
+                    cache: false,
+                    type: "GET",
+                    success: function (result) {
+                        if (result.success == 1) {
+                            swal.fire({
+                                title: 'Device offer is deleted!',
+                                type: 'success',
+                                timer: 3000,
+                                showConfirmButton: false
+                            });
+
+                            $('#device_offer_list').DataTable().ajax.reload();
+
+                        } else {
+                            swal.close();
+                            swal.fire({
+                                title: result.message,
+                                timer: 3000,
+                                type: 'error',
+                            });
+                        }
+
+                    },
+                    error: function (data) {
+                        swal.fire({
+                            title: 'Delete process failed!',
+                            type: 'error',
+                        });
+                    }
+                });
+            }
+            e.preventDefault();
+        });
+        //delete all device offer
+        $('.all_offer_delete').on('click', function (e) {
+            var deleteUrl = "{{ URL('delete-device-offer') }}";
+            var cnfrm = confirm("Do you want to delete all offer?");
+            if (cnfrm) {
+                $.ajax({
+                    url: deleteUrl,
+                    cache: false,
+                    type: "GET",
+                    success: function (result) {
+                        if (result.success == 1) {
+                            swal.fire({
+                                title: 'All device offers are deleted!',
+                                type: 'success',
+                                timer: 3000,
+                                showConfirmButton: false
+                            });
+
+                            $('#device_offer_list').DataTable().ajax.reload();
+
+                        } else {
+                            swal.close();
+                            swal.fire({
+                                title: result.message,
+                                timer: 3000,
+                                type: 'error',
+                            });
+                        }
+
+                    },
+                    error: function (data) {
+                        swal.fire({
+                            title: 'Delete process failed!',
+                            type: 'error',
+                        });
+                    }
+                });
+            }
+            e.preventDefault();
+        });
+
     });
 </script>
 
