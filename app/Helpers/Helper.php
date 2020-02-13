@@ -57,12 +57,12 @@ class Helper
             "AMAR_OFFER"              => "Amar Offer",
             "BALANCE_DETAILS"         => "Balance details > Balance",
             "INTERNET_DETAILS"        => "Balance details > Internet",
-            "EMERGENCY_BALANCE"       => "Emergency Balance",
+/*            "EMERGENCY_BALANCE"       => "Emergency Balance",*/
             "FAQ"                     => "FAQ",
-            "FEED"                    => "Feed",
+/*            "FEED"                    => "Feed",*/
             "FNF"                     => "FnF",
             "HOME"                    => "Home Menu",
-            "INBOX"                   => "Inbox",
+/*            "INBOX"                   => "Inbox",*/
             "INTERNET_EXCLUSIVE_PACK" => "Internet packs > Buy Packs > Exclusive Pack",
             "INTERNET_MONTHLY_PACK"   => "Internet packs > Buy Packs > Monthly Pack",
             "INTERNET_POWER_PACK"     => "Internet packs > Buy Packs > Power Pack",
@@ -73,7 +73,7 @@ class Helper
             "MENU"                    => "Menu",
             "MIXED_BUNDLES"           => "Mixed Bundles",
             "NOTIFICATIONS"           => "Notifications",
-            "PACKAGE_DETAILS"         => "Package Details",
+/*            "PACKAGE_DETAILS"         => "Package Details",*/
             "PRIVACY_POLICY"          => "Privacy Policy",
             "PROFILE"                 => "Profile",
             "RECHARGE"                => "Recharge",
