@@ -213,19 +213,6 @@
                                     </div>
                                 </div>
 
-{{--                                TODO: Savely Delete Recharge --}}
-{{--                                <div class="col-md-6">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label for="title" class="mr-1">Recharge</label>--}}
-{{--                                        <input type="radio" name="is_recharge" value="1" id="yes" {{ ($product->status == 1) ? 'checked' : '' }}>--}}
-{{--                                        <label for="yes" class="mr-1">Yes</label>--}}
-{{--                                        <input type="radio" name="is_recharge" value="0" id="no" {{ ($product->is_recharge == 0) ? 'checked' : '' }}>--}}
-{{--                                        <label for="no">No</label>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-
-
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="title" class="mr-1">Status:</label>

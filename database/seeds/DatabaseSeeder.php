@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(AmarOfferSeeder::class);
+        $this->call(AmarOfferDetailsSeeder::class);
 
         // ====Common Seeder====
         $this->call(RolesTableSeeder::class);
@@ -73,8 +74,10 @@ class DatabaseSeeder extends Seeder
         $this->call(ShortcutSeeder::class);
         $this->call(PrivacyPolicySeeder::class);
 
-        $this->call(MyBlInternetOfferCategorySeeder::class);
+       // $this->call(MyBlInternetOfferCategorySeeder::class);
         $this->call(TelescopepanelUserSeeder::class);
+
+        $this->call(RechargePrefillAmountSeeder::class);
 /*        $this->call(MyBlProductCategorySeeder::class);*/
     }
 }

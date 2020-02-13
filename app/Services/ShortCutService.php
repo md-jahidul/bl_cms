@@ -43,7 +43,6 @@ class ShortCutService
     public function storeShortCut($shortCut)
     {
         $shortCut['icon'] = 'storage/' . $shortCut['icon']->store('short_cuts_icon');
-        $shortCut['component_identifier'] = strtolower(str_replace(" ", "_", $shortCut['title']));
         $this->save($shortCut);
         return new Response("Shortcut has been successfully created");
     }
@@ -67,7 +66,6 @@ class ShortCutService
         } else {
             $request['icon'] = $shortCut->icon;
         }
-        $request['component_identifier'] = strtolower(str_replace(" ", "_", $request['title']));
         $shortCut->update($request);
 
         return new Response("Shortcut has been successfully updated");

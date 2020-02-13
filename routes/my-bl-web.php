@@ -177,4 +177,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     Route::post('store-locations', 'StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
 
     Route::get('core-product/test', 'ProductEntryController@test');
+
+    /*
+     *  Recharge prefill amounts
+     */
+
+    Route::get('recharge/prefill-amounts', 'CMS\PrefillRechargeController@show')
+        ->name('recharge.prefill-amounts.index');
+    Route::post('recharge/prefill-amounts', 'CMS\PrefillRechargeController@update')
+        ->name('recharge.prefill-amounts.update');
+
+    Route::get('recharge/prefill-amounts/order', 'CMS\PrefillRechargeController@updatePosition');
 });

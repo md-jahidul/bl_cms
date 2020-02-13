@@ -1,3 +1,11 @@
+@php
+    if (isset($productDetail->product_details->other_attributes['recharge_benefits_code'])){
+        $offer = $productDetail->product_details->other_attributes['recharge_benefits_code'];
+    }else{
+        $offer = '';
+    }
+@endphp
+
 
 <slot id="structure_1" class="{!! $productDetail->product_details->other_attributes['design_structure'] == 'structure_1' ? "" : "d-none" !!}"
       data-offer-type="structure_1">
@@ -28,7 +36,7 @@
             <option>---Please Recharge Benefits Offer---</option>
             @foreach($products as $product)
                 @if($product->purchase_option == "recharge")
-                    <option value="{{$product->product_core['recharge_product_code']}}" {{ $product->product_core['recharge_product_code'] }}>{{ $product->product_core['recharge_product_code']}}</option>
+                    <option value="{{$product->product_core['recharge_product_code']}}" {{ ($product->product_core['recharge_product_code'] == $offer) ? 'selected' : "" }}>{{ $product->product_core['recharge_product_code']}}</option>
                 @endif
             @endforeach
         </select>

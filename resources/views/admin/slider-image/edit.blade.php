@@ -57,11 +57,10 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
-                                    <label for="start_date" class="required">Start Date</label>
+                                    <label for="start_date">Start Date</label>
                                     <div class='input-group'>
                                         <input type='text' class="form-control" name="start_date" id="start_date"
                                                value="{{ $sliderImage->start_date }}"
-                                               required data-validation-required-message="Please select start date"
                                                placeholder="Please select start date" />
                                     </div>
                                     <div class="help-block"></div>
@@ -73,13 +72,47 @@
                                 <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
                                     <label for="end_date">End Date</label>
                                     <input type="text" name="end_date" id="end_date" class="form-control"
-                                           value="{{ $sliderImage->end_date }}"
-                                           placeholder="Please select end date"
-                                           value="{{ old("end_date") ? old("end_date") : '' }}" autocomplete="off">
+                                           value="{{ $sliderImage->end_date }}" placeholder="Please select end date" autocomplete="off">
                                     <div class="help-block"></div>
                                     @if ($errors->has('end_date'))
                                         <div class="help-block">{{ $errors->first('end_date') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                    <label for="alt_text" class="required">Slider Image (Desktop View)</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="image_url" class="custom-file-input" id="desktopImg">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_url'))
+                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <img src="{{ config('filesystems.file_base_url') .$sliderImage->image_url }}" style="height:70px;width:70px;" id="desktopImgShow">
+                                </div>
+
+                                <div class="form-group col-md-5 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
+                                    <label for="mobileImg" class="required">Slider Image (Mobile View)</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="mobile_view_img" class="custom-file-input" id="mobileImg">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('mobile_view_img'))
+                                        <div class="help-block">  {{ $errors->first('mobile_view_img') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <img src="{{ config('filesystems.file_base_url') .$sliderImage->mobile_view_img }}" style="height:70px;width:70px;" id="mobileImgShow">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
@@ -92,17 +125,35 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-5 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input" id="image">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-                                </div>
+{{--                                <div class="form-group col-md-5 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">--}}
+{{--                                    <div class="custom-file">--}}
+{{--                                        <input type="file" name="image_url" class="custom-file-input" id="image">--}}
+{{--                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>--}}
+{{--                                    </div>--}}
+{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-1">
-                                    <img src="{{ config('filesystems.file_base_url') .$sliderImage->image_url }}" style="height:70px;width:70px;" id="imgDisplay">
-                                </div>
+{{--                                <div class="form-group col-md-1">--}}
+{{--                                    <img src="{{ config('filesystems.file_base_url') .$sliderImage->image_url }}" style="height:70px;width:70px;" id="imgDisplay">--}}
+{{--                                </div>--}}
+
+{{--                                <div class="form-group col-md-5 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">--}}
+{{--                                    <label for="mobileImg" class="required">Slider Image (Mobile View)</label>--}}
+{{--                                    <div class="custom-file">--}}
+{{--                                        <input type="file" name="mobile_view_img" class="custom-file-input" id="mobileImg">--}}
+{{--                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>--}}
+{{--                                    </div>--}}
+{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
+
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('mobile_view_img'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('mobile_view_img') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+
+{{--                                <div class="form-group col-md-1">--}}
+{{--                                    <img style="height:70px;width:70px;display:none" id="mobileImgShow">--}}
+{{--                                </div>--}}
 
                                  @include('layouts.partials.slider_types.' . $type )
 
@@ -144,6 +195,7 @@
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
     <script type="text/javascript">
         $(function () {
             var date = new Date();
