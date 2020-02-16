@@ -43,7 +43,7 @@ class AppServiceProductService
             'appServiceCat' => function ($q) {
                 $q->select('id', 'title_en');
             }
-        ]);
+        ], ['column' => 'created_at', 'direction' => 'DESC']);
     }
 
     /**
