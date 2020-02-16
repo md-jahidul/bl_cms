@@ -16,17 +16,17 @@ var showIamge = (function () {
 })();
 
 (function () {
-    let $desktopImg = $('#desktopImg');
-    let $desktopImgShow = $('#desktopImgShow');
+    let $imgOne = $('#imgOne');
+    let $imgShowOne = $('#imgShowOne');
 
-    let $mobileImg = $('#mobileImg');
-    let $mobileImgShow = $('#mobileImgShow');
+    let $imgTwo = $('#imgTwo');
+    let $imgShowTwo = $('#imgShowTwo');
 
-    $($desktopImg).change(function () {
-        showIamge.imageRead(this, $desktopImgShow);
+    $($imgOne).change(function () {
+        showIamge.imageRead(this, $imgShowOne);
     });
 
-    $($mobileImg).change(function () {
-        showIamge.imageRead(this, $mobileImgShow);
+    $($imgTwo).change(function () {
+        showIamge.imageRead(this, $imgShowTwo);
     });
 })();

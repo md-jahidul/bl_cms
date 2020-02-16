@@ -233,7 +233,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, $type, $id)
     {
-//        return $request;
         $this->productCoreService->updateProductCore($request->all(), $id);
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $type, $id);

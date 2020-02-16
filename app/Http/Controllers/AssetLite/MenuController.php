@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
-class MenuController extends Controller
+class
+
+MenuController extends Controller
 {
     /**
      * @var $menuService
