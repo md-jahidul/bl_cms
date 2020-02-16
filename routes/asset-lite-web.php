@@ -437,6 +437,20 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('programs/ennovatorbatches/{id}/update', 'AssetLite\EcarrerController@ennovatorbatchesUpdate')->name('programs.ennovatorbatches.update');
     Route::get('programs/ennovatorbatches/destroy/{id}', 'AssetLite\EcarrerController@ennovatorbatchesDestroy')->name('programs.ennovatorbatches.destroy');
 
-    // App & Service =========================================================
-    Route::resource('app-service/tabs', 'AppServiceTabController');
+
+    // App & Service Tab =========================================================
+    Route::resource('app-service/tabs', 'AssetLite\AppServiceTabController')
+        ->except('create', 'store', 'show', 'destroy');
+    Route::get('app-service/tabs/destroy/{id}', 'AssetLite\AppServiceTabController@destroy');
+
+    // App & Service Category =========================================================
+    Route::resource('app-service/category', 'AssetLite\AppServiceCategoryController')->except('show', 'destroy');
+    Route::get('app-service/category/destroy/{id}', 'AssetLite\AppServiceCategoryController@destroy');
+
+    // App & Service Product =========================================================
+    Route::resource('app-service-product', 'AssetLite\AppServiceProductController')->except('show', 'destroy');
+    Route::get('app-service/product/destroy/{id}', 'AssetLite\AppServiceProductController@destroy');
+
+    Route::get('app-service/category-find/{id}', 'AssetLite\AppServiceProductController@tabWiseCategory');
+
 });
