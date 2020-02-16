@@ -182,6 +182,47 @@
             </ul>
         </li>
     @endif
+    
+        @if( auth()->user()->can_view('Product') )
+        <li class="nav-item"><a href="#"><i class="la la-briefcase"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Business</span></a>
+            <ul class="menu-content">
+
+                <li class="{{ is_active_url('business-general') }}">
+                    <a class="menu-item" href="{{ url('business-general') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i>Home & General Setup</a>
+                </li>
+                <li class="{{ is_active_url('business-package') }}">
+                    <a class="menu-item" href="{{ route('sim-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Package</a>
+                </li>
+
+                <li class="{{ is_active_url('offer-categories') }}">
+                    <a class="menu-item" href="{{ route('offer-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Internet</a>
+                </li>
+
+                <li class="{{ is_active_url('duration-categories') }}">
+                    <a class="menu-item" href="{{ route('duration-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Business Solution</a>
+                </li>
+                <li class="{{ is_active_url('duration-categories') }}">
+                    <a class="menu-item" href="{{ route('duration-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> IOT</a>
+                </li>
+                <li class="{{ is_active_url('duration-categories') }}">
+                    <a class="menu-item" href="{{ route('duration-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Others</a>
+                </li>
+
+            </ul>
+        </li>
+    @endif
 
 
 
@@ -373,23 +414,22 @@
                 <span class="menu-title" data-i18n="nav.templates.main">App & Service</span></a>
             <ul class="menu-content">
 
-                <li class="{{ is_active_url('product-core') . is_active_url('product-core') }}">
-                    <a class="menu-item" href="{{ route('product.core.list') }}"
+                <li class="{{ is_active_url('app-service/tabs') }}">
+                    <a class="menu-item" href="{{ route('tabs.index') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-taxi"></i> App & Service Tab</a>
                 </li>
 
-                <li class="{{ is_active_url('product-core') . is_active_url('product-core') }}">
-                    <a class="menu-item" href="{{ route('product.core.list') }}"
+                <li class="{{ is_active_url('app-service/category') }}">
+                    <a class="menu-item" href="{{ route('category.index') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-tasks"></i> App & Service Category</a>
                 </li>
-                <li class="{{ is_active_url('offers/postpaid') . is_active_url('offers/postpaid/create') }}">
-                    <a class="menu-item" href="{{ route('product.list','postpaid') }}"
+                <li class="{{ is_active_url('app-service-product') }}">
+                    <a class="menu-item" href="{{ route('app-service-product.index') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> App Service Products</a>
                 </li>
-
             </ul>
         </li>
     @endif
