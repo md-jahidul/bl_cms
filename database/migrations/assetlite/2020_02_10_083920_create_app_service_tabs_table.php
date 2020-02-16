@@ -20,6 +20,7 @@ class CreateAppServiceTabsTable extends Migration
             $table->string('alias');
             $table->string('banner_image_url')->nullable();
             $table->string('banner_alt_text')->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

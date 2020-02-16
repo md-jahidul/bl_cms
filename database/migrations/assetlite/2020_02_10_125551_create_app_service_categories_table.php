@@ -19,6 +19,7 @@ class CreateAppServiceCategoriesTable extends Migration
             $table->string('title_en');
             $table->string('title_bn');
             $table->string('alias');
+            $table->tinyInteger('status')->default(1);
             $table->json('other_attributes')->nullable();
             $table->timestamps();
         });

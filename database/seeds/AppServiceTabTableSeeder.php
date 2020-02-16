@@ -1,7 +1,8 @@
 <?php
 
+use App\Models\AppServiceTab;
 use Illuminate\Database\Seeder;
-use App\AppServiceTab;
+use Illuminate\Support\Facades\DB;
 
 class AppServiceTabTableSeeder extends Seeder
 {
@@ -12,6 +13,8 @@ class AppServiceTabTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS =0;');
+
         AppServiceTab::truncate();
 
         $appServiceTabsEn = ['App', 'VAS', 'Financial', 'Others'];
@@ -24,5 +27,7 @@ class AppServiceTabTableSeeder extends Seeder
                 'alias' => str_replace(' ', '_', strtolower($item))
             ]);
         }
+
+        DB::statement('SET FOREIGN_KEY_CHECKS =1;');
     }
 }

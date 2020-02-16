@@ -2,14 +2,13 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\AppServiceCategory;
+use Illuminate\Support\Facades\DB;
 
 class AppServiceCategoryTableSeeder extends Seeder
 {
 
     protected function insertAppServiceCat($data, $dataBn, $parentId)
     {
-
-
         foreach ($data as $key => $item) {
             AppServiceCategory::create([
                 'app_service_tab_id' => $parentId,
@@ -27,6 +26,7 @@ class AppServiceCategoryTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS =0;');
         AppServiceCategory::truncate();
 
         $appEn = ['Devotional', 'Fun & Entertainment', 'Lifestyle', 'Sports'];
@@ -48,5 +48,7 @@ class AppServiceCategoryTableSeeder extends Seeder
         $this->insertAppServiceCat($financialEn, $financialBn, 3);
 
         $this->insertAppServiceCat($otherEn, $otherBn, 4);
+
+        DB::statement('SET FOREIGN_KEY_CHECKS =1;');
     }
 }

@@ -379,17 +379,16 @@
                             class="la la-taxi"></i> App & Service Tab</a>
                 </li>
 
-                <li class="{{ is_active_url('product-core') . is_active_url('product-core') }}">
-                    <a class="menu-item" href="{{ route('product.core.list') }}"
+                <li class="{{ is_active_url('app-service/category') }}">
+                    <a class="menu-item" href="{{ route('category.index') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-tasks"></i> App & Service Category</a>
                 </li>
-                <li class="{{ is_active_url('offers/postpaid') . is_active_url('offers/postpaid/create') }}">
-                    <a class="menu-item" href="{{ route('product.list','postpaid') }}"
+                <li class="{{ is_active_url('app-service-product') }}">
+                    <a class="menu-item" href="{{ route('app-service-product.index') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> App Service Products</a>
                 </li>
-
             </ul>
         </li>
     @endif
