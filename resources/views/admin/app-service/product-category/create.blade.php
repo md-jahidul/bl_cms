@@ -2,11 +2,11 @@
 @section('title', 'Offer Category Create')
 @section('card_name', 'Offer Category Edit')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ route('tabs.index') }}">App & Service Tabs List</a></li>
+    <li class="breadcrumb-item active"><a href="{{ route('category.index') }}">App & Service Tabs List</a></li>
     <li class="breadcrumb-item active"> App & Service Tabs Edit</li>
 @endsection
 @section('action')
-    <a href="{{ route('tabs.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ route('category.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -45,6 +45,17 @@
                                             <option value="{{ $appServiceTab->id }}">{{ $appServiceTab->name_en }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group mt-3">
+                                        <label for="title" class="mr-1"><strong>Status</strong>:</label>
+                                        <input type="radio" name="status" value="1" id="active" checked>
+                                        <label for="active" class="mr-1">Active</label>
+
+                                        <input type="radio" name="status" value="0" id="inactive">
+                                        <label for="inactive">Inactive</label>
+                                    </div>
                                 </div>
 
 
