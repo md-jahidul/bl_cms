@@ -19,9 +19,7 @@ class ChangeEcarrerPortalFormsColumnTable extends Migration
             }
             
             $table->string('applicant_cv', 500)->nullable()->after('address');
-
-            $table->unsignedInteger('university_id')->nullable()->after('email')->comment('Id from universities table');
-            $table->foreign('university_id')->references('id')->on('universities');
+            $table->integer('university_id')->nullable()->after('email')->comment('Id from universities table');
         });
     }
 
