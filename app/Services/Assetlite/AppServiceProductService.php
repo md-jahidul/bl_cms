@@ -16,6 +16,9 @@ class AppServiceProductService
     use CrudTrait;
     use FileTrait;
 
+    const APP = 1;
+    const VAS = 2;
+
     /**
      * @var $appServiceProductRepository
      */
@@ -63,19 +66,20 @@ class AppServiceProductService
      */
     public function updateAppServiceProduct($data, $id)
     {
-        $appServiceCat = $this->findOne($id);
+        $appServiceProduct = $this->findOne($id);
         if (request()->hasFile('product_img_url')) {
             $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
-            $this->deleteFile($appServiceCat->product_img_url);
+            $this->deleteFile($appServiceProduct->product_img_url);
         }
 
         // Check App & VAS
-        if ($data['app_service_tab_id'] != 1 || $data['app_service_tab_id'] != 2) {
+        if ($data['app_service_tab_id'] != self::APP || $data['app_service_tab_id'] != self::VAS) {
             $data['product_img_url'] = null;
-            $this->deleteFile($appServiceCat->product_img_url);
+            $this->deleteFile($appServiceProduct->product_img_url);
         }
+        $data['can_active'] = (isset($data['can_active']) ? 1 : 0);
 
-        $appServiceCat->update($data);
+        $appServiceProduct->update($data);
         return Response('App Service Category updated successfully');
     }
 
