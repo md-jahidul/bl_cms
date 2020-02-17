@@ -17,7 +17,7 @@ class EcarrerProgramsTabSeeder extends Seeder
 		    [
 		        'title_en' => 'Strategic Assistant Program',
 		        'title_bn' => 'কৌশলগত সহকারী প্রোগ্রাম',
-		        'slug' => 'programs/strategic-assistant-program',
+		        'slug' => 'strategic-assistant-program',
 		        'category' => 'programs_top_tab_title',
 		        'category_type' => 'sap',
 		        'is_active' => 1,
@@ -28,7 +28,7 @@ class EcarrerProgramsTabSeeder extends Seeder
 		    [
 		        'title_en' => 'Ennovators',
 		        'title_bn' => 'উদ্ভাবনক্ষম',
-		        'slug' => 'programs/ennovators',
+		        'slug' => 'ennovators',
 		        'category' => 'programs_top_tab_title',
 		        'category_type' => 'ennovators',
 		        'is_active' => 1,
@@ -39,7 +39,7 @@ class EcarrerProgramsTabSeeder extends Seeder
 		    [
 		        'title_en' => 'Advanced Internship Program',
 		        'title_bn' => 'কৌশলগত সহকারী প্রোগ্রাম',
-		        'slug' => 'programs/advanced-internship-program',
+		        'slug' => 'advanced-internship-program',
 		        'category' => 'programs_top_tab_title',		        
 		        'category_type' => 'aip',
 		        'is_active' => 1,
