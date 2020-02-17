@@ -24,7 +24,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title (English)</label>
                                     <input type="text" name="title_en"  class="form-control section_name" placeholder="Enter title_en (english)"
-                                           value="{{ $sections->title_en }}" required readonly data-validation-required-message="Enter slider title_en (english)">
+                                           value="{{ $sections->title_en }}" required data-validation-required-message="Enter slider title_en (english)">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_en'))
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -139,24 +139,7 @@
 
 @push('page-js')
 
-<script type="text/javascript">
-        jQuery(document).ready(function($){
-
-
-            $('input.section_name').on('keyup', function(){
-                var sectionName = $('#topbanner_section').find('.section_name').val();
-                var sectionNameLower = sectionName.toLowerCase();
-                var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
-
-                $('#topbanner_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
-
-                // console.log(sectionNameRemoveSpace);
-            });
-
-            
-
-        });
-    </script>    
+ 
 
 @endpush
 

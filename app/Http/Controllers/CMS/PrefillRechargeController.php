@@ -30,9 +30,13 @@ class PrefillRechargeController extends Controller
         DB::beginTransaction();
 
         try {
-            PrefillRechargeAmount::truncate();
+            if (count($request->amount) != count(array_unique($request->amount))) {
+                return redirect()->back()->with('error', 'Duplicate value not allowed');
+            }
 
+            PrefillRechargeAmount::truncate();
             $data = [];
+
             foreach ($request->amount as $key => $amount) {
                 $data [] = [
                     'amount' => $amount,

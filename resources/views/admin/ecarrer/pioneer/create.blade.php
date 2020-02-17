@@ -98,13 +98,14 @@
                                     <select class="form-control" name="category_type" aria-invalid="false">
                                             <option value="how_we_hire">How we hire</option>
                                             <option value="bottom_news_media">Bottom News media section</option>
+                                            <option value="job_offers_title">Job offer sections title</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('video') ? ' error' : '' }}">
                                     <label for="video" class="required1">Youtube embeded video url</label>
                                     <input type="text" name="video"  class="form-control section_name" placeholder="Youtube video url"
-                                           value="{{ old("video") ? old("video") : '' }}" data-validation-required-message="Please enter video">
+                                           value="{{ old("video") ? old("video") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('video'))
                                         <div class="help-block">  {{ $errors->first('video') }}</div>

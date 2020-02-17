@@ -4,10 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-/**
- * Class CreatePrefillRechargeAmountsTable
- */
-class CreatePrefillRechargeAmountsTable extends Migration
+class CreateUniversityTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,10 +13,11 @@ class CreatePrefillRechargeAmountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('prefill_recharge_amounts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('amount')->unique();
-            $table->integer('sort');
+        Schema::create('universities', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('university_name');
+            $table->string('university_slug')->nullable();
+            $table->tinyInteger('is_active')->default(1)->comment('active = 1, inactive = 0');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreatePrefillRechargeAmountsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prefill_recharge_amounts');
+        Schema::dropIfExists('universities');
     }
 }

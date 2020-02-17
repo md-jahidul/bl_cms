@@ -108,6 +108,7 @@
                                     <select class="form-control" name="category_type" aria-invalid="false">
                                             <option value="how_we_hire" @if($sections->category_type == 'how_we_hire') selected @endif>How we hire</option>
                                             <option value="bottom_news_media" @if($sections->category_type == 'bottom_news_media') selected @endif>Bottom News media section</option>
+                                            <option value="job_offers_title" @if($sections->category_type == 'job_offers_title') selected @endif>Job offer sections title</option>
                                         </select>
                                 </div>
 
@@ -115,7 +116,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('video') ? ' error' : '' }}">
                                     <label for="video" class="required1">Youtube embeded video url</label>
                                     <input type="text" name="video"  class="form-control section_name" placeholder="Youtube video url"
-                                           value="{{ $sections->video }}" data-validation-required-message="Please enter Section name">
+                                           value="{{ $sections->video }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('video'))
                                         <div class="help-block">  {{ $errors->first('video') }}</div>
