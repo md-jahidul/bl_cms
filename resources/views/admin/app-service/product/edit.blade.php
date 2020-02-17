@@ -135,17 +135,17 @@
                                     <label></label>
                                     <div class="form-group">
                                         <label for="can_active" class="mr-1">Can Active:</label>
-                                        <input type="checkbox" name="can_active" value="1" id="can_active">
+                                        <input type="checkbox" name="can_active" value="1" id="can_active" {{ ($appServiceProduct->can_active == 1) ? 'checked' : '' }}>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="title" class="mr-1">Status:</label>
-                                        <input type="radio" name="status" value="1" id="active" checked>
+                                        <input type="radio" name="status" value="1" id="active" {{ ($appServiceProduct->status == 1) ? 'checked' : '' }}>
                                         <label for="active" class="mr-1">Active</label>
 
-                                        <input type="radio" name="status" value="0" id="inactive">
+                                        <input type="radio" name="status" value="0" id="inactive" {{ ($appServiceProduct->status == 0) ? 'checked' : '' }}>
                                         <label for="inactive">Inactive</label>
                                     </div>
                                 </div>

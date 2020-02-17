@@ -38,7 +38,7 @@
                             <tr>
                                 <td width="3%">{{ $loop->iteration }}</td>
                                 <td>{{ $item->appServiceTab->name_en }}</td>
-                                <td>{{ $item->title_en }}</td>
+                                <td>{{ $item->title_en }}{!! $item->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                 <td>{{ $item->title_bn }}</td>
                                 <td width="12%" class="text-center">
                                     <a href="{{ url("app-service/category/$item->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

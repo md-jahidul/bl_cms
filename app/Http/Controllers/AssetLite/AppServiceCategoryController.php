@@ -47,7 +47,10 @@ class AppServiceCategoryController extends Controller
      */
     public function index()
     {
-        $appServiceCat = $this->appServiceCategory->findAll('', ['appServiceTab']);
+        $appServiceCat = $this->appServiceCategory->findAll('', ['appServiceTab'], [
+                'column' => 'created_at',
+                'direction' => 'DESC'
+            ]);
         return view('admin.app-service.product-category.index', compact('appServiceCat'));
     }
 
@@ -84,6 +87,7 @@ class AppServiceCategoryController extends Controller
     {
         $appServiceTabs = $this->appServiceTabRepository->findByProperties([], ['id', 'name_en', 'alias']);
         $appServiceCat = $this->appServiceCategory->findOne($id);
+//        return $appServiceCat;
         return view('admin.app-service.product-category.edit', compact('appServiceCat', 'appServiceTabs'));
     }
 

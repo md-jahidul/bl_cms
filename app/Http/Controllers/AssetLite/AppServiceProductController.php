@@ -43,8 +43,7 @@ class AppServiceProductController extends Controller
         AppServiceCategoryRepository $appServiceCategoryRepository,
         AppServiceProductService $appServiceProductService,
         TagCategoryService $tagCategoryService
-    )
-    {
+    ) {
         $this->appServiceCategoryRepository = $appServiceCategoryRepository;
         $this->appServiceTabRepository = $appServiceTabRepository;
         $this->appServiceProductService = $appServiceProductService;
