@@ -15,19 +15,19 @@
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label for="title" class="required mr-1">Button label: (Engliash)</label>
+                                <label for="title" class="required1 mr-1">Button label: (Engliash)</label>
                                 <input class="form-control" type="text" name="call_to_action_label_en_{{$i}}" value="{{ $buttons['label_en'] }}">
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label for="title" class="required mr-1">Button label: (Bangla)</label>
+                                <label for="title" class="required1 mr-1">Button label: (Bangla)</label>
                                 <input class="form-control" type="text" name="call_to_action_label_bn_{{$i}}" value="{{ $buttons['label_bn'] }}">
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="title" class="required mr-1">Button link:</label>
+                                <label for="title" class="required1 mr-1">Button link:</label>
                                 <input class="form-control" type="text" name="call_to_action_url_{{$i}}" value="{{ $buttons['link'] }}">
                             </div>
                         </div>
@@ -50,19 +50,19 @@
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="title" class="required mr-1">Button label: (English)</label>
+                        <label for="title" class="required1 mr-1">Button label: (English)</label>
                         <input class="form-control" type="text" name="call_to_action_label_en_1" value="">
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="title" class="required mr-1">Button label: (Bangla)</label>
+                        <label for="title" class="required1 mr-1">Button label: (Bangla)</label>
                         <input class="form-control" type="text" name="call_to_action_label_bn_1" value="">
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="title" class="required mr-1">Button link:</label>
+                        <label for="title" class="required1 mr-1">Button link:</label>
                         <input class="form-control" type="text" name="call_to_action_url_1" value="">
                     </div>
                 </div>
