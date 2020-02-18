@@ -11,7 +11,7 @@ use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
-class AppServiceProductService
+class AppServiceProductDetailsService
 {
     use CrudTrait;
     use FileTrait;
@@ -38,7 +38,7 @@ class AppServiceProductService
     {
         return $this->findAll('', [
             'appServiceTab' => function ($q) {
-                $q->select('id', 'name_en', 'alias');
+                $q->select('id', 'name_en');
             },
             'appServiceCat' => function ($q) {
                 $q->select('id', 'title_en');

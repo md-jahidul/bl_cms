@@ -594,7 +594,7 @@ class EcarrerController extends Controller
 
 		$data_types = null;
 
-		$this->ecarrerService->updateEcarrerSection($request->except(['title_en', 'slug']), $id, $data_types);
+		$this->ecarrerService->updateEcarrerSection($request->except(['slug']), $id, $data_types);
 
 		Session::flash('message', 'Banner updated successfully!');
 		return redirect('life-at-banglalink/topbanner');

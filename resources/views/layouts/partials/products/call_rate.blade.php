@@ -9,6 +9,8 @@
 
 @include('layouts.partials.products.common-field.call_rate')
 
+@include('layouts.partials.products.common-field.call_rate_unit')
+
 @include('layouts.partials.products.common-field.validity_unit')
 
 @include('layouts.partials.products.common-field.validity')

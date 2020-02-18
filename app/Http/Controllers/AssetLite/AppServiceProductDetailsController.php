@@ -16,38 +16,39 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use App\Services\AppServiceProductDetailsService;
 
-class AppServiceProductController extends Controller
+class AppServiceProductDetailsController extends Controller
 {
     /**
      * @var $appServiceCategoryRepository
      */
-    private $appServiceCategoryRepository;
+    private $appServiceProductDetailsService;
     /**
      * @var $appServiceTabRepository
      */
-    private $appServiceTabRepository;
+    // private $appServiceTabRepository;
     /**
      * @var $appServiceProductService
      */
-    private $appServiceProductService;
+    // private $appServiceProductService;
 
     /**
      * @var $tagCategoryService
      */
-    private $tagCategoryService;
+    // private $tagCategoryService;
 
 
     public function __construct(
-        AppServiceTabRepository $appServiceTabRepository,
-        AppServiceCategoryRepository $appServiceCategoryRepository,
-        AppServiceProductService $appServiceProductService,
-        TagCategoryService $tagCategoryService
+        AppServiceProductDetailsService $appServiceProductDetailsService,
+        // AppServiceCategoryRepository $appServiceCategoryRepository,
+        // AppServiceProductService $appServiceProductService,
+        // TagCategoryService $tagCategoryService
     ) {
-        $this->appServiceCategoryRepository = $appServiceCategoryRepository;
-        $this->appServiceTabRepository = $appServiceTabRepository;
-        $this->appServiceProductService = $appServiceProductService;
-        $this->tagCategoryService = $tagCategoryService;
+        $this->appServiceProductDetailsService = $appServiceProductDetailsService;
+        // $this->appServiceTabRepository = $appServiceTabRepository;
+        // $this->appServiceProductService = $appServiceProductService;
+        // $this->tagCategoryService = $tagCategoryService;
     }
 
     /**
@@ -58,7 +59,7 @@ class AppServiceProductController extends Controller
     public function index()
     {
         $appServiceProduct = $this->appServiceProductService->productList();
-        return view('admin.app-service.product.index', compact('appServiceProduct'));
+        return view('admin.app-service.details.index', compact('appServiceProduct'));
     }
 
     /**
