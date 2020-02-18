@@ -24,13 +24,13 @@
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">
                                         @if( $ecarrer_section_slug == 'programs_sapbatches' )
-                                            Name (Bangla)
+                                            Name (English)
                                         @else
-                                            Title (Bangla)
+                                            Title (English)
                                         @endif
                                     </label>
                                     <input type="text" name="title_en"  class="form-control section_name" placeholder="Enter title_en (english)"
-                                           value="{{ $ecarrer_item->title_en }}" required data-validation-required-message="Enter slider title_en (english)">
+                                           value="{{ $ecarrer_item->title_en }}" required data-validation-required-message="Field can not be empty">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_en'))
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -86,7 +86,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text" class="required1">Alt text</label>
                                     <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt_text (english)"
-                                           value="{{ $ecarrer_item->alt_text }}" required data-validation-required-message="Enter slider alt_text (bangla)">
+                                           value="{{ $ecarrer_item->alt_text }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>

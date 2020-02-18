@@ -46,10 +46,11 @@
                                         <td>{{ $product->appServiceTab->name_en }}</td>
                                         <td>{{ $product->appServiceCat->title_en }}</td>
                                         <td class="text-center">
-                                             <a href="{{--{{ route('product.details') }}--}}" class="btn-sm btn-outline-warning border">Details</a>
+                                             <a href="{{ route( "app_service.details.list", ['type' => $product->appServiceTab->alias, 'id' => $product->id] ) }}" class="btn-sm btn-outline-warning border">Details</a>
                                         </td>
                                         <td class="text-center"><input type="checkbox" {{ $product->can_active == 1 ? 'checked' : '' }} disabled></td>
                                         <td>
+        
 {{--                                            <a href="--}}{{--{{ route('product.show', [$product->id]) }}--}}{{--" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>--}}
                                             <a href="{{ url("app-service-product/$product->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                             <a href="#" remove="{{ url("offers/$product->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $product->id }}" title="Delete">

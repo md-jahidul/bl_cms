@@ -20,10 +20,9 @@ class WelcomeInfo extends Model
      * @var array
      */
     protected $fillable = [
-        'guest_salutation',
-        'user_salutation',
-        'guest_message',
-        'user_message',
-        'icon'
+        'message_en',
+        'message_bn',
+        'image',
+        'login_button_title'
     ];
 }
