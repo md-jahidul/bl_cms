@@ -423,4 +423,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::get('app-service/category-find/{id}', 'AssetLite\AppServiceProductController@tabWiseCategory');
 
+    // Lead Management ======================================================
+    Route::get('lead-requested-list', 'AssetLite\LeadManagementController@leadRequestedList')->name('lead-list');
+
 });
