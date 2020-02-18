@@ -39,7 +39,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     Route::get('banner/destroy/{id}', 'CMS\BannerController@destroy');
 
     // welcomeInfo
-    route::resource('welcomeInfo', 'CMS\WelcomeInfoController');
+    route::get('welcomeInfo', 'CMS\WelcomeInfoController@index')->name('welcomeInfo.index');
+    route::post('welcomeInfo', 'CMS\WelcomeInfoController@store')->name('welcomeInfo.store');
+    route::post('welcomeInfo/update/{id}', 'CMS\WelcomeInfoController@update')->name('welcomeInfo.update');
 
     //settings
     route::resource('setting', 'CMS\SettingController');
