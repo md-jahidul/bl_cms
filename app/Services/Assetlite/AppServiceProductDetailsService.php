@@ -4,7 +4,7 @@ namespace App\Services\Assetlite;
 
 //use App\Repositories\AppServiceProductegoryRepository;
 
-use App\Repositories\AppServiceProductRepository;
+use App\Repositories\AppServiceProductDetailsRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Exception;
@@ -20,30 +20,31 @@ class AppServiceProductDetailsService
     const VAS = 2;
 
     /**
-     * @var $appServiceProductRepository
+     * @var $appServiceProductDetailsRepository
      */
-    protected $appServiceProductRepository;
+    protected $appServiceProductDetailsRepository;
 
     /**
      * AppServiceProductService constructor.
-     * @param AppServiceProductRepository $appServiceProductRepository
+     * @param AppServiceProductDetailsRepository $appServiceProductDetailsRepository
      */
-    public function __construct(AppServiceProductRepository $appServiceProductRepository)
+    public function __construct(AppServiceProductDetailsRepository $appServiceProductDetailsRepository)
     {
-        $this->appServiceProductRepository = $appServiceProductRepository;
-        $this->setActionRepository($appServiceProductRepository);
+        $this->AppServiceProductDetailsRepository = $appServiceProductDetailsRepository;
+        $this->setActionRepository($appServiceProductDetailsRepository);
     }
 
-    public function productList()
-    {
-        return $this->findAll('', [
-            'appServiceTab' => function ($q) {
-                $q->select('id', 'name_en');
-            },
-            'appServiceCat' => function ($q) {
-                $q->select('id', 'title_en');
-            }
-        ], ['column' => 'created_at', 'direction' => 'DESC']);
+    public function sectionList()
+    {   
+        return $this->findAll();
+        // return $this->findAll('', [
+        //     'appServiceTab' => function ($q) {
+        //         $q->select('id', 'name_en');
+        //     },
+        //     'appServiceCat' => function ($q) {
+        //         $q->select('id', 'title_en');
+        //     }
+        // ], ['column' => 'created_at', 'direction' => 'DESC']);
     }
 
     /**
@@ -58,10 +59,10 @@ class AppServiceProductDetailsService
 
         $data['product_id'] = $product_id;
         $data['tab_type'] = $tab_type;
-        
+
 
         $this->save($data);
-        return new Response('App Service Category added successfully');
+        return new Response('App Service details section added successfully');
     }
 
     /**

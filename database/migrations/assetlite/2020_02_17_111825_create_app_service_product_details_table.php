@@ -29,7 +29,8 @@ class CreateAppServiceProductDetailsTable extends Migration
             $table->string('tab_type')->nullable();
             $table->string('category')->nullable();
             $table->tinyInteger('status')->default(1);
-            $table->tinyInteger('multiple_component')->default(0)->comment('Section has multiple component(1) or single component(0).');
+            $table->tinyInteger('multiple_component')->default(0)->comment('Section has multiple component(1) or single component(0)');
+            $table->integer('section_order')->nullable();
             $table->json('other_attributes')->nullable();
             $table->timestamps();
             $table->softDeletes();

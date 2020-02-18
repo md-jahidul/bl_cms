@@ -53,10 +53,11 @@ class AppServiceProductDetailsController extends Controller
      */
     public function index($tab_type, $product_id)
     {
-        // $appServiceProduct = $this->appServiceProductService->productList();
+        $section_list = $this->appServiceProductDetailsService->sectionList();
+
         $data['tab_type'] = $tab_type;
         $data['product_id'] = $product_id;
-        return view('admin.app-service.details.index', compact('data'));
+        return view('admin.app-service.details.index', compact('data', 'section_list'));
     }
 
     /**
