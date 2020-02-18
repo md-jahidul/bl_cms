@@ -457,4 +457,9 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('app-service/details/{type}/{id}', 'AssetLite\AppServiceProductDetailsController@index')->name('app_service.details.list');
     Route::post('app-service/details/{type}/{id}/store', 'AssetLite\AppServiceProductDetailsController@store')->name('app_service.details.store');
 
+    # App & Service component
+    Route::get('app-service/component/{type}/{id}', 'AssetLite\ComponentController@conponentList')->name('appservice.component.list');
+    Route::get('app-service/component/create', 'AssetLite\ComponentController@conponentCreate')->name('appservice.component.create');
+
+
 });

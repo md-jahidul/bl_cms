@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Assetlite;
 
 //use App\Repositories\AppServiceProductegoryRepository;
 
-use App\Repositories\AppServiceProductRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+
+use App\Repositories\ComponentRepository;
 
 class ComponentService
 {
@@ -20,30 +21,31 @@ class ComponentService
     const VAS = 2;
 
     /**
-     * @var $appServiceProductRepository
+     * @var $componentRepository
      */
-    protected $appServiceProductRepository;
+    protected $componentRepository;
 
     /**
      * AppServiceProductService constructor.
-     * @param AppServiceProductRepository $appServiceProductRepository
+     * @param ComponentRepository $componentRepository
      */
-    public function __construct(AppServiceProductRepository $appServiceProductRepository)
+    public function __construct(ComponentRepository $componentRepository)
     {
-        $this->appServiceProductRepository = $appServiceProductRepository;
-        $this->setActionRepository($appServiceProductRepository);
+        $this->componentRepository = $componentRepository;
+        $this->setActionRepository($componentRepository);
     }
 
-    public function productList()
-    {
-        return $this->findAll('', [
-            'appServiceTab' => function ($q) {
-                $q->select('id', 'name_en');
-            },
-            'appServiceCat' => function ($q) {
-                $q->select('id', 'title_en');
-            }
-        ], ['column' => 'created_at', 'direction' => 'DESC']);
+    public function componentList()
+    {   
+        return $this->findAll();
+        // return $this->findAll('', [
+        //     'appServiceTab' => function ($q) {
+        //         $q->select('id', 'name_en');
+        //     },
+        //     'appServiceCat' => function ($q) {
+        //         $q->select('id', 'title_en');
+        //     }
+        // ], ['column' => 'created_at', 'direction' => 'DESC']);
     }
 
     /**

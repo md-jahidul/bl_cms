@@ -33,7 +33,9 @@ class CreateComponentsTable extends Migration
             $table->string('alt_text')->nullable();
             $table->string('video', 500)->nullable();
             $table->string('alt_links')->nullable();
+            $table->string('component_type')->nullable();
             $table->integer('component_order')->nullable();
+            $table->json('multiple_attributes')->nullable();
 
             $table->tinyInteger('status')->default(1);
             $table->json('other_attributes')->nullable();
