@@ -40,6 +40,7 @@ class CreateComponentsTable extends Migration
             $table->tinyInteger('status')->default(1);
             $table->json('other_attributes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             // $table->foreign('section_details_id')
             //     ->references('id')

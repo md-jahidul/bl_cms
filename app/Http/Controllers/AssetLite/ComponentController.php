@@ -51,7 +51,11 @@ class ComponentController extends Controller
 
 	}
 
-
+	/**
+	 * [conponentCreate description]
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
 	public function conponentCreate(Request $request){
 
 		$component_type = $request->input('component_type', '');
@@ -62,5 +66,27 @@ class ComponentController extends Controller
 
 	}
 
+
+	public function conponentStore(Request $request){
+
+
+		$response = $this->componentService->storeComponentDetails($request->all());
+
+		$section_id = $request->input('section_details_id');
+		$tab_type = $request->input('tab_type');
+
+		// dd($section_id);
+
+		Session::flash('message', 'Component added successfuly');
+		// return redirect(url("app-service/details/$tab_type/$product_id"));
+		return redirect( url("app-service/component/$tab_type/$section_id") );
+
+
+		// $data['tab_type'] = $tab_type;
+		// $data['section_id'] = $section_id;
+
+		// return view('admin.app-service.details.components.index', compact('data', 'component_list'));
+
+	}
 
 }

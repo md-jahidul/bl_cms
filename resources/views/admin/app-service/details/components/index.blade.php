@@ -26,7 +26,7 @@
                                 <th width="5%">Tab</th>
                                 {{-- <th>Category</th> --}}
                                 <th width="5%" class="text-center">Status</th>
-                                <th class="text-center" width="8%">Add component</th>
+                                {{-- <th class="text-center" width="8%">Add component</th> --}}
                                 <th width="12%" class="">Action</th>
                             </tr>
                         </thead>
@@ -43,9 +43,7 @@
                                         <td>{{ $list->tab_type }}</td>
                                         <td>{{ $list->status }}</td>
                                         
-                                        <td class="text-center">
-                                             <a href="#" class="btn-sm btn-outline-warning border">component</a>
-                                        </td>
+                                        
                                         
                                         <td>
                                             <a href="{{ url("app-service-product/$list->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

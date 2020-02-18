@@ -52,14 +52,19 @@ class ComponentService
      * @param $data
      * @return Response
      */
-    public function storeAppServiceProduct($data)
+    public function storeComponentDetails($data)
     {
-        if (request()->hasFile('product_img_url')) {
-            $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
+        if (request()->hasFile('image_url')) {
+            $data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product/details');
+            unset($data['image_url']);
         }
+
         $this->save($data);
-        return new Response('App Service Category added successfully');
+        return new Response('App Service Component added successfully');
     }
+
+
+
 
     /**
      * @param $data
@@ -70,7 +75,7 @@ class ComponentService
     {
         $appServiceProduct = $this->findOne($id);
         if (request()->hasFile('product_img_url')) {
-            $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
+            $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product/details');
             $this->deleteFile($appServiceProduct->product_img_url);
         }
 
