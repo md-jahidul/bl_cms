@@ -17,8 +17,8 @@ class Product extends Model
             'name_bn',
             'start_date',
             'end_date',
-            'ussd_en',
             'ussd_bn',
+            'balance_check_ussd_bn',
             'bonus',
             'point',
             'is_recharge',
@@ -38,6 +38,7 @@ class Product extends Model
             'is_auto_renewable',
             'rate_cutter_offer',
             'rate_cutter_unit',
+            'call_rate_unit_bn',
             'special_product'
         ];
 

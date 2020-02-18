@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -455,5 +456,9 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     # App & Service details page
     Route::get('app-service/details/{type}/{id}', 'AssetLite\AppServiceProductDetailsController@index')->name('app_service.details.list');
+
+    // Lead Management ======================================================
+    Route::get('lead-requested-list', 'AssetLite\LeadManagementController@leadRequestedList')->name('lead-list');
+
 
 });

@@ -219,7 +219,7 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
-
+//        return $this->info;
         return view('admin.product.edit', $this->info);
     }
 
@@ -250,7 +250,8 @@ class ProductController extends Controller
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
         $otherAttributes = $productDetail->product_details->other_attributes;
-//        return $otherAttributes['design_structure'];
+
+//        return $otherAttributes;
 
         return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType', 'otherAttributes'));
     }
@@ -263,6 +264,8 @@ class ProductController extends Controller
      */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
+//        return $request->all();
+
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
         $this->productDetailService->updateProductDetails($request->all(), $id);
