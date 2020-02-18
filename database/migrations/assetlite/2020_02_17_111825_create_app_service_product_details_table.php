@@ -18,12 +18,15 @@ class CreateAppServiceProductDetailsTable extends Migration
     {
         Schema::create('app_service_product_details', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('product_id')->nullable()->comment('app_service_products table id');
             $table->string('title_en')->nullable();
             $table->string('title_bn')->nullable();
             $table->string('slug')->nullable();
             $table->string('image')->nullable();
             $table->string('alt_text')->nullable();
             $table->string('alt_links')->nullable();
+            $table->string('tab_type')->nullable();
+            $table->string('category')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->json('other_attributes')->nullable();
             $table->timestamps();
