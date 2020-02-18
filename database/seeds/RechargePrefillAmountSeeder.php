@@ -19,10 +19,10 @@ class RechargePrefillAmountSeeder extends Seeder
         ];
 
         $data = [];
-        foreach ($amounts as $key=>$amount) {
+        foreach ($amounts as $key => $amount) {
             $data [] = [
                 'amount'     => $amount,
-                'sort'       => $key +1,
+                'sort'       => $key + 1,
                 'created_at' => now()->toDateTimeString()
             ];
         }

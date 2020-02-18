@@ -15,7 +15,7 @@ class EcarrerTopBannerSeeder extends Seeder
         $top_banner = [
             [
                 'title_en' => 'Life At Banglalink',
-                'slug' => 'life_at_banglalink',
+                'slug' => 'life-at-banglalink',
                 'category' => 'life_at_bl_topbanner',
                 'route_slug' => 'life-at-banglalink/topbanner',
                 'category_type' => 'life_at_banglalink',

@@ -287,7 +287,7 @@ class ProductCoreService
             return true;
         } catch (Exception $e) {
             dd($e->getMessage());
-            Log::error('Product Entry Error'.$e->getMessage());
+            Log::error('Product Entry Error' . $e->getMessage());
             return 0;
         }
     }
@@ -590,7 +590,7 @@ class ProductCoreService
             return true;
         } catch (Exception $e) {
             dd($e->getMessage());
-            Log::error('Product Entry Error'.$e->getMessage());
+            Log::error('Product Entry Error' . $e->getMessage());
             return 0;
         }
     }
@@ -606,7 +606,7 @@ class ProductCoreService
      */
     public function searchProductCodes($keyword)
     {
-        return ProductCore::where('product_code', 'like', '%'.$keyword.'%')->get();
+        return ProductCore::where('product_code', 'like', '%' . $keyword . '%')->get();
     }
 
     public function getProductDetails($product_code)
@@ -629,7 +629,7 @@ class ProductCoreService
             $file = $request->media;
             $path = $file->storeAs(
                 'products/images',
-                $product_code.'.'.$file->getClientOriginalExtension(),
+                $product_code . '.' . $file->getClientOriginalExtension(),
                 'public'
             );
 
