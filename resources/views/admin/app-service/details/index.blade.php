@@ -8,8 +8,8 @@
 {{--    <a href="#" id="syncBtn" class="btn btn-outline-blue-grey round btn-glow px-2">--}}
 {{--        Sync Core Product--}}
 {{--    </a>--}}
-    <a href="{{ route("app-service-product.create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Add Product
+    <a href="{{ route("app-service-product.create") }}" class="btn btn-primary  round btn-glow px-2" data-toggle="modal" data-target="#add_details_with_compoent"><i class="la la-plus"></i>
+        Add section
     </a>
 @endsection
 @section('content')
@@ -34,6 +34,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if( !empty($appServiceProduct) )
                             @foreach($appServiceProduct as $product)
                                 {{--@if($product->product != '')--}}
                                     @php $path = 'partner-offers-home'; @endphp
@@ -59,6 +60,7 @@
                                     </tr>
                                 {{--@endif--}}
                             @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -66,6 +68,81 @@
         </div>
 
     </section>
+    
+    {{-- {{ dd($data['tab_type']) }} --}}
+
+    <div class="modal fade" id="add_details_with_compoent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add App and Service details with component</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+                <form id="product_form" role="form" action="{{ route('app_service.details.store', [ 'type' => $data['tab_type'], 'id' => $data['product_id'] ]) }}" method="POST" novalidate enctype="multipart/form-data">
+                    @csrf
+                  <div class="modal-body">
+                    
+                    <div class="row">
+                        
+                        <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
+                            <label for="name_en">Title (English)</label>
+                            <input type="text" name="name_en" id="name_en" class="form-control" placeholder="Enter offer name in English"
+                                   value="{{ old("name_en") ? old("name_en") : '' }}">
+                            <div class="help-block"></div>
+                            @if ($errors->has('name_en'))
+                                <div class="help-block">{{ $errors->first('name_en') }}</div>
+                            @endif
+                        </div>
+
+                        <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
+                            <label for="name_bn">Title (Bangla)</label>
+                            <input type="text" name="name_bn" id="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
+                                   value="{{ old("name_bn") ? old("name_bn") : '' }}">
+                            <div class="help-block"></div>
+                            @if ($errors->has('name_bn'))
+                                <div class="help-block">{{ $errors->first('name_bn') }}</div>
+                            @endif
+                        </div>
+
+                        <div class="form-group col-md-6 ">
+                            <label for="description_en">Description (English)</label>
+                            <textarea type="text" name="description_en" id="vat" class="form-control" placeholder="Enter description in English"
+                            >{{ old("description_en") ? old("description_en") : '' }}</textarea>
+                            <div class="help-block"></div>
+                        </div>
+
+                        <div class="form-group col-md-6 ">
+                            <label for="description_bn">Description (Bangla)</label>
+                            <textarea type="text" name="description_bn" id="vat" class="form-control" placeholder="Enter description in Bangla"
+                            >{{ old("description_bn") ? old("description_bn") : '' }}</textarea>
+                            <div class="help-block"></div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="title" class="mr-1">Status:</label>
+                                <input type="radio" name="status" value="1" id="active" checked>
+                                <label for="active" class="mr-1">Active</label>
+
+                                <input type="radio" name="status" value="0" id="inactive">
+                                <label for="inactive">Inactive</label>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                  </div>
+                  <div class="modal-footer">
+                    <a type="button" href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+              </form>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+    <!-- Modal -->
 
 @stop
 
@@ -81,63 +158,7 @@
 
 @push('page-js')
     <script>
-        var auto_save_url = "{{ url('/partner-offer/sortable') }}";
-
-        $('#syncBtn').click(function (e) {
-            e.preventDefault();
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                html: jQuery('#syncBtn').html(),
-                showCancelButton: true,
-                confirmButtonText: 'Yes, Sync it!'
-            }).then((result) => {
-                if (result.value) {
-                    swal.fire({
-                        title: 'Data Processing. Please Wait...',
-                        allowEscapeKey: false,
-                        allowOutsideClick: false,
-                        onOpen: () => {
-                            swal.showLoading();
-                        }
-                    });
-
-                    $.ajax({
-                        {{--url: '{{ route('core-product-mapping', strtolower($type))}}',--}}
-                        type: 'Get',
-                        success: function (result) {
-                            if (result.success) {
-                                swal.fire({
-                                    title: 'Core Product Sync Successfully!',
-                                    type: 'success',
-                                    timer: 2000,
-                                    showConfirmButton: false
-                                });
-                                setTimeout(function () {
-                                    window.location.replace(result.url);
-                                }, 2000)
-                            } else {
-                                swal.close();
-                                swal.fire({
-                                    title: result.message,
-                                    type: 'error',
-                                });
-                            }
-
-                        },
-                        error: function (data) {
-                            swal.fire({
-                                title: 'Failed to sync',
-                                type: 'error',
-                            });
-                        }
-                    });
-                }
-            });
-
-        });
+        
 
     </script>
 @endpush

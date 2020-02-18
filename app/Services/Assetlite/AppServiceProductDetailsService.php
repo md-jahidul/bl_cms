@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Assetlite;
 
 //use App\Repositories\AppServiceProductegoryRepository;
 
@@ -50,11 +50,16 @@ class AppServiceProductDetailsService
      * @param $data
      * @return Response
      */
-    public function storeAppServiceProduct($data)
+    public function storeAppServiceProductDetails($data, $tab_type, $product_id)
     {
-        if (request()->hasFile('product_img_url')) {
-            $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
-        }
+        // if (request()->hasFile('product_img_url')) {
+        //     $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
+        // }
+
+        $data['product_id'] = $product_id;
+        $data['tab_type'] = $tab_type;
+        
+
         $this->save($data);
         return new Response('App Service Category added successfully');
     }

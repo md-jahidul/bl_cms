@@ -16,7 +16,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
-use App\Services\AppServiceProductDetailsService;
+use App\Services\Assetlite\AppServiceProductDetailsService;
 
 class AppServiceProductDetailsController extends Controller
 {
@@ -40,15 +40,10 @@ class AppServiceProductDetailsController extends Controller
 
 
     public function __construct(
-        AppServiceProductDetailsService $appServiceProductDetailsService,
-        // AppServiceCategoryRepository $appServiceCategoryRepository,
-        // AppServiceProductService $appServiceProductService,
-        // TagCategoryService $tagCategoryService
-    ) {
+        AppServiceProductDetailsService $appServiceProductDetailsService
+    )
+    {
         $this->appServiceProductDetailsService = $appServiceProductDetailsService;
-        // $this->appServiceTabRepository = $appServiceTabRepository;
-        // $this->appServiceProductService = $appServiceProductService;
-        // $this->tagCategoryService = $tagCategoryService;
     }
 
     /**
@@ -56,10 +51,12 @@ class AppServiceProductDetailsController extends Controller
      *
      * @return Factory|View
      */
-    public function index()
+    public function index($tab_type, $product_id)
     {
-        $appServiceProduct = $this->appServiceProductService->productList();
-        return view('admin.app-service.details.index', compact('appServiceProduct'));
+        // $appServiceProduct = $this->appServiceProductService->productList();
+        $data['tab_type'] = $tab_type;
+        $data['product_id'] = $product_id;
+        return view('admin.app-service.details.index', compact('data'));
     }
 
     /**
@@ -69,9 +66,9 @@ class AppServiceProductDetailsController extends Controller
      */
     public function create()
     {
-        $appServiceTabs = $this->appServiceTabRepository->findByProperties(array(), ['id', 'name_en', 'alias']);
-        $tags = $this->tagCategoryService->findAll();
-        return view('admin.app-service.product.create', compact('tags', 'appServiceTabs', 'appServiceCat'));
+        // $appServiceTabs = $this->appServiceTabRepository->findByProperties(array(), ['id', 'name_en', 'alias']);
+        // $tags = $this->tagCategoryService->findAll();
+        // return view('admin.app-service.product.create', compact('tags', 'appServiceTabs', 'appServiceCat'));
     }
 
     /**
@@ -80,11 +77,14 @@ class AppServiceProductDetailsController extends Controller
      * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(Request $request, $tab_type, $product_id)
     {
-        $response = $this->appServiceProductService->storeAppServiceProduct($request->all());
+
+        $response = $this->appServiceProductDetailsService->storeAppServiceProductDetails($request->all(), $tab_type, $product_id);
+
+
         Session::flash('message', $response->getContent());
-        return redirect(route('app-service-product.index'));
+        return redirect(url("app-service/details/$tab_type/$product_id"));
     }
 
     /**
