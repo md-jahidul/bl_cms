@@ -1,3 +1,18 @@
+<?php
+function matchRelatedProduct($id, $roles)
+{
+    if ($roles) {
+        foreach ($roles as $role) {
+            if ($role == $id) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+?>
+
 @extends('layouts.admin')
 @section('title', 'Product List')
 @section('card_name', 'Product List')
@@ -25,7 +40,6 @@
                                 <th width="20%">Section Name</th>
                                 <th width="5%">Tab</th>
                                 {{-- <th>Category</th> --}}
-                                <th width="5%" class="text-center">Status</th>
                                 <th class="text-center" width="8%">Add compoent</th>
                                 <th width="12%" class="">Action</th>
                             </tr>
@@ -33,22 +47,21 @@
                         <tbody>
                             @if( !empty($section_list) )
                             {{ $i = 1 }}
-                            @foreach($section_list as $list)
+                            @foreach($section_list['section_body'] as $list)
                                 {{--@if($product->product != '')--}}
                                     @php $path = 'partner-offers-home'; @endphp
                                     {{-- <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}"> --}}
                                     <tr>
                                         <td>{{ $i }}</td>
-                                        <td>{{ $list->section_name }}</td>
+                                        <td>{{ $list->section_name }} {!! $list->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                         <td>{{ $list->tab_type }}</td>
-                                        <td>{{ $list->status }}</td>
-                                        
                                         <td class="text-center">
-                                             <a href="{{ route( "appservice.component.list", ['type' => $data['tab_type'], 'id' => $list->id] ) }}" class="btn-sm btn-outline-warning border">component</a>
+                                             <a href="{{ route( "appservice.component.list", [$tab_type, $product_id, $list->id] ) }}" class="btn-sm btn-outline-warning border">component</a>
                                         </td>
-                                        
+
                                         <td>
-                                            <a href="{{ url("app-service-product/$list->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                            <a href="{{ route("app_service.details.edit", [$tab_type, $product_id, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0">
+                                                <i class="la la-pencil" aria-hidden="true"></i></a>
                                             {{-- <a href="#" remove="{{ url("offers/$list->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
                                                 <i class="la la-trash"></i>
                                             </a> --}}
@@ -65,9 +78,88 @@
         </div>
 
     </section>
-    
-    {{-- {{ dd($data['tab_type']) }} --}}
 
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <h4 class="menu-title"><strong>Banner And Related Product</strong></h4><hr>
+                    <div class="card-body card-dashboard">
+                        <form role="form" action="{{ route('app_service.details.fixed-section', [$tab_type, $product_id ]) }}" method="POST" novalidate enctype="multipart/form-data">
+                            @csrf
+                            {{method_field('POST')}}
+                            <div class="row">
+                                <input type="hidden" name="category" value="{{ $tab_type }}_banner_image" class="custom-file-input" id="imgTwo">
+
+                                <div class="form-group col-md-6 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
+                                    <label for="mobileImg">Banner Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="image" class="custom-file-input" id="image">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_image'))
+                                        <div class="help-block">  {{ $errors->first('image') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <img src="{{ config('filesystems.file_base_url') . $fixedSectionData['image'] }}" height="100" width="150" id="imgDisplay">
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                    <label for="title_en">Title (English)</label>
+                                    <input type="text" name="title_en" id="title_en" class="form-control" placeholder="Enter offer name in English"
+                                           value="{{ $fixedSectionData['title_en'] }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_en'))
+                                        <div class="help-block">{{ $errors->first('title_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn">Title (Bangla)</label>
+                                    <input type="text" name="title_bn" id="title_bn" class="form-control" placeholder="Enter offer name in Bangla"
+                                           value="{{ $fixedSectionData['title_bn'] }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">{{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group select-role col-md-4 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
+                                    <label for="role_id">Related Product</label>
+                                    <div class="role-select">
+                                        <select class="select2 form-control" multiple="multiple" name="other_attributes[related_product_id][]">
+                                            @foreach($products as $product)
+                                                <option value="{{ $product->id }}" {{ matchRelatedProduct($product->id, $fixedSectionData['other_attributes']['related_product_id']) ? 'selected' : '' }}>{{$product->name_en}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('role_id'))
+                                        <div class="help-block">  {{ $errors->first('role_id') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-actions col-md-12">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                class="la la-check-square-o"></i> Save
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
     <div class="modal fade" id="add_details_with_compoent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -77,12 +169,10 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-                <form id="product_details_form" role="form" action="{{ route('app_service.details.store', [ 'type' => $data['tab_type'], 'id' => $data['product_id'] ]) }}" method="POST" novalidate enctype="multipart/form-data">
+                <form id="product_details_form" role="form" action="{{ route('app_service.details.store', [$tab_type, $product_id ]) }}" method="POST" novalidate enctype="multipart/form-data">
                     @csrf
                   <div class="modal-body">
-                    
                     <div class="row">
-
                         <div class="form-group col-md-6 {{ $errors->has('section_name') ? ' error' : '' }}">
                             <label for="section_name" class="required">Section Name</label>
                             <input type="text" name="section_name" id="section_name" class="form-control section_name" placeholder="Give section a name"
@@ -102,7 +192,7 @@
                                 <div class="help-block">{{ $errors->first('slug') }}</div>
                             @endif
                         </div>
-                        
+
                         <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                             <label for="title_en">Title (English)</label>
                             <input type="text" name="title_en" id="title_en" class="form-control" placeholder="Enter offer name in English"
@@ -126,9 +216,9 @@
                         <div class="form-group col-md-6">
                             <label for="category_type">Section has multiple component</label>
                             <select class="form-control" name="multiple_component" aria-invalid="false">
-                                    <option value="0">No</option>
-                                    <option value="1">Yes</option>
-                                </select>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
                         </div>
 
                         <div class="col-md-6">
@@ -141,7 +231,7 @@
                                 <label for="inactive">Inactive</label>
                             </div>
                         </div>
-                        
+
                     </div>
 
                   </div>
@@ -155,9 +245,6 @@
     </div><!-- /.modal -->
     <!-- Modal -->
 
-
-
-
 @stop
 
 @push('page-css')
@@ -167,6 +254,15 @@
             padding-top: 5px !important;
             padding-bottom: 5px !important;
         }
+
+        form .select-role.validate input:focus, form .select-role.issue input:focus, form .select-role.validate input{
+            border-color: unset;
+            -webkit-box-shadow: unset;
+            -moz-box-shadow: unset;
+            box-shadow: unset;
+            border-width: 0;
+            color : unset;
+        }
     </style>
 @endpush
 
@@ -174,20 +270,13 @@
 
 <script type="text/javascript">
     jQuery(document).ready(function($){
-
-
         $('input.section_name').on('keyup', function(){
             var sectionName = $('#product_details_form').find('.section_name').val();
             var sectionNameLower = sectionName.toLowerCase();
             var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '-');
-
             $('#product_details_form').find('.auto_slug').empty().val(sectionNameRemoveSpace);
-
-            // console.log(sectionNameRemoveSpace);
+            // console.log(sectionName);
         });
-
-        
-
     });
 </script>
 

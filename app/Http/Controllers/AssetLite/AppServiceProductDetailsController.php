@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Models\AppServiceProduct;
 use App\Repositories\AppServiceCategoryRepository;
 use App\Repositories\AppServiceTabRepository;
 use App\Services\AppServiceCategoryService;
 use App\Services\AppServiceProductService;
 use App\Services\AppServiceTabService;
+use App\Services\ProductService;
 use App\Services\TagCategoryService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -27,23 +29,24 @@ class AppServiceProductDetailsController extends Controller
     /**
      * @var $appServiceTabRepository
      */
-    // private $appServiceTabRepository;
+    private $appServiceProduct;
     /**
      * @var $appServiceProductService
      */
-    // private $appServiceProductService;
+    protected $info = [];
 
     /**
-     * @var $tagCategoryService
+     *
+     * @param AppServiceProductDetailsService $appServiceProductDetailsService
+     * @param AppServiceProduct $appServiceProduct
      */
-    // private $tagCategoryService;
-
 
     public function __construct(
-        AppServiceProductDetailsService $appServiceProductDetailsService
-    )
-    {
+        AppServiceProductDetailsService $appServiceProductDetailsService,
+        AppServiceProductService $appServiceProduct
+    ) {
         $this->appServiceProductDetailsService = $appServiceProductDetailsService;
+        $this->appServiceProduct = $appServiceProduct;
     }
 
     /**
@@ -53,11 +56,19 @@ class AppServiceProductDetailsController extends Controller
      */
     public function index($tab_type, $product_id)
     {
-        $section_list = $this->appServiceProductDetailsService->sectionList();
+        $this->info['tab_type'] = $tab_type;
+        $this->info['product_id'] = $product_id;
+        $this->info["section_list"] = $this->appServiceProductDetailsService->sectionList($product_id);
+        $this->info["products"] = $this->appServiceProduct->appServiceRelatedProduct($tab_type);
+        $this->info["productDetail"] = $this->appServiceProduct->detailsProduct($product_id);
 
-        $data['tab_type'] = $tab_type;
-        $data['product_id'] = $product_id;
-        return view('admin.app-service.details.index', compact('data', 'section_list'));
+        $this->info["fixedSectionData"] = $this->info["section_list"]['fixed_section'];
+
+//        return $this->info["fixedSectionData"];
+
+//        $otherAttributes = $productDetail->product_details->other_attributes;
+
+        return view('admin.app-service.details.section.index', $this->info);
     }
 
     /**
@@ -80,10 +91,7 @@ class AppServiceProductDetailsController extends Controller
      */
     public function store(Request $request, $tab_type, $product_id)
     {
-
         $response = $this->appServiceProductDetailsService->storeAppServiceProductDetails($request->all(), $tab_type, $product_id);
-
-
         Session::flash('message', $response->getContent());
         return redirect(url("app-service/details/$tab_type/$product_id"));
     }
@@ -91,12 +99,17 @@ class AppServiceProductDetailsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @return Response
+     * @param Request $request
+     * @param $tab_type
+     * @param $product_id
+     * @return Request
      */
-    public function show($id)
+    public function fixedSectionUpdate(Request $request, $tab_type, $product_id)
     {
-        //
+//        return $request->all();
+        $response = $this->appServiceProductDetailsService->fixedSectionUpdate($request->all(), $tab_type, $product_id);
+        Session::flash('message', $response->getContent());
+        return redirect(url("app-service/details/$tab_type/$product_id"));
     }
 
     /**
@@ -105,27 +118,10 @@ class AppServiceProductDetailsController extends Controller
      * @param int $id
      * @return Factory|View
      */
-    public function edit($id)
+    public function edit($tab_type, $product_id, $id)
     {
-        $appServiceTabs = $this->appServiceTabRepository->findByProperties(array(), ['id', 'name_en', 'alias']);
-        $appServiceProduct = $this->appServiceProductService->findOne($id, ['appServiceTab' => function ($q) {
-            $q->select('id', 'name_en', 'alias');
-        }]);
-
-        $appServiceCategory = $this->appServiceCategoryRepository
-            ->findByProperties(
-                ['app_service_tab_id' => $appServiceProduct->app_service_tab_id],
-                ['id', 'title_en', 'alias']
-            );
-//        return $appServiceProduct;
-        $tags = $this->tagCategoryService->findAll();
-        return view('admin.app-service.product.edit', compact(
-            'tags',
-            'appServiceTabs',
-            'appServiceCat',
-            'appServiceProduct',
-            'appServiceCategory'
-        ));
+        $section = $this->appServiceProductDetailsService->findOne($id);
+        return view('admin.app-service.details.section.edit', compact('tab_type', 'product_id', 'section'));
     }
 
     /**
@@ -135,11 +131,11 @@ class AppServiceProductDetailsController extends Controller
      * @param int $id
      * @return RedirectResponse|Redirector
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $tab_type, $product_id, $id)
     {
-        $response = $this->appServiceProductService->updateAppServiceProduct($request->all(), $id);
+        $response = $this->appServiceProductDetailsService->updateAppServiceDetailsSection($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect(route('app-service-product.index'));
+        return redirect(route('app_service.details.list', [$tab_type, $product_id]));
     }
 
     public function tabWiseCategory($tabId)

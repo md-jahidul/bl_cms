@@ -17,4 +17,12 @@ class AppServiceProduct extends Model
     {
         return $this->belongsTo(AppServiceCategory::class, 'app_service_cat_id', 'id');
     }
+
+    public function scopeProductTabType($query, $type)
+    {
+        return $query->whereHas('appServiceTab', function ($q) use ($type) {
+            $q->where('alias', $type);
+        });
+    }
+
 }

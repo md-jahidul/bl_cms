@@ -95,4 +95,14 @@ class AppServiceProductService
         $appServiceCat->delete();
         return Response('App Service Tab deleted successfully !');
     }
+
+    public function appServiceRelatedProduct($tab_type)
+    {
+        return $this->appServiceProductRepository->appServiceProduct($tab_type);
+    }
+
+    public function detailsProduct($id)
+    {
+        return $this->appServiceProductRepository->findOne(['id' => $id]);
+    }
 }

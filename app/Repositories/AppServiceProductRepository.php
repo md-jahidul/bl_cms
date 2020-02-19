@@ -16,4 +16,13 @@ use App\Models\AppServiceProduct;
 class AppServiceProductRepository extends BaseRepository
 {
     public $modelName = AppServiceProduct::class;
+
+
+    public function appServiceProduct($tab_type)
+    {
+        return $this->model
+            ->productTabType($tab_type)
+            ->select('id', 'app_service_tab_id', 'name_en')
+            ->get();
+    }
 }
