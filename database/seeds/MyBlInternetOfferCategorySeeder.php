@@ -20,7 +20,7 @@ class MyBlInternetOfferCategorySeeder extends Seeder
             MyBlInternetOffersCategory::create(
                 [
                     'name' => $val,
-                    'sort' => $val + 1,
+                    'sort' => $key + 1,
                     'slug' => strtolower(str_replace(' ', '_', $val))
                 ]
             );
