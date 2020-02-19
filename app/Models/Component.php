@@ -8,6 +8,7 @@ class Component extends Model
 {
    protected $fillable = [
    	'section_details_id',
+    'page_type',
     'title_en',
     'title_bn',
     'slug',

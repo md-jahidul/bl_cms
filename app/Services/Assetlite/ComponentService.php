@@ -19,6 +19,7 @@ class ComponentService
 
     const APP = 1;
     const VAS = 2;
+    const PAGE_TYPE = 'app_services';
 
     /**
      * @var $componentRepository
@@ -35,17 +36,14 @@ class ComponentService
         $this->setActionRepository($componentRepository);
     }
 
-    public function componentList()
+    public function findByType($type)
+    {
+        return $this->componentRepository->findOneByProperties(['type' => $type]);
+    }
+
+    public function componentList($section_id)
     {   
-        return $this->findAll();
-        // return $this->findAll('', [
-        //     'appServiceTab' => function ($q) {
-        //         $q->select('id', 'name_en');
-        //     },
-        //     'appServiceCat' => function ($q) {
-        //         $q->select('id', 'title_en');
-        //     }
-        // ], ['column' => 'created_at', 'direction' => 'DESC']);
+        return $this->componentRepository->findByProperties(['section_details_id' => $section_id]);
     }
 
     /**
@@ -58,6 +56,8 @@ class ComponentService
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product/details');
             unset($data['image_url']);
         }
+
+        $data['page_type'] = self::APP;
 
         $this->save($data);
         return new Response('App Service Component added successfully');

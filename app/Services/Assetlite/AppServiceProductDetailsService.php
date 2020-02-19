@@ -34,9 +34,10 @@ class AppServiceProductDetailsService
         $this->setActionRepository($appServiceProductDetailsRepository);
     }
 
-    public function sectionList()
+    public function sectionList($product_id)
     {   
-        return $this->findAll();
+        return $this->AppServiceProductDetailsRepository->findByProperties(['product_id' => $product_id]);
+        // return $this->findAll();
         // return $this->findAll('', [
         //     'appServiceTab' => function ($q) {
         //         $q->select('id', 'name_en');
@@ -64,6 +65,18 @@ class AppServiceProductDetailsService
         $this->save($data);
         return new Response('App Service details section added successfully');
     }
+
+
+
+
+    public function getSectionColumnInfoByID($section_id, $column_names = [])
+    {   
+        return $this->AppServiceProductDetailsRepository->findOneByProperties(['id' => $section_id], $column_names);
+    }
+
+
+
+
 
     /**
      * @param $data

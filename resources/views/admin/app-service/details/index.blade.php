@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Product List')
-@section('card_name', 'Product List')
+@section('title', 'Product Details Section List')
+@section('card_name', 'Product Details Section List')
 @section('breadcrumb')
     <li class="breadcrumb-item ">Product Details Section List</li>
 @endsection
@@ -49,9 +49,12 @@
                                         
                                         <td>
                                             <a href="{{ url("app-service-product/$list->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                            {{-- <a href="#" remove="{{ url("offers/$list->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
-                                                <i class="la la-trash"></i>
-                                            </a> --}}
+                                            
+                                            @if( isset($list->is_default) && $list->is_default != 0 )
+                                                <a href="#" remove="{{ url("app-service-product/$list->id/delete") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
+                                                    <i class="la la-trash"></i>
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 {{--@endif--}}

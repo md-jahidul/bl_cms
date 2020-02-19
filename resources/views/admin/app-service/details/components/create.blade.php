@@ -18,8 +18,11 @@
                         <form id="product_form" role="form" action="{{ route('appservice.component.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             
+                            
+
                             {{ Form::hidden('section_details_id', $data['section_id'] ) }}
                             {{ Form::hidden('tab_type', $data['tab_type'] ) }}
+                            {{ Form::hidden('component_type', $component_type ) }}
 
                             <div class="row">
                                 @if( !empty($component_type) )

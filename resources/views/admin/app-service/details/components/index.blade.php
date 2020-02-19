@@ -5,12 +5,15 @@
     <li class="breadcrumb-item ">Component List</li>
 @endsection
 @section('action')
-    <a href="{{ route('app_service.details.list', ['type' => $data['tab_type'], 'id' => $data['section_id'] ]) }}" id="syncBtn" class="btn btn-outline-blue-grey round btn-glow px-2">
+    <a href="{{ route('app_service.details.list', ['type' => $data['tab_type'], 'id' => $data['product_id'] ]) }}" id="syncBtn" class="btn btn-outline-blue-grey round btn-glow px-2">
         Go Back Section
     </a>
-    <a href="{{ route("app-service-product.create") }}" class="btn btn-primary  round btn-glow px-2" data-toggle="modal" data-target="#add_compoent_item"><i class="la la-plus"></i>
-        Add Component
-    </a>
+
+    @if( $section_has_multiple_component == 1 || count($component_list) < 1 )
+        <a href="{{ route("app-service-product.create") }}" class="btn btn-primary  round btn-glow px-2" data-toggle="modal" data-target="#add_compoent_item"><i class="la la-plus"></i>
+            Add Component
+        </a>
+    @endif
 @endsection
 @section('content')
     <section>
@@ -22,34 +25,35 @@
                         <thead>
                             <tr>
                                 <td width="3%">#</td>
-                                <th width="20%">Component Name</th>
-                                <th width="5%">Tab</th>
-                                {{-- <th>Category</th> --}}
+                                <th width="20%">Component Title</th>
+                                <th width="5%">Component Type</th>
                                 <th width="5%" class="text-center">Status</th>
                                 {{-- <th class="text-center" width="8%">Add component</th> --}}
                                 <th width="12%" class="">Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {{-- {{ dd($section_has_multiple_component) }} --}}
                             @if( !empty($component_list) )
                             {{ $i = 1 }}
                             @foreach($component_list as $list)
                                 {{--@if($product->product != '')--}}
-                                    @php $path = 'partner-offers-home'; @endphp
+                                    {{-- @php $path = 'partner-offers-home'; @endphp --}}
                                     {{-- <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}"> --}}
                                     <tr>
                                         <td>{{ $i }}</td>
-                                        <td>{{ $list->section_name }}</td>
-                                        <td>{{ $list->tab_type }}</td>
+                                        <td>{{ $list->title_en }}</td>
+                                        <td>{{ $list->component_type }}</td>
                                         <td>{{ $list->status }}</td>
-                                        
-                                        
                                         
                                         <td>
                                             <a href="{{ url("app-service-product/$list->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                            {{-- <a href="#" remove="{{ url("offers/$list->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
-                                                <i class="la la-trash"></i>
-                                            </a> --}}
+
+                                            @if( isset($list->is_default) && $list->is_default != 0 )
+                                                <a href="#" remove="{{ url("app-service-product/$list->id/delete") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
+                                                    <i class="la la-trash"></i>
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 {{--@endif--}}

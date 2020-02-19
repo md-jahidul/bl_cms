@@ -53,7 +53,7 @@ class AppServiceProductDetailsController extends Controller
      */
     public function index($tab_type, $product_id)
     {
-        $section_list = $this->appServiceProductDetailsService->sectionList();
+        $section_list = $this->appServiceProductDetailsService->sectionList($product_id);
 
         $data['tab_type'] = $tab_type;
         $data['product_id'] = $product_id;

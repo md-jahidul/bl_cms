@@ -35,32 +35,57 @@
  </div>
 
 
+ <div class="form-group col-md-6 ">
+     <label for="description_en">Description (English)</label>
+     <textarea type="text" name="description_en" id="vat" class="form-control" placeholder="Enter description in English"
+     >{{ old("description_en") ? old("description_en") : '' }}</textarea>
+     <div class="help-block"></div>
+ </div>
+
+ <div class="form-group col-md-6 ">
+     <label for="description_bn">Description (Bangla)</label>
+     <textarea type="text" name="description_bn" id="vat" class="form-control" placeholder="Enter description in Bangla"
+     >{{ old("description_bn") ? old("description_bn") : '' }}</textarea>
+     <div class="help-block"></div>
+ </div>
 
 
-<div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
-    <label for="alt_text" class="">Image (optional)</label>
+ <div class="form-group col-md-6">
+     <label for="tag_category_id" class="required">Select Video Type</label>
+     <select class="form-control" name="app_service_cat_id">
+             <option value="upload_video">Upload video</option>
+             <option value="youtube_video">Youtube video link</option>
+     </select>
+     <div class="help-block"></div>
+     @if ($errors->has('app_service_cat_id'))
+         <div class="help-block">{{ $errors->first('app_service_cat_id') }}</div>
+     @endif
+ </div>
+
+
+
+<div class="form-group col-md-6 {{ $errors->has('video') ? ' error' : '' }}">
+    <label for="alt_text" class="">Uplaod Video (optional)</label>
     <div class="custom-file">
-        <input type="file" name="image_url" class="custom-file-input" id="image">
+        <input type="file" name="video" class="custom-file-input" id="image">
         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
     </div>
-    <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+    <span class="text-primary">Please given file type (.mp4)</span>
 
     <div class="help-block"></div>
-    @if ($errors->has('image_url'))
-        <div class="help-block">  {{ $errors->first('image_url') }}</div>
+    @if ($errors->has('video'))
+        <div class="help-block">  {{ $errors->first('video') }}</div>
     @endif
 </div>
 
-<div class="form-group col-md-1">
-    <img style="height:70px;width:70px;display:none" id="imgDisplay">
-</div>
 
-<div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-    <label for="alt_text" class="required1">Alt text</label>
-    <input type="text" name="alt_text"  class="form-control"
-           value="{{ old("alt_text") ? old("alt_text") : '' }}">
+
+<div class="form-group col-md-6 {{ $errors->has('video') ? ' error' : '' }}">
+    <label for="video" class="required1">Youtube video link</label>
+    <input type="text" name="video"  class="form-control"
+           value="{{ old("video") ? old("video") : '' }}">
     <div class="help-block"></div>
-    @if ($errors->has('alt_text'))
-        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+    @if ($errors->has('video'))
+        <div class="help-block">  {{ $errors->first('video') }}</div>
     @endif
 </div>
