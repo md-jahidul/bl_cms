@@ -86,7 +86,8 @@ class Helper
             "STORE_LOCATOR"           => "Store locator",
             "T&C"                     => "T&C",
             "USAGE_HISTORY"           => "Usage History",
-            "USSD_CODE_LIST"          => "View USSD code"
+            "USSD_CODE_LIST"          => "View USSD code",
+            "VOICE_BUNDLE"            => "Voice Bundles",
         ];
     }
     /**
