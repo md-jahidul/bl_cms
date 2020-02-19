@@ -16,10 +16,11 @@ class MyBlInternetOfferCategorySeeder extends Seeder
         DB::table('my_bl_internet_offers_categories')->truncate();
 
         $category = ['Exclusive Pack','Power Pack','Weekly Pack','Monthly Pack', 'Social Pack'];
-        foreach ($category as $val) {
+        foreach ($category as $key => $val) {
             MyBlInternetOffersCategory::create(
                 [
                     'name' => $val,
+                    'sort' => $val + 1,
                     'slug' => strtolower(str_replace(' ', '_', $val))
                 ]
             );
