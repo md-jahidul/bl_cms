@@ -193,31 +193,21 @@
                             class="la la-caret-right"></i>Home & General Setup</a>
                 </li>
                 <li class="{{ is_active_url('business-package') }}">
-                    <a class="menu-item" href="{{ route('sim-categories.index') }}"
+                    <a class="menu-item" href="{{ url('business-package') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-caret-right"></i> Package</a>
                 </li>
 
-                <li class="{{ is_active_url('offer-categories') }}">
-                    <a class="menu-item" href="{{ route('offer-categories.index') }}"
+                <li class="{{ is_active_url('business-internet') }}">
+                    <a class="menu-item" href="{{ url('business-internet') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-caret-right"></i> Internet</a>
                 </li>
 
-                <li class="{{ is_active_url('duration-categories') }}">
-                    <a class="menu-item" href="{{ route('duration-categories.index') }}"
+                <li class="{{ is_active_url('business-other-services') }}">
+                    <a class="menu-item" href="{{ route('business.other.services') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-caret-right"></i> Business Solution</a>
-                </li>
-                <li class="{{ is_active_url('duration-categories') }}">
-                    <a class="menu-item" href="{{ route('duration-categories.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-caret-right"></i> IOT</a>
-                </li>
-                <li class="{{ is_active_url('duration-categories') }}">
-                    <a class="menu-item" href="{{ route('duration-categories.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-caret-right"></i> Others</a>
+                            class="la la-caret-right"></i> B.Solution, IOT & Others</a>
                 </li>
 
             </ul>

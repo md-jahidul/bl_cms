@@ -120,9 +120,7 @@ class BusinessHomeService {
      * @return Response
      */
     public function changeCategorySort($request) {
-        $catId = $request->catId;
-        $sort = $request->sort;
-        $response = $this->businessCatRepo->changeCategorySorting($catId, $sort);
+        $response = $this->businessCatRepo->changeCategorySorting($request);
         return $response;
     }
 
@@ -234,9 +232,7 @@ class BusinessHomeService {
      * @return Response
      */
     public function changeFeatureSort($request) {
-        $featureId = $request->featureId;
-        $sort = $request->sort;
-        $response = $this->businessFeaturesRepo->changeFeatureSorting($featureId, $sort);
+        $response = $this->businessFeaturesRepo->changeFeatureSorting($request);
         return $response;
     }
     
@@ -244,8 +240,8 @@ class BusinessHomeService {
      * Change feature status
      * @return Response
      */
-    public function featureStatusChange($featureId) {
-        $response = $this->businessFeaturesRepo->changeFeatureStatus($featureId);
+    public function featureStatusChange($request) {
+        $response = $this->businessFeaturesRepo->changeFeatureStatus($request);
         return $response;
     }
     

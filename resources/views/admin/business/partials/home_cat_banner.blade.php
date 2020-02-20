@@ -9,13 +9,15 @@
                             <tr>
                                 <th width="55%">Name</th>
                                 <th width="20%">Home</th>
-                                <th width="20%">Sorting</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="category_sortable">
                             @foreach($categories as $cat)
-                            <tr>
-                                <td class="category_name">{{ $cat->name }} 
+                            <tr data-index="{{ $cat->id }}" data-position="{{ $cat->home_sort }}">
+
+                                <td class="category_name">
+                                    <i class="icon-cursor-move icons"></i>
+                                    {{ $cat->name }} 
                                     <a class="text-info edit_category_name" href="{{$cat->id}}" name='{{ $cat->name }}'>
                                         <i class="la la-pencil-square"></i>
                                     </a>
@@ -29,12 +31,7 @@
                                     @endif
 
                                 </td>
-                                <td class="home_sorting text-center">
-                                    {{ $cat->home_sort }} 
-                                    <a class="text-info edit_category_sorting" href="{{$cat->id}}" sort="{{ $cat->home_sort }}">
-                                        <i class="la la-pencil-square"></i>
-                                    </a>
-                                </td>
+                               
 
                             </tr>
                             @endforeach
@@ -99,6 +96,8 @@
     $(function () {
 
         /*######################################### Category Javascript ##################################################*/
+
+
 
         /* Category name input view */
         $(".category_name").on('click', 'a.edit_category_name', function (e) {
@@ -218,77 +217,46 @@
         });
 
 
-        /* Home and landing page category sorting input view */
-        $(".home_sorting").on('click', 'a.edit_category_sorting', function (e) {
-            e.preventDefault();
-
-            let sort = $(this).attr('sort');
-            let catId = $(this).attr('href');
-            let input = "<input style='width:75%' class='form-control pull-left' type='text' value='" + sort + "'>\n\
-                    <a class='pull-right text-success save_sorting' href='" + catId + "'><i class='la la-save'></i></a>";
-            $(this).parent('.home_sorting').html(input);
-
-        });
-
-
-        $(".home_sorting").on('keypress', 'input', function (e) {
-            //if the letter is not digit then display error and don't type anything
-            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                return false;
-            }
-        });
-
-
-
-        //save category sorting
-        $(".home_sorting").on('click', '.save_sorting', function (e) {
-            e.preventDefault();
-
-            let newSort = $(this).parent('td').find('input').val();
-            let catId = $(this).attr('href');
-            let thisObj = $(this)
-
+        function saveNewPositions(save_url)
+        {
+            var positions = [];
+            $('.update').each(function () {
+                positions.push([
+                    $(this).attr('data-index'),
+                    $(this).attr('data-position')
+                ]);
+            })
             $.ajax({
-                url: '{{ route("business.category.sort.save")}}',
-                type: 'GET',
-                cache: false,
+                type: "GET",
+                url: save_url,
                 data: {
-                    catId: catId,
-                    sort: newSort
+                    update: 1,
+                    position: positions
                 },
-                success: function (result) {
-                    if (result.success == 1) {
-                        swal.fire({
-                            title: "Changed",
-                            type: 'success',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-
-                        let htmlView = result.sort + ' <a class="text-info edit_category_sorting" href="' + catId + '" sort="' + result.sort + '">\n\
-                                    <i class="la la-pencil-square"></i></a>';
-                        $(thisObj).parent('.home_sorting').html(htmlView);
-
-
-                    } else {
-                        swal.close();
-                        swal.fire({
-                            title: result.message,
-                            type: 'error',
-                        });
-                    }
-                    $(".dropify-clear").trigger("click");
-
+                success: function (data) {
                 },
-                error: function (data) {
-                    swal.fire({
-                        title: 'Failed',
+                error: function () {
+                     swal.fire({
+                        title: 'Failed to sort data',
                         type: 'error',
                     });
                 }
             });
+        }
 
+        $(".category_sortable").sortable({
+            
+            update: function (event, ui) {
+                $(this).children().each(function (index) {
+                    if ($(this).attr('data-position') != (index + 1)) {
+                        $(this).attr('data-position', (index + 1)).addClass('update')
+                    }
+                });
+                var save_url = "{{ url('business-category-sort-change') }}";
+                saveNewPositions(save_url);
+            }
         });
+
 
         /*######################################### Home Banner Javascript ##################################################*/
 
@@ -364,7 +332,7 @@
             });
 
         });
-        
+
     });
 
 </script>
