@@ -54,10 +54,51 @@ class ComponentService
     {
         if (request()->hasFile('image_url')) {
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product/details');
-            unset($data['image_url']);
+        }
+
+        if (request()->hasFile('video_url')) {
+            $data['video'] = $this->upload($data['video_url'], 'assetlite/video/app-service/product/details');
+        }
+        else{
+            $data['video'] = request()->input('video_url', null);
         }
 
         $data['page_type'] = self::APP;
+
+        
+        $results = [];
+        if( isset($data['multi_item']) && !empty($data['multi_item']) ){
+            $request_multi = $data['multi_item'];
+
+            $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
+
+            for ($i=1; $i <= $item_count; $i++) { 
+                
+                foreach ($data['multi_item'] as $key => $value) {
+                    
+                    $sub_data = [];
+
+                    $check_index = explode('-', $key)[1];
+
+                    if( $check_index == $i ){
+                    
+                        if ( request()->hasFile( 'multi_item.'.$key ) ) {
+                            $value = $this->upload($value, 'assetlite/images/app-service/product/details');
+                        }
+                        
+                        $results[$i][] = [$key => $value];
+                    }
+
+                }
+
+            }
+
+            
+
+        }
+
+        
+        $data['multiple_attributes'] = json_encode($results);
 
         $this->save($data);
         return new Response('App Service Component added successfully');

@@ -64,28 +64,27 @@
 
 
 
-<div class="form-group col-md-6 {{ $errors->has('video') ? ' error' : '' }}">
-    <label for="alt_text" class="">Uplaod Video (optional)</label>
+<div class="form-group col-md-6 {{ $errors->has('video_url') ? ' error' : '' }}">
+    <label for="alt_text" class="">Uplaod Video_url (optional)</label>
     <div class="custom-file">
-        <input type="file" name="video" class="custom-file-input" id="image">
+        <input type="file" name="video_url" class="custom-file-input" id="image">
         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
     </div>
     <span class="text-primary">Please given file type (.mp4)</span>
 
     <div class="help-block"></div>
-    @if ($errors->has('video'))
-        <div class="help-block">  {{ $errors->first('video') }}</div>
+    @if ($errors->has('video_url'))
+        <div class="help-block">  {{ $errors->first('video_url') }}</div>
     @endif
 </div>
 
 
-
-<div class="form-group col-md-6 {{ $errors->has('video') ? ' error' : '' }}">
-    <label for="video" class="required1">Youtube video link</label>
-    <input type="text" name="video"  class="form-control"
-           value="{{ old("video") ? old("video") : '' }}">
+<div class="form-group col-md-6 {{ $errors->has('video_url') ? ' error' : '' }}">
+    <label for="video_url" class="required1">Youtube video link</label>
+    <input type="text" name="video_url"  class="form-control"
+           value="{{ old("video_url") ? old("video_url") : '' }}">
     <div class="help-block"></div>
-    @if ($errors->has('video'))
-        <div class="help-block">  {{ $errors->first('video') }}</div>
+    @if ($errors->has('video_url'))
+        <div class="help-block">  {{ $errors->first('video_url') }}</div>
     @endif
 </div>
