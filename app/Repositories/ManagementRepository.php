@@ -24,19 +24,6 @@ class ManagementRepository extends BaseRepository
     {
         $positions = $request->position;
 
-        foreach ($positions as $position) {
-            if ($position[0] == null) {
-                continue;
-            }
-
-            $menu_id = $position[0];
-            $new_position = $position[1];
-            $update_menu = $this->model->findOrFail($menu_id);
-
-            $update_menu['display_order'] = $new_position;
-            $update_menu->update();
-        }
-
-        return "success";
+        return $this->sortData($positions);
     }
 }
