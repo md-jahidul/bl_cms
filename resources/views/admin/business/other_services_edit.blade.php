@@ -41,7 +41,7 @@
 
                             <div class="form-group">
                                 <label for="Banner Photo">Banner Photo <span class="text-danger">*</span></label>
-                                <input type="file" required class="dropify_package" name="banner_photo" data-height="70"
+                                <input type="file" class="dropify_package" name="banner_photo" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                 <input type="hidden" name="old_banner" value="{{$service->banner_photo}}">
                                 <p class="text-center">
@@ -67,7 +67,7 @@
 
                             <div class="form-group">
                                 <label for="Banner Photo">Icon <span class="text-danger">*</span></label>
-                                <input type="file" class="dropify_package" required name="icon" data-height="70"
+                                <input type="file" class="dropify_package" name="icon" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                 <input type="hidden" name="old_icon" value="{{$service->icon}}">
                                 
