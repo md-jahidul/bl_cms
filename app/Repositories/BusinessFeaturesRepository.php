@@ -17,25 +17,31 @@ class BusinessFeaturesRepository extends BaseRepository {
         $data = $this->model->orderBy('sort')->get();
         return $data;
     }
+    public function getActiveFeaturesList() {
+        $data = $this->model->where('status', 1)->orderBy('sort')->get();
+        return $data;
+    }
 
-    public function changeFeatureSorting($featureId, $sort) {
+    public function changeFeatureSorting($request) {
         try {
 
-            $feature = $this->model->findOrFail($featureId);
-
-            $feature->sort = $sort;
-            $feature->save();
-
+            $positions = $request->position;
+            foreach ($positions as $position) {
+                $featureId = $position[0];
+                $new_position = $position[1];
+                $update = $this->model->findOrFail($featureId);
+                $update['sort'] = $new_position;
+                $update->update();
+            }
+            
             $response = [
                 'success' => 1,
-                'sort' => $feature->sort
+                'message' => 'Success'
             ];
             return response()->json($response, 200);
         } catch (\Exception $e) {
-            $feature = $this->model->findOrFail($featureId);
             $response = [
                 'success' => 0,
-                'sort' => $feature->sort,
                 'message' => $e->getMessage()
             ];
             return response()->json($response, 500);
@@ -86,8 +92,6 @@ class BusinessFeaturesRepository extends BaseRepository {
         $data = $this->model->findOrFail($featureId);
         return $data;
     }
-
-
 
     public function deleteFeature($featureId) {
         try {

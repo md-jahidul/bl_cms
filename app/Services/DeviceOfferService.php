@@ -41,7 +41,7 @@ class DeviceOfferService
     }
     
     /**
-     * Get grouped division names for filter
+     * Get device offer list
      * @return Response
      */
     public function getDeviceOffers($request)
