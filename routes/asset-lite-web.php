@@ -489,8 +489,20 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('app-service/category-find/{id}', 'AssetLite\AppServiceProductController@tabWiseCategory');
 
     # App & Service details page
-    Route::get('app-service/details/{type}/{id}', 'AssetLite\AppServiceProductDetailsController@index')->name('app_service.details.list');
-    Route::post('app-service/details/{type}/{id}/store', 'AssetLite\AppServiceProductDetailsController@store')->name('app_service.details.store');
+    Route::get('app-service/details/{type}/{id}', 'AssetLite\AppServiceProductDetailsController@productDetails')
+        ->name('app_service.details.list');
+
+    Route::post('app-service/details/{type}/{id}/store', 'AssetLite\AppServiceProductDetailsController@store')
+        ->name('app_service.details.store');
+
+    Route::get('app-service/details/{type}/{id}/edit/{sectionID}', 'AssetLite\AppServiceProductDetailsController@edit')
+        ->name('app_service.details.edit');
+
+    Route::put('app-service/details/{type}/{id}/update/{sectionID}', 'AssetLite\AppServiceProductDetailsController@update')
+        ->name('app_service.details.update');
+
+    Route::post('app-service/details/{type}/{id}/fixed-section/', 'AssetLite\AppServiceProductDetailsController@fixedSectionUpdate')
+        ->name('app_service.details.fixed-section');
 
 
     # App & Service component

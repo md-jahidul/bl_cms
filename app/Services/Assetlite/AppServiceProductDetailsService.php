@@ -16,13 +16,14 @@ class AppServiceProductDetailsService
     use CrudTrait;
     use FileTrait;
 
-    const APP = 1;
-    const VAS = 2;
 
     /**
      * @var $appServiceProductDetailsRepository
      */
     protected $appServiceProductDetailsRepository;
+    /**
+     * @var AppServiceProductDetailsRepository
+     */
 
     /**
      * AppServiceProductService constructor.
@@ -30,21 +31,16 @@ class AppServiceProductDetailsService
      */
     public function __construct(AppServiceProductDetailsRepository $appServiceProductDetailsRepository)
     {
-        $this->AppServiceProductDetailsRepository = $appServiceProductDetailsRepository;
+        $this->appServiceProductDetailsRepository = $appServiceProductDetailsRepository;
         $this->setActionRepository($appServiceProductDetailsRepository);
     }
 
-    public function sectionList()
-    {   
-        return $this->findAll();
-        // return $this->findAll('', [
-        //     'appServiceTab' => function ($q) {
-        //         $q->select('id', 'name_en');
-        //     },
-        //     'appServiceCat' => function ($q) {
-        //         $q->select('id', 'title_en');
-        //     }
-        // ], ['column' => 'created_at', 'direction' => 'DESC']);
+    public function sectionList($product_id)
+    {
+        $data = [];
+        $data['section_body'] = $this->appServiceProductDetailsRepository->findSection($product_id);
+        $data['fixed_section'] = $this->appServiceProductDetailsRepository->fixedSection($product_id);
+        return $data;
     }
 
     /**
@@ -70,23 +66,11 @@ class AppServiceProductDetailsService
      * @param $id
      * @return ResponseFactory|Response
      */
-    public function updateAppServiceProduct($data, $id)
+    public function updateAppServiceDetailsSection($data, $id)
     {
         $appServiceProduct = $this->findOne($id);
-        if (request()->hasFile('product_img_url')) {
-            $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
-            $this->deleteFile($appServiceProduct->product_img_url);
-        }
-
-        // Check App & VAS
-        if ($data['app_service_tab_id'] != self::APP || $data['app_service_tab_id'] != self::VAS) {
-            $data['product_img_url'] = null;
-            $this->deleteFile($appServiceProduct->product_img_url);
-        }
-        $data['can_active'] = (isset($data['can_active']) ? 1 : 0);
-
         $appServiceProduct->update($data);
-        return Response('App Service Category updated successfully');
+        return Response('App Service Section updated successfully');
     }
 
     /**
@@ -100,5 +84,30 @@ class AppServiceProductDetailsService
         $this->deleteFile($appServiceCat->product_img_url);
         $appServiceCat->delete();
         return Response('App Service Tab deleted successfully !');
+    }
+
+    public function fixedSectionUpdate($data, $tab_type, $product_id)
+    {
+//        $findSection = $this->appServiceProductDetailsRepository->findOneByProperties([
+//            'category' => $data['category']
+//        ]);
+
+        if (request()->hasFile('image')) {
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/app-service/product-details');
+        }
+        $data['tab_type'] = $tab_type;
+        $data['product_id'] = $product_id;
+        $findFixedSection = $this->appServiceProductDetailsRepository->checkFixedSection($product_id);
+
+        if (!$findFixedSection) {
+            $this->save($data);
+        } else {
+            if (!isset($data['other_attributes'])) {
+                $data['other_attributes'] = null;
+            }
+            $findFixedSection->update($data);
+        }
+
+        return Response('App Service Section Update Successfully');
     }
 }
