@@ -50,6 +50,7 @@ class AppServiceProductDetailsController extends Controller
      * @param $product_id
      * @return Factory|View
      */
+
     public function productDetails($tab_type, $product_id)
     {
         $this->info['tab_type'] = $tab_type;

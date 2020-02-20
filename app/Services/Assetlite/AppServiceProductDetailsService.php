@@ -61,6 +61,13 @@ class AppServiceProductDetailsService
         return new Response('App Service details section added successfully');
     }
 
+
+    public function getSectionColumnInfoByID($section_id, $column_names = [])
+    {
+        return $this->appServiceProductDetailsRepository->findOneByProperties(['id' => $section_id], $column_names);
+    }
+
+
     /**
      * @param $data
      * @param $id
@@ -88,10 +95,6 @@ class AppServiceProductDetailsService
 
     public function fixedSectionUpdate($data, $tab_type, $product_id)
     {
-//        $findSection = $this->appServiceProductDetailsRepository->findOneByProperties([
-//            'category' => $data['category']
-//        ]);
-
         if (request()->hasFile('image')) {
             $data['image'] = $this->upload($data['image'], 'assetlite/images/app-service/product-details');
         }
@@ -105,9 +108,9 @@ class AppServiceProductDetailsService
             if (!isset($data['other_attributes'])) {
                 $data['other_attributes'] = null;
             }
+            $this->deleteFile($findFixedSection['image']);
             $findFixedSection->update($data);
         }
-
         return Response('App Service Section Update Successfully');
     }
 }

@@ -15,9 +15,15 @@
                 <div class="card-body card-dashboard">
                     <h5 class="menu-title"><strong>Product Create</strong></h5><hr>
                     <div class="card-body card-dashboard">
-                        <form id="product_form" role="form" action="{{ route('app-service-product.store') }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form id="product_form" role="form" action="{{ route('appservice.component.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             
+                            
+
+                            {{ Form::hidden('section_details_id', $data['section_id'] ) }}
+                            {{ Form::hidden('tab_type', $data['tab_type'] ) }}
+                            {{ Form::hidden('component_type', $component_type ) }}
+
                             <div class="row">
                                 @if( !empty($component_type) )
                                     @include('admin.app-service.details.components.partial.'.$component_type)

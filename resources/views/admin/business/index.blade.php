@@ -2,11 +2,6 @@
 @section('title', 'Business General Setup')
 @section('card_name', 'Business General & Home Setup')
 
-@section('action')
-<a href="{{ url("tag-category/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-    Add Tag
-</a>
-@endsection
 @section('content')
 <section>
    
@@ -28,6 +23,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
+<link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
 
 @endpush
 @push('page-js')
@@ -67,6 +63,7 @@ if (Session::has('sussess')) {
     
 
 });
+
 
 </script>
 @endpush
