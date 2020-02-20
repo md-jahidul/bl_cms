@@ -18,7 +18,8 @@ class CreateComponentsTable extends Migration
     {
         Schema::create('components', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('section_details_id')->comment('service product details page table id');
+            $table->bigInteger('section_details_id')->comment('page section id');
+            $table->string('page_type')->comment('From where page data comming like app & services');
             $table->string('title_en')->nullable();
             $table->string('title_bn')->nullable();
             $table->string('slug')->nullable();
@@ -38,13 +39,11 @@ class CreateComponentsTable extends Migration
             $table->json('multiple_attributes')->nullable();
 
             $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('is_default')->default(0);
             $table->json('other_attributes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
-            // $table->foreign('section_details_id')
-            //     ->references('id')
-            //     ->on('app_service_product_details')
-            //     ->onDelete('cascade');
         });
     }
 

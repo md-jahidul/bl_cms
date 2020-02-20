@@ -508,6 +508,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     # App & Service component
     Route::get('app-service/component/{type}/{id}', 'AssetLite\ComponentController@conponentList')->name('appservice.component.list');
     Route::get('app-service/component/create', 'AssetLite\ComponentController@conponentCreate')->name('appservice.component.create');
+    Route::post('app-service/component/store', 'AssetLite\ComponentController@conponentStore')->name('appservice.component.store');
+    Route::get('app-service/component/{component_id}/edit', 'AssetLite\ComponentController@conponentEdit')->name('appservice.component.edit');
 
     // Lead Management ======================================================
     Route::get('lead-requested-list', 'AssetLite\LeadManagementController@leadRequestedList')->name('lead-list');

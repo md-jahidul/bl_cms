@@ -19,6 +19,7 @@ class ComponentService
 
     const APP = 1;
     const VAS = 2;
+    const PAGE_TYPE = 'app_services';
 
     /**
      * @var $componentRepository
@@ -35,31 +36,76 @@ class ComponentService
         $this->setActionRepository($componentRepository);
     }
 
-    public function componentList()
+    public function findByType($type)
+    {
+        return $this->componentRepository->findOneByProperties(['type' => $type]);
+    }
+
+    public function componentList($section_id)
     {   
-        return $this->findAll();
-        // return $this->findAll('', [
-        //     'appServiceTab' => function ($q) {
-        //         $q->select('id', 'name_en');
-        //     },
-        //     'appServiceCat' => function ($q) {
-        //         $q->select('id', 'title_en');
-        //     }
-        // ], ['column' => 'created_at', 'direction' => 'DESC']);
+        return $this->componentRepository->findByProperties(['section_details_id' => $section_id]);
     }
 
     /**
      * @param $data
      * @return Response
      */
-    public function storeAppServiceProduct($data)
+    public function storeComponentDetails($data)
     {
-        if (request()->hasFile('product_img_url')) {
-            $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
+        if (request()->hasFile('image_url')) {
+            $data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product/details');
         }
+
+        if (request()->hasFile('video_url')) {
+            $data['video'] = $this->upload($data['video_url'], 'assetlite/video/app-service/product/details');
+        }
+        else{
+            $data['video'] = request()->input('video_url', null);
+        }
+
+        $data['page_type'] = self::APP;
+
+        
+        $results = [];
+        if( isset($data['multi_item']) && !empty($data['multi_item']) ){
+            $request_multi = $data['multi_item'];
+
+            $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
+
+            for ($i=1; $i <= $item_count; $i++) { 
+                
+                foreach ($data['multi_item'] as $key => $value) {
+                    
+                    $sub_data = [];
+
+                    $check_index = explode('-', $key)[1];
+
+                    if( $check_index == $i ){
+                    
+                        if ( request()->hasFile( 'multi_item.'.$key ) ) {
+                            $value = $this->upload($value, 'assetlite/images/app-service/product/details');
+                        }
+                        
+                        $results[$i][] = [$key => $value];
+                    }
+
+                }
+
+            }
+
+            
+
+        }
+
+        
+        $data['multiple_attributes'] = json_encode($results);
+
         $this->save($data);
-        return new Response('App Service Category added successfully');
+        return new Response('App Service Component added successfully');
     }
+
+
+
 
     /**
      * @param $data
@@ -70,7 +116,7 @@ class ComponentService
     {
         $appServiceProduct = $this->findOne($id);
         if (request()->hasFile('product_img_url')) {
-            $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
+            $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product/details');
             $this->deleteFile($appServiceProduct->product_img_url);
         }
 
