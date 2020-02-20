@@ -126,25 +126,25 @@
                             @endif
                         </div>
 
-                        <div class="form-group col-md-6">
+                        {{-- <div class="form-group col-md-6">
                             <label for="category_type">Select Component Type</label>
                             <select class="form-control" name="component_type" aria-invalid="false">
                                     <option value="text_with_image_right">Text with image right</option>
                                     <option value="text_with_image_bottom">Text with image bottom</option>
-                                    {{-- <option value="slider_text_with_image_right">Slider text with image right</option> --}}
+                                    <option value="slider_text_with_image_right">Slider text with image right</option>
                                     <option value="title_text_editor">Title with table editor</option>
                                     <option value="video_with_text_right">Video with text right</option>
                                     <option value="multiple_image_banner">Multiple image banner</option>
                                 </select>
-                        </div>
+                        </div> --}}
 
-                        {{-- <div class="form-group col-md-6">
+                        <div class="form-group col-md-6">
                             <label for="category_type">Section has multiple component</label>
                             <select class="form-control" name="multiple_component" aria-invalid="false">
                                     <option value="0">No</option>
                                     <option value="1">Yes</option>
                                 </select>
-                        </div> --}}
+                        </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
