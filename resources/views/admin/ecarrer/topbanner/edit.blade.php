@@ -93,14 +93,14 @@
                                     </div>
                                 </div> --}}
                                 
-                                <div class="form-group col-md-6">
+                                {{-- <div class="form-group col-md-6">
                                     <label for="category_type">Select Banner for</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
                                             <option value="life_at_banglalink">Life at Banglalink</option>
                                             <option value="programs">Programs</option>
                                             <option value="vacancy">Vacancy</option>
                                         </select>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
@@ -139,24 +139,7 @@
 
 @push('page-js')
 
-<script type="text/javascript">
-        jQuery(document).ready(function($){
-
-
-            $('input.section_name').on('keyup', function(){
-                var sectionName = $('#topbanner_section').find('.section_name').val();
-                var sectionNameLower = sectionName.toLowerCase();
-                var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '_');
-
-                $('#topbanner_section').find('.section_slug').empty().val(sectionNameRemoveSpace);
-
-                // console.log(sectionNameRemoveSpace);
-            });
-
-            
-
-        });
-    </script>    
+ 
 
 @endpush
 

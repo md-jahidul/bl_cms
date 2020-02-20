@@ -16,9 +16,15 @@
                         <form id="general_section" role="form" action="{{ route('ecarrer.items.store', $parent_id) }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                    <label for="title_en" class="required">Title (English)</label>
+                                    <label for="title_en" class="required">
+                                        @if( ($ecarrer_section_slug == 'programs_sapbatches') || ($ecarrer_section_slug == 'programs_ennovatorbatches') )
+                                            Name (English)
+                                        @else
+                                            Title (English)
+                                        @endif
+                                    </label>
                                     <input type="text" name="title_en"  class="form-control section_name" placeholder="Section name"
-                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Please enter Section name">
+                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Field can not be empty">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_en'))
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -27,9 +33,15 @@
                                 
                                 @if( $ecarrer_section_slug != 'life_at_bl_contact' )
                                     <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                        <label for="title_bn" class="required1">Title (Bangla)</label>
+                                        <label for="title_bn" class="required1">
+                                            @if( ($ecarrer_section_slug == 'programs_sapbatches') || ($ecarrer_section_slug == 'programs_ennovatorbatches') )
+                                                Name (Bangla)
+                                            @else
+                                                Title (Bangla)
+                                            @endif
+                                        </label>
                                         <input type="text" name="title_bn"  class="form-control section_name" placeholder="Section name"
-                                               value="{{ old("title_bn") ? old("title_bn") : '' }}" data-validation-required-message="Please enter Section name">
+                                               value="{{ old("title_bn") ? old("title_bn") : '' }}">
                                         <div class="help-block"></div>
                                         @if ($errors->has('title_bn'))
                                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>
@@ -66,7 +78,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text" class="required1">Alt text</label>
                                     <input type="text" name="alt_text"  class="form-control" placeholder="Section name"
-                                           value="{{ old("alt_text") ? old("alt_text") : '' }}" required data-validation-required-message="Please enter Section name">
+                                           value="{{ old("alt_text") ? old("alt_text") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>
@@ -94,7 +106,7 @@
                                 @endif
 
 
-                                @if( isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial' )
+                                @if( (isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial') || ($ecarrer_section_slug == 'programs_sapbatches') || ($ecarrer_section_slug == 'programs_ennovatorbatches') )
                                     @include('admin.ecarrer-items.additional.testimonial_text')
                                 @endif
 

@@ -67,7 +67,7 @@
                                 <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Slider Image (Desktop View)</label>
                                     <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input" id="desktopImg"
+                                        <input type="file" name="image_url" class="custom-file-input" id="imgOne"
                                                required data-validation-required-message="Slider image field is required.">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
@@ -80,13 +80,13 @@
                                 </div>
 
                                 <div class="form-group col-md-1">
-                                    <img style="height:70px;width:70px;display:none" id="desktopImgShow">
+                                    <img style="height:70px;width:70px;display:none" id="imgShowOne">
                                 </div>
 
                                 <div class="form-group col-md-5 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
-                                    <label for="mobileImg" class="required">Slider Image (Mobile View)</label>
+                                    <label for="mobileImg">Slider Image (Mobile View)</label>
                                     <div class="custom-file">
-                                        <input type="file" name="mobile_view_img" class="custom-file-input" id="mobileImg">
+                                        <input type="file" name="mobile_view_img" class="custom-file-input" id="imgTwo">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
@@ -98,13 +98,13 @@
                                 </div>
 
                                 <div class="form-group col-md-1">
-                                    <img style="height:70px;width:70px;display:none" id="mobileImgShow">
+                                    <img style="height:70px;width:70px;display:none" id="imgShowTwo">
                                 </div>
 
                                 <div class="form-group col-md-6 mb-0 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text" class="required">Alt Text</label>
+                                    <label for="alt_text">Alt Text</label>
                                     <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text"
-                                           value="{{ old("title") ? old("title") : '' }}" required data-validation-required-message="Enter alt text">
+                                           value="{{ old("title") ? old("title") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>

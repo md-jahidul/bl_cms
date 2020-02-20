@@ -23,7 +23,7 @@ var product = (function () {
                 $(otherElements).hide();
                 $(selectBy + selectedItemName).removeClass('d-none')
                     .show()
-                    .find('input').each(function () {
+                    .find(":input").each(function () {
                         $(this).val('');
                     });
 

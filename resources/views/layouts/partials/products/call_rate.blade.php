@@ -6,11 +6,9 @@
     }
 @endphp
 
-
 @include('layouts.partials.products.common-field.call_rate')
 
 @include('layouts.partials.products.common-field.validity_unit')
 
 @include('layouts.partials.products.common-field.validity')
 
-@include('layouts.partials.products.common-field.balance_check')

@@ -22,9 +22,15 @@
                             <div class="row">
                                 <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                    <label for="title_en" class="required">Title (English)</label>
+                                    <label for="title_en" class="required">
+                                        @if( $ecarrer_section_slug == 'programs_sapbatches' )
+                                            Name (English)
+                                        @else
+                                            Title (English)
+                                        @endif
+                                    </label>
                                     <input type="text" name="title_en"  class="form-control section_name" placeholder="Enter title_en (english)"
-                                           value="{{ $ecarrer_item->title_en }}" required data-validation-required-message="Enter slider title_en (english)">
+                                           value="{{ $ecarrer_item->title_en }}" required data-validation-required-message="Field can not be empty">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_en'))
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -33,8 +39,14 @@
                                 
                                 @if( $ecarrer_section_slug != 'life_at_bl_contact' )
                                     <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                        <label for="title_bn" class="required1">Title (Bangla)</label>
-                                        <input type="text" name="title_bn"  class="form-control" placeholder="Enter title_bn (english)"
+                                        <label for="title_bn" class="required1">
+                                            @if( $ecarrer_section_slug == 'programs_sapbatches' )
+                                                Name (Bangla)
+                                            @else
+                                                Title (Bangla)
+                                            @endif
+                                        </label>
+                                        <input type="text" name="title_bn"  class="form-control" placeholder="Enter text (bangla)"
                                                value="{{ $ecarrer_item->title_bn }}">
                                         <div class="help-block"></div>
                                         @if ($errors->has('title_bn'))
@@ -74,7 +86,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text" class="required1">Alt text</label>
                                     <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt_text (english)"
-                                           value="{{ $ecarrer_item->alt_text }}" required data-validation-required-message="Enter slider alt_text (bangla)">
+                                           value="{{ $ecarrer_item->alt_text }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>
@@ -105,7 +117,7 @@
                                     @include('admin.ecarrer-items.additional.alter_text_links')
                                 @endif
 
-                                @if( isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial' )
+                                @if( (isset($parent_data->check_type) && $parent_data->check_type == 'programs_testimonial') || $ecarrer_section_slug == 'programs_sapbatches' )
                                     @include('admin.ecarrer-items.additional.testimonial_text')
                                 @endif
 

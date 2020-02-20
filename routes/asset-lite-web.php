@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -156,9 +157,22 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
 
     //amar offer details......
-    Route::get('amaroffer/details', 'AssetLite\AmarOfferController@index')->name('amaroffer.list');
-    Route::get('amaroffer/edit/{id}', 'AssetLite\AmarOfferController@edit')->name('amaroffer.edit');
-    Route::put('amaroffer/update/{id}', 'AssetLite\AmarOfferController@update')->name('amaroffer.update');
+    Route::get('amaroffer/details', 'AssetLite\AmarOfferController@amarOfferDetails')->name('amaroffer.list');
+    Route::get('amaroffer/edit/{type}', 'AssetLite\AmarOfferController@edit')->name('amaroffer.edit');
+    Route::put('amaroffer/update/{type}', 'AssetLite\AmarOfferController@update')->name('amaroffer.update');
+
+    // Device offers
+    Route::get('device-offer', 'AssetLite\DeviceOfferController@index');
+    Route::post('device-offer-list', 'AssetLite\DeviceOfferController@deviceOfferList')
+           ->name('deviceoffer.list.ajax');
+
+    Route::post('upload-device-offer-excel', 'AssetLite\DeviceOfferController@uploadOfferByExcel')
+           ->name('device.offer.excel.save');
+
+    Route::get('device-offer-status-change', 'AssetLite\DeviceOfferController@offerStatusChange')
+            ->name('offer.status.change');
+    Route::get('delete-device-offer/{id}', 'AssetLite\DeviceOfferController@deleteDeviceOffer');
+
 
 
     // PARTNERS ====================================
@@ -169,11 +183,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('partner-offer/{partner_id}/{type}', 'AssetLite\PartnerOfferController@index')->name('partner-offer');
     Route::get('partner-offer/{partner_id}/{partner}/offer/create', 'AssetLite\PartnerOfferController@create');
     Route::post('partner-offer/{partner_id}/{partner}/offer/store', 'AssetLite\PartnerOfferController@store')
-        ->name('partner_offer_store');
+            ->name('partner_offer_store');
     Route::get('partner-offer/{partner_id}/{partner}/offer/{id}/', 'AssetLite\PartnerOfferController@edit')
-        ->name('partner_offer_edit');
+            ->name('partner_offer_edit');
     Route::put('partner-offer/{partner_id}/{partner}/offer/{id}/update/', 'AssetLite\PartnerOfferController@update')
-        ->name('partner_offer_update');
+            ->name('partner_offer_update');
     Route::get('partner-offer/{partner_id}/{partner}/offer/destroy/{id}', 'AssetLite\PartnerOfferController@destroy');
     Route::get('/partner-offer-home/sortable', 'AssetLite\PartnerOfferController@partnerOfferSortable');
     Route::get('partner-offers-home', 'AssetLite\PartnerOfferController@partnerOffersHome')->name('partner-offer-home');
@@ -181,9 +195,9 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('campaign-offer/sortable', "AssetLite\PartnerOfferController@campaignOfferSortable");
 
     Route::get('partner-offers/{partner}/{id}/details', 'AssetLite\PartnerOfferController@offerDetailsEdit')
-        ->name('offer.details');
+            ->name('offer.details');
     Route::post('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
-        ->name('offer.details-update');
+            ->name('offer.details-update');
 
     // About Pages ================================
     Route::get('about-page/{slug}', 'AssetLite\PriyojonController@aboutPageView')->name('about-page');
@@ -199,11 +213,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     // Product Core Mapping To Product
     Route::get('/core-product/entry', 'ProductEntryController@assetliteCoreProductForm');
     Route::post('/core-product/store', 'ProductEntryController@assetliteCoreProductStore')
-        ->name('core-product-store');
+            ->name('core-product-store');
     Route::get('/core-product/mapping/{offerType}', 'AssetLite\ProductController@coreDataMappingProduct')
-        ->name('core-product-mapping');
+            ->name('core-product-mapping');
     Route::get('product-core/match/{productCode}', 'AssetLite\ProductController@existProductCore')
-        ->name('product-core/check');
+            ->name('product-core/check');
 
     Route::get('product-details-update', 'AssetLite\ProductController@updateDetails');
 
@@ -214,7 +228,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('fixed-pages/{id}/meta-tags', 'AssetLite\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
     Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'AssetLite\FixedPageController@metaTagsUpdate');
     Route::get('fixed-pages/{pageId}/component/{componentId}', 'AssetLite\FixedPageController@fixedPageStatusUpdate')
-        ->name('update-component-status');
+            ->name('update-component-status');
     // Route::get('dynamic-pages', 'AssetLite\FixedPageController@index');
 
     Route::resource('questions', 'AssetLite\QuestionController');
@@ -242,10 +256,38 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('easy-payment-card', 'AssetLite\EasyPaymentCardController@index');
     Route::post('easy-payment-card-list', 'AssetLite\EasyPaymentCardController@getEasyPaymentCardList')->name('easypaymentcard.list.ajax');
     Route::post('upload-payment-card-excel', 'AssetLite\EasyPaymentCardController@uploadCardByExcel')
-                                         ->name('payment.card.excel.save');
+            ->name('payment.card.excel.save');
     Route::get('payment-card-status-change', 'AssetLite\EasyPaymentCardController@cardStatusChange')
-                                         ->name('payment.card.status.change');
-    Route::get('delete-easy-payment-card/{id}', 'AssetLite\EasyPaymentCardController@deletePaymentCard');
+            ->name('payment.card.status.change');
+    Route::get('delete-easy-payment-card/{id?}', 'AssetLite\EasyPaymentCardController@deletePaymentCard');
+
+
+    // Business Module ============================================
+    Route::get('business-general', 'AssetLite\BusinessGeneralController@index')->name('business.general');
+
+    //__category
+    Route::get('business-category-name-change', 'AssetLite\BusinessGeneralController@categoryNameChange')->name('business.category.name.save');
+    Route::get('business-category-home-status-change', 'AssetLite\BusinessGeneralController@categoryStatusChange')->name('business.category.home.status.change');
+    Route::get('business-category-sort-change', 'AssetLite\BusinessGeneralController@categorySortChange')->name('business.category.sort.save');
+
+    //__banner
+    Route::post('business-banner-photo-upload', 'AssetLite\BusinessGeneralController@bannerPhotoSave')->name('business.banner.photo.save');
+
+    //__news
+    Route::post('business-news-save', 'AssetLite\BusinessGeneralController@homeNewsSave')->name('business.news.save');
+    Route::get('get-single-news/{newsId}', 'AssetLite\BusinessGeneralController@getNewsById')->name('get.news.by.id');
+    Route::get('business-news-status-change/{id}', 'AssetLite\BusinessGeneralController@newsStatusChange');
+    Route::get('business-news-delete/{id}', 'AssetLite\BusinessGeneralController@newsDelete');
+
+    //__features
+    Route::post('business-feature-save', 'AssetLite\BusinessGeneralController@featureSave')->name('business.feature.save');
+    Route::get('get-single-feature/{featureId}', 'AssetLite\BusinessGeneralController@getFeatureById');
+    Route::get('business-feature-sort', 'AssetLite\BusinessGeneralController@featureSortChange')->name('business.feature.sort.save');
+    Route::get('business-feature-status-change/{id}', 'AssetLite\BusinessGeneralController@featureStatusChange');
+    Route::get('business-feature-delete/{id}', 'AssetLite\BusinessGeneralController@featureDelete');
+
+
+
 
 
     // eCarrer ============================================
@@ -326,7 +368,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('vacancy/pioneer/store', 'AssetLite\EcarrerController@pioneerStore')->name('vacancy.pioneer.store');
 
     Route::get('vacancy/pioneer/{id}/edit', 'AssetLite\EcarrerController@pioneerEdit')->name('vacancy.pioneer.edit');
-    
+
     Route::post('vacancy/pioneer/{id}/update', 'AssetLite\EcarrerController@pioneerUpdate')->name('vacancy.pioneer.update');
     Route::get('vacancy/pioneer/destroy/{id}', 'AssetLite\EcarrerController@pioneerDestroy')->name('vacancy.pioneer.destroy');
 
@@ -337,7 +379,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('vacancy/viconbox/store', 'AssetLite\EcarrerController@viconboxStore')->name('vacancy.viconbox.store');
 
     Route::get('vacancy/viconbox/{id}/edit', 'AssetLite\EcarrerController@viconboxEdit')->name('vacancy.viconbox.edit');
-    
+
     Route::post('vacancy/viconbox/{id}/update', 'AssetLite\EcarrerController@viconboxUpdate')->name('vacancy.viconbox.update');
     Route::get('vacancy/viconbox/destroy/{id}', 'AssetLite\EcarrerController@viconboxDestroy')->name('vacancy.viconbox.destroy');
 
@@ -348,7 +390,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('programs/progeneral/store', 'AssetLite\EcarrerController@progeneralStore')->name('programs.progeneral.store');
 
     Route::get('programs/progeneral/{id}/edit', 'AssetLite\EcarrerController@progeneralEdit')->name('programs.progeneral.edit');
-    
+
     Route::post('programs/progeneral/{id}/update', 'AssetLite\EcarrerController@progeneralUpdate')->name('programs.progeneral.update');
     Route::get('programs/progeneral/destroy/{id}', 'AssetLite\EcarrerController@progeneralDestroy')->name('programs.progeneral.destroy');
 
@@ -359,7 +401,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('programs/proiconbox/store', 'AssetLite\EcarrerController@proiconboxStore')->name('programs.proiconbox.store');
 
     Route::get('programs/proiconbox/{id}/edit', 'AssetLite\EcarrerController@proiconboxEdit')->name('programs.proiconbox.edit');
-    
+
     Route::post('programs/proiconbox/{id}/update', 'AssetLite\EcarrerController@proiconboxUpdate')->name('programs.proiconbox.update');
     Route::get('programs/proiconbox/destroy/{id}', 'AssetLite\EcarrerController@proiconboxDestroy')->name('programs.proiconbox.destroy');
 
@@ -370,9 +412,60 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('programs/photogallery/store', 'AssetLite\EcarrerController@photogalleryStore')->name('programs.photogallery.store');
 
     Route::get('programs/photogallery/{id}/edit', 'AssetLite\EcarrerController@photogalleryEdit')->name('programs.photogallery.edit');
-    
+
     Route::post('programs/photogallery/{id}/update', 'AssetLite\EcarrerController@photogalleryUpdate')->name('programs.photogallery.update');
     Route::get('programs/photogallery/destroy/{id}', 'AssetLite\EcarrerController@photogalleryDestroy')->name('programs.photogallery.destroy');
+
+
+    // eCarrer Programs SAP Previous Batches =========================================================
+    Route::get('programs/sapbatches', 'AssetLite\EcarrerController@sapbatchesIndex')->name('programs.sapbatches');
+    Route::get('programs/sapbatches/create', 'AssetLite\EcarrerController@sapbatchesCreate')->name('programs.sapbatches.create');
+    Route::post('programs/sapbatches/store', 'AssetLite\EcarrerController@sapbatchesStore')->name('programs.sapbatches.store');
+
+    Route::get('programs/sapbatches/{id}/edit', 'AssetLite\EcarrerController@sapbatchesEdit')->name('programs.sapbatches.edit');
+
+    Route::post('programs/sapbatches/{id}/update', 'AssetLite\EcarrerController@sapbatchesUpdate')->name('programs.sapbatches.update');
+    Route::get('programs/sapbatches/destroy/{id}', 'AssetLite\EcarrerController@sapbatchesDestroy')->name('programs.sapbatches.destroy');
+
+
+    // eCarrer Programs Ennovators Previous Batches =========================================================
+    Route::get('programs/ennovatorbatches', 'AssetLite\EcarrerController@ennovatorbatchesIndex')->name('programs.ennovatorbatches');
+    Route::get('programs/ennovatorbatches/create', 'AssetLite\EcarrerController@ennovatorbatchesCreate')->name('programs.ennovatorbatches.create');
+    Route::post('programs/ennovatorbatches/store', 'AssetLite\EcarrerController@ennovatorbatchesStore')->name('programs.ennovatorbatches.store');
+
+    Route::get('programs/ennovatorbatches/{id}/edit', 'AssetLite\EcarrerController@ennovatorbatchesEdit')->name('programs.ennovatorbatches.edit');
+
+    Route::post('programs/ennovatorbatches/{id}/update', 'AssetLite\EcarrerController@ennovatorbatchesUpdate')->name('programs.ennovatorbatches.update');
+    Route::get('programs/ennovatorbatches/destroy/{id}', 'AssetLite\EcarrerController@ennovatorbatchesDestroy')->name('programs.ennovatorbatches.destroy');
+
+
+    // App & Service Tab =========================================================
+    Route::resource('app-service/tabs', 'AssetLite\AppServiceTabController')
+        ->except('create', 'store', 'show', 'destroy');
+    Route::get('app-service/tabs/destroy/{id}', 'AssetLite\AppServiceTabController@destroy');
+
+    // App & Service Category =========================================================
+    Route::resource('app-service/category', 'AssetLite\AppServiceCategoryController')->except('show', 'destroy');
+    Route::get('app-service/category/destroy/{id}', 'AssetLite\AppServiceCategoryController@destroy');
+
+    // App & Service Product =========================================================
+    Route::resource('app-service-product', 'AssetLite\AppServiceProductController')->except('show', 'destroy');
+    Route::get('app-service/product/destroy/{id}', 'AssetLite\AppServiceProductController@destroy');
+
+    Route::get('app-service/category-find/{id}', 'AssetLite\AppServiceProductController@tabWiseCategory');
+
+    # App & Service details page
+    Route::get('app-service/details/{type}/{id}', 'AssetLite\AppServiceProductDetailsController@index')->name('app_service.details.list');
+    Route::post('app-service/details/{type}/{id}/store', 'AssetLite\AppServiceProductDetailsController@store')->name('app_service.details.store');
+
+
+    # App & Service component
+    Route::get('app-service/component/{type}/{id}', 'AssetLite\ComponentController@conponentList')->name('appservice.component.list');
+    Route::get('app-service/component/create', 'AssetLite\ComponentController@conponentCreate')->name('appservice.component.create');
+
+    // Lead Management ======================================================
+    Route::get('lead-requested-list', 'AssetLite\LeadManagementController@leadRequestedList')->name('lead-list');
+
 
 
 });

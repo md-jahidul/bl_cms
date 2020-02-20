@@ -182,16 +182,57 @@
             </ul>
         </li>
     @endif
+    
+        @if( auth()->user()->can_view('Product') )
+        <li class="nav-item"><a href="#"><i class="la la-briefcase"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Business</span></a>
+            <ul class="menu-content">
+
+                <li class="{{ is_active_url('business-general') }}">
+                    <a class="menu-item" href="{{ url('business-general') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i>Home & General Setup</a>
+                </li>
+                <li class="{{ is_active_url('business-package') }}">
+                    <a class="menu-item" href="{{ route('sim-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Package</a>
+                </li>
+
+                <li class="{{ is_active_url('offer-categories') }}">
+                    <a class="menu-item" href="{{ route('offer-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Internet</a>
+                </li>
+
+                <li class="{{ is_active_url('duration-categories') }}">
+                    <a class="menu-item" href="{{ route('duration-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Business Solution</a>
+                </li>
+                <li class="{{ is_active_url('duration-categories') }}">
+                    <a class="menu-item" href="{{ route('duration-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> IOT</a>
+                </li>
+                <li class="{{ is_active_url('duration-categories') }}">
+                    <a class="menu-item" href="{{ route('duration-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Others</a>
+                </li>
+
+            </ul>
+        </li>
+    @endif
 
 
 
         <li class="nav-item"><a href="#"><i class="la la-align-justify"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">About Banglalink</span></a>
+                <span class="menu-title" data-i18n="nav.templates.main">About Us</span></a>
             <ul class="menu-content">
 
-                <li class="{{ is_active_url('about-us/create') . is_active_url('about-us/create') }}">
-                    <a class="menu-item" href="{{ url('about-us/create') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Banglalink</a>
+                <li class="{{ is_active_url('about-us') . is_active_url('about-us/create') }}">
+                    <a class="menu-item" href="{{ url('about-us') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Banglalink</a>
                 </li>
                 <li class="{{ is_active_url('management') . is_active_url('management/create') }}">
                     <a class="menu-item" href="{{ url('management') }}"
@@ -246,7 +287,7 @@
                 <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('product.core.list') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-5"></i> Life at Banglalink</a>
+                            class="la la-magic"></i> Life at Banglalink</a>
                             <ul class="menu-content">
 
                                 <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
@@ -292,7 +333,16 @@
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> Photo Gallery</a>
                                 </li>
-                                
+                                <li class="{{ request()->is('programs/sapbatches*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.sapbatches') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> SAP Previous Batches</a>
+                                </li>
+                                <li class="{{ request()->is('programs/ennovatorbatches*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.ennovatorbatches') }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Ennovators Previous Batches</a>
+                                </li>
                             </ul>
                 </li>
                 <li class="{{ is_active_url('vacancy/pioneer') .' '. is_active_url('vacancy/pioneer') }}">
@@ -311,7 +361,7 @@
                                    data-i18n="nav.templates.vert.classic_menu"><i
                                         class="la la-safari"></i> Box Icon Section</a>
                             </li>
-                            
+
                         </ul>
                 </li>
                 <li class="{{ request()->is('life-at-banglalink/contact*') ? 'active' : '' }}">
@@ -324,7 +374,7 @@
         </li>
     {{-- @endif --}}
 
-    @if( auth()->user()->can_view('Product') )
+    @if( auth()->user()->can_view('Product-core') )
         <li class="nav-item"><a href="#"><i class="la la-gift"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Core Product</span></a>
             <ul class="menu-content">
@@ -343,6 +393,7 @@
             </ul>
         </li>
     @endif
+
     @if( auth()->user()->can_view('Product') )
         <li class="{{ is_active_url('/easy-payment-card') }} nav-item">
             <a href="{{ url('easy-payment-card') }}">
@@ -350,9 +401,55 @@
                 <span class="menu-title" data-i18n="nav.templates.main">Easy Payment Card</span>
             </a>
         </li>
+        <li class="{{ is_active_url('/device-offer') }} nav-item">
+            <a href="{{ url('device-offer') }}">
+                <i class="la la-credit-card"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Device Offers</span>
+            </a>
+        </li>
     @endif
 
-    {{--        TODO:: Quiz Management using 2nd priority  --}}
+    @if( auth()->user()->can_view('Lead-management') )
+        <li class="nav-item"><a href="#"><i class="la la-lemon-o"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Lead-management</span></a>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('lead-requested-list') }}">
+                    <a class="menu-item" href="{{ route('lead-list') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-list"></i> Request List</a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
+    @if( auth()->user()->can_view('Product') )
+        <li class="nav-item"><a href="#"><i class="la la-apple"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">App & Service</span></a>
+            <ul class="menu-content">
+
+                <li class="{{ is_active_url('app-service/tabs') }}">
+                    <a class="menu-item" href="{{ route('tabs.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-taxi"></i> App & Service Tab</a>
+                </li>
+
+                <li class="{{ is_active_url('app-service/category') }}">
+                    <a class="menu-item" href="{{ route('category.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-tasks"></i> App & Service Category</a>
+                </li>
+                <li class="{{ is_active_url('app-service-product') }}">
+                    <a class="menu-item" href="{{ route('app-service-product.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> App Service Products</a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
+
+
+    {{--        TODO:: Quiz Management using 3nd priority  --}}
     {{--        @if( auth()->user()->can_view('Tag') || auth()->user()->can_view('Campaign') || auth()->user()->can_view('Question') || auth()->user()->can_view('Prize'))--}}
     {{--            <li class="nav-item"><a href="#"><i class="la la-question"></i>--}}
     {{--                    <span class="menu-title" data-i18n="nav.templates.main">Quiz Management</span></a>--}}

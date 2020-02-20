@@ -4,6 +4,12 @@
     }else{
         $offer = '';
     }
+
+    if (isset($productDetail->product_details->other_attributes['special_product_id'])){
+        $specialOffer = $productDetail->product_details->other_attributes['special_product_id'];
+    }else{
+        $specialOffer = '';
+    }
 @endphp
 
 
@@ -16,7 +22,9 @@
             <select class="select2 form-control" multiple="multiple" name="other_attributes[special_product_id][]">
                 @foreach($products as $product)
                     @if($product->special_product == 1)
-                        <option value="{{ $product->id }}" {{ isset($productDetail->product_details->other_attributes['special_product_id']) ?? specialProductMatch($product->id, $productDetail->product_details->other_attributes['special_product_id']) ? 'selected' : '' }}>{{$product->name_en}} </option>
+                        <option value="{{ $product->id }}"
+                            {{ specialProductMatch($product->id, $specialOffer) ? 'selected' : '' }}
+                        >{{$product->name_en}}</option>
                     @endif
                 @endforeach
             </select>

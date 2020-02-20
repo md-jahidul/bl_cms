@@ -115,6 +115,7 @@ class ProductDetailService
             }
         }
 
+
         $productDetails->update($data);
         return Response('Product Details update successfully!');
     }

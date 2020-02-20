@@ -1,19 +1,18 @@
 @extends('layouts.admin')
-@section('title', 'About US List')
-@section('card_name', 'About US List')
+@section('title', 'About Banglalink')
+@section('card_name', 'About Banglalink')
 @section('breadcrumb')
 @endsection
 @section('action')
-    <a href="{{ url('about-us/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Add About US
-    </a>
+    @if(count($aboutUs) == 0)
+        <a href="{{ url('about-us/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+            Add About Banglalink
+        </a>
+    @endif
 @endsection
 @section('content')
     <section>
         <div class="card">
-            <div class="card-header">
-
-            </div>
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
@@ -42,7 +41,7 @@
                                 </td>
                                 <td width='20%'>
                                     <img style="height:80px;width:100px;"
-                                         src="{{ config('filesystems.file_base_url') . $about->content_image }}" id="profile_image_Display">
+                                         src="{{ config('filesystems.file_base_url') . $about->banner_image }}" id="imgDisplay">
                                 </td>
                                 <td width='20%'>
                                     <div class="row justify-content-md-center no-gutters">
@@ -52,7 +51,7 @@
                                             </a>
                                         </div>
                                         <div class="col-md-3">
-                                            <button data-id="{{$about->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                            {{--<button data-id="{{$about->id}}" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>--}}
                                         </div>
                                     </div>
                                 </td>
@@ -145,8 +144,8 @@
             $('#Example1').DataTable({
                 dom: 'Bfrtip',
                 buttons: [],
-                paging: true,
-                searching: true,
+                paging: false,
+                searching: false,
                 "pageLength": 10,
                 "bDestroy": true,
             });

@@ -68,13 +68,6 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    <label for="activation_ussd">USSD Code (English)</label>
-                                    <input type="text" name="activation_ussd" id="activation_ussd" class="form-control" placeholder="Enter offer ussd code in English"
-                                           value="{{ old("activation_ussd") ? old("activation_ussd") : '' }}">
-                                    <div class="help-block"></div>
-                                </div>
-
                                 <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
                                     <label for="end_date">End Date</label>
                                     <input type="text" name="end_date" id="end_date" class="form-control"
@@ -86,11 +79,60 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
+                                    <label for="offer_category_id" class="required">Offer Type</label>
+                                    <select class="form-control required" name="offer_category_id" id="offer_type"
+                                            required data-validation-required-message="Please select offer">
+                                        <option data-alias="" value="">---Select Offer Type---</option>
+                                        @foreach($offers as $offer)
+                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}">{{ $offer->name_en }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('offer_category_id'))
+                                        <div class="help-block">{{ $errors->first('offer_category_id') }}</div>
+                                    @endif
+                                </div>
+
+                                <slot id="internet" data-offer-type="internet" style="display: none">
+                                    @include('layouts.partials.products.internet')
+                                </slot>
+                                <slot id="packages" data-offer-type="packages" style="display: none">
+                                    @include('layouts.partials.products.packages')
+                                </slot>
+
+                                <slot id="others" data-offer-type="others" style="display: none">
+                                    @include('layouts.partials.products.other')
+                                </slot>
+
+                                @if( strtolower($type) == 'prepaid')
+                                    <slot id="call_rate" data-offer-type="call_rate" style="display: none">
+                                        @include('layouts.partials.products.call_rate')
+                                    </slot>
+                                    <slot id="voice" data-offer-type="voice" style="display: none">
+                                        @include('layouts.partials.products.voice')
+                                    </slot>
+                                    <slot id="bundles" data-offer-type="bundles" style="display: none">
+                                        @include('layouts.partials.products.bundle')
+                                    </slot>
+                                @endif
+
+                                <div class="form-group col-md-6">
+                                    <label for="activation_ussd">USSD Code (English)</label>
+                                    <input type="text" name="activation_ussd" id="activation_ussd" class="form-control" placeholder="Enter offer ussd code in English"
+                                           value="{{ old("activation_ussd") ? old("activation_ussd") : '' }}">
+                                    <div class="help-block"></div>
+                                </div>
+
                                 <div class="form-group col-md-6">
                                     <label for="ussd_bn">USSD Code (Bangla)</label>
                                     <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd code in Bangla"
                                            value="{{ old("ussd_bn") ? old("ussd_bn") : '' }}">
                                 </div>
+
+                                @include('layouts.partials.products.common-field.balance_check')
+
+                                @include('layouts.partials.products.common-field.call_rate_unit')
 
                                 <div class="form-group col-md-6 ">
                                     <label for="price">Offer Price</label>
@@ -118,74 +160,26 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
-                                    <label for="offer_category_id" class="required">Offer Type</label>
-                                    <select class="form-control required" name="offer_category_id" id="offer_type"
-                                            required data-validation-required-message="Please select offer">
-                                        <option data-alias="" value="">---Select Offer Type---</option>
-                                        @foreach($offers as $offer)
-                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}">{{ $offer->name_en }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('offer_category_id'))
-                                        <div class="help-block">{{ $errors->first('offer_category_id') }}</div>
-                                    @endif
-                                </div>
-
-
-
-                                <slot id="internet" data-offer-type="internet" style="display: none">
-                                    @include('layouts.partials.products.internet')
-                                </slot>
-                                <slot id="packages" data-offer-type="packages" style="display: none">
-                                    @include('layouts.partials.products.packages')
-                                </slot>
-
-                                <slot id="others" data-offer-type="others" style="display: none">
-                                    @include('layouts.partials.products.other')
-                                </slot>
-
-                                @if( strtolower($type) == 'prepaid')
-                                    <slot id="call_rate" data-offer-type="call_rate" style="display: none">
-                                        @include('layouts.partials.products.call_rate')
-                                    </slot>
-                                    <slot id="voice" data-offer-type="voice" style="display: none">
-                                        @include('layouts.partials.products.voice')
-                                    </slot>
-                                    <slot id="bundles" data-offer-type="bundles" style="display: none">
-                                        @include('layouts.partials.products.bundle')
-                                    </slot>
-                                @endif
-
-                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
-                                    <label for="purchase_option" class="required">Purchase Option</label>
-                                    <select class="form-control required" name="purchase_option" id="purchase_option"
-                                        required data-validation-required-message="Please select purchase option">
-                                        <option data-alias="" value="">---Select Purchase Option---</option>
-                                        <option value="recharge">Recharge</option>
-                                        <option value="balance">Balance</option>
-                                        <option value="all">All</option>
-                                    </select>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('purchase_option'))
-                                        <div class="help-block">{{ $errors->first('purchase_option') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">--}}
+{{--                                    <label for="purchase_option" class="required">Purchase Option</label>--}}
+{{--                                    <select class="form-control required" name="purchase_option" id="purchase_option"--}}
+{{--                                        required data-validation-required-message="Please select purchase option">--}}
+{{--                                        <option data-alias="" value="">---Select Purchase Option---</option>--}}
+{{--                                        <option value="recharge">Recharge</option>--}}
+{{--                                        <option value="balance">Balance</option>--}}
+{{--                                        <option value="all">All</option>--}}
+{{--                                    </select>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('purchase_option'))--}}
+{{--                                        <div class="help-block">{{ $errors->first('purchase_option') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
                                 <div class="col-md-6">
                                     <label></label>
                                     <div class="form-group" id="show_in_home">
                                         <label for="trending" class="mr-1">Trending Offer:</label>
                                         <input type="checkbox" name="show_in_home" value="1" id="trending">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label></label>
-                                    <div class="form-group">
-                                        <label for="is_amar_offer" class="mr-1">Is Amar Offer:</label>
-                                        <input type="checkbox" name="is_amar_offer" value="1" id="is_amar_offer">
                                     </div>
                                 </div>
 

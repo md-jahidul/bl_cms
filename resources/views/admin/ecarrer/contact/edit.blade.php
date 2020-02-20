@@ -44,35 +44,12 @@
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                     <label for="title_bn" class="required">Title (Bangla)</label>
                                     <input type="text" name="title_bn"  class="form-control" placeholder="Enter title_bn (english)"
-                                           value="{{ $sections->title_bn }}"  data-validation-required-message="Enter slider title_bn (english)">
+                                           value="{{ $sections->title_bn }}" >
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
-
-                                {{-- <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="alt_text" class="">Banner Image (optional)</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input" id="image">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('image_url'))
-                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-1">
-                                    @if( !empty($sections->image) )
-                                        <img style="height:70px;width:70px;display:block" src="{{ config('filesystems.file_base_url') . $sections->image}}" id="imgDisplay">
-                                    @else
-                                        <img style="height:70px;width:70px;display:none" id="imgDisplay">
-                                    @endif
-                                    
-                                </div> --}}
 
 
                                 <div class="col-md-6">

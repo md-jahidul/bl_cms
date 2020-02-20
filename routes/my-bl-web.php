@@ -39,7 +39,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     Route::get('banner/destroy/{id}', 'CMS\BannerController@destroy');
 
     // welcomeInfo
-    route::resource('welcomeInfo', 'CMS\WelcomeInfoController');
+    route::get('welcomeInfo', 'CMS\WelcomeInfoController@index')->name('welcomeInfo.index');
+    route::post('welcomeInfo', 'CMS\WelcomeInfoController@store')->name('welcomeInfo.store');
+    route::post('welcomeInfo/update/{id}', 'CMS\WelcomeInfoController@update')->name('welcomeInfo.update');
 
     //settings
     route::resource('setting', 'CMS\SettingController');
@@ -177,4 +179,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     Route::post('store-locations', 'StoreLocatorEntryController@uploadStoresByExcel')->name('store-locations.save');
 
     Route::get('core-product/test', 'ProductEntryController@test');
+
+    /*
+     *  Recharge prefill amounts
+     */
+
+    Route::get('recharge/prefill-amounts', 'CMS\PrefillRechargeController@show')
+        ->name('recharge.prefill-amounts.index');
+    Route::post('recharge/prefill-amounts', 'CMS\PrefillRechargeController@update')
+        ->name('recharge.prefill-amounts.update');
+
+    Route::get('recharge/prefill-amounts/order', 'CMS\PrefillRechargeController@updatePosition');
 });

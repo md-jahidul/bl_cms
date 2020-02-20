@@ -11,9 +11,6 @@
 @section('content')
     <section>
         <div class="card">
-            <div class="card-header">
-
-            </div>
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <table class="table table-striped table-bordered alt-pagination no-footer dataTable"
@@ -23,8 +20,10 @@
                             <th width='5%'>ID</th>
                             <th width='10%'>Name</th>
                             <th width='10%'>Designation</th>
-                            <th width='30%'>Personal Details</th>
-                            <th width='20%'>Action</th>
+                            <th width='20%'>Personal Details</th>
+                            <th width='15%'>Profile Image</th>
+                            <th width='15%'>Banner Image</th>
+                            <th width='15%'>Action</th>
                         </tr>
                         </thead>
                         <tbody id="sortable">
@@ -37,8 +36,16 @@
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <td width='10%'>{{$manage->name}}</td>
                             <td width='10%'>{{$manage->designation}}</td>
-                            <td width='30%'>{{$manage->personal_details}}</td>
-                            <td width='20%'>
+                            <td width='20%'>{{$manage->personal_details}}</td>
+                            <td width='15%'>
+                                <img style="height:70px;width:90px; padding: 5px;"
+                                     src="{{ config('filesystems.file_base_url') . $manage->profile_image }}" id="profile_image_Display">
+                            </td>
+                            <td width='15%'>
+                                <img style="height:70px;width:90px; padding: 5px;"
+                                     src="{{ config('filesystems.file_base_url') . $manage->banner_image }}" id="imgDisplay">
+                            </td>
+                            <td width='15%'>
                                 <div class="row justify-content-md-center no-gutters">
                                     <div class="col-md-3">
                                         <a role="button" href="{{route('management.edit',$manage->id)}}" class="btn btn-outline-success">
@@ -69,6 +76,10 @@
         #sortable tr td{
             padding-top: 0 !important;
             padding-bottom: 0 !important;
+        }
+
+        table.dataTable {
+            border-spacing: 1px;
         }
     </style>
 @endpush

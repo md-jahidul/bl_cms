@@ -48,15 +48,46 @@ class Helper
     }
 
     /**
-     * Contextual action list
+     * Navigation action list
      * @return array
      */
-    public static function sliderActionList()
+    public static function navigationActionList()
     {
         return [
-            "BUY_INTERNET" =>  "Go To Internet Offers" ,
-            "BUY_MIXED_BUNDLE_OFFER" => "Go To Mixed Bundle Offers",
-            "ADD_FNF" =>  "Go To FNF"
+            "AMAR_OFFER"              => "Amar Offer",
+            "BALANCE_DETAILS"         => "Balance details > Balance",
+            "INTERNET_DETAILS"        => "Balance details > Internet",
+/*            "EMERGENCY_BALANCE"       => "Emergency Balance",*/
+            "FAQ"                     => "FAQ",
+/*            "FEED"                    => "Feed",*/
+            "FNF"                     => "FnF",
+            "HOME"                    => "Home Menu",
+/*            "INBOX"                   => "Inbox",*/
+            "INTERNET_EXCLUSIVE_PACK" => "Internet packs > Buy Packs > Exclusive Pack",
+            "INTERNET_MONTHLY_PACK"   => "Internet packs > Buy Packs > Monthly Pack",
+            "INTERNET_POWER_PACK"     => "Internet packs > Buy Packs > Power Pack",
+            "INTERNET_WEEKLY_PACK"    => "Internet packs > Buy Packs > Weekly Pack",
+            "INTERNET_TRANSFER_PACK"  => "Internet packs > Transfer",
+            "LODGE_COMPLAINT"         => "Lodge a complaint",
+            "MANAGE"                  => "Manage",
+            "MENU"                    => "Menu",
+            "MIXED_BUNDLES"           => "Mixed Bundles",
+            "NOTIFICATIONS"           => "Notifications",
+/*            "PACKAGE_DETAILS"         => "Package Details",*/
+            "PRIVACY_POLICY"          => "Privacy Policy",
+            "PROFILE"                 => "Profile",
+            "RECHARGE"                => "Recharge",
+            "RECHARGE_HISTORY"        => "Recharge History",
+            "RECHARGE_OFFERS"         => "Recharge Offers",
+            "SIM_INFORMATION"         => "Sim Information",
+            "SMS_PACKS"               => "SMS Packs",
+            "SPECIAL_RATE_PACKS"      => "Special Call Rate Offers",
+            "STORE"                   => "Store",
+            "STORE_LOCATOR"           => "Store locator",
+            "T&C"                     => "T&C",
+            "USAGE_HISTORY"           => "Usage History",
+            "USSD_CODE_LIST"          => "View USSD code",
+            "VOICE_BUNDLE"            => "Voice Bundles",
         ];
     }
     /**
