@@ -3,13 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Models\AppServiceProduct;
-use App\Repositories\AppServiceCategoryRepository;
-use App\Repositories\AppServiceTabRepository;
-use App\Services\AppServiceCategoryService;
 use App\Services\AppServiceProductService;
-use App\Services\AppServiceTabService;
-use App\Services\ProductService;
-use App\Services\TagCategoryService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -52,35 +46,19 @@ class AppServiceProductDetailsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $tab_type
+     * @param $product_id
      * @return Factory|View
      */
-    public function index($tab_type, $product_id)
+    public function productDetails($tab_type, $product_id)
     {
         $this->info['tab_type'] = $tab_type;
         $this->info['product_id'] = $product_id;
         $this->info["section_list"] = $this->appServiceProductDetailsService->sectionList($product_id);
-        $this->info["products"] = $this->appServiceProduct->appServiceRelatedProduct($tab_type);
+        $this->info["products"] = $this->appServiceProduct->appServiceRelatedProduct($tab_type, $product_id);
         $this->info["productDetail"] = $this->appServiceProduct->detailsProduct($product_id);
-
         $this->info["fixedSectionData"] = $this->info["section_list"]['fixed_section'];
-
-//        return $this->info["fixedSectionData"];
-
-//        $otherAttributes = $productDetail->product_details->other_attributes;
-
         return view('admin.app-service.details.section.index', $this->info);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Factory|View
-     */
-    public function create()
-    {
-        // $appServiceTabs = $this->appServiceTabRepository->findByProperties(array(), ['id', 'name_en', 'alias']);
-        // $tags = $this->tagCategoryService->findAll();
-        // return view('admin.app-service.product.create', compact('tags', 'appServiceTabs', 'appServiceCat'));
     }
 
     /**
@@ -106,7 +84,6 @@ class AppServiceProductDetailsController extends Controller
      */
     public function fixedSectionUpdate(Request $request, $tab_type, $product_id)
     {
-//        return $request->all();
         $response = $this->appServiceProductDetailsService->fixedSectionUpdate($request->all(), $tab_type, $product_id);
         Session::flash('message', $response->getContent());
         return redirect(url("app-service/details/$tab_type/$product_id"));

@@ -31,4 +31,12 @@ class AppServiceProductDetailsRepository extends BaseRepository
             ->whereNull('section_name')
             ->first();
     }
+
+    public function checkFixedSection($product_id)
+    {
+        return $this->model
+            ->where('product_id', $product_id)
+            ->whereNotNull('category')
+            ->first();
+    }
 }

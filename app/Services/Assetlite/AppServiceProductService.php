@@ -96,9 +96,9 @@ class AppServiceProductService
         return Response('App Service Tab deleted successfully !');
     }
 
-    public function appServiceRelatedProduct($tab_type)
+    public function appServiceRelatedProduct($tab_type, $product_id)
     {
-        return $this->appServiceProductRepository->appServiceProduct($tab_type);
+        return $this->appServiceProductRepository->appServiceProduct($tab_type, $product_id);
     }
 
     public function detailsProduct($id)

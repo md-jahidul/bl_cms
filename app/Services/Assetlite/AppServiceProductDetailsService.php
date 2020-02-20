@@ -88,24 +88,26 @@ class AppServiceProductDetailsService
 
     public function fixedSectionUpdate($data, $tab_type, $product_id)
     {
-        $findSection = $this->appServiceProductDetailsRepository->findOneByProperties([
-            'category' => $data['category']
-        ]);
+//        $findSection = $this->appServiceProductDetailsRepository->findOneByProperties([
+//            'category' => $data['category']
+//        ]);
 
-        if ($findSection) {
-            if (request()->hasFile('image')) {
-                $data['image'] = $this->upload($data['image'], 'assetlite/images/app-service/product-details');
-            }
-            $findSection->update($data);
-            return Response('App Service Section Update Successfully');
-        } else {
-            if (request()->hasFile('image')) {
-                $data['image'] = $this->upload($data['image'], 'assetlite/images/app-service/product-details');
-            }
-            $data['tab_type'] = $tab_type;
-            $data['product_id'] = $product_id;
-            $this->save($data);
-            return Response('App Service Section Update Successfully');
+        if (request()->hasFile('image')) {
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/app-service/product-details');
         }
+        $data['tab_type'] = $tab_type;
+        $data['product_id'] = $product_id;
+        $findFixedSection = $this->appServiceProductDetailsRepository->checkFixedSection($product_id);
+
+        if (!$findFixedSection) {
+            $this->save($data);
+        } else {
+            if (!isset($data['other_attributes'])) {
+                $data['other_attributes'] = null;
+            }
+            $findFixedSection->update($data);
+        }
+
+        return Response('App Service Section Update Successfully');
     }
 }

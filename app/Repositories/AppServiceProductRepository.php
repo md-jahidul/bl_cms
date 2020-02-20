@@ -18,9 +18,10 @@ class AppServiceProductRepository extends BaseRepository
     public $modelName = AppServiceProduct::class;
 
 
-    public function appServiceProduct($tab_type)
+    public function appServiceProduct($tab_type, $product_id)
     {
         return $this->model
+            ->where('id', '!=', $product_id)
             ->productTabType($tab_type)
             ->select('id', 'app_service_tab_id', 'name_en')
             ->get();

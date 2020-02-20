@@ -3,7 +3,8 @@
 @section('card_name', 'App & Service Product Edit')
 @section('breadcrumb')
     <li class="breadcrumb-item active"><a href="{{ route('app-service-product.index') }}">App & Service Product List</a></li>
-    <li class="breadcrumb-item active"> App & Service Product Edit</li>
+    <li class="breadcrumb-item active"><a href="{{ route('app_service.details.list', [$tab_type, $product_id]) }}">Section List</a></li>
+    <li class="breadcrumb-item active"> Section Edit</li>
 @endsection
 @section('action')
     <a href="{{ route('app-service-product.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
