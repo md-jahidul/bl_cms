@@ -7,17 +7,21 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Photo</th>
                                 <th width="50%">Title</th>
                                 <th width="20%">Status</th>
-                                <th width="50%">Sorting</th>
                                 <th width="20%">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="feature_sortable">
                             @foreach($features as $f)
-                            <tr>
+                            <tr data-index="{{ $f->id }}" data-position="{{ $f->sort }}">
                                 <td>
+                                    <i class="icon-cursor-move icons"></i>
+                                </td>
+                                <td>
+                                    
                                     @if($f->icon_url != "")
                                     <img src="{{ config('filesystems.file_base_url') . $f->icon_url }}" alt="Fearure Icon" height="60px" />
                                     @endif
@@ -34,12 +38,7 @@
                                     @endif
                                 </td>
 
-                                <td class="feature_sorting text-center">
-                                    {{ $f->sort }} 
-                                    <a class="text-info edit_feature_sorting" href="{{$f->id}}" sort="{{ $f->sort }}">
-                                        <i class="la la-pencil-square"></i>
-                                    </a>
-                                </td>
+                             
                                 <td class="text-center">
                                     <a class="text-info edit_feature" href="{{$f->id}}">
                                         <i class="la la-pencil-square"></i>
@@ -106,74 +105,46 @@
 
         /*######################################### Features Javascript ##################################################*/
 
-
-        /* Change feature sorting */
-        $(".feature_sorting").on('click', 'a.edit_feature_sorting', function (e) {
-            e.preventDefault();
-
-            let sort = $(this).attr('sort');
-            let featureId = $(this).attr('href');
-            let input = "<input style='width:75%' class='form-control pull-left' type='text' value='" + sort + "'>\n\
-                    <a class='pull-right text-success save_sorting' href='" + featureId + "'><i class='la la-save'></i></a>";
-            $(this).parent('.feature_sorting').html(input);
-
-        });
-
-        //save sorting
-        $(".feature_sorting").on('click', '.save_sorting', function (e) {
-            e.preventDefault();
-
-            let newSort = $(this).parent('td').find('input').val();
-            let featureId = $(this).attr('href');
-            let thisObj = $(this);
-
+        function saveNewPositions(save_url)
+        {
+            var positions = [];
+            $('.update').each(function () {
+                positions.push([
+                    $(this).attr('data-index'),
+                    $(this).attr('data-position')
+                ]);
+            })
             $.ajax({
-                url: '{{ route("business.feature.sort.save")}}',
-                type: 'GET',
-                cache: false,
+                type: "GET",
+                url: save_url,
                 data: {
-                    featureId: featureId,
-                    sort: newSort
+                    update: 1,
+                    position: positions
                 },
-                success: function (result) {
-                    if (result.success == 1) {
-                        swal.fire({
-                            title: "Changed",
-                            type: 'success',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-
-                        let htmlView = result.sort + ' <a class="text-info edit_feature_sorting" href="' + featureId + '" sort="' + result.sort + '">\n\
-                                    <i class="la la-pencil-square"></i></a>';
-                        $(thisObj).parent('.feature_sorting').html(htmlView);
-
-
-                    } else {
-                        swal.close();
-                        swal.fire({
-                            title: result.message,
-                            type: 'error',
-                        });
-                    }
+                success: function (data) {
                 },
-                error: function (data) {
-                    swal.fire({
-                        title: 'Failed',
+                error: function () {
+                     swal.fire({
+                        title: 'Failed to sort data',
                         type: 'error',
                     });
                 }
             });
+        }
 
-        });
-
-        //number validation
-        $(".feature_sorting").on('keypress', 'input', function (e) {
-            //if the letter is not digit then display error and don't type anything
-            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                return false;
+        $(".feature_sortable").sortable({
+            
+            update: function (event, ui) {
+                $(this).children().each(function (index) {
+                    if ($(this).attr('data-position') != (index + 1)) {
+                        $(this).attr('data-position', (index + 1)).addClass('update')
+                    }
+                });
+                var save_url = "{{ url('business-feature-sort') }}";
+                saveNewPositions(save_url);
             }
         });
+
         
         //change status (show/hide) of features
         $(".table").on('click', '.features_status', function (e) {

@@ -12,7 +12,7 @@ class BusinessGeneralController extends Controller {
     private $businessHomeService;
 
     /**
-     * EasyPaymentCardController constructor.
+     * BusinessGeneralController constructor.
      * @param BusinessHomeService $businessHomeService
      */
     public function __construct(BusinessHomeService $businessHomeService) {

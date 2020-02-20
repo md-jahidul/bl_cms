@@ -18,9 +18,6 @@ class BusinessCategoryRepository extends BaseRepository {
         return $categories;
     }
 
-  
-
-
     public function changeCategoryName($catId, $name) {
         try {
 
@@ -45,31 +42,32 @@ class BusinessCategoryRepository extends BaseRepository {
         }
     }
 
-    public function changeCategorySorting($catId, $sort) {
+    public function changeCategorySorting($request) {
         try {
 
-            $category = $this->model->findOrFail($catId);
-
-            $category->home_sort = $sort;
-            $category->save();
+            $positions = $request->position;
+            foreach ($positions as $position) {
+                $categoryId = $position[0];
+                $new_position = $position[1];
+                $update = $this->model->findOrFail($categoryId);
+                $update['home_sort'] = $new_position;
+                $update->update();
+            }
 
             $response = [
                 'success' => 1,
-                'sort' => $category->home_sort
+                'message' => 'Success',
             ];
             return response()->json($response, 200);
         } catch (\Exception $e) {
-            $category = $this->model->findOrFail($catId);
             $response = [
                 'success' => 0,
-                'sort' => $category->home_sort,
                 'message' => $e->getMessage()
             ];
             return response()->json($response, 500);
         }
     }
-    
-    
+
     public function changeHomeShowStatus($catId) {
         try {
 
@@ -99,7 +97,7 @@ class BusinessCategoryRepository extends BaseRepository {
                 $card = $this->model->findOrFail($cardId);
                 $card->delete();
             } else {
-               $this->model->truncate();
+                $this->model->truncate();
             }
 
             $response = [
