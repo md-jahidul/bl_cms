@@ -84,6 +84,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::resource('about-us', 'AssetLite\AboutUsController')->except(['show', 'destroy']);
     Route::get('about-us/destroy/{id}', 'AssetLite\AboutUsController@destroy');
 
+    Route::get('about-slider/', 'AssetLite\AboutUsController@aboutSlider');
+
     Route::resource('management', 'AssetLite\ManagementController')->except(['show', 'destroy']);
     Route::get('management/destroy/{id}', 'AssetLite\ManagementController@destroy');
     Route::get('management-sortable', 'AssetLite\ManagementController@managementSortable');
@@ -285,16 +287,16 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('business-feature-sort', 'AssetLite\BusinessGeneralController@featureSortChange');
     Route::get('business-feature-status-change/{id}', 'AssetLite\BusinessGeneralController@featureStatusChange');
     Route::get('business-feature-delete/{id}', 'AssetLite\BusinessGeneralController@featureDelete');
-    
+
     //__Category Package
     Route::get('business-package', 'AssetLite\BusinessPackageController@index');
     Route::get('business-package-sort-change', 'AssetLite\BusinessPackageController@sortChange');
     Route::get('business-package-home-status-change/{packageId}', 'AssetLite\BusinessPackageController@homeShow');
     Route::get('business-package-active/{packageId}', 'AssetLite\BusinessPackageController@activationStatus');
-   
+
     Route::get('business-package/create', 'AssetLite\BusinessPackageController@create');
     Route::post('business-package/save', 'AssetLite\BusinessPackageController@store')->name('business.package.save');
-    
+
     Route::get('business-package-edit/{packageId}', 'AssetLite\BusinessPackageController@edit');
     Route::post('business-package/update', 'AssetLite\BusinessPackageController@update')->name('business.package.update');
     Route::get('business-package-delete/{packageId}', 'AssetLite\BusinessPackageController@delete');
@@ -306,7 +308,7 @@ Route::middleware('authorize', 'auth')->group(function () {
             ->name('business.internet.excel.save');
     Route::get('business-internet-status-change/{pakcageId}', 'AssetLite\BusinessInternetController@packageStatusChange');
     Route::get('delete-business-internet-package/{pakcageId?}', 'AssetLite\BusinessInternetController@deletePackage');
-    
+
     //Category B. Solution, IOT & Others
     Route::get('business-other-services', 'AssetLite\BusinessOthersController@index')->name('business.other.services');
     Route::get('business-others/create', 'AssetLite\BusinessOthersController@create');
@@ -316,7 +318,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('business-others-service-delete/{serviceId}', 'AssetLite\BusinessOthersController@deleteService');
     Route::get('business-others-service-edit/{serviceId}', 'AssetLite\BusinessOthersController@edit');
     Route::post('business-others-update', 'AssetLite\BusinessOthersController@update')->name("business.other.update");
-    
+
     Route::get('business-others-components/{serviceId}', 'AssetLite\BusinessOthersController@addComponent');
     Route::post('business-others-save', 'AssetLite\BusinessOthersController@saveService')->name("business.other.save");
     Route::post('business-component-save', 'AssetLite\BusinessOthersController@saveComponents')->name("business.component.save");
