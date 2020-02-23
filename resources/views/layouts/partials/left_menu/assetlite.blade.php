@@ -182,7 +182,7 @@
             </ul>
         </li>
     @endif
-    
+
         @if( auth()->user()->can_view('Product') )
         <li class="nav-item"><a href="#"><i class="la la-briefcase"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Business</span></a>
@@ -215,7 +215,6 @@
     @endif
 
 
-
         <li class="nav-item"><a href="#"><i class="la la-align-justify"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">About Us</span></a>
             <ul class="menu-content">
@@ -224,6 +223,12 @@
                     <a class="menu-item" href="{{ url('about-us') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Banglalink</a>
                 </li>
+
+                <li class="{{ is_active_url('about-slider') }}">
+                    <a class="menu-item" href="{{ url('about-slider') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Slider</a>
+                </li>
+
                 <li class="{{ is_active_url('management') . is_active_url('management/create') }}">
                     <a class="menu-item" href="{{ url('management') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Management</a>

@@ -111,7 +111,7 @@
                                     @endif
                                 </div>
 
-                                @include('layouts.partials.slider_types.'.$type )
+{{--                                @include('layouts.partials.slider_types.'.$type )--}}
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>
