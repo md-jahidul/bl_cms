@@ -145,7 +145,12 @@ class EcarrerItemController extends Controller
 
 	}
 
-
+	/**
+	 * [destroy description]
+	 * @param  [type] $parent_id [description]
+	 * @param  [type] $id        [description]
+	 * @return [type]            [description]
+	 */
 	public function destroy($parent_id, $id){
 
 		$response = $this->ecarrerItemService->deleteItem($id);
@@ -153,5 +158,17 @@ class EcarrerItemController extends Controller
 		return redirect("ecarrer-items/$parent_id/list");
 
 	}
+
+	/**
+	 * [ecarrerItemSortable description]
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function ecarrerItemSortable(Request $request){
+
+		$this->ecarrerItemService->tableSortable($request);
+
+	}
+
 
 }

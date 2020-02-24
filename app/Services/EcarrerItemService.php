@@ -259,4 +259,18 @@ class EcarrerItemService
 
     }
 
+
+    /**
+     * [tableSortable description]
+     * @param  [type] $data [description]
+     * @return [type]       [description]
+     */
+    public function tableSortable($data){
+
+        $this->ecarrerPortalItemRepository->ecarrerItemTableSort($data);
+        return new Response('update successfully');
+
+    }
+
+
 }

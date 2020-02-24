@@ -10,6 +10,19 @@
         Add New Item
     </a>
 @endsection
+
+@php
+    if( 
+        $parent_categories['category'] == 'life_at_bl_events' 
+    ){
+        $sortable = true;
+    }
+    else{
+        $sortable = false;
+    }
+
+@endphp
+
 @section('content')
     <section>
         <div class="card">
@@ -31,15 +44,17 @@
                             <th width="22%">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
-                            {{ dd($all_items) }}
+                        <tbody @if($sortable) id="sortable" @endif>
+                            {{-- {{ dd($all_items) }} --}}
                         @if( !empty($all_items) )
                         @foreach($all_items as $key=> $items)
                             {{-- @php( $itemsType = str_replace(" ", "-", strtolower( $items->type->name ) )) --}}
-                            <tr>
+                            <tr @if($sortable) data-index="{{ $items->id }}" data-position="{{ $items->display_order }}" @endif>
                                 <td>{{ ++$key }}</td>
                                 @if( $parent_categories['category'] == 'life_at_bl_events' )
-                                    <td>{{ $items->title_en }}</td>
+                                    <td width="10%">
+                                        <img class="img-fluid" src="{{ config('filesystems.file_base_url') . $items->image }}" alt="">
+                                    </td>
                                 @endif
                                 <td>{{ $items->title_en }}</td>
                                 <td>{{ ($items->is_active == 1) ? 'Acive' : 'Inactive' }}</td>
@@ -59,5 +74,28 @@
     </section>
 
 @stop
+
+
+@push('page-css')
+    @if($sortable)
+        <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+        <style>
+            #sortable tr td{
+                padding-top: 5px !important;
+                padding-bottom: 5px !important;
+            }
+        </style>
+    @endif
+@endpush
+
+
+
+@push('page-js')
+    @if( $sortable )
+        <script>
+            var auto_save_url = "{{ url('ecarrer-items-sortable') }}";
+        </script>
+    @endif
+@endpush
 
 
