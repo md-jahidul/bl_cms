@@ -27,6 +27,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                            {{ dd($all_items) }}
                         @if( !empty($all_items) )
                         @foreach($all_items as $key=> $items)
                             {{-- @php( $itemsType = str_replace(" ", "-", strtolower( $items->type->name ) )) --}}

@@ -226,4 +226,16 @@ class EcarrerItemService
 
     }
 
+
+    /**
+     * [getParentCategories description]
+     * @param  [type] $section_id [description]
+     * @return [type]             [description]
+     */
+    public function getParentCategories($section_id){
+
+        return $this->ecarrerPortalRepository->getSectionDataByID($section_id);
+
+    }
+
 }
