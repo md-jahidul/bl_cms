@@ -33,7 +33,7 @@ class SliderTableSeeder extends Seeder
                 'title_en' =>  $slider,
                 'title_bn' =>  $slidersBn[$key],
                 'component_id' => $component_id,
-                'short_code' => '[slider_' . $component_id . ']',
+                'short_code' => str_replace([' ','-'], '_', strtolower($slider)),
                 'slider_type' => ($slider == 'Lifestyle & benefits' || $slider == 'Trending') ? 'multiple' : 'single',
                 'other_attributes' => ($slider == 'Digital Services' || $slider == 'Lifestyle & benefits' || $slider == 'Trending') ? $other_attributes : ['sliding_speed' => 10]
             ]);

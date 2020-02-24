@@ -251,7 +251,7 @@ class ProductController extends Controller
         $productDetail = $this->productService->detailsProduct($id);
         $otherAttributes = $productDetail->product_details->other_attributes;
 
-//        return $otherAttributes;
+//        return $productDetail;
 
         return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType', 'otherAttributes'));
     }

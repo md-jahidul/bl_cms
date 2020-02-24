@@ -36,6 +36,11 @@ class AlSliderService
         return $this->alSliderRepository->findByProperties(['slider_type' => $type]);
     }
 
+    public function shortCodeSliders($shortCode)
+    {
+        return $this->alSliderRepository->findByProperties(['short_code' => $shortCode]);
+    }
+
     /**
      * Storing the slider resource
      * @return Response
