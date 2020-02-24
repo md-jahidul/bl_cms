@@ -36,7 +36,7 @@
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <td width='10%'>{{$manage->name}}</td>
                             <td width='10%'>{{$manage->designation}}</td>
-                            <td width='20%'>{{$manage->personal_details}}</td>
+                            <td width='20%'>{{strip_tags($manage->personal_details)}}</td>
                             <td width='15%'>
                                 <img style="height:150px;width:180px; padding: 5px;"
                                      src="{{ config('filesystems.file_base_url') . $manage->profile_image }}" id="profile_image_Display">
