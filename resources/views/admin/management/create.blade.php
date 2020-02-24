@@ -171,7 +171,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image') ? ' error' : '' }}">
-                                    <label for="alt_text" >Banner Image</label>
+                                    <label for="alt_text" >Modal Image</label>
                                     <div class="custom-file">
                                         <input type="file" name="banner_image" class="custom-file-input" id="image">
                                         <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
