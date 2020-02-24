@@ -92,6 +92,16 @@ class EcarrerController extends Controller
 		# route slug
 		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
 
+
+		$additional_info = null;
+		if( $request->filled('sider_info') ){
+			$additional_info['sider_info'] = $request->input('sider_info');
+		}
+
+		if( !empty($additional_info) ){
+			$data_types['additional_info'] = json_encode($additional_info);
+		}
+
 		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
 		Session::flash('message', 'Section created successfully!');
@@ -134,7 +144,18 @@ class EcarrerController extends Controller
 		    return redirect('life-at-banglalink/general');
 		}
 
-		$this->ecarrerService->updateEcarrerSection($request->all(), $id);
+
+		$data_types = null;
+		$additional_info = null;
+		if( $request->filled('sider_info') ){
+			$additional_info['sider_info'] = $request->input('sider_info');
+		}
+
+		if( !empty($additional_info) ){
+			$data_types['additional_info'] = json_encode($additional_info);
+		}
+
+		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
 
 		Session::flash('message', 'Section updated successfully!');
 		return redirect('life-at-banglalink/general');
@@ -478,6 +499,7 @@ class EcarrerController extends Controller
 		    return redirect('life-at-banglalink/events');
 		}
 
+		$data_types = null;
 		$additional_info = null;
 		if( $request->filled('sider_info') ){
 			$additional_info['sider_info'] = $request->input('sider_info');

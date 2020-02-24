@@ -13,7 +13,8 @@
 
 @php
     if( 
-        $parent_categories['category'] == 'life_at_bl_events' 
+        $parent_categories['category'] == 'life_at_bl_events' ||
+        $parent_categories['category'] == 'life_at_bl_general'
     ){
         $sortable = true;
     }
@@ -35,7 +36,9 @@
                         <tr>
                             <th width="3%">SL</th>
                             
-                            @if( $parent_categories['category'] == 'life_at_bl_events' )
+                            @if( 
+                                $parent_categories['category'] == 'life_at_bl_events' || 
+                                $parent_categories['category'] == 'life_at_bl_general' )
                                 <th>Images</th>
                             @endif
 
@@ -51,9 +54,14 @@
                             {{-- @php( $itemsType = str_replace(" ", "-", strtolower( $items->type->name ) )) --}}
                             <tr @if($sortable) data-index="{{ $items->id }}" data-position="{{ $items->display_order }}" @endif>
                                 <td>{{ ++$key }}</td>
-                                @if( $parent_categories['category'] == 'life_at_bl_events' )
+                                @if( 
+                                    $parent_categories['category'] == 'life_at_bl_events' ||
+                                    $parent_categories['category'] == 'life_at_bl_general'
+                                     )
                                     <td width="10%">
-                                        <img class="img-fluid" src="{{ config('filesystems.file_base_url') . $items->image }}" alt="">
+                                        @if( !empty($items->image) )
+                                            <img class="img-fluid" src="{{ config('filesystems.file_base_url') . $items->image }}" alt="">
+                                        @endif
                                     </td>
                                 @endif
                                 <td>{{ $items->title_en }}</td>
