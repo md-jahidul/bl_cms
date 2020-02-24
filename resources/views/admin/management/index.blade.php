@@ -22,7 +22,7 @@
                             <th width='10%'>Designation</th>
                             <th width='20%'>Personal Details</th>
                             <th width='15%'>Profile Image</th>
-                            <th width='15%'>Banner Image</th>
+                            <th width='15%'>Modal Image</th>
                             <th width='15%'>Action</th>
                         </tr>
                         </thead>
@@ -36,13 +36,13 @@
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <td width='10%'>{{$manage->name}}</td>
                             <td width='10%'>{{$manage->designation}}</td>
-                            <td width='20%'>{{$manage->personal_details}}</td>
+                            <td width='20%'>{{strip_tags($manage->personal_details)}}</td>
                             <td width='15%'>
-                                <img style="height:70px;width:90px; padding: 5px;"
+                                <img style="height:150px;width:180px; padding: 5px;"
                                      src="{{ config('filesystems.file_base_url') . $manage->profile_image }}" id="profile_image_Display">
                             </td>
                             <td width='15%'>
-                                <img style="height:70px;width:90px; padding: 5px;"
+                                <img style="height:150px;width:200px; padding: 5px;"
                                      src="{{ config('filesystems.file_base_url') . $manage->banner_image }}" id="imgDisplay">
                             </td>
                             <td width='15%'>

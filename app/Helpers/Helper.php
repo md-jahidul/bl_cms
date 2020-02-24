@@ -57,12 +57,11 @@ class Helper
             "AMAR_OFFER"              => "Amar Offer",
             "BALANCE_DETAILS"         => "Balance details > Balance",
             "INTERNET_DETAILS"        => "Balance details > Internet",
-/*            "EMERGENCY_BALANCE"       => "Emergency Balance",*/
+            "MINTUES_DETAILS"         => "Balance details > Minutes",
+            "SMS_DETAILS"             => "Balance details > SMS",
             "FAQ"                     => "FAQ",
-/*            "FEED"                    => "Feed",*/
             "FNF"                     => "FnF",
             "HOME"                    => "Home Menu",
-/*            "INBOX"                   => "Inbox",*/
             "INTERNET_EXCLUSIVE_PACK" => "Internet packs > Buy Packs > Exclusive Pack",
             "INTERNET_MONTHLY_PACK"   => "Internet packs > Buy Packs > Monthly Pack",
             "INTERNET_POWER_PACK"     => "Internet packs > Buy Packs > Power Pack",
@@ -73,7 +72,6 @@ class Helper
             "MENU"                    => "Menu",
             "MIXED_BUNDLES"           => "Mixed Bundles",
             "NOTIFICATIONS"           => "Notifications",
-/*            "PACKAGE_DETAILS"         => "Package Details",*/
             "PRIVACY_POLICY"          => "Privacy Policy",
             "PROFILE"                 => "Profile",
             "RECHARGE"                => "Recharge",
@@ -88,8 +86,14 @@ class Helper
             "USAGE_HISTORY"           => "Usage History",
             "USSD_CODE_LIST"          => "View USSD code",
             "VOICE_BUNDLE"            => "Voice Bundles",
+            "BALANCE_TRANSFER"        => "Balance Transfer",
+            "CONTACT_BACKUP"          => "Contact Backup"
+
         ];
     }
+
+
+
     /**
      * OTP Token length list
      *
