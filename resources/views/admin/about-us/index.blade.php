@@ -20,10 +20,11 @@
                         <thead>
                         <tr>
                             <th width='5%'>ID</th>
+                            <th width='10%'>Title</th>
                             <th width='30%'>About Banglalink</th>
-                            <th width='20%'>Content Image</th>
-                            <th width='20%'>Banner Image</th>
-                            <th width='20%'>Action</th>
+                            <th width='18%'>Content Image</th>
+                            <th width='18%'>Banner Image</th>
+                            <th width='15%'>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -34,16 +35,17 @@
 
                             <tr>
                                 <td width='5%'>{{$about->id}}</td>
+                                <td width='10%'>{{$about->title}}</td>
                                 <td width='30%'>{{$about->banglalink_info}}</td>
-                                <td width='20%'>
+                                <td width='18%'>
                                     <img style="height:80px;width:100px;"
                                          src="{{ config('filesystems.file_base_url') . $about->content_image }}" id="profile_image_Display">
                                 </td>
-                                <td width='20%'>
+                                <td width='18%'>
                                     <img style="height:80px;width:100px;"
                                          src="{{ config('filesystems.file_base_url') . $about->banner_image }}" id="imgDisplay">
                                 </td>
-                                <td width='20%'>
+                                <td width='15%'>
                                     <div class="row justify-content-md-center no-gutters">
                                         <div class="col-md-3">
                                             <a role="button" href="{{route('about-us.edit',$about->id)}}" class="btn btn-outline-success">
