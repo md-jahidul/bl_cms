@@ -37,11 +37,9 @@ class EcarrerItemController extends Controller
      $all_items = $this->ecarrerItemService->getItems($parent_id);
      $route_slug = $this->ecarrerItemService->getParentRouteSlug($parent_id);
 
-     // $parent_type = $this->ecarrerItemService->getParentCategories($parent_id);
-
-     // dd($parent_type);
+     $parent_categories = $this->ecarrerItemService->getParentCategories($parent_id);
 		
-     return view('admin.ecarrer-items.index', compact('parent_id', 'all_items', 'route_slug'));
+     return view('admin.ecarrer-items.index', compact('parent_id', 'all_items', 'route_slug', 'parent_categories'));
 
 	}
 
@@ -147,7 +145,12 @@ class EcarrerItemController extends Controller
 
 	}
 
-
+	/**
+	 * [destroy description]
+	 * @param  [type] $parent_id [description]
+	 * @param  [type] $id        [description]
+	 * @return [type]            [description]
+	 */
 	public function destroy($parent_id, $id){
 
 		$response = $this->ecarrerItemService->deleteItem($id);
@@ -155,5 +158,17 @@ class EcarrerItemController extends Controller
 		return redirect("ecarrer-items/$parent_id/list");
 
 	}
+
+	/**
+	 * [ecarrerItemSortable description]
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function ecarrerItemSortable(Request $request){
+
+		$this->ecarrerItemService->tableSortable($request);
+
+	}
+
 
 }

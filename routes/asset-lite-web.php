@@ -472,6 +472,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('programs/ennovatorbatches/{id}/update', 'AssetLite\EcarrerController@ennovatorbatchesUpdate')->name('programs.ennovatorbatches.update');
     Route::get('programs/ennovatorbatches/destroy/{id}', 'AssetLite\EcarrerController@ennovatorbatchesDestroy')->name('programs.ennovatorbatches.destroy');
 
+    Route::get('/ecarrer-items-sortable', 'AssetLite\EcarrerItemController@ecarrerItemSortable');
+
     // App & Service Tab =========================================================
     Route::resource('app-service/tabs', 'AssetLite\AppServiceTabController')
         ->except('create', 'store', 'show', 'destroy');

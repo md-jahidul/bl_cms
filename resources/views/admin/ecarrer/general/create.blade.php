@@ -45,6 +45,17 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('sliding_speed') ? ' error' : '' }}">
+                                    <label for="sliding_speed" class="required">Sliding Speed</label>
+                                    <input type="text" name="sider_info[sliding_speed]" oninput="this.value =Number(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"  class="form-control" placeholder="Enter sliding speed (sec)"  min="1" max="300"
+                                           value="{{ (!empty($sider_info['sliding_speed'])) ? $sider_info['sliding_speed'] : old("sider_info.sliding_speed") ?? '' }}"
+                                           required data-validation-required-message="Enter slider info">
+                                    <div class="help-block"><small>Default value 10</small></div>
+                                    @if ($errors->has('sliding_speed'))
+                                        <div class="help-block">  {{ $errors->first('sliding_speed') }}</div>
+                                    @endif
+                                </div>
+
                                 {{-- <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="">Banner Image (optional)</label>
                                     <div class="custom-file">

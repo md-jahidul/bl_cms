@@ -234,8 +234,43 @@ class EcarrerItemService
      */
     public function getParentCategories($section_id){
 
-        return $this->ecarrerPortalRepository->getSectionDataByID($section_id);
+        $data = [];
+
+        $results = $this->ecarrerPortalRepository->getSectionDataByID($section_id);
+
+        $data['category'] = $results->category;
+        $data['category_type'] = $results->category_type;
+
+        if( !empty($results->additional_info) ){
+            $additional_type = json_decode($results->additional_info);
+
+            if( isset($additional_type->additional_type) ){
+                $data['additional_type'] = $additional_type->additional_type;
+            }
+            else{
+                $data['additional_type'] = null;
+            }
+        }
+        else{
+            $data['additional_type'] = null;
+        }
+
+        return $data;
 
     }
+
+
+    /**
+     * [tableSortable description]
+     * @param  [type] $data [description]
+     * @return [type]       [description]
+     */
+    public function tableSortable($data){
+
+        $this->ecarrerPortalItemRepository->ecarrerItemTableSort($data);
+        return new Response('update successfully');
+
+    }
+
 
 }
