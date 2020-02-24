@@ -65,11 +65,11 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('banglalink_info') ? ' error' : '' }}">
-                                    <label for="banglalink_info" class="required">About Banglalink (English)</label>
+                                    <label for="banglalink_info" class="required">Description (English)</label>
                                     <textarea
                                         required
-                                        data-validation-required-message="About Banglalink (English) is required"
-                                        class="form-control" name="banglalink_info" placeholder="Enter About Banglalink in English" id="banglalink_info"
+                                        data-validation-required-message="Description (English) is required"
+                                        class="form-control" name="banglalink_info" placeholder="Enter Description in English" id="banglalink_info"
                                         rows="4">{{ old("banglalink_info") ? old("banglalink_info") : $banglalink_info  }}</textarea>
 
                                     <div class="help-block"></div>
@@ -80,11 +80,11 @@
 
 
                                 <div class="form-group col-md-6 {{ $errors->has('banglalink_info_bn') ? ' error' : '' }}">
-                                    <label for="banglalink_info_bn" class="required">About Banglalink (Bangla)</label>
+                                    <label for="banglalink_info_bn" class="required">Description (Bangla)</label>
                                     <textarea
                                         required
-                                        data-validation-required-message="About Banglalink (Bangla) is required"
-                                        class="form-control" name="banglalink_info_bn" placeholder="Enter About Banglalink in Bangla" id="banglalink_info_bn"
+                                        data-validation-required-message="Description (Bangla) is required"
+                                        class="form-control" name="banglalink_info_bn" placeholder="Enter Description in Bangla" id="banglalink_info_bn"
                                         rows="4">{{ old("banglalink_info_bn") ? old("banglalink_info_bn") : $banglalink_info_bn }}</textarea>
 
                                     <div class="help-block"></div>

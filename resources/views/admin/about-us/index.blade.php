@@ -21,7 +21,7 @@
                         <tr>
                             <th width='5%'>ID</th>
                             <th width='10%'>Title</th>
-                            <th width='30%'>About Banglalink</th>
+                            <th width='30%'>Description</th>
                             <th width='18%'>Content Image</th>
                             <th width='18%'>Banner Image</th>
                             <th width='15%'>Action</th>
