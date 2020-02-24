@@ -21,7 +21,7 @@
                                     <i class="icon-cursor-move icons"></i>
                                 </td>
                                 <td>
-                                    
+
                                     @if($f->icon_url != "")
                                     <img src="{{ config('filesystems.file_base_url') . $f->icon_url }}" alt="Fearure Icon" height="60px" />
                                     @endif
@@ -38,7 +38,7 @@
                                     @endif
                                 </td>
 
-                             
+
                                 <td class="text-center">
                                     <a class="text-info edit_feature" href="{{$f->id}}">
                                         <i class="la la-pencil-square"></i>
@@ -68,15 +68,29 @@
                                 <input type="hidden" class="feature_id" name="feature_id" value="">
                                 <input type="hidden" class="old_photo" name="old_photo" value="">
 
-                                <div class="form-group">
-                                    <label for="Title">Title <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control title" required name="title" placeholder="Title">
+                                <div class="form-group row">
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="Title">Title (EN)<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control title" required name="title" placeholder="Title EN">
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="Title">Title (BN)<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control title_bn" required name="title_bn" placeholder="Title BN">
+                                    </div>
+
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="Icon">Icon <span class="text-danger">*</span></label>
-                                    <input type="file" class="dropify_feature" name="feature_icon" data-height="70"
-                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                <div class="form-group row">
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="Icon">Icon <span class="text-danger">*</span></label>
+                                        <input type="file" class="dropify_feature" name="feature_icon" data-height="70"
+                                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    </div>
+
+                                    <div class="col-md-6 col-xs-12">
+                                        <label>Alt Text<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control alt_text" required name="alt_text" placeholder="Alt Text">
+                                    </div>
 
                                 </div>
 
@@ -124,7 +138,7 @@
                 success: function (data) {
                 },
                 error: function () {
-                     swal.fire({
+                    swal.fire({
                         title: 'Failed to sort data',
                         type: 'error',
                     });
@@ -133,7 +147,7 @@
         }
 
         $(".feature_sortable").sortable({
-            
+
             update: function (event, ui) {
                 $(this).children().each(function (index) {
                     if ($(this).attr('data-position') != (index + 1)) {
@@ -145,7 +159,7 @@
             }
         });
 
-        
+
         //change status (show/hide) of features
         $(".table").on('click', '.features_status', function (e) {
             e.preventDefault();
@@ -195,9 +209,9 @@
             });
 
         });
-        
-        
-          //show dropify for news photo
+
+
+        //show dropify for news photo
         $('.dropify_feature').dropify({
             messages: {
                 'default': 'Browse for feature icon',
@@ -206,10 +220,10 @@
                 'error': 'Choose correct file format'
             }
         });
-        
-        
+
+
         //edit feature
-         $('.edit_feature').on('click', function (e) {
+        $('.edit_feature').on('click', function (e) {
             e.preventDefault();
 
             let featureId = $(this).attr('href');
@@ -221,7 +235,9 @@
                 success: function (result) {
 
                     $('.home_feature_form .title').val(result.title);
+                    $('.home_feature_form .title_bn').val(result.title_bn);
                     $('.home_feature_form .old_photo').val(result.icon_url);
+                    $('.home_feature_form .alt_text').val(result.alt_text);
 
 
                 },
@@ -233,8 +249,8 @@
                 }
             });
         });
-        
-          //delete feature confirmation
+
+        //delete feature confirmation
         $(".table").on('click', '.delete_feature', function (e) {
             var confrm = confirm("Do you want to delete this feature?");
             if (confrm) {

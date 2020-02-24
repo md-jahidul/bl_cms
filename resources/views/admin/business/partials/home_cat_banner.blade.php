@@ -7,7 +7,8 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th width="55%">Name</th>
+                                <th width="55%">Name (EN)</th>
+                                <th width="55%">Name (BN)</th>
                                 <th width="20%">Home</th>
                             </tr>
                         </thead>
@@ -18,7 +19,13 @@
                                 <td class="category_name">
                                     <i class="icon-cursor-move icons"></i>
                                     {{ $cat->name }} 
-                                    <a class="text-info edit_category_name" href="{{$cat->id}}" name='{{ $cat->name }}'>
+                                    <a class="text-info edit_category_name" type="en" href="{{$cat->id}}" type="" name='{{ $cat->name }}'>
+                                        <i class="la la-pencil-square"></i>
+                                    </a>
+                                </td>
+                                <td class="category_name">
+                                    {{ $cat->name_bn }} 
+                                    <a class="text-info edit_category_name" type="bn" href="{{$cat->id}}" name='{{ $cat->name_bn }}'>
                                         <i class="la la-pencil-square"></i>
                                     </a>
                                 </td>
@@ -31,7 +38,7 @@
                                     @endif
 
                                 </td>
-                               
+
 
                             </tr>
                             @endforeach
@@ -67,15 +74,28 @@
 
                             <form method="POST" class="form uploadBusinessBanner" enctype="multipart/form-data">
                                 @csrf
+                                
                                 <div class="form-group">
+                                    @if($b->image_name == '')
                                     <input type="file" class="dropify" name="banner_photo" data-height="80"
-                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]' required/>
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]' required>
+                                    @else
+                                    <input type="file" class="dropify" name="banner_photo" data-height="80"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    @endif
                                     <input type="hidden" name="home_sort" value="{{$b->home_sort}}">
                                     <input type="hidden" class="old_photo_{{$sort}}" name="old_photo" value="{{$b->image_name}}">
                                 </div>
+                                
+                                <div class="form-group">
+                                    <label>Alt Text</label>
+                                    <input type="text" class="form-control" value="{{ $b->alt_text }}" name="alt_text">
+                                </div>
+                                
                                 <div class="form-group text-center">
                                     <button class="btn btn-sm btn-info" type="submit">Upload</button>
                                 </div>
+                                
                             </form>
 
 
@@ -105,8 +125,9 @@
 
             let name = $(this).attr('name');
             let catId = $(this).attr('href');
+            let type = $(this).attr("type");
             let input = "<input style='width:80%' class='form-control pull-left' type='text' value='" + name + "'>\n\
-                    <a class='pull-left text-success save_cat_name' href='" + catId + "'><i class='mt-1 la la-save'></i></a>";
+                    <a class='pull-left text-success save_cat_name' type='" + type + "' href='" + catId + "'><i class='mt-1 la la-save'></i></a>";
             $(this).parent('.category_name').html(input);
 
         });
@@ -117,6 +138,7 @@
 
             let newName = $(this).parent('td').find('input').val();
             let catId = $(this).attr('href');
+            let type = $(this).attr("type");
             let thisObj = $(this);
 
             $.ajax({
@@ -125,6 +147,7 @@
                 cache: false,
                 data: {
                     catId: catId,
+                    type: type,
                     name: newName
                 },
                 success: function (result) {
@@ -136,9 +159,15 @@
                             showConfirmButton: false
                         });
 
-                        let htmlView = result.name + ' <a class="text-info edit_category_name" href="' + catId + '" name="' + result.name + '">\n\
+                        if (type == 'en') {
+                            let htmlView = result.name + ' <a class="text-info edit_category_name" type="en" href="' + catId + '" name="' + result.name + '">\n\
                                     <i class="la la-pencil-square"></i></a>';
-                        $(thisObj).parent('.category_name').html(htmlView);
+                            $(thisObj).parent('.category_name').html(htmlView);
+                        } else {
+                            let htmlView = result.name_bn + ' <a class="text-info edit_category_name" type="bn" href="' + catId + '" name="' + result.name_bn + '">\n\
+                                    <i class="la la-pencil-square"></i></a>';
+                            $(thisObj).parent('.category_name').html(htmlView);
+                        }
 
 
                     } else {
@@ -236,7 +265,7 @@
                 success: function (data) {
                 },
                 error: function () {
-                     swal.fire({
+                    swal.fire({
                         title: 'Failed to sort data',
                         type: 'error',
                     });
@@ -245,7 +274,7 @@
         }
 
         $(".category_sortable").sortable({
-            
+
             update: function (event, ui) {
                 $(this).children().each(function (index) {
                     if ($(this).attr('data-position') != (index + 1)) {

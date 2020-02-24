@@ -278,6 +278,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     //__news
     Route::post('business-news-save', 'AssetLite\BusinessGeneralController@homeNewsSave')->name('business.news.save');
     Route::get('get-single-news/{newsId}', 'AssetLite\BusinessGeneralController@getNewsById')->name('get.news.by.id');
+    Route::get('business-news-sort', 'AssetLite\BusinessGeneralController@newsSortChange');
     Route::get('business-news-status-change/{id}', 'AssetLite\BusinessGeneralController@newsStatusChange');
     Route::get('business-news-delete/{id}', 'AssetLite\BusinessGeneralController@newsDelete');
 
