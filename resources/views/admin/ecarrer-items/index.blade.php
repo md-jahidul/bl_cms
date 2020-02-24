@@ -21,6 +21,11 @@
                         <thead>
                         <tr>
                             <th width="3%">SL</th>
+                            
+                            @if( $parent_categories['category'] == 'life_at_bl_events' )
+                                <th>Images</th>
+                            @endif
+
                             <th>Title</th>                            
                             <th width="15%">Status</th>
                             <th width="22%">Action</th>
@@ -33,6 +38,9 @@
                             {{-- @php( $itemsType = str_replace(" ", "-", strtolower( $items->type->name ) )) --}}
                             <tr>
                                 <td>{{ ++$key }}</td>
+                                @if( $parent_categories['category'] == 'life_at_bl_events' )
+                                    <td>{{ $items->title_en }}</td>
+                                @endif
                                 <td>{{ $items->title_en }}</td>
                                 <td>{{ ($items->is_active == 1) ? 'Acive' : 'Inactive' }}</td>
                                 <td class="text-center" width="22%">
