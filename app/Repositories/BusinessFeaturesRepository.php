@@ -85,6 +85,8 @@ class BusinessFeaturesRepository extends BaseRepository {
             $feature->icon_url = $filePath;
         }
         $feature->title = $request->title;
+        $feature->title_bn = $request->title_bn;
+        $feature->alt_text = $request->alt_text;
         return $feature->save();
     }
 
