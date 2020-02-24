@@ -56,9 +56,9 @@
                                 </div>
 
                                 <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="alt_text" class="">Banner Image (optional)</label>
+                                    <label for="alt_text" class="required">Banner Image</label>
                                     <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input" id="image">
+                                        <input type="file" name="image_url" class="custom-file-input" id="image" data-validation-required-message="Image is required">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>

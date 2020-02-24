@@ -417,7 +417,6 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('vacancy/viconbox/{id}/update', 'AssetLite\EcarrerController@viconboxUpdate')->name('vacancy.viconbox.update');
     Route::get('vacancy/viconbox/destroy/{id}', 'AssetLite\EcarrerController@viconboxDestroy')->name('vacancy.viconbox.destroy');
 
-
     // eCarrer Programs general =========================================================
     Route::get('programs/progeneral', 'AssetLite\EcarrerController@progeneralIndex')->name('programs.progeneral');
     Route::get('programs/progeneral/create', 'AssetLite\EcarrerController@progeneralCreate')->name('programs.progeneral.create');
@@ -427,7 +426,6 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::post('programs/progeneral/{id}/update', 'AssetLite\EcarrerController@progeneralUpdate')->name('programs.progeneral.update');
     Route::get('programs/progeneral/destroy/{id}', 'AssetLite\EcarrerController@progeneralDestroy')->name('programs.progeneral.destroy');
-
 
     // eCarrer Programs icon box =========================================================
     Route::get('programs/proiconbox', 'AssetLite\EcarrerController@proiconboxIndex')->name('programs.proiconbox');
@@ -439,7 +437,6 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('programs/proiconbox/{id}/update', 'AssetLite\EcarrerController@proiconboxUpdate')->name('programs.proiconbox.update');
     Route::get('programs/proiconbox/destroy/{id}', 'AssetLite\EcarrerController@proiconboxDestroy')->name('programs.proiconbox.destroy');
 
-
     // eCarrer Programs Photo gallery =========================================================
     Route::get('programs/photogallery', 'AssetLite\EcarrerController@photogalleryIndex')->name('programs.photogallery');
     Route::get('programs/photogallery/create', 'AssetLite\EcarrerController@photogalleryCreate')->name('programs.photogallery.create');
@@ -450,7 +447,6 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('programs/photogallery/{id}/update', 'AssetLite\EcarrerController@photogalleryUpdate')->name('programs.photogallery.update');
     Route::get('programs/photogallery/destroy/{id}', 'AssetLite\EcarrerController@photogalleryDestroy')->name('programs.photogallery.destroy');
 
-
     // eCarrer Programs SAP Previous Batches =========================================================
     Route::get('programs/sapbatches', 'AssetLite\EcarrerController@sapbatchesIndex')->name('programs.sapbatches');
     Route::get('programs/sapbatches/create', 'AssetLite\EcarrerController@sapbatchesCreate')->name('programs.sapbatches.create');
@@ -460,8 +456,6 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::post('programs/sapbatches/{id}/update', 'AssetLite\EcarrerController@sapbatchesUpdate')->name('programs.sapbatches.update');
     Route::get('programs/sapbatches/destroy/{id}', 'AssetLite\EcarrerController@sapbatchesDestroy')->name('programs.sapbatches.destroy');
-
-
     // eCarrer Programs Ennovators Previous Batches =========================================================
     Route::get('programs/ennovatorbatches', 'AssetLite\EcarrerController@ennovatorbatchesIndex')->name('programs.ennovatorbatches');
     Route::get('programs/ennovatorbatches/create', 'AssetLite\EcarrerController@ennovatorbatchesCreate')->name('programs.ennovatorbatches.create');
@@ -471,7 +465,6 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::post('programs/ennovatorbatches/{id}/update', 'AssetLite\EcarrerController@ennovatorbatchesUpdate')->name('programs.ennovatorbatches.update');
     Route::get('programs/ennovatorbatches/destroy/{id}', 'AssetLite\EcarrerController@ennovatorbatchesDestroy')->name('programs.ennovatorbatches.destroy');
-
 
     // App & Service Tab =========================================================
     Route::resource('app-service/tabs', 'AssetLite\AppServiceTabController')
@@ -492,12 +485,12 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('app-service/details/{type}/{id}', 'AssetLite\AppServiceProductDetailsController@index')->name('app_service.details.list');
     Route::post('app-service/details/{type}/{id}/store', 'AssetLite\AppServiceProductDetailsController@store')->name('app_service.details.store');
 
-
     # App & Service component
+    Route::get('app-service/component/{id}/edit', 'AssetLite\ComponentController@conponentEdit')->name('appservice.component.edit');
     Route::get('app-service/component/{type}/{id}', 'AssetLite\ComponentController@conponentList')->name('appservice.component.list');
     Route::get('app-service/component/create', 'AssetLite\ComponentController@conponentCreate')->name('appservice.component.create');
     Route::post('app-service/component/store', 'AssetLite\ComponentController@conponentStore')->name('appservice.component.store');
-    Route::get('app-service/component/{component_id}/edit', 'AssetLite\ComponentController@conponentEdit')->name('appservice.component.edit');
+    
 
     // Lead Management ======================================================
     Route::get('lead-requested-list', 'AssetLite\LeadManagementController@leadRequestedList')->name('lead-list');
