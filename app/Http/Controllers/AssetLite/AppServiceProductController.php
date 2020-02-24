@@ -154,6 +154,8 @@ class AppServiceProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = $this->appServiceProductService->deleteAppServiceProduct($id);
+        Session::flash('message', $response->getContent());
+        return route('tabs.index');
     }
 }
