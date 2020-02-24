@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class EcarrerEcarrerPortalsTableSeeder extends Seeder
+class EcarrerPortalsTableSeeder extends Seeder
 {
 
     /**
