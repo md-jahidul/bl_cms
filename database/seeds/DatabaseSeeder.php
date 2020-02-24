@@ -79,5 +79,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(RechargePrefillAmountSeeder::class);
 /*        $this->call(MyBlProductCategorySeeder::class);*/
+        $this->call(AppServiceProductDetailsTableSeeder::class);
     }
 }
