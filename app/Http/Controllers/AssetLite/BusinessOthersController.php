@@ -36,6 +36,17 @@ class BusinessOthersController extends Controller {
         $others = $this->othersService->getOtherService('others');
         return view('admin.business.other_services', compact("businessSolution", "iot", "others"));
     }
+    /**
+     * List of business other services component list by serviceID.
+     * 
+     * @param No
+     * @return Factory|View
+     * @Bulbul Mahmud Nito || 20/02/2020
+     */
+    public function componentList($serviceId) {
+        $components = $this->othersService->getComponents($serviceId);
+        return view('admin.business.service_component_list', compact("components", "serviceId"));
+    }
 
     /**
      * create business packages [form].
@@ -93,7 +104,9 @@ class BusinessOthersController extends Controller {
 //        print_r($request->all());die();
         
         
-         $response = $this->othersService->saveComponents($request);
+         $components = $this->othersService->getComponents($request->service_id);
+         $oldComponents = count($components);
+         $response = $this->othersService->saveComponents($request, $oldComponents);
          
         if($response['success'] == 1){
            Session::flash('sussess', 'Service components is saved!');  
@@ -101,7 +114,40 @@ class BusinessOthersController extends Controller {
             Session::flash('error', 'Service components saving process failed!'); 
         }
         
-//        return redirect('/business-other-services');
+        return redirect('/business-others-components-list/'.$request->service_id);
+    }
+    
+    
+    /**
+     * delete business service component.
+     * 
+     * @param $serviceId, $position
+     * @return Redirect
+     * @Bulbul Mahmud Nito || 19/02/2020
+     */
+    public function deleteComponent($serviceId, $position, $type) {
+        
+         $response = $this->othersService->deleteComponent($serviceId, $position, $type);
+        
+        if($response['success'] == 1){
+           Session::flash('sussess', 'Component is deleted!');  
+        }else{
+            Session::flash('error', 'Component deleting process failed!'); 
+        }
+        
+        return redirect('business-others-components-list/'.$serviceId);
+    }
+    
+          /**
+     * Service component Sorting Change.
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     * @Dev Bulbul Mahmud Nito || 20/02/2020
+     */
+    public function sortComponent(Request $request) {
+        $sortChange = $this->othersService->changeComponentSort($request);
+        return $sortChange;
     }
     
     
@@ -136,7 +182,7 @@ class BusinessOthersController extends Controller {
     
     
     
-        /**
+         /**
      * Service Sorting Change.
      * 
      * @param Request $request
