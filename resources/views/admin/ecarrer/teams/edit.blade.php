@@ -51,13 +51,13 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6">
+                                {{-- <div class="form-group col-md-6">
                                     <label for="category_type">Select teams type</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
                                             <option value="teams_tab_section" @if($sections->category_type == 'teams_tab_section') selected @endif>Teams tabs section</option>
                                             <option value="teams_title" @if($sections->category_type == 'teams_title') selected @endif>Teams main title</option>
                                         </select>
-                                </div>
+                                </div> --}}
 
 
                                 <div class="col-md-6">

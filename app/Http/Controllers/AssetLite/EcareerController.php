@@ -987,13 +987,13 @@ class EcareerController extends Controller
 	 * programs progeneral section list
 	 * @return [type] [description]
 	 */
-	public function progeneralIndex(){
+	public function progeneralIndex($sections_type){
 
 		$categoryTypes = 'programs_progeneral';
 
 		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
 
-		return view('admin.ecarrer.progeneral.index', compact('sections'));
+		return view('admin.ecarrer.progeneral.index', compact('sections', 'sections_type'));
 
 	}
 
@@ -1002,6 +1002,8 @@ class EcareerController extends Controller
 	 * @return [type] [description]
 	 */
 	public function progeneralCreate(){
+
+		dd('wwwww');
 
 		return view('admin.ecarrer.progeneral.create');
 	}

@@ -424,7 +424,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('vacancy/viconbox/destroy/{id}', 'AssetLite\EcareerController@viconboxDestroy')->name('vacancy.viconbox.destroy');
 
     // eCarrer Programs general =========================================================
-    Route::get('programs/progeneral', 'AssetLite\EcareerController@progeneralIndex')->name('programs.progeneral');
+    Route::get('programs/progeneral/{type}', 'AssetLite\EcareerController@progeneralIndex')->name('programs.progeneral');
     Route::get('programs/progeneral/create', 'AssetLite\EcareerController@progeneralCreate')->name('programs.progeneral.create');
     Route::post('programs/progeneral/store', 'AssetLite\EcareerController@progeneralStore')->name('programs.progeneral.store');
 
@@ -432,6 +432,8 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::post('programs/progeneral/{id}/update', 'AssetLite\EcareerController@progeneralUpdate')->name('programs.progeneral.update');
     Route::get('programs/progeneral/destroy/{id}', 'AssetLite\EcareerController@progeneralDestroy')->name('programs.progeneral.destroy');
+
+
 
     // eCarrer Programs icon box =========================================================
     Route::get('programs/proiconbox', 'AssetLite\EcareerController@proiconboxIndex')->name('programs.proiconbox');

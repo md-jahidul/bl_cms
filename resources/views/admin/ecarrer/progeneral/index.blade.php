@@ -21,14 +21,23 @@
                         <tr>
                             <th width="3%">SL</th>
                             <th>Title</th>
-                            <th width="30%">Category</th>
+                            <th width="30%">Tab</th>
                             <th width="15%">Status</th>
                             <th width="22%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
+
+
                         @if( !empty($sections) )
                         @foreach($sections as $key=> $section)
+                            
+                            @php 
+                                $additional_type = json_decode($section->additional_info)->additional_type;
+                            @endphp
+
+                            @if( $additional_type == 'programs_'.$sections_type )
+
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $section->title_en }}</td>
@@ -54,6 +63,9 @@
                                     @endif
                                 </td>
                             </tr>
+
+                            @endif
+
                         @endforeach
                         @endif
                         </tbody>
