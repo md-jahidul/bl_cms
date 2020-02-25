@@ -41,7 +41,6 @@ class CreateProductCoreHistoriesTable extends Migration
             $table->float('call_rate')->nullable()->comment('Paisa per second');
             $table->string('call_rate_unit')->nullable();
             $table->float('sms_rate')->nullable()->comment('Paisa per sms');
-            $table->string('purchase_option')->nullable();
             $table->tinyInteger('is_auto_renewable')->nullable();
             $table->tinyInteger('is_recharge_offer')->default(0);
             $table->tinyInteger('is_gift_offer')->default(false);
@@ -50,7 +49,6 @@ class CreateProductCoreHistoriesTable extends Migration
             $table->json('other_info')->nullable();
             $table->string('platform')->nullable();
             $table->tinyInteger('status')->default(1)->comment('active = 1, inactive = 0');
-            $table->string('segment')->nullable()->comment('both = 1, b2b = 2, b2c = 3');
             $table->timestamps();
         });
     }
