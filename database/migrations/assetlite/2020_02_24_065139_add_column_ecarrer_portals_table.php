@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnIsDefaultEcarrerPortalItemsTable extends Migration
+class AddColumnEcarrerPortalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnIsDefaultEcarrerPortalItemsTable extends Migration
      */
     public function up()
     {
-        Schema::table('ecarrer_portal_items', function (Blueprint $table) {
-            $table->tinyInteger('is_default')->default(0)->after('is_active')->comment('is_default 1 = Section is default, can not be deleted');
+        Schema::table('ecarrer_portals', function (Blueprint $table) {
+            $table->tinyInteger('is_default')->default(0)->after('has_items')->comment('is_default 1 = Section is default, can not be deleted');
         });
     }
 
@@ -25,7 +25,7 @@ class AddColumnIsDefaultEcarrerPortalItemsTable extends Migration
      */
     public function down()
     {
-        Schema::table('ecarrer_portal_items', function (Blueprint $table) {
+        Schema::table('ecarrer_portals', function (Blueprint $table) {
             $table->dropColumn('is_default');
         });
     }

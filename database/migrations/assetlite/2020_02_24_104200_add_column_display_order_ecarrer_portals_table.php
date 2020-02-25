@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnEcarrerPortalItemsTable extends Migration
+class AddColumnDisplayOrderEcarrerPortalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddColumnEcarrerPortalItemsTable extends Migration
      */
     public function up()
     {
-        Schema::table('ecarrer_portal_items', function (Blueprint $table) {
+        Schema::table('ecarrer_portals', function (Blueprint $table) {
             $table->integer('display_order')->default(0)->after('is_default')->comment('Display Order for sorting');
         });
     }
@@ -25,7 +25,7 @@ class AddColumnEcarrerPortalItemsTable extends Migration
      */
     public function down()
     {
-        Schema::table('ecarrer_portal_items', function (Blueprint $table) {
+        Schema::table('ecarrer_portals', function (Blueprint $table) {
             $table->dropColumn('display_order');
         });
     }
