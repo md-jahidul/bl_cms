@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active"> Section Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('programs/progeneral') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url("programs/progeneral/$sections_type") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -15,6 +15,7 @@
                     <div class="card-body card-dashboard">
                         <form id="progeneral_section" role="form" action="{{ route('programs.progeneral.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
+                                <input type="hidden" name="sections_type" value="{{ $sections_type }}">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title (English)</label>
                                     <input type="text" name="title_en"  class="form-control section_name" placeholder="Section name"
@@ -48,7 +49,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="category_type">Select Programs category</label>
+                                    <label for="category_type">Select Programs tab</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
                                             <option value="sap">Strategic Assistant Program</option>
                                             <option value="ennovators">Ennovators</option>
@@ -56,7 +57,17 @@
                                         </select>
                                 </div>
                                 
-                                <div class="form-group col-md-6">
+                                @if( $sections_type == 'news_section' )
+                                    {!! Form::hidden('programs_sections', 'programs_news_section') !!}
+                                @elseif( $sections_type == 'steps' )
+                                    {!! Form::hidden('programs_sections', 'programs_steps') !!}
+                                @elseif( $sections_type == 'events' )
+                                    {!! Form::hidden('programs_sections', 'programs_events') !!}
+                                @elseif( $sections_type == 'testimonial' )
+                                    {!! Form::hidden('programs_sections', 'programs_testimonial') !!}
+                                @endif
+
+                                {{-- <div class="form-group col-md-6">
                                     <label for="category_type">Specify section type</label>
                                     <select class="form-control" name="programs_sections" aria-invalid="false">
                                             <option value="programs_news_section">Programs news section</option>
@@ -64,7 +75,7 @@
                                             <option value="programs_events">Programs Events section</option>
                                             <option value="programs_testimonial">Programs testimonial section</option>
                                         </select>
-                                </div>
+                                </div> --}}
                                 
 
                                 <div class="col-md-6">

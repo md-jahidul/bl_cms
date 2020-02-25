@@ -45,12 +45,18 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6">
+                                {{-- <div class="form-group col-md-6">
                                     <label for="category_type">Select teams type</label>
                                     <select class="form-control" name="category_type" aria-invalid="false">
                                             <option value="teams_tab_section">Teams tabs section</option>
                                             <option value="teams_title">Teams main title</option>
                                         </select>
+                                </div> --}}
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="hidden" name="category_type" value="teams_tab_section">
+                                    </div>
                                 </div>
 
                                 <div class="col-md-6">

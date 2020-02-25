@@ -195,7 +195,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'is_default' => 0,
                 'created_at' => '2020-02-06 07:22:47',
                 'updated_at' => '2020-02-24 08:25:08',
-                'deleted_at' => '2020-02-24 08:25:08',
+                'deleted_at' => NULL,
             ),
             9 => 
             array (
@@ -575,7 +575,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'is_default' => 0,
                 'created_at' => '2020-02-11 11:16:55',
                 'updated_at' => '2020-02-24 08:29:49',
-                'deleted_at' => '2020-02-24 08:29:49',
+                'deleted_at' => NULL,
             ),
             28 => 
             array (
@@ -915,7 +915,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'is_default' => 0,
                 'created_at' => '2020-02-17 06:35:45',
                 'updated_at' => '2020-02-24 08:25:11',
-                'deleted_at' => '2020-02-24 08:25:11',
+                'deleted_at' => NULL,
             ),
             45 => 
             array (
@@ -931,11 +931,11 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'alt_links' => NULL,
                 'call_to_action' => NULL,
                 'additional_info' => NULL,
-                'is_active' => 0,
+                'is_active' => 1,
                 'is_default' => 0,
                 'created_at' => '2020-02-17 07:03:39',
                 'updated_at' => '2020-02-24 08:29:49',
-                'deleted_at' => '2020-02-24 08:29:49',
+                'deleted_at' => NULL,
             ),
             46 => 
             array (
@@ -975,7 +975,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'is_default' => 0,
                 'created_at' => '2020-02-17 08:22:38',
                 'updated_at' => '2020-02-24 08:29:49',
-                'deleted_at' => '2020-02-24 08:29:49',
+                'deleted_at' => NULL,
             ),
             48 => 
             array (
@@ -1015,7 +1015,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'is_default' => 0,
                 'created_at' => '2020-02-17 08:23:40',
                 'updated_at' => '2020-02-24 08:29:49',
-                'deleted_at' => '2020-02-24 08:29:49',
+                'deleted_at' => NULL,
             ),
             50 => 
             array (
@@ -1551,11 +1551,11 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'alt_links' => NULL,
                 'call_to_action' => 'a:1:{s:8:"button_1";a:3:{s:8:"label_en";s:19:"Sit sequi minim iur";s:8:"label_bn";s:20:"Vel numquam ut vitae";s:4:"link";s:19:"Eum est veniam offi";}}',
                 'additional_info' => NULL,
-                'is_active' => 0,
+                'is_active' => 1,
                 'is_default' => 0,
                 'created_at' => '2020-02-20 08:31:06',
                 'updated_at' => '2020-02-24 08:25:06',
-                'deleted_at' => '2020-02-24 08:25:06',
+                'deleted_at' => NULL,
             ),
             77 => 
             array (

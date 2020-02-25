@@ -4,12 +4,6 @@
 @section('breadcrumb')
     <li class="breadcrumb-item active">Item list</li>
 @endsection
-@section('action')
-    <a href="{{ url("$route_slug") }}" class="btn btn-info round btn-glow px-2">Go back Section</a>
-    <a href="{{ url("ecarrer-items/$parent_id/create") }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
-        Add New Item
-    </a>
-@endsection
 
 @php
     if( 
@@ -22,7 +16,31 @@
         $sortable = false;
     }
 
+
+    if( 
+        $parent_categories['category'] == 'life_at_bl_teams'
+    ){
+        $single_item = true;
+    }
+    else{
+        $single_item = false;
+    }
+
+
 @endphp
+
+@section('action')
+    <a href="{{ url("$route_slug") }}" class="btn btn-info round btn-glow px-2">Go back Section</a>
+    
+    @if( !$single_item || count($all_items) == 0 )
+        <a href="{{ url("ecarrer-items/$parent_id/create") }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+            Add New Item
+        </a>
+    @endif
+
+@endsection
+
+
 
 @section('content')
     <section>
