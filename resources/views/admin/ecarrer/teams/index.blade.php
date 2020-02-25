@@ -32,6 +32,7 @@
                         @if( !empty($sections) )
                         @foreach($sections as $key=> $section)
                             
+
                             @if( $section->category_type == 'teams_title' )
                             <tr>
                                 {{-- <td>{{ ++$key }}</td> --}}
@@ -51,7 +52,7 @@
                                 </td>
                             </tr>
                             @else
-                                @php break; @endphp
+                                @php continue; @endphp
                             @endif
                         @endforeach
                         @endif

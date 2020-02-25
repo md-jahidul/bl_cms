@@ -59,7 +59,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'is_default' => 0,
                 'created_at' => '2020-02-04 11:55:01',
                 'updated_at' => '2020-02-24 08:25:05',
-                'deleted_at' => '2020-02-24 08:25:05',
+                'deleted_at' => NULL,
             ),
             2 => 
             array (
@@ -323,7 +323,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'is_default' => 0,
                 'created_at' => '2020-02-06 07:20:54',
                 'updated_at' => '2020-02-24 08:25:08',
-                'deleted_at' => '2020-02-24 08:25:08',
+                'deleted_at' => NULL,
             ),
             14 => 
             array (
@@ -345,7 +345,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'is_default' => 0,
                 'created_at' => '2020-02-06 07:33:31',
                 'updated_at' => '2020-02-24 08:25:11',
-                'deleted_at' => '2020-02-24 08:25:11',
+                'deleted_at' => NULL,
             ),
             15 => 
             array (
@@ -389,7 +389,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'is_default' => 0,
                 'created_at' => '2020-02-06 10:04:23',
                 'updated_at' => '2020-02-24 08:29:49',
-                'deleted_at' => '2020-02-24 08:29:49',
+                'deleted_at' => NULL,
             ),
             17 => 
             array (
@@ -521,7 +521,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'is_default' => 1,
                 'created_at' => '2020-02-11 10:02:54',
                 'updated_at' => '2020-02-24 08:25:13',
-                'deleted_at' => '2020-02-24 08:25:13',
+                'deleted_at' => NULL,
             ),
             23 => 
             array (
