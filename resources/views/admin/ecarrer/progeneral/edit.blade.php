@@ -6,7 +6,7 @@
     <li class="breadcrumb-item active"> {{$sections->title_en}}</li>
 @endsection
 @section('action')
-    <a href="{{ url("programs/progeneral") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
+    <a href="{{ url("programs/progeneral/$sections_type") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
 @endsection
 @section('content')
     <section>
