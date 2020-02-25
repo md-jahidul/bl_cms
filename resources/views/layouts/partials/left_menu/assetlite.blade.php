@@ -313,11 +313,11 @@
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-car"></i> Programs</a>
                             <ul class="menu-content">
-                                {{-- <li class="{{ request()->is('programs/progeneral*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('programs.progeneral') }}"
+                                <li class="{{ request()->is('programs/tab-title*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.tab.title') }}"
                                        data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> General</a>
-                                </li> --}}
+                                            class="la la-safari"></i> Tab Title</a>
+                                </li>
                                 <li class="{{ request()->is('programs/progeneral/news_section*') ? 'active' : '' }}">
                                     <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'news_section']) }}"
                                        data-i18n="nav.templates.vert.classic_menu"><i

@@ -1733,7 +1733,7 @@ class EcareerController extends Controller
 		]);
 		if ($validator->fails()) {
 		    Session::flash('error', $validator->messages()->first());
-		    return redirect('programs/tabtitle');
+		    return redirect('programs/tab-title');
 		}
 
 		$data_types = null;
@@ -1741,7 +1741,7 @@ class EcareerController extends Controller
 		$this->ecarrerService->updateEcarrerSection($request->except(['slug']), $id, $data_types);
 
 		Session::flash('message', 'Banner updated successfully!');
-		return redirect('programs/tabtitle');
+		return redirect('programs/tab-title');
 
 	}
 
