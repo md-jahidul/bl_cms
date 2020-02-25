@@ -4,23 +4,23 @@ namespace App\Http\Controllers\AssetLite;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\EcarrerService;
-use App\Services\EcarrerItemService;
+use App\Services\EcareerService;
+use App\Services\EcareerItemService;
 use App\Http\Controllers\AssetLite\ConfigController;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 
-class EcarrerItemController extends Controller
+class EcareerItemController extends Controller
 {
-    
+
 	/**
 	 * ecarrer service
 	 * @var [type]
 	 */
    private $ecarrerItemService;
 
-    public function __construct(EcarrerItemService $ecarrerItemService)
+    public function __construct(EcareerItemService $ecarrerItemService)
     {
         $this->ecarrerItemService = $ecarrerItemService;
         $this->middleware('auth');
@@ -38,7 +38,7 @@ class EcarrerItemController extends Controller
      $route_slug = $this->ecarrerItemService->getParentRouteSlug($parent_id);
 
      $parent_categories = $this->ecarrerItemService->getParentCategories($parent_id);
-		
+
      return view('admin.ecarrer-items.index', compact('parent_id', 'all_items', 'route_slug', 'parent_categories'));
 
 	}
@@ -72,7 +72,7 @@ class EcarrerItemController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
@@ -127,7 +127,7 @@ class EcarrerItemController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',

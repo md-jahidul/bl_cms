@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-use App\Repositories\EcarrerPortalRepository;
-use App\Repositories\EcarrerPortalItemRepository;
+use App\Repositories\EcareerPortalRepository;
+use App\Repositories\EcareerPortalItemRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Http\Response;
 use Carbon\Carbon;
 
-class EcarrerService
+class EcareerService
 {
     use CrudTrait;
     use FileTrait;
@@ -29,7 +29,7 @@ class EcarrerService
      * PrizeService constructor.
      * @param PrizeRepository $prizeRepository
      */
-    public function __construct(EcarrerPortalRepository $ecarrerPortalRepository, EcarrerPortalItemRepository $ecarrerPortalItemRepository)
+    public function __construct(EcareerPortalRepository $ecarrerPortalRepository, EcareerPortalItemRepository $ecarrerPortalItemRepository)
     {
         $this->ecarrerPortalRepository = $ecarrerPortalRepository;
         $this->ecarrerPortalItemRepository = $ecarrerPortalItemRepository;
@@ -94,7 +94,7 @@ class EcarrerService
     //     $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
 
     //     if (!empty($data['image_url'])) {
-           
+
     //         $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
     //     }
 
@@ -149,7 +149,7 @@ class EcarrerService
         if( !empty($data['slug']) ){
             $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
         }
-        
+
         if (!empty($data['image_url'])) {
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
         }
@@ -174,9 +174,9 @@ class EcarrerService
         if( !empty($data['slug']) ){
             $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
         }
-        
+
         if (!empty($data['image_url'])) {
-           
+
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
         }
 
@@ -184,7 +184,7 @@ class EcarrerService
             $data['has_items'] = $data_types['has_items'];
         }
 
-        $data['additional_info'] = !empty($data_types['additional_info']) ? $data_types['additional_info'] : null;        
+        $data['additional_info'] = !empty($data_types['additional_info']) ? $data_types['additional_info'] : null;
 
         $general_section->update($data);
 
@@ -210,7 +210,7 @@ class EcarrerService
         else{
             return null;
         }
-        
+
     }
 
 }
