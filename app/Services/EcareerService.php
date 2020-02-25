@@ -197,11 +197,17 @@ class EcareerService
      * @param  [type] $request [description]
      * @return [type]          [description]
      */
-    public function getRouteSlug($path){
+    public function getRouteSlug($path, $additional_route_param = null){
         if( !empty($path) ){
             $match = explode('/', $path);
             if( !empty($match[0]) && !empty($match[1]) ){
-                return $match[0].'/'.$match[1];
+
+                if( !empty($additional_route_param) ){
+                    return $match[0].'/'.$match[1].'/'.$additional_route_param;
+                }
+                else{
+                    return $match[0].'/'.$match[1];
+                }
             }
             else{
                 return null;

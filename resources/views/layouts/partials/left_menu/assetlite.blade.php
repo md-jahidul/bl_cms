@@ -318,25 +318,23 @@
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> General</a>
                                 </li> --}}
-                                
-
-                                <li class="{{ request()->is('programs/progeneral*') ? 'active' : '' }}">
+                                <li class="{{ request()->is('programs/progeneral/news_section*') ? 'active' : '' }}">
                                     <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'news_section']) }}"
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> News section</a>
                                 </li>
-                                <li class="{{ request()->is('programs/progeneral*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'news']) }}"
+                                <li class="{{ request()->is('programs/progeneral/steps*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'steps']) }}"
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> Steps section</a>
                                 </li>
-                                <li class="{{ request()->is('programs/progeneral*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'news']) }}"
+                                <li class="{{ request()->is('programs/progeneral/events*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'events']) }}"
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> Events section</a>
                                 </li>
-                                <li class="{{ request()->is('programs/progeneral*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'news']) }}"
+                                <li class="{{ request()->is('programs/progeneral/testimonial*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'testimonial']) }}"
                                        data-i18n="nav.templates.vert.classic_menu"><i
                                             class="la la-safari"></i> Testimonial section</a>
                                 </li>

@@ -1001,11 +1001,9 @@ class EcareerController extends Controller
 	 * eCarrer programs progeneral
 	 * @return [type] [description]
 	 */
-	public function progeneralCreate(){
+	public function progeneralCreate($sections_type){
 
-		dd('wwwww');
-
-		return view('admin.ecarrer.progeneral.create');
+		return view('admin.ecarrer.progeneral.create', compact('sections_type'));
 	}
 
 	/**
@@ -1016,11 +1014,15 @@ class EcareerController extends Controller
 
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
+		    'sections_type' => 'required',
 		    'slug' => 'required'
 		]);
+
+		$section_type = $request->input('sections_type');
+
 		if ($validator->fails()) {
 		    Session::flash('error', $validator->messages()->first());
-		    return redirect('programs/progeneral');
+		    return redirect("programs/progeneral/$section_type");
 		}
 
 		$data_types['category'] = 'programs_progeneral';
@@ -1028,7 +1030,7 @@ class EcareerController extends Controller
 		$data_types['has_items'] = 1;
 
 		# route slug
-		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path(), $section_type);
 
 		# Additional info
 		$additional_info = null;
@@ -1044,7 +1046,7 @@ class EcareerController extends Controller
 		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
 		Session::flash('message', 'Section created successfully!');
-		return redirect('programs/progeneral');
+		return redirect("programs/progeneral/$section_type");
 	}
 
 
@@ -1052,10 +1054,10 @@ class EcareerController extends Controller
 	 * eCarrer programs progeneral
 	 * @return [type] [description]
 	 */
-	public function progeneralEdit($id){
+	public function progeneralEdit($id, $sections_type){
 
 		$sections = $this->ecarrerService->generalSectionById($id);
-		return view('admin.ecarrer.progeneral.edit', compact('sections'));
+		return view('admin.ecarrer.progeneral.edit', compact('sections', 'sections_type'));
 	}
 
 
@@ -1070,16 +1072,23 @@ class EcareerController extends Controller
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
 
+
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
+		    'sections_type' => 'required',
 		    // 'slug' => 'required',
 		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
 		]);
+
+		$section_type = $request->input('sections_type');
+
 		if ($validator->fails()) {
 		    Session::flash('error', $validator->messages()->first());
-		    return redirect('programs/progeneral');
+		    return redirect("programs/progeneral/$section_type");
 		}
+
 
 		$data_types = null;
 
@@ -1095,7 +1104,7 @@ class EcareerController extends Controller
 		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
 
 		Session::flash('message', 'Section updated successfully!');
-		return redirect('programs/progeneral');
+		return redirect("programs/progeneral/$section_type");
 
 	}
 

@@ -5,7 +5,7 @@
     <li class="breadcrumb-item active">Programs</li>
 @endsection
 @section('action')
-    <a href="{{ url('programs/progeneral/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{ url("programs/progeneral/$sections_type/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Add New
     </a>
 @endsection
@@ -33,7 +33,7 @@
                         @foreach($sections as $key=> $section)
                             
                             @php 
-                                $additional_type = json_decode($section->additional_info)->additional_type;
+                                $additional_type = isset($section->additional_info) ? json_decode($section->additional_info)->additional_type : null;
                             @endphp
 
                             @if( $additional_type == 'programs_'.$sections_type )
@@ -52,7 +52,7 @@
                                 </td>
                                 <td>{{ ($section->is_active == 1) ? 'Acive' : 'Inactive' }}</td>
                                 <td class="text-center" width="22%">
-                                    <a href="{{ url("programs/progeneral/$section->id/edit") }}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="{{ url("programs/progeneral/$section->id/$sections_type/edit") }}" role="button" class="btn btn-outline-success border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
 
                                     @if( $section->is_default != 1 )
                                         <a href="{{ url("programs/progeneral/destroy/$section->id") }}" role="button" class="btn btn-outline-success border-0" onclick="return confirm('Are you sure?');"><i class="la la-trash" aria-hidden="true"></i></a>

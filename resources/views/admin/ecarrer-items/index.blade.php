@@ -29,7 +29,6 @@
 
 @endphp
 
-
 @section('action')
     <a href="{{ url("$route_slug") }}" class="btn btn-info round btn-glow px-2">Go back Section</a>
     
