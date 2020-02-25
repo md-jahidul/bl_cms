@@ -381,7 +381,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('life-at-banglalink/events/destroy/{id}', 'AssetLite\EcareerController@eventsDestroy')->name('life.at.banglalink.events.destroy');
 
 
-    // eCarrer Life at banglalink Events & Activities =========================================================
+    // eCarrer Life at banglalink Top Banner menu =========================================================
     Route::get('life-at-banglalink/topbanner', 'AssetLite\EcareerController@topbannerIndex')->name('life.at.banglalink.topbanner');
     Route::get('life-at-banglalink/topbanner/create', 'AssetLite\EcareerController@topbannerCreate')->name('life.at.banglalink.topbanner.create');
     Route::post('life-at-banglalink/topbanner/store', 'AssetLite\EcareerController@topbannerStore')->name('life.at.banglalink.topbanner.store');
@@ -473,6 +473,14 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::post('programs/ennovatorbatches/{id}/update', 'AssetLite\EcareerController@ennovatorbatchesUpdate')->name('programs.ennovatorbatches.update');
     Route::get('programs/ennovatorbatches/destroy/{id}', 'AssetLite\EcareerController@ennovatorbatchesDestroy')->name('programs.ennovatorbatches.destroy');
+
+    # ecareer programs top tab
+    Route::get('programs/tab-title', 'AssetLite\EcareerController@tabTitleIndex')->name('programs.tab.title');
+    Route::get('programs/tab-title/{id}/edit', 'AssetLite\EcareerController@tabTitleEdit')->name('programs.tab.title.edit');
+    Route::post('programs/tab-title/{id}/update', 'AssetLite\EcareerController@tabTitleUpdate')->name('programs.tab.title.update');
+    // Route::get('life-at-banglalink/topbanner/create', 'AssetLite\EcareerController@topbannerCreate')->name('life.at.banglalink.topbanner.create');
+    // Route::post('programs/tab-title/store', 'AssetLite\EcareerController@topbannerStore')->name('life.at.banglalink.topbanner.store');
+    // Route::get('programs/tab-title/destroy/{id}', 'AssetLite\EcareerController@topbannerDestroy')->name('life.at.banglalink.topbanner.destroy');
 
     Route::get('/ecarrer-items-sortable', 'AssetLite\EcareerItemController@ecarrerItemSortable');
 

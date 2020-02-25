@@ -29,6 +29,7 @@ class EcareerController extends Controller
 	 * # programs_photogallery
 	 * # programs_sapbatches
 	 * # programs_ennovatorbatches
+	 * # programs_top_tab_title
 	 */
 
 	/**
@@ -1648,6 +1649,99 @@ class EcareerController extends Controller
 		$response = $this->ecarrerService->sectionDelete($id);
 		Session::flash('message', $response->getContent());
 		return redirect("programs/ennovatorbatches");
+
+	}
+
+
+	/**
+	 * Life at banglalink topbanner section list
+	 * @return [type] [description]
+	 */
+	public function tabTitleIndex(){
+
+		$categoryTypes = 'programs_top_tab_title';
+
+		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
+
+		return view('admin.ecarrer.tabtitle.index', compact('sections'));
+
+	}
+
+	/**
+	 * eCarrer life at banglalink topbanner
+	 * @return [type] [description]
+	 */
+	// public function tabTitleCreate(){
+
+	// 	return view('admin.ecarrer.topbanner.create');
+	// }
+
+	/**
+	 * eCarrer life at banglalink topbanner store on create
+	 * @return [type] [description]
+	 */
+	// public function tabTitleStore(Request $request){
+
+	// 	$validator = Validator::make($request->all(), [
+	// 	    'title_en' => 'required'
+	// 	]);
+	// 	if ($validator->fails()) {
+	// 	    Session::flash('error', $validator->messages()->first());
+	// 	    return redirect('life-at-banglalink/topbanner');
+	// 	}
+
+	// 	$data_types['category'] = 'programs_top_tab_title';
+	// 	$data_types['has_items'] = 0;
+	// 	# route slug
+	// 	$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+
+	// 	# do not store now
+	// 	// $this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
+
+	// 	Session::flash('message', 'Banner created successfully!');
+	// 	return redirect('life-at-banglalink/topbanner');
+	// }
+
+
+	/**
+	 * eCarrer life at banglalink topbanner
+	 * @return [type] [description]
+	 */
+	public function tabTitleEdit($id){
+
+		$sections = $this->ecarrerService->generalSectionById($id);
+		return view('admin.ecarrer.tabtitle.edit', compact('sections'));
+	}
+
+
+	/**
+	 * Update general section
+	 * @param  Request $request [description]
+	 * @param  [type]  $id      [description]
+	 * @return [type]           [description]
+	 */
+	public function tabTitleUpdate(Request $request, $id){
+
+		$image_upload_size = ConfigController::adminImageUploadSize();
+		$image_upload_type = ConfigController::adminImageUploadType();
+
+		# Check Image upload validation
+		$validator = Validator::make($request->all(), [
+		    // 'title_en' => 'required',
+		    // 'slug' => 'required',
+		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('programs/tabtitle');
+		}
+
+		$data_types = null;
+
+		$this->ecarrerService->updateEcarrerSection($request->except(['slug']), $id, $data_types);
+
+		Session::flash('message', 'Banner updated successfully!');
+		return redirect('programs/tabtitle');
 
 	}
 
