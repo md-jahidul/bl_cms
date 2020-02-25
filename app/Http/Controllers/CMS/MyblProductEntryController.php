@@ -125,7 +125,6 @@ class MyblProductEntryController extends Controller
      */
     public function updateMyblProducts(UpdateMyblProductRequest $request, $product_code)
     {
-        //dd($product_code);
         return $this->service->updateMyblProducts($request, $product_code);
     }
 }

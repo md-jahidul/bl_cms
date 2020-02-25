@@ -17,7 +17,7 @@ class CreateProductCoreHistoriesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('product_core_id');
             $table->integer('created_by');
-            $table->string('product_code')->unique();
+            $table->string('product_code');
             $table->string('recharge_product_code')->nullable();
             $table->string('renew_product_code')->nullable();
             $table->string('name')->nullable();
