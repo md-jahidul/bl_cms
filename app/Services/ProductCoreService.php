@@ -677,6 +677,10 @@ class ProductCoreService
                 $data_request['sms_volume'] = substr($data_request['sms_volume'], 0, strrpos($data_request['sms_volume'], ' '));
             }
 
+            if(isset($data_request['minute_volume'])){
+                $data_request['minute_volume'] = substr($data_request['minute_volume'], 0, strrpos($data_request['minute_volume'], ' '));
+            }
+            
             if(isset($data_request['validity'])){
                 $data_request['validity'] = substr($data_request['validity'], 0, strrpos($data_request['validity'], ' '));
             }
