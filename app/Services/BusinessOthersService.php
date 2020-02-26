@@ -84,8 +84,10 @@ class BusinessOthersService {
 
             $request->validate([
                 'type' => 'required',
-                'name' => 'required',
-                'short_details' => 'required',
+                'name_en' => 'required',
+                'name_bn' => 'required',
+                'short_details_en' => 'required',
+                'short_details_bn' => 'required',
                 'banner_photo' => 'required|mimes:jpg,jpeg,png',
                 'icon' => 'required|mimes:jpg,jpeg,png',
             ]);
@@ -296,6 +298,7 @@ class BusinessOthersService {
         $photoText = $this->photoTextRepo->getComponent($serviceId);
         foreach ($photoText as $v) {
             $components[$v->position]['type'] = 'Photo with Text';
+            $components[$v->position]['id'] = $v->id;
             $components[$v->position]['text'] = $v->text;
             $components[$v->position]['photo_url'] = $v->photo_url;
         }
@@ -304,6 +307,7 @@ class BusinessOthersService {
 
         foreach ($packageOne as $v) {
             $components[$v->position]['type'] = 'Package Comparison One';
+            $components[$v->position]['id'] = $v->ids;
             $components[$v->position]['text'] = $v->heads;
             $components[$v->position]['photo_url'] = "";
         }
@@ -312,6 +316,7 @@ class BusinessOthersService {
 
         foreach ($packageTwo as $v) {
             $components[$v->position]['type'] = 'Package Comparison Two';
+            $components[$v->position]['id'] = $v->ids;
             $components[$v->position]['text'] = $v->name;
             $components[$v->position]['photo_url'] = "";
         }
@@ -321,6 +326,7 @@ class BusinessOthersService {
 
         foreach ($features as $v) {
             $components[$v->position]['type'] = 'Product Features';
+            $components[$v->position]['id'] = $v->id;
             $components[$v->position]['text'] = $v->feature_text;
             $components[$v->position]['photo_url'] = "";
         }
@@ -332,6 +338,7 @@ class BusinessOthersService {
             $headArray = json_decode($v->table_head);
             $head = implode(', ', $headArray);
             $components[$v->position]['type'] = 'Product Price Table';
+            $components[$v->position]['id'] = $v->id;
             $components[$v->position]['text'] = $head;
             $components[$v->position]['photo_url'] = "";
         }
@@ -340,6 +347,7 @@ class BusinessOthersService {
         $video = $this->videoRepo->getComponent($serviceId);
         foreach ($video as $v) {
             $components[$v->position]['type'] = 'Video Component';
+            $components[$v->position]['id'] = $v->id;
             $components[$v->position]['text'] = $v->title;
             $components[$v->position]['photo_url'] = "";
         }
@@ -350,6 +358,7 @@ class BusinessOthersService {
 
         foreach ($photos as $v) {
             $components[$v->position]['type'] = 'Photo Component';
+            $components[$v->position]['id'] = $v->id;
             $components[$v->position]['text'] = "";
             $components[$v->position]['photo_url'] = "";
             $components[$v->position]['photo1'] = $v->photo_one;
@@ -411,35 +420,38 @@ class BusinessOthersService {
     public function changeComponentSort($request) {
         try {
             $positions = $request->position;
+            
             foreach ($positions as $position) {
-                $serviceId = $position[0];
-                $newPosition = $position[1];
-                $oldPosition = $position[2];
-                $type = $position[3];
+                $comId = $position['id'];
+                $newPosition = $position['position'];
+                $oldPosition = $position['old_position'];
+                $type = $position['type'];
                 
-                echo $oldPosition;
-                echo " -- ";
+//                echo $oldPosition;
+//                echo " -- ";
 
                 if ($type == "Photo with Text") {
-                    $this->photoTextRepo->changePosition($serviceId, $newPosition, $oldPosition);
+                    $this->photoTextRepo->changePosition($comId, $newPosition);
                 }
                 if ($type == "Package Comparison One") {
-                    $this->pkOneRepo->changePosition($serviceId, $newPosition, $oldPosition);
+                    $comIds = explode(',', $comId);
+                    $this->pkOneRepo->changePosition($comIds, $newPosition);
                 }
                 if ($type == "Package Comparison Two") {
-                    $this->pkTwoRepo->changePosition($serviceId, $newPosition, $oldPosition);
+                    $comIds = explode(',', $comId);
+                    $this->pkTwoRepo->changePosition($comIds, $newPosition);
                 }
                 if ($type == "Product Features") {
-                    $this->featureRepo->changePosition($serviceId, $newPosition, $oldPosition);
+                    $this->featureRepo->changePosition($comId, $newPosition);
                 }
                 if ($type == "Product Price Table") {
-                    $this->priceTableRepo->changePosition($serviceId, $newPosition, $oldPosition);
+                    $this->priceTableRepo->changePosition($comId, $newPosition);
                 }
                 if ($type == "Video Component") {
-                    $this->videoRepo->changePosition($serviceId, $newPosition, $oldPosition);
+                    $this->videoRepo->changePosition($comId, $newPosition);
                 }
                 if ($type == "Photo Component") {
-                    $this->photoRepo->changePosition($serviceId, $newPosition, $oldPosition);
+                    $this->photoRepo->changePosition($comId, $newPosition);
                 }
             }
             $response = [
@@ -497,7 +509,7 @@ class BusinessOthersService {
      * @return Response
      */
     public function getFeaturesByService($serviceType, $serviceId) {
-        $types = array("business-solusion" => 2, "iot" => 3, "others" => 4);
+        $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
         $parentType = $types[$serviceType];
         $response = $this->asgnFeatureRepo->getAssignedFeatures($serviceId, $parentType);
         return $response;
@@ -510,10 +522,14 @@ class BusinessOthersService {
     public function updateService($request) {
         try {
 
-            $request->validate([
+        
+            
+             $request->validate([
                 'type' => 'required',
-                'name' => 'required',
-                'short_details' => 'required',
+                'name_en' => 'required',
+                'name_bn' => 'required',
+                'short_details_en' => 'required',
+                'short_details_bn' => 'required',
             ]);
 
             //banner file replace in storege
@@ -541,7 +557,7 @@ class BusinessOthersService {
             //save data in database 
             $this->otherRepo->updateService($bannerPath, $iconPath, $request);
 
-            $types = array("business-solusion" => 2, "iot" => 3, "others" => 4);
+            $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
             $parentTypes = $types[$request->type];
             $this->asgnFeatureRepo->assignFeature($request->service_id, $parentTypes, $request->feature);
 

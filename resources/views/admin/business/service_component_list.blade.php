@@ -26,7 +26,7 @@
                             <tbody class="service_sortable cursor-move">
 
                                 @foreach($components as $k => $com)
-                                <tr class="sortable_row" data-index="{{ $serviceId }}" data-position="{{ $k }}" data-oldpos="{{$k}}" data-type="{{$com['type']}}">
+                                <tr class="sortable_row" data-index="{{ $com['id'] }}" data-position="{{ $k }}" data-oldpos="{{$k}}" data-type="{{$com['type']}}">
 
                                     <td class="category_name">
 

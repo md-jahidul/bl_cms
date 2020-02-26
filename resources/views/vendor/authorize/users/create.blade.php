@@ -70,7 +70,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('password') ? ' error' : '' }}">
                                     <label for="password" class="required">Password</label>
-                                    <input type="text" name="password"  class="form-control" placeholder="Enter password"
+                                    <input type="password" name="password"  class="form-control" placeholder="Enter password"
                                            value="{{ old("password") ? old("password") : '' }}" required data-validation-required-message="Enter password">
                                     <div class="help-block"></div>
                                     @if ($errors->has('password'))

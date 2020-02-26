@@ -26,21 +26,29 @@
                                 <label> Select Category <span class="text-danger">*</span></label>
                                 <select class="form-control" required="required" name="type">
                                     <option value="">Select Category</option>
-                                    <option value="business-solusion">Business Solution</option>
+                                    <option value="business-solution">Business Solution</option>
                                     <option value="iot">IOT</option>
                                     <option value="others">Others</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="Package Name"> Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required name="name" placeholder="Package Name">
+
+                                <label for="Package Name"> Name (EN)<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" required name="name_en" placeholder="Package Name English">
+                                <br>
+                                <label for="Package Name"> Name (BN)<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" required name="name_bn" placeholder="Package Name Bangla">
+
                             </div>
 
                             <div class="form-group">
                                 <label for="Banner Photo">Banner Photo <span class="text-danger">*</span></label>
                                 <input type="file" required class="dropify_package" name="banner_photo" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+
+                                <label>Alt Text</label>
+                                <input type="text" class="form-control"  name="alt_text" placeholder="Alt Text">
 
                             </div>
 
@@ -58,15 +66,22 @@
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
-                                <label for="Banner Photo">Icon <span class="text-danger">*</span></label>
+                                <label for="Icon">Icon <span class="text-danger">*</span></label>
                                 <input type="file" class="dropify_package" required name="icon" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
                             </div>
 
                             <div class="form-group">
-                                <label for="Short Details">Short Details <span class="text-danger">*</span></label>
-                                <textarea type="text" name="short_details" required class="form-control"></textarea>
+
+                                <label for="Short Details">Short Details (EN)<span class="text-danger">*</span></label>
+                                <textarea type="text" name="short_details_en" required class="form-control"></textarea>
+
+                                <br>
+
+                                <label for="Short Details">Short Details (BN)<span class="text-danger">*</span></label>
+                                <textarea type="text" name="short_details_bn" required class="form-control"></textarea>
+
                             </div>
 
 
@@ -77,8 +92,14 @@
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
-                                <label for="Details">Offer Details</label>
-                                <textarea type="text" name="offer_details" class="form-control textarea_details"></textarea>
+                                <label for="Details">Offer Details (EN)</label>
+                                <textarea type="text" name="offer_details_en" class="form-control textarea_details"></textarea>
+
+                                <br>
+
+                                <label for="Details">Offer Details (BN)</label>
+                                <textarea type="text" name="offer_details_bn" class="form-control textarea_details"></textarea>
+
                             </div>
 
 
@@ -86,7 +107,7 @@
                         <div class="col-md-12 col-xs-12">
 
                             <div class="form-group ">
-                                 <label>Features</label>
+                                <label>Features</label>
                                 <div class="row">
 
                                     @foreach($features as $feature)
@@ -103,9 +124,10 @@
                                     @endforeach
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
-                                    <button type="submit" class="btn btn-info pull-right">Save</button>
+                                <hr>
+                                <button type="submit" class="btn btn-info pull-right">Save</button>
                             </div>
                         </div>
 

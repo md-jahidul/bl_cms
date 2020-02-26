@@ -31,7 +31,7 @@ class BusinessOthersController extends Controller {
      * @Bulbul Mahmud Nito || 18/02/2020
      */
     public function index() {
-        $businessSolution = $this->othersService->getOtherService('business-solusion');
+        $businessSolution = $this->othersService->getOtherService('business-solution');
         $iot = $this->othersService->getOtherService('iot');
         $others = $this->othersService->getOtherService('others');
         return view('admin.business.other_services', compact("businessSolution", "iot", "others"));
@@ -60,16 +60,7 @@ class BusinessOthersController extends Controller {
         return view('admin.business.other_services_create', compact("features"));
     }
 
-    /**
-     * create business packages add components [form].
-     * 
-     * @param $serviceId
-     * @return Redirect
-     * @Bulbul Mahmud Nito || 18/02/2020
-     */
-    public function addComponent($serviceId) {
-        return view('admin.business.other_services_components', compact("serviceId"));
-    }
+   
 
     /**
      * save business other service/packages.
@@ -91,6 +82,19 @@ class BusinessOthersController extends Controller {
         
         return redirect('/business-other-services');
     }
+    
+    
+     /**
+     * create business packages add components [form].
+     * 
+     * @param $serviceId
+     * @return Redirect
+     * @Bulbul Mahmud Nito || 18/02/2020
+     */
+    public function addComponent($serviceId) {
+        return view('admin.business.other_services_components', compact("serviceId"));
+    }
+    
     
     /**
      * save business other service/packages.
