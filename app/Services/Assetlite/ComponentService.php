@@ -61,7 +61,9 @@ class ComponentService
         } else {
             $data['video'] = request()->input('video_url', null);
         }
-        $data['page_type'] = self::APP;
+	
+	$data['page_type'] = self::PAGE_TYPE;
+        
         $results = [];
         if (isset($data['multi_item']) && !empty($data['multi_item'])) {
             $request_multi = $data['multi_item'];
