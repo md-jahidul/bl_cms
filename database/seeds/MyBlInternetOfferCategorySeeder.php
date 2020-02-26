@@ -15,7 +15,7 @@ class MyBlInternetOfferCategorySeeder extends Seeder
     {
         DB::table('my_bl_internet_offers_categories')->truncate();
 
-        $category = ['Exclusive Pack','Power Pack','Weekly Pack','Monthly Pack', 'Social Pack'];
+        $category = ['Exclusive Pack','Power Pack','Weekly Pack','Monthly Pack', 'Social Pack', 'One Time pack'];
         foreach ($category as $key => $val) {
             MyBlInternetOffersCategory::create(
                 [
