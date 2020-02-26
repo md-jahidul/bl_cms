@@ -129,7 +129,7 @@
                                     <div class="form-group">
                                         <label>Has Auto Renew Code? </label>
                                         <input class="form-control"
-                                               value="{{ ($details->details->renew_product_code)? "YES" : "NO" }}">
+                                               value="{{ ($details->details->renew_product_code)? "YES" : "NO" }}" disabled>
                                     </div>
                                 </div>
                                 @if($details->details->renew_product_code)
