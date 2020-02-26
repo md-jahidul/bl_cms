@@ -163,11 +163,20 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('section-store/{id}', 'AssetLite\ProductDetailsController@storeSection')
         ->name('section-store');
 
-    Route::get('components-list/{SectionId}', 'AssetLite\ProductDetailsController@componentList')
+    Route::get('product-details/components-list/{SectionId}', 'AssetLite\ProductDetailsController@componentList')
         ->name('component-list');
 
     Route::get('components-create/{SectionId}', 'AssetLite\ProductDetailsController@componentCreate')
         ->name('component-create');
+
+    Route::post('components-store/{SectionId}', 'AssetLite\ProductDetailsController@componentStore')
+        ->name('component-store');
+
+    Route::get('product-details/section/{sid}/component/{id}/edit', 'AssetLite\ProductDetailsController@componentEdit')
+        ->name('component-edit');
+
+    Route::put('product-details/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
+        ->name('component-update');
 
 
     Route::get('offers/{type}/{id}', 'AssetLite\ProductController@destroy');

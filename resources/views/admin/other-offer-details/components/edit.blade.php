@@ -1,160 +1,211 @@
 @extends('layouts.admin')
-@section('title', 'App & Service Product Edit')
-@section('card_name', 'App & Service Product Edit')
+@section('title', 'Partner Create')
+@section('card_name', 'Partner Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ route('app-service-product.index') }}">App & Service Product List</a></li>
-    <li class="breadcrumb-item active"> App & Service Product Edit</li>
+    <li class="breadcrumb-item active"> <a href="{{ url('partners') }}"> Partner List</a></li>
+    <li class="breadcrumb-item active"> Partner Create</li>
 @endsection
 @section('action')
-    <a href="{{ route('app-service-product.index') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('partners') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
+
+
+
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h5 class="menu-title"><strong>Product Edit</strong></h5><hr>
                     <div class="card-body card-dashboard">
-                        <form id="product_form" role="form" action="{{ route('app-service-product.update', $appServiceProduct->id) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route('component-update',[$sectionId, $component->id]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
-                            {{ method_field('PUT') }}
-                            <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
-                                    <label for="name_en">Offer Title (English)</label>
-                                    <input type="text" name="name_en" id="name_en" class="form-control" placeholder="Enter offer name in English"
-                                           value="{{ $appServiceProduct->name_en }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('name_en'))
-                                        <div class="help-block">{{ $errors->first('name_en') }}</div>
-                                    @endif
-                                </div>
+                            @method('put')
+                            <div class="app-content">
+                                <h3>Component Fields</h3><hr>
+                                <div class="sidebar-right">
+                                    <div class="sidebar">
+                                        <div class="sidebar-content card d-none d-lg-block">
+                                            <div class="card-body">
+                                                <div class="category-title">
+                                                    <h6><strong>Select Field Type</strong></h6>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-md-8 col-sm-12">
+                                                        <fieldset>
+                                                            <input type="checkbox" id="input-text">
+                                                            <label for="input-text" class="">Text Field</label>
+                                                        </fieldset>
 
-                                <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
-                                    <label for="name_bn">Offer Title (Bangla)</label>
-                                    <input type="text" name="name_bn" id="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
-                                           value="{{ $appServiceProduct->name_bn }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('name_bn'))
-                                        <div class="help-block">{{ $errors->first('name_bn') }}</div>
-                                    @endif
-                                </div>
+                                                        <fieldset>
+                                                            <input type="checkbox" id="text-area">
+                                                            <label for="text-area" class="">TextArea</label>
+                                                        </fieldset>
 
-                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
-                                    <label for="start_date">Start Date</label>
-                                    <div class='input-group'>
-                                        <input type='text' class="form-control" name="start_date" id="start_date"
-                                               value="{{ $appServiceProduct->start_date }}"
-                                               placeholder="Please select start date" />
-                                    </div>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('start_date'))
-                                        <div class="help-block">{{ $errors->first('start_date') }}</div>
-                                    @endif
-                                </div>
+                                                        <fieldset>
+                                                            <input type="checkbox" id="text-editor">
+                                                            <label for="text-editor" class="">Text Editor</label>
+                                                        </fieldset>
 
-                                <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
-                                    <label for="end_date">End Date</label>
-                                    <input type="text" name="end_date" id="end_date" class="form-control"
-                                           placeholder="Please select end date"
-                                           value="{{ $appServiceProduct->end_date }}" autocomplete="0">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('end_date'))
-                                        <div class="help-block">{{ $errors->first('end_date') }}</div>
-                                    @endif
-                                </div>
+                                                        <fieldset>
+                                                            <input type="checkbox" id="image-field">
+                                                            <label for="image-field" class="">Image Field</label>
+                                                        </fieldset>
 
-                                <div class="form-group col-md-6 {{ $errors->has('app_service_tab_id') ? ' error' : '' }}">
-                                    <label for="app_service_tab_id" class="required">App & Service Type</label>
-                                    <select class="form-control required" name="app_service_tab_id" id="offer_type"
-                                            required data-validation-required-message="Please select type">
-                                        <option data-alias="" value="">---Select Type---</option>
-                                        @foreach($appServiceTabs as $tab)
-                                            <option data-alias="{{ $tab->alias }}" value="{{ $tab->id }}" {{ ($tab->id == $appServiceProduct->app_service_tab_id ) ? 'selected' : '' }}>{{ $tab->name_en }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('app_service_tab_id'))
-                                        <div class="help-block">{{ $errors->first('app_service_tab_id') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label for="tag_category_id" class="required">Category</label>
-                                    <select class="form-control" name="app_service_cat_id" id="appServiceCat"
-                                            required data-validation-required-message="Please select category">
-                                        <option data-alias="" value="">---Select Category---</option>
-                                        @foreach($appServiceCategory as $category)
-                                            <option data-alias="{{ $category->alias }}" value="{{ $category->id }}" {{ ($category->id == $appServiceProduct->app_service_cat_id ) ? 'selected' : '' }}>{{ $category->title_en }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('app_service_cat_id'))
-                                        <div class="help-block">{{ $errors->first('app_service_cat_id') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 ">
-                                    <label for="price_tk">Offer Price</label>
-                                    <input type="text" name="price_tk" id="price_tk"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
-                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                                           value="{{ $appServiceProduct->price_tk }}">
-                                    <div class="help-block"></div>
-                                </div>
-
-                                <div class="form-group col-md-6 ">
-                                    <label for="validity_unit">Validity Unit</label>
-                                    <input type="text" name="validity_unit" class="form-control" placeholder="Enter offer validity unit"
-                                           value="{{ $appServiceProduct->validity_unit }}">
-                                    <div class="help-block"></div>
-                                </div>
-
-                                <slot id="app" data-offer-type="app" class="{{ $appServiceProduct->appServiceTab->alias == 'app' ? '' : 'd-none' }}">
-                                    @include('layouts.partials.app-service.app')
-                                </slot>
-
-                                <slot id="vas" data-offer-type="vas" class="{{ $appServiceProduct->appServiceTab->alias == 'vas' ? '' : 'd-none' }}">
-                                    @include('layouts.partials.app-service.vas')
-                                </slot>
-
-                                <div class="form-group col-md-6 ">
-                                    <label for="description_en">Description (English)</label>
-                                    <textarea type="text" name="description_en" class="form-control" placeholder="Enter description in English"
-                                    >{{ $appServiceProduct->description_en }}</textarea>
-                                    <div class="help-block"></div>
-                                </div>
-
-                                <div class="form-group col-md-6 ">
-                                    <label for="description_bn">Description (Bangla)</label>
-                                    <textarea type="text" name="description_bn" class="form-control" placeholder="Enter description in Bangla"
-                                    >{{ $appServiceProduct->description_bn }}</textarea>
-                                    <div class="help-block"></div>
-                                </div>
-
-
-                                <div class="col-md-6">
-                                    <label></label>
-                                    <div class="form-group">
-                                        <label for="can_active" class="mr-1">Can Active:</label>
-                                        <input type="checkbox" name="can_active" value="1" id="can_active" {{ ($appServiceProduct->can_active == 1) ? 'checked' : '' }}>
+                                                        <fieldset>
+                                                            <input type="checkbox" id="multi-image">
+                                                            <label for="multi-image" class="">Multiple Image Field</label>
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="content-left">
+                                    <div class="content-wrapper">
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="title" class="mr-1">Status:</label>
-                                        <input type="radio" name="status" value="1" id="active" {{ ($appServiceProduct->status == 1) ? 'checked' : '' }}>
-                                        <label for="active" class="mr-1">Active</label>
+                                        <div class="content-body">
+                                            <div class="row">
 
-                                        <input type="radio" name="status" value="0" id="inactive" {{ ($appServiceProduct->status == 0) ? 'checked' : '' }}>
-                                        <label for="inactive">Inactive</label>
-                                    </div>
-                                </div>
+                                                <div class="form-group col-md-12 {{ $errors->has('editor_en') ? ' error' : '' }}">
+                                                    <label for="editor_en" >Data Type</label>
 
-                                <div class="form-actions col-md-12">
-                                    <div class="pull-right">
-                                        <button id="save" class="btn btn-primary"><i
-                                                class="la la-check-square-o"></i> Save
-                                        </button>
+                                                    <select name="component_type" class="form-control" required data-validation-required-message="Please select design structure">
+                                                        <option value="">--Select Data Type--</option>
+                                                        {{ $component->component_type }}
+                                                        @foreach($dataTypes as $key => $type)
+                                                            <option value="{{ $key }}" {{ ($component->component_type == $key) ? 'selected' : '' }}>{{ $type }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="help-block"></div>
+                                                    @if ($errors->has('editor_en'))
+                                                        <div class="help-block">{{ $errors->first('editor_en') }}</div>
+                                                    @endif
+                                                </div>
+
+                                                <slot id="text-field" class="{{ ($component->title_en || $component->title_bn) ? '' : "d-none" }}">
+                                                    <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                                        <label for="title_en">Text Field (English)</label>
+                                                        <input type="text" name="title_en"  class="form-control" placeholder="Enter company name bangla"
+                                                               value="{{ $component->title_en }}">
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('title_en'))
+                                                            <div class="help-block">  {{ $errors->first('title_en') }}</div>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                                        <label for="title_bn" >Text Field (Bangla)</label>
+                                                        <input type="text" name="title_bn"  class="form-control" placeholder="Enter company name bangla"
+                                                               value="{{ $component->title_bn }}">
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('title_bn'))
+                                                            <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                                        @endif
+                                                    </div>
+                                                </slot>
+
+                                                <slot id="text-area-field" class="{{ ( $component->description_en || $component->description_en ) ? '' : "d-none" }}">
+                                                    <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
+                                                        <label for="description_en" >Text Area (English)</label>
+                                                        <textarea name="description_en"  class="form-control" placeholder="Enter company name bangla">{{ $component->description_en }}</textarea>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('description_en'))
+                                                            <div class="help-block">  {{ $errors->first('description_en') }}</div>
+                                                        @endif
+                                                    </div>
+
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('description_bn') ? ' error' : '' }}">
+                                                        <label for="description_bn" >Text Area (Bangla)</label>
+                                                        <textarea name="description_bn" class="form-control" placeholder="Enter company name bangla">{{ $component->description_bn }}  </textarea>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('description_bn'))
+                                                            <div class="help-block">  {{ $errors->first('description_bn') }}</div>
+                                                        @endif
+                                                    </div>
+                                                </slot>
+
+                                                <slot id="text-editor-field" class="{{ ( $component->editor_en || $component->editor_bn ) ? '' : "d-none" }}">
+                                                    <div class="form-group col-md-6 {{ $errors->has('editor_en') ? ' error' : '' }}">
+                                                        <label for="editor_en">Text Editor (English)</label>
+                                                        <textarea type="text" name="editor_en"  class="form-control" placeholder="Enter offer details in english" id="details">{{ $component->editor_en }}</textarea>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('editor_en'))
+                                                            <div class="help-block">{{ $errors->first('editor_en') }}</div>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('editor_bn') ? ' error' : '' }}">
+                                                        <label for="editor_bn">Text Editor (Bangla)</label>
+                                                        <textarea type="text" name="editor_bn"  class="form-control" placeholder="Enter offer details in english"  id="details">{{ $component->editor_bn }}</textarea>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('editor_bn'))
+                                                            <div class="help-block">{{ $errors->first('editor_bn') }}</div>
+                                                        @endif
+                                                    </div>
+                                                </slot>
+
+                                                <slot id="single-image" class="{{ ( $component->editor_en ) ? '' : "d-none" }}">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="alt_text" class="">Single Image</label>
+                                                        <div class="custom-file">
+                                                            <input type="file" name="image" class="custom-file-input" id="image">
+                                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                                        </div>
+                                                        <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label for="alt_text" class="required1">Alt Text</label>
+                                                        <input type="text" name="alt_text"  class="form-control">
+                                                    </div>
+                                                </slot>
+
+                                                <slot id="multiple-image-field" class="{{ ( $component->multiple_attributes['image'] ) ? '' : "d-none" }}">
+                                                    @php( $i = 0 )
+                                                    @foreach($multipleImage['image'] as $key => $image)
+                                                        @php($i++)
+                                                        <div class="col-md-6 col-xs-6 option-{{ $i }} options-count">
+                                                            <div class="form-group">
+                                                                <label for="message">Multiple Image</label>
+                                                                <input type="file" class="dropify" name="multiple_attributes[image][image_url_{{ $i }}]"
+                                                                       data-default-file="{{ config('filesystems.file_base_url') . $image }}"
+                                                                       data-height="80"/>
+                                                                <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-md-5 option-{{ $i }}">
+                                                            <label for="alt_text">Alt Text</label>
+                                                            <input type="text" name="multiple_attributes[alt_text][alt_text_{{ $i }}]" value="{{ $multipleImage['alt_text']["alt_text_$i"] }}"  class="form-control">
+                                                        </div>
+
+                                                    @if(count($multipleImage['image']) == 1)
+                                                        <div class="form-group col-md-1">
+                                                            <label for="alt_text"></label>
+                                                            <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>
+                                                        </div>
+                                                    @else
+{{--                                                        <div class="form-group col-md-1 option-{{ $i }}">--}}
+{{--                                                            <label for="alt_text"></label>--}}
+{{--                                                            <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-{{ $i }}" ><i data-id="option-{{ $i }}" class="la la-trash"></i></button>--}}
+{{--                                                        </div>--}}
+                                                    @endif
+                                                    @endforeach
+                                                </slot>
+
+                                                <div class="form-actions col-md-12">
+                                                    <div class="pull-right">
+                                                        <button type="submit" class="btn btn-primary"><i
+                                                                class="la la-check-square-o"></i> Save
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -164,48 +215,123 @@
             </div>
         </div>
     </section>
+
+
+
 @stop
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
-    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/tinymce/tinymce.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/selectize/selectize.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/selects/selectize.default.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+
+
+
 @endpush
 @push('page-js')
-    <script src="{{ asset('app-assets/vendors/js/forms/select/selectize.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('app-assets/js/scripts/forms/select/form-selectize.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
-    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
-    <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 
     <script>
         $(function () {
-            $('#offer_type').change(function () {
-                var typeId = $(this).find('option:selected').val()
-                var appServiceCat = $('#appServiceCat');
-                $.ajax({
-                    url: "{{ url('app-service/category-find') }}" + '/' + typeId,
-                    success: function (data) {
-                        appServiceCat.empty();
-                        var option = '<option value="">---Select Category---</option>'
-                        $.map(data, function (item) {
-                            option += '<option data-alias="'+item.alias+'" value="'+item.id+'">'+item.title_en+'</option>'
-                        })
-                        appServiceCat.append(option)
-                    },
-                })
+
+            function dropify(){
+                $('.dropify').dropify({
+                    messages: {
+                        'default': 'Browse for an Image File to upload',
+                        'replace': 'Click to replace',
+                        'remove': 'Remove',
+                        'error': 'Choose correct file format'
+                    }
+                });
+            }
+            dropify();
+
+            $("textarea#details").summernote({
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    // ['table', ['table']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['view', ['fullscreen', 'codeview']]
+                ],
+                height:200
             })
 
+            $(document).on('click', '#plus-image', function () {
+                var option_count = $('.options-count');
+                var total_option = option_count.length + 1;
 
-            var fields = $("#form-fields").find("input, textarea");
-            fields.val('')
+                var input = '<div class="col-md-6 col-xs-6 options-count option-'+total_option+'">\n' +
+                    '<div class="form-group">\n' +
+                    '      <label for="message">Multiple Image</label>\n' +
+                    '      <input type="file" class="dropify" name="multiple_attributes[image][image_url_'+total_option+']" data-height="80"/>\n' +
+                    '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
+                    '  </div>\n' +
+                    ' </div>\n'+
+                    '<div class="form-group col-md-5 option-'+total_option+'">\n' +
+                    '    <label for="alt_text">Alt Text</label>\n' +
+                    '    <input type="text" name="multiple_attributes[alt_text][alt_text_'+total_option+']"  class="form-control">\n' +
+                    '</div>\n' +
+                    '<div class="form-group col-md-1 option-'+total_option+'">\n' +
+                    '   <label for="alt_text"></label>\n' +
+                    '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
+                    '</div>';
+                $('#multiple-image-field').append(input);
+                //Call dropify Function
+                dropify();
+            });
+
+            $(document).on('click', '.remove-image', function (event) {
+                var rowId = $(event.target).attr('data-id');
+                $('.'+rowId).remove();
+            });
+
+            var inputText = $('#input-text');
+            var textArea = $('#text-area');
+            var textEditor = $('#text-editor');
+            var imageField = $('#image-field');
+            var multiImage = $('#multi-image');
+
+            var textField = $('#text-field');
+            var textAreaField = $('#text-area-field');
+            var textEditorField = $('#text-editor-field');
+            var singleImage = $('#single-image');
+            var multipleImageField = $('#multiple-image-field');
+
+            function showHideElement(field, item){
+                $(field).on('click', function () {
+                    var isChecked = $(this).is(":checked");
+                    if (isChecked) {
+                        $(item).removeClass('d-none')
+                    } else {
+                        $(item).addClass('d-none')
+                    }
+                });
+            }
+
+            showHideElement(inputText, textField);
+            showHideElement(textArea, textAreaField);
+            showHideElement(textEditor, textEditorField);
+            showHideElement(imageField, singleImage);
+            showHideElement(multiImage, multipleImageField);
         })
     </script>
+
 @endpush
+
+
+
+
+
 
 
