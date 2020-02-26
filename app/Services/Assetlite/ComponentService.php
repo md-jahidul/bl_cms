@@ -63,7 +63,7 @@ class ComponentService
             $data['video'] = request()->input('video_url', null);
         }
 
-        $data['page_type'] = self::APP;
+        $data['page_type'] = self::PAGE_TYPE;
 
         
         $results = [];
