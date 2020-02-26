@@ -160,7 +160,7 @@
                         });
 
                         if (type == 'en') {
-                            let htmlView = result.name + ' <a class="text-info edit_category_name" type="en" href="' + catId + '" name="' + result.name + '">\n\
+                            let htmlView = '<i class="icon-cursor-move icons"></i> '+ result.name + ' <a class="text-info edit_category_name" type="en" href="' + catId + '" name="' + result.name + '">\n\
                                     <i class="la la-pencil-square"></i></a>';
                             $(thisObj).parent('.category_name').html(htmlView);
                         } else {

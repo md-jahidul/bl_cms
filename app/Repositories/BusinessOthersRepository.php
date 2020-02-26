@@ -28,14 +28,21 @@ class BusinessOthersRepository extends BaseRepository {
             $service->icon = $iconPath;
         }
 
-        $service->name = $request->name;
+        $service->alt_text = $request->alt_text;
+        
+        $service->name = $request->name_en;
+        $service->name_bn = $request->name_bn;
         
         if ($request->sliding_speed != "") {
             $service->sliding_speed = $request->sliding_speed;
         }
         
-        $service->short_details = $request->short_details;
-        $service->offer_details = $request->offer_details;
+        $service->short_details = $request->short_details_en;
+        $service->short_details_bn = $request->short_details_bn;
+        
+        $service->offer_details = $request->offer_details_en;
+        $service->offer_details_bn = $request->offer_details_bn;
+        
         $service->type = $request->type;
         $service->save();
         return $service->id;
@@ -134,10 +141,21 @@ class BusinessOthersRepository extends BaseRepository {
         if ($iconPath != "") {
             $service->icon = $iconPath;
         }
+          $service->alt_text = $request->alt_text;
         
-        $service->sliding_speed = $request->sliding_speed;
-        $service->short_details = $request->short_details;
-        $service->offer_details = $request->offer_details;
+        $service->name = $request->name_en;
+        $service->name_bn = $request->name_bn;
+        
+        if ($request->sliding_speed != "") {
+            $service->sliding_speed = $request->sliding_speed;
+        }
+        
+        $service->short_details = $request->short_details_en;
+        $service->short_details_bn = $request->short_details_bn;
+        
+        $service->offer_details = $request->offer_details_en;
+        $service->offer_details_bn = $request->offer_details_bn;
+        
         $service->type = $request->type;
         return $service->save();
     }

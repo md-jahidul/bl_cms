@@ -21,21 +21,40 @@
                         <div class="col-md-6 col-xs-12">
 
                             @csrf
-                            
+
                             <input type="hidden" value="{{$package->id}}" name="package_id">
 
-                            <div class="form-group">
-                                <label for="Package Name">Package Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required name="name" value="{{ $package->name }}" placeholder="Package Name">
+
+
+                            <div class="form-group row">
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Package Name (EN)<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required name="name_en" value="{{ $package->name }}" placeholder="Package Name English">
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Package Name (BN)<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required name="name_bn" value="{{ $package->name_bn }}" placeholder="Package Name Bangla">
+                                </div>
+
+
                             </div>
 
 
-
                             <div class="form-group">
-                                <label for="Details">Package Details</label>
-                                <textarea type="text" name="package_details" class="form-control package_details">{!! $package->main_details !!}</textarea>
+
+                                <label for="Details">Package Details (EN)</label>
+                                <textarea type="text" name="package_details_en" class="form-control package_details">{!! $package->main_details !!}</textarea>
+
+                                <hr>
+
+                                <label for="Details">Package Details (BN)</label>
+                                <textarea type="text" name="package_details_bn" class="form-control package_details">{!! $package->main_details_bn !!}</textarea>
+
                             </div>
-                            
+
+
                             <div class="form-group ">
                                 <h4 for="Details">Select Features</h4>
                                 <hr>
@@ -67,29 +86,55 @@
                         </div>
                         <div class="col-md-6 col-xs-12">
 
-                            <div class="form-group">
+                            <div class="form-group row">
                                 <label for="Banner Photo">Banner Photo <span class="text-danger">*</span></label>
                                 <p class="text-center">
-                                     @if($package->banner_photo != "")
-                                <img src="{{ config('filesystems.file_base_url') . $package->banner_photo }}" alt="Banner Photo" height="100px" />
-                                @endif
+                                    @if($package->banner_photo != "")
+                                    <img src="{{ config('filesystems.file_base_url') . $package->banner_photo }}" alt="Banner Photo" height="100px" />
+                                    @endif
                                 </p>
-                               
+                                
+                                <div class="col-md-6 col-xs-12">
 
-                                <input type="hidden" name="old_banner" value="{{$package->banner_photo}}">
-                                <input type="file" class="dropify_package" name="banner_photo" data-height="70"
-                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    <input type="hidden" name="old_banner" value="{{$package->banner_photo}}">
+                                    <input type="file" class="dropify_package" name="banner_photo" data-height="70"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Alt Text</label>
+                                    <input type="text" class="form-control" value="{{$package->alt_text}}" name="alt_text" placeholder="Alt Text">
+                                </div>
 
                             </div>
 
-                            <div class="form-group">
-                                <label for="Short Details">Short Details <span class="text-danger">*</span></label>
-                                <textarea type="text" name="short_details" required class="form-control">{{$package->short_details}}</textarea>
+                            
+                            <div class="form-group row">
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label for="Short Details">Short Details (EN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="short_details_en" required class="form-control">{{$package->short_details}}</textarea>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label for="Short Details">Short Details (BN)<span class="text-danger">*</span></label>
+                                    <textarea type="text" name="short_details_bn" required class="form-control">{{$package->short_details_bn}}</textarea>
+                                </div>
+
+
                             </div>
 
-                            <div class="form-group">
-                                <label for="Offer Details">Offer Details</label>
-                                <textarea type="text" name="offer_details" class="form-control package_details">{!! $package->offer_details !!}</textarea>
+                            
+                             <div class="form-group">
+
+                                    <label for="Offer Details">Offer Details (EN)</label>
+                                    <textarea type="text" name="offer_details_en" class="form-control package_details">{!! $package->offer_details !!}</textarea>
+                                    
+                                    <hr>
+                                    
+                                    <label for="Offer Details">Offer Details (BN)</label>
+                                    <textarea type="text" name="offer_details_bn" class="form-control package_details">{!! $package->offer_details_bn !!}</textarea>
+
                             </div>
 
                             <div class="form-group text-right">
