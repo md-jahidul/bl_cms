@@ -16,6 +16,7 @@ use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
@@ -598,11 +599,9 @@ class ProductCoreService
     }
 
 
-    /*
-     *  product search by code
-     *  return products that contains the keyword in product code
-     */
     /**
+     *  Product search by Code
+     *
      * @param $keyword
      * @return mixed
      */
@@ -611,19 +610,25 @@ class ProductCoreService
         return ProductCore::where('product_code', 'like', '%' . $keyword . '%')->get();
     }
 
+    /**
+     * Get Product details
+     *
+     * @param $product_code
+     * @return MyBlProduct|object|null
+     */
     public function getProductDetails($product_code)
     {
         return MyBlProduct::with('details')->where('product_code', $product_code)->first();
     }
 
-    /*
-     *  Update my-bl products
-     */
 
     /**
-     * @param  Request  $request
+     * Update my-bl products
+     *
+     * @param Request $request
      * @param $product_code
      * @return RedirectResponse
+     * @throws Exception
      */
     public function updateMyblProducts(Request $request, $product_code)
     {
@@ -647,46 +652,51 @@ class ProductCoreService
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
 
-        MyBlProduct::where('product_code', $product_code)->update($data);
+        try{
 
-        $core_product = ProductCore::where('product_code', $product_code)->get()->toArray();
+            DB::beginTransaction();
 
-        $data_request = $request->all();
-        unset($data_request['_token']);
-        unset($data_request['_method']);
-        unset($data_request['tag']);
-        unset($data_request['show_in_home']);
-        unset($data_request['is_rate_cutter_offer']);
-        unset($data_request['offer_section_slug']);
-        unset($data_request['offer_section_title']);
+            MyBlProduct::where('product_code', $product_code)->update($data);
 
+            $core_product = ProductCore::where('product_code', $product_code)->get()->toArray();
 
+            $data_request = $request->all();
+            unset($data_request['_token']);
+            unset($data_request['_method']);
+            unset($data_request['tag']);
+            unset($data_request['show_in_home']);
+            unset($data_request['is_rate_cutter_offer']);
+            unset($data_request['offer_section_slug']);
+            unset($data_request['offer_section_title']);
 
+            if(isset($data_request['data_volume'])){
+                $data_request['data_volume'] = substr($data_request['data_volume'], 0, strrpos($data_request['data_volume'], ' '));
+            }
 
-        if(isset($data_request['data_volume'])){
-            $data_request['data_volume'] = substr($data_request['data_volume'], 0, strrpos($data_request['data_volume'], ' '));
+            if(isset($data_request['sms_volume'])){
+                $data_request['sms_volume'] = substr($data_request['sms_volume'], 0, strrpos($data_request['sms_volume'], ' '));
+            }
+
+            if(isset($data_request['validity'])){
+                $data_request['validity'] = substr($data_request['validity'], 0, strrpos($data_request['validity'], ' '));
+            }
+
+            $data_history = $core_product[0];
+
+            $data_history['created_by'] = Auth::user()->id;
+
+            $data_history['product_core_id'] = $core_product[0]['id'];
+
+            ProductCoreHistory::create($data_history);
+
+            ProductCore::where('product_code', $product_code)->update($data_request);
+
+            DB::commit();
+
+        } catch(Exception $e){
+            DB::rollback();
+            throw new Exception( $e->getMessage());
         }
-
-        if(isset($data_request['sms_volume'])){
-            $data_request['sms_volume'] = substr($data_request['sms_volume'], 0, strrpos($data_request['sms_volume'], ' '));
-        }
-
-        if(isset($data_request['validity'])){
-            $data_request['validity'] = substr($data_request['validity'], 0, strrpos($data_request['validity'], ' '));
-        }
-
-        $data_history = $core_product[0];
-
-        //dd($data_request,  $data_history);
-
-        $data_history['created_by'] = Auth::user()->id;
-
-        $data_history['product_core_id'] = $core_product[0]['id'];
-
-        ProductCoreHistory::create($data_history);
-
-        ProductCore::where('product_code', $product_code)->update($data_request);
-
 
         return Redirect::back()->with('success', 'Product updated Successfully');
     }
