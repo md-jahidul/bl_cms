@@ -154,28 +154,43 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('offers/{type}/{id}/details/update', 'AssetLite\ProductController@productDetailsUpdate')
         ->name('product.details-update');
 
-    Route::get('section/{id}', 'AssetLite\ProductDetailsController@otherOfferDetails')
+    Route::get('product-details/{productDetailsId}/section', 'AssetLite\ProductDetailsController@sectionList')
         ->name('section-list');
 
-    Route::get('section-create/{id}', 'AssetLite\ProductDetailsController@create')
+    Route::get('product-details/{productDetailsId}/section-create', 'AssetLite\ProductDetailsController@create')
         ->name('section-create');
 
-    Route::post('section-store/{id}', 'AssetLite\ProductDetailsController@storeSection')
+    Route::post('product-details/{productDetailsId}/section-store', 'AssetLite\ProductDetailsController@storeSection')
         ->name('section-store');
 
-    Route::get('product-details/components-list/{SectionId}', 'AssetLite\ProductDetailsController@componentList')
-        ->name('component-list');
+    Route::get('product-details/{productDetailsId}/section-edit/{id}', 'AssetLite\ProductDetailsController@editSection')
+        ->name('section-edit');
 
-    Route::get('components-create/{SectionId}', 'AssetLite\ProductDetailsController@componentCreate')
-        ->name('component-create');
+    Route::post('product-details/{productDetailsId}/section-update/{id}', 'AssetLite\ProductDetailsController@updateSection')
+        ->name('section-update');
 
-    Route::post('components-store/{SectionId}', 'AssetLite\ProductDetailsController@componentStore')
+    Route::get(
+        'product-details/{productDetailsId}/section/{sid}/components-list',
+        'AssetLite\ProductDetailsController@componentList'
+    )->name('component-list');
+
+    Route::get(
+        'product-details/{productDetailsId}/section/{SectionId}/components-create',
+        'AssetLite\ProductDetailsController@componentCreate'
+    )->name('component-create');
+
+    Route::post('product-details/{productDetailsId}/components-store/{SectionId}', 'AssetLite\ProductDetailsController@componentStore')
         ->name('component-store');
 
-    Route::get('product-details/section/{sid}/component/{id}/edit', 'AssetLite\ProductDetailsController@componentEdit')
-        ->name('component-edit');
+    Route::get(
+        'product-details/{productDetailsId}/section/{sid}/component/{id}/edit',
+        'AssetLite\ProductDetailsController@componentEdit'
+    )->name('component-edit');
 
-    Route::put('product-details/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
+    Route::put('product-details/{productDetailsId}/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
+        ->name('component-update');
+
+    Route::put('product-details/{productDetailsId}/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
         ->name('component-update');
 
 

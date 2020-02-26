@@ -6,7 +6,7 @@
     <li class="breadcrumb-item active"> Partner Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('partners') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{  route('component-list', [ $productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -17,7 +17,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('component-update',[$sectionId, $component->id]) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route('component-update',[$productDetailsId, $sectionId, $component->id]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="app-content">
@@ -33,27 +33,27 @@
                                                 <div class="row">
                                                     <div class="col-md-8 col-sm-12">
                                                         <fieldset>
-                                                            <input type="checkbox" id="input-text">
+                                                            <input type="checkbox" id="input-text" {{ $component->title_en || $component->title_bn ? 'checked' : '' }}>
                                                             <label for="input-text" class="">Text Field</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="text-area">
+                                                            <input type="checkbox" id="text-area" {{ $component->description_en || $component->description_bn ? 'checked' : '' }}>
                                                             <label for="text-area" class="">TextArea</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="text-editor">
+                                                            <input type="checkbox" id="text-editor" {{ $component->editor_en || $component->editor_bn ? 'checked' : '' }}>
                                                             <label for="text-editor" class="">Text Editor</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="image-field">
+                                                            <input type="checkbox" id="image-field" {{ $component->image ? 'checked' : '' }}>
                                                             <label for="image-field" class="">Image Field</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="multi-image">
+                                                            <input type="checkbox" id="multi-image" {{ $component->multiple_attributes ? 'checked' : '' }}>
                                                             <label for="multi-image" class="">Multiple Image Field</label>
                                                         </fieldset>
                                                     </div>
@@ -147,59 +147,61 @@
                                                     </div>
                                                 </slot>
 
-                                                <slot id="single-image" class="{{ ( $component->editor_en ) ? '' : "d-none" }}">
+                                                <slot id="single-image" class="{{ ( $component->image ) ? '' : "d-none" }}">
                                                     <div class="form-group col-md-6">
                                                         <label for="alt_text" class="">Single Image</label>
                                                         <div class="custom-file">
-                                                            <input type="file" name="image" class="custom-file-input" id="image">
-                                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                                            <input type="file"  name="image" class="dropify" data-height="80"
+                                                               data-default-file="{{ config('filesystems.file_base_url') . $component->image }}" >
+                                                            <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                         </div>
-                                                        <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                     </div>
 
                                                     <div class="form-group col-md-6">
                                                         <label for="alt_text" class="required1">Alt Text</label>
-                                                        <input type="text" name="alt_text"  class="form-control">
+                                                        <input type="text" name="alt_text" value="{{ $component->alt_text }}" class="form-control">
                                                     </div>
                                                 </slot>
 
                                                 <slot id="multiple-image-field" class="{{ ( $component->multiple_attributes['image'] ) ? '' : "d-none" }}">
                                                     @php( $i = 0 )
-                                                    @foreach($multipleImage['image'] as $key => $image)
-                                                        @php($i++)
-                                                        <div class="col-md-6 col-xs-6 option-{{ $i }} options-count">
-                                                            <div class="form-group">
-                                                                <label for="message">Multiple Image</label>
-                                                                <input type="file" class="dropify" name="multiple_attributes[image][image_url_{{ $i }}]"
-                                                                       data-default-file="{{ config('filesystems.file_base_url') . $image }}"
-                                                                       data-height="80"/>
-                                                                <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+                                                    @if($multipleImage['image'])
+                                                        @foreach($multipleImage['image'] as $key => $image)
+                                                            @php($i++)
+                                                            <div class="col-md-6 col-xs-6 option-{{ $i }} options-count">
+                                                                <div class="form-group">
+                                                                    <label for="message">Multiple Image</label>
+                                                                    <input type="file" class="dropify" name="multiple_attributes[image][image_url_{{ $i }}]"
+                                                                           data-default-file="{{ config('filesystems.file_base_url') . $image }}"
+                                                                           data-height="80"/>
+                                                                    <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+                                                                </div>
                                                             </div>
-                                                        </div>
 
-                                                        <div class="form-group col-md-5 option-{{ $i }}">
-                                                            <label for="alt_text">Alt Text</label>
-                                                            <input type="text" name="multiple_attributes[alt_text][alt_text_{{ $i }}]" value="{{ $multipleImage['alt_text']["alt_text_$i"] }}"  class="form-control">
-                                                        </div>
+                                                            <div class="form-group col-md-5 option-{{ $i }}">
+                                                                <label for="alt_text">Alt Text</label>
+                                                                <input type="text" name="multiple_attributes[alt_text][alt_text_{{ $i }}]" value="{{ $multipleImage['alt_text']["alt_text_$i"] }}"  class="form-control">
+                                                            </div>
 
-                                                    @if(count($multipleImage['image']) == 1)
-                                                        <div class="form-group col-md-1">
-                                                            <label for="alt_text"></label>
-                                                            <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>
-                                                        </div>
-                                                    @else
-{{--                                                        <div class="form-group col-md-1 option-{{ $i }}">--}}
-{{--                                                            <label for="alt_text"></label>--}}
-{{--                                                            <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-{{ $i }}" ><i data-id="option-{{ $i }}" class="la la-trash"></i></button>--}}
-{{--                                                        </div>--}}
+                                                            @if($i == 1)
+                                                                <div class="form-group col-md-1">
+                                                                    <label for="alt_text"></label>
+                                                                    <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>
+                                                                </div>
+        {{--                                                    @else--}}
+        {{--                                                        <div class="form-group col-md-1 option-{{ $i }}">--}}
+        {{--                                                            <label for="alt_text"></label>--}}
+        {{--                                                            <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-{{ $i }}" ><i data-id="option-{{ $i }}" class="la la-trash"></i></button>--}}
+        {{--                                                        </div>--}}
+                                                            @endif
+                                                        @endforeach
                                                     @endif
-                                                    @endforeach
                                                 </slot>
 
                                                 <div class="form-actions col-md-12">
                                                     <div class="pull-right">
                                                         <button type="submit" class="btn btn-primary"><i
-                                                                class="la la-check-square-o"></i> Save
+                                                                class="la la-check-square-o"></i> Update
                                                         </button>
                                                     </div>
                                                 </div>

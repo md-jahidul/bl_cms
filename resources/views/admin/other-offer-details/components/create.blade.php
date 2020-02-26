@@ -1,23 +1,21 @@
 @extends('layouts.admin')
-@section('title', 'Partner Create')
-@section('card_name', 'Partner Create')
+@section('title', 'Component Create')
+@section('card_name', 'Component Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('partners') }}"> Partner List</a></li>
-    <li class="breadcrumb-item active"> Partner Create</li>
+    <li class="breadcrumb-item active"> <a href="{{ route('section-list', [$productDetailsId, $sectionId]) }}"> Section List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ route('component-list', [$productDetailsId, $sectionId]) }}"> Component List</a></li>
+    <li class="breadcrumb-item active"> Component Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('partners') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{  route('component-list', [$productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
-
-
-
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('component-store', $sectionId) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route('component-store', [$productDetailsId, $sectionId]) }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="app-content">
                                 <h3>Component Fields</h3><hr>
                                 <div class="sidebar-right">
@@ -149,10 +147,9 @@
                                                     <div class="form-group col-md-6">
                                                         <label for="alt_text" class="">Single Image</label>
                                                         <div class="custom-file">
-                                                            <input type="file" name="image" class="custom-file-input" id="image">
-                                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                                            <input type="file"  name="image" class="dropify" data-height="80">
+                                                            <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                         </div>
-                                                        <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                     </div>
 
                                                     <div class="form-group col-md-6">
@@ -161,15 +158,8 @@
                                                     </div>
                                                 </slot>
 
-{{--                                                ============================================ Dropzone ===============================================                             --}}
-
-
-
-{{--                                                ============================================ Dropzone ===============================================--}}
-
 
                                                 <slot id="multiple-image-field" style="display: none">
-
                                                     <div class="col-md-6 col-xs-6">
                                                         <div class="form-group">
                                                             <label for="message">Multiple Image</label>
@@ -180,7 +170,7 @@
 
                                                     <div class="form-group col-md-5">
                                                         <label for="alt_text">Alt Text</label>
-                                                        <input type="text" name="multiple_attributes[alt_text][alt_text_1]"  class="form-control">
+                                                        <input type="text" name="multiple_attributes[alt_text][alt_text_1]" class="form-control">
                                                     </div>
 
                                                     <div class="form-group col-md-1">
