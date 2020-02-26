@@ -65,12 +65,14 @@ class BusinessPackageService {
         try {
 
             $request->validate([
-                'name' => 'required',
-                'short_details' => 'required',
+                'name_en' => 'required',
+                'name_bn' => 'required',
+                'short_details_en' => 'required',
+                'short_details_bn' => 'required',
                 'banner_photo' => 'required|mimes:jpg,jpeg,png',
             ]);
-            
-          
+
+
 
             //file upload in storege
             $filePath = "";
@@ -146,8 +148,10 @@ class BusinessPackageService {
         try {
 
             $request->validate([
-                'name' => 'required',
-                'short_details' => 'required',
+                'name_en' => 'required',
+                'name_bn' => 'required',
+                'short_details_en' => 'required',
+                'short_details_bn' => 'required',
             ]);
 
             //file upload in storege
@@ -163,7 +167,8 @@ class BusinessPackageService {
 
             //save data in database 
             $this->packageRepo->updatePackage($filePath, $request);
-            $this->asgnFeatureRepo->assignFeature($request->package_id, $request->feature);
+            $parentType = 1;
+            $this->asgnFeatureRepo->assignFeature($request->package_id, $parentType, $request->feature);
 
             $response = [
                 'success' => 1,
@@ -205,31 +210,15 @@ class BusinessPackageService {
             return $response;
         }
     }
+
     /**
      * delete business package
      * @return Response
      */
     public function getFeatures() {
 
-      $features = $this->featureRepo->getActiveFeaturesList();
-      return $features;
+        $features = $this->featureRepo->getActiveFeaturesList();
+        return $features;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
 }

@@ -30,7 +30,7 @@ class BusinessComPkOneRepository extends BaseRepository {
     }
     
        public function getComponent($serviceId) {
-        $component = $this->model->select(DB::raw('group_concat(table_head) heads, position'))
+        $component = $this->model->select(DB::raw('group_concat(id) ids, group_concat(table_head) heads, position'))
                         ->where('service_id', $serviceId)->groupBy('position')->get();
         return $component;
     }
@@ -40,8 +40,8 @@ class BusinessComPkOneRepository extends BaseRepository {
         return $component;
     }
     
-    public function changePosition($serviceId, $newPosition, $oldPosition){
-        $component = $this->model->where(array('service_id' => $serviceId, 'position' => $oldPosition))
+    public function changePosition($comIds, $newPosition){
+        $component = $this->model->whereIn('id', $comIds)
                 ->update(array('position' => $newPosition));
         return $component;
     }
