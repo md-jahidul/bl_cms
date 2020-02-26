@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Partner Create')
-@section('card_name', 'Partner Create')
+@section('title', 'Section Create')
+@section('card_name', 'Section Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('partners') }}"> Partner List</a></li>
-    <li class="breadcrumb-item active"> Partner Create</li>
+    <li class="breadcrumb-item active"> <a href="{{ route('section-list', [$productDetailsId]) }}"> Section List</a></li>
+    <li class="breadcrumb-item active"> Section Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('partners') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ route('section-list', [$productDetailsId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -14,10 +14,10 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('section-store', $id) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route('section-store', $productDetailsId) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-                                <input type="hidden" name="product_id" value="{{ $id }}">
+                                <input type="hidden" name="product_id" value="{{ $productDetailsId }}">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title (English)</label>
                                     <input type="text" name="title_en"  class="form-control" placeholder="Enter company name in English"
