@@ -41,24 +41,20 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="name">Title</label>
-                                        <input class="form-control" value="{{ $details->details->name }}" id="name"
-                                               disabled>
+                                        <input class="form-control" value="{{ $details->details->name }}" name="name" id="name">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="content_type">Content Type</label>
                                         <input class="form-control"
-                                               value="{{ ucfirst($details->details->content_type) }}"
-                                               disabled
-                                        >
+                                               value="{{ ucfirst($details->details->content_type) }}" name="content_type">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Short Description</label>
-                                        <input class="form-control" value="{{ $details->details->short_description }}"
-                                               disabled>
+                                        <input class="form-control" value="{{ $details->details->short_description }}" name="short_description">
                                     </div>
                                 </div>
                                 @if( $details->details->activation_ussd)
@@ -66,9 +62,7 @@
                                         <div class="form-group">
                                             <label>Activation USSD </label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->activation_ussd }}"
-                                                   disabled
-                                            >
+                                                   value="{{ $details->details->activation_ussd }}" name="activation_ussd">
                                         </div>
                                     </div>
                                 @endif
@@ -77,16 +71,14 @@
                                         <div class="form-group">
                                             <label>Balance USSD</label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->balance_check_ussd }}"
-                                                   disabled>
+                                                   value="{{ $details->details->balance_check_ussd }}" name="balance_check_ussd">
                                         </div>
                                     </div>
                                 @endif
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>MRP Price</label>
-                                        <input class="form-control" value="{{ $details->details->mrp_price }}"
-                                               disabled>
+                                        <input class="form-control" value="{{ $details->details->mrp_price }}" name="mrp_price">
                                     </div>
                                 </div>
                                 @if($details->details->data_volume)
@@ -94,8 +86,7 @@
                                         <div class="form-group">
                                             <label>Data Volume </label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->data_volume }} {{ $details->details->data_volume_unit }}"
-                                                   disabled>
+                                                   value="{{ $details->details->data_volume }} {{ $details->details->data_volume_unit }}" name="data_volume">
                                         </div>
                                     </div>
                                 @endif
@@ -104,8 +95,7 @@
                                         <div class="form-group">
                                             <label>Minute Volume </label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->minute_volume }} Minutes"
-                                                   disabled>
+                                                   value="{{ $details->details->minute_volume }} Minutes" name="minute_volume">
                                         </div>
                                     </div>
                                 @endif
@@ -115,8 +105,7 @@
                                         <div class="form-group">
                                             <label>SMS Volume </label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->sms_volume }} SMS"
-                                                   disabled>
+                                                   value="{{ $details->details->sms_volume }} SMS" name="sms_volume">
                                         </div>
                                     </div>
                                 @endif
@@ -125,8 +114,7 @@
                                         <div class="form-group">
                                             <label>SMS Volume </label>
                                             <input class="form-control"
-                                                   value="{{ $details->details->sms_volume }} SMS"
-                                                   disabled>
+                                                   value="{{ $details->details->sms_volume }} SMS">
                                         </div>
                                     </div>
                                 @endif
@@ -134,16 +122,14 @@
                                     <div class="form-group">
                                         <label>Validity </label>
                                         <input class="form-control"
-                                               value="{{ $details->details->validity }} {{ ucfirst($details->details->validity_unit) }}"
-                                               disabled>
+                                               value="{{ $details->details->validity }} {{ ucfirst($details->details->validity_unit) }}" name="validity">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Has Auto Renew Code? </label>
                                         <input class="form-control"
-                                               value="{{ ($details->details->renew_product_code)? "YES" : "NO" }}"
-                                               disabled>
+                                               value="{{ ($details->details->renew_product_code)? "YES" : "NO" }}">
                                     </div>
                                 </div>
                                 @if($details->details->renew_product_code)
