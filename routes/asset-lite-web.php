@@ -140,7 +140,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
 
 
-    // OFFERS  ======================================
+    // Product Offers  ======================================
     Route::get('offers/{type}', 'AssetLite\ProductController@index')->name('product.list');
     Route::get('offers/{type}/create', 'AssetLite\ProductController@create')->name('product.create');
     Route::post('offers/{type}/store', 'AssetLite\ProductController@store')->name('product.store');
@@ -148,10 +148,36 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('offers/{type}/{id}/update', 'AssetLite\ProductController@update')->name('product.update');
     Route::get('offers/{type}/{id}/show', 'AssetLite\ProductController@show')->name('product.show');
 
+    // Product Offers Details  ======================================
     Route::get('offers/{type}/{id}/{offerType}/details', 'AssetLite\ProductController@productDetailsEdit')
         ->name('product.details');
     Route::put('offers/{type}/{id}/details/update', 'AssetLite\ProductController@productDetailsUpdate')
         ->name('product.details-update');
+
+    Route::get('section/{id}', 'AssetLite\ProductDetailsController@otherOfferDetails')
+        ->name('section-list');
+
+    Route::get('section-create/{id}', 'AssetLite\ProductDetailsController@create')
+        ->name('section-create');
+
+    Route::post('section-store/{id}', 'AssetLite\ProductDetailsController@storeSection')
+        ->name('section-store');
+
+    Route::get('product-details/components-list/{SectionId}', 'AssetLite\ProductDetailsController@componentList')
+        ->name('component-list');
+
+    Route::get('components-create/{SectionId}', 'AssetLite\ProductDetailsController@componentCreate')
+        ->name('component-create');
+
+    Route::post('components-store/{SectionId}', 'AssetLite\ProductDetailsController@componentStore')
+        ->name('component-store');
+
+    Route::get('product-details/section/{sid}/component/{id}/edit', 'AssetLite\ProductDetailsController@componentEdit')
+        ->name('component-edit');
+
+    Route::put('product-details/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
+        ->name('component-update');
+
 
     Route::get('offers/{type}/{id}', 'AssetLite\ProductController@destroy');
     Route::get('trending-home', 'AssetLite\ProductController@trendingOfferHome')->name('trending-home');

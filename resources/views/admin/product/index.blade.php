@@ -38,7 +38,14 @@
                                         <td>{{ $product->product_core['activation_ussd'] }}</td>
                                         <td>{{ $product->offer_category->name_en }}</td>
                                         <td class="text-center">
-                                             <a href="{{ route('product.details', [strtolower($type), $product->product_code, strtolower( $product->offer_category->name_en)]) }}" class="btn-sm btn-outline-primary border">Details</a>
+
+                                            @if(strtolower( $product->offer_category->name_en) == "others")
+                                                <a href="{{ route('section-list', [$product->id]) }}"
+                                                    class="btn-sm btn-outline-primary border">Details</a>
+                                            @else
+                                                <a href="{{ route('product.details', [strtolower($type), $product->product_code, strtolower( $product->offer_category->name_en)]) }}"
+                                                   class="btn-sm btn-outline-primary border">Details</a>
+                                            @endif
                                         </td>
                                         <td class="text-center"><input type="checkbox" {{ $product->show_in_home == 1 ? 'checked' : '' }} disabled></td>
                                         <td>

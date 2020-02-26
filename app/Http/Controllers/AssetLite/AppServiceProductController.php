@@ -135,6 +135,8 @@ class AppServiceProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+
         $response = $this->appServiceProductService->updateAppServiceProduct($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect(route('app-service-product.index'));
@@ -154,6 +156,8 @@ class AppServiceProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = $this->appServiceProductService->deleteAppServiceProduct($id);
+        Session::flash('message', $response->getContent());
+        return route('tabs.index');
     }
 }
