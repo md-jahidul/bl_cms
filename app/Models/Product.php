@@ -46,6 +46,7 @@ class Product extends Model
         'offer_info' => 'array',
     ];
 
+
     public function product_core()
     {
         return $this->belongsTo(ProductCore::class, 'product_code', 'product_code');
