@@ -37,17 +37,7 @@ class BusinessOthersController extends Controller {
         return view('admin.business.other_services', compact("businessSolution", "iot", "others"));
     }
 
-    /**
-     * List of business other services component list by serviceID.
-     * 
-     * @param No
-     * @return Factory|View
-     * @Bulbul Mahmud Nito || 20/02/2020
-     */
-    public function componentList($serviceId) {
-        $components = $this->othersService->getComponents($serviceId);
-        return view('admin.business.service_component_list', compact("components", "serviceId"));
-    }
+   
 
     /**
      * create business packages [form].
@@ -81,6 +71,20 @@ class BusinessOthersController extends Controller {
 
         return redirect('/business-other-services');
     }
+    
+    
+     /**
+     * List of business other services component list by serviceID.
+     * 
+     * @param No
+     * @return Factory|View
+     * @Bulbul Mahmud Nito || 20/02/2020
+     */
+    public function componentList($serviceId) {
+        $components = $this->othersService->getComponents($serviceId);
+        return view('admin.business.service_component_list', compact("components", "serviceId"));
+    }
+    
 
     /**
      * create business packages add components [form].
@@ -160,7 +164,7 @@ class BusinessOthersController extends Controller {
     public function editComponent($serviceId, $position, $type) {
         $component = $this->othersService->getSingleComponent($serviceId, $position, $type);
         
-//        print_r($component);die();
+        print_r($component);die();
         return view('admin.business.services_components_edit', compact("component", "type"));
     }
 
