@@ -40,6 +40,11 @@ class BusinessComPkOneRepository extends BaseRepository {
         return $component;
     }
     
+     public function singleComponent($serviceId, $position){
+        $component = $this->model->where(array('service_id' => $serviceId, 'position' => $position))->get();
+        return $component;
+    }
+    
     public function changePosition($comIds, $newPosition){
         $component = $this->model->whereIn('id', $comIds)
                 ->update(array('position' => $newPosition));
