@@ -6,7 +6,7 @@
     <li class="breadcrumb-item active"> {{$sections->title_en}}</li>
 @endsection
 @section('action')
-    <a href="{{ url("programs/progeneral") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
+    <a href="{{ url("programs/progeneral/$sections_type") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
 @endsection
 @section('content')
     <section>
@@ -21,6 +21,7 @@
                             {{method_field('POST')}}
                             <div class="row">
                                 <input type="hidden" name="section_category" value="{{ $sections->category }}">
+                                <input type="hidden" name="sections_type" value="{{ $sections_type }}">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title (English)</label>
                                     <input type="text" name="title_en"  class="form-control section_name" placeholder="Enter title_en (english)"
@@ -60,13 +61,18 @@
                                             <option value="aip" @if($sections->category_type == 'aip') selected @endif>Advanced Internship Program</option>
                                         </select>
                                 </div>
-
+                                
+                                {{-- {{ dd($sections->additional_info) }} --}}
                                 
                                 @if( !empty($sections->additional_info) )
                                     @php $additional_info = json_decode($sections->additional_info); @endphp
                                 @endif
                                 
-                                <div class="form-group col-md-6">
+                                @if( isset($additional_info->additional_type) )
+                                    {!! Form::hidden('programs_sections', $additional_info->additional_type) !!}
+                                @endif
+                                
+                                {{-- <div class="form-group col-md-6">
                                     <label for="category_type">Specify section type</label>
                                     <select class="form-control" name="programs_sections" aria-invalid="false">
                                             <option value="programs_news_section" @if( isset($additional_info->additional_type) && $additional_info->additional_type == 'programs_news_section') selected @endif>Programs news section</option>
@@ -74,7 +80,9 @@
                                             <option value="programs_events" @if( isset($additional_info->additional_type) && $additional_info->additional_type == 'programs_events') selected @endif>Programs Events section</option>
                                             <option value="programs_testimonial" @if( isset($additional_info->additional_type) && $additional_info->additional_type == 'programs_testimonial') selected @endif>Programs testimonial section</option>
                                         </select>
-                                </div>
+                                </div> --}}
+
+
 
                                 <div class="col-md-6">
                                     <label for="alt_text"></label>

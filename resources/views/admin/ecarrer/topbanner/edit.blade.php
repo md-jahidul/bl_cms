@@ -42,9 +42,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                    <label for="title_bn" class="required1">Title_bn (Bangla)</label>
-                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title_bn (english)"
-                                           value="{{ $sections->title_bn }}" data-validation-required-message="Enter slider title_bn (english)">
+                                    <label for="title_bn" class="required1">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title (bangla)"
+                                           value="{{ $sections->title_bn }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
@@ -62,9 +62,9 @@
                                 </div>
 
                                 <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="alt_text" class="">Banner Image (optional)</label>
+                                    <label for="alt_text" class="required">Banner Image</label>
                                     <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input" id="image">
+                                        <input type="file" name="image_url" class="custom-file-input" id="image" data-validation-required-message="Image is required">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>

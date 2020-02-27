@@ -66,18 +66,22 @@ class AppServiceProductService
      */
     public function updateAppServiceProduct($data, $id)
     {
+
+
         $appServiceProduct = $this->findOne($id);
         if (request()->hasFile('product_img_url')) {
             $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
             $this->deleteFile($appServiceProduct->product_img_url);
         }
 
-        // Check App & VAS
-        if ($data['app_service_tab_id'] != self::APP || $data['app_service_tab_id'] != self::VAS) {
-            $data['product_img_url'] = null;
-            $this->deleteFile($appServiceProduct->product_img_url);
-        }
+//        // Check App & VAS
+//        if ($data['app_service_tab_id'] !== self::APP || $data['app_service_tab_id'] !== self::VAS) {
+//            $data['product_img_url'] = null;
+//            $this->deleteFile($appServiceProduct->product_img_url);
+//        }
         $data['can_active'] = (isset($data['can_active']) ? 1 : 0);
+
+//        dd($data);
 
         $appServiceProduct->update($data);
         return Response('App Service Category updated successfully');
@@ -94,5 +98,15 @@ class AppServiceProductService
         $this->deleteFile($appServiceCat->product_img_url);
         $appServiceCat->delete();
         return Response('App Service Tab deleted successfully !');
+    }
+
+    public function appServiceRelatedProduct($tab_type, $product_id)
+    {
+        return $this->appServiceProductRepository->appServiceProduct($tab_type, $product_id);
+    }
+
+    public function detailsProduct($id)
+    {
+        return $this->appServiceProductRepository->findOne(['id' => $id]);
     }
 }

@@ -7,17 +7,21 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Photo</th>
                                 <th width="50%">Title</th>
                                 <th width="20%">Status</th>
-                                <th width="50%">Sorting</th>
                                 <th width="20%">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="feature_sortable">
                             @foreach($features as $f)
-                            <tr>
+                            <tr data-index="{{ $f->id }}" data-position="{{ $f->sort }}">
                                 <td>
+                                    <i class="icon-cursor-move icons"></i>
+                                </td>
+                                <td>
+
                                     @if($f->icon_url != "")
                                     <img src="{{ config('filesystems.file_base_url') . $f->icon_url }}" alt="Fearure Icon" height="60px" />
                                     @endif
@@ -34,12 +38,7 @@
                                     @endif
                                 </td>
 
-                                <td class="feature_sorting text-center">
-                                    {{ $f->sort }} 
-                                    <a class="text-info edit_feature_sorting" href="{{$f->id}}" sort="{{ $f->sort }}">
-                                        <i class="la la-pencil-square"></i>
-                                    </a>
-                                </td>
+
                                 <td class="text-center">
                                     <a class="text-info edit_feature" href="{{$f->id}}">
                                         <i class="la la-pencil-square"></i>
@@ -69,15 +68,29 @@
                                 <input type="hidden" class="feature_id" name="feature_id" value="">
                                 <input type="hidden" class="old_photo" name="old_photo" value="">
 
-                                <div class="form-group">
-                                    <label for="Title">Title <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control title" required name="title" placeholder="Title">
+                                <div class="form-group row">
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="Title">Title (EN)<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control title" required name="title" placeholder="Title EN">
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="Title">Title (BN)<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control title_bn" required name="title_bn" placeholder="Title BN">
+                                    </div>
+
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="Icon">Icon <span class="text-danger">*</span></label>
-                                    <input type="file" class="dropify_feature" name="feature_icon" data-height="70"
-                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                <div class="form-group row">
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="Icon">Icon <span class="text-danger">*</span></label>
+                                        <input type="file" class="dropify_feature" name="feature_icon" data-height="70"
+                                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    </div>
+
+                                    <div class="col-md-6 col-xs-12">
+                                        <label>Alt Text<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control alt_text" required name="alt_text" placeholder="Alt Text">
+                                    </div>
 
                                 </div>
 
@@ -106,75 +119,47 @@
 
         /*######################################### Features Javascript ##################################################*/
 
-
-        /* Change feature sorting */
-        $(".feature_sorting").on('click', 'a.edit_feature_sorting', function (e) {
-            e.preventDefault();
-
-            let sort = $(this).attr('sort');
-            let featureId = $(this).attr('href');
-            let input = "<input style='width:75%' class='form-control pull-left' type='text' value='" + sort + "'>\n\
-                    <a class='pull-right text-success save_sorting' href='" + featureId + "'><i class='la la-save'></i></a>";
-            $(this).parent('.feature_sorting').html(input);
-
-        });
-
-        //save sorting
-        $(".feature_sorting").on('click', '.save_sorting', function (e) {
-            e.preventDefault();
-
-            let newSort = $(this).parent('td').find('input').val();
-            let featureId = $(this).attr('href');
-            let thisObj = $(this);
-
+        function saveNewPositions(save_url)
+        {
+            var positions = [];
+            $('.update').each(function () {
+                positions.push([
+                    $(this).attr('data-index'),
+                    $(this).attr('data-position')
+                ]);
+            })
             $.ajax({
-                url: '{{ route("business.feature.sort.save")}}',
-                type: 'GET',
-                cache: false,
+                type: "GET",
+                url: save_url,
                 data: {
-                    featureId: featureId,
-                    sort: newSort
+                    update: 1,
+                    position: positions
                 },
-                success: function (result) {
-                    if (result.success == 1) {
-                        swal.fire({
-                            title: "Changed",
-                            type: 'success',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-
-                        let htmlView = result.sort + ' <a class="text-info edit_feature_sorting" href="' + featureId + '" sort="' + result.sort + '">\n\
-                                    <i class="la la-pencil-square"></i></a>';
-                        $(thisObj).parent('.feature_sorting').html(htmlView);
-
-
-                    } else {
-                        swal.close();
-                        swal.fire({
-                            title: result.message,
-                            type: 'error',
-                        });
-                    }
+                success: function (data) {
                 },
-                error: function (data) {
+                error: function () {
                     swal.fire({
-                        title: 'Failed',
+                        title: 'Failed to sort data',
                         type: 'error',
                     });
                 }
             });
+        }
 
-        });
+        $(".feature_sortable").sortable({
 
-        //number validation
-        $(".feature_sorting").on('keypress', 'input', function (e) {
-            //if the letter is not digit then display error and don't type anything
-            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                return false;
+            update: function (event, ui) {
+                $(this).children().each(function (index) {
+                    if ($(this).attr('data-position') != (index + 1)) {
+                        $(this).attr('data-position', (index + 1)).addClass('update')
+                    }
+                });
+                var save_url = "{{ url('business-feature-sort') }}";
+                saveNewPositions(save_url);
             }
         });
-        
+
+
         //change status (show/hide) of features
         $(".table").on('click', '.features_status', function (e) {
             e.preventDefault();
@@ -224,9 +209,9 @@
             });
 
         });
-        
-        
-          //show dropify for news photo
+
+
+        //show dropify for news photo
         $('.dropify_feature').dropify({
             messages: {
                 'default': 'Browse for feature icon',
@@ -235,10 +220,10 @@
                 'error': 'Choose correct file format'
             }
         });
-        
-        
+
+
         //edit feature
-         $('.edit_feature').on('click', function (e) {
+        $('.edit_feature').on('click', function (e) {
             e.preventDefault();
 
             let featureId = $(this).attr('href');
@@ -250,7 +235,9 @@
                 success: function (result) {
 
                     $('.home_feature_form .title').val(result.title);
+                    $('.home_feature_form .title_bn').val(result.title_bn);
                     $('.home_feature_form .old_photo').val(result.icon_url);
+                    $('.home_feature_form .alt_text').val(result.alt_text);
 
 
                 },
@@ -262,8 +249,8 @@
                 }
             });
         });
-        
-          //delete feature confirmation
+
+        //delete feature confirmation
         $(".table").on('click', '.delete_feature', function (e) {
             var confrm = confirm("Do you want to delete this feature?");
             if (confrm) {

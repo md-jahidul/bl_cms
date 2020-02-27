@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Product List')
-@section('card_name', 'Product List')
+@section('title', 'App Service Product List')
+@section('card_name', 'App Service Product List')
 @section('breadcrumb')
-    <li class="breadcrumb-item ">Product List</li>
+    <li class="breadcrumb-item ">App Service Product List</li>
 @endsection
 @section('action')
 {{--    <a href="#" id="syncBtn" class="btn btn-outline-blue-grey round btn-glow px-2">--}}
@@ -17,7 +17,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>Product</strong></h4>
+                    <h4 class="pb-1"><strong>Product List</strong></h4>
                     <table class="table table-striped table-bordered zero-configuration">
                         <thead>
                             <tr>
@@ -50,7 +50,7 @@
                                         </td>
                                         <td class="text-center"><input type="checkbox" {{ $product->can_active == 1 ? 'checked' : '' }} disabled></td>
                                         <td>
-        
+
 {{--                                            <a href="--}}{{--{{ route('product.show', [$product->id]) }}--}}{{--" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>--}}
                                             <a href="{{ url("app-service-product/$product->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                             <a href="#" remove="{{ url("offers/$product->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $product->id }}" title="Delete">

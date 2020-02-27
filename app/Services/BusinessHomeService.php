@@ -60,8 +60,9 @@ class BusinessHomeService {
      */
     public function changeCategoryName($request) {
         $catId = $request->catId;
+        $type = $request->type;
         $name = $request->name;
-        $response = $this->businessCatRepo->changeCategoryName($catId, $name);
+        $response = $this->businessCatRepo->changeCategoryName($catId, $type, $name);
         return $response;
     }
 
@@ -82,24 +83,28 @@ class BusinessHomeService {
         try {
 
             $request->validate([
-                'banner_photo' => 'required|mimes:jpg,jpeg,png',
                 'home_sort' => 'required'
             ]);
 
             //file upload in storege
-            $filePath = $this->upload($request['banner_photo'], 'assetlite/images/business-images');
+            $filePath = "";
+            if ($request['banner_photo'] != "") {
+                $filePath = $this->upload($request['banner_photo'], 'assetlite/images/business-images');
+
+                //delete old photo
+                if ($request['old_photo']) {
+                    $this->deleteFile($request['old_photo']);
+                }
+            }
 
             //save data in database 
-            $newPhoto = $this->businessBannerRepo->saveBannerPhoto($filePath, $request['home_sort']);
-
-            //delete old photo
-            if ($request['old_photo']) {
-                $this->deleteFile($request['old_photo']);
-            }
+            $newPhoto = $this->businessBannerRepo->saveBannerPhoto($filePath, $request['alt_text'], $request['home_sort']);
+            
+            $photo = $newPhoto == "" ? $request['old_photo'] : $newPhoto;
 
             $response = [
                 'success' => 1,
-                'photo' => $newPhoto,
+                'photo' => $photo,
                 'sort' => $request['home_sort'],
                 'message' => "Banner photo is uploaded successfully!"
             ];
@@ -120,9 +125,7 @@ class BusinessHomeService {
      * @return Response
      */
     public function changeCategorySort($request) {
-        $catId = $request->catId;
-        $sort = $request->sort;
-        $response = $this->businessCatRepo->changeCategorySorting($catId, $sort);
+        $response = $this->businessCatRepo->changeCategorySorting($request);
         return $response;
     }
 
@@ -153,7 +156,8 @@ class BusinessHomeService {
 
             $request->validate([
                 'title' => 'required',
-                'body' => 'required'
+                'title_bn' => 'required',
+                'body_bn' => 'required'
             ]);
 
             //file upload in storege
@@ -196,6 +200,15 @@ class BusinessHomeService {
         $response = $this->businessNewsRepo->getSingleNews($newsId);
         return $response;
     }
+    
+     /**
+     * Change features sorting
+     * @return Response
+     */
+    public function changeNewsSort($request) {
+        $response = $this->businessNewsRepo->changeNewsSorting($request);
+        return $response;
+    }
 
     /**
      * Change news status
@@ -217,9 +230,8 @@ class BusinessHomeService {
         }
         return $response;
     }
-    
-    
-      /**
+
+    /**
      * Get business features
      * @return Response
      */
@@ -227,29 +239,26 @@ class BusinessHomeService {
         $response = $this->businessFeaturesRepo->getFeaturesList();
         return $response;
     }
-    
-    
-     /**
+
+    /**
      * Change features sorting
      * @return Response
      */
     public function changeFeatureSort($request) {
-        $featureId = $request->featureId;
-        $sort = $request->sort;
-        $response = $this->businessFeaturesRepo->changeFeatureSorting($featureId, $sort);
+        $response = $this->businessFeaturesRepo->changeFeatureSorting($request);
         return $response;
     }
-    
+
     /**
      * Change feature status
      * @return Response
      */
-    public function featureStatusChange($featureId) {
-        $response = $this->businessFeaturesRepo->changeFeatureStatus($featureId);
+    public function featureStatusChange($request) {
+        $response = $this->businessFeaturesRepo->changeFeatureStatus($request);
         return $response;
     }
-    
-     /**
+
+    /**
      * save business feature
      * @return Response
      */
@@ -257,7 +266,8 @@ class BusinessHomeService {
         try {
 
             $request->validate([
-                'title' => 'required'
+                'title' => 'required',
+                'title_bn' => 'required'
             ]);
 
             //file upload in storege
@@ -291,8 +301,8 @@ class BusinessHomeService {
             return $response;
         }
     }
-    
-     /**
+
+    /**
      * Get business feature by id
      * @return Response
      */
@@ -300,9 +310,7 @@ class BusinessHomeService {
         $response = $this->businessFeaturesRepo->getSingleFeature($featureId);
         return $response;
     }
-    
-    
-    
+
     /**
      * Feature delete
      * @return Response

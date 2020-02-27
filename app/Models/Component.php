@@ -6,15 +6,31 @@ use Illuminate\Database\Eloquent\Model;
 
 class Component extends Model
 {
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'section_details_id',
+        'page_type',
+        'title_en',
+        'title_bn',
+        'slug',
+        'description_en',
+        'description_bn',
+        'editor_en',
+        'editor_bn',
+        'image',
+        'alt_text',
+        'video',
+        'alt_links',
+        'component_type',
+        'component_order',
+        'multiple_attributes',
+        'status',
+        'other_attributes',
+        'deleted_at'
+    ];
 
-    // public function appServiceTab()
-    // {
-    //     return $this->belongsTo(AppServiceTab::class, 'app_service_tab_id', 'id');
-    // }
 
-    // public function appServiceCat()
-    // {
-    //     return $this->belongsTo(AppServiceCategory::class, 'app_service_cat_id', 'id');
-    // }
+    protected $casts = [
+        'multiple_attributes' => 'array',
+    ];
+
 }

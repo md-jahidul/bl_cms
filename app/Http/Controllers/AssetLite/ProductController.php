@@ -6,13 +6,8 @@ use App\Enums\OfferType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\OfferCategory;
-use App\Models\OtherRelatedProduct;
 use App\Models\Product;
-use App\Models\ProductCore;
-use App\Models\ProductDetail;
-use App\Models\RelatedProduct;
 use App\Models\SimCategory;
-use App\Models\TagCategory;
 use App\Models\ProductPriceSlab;
 use App\Services\DurationCategoryService;
 use App\Services\OfferCategoryService;
@@ -20,7 +15,6 @@ use App\Services\ProductCoreService;
 use App\Services\ProductDetailService;
 use App\Services\ProductService;
 use App\Services\TagCategoryService;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
@@ -28,9 +22,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\URL;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -240,6 +232,7 @@ class ProductController extends Controller
         return (strpos(request()->previous_page, 'trending-home') !== false) ? redirect(request()->previous_page) : redirect(route('product.list', $type));
     }
 
+
     /**
      * @param $type
      * @param $id
@@ -250,9 +243,6 @@ class ProductController extends Controller
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
         $otherAttributes = $productDetail->product_details->other_attributes;
-
-//        return $otherAttributes;
-
         return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType', 'otherAttributes'));
     }
 
@@ -264,8 +254,6 @@ class ProductController extends Controller
      */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-//        return $request->all();
-
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
         $this->productDetailService->updateProductDetails($request->all(), $id);

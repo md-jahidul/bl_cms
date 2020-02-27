@@ -12,7 +12,7 @@ class BusinessGeneralController extends Controller {
     private $businessHomeService;
 
     /**
-     * EasyPaymentCardController constructor.
+     * BusinessGeneralController constructor.
      * @param BusinessHomeService $businessHomeService
      */
     public function __construct(BusinessHomeService $businessHomeService) {
@@ -116,6 +116,18 @@ class BusinessGeneralController extends Controller {
 
         $response = $this->businessHomeService->getNewsById($newsId);
         return $response;
+    }
+    
+     /**
+     * News Sorting Change.
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     * @Dev Bulbul Mahmud Nito || 24/02/2020
+     */
+    public function newsSortChange(Request $request) {
+        $sortChange = $this->businessHomeService->changeNewsSort($request);
+        return $sortChange;
     }
 
 

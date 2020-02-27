@@ -41,12 +41,35 @@
 
                             <div class="row">
 
+
+                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
+                                    <label for="title" class="required">Title (English)</label>
+                                    <input type="text" name="title"  class="form-control" placeholder="Enter Title in English"
+                                           value="@if(isset($about)){{$about->title}} @elseif(old("title")) {{old("title")}} @endif"
+                                           required data-validation-required-message="Enter Title in English">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title'))
+                                        <div class="help-block">  {{ $errors->first('title') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn" class="required">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter Title in Bangla"
+                                           value="@if(isset($about)){{$about->title_bn}} @elseif(old("title_bn")) {{old("title_bn")}} @endif"
+                                           required data-validation-required-message="Enter Title in Bangla">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('banglalink_info') ? ' error' : '' }}">
-                                    <label for="banglalink_info" class="required">About Banglalink (English)</label>
+                                    <label for="banglalink_info" class="required">Description (English)</label>
                                     <textarea
                                         required
-                                        data-validation-required-message="About Banglalink (English) is required"
-                                        class="form-control" name="banglalink_info" placeholder="Enter About Banglalink in English" id="banglalink_info"
+                                        data-validation-required-message="Description (English) is required"
+                                        class="form-control" name="banglalink_info" placeholder="Enter Description in English" id="banglalink_info"
                                         rows="4">{{ old("banglalink_info") ? old("banglalink_info") : $banglalink_info  }}</textarea>
 
                                     <div class="help-block"></div>
@@ -57,11 +80,11 @@
 
 
                                 <div class="form-group col-md-6 {{ $errors->has('banglalink_info_bn') ? ' error' : '' }}">
-                                    <label for="banglalink_info_bn" class="required">About Banglalink (Bangla)</label>
+                                    <label for="banglalink_info_bn" class="required">Description (Bangla)</label>
                                     <textarea
                                         required
-                                        data-validation-required-message="About Banglalink (Bangla) is required"
-                                        class="form-control" name="banglalink_info_bn" placeholder="Enter About Banglalink in Bangla" id="banglalink_info_bn"
+                                        data-validation-required-message="Description (Bangla) is required"
+                                        class="form-control" name="banglalink_info_bn" placeholder="Enter Description in Bangla" id="banglalink_info_bn"
                                         rows="4">{{ old("banglalink_info_bn") ? old("banglalink_info_bn") : $banglalink_info_bn }}</textarea>
 
                                     <div class="help-block"></div>
@@ -100,19 +123,19 @@
                                 <div class="form-group col-md-6">
 
                                     @if(isset($about))
-                                        <img style="height:80px;width:100px;"
+                                        <img style="height:120px;width:180px;"
                                              src="{{ config('filesystems.file_base_url') . $about->content_image }}" id="profile_image_Display">
                                     @else
-                                        <img style="height:80px;width:100px;display:none" id="profile_image_Display">
+                                        <img style="height:120px;width:180px;display:none" id="profile_image_Display">
                                     @endif
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     @if(isset($about))
-                                        <img style="height:80px;width:100px;"
+                                        <img style="height:120px;width:180px;"
                                              src="{{ config('filesystems.file_base_url') . $about->banner_image }}" id="imgDisplay">
                                     @else
-                                        <img style="height:80px;width:100px;display:none" id="imgDisplay">
+                                        <img style="height:120px;width:180px;display:none" id="imgDisplay">
                                     @endif
                                 </div>
 

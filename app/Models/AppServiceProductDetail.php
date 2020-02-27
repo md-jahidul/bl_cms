@@ -8,6 +8,10 @@ class AppServiceProductDetail extends Model
 {
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'other_attributes' => 'array'
+    ];
+
     // public function appServiceTab()
     // {
     //     return $this->belongsTo(AppServiceTab::class, 'app_service_tab_id', 'id');

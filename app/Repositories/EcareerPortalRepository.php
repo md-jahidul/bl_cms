@@ -9,11 +9,11 @@
 
 namespace App\Repositories;
 
-use App\Models\EcarrerPortal;
+use App\Models\EcareerPortal;
 
-class EcarrerPortalRepository extends BaseRepository
+class EcareerPortalRepository extends BaseRepository
 {
-    public $modelName = EcarrerPortal::class;
+    public $modelName = EcareerPortal::class;
 
 
     /**
@@ -42,4 +42,8 @@ class EcarrerPortalRepository extends BaseRepository
     public function getSectionDataByID($id){
         return $this->model::where('id', $id)->whereNull('deleted_at')->first();
     }
+
+
+
+
 }

@@ -18,7 +18,7 @@ class CreateAppServiceProductDetailsTable extends Migration
     {
         Schema::create('app_service_product_details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('product_id')->nullable()->comment('app_service_products table id');
+            $table->unsignedBigInteger('product_id')->comment('app_service_products table id');
             $table->string('section_name')->nullable();
             $table->string('slug')->nullable();
             $table->string('title_en')->nullable();
@@ -29,11 +29,19 @@ class CreateAppServiceProductDetailsTable extends Migration
             $table->string('tab_type')->nullable();
             $table->string('category')->nullable();
             $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('is_default')->default(0);
             $table->tinyInteger('multiple_component')->default(0)->comment('Section has multiple component(1) or single component(0)');
             $table->integer('section_order')->nullable();
             $table->json('other_attributes')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('product_id')
+                ->references('id')
+                ->on('app_service_products')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
         });
     }
 

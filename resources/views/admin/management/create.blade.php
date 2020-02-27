@@ -92,7 +92,7 @@
                                     <textarea
                                         required
                                         data-validation-required-message="Personal Details (English) is required"
-                                        class="form-control" name="personal_details" placeholder="Enter Personal Details in English" id="personal_details"
+                                        class="form-control details" name="personal_details" placeholder="Enter Personal Details in English" id="personal_details"
                                         rows="4">{{ old("personal_details") ? old("personal_details") : $personal_details  }}</textarea>
 
                                     <div class="help-block"></div>
@@ -107,7 +107,7 @@
                                     <textarea
                                         required
                                         data-validation-required-message="Personal Details (Bangla) is required"
-                                        class="form-control" name="personal_details_bn" placeholder="Enter Personal Details in Bangla" id="personal_details_bn"
+                                        class="form-control details" name="personal_details_bn" placeholder="Enter Personal Details in Bangla" id="personal_details_bn"
                                         rows="4">{{ old("personal_details_bn") ? old("personal_details_bn") : $personal_details_bn }}</textarea>
 
                                     <div class="help-block"></div>
@@ -171,7 +171,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image') ? ' error' : '' }}">
-                                    <label for="alt_text" >Banner Image</label>
+                                    <label for="alt_text" >Modal Image</label>
                                     <div class="custom-file">
                                         <input type="file" name="banner_image" class="custom-file-input" id="image">
                                         <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
@@ -224,10 +224,49 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/tinymce/tinymce.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 @endpush
-@push('page-js')
 
+<style>
+    form .select-role.validate input:focus, form .select-role.issue input:focus, form .select-role.validate input{
+        border-color: unset;
+        -webkit-box-shadow: unset;
+        -moz-box-shadow: unset;
+        box-shadow: unset;
+        border-width: 0;
+        color : unset;
+    }
+</style>
+
+@push('page-js')
+    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+
+
+
+    <script>
+        $(function () {
+            $("textarea.details").summernote({
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    // ['table', ['table']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['view', ['fullscreen', 'codeview']]
+                ],
+                height: 200
+            })
+
+        })
+    </script>
 @endpush
+
 
 
 

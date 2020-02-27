@@ -19,6 +19,7 @@ class ComponentService
 
     const APP = 1;
     const VAS = 2;
+    const PAGE_TYPE = 'app_services';
 
     /**
      * @var $componentRepository
@@ -35,31 +36,149 @@ class ComponentService
         $this->setActionRepository($componentRepository);
     }
 
-    public function componentList()
-    {   
-        return $this->findAll();
-        // return $this->findAll('', [
-        //     'appServiceTab' => function ($q) {
-        //         $q->select('id', 'name_en');
-        //     },
-        //     'appServiceCat' => function ($q) {
-        //         $q->select('id', 'title_en');
-        //     }
-        // ], ['column' => 'created_at', 'direction' => 'DESC']);
+    public function findByType($type)
+    {
+        return $this->componentRepository->findOneByProperties(['type' => $type]);
+    }
+
+    public function componentList($section_id)
+    {
+        return $this->componentRepository->findByProperties(['section_details_id' => $section_id]);
     }
 
     /**
      * @param $data
      * @return Response
      */
-    public function storeAppServiceProduct($data)
+    public function storeComponentDetails($data)
     {
-        if (request()->hasFile('product_img_url')) {
-            $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
+        if (request()->hasFile('image_url')) {
+            $data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product/details');
         }
+
+        if (request()->hasFile('video_url')) {
+            $data['video'] = $this->upload($data['video_url'], 'assetlite/video/app-service/product/details');
+        } else {
+            $data['video'] = request()->input('video_url', null);
+        }
+	
+	$data['page_type'] = self::PAGE_TYPE;
+        
+        $results = [];
+        if (isset($data['multi_item']) && !empty($data['multi_item'])) {
+            $request_multi = $data['multi_item'];
+            $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
+            for ($i = 1; $i <= $item_count; $i++) {
+                foreach ($data['multi_item'] as $key => $value) {
+                    $sub_data = [];
+                    $check_index = explode('-', $key)[1];
+                    if ($check_index == $i) {
+                        if (request()->hasFile('multi_item.' . $key)) {
+                            $value = $this->upload($value, 'assetlite/images/app-service/product/details');
+                        }
+                        $results[$i][] = [$key => $value];
+                    }
+                }
+            }
+        }
+        $data['multiple_attributes'] = json_encode($results);
         $this->save($data);
-        return new Response('App Service Category added successfully');
+        return new Response('App Service Component added successfully');
     }
+
+    protected function imageUpload($data)
+    {
+        if (isset($data['multiple_attributes']) && !empty($data['multiple_attributes'])) {
+            $countImage = count($data['multiple_attributes']['image']);
+            for ($i = 1; $i <= $countImage; $i++) {
+                foreach ($data['multiple_attributes']['image'] as $key => $value) {
+                    if (!empty($value)) {
+                        $imageUrl = $this->upload($value, 'assetlite/images/product_details');
+                        $image[$key] = $imageUrl;
+                    }
+                }
+            }
+        }
+        return $image;
+    }
+
+    public function componentStore($data, $sectionId)
+    {
+        if (request()->hasFile('image')) {
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/banner/product_details');
+        }
+
+
+        $image = $this->imageUpload($data);
+
+        $data['multiple_attributes'] = [
+            'alt_text' => $data['multiple_attributes']['alt_text'],
+            'image' => $image
+        ];
+
+        $data['page_type'] = "other_offer";
+        $data['section_details_id'] = $sectionId;
+
+        $this->save($data);
+    }
+
+    public function componentUpdate($data, $id)
+    {
+
+        $component = $this->findOne($id);
+
+        // ... other usual stuff
+
+        // get original data
+        $new_product_name = $component->multiple_attributes;
+
+        // contains all the inputs from the form as an array
+        $input_product_name = request()->input('multiple_attributes');
+        // loop over the product array
+        foreach ($input_product_name as $data_id => $data) {
+
+            dd($data_id);
+
+            // loop over each input for the product in the view form
+            foreach ($data as $key => $value) {
+
+
+
+                // set the new value
+                $new_product_name[$data_id][$key] = $value;
+            }
+        }
+        // set the new data (should automatically serialize into JSON for storage)
+//        $order->product_name = $new_product_name;
+//
+//        $order->save();
+
+
+
+        $component = $this->findOne($id);
+
+        dd($component['multiple_attributes']);
+
+        if (request()->hasFile('image')) {
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/banner/product_details');
+        }
+
+        if (isset($data['multiple_attributes']['image'])) {
+            $image = $this->imageUpload($data);
+        }
+
+        $data['multiple_attributes'] = [
+            $data['multiple_attributes']['alt_text'],
+            (isset($data['multiple_attributes']['image'])) ? $image : $component['multiple_attributes']
+        ];
+
+        dd($data);
+
+        $data['page_type'] = "other_offer";
+        $component->update($data);
+        return response("Component update successfully!!");
+    }
+
 
     /**
      * @param $data
@@ -70,7 +189,7 @@ class ComponentService
     {
         $appServiceProduct = $this->findOne($id);
         if (request()->hasFile('product_img_url')) {
-            $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
+            $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product/details');
             $this->deleteFile($appServiceProduct->product_img_url);
         }
 
