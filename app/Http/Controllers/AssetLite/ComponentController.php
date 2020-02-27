@@ -102,14 +102,16 @@ class ComponentController extends Controller
 	public function conponentEdit($id)
 	{
 
+		$appServiceProduct = $this->componentService->findOne($id);
+		
+		// dd($appServiceProduct);
 
-		dd($id);
+		// $component_type = $request->input('component_type', '');
+		// $data['tab_type'] = $request->input('tab_type', '');
+		// $data['section_id'] = $request->input('section_id', '');
 
-		$component_type = $request->input('component_type', '');
-		$data['tab_type'] = $request->input('tab_type', '');
-		$data['section_id'] = $request->input('section_id', '');
-
-		return view('admin.app-service.details.components.edit', compact('data', 'component_type'));
+		// return view('admin.app-service.details.components.edit', compact('data', 'component_type'));
+		return view('admin.app-service.details.components.edit', compact('appServiceProduct'));
 
 	}
 

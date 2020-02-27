@@ -282,7 +282,7 @@
                 <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('product.core.list') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-magic"></i> Life at Banglalink</a>
+                            class="la la-motorcycle"></i> Life at Banglalink</a>
                             <ul class="menu-content">
 
                                 <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
@@ -311,13 +311,34 @@
                 <li class="{{ is_active_url('programs/progeneral') .' '. is_active_url('programs/progeneral/create') }}">
                     <a class="menu-item" href="#"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-magic"></i> Programs</a>
+                            class="la la-car"></i> Programs</a>
                             <ul class="menu-content">
-                                <li class="{{ request()->is('programs/progeneral*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('programs.progeneral') }}"
+                                <li class="{{ request()->is('programs/tab-title*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.tab.title') }}"
                                        data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> General</a>
+                                            class="la la-safari"></i> Tab Title</a>
                                 </li>
+                                <li class="{{ request()->is('programs/progeneral/news_section*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'news_section']) }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> News section</a>
+                                </li>
+                                <li class="{{ request()->is('programs/progeneral/steps*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'steps']) }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Steps section</a>
+                                </li>
+                                <li class="{{ request()->is('programs/progeneral/events*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'events']) }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Events section</a>
+                                </li>
+                                <li class="{{ request()->is('programs/progeneral/testimonial*') ? 'active' : '' }}">
+                                    <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'testimonial']) }}"
+                                       data-i18n="nav.templates.vert.classic_menu"><i
+                                            class="la la-safari"></i> Testimonial section</a>
+                                </li>
+
                                 <li class="{{ request()->is('programs/proiconbox*') ? 'active' : '' }}">
                                     <a class="menu-item" href="{{ route('programs.proiconbox') }}"
                                        data-i18n="nav.templates.vert.classic_menu"><i
@@ -343,7 +364,7 @@
                 <li class="{{ is_active_url('vacancy/pioneer') .' '. is_active_url('vacancy/pioneer') }}">
                     <a class="menu-item" href="#"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-magic"></i> Vacancy</a>
+                            class="la la-beer"></i> Vacancy</a>
 
                         <ul class="menu-content">
                             <li class="{{ request()->is('vacancy/pioneer*') ? 'active' : '' }}">

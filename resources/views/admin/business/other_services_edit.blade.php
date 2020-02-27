@@ -21,14 +21,14 @@
                         <div class="col-md-4 col-xs-12">
 
                             @csrf
-                            
+
                             <input type="hidden" name="service_id" value="{{$service->id}}">
 
                             <div class="form-group">
                                 <label> Select Category <span class="text-danger">*</span></label>
                                 <select class="form-control" required="required" name="type">
                                     <option value="">Select Category</option>
-                                    <option @if($service->type == 'business-solusion') selected @endif value="business-solusion">Business Solution</option>
+                                    <option @if($service->type == 'business-solution') selected @endif value="business-solution">Business Solution</option>
                                     <option @if($service->type == 'iot') selected @endif value="iot">IOT</option>
                                     <option @if($service->type == 'others') selected @endif value="others">Others</option>
                                 </select>
@@ -40,15 +40,31 @@
                             </div>
 
                             <div class="form-group">
+
+                                <label for="Package Name"> Name (EN)<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{$service->name}}"  required name="name_en" placeholder="Package Name English">
+                                <br>
+                                <label for="Package Name"> Name (BN)<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{$service->name_bn}}"  required name="name_bn" placeholder="Package Name Bangla">
+
+                            </div>
+
+                            <div class="form-group">
                                 <label for="Banner Photo">Banner Photo <span class="text-danger">*</span></label>
-                                <input type="file" required class="dropify_package" name="banner_photo" data-height="70"
+                                <input type="file" class="dropify_package" name="banner_photo" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                 <input type="hidden" name="old_banner" value="{{$service->banner_photo}}">
+
+                                <label>Alt Text</label>
+                                <input type="text" class="form-control" value="{{$service->alt_text}}" name="alt_text" placeholder="Alt Text">
+
                                 <p class="text-center">
-                                     @if($service->banner_photo != "")
-                                <img src="{{ config('filesystems.file_base_url') . $service->banner_photo }}" alt="Banner Photo" height="50px" />
-                                @endif
+                                    @if($service->banner_photo != "")
+                                    <img src="{{ config('filesystems.file_base_url') . $service->banner_photo }}" alt="Banner Photo" height="50px" />
+                                    @endif
                                 </p>
+
+
 
                             </div>
 
@@ -67,20 +83,28 @@
 
                             <div class="form-group">
                                 <label for="Banner Photo">Icon <span class="text-danger">*</span></label>
-                                <input type="file" class="dropify_package" required name="icon" data-height="70"
+                                <input type="file" class="dropify_package" name="icon" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                 <input type="hidden" name="old_icon" value="{{$service->icon}}">
-                                
+
                                 <p class="text-center">
-                                     @if($service->icon != "")
-                                <img src="{{ config('filesystems.file_base_url') . $service->icon }}" alt="Banner Photo" height="40px" />
-                                @endif
+                                    @if($service->icon != "")
+                                    <img src="{{ config('filesystems.file_base_url') . $service->icon }}" alt="Banner Photo" height="40px" />
+                                    @endif
                                 </p>
                             </div>
 
+
                             <div class="form-group">
-                                <label for="Short Details">Short Details <span class="text-danger">*</span></label>
-                                <textarea type="text" name="short_details" required class="form-control">{{$service->short_details}}</textarea>
+
+                                <label for="Short Details">Short Details (EN)<span class="text-danger">*</span></label>
+                                <textarea type="text" name="short_details_en" required class="form-control">{{$service->short_details}}</textarea>
+
+                                <br>
+
+                                <label for="Short Details">Short Details (BN)<span class="text-danger">*</span></label>
+                                <textarea type="text" name="short_details_bn" required class="form-control">{{$service->short_details_bn}}</textarea>
+
                             </div>
 
                         </div>
@@ -88,12 +112,18 @@
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
-                                <label for="Details">Offer Details</label>
-                                <textarea type="text" name="offer_details" class="form-control textarea_details">{{$service->offer_details}}</textarea>
+                                <label for="Details">Offer Details (EN)</label>
+                                <textarea type="text" name="offer_details_en" class="form-control textarea_details">{{$service->offer_details}}</textarea>
+
+                                <br>
+
+                                <label for="Details">Offer Details (BN)</label>
+                                <textarea type="text" name="offer_details_bn" class="form-control textarea_details">{{$service->offer_details_bn}}</textarea>
+
                             </div>
 
                         </div>
-                        
+
                         <div class="col-md-12 col-xs-12">
 
                             <div class="form-group ">
@@ -103,14 +133,14 @@
                                     @foreach($features as $feature)
                                     <div class="col-md-4">
                                         <label>
-                                            
+
                                             @php
                                             $checked = "";
                                             if(in_array($feature->id, $asgnFeatures)){
                                             $checked = "checked";
                                             }
                                             @endphp
-                                            
+
                                             <input type="checkbox" {{$checked}} name="feature[{{$feature->id}}]" class="custom-input">
                                             @if($feature->icon_url != "")
                                             <img src="{{ config('filesystems.file_base_url') . $feature->icon_url }}" alt="Feature Icon" width="30px" />

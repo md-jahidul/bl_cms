@@ -14,7 +14,7 @@ class BusinessNewsRepository extends BaseRepository {
     public $modelName = BusinessNews::class;
 
     public function getNews() {
-        $data = $this->model->orderBy('id', 'DESC')->get();
+        $data = $this->model->orderBy('sort')->get();
         return $data;
     }
    
@@ -30,7 +30,11 @@ class BusinessNewsRepository extends BaseRepository {
         $news->image_url = $filePath;
         }
         $news->title = $request->title;
+        $news->title_bn = $request->title_bn;
         $news->body = $request->body;
+        $news->body_bn = $request->body_bn;
+        $news->alt_text = $request->alt_text;
+        $news->sliding_speed = $request->sliding_speed;
         return $news->save();
     }
     
@@ -38,6 +42,35 @@ class BusinessNewsRepository extends BaseRepository {
         $data = $this->model->findOrFail($newsId);
         return $data;
     }
+    
+    
+    
+    public function changeNewsSorting($request) {
+        try {
+
+            $positions = $request->position;
+            foreach ($positions as $position) {
+                $newsId = $position[0];
+                $new_position = $position[1];
+                $update = $this->model->findOrFail($newsId);
+                $update['sort'] = $new_position;
+                $update->update();
+            }
+            
+            $response = [
+                'success' => 1,
+                'message' => 'Success'
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
+    }
+    
     
      public function changeNewsStatus($newsId) {
         try {

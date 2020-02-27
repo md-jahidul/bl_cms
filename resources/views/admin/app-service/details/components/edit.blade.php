@@ -68,9 +68,11 @@
                                     <select class="form-control required" name="app_service_tab_id" id="offer_type"
                                             required data-validation-required-message="Please select type">
                                         <option data-alias="" value="">---Select Type---</option>
-                                        @foreach($appServiceTabs as $tab)
-                                            <option data-alias="{{ $tab->alias }}" value="{{ $tab->id }}" {{ ($tab->id == $appServiceProduct->app_service_tab_id ) ? 'selected' : '' }}>{{ $tab->name_en }}</option>
-                                        @endforeach
+                                        @if( !empty($appServiceTabs) )
+                                            @foreach($appServiceTabs as $tab)
+                                                <option data-alias="{{ $tab->alias }}" value="{{ $tab->id }}" {{ ($tab->id == $appServiceProduct->app_service_tab_id ) ? 'selected' : '' }}>{{ $tab->name_en }}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                     <div class="help-block"></div>
                                     @if ($errors->has('app_service_tab_id'))
@@ -83,9 +85,11 @@
                                     <select class="form-control" name="app_service_cat_id" id="appServiceCat"
                                             required data-validation-required-message="Please select category">
                                         <option data-alias="" value="">---Select Category---</option>
-                                        @foreach($appServiceCategory as $category)
-                                            <option data-alias="{{ $category->alias }}" value="{{ $category->id }}" {{ ($category->id == $appServiceProduct->app_service_cat_id ) ? 'selected' : '' }}>{{ $category->title_en }}</option>
-                                        @endforeach
+                                        @if( !empty($appServiceCategory) )
+                                            @foreach($appServiceCategory as $category)
+                                                <option data-alias="{{ $category->alias }}" value="{{ $category->id }}" {{ ($category->id == $appServiceProduct->app_service_cat_id ) ? 'selected' : '' }}>{{ $category->title_en }}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                     <div class="help-block"></div>
                                     @if ($errors->has('app_service_cat_id'))

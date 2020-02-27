@@ -18,17 +18,22 @@ class BusinessCategoryRepository extends BaseRepository {
         return $categories;
     }
 
-    public function changeCategoryName($catId, $name) {
+    public function changeCategoryName($catId, $type, $name) {
         try {
 
             $category = $this->model->findOrFail($catId);
 
-            $category->name = $name;
+            if ($type == 'en') {
+                $category->name = $name;
+            } else {
+                $category->name_bn = $name;
+            }
             $category->save();
 
             $response = [
                 'success' => 1,
-                'name' => $category->name
+                'name' => $category->name,
+                'name_bn' => $category->name_bn,
             ];
             return response()->json($response, 200);
         } catch (\Exception $e) {
@@ -36,6 +41,7 @@ class BusinessCategoryRepository extends BaseRepository {
             $response = [
                 'success' => 0,
                 'name' => $category->name,
+                'name_bn' => $category->name_bn,
                 'message' => $e->getMessage()
             ];
             return response()->json($response, 500);

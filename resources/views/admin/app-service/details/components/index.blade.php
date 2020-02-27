@@ -47,7 +47,9 @@
                                         <td>{{ $list->status }}</td>
 
                                         <td>
-                                            <a href="{{--{{ url("app-service/component/$list->id/edit") }}--}}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                            {{-- <a href="{{ url("app-service/component/$list->id/edit") }}" role="button" class="www btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a> --}}
+                                            <a href="{{ route('appservice.component.edit', ['id' => $list->id]) }}" role="button" class="www btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+
 
                                             @if( isset($list->is_default) && $list->is_default != 0 )
                                                 <a href="#" remove="{{ url("app-service-product/$list->id/delete") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">

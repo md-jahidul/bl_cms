@@ -4,15 +4,15 @@ namespace App\Http\Controllers\AssetLite;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\EcarrerService;
+use App\Services\EcareerService;
 use App\Http\Controllers\AssetLite\ConfigController;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 
-class EcarrerController extends Controller
+class EcareerController extends Controller
 {
-   
+
 
 	/**
 	 * Available eCarrer portals category
@@ -29,6 +29,7 @@ class EcarrerController extends Controller
 	 * # programs_photogallery
 	 * # programs_sapbatches
 	 * # programs_ennovatorbatches
+	 * # programs_top_tab_title
 	 */
 
 	/**
@@ -37,7 +38,7 @@ class EcarrerController extends Controller
 	 */
    private $ecarrerService;
 
-    public function __construct(EcarrerService $ecarrerService)
+    public function __construct(EcareerService $ecarrerService)
     {
         $this->ecarrerService = $ecarrerService;
         $this->middleware('auth');
@@ -53,7 +54,7 @@ class EcarrerController extends Controller
      $categoryTypes = 'life_at_bl_general';
 
      $sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-		
+
      return view('admin.ecarrer.general.index', compact('sections'));
 
 	}
@@ -75,7 +76,7 @@ class EcarrerController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
@@ -91,6 +92,16 @@ class EcarrerController extends Controller
 		$data_types['has_items'] = 1;
 		# route slug
 		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+
+
+		$additional_info = null;
+		if( $request->filled('sider_info') ){
+			$additional_info['sider_info'] = $request->input('sider_info');
+		}
+
+		if( !empty($additional_info) ){
+			$data_types['additional_info'] = json_encode($additional_info);
+		}
 
 		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
@@ -122,7 +133,7 @@ class EcarrerController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
@@ -134,7 +145,18 @@ class EcarrerController extends Controller
 		    return redirect('life-at-banglalink/general');
 		}
 
-		$this->ecarrerService->updateEcarrerSection($request->all(), $id);
+
+		$data_types = null;
+		$additional_info = null;
+		if( $request->filled('sider_info') ){
+			$additional_info['sider_info'] = $request->input('sider_info');
+		}
+
+		if( !empty($additional_info) ){
+			$data_types['additional_info'] = json_encode($additional_info);
+		}
+
+		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
 
 		Session::flash('message', 'Section updated successfully!');
 		return redirect('life-at-banglalink/general');
@@ -164,7 +186,7 @@ class EcarrerController extends Controller
 		$categoryTypes = 'life_at_bl_teams';
 
 		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-		
+
 		return view('admin.ecarrer.teams.index', compact('sections'));
 
 	}
@@ -194,7 +216,7 @@ class EcarrerController extends Controller
 		}
 
 		$data_types['category'] = 'life_at_bl_teams';
-		
+
 		$category_type = $request->input('category_type', null);
 		if( !empty($category_type) && $category_type == 'teams_title' ){
 			$data_types['has_items'] = 0;
@@ -206,7 +228,7 @@ class EcarrerController extends Controller
 			$data_types['has_items'] = 1;
 		}
 
-		
+
 		# route slug
 		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
 
@@ -238,7 +260,7 @@ class EcarrerController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
@@ -290,7 +312,7 @@ class EcarrerController extends Controller
 		$categoryTypes = 'life_at_bl_diversity';
 
 		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-		
+
 		return view('admin.ecarrer.diversity.index', compact('sections'));
 
 	}
@@ -352,7 +374,7 @@ class EcarrerController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
@@ -383,7 +405,7 @@ class EcarrerController extends Controller
 		return redirect("life-at-banglalink/diversity");
 
 	}
-	
+
 
 	/**
 	 * Life at banglalink events section list
@@ -394,7 +416,7 @@ class EcarrerController extends Controller
 		$categoryTypes = 'life_at_bl_events';
 
 		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-		
+
 		return view('admin.ecarrer.events.index', compact('sections'));
 
 	}
@@ -437,7 +459,7 @@ class EcarrerController extends Controller
 		if( !empty($additional_info) ){
 			$data_types['additional_info'] = json_encode($additional_info);
 		}
-	
+
 		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
 		Session::flash('message', 'Section created successfully!');
@@ -466,7 +488,7 @@ class EcarrerController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
@@ -478,6 +500,7 @@ class EcarrerController extends Controller
 		    return redirect('life-at-banglalink/events');
 		}
 
+		$data_types = null;
 		$additional_info = null;
 		if( $request->filled('sider_info') ){
 			$additional_info['sider_info'] = $request->input('sider_info');
@@ -518,7 +541,7 @@ class EcarrerController extends Controller
 		$categoryTypes = 'life_at_bl_topbanner';
 
 		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-		
+
 		return view('admin.ecarrer.topbanner.index', compact('sections'));
 
 	}
@@ -550,7 +573,7 @@ class EcarrerController extends Controller
 		$data_types['has_items'] = 0;
 		# route slug
 		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
-		
+
 		# do not store now
 		// $this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
@@ -580,7 +603,7 @@ class EcarrerController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    // 'title_en' => 'required',
@@ -624,7 +647,7 @@ class EcarrerController extends Controller
 		$categoryTypes = 'life_at_bl_contact';
 
 		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-		
+
 		return view('admin.ecarrer.contact.index', compact('sections'));
 
 	}
@@ -666,10 +689,10 @@ class EcarrerController extends Controller
 			$data_types['has_items'] = 0;
 		}
 
-		
+
 		# route slug
 		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
-	
+
 		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
 		Session::flash('message', 'Section created successfully!');
@@ -698,7 +721,7 @@ class EcarrerController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
@@ -754,7 +777,7 @@ class EcarrerController extends Controller
 		$categoryTypes = 'vacancy_pioneer';
 
 		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-		
+
 		return view('admin.ecarrer.pioneer.index', compact('sections'));
 
 	}
@@ -786,10 +809,10 @@ class EcarrerController extends Controller
 		$data_types['category'] = 'vacancy_pioneer';
 
 		$data_types['has_items'] = 0;
-		
+
 		# route slug
 		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
-	
+
 		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
 		Session::flash('message', 'Section created successfully!');
@@ -818,7 +841,7 @@ class EcarrerController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
@@ -862,7 +885,7 @@ class EcarrerController extends Controller
 		$categoryTypes = 'vacancy_viconbox';
 
 		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-		
+
 		return view('admin.ecarrer.viconbox.index', compact('sections'));
 
 	}
@@ -894,10 +917,10 @@ class EcarrerController extends Controller
 		$data_types['category'] = 'vacancy_viconbox';
 
 		$data_types['has_items'] = 0;
-		
+
 		# route slug
 		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
-	
+
 		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
 		Session::flash('message', 'Item created successfully!');
@@ -926,7 +949,7 @@ class EcarrerController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
@@ -965,13 +988,13 @@ class EcarrerController extends Controller
 	 * programs progeneral section list
 	 * @return [type] [description]
 	 */
-	public function progeneralIndex(){
+	public function progeneralIndex($sections_type){
 
 		$categoryTypes = 'programs_progeneral';
 
 		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-		
-		return view('admin.ecarrer.progeneral.index', compact('sections'));
+
+		return view('admin.ecarrer.progeneral.index', compact('sections', 'sections_type'));
 
 	}
 
@@ -979,9 +1002,9 @@ class EcarrerController extends Controller
 	 * eCarrer programs progeneral
 	 * @return [type] [description]
 	 */
-	public function progeneralCreate(){
+	public function progeneralCreate($sections_type){
 
-		return view('admin.ecarrer.progeneral.create');
+		return view('admin.ecarrer.progeneral.create', compact('sections_type'));
 	}
 
 	/**
@@ -992,19 +1015,23 @@ class EcarrerController extends Controller
 
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
+		    'sections_type' => 'required',
 		    'slug' => 'required'
 		]);
+
+		$section_type = $request->input('sections_type');
+
 		if ($validator->fails()) {
 		    Session::flash('error', $validator->messages()->first());
-		    return redirect('programs/progeneral');
+		    return redirect("programs/progeneral/$section_type");
 		}
 
 		$data_types['category'] = 'programs_progeneral';
 
 		$data_types['has_items'] = 1;
-		
+
 		# route slug
-		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path(), $section_type);
 
 		# Additional info
 		$additional_info = null;
@@ -1016,11 +1043,11 @@ class EcarrerController extends Controller
 			$data_types['additional_info'] = json_encode($additional_info);
 		}
 
-	
+
 		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
 		Session::flash('message', 'Section created successfully!');
-		return redirect('programs/progeneral');
+		return redirect("programs/progeneral/$section_type");
 	}
 
 
@@ -1028,10 +1055,10 @@ class EcarrerController extends Controller
 	 * eCarrer programs progeneral
 	 * @return [type] [description]
 	 */
-	public function progeneralEdit($id){
+	public function progeneralEdit($id, $sections_type){
 
 		$sections = $this->ecarrerService->generalSectionById($id);
-		return view('admin.ecarrer.progeneral.edit', compact('sections'));
+		return view('admin.ecarrer.progeneral.edit', compact('sections', 'sections_type'));
 	}
 
 
@@ -1045,17 +1072,24 @@ class EcarrerController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
+
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
+		    'sections_type' => 'required',
 		    // 'slug' => 'required',
 		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
 		]);
+
+		$section_type = $request->input('sections_type');
+
 		if ($validator->fails()) {
 		    Session::flash('error', $validator->messages()->first());
-		    return redirect('programs/progeneral');
+		    return redirect("programs/progeneral/$section_type");
 		}
+
 
 		$data_types = null;
 
@@ -1071,7 +1105,7 @@ class EcarrerController extends Controller
 		$this->ecarrerService->updateEcarrerSection($request->all(), $id, $data_types);
 
 		Session::flash('message', 'Section updated successfully!');
-		return redirect('programs/progeneral');
+		return redirect("programs/progeneral/$section_type");
 
 	}
 
@@ -1098,7 +1132,7 @@ class EcarrerController extends Controller
 		$categoryTypes = 'programs_proiconbox';
 
 		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-		
+
 		return view('admin.ecarrer.proiconbox.index', compact('sections'));
 
 	}
@@ -1130,7 +1164,7 @@ class EcarrerController extends Controller
 		$data_types['category'] = 'programs_proiconbox';
 
 		$data_types['has_items'] = 1;
-		
+
 		# route slug
 		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
 
@@ -1144,7 +1178,7 @@ class EcarrerController extends Controller
 			$data_types['additional_info'] = json_encode($additional_info);
 		}
 
-	
+
 		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
 		Session::flash('message', 'Section created successfully!');
@@ -1173,7 +1207,7 @@ class EcarrerController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
@@ -1226,7 +1260,7 @@ class EcarrerController extends Controller
 		$categoryTypes = 'programs_photogallery';
 
 		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-		
+
 		return view('admin.ecarrer.photogallery.index', compact('sections'));
 
 	}
@@ -1269,7 +1303,7 @@ class EcarrerController extends Controller
 		if( !empty($additional_info) ){
 			$data_types['additional_info'] = json_encode($additional_info);
 		}
-	
+
 		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
 		Session::flash('message', 'Section created successfully!');
@@ -1298,7 +1332,7 @@ class EcarrerController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
@@ -1309,7 +1343,7 @@ class EcarrerController extends Controller
 		    Session::flash('error', $validator->messages()->first());
 		    return redirect('programs/photogallery');
 		}
-		
+
 		$data_types = null;
 		$additional_info = null;
 		if( $request->filled('sider_info') ){
@@ -1350,7 +1384,7 @@ class EcarrerController extends Controller
 		$categoryTypes = 'programs_sapbatches';
 
 		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-		
+
 		return view('admin.ecarrer.sapbatches.index', compact('sections'));
 
 	}
@@ -1387,7 +1421,7 @@ class EcarrerController extends Controller
 		else{
 			$data_types['has_items'] = 1;
 		}
-		
+
 		# route slug
 		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
 
@@ -1400,7 +1434,7 @@ class EcarrerController extends Controller
 		if( !empty($additional_info) ){
 			$data_types['additional_info'] = json_encode($additional_info);
 		}
-	
+
 		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
 		Session::flash('message', 'Section created successfully!');
@@ -1429,7 +1463,7 @@ class EcarrerController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
@@ -1489,7 +1523,7 @@ class EcarrerController extends Controller
 		$categoryTypes = 'programs_ennovatorbatches';
 
 		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
-		
+
 		return view('admin.ecarrer.ennovatorbatches.index', compact('sections'));
 
 	}
@@ -1526,7 +1560,7 @@ class EcarrerController extends Controller
 		else{
 			$data_types['has_items'] = 1;
 		}
-		
+
 		# route slug
 		$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
 
@@ -1539,7 +1573,7 @@ class EcarrerController extends Controller
 		if( !empty($additional_info) ){
 			$data_types['additional_info'] = json_encode($additional_info);
 		}
-	
+
 		$this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
 
 		Session::flash('message', 'Section created successfully!');
@@ -1568,7 +1602,7 @@ class EcarrerController extends Controller
 
 		$image_upload_size = ConfigController::adminImageUploadSize();
 		$image_upload_type = ConfigController::adminImageUploadType();
-		
+
 		# Check Image upload validation
 		$validator = Validator::make($request->all(), [
 		    'title_en' => 'required',
@@ -1615,6 +1649,99 @@ class EcarrerController extends Controller
 		$response = $this->ecarrerService->sectionDelete($id);
 		Session::flash('message', $response->getContent());
 		return redirect("programs/ennovatorbatches");
+
+	}
+
+
+	/**
+	 * Life at banglalink topbanner section list
+	 * @return [type] [description]
+	 */
+	public function tabTitleIndex(){
+
+		$categoryTypes = 'programs_top_tab_title';
+
+		$sections = $this->ecarrerService->ecarrerSectionsList($categoryTypes);
+
+		return view('admin.ecarrer.tabtitle.index', compact('sections'));
+
+	}
+
+	/**
+	 * eCarrer life at banglalink topbanner
+	 * @return [type] [description]
+	 */
+	// public function tabTitleCreate(){
+
+	// 	return view('admin.ecarrer.topbanner.create');
+	// }
+
+	/**
+	 * eCarrer life at banglalink topbanner store on create
+	 * @return [type] [description]
+	 */
+	// public function tabTitleStore(Request $request){
+
+	// 	$validator = Validator::make($request->all(), [
+	// 	    'title_en' => 'required'
+	// 	]);
+	// 	if ($validator->fails()) {
+	// 	    Session::flash('error', $validator->messages()->first());
+	// 	    return redirect('life-at-banglalink/topbanner');
+	// 	}
+
+	// 	$data_types['category'] = 'programs_top_tab_title';
+	// 	$data_types['has_items'] = 0;
+	// 	# route slug
+	// 	$data_types['route_slug'] = $this->ecarrerService->getRouteSlug($request->path());
+
+	// 	# do not store now
+	// 	// $this->ecarrerService->storeEcarrerSection($request->all(), $data_types);
+
+	// 	Session::flash('message', 'Banner created successfully!');
+	// 	return redirect('life-at-banglalink/topbanner');
+	// }
+
+
+	/**
+	 * eCarrer life at banglalink topbanner
+	 * @return [type] [description]
+	 */
+	public function tabTitleEdit($id){
+
+		$sections = $this->ecarrerService->generalSectionById($id);
+		return view('admin.ecarrer.tabtitle.edit', compact('sections'));
+	}
+
+
+	/**
+	 * Update general section
+	 * @param  Request $request [description]
+	 * @param  [type]  $id      [description]
+	 * @return [type]           [description]
+	 */
+	public function tabTitleUpdate(Request $request, $id){
+
+		$image_upload_size = ConfigController::adminImageUploadSize();
+		$image_upload_type = ConfigController::adminImageUploadType();
+
+		# Check Image upload validation
+		$validator = Validator::make($request->all(), [
+		    // 'title_en' => 'required',
+		    // 'slug' => 'required',
+		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+		]);
+		if ($validator->fails()) {
+		    Session::flash('error', $validator->messages()->first());
+		    return redirect('programs/tab-title');
+		}
+
+		$data_types = null;
+
+		$this->ecarrerService->updateEcarrerSection($request->except(['slug']), $id, $data_types);
+
+		Session::flash('message', 'Banner updated successfully!');
+		return redirect('programs/tab-title');
 
 	}
 

@@ -13,7 +13,7 @@ class BusinessComPriceTableRepository extends BaseRepository {
 
     public $modelName = BusinessComPriceTable::class;
 
-    public function saveComponent($position, $title, $head, $colOne, $colTwo, $colThree, $srvsId) {
+    public function saveComponent($position, $title, $head, $colOne, $colTwo, $colThree, $srvsId, $oldComponents) {
         $data = [];
 
         $headJson = json_encode($head);
@@ -30,11 +30,32 @@ class BusinessComPriceTableRepository extends BaseRepository {
             'title' => $title,
             'table_head' => $headJson,
             'table_body' => $bodyJson,
-            'position' => $position,
+            'position' => $position + $oldComponents,
             'service_id' => $srvsId,
         );
 
         $this->model->insert($data);
+    }
+    
+     public function getComponent($serviceId) {
+        $component = $this->model->where('service_id', $serviceId)->get();
+        return $component;
+    }
+    
+     public function deleteComponent($serviceId, $position){
+        $component = $this->model->where(array('service_id' => $serviceId, 'position' => $position))->delete();
+        return $component;
+    }
+    
+    public function singleComponent($serviceId, $position) {
+        $component = $this->model->where(array('service_id' => $serviceId, 'position' => $position))->first();
+        return $component;
+    }
+    
+    public function changePosition($comId, $newPosition){
+        $component = $this->model->where(array('id' => $comId))
+                ->update(array('position' => $newPosition));
+        return $component;
     }
 
 }

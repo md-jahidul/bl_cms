@@ -9,12 +9,12 @@
 
 namespace App\Repositories;
 
-use App\Models\EcarrerPortalItem;
+use App\Models\EcareerPortalItem;
 use Carbon\Carbon;
 
-class EcarrerPortalItemRepository extends BaseRepository
+class EcareerPortalItemRepository extends BaseRepository
 {
-    public $modelName = EcarrerPortalItem::class;
+    public $modelName = EcareerPortalItem::class;
 
 
     /**
@@ -24,7 +24,7 @@ class EcarrerPortalItemRepository extends BaseRepository
      */
     public function getItemsByParentID($parent_id){
 
-    	return $this->model::where('ecarrer_portals_id', '=', $parent_id)->whereNull('deleted_at')->get();
+    	return $this->model::where('ecarrer_portals_id', '=', $parent_id)->whereNull('deleted_at')->orderBy('display_order')->get();
 
     }
 
@@ -48,6 +48,26 @@ class EcarrerPortalItemRepository extends BaseRepository
     public function sectionItemSoftDeleteBySectionID($id){
 
         return $this->model::where('ecarrer_portals_id', $id)->update(['deleted_at' => Carbon::now()]);
+
+    }
+
+
+    /**
+     * Ecarrer item sortable
+     * @param  [type] $request [description]
+     * @return [type]          [description]
+     */
+    public function ecarrerItemTableSort($request){
+
+        $positions = $request->position;
+        foreach ($positions as $position) {
+            $menu_id = $position[0];
+            $new_position = $position[1];
+            $update_menu = $this->model->findOrFail($menu_id);
+            $update_menu['display_order'] = $new_position;
+            $update_menu->update();
+        }
+        return "success";
 
     }
 

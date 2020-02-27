@@ -14,10 +14,11 @@
                                 <th width="20%">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="news_sortable">
                             @foreach($news as $n)
-                            <tr>
+                            <tr data-index="{{ $n->id }}" data-position="{{ $n->sort }}">
                                 <td>
+                                    <i class="icon-cursor-move icons"></i>
                                     @if($n->image_url != "")
                                     <img src="{{ config('filesystems.file_base_url') . $n->image_url }}" alt="News Photo" height="70px" />
                                     @endif
@@ -67,21 +68,48 @@
                                 <input type="hidden" class="news_id" name="news_id" value="">
                                 <input type="hidden" class="old_photo" name="old_photo" value="">
 
-                                <div class="form-group">
-                                    <label for="news body">News Title <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control title" required name="title" placeholder="Title">
+                                <div class="form-group row">
+                                    <div class="col-md-6 col-xs-12">
+                                        <label>Title (EN) <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control title" required name="title" placeholder="Title EN">
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <label>Title (BN) <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control title_bn" required name="title_bn" placeholder="Title BN">
+                                    </div>
+
+
                                 </div>
+                                
 
-                                <div class="form-group">
-                                    <label for="news body">News Photo <span class="text-danger">*</span></label>
-                                    <input type="file" class="dropify_news" name="news_photo" data-height="70"
-                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                <div class="form-group row">
+
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="news body">News Body (EN) <span class="text-danger">*</span></label>
+                                        <textarea type="text" name="body" required class="form-control news_body"></textarea>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <label for="news body">News Body (BN) <span class="text-danger">*</span></label>
+                                        <textarea type="text" name="body_bn" required class="form-control news_body_bn"></textarea>
+                                    </div>
+
 
                                 </div>
+                                
+                                <div class="form-group row">
 
-                                <div class="form-group">
-                                    <label for="news body">News Body <span class="text-danger">*</span></label>
-                                    <textarea type="text" name="body" required class="form-control news_body"></textarea>
+                                    <div class="col-md-6 col-xs-12">
+                                        <label>News Photo <span class="text-danger">*</span></label>
+                                        <input type="file" class="dropify_news" name="news_photo" data-height="70"
+                                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    </div>
+                                    <div class="col-md-6 col-xs-12">
+                                        <label>Alt Text<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control alt_text" required name="alt_text" placeholder="Alt Text">
+                                        <label>Sliding Speed<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control sliding_speed" required name="sliding_speed">
+                                    </div>
+
                                 </div>
 
                                 <div class="form-group text-right">
@@ -110,6 +138,49 @@
 
 
         /*######################################### News Javascript ##################################################*/
+        
+        
+        
+        function saveNewPositions(save_url)
+        {
+            var positions = [];
+            $('.update').each(function () {
+                positions.push([
+                    $(this).attr('data-index'),
+                    $(this).attr('data-position')
+                ]);
+            })
+            $.ajax({
+                type: "GET",
+                url: save_url,
+                data: {
+                    update: 1,
+                    position: positions
+                },
+                success: function (data) {
+                },
+                error: function () {
+                    swal.fire({
+                        title: 'Failed to sort data',
+                        type: 'error',
+                    });
+                }
+            });
+        }
+
+        $(".news_sortable").sortable({
+
+            update: function (event, ui) {
+                $(this).children().each(function (index) {
+                    if ($(this).attr('data-position') != (index + 1)) {
+                        $(this).attr('data-position', (index + 1)).addClass('update')
+                    }
+                });
+                var save_url = "{{ url('business-news-sort') }}";
+                saveNewPositions(save_url);
+            }
+        });
+        
 
         //show dropify for news photo
         $('.dropify_news').dropify({
@@ -121,19 +192,7 @@
             }
         });
 
-        //text editor for news body
-        $("textarea.news_body").summernote({
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                // ['table', ['table']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['view', ['codeview']]
-            ],
-            height: 120
-        });
+
 
         $('.edit_news').on('click', function (e) {
             e.preventDefault();
@@ -147,8 +206,12 @@
                 success: function (result) {
 
                     $('.home_news_form .title').val(result.title);
+                    $('.home_news_form .title_bn').val(result.title_bn);
                     $('.home_news_form .old_photo').val(result.image_url);
-                    $('.news_body').summernote('code', result.body);
+                    $('.home_news_form .alt_text').val(result.alt_text);
+                    $('.home_news_form .sliding_speed').val(result.sliding_speed);
+                    $('.news_body').text(result.body);
+                    $('.news_body_bn').text(result.body_bn);
 
 
                 },

@@ -52,7 +52,7 @@ function matchRelatedProduct($id, $roles)
                                             <td>{{ $list->section_name }} {!! $list->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                             <td>{{ $list->tab_type }}</td>
                                             <td class="text-center">
-                                                 <a href="{{ route( "appservice.component.list", [$tab_type, $product_id, $list->id] ) }}" class="btn-sm btn-outline-warning border">component</a>
+                                                 <a href="{{ route( "appservice.component.list", ['type' => $tab_type, 'id' => $list->id] ) }}" class="btn-sm btn-outline-warning border">component</a>
                                             </td>
 
                                             <td>
