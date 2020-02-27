@@ -95,7 +95,7 @@
                         <select class="form-control" name="component_type" aria-invalid="false">
                                 <option value="text_with_image_right">Text with image right</option>
                                 <option value="text_with_image_bottom">Text with image bottom</option>
-                                {{-- <option value="slider_text_with_image_right">Slider text with image right</option> --}}
+                                <option value="slider_text_with_image_right">Slider text with image right</option>
                                 <option value="title_text_editor">Title with table editor</option>
                                 <option value="video_with_text_right">Video with text right</option>
                                 <option value="multiple_image_banner">Multiple image banner</option>
