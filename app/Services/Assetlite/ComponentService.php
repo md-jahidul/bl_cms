@@ -71,16 +71,17 @@ class ComponentService
             for ($i = 1; $i <= $item_count; $i++) {
                 foreach ($data['multi_item'] as $key => $value) {
                     $sub_data = [];
-                    $check_index = explode('-', $key)[1];
-                    if ($check_index == $i) {
+                    $check_index = explode('-', $key);
+                    if ($check_index[1] == $i) {
                         if (request()->hasFile('multi_item.' . $key)) {
                             $value = $this->upload($value, 'assetlite/images/app-service/product/details');
                         }
-                        $results[$i][] = [$key => $value];
+                        $results[$i][$check_index[0]] = $value;
                     }
                 }
             }
         }
+
         $data['multiple_attributes'] = json_encode($results);
         $this->save($data);
         return new Response('App Service Component added successfully');
