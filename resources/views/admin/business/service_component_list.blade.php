@@ -67,12 +67,12 @@
                                     <td class="text-center">
 
 
-                                        <a class="text-info edit_component"
+                                        <a class="text-info edit_component_{{$k}}"
                                            href="{{url('business-others-component-edit/'.$serviceId.'/'.$k.'/'.$com['type'])}}">
                                             <i class="la la-pencil-square"></i>
                                         </a>
-                                        
-                                        <a class="text-danger delete_component" 
+
+                                        <a class="text-danger delete_component_{{$k}}" 
                                            href="{{url('business-others-component-delete/'.$serviceId.'/'.$k.'/'.$com['type'])}}">
                                             <i class="la la-trash"></i>
                                         </a>
@@ -147,7 +147,22 @@ if (Session::has('error')) {
                     "position": $(this).attr('data-position'),
                     "old_position": $(this).attr('data-oldpos'),
                     "type": $(this).attr('data-type')
-            });
+                });
+                
+                var type = $(this).attr('data-type');
+                var newPosition = $(this).attr('data-position');
+                var editUrl = "{{ url('business-others-component-edit/'.$serviceId.'/')}}/"+newPosition +"/"+type;
+                var editSelector = $(".edit_component_"+$(this).attr('data-oldpos'));
+                $(editSelector).attr("href", editUrl);
+                
+                var newEditClass = "text-info edit_component_"+newPosition;
+                $(editSelector).attr('class', newEditClass);
+                
+                var delUrl = "{{ url('business-others-component-delete/'.$serviceId.'/')}}/"+newPosition +"/"+type;
+                var delSelector = $(".delete_component_"+$(this).attr('data-oldpos'));
+                $(delSelector).attr("href", delUrl);
+                var newDelClass = "text-danger delete_component_"+newPosition;;
+                $(delSelector).attr('class', newDelClass);
             });
             $.ajax({
                 type: "GET",
