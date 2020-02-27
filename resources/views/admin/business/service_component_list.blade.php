@@ -67,6 +67,11 @@
                                     <td class="text-center">
 
 
+                                        <a class="text-info edit_component"
+                                           href="{{url('business-others-component-edit/'.$serviceId.'/'.$k.'/'.$com['type'])}}">
+                                            <i class="la la-pencil-square"></i>
+                                        </a>
+                                        
                                         <a class="text-danger delete_component" 
                                            href="{{url('business-others-component-delete/'.$serviceId.'/'.$k.'/'.$com['type'])}}">
                                             <i class="la la-trash"></i>
