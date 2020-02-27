@@ -33,6 +33,12 @@ class BusinessComFeaturesRepository extends BaseRepository {
         return $component;
     }
     
+    
+    public function singleComponent($serviceId, $position) {
+        $component = $this->model->where(array('service_id' => $serviceId, 'position' => $position))->first();
+        return $component;
+    }
+    
     public function changePosition($comId, $newPosition){
         $component = $this->model->where(array('id' => $comId))
                 ->update(array('position' => $newPosition));

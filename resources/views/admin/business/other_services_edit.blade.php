@@ -28,7 +28,7 @@
                                 <label> Select Category <span class="text-danger">*</span></label>
                                 <select class="form-control" required="required" name="type">
                                     <option value="">Select Category</option>
-                                    <option @if($service->type == 'business-solution') selected @endif value="business-solusion">Business Solution</option>
+                                    <option @if($service->type == 'business-solution') selected @endif value="business-solution">Business Solution</option>
                                     <option @if($service->type == 'iot') selected @endif value="iot">IOT</option>
                                     <option @if($service->type == 'others') selected @endif value="others">Others</option>
                                 </select>

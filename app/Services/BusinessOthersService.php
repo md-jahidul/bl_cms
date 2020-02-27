@@ -372,6 +372,38 @@ class BusinessOthersService {
         return $components;
     }
 
+    public function getSingleComponent($serviceId, $position, $type) {
+        try {
+            if ($type == "Photo with Text") {
+                return $this->photoTextRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "Package Comparison One") {
+                return $this->pkOneRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "Package Comparison Two") {
+                return $this->pkTwoRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "Product Features") {
+                return $this->featureRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "Product Price Table") {
+                return $this->priceTableRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "Video Component") {
+                return $this->videoRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "Photo Component") {
+                return $this->photoRepo->singleComponent($serviceId, $position);
+            }
+
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return $response;
+        }
+    }
     public function deleteComponent($serviceId, $position, $type) {
         try {
             if ($type == "Photo with Text") {
