@@ -44,6 +44,11 @@
                                                         </fieldset>
 
                                                         <fieldset>
+                                                            <input type="checkbox" id="dropdown">
+                                                            <label for="text-editor" class="">Dropdown</label>
+                                                        </fieldset>
+
+                                                        <fieldset>
                                                             <input type="checkbox" id="image-field">
                                                             <label for="image-field" class="">Image Field</label>
                                                         </fieldset>
@@ -65,14 +70,15 @@
                                             <div class="row">
 
                                                 <div class="form-group col-md-12 {{ $errors->has('editor_en') ? ' error' : '' }}">
-                                                    <label for="editor_en" >Data Type</label>
-                                                    <select name="component_type" class="form-control required" required data-validation-required-message="Please select design structure">
+                                                    <label for="editor_en">Data Type</label>
+                                                    <select name="component_type" class="form-control required" required data-validation-required-message="Please select data type">
                                                         <option value="">--Select Data Type--</option>
                                                         <option value="text_area">Text Area</option>
                                                         <option value="bullet Text">Bullet Text</option>
                                                         <option value="accordion Text">Accordion Text</option>
                                                         <option value="single_image">Single Image</option>
                                                         <option value="multiple_image">Multiple Image</option>
+                                                        <option value="drop_down">Dropdown</option>
                                                     </select>
                                                     <div class="help-block"></div>
                                                     @if ($errors->has('editor_en'))
@@ -142,6 +148,32 @@
                                                         @endif
                                                     </div>
                                                 </slot>
+
+                                                <slot id="dropdown_field" style="display: none">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="editor_bn" class="text-success">Drop Down Sample Picture</label>
+                                                        <img class=" img-fluid" src="{{ asset('sample-images/drop_down.png') }}" alt="Image description">
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('editor_en') ? ' error' : '' }}">
+                                                        <label for="editor_en" class="required" >Drop Down Data</label>
+                                                        <select name="other_attributes[dropdown_data_type]" class="form-control required">
+                                                            <option value="">--Select Dropdown Data Type--</option>
+                                                            <option value="easy_payment_card">Easy Payment Card</option>
+                                                            <option value="device_data_offer">Device Free Data Offer</option>
+                                                        </select>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('editor_en'))
+                                                            <div class="help-block">{{ $errors->first('editor_en') }}</div>
+                                                        @endif
+                                                    </div>
+                                                </slot>
+
+
+
+
+
+
 
                                                 <slot id="single-image" style="display: none">
                                                     <div class="form-group col-md-6">
@@ -286,12 +318,14 @@
             var inputText = $('#input-text');
             var textArea = $('#text-area');
             var textEditor = $('#text-editor');
+            var dropDown = $('#dropdown');
             var imageField = $('#image-field');
             var multiImage = $('#multi-image');
 
             var textField = $('#text-field');
             var textAreaField = $('#text-area-field');
             var textEditorField = $('#text-editor-field');
+            var dropdownField = $('#dropdown_field');
             var singleImage = $('#single-image');
             var multipleImageField = $('#multiple-image-field');
 
@@ -309,6 +343,7 @@
             showHideElement(inputText, textField);
             showHideElement(textArea, textAreaField);
             showHideElement(textEditor, textEditorField);
+            showHideElement(dropDown, dropdownField);
             showHideElement(imageField, singleImage);
             showHideElement(multiImage, multipleImageField);
 
