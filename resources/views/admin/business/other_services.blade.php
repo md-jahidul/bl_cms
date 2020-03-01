@@ -22,6 +22,7 @@
                                     <th width="60%">Short Details</th>
                                     <th class="text-center" width="15%">Component</th>
                                     <th class="text-center" width="10%">Home Show</th>
+                                    <th class="text-center" width="10%">Home Slider</th>
                                     <th class="text-center" width="10%">Status</th>
                                     <th class="text-center" width="10%">Action</th>
                                 </tr>
@@ -53,6 +54,16 @@
                                         <a href="{{$bs->id}}" class="btn btn-sm btn-success package_home_show">Showing</a>
                                         @else
                                         <a href="{{$bs->id}}" class="btn btn-sm btn-warning package_home_show">Hidden</a>
+                                        @endif
+
+                                    </td>
+                                    
+                                    <td class="text-center">
+
+                                        @if($bs->in_home_slider == 1)
+                                        <a href="{{$bs->id}}" class="btn btn-sm btn-success package_home_slider">Yes</a>
+                                        @else
+                                        <a href="{{$bs->id}}" class="btn btn-sm btn-dark package_home_slider">No</a>
                                         @endif
 
                                     </td>
@@ -105,6 +116,7 @@
                                     <th width="60%">Short Details</th>
                                     <th class="text-center" width="15%">Component</th>
                                     <th class="text-center" width="10%">Home Show</th>
+                                    <th class="text-center" width="10%">Home Slider</th>
                                     <th class="text-center" width="10%">Status</th>
                                     <th class="text-center" width="10%">Action</th>
                                 </tr>
@@ -136,6 +148,16 @@
                                         <a href="{{$i->id}}" class="btn btn-sm btn-success package_home_show">Showing</a>
                                         @else
                                         <a href="{{$i->id}}" class="btn btn-sm btn-warning package_home_show">Hidden</a>
+                                        @endif
+
+                                    </td>
+                                    
+                                    <td class="text-center">
+
+                                        @if($bs->in_home_slider == 1)
+                                        <a href="{{$bs->id}}" class="btn btn-sm btn-success package_home_slider">Yes</a>
+                                        @else
+                                        <a href="{{$bs->id}}" class="btn btn-sm btn-dark package_home_slider">No</a>
                                         @endif
 
                                     </td>
@@ -188,6 +210,7 @@
                                     <th width="60%">Short Details</th>
                                     <th class="text-center" width="15%">Component</th>
                                     <th class="text-center" width="10%">Home Show</th>
+                                    <th class="text-center" width="10%">Home Slider</th>
                                     <th class="text-center" width="10%">Status</th>
                                     <th class="text-center" width="10%">Action</th>
                                 </tr>
@@ -219,6 +242,17 @@
                                         <a href="{{$o->id}}" class="btn btn-sm btn-success package_home_show">Showing</a>
                                         @else
                                         <a href="{{$o->id}}" class="btn btn-sm btn-warning package_home_show">Hidden</a>
+                                        @endif
+
+                                    </td>
+                                    
+                                    
+                                    <td class="text-center">
+
+                                        @if($bs->in_home_slider == 1)
+                                        <a href="{{$bs->id}}" class="btn btn-sm btn-success package_home_slider">Yes</a>
+                                        @else
+                                        <a href="{{$bs->id}}" class="btn btn-sm btn-dark package_home_slider">No</a>
                                         @endif
 
                                     </td>
@@ -368,6 +402,57 @@ if (Session::has('error')) {
 
                         } else {
                             btn = '<a href="' + packageId + '" class="btn btn-sm btn-warning package_home_show">Hidden</a>';
+                        }
+                        $(thisObj).parent('td').html(btn);
+
+                    } else {
+                        swal.close();
+                        swal.fire({
+                            title: result.message,
+                            timer: 2000,
+                            type: 'error',
+                        });
+                    }
+
+                },
+                error: function (data) {
+                    swal.fire({
+                        title: 'Status change process failed!',
+                        type: 'error',
+                    });
+                }
+            });
+
+        });
+
+
+        //status change of home showing of package
+        $(".table").on('click', '.package_home_slider', function (e) {
+            e.preventDefault();
+
+            var packageId = $(this).attr('href');
+            var thisObj = $(this);
+
+            $.ajax({
+                url: '{{ url("business-others-home-slider")}}/' + packageId,
+                cache: false,
+                type: "GET",
+                success: function (result) {
+                    if (result.success == 1) {
+                        swal.fire({
+                            title: 'Changed',
+                            type: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+
+                        var btn;
+
+                        if (result.show_status === 1) {
+                            btn = '<a href="' + packageId + '" class="btn btn-sm btn-success package_home_slider">Yes</a>';
+
+                        } else {
+                            btn = '<a href="' + packageId + '" class="btn btn-sm btn-black package_home_slider">No</a>';
                         }
                         $(thisObj).parent('td').html(btn);
 

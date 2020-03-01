@@ -5,7 +5,8 @@
 
             <div class="row">
 
-                <input type="hidden" name="photo_text_id" value="{{$component->id}}">
+                <input type="hidden" name="type" value="photo-text">
+                <input type="hidden" name="com_id" value="{{$component->id}}">
 
                 <div class="col-md-4 col-xs-12">
 
@@ -17,12 +18,13 @@
                             @endif
                         </p>
                         
-                        <input type="file" class="dropify com_pt_photo" required name="" data-height="70"
+                        <input type="file" class="dropify" name="photo" data-height="70"
                                data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                         
+                        <input type="hidden" name="old_photo" value="{{$component->photo_url}}">
 
                         <label> Alt Text</label>
-                        <input type="text" name="alt_text" class="form-control" value="{{$component->text}}">
+                        <input type="text" name="alt_text" class="form-control" value="{{$component->alt_text}}">
 
                     </div>
 
@@ -31,12 +33,12 @@
                     <div class="form-group">
 
                         <label for="Package Name"> Text (EN)<span class="text-danger">*</span></label>
-                        <textarea type="text" name="" class="form-control com_pt_text">{{ $component->text }}</textarea>
+                        <textarea type="text" name="text_en" required class="form-control com_pt_text">{{ $component->text }}</textarea>
 
                         <br>
 
                         <label for="Package Name"> Text (BN)<span class="text-danger">*</span></label>
-                        <textarea type="text" name="" class="form-control com_pt_text">{{ $component->text_bn }}</textarea>
+                        <textarea type="text" name="text_bn" required class="form-control com_pt_text">{{ $component->text_bn }}</textarea>
 
                     </div>
                 </div>
