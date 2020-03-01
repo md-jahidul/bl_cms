@@ -279,16 +279,16 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('business-feature-sort', 'AssetLite\BusinessGeneralController@featureSortChange');
     Route::get('business-feature-status-change/{id}', 'AssetLite\BusinessGeneralController@featureStatusChange');
     Route::get('business-feature-delete/{id}', 'AssetLite\BusinessGeneralController@featureDelete');
-    
+
     //__Category Package
     Route::get('business-package', 'AssetLite\BusinessPackageController@index');
     Route::get('business-package-sort-change', 'AssetLite\BusinessPackageController@sortChange');
     Route::get('business-package-home-status-change/{packageId}', 'AssetLite\BusinessPackageController@homeShow');
     Route::get('business-package-active/{packageId}', 'AssetLite\BusinessPackageController@activationStatus');
-   
+
     Route::get('business-package/create', 'AssetLite\BusinessPackageController@create');
     Route::post('business-package/save', 'AssetLite\BusinessPackageController@store')->name('business.package.save');
-    
+
     Route::get('business-package-edit/{packageId}', 'AssetLite\BusinessPackageController@edit');
     Route::post('business-package/update', 'AssetLite\BusinessPackageController@update')->name('business.package.update');
     Route::get('business-package-delete/{packageId}', 'AssetLite\BusinessPackageController@delete');
@@ -300,23 +300,27 @@ Route::middleware('authorize', 'auth')->group(function () {
             ->name('business.internet.excel.save');
     Route::get('business-internet-status-change/{pakcageId}', 'AssetLite\BusinessInternetController@packageStatusChange');
     Route::get('delete-business-internet-package/{pakcageId?}', 'AssetLite\BusinessInternetController@deletePackage');
-    
+
     //Category B. Solution, IOT & Others
     Route::get('business-other-services', 'AssetLite\BusinessOthersController@index')->name('business.other.services');
     Route::get('business-others/create', 'AssetLite\BusinessOthersController@create');
     Route::get('business-others-home-show/{serviceId}', 'AssetLite\BusinessOthersController@homeShow');
+    Route::get('business-others-home-slider/{serviceId}', 'AssetLite\BusinessOthersController@homeSlider');
     Route::get('business-others-active/{serviceId}', 'AssetLite\BusinessOthersController@activationStatus');
     Route::get('business-others-sort-change', 'AssetLite\BusinessOthersController@sortChange');
     Route::get('business-others-service-delete/{serviceId}', 'AssetLite\BusinessOthersController@deleteService');
     Route::get('business-others-service-edit/{serviceId}', 'AssetLite\BusinessOthersController@edit');
     Route::post('business-others-update', 'AssetLite\BusinessOthersController@update')->name("business.other.update");
-    
+
     Route::get('business-others-components/{serviceId}', 'AssetLite\BusinessOthersController@addComponent');
     Route::post('business-others-save', 'AssetLite\BusinessOthersController@saveService')->name("business.other.save");
     Route::post('business-component-save', 'AssetLite\BusinessOthersController@saveComponents')->name("business.component.save");
     Route::get('business-others-components-list/{serviceId}', 'AssetLite\BusinessOthersController@componentList');
+
     Route::get('business-others-component-edit/{serviceId}/{position}/{type}', 'AssetLite\BusinessOthersController@editComponent');
-     Route::post('business-component-save', 'AssetLite\BusinessOthersController@saveComponents')->name("business.component.save");
+    Route::post('business-others-component-update', 'AssetLite\BusinessOthersController@updateComponents')
+            ->name("business.component.update");
+
     Route::get('business-others-component-delete/{serviceId}/{position}/{type}', 'AssetLite\BusinessOthersController@deleteComponent');
     Route::get('business-other-component-sort', 'AssetLite\BusinessOthersController@sortComponent');
 
