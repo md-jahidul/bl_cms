@@ -544,7 +544,7 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('app_service.details.fixed-section');
 
     # App & Service component
-    Route::get('app-service/component/{id}/edit', 'AssetLite\ComponentController@conponentEdit')->name('appservice.component.edit');
+    Route::get('app-service/{type}/component/{id}/edit', 'AssetLite\ComponentController@conponentEdit')->name('appservice.component.edit');
     Route::get('app-service/component/{type}/{id}', 'AssetLite\ComponentController@conponentList')->name('appservice.component.list');
     Route::get('app-service/component/create', 'AssetLite\ComponentController@conponentCreate')->name('appservice.component.create');
     Route::post('app-service/component/store', 'AssetLite\ComponentController@conponentStore')->name('appservice.component.store');

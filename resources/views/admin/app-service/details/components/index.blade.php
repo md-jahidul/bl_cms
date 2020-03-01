@@ -4,6 +4,7 @@
 @section('breadcrumb')
     <li class="breadcrumb-item ">Component List</li>
 @endsection
+
 @section('action')
     <a href="{{ route('app_service.details.list', ['type' => $data['tab_type'], 'id' => $data['product_id'] ]) }}" id="syncBtn" class="btn btn-outline-blue-grey round btn-glow px-2">
         Go Back Section
@@ -48,7 +49,7 @@
 
                                         <td>
                                             {{-- <a href="{{ url("app-service/component/$list->id/edit") }}" role="button" class="www btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a> --}}
-                                            <a href="{{ route('appservice.component.edit', ['id' => $list->id]) }}" role="button" class="www btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                            <a href="{{ route('appservice.component.edit', [ 'type' => $data['tab_type'], 'id' => $list->id]) }}" role="button" class="www btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
 
 
                                             @if( isset($list->is_default) && $list->is_default != 0 )

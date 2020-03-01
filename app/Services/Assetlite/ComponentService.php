@@ -56,13 +56,20 @@ class ComponentService
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product/details');
         }
 
+        if( request()->filled('other_attr') ){
+            $other_attributes = request()->input('other_attr', null);
+            $data['other_attributes'] = !empty($other_attributes) ? json_encode($other_attributes) : null;
+        }
+
         if (request()->hasFile('video_url')) {
             $data['video'] = $this->upload($data['video_url'], 'assetlite/video/app-service/product/details');
-        } else {
+            $data['other_attributes'] = json_encode(['video_type' => 'uploaded_video']);
+        } elseif( request()->filled('video_url') ) {
             $data['video'] = request()->input('video_url', null);
+            $data['other_attributes'] = json_encode(['video_type' => 'youtube_video']);
         }
 	
-	$data['page_type'] = self::PAGE_TYPE;
+	   $data['page_type'] = self::PAGE_TYPE;
         
         $results = [];
         if (isset($data['multi_item']) && !empty($data['multi_item'])) {
