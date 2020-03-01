@@ -150,7 +150,7 @@
                             
                             
                              <div class="form-group text-right">
-                                <button class="btn btn-sm btn-info" type="submit">Save</button>
+                                <button class="btn btn-info" type="submit">Save</button>
                             </div>
                             
                         </div>
