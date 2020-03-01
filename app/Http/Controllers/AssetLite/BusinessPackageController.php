@@ -40,7 +40,8 @@ class BusinessPackageController extends Controller {
      */
     public function create() {
         $features = $this->packageService->getFeatures();
-        return view('admin.business.package_create', compact("features"));
+        $packages = $this->packageService->getPackages();
+        return view('admin.business.package_create', compact("features", "packages"));
     }
 
     /**
@@ -113,7 +114,9 @@ class BusinessPackageController extends Controller {
         $package = $this->packageService->getPackageById($packageId);
         $features = $this->packageService->getFeatures();
         $asgnFeatures = $this->packageService->getFeaturesByPackage($packageId);
-        return view('admin.business.package_edit', compact('package', 'features', 'asgnFeatures'));
+        $packages = $this->packageService->getPackages($packageId);
+        $relatedProducts = $this->packageService->relatedProducts($packageId);
+        return view('admin.business.package_edit', compact('package', 'features', 'asgnFeatures', "packages", "relatedProducts"));
     }
     
     
