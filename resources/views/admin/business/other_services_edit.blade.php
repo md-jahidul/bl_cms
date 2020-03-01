@@ -152,10 +152,7 @@
                                     @endforeach
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-info pull-right">Save</button>
-                            </div>
+                            
                         </div>
 
                         <div class="col-md-12 col-xs-12">
@@ -186,9 +183,8 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group text-right">
-                                <button class="btn btn-sm btn-info" type="submit">Save</button>
+                                <button type="submit" class="btn btn-info pull-right">Save</button>
                             </div>
 
                         </div>
