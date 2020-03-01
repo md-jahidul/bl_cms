@@ -4,6 +4,7 @@
 @section('breadcrumb')
     <li class="breadcrumb-item ">Component List</li>
 @endsection
+
 @section('action')
     <a href="{{ route('app_service.details.list', ['type' => $data['tab_type'], 'id' => $data['product_id'] ]) }}" id="syncBtn" class="btn btn-outline-blue-grey round btn-glow px-2">
         Go Back Section
@@ -48,7 +49,7 @@
 
                                         <td>
                                             {{-- <a href="{{ url("app-service/component/$list->id/edit") }}" role="button" class="www btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a> --}}
-                                            <a href="{{ route('appservice.component.edit', ['id' => $list->id]) }}" role="button" class="www btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                            <a href="{{ route('appservice.component.edit', [ 'type' => $data['tab_type'], 'id' => $list->id]) }}" role="button" class="www btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
 
 
                                             @if( isset($list->is_default) && $list->is_default != 0 )
@@ -95,7 +96,7 @@
                         <select class="form-control" name="component_type" aria-invalid="false">
                                 <option value="text_with_image_right">Text with image right</option>
                                 <option value="text_with_image_bottom">Text with image bottom</option>
-                                {{-- <option value="slider_text_with_image_right">Slider text with image right</option> --}}
+                                <option value="slider_text_with_image_right">Slider text with image right</option>
                                 <option value="title_text_editor">Title with table editor</option>
                                 <option value="video_with_text_right">Video with text right</option>
                                 <option value="multiple_image_banner">Multiple image banner</option>

@@ -52,13 +52,13 @@
 
  <div class="form-group col-md-6">
      <label for="tag_category_id" class="required">Select Video Type</label>
-     <select class="form-control" name="app_service_cat_id">
-             <option value="upload_video">Upload video</option>
+     <select class="form-control" name="app_service_video_type">
+             <option value="uploaded_video">Upload video</option>
              <option value="youtube_video">Youtube video link</option>
      </select>
      <div class="help-block"></div>
-     @if ($errors->has('app_service_cat_id'))
-         <div class="help-block">{{ $errors->first('app_service_cat_id') }}</div>
+     @if ($errors->has('app_service_video_type'))
+         <div class="help-block">{{ $errors->first('app_service_video_type') }}</div>
      @endif
  </div>
 
