@@ -777,20 +777,19 @@ class ProductCoreService
                 $insert_data[13] = $product->details->sms_volume;
                 $insert_data[14] = $product->details->minute_volume;
                 $insert_data[15] = $product->details->data_volume;
-                $insert_data[16] = $product->details->internet_volume_mb;
-                $insert_data[17] = $product->details->data_volume_unit;
-                $insert_data[18] = $product->details->validity;
-                $insert_data[19] = $product->details->validity_unit;
-                $insert_data[20] = $product->details->mrp_price;
-                $insert_data[21] = $product->details->price;
-                $insert_data[22] = $product->details->vat;
-                $insert_data[23] = ($product->details->is_amar_offer) ? 'Yes' : 'No';
-                $insert_data[24] = ($product->details->is_auto_renewable) ? 'Yes' : 'No';
-                $insert_data[25] = ($product->details->is_recharge_offer) ? 'Yes' : 'No';
-                $insert_data[26] = ($product->details->is_rate_cutter_offer) ? 'Yes' : 'No';
-                $insert_data[27] = $product->offer_section_title;
-                $insert_data[28] = $product->tag;
-                $insert_data[29] = $product->details->call_rate_unit;
+                $insert_data[16] = $product->details->data_volume_unit;
+                $insert_data[17] = $product->details->validity;
+                $insert_data[18] = $product->details->validity_unit;
+                $insert_data[19] = $product->details->mrp_price;
+                $insert_data[20] = $product->details->price;
+                $insert_data[21] = $product->details->vat;
+                $insert_data[22] = ($product->details->is_amar_offer) ? 'Yes' : 'No';
+                $insert_data[23] = ($product->details->is_auto_renewable) ? 'Yes' : 'No';
+                $insert_data[24] = ($product->details->is_recharge_offer) ? 'Yes' : 'No';
+                $insert_data[25] = ($product->details->is_rate_cutter_offer) ? 'Yes' : 'No';
+                $insert_data[26] = $product->offer_section_title;
+                $insert_data[27] = $product->tag;
+                $insert_data[28] = $product->details->call_rate_unit;
 
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
