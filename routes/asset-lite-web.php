@@ -340,6 +340,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('business-other-services', 'AssetLite\BusinessOthersController@index')->name('business.other.services');
     Route::get('business-others/create', 'AssetLite\BusinessOthersController@create');
     Route::get('business-others-home-show/{serviceId}', 'AssetLite\BusinessOthersController@homeShow');
+    Route::get('business-others-home-slider/{serviceId}', 'AssetLite\BusinessOthersController@homeSlider');
     Route::get('business-others-active/{serviceId}', 'AssetLite\BusinessOthersController@activationStatus');
     Route::get('business-others-sort-change', 'AssetLite\BusinessOthersController@sortChange');
     Route::get('business-others-service-delete/{serviceId}', 'AssetLite\BusinessOthersController@deleteService');
@@ -350,8 +351,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('business-others-save', 'AssetLite\BusinessOthersController@saveService')->name("business.other.save");
     Route::post('business-component-save', 'AssetLite\BusinessOthersController@saveComponents')->name("business.component.save");
     Route::get('business-others-components-list/{serviceId}', 'AssetLite\BusinessOthersController@componentList');
+
     Route::get('business-others-component-edit/{serviceId}/{position}/{type}', 'AssetLite\BusinessOthersController@editComponent');
-     Route::post('business-component-save', 'AssetLite\BusinessOthersController@saveComponents')->name("business.component.save");
+    Route::post('business-others-component-update', 'AssetLite\BusinessOthersController@updateComponents')
+            ->name("business.component.update");
+
     Route::get('business-others-component-delete/{serviceId}/{position}/{type}', 'AssetLite\BusinessOthersController@deleteComponent');
     Route::get('business-other-component-sort', 'AssetLite\BusinessOthersController@sortComponent');
 

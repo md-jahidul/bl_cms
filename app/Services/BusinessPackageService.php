@@ -10,6 +10,7 @@ namespace App\Services;
 use App\Repositories\BusinessPackageRepository;
 use App\Repositories\BusinessFeaturesRepository;
 use App\Repositories\BusinessAssignedFeaturesRepository;
+use App\Repositories\BusinessRelatedProductRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Http\Response;
@@ -21,21 +22,28 @@ class BusinessPackageService {
 
     /**
      * @var $packageRepo
+     * @var $featureRepo
+     * @var $asgnFeatureRepo
+     * @var $relatedProductRepo
      */
     protected $packageRepo;
     protected $featureRepo;
     protected $asgnFeatureRepo;
+    protected $relatedProductRepo;
 
     /**
      * BusinessPackageService constructor.
      * @param BusinessPackageRepository $packageRepo
      * @param BusinessFeaturesRepository $featureRepo
      * @param BusinessAssignedFeaturesRepository $asgnFeatureRepo
+     * @param BusinessRelatedProductRepository $relatedProductRepo
      */
-    public function __construct(BusinessPackageRepository $packageRepo, BusinessFeaturesRepository $featureRepo, BusinessAssignedFeaturesRepository $asgnFeatureRepo) {
+    public function __construct(BusinessPackageRepository $packageRepo, BusinessFeaturesRepository $featureRepo,
+            BusinessAssignedFeaturesRepository $asgnFeatureRepo, BusinessRelatedProductRepository $relatedProductRepo) {
         $this->packageRepo = $packageRepo;
         $this->featureRepo = $featureRepo;
         $this->asgnFeatureRepo = $asgnFeatureRepo;
+        $this->relatedProductRepo = $relatedProductRepo;
         $this->setActionRepository($packageRepo);
     }
 
@@ -43,8 +51,8 @@ class BusinessPackageService {
      * Get business product categories
      * @return Response
      */
-    public function getPackages() {
-        $response = $this->packageRepo->getPackageList();
+    public function getPackages($packageId = 0) {
+        $response = $this->packageRepo->getPackageList($packageId);
         return $response;
     }
 
@@ -84,6 +92,7 @@ class BusinessPackageService {
             $packageId = $this->packageRepo->savePackage($filePath, $request);
             $parentType = 1;
             $this->asgnFeatureRepo->assignFeature($packageId, $parentType, $request->feature);
+            $this->relatedProductRepo->assignRelatedProduct($packageId, $parentType, $request->realated);
 
 
 
@@ -101,6 +110,16 @@ class BusinessPackageService {
             ];
             return $response;
         }
+    }
+    
+     /**
+     * get related product
+     * @return Response
+     */
+    public function relatedProducts($packageId) {
+        $parentType = 1;
+        $response = $this->relatedProductRepo->getRelatedProductList($packageId, $parentType);
+        return $response;
     }
 
     /**
@@ -169,6 +188,9 @@ class BusinessPackageService {
             $this->packageRepo->updatePackage($filePath, $request);
             $parentType = 1;
             $this->asgnFeatureRepo->assignFeature($request->package_id, $parentType, $request->feature);
+            
+            $this->relatedProductRepo->assignRelatedProduct($request->package_id, $parentType, $request->realated);
+            
 
             $response = [
                 'success' => 1,

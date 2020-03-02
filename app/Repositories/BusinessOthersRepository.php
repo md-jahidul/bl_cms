@@ -13,9 +13,19 @@ class BusinessOthersRepository extends BaseRepository {
 
     public $modelName = BusinessOthers::class;
     
-     public function getOtherService($type) {
-        $servces = $this->model->where('type', $type)->orderBy('sort')->get();
-        return $servces;
+     public function getOtherService($type, $serviceId) {
+        $servces = $this->model->orderBy('sort');
+        
+        if($serviceId > 0){
+            $servces->where('id', '!=', $serviceId);
+        }
+        if($type != ""){
+            $servces->where('type', $type);
+        }
+        
+        $data = $servces->get();
+        
+        return $data;
     }
 
     public function saveService($bannerPath, $iconPath, $request) {
@@ -55,6 +65,29 @@ class BusinessOthersRepository extends BaseRepository {
 
             $status = $package->home_show == 1 ? 0 : 1;
             $package->home_show = $status;
+            $package->save();
+
+            $response = [
+                'success' => 1,
+                'show_status' => $status,
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'errors' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
+    }
+    
+    public function assignHomeSlider($serviceId) {
+        try {
+
+            $package = $this->model->findOrFail($serviceId);
+
+            $status = $package->in_home_slider == 1 ? 0 : 1;
+            $package->in_home_slider = $status;
             $package->save();
 
             $response = [
