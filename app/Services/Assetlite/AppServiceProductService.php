@@ -80,9 +80,7 @@ class AppServiceProductService
 //            $this->deleteFile($appServiceProduct->product_img_url);
 //        }
         $data['can_active'] = (isset($data['can_active']) ? 1 : 0);
-
-//        dd($data);
-
+        $data['show_in_vas'] = (isset($data['show_in_vas']) ? 1 : 0);
         $appServiceProduct->update($data);
         return Response('App Service Category updated successfully');
     }
@@ -94,10 +92,10 @@ class AppServiceProductService
      */
     public function deleteAppServiceProduct($id)
     {
-        $appServiceCat = $this->findOne($id);
-        $this->deleteFile($appServiceCat->product_img_url);
-        $appServiceCat->delete();
-        return Response('App Service Tab deleted successfully !');
+        $appServiceProduct = $this->findOne($id);
+        $this->deleteFile($appServiceProduct->product_img_url);
+        $appServiceProduct->delete();
+        return Response('App Service Product deleted successfully !');
     }
 
     public function appServiceRelatedProduct($tab_type, $product_id)

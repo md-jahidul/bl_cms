@@ -146,11 +146,20 @@
                                 </div>
 
 
+
                                 <div class="col-md-6">
                                     <label></label>
                                     <div class="form-group">
                                         <label for="can_active" class="mr-1">Can Active:</label>
                                         <input type="checkbox" name="can_active" value="1" id="can_active" {{ ($appServiceProduct->can_active == 1) ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    {{--                                    <label></label>--}}
+                                    <div class="form-group">
+                                        <label for="show_in_vas" class="mr-1">Show In VAS Tab:</label>
+                                        <input type="checkbox" name="show_in_vas" value="1" id="show_in_vas" {{ ($appServiceProduct->show_in_vas == 1) ? 'checked' : '' }}>
                                     </div>
                                 </div>
 

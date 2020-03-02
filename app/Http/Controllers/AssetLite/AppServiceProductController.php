@@ -9,6 +9,7 @@ use App\Services\AppServiceProductService;
 use App\Services\AppServiceTabService;
 use App\Services\AppServiceVendorApiService;
 use App\Services\TagCategoryService;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -130,6 +131,7 @@ class AppServiceProductController extends Controller
 
 
 //        return $appServiceProduct;
+
         $tags = $this->tagCategoryService->findAll();
         return view('admin.app-service.product.edit', compact(
             'tags',
@@ -162,15 +164,14 @@ class AppServiceProductController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return Response
+     * @param $id
+     * @return UrlGenerator|string
+     * @throws \Exception
      */
     public function destroy($id)
     {
         $response = $this->appServiceProductService->deleteAppServiceProduct($id);
         Session::flash('message', $response->getContent());
-        return route('tabs.index');
+        return url(route('app-service-product.index'));
     }
 }
