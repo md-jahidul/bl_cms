@@ -152,10 +152,41 @@
                                     @endforeach
                                 </div>
                             </div>
+                            
+                        </div>
 
-                            <div class="form-group">
+                        <div class="col-md-12 col-xs-12">
+
+                            <div class="form-group ">
+                                <h4>Select Related Solution (You may also like)</h4>
+                                <hr>
+                                <div class="row">
+
+                                    @foreach($services as $s)
+
+                                    @php
+                                    $checked = "";
+                                    if(in_array($s->id, $relatedProducts)){
+                                    $checked = "checked";
+                                    }
+                                    @endphp
+
+
+                                    <div class="col-md-3 col-xs-12">
+                                        <label class="text-bold-600 cursor-pointer">
+                                            <input type="checkbox" {{$checked}} name="realated[{{$s->id}}]">
+                                            {{$s->name}}
+                                        </label>
+
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="form-group text-right">
                                 <button type="submit" class="btn btn-info pull-right">Save</button>
                             </div>
+
                         </div>
 
                     </div>

@@ -10,8 +10,12 @@ use App\Models\ProductCoreHistory;
 use App\Models\ProductDetail;
 use App\Repositories\ProductCoreRepository;
 use App\Traits\CrudTrait;
+use Box\Spout\Common\Entity\Style\Color;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
+use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
+use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
+use Box\Spout\Writer\Common\Creator\WriterFactory;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,6 +23,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class ProductCoreService
@@ -625,7 +630,7 @@ class ProductCoreService
     /**
      * Update my-bl products
      *
-     * @param Request $request
+     * @param  Request  $request
      * @param $product_code
      * @return RedirectResponse
      * @throws Exception
@@ -652,8 +657,7 @@ class ProductCoreService
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
 
-        try{
-
+        try {
             DB::beginTransaction();
 
             MyBlProduct::where('product_code', $product_code)->update($data);
@@ -669,20 +673,36 @@ class ProductCoreService
             unset($data_request['offer_section_slug']);
             unset($data_request['offer_section_title']);
 
-            if(isset($data_request['data_volume'])){
-                $data_request['data_volume'] = substr($data_request['data_volume'], 0, strrpos($data_request['data_volume'], ' '));
+            if (isset($data_request['data_volume'])) {
+                $data_request['data_volume'] = substr(
+                    $data_request['data_volume'],
+                    0,
+                    strrpos($data_request['data_volume'], ' ')
+                );
             }
 
-            if(isset($data_request['sms_volume'])){
-                $data_request['sms_volume'] = substr($data_request['sms_volume'], 0, strrpos($data_request['sms_volume'], ' '));
+            if (isset($data_request['sms_volume'])) {
+                $data_request['sms_volume'] = substr(
+                    $data_request['sms_volume'],
+                    0,
+                    strrpos($data_request['sms_volume'], ' ')
+                );
             }
 
-            if(isset($data_request['minute_volume'])){
-                $data_request['minute_volume'] = substr($data_request['minute_volume'], 0, strrpos($data_request['minute_volume'], ' '));
+            if (isset($data_request['minute_volume'])) {
+                $data_request['minute_volume'] = substr(
+                    $data_request['minute_volume'],
+                    0,
+                    strrpos($data_request['minute_volume'], ' ')
+                );
             }
 
-            if(isset($data_request['validity'])){
-                $data_request['validity'] = substr($data_request['validity'], 0, strrpos($data_request['validity'], ' '));
+            if (isset($data_request['validity'])) {
+                $data_request['validity'] = substr(
+                    $data_request['validity'],
+                    0,
+                    strrpos($data_request['validity'], ' ')
+                );
             }
 
             $data_history = $core_product[0];
@@ -696,12 +716,83 @@ class ProductCoreService
             ProductCore::where('product_code', $product_code)->update($data_request);
 
             DB::commit();
-
-        } catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollback();
-            throw new Exception( $e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
         return Redirect::back()->with('success', 'Product updated Successfully');
+    }
+
+    public function downloadMyblProducts()
+    {
+        $products = MyBlProduct::with('details')->get();
+
+        $products = $products->sortBy('details.content_type');
+
+        $writer = WriterEntityFactory::createXLSXWriter();
+
+        $writer->openToBrowser('mybl-products-' . date('Y-m-d') . '.xlsx');
+
+        // header Style
+        $header_style = (new StyleBuilder())
+            ->setFontBold()
+            ->setFontSize(11)
+            ->setBackgroundColor(Color::rgb(245, 245, 240))
+            ->build();
+
+        $data_style = (new StyleBuilder())
+            ->setFontSize(9)
+            ->build();
+
+
+        $header = config('productMapping.mybl.columns');
+        $headers = array_map(function ($val) {
+            return str_replace('_', ' ', ucwords($val));
+        }, array_keys($header));
+
+        array_pop($headers);
+
+
+        $row = WriterEntityFactory::createRowFromArray(array_values($headers), $header_style);
+        $writer->addRow($row);
+
+        foreach ($products as $product) {
+            $insert_data[0] = ($product->sim_type == 2) ? 'Postpaid' : 'Prepaid';
+            $insert_data[1] = $product->details->content_type;
+            $insert_data[2] = $product->details->family_name;
+            $insert_data[3] = $product->details->product_code;
+            $insert_data[4] = $product->details->renew_product_code;
+            $insert_data[5] = $product->details->recharge_product_code;
+            $insert_data[6] = $product->details->name;
+            $insert_data[7] = $product->details->commercial_name_en;
+            $insert_data[8] = $product->details->commercial_name_bn;
+            $insert_data[9] = $product->details->short_description;
+            $insert_data[10] = $product->details->activation_ussd;
+            $insert_data[11] = $product->details->balance_check_ussd;
+            $insert_data[12] = $product->details->offer_id;
+            $insert_data[13] = $product->details->sms_volume;
+            $insert_data[14] = $product->details->minute_volume;
+            $insert_data[15] = $product->details->data_volume;
+            $insert_data[16] = $product->details->internet_volume_mb;
+            $insert_data[17] = $product->details->data_volume_unit;
+            $insert_data[18] = $product->details->validity;
+            $insert_data[19] = $product->details->validity_unit;
+            $insert_data[20] = $product->details->mrp_price;
+            $insert_data[21] = $product->details->price;
+            $insert_data[22] = $product->details->vat;
+            $insert_data[23] = ($product->details->is_amar_offer) ? 'Yes' : 'No';
+            $insert_data[24] = ($product->details->is_auto_renewable) ? 'Yes' : 'No';
+            $insert_data[25] = ($product->details->is_recharge_offer) ? 'Yes' : 'No';
+            $insert_data[26] = ($product->details->is_rate_cutter_offer) ? 'Yes' : 'No';
+            $insert_data[27] = $product->offer_section_title;
+            $insert_data[28] = $product->tag;
+            $insert_data[29] = $product->details->call_rate_unit;
+
+            $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
+
+            $writer->addRow($row);
+        }
+        $writer->close();
     }
 }

@@ -37,17 +37,7 @@ class BusinessOthersController extends Controller {
         return view('admin.business.other_services', compact("businessSolution", "iot", "others"));
     }
 
-    /**
-     * List of business other services component list by serviceID.
-     * 
-     * @param No
-     * @return Factory|View
-     * @Bulbul Mahmud Nito || 20/02/2020
-     */
-    public function componentList($serviceId) {
-        $components = $this->othersService->getComponents($serviceId);
-        return view('admin.business.service_component_list', compact("components", "serviceId"));
-    }
+   
 
     /**
      * create business packages [form].
@@ -58,7 +48,8 @@ class BusinessOthersController extends Controller {
      */
     public function create() {
         $features = $this->packageService->getFeatures();
-        return view('admin.business.other_services_create', compact("features"));
+        $services = $this->othersService->getOtherService();
+        return view('admin.business.other_services_create', compact("features", "services"));
     }
 
     /**
@@ -72,7 +63,7 @@ class BusinessOthersController extends Controller {
 
 
         $response = $this->othersService->saveService($request);
-
+        
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Service is saved!');
         } else {
@@ -81,6 +72,20 @@ class BusinessOthersController extends Controller {
 
         return redirect('/business-other-services');
     }
+    
+    
+     /**
+     * List of business other services component list by serviceID.
+     * 
+     * @param No
+     * @return Factory|View
+     * @Bulbul Mahmud Nito || 20/02/2020
+     */
+    public function componentList($serviceId) {
+        $components = $this->othersService->getComponents($serviceId);
+        return view('admin.business.service_component_list', compact("components", "serviceId"));
+    }
+    
 
     /**
      * create business packages add components [form].
@@ -94,7 +99,7 @@ class BusinessOthersController extends Controller {
     }
 
     /**
-     * save business other service/packages.
+     * save business other service/packages component.
      * 
      * @param Request $request
      * @return Redirect
@@ -161,7 +166,30 @@ class BusinessOthersController extends Controller {
         $component = $this->othersService->getSingleComponent($serviceId, $position, $type);
         
 //        print_r($component);die();
-        return view('admin.business.services_components_edit', compact("component", "type"));
+        return view('admin.business.services_components_edit', compact("component", "type", "serviceId"));
+    }
+    
+      /**
+     * update business other service/packages component.
+     * 
+     * @param Request $request
+     * @return Redirect
+     * @Bulbul Mahmud Nito || 27/02/2020
+     */
+    public function updateComponents(Request $request) {
+
+        print_r($request->all());die();
+
+
+        $response = $this->othersService->updateComponents($request);
+
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Service component is updated!');
+        } else {
+            Session::flash('error', 'Service component updating process failed!');
+        }
+
+        return redirect('/business-others-components-list/' . $request->service_id);
     }
 
     /**
@@ -174,6 +202,18 @@ class BusinessOthersController extends Controller {
     public function homeShow($serviceId) {
 
         $response = $this->othersService->homeStatusChange($serviceId);
+        return $response;
+    }
+    /**
+     * home show status of business packages .
+     * 
+     * @param $serviceId
+     * @return Response
+     * @Bulbul Mahmud Nito || 19/02/2020
+     */
+    public function homeSlider($serviceId) {
+
+        $response = $this->othersService->homeSlider($serviceId);
         return $response;
     }
 
@@ -215,7 +255,11 @@ class BusinessOthersController extends Controller {
 
         $features = $this->packageService->getFeatures();
         $asgnFeatures = $this->othersService->getFeaturesByService($serviceType, $serviceId);
-        return view('admin.business.other_services_edit', compact('service', 'features', 'asgnFeatures'));
+        
+        $services = $this->othersService->getOtherService("", $serviceId);
+        
+        $relatedProducts = $this->othersService->relatedProducts($serviceId);
+        return view('admin.business.other_services_edit', compact('service', 'features', 'asgnFeatures', 'services', 'relatedProducts'));
     }
 
     /**
@@ -226,6 +270,8 @@ class BusinessOthersController extends Controller {
      * @Bulbul Mahmud Nito || 20/02/2020
      */
     public function update(Request $request) {
+        
+//        print_r($request->all()); die();
 
         $response = $this->othersService->updateService($request);
 

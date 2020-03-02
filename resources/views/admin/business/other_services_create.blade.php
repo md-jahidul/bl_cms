@@ -125,10 +125,34 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            
+                        </div>
+                        
+                        
+                         <div class="col-md-12 col-xs-12">
+                            
+                             <div class="form-group ">
+                                <h4>Select Related Solution (You may also like)</h4>
                                 <hr>
-                                <button type="submit" class="btn btn-info pull-right">Save</button>
+                                <div class="row">
+
+                                    @foreach($services as $s)
+                                    <div class="col-md-3 col-xs-12">
+                                        <label class="text-bold-600 cursor-pointer">
+                                            <input type="checkbox" name="realated[{{$s->id}}]">
+                                            {{$s->name}}
+                                        </label>
+
+                                    </div>
+                                    @endforeach
+                                </div>
                             </div>
+                            
+                            
+                             <div class="form-group text-right">
+                                <button class="btn btn-info" type="submit">Save</button>
+                            </div>
+                            
                         </div>
 
                     </div>
