@@ -790,7 +790,7 @@ class ProductCoreService
                 $insert_data[22] = ($product->details->is_amar_offer) ? 'Yes' : 'No';
                 $insert_data[23] = ($product->details->is_auto_renewable) ? 'Yes' : 'No';
                 $insert_data[24] = ($product->details->is_recharge_offer) ? 'Yes' : 'No';
-                $insert_data[25] = ($product->details->is_rate_cutter_offer) ? 'Yes' : 'No';
+                $insert_data[25] = ($product->is_rate_cutter_offer) ? 'Yes' : 'No';
                 $insert_data[26] = $product->offer_section_title;
                 $insert_data[27] = $product->tag;
                 $insert_data[28] = $product->details->call_rate;
