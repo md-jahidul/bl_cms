@@ -67,6 +67,11 @@
                                     <td class="text-center">
 
 
+                                        <a class="text-info edit_component"
+                                           href="{{url('business-others-component-edit/'.$serviceId.'/'.$k.'/'.$com['type'])}}">
+                                            <i class="la la-pencil-square"></i>
+                                        </a>
+
                                         <a class="text-danger delete_component" 
                                            href="{{url('business-others-component-delete/'.$serviceId.'/'.$k.'/'.$com['type'])}}">
                                             <i class="la la-trash"></i>
@@ -142,7 +147,18 @@ if (Session::has('error')) {
                     "position": $(this).attr('data-position'),
                     "old_position": $(this).attr('data-oldpos'),
                     "type": $(this).attr('data-type')
-            });
+                });
+                
+                var type = $(this).attr('data-type');
+                var newPosition = $(this).attr('data-position');
+                
+                var editUrl = "{{ url('business-others-component-edit/'.$serviceId.'/')}}/"+newPosition +"/"+type;
+                $(this).find("a.edit_component").attr("href", editUrl);
+                
+                var delUrl = "{{ url('business-others-component-delete/'.$serviceId.'/')}}/"+newPosition +"/"+type;
+                $(this).find("a.delete_component").attr("href", delUrl);
+                
+              
             });
             $.ajax({
                 type: "GET",

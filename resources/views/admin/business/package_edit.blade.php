@@ -93,7 +93,7 @@
                                     <img src="{{ config('filesystems.file_base_url') . $package->banner_photo }}" alt="Banner Photo" height="100px" />
                                     @endif
                                 </p>
-                                
+
                                 <div class="col-md-6 col-xs-12">
 
                                     <input type="hidden" name="old_banner" value="{{$package->banner_photo}}">
@@ -108,7 +108,7 @@
 
                             </div>
 
-                            
+
                             <div class="form-group row">
 
                                 <div class="col-md-6 col-xs-12">
@@ -124,22 +124,56 @@
 
                             </div>
 
-                            
-                             <div class="form-group">
 
-                                    <label for="Offer Details">Offer Details (EN)</label>
-                                    <textarea type="text" name="offer_details_en" class="form-control package_details">{!! $package->offer_details !!}</textarea>
-                                    
-                                    <hr>
-                                    
-                                    <label for="Offer Details">Offer Details (BN)</label>
-                                    <textarea type="text" name="offer_details_bn" class="form-control package_details">{!! $package->offer_details_bn !!}</textarea>
+                            <div class="form-group">
+
+                                <label for="Offer Details">Offer Details (EN)</label>
+                                <textarea type="text" name="offer_details_en" class="form-control package_details">{!! $package->offer_details !!}</textarea>
+
+                                <hr>
+
+                                <label for="Offer Details">Offer Details (BN)</label>
+                                <textarea type="text" name="offer_details_bn" class="form-control package_details">{!! $package->offer_details_bn !!}</textarea>
 
                             </div>
+
+                        </div>
+
+                        <div class="col-md-12 col-xs-12">
+
+                            <div class="form-group ">
+                                <h4>Select Related Package (You may also like)</h4>
+                                <hr>
+                                <div class="row">
+
+
+
+                                    @foreach($packages as $pac)
+
+                                    @php
+                                    $checked = "";
+                                    if(in_array($pac->id, $relatedProducts)){
+                                    $checked = "checked";
+                                    }
+                                    @endphp
+
+
+                                    <div class="col-md-3 col-xs-12">
+                                        <label class="text-bold-600 cursor-pointer">
+                                            <input type="checkbox" {{$checked}} name="realated[{{$pac->id}}]">
+                                            {{$pac->name}}
+                                        </label>
+
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
 
                             <div class="form-group text-right">
-                                <button class="btn btn-sm btn-info news_submit" type="submit">Update Package</button>
+                                <button class="btn btn-sm btn-info news_submit" type="submit">Save Package</button>
                             </div>
+
                         </div>
 
                     </div>

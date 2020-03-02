@@ -35,6 +35,11 @@ class BusinessComVideoRepository extends BaseRepository {
         $component = $this->model->where(array('service_id' => $serviceId, 'position' => $position))->delete();
         return $component;
     }
+     
+    public function singleComponent($serviceId, $position) {
+        $component = $this->model->where(array('service_id' => $serviceId, 'position' => $position))->first();
+        return $component;
+    }
     
     public function changePosition($comId, $newPosition){
         $component = $this->model->where(array('id' => $comId))

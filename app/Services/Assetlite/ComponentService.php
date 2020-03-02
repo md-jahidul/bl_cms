@@ -56,13 +56,20 @@ class ComponentService
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product/details');
         }
 
+        if( request()->filled('other_attr') ){
+            $other_attributes = request()->input('other_attr', null);
+            $data['other_attributes'] = !empty($other_attributes) ? json_encode($other_attributes) : null;
+        }
+
         if (request()->hasFile('video_url')) {
             $data['video'] = $this->upload($data['video_url'], 'assetlite/video/app-service/product/details');
-        } else {
+            $data['other_attributes'] = json_encode(['video_type' => 'uploaded_video']);
+        } elseif( request()->filled('video_url') ) {
             $data['video'] = request()->input('video_url', null);
+            $data['other_attributes'] = json_encode(['video_type' => 'youtube_video']);
         }
 	
-	$data['page_type'] = self::PAGE_TYPE;
+	   $data['page_type'] = self::PAGE_TYPE;
         
         $results = [];
         if (isset($data['multi_item']) && !empty($data['multi_item'])) {
@@ -71,16 +78,17 @@ class ComponentService
             for ($i = 1; $i <= $item_count; $i++) {
                 foreach ($data['multi_item'] as $key => $value) {
                     $sub_data = [];
-                    $check_index = explode('-', $key)[1];
-                    if ($check_index == $i) {
+                    $check_index = explode('-', $key);
+                    if ($check_index[1] == $i) {
                         if (request()->hasFile('multi_item.' . $key)) {
                             $value = $this->upload($value, 'assetlite/images/app-service/product/details');
                         }
-                        $results[$i][] = [$key => $value];
+                        $results[$i][$check_index[0]] = $value;
                     }
                 }
             }
         }
+
         $data['multiple_attributes'] = json_encode($results);
         $this->save($data);
         return new Response('App Service Component added successfully');

@@ -9,6 +9,7 @@ namespace App\Services;
 
 use App\Repositories\BusinessOthersRepository;
 use App\Repositories\BusinessAssignedFeaturesRepository;
+use App\Repositories\BusinessRelatedProductRepository;
 use App\Repositories\BusinessComPhotoTextRepository;
 use App\Repositories\BusinessComPkOneRepository;
 use App\Repositories\BusinessComPkTwoRepository;
@@ -38,6 +39,7 @@ class BusinessOthersService {
     protected $videoRepo;
     protected $photoRepo;
     protected $asgnFeatureRepo;
+    protected $relatedProductRepo;
 
     /**
      * BusinessPackageService constructor.
@@ -50,9 +52,10 @@ class BusinessOthersService {
      * @param BusinessComVideoRepository $videoRepo
      * @param BusinessComPhotoRepository $photoRepo
      * @param BusinessAssignedFeaturesRepository $asgnFeatureRepo
+     * @param BusinessRelatedProductRepository $relatedProductRepo
      */
     public function __construct(
-    BusinessOthersRepository $otherRepo, BusinessComPhotoTextRepository $photoTextRepo, BusinessComPkOneRepository $pkOneRepo, BusinessComPkTwoRepository $pkTwoRepo, BusinessComFeaturesRepository $featureRepo, BusinessComPriceTableRepository $priceTableRepo, BusinessComVideoRepository $videoRepo, BusinessComPhotoRepository $photoRepo, BusinessAssignedFeaturesRepository $asgnFeatureRepo
+    BusinessOthersRepository $otherRepo, BusinessComPhotoTextRepository $photoTextRepo, BusinessComPkOneRepository $pkOneRepo, BusinessComPkTwoRepository $pkTwoRepo, BusinessComFeaturesRepository $featureRepo, BusinessComPriceTableRepository $priceTableRepo, BusinessComVideoRepository $videoRepo, BusinessComPhotoRepository $photoRepo, BusinessAssignedFeaturesRepository $asgnFeatureRepo, BusinessRelatedProductRepository $relatedProductRepo
     ) {
         $this->otherRepo = $otherRepo;
         $this->photoTextRepo = $photoTextRepo;
@@ -63,6 +66,7 @@ class BusinessOthersService {
         $this->videoRepo = $videoRepo;
         $this->photoRepo = $photoRepo;
         $this->asgnFeatureRepo = $asgnFeatureRepo;
+        $this->relatedProductRepo = $relatedProductRepo;
         $this->setActionRepository($otherRepo);
     }
 
@@ -70,8 +74,8 @@ class BusinessOthersService {
      * get other service list
      * @return Response
      */
-    public function getOtherService($type) {
-        $servces = $this->otherRepo->getOtherService($type);
+    public function getOtherService($type = "", $serviceId = 0) {
+        $servces = $this->otherRepo->getOtherService($type, $serviceId);
         return $servces;
     }
 
@@ -106,10 +110,13 @@ class BusinessOthersService {
 
             //save data in database 
             $serviceId = $this->otherRepo->saveService($bannerPath, $iconPath, $request);
-            $types = array("business-solusion" => 2, "iot" => 3, "others" => 4);
+            $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
             $parentTypes = $types[$request->type];
 
             $this->asgnFeatureRepo->assignFeature($serviceId, $parentTypes, $request->feature);
+
+            $parentType = 2;
+            $this->relatedProductRepo->assignRelatedProduct($serviceId, $parentType, $request->realated);
 
 
 
@@ -127,6 +134,16 @@ class BusinessOthersService {
             ];
             return $response;
         }
+    }
+
+    /**
+     * get related product
+     * @return Response
+     */
+    public function relatedProducts($serviceId) {
+        $parentType = 2;
+        $response = $this->relatedProductRepo->getRelatedProductList($serviceId, $parentType);
+        return $response;
     }
 
     /**
@@ -372,6 +389,93 @@ class BusinessOthersService {
         return $components;
     }
 
+    public function getSingleComponent($serviceId, $position, $type) {
+        try {
+            if ($type == "Photo with Text") {
+                return $this->photoTextRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "Package Comparison One") {
+                return $this->pkOneRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "Package Comparison Two") {
+                return $this->pkTwoRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "Product Features") {
+                return $this->featureRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "Product Price Table") {
+                return $this->priceTableRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "Video Component") {
+                return $this->videoRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "Photo Component") {
+                return $this->photoRepo->singleComponent($serviceId, $position);
+            }
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return $response;
+        }
+    }
+
+    /**
+     * update business other components
+     * @return Response
+     */
+    public function updateComponents($request) {
+        try {
+
+            $type = $request->type;
+
+            if ($type == "photo-text") {
+
+                $photoUrl = $request->old_photo;
+                if ($request->photo) {
+                    $photoUrl = $this->upload($request->photo, 'assetlite/images/business-images');
+                    $this->deleteFile($request->old_photo);
+                }
+                $this->photoTextRepo->updateComponent($photoUrl, $request);
+            }
+
+            if ($type == "package-comparison-one") {
+                $this->pkOneRepo->updateComponent($request);
+            }
+            if ($type == "package-comparison-two") {
+                return $this->pkTwoRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "product-features") {
+                return $this->featureRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "product-price-table") {
+                return $this->priceTableRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "video-component") {
+                return $this->videoRepo->singleComponent($serviceId, $position);
+            }
+            if ($type == "photo-component") {
+                return $this->photoRepo->singleComponent($serviceId, $position);
+            }
+
+            $response = [
+                'success' => 1,
+                'message' => "Service Saved",
+            ];
+
+
+            return $response;
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return $response;
+        }
+    }
+
     public function deleteComponent($serviceId, $position, $type) {
         try {
             if ($type == "Photo with Text") {
@@ -420,13 +524,13 @@ class BusinessOthersService {
     public function changeComponentSort($request) {
         try {
             $positions = $request->position;
-            
+
             foreach ($positions as $position) {
                 $comId = $position['id'];
                 $newPosition = $position['position'];
                 $oldPosition = $position['old_position'];
                 $type = $position['type'];
-                
+
 //                echo $oldPosition;
 //                echo " -- ";
 
@@ -476,6 +580,14 @@ class BusinessOthersService {
         $response = $this->otherRepo->changeHomeShowStatus($serviceId);
         return $response;
     }
+    /**
+     * Change service home show status
+     * @return Response
+     */
+    public function homeSlider($serviceId) {
+        $response = $this->otherRepo->assignHomeSlider($serviceId);
+        return $response;
+    }
 
     /**
      * Change service active/inactive
@@ -522,9 +634,9 @@ class BusinessOthersService {
     public function updateService($request) {
         try {
 
-        
-            
-             $request->validate([
+
+
+            $request->validate([
                 'type' => 'required',
                 'name_en' => 'required',
                 'name_bn' => 'required',
@@ -535,7 +647,7 @@ class BusinessOthersService {
             //banner file replace in storege
             $bannerPath = "";
             if ($request['banner_photo'] != "") {
-                $filePath = $this->upload($request['banner_photo'], 'assetlite/images/business-images');
+                $bannerPath = $this->upload($request['banner_photo'], 'assetlite/images/business-images');
 
                 //delete old photo
                 if ($request['old_banner']) {
@@ -560,6 +672,9 @@ class BusinessOthersService {
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
             $parentTypes = $types[$request->type];
             $this->asgnFeatureRepo->assignFeature($request->service_id, $parentTypes, $request->feature);
+
+            $parentType = 2;
+            $this->relatedProductRepo->assignRelatedProduct($request->service_id, $parentType, $request->realated);
 
             $response = [
                 'success' => 1,

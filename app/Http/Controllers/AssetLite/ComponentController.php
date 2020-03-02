@@ -64,6 +64,9 @@ class ComponentController extends Controller
 		$data['tab_type'] = $tab_type;
 		$data['section_id'] = $section_id;
 		$data['product_id'] = isset($section_data->product_id) ? $section_data->product_id : null;
+
+
+
 		return view('admin.app-service.details.components.index', compact('data', 'component_list', 'section_has_multiple_component'));
 
 	}
@@ -99,19 +102,17 @@ class ComponentController extends Controller
 	}
 
 
-	public function conponentEdit($id)
+	public function conponentEdit($type, $id)
 	{
 
 		$appServiceProduct = $this->componentService->findOne($id);
-		
-		// dd($appServiceProduct);
 
-		// $component_type = $request->input('component_type', '');
-		// $data['tab_type'] = $request->input('tab_type', '');
-		// $data['section_id'] = $request->input('section_id', '');
+		$component_type = $appServiceProduct->component_type;
+		$data['tab_type'] = $type;
+		$data['section_id'] = $appServiceProduct->section_details_id;
 
 		// return view('admin.app-service.details.components.edit', compact('data', 'component_type'));
-		return view('admin.app-service.details.components.edit', compact('appServiceProduct'));
+		return view('admin.app-service.details.components.edit', compact('appServiceProduct', 'data', 'component_type'));
 
 	}
 

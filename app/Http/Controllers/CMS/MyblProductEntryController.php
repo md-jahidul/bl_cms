@@ -127,4 +127,10 @@ class MyblProductEntryController extends Controller
     {
         return $this->service->updateMyblProducts($request, $product_code);
     }
+
+
+    public function downloadMyblProducts()
+    {
+        return $this->service->downloadMyblProducts();
+    }
 }

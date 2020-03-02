@@ -13,9 +13,17 @@ class BusinessPackageRepository extends BaseRepository {
 
     public $modelName = BusinessPackages::class;
 
-    public function getPackageList() {
-        $packages = $this->model->orderBy('sort')->get();
-        return $packages;
+    public function getPackageList($packageId = 0) {
+
+        $packages = $this->model->orderBy('sort');
+
+        if ($packageId > 0) {
+            $packages->where('id', '!=', $packageId);
+        }
+
+        $data = $packages->get();
+
+        return $data;
     }
 
     public function changePackageSorting($request) {
