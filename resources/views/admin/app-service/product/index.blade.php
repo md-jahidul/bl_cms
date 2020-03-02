@@ -41,7 +41,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                         <td>{{ $product->description_en }}</td>
-                                        <td>{{ $product->price }}</td>
+                                        <td>{{ $product->price_tk }}</td>
                                         <td>{{ $product->ussd_en }}</td>
                                         <td>{{ $product->appServiceTab->name_en }}</td>
                                         <td>{{ $product->appServiceCat->title_en }}</td>
@@ -53,7 +53,7 @@
 
 {{--                                            <a href="--}}{{--{{ route('product.show', [$product->id]) }}--}}{{--" role="button" class="btn-sm btn-outline-secondary border-0"><i class="la la-eye" aria-hidden="true"></i></a>--}}
                                             <a href="{{ url("app-service-product/$product->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                            <a href="#" remove="{{ url("offers/$product->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $product->id }}" title="Delete">
+                                            <a href="#" remove="{{ url("app-service/product/destroy/$product->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $product->id }}" title="Delete">
                                                 <i class="la la-trash"></i>
                                             </a>
                                         </td>
