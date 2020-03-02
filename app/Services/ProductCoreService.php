@@ -630,7 +630,7 @@ class ProductCoreService
     /**
      * Update my-bl products
      *
-     * @param Request $request
+     * @param  Request  $request
      * @param $product_code
      * @return RedirectResponse
      * @throws Exception
@@ -674,19 +674,35 @@ class ProductCoreService
             unset($data_request['offer_section_title']);
 
             if (isset($data_request['data_volume'])) {
-                $data_request['data_volume'] = substr($data_request['data_volume'], 0, strrpos($data_request['data_volume'], ' '));
+                $data_request['data_volume'] = substr(
+                    $data_request['data_volume'],
+                    0,
+                    strrpos($data_request['data_volume'], ' ')
+                );
             }
 
             if (isset($data_request['sms_volume'])) {
-                $data_request['sms_volume'] = substr($data_request['sms_volume'], 0, strrpos($data_request['sms_volume'], ' '));
+                $data_request['sms_volume'] = substr(
+                    $data_request['sms_volume'],
+                    0,
+                    strrpos($data_request['sms_volume'], ' ')
+                );
             }
 
             if (isset($data_request['minute_volume'])) {
-                $data_request['minute_volume'] = substr($data_request['minute_volume'], 0, strrpos($data_request['minute_volume'], ' '));
+                $data_request['minute_volume'] = substr(
+                    $data_request['minute_volume'],
+                    0,
+                    strrpos($data_request['minute_volume'], ' ')
+                );
             }
 
             if (isset($data_request['validity'])) {
-                $data_request['validity'] = substr($data_request['validity'], 0, strrpos($data_request['validity'], ' '));
+                $data_request['validity'] = substr(
+                    $data_request['validity'],
+                    0,
+                    strrpos($data_request['validity'], ' ')
+                );
             }
 
             $data_history = $core_product[0];
@@ -711,16 +727,20 @@ class ProductCoreService
     public function downloadMyblProducts()
     {
         $products = MyBlProduct::with('details')->get();
+
+        $products = $products->sortBy('details.content_type')
+                             ->sortBy('details.price');
+
         $writer = WriterEntityFactory::createXLSXWriter();
 
         $writer->openToBrowser('mybl-products-' . date('Y-m-d') . '.xlsx');
 
         // header Style
         $header_style = (new StyleBuilder())
-                                ->setFontBold()
-                                ->setFontSize(11)
-                                ->setBackgroundColor(Color::rgb(245, 245, 240))
-                                ->build();
+            ->setFontBold()
+            ->setFontSize(11)
+            ->setBackgroundColor(Color::rgb(245, 245, 240))
+            ->build();
 
         $data_style = (new StyleBuilder())
             ->setFontSize(9)
@@ -763,9 +783,9 @@ class ProductCoreService
             $insert_data[21] = $product->details->price;
             $insert_data[22] = $product->details->vat;
             $insert_data[23] = ($product->details->is_amar_offer) ? 'Yes' : 'No';
-            $insert_data[24] = ($product->details->is_auto_renewable)  ? 'Yes' : 'No';
-            $insert_data[25] = ($product->details->is_recharge_offer)  ? 'Yes' : 'No';
-            $insert_data[26] = ($product->details->is_rate_cutter_offer)  ? 'Yes' : 'No';
+            $insert_data[24] = ($product->details->is_auto_renewable) ? 'Yes' : 'No';
+            $insert_data[25] = ($product->details->is_recharge_offer) ? 'Yes' : 'No';
+            $insert_data[26] = ($product->details->is_rate_cutter_offer) ? 'Yes' : 'No';
             $insert_data[27] = $product->offer_section_title;
             $insert_data[28] = $product->tag;
             $insert_data[29] = $product->details->call_rate_unit;
