@@ -668,6 +668,7 @@ class ProductCoreService
             unset($data_request['_token']);
             unset($data_request['_method']);
             unset($data_request['tag']);
+            unset($data_request['media']);
             unset($data_request['show_in_app']);
             unset($data_request['is_rate_cutter_offer']);
             unset($data_request['offer_section_slug']);
