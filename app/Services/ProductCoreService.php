@@ -757,6 +757,8 @@ class ProductCoreService
         $row = WriterEntityFactory::createRowFromArray(array_values($headers), $header_style);
         $writer->addRow($row);
 
+        $problem = [];
+
         foreach ($products as $product) {
             if ($product->details) {
                 $insert_data[0] = ($product->sim_type == 2) ? 'Postpaid' : 'Prepaid';
@@ -793,8 +795,12 @@ class ProductCoreService
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
                 $writer->addRow($row);
+            } else {
+                $problem [] = $product->product_code;
             }
         }
+
+        Log::info(json_encode($problem));
         $writer->close();
     }
 }
