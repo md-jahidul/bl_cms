@@ -728,8 +728,7 @@ class ProductCoreService
     {
         $products = MyBlProduct::with('details')->get();
 
-        $products = $products->sortBy('details.content_type')
-                             ->sortBy('details.price');
+        $products = $products->sortBy('details.content_type');
 
         $writer = WriterEntityFactory::createXLSXWriter();
 
