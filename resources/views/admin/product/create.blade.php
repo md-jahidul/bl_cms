@@ -55,53 +55,125 @@
                                     @endif
                                 </div>
 
+
                                 <slot id="others" data-offer-type="others" style="display: none">
                                     @include('layouts.partials.products.other')
                                 </slot>
 
                                 <slot id="packages" data-offer-type="packages" style="display: none">
                                     @include('layouts.partials.products.packages')
+                                    @include('layouts.partials.products.common-field.call_rate_unit')
                                 </slot>
 
+
+                                <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                    <label for="product_code" class="required">Product Code</label>
+                                    <select id="product_core" name="product_code"
+                                            data-url="{{ url('product-core/match') }}"
+                                            required data-validation-required-message="Please select product code">
+                                        <option value="">Select product code</option>
+                                        @foreach($productCoreCodes as $productCodes)
+                                            <option value="{{ $productCodes['product_code'] }}">{{ $productCodes['product_code'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('product_code'))
+                                        <div class="help-block">{{ $errors->first('product_code') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                    <label for="start_date">Start Date</label>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" name="start_date" id="start_date"
+                                               value="{{ old("start_date") ? old("start_date") : '' }}"
+                                               placeholder="Please select start date" />
+                                    </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('start_date'))
+                                        <div class="help-block">{{ $errors->first('start_date') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                    <label for="end_date">End Date</label>
+                                    <input type="text" name="end_date" id="end_date" class="form-control"
+                                           placeholder="Please select end date"
+                                           value="{{ old("end_date") ? old("end_date") : '' }}" autocomplete="0">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('end_date'))
+                                        <div class="help-block">{{ $errors->first('end_date') }}</div>
+                                    @endif
+                                </div>
+
                                 <slot id="internet" data-offer-type="internet" style="display: none">
-                                    @include('layouts.partials.products.common-field.product_code')
                                     @include('layouts.partials.products.internet')
-                                    @include('layouts.partials.products.common-field.price_vat_mrp')
-                                    @include('layouts.partials.products.common-field.start_end_date')
-                                    @include('layouts.partials.products.common-field.ussd_code')
-                                    @include('layouts.partials.products.common-field.balance_check')
-                                    @include('layouts.partials.products.common-field.tag')
                                 </slot>
+
+{{--                                <slot id="packages" data-offer-type="packages" style="display: none">--}}
+{{--                                    @include('layouts.partials.products.packages')--}}
+{{--                                </slot>--}}
+
+{{--                                <slot id="others" data-offer-type="others" style="display: none">--}}
+{{--                                    @include('layouts.partials.products.other')--}}
+{{--                                </slot>--}}
 
                                 @if( strtolower($type) == 'prepaid')
                                     <slot id="call_rate" data-offer-type="call_rate" style="display: none">
                                         @include('layouts.partials.products.common-field.product_code')
                                         @include('layouts.partials.products.call_rate')
-                                        @include('layouts.partials.products.common-field.call_rate_unit')
-                                        @include('layouts.partials.products.common-field.price_vat_mrp')
-                                        @include('layouts.partials.products.common-field.start_end_date')
-                                        @include('layouts.partials.products.common-field.ussd_code')
-                                        @include('layouts.partials.products.common-field.tag')
                                     </slot>
                                     <slot id="voice" data-offer-type="voice" style="display: none">
-                                        @include('layouts.partials.products.common-field.product_code')
+                                        @include('layouts.partials.products.common-field.call_rate_unit')
                                         @include('layouts.partials.products.voice')
-                                        @include('layouts.partials.products.common-field.price_vat_mrp')
-                                        @include('layouts.partials.products.common-field.start_end_date')
-                                        @include('layouts.partials.products.common-field.ussd_code')
-                                        @include('layouts.partials.products.common-field.balance_check')
-                                        @include('layouts.partials.products.common-field.tag')
                                     </slot>
                                     <slot id="bundles" data-offer-type="bundles" style="display: none">
-                                        @include('layouts.partials.products.common-field.product_code')
                                         @include('layouts.partials.products.bundle')
-                                        @include('layouts.partials.products.common-field.price_vat_mrp')
-                                        @include('layouts.partials.products.common-field.start_end_date')
-                                        @include('layouts.partials.products.common-field.ussd_code')
-                                        @include('layouts.partials.products.common-field.balance_check')
-                                        @include('layouts.partials.products.common-field.tag')
                                     </slot>
                                 @endif
+
+                                <div class="form-group col-md-6">
+                                    <label for="activation_ussd">USSD Code (English)</label>
+                                    <input type="text" name="activation_ussd" id="activation_ussd" class="form-control" placeholder="Enter offer ussd code in English"
+                                           value="{{ old("activation_ussd") ? old("activation_ussd") : '' }}">
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="ussd_bn">USSD Code (Bangla)</label>
+                                    <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd code in Bangla"
+                                           value="{{ old("ussd_bn") ? old("ussd_bn") : '' }}">
+                                </div>
+
+                                @include('layouts.partials.products.common-field.balance_check')
+
+
+
+                                <div class="form-group col-md-6 ">
+                                    <label for="price">Offer Price</label>
+                                        <input type="text" name="price" id="price"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
+                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+                                           value="{{ old("price") ? old("price") : '' }}">
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="form-group col-md-6 ">
+                                    <label for="price">Vat</label>
+                                        <input type="text" name="vat" id="vat" class="form-control" placeholder="Enter offer price in taka" step="0.001"
+                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+                                           value="{{ old("price") ? old("price") : '' }}">
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="tag_category_id">Tag</label>
+                                    <select class="form-control" name="tag_category_id">
+                                        <option value="">---Select Tag---</option>
+                                        @foreach($tags as $tag)
+                                            <option value="{{ $tag->id }}">{{ $tag->name_en }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
                                 <div class="col-md-6">
                                     <label></label>

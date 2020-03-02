@@ -7,9 +7,11 @@ use App\Models\ProductDetailsSection;
 use App\Services\Assetlite\ComponentService;
 use App\Services\Assetlite\ProductDetailsSectionService;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -59,17 +61,21 @@ class ProductDetailsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse|Redirector
      */
     public function storeSection(Request $request, $id)
     {
-        ProductDetailsSection::create($request->all());
+        $response = $this->productDetailsSectionService->sectionStore($request->all());
+        Session::flash('success', $response->content());
         return redirect(route('section-list', $id));
     }
 
     public function editSection($productDetailsId, $id)
     {
         $section = $this->productDetailsSectionService->findOne($id);
+
+//        dd($section->other_attributes);
+
         return view('admin.other-offer-details.edit', compact('section', 'productDetailsId'));
     }
 
@@ -93,9 +99,6 @@ class ProductDetailsController extends Controller
 
     public function componentStore(Request $request, $productDetailsId, $sectionID)
     {
-
-//        return $request->all();
-
         $response = $this->componentService->componentStore($request->all(), $sectionID);
         Session::flash('success', $response->content());
         return redirect(route('component-list', [$productDetailsId, $sectionID]));
@@ -115,13 +118,14 @@ class ProductDetailsController extends Controller
             'text_area' => 'Text Area',
             'bullet_Text' => 'Bullet Text',
             'accordion_text' => 'Accordion Text',
+            'drop_down' => 'Dropdown',
             'single_image' => 'Single Image',
             'multiple_image' => 'Multiple Image'
         ];
         $component = $this->componentService->findOne($id);
         $multipleImage = $component['multiple_attributes'];
 
-//        return $multipleImage;
+//        return $component['other_attributes'];
 
         return view('admin.other-offer-details.components.edit', compact('component', 'multipleImage', 'dataTypes', 'sectionId', 'productDetailsId'));
     }

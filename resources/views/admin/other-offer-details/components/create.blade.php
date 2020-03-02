@@ -86,7 +86,7 @@
                                                     @endif
                                                 </div>
 
-                                                <slot id="text-field" style="display: none">
+                                                <slot id="text-field" class="d-none">
                                                     <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                                         <label for="title_en">Text Field (English)</label>
                                                         <input type="text" name="title_en"  class="form-control" placeholder="Enter company name bangla"
@@ -108,7 +108,7 @@
                                                     </div>
                                                 </slot>
 
-                                                <slot id="text-area-field" style="display: none">
+                                                <slot id="text-area-field" class="d-none">
                                                     <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
                                                         <label for="description_en" >Text Area (English)</label>
                                                         <textarea name="description_en"  class="form-control" placeholder="Enter company name bangla">{{ old("description_en") ? old("description_en") : '' }}</textarea>
@@ -129,7 +129,7 @@
                                                     </div>
                                                 </slot>
 
-                                                <slot id="text-editor-field" style="display: none">
+                                                <slot id="text-editor-field" class="d-none">
                                                     <div class="form-group col-md-6 {{ $errors->has('editor_en') ? ' error' : '' }}">
                                                         <label for="editor_en">Text Editor (English)</label>
                                                         <textarea type="text" name="editor_en"  class="form-control" placeholder="Enter offer details in english" id="details"></textarea>
@@ -149,7 +149,7 @@
                                                     </div>
                                                 </slot>
 
-                                                <slot id="dropdown_field" style="display: none">
+                                                <slot id="dropdown_field" class="d-none">
                                                     <div class="form-group col-md-6">
                                                         <label for="editor_bn" class="text-success">Drop Down Sample Picture</label>
                                                         <img class=" img-fluid" src="{{ asset('sample-images/drop_down.png') }}" alt="Image description">
@@ -175,7 +175,7 @@
 
 
 
-                                                <slot id="single-image" style="display: none">
+                                                <slot id="single-image" class="d-none">
                                                     <div class="form-group col-md-6">
                                                         <label for="alt_text" class="">Single Image</label>
                                                         <div class="custom-file">
@@ -191,7 +191,7 @@
                                                 </slot>
 
 
-                                                <slot id="multiple-image-field" style="display: none">
+                                                <slot id="multiple-image-field" class="d-none">
                                                     <div class="col-md-6 col-xs-6">
                                                         <div class="form-group">
                                                             <label for="message">Multiple Image</label>
@@ -249,6 +249,7 @@
 
 @endpush
 @push('page-js')
+    <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
@@ -315,37 +316,37 @@
                 $('.'+rowId).remove();
             });
 
-            var inputText = $('#input-text');
-            var textArea = $('#text-area');
-            var textEditor = $('#text-editor');
-            var dropDown = $('#dropdown');
-            var imageField = $('#image-field');
-            var multiImage = $('#multi-image');
-
-            var textField = $('#text-field');
-            var textAreaField = $('#text-area-field');
-            var textEditorField = $('#text-editor-field');
-            var dropdownField = $('#dropdown_field');
-            var singleImage = $('#single-image');
-            var multipleImageField = $('#multiple-image-field');
-
-            function showHideElement(field, item){
-                $(field).on('click', function () {
-                    var isChecked = $(this).is(":checked");
-                    if (isChecked) {
-                        $(item).show()
-                    } else {
-                        $(item).hide()
-                    }
-                });
-            }
-
-            showHideElement(inputText, textField);
-            showHideElement(textArea, textAreaField);
-            showHideElement(textEditor, textEditorField);
-            showHideElement(dropDown, dropdownField);
-            showHideElement(imageField, singleImage);
-            showHideElement(multiImage, multipleImageField);
+            // var inputText = $('#input-text');
+            // var textArea = $('#text-area');
+            // var textEditor = $('#text-editor');
+            // var dropDown = $('#dropdown');
+            // var imageField = $('#image-field');
+            // var multiImage = $('#multi-image');
+            //
+            // var textField = $('#text-field');
+            // var textAreaField = $('#text-area-field');
+            // var textEditorField = $('#text-editor-field');
+            // var dropdownField = $('#dropdown_field');
+            // var singleImage = $('#single-image');
+            // var multipleImageField = $('#multiple-image-field');
+            //
+            // function showHideElement(field, item){
+            //     $(field).on('click', function () {
+            //         var isChecked = $(this).is(":checked");
+            //         if (isChecked) {
+            //             $(item).show()
+            //         } else {
+            //             $(item).hide()
+            //         }
+            //     });
+            // }
+            //
+            // showHideElement(inputText, textField);
+            // showHideElement(textArea, textAreaField);
+            // showHideElement(textEditor, textEditorField);
+            // showHideElement(dropDown, dropdownField);
+            // showHideElement(imageField, singleImage);
+            // showHideElement(multiImage, multipleImageField);
 
 
             $('.dropify').dropify({

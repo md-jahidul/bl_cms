@@ -48,6 +48,11 @@
                                                         </fieldset>
 
                                                         <fieldset>
+                                                            <input type="checkbox" id="dropdown" {{ $component->component_type == "drop_down" ? 'checked' : '' }}>
+                                                            <label for="text-editor" class="">Dropdown</label>
+                                                        </fieldset>
+
+                                                        <fieldset>
                                                             <input type="checkbox" id="image-field" {{ $component->image ? 'checked' : '' }}>
                                                             <label for="image-field" class="">Image Field</label>
                                                         </fieldset>
@@ -147,6 +152,27 @@
                                                     </div>
                                                 </slot>
 
+
+                                                <slot id="dropdown_field" class="{{ (isset($component->other_attributes['dropdown_data_type'])) ? '' : "d-none" }}">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="editor_bn" class="text-success">Drop Down Sample Picture</label>
+                                                        <img class=" img-fluid" src="{{ asset('sample-images/drop_down.png') }}" alt="Image description">
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('editor_en') ? ' error' : '' }}">
+                                                        <label for="editor_en" class="required" >Drop Down Data</label>
+                                                        <select name="other_attributes[dropdown_data_type]" class="form-control required">
+                                                            <option value="">--Select Dropdown Data Type--</option>
+                                                            <option value="easy_payment_card" {{ $component->other_attributes['dropdown_data_type'] == "easy_payment_card" ? 'selected' : '' }}>Easy Payment Card</option>
+                                                            <option value="device_data_offer" {{ $component->other_attributes['dropdown_data_type'] == "device_data_offer" ? 'selected' : '' }}>Device Free Data Offer</option>
+                                                        </select>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('editor_en'))
+                                                            <div class="help-block">{{ $errors->first('editor_en') }}</div>
+                                                        @endif
+                                                    </div>
+                                                </slot>
+
                                                 <slot id="single-image" class="{{ ( $component->image ) ? '' : "d-none" }}">
                                                     <div class="form-group col-md-6">
                                                         <label for="alt_text" class="">Single Image</label>
@@ -234,6 +260,7 @@
 
 @endpush
 @push('page-js')
+    <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
@@ -298,34 +325,7 @@
                 $('.'+rowId).remove();
             });
 
-            var inputText = $('#input-text');
-            var textArea = $('#text-area');
-            var textEditor = $('#text-editor');
-            var imageField = $('#image-field');
-            var multiImage = $('#multi-image');
 
-            var textField = $('#text-field');
-            var textAreaField = $('#text-area-field');
-            var textEditorField = $('#text-editor-field');
-            var singleImage = $('#single-image');
-            var multipleImageField = $('#multiple-image-field');
-
-            function showHideElement(field, item){
-                $(field).on('click', function () {
-                    var isChecked = $(this).is(":checked");
-                    if (isChecked) {
-                        $(item).removeClass('d-none')
-                    } else {
-                        $(item).addClass('d-none')
-                    }
-                });
-            }
-
-            showHideElement(inputText, textField);
-            showHideElement(textArea, textAreaField);
-            showHideElement(textEditor, textEditorField);
-            showHideElement(imageField, singleImage);
-            showHideElement(multiImage, multipleImageField);
         })
     </script>
 

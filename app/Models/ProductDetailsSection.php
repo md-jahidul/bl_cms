@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class ProductDetailsSection extends Model
 {
     protected $guarded = ["id"];
+
+    protected $casts = [
+        'other_attributes' => 'array'
+    ];
 }
