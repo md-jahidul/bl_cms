@@ -49,6 +49,14 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="is_tab_section" class="mr-1">Is Tab Section</label>
+                                        <input type="checkbox" name="other_attributes[is_tab_section]" value="1" id="is_tab_section"
+                                            {{ (isset($section->other_attributes['is_tab_section'])) ? "checked" : '' }}>
+                                    </div>
+                                </div>
+
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i

@@ -7,6 +7,7 @@ use App\Repositories\AppServiceTabRepository;
 use App\Services\AppServiceCategoryService;
 use App\Services\AppServiceProductService;
 use App\Services\AppServiceTabService;
+use App\Services\AppServiceVendorApiService;
 use App\Services\TagCategoryService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -31,6 +32,10 @@ class AppServiceProductController extends Controller
      * @var $appServiceProductService
      */
     private $appServiceProductService;
+    /**
+     * @var $appServiceVendorApiService
+     */
+    private $appServiceVendorApiService;
 
     /**
      * @var $tagCategoryService
@@ -42,11 +47,13 @@ class AppServiceProductController extends Controller
         AppServiceTabRepository $appServiceTabRepository,
         AppServiceCategoryRepository $appServiceCategoryRepository,
         AppServiceProductService $appServiceProductService,
+        AppServiceVendorApiService $appServiceVendorApiService,
         TagCategoryService $tagCategoryService
     ) {
         $this->appServiceCategoryRepository = $appServiceCategoryRepository;
         $this->appServiceTabRepository = $appServiceTabRepository;
         $this->appServiceProductService = $appServiceProductService;
+        $this->appServiceVendorApiService = $appServiceVendorApiService;
         $this->tagCategoryService = $tagCategoryService;
     }
 
@@ -69,8 +76,12 @@ class AppServiceProductController extends Controller
     public function create()
     {
         $appServiceTabs = $this->appServiceTabRepository->findByProperties(array(), ['id', 'name_en', 'alias']);
+        $vasVendorList = $this->appServiceVendorApiService->findAll();
+
+//        return $vasVendorList;
+
         $tags = $this->tagCategoryService->findAll();
-        return view('admin.app-service.product.create', compact('tags', 'appServiceTabs', 'appServiceCat'));
+        return view('admin.app-service.product.create', compact('tags', 'appServiceTabs', 'appServiceCat', 'vasVendorList'));
     }
 
     /**
@@ -106,6 +117,7 @@ class AppServiceProductController extends Controller
     public function edit($id)
     {
         $appServiceTabs = $this->appServiceTabRepository->findByProperties(array(), ['id', 'name_en', 'alias']);
+        $vasVendorList = $this->appServiceVendorApiService->findAll();
         $appServiceProduct = $this->appServiceProductService->findOne($id, ['appServiceTab' => function ($q) {
             $q->select('id', 'name_en', 'alias');
         }]);
@@ -115,6 +127,8 @@ class AppServiceProductController extends Controller
                 ['app_service_tab_id' => $appServiceProduct->app_service_tab_id],
                 ['id', 'title_en', 'alias']
             );
+
+
 //        return $appServiceProduct;
         $tags = $this->tagCategoryService->findAll();
         return view('admin.app-service.product.edit', compact(
@@ -122,7 +136,8 @@ class AppServiceProductController extends Controller
             'appServiceTabs',
             'appServiceCat',
             'appServiceProduct',
-            'appServiceCategory'
+            'appServiceCategory',
+            'vasVendorList'
         ));
     }
 
@@ -135,8 +150,6 @@ class AppServiceProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-
         $response = $this->appServiceProductService->updateAppServiceProduct($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect(route('app-service-product.index'));

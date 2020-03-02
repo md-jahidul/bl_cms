@@ -96,11 +96,19 @@
                                     <div class="help-block"></div>
                                 </div>
 
-                                <div class="form-group col-md-6 ">
-                                    <label for="validity_unit">Validity Unit</label>
-                                        <input type="text" name="validity_unit" id="vat" class="form-control" placeholder="Enter offer validity unit"
-                                           value="{{ old("validity_unit") ? old("validity_unit") : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('validity_unit') ? ' error' : '' }}">
+                                    <label for="validity_unit" class="required">Validity Unit</label>
+                                    <select class="form-control required" name="validity_unit"
+                                            required data-validation-required-message="Please select type">
+                                        <option value="">---Validity Type---</option>
+                                        <option value="daily">Daily</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                    </select>
                                     <div class="help-block"></div>
+                                    @if ($errors->has('validity_unit'))
+                                        <div class="help-block">{{ $errors->first('validity_unit') }}</div>
+                                    @endif
                                 </div>
 
                                 <slot id="app" data-offer-type="app" style="display: none">

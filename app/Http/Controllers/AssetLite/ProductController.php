@@ -72,14 +72,12 @@ class ProductController extends Controller
     public function index($type)
     {
         $products = Product::category($type)
-            ->with(['product_core', 'offer_category' => function ($query) {
+            ->with(['offer_category' => function ($query) {
                 $query->select('id', 'name_en');
-            }])
+            }, 'product_core'])
+            ->select('id', 'product_code', 'offer_category_id', 'name_en', 'show_in_home', 'status')
             ->latest()
             ->get();
-
-//        return $products;
-
         return view('admin.product.index', compact('products', 'type'));
     }
 
@@ -101,7 +99,7 @@ class ProductController extends Controller
      * Show the form for creating a new resource.
      *
      * @param $type
-     * @return Response
+     * @return Factory|View
      */
 
     public function create($type)
@@ -149,8 +147,18 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
+//        $data = $request->all();
+//        $otherOfferId = $data['offer_info']['other_offer_type_id'];
+//
+//        dd(gettype($otherOfferId));
+
+//        $offerId = [10, 11, 12, 13, 14, 15, 16, 18]
+
         $bondhoSimOffer = $this->productService->findBondhoSim();
-        if (count($bondhoSimOffer) > 4 && isset($request->offer_info['other_offer_type_id']) == OfferType::BONDHO_SIM_OFFER) {
+
+        if (count($bondhoSimOffer) > 4 &&
+            isset($request->offer_info['other_offer_type_id']) == OfferType::BONDHO_SIM_OFFER
+        ) {
             Session::flash('error', 'Maximum 4 Bondho SIM offer can be created');
             return redirect()->back();
         }
@@ -211,7 +219,6 @@ class ProductController extends Controller
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
         }
-//        return $this->info;
         return view('admin.product.edit', $this->info);
     }
 
@@ -287,7 +294,7 @@ class ProductController extends Controller
     public function coreDataMappingProduct($type)
     {
         $this->productService->coreData();
-        return \response([
+        return response([
             "url" => url("offers/$type"),
             "success" => true
         ]);

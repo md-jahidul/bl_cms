@@ -477,7 +477,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('programs/progeneral/{id}/{type}/edit', 'AssetLite\EcareerController@progeneralEdit')->name('programs.progeneral.edit');
     Route::post('programs/progeneral/{id}/update', 'AssetLite\EcareerController@progeneralUpdate')->name('programs.progeneral.update');
     Route::get('programs/progeneral/destroy/{id}', 'AssetLite\EcareerController@progeneralDestroy')->name('programs.progeneral.destroy');
-    
+
     Route::get('programs/progeneral/{type}', 'AssetLite\EcareerController@progeneralIndex')->name('programs.progeneral');
 
 
@@ -539,6 +539,10 @@ Route::middleware('authorize', 'auth')->group(function () {
     // App & Service Category =========================================================
     Route::resource('app-service/category', 'AssetLite\AppServiceCategoryController')->except('show', 'destroy');
     Route::get('app-service/category/destroy/{id}', 'AssetLite\AppServiceCategoryController@destroy');
+
+    // App & Service Vendor API =========================================================
+    Route::resource('app-service/vendor-api', 'AssetLite\AppServiceVendorApiController')->except('show', 'destroy');
+    Route::get('app-service/vendor-api/destroy/{id}', 'AssetLite\AppServiceVendorApiController@destroy');
 
     // App & Service Product =========================================================
     Route::resource('app-service-product', 'AssetLite\AppServiceProductController')->except('show', 'destroy');

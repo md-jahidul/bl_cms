@@ -15,8 +15,6 @@ use Illuminate\Http\Response;
 class ProductDetailsSectionService
 {
     use CrudTrait;
-
-
     /**
      * @var $productDetailsSectionRepository
      */
@@ -48,12 +46,11 @@ class ProductDetailsSectionService
         return new Response('App Service details section added successfully');
     }
 
-
-    public function getSectionColumnInfoByID($section_id, $column_names = [])
+    public function sectionStore($data)
     {
-        return $this->appServiceProductDetailsRepository->findOneByProperties(['id' => $section_id], $column_names);
+        $this->save($data);
+        return response('Section create successfully!');
     }
-
 
     /**
      * @param $data
@@ -63,6 +60,7 @@ class ProductDetailsSectionService
     public function sectionUpdate($data, $id)
     {
         $section = $this->findOne($id);
+        $data['other_attributes'] = (isset($data['other_attributes']['is_tab_section'])) ? $data['other_attributes'] : null;
         $section->update($data);
         return Response('Section updated successfully');
     }
