@@ -4,15 +4,15 @@
 @section('breadcrumb')
     <li class="breadcrumb-item active">MyBl Product Entry Panel</li>
 @endsection
+@section('action')
+    <form method="post" action="{{route('mybl.product.download')}}">
+        {{csrf_field()}}
+        <button type="submit" class="btn btn-info btn-sm"><i class="la la-download"></i>Export Current Products</button>
+    </form>
+@endsection
 @section('content')
     <section>
         <div class="card">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-md-10">
-                    </div>
-                </div>
-            </div>
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="row">
@@ -20,7 +20,7 @@
                             <form class="form" method="POST"  id="uploadProduct" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="message">Upload Product List</label> <a href="{{ asset('sample-format/mybl-final-format.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
+                                    <label for="message">Upload Product List</label>
                                     <input type="file" class="dropify" name="product_file" data-height="80"
                                            data-allowed-file-extensions="xlsx" required/>
                                 </div>
