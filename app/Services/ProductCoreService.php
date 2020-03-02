@@ -747,6 +747,9 @@ class ProductCoreService
 
 
         $header = config('productMapping.mybl.columns');
+
+        unset($header['internet_volume_mb']);
+
         $headers = array_map(function ($val) {
             return str_replace('_', ' ', ucwords($val));
         }, array_keys($header));
