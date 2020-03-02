@@ -719,7 +719,6 @@ class ProductCoreService
         $header_style = (new StyleBuilder())
                                 ->setFontBold()
                                 ->setFontSize(11)
-                                 ->setCellAlignment(CellAlignment::RIGHT)
                                 ->setBackgroundColor(Color::rgb(245, 245, 240))
                                 ->build();
 
