@@ -792,7 +792,8 @@ class ProductCoreService
                 $insert_data[25] = ($product->details->is_rate_cutter_offer) ? 'Yes' : 'No';
                 $insert_data[26] = $product->offer_section_title;
                 $insert_data[27] = $product->tag;
-                $insert_data[28] = $product->details->call_rate_unit;
+                $insert_data[28] = $product->details->call_rate;
+                $insert_data[29] = $product->details->call_rate_unit;
 
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
