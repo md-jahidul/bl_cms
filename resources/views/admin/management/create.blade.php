@@ -68,7 +68,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('designation') ? ' error' : '' }}">
                                     <label for="designation" class="required">Designation (English)</label>
                                     <input type="text" name="designation"  class="form-control" placeholder="Enter Designation in English"
-                                           value="@if(isset($manage)){{$manage->designation_bn}} @elseif(old("designation_bn")) {{old("designation_bn")}} @endif"
+                                           value="@if(isset($manage)){{$manage->designation}} @elseif(old("designation")) {{old("designation")}} @endif"
                                            required data-validation-required-message="Enter Designation in English">
                                     <div class="help-block"></div>
                                     @if ($errors->has('designation'))
