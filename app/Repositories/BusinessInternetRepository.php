@@ -139,6 +139,9 @@ class BusinessInternetRepository extends BaseRepository {
 
             return response()->json($response, 200);
         } catch (\Exception $e) {
+            
+            print_r($e);
+            
             $response = [
                 'success' => 0,
                 'message' => $e->getMessage()
