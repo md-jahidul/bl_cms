@@ -111,6 +111,10 @@ class ComponentController extends Controller
 		$data['tab_type'] = $type;
 		$data['section_id'] = $appServiceProduct->section_details_id;
 
+		$options = json_decode($appServiceProduct->multiple_attributes, true);
+
+		dd($options);
+
 		// return view('admin.app-service.details.components.edit', compact('data', 'component_type'));
 		return view('admin.app-service.details.components.edit', compact('appServiceProduct', 'data', 'component_type'));
 

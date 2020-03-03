@@ -90,6 +90,7 @@ class ComponentService
         }
 
         $data['multiple_attributes'] = json_encode($results);
+
         $this->save($data);
         return new Response('App Service Component added successfully');
     }
