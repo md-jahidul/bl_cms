@@ -1,17 +1,25 @@
 {
-    "applinks": {
-        "apps": [],
-        "details": [{
-            "appID": "FPSLD433CM.com.Banglalink.My-Banglalink-Dev",
-            "paths": ["/*"]
-            },
-            {
-            "appID": "FPSLD433CM.com.Banglalink.My-Banglalink-QA",
-            "paths": ["/*"]
-        },
-{
-            "appID": "FPSLD433CM.com.Banglalink.My-Banglalink",
-            "paths": ["/*"]
-        }]
-    }
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "FPSLD433CM.com.Banglalink.My-Banglalink-Dev",
+        "paths": [
+          "/*"
+        ]
+      },
+      {
+        "appID": "FPSLD433CM.com.Banglalink.My-Banglalink-QA",
+        "paths": [
+          "/*"
+        ]
+      },
+      {
+        "appID": "FPSLD433CM.com.Banglalink.My-Banglalink",
+        "paths": [
+          "/*"
+        ]
+      }
+    ]
+  }
 }
