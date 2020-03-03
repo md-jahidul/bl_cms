@@ -71,8 +71,6 @@
                                 </div>
                             </div>
 
-
-
                         </div>
                         <div class="col-md-6 col-xs-12">
 
@@ -120,9 +118,33 @@
 
                             </div>
 
-                            <div class="form-group text-right">
+                           
+                        </div>
+                        
+                        <div class="col-md-12 col-xs-12">
+                            
+                             <div class="form-group ">
+                                <h4>Select Related Package (You may also like)</h4>
+                                <hr>
+                                <div class="row">
+
+                                    @foreach($packages as $pac)
+                                    <div class="col-md-3 col-xs-12">
+                                        <label class="text-bold-600 cursor-pointer">
+                                            <input type="checkbox" name="realated[{{$pac->id}}]">
+                                            {{$pac->name}}
+                                        </label>
+
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            
+                            
+                             <div class="form-group text-right">
                                 <button class="btn btn-sm btn-info news_submit" type="submit">Save Package</button>
                             </div>
+                            
                         </div>
 
                     </div>

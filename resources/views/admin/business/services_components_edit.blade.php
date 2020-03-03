@@ -16,10 +16,12 @@
 
 
     <div class="component_wrapper">
-        <form method="POST" action="{{ route('business.component.save')}}" class="form home_news_form" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('business.component.update')}}" class="form home_news_form" enctype="multipart/form-data">
 
 
             @csrf
+
+            <input type="hidden" name="service_id" value="{{$serviceId}}">
 
             @if($type == "Photo with Text")
 
@@ -57,15 +59,62 @@
 
             @endif
 
-            @if($type == "Video Component")
+            @if($type == "Photo Component")
 
             @include('admin.business.partials.com_photo_edit')
 
             @endif
-            
+
             <div class="form-group submit_btn"><button type="submit" class="btn btn-info pull-right">Update</button></div>
 
         </form>
+    </div>
+
+
+    <div class="display-hidden package_comparison_one_single">
+        <div class="col-md-4 col-xs-12 pc1_new_package">
+            <input type="hidden" name="com_id[]" value="">
+            <div class="form-group">
+
+                <label class="display-block">Package Name (EN) <span class="text-danger">*</span> 
+
+                    <a href="javascript:;" class="remove_package_one pull-right text-danger">
+                        <i class="la la-minus-square"></i>
+                    </a>
+
+                    <a href="javascript:;" class="add_package_one pull-right">
+                        <i class="la la-plus-square"></i>
+                    </a>
+                </label>
+                <input type="text" class="form-control" required name="table_head_en[]">
+
+                <label class="display-block">Package Name (BN) <span class="text-danger">*</span> </label>
+                <input type="text" class="form-control" required name="table_head_bn[]">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Feature Text (EN)<span class="text-danger">*</span></label>
+                <textarea type="text" name="feature_text_en[]" required class="form-control textarea_details_new"></textarea>
+
+                <label>Feature Text (BN)<span class="text-danger">*</span></label>
+                <textarea type="text" name="feature_text_bn[]" required class="form-control textarea_details_new"></textarea>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Price (EN)<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" required name="price_bn[]">
+
+                <label>Price (BN)<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" required name="price_bn[]">
+
+            </div>
+            <hr>
+
+        </div>
     </div>
 
 
@@ -102,12 +151,6 @@ $(function () {
     });
 
 
-    //remove package comparison table one element
-    $('.component_wrapper').on('click', '.remove_package_one', function () {
-        $(this).parents('.col-md-4').fadeOut(300, function () {
-            $(this).remove();
-        });
-    });
 
     //add package comparison table two element
     $('.component_wrapper').on('click', '.add_package_two', function () {
