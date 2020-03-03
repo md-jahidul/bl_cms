@@ -59,6 +59,7 @@ class AppServiceProductDetailsController extends Controller
         $this->info["products"] = $this->appServiceProduct->appServiceRelatedProduct($tab_type, $product_id);
         $this->info["productDetail"] = $this->appServiceProduct->detailsProduct($product_id);
         $this->info["fixedSectionData"] = $this->info["section_list"]['fixed_section'];
+
         return view('admin.app-service.details.section.index', $this->info);
     }
 
@@ -70,7 +71,9 @@ class AppServiceProductDetailsController extends Controller
      */
     public function store(Request $request, $tab_type, $product_id)
     {
+
         $response = $this->appServiceProductDetailsService->storeAppServiceProductDetails($request->all(), $tab_type, $product_id);
+
         Session::flash('message', $response->getContent());
         return redirect(url("app-service/details/$tab_type/$product_id"));
     }

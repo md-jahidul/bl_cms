@@ -531,6 +531,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::get('app-service/category-find/{id}', 'AssetLite\AppServiceProductController@tabWiseCategory');
 
+    
     # App & Service details page
     Route::get('app-service/details/{type}/{id}', 'AssetLite\AppServiceProductDetailsController@productDetails')
         ->name('app_service.details.list');

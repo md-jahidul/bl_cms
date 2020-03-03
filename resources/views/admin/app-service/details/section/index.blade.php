@@ -20,12 +20,51 @@ function matchRelatedProduct($id, $roles)
     <li class="breadcrumb-item ">Section List</li>
 @endsection
 @section('action')
-    <a href="{{ route("app-service-product.create") }}" class="btn btn-primary  round btn-glow px-2" data-toggle="modal" data-target="#add_details_with_compoent"><i class="la la-plus"></i>
-        Add section
-    </a>
+    
 @endsection
 @section('content')
     <section>
+        
+        <!-- # Section add component -->
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <h4 class="pb-1"><strong>Add section components</strong></h4>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="category_type">Select Component Type</label>
+                                <select id="component_type" class="form-control" name="component_type" aria-invalid="false">
+                                    <option value="text_with_image_right">Text with image right</option>
+                                    <option value="text_with_image_bottom">Text with image bottom</option>
+                                    <option value="slider_text_with_image_right">Slider text with image right</option>
+                                    <option value="video_with_text_right">Video with text right</option>
+                                    <option value="multiple_image_banner">Multiple image banner</option>
+                                    <option value="pricing_mutiple_table">Pricing Multiple table</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <a id="add_component_btn" href="{{ route("app-service-product.create") }}" class="btn btn-primary  round btn-glow px-1" data-toggle="modal" data-target="#text_with_image_right"><i class="la la-plus"></i>
+                                    Add Component
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="category_type"><strong>Preview</strong></label>
+                                <div id="component_preview" class="component_preview" style="max-width: 400px;min-height: 200px;">
+                                    <img id="component_preview_img" class="img-fluid" style="border: 1px solid #eee;" src="{{asset('app-assets/images/app_services/text_with_image_right.png')}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- # Section list with component card -->
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
@@ -160,6 +199,11 @@ function matchRelatedProduct($id, $roles)
         </div>
     </section>
 
+
+    <!-- # Component modal -->
+    @include('admin.app-service.details.components.component_modal.text_with_image_right')
+
+
     <!-- Modal -->
     <div class="modal fade" id="add_details_with_compoent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -271,6 +315,21 @@ function matchRelatedProduct($id, $roles)
 
 <script type="text/javascript">
     jQuery(document).ready(function($){
+
+        // Preview changes on component selection
+        $('#component_type').on('change', function(){
+
+            var assetUrl = "{{asset('app-assets/images/app_services/')}}"
+            $('#component_preview_img').attr('src', assetUrl +'/'+ $(this).val() +'.png' );
+
+            $('#add_component_btn').attr('data-target', '#'+$(this).val());
+
+            // console.log($(this).val());
+        });
+
+
+
+
         $('input.section_name').on('keyup', function(){
             var sectionName = $('#product_details_form').find('.section_name').val();
             var sectionNameLower = sectionName.toLowerCase();

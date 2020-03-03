@@ -9,12 +9,14 @@ use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use App\Repositories\ComponentRepository;
 use Illuminate\Http\Response;
 
 class AppServiceProductDetailsService
 {
     use CrudTrait;
     use FileTrait;
+    const PAGE_TYPE = 'app_services';
 
 
     /**
@@ -26,12 +28,19 @@ class AppServiceProductDetailsService
      */
 
     /**
+     * @var $componentRepository
+     */
+    protected $componentRepository;
+
+
+    /**
      * AppServiceProductService constructor.
      * @param AppServiceProductDetailsRepository $appServiceProductDetailsRepository
      */
-    public function __construct(AppServiceProductDetailsRepository $appServiceProductDetailsRepository)
+    public function __construct(AppServiceProductDetailsRepository $appServiceProductDetailsRepository, ComponentRepository $componentRepository)
     {
         $this->appServiceProductDetailsRepository = $appServiceProductDetailsRepository;
+        $this->componentRepository = $componentRepository;
         $this->setActionRepository($appServiceProductDetailsRepository);
     }
 
@@ -49,16 +58,33 @@ class AppServiceProductDetailsService
      */
     public function storeAppServiceProductDetails($data, $tab_type, $product_id)
     {
-        // if (request()->hasFile('product_img_url')) {
-        //     $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
-        // }
+        # Save sections data
+        $sections_data = $data['sections'];
+        
+        
+        $sections_data['product_id'] = $product_id;
+        $sections_saved_data = $this->save($sections_data);
 
-        $data['product_id'] = $product_id;
-        $data['tab_type'] = $tab_type;
+        if( isset($sections_saved_data->id) && !empty($sections_saved_data->id) ){
+            # Save Component data                     
+            $component_data = $data['component'];
+            $component_data['section_details_id'] = $sections_saved_data->id;
+            $component_data['page_type'] = self::PAGE_TYPE;   
 
+            if (request()->hasFile('component.image_url')) {
+                $component_data['image'] = $this->upload($data['component']['image_url'], 'assetlite/images/app-service/product-details');
+            }
 
-        $this->save($data);
-        return new Response('App Service details section added successfully');
+            $this->componentRepository->save($component_data);
+
+            return new Response('App Service details section component added successfully');
+        }
+        else{
+            return new Response('Something went wrong! App Service details section component not added');
+        }
+        
+
+        
     }
 
 
