@@ -105,18 +105,7 @@
         //add package comparison table one element
         $('.card').on('click', '.add_package_one', function () {
             var html = $(".package_comparison_one_single .pc1_new_package").clone();
-
-            var position = $(this).parents('.package_one_wrap').find('.com_pc1_position').val();
-
-            var pc1TableHead = "com_pc1_table_head[" + position + "][]";
-            $(html).find('.com_pc1_table_head').attr('name', pc1TableHead);
-
-            var pc1FeatureText = "com_pc1_feature_text[" + position + "][]";
-            $(html).find('.com_pc1_feature_text').attr('name', pc1FeatureText);
-
-            var pc1Price = "com_pc1_price[" + position + "][]";
-            $(html).find('.com_pc1_price').attr('name', pc1Price);
-
+         
             //text editor for package details
             $(html).find("textarea.textarea_details_new").summernote({
                 toolbar: [

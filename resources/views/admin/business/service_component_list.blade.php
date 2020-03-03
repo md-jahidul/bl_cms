@@ -53,7 +53,7 @@
                                         @endif
 
                                         @else
-                                        {{$com['text']}}
+                                        {!!$com['text']!!}
                                         @endif
 
                                     </td>

@@ -178,10 +178,12 @@ class BusinessOthersController extends Controller {
      */
     public function updateComponents(Request $request) {
 
-        print_r($request->all());die();
+//        print_r($request->all());die();
 
 
         $response = $this->othersService->updateComponents($request);
+        
+//        dd($response);
 
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Service component is updated!');
