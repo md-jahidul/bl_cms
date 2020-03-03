@@ -14,7 +14,8 @@ class AddColumnVendorApiUrlInAppServiceTable extends Migration
     public function up()
     {
         Schema::table('app_service_products', function (Blueprint $table) {
-            $table->string('subscription_url')->after('subscribe_text_bn');
+            $table->string('provider_url')->after('subscribe_text_bn');
+            $table->tinyInteger('show_in_vas')->after('can_active')->default(0);
         });
     }
 
@@ -26,7 +27,8 @@ class AddColumnVendorApiUrlInAppServiceTable extends Migration
     public function down()
     {
         Schema::table('app_service_products', function (Blueprint $table) {
-            $table->dropColumn('subscription_url');
+            $table->dropColumn('provider_url');
+            $table->dropColumn('show_in_vas');
         });
     }
 }

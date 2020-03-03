@@ -93,6 +93,8 @@ class AppServiceProductController extends Controller
      */
     public function store(Request $request)
     {
+
+
         $response = $this->appServiceProductService->storeAppServiceProduct($request->all());
         Session::flash('message', $response->getContent());
         return redirect(route('app-service-product.index'));
