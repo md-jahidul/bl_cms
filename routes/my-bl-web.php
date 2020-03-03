@@ -165,6 +165,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
 
 
     Route::get('mybl/core-product', 'CMS\MyblProductEntryController@index')->name('mybl.product.index');
+    Route::post('mybl/core-product/download', 'CMS\MyblProductEntryController@downloadMyblProducts')->name('mybl.product.download');
     Route::post('mybl/core-product', 'CMS\MyblProductEntryController@uploadProductByExcel')
                                          ->name('mybl.core-product.save');
     Route::get('mybl/products', 'CMS\MyblProductEntryController@getMyblProducts')

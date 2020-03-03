@@ -31,6 +31,7 @@ class Component extends Model
 
     protected $casts = [
         'multiple_attributes' => 'array',
+        'other_attributes' => 'array',
     ];
 
 }
