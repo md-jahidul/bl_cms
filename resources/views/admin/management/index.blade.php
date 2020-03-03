@@ -23,13 +23,20 @@
                            {{-- <th width='20%'>Personal Details</th>--}}
                             <th width='20%'>Profile Image</th>
                             <th width='20%'>Modal Image</th>
-                            <th width='15%'>Action</th>
+                            <th width='5%'>Status</th>
+                            <th width='10%'>Action</th>
                         </tr>
                         </thead>
                         <tbody id="sortable">
                         @php $index = 0; @endphp
                         @foreach ($management as $manage)
-                            @php  $index++; @endphp
+                            @php  if($manage->is_active == 1) {
+                                    $status = "Active";
+                                   } else{
+                                      $status = "InActive";
+                                   }
+
+                            @endphp
 
                         <tr>
                             <tr data-index="{{ $manage->id }}" data-position="{{ $manage->display_order }}">
@@ -45,6 +52,7 @@
                                 <img style="height:120px;width:200px; padding: 5px;"
                                      src="{{ config('filesystems.file_base_url') . $manage->banner_image }}" id="imgDisplay">
                             </td>
+                            <td width='5%'>{{$status}}</td>
                             <td width='15%'>
                                 <div class="row justify-content-md-center no-gutters">
                                     <div class="col-md-3">
