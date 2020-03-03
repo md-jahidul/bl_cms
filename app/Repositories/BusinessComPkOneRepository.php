@@ -59,9 +59,10 @@ class BusinessComPkOneRepository extends BaseRepository {
         $priceEn = $request->price_en;
         $priceBn = $request->price_bn;
 
+        $data = [];
         foreach ($comIds as $k => $val) {
 
-            if ($val == "") {
+            if ($val == NULL) {
 
                 $data[] = array(
                     'table_head' => $headEn[$k],
@@ -73,7 +74,6 @@ class BusinessComPkOneRepository extends BaseRepository {
                     'position' => $position,
                     'service_id' => $srvsId,
                 );
-                $this->model->insert($data);
             } else {
 
                 $component = $this->model->where(array('id' => $val))
@@ -88,6 +88,16 @@ class BusinessComPkOneRepository extends BaseRepository {
                         )
                 );
             }
+        }
+
+        //insert
+        if (!empty($data)) {
+            $this->model->insert($data);
+        }
+
+        //delete component
+        if (!empty($deleted)) {
+            $this->model->whereIn('id', $deleted)->delete();
         }
 
         return $component;

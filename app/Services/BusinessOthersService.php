@@ -444,13 +444,13 @@ class BusinessOthersService {
                 $this->pkOneRepo->updateComponent($request);
             }
             if ($type == "package-comparison-two") {
-                return $this->pkTwoRepo->singleComponent($serviceId, $position);
+                $this->pkTwoRepo->updateComponent($request);
             }
             if ($type == "product-features") {
-                return $this->featureRepo->singleComponent($serviceId, $position);
+                $this->featureRepo->updateComponent($request);
             }
             if ($type == "product-price-table") {
-                return $this->priceTableRepo->singleComponent($serviceId, $position);
+                 $this->priceTableRepo->updateComponent($request);
             }
             if ($type == "video-component") {
                 return $this->videoRepo->singleComponent($serviceId, $position);
@@ -580,6 +580,7 @@ class BusinessOthersService {
         $response = $this->otherRepo->changeHomeShowStatus($serviceId);
         return $response;
     }
+
     /**
      * Change service home show status
      * @return Response

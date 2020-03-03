@@ -52,6 +52,55 @@ class BusinessComPriceTableRepository extends BaseRepository {
         return $component;
     }
     
+    public function updateComponent($request) {
+
+        $comId = $request->com_id;
+        
+        $headEnArray = array(
+            0 => $request->head_one_en,
+            1 => $request->head_two_en,
+            2 => $request->head_three_en,
+        );
+        $headEn = json_encode($headEnArray);
+        
+        $headBnArray = array(
+            0 => $request->head_one_bn,
+            1 => $request->head_two_bn,
+            2 => $request->head_three_bn,
+        );
+        $headBn = json_encode($headBnArray);
+        
+        $bodyEnArray = array(
+            0 => $request->column_one_en,
+            1 => $request->column_two_en,
+            2 => $request->column_three_en,
+        );
+        $bodyEn = json_encode($bodyEnArray);
+        
+        $bodyBnArray = array(
+            0 => $request->column_one_bn,
+            1 => $request->column_two_bn,
+            2 => $request->column_three_bn,
+        );
+        $bodyBn = json_encode($bodyBnArray);
+        
+
+
+        $component = $this->model->where(array('id' => $comId))
+                ->update(
+                array(
+                    'title' => $request->title_en,
+                    'title_bn' => $request->title_bn,
+                    'table_head' => $headEn,
+                    'table_head_bn' => $headBn,
+                    'table_body' => $bodyEn,
+                    'table_body_bn' => $bodyBn,
+                )
+        );
+
+        return $component;
+    }
+    
     public function changePosition($comId, $newPosition){
         $component = $this->model->where(array('id' => $comId))
                 ->update(array('position' => $newPosition));
