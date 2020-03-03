@@ -3,18 +3,18 @@
 
 @include('layouts.partials.app-service.common-field.product-image', ['imgField' => 'imgTwo', 'showImg' => 'imgShowTwo'])
 
-<div class="form-group col-md-6 {{ $errors->has('validity_unit') ? ' error' : '' }}">
-    <label for="validity_unit" class="required">Subscription Vendor</label>
-    <select class="form-control required" name="subscription_url"
+<div class="form-group col-md-6 {{ $errors->has('provider_url') ? ' error' : '' }}">
+    <label for="provider_url" class="required">Subscription Vendor</label>
+    <select class="form-control required" name="provider_url"
             required data-validation-required-message="Please select vendor">
         <option value="">---Select Vendor---</option>
         @foreach($vasVendorList as $vendor)
-            <option value="{{ $vendor->end_point_url }}" {{ !empty($appServiceProduct->subscription_url) == $vendor->end_point_url ? 'selected' : '' }}>{{ $vendor->vendor_name }}</option>
+            <option value="{{ $vendor->end_point_url }}" {{ !empty($appServiceProduct->provider_url) == $vendor->end_point_url ? 'selected' : '' }}>{{ $vendor->vendor_name }}</option>
         @endforeach
     </select>
     <div class="help-block"></div>
-    @if ($errors->has('validity_unit'))
-        <div class="help-block">{{ $errors->first('validity_unit') }}</div>
+    @if ($errors->has('provider_url'))
+        <div class="help-block">{{ $errors->first('provider_url') }}</div>
     @endif
 </div>
 
