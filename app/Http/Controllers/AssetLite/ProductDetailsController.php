@@ -6,6 +6,7 @@ use App\Models\Component;
 use App\Models\ProductDetailsSection;
 use App\Services\Assetlite\ComponentService;
 use App\Services\Assetlite\ProductDetailsSectionService;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -43,7 +44,10 @@ class ProductDetailsController extends Controller
     public function sectionList($productDetailsId)
     {
         $productSections = $this->productDetailsSectionService->findAll();
-        return view('admin.other-offer-details.index', compact('productSections', 'productDetailsId'));
+
+//        return $productSections;
+
+        return view('admin.product.details.index', compact('productSections', 'productDetailsId'));
     }
 
     /**
@@ -54,7 +58,7 @@ class ProductDetailsController extends Controller
      */
     public function create($productDetailsId)
     {
-        return view('admin.other-offer-details.create', compact('productDetailsId'));
+        return view('admin.product.details.create', compact('productDetailsId'));
     }
 
     /**
@@ -76,7 +80,7 @@ class ProductDetailsController extends Controller
 
 //        dd($section->other_attributes);
 
-        return view('admin.other-offer-details.edit', compact('section', 'productDetailsId'));
+        return view('admin.product.details.edit', compact('section', 'productDetailsId'));
     }
 
     public function updateSection(Request $request, $productDetailsId, $id)
@@ -89,12 +93,12 @@ class ProductDetailsController extends Controller
     public function componentList($productDetailsId, $sectionId)
     {
         $components = $this->componentService->componentList($sectionId);
-        return view('admin.other-offer-details.components.index', compact('components', 'sectionId', 'productDetailsId'));
+        return view('admin.product.details.components.index', compact('components', 'sectionId', 'productDetailsId'));
     }
 
     public function componentCreate($productDetailsId, $sectionId)
     {
-        return view('admin.other-offer-details.components.create', compact('sectionId', 'productDetailsId'));
+        return view('admin.product.details.components.create', compact('sectionId', 'productDetailsId'));
     }
 
     public function componentStore(Request $request, $productDetailsId, $sectionID)
@@ -120,14 +124,13 @@ class ProductDetailsController extends Controller
             'accordion_text' => 'Accordion Text',
             'drop_down' => 'Dropdown',
             'single_image' => 'Single Image',
+            'banner_image' => 'Banner Image',
             'multiple_image' => 'Multiple Image'
         ];
         $component = $this->componentService->findOne($id);
         $multipleImage = $component['multiple_attributes'];
 
-//        return $component['other_attributes'];
-
-        return view('admin.other-offer-details.components.edit', compact('component', 'multipleImage', 'dataTypes', 'sectionId', 'productDetailsId'));
+        return view('admin.product.details.components.edit', compact('component', 'multipleImage', 'dataTypes', 'sectionId', 'productDetailsId'));
     }
 
     /**
@@ -161,12 +164,13 @@ class ProductDetailsController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
+     * @param $productDetailsId
+     * @param $sectionId
+     * @return UrlGenerator|string
      */
-    public function destroy($id)
+    public function sectionDestroy($productDetailsId, $sectionId)
     {
-        //
+        $this->productDetailsSectionService->sectionDestroy($sectionId);
+        return url(route('section-list', $productDetailsId));
     }
 }

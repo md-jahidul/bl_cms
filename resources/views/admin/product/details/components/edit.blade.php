@@ -175,7 +175,7 @@
 
                                                 <slot id="single-image" class="{{ ( $component->image ) ? '' : "d-none" }}">
                                                     <div class="form-group col-md-6">
-                                                        <label for="alt_text" class="">Single Image</label>
+                                                        <label for="alt_text" class="">Image Field</label>
                                                         <div class="custom-file">
                                                             <input type="file"  name="image" class="dropify" data-height="80"
                                                                data-default-file="{{ config('filesystems.file_base_url') . $component->image }}" >

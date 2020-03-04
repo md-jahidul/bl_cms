@@ -14,14 +14,14 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('section-store', $productDetailsId) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route('section-update', [$productDetailsId, $section->id]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-                                <input type="hidden" name="product_id" value="{{ $productDetailsId }}">
+{{--                                <input type="hidden" name="product_id" value="{{ $productDetailsId }}">--}}
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title (English)</label>
-                                    <input type="text" name="title_en"  class="form-control" placeholder="Enter section title in English"
-                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Enter section title in English">
+                                    <input type="text" name="title_en"  class="form-control" placeholder="Enter company name in English"
+                                           value="{{ $section->title_en }}" required data-validation-required-message="Enter company name in English">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_en'))
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -30,33 +30,42 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                     <label for="title_bn" class="required">Title (Bangla)</label>
-                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter section title in Bangla"
-                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Enter section title in Bangla">
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter company name bangla"
+                                           value="{{ $section->title_bn }}" required data-validation-required-message="Enter company name in Bangla">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    <label for="tag_category_id">Section Type</label>
+                                    <select class="form-control" name="section_type">
+                                        <option value="">---Select Section Type---</option>
+                                        <option value="multi_section" {{ ($section->section_type == "multi_section") ? "selected" : '' }}>Multi Component Section</option>
+                                        <option value="fixed_section" {{ ($section->section_type == "fixed_section") ? "selected" : '' }}>Fixed Component Section</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mt-1">
+                                    <label for="tag_category_id"></label>
+                                    <div class="form-group">
+                                        <label for="is_tab_section" class="mr-1">Is Tab Section</label>
+                                        <input type="checkbox" name="other_attributes[is_tab_section]" value="1" id="is_tab_section"
+                                            {{ (isset($section->other_attributes['is_tab_section'])) ? "checked" : '' }}>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="title" class="mr-1">Status:</label>
-                                        <input type="radio" name="status" value="1" id="active" checked>
+                                        <input type="radio" name="status" value="1" id="active" {{ $section->status == 1 ? 'checked' : '' }}>
                                         <label for="active" class="mr-1">Active</label>
 
-                                        <input type="radio" name="status" value="0" id="inactive">
+                                        <input type="radio" name="status" value="0" id="inactive" {{ $section->status == 0 ? 'checked' : '' }}>
                                         <label for="inactive">Inactive</label>
                                     </div>
                                 </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="is_tab_section" class="mr-1">Is Tab Section</label>
-                                        <input type="checkbox" name="other_attributes[is_tab_section]" value="1" id="is_tab_section">
-                                    </div>
-                                </div>
-
-
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
