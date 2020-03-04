@@ -14,10 +14,11 @@ class BusinessOthersRepository extends BaseRepository {
     public $modelName = BusinessOthers::class;
     
      public function getOtherService($type, $serviceId) {
-        $servces = $this->model->orderBy('sort')->where('status', 1);
+        $servces = $this->model->orderBy('sort');
         
         if($serviceId > 0){
             $servces->where('id', '!=', $serviceId);
+            $servces->where('status', 1);
         }
         if($type != ""){
             $servces->where('type', $type);
