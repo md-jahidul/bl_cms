@@ -1,25 +1,11 @@
 {
-  "applinks": {
-    "apps": [],
-    "details": [
-      {
-        "appID": "FPSLD433CM.com.Banglalink.My-Banglalink-Dev",
-        "paths": [
-          "/*"
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "S6KL3322ZR.com.pickaboo.ios",
+                "paths": [ "*" ]
+            }
         ]
-      },
-      {
-        "appID": "FPSLD433CM.com.Banglalink.My-Banglalink-QA",
-        "paths": [
-          "/*"
-        ]
-      },
-      {
-        "appID": "FPSLD433CM.com.Banglalink.My-Banglalink",
-        "paths": [
-          "/*"
-        ]
-      }
-    ]
-  }
+    }
 }
