@@ -77,6 +77,7 @@
                                                         <option value="bullet Text">Bullet Text</option>
                                                         <option value="accordion Text">Accordion Text</option>
                                                         <option value="single_image">Single Image</option>
+                                                        <option value="banner_image">Banner Image</option>
                                                         <option value="multiple_image">Multiple Image</option>
                                                         <option value="drop_down">Dropdown</option>
                                                     </select>
@@ -169,15 +170,9 @@
                                                     </div>
                                                 </slot>
 
-
-
-
-
-
-
                                                 <slot id="single-image" class="d-none">
                                                     <div class="form-group col-md-6">
-                                                        <label for="alt_text" class="">Single Image</label>
+                                                        <label for="alt_text" class="">Image Field</label>
                                                         <div class="custom-file">
                                                             <input type="file"  name="image" class="dropify" data-height="80">
                                                             <span class="text-primary">Please given file type (.png, .jpg, svg)</span>

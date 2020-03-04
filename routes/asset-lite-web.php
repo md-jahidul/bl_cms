@@ -169,6 +169,9 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('product-details/{productDetailsId}/section-update/{id}', 'AssetLite\ProductDetailsController@updateSection')
         ->name('section-update');
 
+    Route::get('product-details/{productDetailsId}/section-delete/{id}', 'AssetLite\ProductDetailsController@sectionDestroy')
+        ->name('section-destroy');
+
     Route::get(
         'product-details/{productDetailsId}/section/{sid}/components-list',
         'AssetLite\ProductDetailsController@componentList'
