@@ -9,15 +9,27 @@
 
                 <div class="col-md-5 col-xs-12">
                     <div class="form-group">
+                        <label for=""> Title (EN) <span class="text-danger">*</span></label>
+                        <input type="text" required name="title_en" value="{{$component->title_en}}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
                         <label for=""> Features (EN) <span class="text-danger">*</span></label>
-                        <textarea type="text" name="feature_text_en" class="form-control textarea_details">{{$component->feature_text}}</textarea>
+                        <textarea type="text" required name="feature_text_en" class="form-control textarea_details">{{$component->feature_text}}</textarea>
                     </div>
                 </div>
                 <div class="col-md-5 col-xs-12">
+                    
+                    <div class="form-group">
+                        <label for=""> Title (BN) <span class="text-danger">*</span></label>
+                        <input type="text" required name="title_bn" value="{{$component->title_bn}}" class="form-control">
+                    </div>
+                    
                     <div class="form-group">
                         <label for=""> Features (BN) <span class="text-danger">*</span></label>
                         <textarea type="text" name="feature_text_bn" class="form-control textarea_details">{{$component->feature_text_bn}}</textarea>
                     </div>
+                    
                 </div>
                 <div class="col-md-2 col-xs-12">
                     <div class="form-group">
