@@ -21,6 +21,7 @@
                     <th>Activation USSD</th>
                     <th>Balance Check USSD</th>
                     <th>MRP</th>
+                    <th>Home Show</th>
                     <th>Status</th>
                     <th class="filter_data">Actions</th>
                 </tr>
@@ -50,7 +51,7 @@
             autoWidth: false,
             pageLength: 20,
 //            lengthChange: false,
-            "lengthMenu": [10, 25, 50, 100, 200],
+            "lengthMenu": [20, 25, 50, 100, 200],
             ajax: {
                 url: '{{ route("business.internet.list.ajax") }}',
                 method: 'POST',
@@ -97,6 +98,12 @@
                     }
                 },
                 {
+                    name: 'home_show',
+                    render: function (data, type, row) {
+                        return row.home_show;
+                    }
+                },
+                {
                     name: 'status',
                     render: function (data, type, row) {
                         return row.status;
@@ -124,6 +131,85 @@
 
 
         //change show/hide status of device offer
+        $("#internet_package_list").on('click', '.package_change_status', function (e) {
+            var packageId = $(this).attr('href');
+
+            $.ajax({
+                url: '{{ url("business-internet-status-change")}}/' + packageId,
+                cache: false,
+                type: "GET",
+                success: function (result) {
+                    if (result.success == 1) {
+                        swal.fire({
+                            title: 'Internet Package status is changed!',
+                            type: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+
+                        $('#internet_package_list').DataTable().ajax.reload();
+
+                    } else {
+                        swal.close();
+                        swal.fire({
+                            title: result.message,
+                            timer: 3000,
+                            type: 'error',
+                        });
+                    }
+
+                },
+                error: function (data) {
+                    swal.fire({
+                        title: 'Status change process failed!',
+                        type: 'error',
+                    });
+                }
+            });
+            e.preventDefault();
+        });
+
+
+        //change home show status of internet
+        $("#internet_package_list").on('click', '.package_home_show', function (e) {
+            var packageId = $(this).attr('href');
+
+            $.ajax({
+                url: '{{ url("business-internet-home-show")}}/' + packageId,
+                cache: false,
+                type: "GET",
+                success: function (result) {
+                    if (result.success == 1) {
+                        swal.fire({
+                            title: 'Changed!',
+                            type: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+
+                        $('#internet_package_list').DataTable().ajax.reload();
+
+                    } else {
+                        swal.close();
+                        swal.fire({
+                            title: result.message,
+                            timer: 3000,
+                            type: 'error',
+                        });
+                    }
+
+                },
+                error: function (data) {
+                    swal.fire({
+                        title: 'Process failed!',
+                        type: 'error',
+                    });
+                }
+            });
+            e.preventDefault();
+        });
+
+        //change activation status of internet
         $("#internet_package_list").on('click', '.package_change_status', function (e) {
             var packageId = $(this).attr('href');
 

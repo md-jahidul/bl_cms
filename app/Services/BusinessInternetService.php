@@ -48,6 +48,16 @@ class BusinessInternetService {
         return $response;
     }
       /**
+     * change home show
+     * @return Response
+     */
+    public function homeShow($packageId)
+    {
+        $response = $this->internetRepo->homeShow($packageId);
+        return $response;
+    }
+    
+      /**
      * change showing status
      * @return Response
      */
