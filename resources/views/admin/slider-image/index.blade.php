@@ -2,7 +2,12 @@
 @section('title', 'Slider Image List')
 @section('card_name', 'Slider Image List')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ url("$sliderItem->slider_type-sliders") }}">Slider List</a></li>
+
+    {{--strpos(request()->previous_page, 'trending-home') !== false) ? redirect(request()->previous_page) : redirect(route('product.list', $type)--}}
+
+    <li class="breadcrumb-item active"><a
+            href="{{ strpos($previousUrl, 'about-slider') !== false ? url($previousUrl) : url("$sliderItem->slider_type-sliders")}}"
+        >Slider List</a></li>
     <li class="breadcrumb-item active"><strong>Slider Image List</strong></li>
 @endsection
 @section('action')

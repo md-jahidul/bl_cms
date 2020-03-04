@@ -2,7 +2,7 @@
 @section('title', 'Slider Image Edit')
 @section('card_name', 'Slider Image Edit')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('single-sliders') }}"> Slider List</a></li>
+    <li class="breadcrumb-item active"> Slider List</li>
     <li class="breadcrumb-item active"> <a href="{{ route('slider_images', [$sliderImage->slider_id, $type]) }}"> Slider Image List</a></li>
     <li class="breadcrumb-item active"> Slider Image Edit</li>
 @endsection
@@ -10,21 +10,7 @@
     <a href="{{ route('slider_images', [$sliderImage->slider_id, $type]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 
-
 @section('content')
-    @if(Session::has('error'))
-        <div class="alert bg-danger alert-dismissible mb-2">
-            {{ Session::get('error') }}
-            @php
-                Session::forget('error');
-            @endphp
-        </div>
-    @endif
-
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-        @endforeach
-    @endif
     <section>
         <div class="card">
             <div class="card-content collapse show">
@@ -79,11 +65,11 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="alt_text" class="required">Slider Image (Desktop View)</label>
+                                <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                    <label for="alt_text">Slider Image (Desktop View)</label>
                                     <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input" id="desktopImg">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                        <input type="file" name="image_url" class="custom-file-input dropify" data-height="80"
+                                               data-default-file="{{ config('filesystems.file_base_url') . $sliderImage->image_url }}">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
 
@@ -93,15 +79,11 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-1">
-                                    <img src="{{ config('filesystems.file_base_url') .$sliderImage->image_url }}" style="height:70px;width:70px;" id="desktopImgShow">
-                                </div>
-
-                                <div class="form-group col-md-5 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
-                                    <label for="mobileImg" class="required">Slider Image (Mobile View)</label>
+                                <div class="form-group col-md-6 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
+                                    <label for="mobileImg">Slider Image (Mobile View)</label>
                                     <div class="custom-file">
-                                        <input type="file" name="mobile_view_img" class="custom-file-input" id="mobileImg">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                        <input type="file" name="mobile_view_img" class="custom-file-input dropify" data-height="80"
+                                               data-default-file="{{ config('filesystems.file_base_url') . $sliderImage->mobile_view_img}}">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
 
@@ -111,12 +93,8 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-1">
-                                    <img src="{{ config('filesystems.file_base_url') .$sliderImage->mobile_view_img }}" style="height:70px;width:70px;" id="mobileImgShow">
-                                </div>
-
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text" class="required">Alt Text</label>
+                                    <label for="alt_text">Alt Text</label>
                                     <input type="text" name="alt_text"  class="form-control" placeholder="Enter bangla title"
                                            value="{{ $sliderImage->alt_text }}" required data-validation-required-message="Enter bangla title">
                                     <div class="help-block"></div>
@@ -125,40 +103,10 @@
                                     @endif
                                 </div>
 
-{{--                                <div class="form-group col-md-5 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">--}}
-{{--                                    <div class="custom-file">--}}
-{{--                                        <input type="file" name="image_url" class="custom-file-input" id="image">--}}
-{{--                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>--}}
-{{--                                    </div>--}}
-{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="form-group col-md-1">--}}
-{{--                                    <img src="{{ config('filesystems.file_base_url') .$sliderImage->image_url }}" style="height:70px;width:70px;" id="imgDisplay">--}}
-{{--                                </div>--}}
-
-{{--                                <div class="form-group col-md-5 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">--}}
-{{--                                    <label for="mobileImg" class="required">Slider Image (Mobile View)</label>--}}
-{{--                                    <div class="custom-file">--}}
-{{--                                        <input type="file" name="mobile_view_img" class="custom-file-input" id="mobileImg">--}}
-{{--                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>--}}
-{{--                                    </div>--}}
-{{--                                    <span class="text-primary">Please given file type (.png, .jpg)</span>--}}
-
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('mobile_view_img'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('mobile_view_img') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
-{{--                                <div class="form-group col-md-1">--}}
-{{--                                    <img style="height:70px;width:70px;display:none" id="mobileImgShow">--}}
-{{--                                </div>--}}
-
                                  @include('layouts.partials.slider_types.' . $type )
 
 
-                                <div class="col-md-12">
+                                <div class="col-md-6 mt-2">
                                     <div class="form-group">
                                         <label for="title" class="required mr-1">Status:</label>
 
@@ -189,6 +137,10 @@
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">--}}
+
 @endpush
 
 @push('page-js')
@@ -196,6 +148,10 @@
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+{{--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>--}}
+
     <script type="text/javascript">
         $(function () {
             var date = new Date();
@@ -220,6 +176,17 @@
                     validityField.val(durationDays).prop('readonly', true);
                 }
             })
+
+
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Image File to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                }
+            });
+
         });
     </script>
 @endpush
