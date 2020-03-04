@@ -35,9 +35,14 @@ class BusinessInternetRepository extends BaseRepository {
 
         $items->each(function ($item) use (&$response) {
             
-            $statusBtn = "<a href='$item->id' class='btn-sm btn-success package_change_status'>Showing</a>";
+            $homeShow = "<a href='$item->id' class='btn-sm btn-success package_home_show'>Showing</a>";
+            if ($item->home_show == 0) {
+                $homeShow = "<a href='$item->id' class='btn-sm btn-warning package_home_show'>Hidden</a>";
+            }
+            
+            $statusBtn = "<a href='$item->id' class='btn-sm btn-success package_change_status'>Active</a>";
             if ($item->status == 0) {
-                $statusBtn = "<a href='$item->id' class='btn-sm btn-warning package_change_status'>Hidden</a>";
+                $statusBtn = "<a href='$item->id' class='btn-sm btn-warning package_change_status'>Inactive</a>";
             }
 
             $freeData = "<small><strong>One:</strong> " . $item->free_data_one .
@@ -55,6 +60,7 @@ class BusinessInternetRepository extends BaseRepository {
                 'activation_ussd_code' => $item->activation_ussd_code,
                 'balance_check_ussd_code' => $item->balance_check_ussd_code,
                 'mrp' => $item->mrp,
+                'home_show' => $homeShow,
                 'status' => $statusBtn
             ];
         });
@@ -139,12 +145,32 @@ class BusinessInternetRepository extends BaseRepository {
 
             return response()->json($response, 200);
         } catch (\Exception $e) {
-            
-            print_r($e);
-            
             $response = [
                 'success' => 0,
                 'message' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
+    }
+    
+    
+    public function homeShow($packageId) {
+        try {
+
+            $card = $this->model->findOrFail($packageId);
+
+            $status = $card->home_show == 1 ? 0 : 1;
+            $card->home_show = $status;
+            $card->save();
+
+            $response = [
+                'success' => 1
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'errors' => $e->getMessage()
             ];
             return response()->json($response, 500);
         }

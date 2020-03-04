@@ -41,6 +41,28 @@ class BusinessComPhotoRepository extends BaseRepository {
         return $component;
     }
     
+    public function updateComponent($onePath, $twoPath, $threePath, $fourPath, $request){
+
+        $comId = $request->com_id;
+
+
+        $component = $this->model->where(array('id' => $comId))
+                ->update(
+                array(
+                    'photo_one' => $onePath,
+                    'alt_text_one' => $request->alt_text_one,
+                    'photo_two' => $twoPath,
+                    'alt_text_two' => $request->alt_text_two,
+                    'photo_three' => $threePath,
+                    'alt_text_three' => $request->alt_text_three,
+                    'photo_four' => $fourPath,
+                    'alt_text_four' => $request->alt_text_four,
+                )
+        );
+
+        return $component;
+    }
+    
     public function changePosition($comId, $newPosition){
         $component = $this->model->where(array('id' => $comId))
                 ->update(array('position' => $newPosition));

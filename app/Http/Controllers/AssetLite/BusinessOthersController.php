@@ -95,7 +95,7 @@ class BusinessOthersController extends Controller {
      * @Bulbul Mahmud Nito || 18/02/2020
      */
     public function addComponent($serviceId) {
-        return view('admin.business.other_services_components', compact("serviceId"));
+        return view('admin.business.services_components_add', compact("serviceId"));
     }
 
     /**

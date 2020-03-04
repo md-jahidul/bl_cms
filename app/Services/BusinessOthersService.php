@@ -450,13 +450,49 @@ class BusinessOthersService {
                 $this->featureRepo->updateComponent($request);
             }
             if ($type == "product-price-table") {
-                 $this->priceTableRepo->updateComponent($request);
+                $this->priceTableRepo->updateComponent($request);
             }
             if ($type == "video-component") {
-                return $this->videoRepo->singleComponent($serviceId, $position);
+                $this->videoRepo->updateComponent($request);
             }
             if ($type == "photo-component") {
-                return $this->photoRepo->singleComponent($serviceId, $position);
+
+                $onePath = $request->old_photo_one;
+                if ($request->photo_one) {
+                    $onePath = $this->upload($request->photo_one, 'assetlite/images/business-images');
+                    //delete old photo
+                    if ($request->old_photo_one != "") {
+                        $this->deleteFile($request->old_photo_one);
+                    }
+                }
+
+                $twoPath = $request->old_photo_two;
+                if ($request->photo_two) {
+                    $twoPath = $this->upload($request->photo_two, 'assetlite/images/business-images');
+                    //delete old photo
+                    if ($request->old_photo_two != "") {
+                        $this->deleteFile($request->old_photo_two);
+                    }
+                }
+
+                $threePath = $request->old_photo_three;
+                if ($request->photo_three) {
+                    $threePath = $this->upload($request->photo_three, 'assetlite/images/business-images');
+                    //delete old photo
+                    if ($request->old_photo_three != "") {
+                        $this->deleteFile($request->old_photo_three);
+                    }
+                }
+                $fourPath = $request->old_photo_four;
+                if ($request->photo_four) {
+                    $fourPath = $this->upload($request->photo_four, 'assetlite/images/business-images');
+                    //delete old photo
+                    if ($request->old_photo_four != "") {
+                        $this->deleteFile($request->old_photo_four);
+                    }
+                }
+
+                $this->photoRepo->updateComponent($onePath, $twoPath, $threePath, $fourPath, $request);
             }
 
             $response = [
