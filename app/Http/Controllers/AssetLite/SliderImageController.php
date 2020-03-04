@@ -40,10 +40,14 @@ class SliderImageController extends Controller
      */
     public function index($sliderId, $type)
     {
+        $previousUrl = url()->previous();
+
+//        dd($previousUrl);
+
         $slider_images = AlSliderImage::where('slider_id', $sliderId)->with('slider')->orderBy('display_order')->get();
         $sliderItem    = AlSlider::select('title_en', 'slider_type')->where('id', $sliderId)->first();
 //        $this->alSliderImageService->itemList($sliderId, $type);
-        return view('admin.slider-image.index', compact('slider_images', 'sliderItem', 'sliderId', 'type'));
+        return view('admin.slider-image.index', compact('slider_images', 'sliderItem', 'sliderId', 'type', 'previousUrl'));
     }
 
     /**

@@ -62,14 +62,11 @@
                                     @endif
                                 </div>
 
-
-
-                                <div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Slider Image (Desktop View)</label>
                                     <div class="custom-file">
-                                        <input type="file" name="image_url" class="custom-file-input" id="imgOne"
-                                               required data-validation-required-message="Slider image field is required.">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                        <input type="file" name="image_url" class="custom-file-input dropify"
+                                               required data-validation-required-message="Slider image field is required" data-height="80">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
 
@@ -79,24 +76,10 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-1">
-                                    <img style="height:70px;width:70px;display:none" id="imgShowOne">
-                                </div>
-
-{{--                                <div class="form-group col-md-6">--}}
-{{--                                    <label for="alt_text" class="">Image Field</label>--}}
-{{--                                    <div class="custom-file">--}}
-{{--                                        <input type="file"  name="image" class="dropify" data-height="80"--}}
-{{--                                               data-default-file="{{ config('filesystems.file_base_url') . $component->image }}" >--}}
-{{--                                        <span class="text-primary">Please given file type (.png, .jpg, svg)</span>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-                                <div class="form-group col-md-5 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
                                     <label for="mobileImg">Slider Image (Mobile View)</label>
                                     <div class="custom-file">
                                         <input type="file" name="mobile_view_img" class="custom-file-input dropify" data-height="80">
-{{--                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>--}}
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
 
@@ -104,10 +87,6 @@
                                     @if ($errors->has('mobile_view_img'))
                                         <div class="help-block">  {{ $errors->first('mobile_view_img') }}</div>
                                     @endif
-                                </div>
-
-                                <div class="form-group col-md-1">
-                                    <img style="height:70px;width:70px;display:none" id="imgShowTwo">
                                 </div>
 
                                 <div class="form-group col-md-6 mb-0 {{ $errors->has('alt_text') ? ' error' : '' }}">
