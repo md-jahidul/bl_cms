@@ -21,7 +21,7 @@
                                     <th width="20%">Name</th>
                                     <th width="60%">Short Details</th>
                                     <th class="text-center" width="15%">Component</th>
-                                    <th class="text-center" width="10%">Home Show</th>
+                                    <th class="text-center" width="10%">Home Top</th>
                                     <th class="text-center" width="10%">Home Slider</th>
                                     <th class="text-center" width="10%">Status</th>
                                     <th class="text-center" width="10%">Action</th>
@@ -115,7 +115,7 @@
                                     <th width="20%">Name</th>
                                     <th width="60%">Short Details</th>
                                     <th class="text-center" width="15%">Component</th>
-                                    <th class="text-center" width="10%">Home Show</th>
+                                    <th class="text-center" width="10%">Home Top</th>
                                     <th class="text-center" width="10%">Home Slider</th>
                                     <th class="text-center" width="10%">Status</th>
                                     <th class="text-center" width="10%">Action</th>
@@ -209,7 +209,7 @@
                                     <th width="20%">Name</th>
                                     <th width="60%">Short Details</th>
                                     <th class="text-center" width="15%">Component</th>
-                                    <th class="text-center" width="10%">Home Show</th>
+                                    <th class="text-center" width="10%">Home Top</th>
                                     <th class="text-center" width="10%">Home Slider</th>
                                     <th class="text-center" width="10%">Status</th>
                                     <th class="text-center" width="10%">Action</th>
@@ -249,10 +249,10 @@
                                     
                                     <td class="text-center">
 
-                                        @if($bs->in_home_slider == 1)
-                                        <a href="{{$bs->id}}" class="btn btn-sm btn-success package_home_slider">Yes</a>
+                                        @if($o->in_home_slider == 1)
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-success package_home_slider">Yes</a>
                                         @else
-                                        <a href="{{$bs->id}}" class="btn btn-sm btn-dark package_home_slider">No</a>
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-dark package_home_slider">No</a>
                                         @endif
 
                                     </td>

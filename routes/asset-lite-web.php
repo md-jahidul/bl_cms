@@ -334,6 +334,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('business-internet-excel', 'AssetLite\BusinessInternetController@uploadInternetExcel')
             ->name('business.internet.excel.save');
     Route::get('business-internet-status-change/{pakcageId}', 'AssetLite\BusinessInternetController@packageStatusChange');
+    Route::get('business-internet-home-show/{pakcageId}', 'AssetLite\BusinessInternetController@packageHomeShow');
     Route::get('delete-business-internet-package/{pakcageId?}', 'AssetLite\BusinessInternetController@deletePackage');
 
     //Category B. Solution, IOT & Others

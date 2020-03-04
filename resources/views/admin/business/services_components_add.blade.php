@@ -71,13 +71,19 @@
                                 <input type="file" class="dropify_package com_pt_photo" required name="" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
+                                <label for="Banner Photo">Alt Text <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control com_pt_alt_text" required name="">
+
                             </div>
 
                         </div>
                         <div class="col-md-4 col-xs-12">
                             <div class="form-group">
-                                <label for="Package Name"> Text <span class="text-danger">*</span></label>
-                                <textarea type="text" name="" class="form-control com_pt_text"></textarea>
+                                <label for="Package Name"> Text (EN) <span class="text-danger">*</span></label>
+                                <textarea type="text" name="" class="form-control com_pt_text_en"></textarea>
+
+                                <label for="Package Name"> Text (BN) <span class="text-danger">*</span></label>
+                                <textarea type="text" name="" class="form-control com_pt_text_bn"></textarea>
                             </div>
                         </div>
                         <div class="col-md-4 col-xs-12">
@@ -295,7 +301,7 @@
                                 <img src="{{asset('app-assets/images/business/package_two_demo.png')}}" width="100%">
                             </div>
 
-                           
+
 
                         </div>
 
@@ -661,8 +667,14 @@ if (Session::has('error')) {
             var photoName = "com_pt_photo[" + position + "]";
             $(html).find('.com_pt_photo').attr('name', photoName);
 
-            var textName = "com_pt_text[" + position + "]";
-            $(html).find('.com_pt_text').attr('name', textName);
+            var altText = "com_pt_alt_text[" + position + "]";
+            $(html).find('.com_pt_alt_text').attr('name', altText);
+
+            var textNameEn = "com_pt_text_en[" + position + "]";
+            $(html).find('.com_pt_text_en').attr('name', textNameEn);
+
+            var textNameBn = "com_pt_text_bn[" + position + "]";
+            $(html).find('.com_pt_text_bn').attr('name', textNameBn);
         }
 
         //package comrarison one position
@@ -716,7 +728,7 @@ if (Session::has('error')) {
 
             var ptTitle = "com_price_title[" + position + "]";
             $(html).find('.com_price_title').attr('name', ptTitle);
-            
+
             var ptHead = "com_price_head[" + position + "][]";
             $(html).find('.com_price_head').attr('name', ptHead);
 
@@ -730,9 +742,9 @@ if (Session::has('error')) {
             $(html).find('.com_price_column_three').attr('name', ptPrice3);
 
         }
-        
-        
-        
+
+
+
 
 
         //video component position
@@ -742,30 +754,30 @@ if (Session::has('error')) {
 
             var vidEmbed = "com_vid_embed[" + position + "]";
             $(html).find('.com_vid_embed').attr('name', vidEmbed);
-            
+
             var vidTitle = "com_vid_title[" + position + "]";
             $(html).find('.com_vid_title').attr('name', vidTitle);
-            
+
             var vidDescription = "com_vid_description[" + position + "]";
             $(html).find('.com_vid_description').attr('name', vidDescription);
         }
-        
+
 
         //photo component position
         if (component == 'photo_component') {
             var photoOne = "com_photo_one[" + position + "]";
             $(html).find('.com_photo_one').attr('name', photoOne);
-            
+
             var photoTwo = "com_photo_two[" + position + "]";
             $(html).find('.com_photo_two').attr('name', photoTwo);
-            
+
             var photoThree = "com_photo_three[" + position + "]";
             $(html).find('.com_photo_three').attr('name', photoThree);
-            
+
             var photoFour = "com_photo_four[" + position + "]";
             $(html).find('.com_photo_four').attr('name', photoFour);
 
-          
+
         }
 
 
