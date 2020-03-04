@@ -33,7 +33,7 @@
                             @php  if($manage->is_active == 1) {
                                     $status = "Active";
                                    } else{
-                                      $status = "InActive";
+                                      $status = "Inactive";
                                    }
 
                             @endphp
