@@ -175,8 +175,11 @@ class BusinessOthersService {
             $this->_savePackageTwo($p2Title, $p2Name, $p2Data, $p2Days, $p2Price, $srvsId, $oldComponents);
 
             //save package features
-            $features = $request->com_ft_text;
-            $this->_saveServiceFeature($features, $srvsId, $oldComponents);
+            $ftTitleEn = $request->com_ft_title_en;
+            $ftTitleBn = $request->com_ft_title_bn;
+            $featureEn = $request->com_ft_text_en;
+            $featureBn = $request->com_ft_text_bn;
+            $this->_saveServiceFeature($ftTitleEn, $ftTitleBn, $featureEn, $featureBn, $srvsId, $oldComponents);
 
             //save product price table data
             $ptTitle = $request->com_price_title;
@@ -254,10 +257,10 @@ class BusinessOthersService {
     }
 
     //save service features
-    private function _saveServiceFeature($features, $srvsId, $oldComponents) {
-        if (!empty($features)) {
-            foreach ($features as $position => $ft) {
-                $this->featureRepo->saveComponent($position, $ft, $srvsId, $oldComponents);
+    private function _saveServiceFeature($ftTitleEn, $ftTitleBn, $featureEn, $featureBn, $srvsId, $oldComponents) {
+        if (!empty($ftTitleEn)) {
+            foreach ($ftTitleEn as $position => $val) {
+                $this->featureRepo->saveComponent($position, $ftTitleEn, $ftTitleBn, $featureEn, $featureBn, $srvsId, $oldComponents);
             }
         }
     }
@@ -344,7 +347,7 @@ class BusinessOthersService {
         foreach ($features as $v) {
             $components[$v->position]['type'] = 'Product Features';
             $components[$v->position]['id'] = $v->id;
-            $components[$v->position]['text'] = $v->feature_text;
+            $components[$v->position]['text'] = $v->title_bn;
             $components[$v->position]['photo_url'] = "";
         }
 

@@ -2,11 +2,11 @@
 @section('title', 'Create Business Service Components')
 @section('card_name', 'Add Components')
 @section('breadcrumb')
-<li class="breadcrumb-item active"> <a href="{{ url('business-other-services') }}"> Service List</a></li>
+<li class="breadcrumb-item active"> <a href="{{ url('business-others-components-list/'.$serviceId) }}"> Service Details</a></li>
 <li class="breadcrumb-item active"> Add Components</li>
 @endsection
 @section('action')
-<a href="{{ url('business-other-services') }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
+<a href="{{ url('business-others-components-list/'.$serviceId) }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
 @endsection
 @section('content')
 <section>
@@ -321,13 +321,28 @@
 
                     <div class="row">
 
-                        <div class="col-md-6 col-xs-12">
+                        <div class="col-md-5 col-xs-12">
                             <div class="form-group">
-                                <label for=""> Features <span class="text-danger">*</span></label>
-                                <textarea type="text" name="" class="form-control com_ft_text textarea_details"></textarea>
+                                <label for=""> Title (EN) <span class="text-danger">*</span></label>
+                                <input type="text" name="" class="form-control com_ft_title_en">
+                            </div>
+                            <div class="form-group">
+                                <label for=""> Features (EN) <span class="text-danger">*</span></label>
+                                <textarea type="text" name="" class="form-control com_ft_text_en textarea_details"></textarea>
                             </div>
                         </div>
-                        <div class="col-md-4 col-xs-12">
+                        
+                        <div class="col-md-5 col-xs-12">
+                            <div class="form-group">
+                               <label for=""> Title (BN) <span class="text-danger">*</span></label>
+                                <input type="text" name="" class="form-control com_ft_title_bn">
+                            </div>
+                            <div class="form-group">
+                                <label for=""> Features (BN) <span class="text-danger">*</span></label>
+                                <textarea type="text" name="" class="form-control com_ft_text_bn textarea_details"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-xs-12">
                             <div class="form-group">
                                 <label>Sample </label>
                                 <img src="{{asset('app-assets/images/business/product_features_demo.png')}}" width="100%">
@@ -716,8 +731,17 @@ if (Session::has('error')) {
         //component feature position
         if (component == 'product_features') {
 
-            var ftText = "com_ft_text[" + position + "]";
-            $(html).find('.com_ft_text').attr('name', ftText);
+            var titleEn = "com_ft_title_en[" + position + "]";
+            $(html).find('.com_ft_title_en').attr('name', titleEn);
+            
+            var titleBn = "com_ft_title_bn[" + position + "]";
+            $(html).find('.com_ft_title_bn').attr('name', titleBn);
+            
+            var ftTextEn = "com_ft_text_en[" + position + "]";
+            $(html).find('.com_ft_text_en').attr('name', ftTextEn);
+            
+            var ftTextBn = "com_ft_text_bn[" + position + "]";
+            $(html).find('.com_ft_text_bn').attr('name', ftTextBn);
 
         }
 
