@@ -68,14 +68,22 @@ class AppServiceProductDetailsService
         if( isset($sections_saved_data->id) && !empty($sections_saved_data->id) ){
             # Save Component data                     
             $component_data = $data['component'];
-            $component_data['section_details_id'] = $sections_saved_data->id;
-            $component_data['page_type'] = self::PAGE_TYPE;   
 
-            if (request()->hasFile('component.image_url')) {
-                $component_data['image'] = $this->upload($data['component']['image_url'], 'assetlite/images/app-service/product-details');
+            if( !empty($component_data) && count($component_data) > 0 ){
+                foreach ($component_data as $key => $value) {
+
+                    $value['section_details_id'] = $sections_saved_data->id;
+                    $value['page_type'] = self::PAGE_TYPE;
+
+                    if (request()->hasFile('component.'.$key.'.image_url')) {
+                        $value['image'] = $this->upload($data['component'][$key]['image_url'], 'assetlite/images/app-service/product-details');
+                    }
+
+                    $this->componentRepository->save($value);
+                }
             }
 
-            $this->componentRepository->save($component_data);
+            
 
             return new Response('App Service details section component added successfully');
         }
@@ -85,6 +93,24 @@ class AppServiceProductDetailsService
         
 
         
+    }
+
+    /**
+     * [updateAppServiceDetailsComponent description]
+     * @param  [type] $data        [description]
+     * @param  [type] $compoent_id [description]
+     * @return [type]              [description]
+     */
+    public function updateAppServiceDetailsComponent($data, $compoent_id){
+
+        $component = $this->componentRepository->findOne($compoent_id);
+        
+        if( isset($data['image_url']) && !empty($data['image_url']) ){
+            $data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product-details');
+        }
+
+        $component->update($data);
+
     }
 
 
@@ -139,4 +165,53 @@ class AppServiceProductDetailsService
         }
         return Response('App Service Section Update Successfully');
     }
+
+
+    /**
+     * [getJsonSectionComponentList description]
+     * @param  [type] $product_id [description]
+     * @return [type]             [description]
+     */
+    public function getJsonSectionComponentList($section_id){
+
+        $results = [];
+
+        $section_list_component = $this->appServiceProductDetailsRepository->findOne($section_id, 'sectionComponent');
+
+        $results['sections'] = $section_list_component;
+
+        if( !empty($section_list_component->sectionComponent) && count($section_list_component->sectionComponent) > 0 ){
+            foreach ($section_list_component->sectionComponent as $value) {
+               $results['component'][] = $value;
+
+               # get component type
+               $results['primary_component_type'] = $value->component_type;
+            }
+        }
+        
+
+       return $results;
+
+    }
+
+    /**
+     * [getSectionComponentByID description]
+     * @param  [type] $section_id [description]
+     * @return [type]             [description]
+     */
+    public function getSectionComponentByID($section_id){
+
+        return $this->appServiceProductDetailsRepository->findOne($section_id, 'sectionComponent');
+
+    }
+
+    /**
+     * [tableSortable description]
+     * @return [type] [description]
+     */
+    public function tableSortable($data){
+        $this->appServiceProductDetailsRepository->sectionsTableSort($data);
+        return new Response('update successfully');
+    }
+
 }

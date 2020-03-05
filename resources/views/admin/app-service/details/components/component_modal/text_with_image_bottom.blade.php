@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="text_with_image_right" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="text_with_image_bottom" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal_xl_custom " role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -13,10 +13,10 @@
               <div class="modal-body">
                 <div class="row">
 
-                		{{ Form::hidden('sections[section_name]', 'Text with Image Right' ) }}
+                		{{ Form::hidden('sections[section_name]', 'Text with Image Bottom' ) }}
                 		{{ Form::hidden('sections[tab_type]', $tab_type ) }}
                 		{{ Form::hidden('sections[category]', 'component_sections' ) }}
-                		{{ Form::hidden('component[0][component_type]', 'text_with_image_right' ) }}
+                		{{ Form::hidden('component[0][component_type]', 'text_with_image_bottom' ) }}
 
 
 							<div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
@@ -43,6 +43,23 @@
 							         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
 							     @endif
 							 </div>
+
+
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="exampleInputPassword1">Description (English)</label>
+                              <textarea name="component[0][description_en]" class="form-control" rows="5"
+                                        placeholder="Enter description">{{ isset($ecarrer_item->description_en) ? $ecarrer_item->description_en : '' }}</textarea>
+                          </div>
+                      </div>
+
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="exampleInputPassword1">Description (Bangla)</label>
+                              <textarea name="component[0][description_bn]" class="form-control" rows="5"
+                                        placeholder="Enter description">{{ isset($ecarrer_item->description_bn) ? $ecarrer_item->description_bn : '' }}</textarea>
+                          </div>
+                      </div>
 
 
 							<div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
@@ -72,6 +89,9 @@
 							        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
 							    @endif
 							</div>
+
+
+                     
 
 
                     {{-- <div class="form-group col-md-6 {{ $errors->has('section_name') ? ' error' : '' }}">

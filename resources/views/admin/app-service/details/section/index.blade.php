@@ -52,7 +52,7 @@ function matchRelatedProduct($id, $roles)
                         <div class="col-sm-4"></div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="category_type"><strong>Preview</strong></label>
+                                <label for="category_type">Component Preview</label>
                                 <div id="component_preview" class="component_preview" style="max-width: 400px;min-height: 200px;">
                                     <img id="component_preview_img" class="img-fluid" style="border: 1px solid #eee;" src="{{asset('app-assets/images/app_services/text_with_image_right.png')}}" alt="">
                                 </div>
@@ -62,40 +62,58 @@ function matchRelatedProduct($id, $roles)
                 </div>
             </div>
         </div>
+        
 
+        
 
         <!-- # Section list with component card -->
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>Section List</strong></h4>
-                    <table class="table table-striped table-bordered zero-configuration">
+                    <h4 class="pb-1"><strong>Section Component List</strong></h4>
+                    <table class="table table-striped table-bordered"
+                           role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                             <tr>
                                 <td width="3%">#</td>
-                                <th width="20%">Section Name</th>
-                                <th width="5%">Tab</th>
+                                <th width="20%">Component Name</th>
+                                <th width="15%">Preview</th>
+                                {{-- <th width="5%">Section Title</th> --}}
                                 {{-- <th>Category</th> --}}
-                                <th class="text-center" width="8%">Components</th>
+                                <th width="12%" class="">Status</th>
                                 <th width="12%" class="">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable">
 {{--                            @if( !empty($section_list) )--}}
                                 @foreach($section_list['section_body'] as $list)
 
                                         @php $path = 'partner-offers-home'; @endphp
-                                        {{-- <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}"> --}}
-                                        <tr>
+                                        {{-- <tr> --}}
+                                        <tr data-index="{{ $list->id }}" data-position="{{ $list->section_order }}">
                                             <td>{{ $loop->iteration }}</td>
+
                                             <td>{{ $list->section_name }} {!! $list->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
-                                            <td>{{ $list->tab_type }}</td>
-                                            <td class="text-center">
-                                                 <a href="{{ route( "appservice.component.list", ['type' => $tab_type, 'id' => $list->id] ) }}" class="btn-sm btn-outline-warning border">component</a>
+
+                                            <td>
+                                                @if( isset($list->sectionComponent[0]->component_type) )
+                                                <div class="component_preview" style="max-width: 400px;">
+                                                <img class="img-fluid" style="border: 1px solid #eee;" src="{{asset('app-assets/images/app_services/'.$list->sectionComponent[0]->component_type.'.png')}}" alt="">
+                                                </div>
+                                                @endif
                                             </td>
 
                                             <td>
-                                                <a href="{{ route("app_service.details.edit", [$tab_type, $product_id, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0">
+                                                @if( $list->status == 1 )
+                                                    Active
+                                                @else
+                                                    Inactive
+                                                @endif
+                                                 {{-- <a href="{{ route( "appservice.component.list", ['type' => $tab_type, 'id' => $list->id] ) }}" class="btn-sm btn-outline-warning border">component</a> --}}
+                                            </td>
+
+                                            <td>
+                                                <a href="{{ route("app_service.details.edit", [$tab_type, $product_id, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0 section_component_edit">
                                                     <i class="la la-pencil" aria-hidden="true"></i></a>
                                                 {{-- <a href="#" remove="{{ url("offers/$list->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
                                                     <i class="la la-trash"></i>
@@ -111,7 +129,8 @@ function matchRelatedProduct($id, $roles)
         </div>
 
     </section>
-
+   
+   <!-- Fixed sections -->
     <section>
         <div class="card">
             <div class="card-content collapse show">
@@ -202,6 +221,9 @@ function matchRelatedProduct($id, $roles)
 
     <!-- # Component modal -->
     @include('admin.app-service.details.components.component_modal.text_with_image_right')
+    @include('admin.app-service.details.components.component_modal.text_with_image_bottom')
+    @include('admin.app-service.details.components.component_modal.video_with_text_right')
+    @include('admin.app-service.details.components.component_modal.pricing_mutiple_table')
 
 
     <!-- Modal -->
@@ -292,12 +314,14 @@ function matchRelatedProduct($id, $roles)
 
 @stop
 
+
 @push('page-css')
-{{--    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">--}}
+    {{-- <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
     <style>
         #sortable tr td{
-            padding-top: 5px !important;
-            padding-bottom: 5px !important;
+            padding-top: 15px !important;
+            padding-bottom: 15px !important;
         }
 
         form .select-role.validate input:focus, form .select-role.issue input:focus, form .select-role.validate input{
@@ -314,8 +338,10 @@ function matchRelatedProduct($id, $roles)
 @push('page-js')
 
 <script type="text/javascript">
-    jQuery(document).ready(function($){
+    
+    var auto_save_url = "{{ url('app-service-sections-sortable') }}";
 
+    jQuery(document).ready(function($){
         // Preview changes on component selection
         $('#component_type').on('change', function(){
 
@@ -328,16 +354,107 @@ function matchRelatedProduct($id, $roles)
         });
 
 
+    }); // Doc ready
 
 
-        $('input.section_name').on('keyup', function(){
-            var sectionName = $('#product_details_form').find('.section_name').val();
-            var sectionNameLower = sectionName.toLowerCase();
-            var sectionNameRemoveSpace = sectionNameLower.replace(/\s+/g, '-');
-            $('#product_details_form').find('.auto_slug').empty().val(sectionNameRemoveSpace);
-            // console.log(sectionName);
+
+
+    // Edit section components
+    $('.section_component_edit').on('click', function(e){
+        e.preventDefault();
+
+        var editUrl = $(this).attr('href');
+
+        console.log(editUrl);
+
+        $.ajax({
+            url: editUrl,
+            cache: false,
+            type: "GET",
+            success: function (result) {
+
+                // console.log(result);
+
+                if( result.status == 'SUCCESS' ){
+                     var $parentSelector = $('#text_with_image_right');
+                     var baseUrl = "{{ config('filesystems.file_base_url') }}";
+
+                     $parentSelector.find('#form_save').hide();
+                     $parentSelector.find('#form_update').show();
+
+
+                    $('#text_with_image_right').modal('show');
+
+                    // Set all sections
+                    // $.each(result.data.sections, function(k, v){
+
+                    //     if( k == 'status' ){     
+
+                    //        // $parentSelector.find("").val();
+
+
+                    //         // $('#text_with_image_right').find("input[name='component[title_en]']").val(v);
+                    //     }
+                        
+                    // });
+
+                    // Add section id
+                    $('#section_id').val(result.data.sections.id);
+
+                    $("input[name='sections[status]']").each(function(sk, sv){
+                       // console.log($(sv).val());
+                       if( $(sv).val() == result.data.sections.status ){
+                           $(sv).attr('checked', true);
+                       }
+
+                    });
+
+
+                    // Compoent foreach
+                    $.each(result.data.component, function(cpk, cpv){
+
+                        $.each(cpv, function(ck, cv){
+
+                           if( ck == 'title_en' ){                            
+                             $parentSelector.find("input[name='component["+cpk+"][title_en]']").val(cv);
+                           }
+
+                           if( ck == 'title_bn' ){                            
+                             $parentSelector.find("input[name='component["+cpk+"][title_bn]']").val(cv);
+                           }
+
+                           if( ck == 'alt_text' ){                            
+                             $parentSelector.find("input[name='component["+cpk+"][alt_text]']").val(cv);
+                           }
+
+
+                           if( ck == 'image' ){
+                             $parentSelector.find('.imgDisplay').attr('src', baseUrl + cv).show();
+                           }
+
+                           if( ck == 'id' ){
+                              $parentSelector.find("input[name='component["+cpk+"][id]']").val(cv);
+                           }
+
+                        });
+
+                    });
+
+
+                }
+
+
+            },
+            error: function (data) {
+                swal.fire({
+                    title: 'Status change process failed!',
+                    type: 'error',
+                });
+            }
         });
+
     });
+
 </script>
 
 @endpush
