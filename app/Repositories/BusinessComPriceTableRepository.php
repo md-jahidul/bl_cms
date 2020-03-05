@@ -13,77 +13,89 @@ class BusinessComPriceTableRepository extends BaseRepository {
 
     public $modelName = BusinessComPriceTable::class;
 
-    public function saveComponent($position, $title, $head, $colOne, $colTwo, $colThree, $srvsId, $oldComponents) {
+    public function saveComponent($position, $tableData, $srvsId, $oldComponents) {
+
+
         $data = [];
 
-        $headJson = json_encode($head);
+        $titleEn = $tableData['ptTitleEn'];
+        $titleBn = $tableData['ptTitleBn'];
+        
+        $headJsonEn = json_encode($tableData['ptHeadEn']);
+        $headJsonBn = json_encode($tableData['ptHeadBn']);
 
-        $bodyOne = $colOne;
-        $bodyTwo = $colTwo;
-        $bodyThree = $colThree;
-        $body = array(
-            0 => $bodyOne, 1 => $bodyTwo, 2 => $bodyThree
+        $bodyEn = array(
+            0 => $tableData['ptColOneEn'], 1 => $tableData['ptColTwoEn'], 2 => $tableData['ptColThreeEn']
         );
-        $bodyJson = json_encode($body);
+        $bodyJsonEn = json_encode($bodyEn);
+        
+        $bodyBn = array(
+            0 => $tableData['ptColOneBn'], 1 => $tableData['ptColTwoBn'], 2 => $tableData['ptColThreeBn']
+        );
+        $bodyJsonBn = json_encode($bodyBn);
+        
 
         $data[] = array(
-            'title' => $title,
-            'table_head' => $headJson,
-            'table_body' => $bodyJson,
+            'title' => $titleEn,
+            'title_bn' => $titleBn,
+            'table_head' => $headJsonEn,
+            'table_head_bn' => $headJsonBn,
+            'table_body' => $bodyJsonEn,
+            'table_body_bn' => $bodyJsonBn,
             'position' => $position + $oldComponents,
             'service_id' => $srvsId,
         );
 
         $this->model->insert($data);
     }
-    
-     public function getComponent($serviceId) {
+
+    public function getComponent($serviceId) {
         $component = $this->model->where('service_id', $serviceId)->get();
         return $component;
     }
-    
-     public function deleteComponent($serviceId, $position){
+
+    public function deleteComponent($serviceId, $position) {
         $component = $this->model->where(array('service_id' => $serviceId, 'position' => $position))->delete();
         return $component;
     }
-    
+
     public function singleComponent($serviceId, $position) {
         $component = $this->model->where(array('service_id' => $serviceId, 'position' => $position))->first();
         return $component;
     }
-    
+
     public function updateComponent($request) {
 
         $comId = $request->com_id;
-        
+
         $headEnArray = array(
             0 => $request->head_one_en,
             1 => $request->head_two_en,
             2 => $request->head_three_en,
         );
         $headEn = json_encode($headEnArray);
-        
+
         $headBnArray = array(
             0 => $request->head_one_bn,
             1 => $request->head_two_bn,
             2 => $request->head_three_bn,
         );
         $headBn = json_encode($headBnArray);
-        
+
         $bodyEnArray = array(
             0 => $request->column_one_en,
             1 => $request->column_two_en,
             2 => $request->column_three_en,
         );
         $bodyEn = json_encode($bodyEnArray);
-        
+
         $bodyBnArray = array(
             0 => $request->column_one_bn,
             1 => $request->column_two_bn,
             2 => $request->column_three_bn,
         );
         $bodyBn = json_encode($bodyBnArray);
-        
+
 
 
         $component = $this->model->where(array('id' => $comId))
@@ -100,8 +112,8 @@ class BusinessComPriceTableRepository extends BaseRepository {
 
         return $component;
     }
-    
-    public function changePosition($comId, $newPosition){
+
+    public function changePosition($comId, $newPosition) {
         $component = $this->model->where(array('id' => $comId))
                 ->update(array('position' => $newPosition));
         return $component;

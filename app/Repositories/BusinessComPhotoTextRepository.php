@@ -13,11 +13,13 @@ class BusinessComPhotoTextRepository extends BaseRepository {
 
     public $modelName = BusinessPhotoText::class;
 
-    public function saveComponent($position, $text, $bannerPath, $serviceId, $oldComponents) {
+    public function saveComponent($position, $textEn,$textBn, $altText, $bannerPath, $serviceId, $oldComponents) {
         $this->model->insert(
                 array(
-                    "text" => $text,
+                    "text" => $textEn,
+                    "text_bn" => $textBn,
                     "photo_url" => $bannerPath,
+                    "alt_text" => $altText,
                     "position" => $position + $oldComponents,
                     "service_id" => $serviceId
                 )
