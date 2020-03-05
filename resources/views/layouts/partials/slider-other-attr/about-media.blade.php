@@ -9,11 +9,8 @@
     @endif
 </div>
 
-
-
-
 <div class="form-group col-md-6 {{ $errors->has('press_release_title_en') ? ' error' : '' }}">
-    <label for="press_release_title_en">Press Release Title (English)</label>
+    <label for="press_release_title_en">Menu - 1 Title (English)</label>
     <input type="text" name="other_attributes[press_release_title_en]"  class="form-control" placeholder="Enter press release link"
            value="{{ (!empty($other_attributes['press_release_title_en'])) ? $other_attributes['press_release_title_en'] : old("other_attributes.press_release_title_en") ?? '' }}">
     <div class="help-block"></div>
@@ -23,7 +20,7 @@
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('press_release_title_bn') ? ' error' : '' }}">
-    <label for="press_release_title_bn">Press Release (Bangla)</label>
+    <label for="press_release_title_bn">Menu - 1 (Bangla)</label>
     <input type="text" name="other_attributes[press_release_title_bn]"  class="form-control" placeholder="Enter press release link"
            value="{{ (!empty($other_attributes['press_release_title_bn'])) ? $other_attributes['press_release_title_bn'] : old("other_attributes.press_release_title_bn") ?? '' }}">
     <div class="help-block"></div>
@@ -33,7 +30,7 @@
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('press_release_link') ? ' error' : '' }}">
-    <label for="press_release_link">Press Release link</label>
+    <label for="press_release_link">Menu - 1 link</label>
     <input type="text" name="other_attributes[press_release_link]"  class="form-control" placeholder="Enter press release link"
            value="{{ (!empty($other_attributes['press_release_link'])) ? $other_attributes['press_release_link'] : old("other_attributes.press_release_link") ?? '' }}">
     <div class="help-block"></div>
@@ -43,7 +40,7 @@
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('news_events_title_en') ? ' error' : '' }}">
-    <label for="news_events_title_en">News & Events Title (English)</label>
+    <label for="news_events_title_en">Menu - 2 Title (English)</label>
     <input type="text" name="other_attributes[news_events_title_en]"  class="form-control" placeholder="Enter news & events link"
            value="{{ (!empty($other_attributes['news_events_title_en'])) ? $other_attributes['news_events_title_en'] : old("other_attributes.news_events_title_en") ?? '' }}">
     <div class="help-block"></div>
@@ -53,7 +50,7 @@
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('news_events_title_bn') ? ' error' : '' }}">
-    <label for="news_events_title_bn">News & Events Title (Bangla)</label>
+    <label for="news_events_title_bn">Menu - 2 Title (Bangla)</label>
     <input type="text" name="other_attributes[news_events_title_bn]"  class="form-control" placeholder="Enter news & events link"
            value="{{ (!empty($other_attributes['news_events_title_bn'])) ? $other_attributes['news_events_title_bn'] : old("other_attributes.news_events_title_bn") ?? '' }}">
     <div class="help-block"></div>
@@ -63,7 +60,7 @@
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('news_events_link') ? ' error' : '' }}">
-    <label for="news_events_link">News & Events link</label>
+    <label for="news_events_link">Menu - 2 link</label>
     <input type="text" name="other_attributes[news_events_link]"  class="form-control" placeholder="Enter news & events link"
            value="{{ (!empty($other_attributes['news_events_link'])) ? $other_attributes['news_events_link'] : old("other_attributes.news_events_link") ?? '' }}">
     <div class="help-block"></div>
@@ -73,7 +70,7 @@
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('tvc_title_en') ? ' error' : '' }}">
-    <label for="tvc_title_en">TVC Title (English)</label>
+    <label for="tvc_title_en">Menu - 3 Title (English)</label>
     <input type="text" name="other_attributes[tvc_title_en]"  class="form-control" placeholder="Enter app store link"
            value="{{ (!empty($other_attributes['tvc_title_en'])) ? $other_attributes['tvc_title_en'] : old("other_attributes.tvc_title_en") ?? '' }}">
     <div class="help-block"></div>
@@ -83,7 +80,7 @@
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('tvc_title_bn') ? ' error' : '' }}">
-    <label for="tvc_title_bn">TVC Title (Bangla)</label>
+    <label for="tvc_title_bn">Menu - 3 Title (Bangla)</label>
     <input type="text" name="other_attributes[tvc_title_bn]"  class="form-control" placeholder="Enter app store link"
            value="{{ (!empty($other_attributes['tvc_title_bn'])) ? $other_attributes['tvc_title_bn'] : old("other_attributes.tvc_title_bn") ?? '' }}">
     <div class="help-block"></div>
@@ -93,7 +90,7 @@
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('tvc_link') ? ' error' : '' }}">
-    <label for="tvc_link">TVC link</label>
+    <label for="tvc_link">Menu - 3 link</label>
     <input type="text" name="other_attributes[tvc_link]"  class="form-control" placeholder="Enter app store link"
            value="{{ (!empty($other_attributes['tvc_link'])) ? $other_attributes['tvc_link'] : old("other_attributes.tvc_link") ?? '' }}">
     <div class="help-block"></div>
