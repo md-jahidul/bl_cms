@@ -174,7 +174,6 @@ class AboutUsController extends Controller
              session()->flash('success', "Updated successfully");
              return redirect(route('about-us.index'));
         }
-
         session()->flash('message', "Failed! Please try again");
     }
 

@@ -51,6 +51,7 @@ class AlSliderImageService
         if (request()->hasFile('mobile_view_img')) {
             $data['mobile_view_img'] = $this->upload($data['mobile_view_img'], 'assetlite/images/slider-images');
         }
+        $data['title_bn'] = "No Title";
         $data['slider_id'] = $sliderId;
         $data['display_order'] = ++$count;
         $this->save($data);
