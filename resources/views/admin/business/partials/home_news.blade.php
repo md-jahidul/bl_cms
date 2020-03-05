@@ -8,10 +8,10 @@
                         <thead>
                             <tr>
                                 <th>Photo</th>
-                                <th width="50%">Title</th>
+                                <th width="20%">Title</th>
                                 <th width="50%">News</th>
-                                <th width="20%">Status</th>
-                                <th width="20%">Action</th>
+                                <th width="10%">Status</th>
+                                <th width="10%">Action</th>
                             </tr>
                         </thead>
                         <tbody class="news_sortable">
@@ -20,7 +20,7 @@
                                 <td>
                                     <i class="icon-cursor-move icons"></i>
                                     @if($n->image_url != "")
-                                    <img src="{{ config('filesystems.file_base_url') . $n->image_url }}" alt="News Photo" height="70px" />
+                                    <img src="{{ config('filesystems.file_base_url') . $n->image_url }}" alt="News Photo" height="35px" />
                                     @endif
                                 </td>
                                 <td>
@@ -106,8 +106,6 @@
                                     <div class="col-md-6 col-xs-12">
                                         <label>Alt Text<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control alt_text" required name="alt_text" placeholder="Alt Text">
-                                        <label>Sliding Speed<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control sliding_speed" required name="sliding_speed">
                                     </div>
 
                                 </div>
@@ -209,7 +207,6 @@
                     $('.home_news_form .title_bn').val(result.title_bn);
                     $('.home_news_form .old_photo').val(result.image_url);
                     $('.home_news_form .alt_text').val(result.alt_text);
-                    $('.home_news_form .sliding_speed').val(result.sliding_speed);
                     $('.news_body').text(result.body);
                     $('.news_body_bn').text(result.body_bn);
 

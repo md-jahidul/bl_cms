@@ -207,7 +207,7 @@
                 <li class="{{ is_active_url('business-other-services') }}">
                     <a class="menu-item" href="{{ route('business.other.services') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-caret-right"></i> B.Solution, IOT & Others</a>
+                            class="la la-caret-right"></i> Enterprise Solution</a>
                 </li>
 
             </ul>

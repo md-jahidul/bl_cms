@@ -43,11 +43,13 @@ class BusinessOthersRepository extends BaseRepository {
         
         $service->name = $request->name_en;
         $service->name_bn = $request->name_bn;
+        $service->home_short_details_en = $request->home_short_details_en;
+        $service->home_short_details_bn = $request->home_short_details_bn;
         
         $service->short_details = $request->short_details_en;
         $service->short_details_bn = $request->short_details_bn;
         
-        $service->offer_details = $request->offer_details_en;
+        $service->offer_details_en = $request->offer_details_en;
         $service->offer_details_bn = $request->offer_details_bn;
         
         $service->type = $request->type;
@@ -176,14 +178,13 @@ class BusinessOthersRepository extends BaseRepository {
         $service->name = $request->name_en;
         $service->name_bn = $request->name_bn;
         
-        if ($request->sliding_speed != "") {
-            $service->sliding_speed = $request->sliding_speed;
-        }
+        $service->home_short_details_en = $request->home_short_details_en;
+        $service->home_short_details_bn = $request->home_short_details_bn;
         
         $service->short_details = $request->short_details_en;
         $service->short_details_bn = $request->short_details_bn;
         
-        $service->offer_details = $request->offer_details_en;
+        $service->offer_details_en = $request->offer_details_en;
         $service->offer_details_bn = $request->offer_details_bn;
         
         $service->type = $request->type;
