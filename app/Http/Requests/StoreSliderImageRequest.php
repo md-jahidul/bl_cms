@@ -29,7 +29,7 @@ class StoreSliderImageRequest extends FormRequest
         $image_upload_type = ConfigController::adminImageUploadType();
 
         return [
-            'title_bn' => 'required',
+            'title_en' => 'required',
             'image_url' => 'mimes:' . $image_upload_type . '|max:' . $image_upload_size,
             'alt_text' => 'required',
             'is_active' => 'required',
