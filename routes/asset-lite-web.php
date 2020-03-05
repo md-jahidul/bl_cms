@@ -293,6 +293,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('business-category-sort-change', 'AssetLite\BusinessGeneralController@categorySortChange')->name('business.category.sort.save');
 
     //sliding speed
+    
     Route::get('business-save-sliding-speed', 'AssetLite\BusinessGeneralController@saveSlidingSpeed')
             ->name('business.sliding.speed.save');
 
