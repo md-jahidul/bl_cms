@@ -194,7 +194,13 @@ class AboutUsController extends Controller
         session()->flash('message', "Failed! Please try again");
     }
 
-
+    /**
+     * @param $parentId
+     * @param $type
+     * @param $id
+     * @return UrlGenerator|string
+     * @throws \Exception
+     */
     public function destroySliderImage($parentId, $type, $id)
     {
         $response = $this->alSliderImageService->deleteSliderImage($id);
