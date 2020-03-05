@@ -82,6 +82,25 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     // About Us  ====================================
     Route::resource('about-us', 'AssetLite\AboutUsController')->except(['show', 'destroy']);
+    Route::get('about-us/slider/{sliderId}/{type}', 'AssetLite\AboutUsController@sliderImageList')
+        ->name('about_image_list');
+
+    Route::get('about-us/slider-image/{sliderId}/{type}/create', 'AssetLite\AboutUsController@createSliderImage')
+        ->name('about_image_create');
+
+    Route::post('about-us/slider-image/{sliderId}/{type}/store', 'AssetLite\AboutUsController@storeSliderImage')
+        ->name('about_image_store');
+
+    Route::get('about-us/slider-image/{sliderId}/{type}/edit/{id}', 'AssetLite\AboutUsController@editSliderImage')
+        ->name('about_image_edit');
+
+    Route::post('about-us/slider-image/{sliderId}/{type}/update/{id}', 'AssetLite\AboutUsController@updateSliderImage')
+        ->name('about_image_update');
+
+    Route::get('about-us/slider-image/{sliderId}/{type}/destroy/{id}', 'AssetLite\AboutUsController@destroySliderImage')
+        ->name('about_image_destroy');
+
+
     Route::get('about-us/destroy/{id}', 'AssetLite\AboutUsController@destroy');
 
     Route::get('about-slider/', 'AssetLite\AboutUsController@aboutSlider');
