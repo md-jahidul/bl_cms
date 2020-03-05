@@ -13,13 +13,29 @@ class BusinessComVideoRepository extends BaseRepository {
 
     public $modelName = BusinessComVideo::class;
 
-    public function saveComponent($position, $name, $title, $embed, $description, $serviceId, $oldComponents) {
+    public function saveComponent($position, $vData, $serviceId, $oldComponents) {
+
+        $data['videoNameEn'] = $vData['videoNameEn'];
+        $data['videoNameBn'] = $vData['videoNameBn'];
+
+        $data['videoTitleEn'] = $vData['videoTitleEn'];
+        $data['videoTitleBn'] = $vData['videoTitleBn'];
+
+        $data['videoEmbed'] = $vData['videoEmbed'];
+
+        $data['videoDesEn'] = $vData['videoDesEn'];
+        $data['videoDesBn'] = $vData['videoDesBn'];
+        
+
         $this->model->insert(
                 array(
-                    "name" => $name,
-                    "title" => $title,
-                    "embed_code" => $embed,
-                    "description" => $description,
+                    "name" => $data['videoNameEn'],
+                    "name_bn" => $data['videoNameBn'],
+                    "title" => $data['videoTitleEn'],
+                    "title_bn" => $data['videoTitleBn'],
+                    "embed_code" => $data['videoEmbed'],
+                    "description" => $data['videoDesEn'],
+                    "description_bn" => $data['videoDesBn'],
                     "position" => $position + $oldComponents,
                     "service_id" => $serviceId
                 )

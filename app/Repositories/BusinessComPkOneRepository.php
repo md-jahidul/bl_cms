@@ -14,13 +14,16 @@ class BusinessComPkOneRepository extends BaseRepository {
 
     public $modelName = BusinessComPackageOne::class;
 
-    public function saveComponent($position, $head, $ftText, $price, $srvsId, $oldComponents) {
+    public function saveComponent($position, $hEn, $hBn, $tEn, $tBn, $pEn, $pBn, $srvsId, $oldComponents) {
         $data = [];
-        foreach ($head as $k => $v) {
+        foreach ($hEn as $k => $v) {
             $data[] = array(
                 'table_head' => $v,
-                'feature_text' => $ftText[$k],
-                'price' => $price[$k],
+                'table_head_bn' => $hBn[$k],
+                'feature_text' => $tEn[$k],
+                'feature_text_bn' => $tBn[$k],
+                'price' => $pEn[$k],
+                'price_bn' => $pBn[$k],
                 'position' => $position + $oldComponents,
                 'service_id' => $srvsId,
             );

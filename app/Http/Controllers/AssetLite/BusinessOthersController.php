@@ -64,6 +64,8 @@ class BusinessOthersController extends Controller {
 
         $response = $this->othersService->saveService($request);
         
+        dd($response);
+        
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Service is saved!');
         } else {
@@ -106,13 +108,15 @@ class BusinessOthersController extends Controller {
      * @Bulbul Mahmud Nito || 19/02/2020
      */
     public function saveComponents(Request $request) {
-
+        
 //        print_r($request->all());die();
 
 
         $components = $this->othersService->getComponents($request->service_id);
         $oldComponents = count($components);
         $response = $this->othersService->saveComponents($request, $oldComponents);
+        
+//        dd($response);die();
 
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Service components is saved!');

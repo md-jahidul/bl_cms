@@ -19,7 +19,6 @@
                             <thead>
                                 <tr>
                                     <th width="20%">Name</th>
-                                    <th width="60%">Short Details</th>
                                     <th class="text-center" width="15%">Component</th>
                                     <th class="text-center" width="10%">Home Top</th>
                                     <th class="text-center" width="10%">Home Slider</th>
@@ -40,9 +39,7 @@
 
                                     </td>
 
-                                    <td>
-                                        {{$bs->short_details}}
-                                    </td>
+                                    
                                     <td class="text-center">
                                         <a href="{{ url('business-others-components-list/'.$bs->id) }}" class="btn btn-sm btn-success">View</a>
                                         <a href="{{ url('business-others-components/'.$bs->id) }}" class="btn btn-sm btn-info">Add</a>
@@ -113,7 +110,6 @@
                             <thead>
                                 <tr>
                                     <th width="20%">Name</th>
-                                    <th width="60%">Short Details</th>
                                     <th class="text-center" width="15%">Component</th>
                                     <th class="text-center" width="10%">Home Top</th>
                                     <th class="text-center" width="10%">Home Slider</th>
@@ -134,9 +130,7 @@
 
                                     </td>
 
-                                    <td>
-                                        {{$i->short_details}}
-                                    </td>
+                                   
                                     <td class="text-center">
                                         <a href="{{ url('business-others-components-list/'.$i->id) }}" class="btn btn-sm btn-success">View</a>
                                         <a href="{{ url('business-others-components/'.$i->id) }}" class="btn btn-sm btn-info">Add</a>
@@ -154,10 +148,10 @@
                                     
                                     <td class="text-center">
 
-                                        @if($bs->in_home_slider == 1)
-                                        <a href="{{$bs->id}}" class="btn btn-sm btn-success package_home_slider">Yes</a>
+                                        @if($i->in_home_slider == 1)
+                                        <a href="{{$i->id}}" class="btn btn-sm btn-success package_home_slider">Yes</a>
                                         @else
-                                        <a href="{{$bs->id}}" class="btn btn-sm btn-dark package_home_slider">No</a>
+                                        <a href="{{$i->id}}" class="btn btn-sm btn-dark package_home_slider">No</a>
                                         @endif
 
                                     </td>
@@ -207,7 +201,6 @@
                             <thead>
                                 <tr>
                                     <th width="20%">Name</th>
-                                    <th width="60%">Short Details</th>
                                     <th class="text-center" width="15%">Component</th>
                                     <th class="text-center" width="10%">Home Top</th>
                                     <th class="text-center" width="10%">Home Slider</th>
@@ -228,9 +221,7 @@
 
                                     </td>
 
-                                    <td>
-                                        {{$o->short_details}}
-                                    </td>
+                                   
                                     <td class="text-center">
                                         <a href="{{ url('business-others-components-list/'.$o->id) }}" class="btn btn-sm btn-success">View</a>
                                         <a href="{{ url('business-others-components/'.$o->id) }}" class="btn btn-sm btn-info">Add</a>

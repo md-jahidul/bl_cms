@@ -52,15 +52,6 @@
 
                             </div>
 
-                            <div class="form-group">
-                                <label for="Banner Photo">Sliding Speed (Seconds)</label>
-
-                                <input type="text" class="form-control" name="sliding_speed" value="1">
-
-                            </div>
-
-
-
 
                         </div>
                         <div class="col-md-4 col-xs-12">

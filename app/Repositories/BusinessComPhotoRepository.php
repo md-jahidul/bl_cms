@@ -13,35 +13,40 @@ class BusinessComPhotoRepository extends BaseRepository {
 
     public $modelName = BusinessComPhoto::class;
 
-    public function saveComponent($position, $onePath, $twoPath, $threePath, $fourPath, $serviceId, $oldComponents) {
+    public function saveComponent($position, $data, $serviceId, $oldComponents) {
+
         $this->model->insert(
                 array(
-                    "photo_one" => $onePath,
-                    "photo_two" => $twoPath,
-                    "photo_three" => $threePath,
-                    "photo_four" => $fourPath,
+                    "photo_one" => $data['onePath'],
+                    "alt_text_one" => $data['altOne'],
+                    "photo_two" => $data['twoPath'],
+                    "alt_text_two" => $data['altTwo'],
+                    "photo_three" => $data['threePath'],
+                    "alt_text_three" => $data['altThree'],
+                    "photo_four" => $data['fourPath'],
+                    "alt_text_four" => $data['altFour'],
                     "position" => $position + $oldComponents,
                     "service_id" => $serviceId
                 )
         );
     }
-    
+
     public function getComponent($serviceId) {
         $component = $this->model->where('service_id', $serviceId)->get();
         return $component;
     }
-    
-     public function deleteComponent($serviceId, $position){
+
+    public function deleteComponent($serviceId, $position) {
         $component = $this->model->where(array('service_id' => $serviceId, 'position' => $position))->delete();
         return $component;
     }
-    
+
     public function singleComponent($serviceId, $position) {
         $component = $this->model->where(array('service_id' => $serviceId, 'position' => $position))->first();
         return $component;
     }
-    
-    public function updateComponent($onePath, $twoPath, $threePath, $fourPath, $request){
+
+    public function updateComponent($onePath, $twoPath, $threePath, $fourPath, $request) {
 
         $comId = $request->com_id;
 
@@ -62,8 +67,8 @@ class BusinessComPhotoRepository extends BaseRepository {
 
         return $component;
     }
-    
-    public function changePosition($comId, $newPosition){
+
+    public function changePosition($comId, $newPosition) {
         $component = $this->model->where(array('id' => $comId))
                 ->update(array('position' => $newPosition));
         return $component;

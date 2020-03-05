@@ -44,10 +44,6 @@ class BusinessOthersRepository extends BaseRepository {
         $service->name = $request->name_en;
         $service->name_bn = $request->name_bn;
         
-        if ($request->sliding_speed != "") {
-            $service->sliding_speed = $request->sliding_speed;
-        }
-        
         $service->short_details = $request->short_details_en;
         $service->short_details_bn = $request->short_details_bn;
         

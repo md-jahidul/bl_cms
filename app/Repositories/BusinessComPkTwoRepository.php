@@ -14,15 +14,20 @@ class BusinessComPkTwoRepository extends BaseRepository {
 
     public $modelName = BusinessComPackageTwo::class;
 
-    public function saveComponent($position, $title, $name, $data, $days, $price, $srvsId, $oldComponents) {
+    public function saveComponent($position, $p2data, $srvsId, $oldComponents) {
         $insertData = [];
-        foreach ($title as $k => $v) {
+        foreach ($p2data['p2TitleEn'] as $k => $v) {
             $insertData[] = array(
-                'title' => $v,
-                'package_name' => $name[$k],
-                'data_limit' => $data[$k],
-                'package_days' => $days[$k],
-                'price' => $price[$k],
+                'title' => $p2data['p2TitleEn'][$k],
+                'title_bn' => $p2data['p2TitleBn'][$k],
+                'package_name' => $p2data['p2NameEn'][$k],
+                'package_name_bn' => $p2data['p2NameBn'][$k],
+                'data_limit' => $p2data['p2DataEn'][$k],
+                'data_limit_bn' => $p2data['p2DataBn'][$k],
+                'package_days' => $p2data['p2DaysEn'][$k],
+                'package_days_bn' => $p2data['p2DaysBn'][$k],
+                'price' => $p2data['p2PriceEn'][$k],
+                'price_bn' => $p2data['p2PriceBn'][$k],
                 'position' => $position + $oldComponents,
                 'service_id' => $srvsId,
             );
