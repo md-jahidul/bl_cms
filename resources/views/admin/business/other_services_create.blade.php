@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Create Business Service')
-@section('card_name', 'Create B. Solution, IOT & Others')
+@section('title', 'Create Business Enterprise Service')
+@section('card_name', 'Enterprise Solution')
 @section('breadcrumb')
 <li class="breadcrumb-item active"> <a href="{{ url('business-other-services') }}"> Service List</a></li>
 <li class="breadcrumb-item active"> Create</li>
@@ -63,6 +63,18 @@
 
                             </div>
 
+                            <div class="form-group">
+
+                                <label for="Short Details">Home Short Details (EN)</label>
+                                <textarea type="text" name="home_short_details_en" class="form-control"></textarea>
+
+                                <br>
+
+                                <label for="Short Details">Home Short Details (BN)</label>
+                                <textarea type="text" name="home_short_details_bn" class="form-control"></textarea>
+
+                            </div>
+                            
                             <div class="form-group">
 
                                 <label for="Short Details">Short Details (EN)<span class="text-danger">*</span></label>

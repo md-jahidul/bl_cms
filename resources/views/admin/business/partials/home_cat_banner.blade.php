@@ -44,6 +44,37 @@
                             @endforeach
                         </tbody>
                     </table>
+
+
+                    <h4 class="pb-1"><strong>Sliding Speed</strong></h4>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="55%">Enterprise Solution</th>
+                                <th width="55%">Home News</th>
+                                <th width="20%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td>
+                                    <input type="text" class="form-control enterprise_speed" value="{{ $slidingSpeed->enterprise_speed }}" disabled="disabled">
+
+                                </td>
+                                <td class="category_name">
+                                    <input type="text" class="form-control news_speed" value="{{ $slidingSpeed->news_speed }}" disabled="disabled">
+                                </td>
+                                <td class="text-center">
+
+                                    <a href="javascript:;" class="btn btn-sm btn-success update_slider_speed">Update</a>
+
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="col-md-6 col-xs-12">
@@ -74,7 +105,7 @@
 
                             <form method="POST" class="form uploadBusinessBanner" enctype="multipart/form-data">
                                 @csrf
-                                
+
                                 <div class="form-group">
                                     @if($b->image_name == '')
                                     <input type="file" class="dropify" name="banner_photo" data-height="80"
@@ -86,16 +117,16 @@
                                     <input type="hidden" name="home_sort" value="{{$b->home_sort}}">
                                     <input type="hidden" class="old_photo_{{$sort}}" name="old_photo" value="{{$b->image_name}}">
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label>Alt Text</label>
                                     <input type="text" class="form-control" value="{{ $b->alt_text }}" name="alt_text">
                                 </div>
-                                
+
                                 <div class="form-group text-center">
                                     <button class="btn btn-sm btn-info" type="submit">Upload</button>
                                 </div>
-                                
+
                             </form>
 
 
@@ -160,7 +191,7 @@
                         });
 
                         if (type == 'en') {
-                            let htmlView = '<i class="icon-cursor-move icons"></i> '+ result.name + ' <a class="text-info edit_category_name" type="en" href="' + catId + '" name="' + result.name + '">\n\
+                            let htmlView = '<i class="icon-cursor-move icons"></i> ' + result.name + ' <a class="text-info edit_category_name" type="en" href="' + catId + '" name="' + result.name + '">\n\
                                     <i class="la la-pencil-square"></i></a>';
                             $(thisObj).parent('.category_name').html(htmlView);
                         } else {
@@ -244,6 +275,67 @@
             });
 
         });
+
+
+        //change sliding speed
+        $(".update_slider_speed").on('click', function () {
+            var btn = '<a href="javascript:;" class="btn btn-sm btn-success save_sliding_speed">Save</a>';
+            $(this).parent("td").html(btn);
+             $(this).remove();
+            $(".enterprise_speed").removeAttr('disabled');
+            $(".news_speed").removeAttr('disabled');
+           
+        });
+
+        //save sliding speed
+
+        $(".table").on('click', '.save_sliding_speed', function () {
+            var enSpeed = $(".enterprise_speed").val();
+            var newsSpeed = $(".news_speed").val();
+
+            $.ajax({
+                url: '{{ route("business.sliding.speed.save")}}',
+                cache: false,
+                type: "GET",
+                data: {
+                    enSpeed: enSpeed,
+                    newsSpeed: newsSpeed,
+                },
+                success: function (result) {
+                    if (result.success == 1) {
+                        swal.fire({
+                            title: 'Saved',
+                            type: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+
+                        $(".enterprise_speed").attr('disabled', 'disabled');
+                        $(".news_speed").attr('disabled', 'disabled');
+
+                        $(".update_slider_speed").text('Update').removeClass('save_sliding_speed');
+
+                    } else {
+                        swal.close();
+                        swal.fire({
+                            title: result.message,
+                            timer: 2000,
+                            type: 'error',
+                        });
+                    }
+
+                },
+                error: function (data) {
+                    swal.fire({
+                        title: 'Process failed!',
+                        type: 'error',
+                    });
+                }
+            });
+
+
+        });
+
 
 
         function saveNewPositions(save_url)

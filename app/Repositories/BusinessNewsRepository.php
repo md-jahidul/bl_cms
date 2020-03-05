@@ -34,7 +34,6 @@ class BusinessNewsRepository extends BaseRepository {
         $news->body = $request->body;
         $news->body_bn = $request->body_bn;
         $news->alt_text = $request->alt_text;
-        $news->sliding_speed = $request->sliding_speed;
         return $news->save();
     }
     
