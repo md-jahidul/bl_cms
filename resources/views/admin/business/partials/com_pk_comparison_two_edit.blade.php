@@ -85,13 +85,9 @@
 
 
                                 <div class="form-group row">
-                                    <div class="col-md-6 col-xs-12">
+                                    <div class="col-md-12 col-xs-12">
                                         <label>Package Price (EN) <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" required value="{{$val->price}}" name="price_en[]">
-                                    </div>
-                                    <div class="col-md-6 col-xs-12">
-                                        <label>Package Price (BN) <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" required value="{{$val->price_bn}}" name="price_bn[]">
+                                        <input type="text" class="form-control price_input" required value="{{$val->price}}" name="price_en[]">
                                     </div>
 
 

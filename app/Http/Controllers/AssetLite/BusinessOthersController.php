@@ -74,7 +74,7 @@ class BusinessOthersController extends Controller {
 
         return redirect('/business-other-services');
     }
-    
+       
     
      /**
      * List of business other services component list by serviceID.
@@ -84,8 +84,10 @@ class BusinessOthersController extends Controller {
      * @Bulbul Mahmud Nito || 20/02/2020
      */
     public function componentList($serviceId) {
+        $service = $this->othersService->getServiceById($serviceId);
+        $serviceName = $service->name;
         $components = $this->othersService->getComponents($serviceId);
-        return view('admin.business.service_component_list', compact("components", "serviceId"));
+        return view('admin.business.service_component_list', compact("components", "serviceId", "serviceName"));
     }
     
 
@@ -97,7 +99,9 @@ class BusinessOthersController extends Controller {
      * @Bulbul Mahmud Nito || 18/02/2020
      */
     public function addComponent($serviceId) {
-        return view('admin.business.services_components_add', compact("serviceId"));
+        $service = $this->othersService->getServiceById($serviceId);
+        $serviceName = $service->name;
+        return view('admin.business.services_components_add', compact("serviceId", "serviceName"));
     }
 
     /**
@@ -168,9 +172,11 @@ class BusinessOthersController extends Controller {
      */
     public function editComponent($serviceId, $position, $type) {
         $component = $this->othersService->getSingleComponent($serviceId, $position, $type);
+         $service = $this->othersService->getServiceById($serviceId);
+        $serviceName = $service->name;
         
 //        print_r($component);die();
-        return view('admin.business.services_components_edit', compact("component", "type", "serviceId"));
+        return view('admin.business.services_components_edit', compact("component", "type", "serviceId", "serviceName"));
     }
     
       /**

@@ -189,7 +189,6 @@ class BusinessOthersService {
             $p2data['p2DaysBn'] = $request->com_pk2_days_bn;
 
             $p2data['p2PriceEn'] = $request->com_pk2_price_en;
-            $p2data['p2PriceBn'] = $request->com_pk2_price_bn;
 
             $this->_savePackageTwo($p2data, $srvsId, $oldComponents);
 
@@ -233,13 +232,13 @@ class BusinessOthersService {
 
 
             //save photo component
-            $pcData['photoOne'] = $request->com_photo_one;
+            $pcData['photoOne'] = $request->com_photo_one ? $request->com_photo_one : "";
             $pcData['photoOneAlt'] = $request->com_photo_one_alt;
-            $pcData['photoTwo'] = $request->com_photo_two;
+            $pcData['photoTwo'] = $request->com_photo_two ? $request->com_photo_two : "";
             $pcData['photoTwoAlt'] = $request->com_photo_two_alt;
-            $pcData['photoThree'] = $request->com_photo_three;
+            $pcData['photoThree'] = $request->com_photo_three ? $request->com_photo_three : "";
             $pcData['photoThreeAlt'] = $request->com_photo_three_alt;
-            $pcData['photoFour'] = $request->com_photo_four;
+            $pcData['photoFour'] = $request->com_photo_four ? $request->com_photo_four : "";
             $pcData['photoFourAlt'] = $request->com_photo_four_alt;
             $this->_savePhotoComponent($pcData, $srvsId, $oldComponents);
 
@@ -285,9 +284,8 @@ class BusinessOthersService {
                 $tBn = $p1TextBn[$position];
 
                 $pEn = $p1PriceEn[$position];
-                $pBn = $p1PriceBn[$position];
 
-                $this->pkOneRepo->saveComponent($position, $hEn, $hBn, $tEn, $tBn, $pEn, $pBn, $srvsId, $oldComponents);
+                $this->pkOneRepo->saveComponent($position, $hEn, $hBn, $tEn, $tBn, $pEn, $srvsId, $oldComponents);
             }
         }
     }
@@ -311,7 +309,6 @@ class BusinessOthersService {
                 $data['p2DaysBn'] = $p2data['p2DaysBn'][$position];
 
                 $data['p2PriceEn'] = $p2data['p2PriceEn'][$position];
-                $data['p2PriceBn'] = $p2data['p2PriceBn'][$position];
 
                 $this->pkTwoRepo->saveComponent($position, $data, $srvsId, $oldComponents);
             }
@@ -388,20 +385,20 @@ class BusinessOthersService {
         if (!empty($pcData['photoOne'])) {
             foreach ($pcData['photoOne'] as $position => $val) {
 
-                $pOne = $pcData['photoOne'][$position];
-                $pTwo = $pcData['photoTwo'][$position];
-                $pThree = $pcData['photoThree'][$position];
-                $pFour = $pcData['photoFour'][$position];
+                $pOne = !empty($pcData['photoOne']) ? $pcData['photoOne'][$position] : "";
+                $pTwo = !empty($pcData['photoTwo']) ? $pcData['photoTwo'][$position] : "";
+                $pThree = !empty($pcData['photoThree']) ? $pcData['photoThree'][$position] : "";
+                $pFour = !empty($pcData['photoFour']) ? $pcData['photoFour'][$position] : "";
                 
                 $data['altOne'] = $pcData['photoOneAlt'][$position];
                 $data['altTwo']  = $pcData['photoTwoAlt'][$position];
                 $data['altThree']  = $pcData['photoThreeAlt'][$position];
                 $data['altFour']  = $pcData['photoFourAlt'][$position];
 
-                $data['onePath']  = $this->upload($pOne, 'assetlite/images/business-images');
-                $data['twoPath']  = $this->upload($pTwo, 'assetlite/images/business-images');
-                $data['threePath']  = $this->upload($pThree, 'assetlite/images/business-images');
-                $data['fourPath']  = $this->upload($pFour, 'assetlite/images/business-images');
+                $data['onePath']  = !empty($pOne) ? $this->upload($pOne, 'assetlite/images/business-images') : "";
+                $data['twoPath']  = !empty($pTwo) ? $this->upload($pTwo, 'assetlite/images/business-images') : "";
+                $data['threePath']  = !empty($pThree) ? $this->upload($pThree, 'assetlite/images/business-images') : "";
+                $data['fourPath']  = !empty($pFour) ? $this->upload($pFour, 'assetlite/images/business-images') : "";
                 
 
                 $this->photoRepo->saveComponent($position, $data, $srvsId, $oldComponents);

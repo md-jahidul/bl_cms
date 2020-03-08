@@ -27,7 +27,6 @@ class BusinessComPkTwoRepository extends BaseRepository {
                 'package_days' => $p2data['p2DaysEn'][$k],
                 'package_days_bn' => $p2data['p2DaysBn'][$k],
                 'price' => $p2data['p2PriceEn'][$k],
-                'price_bn' => $p2data['p2PriceBn'][$k],
                 'position' => $position + $oldComponents,
                 'service_id' => $srvsId,
             );
@@ -68,7 +67,6 @@ class BusinessComPkTwoRepository extends BaseRepository {
         $daysEn = $request->package_days_en;
         $daysBn = $request->package_days_bn;
         $priceEn = $request->price_en;
-        $priceBn = $request->price_bn;
 
         $data = [];
         foreach ($comIds as $k => $val) {
@@ -85,7 +83,6 @@ class BusinessComPkTwoRepository extends BaseRepository {
                     'package_days' => $daysEn[$k],
                     'package_days_bn' => $daysBn[$k],
                     'price' => $priceEn[$k],
-                    'price_bn' => $priceBn[$k],
                     'position' => $position,
                     'service_id' => $srvsId,
                 );
@@ -103,7 +100,6 @@ class BusinessComPkTwoRepository extends BaseRepository {
                             'package_days' => $daysEn[$k],
                             'package_days_bn' => $daysBn[$k],
                             'price' => $priceEn[$k],
-                            'price_bn' => $priceBn[$k],
                         )
                 );
             }

@@ -7,8 +7,9 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th width="55%">Name (EN)</th>
-                                <th width="55%">Name (BN)</th>
+                                <th width="22%">Name (EN)</th>
+                                <th width="22%">Name (BN)</th>
+                                <th width="40%">Banner</th>
                                 <th width="20%">Home</th>
                             </tr>
                         </thead>
@@ -28,6 +29,19 @@
                                     <a class="text-info edit_category_name" type="bn" href="{{$cat->id}}" name='{{ $cat->name_bn }}'>
                                         <i class="la la-pencil-square"></i>
                                     </a>
+                                </td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-6 col-xs-12">
+                                            <input type="file" class="dropify_category" name="banner_photo" data-height="60"
+                                                   data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                            <button class="btn btn-sm btn-info"><i class="la la-save"></i></button>
+                                        </div>
+                                        <div class="col-md-6 col-xs-12">
+                                            
+                                        </div>
+                                    </div>
+
                                 </td>
                                 <td class="text-center">
 
@@ -281,10 +295,10 @@
         $(".update_slider_speed").on('click', function () {
             var btn = '<a href="javascript:;" class="btn btn-sm btn-success save_sliding_speed">Save</a>';
             $(this).parent("td").html(btn);
-             $(this).remove();
+            $(this).remove();
             $(".enterprise_speed").removeAttr('disabled');
             $(".news_speed").removeAttr('disabled');
-           
+
         });
 
         //save sliding speed
@@ -375,6 +389,15 @@
                 });
                 var save_url = "{{ url('business-category-sort-change') }}";
                 saveNewPositions(save_url);
+            }
+        });
+
+        $('.dropify_category').dropify({
+            messages: {
+                'default': 'Browse',
+                'replace': 'Click to replace',
+                'remove': 'Remove',
+                'error': 'Choose correct file format'
             }
         });
 
