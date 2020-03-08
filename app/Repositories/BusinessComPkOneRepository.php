@@ -14,7 +14,7 @@ class BusinessComPkOneRepository extends BaseRepository {
 
     public $modelName = BusinessComPackageOne::class;
 
-    public function saveComponent($position, $hEn, $hBn, $tEn, $tBn, $pEn, $pBn, $srvsId, $oldComponents) {
+    public function saveComponent($position, $hEn, $hBn, $tEn, $tBn, $pEn,  $srvsId, $oldComponents) {
         $data = [];
         foreach ($hEn as $k => $v) {
             $data[] = array(
@@ -23,7 +23,6 @@ class BusinessComPkOneRepository extends BaseRepository {
                 'feature_text' => $tEn[$k],
                 'feature_text_bn' => $tBn[$k],
                 'price' => $pEn[$k],
-                'price_bn' => $pBn[$k],
                 'position' => $position + $oldComponents,
                 'service_id' => $srvsId,
             );
@@ -60,7 +59,6 @@ class BusinessComPkOneRepository extends BaseRepository {
         $ftEn = $request->feature_text_en;
         $ftBn = $request->feature_text_bn;
         $priceEn = $request->price_en;
-        $priceBn = $request->price_bn;
 
         $data = [];
         foreach ($comIds as $k => $val) {
@@ -73,7 +71,6 @@ class BusinessComPkOneRepository extends BaseRepository {
                     'feature_text' => $ftEn[$k],
                     'feature_text_bn' => $ftBn[$k],
                     'price' => $priceEn[$k],
-                    'price_bn' => $priceBn[$k],
                     'position' => $position,
                     'service_id' => $srvsId,
                 );
@@ -87,7 +84,6 @@ class BusinessComPkOneRepository extends BaseRepository {
                             'feature_text' => $ftEn[$k],
                             'feature_text_bn' => $ftBn[$k],
                             'price' => $priceEn[$k],
-                            'price_bn' => $priceBn[$k],
                         )
                 );
             }

@@ -19,7 +19,7 @@
             <div class="card-body card-dashboard">
                 <div class="row">
                     <div class="col-md-12 col-xs-12">
-                        <h4 class="pb-1"><strong>Business Solution</strong></h4>
+                        <h4 class="pb-1"><strong>Business Solution : </strong>{{ $serviceName}}</h4>
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>

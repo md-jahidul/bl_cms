@@ -48,10 +48,7 @@
                                 <div class="form-group">
 
                                     <label>Price (EN)<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" required value="{{$val->price}}" name="price_en[]">
-
-                                    <label>Price (BN)<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" required value="{{$val->price_bn}}" name="price_bn[]">
+                                    <input type="text" class="form-control price_input" required value="{{$val->price}}" name="price_en[]">
 
                                 </div>
                             </div>
@@ -100,7 +97,6 @@
             ],
             height: 170
         });
-
 
 
         //add package comparison table one element

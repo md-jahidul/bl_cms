@@ -11,7 +11,10 @@
 @section('content')
 <section>
 
-
+    <div class="col-md-12 col-xs-12 text-center">
+        <h4>Service: {{ $serviceName}}</h4>
+        <hr>
+    </div>
 
 
 
@@ -107,10 +110,7 @@
                 <div class="form-group">
 
                     <label>Price (EN)<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" required name="price_en[]">
-
-                    <label>Price (BN)<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" required name="price_bn[]">
+                    <input type="text" class="form-control price_input" required name="price_en[]">
 
                 </div>
             </div>
@@ -191,14 +191,11 @@
 
 
                 <div class="form-group row">
-                    <div class="col-md-6 col-xs-12">
+                    <div class="col-md-12 col-xs-12">
                         <label>Package Price (EN) <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" required name="price_en[]">
+                        <input type="text" class="form-control price_input" required name="price_en[]">
                     </div>
-                    <div class="col-md-6 col-xs-12">
-                        <label>Package Price (BN) <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" required name="price_bn[]">
-                    </div>
+
 
 
                 </div>
@@ -269,6 +266,13 @@ $(function () {
             'replace': 'Click to replace',
             'remove': 'Remove',
             'error': 'Choose correct file format'
+        }
+    });
+
+    $(".card").on("keypress keyup blur", '.price_input', function (event) {
+        $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+            event.preventDefault();
         }
     });
 
