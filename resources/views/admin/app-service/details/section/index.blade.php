@@ -220,10 +220,12 @@ function matchRelatedProduct($id, $roles)
 
 
     <!-- # Component modal -->
-    @include('admin.app-service.details.components.component_modal.text_with_image_right')
-    @include('admin.app-service.details.components.component_modal.text_with_image_bottom')
-    @include('admin.app-service.details.components.component_modal.video_with_text_right')
-    @include('admin.app-service.details.components.component_modal.pricing_sections')
+    @include('admin.app-service.details.section.component_modal.text_with_image_right')
+    @include('admin.app-service.details.section.component_modal.text_with_image_bottom')
+    @include('admin.app-service.details.section.component_modal.video_with_text_right')
+    @include('admin.app-service.details.section.component_modal.pricing_sections')
+
+    @include('admin.app-service.details.section.component_modal.slider_text_with_image_right')
 
 
     <!-- Modal -->
@@ -331,6 +333,10 @@ function matchRelatedProduct($id, $roles)
             box-shadow: unset;
             border-width: 0;
             color : unset;
+        }
+
+        .modal-lg.modal_lg_custom{
+            max-width: 1200px;
         }
     </style>
 @endpush
