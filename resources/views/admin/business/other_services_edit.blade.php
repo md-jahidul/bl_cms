@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Edit Business Service')
-@section('card_name', 'Create B. Solution, IOT & Others')
+@section('title', 'Edit Business Enterprise Service')
+@section('card_name', 'Enterprise Solution')
 @section('breadcrumb')
 <li class="breadcrumb-item active"> <a href="{{ url('business-other-services') }}"> Service List</a></li>
-<li class="breadcrumb-item active"> Create</li>
+<li class="breadcrumb-item active"> Edit</li>
 @endsection
 @section('action')
 <a href="{{ url('business-other-services') }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
@@ -35,11 +35,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="Package Name"> Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{$service->name}}" required name="name" placeholder="Package Name">
-                            </div>
-
-                            <div class="form-group">
 
                                 <label for="Package Name"> Name (EN)<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" value="{{$service->name}}"  required name="name_en" placeholder="Package Name English">
@@ -68,15 +63,6 @@
 
                             </div>
 
-                            <div class="form-group">
-                                <label for="Banner Photo">Sliding Speed (Seconds)</label>
-
-                                <input type="text" class="form-control" name="sliding_speed" value="{{$service->sliding_speed}}">
-
-                            </div>
-
-
-
 
                         </div>
                         <div class="col-md-4 col-xs-12">
@@ -92,6 +78,18 @@
                                     <img src="{{ config('filesystems.file_base_url') . $service->icon }}" alt="Banner Photo" height="40px" />
                                     @endif
                                 </p>
+                            </div>
+                            
+                             <div class="form-group">
+
+                                <label for="Short Details">Home Short Details (EN)</label>
+                                <textarea type="text" name="home_short_details_en" class="form-control">{{$service->home_short_details_en}}</textarea>
+
+                                <br>
+
+                                <label for="Short Details">Home Short Details (BN)</label>
+                                <textarea type="text" name="home_short_details_bn" class="form-control">{{$service->home_short_details_bn}}</textarea>
+
                             </div>
 
 
@@ -113,7 +111,7 @@
 
                             <div class="form-group">
                                 <label for="Details">Offer Details (EN)</label>
-                                <textarea type="text" name="offer_details_en" class="form-control textarea_details">{{$service->offer_details}}</textarea>
+                                <textarea type="text" name="offer_details_en" class="form-control textarea_details">{{$service->offer_details_en}}</textarea>
 
                                 <br>
 
@@ -152,10 +150,41 @@
                                     @endforeach
                                 </div>
                             </div>
+                            
+                        </div>
 
-                            <div class="form-group">
+                        <div class="col-md-12 col-xs-12">
+
+                            <div class="form-group ">
+                                <h4>Select Related Solution (You may also like)</h4>
+                                <hr>
+                                <div class="row">
+
+                                    @foreach($services as $s)
+
+                                    @php
+                                    $checked = "";
+                                    if(in_array($s->id, $relatedProducts)){
+                                    $checked = "checked";
+                                    }
+                                    @endphp
+
+
+                                    <div class="col-md-3 col-xs-12">
+                                        <label class="text-bold-600 cursor-pointer">
+                                            <input type="checkbox" {{$checked}} name="realated[{{$s->id}}]">
+                                            {{$s->name}}
+                                        </label>
+
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="form-group text-right">
                                 <button type="submit" class="btn btn-info pull-right">Save</button>
                             </div>
+
                         </div>
 
                     </div>

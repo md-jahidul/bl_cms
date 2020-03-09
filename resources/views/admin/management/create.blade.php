@@ -42,6 +42,12 @@
                                    @php $personal_details_bn = ''; @endphp
                                @endif
 
+                               @if(isset($manage))
+                                   @php $status = $manage->is_active; @endphp
+                               @else
+                                   @php $status = 1; @endphp
+                               @endif
+
                                <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('name') ? ' error' : '' }}">
                                     <label for="name" class="required">Name (English)</label>
@@ -68,7 +74,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('designation') ? ' error' : '' }}">
                                     <label for="designation" class="required">Designation (English)</label>
                                     <input type="text" name="designation"  class="form-control" placeholder="Enter Designation in English"
-                                           value="@if(isset($manage)){{$manage->designation_bn}} @elseif(old("designation_bn")) {{old("designation_bn")}} @endif"
+                                           value="@if(isset($manage)){{$manage->designation}} @elseif(old("designation")) {{old("designation")}} @endif"
                                            required data-validation-required-message="Enter Designation in English">
                                     <div class="help-block"></div>
                                     @if ($errors->has('designation'))
@@ -200,6 +206,19 @@
                                     <img style="height:80px;width:100px;display:none" id="imgDisplay">
                                     @endif
                                 </div>
+
+                               <div class="form-group col-md-6">
+                                   <div class="form-group {{ $errors->has('is_active') ? ' error' : '' }}">
+                                       <label for="is_active" style="margin-right: 10px; padding: 5px" >Current Status</label>
+                                       <input type="radio" name="is_active" value="1" id="input-radio-15" @if($status == 1) {{ 'checked' }} @endif checked>
+                                       <label for="input-radio-15" class="mr-1">Active</label>
+                                       <input type="radio" name="is_active" value="0" id="input-radio-16" @if($status == 0) {{ 'checked' }} @endif>
+                                       <label for="input-radio-16">Inactive</label>
+                                       @if ($errors->has('is_active'))
+                                           <div class="help-block">  {{ $errors->first('is_active') }}</div>
+                                       @endif
+                                   </div>
+                               </div>
 
 
                                 <div class="form-actions col-md-12 ">

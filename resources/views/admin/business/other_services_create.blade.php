@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Create Business Service')
-@section('card_name', 'Create B. Solution, IOT & Others')
+@section('title', 'Create Business Enterprise Service')
+@section('card_name', 'Enterprise Solution')
 @section('breadcrumb')
 <li class="breadcrumb-item active"> <a href="{{ url('business-other-services') }}"> Service List</a></li>
 <li class="breadcrumb-item active"> Create</li>
@@ -52,15 +52,6 @@
 
                             </div>
 
-                            <div class="form-group">
-                                <label for="Banner Photo">Sliding Speed (Seconds)</label>
-
-                                <input type="text" class="form-control" name="sliding_speed" value="1">
-
-                            </div>
-
-
-
 
                         </div>
                         <div class="col-md-4 col-xs-12">
@@ -72,6 +63,18 @@
 
                             </div>
 
+                            <div class="form-group">
+
+                                <label for="Short Details">Home Short Details (EN)</label>
+                                <textarea type="text" name="home_short_details_en" class="form-control"></textarea>
+
+                                <br>
+
+                                <label for="Short Details">Home Short Details (BN)</label>
+                                <textarea type="text" name="home_short_details_bn" class="form-control"></textarea>
+
+                            </div>
+                            
                             <div class="form-group">
 
                                 <label for="Short Details">Short Details (EN)<span class="text-danger">*</span></label>
@@ -125,10 +128,34 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            
+                        </div>
+                        
+                        
+                         <div class="col-md-12 col-xs-12">
+                            
+                             <div class="form-group ">
+                                <h4>Select Related Solution (You may also like)</h4>
                                 <hr>
-                                <button type="submit" class="btn btn-info pull-right">Save</button>
+                                <div class="row">
+
+                                    @foreach($services as $s)
+                                    <div class="col-md-3 col-xs-12">
+                                        <label class="text-bold-600 cursor-pointer">
+                                            <input type="checkbox" name="realated[{{$s->id}}]">
+                                            {{$s->name}}
+                                        </label>
+
+                                    </div>
+                                    @endforeach
+                                </div>
                             </div>
+                            
+                            
+                             <div class="form-group text-right">
+                                <button class="btn btn-info" type="submit">Save</button>
+                            </div>
+                            
                         </div>
 
                     </div>

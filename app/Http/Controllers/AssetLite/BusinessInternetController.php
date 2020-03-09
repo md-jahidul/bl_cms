@@ -45,6 +45,11 @@ class BusinessInternetController extends Controller {
         return $response;
     }
 
+    public function packageHomeShow($packageId) {
+        $response = $this->internetService->homeShow($packageId);
+        return $response;
+    }
+    
     public function packageStatusChange($packageId) {
         $response = $this->internetService->statusChange($packageId);
         return $response;

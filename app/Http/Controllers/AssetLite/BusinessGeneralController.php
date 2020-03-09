@@ -29,9 +29,10 @@ class BusinessGeneralController extends Controller {
     public function index() {
         $categories = $this->businessHomeService->getCategories();
         $banners = $this->businessHomeService->getHomeBanners();
+        $slidingSpeed = $this->businessHomeService->slidingSpeed();
         $news = $this->businessHomeService->getNews();
         $features = $this->businessHomeService->getFeatures();
-        return view('admin.business.index', compact('categories', 'banners', 'news', 'features'));
+        return view('admin.business.index', compact('categories', 'banners', 'slidingSpeed', 'news', 'features'));
     }
 
     /**
@@ -45,6 +46,7 @@ class BusinessGeneralController extends Controller {
         $bannersSave = $this->businessHomeService->saveHomeBanners($request);
         return $bannersSave;
     }
+   
 
     /**
      * Category name Change.
@@ -82,6 +84,19 @@ class BusinessGeneralController extends Controller {
         $catId = $request->catId;
         $response = $this->businessHomeService->categoryStatusChange($catId);
         return $response;
+    }
+    
+    
+     /**
+     * Save/update sliding speed
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     * @Dev Bulbul Mahmud Nito || 05/03/2020
+     */
+    public function saveSlidingSpeed(Request $request) {
+        $bannersSave = $this->businessHomeService->saveSlidingSpeed($request);
+        return $bannersSave;
     }
 
     /**

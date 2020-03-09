@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 @section('title', 'Business Solution, IOT & Others Component List')
 @section('card_name', 'Component List')
+
+@section('breadcrumb')
+<li class="breadcrumb-item active"> <a href="{{ url('business-other-services') }}"> Service List</a></li>
+<li class="breadcrumb-item active"> Component List</li>
+@endsection
+
 @section('action')
 <a href="{{ url('business-others-components/'.$serviceId) }}" class="btn btn-sm btn-primary"><i class="la la-plus"></i>Add More</a>
 <a href="{{ url('business-other-services') }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
@@ -13,7 +19,7 @@
             <div class="card-body card-dashboard">
                 <div class="row">
                     <div class="col-md-12 col-xs-12">
-                        <h4 class="pb-1"><strong>Business Solution</strong></h4>
+                        <h4 class="pb-1"><strong>Business Solution : </strong>{{ $serviceName}}</h4>
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
@@ -53,7 +59,7 @@
                                         @endif
 
                                         @else
-                                        {{$com['text']}}
+                                        {!!$com['text']!!}
                                         @endif
 
                                     </td>
@@ -67,12 +73,12 @@
                                     <td class="text-center">
 
 
-                                        <a class="text-info edit_component_{{$k}}"
+                                        <a class="text-info edit_component"
                                            href="{{url('business-others-component-edit/'.$serviceId.'/'.$k.'/'.$com['type'])}}">
                                             <i class="la la-pencil-square"></i>
                                         </a>
 
-                                        <a class="text-danger delete_component_{{$k}}" 
+                                        <a class="text-danger delete_component" 
                                            href="{{url('business-others-component-delete/'.$serviceId.'/'.$k.'/'.$com['type'])}}">
                                             <i class="la la-trash"></i>
                                         </a>
@@ -151,18 +157,14 @@ if (Session::has('error')) {
                 
                 var type = $(this).attr('data-type');
                 var newPosition = $(this).attr('data-position');
-                var editUrl = "{{ url('business-others-component-edit/'.$serviceId.'/')}}/"+newPosition +"/"+type;
-                var editSelector = $(".edit_component_"+$(this).attr('data-oldpos'));
-                $(editSelector).attr("href", editUrl);
                 
-                var newEditClass = "text-info edit_component_"+newPosition;
-                $(editSelector).attr('class', newEditClass);
+                var editUrl = "{{ url('business-others-component-edit/'.$serviceId.'/')}}/"+newPosition +"/"+type;
+                $(this).find("a.edit_component").attr("href", editUrl);
                 
                 var delUrl = "{{ url('business-others-component-delete/'.$serviceId.'/')}}/"+newPosition +"/"+type;
-                var delSelector = $(".delete_component_"+$(this).attr('data-oldpos'));
-                $(delSelector).attr("href", delUrl);
-                var newDelClass = "text-danger delete_component_"+newPosition;;
-                $(delSelector).attr('class', newDelClass);
+                $(this).find("a.delete_component").attr("href", delUrl);
+                
+              
             });
             $.ajax({
                 type: "GET",

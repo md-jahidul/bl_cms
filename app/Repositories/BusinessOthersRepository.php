@@ -13,9 +13,20 @@ class BusinessOthersRepository extends BaseRepository {
 
     public $modelName = BusinessOthers::class;
     
-     public function getOtherService($type) {
-        $servces = $this->model->where('type', $type)->orderBy('sort')->get();
-        return $servces;
+     public function getOtherService($type, $serviceId) {
+        $servces = $this->model->orderBy('sort');
+        
+        if($serviceId > 0){
+            $servces->where('id', '!=', $serviceId);
+            $servces->where('status', 1);
+        }
+        if($type != ""){
+            $servces->where('type', $type);
+        }
+        
+        $data = $servces->get();
+        
+        return $data;
     }
 
     public function saveService($bannerPath, $iconPath, $request) {
@@ -32,15 +43,13 @@ class BusinessOthersRepository extends BaseRepository {
         
         $service->name = $request->name_en;
         $service->name_bn = $request->name_bn;
-        
-        if ($request->sliding_speed != "") {
-            $service->sliding_speed = $request->sliding_speed;
-        }
+        $service->home_short_details_en = $request->home_short_details_en;
+        $service->home_short_details_bn = $request->home_short_details_bn;
         
         $service->short_details = $request->short_details_en;
         $service->short_details_bn = $request->short_details_bn;
         
-        $service->offer_details = $request->offer_details_en;
+        $service->offer_details_en = $request->offer_details_en;
         $service->offer_details_bn = $request->offer_details_bn;
         
         $service->type = $request->type;
@@ -55,6 +64,29 @@ class BusinessOthersRepository extends BaseRepository {
 
             $status = $package->home_show == 1 ? 0 : 1;
             $package->home_show = $status;
+            $package->save();
+
+            $response = [
+                'success' => 1,
+                'show_status' => $status,
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'errors' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
+    }
+    
+    public function assignHomeSlider($serviceId) {
+        try {
+
+            $package = $this->model->findOrFail($serviceId);
+
+            $status = $package->in_home_slider == 1 ? 0 : 1;
+            $package->in_home_slider = $status;
             $package->save();
 
             $response = [
@@ -146,14 +178,13 @@ class BusinessOthersRepository extends BaseRepository {
         $service->name = $request->name_en;
         $service->name_bn = $request->name_bn;
         
-        if ($request->sliding_speed != "") {
-            $service->sliding_speed = $request->sliding_speed;
-        }
+        $service->home_short_details_en = $request->home_short_details_en;
+        $service->home_short_details_bn = $request->home_short_details_bn;
         
         $service->short_details = $request->short_details_en;
         $service->short_details_bn = $request->short_details_bn;
         
-        $service->offer_details = $request->offer_details_en;
+        $service->offer_details_en = $request->offer_details_en;
         $service->offer_details_bn = $request->offer_details_bn;
         
         $service->type = $request->type;
