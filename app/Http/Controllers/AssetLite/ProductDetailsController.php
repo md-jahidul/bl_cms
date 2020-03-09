@@ -28,6 +28,17 @@ class ProductDetailsController extends Controller
      */
     protected $componentService;
 
+    protected $dataTypes = [
+        'title' => 'Title',
+        'text_area' => 'Text Area',
+        'text_and_button' => 'Text And Button',
+        'bullet_Text' => 'Bullet Text',
+        'accordion_text' => 'Accordion Text',
+        'drop_down' => 'Dropdown',
+        'single_image' => 'Single Image',
+        'multiple_image' => 'Multiple Image'
+    ];
+
     public function __construct(
         ProductDetailsSectionService $productDetailsSectionService,
         ComponentService $componentService
@@ -79,9 +90,6 @@ class ProductDetailsController extends Controller
     public function editSection($productDetailsId, $id)
     {
         $section = $this->productDetailsSectionService->findOne($id);
-
-//        dd($section->other_attributes);
-
         return view('admin.product.details.edit', compact('section', 'productDetailsId'));
     }
 
@@ -100,11 +108,15 @@ class ProductDetailsController extends Controller
 
     public function componentCreate($productDetailsId, $sectionId)
     {
-        return view('admin.product.details.components.create', compact('sectionId', 'productDetailsId'));
+        $dataTypes = $this->dataTypes;
+        return view('admin.product.details.components.create', compact('sectionId', 'productDetailsId', 'dataTypes'));
     }
 
     public function componentStore(Request $request, $productDetailsId, $sectionID)
     {
+
+//        return $request->all();
+
         $response = $this->componentService->componentStore($request->all(), $sectionID);
         Session::flash('success', $response->content());
         return redirect(route('component-list', [$productDetailsId, $sectionID]));
