@@ -43,7 +43,9 @@ class ProductDetailsController extends Controller
      */
     public function sectionList($productDetailsId)
     {
-        $productSections = $this->productDetailsSectionService->findAll();
+//        return $productDetailsId;
+
+        $productSections = $this->productDetailsSectionService->findBySection($productDetailsId);
 
 //        return $productSections;
 
