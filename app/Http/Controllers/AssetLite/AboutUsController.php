@@ -73,7 +73,7 @@ class AboutUsController extends Controller
     public function sliderImageList($sliderId, $type)
     {
         $slider_images = $this->alSliderImageService->itemList($sliderId, $type);
-        return view('admin.about-us.slider.slider-image.index', compact('slider_images', 'sliderItem', 'sliderId', 'type'));
+        return view('admin.about-us.slider.slider-image.index', compact('slider_images', 'sliderId', 'type'));
     }
 
     /**
