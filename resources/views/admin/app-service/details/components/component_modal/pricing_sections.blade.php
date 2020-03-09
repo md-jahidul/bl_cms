@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="pricing_mutiple_table" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="pricing_sections" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal_xl_custom " role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -14,6 +14,7 @@
                 <div class="row">
 
                 		{{ Form::hidden('sections[section_name]', 'Pricing sections' ) }}
+                     {{ Form::hidden('sections[section_type]', 'pricing_sections' ) }}
                 		{{ Form::hidden('sections[tab_type]', $tab_type ) }}
                 		{{ Form::hidden('sections[category]', 'component_sections' ) }}
                 		{{ Form::hidden('component[0][component_type]', 'pricing_mutiple_table' ) }}
@@ -166,7 +167,7 @@
 
               </div>
               <div class="modal-footer">
-              		{{ Form::hidden('sections[id]', null, ['id' => 'section_id'] ) }}
+              		{{ Form::hidden('sections[id]', null, ['class' => 'section_id'] ) }}
               		{{ Form::hidden('component[0][id]', null, ['class' => 'component_id'] ) }}
 
                 <a type="button" href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>

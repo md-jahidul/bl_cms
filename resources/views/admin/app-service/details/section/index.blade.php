@@ -40,7 +40,7 @@ function matchRelatedProduct($id, $roles)
                                     <option value="slider_text_with_image_right">Slider text with image right</option>
                                     <option value="video_with_text_right">Video with text right</option>
                                     <option value="multiple_image_banner">Multiple image banner</option>
-                                    <option value="pricing_mutiple_table">Pricing Multiple table</option>
+                                    <option value="pricing_sections">Pricing Multiple table</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -113,7 +113,7 @@ function matchRelatedProduct($id, $roles)
                                             </td>
 
                                             <td>
-                                                <a href="{{ route("app_service.details.edit", [$tab_type, $product_id, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0 section_component_edit">
+                                                <a href="{{ route("app_service.details.edit", [$tab_type, $product_id, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0 section_component_edit" data-sections="{{$list->section_type}}">
                                                     <i class="la la-pencil" aria-hidden="true"></i></a>
                                                 {{-- <a href="#" remove="{{ url("offers/$list->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
                                                     <i class="la la-trash"></i>
@@ -223,7 +223,7 @@ function matchRelatedProduct($id, $roles)
     @include('admin.app-service.details.components.component_modal.text_with_image_right')
     @include('admin.app-service.details.components.component_modal.text_with_image_bottom')
     @include('admin.app-service.details.components.component_modal.video_with_text_right')
-    @include('admin.app-service.details.components.component_modal.pricing_mutiple_table')
+    @include('admin.app-service.details.components.component_modal.pricing_sections')
 
 
     <!-- Modal -->
@@ -364,8 +364,9 @@ function matchRelatedProduct($id, $roles)
         e.preventDefault();
 
         var editUrl = $(this).attr('href');
+        var modalComponent = $(this).attr('data-sections');
 
-        console.log(editUrl);
+        // console.log(modalComponent);
 
         $.ajax({
             url: editUrl,
@@ -373,33 +374,33 @@ function matchRelatedProduct($id, $roles)
             type: "GET",
             success: function (result) {
 
-                // console.log(result);
+                console.log(result);
 
                 if( result.status == 'SUCCESS' ){
-                     var $parentSelector = $('#text_with_image_right');
+                     var $parentSelector = $('#'+modalComponent);
                      var baseUrl = "{{ config('filesystems.file_base_url') }}";
 
                      $parentSelector.find('#form_save').hide();
                      $parentSelector.find('#form_update').show();
 
 
-                    $('#text_with_image_right').modal('show');
+                    $('#'+modalComponent).modal('show');
 
                     // Set all sections
-                    // $.each(result.data.sections, function(k, v){
+                    $.each(result.data.sections, function(k, v){
 
-                    //     if( k == 'status' ){     
+                        if( k == 'title_en' ){     
+                           $parentSelector.find("input[name='sections[title_en]']").val(v);
+                        }
 
-                    //        // $parentSelector.find("").val();
-
-
-                    //         // $('#text_with_image_right').find("input[name='component[title_en]']").val(v);
-                    //     }
+                        if( k == 'title_bn' ){     
+                           $parentSelector.find("input[name='sections[title_bn]']").val(v);
+                        }
                         
-                    // });
+                    });
 
                     // Add section id
-                    $('#section_id').val(result.data.sections.id);
+                    $parentSelector.find('.section_id').val(result.data.sections.id);
 
                     $("input[name='sections[status]']").each(function(sk, sv){
                        // console.log($(sv).val());
@@ -434,6 +435,27 @@ function matchRelatedProduct($id, $roles)
 
                            if( ck == 'id' ){
                               $parentSelector.find("input[name='component["+cpk+"][id]']").val(cv);
+                           }
+
+
+                           if( ck == 'description_en' ){                            
+                             $parentSelector.find("textarea[name='component["+cpk+"][description_en]']").val(cv);
+                           }
+
+                           if( ck == 'description_bn' ){                            
+                             $parentSelector.find("textarea[name='component["+cpk+"][description_bn]']").val(cv);
+                           }
+
+                           if( ck == 'editor_en' ){                            
+                             $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").val(cv);
+
+                             $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
+                           }
+
+                           if( ck == 'editor_bn' ){                            
+                             $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").val(cv);
+
+                             $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
                            }
 
                         });

@@ -72,7 +72,8 @@ class AppServiceProductDetailsController extends Controller
     public function store(Request $request, $tab_type, $product_id)
     {
 
-        // dd($request->all());
+        // dd( $request->all() );
+
         $data = $request->all();
 
         // dd( $data['component'] );
@@ -87,12 +88,17 @@ class AppServiceProductDetailsController extends Controller
 
             # Update section data
             $section_data = $data['sections'];
+
+            // dd($data['sections']);
+
             if( isset($section_data['id']) && !empty($section_data['id']) ){
 
                 $this->appServiceProductDetailsService->updateAppServiceDetailsSection($section_data, $section_data['id']);
 
                 # Update component data
                 $component_data = $data['component'];
+
+
 
                 if( isset($component_data) && count($component_data) > 0 ){
                     foreach ($component_data as $component_value) {
