@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 @section('title', 'Business Solution, IOT & Others Component List')
 @section('card_name', 'Component List')
+
+@section('breadcrumb')
+<li class="breadcrumb-item active"> <a href="{{ url('business-other-services') }}"> Service List</a></li>
+<li class="breadcrumb-item active"> Component List</li>
+@endsection
+
 @section('action')
 <a href="{{ url('business-others-components/'.$serviceId) }}" class="btn btn-sm btn-primary"><i class="la la-plus"></i>Add More</a>
 <a href="{{ url('business-other-services') }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
@@ -13,7 +19,7 @@
             <div class="card-body card-dashboard">
                 <div class="row">
                     <div class="col-md-12 col-xs-12">
-                        <h4 class="pb-1"><strong>Business Solution</strong></h4>
+                        <h4 class="pb-1"><strong>Business Solution : </strong>{{ $serviceName}}</h4>
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>

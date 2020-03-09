@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-@section('title', 'Business Solution, IOT & Others')
-@section('card_name', 'Business Solution, IOT & Others')
+@section('title', 'Business Enterprise Solution')
+@section('card_name', 'Enterprise Solution')
 @section('action')
 <a href="{{ url('business-others/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
     Add Service
@@ -19,9 +19,9 @@
                             <thead>
                                 <tr>
                                     <th width="20%">Name</th>
-                                    <th width="60%">Short Details</th>
+                                    <th width="20%">Banner</th>
                                     <th class="text-center" width="15%">Component</th>
-                                    <th class="text-center" width="10%">Home Show</th>
+                                    <th class="text-center" width="10%">Home Top</th>
                                     <th class="text-center" width="10%">Home Slider</th>
                                     <th class="text-center" width="10%">Status</th>
                                     <th class="text-center" width="10%">Action</th>
@@ -39,15 +39,16 @@
                                         </p> 
 
                                     </td>
-
                                     <td>
-                                        {{$bs->short_details}}
+                                        <img src="{{ config('filesystems.file_base_url') . $bs->banner_photo }}" alt="Banner Photo" height="40px" />
                                     </td>
+
+
                                     <td class="text-center">
                                         <a href="{{ url('business-others-components-list/'.$bs->id) }}" class="btn btn-sm btn-success">View</a>
                                         <a href="{{ url('business-others-components/'.$bs->id) }}" class="btn btn-sm btn-info">Add</a>
                                     </td>
-                                    
+
                                     <td class="text-center">
 
                                         @if($bs->home_show == 1)
@@ -57,7 +58,7 @@
                                         @endif
 
                                     </td>
-                                    
+
                                     <td class="text-center">
 
                                         @if($bs->in_home_slider == 1)
@@ -113,9 +114,9 @@
                             <thead>
                                 <tr>
                                     <th width="20%">Name</th>
-                                    <th width="60%">Short Details</th>
+                                    <th width="20%">Banner</th>
                                     <th class="text-center" width="15%">Component</th>
-                                    <th class="text-center" width="10%">Home Show</th>
+                                    <th class="text-center" width="10%">Home Top</th>
                                     <th class="text-center" width="10%">Home Slider</th>
                                     <th class="text-center" width="10%">Status</th>
                                     <th class="text-center" width="10%">Action</th>
@@ -135,8 +136,9 @@
                                     </td>
 
                                     <td>
-                                        {{$i->short_details}}
+                                        <img src="{{ config('filesystems.file_base_url') . $i->banner_photo }}" alt="Banner Photo" height="40px" />
                                     </td>
+
                                     <td class="text-center">
                                         <a href="{{ url('business-others-components-list/'.$i->id) }}" class="btn btn-sm btn-success">View</a>
                                         <a href="{{ url('business-others-components/'.$i->id) }}" class="btn btn-sm btn-info">Add</a>
@@ -151,13 +153,13 @@
                                         @endif
 
                                     </td>
-                                    
+
                                     <td class="text-center">
 
-                                        @if($bs->in_home_slider == 1)
-                                        <a href="{{$bs->id}}" class="btn btn-sm btn-success package_home_slider">Yes</a>
+                                        @if($i->in_home_slider == 1)
+                                        <a href="{{$i->id}}" class="btn btn-sm btn-success package_home_slider">Yes</a>
                                         @else
-                                        <a href="{{$bs->id}}" class="btn btn-sm btn-dark package_home_slider">No</a>
+                                        <a href="{{$i->id}}" class="btn btn-sm btn-dark package_home_slider">No</a>
                                         @endif
 
                                     </td>
@@ -207,9 +209,9 @@
                             <thead>
                                 <tr>
                                     <th width="20%">Name</th>
-                                    <th width="60%">Short Details</th>
+                                    <th width="20%">Banner</th>
                                     <th class="text-center" width="15%">Component</th>
-                                    <th class="text-center" width="10%">Home Show</th>
+                                    <th class="text-center" width="10%">Home Top</th>
                                     <th class="text-center" width="10%">Home Slider</th>
                                     <th class="text-center" width="10%">Status</th>
                                     <th class="text-center" width="10%">Action</th>
@@ -227,10 +229,10 @@
                                         </p> 
 
                                     </td>
-
                                     <td>
-                                        {{$o->short_details}}
+                                        <img src="{{ config('filesystems.file_base_url') . $o->banner_photo }}" alt="Banner Photo" height="40px" />
                                     </td>
+
                                     <td class="text-center">
                                         <a href="{{ url('business-others-components-list/'.$o->id) }}" class="btn btn-sm btn-success">View</a>
                                         <a href="{{ url('business-others-components/'.$o->id) }}" class="btn btn-sm btn-info">Add</a>
@@ -245,14 +247,14 @@
                                         @endif
 
                                     </td>
-                                    
-                                    
+
+
                                     <td class="text-center">
 
-                                        @if($bs->in_home_slider == 1)
-                                        <a href="{{$bs->id}}" class="btn btn-sm btn-success package_home_slider">Yes</a>
+                                        @if($o->in_home_slider == 1)
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-success package_home_slider">Yes</a>
                                         @else
-                                        <a href="{{$bs->id}}" class="btn btn-sm btn-dark package_home_slider">No</a>
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-dark package_home_slider">No</a>
                                         @endif
 
                                     </td>

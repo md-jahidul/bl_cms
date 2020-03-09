@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Helpers\Helper;
 
@@ -40,10 +41,10 @@ class SliderImageController extends Controller
      */
     public function index($sliderId, $type)
     {
+        $previousUrl = url()->previous();
         $slider_images = AlSliderImage::where('slider_id', $sliderId)->with('slider')->orderBy('display_order')->get();
         $sliderItem    = AlSlider::select('title_en', 'slider_type')->where('id', $sliderId)->first();
-//        $this->alSliderImageService->itemList($sliderId, $type);
-        return view('admin.slider-image.index', compact('slider_images', 'sliderItem', 'sliderId', 'type'));
+        return view('admin.slider-image.index', compact('slider_images', 'sliderItem', 'sliderId', 'type', 'previousUrl'));
     }
 
     /**
@@ -88,13 +89,11 @@ class SliderImageController extends Controller
      */
     public function edit($parentId, $type, $id)
     {
-        $sliderImage = AlSliderImage::find($id);
+        $sliderImage = $this->alSliderImageService->findOne($id);
         $other_attributes = $sliderImage->other_attributes;
-
-//        return $sliderImage;
-
         return view('admin.slider-image.edit', compact('sliderImage', 'type', 'other_attributes'));
     }
+
 
     /**
      * @param StoreSliderImageRequest $request
@@ -125,7 +124,6 @@ class SliderImageController extends Controller
      */
     public function destroy($parentId, $type, $id)
     {
-
         $response = $this->alSliderImageService->deleteSliderImage($id);
         Session::flash('message', $response->getContent());
         return url("slider/$parentId/$type");

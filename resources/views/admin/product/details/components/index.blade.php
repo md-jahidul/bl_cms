@@ -2,18 +2,13 @@
 @section('title', 'Component List')
 @section('card_name', 'Component List')
 @section('breadcrumb')
+    <li class="breadcrumb-item "><a href="{{ route("section-list", [$productDetailsId, $sectionId]) }}">Section List</a></li>
     <li class="breadcrumb-item ">Component List</li>
 @endsection
 @section('action')
-{{--    <a href="{{ route('app_service.details.list', ['type' => $data['tab_type'], 'id' => $data['product_id'] ]) }}" id="syncBtn" class="btn btn-outline-blue-grey round btn-glow px-2">--}}
-{{--        Go Back Section--}}
-{{--    </a>--}}
 
-{{--    @if( $section_has_multiple_component == 1 || count($component_list) < 1 )--}}
-        <a href="{{ route("component-create", $sectionId) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-            Add Component
-        </a>
-{{--    @endif--}}
+<a href="{{ route("component-create", [$productDetailsId, $sectionId]) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>Add Component</a>
+
 @endsection
 @section('content')
     <section>
@@ -41,12 +36,10 @@
                                     <td>{!! $list->editor_en !!}</td>
                                     <td>{{ $list->component_type }}</td>
                                     <td>
-                                        <a href="{{ route("component-edit", [$sectionId, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        @if( isset($list->is_default) && $list->is_default != 0 )
-                                            <a href="#" remove="{{ url("app-service-product/$list->id/delete") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
-                                                <i class="la la-trash"></i>
-                                            </a>
-                                        @endif
+                                        <a href="{{ route("component-edit", [$productDetailsId, $sectionId, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <a href="#" remove="{{ url("app-service-product/$list->id/delete") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
+                                            <i class="la la-trash"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

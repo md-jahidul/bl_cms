@@ -1,23 +1,21 @@
 @extends('layouts.admin')
-@section('title', 'Partner Create')
-@section('card_name', 'Partner Create')
+@section('title', 'Component Create')
+@section('card_name', 'Component Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('partners') }}"> Partner List</a></li>
-    <li class="breadcrumb-item active"> Partner Create</li>
+    <li class="breadcrumb-item active"> <a href="{{ route('section-list', [$productDetailsId, $sectionId]) }}"> Section List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ route('component-list', [$productDetailsId, $sectionId]) }}"> Component List</a></li>
+    <li class="breadcrumb-item active"> Component Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('partners') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{  route('component-list', [$productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
-
-
-
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('component-store', $sectionId) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route('component-store', [$productDetailsId, $sectionId]) }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="app-content">
                                 <h3>Component Fields</h3><hr>
                                 <div class="sidebar-right">
@@ -46,6 +44,11 @@
                                                         </fieldset>
 
                                                         <fieldset>
+                                                            <input type="checkbox" id="dropdown">
+                                                            <label for="text-editor" class="">Dropdown</label>
+                                                        </fieldset>
+
+                                                        <fieldset>
                                                             <input type="checkbox" id="image-field">
                                                             <label for="image-field" class="">Image Field</label>
                                                         </fieldset>
@@ -67,14 +70,16 @@
                                             <div class="row">
 
                                                 <div class="form-group col-md-12 {{ $errors->has('editor_en') ? ' error' : '' }}">
-                                                    <label for="editor_en" >Data Type</label>
-                                                    <select name="component_type" class="form-control required" required data-validation-required-message="Please select design structure">
+                                                    <label for="editor_en">Data Type</label>
+                                                    <select name="component_type" class="form-control required" required data-validation-required-message="Please select data type">
                                                         <option value="">--Select Data Type--</option>
                                                         <option value="text_area">Text Area</option>
                                                         <option value="bullet Text">Bullet Text</option>
                                                         <option value="accordion Text">Accordion Text</option>
                                                         <option value="single_image">Single Image</option>
+                                                        <option value="banner_image">Banner Image</option>
                                                         <option value="multiple_image">Multiple Image</option>
+                                                        <option value="drop_down">Dropdown</option>
                                                     </select>
                                                     <div class="help-block"></div>
                                                     @if ($errors->has('editor_en'))
@@ -82,7 +87,7 @@
                                                     @endif
                                                 </div>
 
-                                                <slot id="text-field" style="display: none">
+                                                <slot id="text-field" class="d-none">
                                                     <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                                         <label for="title_en">Text Field (English)</label>
                                                         <input type="text" name="title_en"  class="form-control" placeholder="Enter company name bangla"
@@ -104,7 +109,7 @@
                                                     </div>
                                                 </slot>
 
-                                                <slot id="text-area-field" style="display: none">
+                                                <slot id="text-area-field" class="d-none">
                                                     <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
                                                         <label for="description_en" >Text Area (English)</label>
                                                         <textarea name="description_en"  class="form-control" placeholder="Enter company name bangla">{{ old("description_en") ? old("description_en") : '' }}</textarea>
@@ -125,7 +130,7 @@
                                                     </div>
                                                 </slot>
 
-                                                <slot id="text-editor-field" style="display: none">
+                                                <slot id="text-editor-field" class="d-none">
                                                     <div class="form-group col-md-6 {{ $errors->has('editor_en') ? ' error' : '' }}">
                                                         <label for="editor_en">Text Editor (English)</label>
                                                         <textarea type="text" name="editor_en"  class="form-control" placeholder="Enter offer details in english" id="details"></textarea>
@@ -145,14 +150,33 @@
                                                     </div>
                                                 </slot>
 
-                                                <slot id="single-image" style="display: none">
+                                                <slot id="dropdown_field" class="d-none">
                                                     <div class="form-group col-md-6">
-                                                        <label for="alt_text" class="">Single Image</label>
+                                                        <label for="editor_bn" class="text-success">Drop Down Sample Picture</label>
+                                                        <img class=" img-fluid" src="{{ asset('sample-images/drop_down.png') }}" alt="Image description">
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('editor_en') ? ' error' : '' }}">
+                                                        <label for="editor_en" class="required" >Drop Down Data</label>
+                                                        <select name="other_attributes[dropdown_data_type]" class="form-control required">
+                                                            <option value="">--Select Dropdown Data Type--</option>
+                                                            <option value="easy_payment_card">Easy Payment Card</option>
+                                                            <option value="device_data_offer">Device Free Data Offer</option>
+                                                        </select>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('editor_en'))
+                                                            <div class="help-block">{{ $errors->first('editor_en') }}</div>
+                                                        @endif
+                                                    </div>
+                                                </slot>
+
+                                                <slot id="single-image" class="d-none">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="alt_text" class="">Image Field</label>
                                                         <div class="custom-file">
-                                                            <input type="file" name="image" class="custom-file-input" id="image">
-                                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                                            <input type="file" name="image" class="dropify" data-height="80">
+                                                            <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                         </div>
-                                                        <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                     </div>
 
                                                     <div class="form-group col-md-6">
@@ -161,15 +185,8 @@
                                                     </div>
                                                 </slot>
 
-{{--                                                ============================================ Dropzone ===============================================                             --}}
 
-
-
-{{--                                                ============================================ Dropzone ===============================================--}}
-
-
-                                                <slot id="multiple-image-field" style="display: none">
-
+                                                <slot id="multiple-image-field" class="d-none">
                                                     <div class="col-md-6 col-xs-6">
                                                         <div class="form-group">
                                                             <label for="message">Multiple Image</label>
@@ -180,7 +197,7 @@
 
                                                     <div class="form-group col-md-5">
                                                         <label for="alt_text">Alt Text</label>
-                                                        <input type="text" name="multiple_attributes[alt_text][alt_text_1]"  class="form-control">
+                                                        <input type="text" name="multiple_attributes[alt_text][alt_text_1]" class="form-control">
                                                     </div>
 
                                                     <div class="form-group col-md-1">
@@ -227,6 +244,7 @@
 
 @endpush
 @push('page-js')
+    <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
@@ -293,34 +311,37 @@
                 $('.'+rowId).remove();
             });
 
-            var inputText = $('#input-text');
-            var textArea = $('#text-area');
-            var textEditor = $('#text-editor');
-            var imageField = $('#image-field');
-            var multiImage = $('#multi-image');
-
-            var textField = $('#text-field');
-            var textAreaField = $('#text-area-field');
-            var textEditorField = $('#text-editor-field');
-            var singleImage = $('#single-image');
-            var multipleImageField = $('#multiple-image-field');
-
-            function showHideElement(field, item){
-                $(field).on('click', function () {
-                    var isChecked = $(this).is(":checked");
-                    if (isChecked) {
-                        $(item).show()
-                    } else {
-                        $(item).hide()
-                    }
-                });
-            }
-
-            showHideElement(inputText, textField);
-            showHideElement(textArea, textAreaField);
-            showHideElement(textEditor, textEditorField);
-            showHideElement(imageField, singleImage);
-            showHideElement(multiImage, multipleImageField);
+            // var inputText = $('#input-text');
+            // var textArea = $('#text-area');
+            // var textEditor = $('#text-editor');
+            // var dropDown = $('#dropdown');
+            // var imageField = $('#image-field');
+            // var multiImage = $('#multi-image');
+            //
+            // var textField = $('#text-field');
+            // var textAreaField = $('#text-area-field');
+            // var textEditorField = $('#text-editor-field');
+            // var dropdownField = $('#dropdown_field');
+            // var singleImage = $('#single-image');
+            // var multipleImageField = $('#multiple-image-field');
+            //
+            // function showHideElement(field, item){
+            //     $(field).on('click', function () {
+            //         var isChecked = $(this).is(":checked");
+            //         if (isChecked) {
+            //             $(item).show()
+            //         } else {
+            //             $(item).hide()
+            //         }
+            //     });
+            // }
+            //
+            // showHideElement(inputText, textField);
+            // showHideElement(textArea, textAreaField);
+            // showHideElement(textEditor, textEditorField);
+            // showHideElement(dropDown, dropdownField);
+            // showHideElement(imageField, singleImage);
+            // showHideElement(multiImage, multipleImageField);
 
 
             $('.dropify').dropify({

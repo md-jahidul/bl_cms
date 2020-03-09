@@ -14,15 +14,19 @@ class BusinessComPkTwoRepository extends BaseRepository {
 
     public $modelName = BusinessComPackageTwo::class;
 
-    public function saveComponent($position, $title, $name, $data, $days, $price, $srvsId, $oldComponents) {
+    public function saveComponent($position, $p2data, $srvsId, $oldComponents) {
         $insertData = [];
-        foreach ($title as $k => $v) {
+        foreach ($p2data['p2TitleEn'] as $k => $v) {
             $insertData[] = array(
-                'title' => $v,
-                'package_name' => $name[$k],
-                'data_limit' => $data[$k],
-                'package_days' => $days[$k],
-                'price' => $price[$k],
+                'title' => $p2data['p2TitleEn'][$k],
+                'title_bn' => $p2data['p2TitleBn'][$k],
+                'package_name' => $p2data['p2NameEn'][$k],
+                'package_name_bn' => $p2data['p2NameBn'][$k],
+                'data_limit' => $p2data['p2DataEn'][$k],
+                'data_limit_bn' => $p2data['p2DataBn'][$k],
+                'package_days' => $p2data['p2DaysEn'][$k],
+                'package_days_bn' => $p2data['p2DaysBn'][$k],
+                'price' => $p2data['p2PriceEn'][$k],
                 'position' => $position + $oldComponents,
                 'service_id' => $srvsId,
             );
@@ -63,7 +67,6 @@ class BusinessComPkTwoRepository extends BaseRepository {
         $daysEn = $request->package_days_en;
         $daysBn = $request->package_days_bn;
         $priceEn = $request->price_en;
-        $priceBn = $request->price_bn;
 
         $data = [];
         foreach ($comIds as $k => $val) {
@@ -80,7 +83,6 @@ class BusinessComPkTwoRepository extends BaseRepository {
                     'package_days' => $daysEn[$k],
                     'package_days_bn' => $daysBn[$k],
                     'price' => $priceEn[$k],
-                    'price_bn' => $priceBn[$k],
                     'position' => $position,
                     'service_id' => $srvsId,
                 );
@@ -98,7 +100,6 @@ class BusinessComPkTwoRepository extends BaseRepository {
                             'package_days' => $daysEn[$k],
                             'package_days_bn' => $daysBn[$k],
                             'price' => $priceEn[$k],
-                            'price_bn' => $priceBn[$k],
                         )
                 );
             }

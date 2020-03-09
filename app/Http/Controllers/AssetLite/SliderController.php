@@ -94,8 +94,9 @@ class SliderController extends Controller
     public function edit($id, $type)
     {
         $slider = $this->alSliderService->findOne($id);
+        $previousUrl = url()->previous();
         $other_attributes = $slider->other_attributes;
-        return view('admin.slider.edit', compact('slider', 'type', 'other_attributes'));
+        return view('admin.slider.edit', compact('slider', 'type', 'other_attributes', 'previousUrl'));
     }
 
     /**
@@ -108,7 +109,7 @@ class SliderController extends Controller
         $sliderType = $request->slider_type;
         $response = $this->alSliderService->updateSlider($request->all(), $request->id);
         Session::flash('message', $response->getContent());
-        return redirect("/$sliderType-sliders");
+        return redirect((strpos($request->previous_url, 'about-slider') !== false) ? $request->previous_url : url("/$sliderType-sliders"));
     }
 
     /**

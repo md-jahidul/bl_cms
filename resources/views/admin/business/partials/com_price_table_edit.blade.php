@@ -4,19 +4,19 @@
             <input type="hidden" name="type" value="product-price-table">
 
             <div class="row">
-                
+
                 <input type="hidden" name="com_id" value="{{$component->id}}">
 
                 <div class="col-md-8 col-xs-12">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label class="display-block">Title (EN) <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$component->title}}" name="title_en">
+                            <input type="text" required class="form-control" value="{{$component->title}}" name="title_en">
 
                         </div>
                         <div class="col-md-6">
                             <label class="display-block">Title (BN) <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" value="{{$component->title_bn}}" name="title_bn">
+                            <input type="text" required class="form-control" value="{{$component->title_bn}}" name="title_bn">
                         </div>
 
                     </div>
@@ -101,13 +101,13 @@
                     <input type="hidden" value="{{$totalRow}}" class="total_row">
 
                     <div class="col-md-6 pull-left price_table_wrap_en">
-                        <label class="display-block">(EN) <span class="text-dange                                            r">*</span></label>
+                        <label class="display-block">(EN) <span class="text-danger">*</span></label>
                         @foreach($bodyEn as $k => $val)
 
                         <div class="row column_body_wrap_{{$k}}">
-                            <input type="text" value="{{$val[0]}}" class="form-control col-md-4 pull-left" name="column_one_en[]">
-                            <input type="text" value="{{$val[1]}}" class="form-control col-md-4 pull-left" name="column_two_en[]">
-                            <input type="text" value="{{$val[2]}}" class="form-control col-md-3 pull-left" name="column_three_en[]">
+                            <input type="text" required value="{{$val[0]}}" class="form-control col-md-4 pull-left" name="column_one_en[]">
+                            <input type="text" required value="{{$val[1]}}" class="form-control col-md-4 pull-left" name="column_two_en[]">
+                            <input type="text" required value="{{$val[2]}}" class="form-control col-md-3 pull-left" name="column_three_en[]">
                         </div>
 
 
@@ -121,13 +121,14 @@
                         <label class="display-block">(BN) <span class="text-danger">*</span></label>
                         @foreach($bodyBn as $k => $val)
                         <div class="row column_body_wrap_{{$k}}">
-                            <input type="text" value="{{$val[0]}}" class="form-control col-md-4 pull-left" name="column_one_bn[]">
-                            <input type="text" value="{{$val[1]}}" class="form-control col-md-4 pull-left" name="column_two_bn[]">
-                            <input type="text" value="{{$val[2]}}" class="form-control col-md-3 pull-left" name="column_three_bn[]">
-
+                            <input type="text" required value="{{$val[0]}}" class="form-control col-md-4 pull-left" name="column_one_bn[]">
+                            <input type="text" required value="{{$val[1]}}" class="form-control col-md-4 pull-left" name="column_two_bn[]">
+                            <input type="text" required value="{{$val[2]}}" class="form-control col-md-3 pull-left" name="column_three_bn[]">
+                            @if($k > 0)
                             <a href="javascript:;" column="{{$k}}" class="remove_price_table_clmn text-center text-danger">
                                 <i class="la la-minus-square"></i>
                             </a>
+                            @endif
                         </div>
 
                         <div class="clearfix"></div>
@@ -168,7 +169,7 @@
             $(htmlBn).find('.column_body_wrap').addClass('column_body_wrap_' + totalRow);
             $(htmlBn).find('.remove_price_table_clmn').attr('column', totalRow);
             $('.price_table_wrap_bn').append(htmlBn);
-            
+
             var newTotalRow = parseInt(totalRow) + 1;
             $('.total_row').val(newTotalRow);
 
