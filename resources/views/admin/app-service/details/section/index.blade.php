@@ -388,87 +388,200 @@ function matchRelatedProduct($id, $roles)
 					 $parentSelector.find('#form_save').hide();
 					 $parentSelector.find('#form_update').show();
 
-					 console.log(result.data.sections);
+					 console.log(result.data);
 
-					// if(  )
+					if( result.data.sections.section_type == 'slider_text_with_image_right' ){
 
-					$('#'+modalComponent).modal('show');
-
-					// Set all sections
-					$.each(result.data.sections, function(k, v){
-
-						if( k == 'title_en' ){     
-						   $parentSelector.find("input[name='sections[title_en]']").val(v);
-						}
-
-						if( k == 'title_bn' ){     
-						   $parentSelector.find("input[name='sections[title_bn]']").val(v);
-						}
-						
-					});
-
-					// Add section id
-					$parentSelector.find('.section_id').val(result.data.sections.id);
-
-					$("input[name='sections[status]']").each(function(sk, sv){
-					   // console.log($(sv).val());
-					   if( $(sv).val() == result.data.sections.status ){
-						   $(sv).attr('checked', true);
-					   }
-
-					});
+						$('#edit_'+modalComponent).modal('show');
 
 
-					// Compoent foreach
-					$.each(result.data.component, function(cpk, cpv){
 
-						$.each(cpv, function(ck, cv){
+						// Set all sections
+						$.each(result.data.sections, function(k, v){
 
-						   if( ck == 'title_en' ){                            
-							 $parentSelector.find("input[name='component["+cpk+"][title_en]']").val(cv);
-						   }
+							if( k == 'title_en' ){     
+							   $parentSelector.find("input[name='sections[title_en]']").val(v);
+							}
 
-						   if( ck == 'title_bn' ){                            
-							 $parentSelector.find("input[name='component["+cpk+"][title_bn]']").val(cv);
-						   }
+							if( k == 'title_bn' ){     
+							   $parentSelector.find("input[name='sections[title_bn]']").val(v);
+							}
+							
+						});
 
-						   if( ck == 'alt_text' ){                            
-							 $parentSelector.find("input[name='component["+cpk+"][alt_text]']").val(cv);
-						   }
+						// Add section id
+						$parentSelector.find('.section_id').val(result.data.sections.id);
 
-
-						   if( ck == 'image' ){
-							 $parentSelector.find('.imgDisplay').attr('src', baseUrl + cv).show();
-						   }
-
-						   if( ck == 'id' ){
-							  $parentSelector.find("input[name='component["+cpk+"][id]']").val(cv);
-						   }
-
-
-						   if( ck == 'description_en' ){                            
-							 $parentSelector.find("textarea[name='component["+cpk+"][description_en]']").val(cv);
-						   }
-
-						   if( ck == 'description_bn' ){                            
-							 $parentSelector.find("textarea[name='component["+cpk+"][description_bn]']").val(cv);
-						   }
-
-						   if( ck == 'editor_en' ){                            
-							 $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").val(cv);
-
-							 $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
-						   }
-
-						   if( ck == 'editor_bn' ){                            
-							 $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").val(cv);
-
-							 $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
+						$("input[name='sections[status]']").each(function(sk, sv){
+						   // console.log($(sv).val());
+						   if( $(sv).val() == result.data.sections.status ){
+							   $(sv).attr('checked', true);
 						   }
 
 						});
 
-					});
+
+
+						// Compoent foreach
+						$.each(result.data.component, function(cpk, cpv){
+
+							$.each(cpv, function(ck, cv){
+
+
+								if( ck == 'multiple_attributes' ){
+									// console.log(cv);
+
+									if( typeof cv !== 'undefined' ){
+										var multiData = JSON.parse(cv);
+
+										console.log(multiData);
+
+										$.each(multiData, function(mck, mcv){
+
+											var html = '';
+
+											html += '<tr><td>'+mck+'</td><td width="5%"><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" /></td><td>'+mcv.title_en+'</td><td>'+mcv.status+'</td><td>Edit</td></tr>';
+
+											$('#slider_sortable').append(html);
+
+										});
+									}
+								}
+
+
+
+							  //  if( ck == 'title_en' ){                            
+								 // $parentSelector.find("input[name='component["+cpk+"][title_en]']").val(cv);
+							  //  }
+
+							  //  if( ck == 'title_bn' ){                            
+								 // $parentSelector.find("input[name='component["+cpk+"][title_bn]']").val(cv);
+							  //  }
+
+							  //  if( ck == 'alt_text' ){                            
+								 // $parentSelector.find("input[name='component["+cpk+"][alt_text]']").val(cv);
+							  //  }
+
+
+							  //  if( ck == 'image' ){
+								 // $parentSelector.find('.imgDisplay').attr('src', baseUrl + cv).show();
+							  //  }
+
+							  //  if( ck == 'id' ){
+								 //  $parentSelector.find("input[name='component["+cpk+"][id]']").val(cv);
+							  //  }
+
+
+							  //  if( ck == 'description_en' ){                            
+								 // $parentSelector.find("textarea[name='component["+cpk+"][description_en]']").val(cv);
+							  //  }
+
+							  //  if( ck == 'description_bn' ){                            
+								 // $parentSelector.find("textarea[name='component["+cpk+"][description_bn]']").val(cv);
+							  //  }
+
+							  //  if( ck == 'editor_en' ){                            
+								 // $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").val(cv);
+
+								 // $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
+							  //  }
+
+							  //  if( ck == 'editor_bn' ){                            
+								 // $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").val(cv);
+
+								 // $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
+							  //  }
+
+
+
+
+							});
+
+						});
+
+
+					}
+					else{
+						$('#'+modalComponent).modal('show');
+
+						// Set all sections
+						$.each(result.data.sections, function(k, v){
+
+							if( k == 'title_en' ){     
+							   $parentSelector.find("input[name='sections[title_en]']").val(v);
+							}
+
+							if( k == 'title_bn' ){     
+							   $parentSelector.find("input[name='sections[title_bn]']").val(v);
+							}
+							
+						});
+
+						// Add section id
+						$parentSelector.find('.section_id').val(result.data.sections.id);
+
+						$("input[name='sections[status]']").each(function(sk, sv){
+						   // console.log($(sv).val());
+						   if( $(sv).val() == result.data.sections.status ){
+							   $(sv).attr('checked', true);
+						   }
+
+						});
+
+
+						// Compoent foreach
+						$.each(result.data.component, function(cpk, cpv){
+
+							$.each(cpv, function(ck, cv){
+
+							   if( ck == 'title_en' ){                            
+								 $parentSelector.find("input[name='component["+cpk+"][title_en]']").val(cv);
+							   }
+
+							   if( ck == 'title_bn' ){                            
+								 $parentSelector.find("input[name='component["+cpk+"][title_bn]']").val(cv);
+							   }
+
+							   if( ck == 'alt_text' ){                            
+								 $parentSelector.find("input[name='component["+cpk+"][alt_text]']").val(cv);
+							   }
+
+
+							   if( ck == 'image' ){
+								 $parentSelector.find('.imgDisplay').attr('src', baseUrl + cv).show();
+							   }
+
+							   if( ck == 'id' ){
+								  $parentSelector.find("input[name='component["+cpk+"][id]']").val(cv);
+							   }
+
+
+							   if( ck == 'description_en' ){                            
+								 $parentSelector.find("textarea[name='component["+cpk+"][description_en]']").val(cv);
+							   }
+
+							   if( ck == 'description_bn' ){                            
+								 $parentSelector.find("textarea[name='component["+cpk+"][description_bn]']").val(cv);
+							   }
+
+							   if( ck == 'editor_en' ){                            
+								 $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").val(cv);
+
+								 $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
+							   }
+
+							   if( ck == 'editor_bn' ){                            
+								 $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").val(cv);
+
+								 $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
+							   }
+
+							});
+
+						});
+					}
+
+						
 
 
 				}

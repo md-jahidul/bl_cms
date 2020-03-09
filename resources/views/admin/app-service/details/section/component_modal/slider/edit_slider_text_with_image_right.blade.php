@@ -14,6 +14,7 @@
 							<div class="modal-body">
 								<div class="row">
 									<div class="col-sm-12">
+										<h4 class="pb-1 float-left"><strong>Slider Image List</strong></h4>
 										<div class="add_button_wrap float-right">
 										  <a href="#" class="btn btn-info  btn-glow px-1 add_moreslider_item">+ Add slide</a>
 										</div>
@@ -27,7 +28,28 @@
 										{{ Form::hidden('sections[category]', 'component_sections' ) }}
 										{{ Form::hidden('component[0][component_type]', 'slider_text_with_image_right' ) }}
 
+
+									
 									<div class="col-sm-12">
+										<table class="table table-striped table-bordered"
+											   role="grid" aria-describedby="Example1_info" style="">
+											<thead>
+												<tr>
+													<td width="3%">#</td>
+													<th width="15%">Image</th>
+													<th width="20%">Title</th>
+													<th width="12%" class="">Status</th>
+													<th width="12%" class="">Action</th>
+												</tr>
+											</thead>
+											<tbody id="slider_sortable">
+													
+											</tbody>
+										</table>
+									</div>
+
+
+									{{-- <div class="col-sm-12">
 									  
 									  <div id="slider_content_section" class="slider_content_section" data-count="1">
 									    <input id="multi_item_count" type="hidden" name="component[0][multi_item_count]" value="1">
@@ -112,10 +134,8 @@
 
 									  </div>
 
-									  {{-- <hr class="hr">
-									  <br> --}}
 
-									</div>
+									</div> --}}
 
 
 
