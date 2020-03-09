@@ -43,7 +43,7 @@
                                     <select class="form-control" name="section_type">
                                         <option value="">---Select Section Type---</option>
                                         <option value="multi_section">Multi Component Section</option>
-                                        <option value="fixed_section">Fixed Component Section</option>
+                                        <option value="tab_section">Tab Section</option>
                                     </select>
                                 </div>
 

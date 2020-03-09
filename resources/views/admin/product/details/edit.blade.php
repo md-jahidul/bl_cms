@@ -43,7 +43,7 @@
                                     <select class="form-control" name="section_type">
                                         <option value="">---Select Section Type---</option>
                                         <option value="multi_section" {{ ($section->section_type == "multi_section") ? "selected" : '' }}>Multi Component Section</option>
-                                        <option value="fixed_section" {{ ($section->section_type == "fixed_section") ? "selected" : '' }}>Fixed Component Section</option>
+                                        <option value="tab_section" {{ ($section->section_type == "tab_section") ? "selected" : '' }}>Tab Section</option>
                                     </select>
                                 </div>
 
