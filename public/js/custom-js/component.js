@@ -13,6 +13,10 @@
     var singleImage = $('#single-image');
     var multipleImageField = $('#multiple-image-field');
 
+    $('#data-type').change(function () {
+        alert();
+    });
+
     function showHideElement(field, item) {
         $(field).on('click', function () {
             var isChecked = $(this).is(":checked");

@@ -71,15 +71,19 @@
 
                                                 <div class="form-group col-md-12 {{ $errors->has('editor_en') ? ' error' : '' }}">
                                                     <label for="editor_en">Data Type</label>
-                                                    <select name="component_type" class="form-control required" required data-validation-required-message="Please select data type">
+                                                    <select name="component_type" class="form-control required" id="data-type"
+                                                            required data-validation-required-message="Please select data type">
                                                         <option value="">--Select Data Type--</option>
-                                                        <option value="text_area">Text Area</option>
-                                                        <option value="bullet Text">Bullet Text</option>
-                                                        <option value="accordion Text">Accordion Text</option>
-                                                        <option value="single_image">Single Image</option>
-                                                        <option value="banner_image">Banner Image</option>
-                                                        <option value="multiple_image">Multiple Image</option>
-                                                        <option value="drop_down">Dropdown</option>
+                                                        @foreach($dataTypes as $key => $item)
+                                                            <option value="{{ $key }}">{{ $item }}</option>
+                                                        @endforeach
+{{--                                                        <option value="text_area">Text</option>--}}
+{{--                                                        <option value="text_and_button">Text And Button</option>--}}
+{{--                                                        <option value="bullet_text">Bullet Text</option>--}}
+{{--                                                        <option value="accordion_text">Accordion Text</option>--}}
+{{--                                                        <option value="single_image">Single Image</option>--}}
+{{--                                                        <option value="multiple_image">Multiple Image</option>--}}
+{{--                                                        <option value="drop_down">Dropdown</option>--}}
                                                     </select>
                                                     <div class="help-block"></div>
                                                     @if ($errors->has('editor_en'))
@@ -105,6 +109,57 @@
                                                         <div class="help-block"></div>
                                                         @if ($errors->has('title_bn'))
                                                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                                        @endif
+                                                    </div>
+                                                </slot>
+
+                                                <slot id="text-area-button" class="d-none">
+                                                    <div class="form-group col-md-6 {{ $errors->has('button_en') ? ' error' : '' }}">
+                                                        <label for="button_en">Button Title (English)</label>
+                                                        <input type="text" name="title_en"  class="form-control" placeholder="Enter company name bangla"
+                                                               value="{{ old("button_en") ? old("button_en") : '' }}">
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('button_en'))
+                                                            <div class="help-block">  {{ $errors->first('button_en') }}</div>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('button_bn') ? ' error' : '' }}">
+                                                        <label for="button_bn" >Button Title (Bangla)</label>
+                                                        <input type="text" name="button_bn"  class="form-control" placeholder="Enter company name bangla"
+                                                               value="{{ old("button_bn") ? old("button_bn") : '' }}">
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('button_bn'))
+                                                            <div class="help-block">  {{ $errors->first('button_bn') }}</div>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('button_link') ? ' error' : '' }}">
+                                                        <label for="button_link" >Button URL</label>
+                                                        <input type="text" name="button_link"  class="form-control" placeholder="Enter company name bangla"
+                                                               value="{{ old("button_link") ? old("button_link") : '' }}">
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('button_link'))
+                                                            <div class="help-block">  {{ $errors->first('button_link') }}</div>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
+                                                        <label for="description_en" >Text Area (English)</label>
+                                                        <textarea name="description_en"  class="form-control" placeholder="Enter company name bangla">{{ old("description_en") ? old("description_en") : '' }}</textarea>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('description_en'))
+                                                            <div class="help-block">  {{ $errors->first('description_en') }}</div>
+                                                        @endif
+                                                    </div>
+
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('description_bn') ? ' error' : '' }}">
+                                                        <label for="description_bn" >Text Area (Bangla)</label>
+                                                        <textarea name="description_bn"  class="form-control" placeholder="Enter company name bangla">{{ old("description_bn") ? old("description_bn") : '' }}  </textarea>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('description_bn'))
+                                                            <div class="help-block">  {{ $errors->first('description_bn') }}</div>
                                                         @endif
                                                     </div>
                                                 </slot>
