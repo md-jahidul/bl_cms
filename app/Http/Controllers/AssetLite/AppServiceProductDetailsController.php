@@ -81,7 +81,7 @@ class AppServiceProductDetailsController extends Controller
      * @param Request $request
      * @param $tab_type
      * @param $product_id
-     * @return Request
+     * @return RedirectResponse|Redirector
      */
     public function fixedSectionUpdate(Request $request, $tab_type, $product_id)
     {

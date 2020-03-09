@@ -13,10 +13,13 @@ class BusinessComFeaturesRepository extends BaseRepository {
 
     public $modelName = BusinessComFeatures::class;
 
-    public function saveComponent($position, $feature, $serviceId, $oldComponents) {
+    public function saveComponent($position, $ftTitleEn, $ftTitleBn, $featureEn, $featureBn, $serviceId, $oldComponents) {
         $this->model->insert(
                 array(
-                    "feature_text" => $feature,
+                    "title_bn" => $ftTitleBn[$position],
+                    "title_en" => $ftTitleEn[$position],
+                    "feature_text" => $featureEn[$position],
+                    "feature_text_bn" => $featureBn[$position],
                     "position" => $position + $oldComponents,
                     "service_id" => $serviceId
                 )
@@ -41,15 +44,15 @@ class BusinessComFeaturesRepository extends BaseRepository {
     public function updateComponent($request) {
 
         $comId = $request->com_id;
-        $featureTextEn = $request->feature_text_en;
-        $featureTextBn = $request->feature_text_bn;
 
 
         $component = $this->model->where(array('id' => $comId))
                 ->update(
                 array(
-                    'feature_text' => $featureTextEn,
-                    'feature_text_bn' => $featureTextBn,
+                    'title_bn' => $request->title_bn,
+                    'title_en' => $request->title_en,
+                    'feature_text' => $request->feature_text_en,
+                    'feature_text_bn' => $request->feature_text_bn,
                 )
         );
 

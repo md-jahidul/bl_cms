@@ -157,49 +157,90 @@ class BusinessOthersService {
 
 
             //save photo text
-            $this->_savePhotoText($request->com_pt_text, $request->com_pt_photo, $srvsId, $oldComponents);
+            $ptTextEn = $request->com_pt_text_en;
+            $ptTextBn = $request->com_pt_text_bn;
+            $ptAlt = $request->com_pt_alt_text;
+            $ptPhoto = $request->com_pt_photo;
+            $this->_savePhotoText($ptTextEn, $ptTextBn, $ptAlt, $ptPhoto, $srvsId, $oldComponents);
 
             //save package comparison one
-            $p1Head = $request->com_pc1_table_head;
-            $p1Text = $request->com_pc1_feature_text;
-            $p1Price = $request->com_pc1_price;
-            $this->_savePackageOne($p1Head, $p1Text, $p1Price, $srvsId, $oldComponents);
+            $p1HeadEn = $request->com_pc1_table_head_en;
+            $p1HeadBn = $request->com_pc1_table_head_bn;
+
+            $p1TextEn = $request->com_pc1_feature_text_en;
+            $p1TextBn = $request->com_pc1_feature_text_bn;
+
+            $p1PriceEn = $request->com_pc1_price_en;
+            $p1PriceBn = $request->com_pc1_price_bn;
+            $this->_savePackageOne($p1HeadEn, $p1HeadBn, $p1TextEn, $p1TextBn, $p1PriceEn, $p1PriceBn, $srvsId, $oldComponents);
 
 
             //save package comparison two
-            $p2Title = $request->com_pk2_title;
-            $p2Name = $request->com_pk2_name;
-            $p2Data = $request->com_pk2_data;
-            $p2Days = $request->com_pk2_days;
-            $p2Price = $request->com_pk2_price;
-            $this->_savePackageTwo($p2Title, $p2Name, $p2Data, $p2Days, $p2Price, $srvsId, $oldComponents);
+            $p2data['p2TitleEn'] = $request->com_pk2_title_en;
+            $p2data['p2TitleBn'] = $request->com_pk2_title_bn;
+
+            $p2data['p2NameEn'] = $request->com_pk2_name_en;
+            $p2data['p2NameBn'] = $request->com_pk2_name_bn;
+
+            $p2data['p2DataEn'] = $request->com_pk2_data_en;
+            $p2data['p2DataBn'] = $request->com_pk2_data_bn;
+
+            $p2data['p2DaysEn'] = $request->com_pk2_days_en;
+            $p2data['p2DaysBn'] = $request->com_pk2_days_bn;
+
+            $p2data['p2PriceEn'] = $request->com_pk2_price_en;
+
+            $this->_savePackageTwo($p2data, $srvsId, $oldComponents);
 
             //save package features
-            $features = $request->com_ft_text;
-            $this->_saveServiceFeature($features, $srvsId, $oldComponents);
+            $ftTitleEn = $request->com_ft_title_en;
+            $ftTitleBn = $request->com_ft_title_bn;
+            $featureEn = $request->com_ft_text_en;
+            $featureBn = $request->com_ft_text_bn;
+            $this->_saveServiceFeature($ftTitleEn, $ftTitleBn, $featureEn, $featureBn, $srvsId, $oldComponents);
 
             //save product price table data
-            $ptTitle = $request->com_price_title;
-            $ptHead = $request->com_price_head;
-            $ptColOne = $request->com_price_column_one;
-            $ptColTwo = $request->com_price_column_two;
-            $ptColThree = $request->com_price_column_three;
-            $this->_saveProductPrice($ptTitle, $ptHead, $ptColOne, $ptColTwo, $ptColThree, $srvsId, $oldComponents);
+            $pTable['ptTitleEn'] = $request->com_price_title_en;
+            $pTable['ptTitleBn'] = $request->com_price_title_bn;
+
+            $pTable['ptHeadEn'] = $request->com_price_head_en;
+            $pTable['ptHeadBn'] = $request->com_price_head_bn;
+
+            $pTable['ptColOneEn'] = $request->com_price_column_one_en;
+            $pTable['ptColOneBn'] = $request->com_price_column_one_bn;
+
+            $pTable['ptColTwoEn'] = $request->com_price_column_two_en;
+            $pTable['ptColTwoBn'] = $request->com_price_column_two_bn;
+
+            $pTable['ptColThreeEn'] = $request->com_price_column_three_en;
+            $pTable['ptColThreeBn'] = $request->com_price_column_three_bn;
+
+            $this->_saveProductPrice($pTable, $srvsId, $oldComponents);
 
             //save video component
-            $videoName = $request->com_vid_name;
-            $videoTitle = $request->com_vid_title;
-            $videoEmbed = $request->com_vid_embed;
-            $videoDes = $request->com_vid_description;
-            $this->_saveVideoComponent($videoName, $videoTitle, $videoEmbed, $videoDes, $srvsId, $oldComponents);
+            $vData['videoNameEn'] = $request->com_vid_name_en;
+            $vData['videoNameBn'] = $request->com_vid_name_bn;
+
+            $vData['videoTitleEn'] = $request->com_vid_title_en;
+            $vData['videoTitleBn'] = $request->com_vid_title_bn;
+
+            $vData['videoEmbed'] = $request->com_vid_embed;
+
+            $vData['videoDesEn'] = $request->com_vid_description_en;
+            $vData['videoDesBn'] = $request->com_vid_description_bn;
+            $this->_saveVideoComponent($vData, $srvsId, $oldComponents);
 
 
             //save photo component
-            $photoOne = $request->com_photo_one;
-            $photoTwo = $request->com_photo_two;
-            $photoThree = $request->com_photo_three;
-            $photoFour = $request->com_photo_four;
-            $this->_savePhotoComponent($photoOne, $photoTwo, $photoThree, $photoFour, $srvsId, $oldComponents);
+            $pcData['photoOne'] = $request->com_photo_one ? $request->com_photo_one : "";
+            $pcData['photoOneAlt'] = $request->com_photo_one_alt;
+            $pcData['photoTwo'] = $request->com_photo_two ? $request->com_photo_two : "";
+            $pcData['photoTwoAlt'] = $request->com_photo_two_alt;
+            $pcData['photoThree'] = $request->com_photo_three ? $request->com_photo_three : "";
+            $pcData['photoThreeAlt'] = $request->com_photo_three_alt;
+            $pcData['photoFour'] = $request->com_photo_four ? $request->com_photo_four : "";
+            $pcData['photoFourAlt'] = $request->com_photo_four_alt;
+            $this->_savePhotoComponent($pcData, $srvsId, $oldComponents);
 
             $response = [
                 'success' => 1,
@@ -219,88 +260,148 @@ class BusinessOthersService {
     }
 
     //save photo text component
-    private function _savePhotoText($text, $photo, $serviceId, $oldComponents) {
-        if (!empty($text)) {
-            foreach ($text as $position => $t) {
-                $photoVal = $photo[$position];
+    private function _savePhotoText($ptTextEn, $ptTextBn, $ptAlt, $ptPhoto, $serviceId, $oldComponents) {
+        if (!empty($ptTextEn)) {
+            foreach ($ptTextEn as $position => $textEn) {
+                $textBn = $ptTextBn[$position];
+                $altText = $ptAlt[$position];
+                $photoVal = $ptPhoto[$position];
                 $bannerPath = $this->upload($photoVal, 'assetlite/images/business-images');
-                $this->photoTextRepo->saveComponent($position, $t, $bannerPath, $serviceId, $oldComponents);
+                $this->photoTextRepo->saveComponent($position, $textEn,$textBn, $altText, $bannerPath, $serviceId, $oldComponents);
             }
         }
     }
 
     //save package comparison one
-    private function _savePackageOne($p1Head, $p1Text, $p1Price, $srvsId, $oldComponents) {
-        if (!empty($p1Head)) {
-            foreach ($p1Head as $position => $head) {
-                $ftText = $p1Text[$position];
-                $price = $p1Price[$position];
-                $this->pkOneRepo->saveComponent($position, $head, $ftText, $price, $srvsId, $oldComponents);
+    private function _savePackageOne($p1HeadEn, $p1HeadBn, $p1TextEn, $p1TextBn, $p1PriceEn, $p1PriceBn, $srvsId, $oldComponents) {
+        if (!empty($p1HeadEn)) {
+            foreach ($p1HeadEn as $position => $head) {
+
+                $hEn = $p1HeadEn[$position];
+                $hBn = $p1HeadBn[$position];
+
+                $tEn = $p1TextEn[$position];
+                $tBn = $p1TextBn[$position];
+
+                $pEn = $p1PriceEn[$position];
+
+                $this->pkOneRepo->saveComponent($position, $hEn, $hBn, $tEn, $tBn, $pEn, $srvsId, $oldComponents);
             }
         }
     }
 
     //save package comparison two
-    private function _savePackageTwo($p2Title, $p2Name, $p2Data, $p2Days, $p2Price, $srvsId, $oldComponents) {
-        if (!empty($p2Title)) {
-            foreach ($p2Title as $position => $title) {
-                $name = $p2Name[$position];
-                $data = $p2Data[$position];
-                $days = $p2Days[$position];
-                $price = $p2Price[$position];
-                $this->pkTwoRepo->saveComponent($position, $title, $name, $data, $days, $price, $srvsId, $oldComponents);
+    private function _savePackageTwo($p2data, $srvsId, $oldComponents) {
+
+        if (!empty($p2data['p2TitleEn'])) {
+            foreach ($p2data['p2TitleEn'] as $position => $val) {
+
+                $data['p2TitleEn'] = $p2data['p2TitleEn'][$position];
+                $data['p2TitleBn'] = $p2data['p2TitleBn'][$position];
+
+                $data['p2NameEn'] = $p2data['p2NameEn'][$position];
+                $data['p2NameBn'] = $p2data['p2NameBn'][$position];
+
+                $data['p2DataEn'] = $p2data['p2DataEn'][$position];
+                $data['p2DataBn'] = $p2data['p2DataBn'][$position];
+
+                $data['p2DaysEn'] = $p2data['p2DaysEn'][$position];
+                $data['p2DaysBn'] = $p2data['p2DaysBn'][$position];
+
+                $data['p2PriceEn'] = $p2data['p2PriceEn'][$position];
+
+                $this->pkTwoRepo->saveComponent($position, $data, $srvsId, $oldComponents);
             }
         }
     }
 
     //save service features
-    private function _saveServiceFeature($features, $srvsId, $oldComponents) {
-        if (!empty($features)) {
-            foreach ($features as $position => $ft) {
-                $this->featureRepo->saveComponent($position, $ft, $srvsId, $oldComponents);
+    private function _saveServiceFeature($ftTitleEn, $ftTitleBn, $featureEn, $featureBn, $srvsId, $oldComponents) {
+        if (!empty($ftTitleEn)) {
+            foreach ($ftTitleEn as $position => $val) {
+                $this->featureRepo->saveComponent($position, $ftTitleEn, $ftTitleBn, $featureEn, $featureBn, $srvsId, $oldComponents);
             }
         }
     }
 
     //save product price table
-    private function _saveProductPrice($ptTitle, $ptHead, $ptColOne, $ptColTwo, $ptColThree, $srvsId, $oldComponents) {
-        if (!empty($ptTitle)) {
-            foreach ($ptTitle as $position => $title) {
-                $head = $ptHead[$position];
-                $colOne = $ptColOne[$position];
-                $colTwo = $ptColTwo[$position];
-                $colThree = $ptColThree[$position];
-                $this->priceTableRepo->saveComponent($position, $title, $head, $colOne, $colTwo, $colThree, $srvsId, $oldComponents);
+    private function _saveProductPrice($pTable, $srvsId, $oldComponents) {
+
+
+
+
+
+        if (!empty($pTable['ptTitleEn'])) {
+            foreach ($pTable['ptTitleEn'] as $position => $title) {
+
+
+                $data['ptTitleEn'] = $pTable['ptTitleEn'][$position];
+                $data['ptTitleBn'] = $pTable['ptTitleBn'][$position];
+
+                $data['ptHeadEn'] = $pTable['ptHeadEn'][$position];
+                $data['ptHeadBn'] = $pTable['ptHeadBn'][$position];
+
+                $data['ptColOneEn'] = $pTable['ptColOneEn'][$position];
+                $data['ptColOneBn'] = $pTable['ptColOneBn'][$position];
+
+                $data['ptColTwoEn'] = $pTable['ptColTwoEn'][$position];
+                $data['ptColTwoBn'] = $pTable['ptColTwoBn'][$position];
+
+                $data['ptColThreeEn'] = $pTable['ptColThreeEn'][$position];
+                $data['ptColThreeBn'] = $pTable['ptColThreeBn'][$position];
+
+                $this->priceTableRepo->saveComponent($position, $data, $srvsId, $oldComponents);
             }
         }
     }
 
     //save video component
-    private function _saveVideoComponent($videoName, $videoTitle, $videoEmbed, $videoDes, $srvsId, $oldComponents) {
-        if (!empty($videoName)) {
-            foreach ($videoName as $position => $name) {
-                $title = $videoTitle[$position];
-                $embed = $videoEmbed[$position];
-                $description = $videoDes[$position];
-                $this->videoRepo->saveComponent($position, $name, $title, $embed, $description, $srvsId, $oldComponents);
+    private function _saveVideoComponent($vData, $srvsId, $oldComponents) {
+
+
+
+        if (!empty($vData['videoNameEn'])) {
+            foreach ($vData['videoNameEn'] as $position => $name) {
+                $data['videoNameEn'] = $vData['videoNameEn'][$position];
+                $data['videoNameBn'] = $vData['videoNameBn'][$position];
+
+                $data['videoTitleEn'] = $vData['videoTitleEn'][$position];
+                $data['videoTitleBn'] = $vData['videoTitleBn'][$position];
+
+                $data['videoEmbed'] = $vData['videoEmbed'][$position];
+
+                $data['videoDesEn'] = $vData['videoDesEn'][$position];
+                $data['videoDesBn'] = $vData['videoDesBn'][$position];
+
+                $this->videoRepo->saveComponent($position, $data, $srvsId, $oldComponents);
             }
         }
     }
 
     //save video component
-    private function _savePhotoComponent($photoOne, $photoTwo, $photoThree, $photoFour, $srvsId, $oldComponents) {
-        if (!empty($photoOne)) {
-            foreach ($photoOne as $position => $pOne) {
-                $pTwo = $photoTwo[$position];
-                $pThree = $photoThree[$position];
-                $pFour = $photoFour[$position];
+    private function _savePhotoComponent($pcData, $srvsId, $oldComponents) {
 
-                $onePath = $this->upload($pOne, 'assetlite/images/business-images');
-                $twoPath = $this->upload($pTwo, 'assetlite/images/business-images');
-                $threePath = $this->upload($pThree, 'assetlite/images/business-images');
-                $fourPath = $this->upload($pFour, 'assetlite/images/business-images');
 
-                $this->photoRepo->saveComponent($position, $onePath, $twoPath, $threePath, $fourPath, $srvsId, $oldComponents);
+        if (!empty($pcData['photoOne'])) {
+            foreach ($pcData['photoOne'] as $position => $val) {
+
+                $pOne = !empty($pcData['photoOne']) ? $pcData['photoOne'][$position] : "";
+                $pTwo = !empty($pcData['photoTwo']) ? $pcData['photoTwo'][$position] : "";
+                $pThree = !empty($pcData['photoThree']) ? $pcData['photoThree'][$position] : "";
+                $pFour = !empty($pcData['photoFour']) ? $pcData['photoFour'][$position] : "";
+                
+                $data['altOne'] = $pcData['photoOneAlt'][$position];
+                $data['altTwo']  = $pcData['photoTwoAlt'][$position];
+                $data['altThree']  = $pcData['photoThreeAlt'][$position];
+                $data['altFour']  = $pcData['photoFourAlt'][$position];
+
+                $data['onePath']  = !empty($pOne) ? $this->upload($pOne, 'assetlite/images/business-images') : "";
+                $data['twoPath']  = !empty($pTwo) ? $this->upload($pTwo, 'assetlite/images/business-images') : "";
+                $data['threePath']  = !empty($pThree) ? $this->upload($pThree, 'assetlite/images/business-images') : "";
+                $data['fourPath']  = !empty($pFour) ? $this->upload($pFour, 'assetlite/images/business-images') : "";
+                
+
+                $this->photoRepo->saveComponent($position, $data, $srvsId, $oldComponents);
             }
         }
     }
@@ -344,7 +445,7 @@ class BusinessOthersService {
         foreach ($features as $v) {
             $components[$v->position]['type'] = 'Product Features';
             $components[$v->position]['id'] = $v->id;
-            $components[$v->position]['text'] = $v->feature_text;
+            $components[$v->position]['text'] = $v->title_en;
             $components[$v->position]['photo_url'] = "";
         }
 
@@ -450,13 +551,49 @@ class BusinessOthersService {
                 $this->featureRepo->updateComponent($request);
             }
             if ($type == "product-price-table") {
-                 $this->priceTableRepo->updateComponent($request);
+                $this->priceTableRepo->updateComponent($request);
             }
             if ($type == "video-component") {
-                return $this->videoRepo->singleComponent($serviceId, $position);
+                $this->videoRepo->updateComponent($request);
             }
             if ($type == "photo-component") {
-                return $this->photoRepo->singleComponent($serviceId, $position);
+
+                $onePath = $request->old_photo_one;
+                if ($request->photo_one) {
+                    $onePath = $this->upload($request->photo_one, 'assetlite/images/business-images');
+                    //delete old photo
+                    if ($request->old_photo_one != "") {
+                        $this->deleteFile($request->old_photo_one);
+                    }
+                }
+
+                $twoPath = $request->old_photo_two;
+                if ($request->photo_two) {
+                    $twoPath = $this->upload($request->photo_two, 'assetlite/images/business-images');
+                    //delete old photo
+                    if ($request->old_photo_two != "") {
+                        $this->deleteFile($request->old_photo_two);
+                    }
+                }
+
+                $threePath = $request->old_photo_three;
+                if ($request->photo_three) {
+                    $threePath = $this->upload($request->photo_three, 'assetlite/images/business-images');
+                    //delete old photo
+                    if ($request->old_photo_three != "") {
+                        $this->deleteFile($request->old_photo_three);
+                    }
+                }
+                $fourPath = $request->old_photo_four;
+                if ($request->photo_four) {
+                    $fourPath = $this->upload($request->photo_four, 'assetlite/images/business-images');
+                    //delete old photo
+                    if ($request->old_photo_four != "") {
+                        $this->deleteFile($request->old_photo_four);
+                    }
+                }
+
+                $this->photoRepo->updateComponent($onePath, $twoPath, $threePath, $fourPath, $request);
             }
 
             $response = [

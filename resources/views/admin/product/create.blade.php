@@ -19,6 +19,22 @@
                         <form id="product_form" role="form" action="{{ route('product.store', strtolower($type)) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             <div class="row">
+
+                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
+                                    <label for="offer_category_id" class="required">Offer Type</label>
+                                    <select class="form-control required" name="offer_category_id" id="offer_type"
+                                            required data-validation-required-message="Please select offer">
+                                        <option data-alias="" value="">---Select Offer Type---</option>
+                                        @foreach($offers as $offer)
+                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}">{{ $offer->name_en }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('offer_category_id'))
+                                        <div class="help-block">{{ $errors->first('offer_category_id') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
                                     <label for="name_en">Offer Name (English)</label>
                                     <input type="text" name="name_en" id="name_en" class="form-control" placeholder="Enter offer name in English"
@@ -29,8 +45,29 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
+                                    <label for="name_bn">Offer Name (Bangla)</label>
+                                    <input type="text" name="name_bn" id="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
+                                           value="{{ old("name_bn") ? old("name_bn") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('name_bn'))
+                                        <div class="help-block">{{ $errors->first('name_bn') }}</div>
+                                    @endif
+                                </div>
+
+
+                                <slot id="others" data-offer-type="others" style="display: none">
+                                    @include('layouts.partials.products.other')
+                                </slot>
+
+                                <slot id="packages" data-offer-type="packages" style="display: none">
+                                    @include('layouts.partials.products.packages')
+                                    @include('layouts.partials.products.common-field.call_rate_unit')
+                                </slot>
+
+
                                 <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
-                                    <label for="product_code" class="required">Product ID</label>
+                                    <label for="product_code" class="required">Product Code</label>
                                     <select id="product_core" name="product_code"
                                             data-url="{{ url('product-core/match') }}"
                                             required data-validation-required-message="Please select product code">
@@ -42,16 +79,6 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('product_code'))
                                         <div class="help-block">{{ $errors->first('product_code') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
-                                    <label for="name_bn">Offer Name (Bangla)</label>
-                                    <input type="text" name="name_bn" id="name_bn" class="form-control" placeholder="Enter offer name in Bangla"
-                                           value="{{ old("name_bn") ? old("name_bn") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('name_bn'))
-                                        <div class="help-block">{{ $errors->first('name_bn') }}</div>
                                     @endif
                                 </div>
 
@@ -79,37 +106,25 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
-                                    <label for="offer_category_id" class="required">Offer Type</label>
-                                    <select class="form-control required" name="offer_category_id" id="offer_type"
-                                            required data-validation-required-message="Please select offer">
-                                        <option data-alias="" value="">---Select Offer Type---</option>
-                                        @foreach($offers as $offer)
-                                            <option data-alias="{{ $offer->alias }}" value="{{ $offer->id }}">{{ $offer->name_en }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('offer_category_id'))
-                                        <div class="help-block">{{ $errors->first('offer_category_id') }}</div>
-                                    @endif
-                                </div>
-
                                 <slot id="internet" data-offer-type="internet" style="display: none">
                                     @include('layouts.partials.products.internet')
                                 </slot>
-                                <slot id="packages" data-offer-type="packages" style="display: none">
-                                    @include('layouts.partials.products.packages')
-                                </slot>
 
-                                <slot id="others" data-offer-type="others" style="display: none">
-                                    @include('layouts.partials.products.other')
-                                </slot>
+{{--                                <slot id="packages" data-offer-type="packages" style="display: none">--}}
+{{--                                    @include('layouts.partials.products.packages')--}}
+{{--                                </slot>--}}
+
+{{--                                <slot id="others" data-offer-type="others" style="display: none">--}}
+{{--                                    @include('layouts.partials.products.other')--}}
+{{--                                </slot>--}}
 
                                 @if( strtolower($type) == 'prepaid')
                                     <slot id="call_rate" data-offer-type="call_rate" style="display: none">
+                                        @include('layouts.partials.products.common-field.product_code')
                                         @include('layouts.partials.products.call_rate')
                                     </slot>
                                     <slot id="voice" data-offer-type="voice" style="display: none">
+                                        @include('layouts.partials.products.common-field.call_rate_unit')
                                         @include('layouts.partials.products.voice')
                                     </slot>
                                     <slot id="bundles" data-offer-type="bundles" style="display: none">
@@ -132,7 +147,7 @@
 
                                 @include('layouts.partials.products.common-field.balance_check')
 
-                                @include('layouts.partials.products.common-field.call_rate_unit')
+
 
                                 <div class="form-group col-md-6 ">
                                     <label for="price">Offer Price</label>
@@ -159,21 +174,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-
-{{--                                <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">--}}
-{{--                                    <label for="purchase_option" class="required">Purchase Option</label>--}}
-{{--                                    <select class="form-control required" name="purchase_option" id="purchase_option"--}}
-{{--                                        required data-validation-required-message="Please select purchase option">--}}
-{{--                                        <option data-alias="" value="">---Select Purchase Option---</option>--}}
-{{--                                        <option value="recharge">Recharge</option>--}}
-{{--                                        <option value="balance">Balance</option>--}}
-{{--                                        <option value="all">All</option>--}}
-{{--                                    </select>--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('purchase_option'))--}}
-{{--                                        <div class="help-block">{{ $errors->first('purchase_option') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
 
                                 <div class="col-md-6">
                                     <label></label>

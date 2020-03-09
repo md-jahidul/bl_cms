@@ -39,6 +39,7 @@
                                         <td>{{ $product->offer_category->name_en }}</td>
                                         <td class="text-center">
 
+{{--                                            // Other Details ==============================================--}}
                                             @if(strtolower( $product->offer_category->name_en) == "others")
                                                 <a href="{{ route('section-list', [$product->id]) }}"
                                                     class="btn-sm btn-outline-primary border">Details</a>
