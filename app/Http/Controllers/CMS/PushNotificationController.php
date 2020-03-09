@@ -106,6 +106,7 @@ class PushNotificationController extends Controller
                     'body' => $request->input('message'),
                     'category_slug' => $request->input('category_slug'),
                     'category_name' => $request->input('category_name'),
+                    "sending_from" => "cms",
                     "send_to_type" => "INDIVIDUALS",
                     "recipients" => $user_phone,
                     "is_interactive" => "Yes",
