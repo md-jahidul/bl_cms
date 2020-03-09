@@ -1,9 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" id="slider_text_with_image_right" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="edit_slider_text_with_image_right" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg modal_lg_custom" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title" id="exampleModalLabel"><strong>Component: Slider - text with Image right</strong></h4>
+						<h4 class="modal-title" id="exampleModalLabel"><strong>Component Slider List</strong></h4>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -27,20 +27,17 @@
 										{{ Form::hidden('sections[category]', 'component_sections' ) }}
 										{{ Form::hidden('component[0][component_type]', 'slider_text_with_image_right' ) }}
 
-							
-									
-
 									<div class="col-sm-12">
 									  
 									  <div id="slider_content_section" class="slider_content_section" data-count="1">
-									    <input id="multi_item_count" type="hidden" name="multi_item_count" value="1">
-									    <input type="hidden" name="multi_item[display_order-1]" value="0">
+									    <input id="multi_item_count" type="hidden" name="component[0][multi_item_count]" value="1">
+									    <input type="hidden" name="component[0][multi_item][display_order-1]" value="0">
 
 									    <div class="row single_slider_content" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">
 
 									      <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
 									         <label for="title_en" class="required1">Slider Title (English)</label>
-									         <input type="text" name="multi_item[title_en-1]"  class="form-control"
+									         <input type="text" name="component[0][multi_item][title_en-1]"  class="form-control"
 									                value="{{ !empty($ecarrer_item->title_en) ? $ecarrer_item->title_en : '' }}" >
 									         <div class="help-block"></div>
 									         @if ($errors->has('title_en'))
@@ -50,7 +47,7 @@
 
 									      <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
 									         <label for="title_bn" class="required1">Slider Title (Bangla)</label>
-									         <input type="text" name="multi_item[title_bn-1]"  class="form-control"
+									         <input type="text" name="component[0][multi_item][title_bn-1]"  class="form-control"
 									                value="{{ !empty($ecarrer_item->title_bn) ? $ecarrer_item->title_bn : '' }}" >
 									         <div class="help-block"></div>
 									         @if ($errors->has('title_bn'))
@@ -61,7 +58,7 @@
 									      <div class="form-group col-md-4 {{ $errors->has('image_url') ? ' error' : '' }}">
 									          <label for="alt_text" class="">Image (optional)</label>
 									          <div class="custom-file">
-									              <input type="file" name="multi_item[image_url-1]" class="custom-file-input" id="image">
+									              <input type="file" name="component[0][multi_item][image_url-1]" class="custom-file-input" id="image">
 									              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
 									          </div>
 									          <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
@@ -79,7 +76,7 @@
 
 									      <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
 									         <label for="alt_text" class="required1">Alt Text</label>
-									         <input type="text" name="multi_item[alt_text-1]"  class="form-control"
+									         <input type="text" name="component[0][multi_item][alt_text-1]"  class="form-control"
 									                value="{{ !empty($ecarrer_item->alt_text) ? $ecarrer_item->alt_text : '' }}" >
 									         <div class="help-block"></div>
 									         @if ($errors->has('alt_text'))
@@ -89,7 +86,7 @@
 
 									      <div class="form-group col-md-2">
 									          <label for="status">Status</label>
-									          <select class="form-control" name="multi_item[status-1]" aria-invalid="false">
+									          <select class="form-control" name="component[0][multi_item][status-1]" aria-invalid="false">
 									                  <option value="1">Active</option>
 									                  <option value="0">Inactive</option>
 									          </select>
@@ -119,72 +116,6 @@
 									  <br> --}}
 
 									</div>
-
-
-								
-
-
-								{{-- 
-								<div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-										<label for="title_en" class="required1">
-												Title (English)
-										</label>
-										<input type="text" name="component[0][title_en]"  class="form-control" placeholder="Enter title"
-													 value="{{ old("title_en") ? old("title_en") : '' }}">
-										<div class="help-block"></div>
-										@if ($errors->has('title_en'))
-												<div class="help-block">  {{ $errors->first('title_en') }}</div>
-										@endif
-								</div>
-
-
-								 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-										 <label for="title_bn" class="required1">
-												 Title (Bangla)
-										 </label>
-										 <input type="text" name="component[0][title_bn]"  class="form-control" placeholder="Enter title"
-														value="{{ old("title_bn") ? old("title_bn") : '' }}">
-										 <div class="help-block"></div>
-										 @if ($errors->has('title_bn'))
-												 <div class="help-block">  {{ $errors->first('title_bn') }}</div>
-										 @endif
-								 </div>
-
-
-								<div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
-										<label for="alt_text" class="">Image (optional)</label>
-										<div class="custom-file">
-												<input type="file" name="component[0][image_url]" class="custom-file-input" id="image">
-												<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-										</div>
-										<span class="text-primary">Please given file type (.png, .jpg, svg)</span>
-
-										<div class="help-block"></div>
-										@if ($errors->has('image_url'))
-												<div class="help-block">  {{ $errors->first('image_url') }}</div>
-										@endif
-								</div>
-
-								<div class="form-group col-md-1">
-										<img id="imgDisplay" class="imgDisplay" style="height:70px;width:70px;display:none">
-								</div>
-
-								<div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-										<label for="alt_text" class="required1">Alt text</label>
-										<input type="text" name="component[0][alt_text]"  class="form-control"
-													 value="{{ old("alt_text") ? old("alt_text") : '' }}">
-										<div class="help-block"></div>
-										@if ($errors->has('alt_text'))
-												<div class="help-block">  {{ $errors->first('alt_text') }}</div>
-										@endif
-								</div>
-								 --}}
-
-
-
-
-
-
 
 
 
@@ -267,7 +198,7 @@
 
 	     var html = '';
 	     
-	     html += '<div class="row single_slider_content"><input type="hidden" name="multi_item[display_order-'+i+']" value="0"><div class="form-group col-md-6"> <label for="title_en" class="required1">Slider Title (English)</label> <input type="text" name="multi_item[title_en-'+i+']" class="form-control" value="" aria-invalid="false"> <div class="help-block"></div></div><div class="form-group col-md-6 "> <label for="title_bn" class="required1">Slider Title (Bangla)</label> <input type="text" name="multi_item[title_bn-'+i+']" class="form-control" value=""> <div class="help-block"></div></div><div class="form-group col-md-4"> <label for="alt_text" class="">Image (optional)</label><div class="custom-file"> <input type="file" name="multi_item[image_url-'+i+']" class="custom-file-input" id="image" aria-invalid="false"> <label class="custom-file-label" for="inputGroupFile01">Choose file</label></div> <span class="text-primary">Please given file type (.png, .jpg, svg)</span><div class="help-block"></div></div><div class="form-group col-md-1"> <img style="height:70px;width:70px;display:none" id="imgDisplay"></div><div class="form-group col-md-4 "> <label for="alt_text" class="required1">Alt Text</label> <input type="text" name="multi_item[alt_text-'+i+']" class="form-control" value=""><div class="help-block"></div></div><div class="form-group col-md-2"> <label for="status">Status</label> <select class="form-control" name="multi_item[status-'+i+']" aria-invalid="false"><option value="1">Active</option><option value="0">Inactive</option> </select></div><div class="form-group"> <label for="status" style="padding-bottom: 43px;"> </label> <button class="btn btn-danger multi_item_remove">-</button></div></div>';
+	     html += '<div class="row single_slider_content"><input type="hidden" name="component[0][multi_item][display_order-'+i+']" value="'+i+'"><div class="form-group col-md-6"> <label for="title_en" class="required1">Slider Title (English)</label> <input type="text" name="component[0][multi_item][title_en-'+i+']" class="form-control" value="" aria-invalid="false"> <div class="help-block"></div></div><div class="form-group col-md-6 "> <label for="title_bn" class="required1">Slider Title (Bangla)</label> <input type="text" name="component[0][multi_item][title_bn-'+i+']" class="form-control" value=""> <div class="help-block"></div></div><div class="form-group col-md-4"> <label for="alt_text" class="">Image (optional)</label><div class="custom-file"> <input type="file" name="component[0][multi_item][image_url-'+i+']" class="custom-file-input" id="image" aria-invalid="false"> <label class="custom-file-label" for="inputGroupFile01">Choose file</label></div> <span class="text-primary">Please given file type (.png, .jpg, svg)</span><div class="help-block"></div></div><div class="form-group col-md-1"> <img style="height:70px;width:70px;display:none" id="imgDisplay"></div><div class="form-group col-md-4 "> <label for="alt_text" class="required1">Alt Text</label> <input type="text" name="component[0][multi_item][alt_text-'+i+']" class="form-control" value=""><div class="help-block"></div></div><div class="form-group col-md-2"> <label for="status">Status</label> <select class="form-control" name="component[0][multi_item][status-'+i+']" aria-invalid="false"><option value="1">Active</option><option value="0">Inactive</option> </select></div><div class="form-group"> <label for="status" style="padding-bottom: 43px;"> </label> <button class="btn btn-danger multi_item_remove">-</button></div></div>';
 
 	     $('#slider_content_section').append(html);
 
