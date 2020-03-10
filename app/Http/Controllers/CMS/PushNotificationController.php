@@ -109,7 +109,7 @@ class PushNotificationController extends Controller
                     "sending_from" => "cms",
                     "send_to_type" => "INDIVIDUALS",
                     "recipients" => $user_phone,
-                    "is_interactive" => "Yes",
+                    "is_interactive" => "NO",
                     "data" => [
                         "cid" => "1",
                         "url" => "test.com",
