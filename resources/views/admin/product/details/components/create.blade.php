@@ -34,6 +34,11 @@
                                                         </fieldset>
 
                                                         <fieldset>
+                                                            <input type="checkbox" id="extra-title">
+                                                            <label for="extra-title" class="">Extra Title</label>
+                                                        </fieldset>
+
+                                                        <fieldset>
                                                             <input type="checkbox" id="text-area">
                                                             <label for="text-area" class="">TextArea</label>
                                                         </fieldset>
@@ -56,6 +61,11 @@
                                                         <fieldset>
                                                             <input type="checkbox" id="multi-image">
                                                             <label for="multi-image" class="">Multiple Image Field</label>
+                                                        </fieldset>
+
+                                                        <fieldset>
+                                                            <input type="checkbox" id="button-check">
+                                                            <label for="button" class="">Button</label>
                                                         </fieldset>
                                                     </div>
                                                 </div>
@@ -114,7 +124,7 @@
                                                 </slot>
 
 
-                                                <slot id="text-editor-field" class="d-none">
+                                                <slot id="extra-title-field" class="d-none">
                                                     <div class="form-group col-md-6 {{ $errors->has('editor_en') ? ' error' : '' }}">
                                                         <label for="editor_en">Extra Title (English)</label>
                                                         <textarea type="text" name="editor_en"  class="form-control" placeholder="Enter offer details in english" id="details"></textarea>
@@ -162,25 +172,6 @@
                                                         <div class="help-block"></div>
                                                         @if ($errors->has('button_link'))
                                                             <div class="help-block">  {{ $errors->first('button_link') }}</div>
-                                                        @endif
-                                                    </div>
-
-                                                    <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
-                                                        <label for="description_en" >Text Area (English)</label>
-                                                        <textarea name="description_en"  class="form-control" placeholder="Enter company name bangla">{{ old("description_en") ? old("description_en") : '' }}</textarea>
-                                                        <div class="help-block"></div>
-                                                        @if ($errors->has('description_en'))
-                                                            <div class="help-block">  {{ $errors->first('description_en') }}</div>
-                                                        @endif
-                                                    </div>
-
-
-                                                    <div class="form-group col-md-6 {{ $errors->has('description_bn') ? ' error' : '' }}">
-                                                        <label for="description_bn" >Text Area (Bangla)</label>
-                                                        <textarea name="description_bn"  class="form-control" placeholder="Enter company name bangla">{{ old("description_bn") ? old("description_bn") : '' }}  </textarea>
-                                                        <div class="help-block"></div>
-                                                        @if ($errors->has('description_bn'))
-                                                            <div class="help-block">  {{ $errors->first('description_bn') }}</div>
                                                         @endif
                                                     </div>
                                                 </slot>
@@ -361,7 +352,7 @@
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['view', ['fullscreen', 'codeview']]
                 ],
-                height:200
+                height:150
             })
 
             $(document).on('click', '#plus-image', function () {

@@ -30,8 +30,13 @@ class ProductDetailsController extends Controller
 
     protected $dataTypes = [
         'large_title_with_text' => 'Large Title With Text',
+        'large_title_text_button' => 'Large Title With Text Button',
         'medium_title_with_text' => 'Medium Title With Text',
         'small_title_with_text' => 'Small Title With Text',
+        'special_data_offer' => 'Special Data Offer',
+        'bontho_sim_offer' => 'Bontho Sim Offer',
+        'startup_offer' => 'Startup offer',
+
         'title' => 'Title',
         'text_area' => 'Text Area',
         'text_and_button' => 'Text And Button',
