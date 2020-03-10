@@ -16,8 +16,8 @@ class AddAdditionalColumnComponentsTable extends Migration
         Schema::table('components', function (Blueprint $table) {
             $table->string('extra_title_en')->nullable()->after('alt_links');
             $table->string('extra_title_bn')->nullable()->after('alt_links');
-            $table->string('offer_Type')->nullable()->after('alt_links');
-            $table->integer('offer_Type_id')->nullable()->after('alt_links');
+            $table->string('offer_type')->nullable()->after('alt_links');
+            $table->integer('offer_type_id')->nullable()->after('alt_links');
 
 
             $table->string('button_en')->nullable()->after('alt_links');
@@ -36,8 +36,8 @@ class AddAdditionalColumnComponentsTable extends Migration
         Schema::table('components', function (Blueprint $table) {
             $table->dropColumn('extra_title_en');
             $table->dropColumn('extra_title_bn');
-            $table->dropColumn('offer_Type');
-            $table->dropColumn('offer_Type_id');
+            $table->dropColumn('offer_type');
+            $table->dropColumn('offer_type_id');
 
             $table->dropColumn('button_en');
             $table->dropColumn('button_bn');
