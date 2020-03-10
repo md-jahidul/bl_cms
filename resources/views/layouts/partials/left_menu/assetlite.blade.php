@@ -270,7 +270,7 @@
     <!-- // eCarrer portal -->
     {{-- @if( auth()->user()->can_view('Slider', 'singleSlider') || auth()->user()->can_view('Slider', 'multiSlider') ) --}}
         <li class="nav-item"><a href="#"><i class="la la-bell"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">eCarrer</span></a>
+                <span class="menu-title" data-i18n="nav.templates.main">eCareer</span></a>
             <ul class="menu-content">
 
                 <li class="{{ request()->is('life-at-banglalink/topbanner*') ? 'active' : '' }}">

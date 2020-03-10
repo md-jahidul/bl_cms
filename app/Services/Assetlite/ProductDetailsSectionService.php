@@ -41,6 +41,11 @@ class ProductDetailsSectionService
         $this->setActionRepository($productDetailsSectionRepository);
     }
 
+    public function findBySection($productId)
+    {
+        return $this->productDetailsSectionRepository->findByProperties(['product_id' => $productId]);
+    }
+
 
     /**
      * @param $data
@@ -48,10 +53,8 @@ class ProductDetailsSectionService
      */
     public function storeAppServiceProductDetails($data, $tab_type, $product_id)
     {
-
         $data['product_id'] = $product_id;
         $data['tab_type'] = $tab_type;
-
         $this->save($data);
         return new Response('App Service details section added successfully');
     }

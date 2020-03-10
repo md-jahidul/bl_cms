@@ -73,7 +73,7 @@ class AboutUsController extends Controller
     public function sliderImageList($sliderId, $type)
     {
         $slider_images = $this->alSliderImageService->itemList($sliderId, $type);
-        return view('admin.about-us.slider.slider-image.index', compact('slider_images', 'sliderItem', 'sliderId', 'type'));
+        return view('admin.about-us.slider.slider-image.index', compact('slider_images', 'sliderId', 'type'));
     }
 
     /**
@@ -174,7 +174,6 @@ class AboutUsController extends Controller
              session()->flash('success', "Updated successfully");
              return redirect(route('about-us.index'));
         }
-
         session()->flash('message', "Failed! Please try again");
     }
 
@@ -194,7 +193,13 @@ class AboutUsController extends Controller
         session()->flash('message', "Failed! Please try again");
     }
 
-
+    /**
+     * @param $parentId
+     * @param $type
+     * @param $id
+     * @return UrlGenerator|string
+     * @throws \Exception
+     */
     public function destroySliderImage($parentId, $type, $id)
     {
         $response = $this->alSliderImageService->deleteSliderImage($id);
