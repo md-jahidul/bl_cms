@@ -113,6 +113,27 @@
                                                     </div>
                                                 </slot>
 
+
+                                                <slot id="text-editor-field" class="d-none">
+                                                    <div class="form-group col-md-6 {{ $errors->has('editor_en') ? ' error' : '' }}">
+                                                        <label for="editor_en">Extra Title (English)</label>
+                                                        <textarea type="text" name="editor_en"  class="form-control" placeholder="Enter offer details in english" id="details"></textarea>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('editor_en'))
+                                                            <div class="help-block">{{ $errors->first('editor_en') }}</div>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('editor_bn') ? ' error' : '' }}">
+                                                        <label for="editor_bn">Extra Title (Bangla)</label>
+                                                        <textarea type="text" name="editor_bn"  class="form-control" placeholder="Enter offer details in english"  id="details"></textarea>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('editor_bn'))
+                                                            <div class="help-block">{{ $errors->first('editor_bn') }}</div>
+                                                        @endif
+                                                    </div>
+                                                </slot>
+
                                                 <slot id="text-area-button" class="d-none">
                                                     <div class="form-group col-md-6 {{ $errors->has('button_en') ? ' error' : '' }}">
                                                         <label for="button_en">Button Title (English)</label>

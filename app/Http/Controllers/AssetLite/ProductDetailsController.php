@@ -29,6 +29,9 @@ class ProductDetailsController extends Controller
     protected $componentService;
 
     protected $dataTypes = [
+        'large_title_with_text' => 'Large Title With Text',
+        'medium_title_with_text' => 'Medium Title With Text',
+        'small_title_with_text' => 'Small Title With Text',
         'title' => 'Title',
         'text_area' => 'Text Area',
         'text_and_button' => 'Text And Button',
