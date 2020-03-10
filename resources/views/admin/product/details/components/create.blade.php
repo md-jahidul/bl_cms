@@ -242,17 +242,22 @@
 
 
                                                 <slot id="multiple-image-field" class="d-none">
+                                                    <input id="multi_item_count" type="hidden" name="multi_item_count" value="1">
                                                     <div class="col-md-6 col-xs-6">
                                                         <div class="form-group">
                                                             <label for="message">Multiple Image</label>
-                                                            <input type="file" class="dropify" name="multiple_attributes[image][image_url_1]" data-height="80"/>
+                                                            <input type="file" class="dropify" name="multi_item[image_url-1]" data-height="80"/>
+
+{{--                                                            <input type="file" class="dropify" name="multiple_attributes[image][image_url_1]" data-height="80"/>--}}
                                                             <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group col-md-5">
                                                         <label for="alt_text">Alt Text</label>
-                                                        <input type="text" name="multiple_attributes[alt_text][alt_text_1]" class="form-control">
+                                                        <input type="text" name="multi_item[alt_text-1]" class="form-control">
+
+{{--                                                        <input type="text" name="multiple_attributes[alt_text][alt_text_1]" class="form-control">--}}
                                                     </div>
 
                                                     <div class="form-group col-md-1">
@@ -343,15 +348,18 @@
                 var total_option = option_count.length + 2;
 
                 var input = '<div class="col-md-6 col-xs-6 options-count option-'+total_option+'">\n' +
+                            '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">>\n' +
                             '<div class="form-group">\n' +
                             '      <label for="message">Multiple Image</label>\n' +
-                            '      <input type="file" class="dropify" name="multiple_attributes[image][image_url_'+total_option+']" data-height="80"/>\n' +
+                            '      <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +
+                            // '      <input type="file" class="dropify" name="multiple_attributes[image][image_url_'+total_option+']" data-height="80"/>\n' +
                             '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
                             '  </div>\n' +
                             ' </div>\n'+
                             '<div class="form-group col-md-5 option-'+total_option+'">\n' +
                             '    <label for="alt_text">Alt Text</label>\n' +
-                            '    <input type="text" name="multiple_attributes[alt_text][alt_text_'+total_option+']"  class="form-control">\n' +
+                            '    <input type="text" name="multi_item[alt_text-'+total_option+']"  class="form-control">\n' +
+                            // '    <input type="text" name="multiple_attributes[alt_text][alt_text_'+total_option+']"  class="form-control">\n' +
                             '</div>\n' +
                             '<div class="form-group col-md-1 option-'+total_option+'">\n' +
                             '   <label for="alt_text"></label>\n' +

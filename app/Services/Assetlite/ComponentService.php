@@ -68,9 +68,9 @@ class ComponentService
             $data['video'] = request()->input('video_url', null);
             $data['other_attributes'] = json_encode(['video_type' => 'youtube_video']);
         }
-	
+
 	   $data['page_type'] = self::PAGE_TYPE;
-        
+
         $results = [];
         if (isset($data['multi_item']) && !empty($data['multi_item'])) {
             $request_multi = $data['multi_item'];
@@ -97,38 +97,55 @@ class ComponentService
 
     protected function imageUpload($data)
     {
-        if (isset($data['multiple_attributes']) && !empty($data['multiple_attributes'])) {
-            $countImage = count($data['multiple_attributes']['image']);
-            for ($i = 1; $i <= $countImage; $i++) {
-                foreach ($data['multiple_attributes']['image'] as $key => $value) {
-                    if (!empty($value)) {
-                        $imageUrl = $this->upload($value, 'assetlite/images/product_details');
-                        $image[$key] = $imageUrl;
-                    }
-                }
-            }
-        }
+
         return $image;
     }
 
+
+
     public function componentStore($data, $sectionId)
     {
+//        dd($data);
+
         if (request()->hasFile('image')) {
             $data['image'] = $this->upload($data['image'], 'assetlite/images/banner/product_details');
         }
 
-        $input_multiple_attributes = $data['multiple_attributes'];
-        // loop over the product array
-        foreach ($input_multiple_attributes as $data_id => $inputData) {
-            foreach ($inputData as $key => $value) {
-                // set the new value
-                $new_multiple_attributes[$data_id][$key] = is_object($value) ? $this->upload($value, 'assetlite/images/product_details') : $value;
+//        $input_multiple_attributes = $data['multiple_attributes'];
+//
+//        // loop over the product array
+//        foreach ($input_multiple_attributes as $data_id => $inputData) {
+//            foreach ($inputData as $key => $value) {
+//                // set the new value
+//                $new_multiple_attributes[$data_id][$key] = is_object($value) ? $this->upload($value, 'assetlite/images/product_details') : $value;
+//            }
+//        }
+
+        $results = [];
+        if (isset($data['multi_item']) && !empty($data['multi_item'])) {
+            $request_multi = $data['multi_item'];
+            $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
+            for ($i = 1; $i <= $item_count; $i++) {
+                foreach ($data['multi_item'] as $key => $value) {
+                    $sub_data = [];
+                    $check_index = explode('-', $key);
+                    if ($check_index[1] == $i) {
+                        if (request()->hasFile('multi_item.' . $key)) {
+                            $value = $this->upload($value, 'assetlite/images/app-service/product/details');
+                        }
+                        $results[$i][$check_index[0]] = $value;
+                    }
+                }
             }
         }
 
-        ($new_multiple_attributes['alt_text']['alt_text_1']) ? $data['multiple_attributes'] = $new_multiple_attributes : $data['multiple_attributes'] = null;
 
-        $data['page_type'] = "other_offer";
+
+        $data['multiple_attributes'] = array_values($results);
+
+//        ($new_multiple_attributes['alt_text']['alt_text_1']) ? $data['multiple_attributes'] = $new_multiple_attributes : $data['multiple_attributes'] = null;
+
+        $data['page_type'] = "product_details";
         $data['section_details_id'] = $sectionId;
         $this->save($data);
         return response('Component create successfully!');
@@ -163,7 +180,7 @@ class ComponentService
         $data['multiple_attributes'] = $new_multiple_attributes;
 
 
-        $data['page_type'] = "other_offer";
+        $data['page_type'] = "product_details";
         $component->update($data);
         return response("Component update successfully!!");
     }
