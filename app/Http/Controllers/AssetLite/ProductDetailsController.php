@@ -40,7 +40,7 @@ class ProductDetailsController extends Controller
         'title' => 'Title',
         'text_area' => 'Text Area',
         'text_and_button' => 'Text And Button',
-        'bullet_Text' => 'Bullet Text',
+        'bullet_text' => 'Bullet Text',
         'accordion_text' => 'Accordion Text',
         'drop_down' => 'Dropdown',
         'single_image' => 'Single Image',

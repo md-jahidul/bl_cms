@@ -67,6 +67,11 @@
                                                             <input type="checkbox" id="button-check">
                                                             <label for="button" class="">Button</label>
                                                         </fieldset>
+
+                                                        <fieldset>
+                                                            <input type="checkbox" id="related_product">
+                                                            <label for="related_product" class="">Related Product</label>
+                                                        </fieldset>
                                                     </div>
                                                 </div>
                                             </div>
@@ -275,6 +280,33 @@
                                                     <div class="form-group col-md-1">
                                                         <label for="alt_text"></label>
                                                         <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>
+                                                    </div>
+                                                </slot>
+
+
+                                                <slot id="related_product_field" class="d-none">
+                                                    <div class="form-group col-md-6 {{ $errors->has('offer_type_id') ? ' error' : '' }}">
+                                                        <label for="editor_en">Related Product</label>
+                                                        <select name="offer_type_id" class="form-control required" id="data-type"
+                                                                required data-validation-required-message="Please select data type">
+                                                            <option value="">--Select Data Type--</option>
+                                                            <option value="60">Special Data Offer</option>
+                                                            <option value="59">Special Voice Offer</option>
+{{--                                                            @foreach($dataTypes as $key => $item)--}}
+{{--                                                                <option value="{{ $key }}">{{ $item }}</option>--}}
+{{--                                                            @endforeach--}}
+                                                            {{--                                                        <option value="text_area">Text</option>--}}
+                                                            {{--                                                        <option value="text_and_button">Text And Button</option>--}}
+                                                            {{--                                                        <option value="bullet_text">Bullet Text</option>--}}
+                                                            {{--                                                        <option value="accordion_text">Accordion Text</option>--}}
+                                                            {{--                                                        <option value="single_image">Single Image</option>--}}
+                                                            {{--                                                        <option value="multiple_image">Multiple Image</option>--}}
+                                                            {{--                                                        <option value="drop_down">Dropdown</option>--}}
+                                                        </select>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('offer_type_id'))
+                                                            <div class="help-block">{{ $errors->first('offer_type_id') }}</div>
+                                                        @endif
                                                     </div>
                                                 </slot>
 
