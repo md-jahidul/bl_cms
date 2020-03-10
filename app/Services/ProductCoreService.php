@@ -717,7 +717,7 @@ class ProductCoreService
 
     public function downloadMyblProducts()
     {
-        $products = MyBlProduct::has('details')->with('details')->get();
+        $products = MyBlProduct::whereHas('details')->with('details')->where('status', 1)->get();
 
         $products = $products->sortBy('details.content_type');
 
