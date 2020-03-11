@@ -323,11 +323,10 @@ class ProductCoreService
                 if ($request->content_type) {
                     if (in_array($request->content_type, $bundles)) {
                         $q->where('content_type', $request->content_type);
-                        $q->where('is_recharge_offer', '<>', 1);
                         $q->whereNull('call_rate');
                     } elseif ($request->content_type == 'recharge_offer') {
                         $q->whereNotNull('recharge_product_code');
-                    } elseif ($request->content_type == 'rate_cutter') {
+                    } elseif ($request->content_type == 'scr') {
                         $q->whereNotNull('call_rate');
                     } else {
                         $q->where('content_type', $request->content_type);
@@ -335,6 +334,11 @@ class ProductCoreService
                 }
             }
         );
+
+        if ($request->content_type == 'recharge_offer') {
+            $builder->where('show_recharge_offer', 1);
+        }
+
 
         $all_items_count = $builder->count();
         $items = $builder->skip($start)->take($length)->get();
