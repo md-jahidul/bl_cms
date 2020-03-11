@@ -287,8 +287,7 @@
                                                 <slot id="related_product_field" class="d-none">
                                                     <div class="form-group col-md-6 {{ $errors->has('offer_type_id') ? ' error' : '' }}">
                                                         <label for="editor_en">Related Product</label>
-                                                        <select name="offer_type_id" class="form-control required" id="data-type"
-                                                                required data-validation-required-message="Please select data type">
+                                                        <select name="offer_type_id" class="form-control required" id="data-type">
                                                             <option value="">--Select Data Type--</option>
                                                             <option value="60">Special Data Offer</option>
                                                             <option value="59">Special Voice Offer</option>
