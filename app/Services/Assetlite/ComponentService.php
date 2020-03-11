@@ -105,7 +105,7 @@ class ComponentService
 
     public function componentStore($data, $sectionId)
     {
-//        dd($data);
+
 
         if (request()->hasFile('image')) {
             $data['image'] = $this->upload($data['image'], 'assetlite/images/banner/product_details');
@@ -141,7 +141,7 @@ class ComponentService
 
 
 
-        $data['multiple_attributes'] = array_values($results);
+        $data['multiple_attributes'] = (count($results) > 1) ? array_values($results) : null;
 
 //        ($new_multiple_attributes['alt_text']['alt_text_1']) ? $data['multiple_attributes'] = $new_multiple_attributes : $data['multiple_attributes'] = null;
 

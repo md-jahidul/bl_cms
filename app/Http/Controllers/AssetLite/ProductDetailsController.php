@@ -6,6 +6,7 @@ use App\Models\Component;
 use App\Models\ProductDetailsSection;
 use App\Services\Assetlite\ComponentService;
 use App\Services\Assetlite\ProductDetailsSectionService;
+use App\Services\ProductService;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -28,11 +29,17 @@ class ProductDetailsController extends Controller
      */
     protected $componentService;
 
+    /**
+     * @var ComponentService
+     */
+    protected $productService;
+
     protected $dataTypes = [
         'large_title_with_text' => 'Large Title With Text',
         'large_title_text_button' => 'Large Title With Text Button',
         'medium_title_with_text' => 'Medium Title With Text',
         'small_title_with_text' => 'Small Title With Text',
+        'text_and_button' => 'Text And Button',
         'special_data_offer' => 'Special Data Offer',
         'bondho_sim_offer' => 'Bondho Sim Offer',
         'startup_offer' => 'Startup offer',
@@ -40,20 +47,22 @@ class ProductDetailsController extends Controller
 
 //        'title' => 'Title',
 //        'text_area' => 'Text Area',
-//        'text_and_button' => 'Text And Button',
+//        'single_image' => 'Single Image',
+
         'bullet_text' => 'Bullet Text',
         'accordion_text' => 'Accordion Text',
         'drop_down' => 'Dropdown',
-        'single_image' => 'Single Image',
         'multiple_image' => 'Multiple Image'
     ];
 
     public function __construct(
         ProductDetailsSectionService $productDetailsSectionService,
+        ProductService $productService,
         ComponentService $componentService
     ) {
         $this->productDetailsSectionService = $productDetailsSectionService;
         $this->componentService = $componentService;
+        $this->productService = $productService;
     }
 
 
@@ -63,12 +72,7 @@ class ProductDetailsController extends Controller
      */
     public function sectionList($productDetailsId)
     {
-//        return $productDetailsId;
-
         $productSections = $this->productDetailsSectionService->findBySection($productDetailsId);
-
-//        return $productSections;
-
         return view('admin.product.details.index', compact('productSections', 'productDetailsId'));
     }
 
@@ -118,12 +122,12 @@ class ProductDetailsController extends Controller
     public function componentCreate($productDetailsId, $sectionId)
     {
         $dataTypes = $this->dataTypes;
-        return view('admin.product.details.components.create', compact('sectionId', 'productDetailsId', 'dataTypes'));
+        $products = $this->productService->produtcs();
+        return view('admin.product.details.components.create', compact('sectionId', 'productDetailsId', 'dataTypes', 'products'));
     }
 
     public function componentStore(Request $request, $productDetailsId, $sectionID)
     {
-
 //        return $request->all();
 
         $response = $this->componentService->componentStore($request->all(), $sectionID);
@@ -135,25 +139,21 @@ class ProductDetailsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param $productDetailsId
      * @param $sectionId
      * @param int $id
      * @return Factory|View
      */
     public function componentEdit($productDetailsId, $sectionId, $id)
     {
-        $dataTypes = [
-            'text_area' => 'Text Area',
-            'bullet_Text' => 'Bullet Text',
-            'accordion_text' => 'Accordion Text',
-            'drop_down' => 'Dropdown',
-            'single_image' => 'Single Image',
-            'banner_image' => 'Banner Image',
-            'multiple_image' => 'Multiple Image'
-        ];
+        $dataTypes = $this->dataTypes;
         $component = $this->componentService->findOne($id);
         $multipleImage = $component['multiple_attributes'];
+        $products = $this->productService->produtcs();
 
-        return view('admin.product.details.components.edit', compact('component', 'multipleImage', 'dataTypes', 'sectionId', 'productDetailsId'));
+//        return $component;
+
+        return view('admin.product.details.components.edit', compact('component', 'products', 'multipleImage', 'dataTypes', 'sectionId', 'productDetailsId'));
     }
 
     /**
