@@ -129,6 +129,7 @@ class ProductDetailsController extends Controller
     public function componentStore(Request $request, $productDetailsId, $sectionID)
     {
 //        return $request->all();
+
         $response = $this->componentService->componentStore($request->all(), $sectionID);
         Session::flash('success', $response->content());
         return redirect(route('component-list', [$productDetailsId, $sectionID]));
@@ -145,19 +146,14 @@ class ProductDetailsController extends Controller
      */
     public function componentEdit($productDetailsId, $sectionId, $id)
     {
-        $dataTypes = [
-            'text_area' => 'Text Area',
-            'bullet_Text' => 'Bullet Text',
-            'accordion_text' => 'Accordion Text',
-            'drop_down' => 'Dropdown',
-            'single_image' => 'Single Image',
-            'banner_image' => 'Banner Image',
-            'multiple_image' => 'Multiple Image'
-        ];
+        $dataTypes = $this->dataTypes;
         $component = $this->componentService->findOne($id);
         $multipleImage = $component['multiple_attributes'];
+        $products = $this->productService->produtcs();
 
-        return view('admin.product.details.components.edit', compact('component', 'multipleImage', 'dataTypes', 'sectionId', 'productDetailsId'));
+//        return $component;
+
+        return view('admin.product.details.components.edit', compact('component', 'products', 'multipleImage', 'dataTypes', 'sectionId', 'productDetailsId'));
     }
 
     /**

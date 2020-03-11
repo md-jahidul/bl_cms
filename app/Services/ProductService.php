@@ -46,7 +46,7 @@ class ProductService
 
     public function produtcs()
     {
-        return $this->productRepository->findByProperties([], ['product_code', 'name_en']);
+        return $this->productRepository->findByProperties([], ['id', 'product_code', 'name_en']);
     }
 
     /**

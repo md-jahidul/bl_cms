@@ -69,7 +69,7 @@
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="related_product" checked>
+                                                            <input type="checkbox" id="related_product">
                                                             <label for="related_product" class="">Related Product</label>
                                                         </fieldset>
                                                     </div>
@@ -111,7 +111,7 @@
                                                     </div>
 
                                                     <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                                        <label for="title_bn" >Text Field (Bangla)</label>
+                                                        <label for="title_bn" >Title Field (Bangla)</label>
                                                         <input type="text" name="title_bn"  class="form-control" placeholder="Enter company name bangla"
                                                                value="{{ old("title_bn") ? old("title_bn") : '' }}">
                                                         <div class="help-block"></div>
@@ -279,7 +279,7 @@
 
 
 {{--                                                <slot id="related_product_field" class="">--}}
-                                                    <div id="related_product_field" class="col-md-6 {{ $errors->has('offer_type_id') ? ' error' : '' }}">
+                                                    <div id="related_product_field" class="col-md-6 {{ $errors->has('offer_type_id') ? ' error' : '' }} d-none">
                                                         <label for="editor_en">Related Product</label>
                                                         <select name="offer_type_id" class="select2 form-control" id="data-type">
                                                             <option value="">--Select Data Type--</option>
@@ -318,7 +318,11 @@
         </div>
     </section>
 
-
+<style>
+    form #related_product_field .select2-container {
+        width: 100% !important;
+    }
+</style>
 
 @stop
 
