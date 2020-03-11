@@ -333,8 +333,16 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
     Route::get('product-core/{id}/edit/', 'AssetLite\ProductCoreController@edit')->name('product.core.edit');
 
-
-
+    
+    // Search ======================================================
+    Route::get('popular-search', 'AssetLite\SearchController@index');
+    Route::get('save-search-limit', 'AssetLite\SearchController@saveLimit')->name('save.search.limit');
+    Route::get('popular-search-create', 'AssetLite\SearchController@popularSearchCreate');
+    Route::get('search-product-list', 'AssetLite\SearchController@getProductList')->name('search.get.product.list');
+    
+    Route::post('popular-search-save', 'AssetLite\SearchController@popularSearchSave')->name('popular.search.save');
+    Route::get('popular-search-delete/{keywordId}', 'AssetLite\SearchController@deletePopularSearch');
+    
     // Easy Payment Card ============================================
     Route::get('easy-payment-card', 'AssetLite\EasyPaymentCardController@index');
     Route::post('easy-payment-card-list', 'AssetLite\EasyPaymentCardController@getEasyPaymentCardList')->name('easypaymentcard.list.ajax');

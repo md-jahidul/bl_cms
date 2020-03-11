@@ -15,4 +15,13 @@ use App\Models\TagCategory;
 class TagCategoryRepository extends BaseRepository
 {
     public $modelName = TagCategory::class;
+    
+    public function getTags() {
+        $response = $this->model->get();
+        return $response;
+    }
+    public function getTagById($tagId) {
+        $response = $this->model->findOrFail($tagId);
+        return $response->name_en;
+    }
 }
