@@ -227,93 +227,8 @@ function matchRelatedProduct($id, $roles)
 
 	@include('admin.app-service.details.section.component_modal.slider.slider_text_with_image_right')
 	@include('admin.app-service.details.section.component_modal.slider.edit_slider_text_with_image_right')
+	@include('admin.app-service.details.section.component_modal.slider.single_item_edit_slider_text_with_image_right')
 
-
-	<!-- Modal -->
-	<div class="modal fade" id="add_details_with_compoent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Add App and Service details with component</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-			  </div>
-				<form id="product_details_form" role="form" action="{{ route('app_service.details.store', [$tab_type, $product_id ]) }}" method="POST" novalidate enctype="multipart/form-data">
-					@csrf
-				  <div class="modal-body">
-					<div class="row">
-						<div class="form-group col-md-6 {{ $errors->has('section_name') ? ' error' : '' }}">
-							<label for="section_name" class="required">Section Name</label>
-							<input type="text" name="section_name" id="section_name" class="form-control section_name" placeholder="Give section a name"
-								   value="{{ old("section_name") ? old("section_name") : '' }}" required data-validation-required-message="This field can not be empty">
-							<div class="help-block"></div>
-							@if ($errors->has('section_name'))
-								<div class="help-block">{{ $errors->first('section_name') }}</div>
-							@endif
-						</div>
-
-						<div class="form-group col-md-6 {{ $errors->has('slug') ? ' error' : '' }}">
-							<label for="slug" class="required">Section Slug</label>
-							<input type="text" name="slug" id="slug" class="form-control auto_slug"
-								   value="{{ old("slug") ? old("slug") : '' }}" readonly required data-validation-required-message="This field can not be empty">
-							<div class="help-block"></div>
-							@if ($errors->has('slug'))
-								<div class="help-block">{{ $errors->first('slug') }}</div>
-							@endif
-						</div>
-
-						<div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-							<label for="title_en">Title (English)</label>
-							<input type="text" name="title_en" id="title_en" class="form-control" placeholder="Enter offer name in English"
-								   value="{{ old("title_en") ? old("title_en") : '' }}">
-							<div class="help-block"></div>
-							@if ($errors->has('title_en'))
-								<div class="help-block">{{ $errors->first('title_en') }}</div>
-							@endif
-						</div>
-
-						<div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-							<label for="title_bn">Title (Bangla)</label>
-							<input type="text" name="title_bn" id="title_bn" class="form-control" placeholder="Enter offer name in Bangla"
-								   value="{{ old("title_bn") ? old("title_bn") : '' }}">
-							<div class="help-block"></div>
-							@if ($errors->has('title_bn'))
-								<div class="help-block">{{ $errors->first('title_bn') }}</div>
-							@endif
-						</div>
-
-						<div class="form-group col-md-6">
-							<label for="category_type">Section has multiple component</label>
-							<select class="form-control" name="multiple_component" aria-invalid="false">
-								<option value="0">No</option>
-								<option value="1">Yes</option>
-							</select>
-						</div>
-
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="title" class="mr-1">Status:</label>
-								<input type="radio" name="status" value="1" id="active" checked>
-								<label for="active" class="mr-1">Active</label>
-
-								<input type="radio" name="status" value="0" id="inactive">
-								<label for="inactive">Inactive</label>
-							</div>
-						</div>
-
-					</div>
-
-				  </div>
-				  <div class="modal-footer">
-					<a type="button" href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
-					<button type="submit" class="btn btn-primary">Save changes</button>
-				  </div>
-			  </form>
-			</div>
-		</div>
-	</div><!-- /.modal -->
-	<!-- Modal -->
 
 @stop
 
@@ -390,27 +305,29 @@ function matchRelatedProduct($id, $roles)
 
 					 console.log(result.data);
 
+					 // Check component is slider?
 					if( result.data.sections.section_type == 'slider_text_with_image_right' ){
 
-						$('#edit_'+modalComponent).modal('show');
+						var $parentSelectorEdit = $('#edit_'+modalComponent);
 
 
+						$parentSelectorEdit.modal('show');
 
 						// Set all sections
 						$.each(result.data.sections, function(k, v){
 
 							if( k == 'title_en' ){     
-							   $parentSelector.find("input[name='sections[title_en]']").val(v);
+							   $parentSelectorEdit.find("input[name='sections[title_en]']").val(v);
 							}
 
 							if( k == 'title_bn' ){     
-							   $parentSelector.find("input[name='sections[title_bn]']").val(v);
+							   $parentSelectorEdit.find("input[name='sections[title_bn]']").val(v);
 							}
 							
 						});
 
 						// Add section id
-						$parentSelector.find('.section_id').val(result.data.sections.id);
+						$parentSelectorEdit.find('.section_id').val(result.data.sections.id);
 
 						$("input[name='sections[status]']").each(function(sk, sv){
 						   // console.log($(sv).val());
@@ -421,78 +338,66 @@ function matchRelatedProduct($id, $roles)
 						});
 
 
-
 						// Compoent foreach
 						$.each(result.data.component, function(cpk, cpv){
 
 							$.each(cpv, function(ck, cv){
 
+							   if( ck == 'id' ){                            
+								 $parentSelectorEdit.find("input[name='component["+cpk+"][id]']").val(cv);
+								 $('.tablecompoent_'+cpk).attr('data-component_id', cv);
+							   }
 
+							   // Multiple attribute parse
 								if( ck == 'multiple_attributes' ){
 									// console.log(cv);
 
 									if( typeof cv !== 'undefined' ){
-										var multiData = JSON.parse(cv);
+										var multiData = eval(JSON.parse(cv));
+										$('#slider_sortable').empty();
 
-										console.log(multiData);
+										var component_id = $('.tablecompoent_'+cpk).attr('data-component_id');
 
 										$.each(multiData, function(mck, mcv){
 
 											var html = '';
 
-											html += '<tr><td>'+mck+'</td><td width="5%"><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" /></td><td>'+mcv.title_en+'</td><td>'+mcv.status+'</td><td>Edit</td></tr>';
+											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td width="5%"><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" /></td><td>'+mcv.title_en+'</td><td>'+mcv.status+'</td><td><a href="#" class="multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a></td></tr>';
 
 											$('#slider_sortable').append(html);
 
 										});
+
+
+										// Enable sortable for slider
+										$("#slider_sortable").sortable({
+										    update: function (event, ui) {
+										        $(this).children().each(function (index) {
+										            if ($(this).attr('data-position') != (index + 1)) {
+										                $(this).attr('data-position', (index + 1)).addClass('update')
+										            }
+										        });
+										        saveNewPositionsMultiAttr($(this));
+										    }
+										});
+
 									}
 								}
 
 
+								// Other attribute parse
+								if( ck == 'other_attributes' ){
+									if( typeof cv !== 'undefined' ){
+										var otherAttrData = eval(JSON.parse(cv));
 
-							  //  if( ck == 'title_en' ){                            
-								 // $parentSelector.find("input[name='component["+cpk+"][title_en]']").val(cv);
-							  //  }
+										$.each(otherAttrData, function(ock, ocv){
 
-							  //  if( ck == 'title_bn' ){                            
-								 // $parentSelector.find("input[name='component["+cpk+"][title_bn]']").val(cv);
-							  //  }
+											$parentSelectorEdit.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
 
-							  //  if( ck == 'alt_text' ){                            
-								 // $parentSelector.find("input[name='component["+cpk+"][alt_text]']").val(cv);
-							  //  }
+										});
 
-
-							  //  if( ck == 'image' ){
-								 // $parentSelector.find('.imgDisplay').attr('src', baseUrl + cv).show();
-							  //  }
-
-							  //  if( ck == 'id' ){
-								 //  $parentSelector.find("input[name='component["+cpk+"][id]']").val(cv);
-							  //  }
-
-
-							  //  if( ck == 'description_en' ){                            
-								 // $parentSelector.find("textarea[name='component["+cpk+"][description_en]']").val(cv);
-							  //  }
-
-							  //  if( ck == 'description_bn' ){                            
-								 // $parentSelector.find("textarea[name='component["+cpk+"][description_bn]']").val(cv);
-							  //  }
-
-							  //  if( ck == 'editor_en' ){                            
-								 // $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").val(cv);
-
-								 // $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
-							  //  }
-
-							  //  if( ck == 'editor_bn' ){                            
-								 // $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").val(cv);
-
-								 // $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
-							  //  }
-
-
+									}
+								}
 
 
 							});
@@ -597,6 +502,43 @@ function matchRelatedProduct($id, $roles)
 		});
 
 	});
+
+
+
+	// multi attribute sortable
+	function saveNewPositionsMultiAttr($this)
+	    {
+	        var positions = [];
+	        $('.update').each(function () {
+	            positions.push([
+	                $(this).attr('data-index'),
+	                $(this).attr('data-position')
+	            ]);
+	        });
+	        // var component_id = null;
+
+	        var componentID = $this.attr('data-component_id');
+
+	        // console.log(componentID);
+
+	        $.ajax({
+	            methods: "POST",
+	            url: "{{ url('app-service-component-attribute-sortable') }}",
+	            data: {
+	                update: 1,
+	                position: positions,
+	                component_id: componentID,
+	            },
+	            success: function (data) {
+	                console.log(data)
+	            },
+	            error: function () {
+	                // window.location.replace(auto_save_url);
+	            }
+	        });
+	    }
+	    
+
 
 </script>
 

@@ -72,12 +72,11 @@ class AppServiceProductDetailsController extends Controller
     public function store(Request $request, $tab_type, $product_id)
     {
 
-        // dd( $request->all() );
-
         $data = $request->all();
 
-        // dd( $data['component'] );
+        // dd($data);
 
+        // Create new sections
         if( $request->has('save') ){
             $response = $this->appServiceProductDetailsService->storeAppServiceProductDetails($request->all(), $tab_type, $product_id);
 
@@ -98,8 +97,6 @@ class AppServiceProductDetailsController extends Controller
                 # Update component data
                 $component_data = $data['component'];
 
-
-
                 if( isset($component_data) && count($component_data) > 0 ){
                     foreach ($component_data as $component_value) {
                         $this->appServiceProductDetailsService->updateAppServiceDetailsComponent($component_value, $component_value['id']);
@@ -112,6 +109,22 @@ class AppServiceProductDetailsController extends Controller
             return redirect(url("app-service/details/$tab_type/$product_id"));
 
         }
+        elseif( $request->has('compnent_muti_attr_update') ){
+
+            # Update component data
+            $component_data = $data['component'];
+
+            if( isset($component_data) && count($component_data) > 0 ){
+                foreach ($component_data as $key => $component_value) {
+                    $this->appServiceProductDetailsService->updateAppServiceDetailsComponent($component_value, $component_value['id'], $key);
+                }
+            }
+
+        }
+
+
+        Session::flash('message', 'Section component updated succesfuly');
+        return redirect(url("app-service/details/$tab_type/$product_id"));
 
         
     }
@@ -158,7 +171,7 @@ class AppServiceProductDetailsController extends Controller
                 'status' => 'FAILED',
                 'message' => 'Data not found',
                 'data' => []
-            ], 200);
+            ], 404);
         }
 
         

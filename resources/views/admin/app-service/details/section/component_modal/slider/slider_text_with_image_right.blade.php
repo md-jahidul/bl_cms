@@ -33,6 +33,8 @@
 									    <input id="multi_item_count" type="hidden" name="component[0][multi_item_count]" value="1">
 									    <input type="hidden" name="component[0][multi_item][display_order-1]" value="0">
 
+									    <input type="hidden" name="component[0][multi_item][id-1]" value="1">
+
 									    <div class="row single_slider_content" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">
 
 									      <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
@@ -119,33 +121,33 @@
 
 
 
-							<div class="form-group col-md-6 {{ $errors->has('sliding_speed') ? ' error' : '' }}">
-							    <label for="sliding_speed" class="required">Sliding Speed</label>
-							    <input type="text" name="component[0][other_attr][sliding_speed]" oninput="this.value =Number(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"  class="form-control" placeholder="Enter sliding speed (sec)"  min="1" max="300"
-							           value="{{ (!empty($other_attr['sliding_speed'])) ? $other_attr['sliding_speed'] : old("other_attr.sliding_speed") ?? '' }}"
-							           required data-validation-required-message="Enter slider info">
-							    <div class="help-block"><small>Default value 10</small></div>
-							    @if ($errors->has('sliding_speed'))
-							        <div class="help-block">  {{ $errors->first('sliding_speed') }}</div>
-							    @endif
-							</div>
+									<div class="multi_attr_update_hide form-group col-md-6 {{ $errors->has('sliding_speed') ? ' error' : '' }}">
+									    <label for="sliding_speed" class="required">Sliding Speed</label>
+									    <input type="text" name="component[0][other_attr][sliding_speed]" oninput="this.value =Number(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"  class="form-control" placeholder="Enter sliding speed (sec)"  min="1" max="300"
+									           value="{{ (!empty($other_attr['sliding_speed'])) ? $other_attr['sliding_speed'] : old("other_attr.sliding_speed") ?? '' }}"
+									           required data-validation-required-message="Enter slider info">
+									    <div class="help-block"><small>Default value 10</small></div>
+									    @if ($errors->has('sliding_speed'))
+									        <div class="help-block">  {{ $errors->first('sliding_speed') }}</div>
+									    @endif
+									</div>
 
-							
-							<div class="col-md-6">
-									<div class="form-group">
+									
+									<div class="multi_attr_update_hide col-md-6">
+										<div class="form-group">
 											<label for="title" class="mr-1">Status:</label>
 											<input type="radio" name="sections[status]" value="1" id="active" checked>
 											<label for="active" class="mr-1">Active</label>
 
 											<input type="radio" name="sections[status]" value="0" id="inactive">
 											<label for="inactive">Inactive</label>
+										</div>
 									</div>
-							</div>
 
-							<div class="form-group col-md-6">
-									<!-- 0 - NO, 1 - Yes : Component has multiple component or not -->
-									{{ Form::hidden('sections[multiple_component]', 0 ) }}
-							</div>
+									<div class="form-group col-md-6">
+											<!-- 0 - NO, 1 - Yes : Component has multiple component or not -->
+											{{ Form::hidden('sections[multiple_component]', 0 ) }}
+									</div>
 
 										
 
@@ -159,6 +161,7 @@
 								<a type="button" href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
 								<button id="form_save" type="submit" name="save" class="btn btn-primary">Save changes</button>
 								<button id="form_update" type="submit" name="update" class="btn btn-primary" style="display: none;">Update</button>
+								<button id="form_multi_attr_update" type="submit" name="compnent_muti_attr_update" class="btn btn-primary" style="display: none;">Update</button>
 							</div>
 					</form>
 				</div>
@@ -193,12 +196,13 @@
 	   $('.add_moreslider_item').on('click', function(){
 
 	     var i = parseInt($('#multi_item_count').val(), 10);
+	     // $('#slider_content_section').empty();
 
 	     i = i+1;
 
 	     var html = '';
 	     
-	     html += '<div class="row single_slider_content"><input type="hidden" name="component[0][multi_item][display_order-'+i+']" value="'+i+'"><div class="form-group col-md-6"> <label for="title_en" class="required1">Slider Title (English)</label> <input type="text" name="component[0][multi_item][title_en-'+i+']" class="form-control" value="" aria-invalid="false"> <div class="help-block"></div></div><div class="form-group col-md-6 "> <label for="title_bn" class="required1">Slider Title (Bangla)</label> <input type="text" name="component[0][multi_item][title_bn-'+i+']" class="form-control" value=""> <div class="help-block"></div></div><div class="form-group col-md-4"> <label for="alt_text" class="">Image (optional)</label><div class="custom-file"> <input type="file" name="component[0][multi_item][image_url-'+i+']" class="custom-file-input" id="image" aria-invalid="false"> <label class="custom-file-label" for="inputGroupFile01">Choose file</label></div> <span class="text-primary">Please given file type (.png, .jpg, svg)</span><div class="help-block"></div></div><div class="form-group col-md-1"> <img style="height:70px;width:70px;display:none" id="imgDisplay"></div><div class="form-group col-md-4 "> <label for="alt_text" class="required1">Alt Text</label> <input type="text" name="component[0][multi_item][alt_text-'+i+']" class="form-control" value=""><div class="help-block"></div></div><div class="form-group col-md-2"> <label for="status">Status</label> <select class="form-control" name="component[0][multi_item][status-'+i+']" aria-invalid="false"><option value="1">Active</option><option value="0">Inactive</option> </select></div><div class="form-group"> <label for="status" style="padding-bottom: 43px;"> </label> <button class="btn btn-danger multi_item_remove">-</button></div></div>';
+	     html += '<div class="row single_slider_content"><input type="hidden" name="component[0][multi_item][display_order-'+i+']" value="'+i+'"><input type="hidden" name="component[0][multi_item][id-'+i+']" value="'+i+'"><div class="form-group col-md-6"> <label for="title_en" class="required1">Slider Title (English)</label> <input type="text" name="component[0][multi_item][title_en-'+i+']" class="form-control" value="" aria-invalid="false"> <div class="help-block"></div></div><div class="form-group col-md-6 "> <label for="title_bn" class="required1">Slider Title (Bangla)</label> <input type="text" name="component[0][multi_item][title_bn-'+i+']" class="form-control" value=""> <div class="help-block"></div></div><div class="form-group col-md-4"> <label for="alt_text" class="">Image (optional)</label><div class="custom-file"> <input type="file" name="component[0][multi_item][image_url-'+i+']" class="custom-file-input" id="image" aria-invalid="false"> <label class="custom-file-label" for="inputGroupFile01">Choose file</label></div> <span class="text-primary">Please given file type (.png, .jpg, svg)</span><div class="help-block"></div></div><div class="form-group col-md-1"> <img style="height:70px;width:70px;display:none" id="imgDisplay"></div><div class="form-group col-md-4 "> <label for="alt_text" class="required1">Alt Text</label> <input type="text" name="component[0][multi_item][alt_text-'+i+']" class="form-control" value=""><div class="help-block"></div></div><div class="form-group col-md-2"> <label for="status">Status</label> <select class="form-control" name="component[0][multi_item][status-'+i+']" aria-invalid="false"><option value="1">Active</option><option value="0">Inactive</option> </select></div><div class="form-group"> <label for="status" style="padding-bottom: 43px;"> </label> <button class="btn btn-danger multi_item_remove">-</button></div></div>';
 
 	     $('#slider_content_section').append(html);
 

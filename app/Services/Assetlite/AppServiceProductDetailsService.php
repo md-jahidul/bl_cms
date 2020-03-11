@@ -88,23 +88,20 @@ class AppServiceProductDetailsService
 						$item_count = isset($value['multi_item_count']) ? $value['multi_item_count'] : 0;
 						$results = [];
 						for ($i = 1; $i <= $item_count; $i++) {
-						    foreach ($value['multi_item'] as $m_key => $m_value) {
+						    foreach ($request_multi as $m_key => $m_value) {
 						        $sub_data = [];
 						        $check_index = explode('-', $m_key);
-
-						        // dd('component.'.$key.'.multi_item.'.$m_key);
-
-						        
 
 						        if ($check_index[1] == $i) {
 						            if ( request()->hasFile('component.'.$key.'.multi_item.'.$m_key) ) {
 
 						            	// dd( request()->hasFile('component.'.$key.'.multi_item.'.$m_key) );
 						                $m_value = $this->upload($data['component'][$key]['multi_item'][$m_key], 'assetlite/images/app-service/product/details');
-						            	// dd($m_value);
 
 						            }
+
 						            $results[$i][$check_index[0]] = $m_value;
+						            
 						        }
 						    }
 						}
@@ -141,12 +138,66 @@ class AppServiceProductDetailsService
 	 * @param  [type] $compoent_id [description]
 	 * @return [type]              [description]
 	 */
-	public function updateAppServiceDetailsComponent($data, $compoent_id){
+	public function updateAppServiceDetailsComponent($data, $compoent_id, $key = null){
 
 		$component = $this->componentRepository->findOne($compoent_id);
 		
 		if( isset($data['image_url']) && !empty($data['image_url']) ){
 			$data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product-details');
+		}
+
+		if( isset($data['other_attr']) && !empty($data['other_attr']) ){
+			$data['other_attributes'] = json_encode($data['other_attr']);
+		}
+
+		if( isset($data['multi_item']) && !empty($data['multi_item']) ){
+
+			// dd($data['multi_item']);
+
+			$request_multi = $data['multi_item'];
+			$item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
+			$results = [];
+			for ($i = 1; $i <= $item_count; $i++) {
+			    foreach ($request_multi as $m_key => $m_value) {
+			        $sub_data = [];
+			        $check_index = explode('-', $m_key);
+
+			        if ($check_index[1] == $i) {
+			            if ( request()->hasFile('component.'.$key.'.multi_item.'.$m_key) ) {
+			                $m_value = $this->upload($data['multi_item'][$m_key], 'assetlite/images/app-service/product/details');
+			            }
+
+			            $results[$i][$check_index[0]] = $m_value;
+			            
+			        }
+			    }
+			}
+
+			
+			# get existing multiattr data
+			$existing_multi_data = $component->multiple_attributes;
+
+			if( !empty($existing_multi_data) ){
+				$existing_multi_data = json_decode($existing_multi_data, true);
+
+				$last_array_id = end($existing_multi_data)['id'];
+				$last_display_order_id = end($existing_multi_data)['display_order'];
+
+				$new_results = array_map(function($value) use ($last_array_id, $last_display_order_id){
+
+					$value['id'] = ($value['id'] + $last_array_id);
+					$value['display_order'] = $value['id'];
+
+					return $value;
+
+				}, $results);
+
+			}
+
+			$final_results = array_merge($existing_multi_data, $new_results);
+
+			$data['multiple_attributes'] = !empty($final_results) ? json_encode($final_results) : null;
+
 		}
 
 		$component->update($data);
@@ -221,8 +272,15 @@ class AppServiceProductDetailsService
 		$results['sections'] = $section_list_component;
 
 		if( !empty($section_list_component->sectionComponent) && count($section_list_component->sectionComponent) > 0 ){
-			foreach ($section_list_component->sectionComponent as $value) {
+			foreach ($section_list_component->sectionComponent as $key => $value) {
 			   $results['component'][] = $value;
+
+			   if( isset($value->multiple_attributes) && !empty($value->multiple_attributes) ){
+			   	$res = json_decode($value->multiple_attributes, true);
+			   	usort($res, function($a, $b){return strcmp($a["display_order"], $b["display_order"]);});
+
+			   	$results['component'][$key]['multiple_attributes'] = json_encode($res);
+			   }
 
 			   # get component type
 			   $results['primary_component_type'] = $value->component_type;

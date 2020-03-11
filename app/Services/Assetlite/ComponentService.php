@@ -205,4 +205,37 @@ class ComponentService
         $appServiceCat->delete();
         return Response('App Service Tab deleted successfully !');
     }
+
+    /**
+     * [attrTableSortable description]
+     * @param  [type] $data [description]
+     * @return [type]       [description]
+     */
+    public function attrTableSortable($data){
+        $this->componentRepository->multiAttrTableSort($data);
+        return new Response('update successfully');
+    }
+
+
+    /**
+     * [processMultiAttrValue description]
+     * @param  [type] $data    [description]
+     * @param  [type] $item_id [description]
+     * @return [type]          [description]
+     */
+    public function processMultiAttrValue($data, $item_id){
+
+        $data = json_decode($data);
+        $reuslts = null;
+        foreach ($data as $value) {
+            if( $value->id == $item_id ){
+                $reuslts = $value;
+            }
+        }
+
+        return $reuslts;
+
+    }
+
+
 }

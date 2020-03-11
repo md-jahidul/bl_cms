@@ -120,5 +120,60 @@ class ComponentController extends Controller
 
 	}
 
+	/**
+	 * [conponentItemAttr description]
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function conponentItemAttr(Request $request){
+
+		
+
+		$component_id = $request->input('component_id', null);
+		$item_id = $request->input('item_id', null);
+
+		if( !empty($component_id) && !empty($item_id) ){
+			$appServiceComponent = $this->componentService->findOne($component_id);
+
+			$multi_attr_value = $appServiceComponent->multiple_attributes;
+			if( !empty($multi_attr_value) ){
+				$appServiceComponent = $this->componentService->processMultiAttrValue($multi_attr_value, $item_id);
+
+				return response()->json([
+				    'status' => 'SUCCESS',
+				    'message' => 'Data found',
+				    'data' => $appServiceComponent
+				], 200);
+
+			}
+			else{
+				return response()->json([
+                'status' => 'FAILED',
+                'message' => 'Data not found',
+                'data' => []
+            ], 404);
+			}
+
+
+		}
+		else{
+			return response()->json([
+             'status' => 'FAILED',
+             'message' => 'Data not found',
+             'data' => []
+         ], 404);
+		}
+
+	}
+
+
+	/**
+	 * Multiple attribute sortable for component
+	 * @return [type] [description]
+	 */
+	public function multiAttributeSortable(Request $request){
+		$this->componentService->attrTableSortable($request);
+	}
+
 
 }
