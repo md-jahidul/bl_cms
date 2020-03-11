@@ -95,11 +95,11 @@ class ComponentService
         return new Response('App Service Component added successfully');
     }
 
-    protected function imageUpload($data)
-    {
-
-        return $image;
-    }
+//    protected function imageUpload($data)
+//    {
+//
+//        return $image;
+//    }
 
 
 
@@ -131,7 +131,7 @@ class ComponentService
                     $check_index = explode('-', $key);
                     if ($check_index[1] == $i) {
                         if (request()->hasFile('multi_item.' . $key)) {
-                            $value = $this->upload($value, 'assetlite/images/app-service/product/details');
+                            $value = $this->upload($value, 'assetlite/images/product_details');
                         }
                         $results[$i][$check_index[0]] = $value;
                     }
