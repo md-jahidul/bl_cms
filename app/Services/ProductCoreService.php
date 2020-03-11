@@ -301,9 +301,10 @@ class ProductCoreService
         $length = $request->get('length');
 
         $builder = new MyBlProduct();
-        if ($request->status) {
+        $builder = $builder->where('status', 1);
+/*        if ($request->status) {
             $builder = MyBlProduct::where('status', $request->status);
-        }
+        }*/
         if ($request->show_in_home != null) {
             $builder = $builder->where('show_in_home', $request->show_in_home);
         }
