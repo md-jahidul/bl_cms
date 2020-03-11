@@ -28,9 +28,9 @@ class Component extends Model
         'deleted_at'
     ];
 
-
     protected $casts = [
         'multiple_attributes' => 'array',
+        'other_attributes' => 'array',
     ];
 
 }

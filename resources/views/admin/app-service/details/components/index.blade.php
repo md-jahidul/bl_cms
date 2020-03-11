@@ -100,6 +100,8 @@
                                 <option value="title_text_editor">Title with table editor</option>
                                 <option value="video_with_text_right">Video with text right</option>
                                 <option value="multiple_image_banner">Multiple image banner</option>
+                                <option value="editor_only">Text Editor Only</option>
+                                <option value="accordion">Accordion</option>
                             </select>
                     </div>
 

@@ -161,7 +161,6 @@ class ProductCoreService
                         $cells = $row->getCells();
                         foreach ($config as $field => $index) {
                             switch ($field) {
-                                case "family_name":
                                 case "content_type":
                                     $core_data [$field] = ($cells [$index]->getValue() != '') ?
                                         strtolower($cells [$index]->getValue()) : null;
@@ -175,12 +174,13 @@ class ProductCoreService
                                     } elseif ($type == 'propaid') {
                                         $sim_type = 3;
                                     } else {
-                                        $sim_type = null;
+                                        $sim_type = 4;
                                     }
                                     $core_data [$field] = $sim_type;
                                     break;
-                                case "is_auto_renewable":
-                                case "is_recharge_offer":
+                                case 'status':
+                                case "is_rate_cutter_offer":
+                                case "show_recharge_offer":
                                     $type = strtolower($cells [$index]->getValue());
                                     if ($type == 'yes') {
                                         $flag = 1;
@@ -189,7 +189,7 @@ class ProductCoreService
                                     } else {
                                         break;
                                     }
-                                    $core_data[$field] = $flag;
+                                    $mybl_data[$field] = $flag;
                                     break;
                                 case "internet_volume_mb":
                                     $data_volume = $cells [$index]->getValue();
@@ -234,22 +234,12 @@ class ProductCoreService
                                     }
                                     $core_data [$field] = ($validity == "") ? null : $validity;
                                     break;
-                                case "is_rate_cutter_offer":
-                                case "is_amar_offer":
-                                    $type = strtolower($cells [$index]->getValue());
-                                    if ($type == 'yes') {
-                                        $flag = 1;
-                                    } elseif ($type == 'no') {
-                                        $flag = 0;
-                                    } else {
-                                        break;
-                                    }
-                                    $mybl_data[$field] = $flag;
-                                    break;
                                 case "offer_section_title":
                                     $title = $cells [$index]->getValue();
-                                    $mybl_data[$field] = $title;
-                                    $mybl_data['offer_section_slug'] = str_replace(' ', '_', strtolower($title));
+                                    if ($title != '') {
+                                        $mybl_data[$field] = $title;
+                                        $mybl_data['offer_section_slug'] = str_replace(' ', '_', strtolower($title));
+                                    }
                                     break;
                                 case "tag":
                                     $tag = $cells [$index]->getValue();
@@ -311,9 +301,10 @@ class ProductCoreService
         $length = $request->get('length');
 
         $builder = new MyBlProduct();
-        if ($request->status) {
+        $builder = $builder->where('status', 1);
+/*        if ($request->status) {
             $builder = MyBlProduct::where('status', $request->status);
-        }
+        }*/
         if ($request->show_in_home != null) {
             $builder = $builder->where('show_in_home', $request->show_in_home);
         }
@@ -333,11 +324,10 @@ class ProductCoreService
                 if ($request->content_type) {
                     if (in_array($request->content_type, $bundles)) {
                         $q->where('content_type', $request->content_type);
-                        $q->where('is_recharge_offer', '<>', 1);
                         $q->whereNull('call_rate');
                     } elseif ($request->content_type == 'recharge_offer') {
                         $q->whereNotNull('recharge_product_code');
-                    } elseif ($request->content_type == 'rate_cutter') {
+                    } elseif ($request->content_type == 'scr') {
                         $q->whereNotNull('call_rate');
                     } else {
                         $q->where('content_type', $request->content_type);
@@ -345,6 +335,11 @@ class ProductCoreService
                 }
             }
         );
+
+        if ($request->content_type == 'recharge_offer') {
+            $builder->where('show_recharge_offer', 1);
+        }
+
 
         $all_items_count = $builder->count();
         $items = $builder->skip($start)->take($length)->get();
@@ -727,7 +722,7 @@ class ProductCoreService
 
     public function downloadMyblProducts()
     {
-        $products = MyBlProduct::has('details')->with('details')->get();
+        $products = MyBlProduct::whereHas('details')->with('details')->where('status', 1)->get();
 
         $products = $products->sortBy('details.content_type');
 
@@ -751,6 +746,9 @@ class ProductCoreService
 
         unset($header['internet_volume_mb']);
 
+        $header['Active'] = $header['status'];
+        unset($header['status']);
+
         $headers = array_map(function ($val) {
             return str_replace('_', ' ', ucwords($val));
         }, array_keys($header));
@@ -767,34 +765,31 @@ class ProductCoreService
             if ($product->details) {
                 $insert_data[0] = ($product->sim_type == 2) ? 'Postpaid' : 'Prepaid';
                 $insert_data[1] = $product->details->content_type;
-                $insert_data[2] = $product->details->family_name;
-                $insert_data[3] = $product->details->product_code;
-                $insert_data[4] = $product->details->renew_product_code;
-                $insert_data[5] = $product->details->recharge_product_code;
-                $insert_data[6] = $product->details->name;
-                $insert_data[7] = $product->details->commercial_name_en;
-                $insert_data[8] = $product->details->commercial_name_bn;
-                $insert_data[9] = $product->details->short_description;
-                $insert_data[10] = $product->details->activation_ussd;
-                $insert_data[11] = $product->details->balance_check_ussd;
-                $insert_data[12] = $product->details->offer_id;
-                $insert_data[13] = $product->details->sms_volume;
-                $insert_data[14] = $product->details->minute_volume;
-                $insert_data[15] = $product->details->data_volume;
-                $insert_data[16] = $product->details->data_volume_unit;
-                $insert_data[17] = $product->details->validity;
-                $insert_data[18] = $product->details->validity_unit;
-                $insert_data[19] = $product->details->mrp_price;
-                $insert_data[20] = $product->details->price;
-                $insert_data[21] = $product->details->vat;
-                $insert_data[22] = ($product->details->is_amar_offer) ? 'Yes' : 'No';
-                $insert_data[23] = ($product->details->is_auto_renewable) ? 'Yes' : 'No';
-                $insert_data[24] = ($product->details->is_recharge_offer) ? 'Yes' : 'No';
-                $insert_data[25] = ($product->is_rate_cutter_offer) ? 'Yes' : 'No';
-                $insert_data[26] = $product->offer_section_title;
-                $insert_data[27] = $product->tag;
-                $insert_data[28] = $product->details->call_rate;
-                $insert_data[29] = $product->details->call_rate_unit;
+                $insert_data[2] = $product->details->product_code;
+                $insert_data[3] = $product->details->renew_product_code;
+                $insert_data[4] = $product->details->recharge_product_code;
+                $insert_data[5] = $product->details->name;
+                $insert_data[6] = $product->details->commercial_name_en;
+                $insert_data[7] = $product->details->commercial_name_bn;
+                $insert_data[8] = $product->details->short_description;
+                $insert_data[9] = $product->details->activation_ussd;
+                $insert_data[10] = $product->details->balance_check_ussd;
+                $insert_data[11] = $product->details->sms_volume;
+                $insert_data[12] = $product->details->minute_volume;
+                $insert_data[13] = $product->details->data_volume;
+                $insert_data[14] = $product->details->data_volume_unit;
+                $insert_data[15] = $product->details->validity;
+                $insert_data[16] = $product->details->validity_unit;
+                $insert_data[17] = $product->details->mrp_price;
+                $insert_data[18] = $product->details->price;
+                $insert_data[19] = $product->details->vat;
+                $insert_data[20] = ($product->show_recharge_offer) ? 'Yes' : 'No';
+                $insert_data[21] = ($product->is_rate_cutter_offer) ? 'Yes' : 'No';
+                $insert_data[22] = $product->offer_section_title;
+                $insert_data[23] = $product->tag;
+                $insert_data[24] = $product->details->call_rate;
+                $insert_data[25] = $product->details->call_rate_unit;
+                $insert_data[26] = ($product->status) ? 'Yes' : 'No';
 
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 

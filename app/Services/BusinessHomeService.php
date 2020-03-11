@@ -9,6 +9,7 @@ namespace App\Services;
 
 use App\Repositories\BusinessCategoryRepository;
 use App\Repositories\BusinessHomeBannerRepository;
+use App\Repositories\BusinessSlidingRepository;
 use App\Repositories\BusinessNewsRepository;
 use App\Repositories\BusinessFeaturesRepository;
 use App\Traits\CrudTrait;
@@ -26,6 +27,7 @@ class BusinessHomeService {
      */
     protected $businessCatRepo;
     protected $businessBannerRepo;
+    protected $slidingRepo;
     protected $businessNewsRepo;
     protected $businessFeaturesRepo;
 
@@ -33,14 +35,16 @@ class BusinessHomeService {
      * BusinessHomeService constructor.
      * @param BusinessCategoryRepository $businessCatRepo
      * @param BusinessHomeBannerRepository $businessBannerRepo
+     * @param BusinessSlidingRepository $slidingRepo
      * @param BusinessNewsRepository $businessNewsRepo
      * @param BusinessFeaturesRepository $businessFeaturesRepo
      */
     public function __construct(
-    BusinessCategoryRepository $businessCatRepo, BusinessHomeBannerRepository $businessBannerRepo, BusinessNewsRepository $businessNewsRepo, BusinessFeaturesRepository $businessFeaturesRepo
+    BusinessCategoryRepository $businessCatRepo, BusinessHomeBannerRepository $businessBannerRepo, BusinessSlidingRepository $slidingRepo, BusinessNewsRepository $businessNewsRepo, BusinessFeaturesRepository $businessFeaturesRepo
     ) {
         $this->businessCatRepo = $businessCatRepo;
         $this->businessBannerRepo = $businessBannerRepo;
+        $this->slidingRepo = $slidingRepo;
         $this->businessNewsRepo = $businessNewsRepo;
         $this->businessFeaturesRepo = $businessFeaturesRepo;
     }
@@ -119,6 +123,7 @@ class BusinessHomeService {
             return response()->json($response, 500);
         }
     }
+   
 
     /**
      * Change category sorting
@@ -136,6 +141,51 @@ class BusinessHomeService {
     public function categoryStatusChange($catId) {
         $response = $this->businessCatRepo->changeHomeShowStatus($catId);
         return $response;
+    }
+    
+    
+
+    /**
+     * Get business sliding speed
+     * @return Response
+     */
+    public function slidingSpeed() {
+        $response = $this->slidingRepo->getSlidingSpeed();
+        return $response;
+    }
+    
+     /**
+     * save business sliding speed
+     * @return Response
+     */
+    public function saveSlidingSpeed($request) {
+        try {
+
+            $request->validate([
+                'enSpeed' => 'required',
+                'newsSpeed' => 'required'
+            ]);
+
+        
+
+            //save data in database 
+            $this->slidingRepo->saveSpeed($request['enSpeed'], $request['newsSpeed']);
+            
+
+            $response = [
+                'success' => 1,
+                'message' => "Speed is updated successfully!"
+            ];
+
+
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
     }
 
     /**

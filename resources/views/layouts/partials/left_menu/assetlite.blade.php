@@ -207,7 +207,7 @@
                 <li class="{{ is_active_url('business-other-services') }}">
                     <a class="menu-item" href="{{ route('business.other.services') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-caret-right"></i> B.Solution, IOT & Others</a>
+                            class="la la-caret-right"></i> Enterprise Solution</a>
                 </li>
 
             </ul>
@@ -270,7 +270,7 @@
     <!-- // eCarrer portal -->
     {{-- @if( auth()->user()->can_view('Slider', 'singleSlider') || auth()->user()->can_view('Slider', 'multiSlider') ) --}}
         <li class="nav-item"><a href="#"><i class="la la-bell"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">eCarrer</span></a>
+                <span class="menu-title" data-i18n="nav.templates.main">eCareer</span></a>
             <ul class="menu-content">
 
                 <li class="{{ request()->is('life-at-banglalink/topbanner*') ? 'active' : '' }}">
@@ -446,18 +446,25 @@
                 <li class="{{ is_active_url('app-service/tabs') }}">
                     <a class="menu-item" href="{{ route('tabs.index') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-taxi"></i> App & Service Tab</a>
+                            class="la la-caret-right"></i> App & Service Tab</a>
                 </li>
 
                 <li class="{{ is_active_url('app-service/category') }}">
                     <a class="menu-item" href="{{ route('category.index') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-tasks"></i> App & Service Category</a>
+                            class="la la-caret-right"></i> App & Service Category</a>
                 </li>
+
+                <li class="{{ is_active_url('app-service/vendor-api') }}">
+                    <a class="menu-item" href="{{ route('vendor-api.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Vendor API</a>
+                </li>
+
                 <li class="{{ is_active_url('app-service-product') }}">
                     <a class="menu-item" href="{{ route('app-service-product.index') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-magic"></i> App Service Products</a>
+                            class="la la-caret-right"></i> App Service Products</a>
                 </li>
             </ul>
         </li>

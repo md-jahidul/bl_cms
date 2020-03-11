@@ -18,6 +18,8 @@ class CreateProductDetailsSectionsTable extends Migration
             $table->unsignedBigInteger('product_id')->nullable();
             $table->string('title_en')->nullable();
             $table->string('title_bn')->nullable();
+            $table->string('alias')->nullable();
+            $table->json('other_attributes')->nullable();
             $table->integer('display_order')->nullable();
             $table->tinyInteger('status')->nullable();
             $table->timestamps();

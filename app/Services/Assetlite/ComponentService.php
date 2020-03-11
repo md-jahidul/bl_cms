@@ -90,6 +90,7 @@ class ComponentService
         }
 
         $data['multiple_attributes'] = json_encode($results);
+
         $this->save($data);
         return new Response('App Service Component added successfully');
     }
@@ -116,18 +117,21 @@ class ComponentService
             $data['image'] = $this->upload($data['image'], 'assetlite/images/banner/product_details');
         }
 
+        $input_multiple_attributes = $data['multiple_attributes'];
+        // loop over the product array
+        foreach ($input_multiple_attributes as $data_id => $inputData) {
+            foreach ($inputData as $key => $value) {
+                // set the new value
+                $new_multiple_attributes[$data_id][$key] = is_object($value) ? $this->upload($value, 'assetlite/images/product_details') : $value;
+            }
+        }
 
-        $image = $this->imageUpload($data);
-
-        $data['multiple_attributes'] = [
-            'alt_text' => $data['multiple_attributes']['alt_text'],
-            'image' => $image
-        ];
+        ($new_multiple_attributes['alt_text']['alt_text_1']) ? $data['multiple_attributes'] = $new_multiple_attributes : $data['multiple_attributes'] = null;
 
         $data['page_type'] = "other_offer";
         $data['section_details_id'] = $sectionId;
-
         $this->save($data);
+        return response('Component create successfully!');
     }
 
     public function componentUpdate($data, $id)
@@ -135,52 +139,29 @@ class ComponentService
 
         $component = $this->findOne($id);
 
-        // ... other usual stuff
-
         // get original data
-        $new_product_name = $component->multiple_attributes;
+        $new_multiple_attributes = $component->multiple_attributes;
 
         // contains all the inputs from the form as an array
-        $input_product_name = request()->input('multiple_attributes');
+        $input_multiple_attributes = isset($data['multiple_attributes']) ? $data['multiple_attributes'] : null;
+
         // loop over the product array
-        foreach ($input_product_name as $data_id => $data) {
-
-            dd($data_id);
-
-            // loop over each input for the product in the view form
-            foreach ($data as $key => $value) {
-
-
-
-                // set the new value
-                $new_product_name[$data_id][$key] = $value;
+        if ($input_multiple_attributes) {
+            foreach ($input_multiple_attributes as $data_id => $inputData) {
+                foreach ($inputData as $key => $value) {
+                    // set the new value
+                    $new_multiple_attributes[$data_id][$key] = is_object($value) ? $this->upload($value, 'assetlite/images/product_details') : $value;
+                }
             }
         }
-        // set the new data (should automatically serialize into JSON for storage)
-//        $order->product_name = $new_product_name;
-//
-//        $order->save();
-
-
-
-        $component = $this->findOne($id);
-
-        dd($component['multiple_attributes']);
 
         if (request()->hasFile('image')) {
             $data['image'] = $this->upload($data['image'], 'assetlite/images/banner/product_details');
         }
 
-        if (isset($data['multiple_attributes']['image'])) {
-            $image = $this->imageUpload($data);
-        }
 
-        $data['multiple_attributes'] = [
-            $data['multiple_attributes']['alt_text'],
-            (isset($data['multiple_attributes']['image'])) ? $image : $component['multiple_attributes']
-        ];
+        $data['multiple_attributes'] = $new_multiple_attributes;
 
-        dd($data);
 
         $data['page_type'] = "other_offer";
         $component->update($data);

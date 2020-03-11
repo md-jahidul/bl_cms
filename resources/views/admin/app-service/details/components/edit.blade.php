@@ -8,6 +8,9 @@
 @section('action')
     <a href="{{ route('appservice.component.list', ['type' => $data['tab_type'], 'id' => $data['section_id']]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
+
+{{ dd($appServiceProduct->multiple_attributes) }}
+
 @section('content')
     <section>
         <div class="card">
