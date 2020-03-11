@@ -44,6 +44,11 @@ class ProductService
         $this->setActionRepository($productRepository);
     }
 
+    public function produtcs()
+    {
+        return $this->productRepository->findByProperties([], ['product_code', 'name_en']);
+    }
+
     /**
      * @param $data
      * @param $simId

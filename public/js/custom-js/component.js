@@ -30,8 +30,10 @@
             var isChecked = $(this).is(":checked");
             if (isChecked) {
                 $(item).removeClass('d-none')
+                // $(item).show()
             } else {
                 $(item).addClass('d-none')
+                // $(item).hide()
             }
         });
     }

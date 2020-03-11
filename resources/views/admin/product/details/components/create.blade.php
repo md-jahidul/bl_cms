@@ -69,7 +69,7 @@
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="related_product">
+                                                            <input type="checkbox" id="related_product" checked>
                                                             <label for="related_product" class="">Related Product</label>
                                                         </fieldset>
                                                     </div>
@@ -85,20 +85,13 @@
                                             <div class="row">
 
                                                 <div class="form-group col-md-12 {{ $errors->has('editor_en') ? ' error' : '' }}">
-                                                    <label for="editor_en">Data Type</label>
+                                                    <label for="editor_en">Component Type</label>
                                                     <select name="component_type" class="form-control required" id="data-type"
                                                             required data-validation-required-message="Please select data type">
                                                         <option value="">--Select Data Type--</option>
                                                         @foreach($dataTypes as $key => $item)
                                                             <option value="{{ $key }}">{{ $item }}</option>
                                                         @endforeach
-{{--                                                        <option value="text_area">Text</option>--}}
-{{--                                                        <option value="text_and_button">Text And Button</option>--}}
-{{--                                                        <option value="bullet_text">Bullet Text</option>--}}
-{{--                                                        <option value="accordion_text">Accordion Text</option>--}}
-{{--                                                        <option value="single_image">Single Image</option>--}}
-{{--                                                        <option value="multiple_image">Multiple Image</option>--}}
-{{--                                                        <option value="drop_down">Dropdown</option>--}}
                                                     </select>
                                                     <div class="help-block"></div>
                                                     @if ($errors->has('editor_en'))
@@ -108,7 +101,7 @@
 
                                                 <slot id="text-field" class="d-none">
                                                     <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                                        <label for="title_en">Text Field (English)</label>
+                                                        <label for="title_en">Title Field (English)</label>
                                                         <input type="text" name="title_en"  class="form-control" placeholder="Enter company name bangla"
                                                                value="{{ old("title_en") ? old("title_en") : '' }}">
                                                         <div class="help-block"></div>
@@ -130,21 +123,21 @@
 
 
                                                 <slot id="extra-title-field" class="d-none">
-                                                    <div class="form-group col-md-6 {{ $errors->has('editor_en') ? ' error' : '' }}">
-                                                        <label for="editor_en">Extra Title (English)</label>
-                                                        <textarea type="text" name="editor_en"  class="form-control" placeholder="Enter offer details in english" id="details"></textarea>
+                                                    <div class="form-group col-md-6 {{ $errors->has('extra_title_en') ? ' error' : '' }}">
+                                                        <label for="extra_title_en">Extra Title (English)</label>
+                                                        <textarea type="text" name="extra_title_en"  class="form-control" placeholder="Enter extra title in English" id="details"></textarea>
                                                         <div class="help-block"></div>
-                                                        @if ($errors->has('editor_en'))
-                                                            <div class="help-block">{{ $errors->first('editor_en') }}</div>
+                                                        @if ($errors->has('extra_title_en'))
+                                                            <div class="help-block">{{ $errors->first('extra_title_en') }}</div>
                                                         @endif
                                                     </div>
 
-                                                    <div class="form-group col-md-6 {{ $errors->has('editor_bn') ? ' error' : '' }}">
-                                                        <label for="editor_bn">Extra Title (Bangla)</label>
-                                                        <textarea type="text" name="editor_bn"  class="form-control" placeholder="Enter offer details in english"  id="details"></textarea>
+                                                    <div class="form-group col-md-6 {{ $errors->has('extra_title_bn') ? ' error' : '' }}">
+                                                        <label for="extra_title_bn">Extra Title (Bangla)</label>
+                                                        <textarea type="text" name="extra_title_bn"  class="form-control" placeholder="Enter extra title in Bangla"  id="details"></textarea>
                                                         <div class="help-block"></div>
-                                                        @if ($errors->has('editor_bn'))
-                                                            <div class="help-block">{{ $errors->first('editor_bn') }}</div>
+                                                        @if ($errors->has('extra_title_bn'))
+                                                            <div class="help-block">{{ $errors->first('extra_title_bn') }}</div>
                                                         @endif
                                                     </div>
                                                 </slot>
@@ -152,7 +145,7 @@
                                                 <slot id="text-area-button" class="d-none">
                                                     <div class="form-group col-md-6 {{ $errors->has('button_en') ? ' error' : '' }}">
                                                         <label for="button_en">Button Title (English)</label>
-                                                        <input type="text" name="title_en"  class="form-control" placeholder="Enter company name bangla"
+                                                        <input type="text" name="button_en"  class="form-control" placeholder="Enter company name bangla"
                                                                value="{{ old("button_en") ? old("button_en") : '' }}">
                                                         <div class="help-block"></div>
                                                         @if ($errors->has('button_en'))
@@ -232,7 +225,7 @@
                                                         <label for="editor_en" class="required" >Drop Down Data</label>
                                                         <select name="other_attributes[dropdown_data_type]" class="form-control required">
                                                             <option value="">--Select Dropdown Data Type--</option>
-                                                            <option value="easy_payment_card">Easy Payment Card</option>
+{{--                                                            <option value="easy_payment_card">Easy Payment Card</option>--}}
                                                             <option value="device_data_offer">Device Free Data Offer</option>
                                                         </select>
                                                         <div class="help-block"></div>
@@ -284,30 +277,24 @@
                                                 </slot>
 
 
-                                                <slot id="related_product_field" class="d-none">
-                                                    <div class="form-group col-md-6 {{ $errors->has('offer_type_id') ? ' error' : '' }}">
+
+{{--                                                <slot id="related_product_field" class="">--}}
+                                                    <div id="related_product_field" class="col-md-6 {{ $errors->has('offer_type_id') ? ' error' : '' }}">
                                                         <label for="editor_en">Related Product</label>
-                                                        <select name="offer_type_id" class="form-control required" id="data-type">
+                                                        <select name="offer_type_id" class="select2 form-control" id="data-type">
                                                             <option value="">--Select Data Type--</option>
-                                                            <option value="60">Special Data Offer</option>
-                                                            <option value="59">Special Voice Offer</option>
-{{--                                                            @foreach($dataTypes as $key => $item)--}}
-{{--                                                                <option value="{{ $key }}">{{ $item }}</option>--}}
-{{--                                                            @endforeach--}}
-                                                            {{--                                                        <option value="text_area">Text</option>--}}
-                                                            {{--                                                        <option value="text_and_button">Text And Button</option>--}}
-                                                            {{--                                                        <option value="bullet_text">Bullet Text</option>--}}
-                                                            {{--                                                        <option value="accordion_text">Accordion Text</option>--}}
-                                                            {{--                                                        <option value="single_image">Single Image</option>--}}
-                                                            {{--                                                        <option value="multiple_image">Multiple Image</option>--}}
-                                                            {{--                                                        <option value="drop_down">Dropdown</option>--}}
+{{--                                                            <option value="60">Special Data Offer</option>--}}
+{{--                                                            <option value="59">Special Voice Offer</option>--}}
+                                                             @foreach($products as  $product)
+                                                                 <option value="{{ $product->id }}">{{ $product->name_en . '/ ' . $product->product_code }}</option>
+                                                             @endforeach
                                                         </select>
                                                         <div class="help-block"></div>
                                                         @if ($errors->has('offer_type_id'))
                                                             <div class="help-block">{{ $errors->first('offer_type_id') }}</div>
                                                         @endif
                                                     </div>
-                                                </slot>
+{{--                                                </slot>--}}
 
                                                 <div class="form-actions col-md-12">
                                                     <div class="pull-right">

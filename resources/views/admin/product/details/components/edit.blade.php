@@ -189,9 +189,9 @@
                                                     </div>
                                                 </slot>
 
-                                                <slot id="multiple-image-field" class="{{ ( $component->multiple_attributes['image'] ) ? '' : "d-none" }}">
+                                                <slot id="multiple-image-field" class="{{ ( isset($component->multiple_attributes['image']) ) ? '' : "d-none" }}">
                                                     @php( $i = 0 )
-                                                    @if($multipleImage['image'])
+                                                    @if(isset($multipleImage['image']))
                                                         @foreach($multipleImage['image'] as $key => $image)
                                                             @php($i++)
                                                             <div class="col-md-6 col-xs-6 option-{{ $i }} options-count">
