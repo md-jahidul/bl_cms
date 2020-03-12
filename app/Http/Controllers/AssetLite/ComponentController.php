@@ -125,9 +125,8 @@ class ComponentController extends Controller
 	 * @param  Request $request [description]
 	 * @return [type]           [description]
 	 */
-	public function conponentItemAttr(Request $request){
-
-		
+	public function conponentItemAttr(Request $request)
+	{
 
 		$component_id = $request->input('component_id', null);
 		$item_id = $request->input('item_id', null);
@@ -171,8 +170,33 @@ class ComponentController extends Controller
 	 * Multiple attribute sortable for component
 	 * @return [type] [description]
 	 */
-	public function multiAttributeSortable(Request $request){
+	public function multiAttributeSortable(Request $request)
+	{
 		$this->componentService->attrTableSortable($request);
+
+		return response()->json([
+		    'status' => 'SUCCESS',
+		    'message' => 'Data sorted',
+		    'data' => []
+		], 200);
+
+	}
+
+	/**
+	 * [conponentItemAttrStore description]
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function conponentItemAttrStore(Request $request)
+	{
+		$response = $this->componentService->storeComponentMultiItemAttr($request->all());
+
+		$product_id = $request->input('product_id');
+		$tab_type = $request->input('tab_type');
+
+		Session::flash('message', 'Component item updated successfuly');
+		return redirect( url("app-service/details/$tab_type/$product_id") );
+
 	}
 
 

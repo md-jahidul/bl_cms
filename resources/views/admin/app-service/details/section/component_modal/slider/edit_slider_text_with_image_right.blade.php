@@ -190,6 +190,12 @@
 	   	    				$singleModalID.find("input[name='component_multi_attr["+k+"]']").val(v);
 	   	    			}
 
+
+	   	    			// Put item id and component id
+	   	    			$singleModalID.find('.item_id').val(itemId);
+	   	    			$singleModalID.find('.component_id').val(componentId);
+
+
 	   	    		});
 
 	   	    		$editedModalID.modal('hide');

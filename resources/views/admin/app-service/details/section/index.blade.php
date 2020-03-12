@@ -373,9 +373,11 @@ function matchRelatedProduct($id, $roles)
 										$("#slider_sortable").sortable({
 										    update: function (event, ui) {
 										        $(this).children().each(function (index) {
+
 										            if ($(this).attr('data-position') != (index + 1)) {
-										                $(this).attr('data-position', (index + 1)).addClass('update')
+										                $(this).attr('data-position', (index + 1));
 										            }
+									        		 	$(this).addClass('sorting_updated');
 										        });
 										        saveNewPositionsMultiAttr($(this));
 										    }
@@ -509,7 +511,7 @@ function matchRelatedProduct($id, $roles)
 	function saveNewPositionsMultiAttr($this)
 	    {
 	        var positions = [];
-	        $('.update').each(function () {
+	        $('.sorting_updated').each(function () {
 	            positions.push([
 	                $(this).attr('data-index'),
 	                $(this).attr('data-position')

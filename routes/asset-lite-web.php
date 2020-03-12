@@ -632,6 +632,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('app-service/component/store', 'AssetLite\ComponentController@conponentStore')->name('appservice.component.store');
     // Get component multi attr
     Route::get('app-service/component/itemattr', 'AssetLite\ComponentController@conponentItemAttr')->name('appservice.component.itemattr');
+    Route::post('app-service/component/itemattr/store', 'AssetLite\ComponentController@conponentItemAttrStore')->name('appservice.component.itemattr.store');
 
 
     // Lead Management ======================================================

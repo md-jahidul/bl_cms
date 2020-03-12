@@ -3,21 +3,23 @@
 		<div class="modal-dialog modal-lg modal_lg_custom" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title" id="exampleModalLabel"><strong>Component: Slider - text with Image right</strong></h4>
+						<h4 class="modal-title" id="exampleModalLabel"><strong>Component: Single Item Edit</strong></h4>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 
 					</div>
-						<form id="product_details_form" role="form" action="{{ route('app_service.details.store', [$tab_type, $product_id ]) }}" method="POST" novalidate enctype="multipart/form-data">
+						<form id="product_details_form" role="form" action="{{ route('appservice.component.itemattr.store') }}" method="POST" novalidate enctype="multipart/form-data">
 								@csrf
 							<div class="modal-body">
 								
 								<div class="row">
 
 									
-									{{ Form::hidden('item_id', '' ) }}
-									{{ Form::hidden('component_id', '' ) }}
+									{{ Form::hidden('item_id', '', ['class' => 'item_id']) }}
+									{{ Form::hidden('component_id', '', ['class' => 'component_id'] ) }}
+									{{ Form::hidden('product_id', $product_id) }}
+									{{ Form::hidden('tab_type', $tab_type) }}
 
 									
 									<div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
@@ -127,35 +129,7 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 	   
-	   // Add multiple item
-	   $('.add_moreslider_item').on('click', function(){
-
-	     var i = parseInt($('#multi_item_count').val(), 10);
-	     // $('#slider_content_section').empty();
-
-	     i = i+1;
-
-	     var html = '';
-	     
-	     html += '<div class="row single_slider_content"><input type="hidden" name="component[0][multi_item][display_order-'+i+']" value="'+i+'"><input type="hidden" name="component[0][multi_item][id-'+i+']" value="'+i+'"><div class="form-group col-md-6"> <label for="title_en" class="required1">Slider Title (English)</label> <input type="text" name="component[0][multi_item][title_en-'+i+']" class="form-control" value="" aria-invalid="false"> <div class="help-block"></div></div><div class="form-group col-md-6 "> <label for="title_bn" class="required1">Slider Title (Bangla)</label> <input type="text" name="component[0][multi_item][title_bn-'+i+']" class="form-control" value=""> <div class="help-block"></div></div><div class="form-group col-md-4"> <label for="alt_text" class="">Image (optional)</label><div class="custom-file"> <input type="file" name="component[0][multi_item][image_url-'+i+']" class="custom-file-input" id="image" aria-invalid="false"> <label class="custom-file-label" for="inputGroupFile01">Choose file</label></div> <span class="text-primary">Please given file type (.png, .jpg, svg)</span><div class="help-block"></div></div><div class="form-group col-md-1"> <img style="height:70px;width:70px;display:none" id="imgDisplay"></div><div class="form-group col-md-4 "> <label for="alt_text" class="required1">Alt Text</label> <input type="text" name="component[0][multi_item][alt_text-'+i+']" class="form-control" value=""><div class="help-block"></div></div><div class="form-group col-md-2"> <label for="status">Status</label> <select class="form-control" name="component[0][multi_item][status-'+i+']" aria-invalid="false"><option value="1">Active</option><option value="0">Inactive</option> </select></div><div class="form-group"> <label for="status" style="padding-bottom: 43px;"> </label> <button class="btn btn-danger multi_item_remove">-</button></div></div>';
-
-	     $('#slider_content_section').append(html);
-
-	     
-
-	     $('#multi_item_count').val(i);
-
-
-	   });
-
-
-	   $(document).on('click', '.multi_item_remove', function(e){
-
-	     e.preventDefault();
-
-	     $(this).parents('.row.single_slider_content').remove();
-
-	   });
+	   
 
 
 

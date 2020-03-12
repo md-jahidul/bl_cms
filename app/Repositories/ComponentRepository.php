@@ -30,45 +30,45 @@ class ComponentRepository extends BaseRepository
 
 	 	$component_id = $request->component_id;
 
-	 	$component_data = $this->model->findOrFail($component_id);
+	 	$component = $this->model->findOrFail($component_id);
 
-	 	if( !empty($component_data->multiple_attributes) ){
+	 	if( !empty($component->multiple_attributes) ){
 
-	 		$multi_attr = json_decode($component_data->multiple_attributes, true);
+	 		$multi_attr = json_decode($component->multiple_attributes, true);
 
 	 		$new_multiattr = null;
 	 		$positions = $request->position;
 
-	 		// dd($request->all());
+	 		// dd($positions);
 
-	 		foreach ($positions as $position) {
-	 		    $menu_id = $position[0]; // slider id / id
-	 		    $new_order = $position[1]; // order position
+	 		$final_results = [];
 
-	 		    $new_multiattr = array_map(function($value) use($menu_id, $new_order){
+	 		foreach ($multi_attr as $value) {
+	 			$sub_data = [];
+	 			
+	 			foreach ($positions as $position){
+	 				$menu_id = $position[0]; // slider id / id
+	 				$new_order = $position[1]; // order position
 
-	 		    	if( $value['id'] == $menu_id ){
+	 				if( $menu_id == $value['id'] ){
+	 					$value['display_order'] = $new_order;
+	 				}
 
-	 		    		$value['display_order'] = $new_order;
+	 				$sub_data = $value;
 
-	 		    	}
-	 		    	
-	 		    	return $value;
+	 			}
 
-	 		    }, $multi_attr);
-
-	 		} // End foreach
+	 			$final_results[] = $sub_data;
+	 			
+	 		}	 		
 
 	 	}
 
-	 	// dd($new_multiattr);
+	 	if( !empty($final_results) && count($final_results) > 0 ){
 
-	 	if( !empty($new_multiattr) && count($new_multiattr) > 0 ){
+	 		$component->multiple_attributes = json_encode($final_results);
 
-	 		$component_data->multiple_attributes = json_encode($new_multiattr);
-
-
-	 		$component_data->update();
+	 		$component->update();
 
 	 		return true;
 	 	}

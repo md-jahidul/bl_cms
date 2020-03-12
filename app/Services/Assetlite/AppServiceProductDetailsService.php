@@ -277,6 +277,7 @@ class AppServiceProductDetailsService
 
 			   if( isset($value->multiple_attributes) && !empty($value->multiple_attributes) ){
 			   	$res = json_decode($value->multiple_attributes, true);
+			   	
 			   	usort($res, function($a, $b){return strcmp($a["display_order"], $b["display_order"]);});
 
 			   	$results['component'][$key]['multiple_attributes'] = json_encode($res);

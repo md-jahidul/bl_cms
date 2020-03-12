@@ -31,9 +31,9 @@
 									  
 									  <div id="slider_content_section" class="slider_content_section" data-count="1">
 									    <input id="multi_item_count" type="hidden" name="component[0][multi_item_count]" value="1">
+									    <input type="hidden" name="component[0][multi_item][id-1]" value="1">
 									    <input type="hidden" name="component[0][multi_item][display_order-1]" value="0">
 
-									    <input type="hidden" name="component[0][multi_item][id-1]" value="1">
 
 									    <div class="row single_slider_content" style="margin-bottom: 30px;padding-bottom: 30px;border-bottom: 1px solid #d1d5ea;">
 
