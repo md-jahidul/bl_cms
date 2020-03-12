@@ -290,7 +290,7 @@ if (Session::has('error')) {
         height: 200
     });
     
-     $(".mrp, .tex, .price, .validity").on("keypress keyup blur", '.price_input', function (event) {
+     $(".mrp, .tex, .price, .validity").on("keypress keyup blur", function (event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
             event.preventDefault();
