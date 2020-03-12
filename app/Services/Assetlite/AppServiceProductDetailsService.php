@@ -81,6 +81,15 @@ class AppServiceProductDetailsService
 						$value['image'] = $this->upload($data['component'][$key]['image_url'], 'assetlite/images/app-service/product-details');
 					}
 
+
+					# get video url
+					if( isset( $value['video_url'] ) && is_object($value['video_url']) ){
+						$value['video'] = $this->upload($value['video_url'], 'assetlite/images/app-service/product/details');
+					}
+					elseif( isset($value['video_url']) ){
+						$value['video'] = $value['video_url'];
+					}
+
 					# Multiple item to save
 					if( request()->filled('component.'.$key.'.multi_item') ){
 
@@ -198,6 +207,14 @@ class AppServiceProductDetailsService
 
 			$data['multiple_attributes'] = !empty($final_results) ? json_encode($final_results) : null;
 
+		}
+
+		# get video url
+		if( isset( $data['video_url'] ) && is_object($data['video_url']) ){
+			$data['video'] = $this->upload($data['video_url'], 'assetlite/images/app-service/product/details');
+		}
+		elseif( isset($data['video_url']) ){
+			$data['video'] = $data['video_url'];
 		}
 
 		$component->update($data);
