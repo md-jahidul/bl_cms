@@ -341,6 +341,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('search-product-list', 'AssetLite\SearchController@getProductList')->name('search.get.product.list');
     
     Route::post('popular-search-save', 'AssetLite\SearchController@popularSearchSave')->name('popular.search.save');
+    
+    Route::get('search-popular-edit/{keywordId}', 'AssetLite\SearchController@popularSearchEdit');
+    Route::post('popular-search-update', 'AssetLite\SearchController@popularSearchUpdate')->name('popular.search.update');
+    
+    Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus');
     Route::get('popular-search-delete/{keywordId}', 'AssetLite\SearchController@deletePopularSearch');
     
     // Easy Payment Card ============================================
