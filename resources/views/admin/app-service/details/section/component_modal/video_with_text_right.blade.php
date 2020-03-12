@@ -92,7 +92,7 @@
 
                       <div class="form-group col-md-6">
                           <label for="tag_category_id" class="required">Select Video Type</label>
-                          <select class="form-control" name="component[0][app_service_video_type]">
+                          <select class="form-control" name="component[0][other_attr][video_type]">
                                   <option value="uploaded_video">Upload video</option>
                                   <option value="youtube_video">Youtube video link</option>
                           </select>
@@ -124,6 +124,7 @@
                          <input type="text" name="component[0][video_url]"  class="form-control"
                                 value="{{ old("video_url") ? old("video_url") : '' }}">
                          <div class="help-block"></div>
+                         <p class="small text-warning">Please put embeded youtube link ex: https://www.youtube.com/embed/USs8IaKYoRI</p>
                          @if ($errors->has('video_url'))
                              <div class="help-block">  {{ $errors->first('video_url') }}</div>
                          @endif

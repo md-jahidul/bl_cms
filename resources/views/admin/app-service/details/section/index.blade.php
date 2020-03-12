@@ -224,10 +224,15 @@ function matchRelatedProduct($id, $roles)
 	@include('admin.app-service.details.section.component_modal.text_with_image_bottom')
 	@include('admin.app-service.details.section.component_modal.video_with_text_right')
 	@include('admin.app-service.details.section.component_modal.pricing_sections')
-
+	
+	<!-- multi image slider -->
 	@include('admin.app-service.details.section.component_modal.slider.slider_text_with_image_right')
 	@include('admin.app-service.details.section.component_modal.slider.edit_slider_text_with_image_right')
 	@include('admin.app-service.details.section.component_modal.slider.single_item_edit_slider_text_with_image_right')
+	<!-- multi image banner -->
+	@include('admin.app-service.details.section.component_modal.multi_banner.multiple_image_banner')
+	@include('admin.app-service.details.section.component_modal.multi_banner.edit_multiple_image_banner')
+	@include('admin.app-service.details.section.component_modal.multi_banner.single_item_edit_multiple_image_banner')
 
 
 @stop
@@ -371,6 +376,97 @@ function matchRelatedProduct($id, $roles)
 
 										// Enable sortable for slider
 										$("#slider_sortable").sortable({
+										    update: function (event, ui) {
+										        $(this).children().each(function (index) {
+
+										            if ($(this).attr('data-position') != (index + 1)) {
+										                $(this).attr('data-position', (index + 1));
+										            }
+									        		 	$(this).addClass('sorting_updated');
+										        });
+										        saveNewPositionsMultiAttr($(this));
+										    }
+										});
+
+									}
+								}
+
+
+								// Other attribute parse
+								if( ck == 'other_attributes' ){
+									if( typeof cv !== 'undefined' ){
+										var otherAttrData = eval(JSON.parse(cv));
+
+										$.each(otherAttrData, function(ock, ocv){
+
+											$parentSelectorEdit.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
+
+										});
+
+									}
+								}
+
+
+							});
+
+						});
+
+
+					}
+					 // Check component is multiple banner image?
+					else if( result.data.sections.section_type == 'multiple_image_banner' ){
+
+						var $parentSelectorEdit = $('#edit_'+modalComponent);
+
+
+						$parentSelectorEdit.modal('show');
+						
+
+						// Add section id
+						$parentSelectorEdit.find('.section_id').val(result.data.sections.id);
+
+						$("input[name='sections[status]']").each(function(sk, sv){
+						   // console.log($(sv).val());
+						   if( $(sv).val() == result.data.sections.status ){
+							   $(sv).attr('checked', true);
+						   }
+
+						});
+
+
+						// Compoent foreach
+						$.each(result.data.component, function(cpk, cpv){
+
+							$.each(cpv, function(ck, cv){
+
+							   if( ck == 'id' ){                            
+								 $parentSelectorEdit.find("input[name='component["+cpk+"][id]']").val(cv);
+								 $('.tablecompoent_'+cpk).attr('data-component_id', cv);
+							   }
+
+							   // Multiple attribute parse
+								if( ck == 'multiple_attributes' ){
+									// console.log(cv);
+
+									if( typeof cv !== 'undefined' ){
+										var multiData = eval(JSON.parse(cv));
+										$parentSelectorEdit.find('#slider_sortable').empty();
+
+										var component_id = $('.tablecompoent_'+cpk).attr('data-component_id');
+
+										$.each(multiData, function(mck, mcv){
+
+											var html = '';
+
+											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td width="5%"><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" /></td><td>'+mcv.alt_text+'</td><td>'+mcv.status+'</td><td><a href="#" class="banner_multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a></td></tr>';
+
+											$parentSelectorEdit.find('#slider_sortable').append(html);
+
+										});
+
+
+										// Enable sortable for slider
+										$parentSelectorEdit.find("#slider_sortable").sortable({
 										    update: function (event, ui) {
 										        $(this).children().each(function (index) {
 

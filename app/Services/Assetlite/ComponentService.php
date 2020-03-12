@@ -286,10 +286,22 @@ class ComponentService
 				
 				if( $attributes['id'] == $item_id ){
 
-					$attributes['title_en'] = isset($item_data['title_en']) ? $item_data['title_en'] : $attributes['title_en'];
-					$attributes['title_bn'] = isset($item_data['title_bn']) ? $item_data['title_bn'] : $attributes['title_bn'];
-					$attributes['alt_text'] = isset($item_data['alt_text']) ? $item_data['alt_text'] : $attributes['alt_text'];
-					$attributes['status'] = isset($item_data['status']) ? $item_data['status'] : $attributes['status'];
+					if( isset($item_data['title_en']) && !empty($item_data['title_en']) ){
+						$attributes['title_en'] = $item_data['title_en'];
+					}
+
+					if( isset($item_data['title_bn']) && !empty($item_data['title_bn']) ){
+						$attributes['title_bn'] = $item_data['title_bn'];
+					}
+
+					if( isset($item_data['alt_text']) && !empty($item_data['alt_text']) ){
+						$attributes['alt_text'] = $item_data['alt_text'];
+					}
+
+					if( isset($item_data['status']) ){
+						$attributes['status'] = $item_data['status'];
+					}
+					
 
 					if( isset($item_data['image_url']) && !empty($item_data['image_url']) ){
 						$attributes['image_url'] = is_object($item_data['image_url']) ? $this->upload($item_data['image_url'], 'assetlite/images/product_details') : $attributes['image_url'];
