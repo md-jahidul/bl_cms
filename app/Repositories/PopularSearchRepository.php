@@ -29,8 +29,45 @@ class PopularSearchRepository extends BaseRepository {
         return $save;
     }
     
-    public function deleteKeyword($kwId){
+    public function getKeywordById($kwId){
+        $response = $this->model->findOrFail($kwId);
+        return $response;
+    }
+
+        public function deleteKeyword($kwId){
         return $this->model->findOrFail($kwId)->delete();
+    }
+    
+    public function updateKeyword($keywordId, $keyword){
+
+            $popular = $this->model->findOrFail($keywordId);
+
+            $popular->keyword = $keyword;
+            return $popular->save();
+
+          
+    }
+    public function changeStatus($kwId) {
+        try {
+
+            $popular = $this->model->findOrFail($kwId);
+
+            $status = $popular->status == 1 ? 0 : 1;
+            $popular->status = $status;
+            $popular->save();
+
+            $response = [
+                'success' => 1,
+                'show_status' => $status,
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'errors' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
     }
 
 }
