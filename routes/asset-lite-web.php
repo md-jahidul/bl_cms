@@ -406,6 +406,8 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     //__Category Internet Package
     Route::get('business-internet', 'AssetLite\BusinessInternetController@index');
+    Route::get('business-internet-create', 'AssetLite\BusinessInternetController@internetCreate');
+    Route::post('business-internet-save', 'AssetLite\BusinessInternetController@saveInternetPackage');
     Route::post('business-internet-package-list', 'AssetLite\BusinessInternetController@internetPackageList')->name("business.internet.list.ajax");
     Route::post('business-internet-excel', 'AssetLite\BusinessInternetController@uploadInternetExcel')
             ->name('business.internet.excel.save');

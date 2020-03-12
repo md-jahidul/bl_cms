@@ -81,7 +81,7 @@
                                         <a class="text-info edit_package" href="{{url('search-popular-edit/'.$p->id)}}">
                                             <i class="la la-pencil-square"></i>
                                         </a>
-                                        <a class="text-danger delete_package" href="{{url('popular-search-delete/'.$p->id)}}">
+                                        <a class="text-danger delete_keyword" href="{{url('popular-search-delete/'.$p->id)}}">
                                             <i class="la la-trash"></i>
                                         </a>
 
@@ -264,6 +264,14 @@ if (Session::has('error')) {
                 }
             });
 
+        });
+        
+        $('.delete_keyword').on('click', function(){
+            var conf = confirm("Do you want to delete this keyword?");
+            if(conf){
+                return true;
+            }
+            return false;
         });
 
 
