@@ -298,7 +298,7 @@ class ComponentService
 						$attributes['alt_text'] = $item_data['alt_text'];
 					}
 
-					if( isset($item_data['status']) ) ){
+					if( isset($item_data['status']) ){
 						$attributes['status'] = $item_data['status'];
 					}
 					
