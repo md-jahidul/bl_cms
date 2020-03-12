@@ -20,30 +20,21 @@
                 		{{ Form::hidden('component[0][component_type]', 'text_with_image_right' ) }}
 
 
-							<div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-							    <label for="title_en" class="required1">
-							        Title (English)
-							    </label>
-							    <input type="text" name="component[0][title_en]"  class="form-control" placeholder="Enter title"
-							           value="{{ old("title_en") ? old("title_en") : '' }}">
-							    <div class="help-block"></div>
-							    @if ($errors->has('title_en'))
-							        <div class="help-block">  {{ $errors->first('title_en') }}</div>
-							    @endif
-							</div>
+  							<div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Description (English)</label>
+                        <textarea name="component[0][description_en]" class="form-control" rows="5"
+                                  placeholder="Enter description">{{ isset($ecarrer_item->description_en) ? $ecarrer_item->description_en : '' }}</textarea>
+                    </div>
+                </div>
 
-
-							 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-							     <label for="title_bn" class="required1">
-							         Title (Bangla)
-							     </label>
-							     <input type="text" name="component[0][title_bn]"  class="form-control" placeholder="Enter title"
-							            value="{{ old("title_bn") ? old("title_bn") : '' }}">
-							     <div class="help-block"></div>
-							     @if ($errors->has('title_bn'))
-							         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
-							     @endif
-							 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Description (Bangla)</label>
+                        <textarea name="component[0][description_bn]" class="form-control" rows="5"
+                                  placeholder="Enter description">{{ isset($ecarrer_item->description_bn) ? $ecarrer_item->description_bn : '' }}</textarea>
+                    </div>
+                </div>
 
 
 							<div class="form-group col-md-5 {{ $errors->has('image_url') ? ' error' : '' }}">
