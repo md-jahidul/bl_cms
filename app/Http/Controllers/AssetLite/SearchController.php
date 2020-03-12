@@ -39,26 +39,23 @@ class SearchController extends Controller {
      * @return Factory|View
      * @Bulbul Mahmud Nito || 11/03/2020
      */
-     public function saveLimit(Request $request) {
+    public function saveLimit(Request $request) {
         $limitChange = $this->searchService->updateSearchLimit($request);
         return $limitChange;
     }
-    
+
     /**
-     * Popular search form
+     * Popular search create form
      * 
      * @param NO
      * @return Factory|View
      * @Bulbul Mahmud Nito || 11/03/2020
      */
-     public function popularSearchCreate() {
-//        $tags = $this->searchService->getTags();
-//        $products = $this->searchService->getProducts();
-//        $this->searchService->saveSearchData(8, "50MB-4Days-13TK (with renewal)", "prepaid/internet-offer/8", 'prepaid-internet', "Hot Offer");
+    public function popularSearchCreate() {
         return view('admin.search.create');
     }
-    
-     /**
+
+    /**
      * save Popular search
      * 
      * @param Request $request
@@ -69,7 +66,7 @@ class SearchController extends Controller {
 
 
         $response = $this->searchService->savePopularSearch($request);
-        
+
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Keyword is saved!');
         } else {
@@ -78,17 +75,47 @@ class SearchController extends Controller {
 
         return redirect('/popular-search');
     }
-    
-     /**
+
+    /**
+     * Popular search edit form
+     * 
+     * @param NO
+     * @return Factory|View
+     * @Bulbul Mahmud Nito || 12/03/2020
+     */
+    public function popularSearchEdit($kwId) {
+        $popularSearch = $this->searchService->popularSearchById($kwId);
+        return view('admin.search.edit', compact('popularSearch'));
+    }
+
+    /**
+     * Popular search update
+     * 
+     * @param NO
+     * @return Factory|View
+     * @Bulbul Mahmud Nito || 12/03/2020
+     */
+    public function popularSearchUpdate(Request $request) {
+        $response = $this->searchService->updatePopularSearch($request);
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Keyword is updated!');
+        } else {
+            Session::flash('error', 'Keyword updating process failed!');
+        }
+
+        return redirect('/popular-search');
+    }
+
+    /**
      * delete Popular search
      * 
      * @param $kwId
      * @return Redirect
      * @Bulbul Mahmud Nito || 11/03/2020
      */
-    public function deletePopularSearch($kwId){
+    public function deletePopularSearch($kwId) {
         $response = $this->searchService->deletePopularSearch($kwId);
-        
+
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Keyword is deleted!');
         } else {
@@ -97,20 +124,29 @@ class SearchController extends Controller {
 
         return redirect('/popular-search');
     }
-    
-     /**
+
+    /**
      * Get product list by type
      * 
      * @param NO
      * @return $response
      * @Bulbul Mahmud Nito || 11/03/2020
      */
-    public function getProductList(Request $request){
+    public function getProductList(Request $request) {
         $products = $this->searchService->getProducts($request);
         return $products;
     }
 
-  
-    
+    /**
+     * Change status of popular search
+     * 
+     * @param $kwId
+     * @return $response
+     * @Bulbul Mahmud Nito || 12/03/2020
+     */
+    public function popularSearchStatus($kwId) {
+        $products = $this->searchService->popularSearchStatusChange($kwId);
+        return $products;
+    }
 
 }
