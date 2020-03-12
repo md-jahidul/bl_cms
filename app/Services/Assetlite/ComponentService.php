@@ -108,7 +108,7 @@ class ComponentService
 
 
         if (request()->hasFile('image')) {
-            $data['image'] = $this->upload($data['image'], 'assetlite/images/banner/product_details');
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
         }
 
 //        $input_multiple_attributes = $data['multiple_attributes'];

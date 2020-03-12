@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Models\Component;
 use App\Models\ProductDetailsSection;
+use App\Services\Assetlite\BannerImgRelatedProductService;
 use App\Services\Assetlite\ComponentService;
 use App\Services\Assetlite\ProductDetailsSectionService;
 use App\Services\ProductService;
@@ -54,13 +55,19 @@ class ProductDetailsController extends Controller
         'drop_down' => 'Dropdown',
         'multiple_image' => 'Multiple Image'
     ];
+    /**
+     * @var BannerImgRelatedProductService
+     */
+    private $bannerImgRelatedProductService;
 
     public function __construct(
         ProductDetailsSectionService $productDetailsSectionService,
+        BannerImgRelatedProductService $bannerImgRelatedProductService,
         ProductService $productService,
         ComponentService $componentService
     ) {
         $this->productDetailsSectionService = $productDetailsSectionService;
+        $this->bannerImgRelatedProductService = $bannerImgRelatedProductService;
         $this->componentService = $componentService;
         $this->productService = $productService;
     }
@@ -72,8 +79,10 @@ class ProductDetailsController extends Controller
      */
     public function sectionList($productDetailsId)
     {
+        $products = $this->productService->produtcs();
         $productSections = $this->productDetailsSectionService->findBySection($productDetailsId);
-        return view('admin.product.details.index', compact('productSections', 'productDetailsId'));
+        $bannerRelatedProduct = $this->bannerImgRelatedProductService->findBannerAndRelatedProduct($productDetailsId);
+        return view('admin.product.details.index', compact('productSections', 'productDetailsId', 'products', 'bannerRelatedProduct'));
     }
 
     /**
@@ -150,9 +159,6 @@ class ProductDetailsController extends Controller
         $component = $this->componentService->findOne($id);
         $multipleImage = $component['multiple_attributes'];
         $products = $this->productService->produtcs();
-
-//        return $component;
-
         return view('admin.product.details.components.edit', compact('component', 'products', 'multipleImage', 'dataTypes', 'sectionId', 'productDetailsId'));
     }
 
@@ -172,16 +178,11 @@ class ProductDetailsController extends Controller
     }
 
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
+    public function bannerImgRelatedPro(Request $request, $productId)
     {
-        //
+        $response = $this->bannerImgRelatedProductService->storeImgProduct($request->all(), $productId);
+        Session::flash('success', $response->content());
+        return redirect(route('section-list', $productId));
     }
 
 
