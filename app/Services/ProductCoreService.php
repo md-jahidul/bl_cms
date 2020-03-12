@@ -415,7 +415,7 @@ class ProductCoreService {
                         $cells = $row->getCells();
                         foreach ($config as $field => $index) {
                             switch ($field) {
-                                case "family_name":
+//                                case "family_name":
                                 case "content_type":
                                     $contentType = ($cells [$index]->getValue() != '') ?
                                             strtolower($cells [$index]->getValue()) : null;
@@ -455,7 +455,7 @@ class ProductCoreService {
                                     break;
 
                                 case "is_auto_renewable":
-                                    $core_data [$field] = $cells [$index]->getValue();
+//                                    $core_data [$field] = $cells [$index]->getValue();
                                     $assetLiteProduct['is_auto_renewable'] = $cells [$index]->getValue();
                                     break;
                                 case "recharge_product_code":
@@ -538,7 +538,7 @@ class ProductCoreService {
                                     break;
                                 case "is_gift_offer":
                                     $giftOffer = strtolower($cells [$index]->getValue());
-                                    $core_data [$field] = $giftOffer;
+//                                    $core_data [$field] = $giftOffer;
                                     $assetLiteProduct[$field] = $giftOffer;
                                     break;
                                 case "is_social_pack":
@@ -569,14 +569,17 @@ class ProductCoreService {
                                 'product_code' => $product_code
                                     ], $core_data);
 
+
                             if ($assetLiteProduct['offer_category_id']) {
-                                $productId = Product::updateOrCreate([
+                                $product = Product::updateOrCreate([
                                             'product_code' => $product_code
                                                 ], $assetLiteProduct);
-                                
-                                $this->_saveSearchData($productId);
+
+
+                                $this->_saveSearchData($product);
+
                                 ProductDetail::updateOrCreate([
-                                    'product_id' => $productId->id
+                                    'product_id' => $product->id
                                 ]);
                             }
                         } catch (Exception $e) {
@@ -599,6 +602,7 @@ class ProductCoreService {
     //save Search Data
     private function _saveSearchData($product) {
 
+
         $productId = $product->id;
         $name = $product->name_en;
 
@@ -620,9 +624,10 @@ class ProductCoreService {
             $url = 'postpaid/internet-offer/' . $productId;
             $type = 'postpaid-internet';
         }
-
-        $tag = $this->tagRepository->getTagById($product->tag_category_id);
-
+        $tag = "";
+        if ($product->tag_category_id){
+            $tag = $this->tagRepository->getTagById($product->tag_category_id);
+        }
         return $this->searchRepository->saveData($productId, $name, $url, $type, $tag);
     }
 
