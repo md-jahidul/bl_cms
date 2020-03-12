@@ -96,9 +96,9 @@ function matchRelatedProduct($id, $roles)
 											<td>{{ $list->section_name }} {!! $list->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
 
 											<td>
-												@if( isset($list->sectionComponent[0]->component_type) )
+												@if( isset($list->section_type) )
 												<div class="component_preview" style="max-width: 400px;">
-												<img class="img-fluid" style="border: 1px solid #eee;" src="{{asset('app-assets/images/app_services/'.$list->sectionComponent[0]->component_type.'.png')}}" alt="">
+												<img class="img-fluid" style="border: 1px solid #eee;" src="{{asset('app-assets/images/app_services/'.$list->section_type.'.png')}}" alt="">
 												</div>
 												@endif
 											</td>
