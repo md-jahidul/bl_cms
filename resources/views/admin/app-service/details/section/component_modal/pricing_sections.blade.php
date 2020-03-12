@@ -169,6 +169,7 @@
               <div class="modal-footer">
               		{{ Form::hidden('sections[id]', null, ['class' => 'section_id'] ) }}
               		{{ Form::hidden('component[0][id]', null, ['class' => 'component_id'] ) }}
+                  {{ Form::hidden('component[1][id]', null, ['class' => 'component_id'] ) }}
 
                 <a type="button" href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                 <button id="form_save" type="submit" name="save" class="btn btn-primary">Save changes</button>

@@ -97,6 +97,8 @@ class AppServiceProductDetailsController extends Controller
                 # Update component data
                 $component_data = $data['component'];
 
+                dd($component_data);
+
                 if( isset($component_data) && count($component_data) > 0 ){
                     foreach ($component_data as $component_value) {
                         $this->appServiceProductDetailsService->updateAppServiceDetailsComponent($component_value, $component_value['id']);
