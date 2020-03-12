@@ -49,6 +49,11 @@ class ProductService {
         $this->setActionRepository($productRepository);
     }
 
+    public function produtcs()
+    {
+        return $this->productRepository->findByProperties([], ['id', 'product_code', 'name_en']);
+    }
+
     /**
      * @param $data
      * @param $simId
@@ -68,10 +73,10 @@ class ProductService {
 
     //save Search Data
     private function _saveSearchData($product) {
-        
+
         $productId = $product->id;
         $name = $product->name_en;
-        
+
         $url = "";
         $type = "";
         if($product->sim_category_id == 1 && $product->offer_category_id == 1){
@@ -90,9 +95,12 @@ class ProductService {
             $url = 'postpaid/internet-offer/' . $productId;
             $type ='postpaid-internet';
         }
-        
-        $tag = $this->tagRepository->getTagById($product->tag_category_id);
-            
+
+        $tag = "";
+        if ($product->tag_category_id){
+            $tag = $this->tagRepository->getTagById($product->tag_category_id);
+        }
+
         return $this->searchRepository->saveData($productId, $name, $url, $type, $tag);
     }
 

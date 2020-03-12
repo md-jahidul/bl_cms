@@ -34,6 +34,11 @@
                                                         </fieldset>
 
                                                         <fieldset>
+                                                            <input type="checkbox" id="extra-title">
+                                                            <label for="extra-title" class="">Extra Title</label>
+                                                        </fieldset>
+
+                                                        <fieldset>
                                                             <input type="checkbox" id="text-area">
                                                             <label for="text-area" class="">TextArea</label>
                                                         </fieldset>
@@ -57,6 +62,16 @@
                                                             <input type="checkbox" id="multi-image">
                                                             <label for="multi-image" class="">Multiple Image Field</label>
                                                         </fieldset>
+
+                                                        <fieldset>
+                                                            <input type="checkbox" id="button-check">
+                                                            <label for="button" class="">Button</label>
+                                                        </fieldset>
+
+                                                        <fieldset>
+                                                            <input type="checkbox" id="related_product">
+                                                            <label for="related_product" class="">Related Product</label>
+                                                        </fieldset>
                                                     </div>
                                                 </div>
                                             </div>
@@ -70,16 +85,13 @@
                                             <div class="row">
 
                                                 <div class="form-group col-md-12 {{ $errors->has('editor_en') ? ' error' : '' }}">
-                                                    <label for="editor_en">Data Type</label>
-                                                    <select name="component_type" class="form-control required" required data-validation-required-message="Please select data type">
+                                                    <label for="editor_en">Component Type</label>
+                                                    <select name="component_type" class="form-control required" id="data-type"
+                                                            required data-validation-required-message="Please select data type">
                                                         <option value="">--Select Data Type--</option>
-                                                        <option value="text_area">Text Area</option>
-                                                        <option value="bullet Text">Bullet Text</option>
-                                                        <option value="accordion Text">Accordion Text</option>
-                                                        <option value="single_image">Single Image</option>
-                                                        <option value="banner_image">Banner Image</option>
-                                                        <option value="multiple_image">Multiple Image</option>
-                                                        <option value="drop_down">Dropdown</option>
+                                                        @foreach($dataTypes as $key => $item)
+                                                            <option value="{{ $key }}">{{ $item }}</option>
+                                                        @endforeach
                                                     </select>
                                                     <div class="help-block"></div>
                                                     @if ($errors->has('editor_en'))
@@ -89,7 +101,7 @@
 
                                                 <slot id="text-field" class="d-none">
                                                     <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                                        <label for="title_en">Text Field (English)</label>
+                                                        <label for="title_en">Title Field (English)</label>
                                                         <input type="text" name="title_en"  class="form-control" placeholder="Enter company name bangla"
                                                                value="{{ old("title_en") ? old("title_en") : '' }}">
                                                         <div class="help-block"></div>
@@ -99,12 +111,65 @@
                                                     </div>
 
                                                     <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                                        <label for="title_bn" >Text Field (Bangla)</label>
+                                                        <label for="title_bn" >Title Field (Bangla)</label>
                                                         <input type="text" name="title_bn"  class="form-control" placeholder="Enter company name bangla"
                                                                value="{{ old("title_bn") ? old("title_bn") : '' }}">
                                                         <div class="help-block"></div>
                                                         @if ($errors->has('title_bn'))
                                                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                                        @endif
+                                                    </div>
+                                                </slot>
+
+
+                                                <slot id="extra-title-field" class="d-none">
+                                                    <div class="form-group col-md-6 {{ $errors->has('extra_title_en') ? ' error' : '' }}">
+                                                        <label for="extra_title_en">Extra Title (English)</label>
+                                                        <textarea type="text" name="extra_title_en"  class="form-control" placeholder="Enter extra title in English" id="details"></textarea>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('extra_title_en'))
+                                                            <div class="help-block">{{ $errors->first('extra_title_en') }}</div>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('extra_title_bn') ? ' error' : '' }}">
+                                                        <label for="extra_title_bn">Extra Title (Bangla)</label>
+                                                        <textarea type="text" name="extra_title_bn"  class="form-control" placeholder="Enter extra title in Bangla"  id="details"></textarea>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('extra_title_bn'))
+                                                            <div class="help-block">{{ $errors->first('extra_title_bn') }}</div>
+                                                        @endif
+                                                    </div>
+                                                </slot>
+
+                                                <slot id="text-area-button" class="d-none">
+                                                    <div class="form-group col-md-6 {{ $errors->has('button_en') ? ' error' : '' }}">
+                                                        <label for="button_en">Button Title (English)</label>
+                                                        <input type="text" name="button_en"  class="form-control" placeholder="Enter company name bangla"
+                                                               value="{{ old("button_en") ? old("button_en") : '' }}">
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('button_en'))
+                                                            <div class="help-block">  {{ $errors->first('button_en') }}</div>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('button_bn') ? ' error' : '' }}">
+                                                        <label for="button_bn" >Button Title (Bangla)</label>
+                                                        <input type="text" name="button_bn"  class="form-control" placeholder="Enter company name bangla"
+                                                               value="{{ old("button_bn") ? old("button_bn") : '' }}">
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('button_bn'))
+                                                            <div class="help-block">  {{ $errors->first('button_bn') }}</div>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('button_link') ? ' error' : '' }}">
+                                                        <label for="button_link" >Button URL</label>
+                                                        <input type="text" name="button_link"  class="form-control" placeholder="Enter company name bangla"
+                                                               value="{{ old("button_link") ? old("button_link") : '' }}">
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('button_link'))
+                                                            <div class="help-block">  {{ $errors->first('button_link') }}</div>
                                                         @endif
                                                     </div>
                                                 </slot>
@@ -160,7 +225,7 @@
                                                         <label for="editor_en" class="required" >Drop Down Data</label>
                                                         <select name="other_attributes[dropdown_data_type]" class="form-control required">
                                                             <option value="">--Select Dropdown Data Type--</option>
-                                                            <option value="easy_payment_card">Easy Payment Card</option>
+{{--                                                            <option value="easy_payment_card">Easy Payment Card</option>--}}
                                                             <option value="device_data_offer">Device Free Data Offer</option>
                                                         </select>
                                                         <div class="help-block"></div>
@@ -187,17 +252,22 @@
 
 
                                                 <slot id="multiple-image-field" class="d-none">
+                                                    <input id="multi_item_count" type="hidden" name="multi_item_count" value="1">
                                                     <div class="col-md-6 col-xs-6">
                                                         <div class="form-group">
                                                             <label for="message">Multiple Image</label>
-                                                            <input type="file" class="dropify" name="multiple_attributes[image][image_url_1]" data-height="80"/>
+                                                            <input type="file" class="dropify" name="multi_item[image_url-1]" data-height="80"/>
+
+{{--                                                            <input type="file" class="dropify" name="multiple_attributes[image][image_url_1]" data-height="80"/>--}}
                                                             <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group col-md-5">
                                                         <label for="alt_text">Alt Text</label>
-                                                        <input type="text" name="multiple_attributes[alt_text][alt_text_1]" class="form-control">
+                                                        <input type="text" name="multi_item[alt_text-1]" class="form-control">
+
+{{--                                                        <input type="text" name="multiple_attributes[alt_text][alt_text_1]" class="form-control">--}}
                                                     </div>
 
                                                     <div class="form-group col-md-1">
@@ -205,6 +275,26 @@
                                                         <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>
                                                     </div>
                                                 </slot>
+
+
+
+{{--                                                <slot id="related_product_field" class="">--}}
+                                                    <div id="related_product_field" class="col-md-6 {{ $errors->has('offer_type_id') ? ' error' : '' }} d-none">
+                                                        <label for="editor_en">Related Product</label>
+                                                        <select name="offer_type_id" class="select2 form-control" id="data-type">
+                                                            <option value="">--Select Data Type--</option>
+{{--                                                            <option value="60">Special Data Offer</option>--}}
+{{--                                                            <option value="59">Special Voice Offer</option>--}}
+                                                             @foreach($products as  $product)
+                                                                 <option value="{{ $product->id }}">{{ $product->name_en . '/ ' . $product->product_code }}</option>
+                                                             @endforeach
+                                                        </select>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('offer_type_id'))
+                                                            <div class="help-block">{{ $errors->first('offer_type_id') }}</div>
+                                                        @endif
+                                                    </div>
+{{--                                                </slot>--}}
 
                                                 <div class="form-actions col-md-12">
                                                     <div class="pull-right">
@@ -228,7 +318,11 @@
         </div>
     </section>
 
-
+<style>
+    form #related_product_field .select2-container {
+        width: 100% !important;
+    }
+</style>
 
 @stop
 
@@ -280,7 +374,7 @@
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['view', ['fullscreen', 'codeview']]
                 ],
-                height:200
+                height:150
             })
 
             $(document).on('click', '#plus-image', function () {
@@ -288,15 +382,18 @@
                 var total_option = option_count.length + 2;
 
                 var input = '<div class="col-md-6 col-xs-6 options-count option-'+total_option+'">\n' +
+                            '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">>\n' +
                             '<div class="form-group">\n' +
                             '      <label for="message">Multiple Image</label>\n' +
-                            '      <input type="file" class="dropify" name="multiple_attributes[image][image_url_'+total_option+']" data-height="80"/>\n' +
+                            '      <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +
+                            // '      <input type="file" class="dropify" name="multiple_attributes[image][image_url_'+total_option+']" data-height="80"/>\n' +
                             '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
                             '  </div>\n' +
                             ' </div>\n'+
                             '<div class="form-group col-md-5 option-'+total_option+'">\n' +
                             '    <label for="alt_text">Alt Text</label>\n' +
-                            '    <input type="text" name="multiple_attributes[alt_text][alt_text_'+total_option+']"  class="form-control">\n' +
+                            '    <input type="text" name="multi_item[alt_text-'+total_option+']"  class="form-control">\n' +
+                            // '    <input type="text" name="multiple_attributes[alt_text][alt_text_'+total_option+']"  class="form-control">\n' +
                             '</div>\n' +
                             '<div class="form-group col-md-1 option-'+total_option+'">\n' +
                             '   <label for="alt_text"></label>\n' +

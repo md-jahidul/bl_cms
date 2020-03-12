@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Partner Create')
-@section('card_name', 'Partner Create')
+@section('title', 'Component')
+@section('card_name', 'Component')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('partners') }}"> Partner List</a></li>
-    <li class="breadcrumb-item active"> Partner Create</li>
+    <li class="breadcrumb-item active"> <a href="{{  route('component-list', [ $productDetailsId, $sectionId]) }}"> Component List</a></li>
+    <li class="breadcrumb-item active"> Component Edit</li>
 @endsection
 @section('action')
     <a href="{{  route('component-list', [ $productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
@@ -33,33 +33,48 @@
                                                 <div class="row">
                                                     <div class="col-md-8 col-sm-12">
                                                         <fieldset>
-                                                            <input type="checkbox" id="input-text" {{ $component->title_en || $component->title_bn ? 'checked' : '' }}>
+                                                            <input type="checkbox" id="input-text" {{ $component->title_en || $component->title_bn ? 'checked' : '' }} disabled="disabled">
                                                             <label for="input-text" class="">Text Field</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="text-area" {{ $component->description_en || $component->description_bn ? 'checked' : '' }}>
+                                                            <input type="checkbox" id="extra-title" {{ $component->extra_title_en || $component->extra_title_bn ? 'checked' : '' }} disabled="disabled">
+                                                            <label for="extra-title" class="">Extra Title</label>
+                                                        </fieldset>
+
+                                                        <fieldset>
+                                                            <input type="checkbox" id="text-area" {{ $component->description_en || $component->description_bn ? 'checked' : '' }} disabled="disabled">
                                                             <label for="text-area" class="">TextArea</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="text-editor" {{ $component->editor_en || $component->editor_bn ? 'checked' : '' }}>
+                                                            <input type="checkbox" id="text-editor" {{ $component->editor_en || $component->editor_bn ? 'checked' : '' }} disabled="disabled">
                                                             <label for="text-editor" class="">Text Editor</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="dropdown" {{ $component->component_type == "drop_down" ? 'checked' : '' }}>
+                                                            <input type="checkbox" id="dropdown" {{ $component->component_type == "drop_down" ? 'checked' : '' }} disabled="disabled">
                                                             <label for="text-editor" class="">Dropdown</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="image-field" {{ $component->image ? 'checked' : '' }}>
+                                                            <input type="checkbox" id="image-field" {{ $component->image ? 'checked' : '' }} disabled="disabled">
                                                             <label for="image-field" class="">Image Field</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="multi-image" {{ $component->multiple_attributes ? 'checked' : '' }}>
+                                                            <input type="checkbox" id="multi-image" {{ $component->multiple_attributes ? 'checked' : '' }} disabled="disabled">
                                                             <label for="multi-image" class="">Multiple Image Field</label>
+                                                        </fieldset>
+
+                                                        <fieldset>
+                                                            <input type="checkbox" id="button-check" {{ $component->button_en ||  $component->button_bn ||  $component->button_link ? 'checked' : '' }} disabled="disabled">
+                                                            <label for="button" class="">Button</label>
+                                                        </fieldset>
+
+                                                        <fieldset>
+                                                            <input type="checkbox" id="related_product" {{ ( isset($component->offer_type_id) ) ? 'checked' : '' }} disabled="disabled">
+                                                            <label for="related_product" class="">Related Product</label>
                                                         </fieldset>
                                                     </div>
                                                 </div>
@@ -74,11 +89,10 @@
                                             <div class="row">
 
                                                 <div class="form-group col-md-12 {{ $errors->has('editor_en') ? ' error' : '' }}">
-                                                    <label for="editor_en" >Data Type</label>
+                                                    <label for="editor_en" >Component Type</label>
 
                                                     <select name="component_type" class="form-control" required data-validation-required-message="Please select design structure">
                                                         <option value="">--Select Data Type--</option>
-                                                        {{ $component->component_type }}
                                                         @foreach($dataTypes as $key => $type)
                                                             <option value="{{ $key }}" {{ ($component->component_type == $key) ? 'selected' : '' }}>{{ $type }}</option>
                                                         @endforeach
@@ -91,7 +105,7 @@
 
                                                 <slot id="text-field" class="{{ ($component->title_en || $component->title_bn) ? '' : "d-none" }}">
                                                     <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                                        <label for="title_en">Text Field (English)</label>
+                                                        <label for="title_en">Title Field (English)</label>
                                                         <input type="text" name="title_en"  class="form-control" placeholder="Enter company name bangla"
                                                                value="{{ $component->title_en }}">
                                                         <div class="help-block"></div>
@@ -101,12 +115,32 @@
                                                     </div>
 
                                                     <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                                        <label for="title_bn" >Text Field (Bangla)</label>
+                                                        <label for="title_bn" >Title Field (Bangla)</label>
                                                         <input type="text" name="title_bn"  class="form-control" placeholder="Enter company name bangla"
                                                                value="{{ $component->title_bn }}">
                                                         <div class="help-block"></div>
                                                         @if ($errors->has('title_bn'))
                                                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                                        @endif
+                                                    </div>
+                                                </slot>
+
+                                                <slot id="extra-title-field" class="d-none">
+                                                    <div class="form-group col-md-6 {{ $errors->has('extra_title_en') ? ' error' : '' }}">
+                                                        <label for="extra_title_en">Extra Title (English)</label>
+                                                        <textarea type="text" name="extra_title_en"  class="form-control" placeholder="Enter extra title in English" id="details"></textarea>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('extra_title_en'))
+                                                            <div class="help-block">{{ $errors->first('extra_title_en') }}</div>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 {{ $errors->has('extra_title_bn') ? ' error' : '' }}">
+                                                        <label for="extra_title_bn">Extra Title (Bangla)</label>
+                                                        <textarea type="text" name="extra_title_bn"  class="form-control" placeholder="Enter extra title in Bangla"  id="details"></textarea>
+                                                        <div class="help-block"></div>
+                                                        @if ($errors->has('extra_title_bn'))
+                                                            <div class="help-block">{{ $errors->first('extra_title_bn') }}</div>
                                                         @endif
                                                     </div>
                                                 </slot>
@@ -189,9 +223,9 @@
                                                     </div>
                                                 </slot>
 
-                                                <slot id="multiple-image-field" class="{{ ( $component->multiple_attributes['image'] ) ? '' : "d-none" }}">
+                                                <slot id="multiple-image-field" class="{{ ( isset($component->multiple_attributes['image']) ) ? '' : "d-none" }}">
                                                     @php( $i = 0 )
-                                                    @if($multipleImage['image'])
+                                                    @if(isset($multipleImage['image']))
                                                         @foreach($multipleImage['image'] as $key => $image)
                                                             @php($i++)
                                                             <div class="col-md-6 col-xs-6 option-{{ $i }} options-count">
@@ -224,6 +258,24 @@
                                                     @endif
                                                 </slot>
 
+
+                                                <div id="related_product_field" class="col-md-6 {{ $errors->has('offer_type_id') ? ' error' : '' }} {{ ( isset($component->offer_type_id) ) ? '' : "d-none" }}">
+                                                    <label for="editor_en">Related Product</label>
+                                                    <select name="offer_type_id" class="select2 form-control">
+                                                        <option value="">--Select Product Type--</option>
+                                                        {{--<option value="60">Special Data Offer</option>--}}
+                                                        {{--<option value="59">Special Voice Offer</option>--}}
+                                                        @foreach($products as  $product)
+                                                            <option value="{{ $product->id }}" {{ $component->offer_type_id == $product->id ? 'selected' : '' }}
+                                                            >{{ $product->name_en . '/ ' . $product->product_code }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <div class="help-block"></div>
+                                                    @if ($errors->has('offer_type_id'))
+                                                        <div class="help-block">{{ $errors->first('offer_type_id') }}</div>
+                                                    @endif
+                                                </div>
+
                                                 <div class="form-actions col-md-12">
                                                     <div class="pull-right">
                                                         <button type="submit" class="btn btn-primary"><i
@@ -244,7 +296,11 @@
         </div>
     </section>
 
-
+<style>
+    form #related_product_field .select2-container {
+        width: 100% !important;
+    }
+</style>
 
 @stop
 
