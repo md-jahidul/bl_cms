@@ -168,6 +168,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('offers/{type}/{id}/details/update', 'AssetLite\ProductController@productDetailsUpdate')
             ->name('product.details-update');
 
+    Route::post('product-details/{productId}/banner-image/related-product', 'AssetLite\ProductDetailsController@bannerImgRelatedPro')
+        ->name('bannerImg-relatedPro');
 
     Route::get('product-details/{productDetailsId}/section', 'AssetLite\ProductDetailsController@sectionList')
         ->name('section-list');
@@ -208,8 +210,10 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('product-details/{productDetailsId}/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
         ->name('component-update');
 
-    Route::put('product-details/{productDetailsId}/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
-        ->name('component-update');
+    Route::get('product-details/{productDetailsId}/section/{sid}/component/{id}/delete', 'AssetLite\ProductDetailsController@componentDestroy')
+        ->name('component-delete');
+
+    Route::get('component-sortable', 'AssetLite\ProductDetailsController@componentSortable');
 
   /*  Route::get('section/{id}', 'AssetLite\ProductDetailsController@otherOfferDetails')
             ->name('section-list');
@@ -368,7 +372,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('business-category-sort-change', 'AssetLite\BusinessGeneralController@categorySortChange')->name('business.category.sort.save');
 
     //sliding speed
-    
+
     Route::get('business-save-sliding-speed', 'AssetLite\BusinessGeneralController@saveSlidingSpeed')
             ->name('business.sliding.speed.save');
 

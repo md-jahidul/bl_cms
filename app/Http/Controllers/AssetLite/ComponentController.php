@@ -18,7 +18,7 @@ use App\Services\Assetlite\AppServiceProductDetailsService;
 
 class ComponentController extends Controller
 {
-   
+
    /**
     * [$componentService description]
     * @var [object]
@@ -36,7 +36,7 @@ class ComponentController extends Controller
     * @param ComponentService $componentService [description]
     */
 	public function __construct(
-		ComponentService $componentService, 
+		ComponentService $componentService,
 		AppServiceProductDetailsService $appServiceProductDetailsService
 	)
 	{
@@ -54,12 +54,12 @@ class ComponentController extends Controller
 	public function conponentList($tab_type, $section_id)
 	{
 
-		$component_list = $this->componentService->componentList($section_id);
+		$component_list = $this->componentService->componentList($section_id, 'app_services');
 
 		$section_data = $this->appServiceProductDetailsService->getSectionColumnInfoByID($section_id, ['multiple_component', 'product_id']);
 
 		$section_has_multiple_component = isset($section_data->multiple_component) ? $section_data->multiple_component : null;
-		
+
 
 		$data['tab_type'] = $tab_type;
 		$data['section_id'] = $section_id;

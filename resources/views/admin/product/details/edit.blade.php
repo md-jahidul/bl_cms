@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Section Create')
-@section('card_name', 'Section Create')
+@section('title', 'Section Edit')
+@section('card_name', 'Section Edit')
 @section('breadcrumb')
     <li class="breadcrumb-item active"> <a href="{{ route('section-list', [$productDetailsId]) }}"> Section List</a></li>
-    <li class="breadcrumb-item active"> Section Create</li>
+    <li class="breadcrumb-item active"> Section Edit</li>
 @endsection
 @section('action')
     <a href="{{ route('section-list', [$productDetailsId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
@@ -47,14 +47,14 @@
                                     </select>
                                 </div>
 
-                                <div class="col-md-6 mt-1">
-                                    <label for="tag_category_id"></label>
-                                    <div class="form-group">
-                                        <label for="is_tab_section" class="mr-1">Is Tab Section</label>
-                                        <input type="checkbox" name="other_attributes[is_tab_section]" value="1" id="is_tab_section"
-                                            {{ (isset($section->other_attributes['is_tab_section'])) ? "checked" : '' }}>
-                                    </div>
-                                </div>
+{{--                                <div class="col-md-6 mt-1">--}}
+{{--                                    <label for="tag_category_id"></label>--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="is_tab_section" class="mr-1">Is Tab Section</label>--}}
+{{--                                        <input type="checkbox" name="other_attributes[is_tab_section]" value="1" id="is_tab_section"--}}
+{{--                                            {{ (isset($section->other_attributes['is_tab_section'])) ? "checked" : '' }}>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                                 <div class="col-md-6">
                                     <div class="form-group">
