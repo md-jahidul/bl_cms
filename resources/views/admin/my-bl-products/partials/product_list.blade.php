@@ -17,13 +17,14 @@
                 <option value="mix">MIX BUNDLES</option>
                 <option value="voice">VOICE BUNDLES</option>
                 <option value="sms">SMS BUNDLES</option>
-                <option value="rate_cutter">RATE CUTTER</option>
+                <option value="scr">SPECIAL CALL RATE</option>
                 <option value="recharge_offer">RECHARGE OFFER</option>
                 <option value="ma loan">MA LOAN</option>
                 <option value="data loan">DATA LOAN</option>
                 <option value="gift">GIFT</option>
                 <option value="volume request">VOLUME REQUEST</option>
                 <option value="volume transfer">VOLUME TRANSFER</option>
+                <option value="bonus">BONUS</option>
             </select>
         </div>
         <div class="col-md-3">

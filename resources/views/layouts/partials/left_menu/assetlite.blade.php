@@ -214,7 +214,6 @@
         </li>
     @endif
 
-
         <li class="nav-item"><a href="#"><i class="la la-align-justify"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">About Us</span></a>
             <ul class="menu-content">
@@ -411,6 +410,12 @@
     @endif
 
     @if( auth()->user()->can_view('Product') )
+        <li class="{{ is_active_url('/popular-search') }} nav-item">
+            <a href="{{ url('popular-search') }}">
+                <i class="la la-search"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Popular Search</span>
+            </a>
+        </li>
         <li class="{{ is_active_url('/easy-payment-card') }} nav-item">
             <a href="{{ url('easy-payment-card') }}">
                 <i class="la la-credit-card"></i>

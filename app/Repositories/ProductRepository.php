@@ -65,5 +65,27 @@ class ProductRepository extends BaseRepository
         return $this->model->where('offer_info->other_offer_type_id', OfferType::BONDHO_SIM_OFFER)
             ->get();
     }
+    
+      public function getProductsForSearch($type)
+    {
+        $products = $this->model->select('id', 'name_en')->orderBy('name_en');
+        
+        if($type == 'prepaid-internet'){
+            $products->where(array('sim_category_id' => 1, 'offer_category_id' => 1));
+        }
+        if($type == 'prepaid-voice'){
+            $products->where(array('sim_category_id' => 1, 'offer_category_id' => 2));
+        }
+        if($type == 'prepaid-bundle'){
+            $products->where(array('sim_category_id' => 1, 'offer_category_id' => 3));
+        }
+        if($type == 'postpaid-internet'){
+            $products->where(array('sim_category_id' => 2, 'offer_category_id' => 1));
+        }
+        
+        $data = $products->where('name_en', '!=', "")->get();
+        
+        return $data;
+    }
 
 }

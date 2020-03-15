@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerContactBackup extends Model
+class RequestLog extends Model
 {
     protected $guarded = ['id'];
 }
