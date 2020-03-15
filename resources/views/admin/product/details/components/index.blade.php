@@ -15,12 +15,12 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>Components</strong></h4>
+                    <h4 class="pb-1"><strong>Components List</strong></h4>
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                                <th width="5%">Data Type</th>
+                                <th width="5%">Component Type</th>
                                 <th width="8%">Title</th>
                                 <th width="12%" class="text-right">Action</th>
                             </tr>

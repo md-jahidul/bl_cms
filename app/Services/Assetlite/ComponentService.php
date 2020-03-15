@@ -145,6 +145,11 @@ class ComponentService
 
 //        ($new_multiple_attributes['alt_text']['alt_text_1']) ? $data['multiple_attributes'] = $new_multiple_attributes : $data['multiple_attributes'] = null;
 
+        $countComponents = $this->componentRepository->list($sectionId, self::PAGE_TYPE['product_details']);
+//        dd(count($countComponents));
+
+        $data['component_order'] = count($countComponents) + 1;
+
         $data['page_type'] = self::PAGE_TYPE['product_details'];
         $data['section_details_id'] = $sectionId;
         $this->save($data);
