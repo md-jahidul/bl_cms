@@ -210,8 +210,10 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('product-details/{productDetailsId}/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
         ->name('component-update');
 
-    Route::put('product-details/{productDetailsId}/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
-        ->name('component-update');
+    Route::get('product-details/{productDetailsId}/section/{sid}/component/{id}/delete', 'AssetLite\ProductDetailsController@componentDestroy')
+        ->name('component-delete');
+
+    Route::get('component-sortable', 'AssetLite\ProductDetailsController@componentSortable');
 
   /*  Route::get('section/{id}', 'AssetLite\ProductDetailsController@otherOfferDetails')
             ->name('section-list');

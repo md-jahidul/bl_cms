@@ -33,47 +33,47 @@
                                                 <div class="row">
                                                     <div class="col-md-8 col-sm-12">
                                                         <fieldset>
-                                                            <input type="checkbox" id="input-text" {{ $component->title_en || $component->title_bn ? 'checked' : '' }} disabled="disabled">
+                                                            <input type="checkbox" id="input-text" {{ $component->title_en || $component->title_bn ? 'checked' : '' }}>
                                                             <label for="input-text" class="">Text Field</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="extra-title" {{ $component->extra_title_en || $component->extra_title_bn ? 'checked' : '' }} disabled="disabled">
+                                                            <input type="checkbox" id="extra-title" {{ $component->extra_title_en || $component->extra_title_bn ? 'checked' : '' }}>
                                                             <label for="extra-title" class="">Extra Title</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="text-area" {{ $component->description_en || $component->description_bn ? 'checked' : '' }} disabled="disabled">
+                                                            <input type="checkbox" id="text-area" {{ $component->description_en || $component->description_bn ? 'checked' : '' }}>
                                                             <label for="text-area" class="">TextArea</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="text-editor" {{ $component->editor_en || $component->editor_bn ? 'checked' : '' }} disabled="disabled">
+                                                            <input type="checkbox" id="text-editor" {{ $component->editor_en || $component->editor_bn ? 'checked' : '' }}>
                                                             <label for="text-editor" class="">Text Editor</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="dropdown" {{ $component->component_type == "drop_down" ? 'checked' : '' }} disabled="disabled">
+                                                            <input type="checkbox" id="dropdown" {{ $component->component_type == "drop_down" ? 'checked' : '' }}>
                                                             <label for="text-editor" class="">Dropdown</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="image-field" {{ $component->image ? 'checked' : '' }} disabled="disabled">
+                                                            <input type="checkbox" id="image-field" {{ $component->image ? 'checked' : '' }}>
                                                             <label for="image-field" class="">Image Field</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="multi-image" {{ $component->multiple_attributes ? 'checked' : '' }} disabled="disabled">
+                                                            <input type="checkbox" id="multi-image" {{ $component->multiple_attributes ? 'checked' : '' }}>
                                                             <label for="multi-image" class="">Multiple Image Field</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="button-check" {{ $component->button_en ||  $component->button_bn ||  $component->button_link ? 'checked' : '' }} disabled="disabled">
+                                                            <input type="checkbox" id="button-check" {{ $component->button_en ||  $component->button_bn ||  $component->button_link ? 'checked' : '' }}>
                                                             <label for="button" class="">Button</label>
                                                         </fieldset>
 
                                                         <fieldset>
-                                                            <input type="checkbox" id="related_product" {{ ( isset($component->offer_type_id) ) ? 'checked' : '' }} disabled="disabled">
+                                                            <input type="checkbox" id="related_product" {{ ( isset($component->offer_type_id) ) ? 'checked' : '' }}>
                                                             <label for="related_product" class="">Related Product</label>
                                                         </fieldset>
                                                     </div>
@@ -89,9 +89,9 @@
                                             <div class="row">
 
                                                 <div class="form-group col-md-12 {{ $errors->has('editor_en') ? ' error' : '' }}">
-                                                    <label for="editor_en" >Component Type</label>
+                                                    <label for="editor_en" class="required">Component Type</label>
 
-                                                    <select name="component_type" class="form-control" required data-validation-required-message="Please select design structure">
+                                                    <select name="component_type" class="form-control" required data-validation-required-message="Please select component type">
                                                         <option value="">--Select Data Type--</option>
                                                         @foreach($dataTypes as $key => $type)
                                                             <option value="{{ $key }}" {{ ($component->component_type == $key) ? 'selected' : '' }}>{{ $type }}</option>

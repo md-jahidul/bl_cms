@@ -16,28 +16,24 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <h4 class="pb-1"><strong>Components</strong></h4>
-                    <table class="table table-striped table-bordered zero-configuration">
+                    <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <td width="3%">#</td>
-                                <th width="8%">Title</th>
-                                <th width="5%">Text Area</th>
-                                <th width="5%">Editor Text</th>
+                                <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <th width="5%">Data Type</th>
-                                <th width="12%" class="">Action</th>
+                                <th width="8%">Title</th>
+                                <th width="12%" class="text-right">Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable">
                             @foreach($components as $list)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                <tr data-index="{{ $list->id }}" data-position="{{ $list->component_order }}">
+                                    <td><i class="icon-cursor-move icons"></i></td>
+                                    <td>{{ ucwords(str_replace('_', ' ', $list->component_type)) }}</td>
                                     <td>{{ $list->title_en  }}</td>
-                                    <td>{{ $list->description_en }}</td>
-                                    <td>{!! $list->editor_en !!}</td>
-                                    <td>{{ $list->component_type }}</td>
-                                    <td>
+                                    <td class="text-right">
                                         <a href="{{ route("component-edit", [$productDetailsId, $sectionId, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ url("app-service-product/$list->id/delete") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
+                                        <a href="#" remove="{{ route('component-delete', [$productDetailsId, $sectionId, $list->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
                                             <i class="la la-trash"></i>
                                         </a>
                                     </td>
@@ -53,7 +49,7 @@
 @stop
 
 @push('page-css')
-{{--    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">--}}
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
     <style>
         #sortable tr td{
             padding-top: 5px !important;
@@ -63,7 +59,9 @@
 @endpush
 
 @push('page-js')
-
+    <script>
+        var auto_save_url = "{{ url('component-sortable') }}";
+    </script>
 @endpush
 
 

@@ -14,6 +14,7 @@ use App\Repositories\ComponentRepository;
 
 class ComponentService
 {
+<<<<<<< HEAD
 	use CrudTrait;
 	use FileTrait;
 
@@ -110,6 +111,98 @@ class ComponentService
 	// 	}
 	// 	return $image;
 	// }
+=======
+    use CrudTrait;
+    use FileTrait;
+
+    const APP = 1;
+    const VAS = 2;
+    const PAGE_TYPE = [
+        'app_services' => 'app_services',
+        'product_details' => 'product_details'
+    ];
+
+    /**
+     * @var $componentRepository
+     */
+    protected $componentRepository;
+
+    /**
+     * AppServiceProductService constructor.
+     * @param ComponentRepository $componentRepository
+     */
+    public function __construct(ComponentRepository $componentRepository)
+    {
+        $this->componentRepository = $componentRepository;
+        $this->setActionRepository($componentRepository);
+    }
+
+    public function findByType($type)
+    {
+        return $this->componentRepository->findOneByProperties(['type' => $type]);
+    }
+
+    public function componentList($section_id, $pageType)
+    {
+        return $this->componentRepository->list($section_id, $pageType);
+    }
+
+    /**
+     * @param $data
+     * @return Response
+     */
+    public function storeComponentDetails($data)
+    {
+        if (request()->hasFile('image_url')) {
+            $data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product/details');
+        }
+
+        if( request()->filled('other_attr') ){
+            $other_attributes = request()->input('other_attr', null);
+            $data['other_attributes'] = !empty($other_attributes) ? json_encode($other_attributes) : null;
+        }
+
+        if (request()->hasFile('video_url')) {
+            $data['video'] = $this->upload($data['video_url'], 'assetlite/video/app-service/product/details');
+            $data['other_attributes'] = json_encode(['video_type' => 'uploaded_video']);
+        } elseif( request()->filled('video_url') ) {
+            $data['video'] = request()->input('video_url', null);
+            $data['other_attributes'] = json_encode(['video_type' => 'youtube_video']);
+        }
+
+	   $data['page_type'] = self::PAGE_TYPE['app_services'];
+
+        $results = [];
+        if (isset($data['multi_item']) && !empty($data['multi_item'])) {
+            $request_multi = $data['multi_item'];
+            $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
+            for ($i = 1; $i <= $item_count; $i++) {
+                foreach ($data['multi_item'] as $key => $value) {
+                    $sub_data = [];
+                    $check_index = explode('-', $key);
+                    if ($check_index[1] == $i) {
+                        if (request()->hasFile('multi_item.' . $key)) {
+                            $value = $this->upload($value, 'assetlite/images/app-service/product/details');
+                        }
+                        $results[$i][$check_index[0]] = $value;
+                    }
+                }
+            }
+        }
+
+        $data['multiple_attributes'] = json_encode($results);
+
+        $this->save($data);
+        return new Response('App Service Component added successfully');
+    }
+
+//    protected function imageUpload($data)
+//    {
+//        return $image;
+//    }
+
+
+>>>>>>> ac20c5c22e5e4cce526f6ca9db2401d177cab456
 
     public function componentStore($data, $sectionId)
     {
@@ -147,13 +240,11 @@ class ComponentService
             }
         }
 
-
-
         $data['multiple_attributes'] = (count($results) > 1) ? array_values($results) : null;
 
 //        ($new_multiple_attributes['alt_text']['alt_text_1']) ? $data['multiple_attributes'] = $new_multiple_attributes : $data['multiple_attributes'] = null;
 
-        $data['page_type'] = "product_details";
+        $data['page_type'] = self::PAGE_TYPE['product_details'];
         $data['section_details_id'] = $sectionId;
         $this->save($data);
         return response('Component create successfully!');
@@ -325,4 +416,29 @@ class ComponentService
 	}
 
 
+<<<<<<< HEAD
+=======
+    /**
+     * @param $data
+     * @return Response
+     */
+    public function tableSortable($data)
+    {
+        $this->componentRepository->componentTableSort($data);
+        return new Response('update successfully');
+    }
+
+    /**
+     * @param $id
+     * @return ResponseFactory|Response
+     * @throws Exception
+     */
+    public function deleteComponent($id)
+    {
+        $appServiceCat = $this->findOne($id);
+        $this->deleteFile($appServiceCat->product_img_url);
+        $appServiceCat->delete();
+        return Response('Component deleted successfully !');
+    }
+>>>>>>> ac20c5c22e5e4cce526f6ca9db2401d177cab456
 }
