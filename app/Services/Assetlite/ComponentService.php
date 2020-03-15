@@ -14,7 +14,6 @@ use App\Repositories\ComponentRepository;
 
 class ComponentService
 {
-//<<<<<<< HEAD
     use CrudTrait;
     use FileTrait;
 
