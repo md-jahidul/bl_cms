@@ -79,10 +79,7 @@ class ComponentRepository extends BaseRepository
 		
 	 }
 
-
-} // Class end
-
-    public function list($section_id, $pageType)
+   public function list($section_id, $pageType)
     {
         return $this->model->where('section_details_id', $section_id)
             ->where('page_type', $pageType)
@@ -103,3 +100,4 @@ class ComponentRepository extends BaseRepository
         return "success";
     }
 }
+//class end
