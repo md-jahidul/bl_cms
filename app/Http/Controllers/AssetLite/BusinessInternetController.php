@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Controllers\Controller;
 use App\Services\BusinessInternetService;
 use Illuminate\Http\Request;
+use Session;
 
 class BusinessInternetController extends Controller {
 
@@ -29,6 +30,35 @@ class BusinessInternetController extends Controller {
         return view('admin.business.internet_packages');
     }
 
+    /**
+     * Internet Create Form
+     * 
+     * @param NA
+     * @return Factory|View
+     * @Bulbul Mahmud Nito || 12/03/2020
+     */
+    public function internetCreate() {
+        $otherPorducts = $this->internetService->getAllPackage();
+        return view('admin.business.internet_package_create', compact('otherPorducts'));
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function saveInternetPackage(Request $request) {
+
+        $response = $this->internetService->saveInternet($request);
+        
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Package is saved!');
+        } else {
+            Session::flash('error', 'Package saving process failed!');
+        }
+
+        return redirect('/business-internet');
+    }
+
     public function internetPackageList(Request $request) {
 
         $response = $this->internetService->getInternetPackage($request);
@@ -49,7 +79,7 @@ class BusinessInternetController extends Controller {
         $response = $this->internetService->homeShow($packageId);
         return $response;
     }
-    
+
     public function packageStatusChange($packageId) {
         $response = $this->internetService->statusChange($packageId);
         return $response;
