@@ -73,7 +73,6 @@ class ProductDetailsSectionService
     public function sectionUpdate($data, $id)
     {
         $section = $this->findOne($id);
-//        $data['other_attributes'] = (isset($data['other_attributes']['is_tab_section'])) ? $data['other_attributes'] : null;
         $section->update($data);
         return Response('Section updated successfully');
     }

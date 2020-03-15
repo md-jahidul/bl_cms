@@ -59,7 +59,7 @@ class ComponentService
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/app-service/product/details');
         }
 
-        if( request()->filled('other_attr') ){
+        if (request()->filled('other_attr')) {
             $other_attributes = request()->input('other_attr', null);
             $data['other_attributes'] = !empty($other_attributes) ? json_encode($other_attributes) : null;
         }
@@ -67,12 +67,12 @@ class ComponentService
         if (request()->hasFile('video_url')) {
             $data['video'] = $this->upload($data['video_url'], 'assetlite/video/app-service/product/details');
             $data['other_attributes'] = json_encode(['video_type' => 'uploaded_video']);
-        } elseif( request()->filled('video_url') ) {
+        } elseif (request()->filled('video_url')) {
             $data['video'] = request()->input('video_url', null);
             $data['other_attributes'] = json_encode(['video_type' => 'youtube_video']);
         }
 
-	   $data['page_type'] = self::PAGE_TYPE['app_services'];
+        $data['page_type'] = self::PAGE_TYPE;
 
         $results = [];
         if (isset($data['multi_item']) && !empty($data['multi_item'])) {
@@ -144,177 +144,172 @@ class ComponentService
 
 //        ($new_multiple_attributes['alt_text']['alt_text_1']) ? $data['multiple_attributes'] = $new_multiple_attributes : $data['multiple_attributes'] = null;
 
+        $countComponents = $this->componentRepository->list($sectionId, self::PAGE_TYPE['product_details']);
+//        dd(count($countComponents));
+
+        $data['component_order'] = count($countComponents) + 1;
+
         $data['page_type'] = self::PAGE_TYPE['product_details'];
         $data['section_details_id'] = $sectionId;
         $this->save($data);
         return response('Component create successfully!');
     }
 
-	public function componentUpdate($data, $id)
-	{
 
-		$component = $this->findOne($id);
+    public function componentUpdate($data, $id)
+    {
 
-		// get original data
-		$new_multiple_attributes = $component->multiple_attributes;
+        $component = $this->findOne($id);
 
-		// contains all the inputs from the form as an array
-		$input_multiple_attributes = isset($data['multiple_attributes']) ? $data['multiple_attributes'] : null;
+        // get original data
+        $new_multiple_attributes = $component->multiple_attributes;
 
-		// loop over the product array
-		if ($input_multiple_attributes) {
-			foreach ($input_multiple_attributes as $data_id => $inputData) {
-				foreach ($inputData as $key => $value) {
-					// set the new value
-					$new_multiple_attributes[$data_id][$key] = is_object($value) ? $this->upload($value, 'assetlite/images/product_details') : $value;
-				}
-			}
-		}
+        // contains all the inputs from the form as an array
+        $input_multiple_attributes = isset($data['multiple_attributes']) ? $data['multiple_attributes'] : null;
 
-		if (request()->hasFile('image')) {
-			$data['image'] = $this->upload($data['image'], 'assetlite/images/banner/product_details');
-		}
+        // loop over the product array
+        if ($input_multiple_attributes) {
+            foreach ($input_multiple_attributes as $data_id => $inputData) {
+                foreach ($inputData as $key => $value) {
+                    // set the new value
+                    $new_multiple_attributes[$data_id][$key] = is_object($value) ? $this->upload($value, 'assetlite/images/product_details') : $value;
+                }
+            }
+        }
 
-
-		$data['multiple_attributes'] = $new_multiple_attributes;
+        if (request()->hasFile('image')) {
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/banner/product_details');
+        }
 
 
-		$data['page_type'] = "other_offer";
-		$component->update($data);
-		return response("Component update successfully!!");
-	}
+        $data['multiple_attributes'] = $new_multiple_attributes;
 
 
-	/**
-	 * @param $data
-	 * @param $id
-	 * @return ResponseFactory|Response
-	 */
-	public function updateAppServiceProduct($data, $id)
-	{
-		$appServiceProduct = $this->findOne($id);
-		if (request()->hasFile('product_img_url')) {
-			$data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product/details');
-			$this->deleteFile($appServiceProduct->product_img_url);
-		}
-
-		// Check App & VAS
-		if ($data['app_service_tab_id'] != self::APP || $data['app_service_tab_id'] != self::VAS) {
-			$data['product_img_url'] = null;
-			$this->deleteFile($appServiceProduct->product_img_url);
-		}
-		$data['can_active'] = (isset($data['can_active']) ? 1 : 0);
-
-		$appServiceProduct->update($data);
-		return Response('App Service Category updated successfully');
-	}
-
-	/**
-	 * @param $id
-	 * @return ResponseFactory|Response
-	 * @throws Exception
-	 */
-	public function deleteAppServiceProduct($id)
-	{
-		$appServiceCat = $this->findOne($id);
-		$this->deleteFile($appServiceCat->product_img_url);
-		$appServiceCat->delete();
-		return Response('App Service Tab deleted successfully !');
-	}
-
-	/**
-	 * [attrTableSortable description]
-	 * @param  [type] $data [description]
-	 * @return [type]       [description]
-	 */
-	public function attrTableSortable($data){
-		$this->componentRepository->multiAttrTableSort($data);
-		return new Response('update successfully');
-	}
+        $data['page_type'] = "other_offer";
+        $component->update($data);
+        return response("Component update successfully!!");
+    }
 
 
-	/**
-	 * [processMultiAttrValue description]
-	 * @param  [type] $data    [description]
-	 * @param  [type] $item_id [description]
-	 * @return [type]          [description]
-	 */
-	public function processMultiAttrValue($data, $item_id)
-	{
+    /**
+     * @param $data
+     * @param $id
+     * @return ResponseFactory|Response
+     */
+    public function updateAppServiceProduct($data, $id)
+    {
+        $appServiceProduct = $this->findOne($id);
+        if (request()->hasFile('product_img_url')) {
+            $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product/details');
+            $this->deleteFile($appServiceProduct->product_img_url);
+        }
 
-		$data = json_decode($data);
-		$reuslts = null;
-		foreach ($data as $value) {
-			if( $value->id == $item_id ){
-				$reuslts = $value;
-			}
-		}
+        // Check App & VAS
+        if ($data['app_service_tab_id'] != self::APP || $data['app_service_tab_id'] != self::VAS) {
+            $data['product_img_url'] = null;
+            $this->deleteFile($appServiceProduct->product_img_url);
+        }
+        $data['can_active'] = (isset($data['can_active']) ? 1 : 0);
 
-		return $reuslts;
+        $appServiceProduct->update($data);
+        return Response('App Service Category updated successfully');
+    }
 
-	}
+    /**
+     * @param $id
+     * @return ResponseFactory|Response
+     * @throws Exception
+     */
+    public function deleteAppServiceProduct($id)
+    {
+        $appServiceCat = $this->findOne($id);
+        $this->deleteFile($appServiceCat->product_img_url);
+        $appServiceCat->delete();
+        return Response('App Service Tab deleted successfully !');
+    }
 
-
-	public function storeComponentMultiItemAttr($data)
-	{
-
-		$component_id = $data['component_id'];
-		$item_id = $data['item_id'];
-		$item_data = $data['component_multi_attr'];
-
-		if( empty($component_id) || empty($item_id) || empty($item_data) ){
-			return false;
-		}
-
-		$component = $this->findOne($component_id);
-
-		// get original data
-		$multiple_attributes = !empty($component->multiple_attributes) ? json_decode($component->multiple_attributes, true) : null;
-
-		// loop over the product array
-		if( !empty($multiple_attributes) ){
-			foreach ($multiple_attributes as $key => $attributes) {
-				
-				if( $attributes['id'] == $item_id ){
-
-					if( isset($item_data['title_en']) && !empty($item_data['title_en']) ){
-						$attributes['title_en'] = $item_data['title_en'];
-					}
-
-					if( isset($item_data['title_bn']) && !empty($item_data['title_bn']) ){
-						$attributes['title_bn'] = $item_data['title_bn'];
-					}
-
-					if( isset($item_data['alt_text']) && !empty($item_data['alt_text']) ){
-						$attributes['alt_text'] = $item_data['alt_text'];
-					}
-
-					if( isset($item_data['status']) ){
-						$attributes['status'] = $item_data['status'];
-					}
-					
-
-					if( isset($item_data['image_url']) && !empty($item_data['image_url']) ){
-						$attributes['image_url'] = is_object($item_data['image_url']) ? $this->upload($item_data['image_url'], 'assetlite/images/product_details') : $attributes['image_url'];
-					}
-
-					$multiple_attributes[$key] = $attributes;
-
-				}
-
-			}
-		}
+    /**
+     * [attrTableSortable description]
+     * @param  [type] $data [description]
+     * @return Response [type]       [description]
+     */
+    public function attrTableSortable($data)
+    {
+        $this->componentRepository->multiAttrTableSort($data);
+        return new Response('update successfully');
+    }
 
 
-		$reults['multiple_attributes'] = !empty($multiple_attributes) ? json_encode($multiple_attributes) : null;
+    /**
+     * [processMultiAttrValue description]
+     * @param  [type] $data    [description]
+     * @param  [type] $item_id [description]
+     * @return [type]          [description]
+     */
+    public function processMultiAttrValue($data, $item_id)
+    {
+        $data = json_decode($data);
+        $reuslts = null;
+        foreach ($data as $value) {
+            if ($value->id == $item_id) {
+                $reuslts = $value;
+            }
+        }
+        return $reuslts;
+    }
 
-		$component->update($reults);
-		return response("Component update successfully!!");
-		
-		
 
-	}
+    public function storeComponentMultiItemAttr($data)
+    {
 
+        $component_id = $data['component_id'];
+        $item_id = $data['item_id'];
+        $item_data = $data['component_multi_attr'];
+
+        if (empty($component_id) || empty($item_id) || empty($item_data)) {
+            return false;
+        }
+
+        $component = $this->findOne($component_id);
+
+        // get original data
+        $multiple_attributes = !empty($component->multiple_attributes) ? json_decode($component->multiple_attributes, true) : null;
+
+        // loop over the product array
+        if (!empty($multiple_attributes)) {
+            foreach ($multiple_attributes as $key => $attributes) {
+                if ($attributes['id'] == $item_id) {
+                    if (isset($item_data['title_en']) && !empty($item_data['title_en'])) {
+                        $attributes['title_en'] = $item_data['title_en'];
+                    }
+
+                    if (isset($item_data['title_bn']) && !empty($item_data['title_bn'])) {
+                        $attributes['title_bn'] = $item_data['title_bn'];
+                    }
+
+                    if (isset($item_data['alt_text']) && !empty($item_data['alt_text'])) {
+                        $attributes['alt_text'] = $item_data['alt_text'];
+                    }
+
+                    if (isset($item_data['status'])) {
+                        $attributes['status'] = $item_data['status'];
+                    }
+
+
+                    if (isset($item_data['image_url']) && !empty($item_data['image_url'])) {
+                        $attributes['image_url'] = is_object($item_data['image_url']) ? $this->upload($item_data['image_url'], 'assetlite/images/product_details') : $attributes['image_url'];
+                    }
+
+                    $multiple_attributes[$key] = $attributes;
+
+                }
+
+            }
+        }
+        $reults['multiple_attributes'] = !empty($multiple_attributes) ? json_encode($multiple_attributes) : null;
+        $component->update($reults);
+        return response("Component update successfully!!");
+    }
 
     /**
      * @param $data
@@ -338,5 +333,4 @@ class ComponentService
         $appServiceCat->delete();
         return Response('Component deleted successfully !');
     }
-
 }
