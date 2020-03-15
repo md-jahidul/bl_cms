@@ -122,9 +122,15 @@ class ProductDetailsController extends Controller
         return redirect(route('section-list', $productDetailsId));
     }
 
+    /**
+     * @param $productDetailsId
+     * @param $sectionId
+     * @return Factory|View
+     */
     public function componentList($productDetailsId, $sectionId)
     {
-        $components = $this->componentService->componentList($sectionId);
+        $components = $this->componentService->componentList($sectionId, 'product_details');
+//        return $components;
         return view('admin.product.details.components.index', compact('components', 'sectionId', 'productDetailsId'));
     }
 
@@ -137,8 +143,6 @@ class ProductDetailsController extends Controller
 
     public function componentStore(Request $request, $productDetailsId, $sectionID)
     {
-//        return $request->all();
-
         $response = $this->componentService->componentStore($request->all(), $sectionID);
         Session::flash('success', $response->content());
         return redirect(route('component-list', [$productDetailsId, $sectionID]));
@@ -196,5 +200,23 @@ class ProductDetailsController extends Controller
     {
         $this->productDetailsSectionService->sectionDestroy($sectionId);
         return url(route('section-list', $productDetailsId));
+    }
+
+    public function componentSortable(Request $request)
+    {
+        $this->componentService->tableSortable($request);
+    }
+
+    /**
+     * @param $productId
+     * @param $sectionId
+     * @param $id
+     * @return string
+     * @throws \Exception
+     */
+    public function componentDestroy($productId, $sectionId, $id)
+    {
+        $this->componentService->deleteComponent($id);
+        return url(route('component-list', [$productId, $sectionId]));
     }
 }

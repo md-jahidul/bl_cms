@@ -35,7 +35,8 @@
                         <tr>
                             <th>SL</th>
                             <th>Title (English)</th>
-                            <th>Title (Bangla)</th>
+                            <th>Title (English)</th>
+                            <th>Section Type</th>
                             <th>Components</th>
                             <th width="12%">Action</th>
                         </tr>
@@ -44,8 +45,9 @@
                         @foreach($productSections as $section)
                             <tr>
                                 <td class="pt-2">{{ $loop->iteration }}</td>
-                                <td class="pt-2">{{ $section->title_en }}</td>
+                                <td class="pt-2">{{ $section->title_en }} {!! $section->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                 <td class="pt-2">{{ $section->title_bn }}</td>
+                                <td class="pt-2">{{ str_replace('_', ' ', $section->section_type) }}</td>
                                 <td class="pt-2">
                                     <a href="{{ route('component-list', [$productDetailsId, $section->id]) }}"
                                        class="btn-sm btn-outline-primary border">Components</a>

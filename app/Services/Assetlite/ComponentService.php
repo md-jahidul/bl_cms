@@ -19,7 +19,10 @@ class ComponentService
 
     const APP = 1;
     const VAS = 2;
-    const PAGE_TYPE = 'app_services';
+    const PAGE_TYPE = [
+        'app_services' => 'app_services',
+        'product_details' => 'product_details'
+    ];
 
     /**
      * @var $componentRepository
@@ -41,9 +44,9 @@ class ComponentService
         return $this->componentRepository->findOneByProperties(['type' => $type]);
     }
 
-    public function componentList($section_id)
+    public function componentList($section_id, $pageType)
     {
-        return $this->componentRepository->findByProperties(['section_details_id' => $section_id]);
+        return $this->componentRepository->list($section_id, $pageType);
     }
 
     /**
@@ -69,7 +72,7 @@ class ComponentService
             $data['other_attributes'] = json_encode(['video_type' => 'youtube_video']);
         }
 
-	   $data['page_type'] = self::PAGE_TYPE;
+	   $data['page_type'] = self::PAGE_TYPE['app_services'];
 
         $results = [];
         if (isset($data['multi_item']) && !empty($data['multi_item'])) {
@@ -97,7 +100,6 @@ class ComponentService
 
 //    protected function imageUpload($data)
 //    {
-//
 //        return $image;
 //    }
 
@@ -139,13 +141,11 @@ class ComponentService
             }
         }
 
-
-
         $data['multiple_attributes'] = (count($results) > 1) ? array_values($results) : null;
 
 //        ($new_multiple_attributes['alt_text']['alt_text_1']) ? $data['multiple_attributes'] = $new_multiple_attributes : $data['multiple_attributes'] = null;
 
-        $data['page_type'] = "product_details";
+        $data['page_type'] = self::PAGE_TYPE['product_details'];
         $data['section_details_id'] = $sectionId;
         $this->save($data);
         return response('Component create successfully!');
@@ -211,15 +211,25 @@ class ComponentService
     }
 
     /**
+     * @param $data
+     * @return Response
+     */
+    public function tableSortable($data)
+    {
+        $this->componentRepository->componentTableSort($data);
+        return new Response('update successfully');
+    }
+
+    /**
      * @param $id
      * @return ResponseFactory|Response
      * @throws Exception
      */
-    public function deleteAppServiceProduct($id)
+    public function deleteComponent($id)
     {
         $appServiceCat = $this->findOne($id);
         $this->deleteFile($appServiceCat->product_img_url);
         $appServiceCat->delete();
-        return Response('App Service Tab deleted successfully !');
+        return Response('Component deleted successfully !');
     }
 }
