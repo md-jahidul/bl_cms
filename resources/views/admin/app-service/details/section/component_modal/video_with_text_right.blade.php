@@ -92,7 +92,7 @@
 
                       <div class="form-group col-md-6">
                           <label for="tag_category_id" class="required">Select Video Type</label>
-                          <select class="form-control" name="component[0][other_attr][video_type]">
+                          <select id="select_video_type" class="form-control" name="component[0][other_attr][video_type]">
                                   <option value="uploaded_video">Upload video</option>
                                   <option value="youtube_video">Youtube video link</option>
                           </select>
@@ -104,7 +104,7 @@
 
 
 
-                     <div class="form-group col-md-6 {{ $errors->has('video_url') ? ' error' : '' }}">
+                     <div class="uploaded_video form-group col-md-6 {{ $errors->has('video_url') ? ' error' : '' }}">
                          <label for="alt_text" class="">Uplaod Video_url (optional)</label>
                          <div class="custom-file">
                              <input type="file" name="component[0][video_url]" class="custom-file-input" id="image">
@@ -119,7 +119,7 @@
                      </div>
 
 
-                     <div class="form-group col-md-6 {{ $errors->has('video_url') ? ' error' : '' }}">
+                     <div class="youtube_video form-group col-md-6 {{ $errors->has('video_url') ? ' error' : '' }}" style="display: none;">
                          <label for="video_url" class="required1">Youtube video link</label>
                          <input type="text" name="component[0][video_url]"  class="form-control"
                                 value="{{ old("video_url") ? old("video_url") : '' }}">
@@ -177,4 +177,27 @@
        	margin-right: 10%;
      }
  </style>
+@endpush
+
+
+
+
+@push('page-js')
+
+<script type="text/javascript">
+  $(document).ready(function () {
+     
+     $('#select_video_type').on('change', function(){
+      
+     });
+
+
+
+
+  }); // doc ready
+</script>
+
+
+
+
 @endpush

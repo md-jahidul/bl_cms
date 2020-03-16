@@ -14,8 +14,8 @@ class AddAdditionalColumnComponentsTable extends Migration
     public function up()
     {
         Schema::table('components', function (Blueprint $table) {
-            $table->string('extra_title_en')->nullable()->after('alt_links');
-            $table->string('extra_title_bn')->nullable()->after('alt_links');
+            $table->text('extra_title_en')->nullable()->after('alt_links');
+            $table->text('extra_title_bn')->nullable()->after('alt_links');
             $table->string('offer_type')->nullable()->after('alt_links');
             $table->integer('offer_type_id')->nullable()->after('alt_links');
 
