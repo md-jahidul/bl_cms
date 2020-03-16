@@ -163,6 +163,7 @@ class ProductDetailsController extends Controller
         $component = $this->componentService->findOne($id);
         $multipleImage = $component['multiple_attributes'];
         $products = $this->productService->produtcs();
+//        dd($multipleImage);
         return view('admin.product.details.components.edit', compact('component', 'products', 'multipleImage', 'dataTypes', 'sectionId', 'productDetailsId'));
     }
 

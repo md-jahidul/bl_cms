@@ -223,16 +223,18 @@
                                                     </div>
                                                 </slot>
 
-                                                <slot id="multiple-image-field" class="{{ ( isset($component->multiple_attributes['image']) ) ? '' : "d-none" }}">
+                                                <slot id="multiple-image-field" class="{{ ( isset($multipleImage) ) ? '' : "d-none" }}">
                                                     @php( $i = 0 )
-                                                    @if(isset($multipleImage['image']))
-                                                        @foreach($multipleImage['image'] as $key => $image)
+                                                    @if(isset($multipleImage))
+                                                        @foreach($multipleImage as $key => $image)
+{{--                                                            {{ dd($image) }}--}}
                                                             @php($i++)
+                                                            <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$i}}">
                                                             <div class="col-md-6 col-xs-6 option-{{ $i }} options-count">
                                                                 <div class="form-group">
                                                                     <label for="message">Multiple Image</label>
-                                                                    <input type="file" class="dropify" name="multiple_attributes[image][image_url_{{ $i }}]"
-                                                                           data-default-file="{{ config('filesystems.file_base_url') . $image }}"
+                                                                    <input type="file" class="dropify" name="multi_item[image_url-{{ $i }}]"
+                                                                           data-default-file="{{ config('filesystems.file_base_url') . $image['image_url'] }}"
                                                                            data-height="80"/>
                                                                     <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                                 </div>
@@ -240,7 +242,7 @@
 
                                                             <div class="form-group col-md-5 option-{{ $i }}">
                                                                 <label for="alt_text">Alt Text</label>
-                                                                <input type="text" name="multiple_attributes[alt_text][alt_text_{{ $i }}]" value="{{ $multipleImage['alt_text']["alt_text_$i"] }}"  class="form-control">
+                                                                <input type="text" name="multi_item[alt_text-{{ $i }}]" value="{{ $image['alt_text'] }}" class="form-control">
                                                             </div>
 
                                                             @if($i == 1)
@@ -357,15 +359,16 @@
                 var total_option = option_count.length + 1;
 
                 var input = '<div class="col-md-6 col-xs-6 options-count option-'+total_option+'">\n' +
+                    '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">>\n' +
                     '<div class="form-group">\n' +
                     '      <label for="message">Multiple Image</label>\n' +
-                    '      <input type="file" class="dropify" name="multiple_attributes[image][image_url_'+total_option+']" data-height="80"/>\n' +
+                    '      <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +
                     '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
                     '  </div>\n' +
                     ' </div>\n'+
                     '<div class="form-group col-md-5 option-'+total_option+'">\n' +
                     '    <label for="alt_text">Alt Text</label>\n' +
-                    '    <input type="text" name="multiple_attributes[alt_text][alt_text_'+total_option+']"  class="form-control">\n' +
+                    '    <input type="text" name="multi_item[alt_text-'+total_option+']"  class="form-control">\n' +
                     '</div>\n' +
                     '<div class="form-group col-md-1 option-'+total_option+'">\n' +
                     '   <label for="alt_text"></label>\n' +
