@@ -10,7 +10,7 @@
                                 <th width="22%">Name (EN)</th>
                                 <th width="22%">Name (BN)</th>
                                 <th width="">Banner</th>
-                                <th width="40%">Upload Banner</th>
+                                <th width="20%">Upload Banner</th>
                                 <th width="20%">Home</th>
                             </tr>
                         </thead>
@@ -32,8 +32,8 @@
                                     </a>
                                 </td>
                                 <td class="banner_photo">
-                                <img src="{{$cat->banner_photo}}" height="40px">
-                                {{ config('filesystems.file_base_url/').$cat->banner_photo}}
+                                <img src="{{ config('filesystems.file_base_url') . $cat->banner_photo }}" height="40px">
+                                
                                 </td>
                                 <td>
                                     <div class="row">
@@ -41,6 +41,7 @@
                                             <form method="POST" class="form uploadCategoryBanner" enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="file" class="pull-left" name="banner_photo">
+                                                <input type="hidden" value="{{$cat->id}}" name="cat_id">
                                                 <input type="hidden" value="{{$cat->banner_photo}}" name="old_photo">
                                                 <input type="text" placeholder="Alt Text" class="form-control" value="{{$cat->alt_text}}" name="alt_text">
                                                 <button type="submit" class="btn btn-sm btn-info pull-right">Save</button>
