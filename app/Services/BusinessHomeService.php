@@ -109,7 +109,6 @@ class BusinessHomeService {
             $response = [
                 'success' => 1,
                 'banner_photo' => $photo,
-                'sort' => $request['home_sort'],
                 'message' => "Banner photo is uploaded successfully!"
             ];
 
