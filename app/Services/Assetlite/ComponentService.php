@@ -140,7 +140,9 @@ class ComponentService
             }
         }
 
-        $data['multiple_attributes'] = (count($results) > 1) ? array_values($results) : null;
+//        dd($results);
+
+        $data['multiple_attributes'] = array_values($results);
 
 //        ($new_multiple_attributes['alt_text']['alt_text_1']) ? $data['multiple_attributes'] = $new_multiple_attributes : $data['multiple_attributes'] = null;
 
