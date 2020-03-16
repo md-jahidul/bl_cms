@@ -358,7 +358,7 @@
                 var total_option = option_count.length + 1;
 
                 var input = '<div class="col-md-6 col-xs-6 options-count option-'+total_option+'">\n' +
-                    '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">>\n' +
+                    '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +
                     '<div class="form-group">\n' +
                     '      <label for="message">Multiple Image</label>\n' +
                     '      <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +
