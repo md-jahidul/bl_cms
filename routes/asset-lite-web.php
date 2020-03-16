@@ -364,7 +364,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     //__category
     Route::get('business-category-name-change', 'AssetLite\BusinessGeneralController@categoryNameChange')->name('business.category.name.save');
     Route::get('business-category-home-status-change', 'AssetLite\BusinessGeneralController@categoryStatusChange')->name('business.category.home.status.change');
-
+    Route::post('business-category-banner-upload', 'AssetLite\BusinessGeneralController@categoryBannerSave')
+            ->name('business.category.banner.save');
     Route::get('business-category-sort-change', 'AssetLite\BusinessGeneralController@categorySortChange')->name('business.category.sort.save');
 
     //sliding speed
@@ -406,6 +407,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('business-internet', 'AssetLite\BusinessInternetController@index');
     Route::get('business-internet-create', 'AssetLite\BusinessInternetController@internetCreate');
     Route::post('business-internet-save', 'AssetLite\BusinessInternetController@saveInternetPackage');
+    Route::get('business-internet-edit/{internetId}', 'AssetLite\BusinessInternetController@internetEdit');
+    Route::post('business-internet-update', 'AssetLite\BusinessInternetController@updateInternetPackage');
     Route::post('business-internet-package-list', 'AssetLite\BusinessInternetController@internetPackageList')->name("business.internet.list.ajax");
     Route::post('business-internet-excel', 'AssetLite\BusinessInternetController@uploadInternetExcel')
             ->name('business.internet.excel.save');

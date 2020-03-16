@@ -17,6 +17,18 @@ class BusinessCategoryRepository extends BaseRepository {
         $categories = $this->model->orderBy('home_sort')->get();
         return $categories;
     }
+    
+    public function saveBannerPhoto($filePath, $altText, $catId){
+        $update = [];
+        $update['alt_text'] = $altText;
+        if($filePath != ""){
+        $update['banner_photo'] = $filePath;
+        }
+        $this->model->where('id', $catId)->update($update);
+        return $filePath;
+        
+        
+    }
 
     public function changeCategoryName($catId, $type, $name) {
         try {

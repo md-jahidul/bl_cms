@@ -8,24 +8,31 @@
 namespace App\Services;
 
 use App\Repositories\BusinessInternetRepository;
+use App\Repositories\TagCategoryRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Illuminate\Http\Response;
 
 class BusinessInternetService {
 
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var $internetRepo
+     * @var $tagsRepo
      */
     protected $internetRepo;
+    protected $tagsRepo;
 
     /**
      * BusinessInternetService constructor.
      * @param BusinessInternetRepository $internetRepo
+     * @param TagCategoryRepository $tagsRepo
      */
-    public function __construct(BusinessInternetRepository $internetRepo) {
+    public function __construct(BusinessInternetRepository $internetRepo, TagCategoryRepository $tagsRepo) {
         $this->internetRepo = $internetRepo;
+        $this->tagsRepo = $tagsRepo;
         $this->setActionRepository($internetRepo);
     }
 
@@ -39,11 +46,29 @@ class BusinessInternetService {
     }
 
     /**
+     * Get Internet package by id
+     * @return Response
+     */
+    public function getInternetById($internetId) {
+        $response = $this->internetRepo->getInternetById($internetId);
+        return $response;
+    }
+
+    /**
      * Get Internet package for drop down
      * @return Response
      */
-    public function getAllPackage() {
-        $response = $this->internetRepo->getAllPackage();
+    public function getAllPackage($internetId = 0) {
+        $response = $this->internetRepo->getAllPackage($internetId);
+        return $response;
+    }
+
+    /**
+     * Get tags
+     * @return Response
+     */
+    public function getTags() {
+        $response = $this->tagsRepo->getTags();
         return $response;
     }
 
@@ -58,7 +83,6 @@ class BusinessInternetService {
                 'product_code' => 'required',
                 'product_code_ev' => 'required',
                 'product_code_with_renew' => 'required',
-                'product_name' => 'required',
                 'product_commercial_name_en' => 'required',
                 'product_commercial_name_bn' => 'required',
                 'product_short_description' => 'required',
@@ -96,6 +120,54 @@ class BusinessInternetService {
     }
 
     /**
+     * Save internet package
+     * @return Response
+     */
+    public function updateInternet($request) {
+        try {
+
+            $request->validate([
+                'product_code' => 'required',
+                'product_code_ev' => 'required',
+                'product_code_with_renew' => 'required',
+                'product_commercial_name_en' => 'required',
+                'product_commercial_name_bn' => 'required',
+                'product_short_description' => 'required',
+                'activation_ussd_code' => 'required',
+                'balance_check_ussd_code' => 'required',
+                'data_volume' => 'required',
+                'volume_data_unit' => 'required',
+                'validity' => 'required',
+                'validity_unit' => 'required',
+                'mrp' => 'required',
+                'price' => 'required',
+            ]);
+
+            //file upload in storege
+            $bannerPath = "";
+            if ($request['banner_photo'] != "") {
+                $bannerPath = $this->upload($request['banner_photo'], 'assetlite/images/business-images');
+                $this->deleteFile($request['old_banner']);
+            }
+
+            $this->internetRepo->saveInternet($bannerPath, $request);
+
+            $response = [
+                'success' => 1,
+            ];
+
+
+            return $response;
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e
+            ];
+            return $response;
+        }
+    }
+
+    /**
      * Upload/Save excel file
      * @return Response
      */
@@ -127,6 +199,8 @@ class BusinessInternetService {
      * @return Response
      */
     public function deletePackage($packageId) {
+        $package = $this->internetRepo->getInternetById($packageId); 
+        $this->deleteFile($package->banner_photo);
         $response = $this->internetRepo->deletePackage($packageId);
         return $response;
     }
