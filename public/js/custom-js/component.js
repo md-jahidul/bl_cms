@@ -21,11 +21,12 @@
 
     var related_product_field = $('#related_product_field');
 
-    // $('#data-type').change(function () {
-    //     alert();
-    // });
+    $('#component-type').change(function () {
+        var selectedValue = $('#data-type').find('option:selected').val();
+    });
 
-    function showHideElement(field, item) {
+    function showHideElement(field, item)
+    {
         $(field).on('click', function () {
             var isChecked = $(this).is(":checked");
             if (isChecked) {

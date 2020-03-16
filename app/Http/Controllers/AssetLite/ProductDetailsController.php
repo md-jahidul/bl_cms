@@ -41,19 +41,17 @@ class ProductDetailsController extends Controller
         'medium_title_with_text' => 'Medium Title With Text',
         'small_title_with_text' => 'Small Title With Text',
         'text_and_button' => 'Text And Button',
-        'special_data_offer' => 'Special Data Offer',
-        'bondho_sim_offer' => 'Bondho Sim Offer',
-        'startup_offer' => 'Startup offer',
         'table_component' => 'Table Component',
 
-//        'title' => 'Title',
-//        'text_area' => 'Text Area',
 //        'single_image' => 'Single Image',
 
         'bullet_text' => 'Bullet Text',
         'accordion_text' => 'Accordion Text',
+        'multiple_image' => 'Multiple Image',
         'drop_down' => 'Dropdown',
-        'multiple_image' => 'Multiple Image'
+        'special_data_offer' => 'Special Data Offer',
+        'bondho_sim_offer' => 'Bondho Sim Offer',
+        'startup_offer' => 'Startup offer',
     ];
     /**
      * @var BannerImgRelatedProductService
