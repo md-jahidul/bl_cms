@@ -37,7 +37,7 @@ class ProductDetailsController extends Controller
 
     protected $dataTypes = [
         'large_title_with_text' => 'Large Title With Text',
-        'large_title_text_button' => 'Large Title With Text Button',
+        'large_title_text_button' => 'Large Title With Text And Button',
         'medium_title_with_text' => 'Medium Title With Text',
         'small_title_with_text' => 'Small Title With Text',
         'text_and_button' => 'Text And Button',

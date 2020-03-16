@@ -23,7 +23,24 @@
 
     $('#component-type').change(function () {
         var selectedValue = $('#data-type').find('option:selected').val();
+        product.select_change('#component-type');
+
     });
+
+
+
+    // $removeDomSelect = [$offerType, $packageType, $otherOfferType, $startupOfferDetails];
+    // $removeDomSelect.forEach(function ($ele) {
+    //     $ele.on('change', function () {
+    //         product.select_change($ele);
+    //     });
+    // })
+
+    $('#save').on('click', function (e) {
+        product.save(e, $removeDomSelect, 'product_form');
+    });
+
+
 
     function showHideElement(field, item)
     {

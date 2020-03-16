@@ -1,4 +1,4 @@
-<div id="related_product_field" class="col-md-6 {{ $errors->has('offer_type_id') ? ' error' : '' }} d-none">
+<div id="related_product_field" class="col-md-6 {{ $errors->has('offer_type_id') ? ' error' : '' }}">
     <label for="editor_en">Related Product</label>
     <select name="offer_type_id" class="select2 form-control" id="data-type">
         <option value="">--Select Data Type--</option>
