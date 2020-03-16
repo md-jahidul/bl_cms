@@ -226,14 +226,14 @@
                                                     @php( $i = 0 )
                                                     @if(isset($multipleImage))
                                                         @foreach($multipleImage as $key => $image)
-{{--                                                            {{ dd($image) }}--}}
+{{--                                                            {{ dd($image['alt_text']) }}--}}
                                                             @php($i++)
                                                             <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$i}}">
                                                             <div class="col-md-6 col-xs-6 option-{{ $i }} options-count">
                                                                 <div class="form-group">
                                                                     <label for="message">Multiple Image</label>
                                                                     <input type="file" class="dropify" name="multi_item[image_url-{{ $i }}]"
-                                                                           data-default-file="{{ config('filesystems.file_base_url') . isset($image['image_url']) ? $image['image_url'] : null }}"
+                                                                           data-default-file="{{ config('filesystems.file_base_url') . $image['image_url'] }}"
                                                                            data-height="80"/>
                                                                     <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                                 </div>
