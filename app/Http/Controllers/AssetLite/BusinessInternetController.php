@@ -39,9 +39,11 @@ class BusinessInternetController extends Controller {
      */
     public function internetCreate() {
         $otherPorducts = $this->internetService->getAllPackage();
-        return view('admin.business.internet_package_create', compact('otherPorducts'));
+        $tags = $this->internetService->getTags();
+        return view('admin.business.internet_package_create', compact('otherPorducts', 'tags'));
     }
 
+    
     /**
      * @param Request $request
      * @return JsonResponse
@@ -58,6 +60,41 @@ class BusinessInternetController extends Controller {
 
         return redirect('/business-internet');
     }
+    
+    
+    /**
+     * Internet edit Form
+     * 
+     * @param NA
+     * @return Factory|View
+     * @Bulbul Mahmud Nito || 12/03/2020
+     */
+    public function internetEdit($internetId) {
+        $internet = $this->internetService->getInternetById($internetId);
+        $otherPorducts = $this->internetService->getAllPackage($internetId);
+        $tags = $this->internetService->getTags();
+        return view('admin.business.internet_package_edit', compact('internet', 'otherPorducts', 'tags'));
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateInternetPackage(Request $request) {
+
+        $response = $this->internetService->updateInternet($request);
+        
+//        dd($response);
+        
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Package is updated!');
+        } else {
+            Session::flash('error', 'Package updating process failed!');
+        }
+
+        return redirect('/business-internet');
+    }
+    
 
     public function internetPackageList(Request $request) {
 

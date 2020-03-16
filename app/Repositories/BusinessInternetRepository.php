@@ -67,16 +67,27 @@ class BusinessInternetRepository extends BaseRepository {
 
         return $response;
     }
+    
+    public function getInternetById($internetId){
+         return $this->model->findOrFail($internetId);
+    }
 
-    public function getAllPackage() {
-        return $this->model->select('id', 'product_code', 'product_name')->where('status', 1)->get();
+    public function getAllPackage($internetId) {
+        $allProducts = $this->model->select('id', 'product_code', 'product_name')->where('status', 1);
+        if($internetId > 0){
+            $allProducts->where('id', '!=', $internetId);
+        }
+        $data = $allProducts->get();
+        
+        return $data;
+        
     }
 
     public function saveInternet($bannerPath, $request) {
 
 
 
-        $insertdata[] = array(
+        $insertdata = array(
             'product_code' => $request->product_code,
             'product_code_ev' => $request->product_code_ev,
             'product_code_with_renew' => $request->product_code_with_renew,
@@ -101,11 +112,21 @@ class BusinessInternetRepository extends BaseRepository {
             'offer_type' => $request->offer_type,
             'short_text' => $request->short_text,
             'alt_text' => $request->alt_text,
+            'tag_id' => $request->tag,
             'related_product' => implode(',', $request->related_product_id),
-            'banner_photo' => $bannerPath,
         );
+        
+        if($bannerPath != ""){
+              $insertdata['banner_photo'] = $bannerPath;
+        }
+        
+        if($request->internet_id){
+//          dd($insertdata);
+             $this->model->where('id', $request->internet_id)->update($insertdata);
+        }else{
+            return $this->model->insert($insertdata);
+        }
 
-        return $this->model->insert($insertdata);
     }
 
     public function saveExcelFile($request) {
@@ -186,11 +207,11 @@ class BusinessInternetRepository extends BaseRepository {
     public function homeShow($packageId) {
         try {
 
-            $card = $this->model->findOrFail($packageId);
+            $internet = $this->model->findOrFail($packageId);
 
-            $status = $card->home_show == 1 ? 0 : 1;
-            $card->home_show = $status;
-            $card->save();
+            $status = $internet->home_show == 1 ? 0 : 1;
+            $internet->home_show = $status;
+            $internet->save();
 
             $response = [
                 'success' => 1
