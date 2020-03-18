@@ -207,7 +207,26 @@ class ComponentController extends Controller
 	public function conponentItemAttrDestroy(Request $request)
 	{
 
-		dd($request->all());
+		$response = $this->componentService->conponentMultiAttrItemDestroy($request->all());
+
+		if( $response ){
+			return response()->json([
+			    'status' => 'SUCCESS',
+			    'message' => 'Data updated',
+			    'data' => []
+			], 200);
+		}
+		else{
+			return response()->json([
+			    'status' => 'FAILED',
+			    'message' => 'Data update failed',
+			    'data' => []
+			], 404);
+		}
+
+		
+
+
 
 	}
 

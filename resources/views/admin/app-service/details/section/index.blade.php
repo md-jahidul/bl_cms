@@ -370,7 +370,7 @@ function matchRelatedProduct($id, $roles)
 
 											var html = '';
 
-											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" style="max-width:100px;" /></td><td>'+mcv.title_en+'</td><td>'+mcv.status+'</td><td><a href="#" class="multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a><a href="#" class="border-0 btn-sm btn-outline-danger delete_btn" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'" title="Delete"><i class="la la-trash"></i></a></td></tr>';
+											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" style="max-width:100px;" /></td><td>'+mcv.title_en+'</td><td>'+mcv.status+'</td><td><a href="#" class="multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a><a href="#" class="border-0 btn-sm btn-outline-danger delete_multi_attr_item" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'" title="Delete"><i class="la la-trash"></i></a></td></tr>';
 
 											$('#slider_sortable').append(html);
 
@@ -641,27 +641,33 @@ function matchRelatedProduct($id, $roles)
 	    
 
 	    // Delete multiple attribute items
-	    $(document).on('click', '.delete_btn', function(e){
+	    $(document).on('click', '.delete_multi_attr_item', function(e){
 	    	e.preventDefault();
 
-	    	var confim = confim('Are you sure?');
+	    	// var confirm = confirm('Are you sure?');
+	    	$this = $(this);
 
-	    	if( confim ){
+	    	if( confirm("Are you sure?") ){
 
-	    		var itemID = $this.attr('data-component_id');
-	    		var componentID = $this.attr('data-component_id');
-
-	    		console.log(itemID, componentID);
+	    		var itemID = $this.attr('data-item_id');
+	    		var componentID = $this.attr('data-component_id');	    		
 
 	    		$.ajax({
-	    		    methods: "POST",
-	    		    url: "{{ url('app-service/component/itemattr/destory') }}",
+	    		    type: "POST",
+	    		    url: "{{ route('appservice.component.itemattr.destory') }}",
 	    		    data: {	    		        
 	    		        item_id: itemID,
 	    		        component_id: componentID,
+	    		        _token : "{{csrf_token()}}"
 	    		    },
 	    		    success: function (data) {
 	    		        console.log(data)
+
+	    		        if( data.status == "SUCCESS" ){
+
+	    		        		$this.parents('tr').remove();
+	    		        }
+
 	    		    },
 	    		    error: function () {
 	    		        // window.location.replace(auto_save_url);
