@@ -324,6 +324,65 @@ Route::middleware('authorize', 'auth')->group(function () {
 //     Route::resource('campaigns','AssetLite\CampaignController');
 //     Route::resource('prizes','AssetLite\PrizeController');
 
+   Route::get('/home', 'AssetLite\HomeController@index')->name('home'); 
+
+   Route::get('/test/excel', function (\App\Services\ProductCoreService $service) { 
+
+      $service->mapDataFromExcel('/home/bs104/Desktop/product_sample.xlsx');  
+   });   
+
+   // Product core ============================================   
+   Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list'); 
+   Route::get('product-core/{id}/edit/', 'AssetLite\ProductCoreController@edit')->name('product.core.edit');   
+
+
+   // Search ======================================================  
+   Route::get('popular-search', 'AssetLite\SearchController@index'); 
+   Route::get('save-search-limit', 'AssetLite\SearchController@saveLimit')->name('save.search.limit');   
+   Route::get('popular-search-create', 'AssetLite\SearchController@popularSearchCreate'); 
+   Route::get('search-product-list', 'AssetLite\SearchController@getProductList')->name('search.get.product.list');  
+
+   Route::post('popular-search-save', 'AssetLite\SearchController@popularSearchSave')->name('popular.search.save');  
+
+   Route::get('search-popular-edit/{keywordId}', 'AssetLite\SearchController@popularSearchEdit');  
+   Route::post('popular-search-update', 'AssetLite\SearchController@popularSearchUpdate')->name('popular.search.update');  
+
+   Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus'); 
+   Route::get('popular-search-delete/{keywordId}', 'AssetLite\SearchController@deletePopularSearch'); 
+
+   // Easy Payment Card ============================================ 
+   Route::get('easy-payment-card', 'AssetLite\EasyPaymentCardController@index'); 
+   Route::post('easy-payment-card-list', 'AssetLite\EasyPaymentCardController@getEasyPaymentCardList')->name('easypaymentcard.list.ajax');   
+   Route::post('upload-payment-card-excel', 'AssetLite\EasyPaymentCardController@uploadCardByExcel')  
+         ->name('payment.card.excel.save');  
+   Route::get('payment-card-status-change', 'AssetLite\EasyPaymentCardController@cardStatusChange')   
+         ->name('payment.card.status.change');  
+   Route::get('delete-easy-payment-card/{id?}', 'AssetLite\EasyPaymentCardController@deletePaymentCard');   
+
+
+   // Business Module ============================================   
+   Route::get('business-general', 'AssetLite\BusinessGeneralController@index')->name('business.general');   
+
+   //__category   
+   Route::get('business-category-name-change', 'AssetLite\BusinessGeneralController@categoryNameChange')->name('business.category.name.save');  
+   Route::get('business-category-home-status-change', 'AssetLite\BusinessGeneralController@categoryStatusChange')->name('business.category.home.status.change');  
+
+   Route::get('business-category-sort-change', 'AssetLite\BusinessGeneralController@categorySortChange')->name('business.category.sort.save');  
+
+   //sliding speed   
+
+   Route::get('business-save-sliding-speed', 'AssetLite\BusinessGeneralController@saveSlidingSpeed')  
+         ->name('business.sliding.speed.save'); 
+
+   //__banner  
+   Route::post('business-banner-photo-upload', 'AssetLite\BusinessGeneralController@bannerPhotoSave')->name('business.banner.photo.save');   
+
+   //__news 
+   Route::post('business-news-save', 'AssetLite\BusinessGeneralController@homeNewsSave')->name('business.news.save');   
+   Route::get('get-single-news/{newsId}', 'AssetLite\BusinessGeneralController@getNewsById')->name('get.news.by.id');   
+   Route::get('business-news-sort', 'AssetLite\BusinessGeneralController@newsSortChange');   
+   Route::get('business-news-status-change/{id}', 'AssetLite\BusinessGeneralController@newsStatusChange');  
+   Route::get('business-news-delete/{id}', 'AssetLite\BusinessGeneralController@newsDelete');
 
    //__features
    Route::post('business-feature-save', 'AssetLite\BusinessGeneralController@featureSave')->name('business.feature.save');

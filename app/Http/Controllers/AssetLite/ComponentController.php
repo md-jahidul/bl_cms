@@ -199,10 +199,16 @@ class ComponentController extends Controller
 
 	}
 
-
-	public function conponentItemAttrDestroy()
+	/**
+	 * [conponentItemAttrDestroy description]
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function conponentItemAttrDestroy(Request $request)
 	{
-		
+
+		dd($request->all());
+
 	}
 
 

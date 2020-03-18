@@ -648,8 +648,26 @@ function matchRelatedProduct($id, $roles)
 
 	    	if( confim ){
 
-	    		
-	    		
+	    		var itemID = $this.attr('data-component_id');
+	    		var componentID = $this.attr('data-component_id');
+
+	    		console.log(itemID, componentID);
+
+	    		$.ajax({
+	    		    methods: "POST",
+	    		    url: "{{ url('app-service/component/itemattr/destory') }}",
+	    		    data: {	    		        
+	    		        item_id: itemID,
+	    		        component_id: componentID,
+	    		    },
+	    		    success: function (data) {
+	    		        console.log(data)
+	    		    },
+	    		    error: function () {
+	    		        // window.location.replace(auto_save_url);
+	    		    }
+	    		});
+
 	    	}
 
 
