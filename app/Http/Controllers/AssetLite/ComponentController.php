@@ -200,4 +200,10 @@ class ComponentController extends Controller
 	}
 
 
-}
+	public function conponentItemAttrDestroy()
+	{
+		
+	}
+
+
+}  // class End
