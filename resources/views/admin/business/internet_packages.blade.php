@@ -62,6 +62,32 @@
 
 <script>
 $(function () {
+    
+    
+            //success and error msg
+<?php
+if (Session::has('sussess')) {
+    ?>
+            swal.fire({
+                title: "{{ Session::get('sussess') }}",
+                type: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            });
+    <?php
+}
+if (Session::has('error')) {
+    ?>
+
+            swal.fire({
+                title: "{{ Session::get('error') }}",
+                type: 'error',
+                timer: 2000,
+                showConfirmButton: false
+            });
+
+<?php } ?>
+    
     $('.dropify').dropify({
         messages: {
             'default': 'Browse for an Excel File to upload',

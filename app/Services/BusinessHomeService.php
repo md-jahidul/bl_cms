@@ -80,6 +80,49 @@ class BusinessHomeService {
     }
 
     /**
+     * save business category banner
+     * @return Response
+     */
+    public function saveCatBanners($request) {
+        try {
+
+            $request->validate([
+                'banner_photo' => 'required'
+            ]);
+
+            //file upload in storege
+            $filePath = "";
+            if ($request['banner_photo'] != "") {
+                $filePath = $this->upload($request['banner_photo'], 'assetlite/images/business-images');
+
+                //delete old photo
+                if ($request['old_photo']) {
+                    $this->deleteFile($request['old_photo']);
+                }
+            }
+
+            //save data in database 
+            $newPhoto = $this->businessCatRepo->saveBannerPhoto($filePath, $request['alt_text'], $request['cat_id']);
+            
+            $photo = $newPhoto == "" ? $request['old_photo'] : $newPhoto;
+
+            $response = [
+                'success' => 1,
+                'banner_photo' => $photo,
+                'message' => "Banner photo is uploaded successfully!"
+            ];
+
+
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
+    }
+    /**
      * save business landing page top banner
      * @return Response
      */
