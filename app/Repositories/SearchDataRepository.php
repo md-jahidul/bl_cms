@@ -14,7 +14,7 @@ class SearchDataRepository extends BaseRepository {
     public $modelName = SearchData::class;
 
     public function saveData($productId, $name, $url, $type, $tag) {
-        $previous = $this->model->where('product_id', $productId);
+        $previous = $this->model->where('keyword_id', $productId);
         if ($previous->count() > 0) {
            $save = $previous->update(
                     array(
