@@ -15,7 +15,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <h4 class="pb-1"><strong>About Career</strong></h4>
-                    <table class="table table-striped table-bordered zero-configuration">
+                    <table  id="Example1"  class="table table-striped table-bordered zero-configuration">
                         <thead>
                         <tr>
                             <td width="3%">#</td>
@@ -60,8 +60,27 @@
 @endpush
 
 @push('page-js')
+    <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
+    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
+    <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
+    <script>
 
+
+        $(document).ready(function () {
+            $('#Example1').DataTable({
+                dom: 'Bfrtip',
+                buttons: [],
+                paging: false,
+                searching: false,
+                "pageLength": 10,
+                "bDestroy": true,
+            });
+        });
+
+    </script>
 @endpush
+
 
 
 
