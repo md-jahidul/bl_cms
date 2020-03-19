@@ -26,6 +26,7 @@ class CreateAboutUsEcareerItemsTable extends Migration
             $table->string('alt_links')->nullable();
             $table->string('call_to_action', 2000)->nullable();
             $table->json('additional_info')->nullable();
+            $table->integer('display_order')->nullable();
             $table->tinyInteger('is_active')->default(1)->comment('active = 1, inactive = 0');
             $table->timestamps();
             $table->softDeletes();

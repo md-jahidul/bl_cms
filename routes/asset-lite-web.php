@@ -90,6 +90,24 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('management/destroy/{id}', 'AssetLite\ManagementController@destroy');
     Route::get('management-sortable', 'AssetLite\ManagementController@managementSortable');
 
+    Route::resource('about-career', 'AssetLite\AboutEcareerController')->except(['show', 'destroy']);
+    Route::get('about-career-item/{careerId}', 'AssetLite\AboutEcareerItemController@index')
+        ->name('career-item.list');
+
+    Route::get('about-career-item/{careerId}/create', 'AssetLite\AboutEcareerItemController@create')
+        ->name('career-item.create');
+
+    Route::post('about-career-item/{careerId}/store', 'AssetLite\AboutEcareerItemController@store')
+        ->name('career-item.store');
+
+    Route::get('about-career-item/{careerId}/edit/{id}', 'AssetLite\AboutEcareerItemController@edit')
+        ->name('career-item.edit');
+
+    Route::post('about-career-item/{careerId}/update/{id}', 'AssetLite\AboutEcareerItemController@update')
+        ->name('career-item.update');
+
+    Route::get('about-career-item/{careerId}/destroy/{id}', 'AssetLite\AboutEcareerItemController@destroy');
+
 
 
     // META TAG  ====================================
@@ -463,7 +481,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('programs/progeneral/{id}/{type}/edit', 'AssetLite\EcareerController@progeneralEdit')->name('programs.progeneral.edit');
     Route::post('programs/progeneral/{id}/update', 'AssetLite\EcareerController@progeneralUpdate')->name('programs.progeneral.update');
     Route::get('programs/progeneral/destroy/{id}', 'AssetLite\EcareerController@progeneralDestroy')->name('programs.progeneral.destroy');
-    
+
     Route::get('programs/progeneral/{type}', 'AssetLite\EcareerController@progeneralIndex')->name('programs.progeneral');
 
 

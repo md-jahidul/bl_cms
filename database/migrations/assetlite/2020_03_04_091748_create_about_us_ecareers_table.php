@@ -19,6 +19,8 @@ class CreateAboutUsEcareersTable extends Migration
             $table->string('title_bn')->nullable();
             $table->text('description_en')->nullable();
             $table->text('description_bn')->nullable();
+            $table->tinyInteger('status')->default(1)
+                ->comment('1 = Active, 2 = inactive');
             $table->timestamps();
         });
     }
