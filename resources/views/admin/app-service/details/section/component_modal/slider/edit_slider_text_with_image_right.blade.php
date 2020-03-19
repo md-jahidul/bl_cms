@@ -36,7 +36,7 @@
 											<thead>
 												<tr>
 													<td width="3%">#</td>
-													<th width="15%">Image</th>
+													<th width="5%">Image</th>
 													<th width="20%">Title</th>
 													<th width="12%" class="">Status</th>
 													<th width="12%" class="">Action</th>

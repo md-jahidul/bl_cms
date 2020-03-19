@@ -22,6 +22,7 @@ class AppServiceProductDetailsRepository extends BaseRepository
     {
         return $this->model->with('sectionComponent')->where('product_id', $product_id)
             ->where('category', 'component_sections')
+            ->whereNull('deleted_at')
             ->orderBy('section_order')
             ->get();
     }
@@ -30,6 +31,7 @@ class AppServiceProductDetailsRepository extends BaseRepository
     {
         return $this->model->where('product_id', $product_id)
             ->whereNull('section_name')
+            ->whereNull('deleted_at')
             ->first();
     }
 
