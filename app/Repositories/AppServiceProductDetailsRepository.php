@@ -20,8 +20,10 @@ class AppServiceProductDetailsRepository extends BaseRepository
 
     public function findSection($product_id)
     {
-        return $this->model->where('product_id', $product_id)
-            ->whereNotNull('section_name')
+        return $this->model->with('sectionComponent')->where('product_id', $product_id)
+            ->where('category', 'component_sections')
+            ->whereNull('deleted_at')
+            ->orderBy('section_order')
             ->get();
     }
 
@@ -29,6 +31,7 @@ class AppServiceProductDetailsRepository extends BaseRepository
     {
         return $this->model->where('product_id', $product_id)
             ->whereNull('section_name')
+            ->whereNull('deleted_at')
             ->first();
     }
 
@@ -39,4 +42,18 @@ class AppServiceProductDetailsRepository extends BaseRepository
             ->whereNotNull('category')
             ->first();
     }
+
+
+    public function sectionsTableSort($request){
+        $positions = $request->position;
+        foreach ($positions as $position) {
+            $menu_id = $position[0];
+            $new_position = $position[1];
+            $update_menu = $this->model->findOrFail($menu_id);
+            $update_menu['section_order'] = $new_position;
+            $update_menu->update();
+        }
+        return "success";
+    }
+
 }

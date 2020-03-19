@@ -18,7 +18,7 @@ use App\Services\Assetlite\AppServiceProductDetailsService;
 
 class ComponentController extends Controller
 {
-   
+
    /**
     * [$componentService description]
     * @var [object]
@@ -36,7 +36,7 @@ class ComponentController extends Controller
     * @param ComponentService $componentService [description]
     */
 	public function __construct(
-		ComponentService $componentService, 
+		ComponentService $componentService,
 		AppServiceProductDetailsService $appServiceProductDetailsService
 	)
 	{
@@ -54,12 +54,12 @@ class ComponentController extends Controller
 	public function conponentList($tab_type, $section_id)
 	{
 
-		$component_list = $this->componentService->componentList($section_id);
+		$component_list = $this->componentService->componentList($section_id, 'app_services');
 
 		$section_data = $this->appServiceProductDetailsService->getSectionColumnInfoByID($section_id, ['multiple_component', 'product_id']);
 
 		$section_has_multiple_component = isset($section_data->multiple_component) ? $section_data->multiple_component : null;
-		
+
 
 		$data['tab_type'] = $tab_type;
 		$data['section_id'] = $section_id;
@@ -120,5 +120,115 @@ class ComponentController extends Controller
 
 	}
 
+	/**
+	 * [conponentItemAttr description]
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function conponentItemAttr(Request $request)
+	{
 
-}
+		$component_id = $request->input('component_id', null);
+		$item_id = $request->input('item_id', null);
+
+		if( !empty($component_id) && !empty($item_id) ){
+			$appServiceComponent = $this->componentService->findOne($component_id);
+
+			$multi_attr_value = $appServiceComponent->multiple_attributes;
+			if( !empty($multi_attr_value) ){
+				$appServiceComponent = $this->componentService->processMultiAttrValue($multi_attr_value, $item_id);
+
+				return response()->json([
+				    'status' => 'SUCCESS',
+				    'message' => 'Data found',
+				    'data' => $appServiceComponent
+				], 200);
+
+			}
+			else{
+				return response()->json([
+                'status' => 'FAILED',
+                'message' => 'Data not found',
+                'data' => []
+            ], 404);
+			}
+
+
+		}
+		else{
+			return response()->json([
+             'status' => 'FAILED',
+             'message' => 'Data not found',
+             'data' => []
+         ], 404);
+		}
+
+	}
+
+
+	/**
+	 * Multiple attribute sortable for component
+	 * @return [type] [description]
+	 */
+	public function multiAttributeSortable(Request $request)
+	{
+		$this->componentService->attrTableSortable($request);
+
+		return response()->json([
+		    'status' => 'SUCCESS',
+		    'message' => 'Data sorted',
+		    'data' => []
+		], 200);
+
+	}
+
+	/**
+	 * [conponentItemAttrStore description]
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function conponentItemAttrStore(Request $request)
+	{
+		$response = $this->componentService->storeComponentMultiItemAttr($request->all());
+
+		$product_id = $request->input('product_id');
+		$tab_type = $request->input('tab_type');
+
+		Session::flash('message', 'Component item updated successfuly');
+		return redirect( url("app-service/details/$tab_type/$product_id") );
+
+	}
+
+	/**
+	 * [conponentItemAttrDestroy description]
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function conponentItemAttrDestroy(Request $request)
+	{
+
+		$response = $this->componentService->conponentMultiAttrItemDestroy($request->all());
+
+		if( $response ){
+			return response()->json([
+			    'status' => 'SUCCESS',
+			    'message' => 'Data updated',
+			    'data' => []
+			], 200);
+		}
+		else{
+			return response()->json([
+			    'status' => 'FAILED',
+			    'message' => 'Data update failed',
+			    'data' => []
+			], 404);
+		}
+
+		
+
+
+
+	}
+
+
+}  // class End

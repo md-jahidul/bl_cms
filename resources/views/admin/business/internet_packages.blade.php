@@ -1,7 +1,11 @@
 @extends('layouts.admin')
 @section('title', 'Business Internet Packages')
 @section('card_name', 'Internet Packages')
-
+@section('action')
+<a href="{{ url('business-internet-create') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+    Add Package
+</a>
+@endsection
 @section('content')
 <section>
     <div class="card">
@@ -58,6 +62,32 @@
 
 <script>
 $(function () {
+    
+    
+            //success and error msg
+<?php
+if (Session::has('sussess')) {
+    ?>
+            swal.fire({
+                title: "{{ Session::get('sussess') }}",
+                type: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            });
+    <?php
+}
+if (Session::has('error')) {
+    ?>
+
+            swal.fire({
+                title: "{{ Session::get('error') }}",
+                type: 'error',
+                timer: 2000,
+                showConfirmButton: false
+            });
+
+<?php } ?>
+    
     $('.dropify').dropify({
         messages: {
             'default': 'Browse for an Excel File to upload',

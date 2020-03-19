@@ -70,9 +70,9 @@
 
                                     <td class="text-center">
                                         @if($p->status == 1)
-                                        <a href="{{$p->id}}" class="btn btn-sm btn-success package_status">Active</a>
+                                        <a href="{{$p->id}}" class="btn btn-sm btn-success popular_status">Active</a>
                                         @else
-                                        <a href="{{$p->id}}" class="btn btn-sm btn-warning package_status">Inactive</a>
+                                        <a href="{{$p->id}}" class="btn btn-sm btn-warning popular_status">Inactive</a>
                                         @endif
                                     </td>
 
@@ -81,7 +81,7 @@
                                         <a class="text-info edit_package" href="{{url('search-popular-edit/'.$p->id)}}">
                                             <i class="la la-pencil-square"></i>
                                         </a>
-                                        <a class="text-danger delete_package" href="{{url('popular-search-delete/'.$p->id)}}">
+                                        <a class="text-danger delete_keyword" href="{{url('popular-search-delete/'.$p->id)}}">
                                             <i class="la la-trash"></i>
                                         </a>
 
@@ -214,6 +214,65 @@ if (Session::has('error')) {
         });
 
     });
+    
+    
+    //status change of home showing of category
+        $(".table").on('click', '.popular_status', function (e) {
+            e.preventDefault();
+
+            var kwId = $(this).attr('href');
+            var thisObj = $(this);
+
+            $.ajax({
+                url: '{{ url("popular-status-change")}}/'+kwId,
+                cache: false,
+                type: "GET",
+                success: function (result) {
+                    if (result.success == 1) {
+                        swal.fire({
+                            title: 'Changed',
+                            type: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+
+                        var btn;
+
+                        if (result.show_status === 1) {
+                            btn = '<a href="' + kwId + '" class="btn btn-sm btn-success popular_status">Active</a>';
+
+                        } else {
+                            btn = '<a href="' + kwId + '" class="btn btn-sm btn-warning popular_status">Inactive</a>';
+                        }
+                        $(thisObj).parent('td').html(btn);
+
+                    } else {
+                        swal.close();
+                        swal.fire({
+                            title: result.message,
+                            timer: 2000,
+                            type: 'error',
+                        });
+                    }
+
+                },
+                error: function (data) {
+                    swal.fire({
+                        title: 'Status change process failed!',
+                        type: 'error',
+                    });
+                }
+            });
+
+        });
+        
+        $('.delete_keyword').on('click', function(){
+            var conf = confirm("Do you want to delete this keyword?");
+            if(conf){
+                return true;
+            }
+            return false;
+        });
 
 
 

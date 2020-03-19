@@ -34,7 +34,6 @@ use Redis;
  */
 class ProductCoreService
 {
-
     use CrudTrait;
 
     /**
@@ -298,7 +297,7 @@ class ProductCoreService
             return true;
         } catch (Exception $e) {
             dd($e->getMessage());
-            Log::error('Product Entry Error'.$e->getMessage());
+            Log::error('Product Entry Error' . $e->getMessage());
             return 0;
         }
     }
@@ -325,27 +324,28 @@ class ProductCoreService
         $bundles = ['mix', 'voice', 'sms'];
 
         $builder = $builder->whereHas(
-            'details', function ($q) use ($request, $bundles) {
-            if ($request->product_code) {
-                $q->where('product_code', $request->product_code);
-            }
-            if ($request->sim_type) {
-                $q->where('sim_type', $request->sim_type);
-            }
+            'details',
+            function ($q) use ($request, $bundles) {
+                if ($request->product_code) {
+                    $q->where('product_code', $request->product_code);
+                }
+                if ($request->sim_type) {
+                    $q->where('sim_type', $request->sim_type);
+                }
 
-            if ($request->content_type) {
-                if (in_array($request->content_type, $bundles)) {
-                    $q->where('content_type', $request->content_type);
-                    $q->whereNull('call_rate');
-                } elseif ($request->content_type == 'recharge_offer') {
-                    $q->whereNotNull('recharge_product_code');
-                } elseif ($request->content_type == 'scr') {
-                    $q->whereNotNull('call_rate');
-                } else {
-                    $q->where('content_type', $request->content_type);
+                if ($request->content_type) {
+                    if (in_array($request->content_type, $bundles)) {
+                        $q->where('content_type', $request->content_type);
+                        $q->whereNull('call_rate');
+                    } elseif ($request->content_type == 'recharge_offer') {
+                        $q->whereNotNull('recharge_product_code');
+                    } elseif ($request->content_type == 'scr') {
+                        $q->whereNotNull('call_rate');
+                    } else {
+                        $q->where('content_type', $request->content_type);
+                    }
                 }
             }
-        }
         );
 
         if ($request->content_type == 'recharge_offer') {
@@ -430,7 +430,7 @@ class ProductCoreService
                         $cells = $row->getCells();
                         foreach ($config as $field => $index) {
                             switch ($field) {
-                                case "family_name":
+//                                case "family_name":
                                 case "content_type":
                                     $contentType = ($cells [$index]->getValue() != '') ?
                                         strtolower($cells [$index]->getValue()) : null;
@@ -470,7 +470,7 @@ class ProductCoreService
                                     break;
 
                                 case "is_auto_renewable":
-                                    $core_data [$field] = $cells [$index]->getValue();
+//                                    $core_data [$field] = $cells [$index]->getValue();
                                     $assetLiteProduct['is_auto_renewable'] = $cells [$index]->getValue();
                                     break;
                                 case "recharge_product_code":
@@ -553,7 +553,7 @@ class ProductCoreService
                                     break;
                                 case "is_gift_offer":
                                     $giftOffer = strtolower($cells [$index]->getValue());
-                                    $core_data [$field] = $giftOffer;
+//                                    $core_data [$field] = $giftOffer;
                                     $assetLiteProduct[$field] = $giftOffer;
                                     break;
                                 case "is_social_pack":
@@ -582,16 +582,19 @@ class ProductCoreService
 
                             ProductCore::updateOrCreate([
                                 'product_code' => $product_code
-                            ], $core_data);
+                                    ], $core_data);
+
 
                             if ($assetLiteProduct['offer_category_id']) {
-                                $productId = Product::updateOrCreate([
-                                    'product_code' => $product_code
-                                ], $assetLiteProduct);
+                                $product = Product::updateOrCreate([
+                                            'product_code' => $product_code
+                                                ], $assetLiteProduct);
 
-                                $this->_saveSearchData($productId);
+
+                                $this->_saveSearchData($product);
+
                                 ProductDetail::updateOrCreate([
-                                    'product_id' => $productId->id
+                                    'product_id' => $product->id
                                 ]);
                             }
                         } catch (Exception $e) {
@@ -606,7 +609,7 @@ class ProductCoreService
             return true;
         } catch (Exception $e) {
             dd($e->getMessage());
-            Log::error('Product Entry Error'.$e->getMessage());
+            Log::error('Product Entry Error' . $e->getMessage());
             return 0;
         }
     }
@@ -614,30 +617,33 @@ class ProductCoreService
     //save Search Data
     private function _saveSearchData($product)
     {
+
+
         $productId = $product->id;
         $name = $product->name_en;
 
         $url = "";
         $type = "";
         if ($product->sim_category_id == 1 && $product->offer_category_id == 1) {
-            $url = 'prepaid/internet-offer/'.$productId;
+            $url = 'prepaid/internet-offer/' . $productId;
             $type = 'prepaid-internet';
         }
         if ($product->sim_category_id == 1 && $product->offer_category_id == 2) {
-            $url = 'prepaid/voice-offer/'.$productId;
+            $url = 'prepaid/voice-offer/' . $productId;
             $type = 'prepaid-voice';
         }
         if ($product->sim_category_id == 1 && $product->offer_category_id == 3) {
-            $url = 'prepaid/bundle-offer/'.$productId;
+            $url = 'prepaid/bundle-offer/' . $productId;
             $type = 'prepaid-bundle';
         }
         if ($product->sim_category_id == 2 && $product->offer_category_id == 1) {
-            $url = 'postpaid/internet-offer/'.$productId;
+            $url = 'postpaid/internet-offer/' . $productId;
             $type = 'postpaid-internet';
         }
-
-        $tag = $this->tagRepository->getTagById($product->tag_category_id);
-
+        $tag = "";
+        if ($product->tag_category_id) {
+            $tag = $this->tagRepository->getTagById($product->tag_category_id);
+        }
         return $this->searchRepository->saveData($productId, $name, $url, $type, $tag);
     }
 
@@ -649,7 +655,7 @@ class ProductCoreService
      */
     public function searchProductCodes($keyword)
     {
-        return ProductCore::where('product_code', 'like', '%'.$keyword.'%')->get();
+        return ProductCore::where('product_code', 'like', '%' . $keyword . '%')->get();
     }
 
     /**
@@ -676,7 +682,9 @@ class ProductCoreService
         if ($request->file('media')) {
             $file = $request->media;
             $path = $file->storeAs(
-                'products/images', $product_code.'.'.$file->getClientOriginalExtension(), 'public'
+                'products/images',
+                $product_code . '.' . $file->getClientOriginalExtension(),
+                'public'
             );
 
             $data['media'] = $path;
@@ -711,25 +719,33 @@ class ProductCoreService
 
             if (isset($data_request['data_volume'])) {
                 $data_request['data_volume'] = substr(
-                    $data_request['data_volume'], 0, strrpos($data_request['data_volume'], ' ')
+                    $data_request['data_volume'],
+                    0,
+                    strrpos($data_request['data_volume'], ' ')
                 );
             }
 
             if (isset($data_request['sms_volume'])) {
                 $data_request['sms_volume'] = substr(
-                    $data_request['sms_volume'], 0, strrpos($data_request['sms_volume'], ' ')
+                    $data_request['sms_volume'],
+                    0,
+                    strrpos($data_request['sms_volume'], ' ')
                 );
             }
 
             if (isset($data_request['minute_volume'])) {
                 $data_request['minute_volume'] = substr(
-                    $data_request['minute_volume'], 0, strrpos($data_request['minute_volume'], ' ')
+                    $data_request['minute_volume'],
+                    0,
+                    strrpos($data_request['minute_volume'], ' ')
                 );
             }
 
             if (isset($data_request['validity'])) {
                 $data_request['validity'] = substr(
-                    $data_request['validity'], 0, strrpos($data_request['validity'], ' ')
+                    $data_request['validity'],
+                    0,
+                    strrpos($data_request['validity'], ' ')
                 );
             }
 
@@ -763,7 +779,7 @@ class ProductCoreService
 
         $writer = WriterEntityFactory::createXLSXWriter();
 
-        $writer->openToBrowser('mybl-products-'.date('Y-m-d').'.xlsx');
+        $writer->openToBrowser('mybl-products-' . date('Y-m-d') . '.xlsx');
 
         // header Style
         $header_style = (new StyleBuilder())
@@ -837,5 +853,4 @@ class ProductCoreService
         Log::info(json_encode($problem));
         $writer->close();
     }
-
 }

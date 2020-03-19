@@ -36,7 +36,7 @@ class BusinessGeneralController extends Controller {
     }
 
     /**
-     * Display Categories, Banner, News and Features of Business.
+     * Home Banner Photo save
      * 
      * @param Request $request
      * @return JsonResponse
@@ -58,6 +58,18 @@ class BusinessGeneralController extends Controller {
     public function categoryNameChange(Request $request) {
         $nameChange = $this->businessHomeService->changeCategoryName($request);
         return $nameChange;
+    }
+    
+     /**
+     * Category banner photo save
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     * @Dev Bulbul Mahmud Nito || 15/03/2020
+     */
+    public function categoryBannerSave(Request $request) {
+        $bannersSave = $this->businessHomeService->saveCatBanners($request);
+        return $bannersSave;
     }
 
     /**

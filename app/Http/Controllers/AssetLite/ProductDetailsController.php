@@ -4,8 +4,10 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Models\Component;
 use App\Models\ProductDetailsSection;
+use App\Services\Assetlite\BannerImgRelatedProductService;
 use App\Services\Assetlite\ComponentService;
 use App\Services\Assetlite\ProductDetailsSectionService;
+use App\Services\ProductService;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -28,12 +30,46 @@ class ProductDetailsController extends Controller
      */
     protected $componentService;
 
+    /**
+     * @var ComponentService
+     */
+    protected $productService;
+
+    protected $dataTypes = [
+        'large_title_with_text' => 'Large Title With Text',
+        'large_title_text_button' => 'Large Title With Text Button',
+        'medium_title_with_text' => 'Medium Title With Text',
+        'small_title_with_text' => 'Small Title With Text',
+        'text_and_button' => 'Text And Button',
+        'special_data_offer' => 'Special Data Offer',
+        'bondho_sim_offer' => 'Bondho Sim Offer',
+        'startup_offer' => 'Startup offer',
+        'table_component' => 'Table Component',
+
+//        'title' => 'Title',
+//        'text_area' => 'Text Area',
+//        'single_image' => 'Single Image',
+
+        'bullet_text' => 'Bullet Text',
+        'accordion_text' => 'Accordion Text',
+        'drop_down' => 'Dropdown',
+        'multiple_image' => 'Multiple Image'
+    ];
+    /**
+     * @var BannerImgRelatedProductService
+     */
+    private $bannerImgRelatedProductService;
+
     public function __construct(
         ProductDetailsSectionService $productDetailsSectionService,
+        BannerImgRelatedProductService $bannerImgRelatedProductService,
+        ProductService $productService,
         ComponentService $componentService
     ) {
         $this->productDetailsSectionService = $productDetailsSectionService;
+        $this->bannerImgRelatedProductService = $bannerImgRelatedProductService;
         $this->componentService = $componentService;
+        $this->productService = $productService;
     }
 
 
@@ -43,13 +79,10 @@ class ProductDetailsController extends Controller
      */
     public function sectionList($productDetailsId)
     {
-//        return $productDetailsId;
-
+        $products = $this->productService->produtcs();
         $productSections = $this->productDetailsSectionService->findBySection($productDetailsId);
-
-//        return $productSections;
-
-        return view('admin.product.details.index', compact('productSections', 'productDetailsId'));
+        $bannerRelatedProduct = $this->bannerImgRelatedProductService->findBannerAndRelatedProduct($productDetailsId);
+        return view('admin.product.details.index', compact('productSections', 'productDetailsId', 'products', 'bannerRelatedProduct'));
     }
 
     /**
@@ -79,9 +112,6 @@ class ProductDetailsController extends Controller
     public function editSection($productDetailsId, $id)
     {
         $section = $this->productDetailsSectionService->findOne($id);
-
-//        dd($section->other_attributes);
-
         return view('admin.product.details.edit', compact('section', 'productDetailsId'));
     }
 
@@ -92,15 +122,23 @@ class ProductDetailsController extends Controller
         return redirect(route('section-list', $productDetailsId));
     }
 
+    /**
+     * @param $productDetailsId
+     * @param $sectionId
+     * @return Factory|View
+     */
     public function componentList($productDetailsId, $sectionId)
     {
-        $components = $this->componentService->componentList($sectionId);
+        $components = $this->componentService->componentList($sectionId, 'product_details');
+//        return $components;
         return view('admin.product.details.components.index', compact('components', 'sectionId', 'productDetailsId'));
     }
 
     public function componentCreate($productDetailsId, $sectionId)
     {
-        return view('admin.product.details.components.create', compact('sectionId', 'productDetailsId'));
+        $dataTypes = $this->dataTypes;
+        $products = $this->productService->produtcs();
+        return view('admin.product.details.components.create', compact('sectionId', 'productDetailsId', 'dataTypes', 'products'));
     }
 
     public function componentStore(Request $request, $productDetailsId, $sectionID)
@@ -114,25 +152,18 @@ class ProductDetailsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param $productDetailsId
      * @param $sectionId
      * @param int $id
      * @return Factory|View
      */
     public function componentEdit($productDetailsId, $sectionId, $id)
     {
-        $dataTypes = [
-            'text_area' => 'Text Area',
-            'bullet_Text' => 'Bullet Text',
-            'accordion_text' => 'Accordion Text',
-            'drop_down' => 'Dropdown',
-            'single_image' => 'Single Image',
-            'banner_image' => 'Banner Image',
-            'multiple_image' => 'Multiple Image'
-        ];
+        $dataTypes = $this->dataTypes;
         $component = $this->componentService->findOne($id);
         $multipleImage = $component['multiple_attributes'];
-
-        return view('admin.product.details.components.edit', compact('component', 'multipleImage', 'dataTypes', 'sectionId', 'productDetailsId'));
+        $products = $this->productService->produtcs();
+        return view('admin.product.details.components.edit', compact('component', 'products', 'multipleImage', 'dataTypes', 'sectionId', 'productDetailsId'));
     }
 
     /**
@@ -151,16 +182,11 @@ class ProductDetailsController extends Controller
     }
 
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
+    public function bannerImgRelatedPro(Request $request, $productId)
     {
-        //
+        $response = $this->bannerImgRelatedProductService->storeImgProduct($request->all(), $productId);
+        Session::flash('success', $response->content());
+        return redirect(route('section-list', $productId));
     }
 
 
@@ -174,5 +200,23 @@ class ProductDetailsController extends Controller
     {
         $this->productDetailsSectionService->sectionDestroy($sectionId);
         return url(route('section-list', $productDetailsId));
+    }
+
+    public function componentSortable(Request $request)
+    {
+        $this->componentService->tableSortable($request);
+    }
+
+    /**
+     * @param $productId
+     * @param $sectionId
+     * @param $id
+     * @return string
+     * @throws \Exception
+     */
+    public function componentDestroy($productId, $sectionId, $id)
+    {
+        $this->componentService->deleteComponent($id);
+        return url(route('component-list', [$productId, $sectionId]));
     }
 }

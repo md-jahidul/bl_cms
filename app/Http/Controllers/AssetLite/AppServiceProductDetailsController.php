@@ -59,6 +59,7 @@ class AppServiceProductDetailsController extends Controller
         $this->info["products"] = $this->appServiceProduct->appServiceRelatedProduct($tab_type, $product_id);
         $this->info["productDetail"] = $this->appServiceProduct->detailsProduct($product_id);
         $this->info["fixedSectionData"] = $this->info["section_list"]['fixed_section'];
+
         return view('admin.app-service.details.section.index', $this->info);
     }
 
@@ -70,9 +71,62 @@ class AppServiceProductDetailsController extends Controller
      */
     public function store(Request $request, $tab_type, $product_id)
     {
-        $response = $this->appServiceProductDetailsService->storeAppServiceProductDetails($request->all(), $tab_type, $product_id);
-        Session::flash('message', $response->getContent());
+
+        $data = $request->all();
+
+        // dd($data);
+
+        // Create new sections
+        if( $request->has('save') ){
+            $response = $this->appServiceProductDetailsService->storeAppServiceProductDetails($request->all(), $tab_type, $product_id);
+
+            Session::flash('message', $response->getContent());
+            return redirect(url("app-service/details/$tab_type/$product_id"));
+        }
+        elseif( $request->has('update') ){
+
+            # Update section data
+            $section_data = $data['sections'];
+
+            // dd($data['sections']);
+
+            if( isset($section_data['id']) && !empty($section_data['id']) ){
+
+                $this->appServiceProductDetailsService->updateAppServiceDetailsSection($section_data, $section_data['id']);
+
+                # Update component data
+                $component_data = $data['component'];
+
+                if( isset($component_data) && count($component_data) > 0 ){
+                    foreach ($component_data as $component_value) {
+                        $this->appServiceProductDetailsService->updateAppServiceDetailsComponent($component_value, $component_value['id']);
+                    }
+                }
+
+            }
+
+            Session::flash('message', 'Section component updated succesfuly');
+            return redirect(url("app-service/details/$tab_type/$product_id"));
+
+        }
+        elseif( $request->has('compnent_muti_attr_update') ){
+
+            # Update component data
+            $component_data = $data['component'];
+
+            if( isset($component_data) && count($component_data) > 0 ){
+                foreach ($component_data as $key => $component_value) {
+                    $this->appServiceProductDetailsService->updateAppServiceDetailsComponent($component_value, $component_value['id'], $key);
+                }
+            }
+
+        }
+
+
+        Session::flash('message', 'Section component updated succesfuly');
         return redirect(url("app-service/details/$tab_type/$product_id"));
+
+        
     }
 
     /**
@@ -96,10 +150,33 @@ class AppServiceProductDetailsController extends Controller
      * @param int $id
      * @return Factory|View
      */
-    public function edit($tab_type, $product_id, $id)
+    public function edit($tab_type, $product_id, $section_id)
     {
-        $section = $this->appServiceProductDetailsService->findOne($id);
-        return view('admin.app-service.details.section.edit', compact('tab_type', 'product_id', 'section'));
+
+        // $section = $this->appServiceProductDetailsService->getSectionComponentByID($section_id);
+        
+        // return view('admin.app-service.details.section.edit', compact('tab_type', 'product_id', 'section'));
+
+        $section = $this->appServiceProductDetailsService->getJsonSectionComponentList($section_id);
+
+        if( !empty($section) && count($section) > 0 ){
+            return response()->json([
+                'status' => 'SUCCESS',
+                'message' => 'Data found',
+                'data' => $section
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'status' => 'FAILED',
+                'message' => 'Data not found',
+                'data' => []
+            ], 404);
+        }
+
+        
+
+        
     }
 
     /**
@@ -128,8 +205,21 @@ class AppServiceProductDetailsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($tab_type, $product_id, $id)
     {
-        //
+        $response = $this->appServiceProductDetailsService->sectionDelete($id);
+        // Session::flash('message', $response->getContent());
+        if ($response) {
+            session()->flash('error', "Deleted successfully");
+            return url(route('app_service.details.list', [$tab_type, $product_id]));
+        }
+
+        session()->flash('message', "Failed! Please try again");
+    }
+
+
+
+    public function sectionsSortable(Request $request){
+        $this->appServiceProductDetailsService->tableSortable($request);
     }
 }

@@ -47,13 +47,13 @@
                                     </select>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label for="tag_category_id"></label>
-                                    <div class="form-group mt-1">
-                                        <label for="is_tab_section" class="mr-1">Is Tab Section</label>
-                                        <input type="checkbox" name="other_attributes[is_tab_section]" value="1" id="is_tab_section">
-                                    </div>
-                                </div>
+{{--                                <div class="col-md-6">--}}
+{{--                                    <label for="tag_category_id"></label>--}}
+{{--                                    <div class="form-group mt-1">--}}
+{{--                                        <label for="is_tab_section" class="mr-1">Is Tab Section</label>--}}
+{{--                                        <input type="checkbox" name="other_attributes[is_tab_section]" value="1" id="is_tab_section">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                                 <div class="col-md-6">
                                     <div class="form-group">

@@ -113,9 +113,11 @@
                     name: 'actions',
                     className: 'filter_data',
                     render: function (data, type, row) {
-                        let detail_question_url = "{{ URL('delete-business-internet-package') }}" + "/" + row.id;
+                        let edit_url = "{{ URL('business-internet-edit') }}" + "/" + row.id;
+                        let delete_url = "{{ URL('delete-business-internet-package') }}" + "/" + row.id;
                         return `<div class="btn-group" role="group" aria-label="Delete">
-                        <a href=" ` + detail_question_url + ` "class="btn btn-sm btn-icon btn-outline-danger delete_package"><i class="la la-trash"></i></a>
+                        <a href=" ` + edit_url + ` "class="btn btn-sm btn-icon btn-outline-info edit_package"><i class="la la-edit"></i></a>
+                        <a href=" ` + delete_url + ` "class="btn btn-sm btn-icon btn-outline-danger delete_package"><i class="la la-trash"></i></a>
                       </div>`
                     }
                 }

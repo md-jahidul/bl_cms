@@ -72,7 +72,7 @@ class QuickLaunchController extends Controller
      */
     public function quickLaunchSortable(Request $request)
     {
-        $this->quickLaunchService->tableSortable($request);
+            $this->quickLaunchService->tableSortable($request);
     }
 
     /**

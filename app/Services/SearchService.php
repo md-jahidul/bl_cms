@@ -101,6 +101,15 @@ class SearchService {
         }
         return $options;
     }
+    
+     /**
+     * Get Products
+     * @return Response
+     */
+    public function popularSearchById($kwId) {
+        $response = $this->popularRepo->getKeywordById($kwId);
+        return $response;
+    }
 
     public function saveSearchData($productId, $name, $url, $type, $tag) {
         return $this->dataRepo->saveData($productId, $name, $url, $type, $tag);
@@ -146,6 +155,38 @@ class SearchService {
             return $response;
         }
     }
+    
+
+    public function updatePopularSearch($request) {
+        try {
+
+            $request->validate([
+                'keyword_id' => 'required',
+                'keyword' => 'required',
+            ]);
+
+
+
+            //save data in database 
+            $keywordId = $request->keyword_id;
+            $keyword = $request->keyword;
+
+           
+            $this->popularRepo->updateKeyword($keywordId, $keyword);
+
+            $response = [
+                'success' => 1,
+            ];
+
+
+            return $response;
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+            ];
+            return $response;
+        }
+    }
 
     public function deletePopularSearch($kwId) {
         try {
@@ -164,6 +205,15 @@ class SearchService {
             return $response;
         }
     }
+    
+     /**
+     * Change category home show status
+     * @return Response
+     */
+    public function popularSearchStatusChange($kwId) {
+        $response = $this->popularRepo->changeStatus($kwId);
+        return $response;
+    }
 
 
     /**
@@ -175,14 +225,7 @@ class SearchService {
         return $response;
     }
 
-    /**
-     * Change category home show status
-     * @return Response
-     */
-    public function statusChange($kwId) {
-        $response = $this->businessCatRepo->changeHomeShowStatus($catId);
-        return $response;
-    }
+   
 
     /**
      * Get business sliding speed

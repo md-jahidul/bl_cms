@@ -2,14 +2,15 @@
     <div class="card-content collapse show">
         <div class="card-body card-dashboard">
             <div class="row">
-                <div class="col-md-6 col-xs-12">
+                <div class="col-md-12 col-xs-12">
                     <h4 class="pb-1"><strong>Categories/Manus</strong></h4>
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th width="22%">Name (EN)</th>
                                 <th width="22%">Name (BN)</th>
-                                <th width="40%">Banner</th>
+                                <th width="">Banner</th>
+                                <th width="20%">Upload Banner</th>
                                 <th width="20%">Home</th>
                             </tr>
                         </thead>
@@ -30,16 +31,21 @@
                                         <i class="la la-pencil-square"></i>
                                     </a>
                                 </td>
+                                <td class="banner_photo">
+                                <img src="{{ config('filesystems.file_base_url') . $cat->banner_photo }}" height="40px">
+                                
+                                </td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-md-6 col-xs-12">
-                                            <input type="file" class="dropify_category" name="banner_photo" data-height="60"
-                                                   data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                            <button class="btn btn-sm btn-info"><i class="la la-save"></i></button>
-                                        </div>
-                                        <div class="col-md-6 col-xs-12">
-                                            
-                                        </div>
+                                       
+                                            <form method="POST" class="form uploadCategoryBanner" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="file" class="pull-left" name="banner_photo">
+                                                <input type="hidden" value="{{$cat->id}}" name="cat_id">
+                                                <input type="hidden" value="{{$cat->banner_photo}}" name="old_photo">
+                                                <input type="text" placeholder="Alt Text" class="form-control" value="{{$cat->alt_text}}" name="alt_text">
+                                                <button type="submit" class="btn btn-sm btn-info pull-right">Save</button>
+                                            </form>
                                     </div>
 
                                 </td>
@@ -59,7 +65,9 @@
                         </tbody>
                     </table>
 
+                </div>
 
+                <div class="col-md-6 col-xs-12">
                     <h4 class="pb-1"><strong>Sliding Speed</strong></h4>
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -84,8 +92,6 @@
                                     <a href="javascript:;" class="btn btn-sm btn-success update_slider_speed">Update</a>
 
                                 </td>
-
-
                             </tr>
                         </tbody>
                     </table>
@@ -213,6 +219,65 @@
                                     <i class="la la-pencil-square"></i></a>';
                             $(thisObj).parent('.category_name').html(htmlView);
                         }
+
+
+                    } else {
+                        swal.close();
+                        swal.fire({
+                            title: result.message,
+                            type: 'error',
+                        });
+                    }
+                    $(".dropify-clear").trigger("click");
+
+                },
+                error: function (data) {
+                    swal.fire({
+                        title: 'Failed to upload payment card excel',
+                        type: 'error',
+                    });
+                }
+            });
+
+        });
+
+
+        /* cagegory banner upload */
+        $('.uploadCategoryBanner').submit(function (e) {
+            e.preventDefault();
+
+            swal.fire({
+                title: 'File Uploading.Please Wait ...',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                onOpen: () => {
+                    swal.showLoading();
+                }
+            });
+
+            let formData = new FormData($(this)[0]);
+            let thisObj = $(this);
+
+            $.ajax({
+                url: '{{ route("business.category.banner.save")}}',
+                type: 'POST',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (result) {
+                    if (result.success == 1) {
+                        swal.fire({
+                            title: result.message,
+                            type: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+
+                        //change photo in the view
+                        let photoUrl = '<img src="{{ config('filesystems.file_base_url')}}' + result.banner_photo + '" height="40px">';
+
+                        thisObj.parents('tr').find('.banner_photo').html(photoUrl);
 
 
                     } else {
