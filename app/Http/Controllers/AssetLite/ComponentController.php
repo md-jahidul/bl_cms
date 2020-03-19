@@ -199,5 +199,36 @@ class ComponentController extends Controller
 
 	}
 
+	/**
+	 * [conponentItemAttrDestroy description]
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
+	public function conponentItemAttrDestroy(Request $request)
+	{
 
-}
+		$response = $this->componentService->conponentMultiAttrItemDestroy($request->all());
+
+		if( $response ){
+			return response()->json([
+			    'status' => 'SUCCESS',
+			    'message' => 'Data updated',
+			    'data' => []
+			], 200);
+		}
+		else{
+			return response()->json([
+			    'status' => 'FAILED',
+			    'message' => 'Data update failed',
+			    'data' => []
+			], 404);
+		}
+
+		
+
+
+
+	}
+
+
+}  // class End
