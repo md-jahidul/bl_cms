@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Redis;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -95,6 +96,8 @@ class MyblProductEntryController extends Controller
             $path = Storage::disk('public')->path($path);
 
             $this->service->mapMyBlProduct($path);
+
+            Redis::del('available_products:*');
 
             $response = [
                 'success' => 'SUCCESS'
