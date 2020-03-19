@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
-use Redis;
+use Illuminate\Support\Facades\Redis;
 
 /**
  * Class ProductCoreService
