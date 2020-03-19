@@ -26,13 +26,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Redis;
 
 /**
  * Class ProductCoreService
  * @package App\Services
  */
-class ProductCoreService {
-
+class ProductCoreService
+{
     use CrudTrait;
 
     /**
@@ -50,10 +51,14 @@ class ProductCoreService {
     /**
      * ProductCoreService constructor.
      * @param  ProductCoreRepository  $productCoreRepository
-     * @param SearchDataRepository $searchRepository
-     * @param TagCategoryRepository $tagRepository
+     * @param  SearchDataRepository  $searchRepository
+     * @param  TagCategoryRepository  $tagRepository
      */
-    public function __construct(ProductCoreRepository $productCoreRepository, SearchDataRepository $searchRepository, TagCategoryRepository $tagRepository) {
+    public function __construct(
+        ProductCoreRepository $productCoreRepository,
+        SearchDataRepository $searchRepository,
+        TagCategoryRepository $tagRepository
+    ) {
         $this->productCoreRepository = $productCoreRepository;
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
@@ -64,7 +69,8 @@ class ProductCoreService {
      * @param $typeId
      * @return string
      */
-    public function getType($typeId) {
+    public function getType($typeId)
+    {
         switch ($typeId) {
             case "1":
                 $offerId = "data";
@@ -85,7 +91,8 @@ class ProductCoreService {
      * @param $id
      * @return string|null
      */
-    public function getSimtype($id) {
+    public function getSimtype($id)
+    {
         switch ($id) {
             case "1":
                 $type = "prepaid";
@@ -107,10 +114,11 @@ class ProductCoreService {
      * @param $simId
      * @return void
      */
-    public function storeProductCore($data, $simId) {
+    public function storeProductCore($data, $simId)
+    {
         $productCode = $this->productCoreRepository
-                ->findByProperties(['product_code' => $data['product_code']])
-                ->first();
+            ->findByProperties(['product_code' => $data['product_code']])
+            ->first();
         if (empty($productCode)) {
             $data['name'] = $data['name_en'];
             $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
@@ -128,7 +136,8 @@ class ProductCoreService {
      * @param $id
      * @return mixed
      */
-    public function findProductCore($id) {
+    public function findProductCore($id)
+    {
         return $this->productCoreRepository->findWithProduct($id);
     }
 
@@ -136,7 +145,8 @@ class ProductCoreService {
      * @param $data
      * @param $id
      */
-    public function updateProductCore($data, $id) {
+    public function updateProductCore($data, $id)
+    {
         $product = $this->productCoreRepository->findOneProductCore($id);
         $data['mrp_price'] = round($data['price'] + $data['vat']);
         $product->update($data);
@@ -146,7 +156,8 @@ class ProductCoreService {
      * @param $excel_path
      * @return bool|int
      */
-    public function mapMyBlProduct($excel_path) {
+    public function mapMyBlProduct($excel_path)
+    {
         $config = config('productMapping.mybl.columns');
         try {
             $reader = ReaderFactory::createFromType(Type::XLSX); // for XLSX files
@@ -164,7 +175,7 @@ class ProductCoreService {
                             switch ($field) {
                                 case "content_type":
                                     $core_data [$field] = ($cells [$index]->getValue() != '') ?
-                                            strtolower($cells [$index]->getValue()) : null;
+                                        strtolower($cells [$index]->getValue()) : null;
                                     break;
                                 case "sim_type":
                                     $type = strtolower($cells [$index]->getValue());
@@ -249,7 +260,7 @@ class ProductCoreService {
 
                                 default:
                                     $core_data [$field] = ($cells [$index]->getValue() != '') ?
-                                            $cells [$index]->getValue() : null;
+                                        $cells [$index]->getValue() : null;
                             }
                         }
 
@@ -269,11 +280,11 @@ class ProductCoreService {
 
                             ProductCore::updateOrCreate([
                                 'product_code' => $product_code
-                                    ], $core_data);
+                            ], $core_data);
 
                             MyBlProduct::updateOrCreate([
                                 'product_code' => $product_code
-                                    ], $mybl_data);
+                            ], $mybl_data);
                         } catch (Exception $e) {
                             dd($e->getMessage());
                             continue;
@@ -295,7 +306,8 @@ class ProductCoreService {
      * @param  Request  $request
      * @return array
      */
-    public function getMyblProducts(Request $request) {
+    public function getMyblProducts(Request $request)
+    {
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');
@@ -312,27 +324,28 @@ class ProductCoreService {
         $bundles = ['mix', 'voice', 'sms'];
 
         $builder = $builder->whereHas(
-                'details', function ($q) use ($request, $bundles) {
-            if ($request->product_code) {
-                $q->where('product_code', $request->product_code);
-            }
-            if ($request->sim_type) {
-                $q->where('sim_type', $request->sim_type);
-            }
+            'details',
+            function ($q) use ($request, $bundles) {
+                if ($request->product_code) {
+                    $q->where('product_code', $request->product_code);
+                }
+                if ($request->sim_type) {
+                    $q->where('sim_type', $request->sim_type);
+                }
 
-            if ($request->content_type) {
-                if (in_array($request->content_type, $bundles)) {
-                    $q->where('content_type', $request->content_type);
-                    $q->whereNull('call_rate');
-                } elseif ($request->content_type == 'recharge_offer') {
-                    $q->whereNotNull('recharge_product_code');
-                } elseif ($request->content_type == 'scr') {
-                    $q->whereNotNull('call_rate');
-                } else {
-                    $q->where('content_type', $request->content_type);
+                if ($request->content_type) {
+                    if (in_array($request->content_type, $bundles)) {
+                        $q->where('content_type', $request->content_type);
+                        $q->whereNull('call_rate');
+                    } elseif ($request->content_type == 'recharge_offer') {
+                        $q->whereNotNull('recharge_product_code');
+                    } elseif ($request->content_type == 'scr') {
+                        $q->whereNotNull('call_rate');
+                    } else {
+                        $q->where('content_type', $request->content_type);
+                    }
                 }
             }
-        }
         );
 
         if ($request->content_type == 'recharge_offer') {
@@ -374,7 +387,8 @@ class ProductCoreService {
      * @param $contentType
      * @return int|null
      */
-    protected function offerType($contentType) {
+    protected function offerType($contentType)
+    {
         switch (strtolower($contentType)) {
             case "internet":
                 $offerId = 1;
@@ -398,7 +412,8 @@ class ProductCoreService {
      * @param $excel_path
      * @return bool|int
      */
-    public function mapAssetliteProduct($excel_path) {
+    public function mapAssetliteProduct($excel_path)
+    {
         $config = config('productMapping.assetlite.columns');
 
         try {
@@ -418,13 +433,13 @@ class ProductCoreService {
 //                                case "family_name":
                                 case "content_type":
                                     $contentType = ($cells [$index]->getValue() != '') ?
-                                            strtolower($cells [$index]->getValue()) : null;
+                                        strtolower($cells [$index]->getValue()) : null;
                                     $core_data [$field] = $contentType;
                                     break;
 
                                 case "assetlite_offer_type":
                                     $contentType = ($cells [$index]->getValue() != '') ?
-                                            strtolower($cells [$index]->getValue()) : null;
+                                        strtolower($cells [$index]->getValue()) : null;
                                     $offerId = $this->offerType($contentType);
                                     $assetLiteProduct['offer_category_id'] = $offerId;
                                     if ($offerId == 4) {
@@ -543,11 +558,11 @@ class ProductCoreService {
                                     break;
                                 case "is_social_pack":
                                     $assetLiteProduct [$field] = ($cells [$index]->getValue() != '') ?
-                                            $cells [$index]->getValue() : null;
+                                        $cells [$index]->getValue() : null;
                                     break;
                                 default:
                                     $core_data [$field] = ($cells [$index]->getValue() != '') ?
-                                            $cells [$index]->getValue() : null;
+                                        $cells [$index]->getValue() : null;
                             }
                         }
 
@@ -600,7 +615,8 @@ class ProductCoreService {
     }
 
     //save Search Data
-    private function _saveSearchData($product) {
+    private function _saveSearchData($product)
+    {
 
 
         $productId = $product->id;
@@ -625,7 +641,7 @@ class ProductCoreService {
             $type = 'postpaid-internet';
         }
         $tag = "";
-        if ($product->tag_category_id){
+        if ($product->tag_category_id) {
             $tag = $this->tagRepository->getTagById($product->tag_category_id);
         }
         return $this->searchRepository->saveData($productId, $name, $url, $type, $tag);
@@ -637,7 +653,8 @@ class ProductCoreService {
      * @param $keyword
      * @return mixed
      */
-    public function searchProductCodes($keyword) {
+    public function searchProductCodes($keyword)
+    {
         return ProductCore::where('product_code', 'like', '%' . $keyword . '%')->get();
     }
 
@@ -647,7 +664,8 @@ class ProductCoreService {
      * @param $product_code
      * @return MyBlProduct|object|null
      */
-    public function getProductDetails($product_code) {
+    public function getProductDetails($product_code)
+    {
         return MyBlProduct::with('details')->where('product_code', $product_code)->first();
     }
 
@@ -659,11 +677,14 @@ class ProductCoreService {
      * @return RedirectResponse
      * @throws Exception
      */
-    public function updateMyblProducts(Request $request, $product_code) {
+    public function updateMyblProducts(Request $request, $product_code)
+    {
         if ($request->file('media')) {
             $file = $request->media;
             $path = $file->storeAs(
-                    'products/images', $product_code . '.' . $file->getClientOriginalExtension(), 'public'
+                'products/images',
+                $product_code . '.' . $file->getClientOriginalExtension(),
+                'public'
             );
 
             $data['media'] = $path;
@@ -681,7 +702,8 @@ class ProductCoreService {
         try {
             DB::beginTransaction();
 
-            MyBlProduct::where('product_code', $product_code)->update($data);
+            $model = MyBlProduct::where('product_code', $product_code);
+            $model->update($data);
 
             $core_product = ProductCore::where('product_code', $product_code)->get()->toArray();
 
@@ -697,25 +719,33 @@ class ProductCoreService {
 
             if (isset($data_request['data_volume'])) {
                 $data_request['data_volume'] = substr(
-                        $data_request['data_volume'], 0, strrpos($data_request['data_volume'], ' ')
+                    $data_request['data_volume'],
+                    0,
+                    strrpos($data_request['data_volume'], ' ')
                 );
             }
 
             if (isset($data_request['sms_volume'])) {
                 $data_request['sms_volume'] = substr(
-                        $data_request['sms_volume'], 0, strrpos($data_request['sms_volume'], ' ')
+                    $data_request['sms_volume'],
+                    0,
+                    strrpos($data_request['sms_volume'], ' ')
                 );
             }
 
             if (isset($data_request['minute_volume'])) {
                 $data_request['minute_volume'] = substr(
-                        $data_request['minute_volume'], 0, strrpos($data_request['minute_volume'], ' ')
+                    $data_request['minute_volume'],
+                    0,
+                    strrpos($data_request['minute_volume'], ' ')
                 );
             }
 
             if (isset($data_request['validity'])) {
                 $data_request['validity'] = substr(
-                        $data_request['validity'], 0, strrpos($data_request['validity'], ' ')
+                    $data_request['validity'],
+                    0,
+                    strrpos($data_request['validity'], ' ')
                 );
             }
 
@@ -727,7 +757,10 @@ class ProductCoreService {
 
             ProductCoreHistory::create($data_history);
 
-            ProductCore::where('product_code', $product_code)->update($data_request);
+            $model = ProductCore::where('product_code', $product_code);
+            $model->update($data_request);
+
+            Redis::del('available_products:*');
 
             DB::commit();
         } catch (Exception $e) {
@@ -738,7 +771,8 @@ class ProductCoreService {
         return Redirect::back()->with('success', 'Product updated Successfully');
     }
 
-    public function downloadMyblProducts() {
+    public function downloadMyblProducts()
+    {
         $products = MyBlProduct::whereHas('details')->with('details')->where('status', 1)->get();
 
         $products = $products->sortBy('details.content_type');
@@ -749,14 +783,14 @@ class ProductCoreService {
 
         // header Style
         $header_style = (new StyleBuilder())
-                ->setFontBold()
-                ->setFontSize(11)
-                ->setBackgroundColor(Color::rgb(245, 245, 240))
-                ->build();
+            ->setFontBold()
+            ->setFontSize(11)
+            ->setBackgroundColor(Color::rgb(245, 245, 240))
+            ->build();
 
         $data_style = (new StyleBuilder())
-                ->setFontSize(9)
-                ->build();
+            ->setFontSize(9)
+            ->build();
 
 
         $header = config('productMapping.mybl.columns');
@@ -819,5 +853,4 @@ class ProductCoreService {
         Log::info(json_encode($problem));
         $writer->close();
     }
-
 }
