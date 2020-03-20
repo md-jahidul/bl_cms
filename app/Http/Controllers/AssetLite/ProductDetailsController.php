@@ -188,6 +188,11 @@ class ProductDetailsController extends Controller
         return redirect(route('section-list', $productId));
     }
 
+    public function sectionSortable(Request $request)
+    {
+        $this->productDetailsSectionService->tableSortable($request);
+    }
+
 
     /**
      * Remove the specified resource from storage.

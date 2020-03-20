@@ -186,12 +186,10 @@ class ComponentService
 //         loop over the product array
         if ($input_multiple_attributes) {
             foreach ($input_multiple_attributes as $data_id => $inputData) {
-                $new_multiple_attributes[$data_id]['alt_text'] = $value;
                 foreach ($inputData as $key => $value) {
-                    // set the new value Image url
+                    // set the new value
                     $new_multiple_attributes[$data_id][$key] = $value;
                 }
-
             }
         }
 

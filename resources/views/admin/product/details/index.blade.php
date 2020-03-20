@@ -38,12 +38,12 @@
                             <th>Title (English)</th>
                             <th>Section Type</th>
                             <th>Components</th>
-                            <th width="12%">Action</th>
+                            <th width="12%" class="text-right">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable">
                         @foreach($productSections as $section)
-                            <tr>
+                            <tr data-index="{{ $section->id }}" data-position="{{ $section->display_order }}">
                                 <td class="pt-2">{{ $loop->iteration }}</td>
                                 <td class="pt-2">{{ $section->title_en }} {!! $section->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                 <td class="pt-2">{{ $section->title_bn }}</td>
@@ -53,8 +53,8 @@
                                        class="btn-sm btn-outline-primary border">Components</a>
                                 </td>
                                 <td class="action" width="8%">
-                                    <a href="{{ route('section-edit', [$productDetailsId, $section->id]) }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ route('section-destroy', [$productDetailsId, $section->id]) }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $section->id }}" title="Delete the user">
+                                    <a href="{{ route('section-edit', [$productDetailsId, $section->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" remove="{{ route('section-destroy', [$productDetailsId, $section->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $section->id }}" title="Delete the user">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>
@@ -167,6 +167,7 @@
 
 @push('page-css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
 @endpush
 
 @push('page-js')
@@ -180,13 +181,7 @@
                 'error': 'Choose correct file format'
             }
         });
+
+        var auto_save_url = "{{ url('product-details/section-sortable') }}";
     </script>
-
 @endpush
-
-{{--<style>--}}
-{{--    h4.menu-title {--}}
-{{--        font-weight: bold;--}}
-{{--    }--}}
-{{--</style>--}}
-

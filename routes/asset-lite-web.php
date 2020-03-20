@@ -213,10 +213,13 @@ Route::middleware('authorize', 'auth')->group(function () {
    Route::get('product-details/{productDetailsId}/section-delete/{id}', 'AssetLite\ProductDetailsController@sectionDestroy')
       ->name('section-destroy');
 
-   Route::get(
-      'product-details/{productDetailsId}/section/{sid}/components-list',
-      'AssetLite\ProductDetailsController@componentList'
-   )->name('component-list');
+    Route::get('product-details/section-sortable', 'AssetLite\ProductDetailsController@sectionSortable');
+
+    Route::get(
+        'product-details/{productDetailsId}/section/{sid}/components-list',
+        'AssetLite\ProductDetailsController@componentList'
+    )->name('component-list');
+
 
    Route::get(
       'product-details/{productDetailsId}/section/{SectionId}/components-create',
@@ -376,6 +379,24 @@ Route::middleware('authorize', 'auth')->group(function () {
    Route::get('popular-search-sort-change', 'AssetLite\SearchController@popularSortChange'); 
    Route::get('popular-search-delete/{keywordId}', 'AssetLite\SearchController@deletePopularSearch'); 
 
+    // Product core ============================================
+    Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
+    Route::get('product-core/{id}/edit/', 'AssetLite\ProductCoreController@edit')->name('product.core.edit');
+
+
+    // Search ======================================================
+    Route::get('popular-search', 'AssetLite\SearchController@index');
+    Route::get('save-search-limit', 'AssetLite\SearchController@saveLimit')->name('save.search.limit');
+    Route::get('popular-search-create', 'AssetLite\SearchController@popularSearchCreate');
+    Route::get('search-product-list', 'AssetLite\SearchController@getProductList')->name('search.get.product.list');
+
+    Route::post('popular-search-save', 'AssetLite\SearchController@popularSearchSave')->name('popular.search.save');
+
+    Route::get('search-popular-edit/{keywordId}', 'AssetLite\SearchController@popularSearchEdit');
+    Route::post('popular-search-update', 'AssetLite\SearchController@popularSearchUpdate')->name('popular.search.update');
+
+    Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus');
+    Route::get('popular-search-delete/{keywordId}', 'AssetLite\SearchController@deletePopularSearch');
 
     // Easy Payment Card ============================================
     Route::get('easy-payment-card', 'AssetLite\EasyPaymentCardController@index');
