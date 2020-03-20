@@ -45,7 +45,11 @@ class BannerImgRelatedProductService
         if (request()->hasFile('banner_image_url')) {
             $data['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/product_details');
         }
+        if (request()->hasFile('mobile_view_img_url')) {
+            $data['mobile_view_img_url'] = $this->upload($data['mobile_view_img_url'], 'assetlite/images/banner/product_details');
+        }
         $data['product_id'] = $productId;
+
         $this->bannerImgRelatedProductRepository->updateOrCreate($data, $productId);
         return response('Banner Image and related product save');
     }

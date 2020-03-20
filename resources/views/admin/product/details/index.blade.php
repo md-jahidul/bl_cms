@@ -80,7 +80,7 @@
                             <div class="row">
 
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                    <label for="mobileImg">Banner Image</label>
+                                    <label for="mobileImg">Desktop View Image</label>
                                     <div class="custom-file">
                                         <input type="file" name="banner_image_url" class="dropify" data-height="80" id="image"
                                                data-default-file="{{ isset($bannerRelatedProduct->banner_image_url) ?  config('filesystems.file_base_url') . $bannerRelatedProduct->banner_image_url : null  }}">
@@ -90,6 +90,20 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('banner_image_url'))
                                         <div class="help-block">  {{ $errors->first('banner_image_url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('mobile_view_img_url') ? ' error' : '' }}">
+                                    <label for="mobileImg">Mobile View Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="mobile_view_img_url" class="dropify" data-height="80" id="image"
+                                               data-default-file="{{ isset($bannerRelatedProduct->mobile_view_img_url) ?  config('filesystems.file_base_url') . $bannerRelatedProduct->mobile_view_img_url : null  }}">
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('mobile_view_img_url'))
+                                        <div class="help-block">  {{ $errors->first('mobile_view_img_url') }}</div>
                                     @endif
                                 </div>
 
@@ -103,50 +117,41 @@
                                     @endif
                                 </div>
 
-{{--                                <div class="form-group col-md-6">--}}
-{{--                                    @if($fixedSectionData['image'])--}}
-{{--                                        <img src="{{ config('filesystems.file_base_url') . $fixedSectionData['image'] }}" height="100" width="200" id="imgDisplay">--}}
-{{--                                    @else--}}
-{{--                                        <img height="100" width="200" id="imgDisplay" style="display: none">--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
+                                <div class="form-group col-md-6 {{ $errors->has('component_title_en') ? ' error' : '' }}">
+                                    <label for="component_title_en">Related Product Section Title (English)</label>
+                                    <input type="text" name="component_title_en" id="component_title_en" class="form-control" placeholder="Enter offer name in English"
+                                           value="{{ isset($bannerRelatedProduct->component_title_en) ? $bannerRelatedProduct->component_title_en : null }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('component_title_en'))
+                                        <div class="help-block">{{ $errors->first('component_title_en') }}</div>
+                                    @endif
+                                </div>
 
-{{--                                @if($tab_type == "app" || $tab_type == "vas")--}}
-                                    <div class="form-group col-md-6 {{ $errors->has('component_title_en') ? ' error' : '' }}">
-                                        <label for="component_title_en">Related Product Section Title (English)</label>
-                                        <input type="text" name="component_title_en" id="component_title_en" class="form-control" placeholder="Enter offer name in English"
-                                               value="{{ isset($bannerRelatedProduct->component_title_en) ? $bannerRelatedProduct->component_title_en : null }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('component_title_en'))
-                                            <div class="help-block">{{ $errors->first('component_title_en') }}</div>
-                                        @endif
-                                    </div>
+                                <div class="form-group col-md-6 {{ $errors->has('component_title_bn') ? ' error' : '' }}">
+                                    <label for="component_title_bn">Related Product Section Title (Bangla)</label>
+                                    <input type="text" name="component_title_bn" id="component_title_bn" class="form-control" placeholder="Enter offer name in Bangla"
+                                           value="{{ isset($bannerRelatedProduct->component_title_bn) ? $bannerRelatedProduct->component_title_bn : null }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('component_title_bn'))
+                                        <div class="help-block">{{ $errors->first('component_title_bn') }}</div>
+                                    @endif
+                                </div>
 
-                                    <div class="form-group col-md-6 {{ $errors->has('component_title_bn') ? ' error' : '' }}">
-                                        <label for="component_title_bn">Related Product Section Title (Bangla)</label>
-                                        <input type="text" name="component_title_bn" id="component_title_bn" class="form-control" placeholder="Enter offer name in Bangla"
-                                               value="{{ isset($bannerRelatedProduct->component_title_bn) ? $bannerRelatedProduct->component_title_bn : null }}">
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('component_title_bn'))
-                                            <div class="help-block">{{ $errors->first('component_title_bn') }}</div>
-                                        @endif
+                                <div class="form-group select-role col-md-6 mb-0 {{ $errors->has('related_product_id') ? ' error' : '' }}">
+                                    <label for="related_product_id">Related Product</label>
+                                    <div class="role-select">
+                                        <select class="select2 form-control" multiple="multiple" name="related_product_id[]">
+                                            @foreach($products as $product)
+                                                <option value="{{ $product->id }}" {{ match($product->id, $bannerRelatedProduct['related_product_id']) ? 'selected' : '' }}>{{$product->name_en."/ ".$product->product_code}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('related_product_id'))
+                                        <div class="help-block">  {{ $errors->first('related_product_id') }}</div>
+                                    @endif
+                                </div>
 
-                                    <div class="form-group select-role col-md-6 mb-0 {{ $errors->has('related_product_id') ? ' error' : '' }}">
-                                        <label for="related_product_id">Related Product</label>
-                                        <div class="role-select">
-                                            <select class="select2 form-control" multiple="multiple" name="related_product_id[]">
-                                                @foreach($products as $product)
-                                                    <option value="{{ $product->id }}" {{ match($product->id, $bannerRelatedProduct['related_product_id']) ? 'selected' : '' }}>{{$product->name_en."/ ".$product->product_code}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="help-block"></div>
-                                        @if ($errors->has('related_product_id'))
-                                            <div class="help-block">  {{ $errors->first('related_product_id') }}</div>
-                                        @endif
-                                    </div>
-{{--                                @endif--}}
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
