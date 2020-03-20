@@ -119,14 +119,14 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="action_div">
                         @php
                             $actionList = Helper::navigationActionList();
                         @endphp
 
                         <div class="form-group">
                             <label>Navigate Action </label>
-                            <select name="component_identifier" class="browser-default custom-select">
+                            <select name="component_identifier" class="browser-default custom-select" id="navigate_action">
                                 <option value="">Select Action</option>
                                 @foreach ($actionList as $key => $value)
                                     <option
@@ -142,17 +142,28 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2 pull-right">
+                    <div id="append_div" class="col-md-6">
                         @if(isset($short_cut_info))
-                            <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Update
-                                Shortcut
-                            </button>
-                        @else
-                            <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Add Shortcut
-                            </button>
+                            <div class="form-group" id="dial_input_div">
+                                <label>Dial Number</label>
+                                <input type="text" name="dial_number" class="form-control" required value="{{ $short_cut_info->dial_number }}">
+                                <div class="help-block"></div>
+                            </div>
                         @endif
                     </div>
 
+                    <div class="col-md-6">
+                        <div class="pull-right" >
+                            @if(isset($short_cut_info))
+                                <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Update
+                                    Shortcut
+                                </button>
+                            @else
+                                <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Add Shortcut
+                                </button>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
@@ -255,7 +266,19 @@
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js"
             type="text/javascript"></script>
     <script>
+
         $(function () {
+            var parse_data;
+            let dial_html, dial_number = null;
+            var js_data = '<?php echo isset($short_cut_info) ? json_encode($short_cut_info) : null; ?>';
+
+            if(js_data){
+                parse_data = JSON.parse(js_data);
+                dial_number = parse_data.dial_number;
+            }
+
+            console.log(js_data);
+
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
 
@@ -289,7 +312,23 @@
                     }
                 })
             })
-        })
+            // add dial number
+
+            dial_html = ` <div class="form-group" id="dial_input_div">
+                                        <label>Dial Number</label>
+                                        <input type="text" name="dial_number" class="form-control" value="${dial_number}" required>
+                                        <div class="help-block"></div>
+                                    </div>`;
+
+            $('#navigate_action').on('change', function () {
+                let action = $(this).val();
+                if(action == 'DIAL'){
+                    $("#append_div").html(dial_html);
+                }else{
+                    $("#dial_input_div").remove();
+                }
+            })
+        });
 
 
         $(document).ready(function () {
