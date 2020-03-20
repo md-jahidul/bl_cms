@@ -19,7 +19,7 @@
 
                                 </tr>
                             </thead>
-                            <tbody class="category_sortable">
+                            <tbody>
                                 @foreach($settings as $s)
                                 <tr>
 
@@ -58,10 +58,11 @@
 
                                 </tr>
                             </thead>
-                            <tbody class="category_sortable">
+                            <tbody class="popular_sortable">
                                 @foreach($popular as $p)
-                                <tr>
+                                <tr  data-index="{{ $p->id }}" data-position="{{ $p->sort }}">
                                     <td>
+                                        <i class="icon-cursor-move icons"></i> 
                                         {{ $p->keyword }} 
                                     </td>
                                     <td>
@@ -265,6 +266,48 @@ if (Session::has('error')) {
             });
 
         });
+        
+        
+         function saveNewPositions(save_url)
+        {
+            var positions = [];
+            $('.popular_sortable tr').each(function () {
+                positions.push([
+                    $(this).attr('data-index'),
+                    $(this).attr('data-position')
+                ]);
+            });
+            $.ajax({
+                type: "GET",
+                url: save_url,
+                data: {
+                    update: 1,
+                    position: positions
+                },
+                success: function (data) {
+                },
+                error: function () {
+                    swal.fire({
+                        title: 'Failed to sort data',
+                        type: 'error',
+                    });
+                }
+            });
+        }
+
+        $(".popular_sortable").sortable({
+
+            update: function (event, ui) {
+                $(this).children().each(function (index) {
+                    if ($(this).attr('data-position') != (index + 1)) {
+                        $(this).attr('data-position', (index + 1));
+                    }
+                });
+                var save_url = "{{ url('popular-search-sort-change') }}";
+                saveNewPositions(save_url);
+            }
+        });
+        
         
         $('.delete_keyword').on('click', function(){
             var conf = confirm("Do you want to delete this keyword?");

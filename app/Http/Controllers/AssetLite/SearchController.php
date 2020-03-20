@@ -105,6 +105,18 @@ class SearchController extends Controller {
 
         return redirect('/popular-search');
     }
+    
+     /**
+     * Keyword Sorting Change.
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     * @Dev Bulbul Mahmud Nito || 20/03/2020
+     */
+    public function popularSortChange(Request $request) {
+        $sortChange = $this->searchService->changeKeywordSort($request);
+        return $sortChange;
+    }
 
     /**
      * delete Popular search

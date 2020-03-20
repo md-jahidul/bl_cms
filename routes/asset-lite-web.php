@@ -371,8 +371,11 @@ Route::middleware('authorize', 'auth')->group(function () {
    Route::get('search-popular-edit/{keywordId}', 'AssetLite\SearchController@popularSearchEdit');
    Route::post('popular-search-update', 'AssetLite\SearchController@popularSearchUpdate')->name('popular.search.update');
 
-   Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus');
-   Route::get('popular-search-delete/{keywordId}', 'AssetLite\SearchController@deletePopularSearch');
+
+   Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus'); 
+   Route::get('popular-search-sort-change', 'AssetLite\SearchController@popularSortChange'); 
+   Route::get('popular-search-delete/{keywordId}', 'AssetLite\SearchController@deletePopularSearch'); 
+
 
     // Easy Payment Card ============================================
     Route::get('easy-payment-card', 'AssetLite\EasyPaymentCardController@index');
@@ -387,9 +390,13 @@ Route::middleware('authorize', 'auth')->group(function () {
    // Business Module ============================================
    Route::get('business-general', 'AssetLite\BusinessGeneralController@index')->name('business.general');
 
-   //__category
-   Route::get('business-category-name-change', 'AssetLite\BusinessGeneralController@categoryNameChange')->name('business.category.name.save');
-   Route::get('business-category-home-status-change', 'AssetLite\BusinessGeneralController@categoryStatusChange')->name('business.category.home.status.change');
+
+   //__category   
+   Route::get('business-category-name-change', 'AssetLite\BusinessGeneralController@categoryNameChange')->name('business.category.name.save');  
+   Route::get('business-category-home-status-change', 'AssetLite\BusinessGeneralController@categoryStatusChange')->name('business.category.home.status.change');  
+   Route::post('business-category-banner-save', 'AssetLite\BusinessGeneralController@categoryBannerSave')
+           ->name('business.category.banner.save');  
+
 
    Route::get('business-category-sort-change', 'AssetLite\BusinessGeneralController@categorySortChange')->name('business.category.sort.save');
 

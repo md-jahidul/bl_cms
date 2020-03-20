@@ -418,7 +418,7 @@
         <li class="{{ is_active_url('/popular-search') }} nav-item">
             <a href="{{ url('popular-search') }}">
                 <i class="la la-search"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Popular Search</span>
+                <span class="menu-title" data-i18n="nav.templates.main">Search</span>
             </a>
         </li>
         <li class="{{ is_active_url('/easy-payment-card') }} nav-item">
