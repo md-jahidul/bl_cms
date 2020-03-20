@@ -223,14 +223,19 @@
                        data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Banglalink</a>
                 </li>
 
-                <li class="{{ is_active_url('about-slider') }}">
-                    <a class="menu-item" href="{{ url('about-slider') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Slider</a>
-                </li>
-
                 <li class="{{ is_active_url('management') . is_active_url('management/create') }}">
                     <a class="menu-item" href="{{ url('management') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Management</a>
+                </li>
+
+                <li class="{{ is_active_url('about/career') }}">
+                    <a class="menu-item" href="{{ route('about-career.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> About Career</a>
+                </li>
+
+                <li class="{{ is_active_url('about-slider') }}">
+                    <a class="menu-item" href="{{ url('about-slider') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Slider</a>
                 </li>
 
             </ul>
