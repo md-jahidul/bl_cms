@@ -115,9 +115,13 @@ function matchRelatedProduct($id, $roles)
 											<td>
 												<a href="{{ route("app_service.details.edit", [$tab_type, $product_id, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0 section_component_edit" data-sections="{{$list->section_type}}">
 													<i class="la la-pencil" aria-hidden="true"></i></a>
-												{{-- <a href="#" remove="{{ url("offers/$list->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
-													<i class="la la-trash"></i>
-												</a> --}}
+												
+												@if( $list->is_default == 0 )
+													<a href="#" remove="{{ route("app_service.sections.destroy", [$tab_type, $product_id, $list->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
+														<i class="la la-trash"></i>
+													</a>
+												@endif
+
 											</td>
 										</tr>
 								@endforeach
@@ -308,7 +312,7 @@ function matchRelatedProduct($id, $roles)
 					 $parentSelector.find('#form_save').hide();
 					 $parentSelector.find('#form_update').show();
 
-					 console.log(result.data);
+					 // console.log(result.data);
 
 					 // Check component is slider?
 					if( result.data.sections.section_type == 'slider_text_with_image_right' ){
@@ -355,7 +359,6 @@ function matchRelatedProduct($id, $roles)
 
 							   // Multiple attribute parse
 								if( ck == 'multiple_attributes' ){
-									// console.log(cv);
 
 									if( typeof cv !== 'undefined' ){
 										var multiData = eval(JSON.parse(cv));
@@ -367,7 +370,7 @@ function matchRelatedProduct($id, $roles)
 
 											var html = '';
 
-											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td width="5%"><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" /></td><td>'+mcv.title_en+'</td><td>'+mcv.status+'</td><td><a href="#" class="multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a></td></tr>';
+											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" style="max-width:100px;" /></td><td>'+mcv.title_en+'</td><td>'+mcv.status+'</td><td><a href="#" class="multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a><a href="#" class="border-0 btn-sm btn-outline-danger delete_multi_attr_item" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'" title="Delete"><i class="la la-trash"></i></a></td></tr>';
 
 											$('#slider_sortable').append(html);
 
@@ -458,7 +461,7 @@ function matchRelatedProduct($id, $roles)
 
 											var html = '';
 
-											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td width="5%"><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" /></td><td>'+mcv.alt_text+'</td><td>'+mcv.status+'</td><td><a href="#" class="banner_multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a></td></tr>';
+											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" style="max-width:100px;" /></td><td>'+mcv.alt_text+'</td><td>'+mcv.status+'</td><td><a href="#" class="banner_multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a></td></tr>';
 
 											$parentSelectorEdit.find('#slider_sortable').append(html);
 
@@ -636,6 +639,45 @@ function matchRelatedProduct($id, $roles)
 	        });
 	    }
 	    
+
+	    // Delete multiple attribute items
+	    $(document).on('click', '.delete_multi_attr_item', function(e){
+	    	e.preventDefault();
+
+	    	// var confirm = confirm('Are you sure?');
+	    	$this = $(this);
+
+	    	if( confirm("Are you sure?") ){
+
+	    		var itemID = $this.attr('data-item_id');
+	    		var componentID = $this.attr('data-component_id');	    		
+
+	    		$.ajax({
+	    		    type: "POST",
+	    		    url: "{{ route('appservice.component.itemattr.destory') }}",
+	    		    data: {	    		        
+	    		        item_id: itemID,
+	    		        component_id: componentID,
+	    		        _token : "{{csrf_token()}}"
+	    		    },
+	    		    success: function (data) {
+	    		        console.log(data)
+
+	    		        if( data.status == "SUCCESS" ){
+
+	    		        		$this.parents('tr').remove();
+	    		        }
+
+	    		    },
+	    		    error: function () {
+	    		        // window.location.replace(auto_save_url);
+	    		    }
+	    		});
+
+	    	}
+
+
+	    });
 
 
 </script>

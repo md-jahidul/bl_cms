@@ -342,4 +342,52 @@ class ComponentService
         $appServiceCat->delete();
         return Response('Component deleted successfully !');
     }
+
+
+    public function conponentMultiAttrItemDestroy($data)
+    {
+
+        $component_id = $data['component_id'];
+        $item_id = $data['item_id'];
+
+        if ( empty($component_id) || empty($item_id) ) {
+            return false;
+        }
+
+
+        $component = $this->findOne($component_id);
+
+        // get original data
+        $multiple_attributes = !empty($component->multiple_attributes) ? json_decode($component->multiple_attributes, true) : null;
+
+        // loop over the product array
+        if (!empty($multiple_attributes)) {
+
+            $multi_attr = array_map(function($value) use ($item_id){
+
+                if( $value['id'] == $item_id ){
+                    return false;
+                }
+
+                return $value;
+                
+
+            }, $multiple_attributes);
+
+            $reults['multiple_attributes'] = !empty($multi_attr) ? json_encode(array_filter($multi_attr)) : null;
+            $component->update($reults);
+            return response("Component deleted!!");
+
+
+        }
+        else{
+
+            return false;
+        }
+
+        
+
+
+    }
+
 }

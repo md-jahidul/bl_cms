@@ -205,9 +205,16 @@ class AppServiceProductDetailsController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($tab_type, $product_id, $id)
     {
-        //
+        $response = $this->appServiceProductDetailsService->sectionDelete($id);
+        // Session::flash('message', $response->getContent());
+        if ($response) {
+            session()->flash('error', "Deleted successfully");
+            return url(route('app_service.details.list', [$tab_type, $product_id]));
+        }
+
+        session()->flash('message', "Failed! Please try again");
     }
 
 

@@ -18,6 +18,19 @@ class BusinessCategoryRepository extends BaseRepository {
         return $categories;
     }
 
+    public function saveBannerPhoto($filePath, $altText, $catId) {
+        $update = [];
+        $update['alt_text'] = $altText;
+
+        if ($filePath != "") {
+            $update['banner_photo'] = $filePath;
+        }
+        
+
+        $this->model->where('id', $catId)->update($update);
+        return $filePath;
+    }
+
     public function changeCategoryName($catId, $type, $name) {
         try {
 

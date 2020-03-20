@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use App\Repositories\ComponentRepository;
 use Illuminate\Http\Response;
+use Carbon\Carbon;
 
 class AppServiceProductDetailsService
 {
@@ -328,6 +329,24 @@ class AppServiceProductDetailsService
 	public function tableSortable($data){
 		$this->appServiceProductDetailsRepository->sectionsTableSort($data);
 		return new Response('update successfully');
+	}
+
+
+
+	/**
+	 * @param $id
+	 * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+	 * @throws \Exception
+	 */
+	public function sectionDelete($id)
+	{
+	    $section = $this->findOne($id);
+	    $data['deleted_at'] = Carbon::now();
+	    $section->update($data);
+
+	   //$this->appServiceProductDetailsRepository->sectionItemSoftDeleteBySectionID($id);
+
+	    return Response('Section deleted successfully !');
 	}
 
 }
