@@ -43,9 +43,18 @@ class ProductDetailsSectionService
 
     public function findBySection($productId)
     {
-        return $this->productDetailsSectionRepository->findByProperties(['product_id' => $productId]);
+        return $this->productDetailsSectionRepository->productDetailsSection($productId);
     }
 
+    /**
+     * @param $data
+     * @return Response
+     */
+    public function tableSortable($data)
+    {
+        $this->productDetailsSectionRepository->sectionTableSort($data);
+        return new Response('update successfully');
+    }
 
     /**
      * @param $data
