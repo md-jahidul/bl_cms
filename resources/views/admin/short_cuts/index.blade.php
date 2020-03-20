@@ -269,7 +269,7 @@
 
         $(function () {
             var parse_data;
-            let dial_html, dial_number = null;
+            let dial_html, dial_number = '';
             var js_data = '<?php echo isset($short_cut_info) ? json_encode($short_cut_info) : null; ?>';
 
             if(js_data){
