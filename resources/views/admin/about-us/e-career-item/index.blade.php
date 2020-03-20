@@ -16,10 +16,11 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <h4 class="pb-1"><strong>About Career Item List</strong></h4>
-                    <table class="table table-striped table-bordered zero-configuration">
+                    <table id="About_eCareer" class="table table-striped table-bordered zero-configuration">
                         <thead>
                         <tr>
-                            <td width="3%">#</td>
+                            <th width='5%'><i class="icon-cursor-move icons"></i></th>
+                           {{-- <td width="3%">#</td>--}}
                             <th width="25%">Title</th>
                             <th class="">Description</th>
                             <th class="">Image</th>
@@ -29,8 +30,9 @@
                         <tbody>
                             @foreach($aboutCareerItems as $item)
                                 @php $path = 'partner-offers-home'; @endphp
-                                <tr>
-                                    <td width="3%">{{ $loop->iteration }}</td>
+                                <tr data-index="{{ $item->id }}" data-position="{{ $item->display_order }}">
+                                    <td width="5%"><i class="icon-cursor-move icons"></i></td>
+                                    {{--<td width="3%">{{ $loop->iteration }}</td>--}}
                                     <td>{{ $item->title_en }}</td>
                                     <td>{{ $item->description_en }}</td>
                                     <td><img src="{{ config('filesystems.file_base_url') . $item->image }}" height="50" width="70"></td>
@@ -51,18 +53,47 @@
 @stop
 
 @push('page-css')
-    {{--    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">--}}
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
     <style>
         #sortable tr td{
-            padding-top: 5px !important;
-            padding-bottom: 5px !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+        table.dataTable {
+            border-spacing: 1px;
         }
     </style>
 @endpush
 
-@push('page-js')
+@section('content_right_side_bar')
+    <h1>
+        List
+    </h1>
+@endsection
 
+
+@push('page-js')
+    <script>
+        var auto_save_url = "{{ url('about-us-career-sortable') }}";
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#About_eCareer').DataTable({
+                dom: 'Bfrtip',
+                buttons: [],
+                paging: true,
+                searching: true,
+                "pageLength": 10,
+                "bDestroy": true,
+            });
+        });
+
+    </script>
 @endpush
+
 
 
 

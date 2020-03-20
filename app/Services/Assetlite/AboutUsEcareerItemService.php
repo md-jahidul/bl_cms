@@ -81,4 +81,15 @@ class AboutUsEcareerItemService
         $aboutCareerItem->delete();
         return Response('About career item deleted successfully !');
     }
+
+
+    /**
+     * @param $data
+     * @return Response
+     */
+    public function tableSortable($data)
+    {
+        $this->aboutUsEcareerItemRepository->sortAboutUsCareerItems($data);
+        return new Response('update successfully');
+    }
 }

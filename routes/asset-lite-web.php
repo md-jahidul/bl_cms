@@ -127,6 +127,9 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::get('about-career-item/{careerId}/destroy/{id}', 'AssetLite\AboutEcareerItemController@destroy');
 
+    Route::get('about-us-career-sortable', 'AssetLite\AboutEcareerItemController@aboutUsCareerSortable');
+
+
 
 
    // META TAG  ====================================

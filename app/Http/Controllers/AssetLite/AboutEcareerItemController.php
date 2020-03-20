@@ -125,4 +125,14 @@ class AboutEcareerItemController extends Controller
         $this->aboutUsEcareerItemService->deleteAboutCareerItem($id);
         return url(route('career-item.list', $careerId));
     }
+
+    /**
+     * @param Request $request
+     */
+    public function aboutUsCareerSortable(Request $request)
+    {
+        $this->aboutUsEcareerItemService->tableSortable($request);
+    }
+
+
 }
