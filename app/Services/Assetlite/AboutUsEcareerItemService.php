@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services;
 
 use App\Http\Helpers;
@@ -12,6 +11,10 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 
+/**
+ * Class AboutUsEcareerItemService
+ * @package App\Services
+ */
 class AboutUsEcareerItemService
 {
     use CrudTrait;
@@ -22,8 +25,9 @@ class AboutUsEcareerItemService
      */
     private $aboutUsEcareerItemRepository;
 
+
     /**
-     * AboutUsService constructor.
+     * AboutUsEcareerItemService constructor.
      * @param AboutUsEcareerItemRepository $aboutUsEcareerItemRepository
      */
     public function __construct(AboutUsEcareerItemRepository $aboutUsEcareerItemRepository)
@@ -32,9 +36,14 @@ class AboutUsEcareerItemService
         $this->setActionRepository($aboutUsEcareerItemRepository);
     }
 
+
+    /**
+     * @param $careerId
+     * @return mixed
+     */
     public function aboutCareerItems($careerId)
     {
-        return $this->aboutUsEcareerItemRepository->findByProperties(['about_us_ecareers_id' => $careerId]);
+        return $this->aboutUsEcareerItemRepository->getAboutUsCareerItems($careerId);
     }
 
 

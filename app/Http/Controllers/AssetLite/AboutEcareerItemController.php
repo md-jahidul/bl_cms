@@ -47,7 +47,7 @@ class AboutEcareerItemController extends Controller
     public function index($careerId)
     {
         $aboutCareerItems = $this->aboutUsEcareerItemService->aboutCareerItems($careerId);
-//        return $aboutCareerItems;
+
         return view('admin.about-us.e-career-item.index', compact('aboutCareerItems', 'careerId'));
     }
 

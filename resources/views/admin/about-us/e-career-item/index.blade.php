@@ -27,7 +27,7 @@
                             <th class="">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable">
                             @foreach($aboutCareerItems as $item)
                                 @php $path = 'partner-offers-home'; @endphp
                                 <tr data-index="{{ $item->id }}" data-position="{{ $item->display_order }}">
