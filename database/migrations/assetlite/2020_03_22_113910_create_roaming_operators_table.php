@@ -19,6 +19,7 @@ class CreateRoamingOperatorsTable extends Migration {
             $table->string('operator_en', 300)->nullable();
             $table->string('operator_bn', 300)->nullable();
             $table->string('tap_code', 100)->nullable();
+            $table->tinyInteger('status')->default(1)->comment('1=show,0=hide');
             $table->timestamps();
         });
     }

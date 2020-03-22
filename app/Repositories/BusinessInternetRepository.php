@@ -67,7 +67,7 @@ class BusinessInternetRepository extends BaseRepository {
 
         return $response;
     }
-    
+
     public function getInternetById($internetId){
          return $this->model->findOrFail($internetId);
     }
@@ -78,9 +78,9 @@ class BusinessInternetRepository extends BaseRepository {
             $allProducts->where('id', '!=', $internetId);
         }
         $data = $allProducts->get();
-        
+
         return $data;
-        
+
     }
 
     public function saveInternet($bannerPath, $request) {
@@ -115,11 +115,11 @@ class BusinessInternetRepository extends BaseRepository {
             'tag_id' => $request->tag,
             'related_product' => implode(',', $request->related_product_id),
         );
-        
+
         if($bannerPath != ""){
               $insertdata['banner_photo'] = $bannerPath;
         }
-        
+
         if($request->internet_id){
 //          dd($insertdata);
              $this->model->where('id', $request->internet_id)->update($insertdata);
