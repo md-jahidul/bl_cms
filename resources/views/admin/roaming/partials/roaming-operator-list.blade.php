@@ -97,6 +97,8 @@
                     }
                 ],
                 "fnCreatedRow": function (row, data, index) {
+
+                    console.log(row)
                     $('td', row).eq(0).html(index + 1);
                 }
 
@@ -107,11 +109,11 @@
 
 
             //change show/hide status of device offer
-            $("#internet_package_list").on('click', '.package_change_status', function (e) {
+            $("#roaming_operator_list").on('click', '.operator_change_status', function (e) {
                 var packageId = $(this).attr('href');
 
                 $.ajax({
-                    url: '{{ url("business-internet-status-change")}}/' + packageId,
+                    url: '{{ url("roaming-operator-status-change")}}/' + packageId,
                     cache: false,
                     type: "GET",
                     success: function (result) {
@@ -123,7 +125,7 @@
                                 showConfirmButton: false
                             });
 
-                            $('#internet_package_list').DataTable().ajax.reload();
+                            $('#roaming_operator_list').DataTable().ajax.reload();
 
                         } else {
                             swal.close();
@@ -146,7 +148,7 @@
             });
 
             //change activation status of internet
-            $("#internet_package_list").on('click', '.package_change_status', function (e) {
+            $("#internet_package_list").on('click', '.operator_change_status', function (e) {
                 var packageId = $(this).attr('href');
 
                 $.ajax({

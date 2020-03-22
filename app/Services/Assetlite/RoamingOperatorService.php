@@ -174,20 +174,12 @@ class RoamingOperatorService {
     }
 
     /**
-     * change home show
-     * @return Response
-     */
-    public function homeShow($packageId) {
-        $response = $this->internetRepo->homeShow($packageId);
-        return $response;
-    }
-
-    /**
      * change showing status
      * @return Response
      */
-    public function statusChange($packageId) {
-        $response = $this->internetRepo->statusChange($packageId);
+    public function statusChange($id)
+    {
+        $response = $this->roamingOperatorRepository->statusChange($id);
         return $response;
     }
 

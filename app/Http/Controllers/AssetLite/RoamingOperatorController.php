@@ -122,8 +122,10 @@ class RoamingOperatorController extends Controller
         return $response;
     }
 
-    public function packageStatusChange($packageId) {
-        $response = $this->internetService->statusChange($packageId);
+    public function operatorStatusChange($id)
+    {
+//        dd($id);
+        $response = $this->roamingOperatorService->statusChange($id);
         return $response;
     }
 

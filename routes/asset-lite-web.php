@@ -473,13 +473,15 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('roaming/get-single-category/{catId}', 'AssetLite\RoamingGeneralController@getSingleCategory');
     Route::post('roaming/update-category', 'AssetLite\RoamingGeneralController@updateCategory');
     Route::get('roaming/category-sort', 'AssetLite\RoamingGeneralController@categorySortChange');
-    Route::get('roaming/operator-list', 'AssetLite\RoamingOperatorController@index');
+    Route::get('roaming/operators', 'AssetLite\RoamingOperatorController@index');
 
     Route::post('roaming-operator-list', 'AssetLite\RoamingOperatorController@roamingOperatorList')
         ->name('roaming.operator.list.ajax');
 
     Route::post('roaming/operator-excel', 'AssetLite\RoamingOperatorController@uploadOperatorExcel')
         ->name('roaming.operator-excel.save');
+
+    Route::get('roaming-operator-status-change/{pakcageId}', 'AssetLite\RoamingOperatorController@operatorStatusChange');
 
 
     // eCarrer ============================================

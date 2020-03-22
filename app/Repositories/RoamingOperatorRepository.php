@@ -37,9 +37,9 @@ class RoamingOperatorRepository extends BaseRepository {
 
         $items->each(function ($item) use (&$response) {
 
-            $statusBtn = "<a href='$item->id' class='btn-sm btn-success package_change_status'>Active</a>";
+            $statusBtn = "<a href='$item->id' class='btn-sm btn-success operator_change_status'>Active</a>";
             if ($item->status == 0) {
-                $statusBtn = "<a href='$item->id' class='btn-sm btn-warning package_change_status'>Inactive</a>";
+                $statusBtn = "<a href='$item->id' class='btn-sm btn-warning operator_change_status'>Inactive</a>";
             }
             $response['data'][] = [
                 'id' => $item->id,
@@ -143,13 +143,10 @@ class RoamingOperatorRepository extends BaseRepository {
 
     public function statusChange($packageId) {
         try {
-
             $card = $this->model->findOrFail($packageId);
-
             $status = $card->status == 1 ? 0 : 1;
             $card->status = $status;
             $card->save();
-
             $response = [
                 'success' => 1
             ];
