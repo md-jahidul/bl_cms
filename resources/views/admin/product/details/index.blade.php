@@ -20,6 +20,10 @@
     <li class="breadcrumb-item active">Section List</li>
 @endsection
 @section('action')
+    <a href="{{ url("offers/$offerType") }}" class="btn btn-outline-secondary round btn-glow px-2"><i class="la la-arrow-left"></i>
+        Back To Product
+    </a>
+
     <a href="{{ route('section-create', [$productDetailsId]) }}" class="btn btn-success  round btn-glow px-2"><i class="la la-plus"></i>
         Add Section
     </a>
@@ -117,40 +121,42 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('component_title_en') ? ' error' : '' }}">
-                                    <label for="component_title_en">Related Product Section Title (English)</label>
-                                    <input type="text" name="component_title_en" id="component_title_en" class="form-control" placeholder="Enter offer name in English"
-                                           value="{{ isset($bannerRelatedProduct->component_title_en) ? $bannerRelatedProduct->component_title_en : null }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('component_title_en'))
-                                        <div class="help-block">{{ $errors->first('component_title_en') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('component_title_bn') ? ' error' : '' }}">
-                                    <label for="component_title_bn">Related Product Section Title (Bangla)</label>
-                                    <input type="text" name="component_title_bn" id="component_title_bn" class="form-control" placeholder="Enter offer name in Bangla"
-                                           value="{{ isset($bannerRelatedProduct->component_title_bn) ? $bannerRelatedProduct->component_title_bn : null }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('component_title_bn'))
-                                        <div class="help-block">{{ $errors->first('component_title_bn') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group select-role col-md-6 mb-0 {{ $errors->has('related_product_id') ? ' error' : '' }}">
-                                    <label for="related_product_id">Related Product</label>
-                                    <div class="role-select">
-                                        <select class="select2 form-control" multiple="multiple" name="related_product_id[]">
-                                            @foreach($products as $product)
-                                                <option value="{{ $product->id }}" {{ match($product->id, $bannerRelatedProduct['related_product_id']) ? 'selected' : '' }}>{{$product->name_en."/ ".$product->product_code}}</option>
-                                            @endforeach
-                                        </select>
+                                @if($productType !== \App\Enums\OfferType::OTHERS)
+                                    <div class="form-group col-md-6 {{ $errors->has('component_title_en') ? ' error' : '' }}">
+                                        <label for="component_title_en">Related Product Section Title (English)</label>
+                                        <input type="text" name="component_title_en" id="component_title_en" class="form-control" placeholder="Enter offer name in English"
+                                               value="{{ isset($bannerRelatedProduct->component_title_en) ? $bannerRelatedProduct->component_title_en : null }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('component_title_en'))
+                                            <div class="help-block">{{ $errors->first('component_title_en') }}</div>
+                                        @endif
                                     </div>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('related_product_id'))
-                                        <div class="help-block">  {{ $errors->first('related_product_id') }}</div>
-                                    @endif
-                                </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('component_title_bn') ? ' error' : '' }}">
+                                        <label for="component_title_bn">Related Product Section Title (Bangla)</label>
+                                        <input type="text" name="component_title_bn" id="component_title_bn" class="form-control" placeholder="Enter offer name in Bangla"
+                                               value="{{ isset($bannerRelatedProduct->component_title_bn) ? $bannerRelatedProduct->component_title_bn : null }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('component_title_bn'))
+                                            <div class="help-block">{{ $errors->first('component_title_bn') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group select-role col-md-6 mb-0 {{ $errors->has('related_product_id') ? ' error' : '' }}">
+                                        <label for="related_product_id">Related Product</label>
+                                        <div class="role-select">
+                                            <select class="select2 form-control" multiple="multiple" name="related_product_id[]">
+                                                @foreach($products as $product)
+                                                    <option value="{{ $product->id }}" {{ match($product->id, $bannerRelatedProduct['related_product_id']) ? 'selected' : '' }}>{{$product->name_en."/ ".$product->product_code}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('related_product_id'))
+                                            <div class="help-block">  {{ $errors->first('related_product_id') }}</div>
+                                        @endif
+                                    </div>
+                                @endif
 
 
                                 <div class="form-actions col-md-12">

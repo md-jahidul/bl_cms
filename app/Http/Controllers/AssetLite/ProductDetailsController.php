@@ -75,12 +75,16 @@ class ProductDetailsController extends Controller
      * @param $productDetailsId
      * @return Factory|View
      */
-    public function sectionList($productDetailsId)
+    public function sectionList($offerType, $productDetailsId)
     {
+        $productType = $this->productService->findOne($productDetailsId);
+        $productType = $productType->offer_category_id;
         $products = $this->productService->produtcs();
         $productSections = $this->productDetailsSectionService->findBySection($productDetailsId);
         $bannerRelatedProduct = $this->bannerImgRelatedProductService->findBannerAndRelatedProduct($productDetailsId);
-        return view('admin.product.details.index', compact('productSections', 'productDetailsId', 'products', 'bannerRelatedProduct'));
+
+        return view('admin.product.details.index', compact('productSections', 'offerType','productDetailsId', 'products', 'productType', 'bannerRelatedProduct')
+        );
     }
 
     /**

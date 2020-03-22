@@ -195,7 +195,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('product-details/{productId}/banner-image/related-product', 'AssetLite\ProductDetailsController@bannerImgRelatedPro')
         ->name('bannerImg-relatedPro');
 
-    Route::get('product-details/{productDetailsId}/section', 'AssetLite\ProductDetailsController@sectionList')
+    Route::get('product-details/{type}/{productDetailsId}/section', 'AssetLite\ProductDetailsController@sectionList')
         ->name('section-list');
 
     Route::get('product-details/{productDetailsId}/section-create', 'AssetLite\ProductDetailsController@create')

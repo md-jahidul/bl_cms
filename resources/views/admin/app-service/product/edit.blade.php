@@ -43,8 +43,7 @@
                                     <label for="start_date">Start Date</label>
                                     <div class='input-group'>
                                         <input type='text' class="form-control" name="start_date" id="start_date"
-                                               value="{{ $appServiceProduct->start_date }}"
-                                               placeholder="Please select start date" />
+                                               value="{{ $appServiceProduct->start_date }}" placeholder="Please select start date" />
                                     </div>
                                     <div class="help-block"></div>
                                     @if ($errors->has('start_date'))
@@ -204,11 +203,24 @@
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
-    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
+{{--    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
     <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
 
     <script>
         $(function () {
+            var date = new Date();
+            date.setDate(date.getDate());
+            $('#start_date').datetimepicker({
+                format : 'YYYY-MM-DD HH:mm:ss',
+                showClose: true,
+            });
+            $('#end_date').datetimepicker({
+                format : 'YYYY-MM-DD HH:mm:ss',
+                useCurrent: false, //Important! See issue #1075
+                showClose: true,
+
+            });
+
             $('#offer_type').change(function () {
                 var typeId = $(this).find('option:selected').val()
                 var appServiceCat = $('#appServiceCat');
