@@ -472,6 +472,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('business-other-component-sort', 'AssetLite\BusinessOthersController@sortComponent');
 
 
+    // Business Module ============================================
+    Route::get('roaming-general', 'AssetLite\RoamingGeneralController@index');
+    Route::get('roaming/get-single-category/{catId}', 'AssetLite\RoamingGeneralController@getSingleCategory');
+    Route::post('roaming/update-category', 'AssetLite\RoamingGeneralController@updateCategory');
+       Route::get('roaming/category-sort', 'AssetLite\RoamingGeneralController@categorySortChange');
 
 
     // eCarrer ============================================
