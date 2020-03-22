@@ -37,16 +37,16 @@ class RoamingOperatorRepository extends BaseRepository {
 
         $items->each(function ($item) use (&$response) {
 
-//            $statusBtn = "<a href='$item->id' class='btn-sm btn-success package_change_status'>Active</a>";
-//            if ($item->status == 0) {
-//                $statusBtn = "<a href='$item->id' class='btn-sm btn-warning package_change_status'>Inactive</a>";
-//            }
+            $statusBtn = "<a href='$item->id' class='btn-sm btn-success package_change_status'>Active</a>";
+            if ($item->status == 0) {
+                $statusBtn = "<a href='$item->id' class='btn-sm btn-warning package_change_status'>Inactive</a>";
+            }
             $response['data'][] = [
                 'id' => $item->id,
                 'country_en' => $item->country_en,
-                'operator_en' => $item->country_en,
+                'operator_en' => $item->operator_en,
                 'tap_code' => $item->tap_code,
-//                'status' => $statusBtn
+                'status' => $statusBtn
             ];
         });
 

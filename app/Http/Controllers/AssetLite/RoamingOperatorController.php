@@ -55,29 +55,29 @@ class RoamingOperatorController extends Controller
      * @return Factory|View
      * @Bulbul Mahmud Nito || 12/03/2020
      */
-    public function internetCreate() {
-        $otherPorducts = $this->internetService->getAllPackage();
-        $tags = $this->internetService->getTags();
-        return view('admin.business.internet_package_create', compact('otherPorducts', 'tags'));
-    }
+//    public function internetCreate() {
+//        $otherPorducts = $this->internetService->getAllPackage();
+//        $tags = $this->internetService->getTags();
+//        return view('admin.business.internet_package_create', compact('otherPorducts', 'tags'));
+//    }
 
 
     /**
      * @param Request $request
      * @return JsonResponse
      */
-    public function saveInternetPackage(Request $request) {
-
-        $response = $this->internetService->saveInternet($request);
-
-        if ($response['success'] == 1) {
-            Session::flash('sussess', 'Package is saved!');
-        } else {
-            Session::flash('error', 'Package saving process failed!');
-        }
-
-        return redirect('/business-internet');
-    }
+//    public function saveInternetPackage(Request $request) {
+//
+//        $response = $this->internetService->saveInternet($request);
+//
+//        if ($response['success'] == 1) {
+//            Session::flash('sussess', 'Package is saved!');
+//        } else {
+//            Session::flash('error', 'Package saving process failed!');
+//        }
+//
+//        return redirect('/business-internet');
+//    }
 
 
     /**

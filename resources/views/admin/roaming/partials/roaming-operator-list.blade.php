@@ -19,7 +19,7 @@
                 <th>Country</th>
                 <th>Operator</th>
                 <th>Tap Code</th>
-{{--                <th>Status</th>--}}
+                <th>Status</th>
                 <th class="filter_data">Actions</th>
             </tr>
             </thead>
@@ -43,7 +43,7 @@
                 autoWidth: false,
                 pageLength: 20,
 //            lengthChange: false,
-                "lengthMenu": [20, 25, 50, 100, 200],
+                "lengthMenu": [10, 20, 25, 50, 100, 200],
                 ajax: {
                     url: '{{ route("roaming.operator.list.ajax") }}',
                     method: 'POST',
@@ -52,7 +52,6 @@
                     }
                 },
                 columns: [
-
                     {
                         name: 'sl',
                         render: function () {
@@ -62,18 +61,13 @@
                     {
                         name: 'country_en',
                         render: function (data, type, row) {
-
-                            // console.log(row)
-
                             return row.country_en;
                         }
                     },
                     {
                         name: 'operator_en',
                         render: function (data, type, row) {
-
-                            console.log(row)
-
+                            console.log(row);
                             return row.operator_en;
                         }
                     },
@@ -83,12 +77,12 @@
                             return row.tap_code;
                         }
                     },
-                    // {
-                    //     name: 'status',
-                    //     render: function (data, type, row) {
-                    //         return row.status;
-                    //     }
-                    // },
+                    {
+                        name: 'status',
+                        render: function (data, type, row) {
+                            return row.status;
+                        }
+                    },
                     {
                         name: 'actions',
                         className: 'filter_data',
