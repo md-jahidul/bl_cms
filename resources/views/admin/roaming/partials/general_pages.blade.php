@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-content collapse show">
         <div class="card-body card-dashboard">
-            <h4 class="pb-1"><strong>Categories/Manus</strong></h4>
+            <h4 class="pb-1"><strong>General Pages</strong></h4>
             <div class="row">
 
                 <div class="col-md-12 col-xs-12">
@@ -9,42 +9,29 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th width="22%">Name (EN)</th>
-                                <th width="22%">Name (BN)</th>
-                                <th width="">Banners Web</th>
-                                <th width="">Banners Mobile</th>
+                                <th width="22%">Page</th>
+                                <th width="22%">Title</th>
+                                <th width="">Short Text</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody class="category_sortable">
-                            @foreach($categories as $cat)
-                            <tr data-index="{{ $cat->id }}" data-position="{{ $cat->sort }}">
+                        <tbody>
+                            @foreach($pages as $p)
+                            <tr>
 
-                                <td class="category_name cursor-move">
-                                    <i class="icon-cursor-move icons"></i> 
-
-                                    @if($cat->status == 1)
-                                    <strong class="text-info">{{ $cat->name_en }} </strong>
-                                    @else
-                                    <i class="text-muted">{{ $cat->name_en }} </i>
-                                    @endif
-
-
+                                <td>
+                                    {{ $p->page_type }}
                                 </td>
-                                <td class="category_name">
-                                    {{ $cat->name_bn }} 
+                                <td>
+                                    {{ $p->title_en }} 
                                 </td>
-                                <td class="banner_photo_web">
-                                    <img src="{{ config('filesystems.file_base_url') . $cat->banner_web }}" height="30px">
-
+                                <td>
+                                   {{ $p->short_text_en }} 
                                 </td>
-                                <td class="banner_photo_mobile">
-                                    <img src="{{ config('filesystems.file_base_url') . $cat->banner_mobile }}" height="30px">
-
-                                </td>
+                                
                                 <td class="text-center">
 
-                                    <a href="{{$cat->id}}" class=" category_edit">
+                                    <a href="{{$p->id}}" class=" page_edit">
                                         <i class="la la-edit"></i>
                                     </a>
 

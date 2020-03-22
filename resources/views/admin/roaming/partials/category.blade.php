@@ -4,7 +4,7 @@
             <h4 class="pb-1"><strong>Categories/Manus</strong></h4>
             <div class="row">
 
-                <div class="col-md-8 col-xs-12">
+                <div class="col-md-12 col-xs-12">
 
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -35,11 +35,11 @@
                                     {{ $cat->name_bn }} 
                                 </td>
                                 <td class="banner_photo_web">
-                                    <img src="{{ config('filesystems.file_base_url') . $cat->banner_web }}" height="30px">
+                                    <img src="{{ config('filesystems.file_base_url') . $cat->banner_web }}" height="40px">
 
                                 </td>
                                 <td class="banner_photo_mobile">
-                                    <img src="{{ config('filesystems.file_base_url') . $cat->banner_mobile }}" height="30px">
+                                    <img src="{{ config('filesystems.file_base_url') . $cat->banner_mobile }}" height="40px">
 
                                 </td>
                                 <td class="text-center">
@@ -58,51 +58,89 @@
 
                 </div>
 
-                <div class="col-md-4 col-xs-12 cat_update_form" style="display: none;">
-
+                <div class="col-md-12 col-xs-12 cat_update_form" style="display: block;">
+                    <br>
+                    <h4 class="pb-1"><strong>Update Category</strong></h4>
+                     <hr>
                     <form method="POST" action="{{ url('roaming/update-category') }}" class="form uploadCategoryBanner" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden"  class="cat_id" name="cat_id">
                         <div class="form-group row">
-                            <div class="col-md-6 col-xs-12">
+                            <div class="col-md-3 col-xs-12">
                                 <label>Name (EN) <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control name_en" required name="name_en" placeholder="Name EN">
                             </div>
-                            <div class="col-md-6 col-xs-12">
+                            <div class="col-md-3 col-xs-12">
                                 <label>Name (BN) <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control name_bn" required name="name_bn" placeholder="Name BN">
+                            </div>
+                            <div class="col-md-3 col-xs-12">
+                                <label>URL <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control page_url" required name="page_url" placeholder="URL">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> roaming-rates<br>
+                                    <strong>Note: </strong> Don't use spaces in the URL string
+                                </small>
+                            </div>
+                            
+                            <div class="col-md-3 col-xs-12">
+                                <label>Banner Photo Name<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control page_url" required name="page_url" placeholder="URL">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> about-roaming-banner<br>
+                                    <strong>Note: </strong> Don't need MIME type like jpg,png
+                                </small>
                             </div>
 
                         </div>
 
                         <div class="form-group row">
 
-                            <div class="col-md-6 col-xs-12">
+                            <div class="col-md-3 col-xs-12">
                                 <label>Banner (Web)</label>
                                 <input type="file" class="dropify" name="banner_web" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                             </div>
-                            <div class="col-md-6 col-xs-12">
+                            <div class="col-md-3 col-xs-12">
                                 <label>Banner (Mobile)</label>
                                 <input type="file" class="dropify" name="banner_mobile" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                             </div>
-                            <div class="col-md-12 col-xs-12">
+                            <div class="col-md-3 col-xs-12">
+                                <label>Page Header (HTML)</label>
+                                <textarea class="form-control html_header" name="html_header"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+                            <div class="col-md-3 col-xs-12">
+                                <label>Schema Markup</label>
+                                <textarea class="form-control html_header" name="html_header"></textarea>
+                                 <small class="text-info">
+                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                </small>
+                            </div>
+                            <div class="col-md-3 col-xs-12">
                                 <label>Alt Text</label>
                                 <input type="text" class="form-control alt_text" name="alt_text" placeholder="Alt Text">
+                            </div>
+                            
+                            
+                            <div class="col-md-4 col-xs-12">
+                                <label class="display-block">&nbsp;</label>
+                                
+                                <label class="mr-1">
+                                    <input type="radio" name="status" value="1" class="status_active"> Active
+                                </label>
+                                
+                                
+                                <label><input type="radio" name="status" value="0" class="status_inactive"> Inactive</label>
                             </div>
 
                         </div>
 
                         <div class="form-group row">
 
-                            <div class="col-md-12 col-xs-12">
-
-                                <input type="radio" name="status" value="1" class="status_active">
-                                <label for="active" class="mr-1">Active</label>
-                                <input type="radio" name="status" value="0" class="status_inactive">
-                                <label for="inactive">Inactive</label>
-                            </div>
                         </div>
 
 

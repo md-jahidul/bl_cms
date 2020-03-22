@@ -28,8 +28,9 @@ class RoamingGeneralController extends Controller {
      */
     public function index() {
         $categories = $this->generalService->getCategories();
+        $pages = $this->generalService->getPages();
         
-        return view('admin.roaming.index', compact('categories'));
+        return view('admin.roaming.index', compact('categories', 'pages'));
     }
    
        /**
