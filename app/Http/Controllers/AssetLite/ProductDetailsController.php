@@ -37,23 +37,21 @@ class ProductDetailsController extends Controller
 
     protected $dataTypes = [
         'large_title_with_text' => 'Large Title With Text',
-        'large_title_text_button' => 'Large Title With Text Button',
+        'large_title_text_button' => 'Large Title With Text And Button',
         'medium_title_with_text' => 'Medium Title With Text',
         'small_title_with_text' => 'Small Title With Text',
         'text_and_button' => 'Text And Button',
-        'special_data_offer' => 'Special Data Offer',
-        'bondho_sim_offer' => 'Bondho Sim Offer',
-        'startup_offer' => 'Startup offer',
         'table_component' => 'Table Component',
 
-//        'title' => 'Title',
-//        'text_area' => 'Text Area',
 //        'single_image' => 'Single Image',
 
         'bullet_text' => 'Bullet Text',
         'accordion_text' => 'Accordion Text',
+        'multiple_image' => 'Multiple Image',
         'drop_down' => 'Dropdown',
-        'multiple_image' => 'Multiple Image'
+        'special_data_offer' => 'Special Data Offer',
+        'bondho_sim_offer' => 'Bondho Sim Offer',
+        'startup_offer' => 'Startup offer',
     ];
     /**
      * @var BannerImgRelatedProductService
@@ -77,12 +75,16 @@ class ProductDetailsController extends Controller
      * @param $productDetailsId
      * @return Factory|View
      */
-    public function sectionList($productDetailsId)
+    public function sectionList($offerType, $productDetailsId)
     {
+        $productType = $this->productService->findOne($productDetailsId);
+        $productType = $productType->offer_category_id;
         $products = $this->productService->produtcs();
         $productSections = $this->productDetailsSectionService->findBySection($productDetailsId);
         $bannerRelatedProduct = $this->bannerImgRelatedProductService->findBannerAndRelatedProduct($productDetailsId);
-        return view('admin.product.details.index', compact('productSections', 'productDetailsId', 'products', 'bannerRelatedProduct'));
+
+        return view('admin.product.details.index', compact('productSections', 'offerType','productDetailsId', 'products', 'productType', 'bannerRelatedProduct')
+        );
     }
 
     /**
@@ -163,6 +165,7 @@ class ProductDetailsController extends Controller
         $component = $this->componentService->findOne($id);
         $multipleImage = $component['multiple_attributes'];
         $products = $this->productService->produtcs();
+//        dd($multipleImage);
         return view('admin.product.details.components.edit', compact('component', 'products', 'multipleImage', 'dataTypes', 'sectionId', 'productDetailsId'));
     }
 
@@ -187,6 +190,11 @@ class ProductDetailsController extends Controller
         $response = $this->bannerImgRelatedProductService->storeImgProduct($request->all(), $productId);
         Session::flash('success', $response->content());
         return redirect(route('section-list', $productId));
+    }
+
+    public function sectionSortable(Request $request)
+    {
+        $this->productDetailsSectionService->tableSortable($request);
     }
 
 

@@ -41,7 +41,7 @@
 
 {{--                                            // Other Details ==============================================--}}
                                             @if(strtolower( $product->offer_category->name_en) == "others")
-                                                <a href="{{ route('section-list', [$product->id]) }}"
+                                                <a href="{{ route('section-list', [$type, $product->id]) }}"
                                                     class="btn-sm btn-outline-primary border">Details</a>
                                             @else
                                                 <a href="{{ route('product.details', [strtolower($type), $product->product_code, strtolower( $product->offer_category->name_en)]) }}"

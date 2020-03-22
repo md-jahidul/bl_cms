@@ -20,6 +20,10 @@
     <li class="breadcrumb-item active">Section List</li>
 @endsection
 @section('action')
+    <a href="{{ url("offers/$offerType") }}" class="btn btn-outline-secondary round btn-glow px-2"><i class="la la-arrow-left"></i>
+        Back To Product
+    </a>
+
     <a href="{{ route('section-create', [$productDetailsId]) }}" class="btn btn-success  round btn-glow px-2"><i class="la la-plus"></i>
         Add Section
     </a>
@@ -38,12 +42,12 @@
                             <th>Title (English)</th>
                             <th>Section Type</th>
                             <th>Components</th>
-                            <th width="12%">Action</th>
+                            <th width="12%" class="text-right">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable">
                         @foreach($productSections as $section)
-                            <tr>
+                            <tr data-index="{{ $section->id }}" data-position="{{ $section->display_order }}">
                                 <td class="pt-2">{{ $loop->iteration }}</td>
                                 <td class="pt-2">{{ $section->title_en }} {!! $section->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                 <td class="pt-2">{{ $section->title_bn }}</td>
@@ -53,8 +57,8 @@
                                        class="btn-sm btn-outline-primary border">Components</a>
                                 </td>
                                 <td class="action" width="8%">
-                                    <a href="{{ route('section-edit', [$productDetailsId, $section->id]) }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ route('section-destroy', [$productDetailsId, $section->id]) }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $section->id }}" title="Delete the user">
+                                    <a href="{{ route('section-edit', [$productDetailsId, $section->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" remove="{{ route('section-destroy', [$productDetailsId, $section->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $section->id }}" title="Delete the user">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>
@@ -80,7 +84,7 @@
                             <div class="row">
 
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                    <label for="mobileImg">Banner Image</label>
+                                    <label for="mobileImg">Desktop View Image</label>
                                     <div class="custom-file">
                                         <input type="file" name="banner_image_url" class="dropify" data-height="80" id="image"
                                                data-default-file="{{ isset($bannerRelatedProduct->banner_image_url) ?  config('filesystems.file_base_url') . $bannerRelatedProduct->banner_image_url : null  }}">
@@ -90,6 +94,20 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('banner_image_url'))
                                         <div class="help-block">  {{ $errors->first('banner_image_url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('mobile_view_img_url') ? ' error' : '' }}">
+                                    <label for="mobileImg">Mobile View Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="mobile_view_img_url" class="dropify" data-height="80" id="image"
+                                               data-default-file="{{ isset($bannerRelatedProduct->mobile_view_img_url) ?  config('filesystems.file_base_url') . $bannerRelatedProduct->mobile_view_img_url : null  }}">
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('mobile_view_img_url'))
+                                        <div class="help-block">  {{ $errors->first('mobile_view_img_url') }}</div>
                                     @endif
                                 </div>
 
@@ -103,15 +121,7 @@
                                     @endif
                                 </div>
 
-{{--                                <div class="form-group col-md-6">--}}
-{{--                                    @if($fixedSectionData['image'])--}}
-{{--                                        <img src="{{ config('filesystems.file_base_url') . $fixedSectionData['image'] }}" height="100" width="200" id="imgDisplay">--}}
-{{--                                    @else--}}
-{{--                                        <img height="100" width="200" id="imgDisplay" style="display: none">--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
-{{--                                @if($tab_type == "app" || $tab_type == "vas")--}}
+                                @if($productType !== \App\Enums\OfferType::OTHERS)
                                     <div class="form-group col-md-6 {{ $errors->has('component_title_en') ? ' error' : '' }}">
                                         <label for="component_title_en">Related Product Section Title (English)</label>
                                         <input type="text" name="component_title_en" id="component_title_en" class="form-control" placeholder="Enter offer name in English"
@@ -146,7 +156,8 @@
                                             <div class="help-block">  {{ $errors->first('related_product_id') }}</div>
                                         @endif
                                     </div>
-{{--                                @endif--}}
+                                @endif
+
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">
@@ -167,6 +178,7 @@
 
 @push('page-css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
 @endpush
 
 @push('page-js')
@@ -180,13 +192,7 @@
                 'error': 'Choose correct file format'
             }
         });
+
+        var auto_save_url = "{{ url('product-details/section-sortable') }}";
     </script>
-
 @endpush
-
-{{--<style>--}}
-{{--    h4.menu-title {--}}
-{{--        font-weight: bold;--}}
-{{--    }--}}
-{{--</style>--}}
-

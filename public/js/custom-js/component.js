@@ -21,11 +21,29 @@
 
     var related_product_field = $('#related_product_field');
 
-    // $('#data-type').change(function () {
-    //     alert();
-    // });
+    $('#component-type').change(function () {
+        var selectedValue = $('#data-type').find('option:selected').val();
+        product.select_change('#component-type');
 
-    function showHideElement(field, item) {
+    });
+
+
+
+    // $removeDomSelect = [$offerType, $packageType, $otherOfferType, $startupOfferDetails];
+    // $removeDomSelect.forEach(function ($ele) {
+    //     $ele.on('change', function () {
+    //         product.select_change($ele);
+    //     });
+    // })
+
+    $('#save').on('click', function (e) {
+        product.save(e, $removeDomSelect, 'product_form');
+    });
+
+
+
+    function showHideElement(field, item)
+    {
         $(field).on('click', function () {
             var isChecked = $(this).is(":checked");
             if (isChecked) {

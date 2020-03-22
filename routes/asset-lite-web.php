@@ -80,34 +80,34 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('/quick-launch-sortable', 'AssetLite\QuickLaunchController@quickLaunchSortable');
 
 
-   // About Us  ====================================
-   Route::resource('about-us', 'AssetLite\AboutUsController')->except(['show', 'destroy']);
-   Route::get('about-us/slider/{sliderId}/{type}', 'AssetLite\AboutUsController@sliderImageList')
-      ->name('about_image_list');
+    // About Us  ====================================
+    Route::resource('about-us', 'AssetLite\AboutUsController')->except(['show', 'destroy']);
+    Route::get('about-us/slider/{sliderId}/{type}', 'AssetLite\AboutUsController@sliderImageList')
+        ->name('about_image_list');
 
-   Route::get('about-us/slider-image/{sliderId}/{type}/create', 'AssetLite\AboutUsController@createSliderImage')
-      ->name('about_image_create');
+    Route::get('about-us/slider-image/{sliderId}/{type}/create', 'AssetLite\AboutUsController@createSliderImage')
+        ->name('about_image_create');
 
-   Route::post('about-us/slider-image/{sliderId}/{type}/store', 'AssetLite\AboutUsController@storeSliderImage')
-      ->name('about_image_store');
+    Route::post('about-us/slider-image/{sliderId}/{type}/store', 'AssetLite\AboutUsController@storeSliderImage')
+        ->name('about_image_store');
 
-   Route::get('about-us/slider-image/{sliderId}/{type}/edit/{id}', 'AssetLite\AboutUsController@editSliderImage')
-      ->name('about_image_edit');
+    Route::get('about-us/slider-image/{sliderId}/{type}/edit/{id}', 'AssetLite\AboutUsController@editSliderImage')
+        ->name('about_image_edit');
 
-   Route::post('about-us/slider-image/{sliderId}/{type}/update/{id}', 'AssetLite\AboutUsController@updateSliderImage')
-      ->name('about_image_update');
+    Route::post('about-us/slider-image/{sliderId}/{type}/update/{id}', 'AssetLite\AboutUsController@updateSliderImage')
+        ->name('about_image_update');
 
-   Route::get('about-us/slider-image/{sliderId}/{type}/destroy/{id}', 'AssetLite\AboutUsController@destroySliderImage')
-      ->name('about_image_destroy');
+    Route::get('about-us/slider-image/{sliderId}/{type}/destroy/{id}', 'AssetLite\AboutUsController@destroySliderImage')
+        ->name('about_image_destroy');
 
 
-   Route::get('about-us/destroy/{id}', 'AssetLite\AboutUsController@destroy');
+    Route::get('about-us/destroy/{id}', 'AssetLite\AboutUsController@destroy');
 
-   Route::get('about-slider/', 'AssetLite\AboutUsController@aboutSlider');
+    Route::get('about-slider/', 'AssetLite\AboutUsController@aboutSlider');
 
-   Route::resource('management', 'AssetLite\ManagementController')->except(['show', 'destroy']);
-   Route::get('management/destroy/{id}', 'AssetLite\ManagementController@destroy');
-   Route::get('management-sortable', 'AssetLite\ManagementController@managementSortable');
+    Route::resource('management', 'AssetLite\ManagementController')->except(['show', 'destroy']);
+    Route::get('management/destroy/{id}', 'AssetLite\ManagementController@destroy');
+    Route::get('management-sortable', 'AssetLite\ManagementController@managementSortable');
 
     Route::resource('about-career', 'AssetLite\AboutEcareerController')->except(['show', 'destroy']);
     Route::get('about-career-item/{careerId}', 'AssetLite\AboutEcareerItemController@index')
@@ -132,29 +132,29 @@ Route::middleware('authorize', 'auth')->group(function () {
 
 
 
-   // META TAG  ====================================
-   Route::resource('meta-tag', 'AssetLite\MetaTagController');
-   //Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
-   //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
-   // CONFIG  ====================================
-   Route::get('config', 'AssetLite\ConfigController@index');
-   Route::put('config/update', 'AssetLite\ConfigController@update');
+    // META TAG  ====================================
+    Route::resource('meta-tag', 'AssetLite\MetaTagController');
+    //Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
+    //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
+    // CONFIG  ====================================
+    Route::get('config', 'AssetLite\ConfigController@index');
+    Route::put('config/update', 'AssetLite\ConfigController@update');
 
-   // SLIDERS  ====================================
-   Route::get('single-sliders', 'AssetLite\SliderController@singleSlider');
-   Route::get('multiple-sliders', 'AssetLite\SliderController@multiSlider');
-   Route::get('sliders/{id}/{type}/edit', 'AssetLite\SliderController@edit');
-   Route::put('sliders/{id}/update', 'AssetLite\SliderController@update');
-   Route::get('slider/{slider_id}/{type}', 'AssetLite\SliderImageController@index')->name('slider_images');
-   Route::get('slider/{slider_id}/{type}/image/create', 'AssetLite\SliderImageController@create');
-   Route::post('slider/{slider_id}/{type}/image/store', 'AssetLite\SliderImageController@store')
-         ->name('slider_image_store');
-   Route::get('slider/{slider_id}/{type}/image/{id}', 'AssetLite\SliderImageController@edit')
-         ->name('slider_image_edit');
-   Route::post('slider/{slider_id}/{type}/image/{id}/update', 'AssetLite\SliderImageController@update')
-         ->name('slider_image_update');
-   Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'AssetLite\SliderImageController@destroy');
-   Route::get('/slider-image-sortable', 'AssetLite\SliderImageController@sliderImageSortable');
+    // SLIDERS  ====================================
+    Route::get('single-sliders', 'AssetLite\SliderController@singleSlider');
+    Route::get('multiple-sliders', 'AssetLite\SliderController@multiSlider');
+    Route::get('sliders/{id}/{type}/edit', 'AssetLite\SliderController@edit');
+    Route::put('sliders/{id}/update', 'AssetLite\SliderController@update');
+    Route::get('slider/{slider_id}/{type}', 'AssetLite\SliderImageController@index')->name('slider_images');
+    Route::get('slider/{slider_id}/{type}/image/create', 'AssetLite\SliderImageController@create');
+    Route::post('slider/{slider_id}/{type}/image/store', 'AssetLite\SliderImageController@store')
+        ->name('slider_image_store');
+    Route::get('slider/{slider_id}/{type}/image/{id}', 'AssetLite\SliderImageController@edit')
+        ->name('slider_image_edit');
+    Route::post('slider/{slider_id}/{type}/image/{id}/update', 'AssetLite\SliderImageController@update')
+        ->name('slider_image_update');
+    Route::get('slider/{slider_id}/{type}/image/destroy/{id}', 'AssetLite\SliderImageController@destroy');
+    Route::get('/slider-image-sortable', 'AssetLite\SliderImageController@sliderImageSortable');
 
 
 
@@ -178,171 +178,149 @@ Route::middleware('authorize', 'auth')->group(function () {
 
 
 
-   // Product Offers  ======================================
-   Route::get('offers/{type}', 'AssetLite\ProductController@index')->name('product.list');
-   Route::get('offers/{type}/create', 'AssetLite\ProductController@create')->name('product.create');
-   Route::post('offers/{type}/store', 'AssetLite\ProductController@store')->name('product.store');
-   Route::get('offers/{type}/{id}/edit/', 'AssetLite\ProductController@edit')->name('product.edit');
-   Route::put('offers/{type}/{id}/update', 'AssetLite\ProductController@update')->name('product.update');
-   Route::get('offers/{type}/{id}/show', 'AssetLite\ProductController@show')->name('product.show');
+    // Product Offers  ======================================
+    Route::get('offers/{type}', 'AssetLite\ProductController@index')->name('product.list');
+    Route::get('offers/{type}/create', 'AssetLite\ProductController@create')->name('product.create');
+    Route::post('offers/{type}/store', 'AssetLite\ProductController@store')->name('product.store');
+    Route::get('offers/{type}/{id}/edit/', 'AssetLite\ProductController@edit')->name('product.edit');
+    Route::put('offers/{type}/{id}/update', 'AssetLite\ProductController@update')->name('product.update');
+    Route::get('offers/{type}/{id}/show', 'AssetLite\ProductController@show')->name('product.show');
 
-   // Product Offers Details  ======================================
-   Route::get('offers/{type}/{id}/{offerType}/details', 'AssetLite\ProductController@productDetailsEdit')
-         ->name('product.details');
-   Route::put('offers/{type}/{id}/details/update', 'AssetLite\ProductController@productDetailsUpdate')
-         ->name('product.details-update');
+    // Product Offers Details  ======================================
+    Route::get('offers/{type}/{id}/{offerType}/details', 'AssetLite\ProductController@productDetailsEdit')
+        ->name('product.details');
+    Route::put('offers/{type}/{id}/details/update', 'AssetLite\ProductController@productDetailsUpdate')
+        ->name('product.details-update');
 
-   Route::post('product-details/{productId}/banner-image/related-product', 'AssetLite\ProductDetailsController@bannerImgRelatedPro')
-      ->name('bannerImg-relatedPro');
+    Route::post('product-details/{productId}/banner-image/related-product', 'AssetLite\ProductDetailsController@bannerImgRelatedPro')
+        ->name('bannerImg-relatedPro');
 
-   Route::get('product-details/{productDetailsId}/section', 'AssetLite\ProductDetailsController@sectionList')
-      ->name('section-list');
+    Route::get('product-details/{type}/{productDetailsId}/section', 'AssetLite\ProductDetailsController@sectionList')
+        ->name('section-list');
 
-   Route::get('product-details/{productDetailsId}/section-create', 'AssetLite\ProductDetailsController@create')
-      ->name('section-create');
+    Route::get('product-details/{productDetailsId}/section-create', 'AssetLite\ProductDetailsController@create')
+        ->name('section-create');
 
-   Route::post('product-details/{productDetailsId}/section-store', 'AssetLite\ProductDetailsController@storeSection')
-      ->name('section-store');
+    Route::post('product-details/{productDetailsId}/section-store', 'AssetLite\ProductDetailsController@storeSection')
+        ->name('section-store');
 
-   Route::get('product-details/{productDetailsId}/section-edit/{id}', 'AssetLite\ProductDetailsController@editSection')
-      ->name('section-edit');
+    Route::get('product-details/{productDetailsId}/section-edit/{id}', 'AssetLite\ProductDetailsController@editSection')
+        ->name('section-edit');
 
-   Route::post('product-details/{productDetailsId}/section-update/{id}', 'AssetLite\ProductDetailsController@updateSection')
-      ->name('section-update');
+    Route::post('product-details/{productDetailsId}/section-update/{id}', 'AssetLite\ProductDetailsController@updateSection')
+        ->name('section-update');
 
-   Route::get('product-details/{productDetailsId}/section-delete/{id}', 'AssetLite\ProductDetailsController@sectionDestroy')
-      ->name('section-destroy');
+    Route::get('product-details/{productDetailsId}/section-delete/{id}', 'AssetLite\ProductDetailsController@sectionDestroy')
+        ->name('section-destroy');
 
-   Route::get(
-      'product-details/{productDetailsId}/section/{sid}/components-list',
-      'AssetLite\ProductDetailsController@componentList'
-   )->name('component-list');
+    Route::get('product-details/section-sortable', 'AssetLite\ProductDetailsController@sectionSortable');
 
-   Route::get(
-      'product-details/{productDetailsId}/section/{SectionId}/components-create',
-      'AssetLite\ProductDetailsController@componentCreate'
-   )->name('component-create');
-
-   Route::post('product-details/{productDetailsId}/components-store/{SectionId}', 'AssetLite\ProductDetailsController@componentStore')
-      ->name('component-store');
-
-   Route::get(
-      'product-details/{productDetailsId}/section/{sid}/component/{id}/edit',
-      'AssetLite\ProductDetailsController@componentEdit'
-   )->name('component-edit');
-
-   Route::put('product-details/{productDetailsId}/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
-      ->name('component-update');
-
-   Route::get('product-details/{productDetailsId}/section/{sid}/component/{id}/delete', 'AssetLite\ProductDetailsController@componentDestroy')
-      ->name('component-delete');
-
-   Route::get('component-sortable', 'AssetLite\ProductDetailsController@componentSortable');
-
-  /*  Route::get('section/{id}', 'AssetLite\ProductDetailsController@otherOfferDetails')
-         ->name('section-list');
-
-   Route::get('section-create/{id}', 'AssetLite\ProductDetailsController@create')
-         ->name('section-create');
-
-   Route::post('section-store/{id}', 'AssetLite\ProductDetailsController@storeSection')
-         ->name('section-store');
-
-   Route::get('product-details/components-list/{SectionId}', 'AssetLite\ProductDetailsController@componentList')
-         ->name('component-list');
-
-   Route::get('components-create/{SectionId}', 'AssetLite\ProductDetailsController@componentCreate')
-         ->name('component-create');
-
-   Route::post('components-store/{SectionId}', 'AssetLite\ProductDetailsController@componentStore')
-         ->name('component-store');
-
-   Route::get('product-details/section/{sid}/component/{id}/edit', 'AssetLite\ProductDetailsController@componentEdit')
-         ->name('component-edit');
-
-   Route::put('product-details/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
-         ->name('component-update'); */
+    Route::get(
+        'product-details/{productDetailsId}/section/{sid}/components-list',
+        'AssetLite\ProductDetailsController@componentList'
+    )->name('component-list');
 
 
-   Route::get('offers/{type}/{id}', 'AssetLite\ProductController@destroy');
-   Route::get('trending-home', 'AssetLite\ProductController@trendingOfferHome')->name('trending-home');
+    Route::get(
+        'product-details/{productDetailsId}/section/{SectionId}/components-create',
+        'AssetLite\ProductDetailsController@componentCreate'
+    )->name('component-create');
+
+    Route::post('product-details/{productDetailsId}/components-store/{SectionId}', 'AssetLite\ProductDetailsController@componentStore')
+        ->name('component-store');
+
+    Route::get(
+        'product-details/{productDetailsId}/section/{sid}/component/{id}/edit',
+        'AssetLite\ProductDetailsController@componentEdit'
+    )->name('component-edit');
+
+    Route::put('product-details/{productDetailsId}/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
+        ->name('component-update');
+
+    Route::get('product-details/{productDetailsId}/section/{sid}/component/{id}/delete', 'AssetLite\ProductDetailsController@componentDestroy')
+        ->name('component-delete');
+
+    Route::get('component-sortable', 'AssetLite\ProductDetailsController@componentSortable');
+
+    Route::get('offers/{type}/{id}', 'AssetLite\ProductController@destroy');
+    Route::get('trending-home', 'AssetLite\ProductController@trendingOfferHome')->name('trending-home');
 //    Route::get('trending-home/{id}/edit', 'AssetLite\ProductController@homeEdit');
-   Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
+    Route::get('trending-home/sortable', 'AssetLite\ProductController@trendingOfferSortable');
 
-   //amar offer details......
-   Route::get('amaroffer/details', 'AssetLite\AmarOfferController@amarOfferDetails')->name('amaroffer.list');
-   Route::get('amaroffer/edit/{type}', 'AssetLite\AmarOfferController@edit')->name('amaroffer.edit');
-   Route::put('amaroffer/update/{type}', 'AssetLite\AmarOfferController@update')->name('amaroffer.update');
+    //amar offer details......
+    Route::get('amaroffer/details', 'AssetLite\AmarOfferController@amarOfferDetails')->name('amaroffer.list');
+    Route::get('amaroffer/edit/{type}', 'AssetLite\AmarOfferController@edit')->name('amaroffer.edit');
+    Route::put('amaroffer/update/{type}', 'AssetLite\AmarOfferController@update')->name('amaroffer.update');
 
-   // Device offers
-   Route::get('device-offer', 'AssetLite\DeviceOfferController@index');
-   Route::post('device-offer-list', 'AssetLite\DeviceOfferController@deviceOfferList')
-         ->name('deviceoffer.list.ajax');
+    // Device offers
+    Route::get('device-offer', 'AssetLite\DeviceOfferController@index');
+    Route::post('device-offer-list', 'AssetLite\DeviceOfferController@deviceOfferList')
+        ->name('deviceoffer.list.ajax');
 
-   Route::post('upload-device-offer-excel', 'AssetLite\DeviceOfferController@uploadOfferByExcel')
-         ->name('device.offer.excel.save');
+    Route::post('upload-device-offer-excel', 'AssetLite\DeviceOfferController@uploadOfferByExcel')
+        ->name('device.offer.excel.save');
 
-   Route::get('device-offer-status-change', 'AssetLite\DeviceOfferController@offerStatusChange')
-         ->name('offer.status.change');
-   Route::get('delete-device-offer/{id}', 'AssetLite\DeviceOfferController@deleteDeviceOffer');
+    Route::get('device-offer-status-change', 'AssetLite\DeviceOfferController@offerStatusChange')
+        ->name('offer.status.change');
+    Route::get('delete-device-offer/{id}', 'AssetLite\DeviceOfferController@deleteDeviceOffer');
 
 
 
-   // PARTNERS ====================================
-   Route::resource('partners', 'AssetLite\PartnerController')->except(['show', 'destroy', 'update']);
-   Route::post('partners/{id}', 'AssetLite\PartnerController@update');
-   Route::get('partner/destroy/{id}', 'AssetLite\PartnerController@destroy');
+    // PARTNERS ====================================
+    Route::resource('partners', 'AssetLite\PartnerController')->except(['show', 'destroy', 'update']);
+    Route::post('partners/{id}', 'AssetLite\PartnerController@update');
+    Route::get('partner/destroy/{id}', 'AssetLite\PartnerController@destroy');
 
-   Route::get('partner-offer/{partner_id}/{type}', 'AssetLite\PartnerOfferController@index')->name('partner-offer');
-   Route::get('partner-offer/{partner_id}/{partner}/offer/create', 'AssetLite\PartnerOfferController@create');
-   Route::post('partner-offer/{partner_id}/{partner}/offer/store', 'AssetLite\PartnerOfferController@store')
-         ->name('partner_offer_store');
-   Route::get('partner-offer/{partner_id}/{partner}/offer/{id}/', 'AssetLite\PartnerOfferController@edit')
-         ->name('partner_offer_edit');
-   Route::put('partner-offer/{partner_id}/{partner}/offer/{id}/update/', 'AssetLite\PartnerOfferController@update')
-         ->name('partner_offer_update');
-   Route::get('partner-offer/{partner_id}/{partner}/offer/destroy/{id}', 'AssetLite\PartnerOfferController@destroy');
-   Route::get('/partner-offer-home/sortable', 'AssetLite\PartnerOfferController@partnerOfferSortable');
-   Route::get('partner-offers-home', 'AssetLite\PartnerOfferController@partnerOffersHome')->name('partner-offer-home');
-   Route::get('campaign-offers', "AssetLite\PartnerOfferController@campaignOfferList")->name('campaign-offers.list');
-   Route::get('campaign-offer/sortable', "AssetLite\PartnerOfferController@campaignOfferSortable");
+    Route::get('partner-offer/{partner_id}/{type}', 'AssetLite\PartnerOfferController@index')->name('partner-offer');
+    Route::get('partner-offer/{partner_id}/{partner}/offer/create', 'AssetLite\PartnerOfferController@create');
+    Route::post('partner-offer/{partner_id}/{partner}/offer/store', 'AssetLite\PartnerOfferController@store')
+        ->name('partner_offer_store');
+    Route::get('partner-offer/{partner_id}/{partner}/offer/{id}/', 'AssetLite\PartnerOfferController@edit')
+        ->name('partner_offer_edit');
+    Route::put('partner-offer/{partner_id}/{partner}/offer/{id}/update/', 'AssetLite\PartnerOfferController@update')
+        ->name('partner_offer_update');
+    Route::get('partner-offer/{partner_id}/{partner}/offer/destroy/{id}', 'AssetLite\PartnerOfferController@destroy');
+    Route::get('/partner-offer-home/sortable', 'AssetLite\PartnerOfferController@partnerOfferSortable');
+    Route::get('partner-offers-home', 'AssetLite\PartnerOfferController@partnerOffersHome')->name('partner-offer-home');
+    Route::get('campaign-offers', "AssetLite\PartnerOfferController@campaignOfferList")->name('campaign-offers.list');
+    Route::get('campaign-offer/sortable', "AssetLite\PartnerOfferController@campaignOfferSortable");
 
-   Route::get('partner-offers/{partner}/{id}/details', 'AssetLite\PartnerOfferController@offerDetailsEdit')
-         ->name('offer.details');
-   Route::post('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
-         ->name('offer.details-update');
+    Route::get('partner-offers/{partner}/{id}/details', 'AssetLite\PartnerOfferController@offerDetailsEdit')
+        ->name('offer.details');
+    Route::post('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
+        ->name('offer.details-update');
 
-   // About Pages ================================
-   Route::get('about-page/{slug}', 'AssetLite\PriyojonController@aboutPageView')->name('about-page');
-   Route::put('about-page/update', 'AssetLite\PriyojonController@aboutPageUpdate')
-         ->name('about-page.update');
+    // About Pages ================================
+    Route::get('about-page/{slug}', 'AssetLite\PriyojonController@aboutPageView')->name('about-page');
+    Route::put('about-page/update', 'AssetLite\PriyojonController@aboutPageUpdate')
+        ->name('about-page.update');
 
 //    Route::get('about-reward', 'AssetLite\PriyojonController@aboutRewardPoint')->name('about-reward');
 //    Route::put('about-reward/update', 'AssetLite\PriyojonController@aboutRewardPointUpdate')
 //        ->name('about-reward.update');
-   //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
-   // Product Core Mapping To Product
-   Route::get('/core-product/entry', 'ProductEntryController@assetliteCoreProductForm');
-   Route::post('/core-product/store', 'ProductEntryController@assetliteCoreProductStore')
-         ->name('core-product-store');
-   Route::get('/core-product/mapping/{offerType}', 'AssetLite\ProductController@coreDataMappingProduct')
-         ->name('core-product-mapping');
-   Route::get('product-core/match/{productCode}', 'AssetLite\ProductController@existProductCore')
-         ->name('product-core/check');
+    //Route::get('/quick-launch-sortable','AssetLite\QuickLaunchController@quickLaunchSortable');
+    // Product Core Mapping To Product
+    Route::get('/core-product/entry', 'ProductEntryController@assetliteCoreProductForm');
+    Route::post('/core-product/store', 'ProductEntryController@assetliteCoreProductStore')
+        ->name('core-product-store');
+    Route::get('/core-product/mapping/{offerType}', 'AssetLite\ProductController@coreDataMappingProduct')
+        ->name('core-product-mapping');
+    Route::get('product-core/match/{productCode}', 'AssetLite\ProductController@existProductCore')
+        ->name('product-core/check');
 
-   Route::get('product-details-update', 'AssetLite\ProductController@updateDetails');
+    Route::get('product-details-update', 'AssetLite\ProductController@updateDetails');
 
 
-   // Fixed  ====================================
-   Route::get('fixed-pages', 'AssetLite\FixedPageController@index');
-   Route::get('fixed-page/{id}/components', 'AssetLite\FixedPageController@components')->name('fixed-page-components');
-   Route::get('fixed-pages/{id}/meta-tags', 'AssetLite\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
-   Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'AssetLite\FixedPageController@metaTagsUpdate');
-   Route::get('fixed-pages/{pageId}/component/{componentId}', 'AssetLite\FixedPageController@fixedPageStatusUpdate')
-         ->name('update-component-status');
-   // Route::get('dynamic-pages', 'AssetLite\FixedPageController@index');
+    // Fixed  ====================================
+    Route::get('fixed-pages', 'AssetLite\FixedPageController@index');
+    Route::get('fixed-page/{id}/components', 'AssetLite\FixedPageController@components')->name('fixed-page-components');
+    Route::get('fixed-pages/{id}/meta-tags', 'AssetLite\FixedPageController@metaTagsEdit')->name('fixed-page-metatags');
+    Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'AssetLite\FixedPageController@metaTagsUpdate');
+    Route::get('fixed-pages/{pageId}/component/{componentId}', 'AssetLite\FixedPageController@fixedPageStatusUpdate')
+        ->name('update-component-status');
+    // Route::get('dynamic-pages', 'AssetLite\FixedPageController@index');
 
-   Route::resource('questions', 'AssetLite\QuestionController');
+    Route::resource('questions', 'AssetLite\QuestionController');
 //     Route::resource('prize', 'PrizeController');
 //     Route::resource('tags', 'AssetLite\TagController');
 //     Route::resource('campaigns','AssetLite\CampaignController');
@@ -350,63 +328,81 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::get('/home', 'AssetLite\HomeController@index')->name('home');
 
-   Route::get('/test/excel', function (\App\Services\ProductCoreService $service) {
+    Route::get('/test/excel', function (\App\Services\ProductCoreService $service) {
 
-      $service->mapDataFromExcel('/home/bs104/Desktop/product_sample.xlsx');
-   });
+        $service->mapDataFromExcel('/home/bs104/Desktop/product_sample.xlsx');
+    });
 
-   // Product core ============================================
-   Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
-   Route::get('product-core/{id}/edit/', 'AssetLite\ProductCoreController@edit')->name('product.core.edit');
-
-
-   // Search ======================================================
-   Route::get('popular-search', 'AssetLite\SearchController@index');
-   Route::get('save-search-limit', 'AssetLite\SearchController@saveLimit')->name('save.search.limit');
-   Route::get('popular-search-create', 'AssetLite\SearchController@popularSearchCreate');
-   Route::get('search-product-list', 'AssetLite\SearchController@getProductList')->name('search.get.product.list');
-
-   Route::post('popular-search-save', 'AssetLite\SearchController@popularSearchSave')->name('popular.search.save');
-
-   Route::get('search-popular-edit/{keywordId}', 'AssetLite\SearchController@popularSearchEdit');
-   Route::post('popular-search-update', 'AssetLite\SearchController@popularSearchUpdate')->name('popular.search.update');
+    // Product core ============================================
+    Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
+    Route::get('product-core/{id}/edit/', 'AssetLite\ProductCoreController@edit')->name('product.core.edit');
 
 
-   Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus'); 
-   Route::get('popular-search-sort-change', 'AssetLite\SearchController@popularSortChange'); 
-   Route::get('popular-search-delete/{keywordId}', 'AssetLite\SearchController@deletePopularSearch'); 
+    // Search ======================================================
+    Route::get('popular-search', 'AssetLite\SearchController@index');
+    Route::get('save-search-limit', 'AssetLite\SearchController@saveLimit')->name('save.search.limit');
+    Route::get('popular-search-create', 'AssetLite\SearchController@popularSearchCreate');
+    Route::get('search-product-list', 'AssetLite\SearchController@getProductList')->name('search.get.product.list');
 
+    Route::post('popular-search-save', 'AssetLite\SearchController@popularSearchSave')->name('popular.search.save');
+
+    Route::get('search-popular-edit/{keywordId}', 'AssetLite\SearchController@popularSearchEdit');
+    Route::post('popular-search-update', 'AssetLite\SearchController@popularSearchUpdate')->name('popular.search.update');
+
+
+    Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus');
+    Route::get('popular-search-sort-change', 'AssetLite\SearchController@popularSortChange');
+    Route::get('popular-search-delete/{keywordId}', 'AssetLite\SearchController@deletePopularSearch');
+
+    // Product core ============================================
+    Route::get('product-core', 'AssetLite\ProductCoreController@index')->name('product.core.list');
+    Route::get('product-core/{id}/edit/', 'AssetLite\ProductCoreController@edit')->name('product.core.edit');
+
+
+    // Search ======================================================
+    Route::get('popular-search', 'AssetLite\SearchController@index');
+    Route::get('save-search-limit', 'AssetLite\SearchController@saveLimit')->name('save.search.limit');
+    Route::get('popular-search-create', 'AssetLite\SearchController@popularSearchCreate');
+    Route::get('search-product-list', 'AssetLite\SearchController@getProductList')->name('search.get.product.list');
+
+    Route::post('popular-search-save', 'AssetLite\SearchController@popularSearchSave')->name('popular.search.save');
+
+    Route::get('search-popular-edit/{keywordId}', 'AssetLite\SearchController@popularSearchEdit');
+    Route::post('popular-search-update', 'AssetLite\SearchController@popularSearchUpdate')->name('popular.search.update');
+
+    Route::get('popular-status-change/{keywordId}', 'AssetLite\SearchController@popularSearchStatus');
+    Route::get('popular-search-delete/{keywordId}', 'AssetLite\SearchController@deletePopularSearch');
 
     // Easy Payment Card ============================================
     Route::get('easy-payment-card', 'AssetLite\EasyPaymentCardController@index');
     Route::post('easy-payment-card-list', 'AssetLite\EasyPaymentCardController@getEasyPaymentCardList')->name('easypaymentcard.list.ajax');
     Route::post('upload-payment-card-excel', 'AssetLite\EasyPaymentCardController@uploadCardByExcel')
-            ->name('payment.card.excel.save');
+        ->name('payment.card.excel.save');
     Route::get('payment-card-status-change', 'AssetLite\EasyPaymentCardController@cardStatusChange')
-            ->name('payment.card.status.change');
+        ->name('payment.card.status.change');
     Route::get('delete-easy-payment-card/{id?}', 'AssetLite\EasyPaymentCardController@deletePaymentCard');
 
 
-   // Business Module ============================================
-   Route::get('business-general', 'AssetLite\BusinessGeneralController@index')->name('business.general');
+    // Business Module ============================================
+    Route::get('business-general', 'AssetLite\BusinessGeneralController@index')->name('business.general');
 
 
-   //__category   
-   Route::get('business-category-name-change', 'AssetLite\BusinessGeneralController@categoryNameChange')->name('business.category.name.save');  
-   Route::get('business-category-home-status-change', 'AssetLite\BusinessGeneralController@categoryStatusChange')->name('business.category.home.status.change');  
-   Route::post('business-category-banner-save', 'AssetLite\BusinessGeneralController@categoryBannerSave')
-           ->name('business.category.banner.save');  
+    //__category
+    Route::get('business-category-name-change', 'AssetLite\BusinessGeneralController@categoryNameChange')->name('business.category.name.save');
+    Route::get('business-category-home-status-change', 'AssetLite\BusinessGeneralController@categoryStatusChange')->name('business.category.home.status.change');
+    Route::post('business-category-banner-save', 'AssetLite\BusinessGeneralController@categoryBannerSave')
+        ->name('business.category.banner.save');
 
 
-   Route::get('business-category-sort-change', 'AssetLite\BusinessGeneralController@categorySortChange')->name('business.category.sort.save');
+    Route::get('business-category-sort-change', 'AssetLite\BusinessGeneralController@categorySortChange')->name('business.category.sort.save');
 
-   //sliding speed
+    //sliding speed
 
-   Route::get('business-save-sliding-speed', 'AssetLite\BusinessGeneralController@saveSlidingSpeed')
-         ->name('business.sliding.speed.save');
+    Route::get('business-save-sliding-speed', 'AssetLite\BusinessGeneralController@saveSlidingSpeed')
+        ->name('business.sliding.speed.save');
 
-   //__banner
-   Route::post('business-banner-photo-upload', 'AssetLite\BusinessGeneralController@bannerPhotoSave')->name('business.banner.photo.save');
+    //__banner
+    Route::post('business-banner-photo-upload', 'AssetLite\BusinessGeneralController@bannerPhotoSave')->name('business.banner.photo.save');
 
     //__news
     Route::post('business-news-save', 'AssetLite\BusinessGeneralController@homeNewsSave')->name('business.news.save');
@@ -443,7 +439,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('business-internet-update', 'AssetLite\BusinessInternetController@updateInternetPackage');
     Route::post('business-internet-package-list', 'AssetLite\BusinessInternetController@internetPackageList')->name("business.internet.list.ajax");
     Route::post('business-internet-excel', 'AssetLite\BusinessInternetController@uploadInternetExcel')
-            ->name('business.internet.excel.save');
+        ->name('business.internet.excel.save');
     Route::get('business-internet-status-change/{pakcageId}', 'AssetLite\BusinessInternetController@packageStatusChange');
     Route::get('business-internet-home-show/{pakcageId}', 'AssetLite\BusinessInternetController@packageHomeShow');
     Route::get('delete-business-internet-package/{pakcageId?}', 'AssetLite\BusinessInternetController@deletePackage');
@@ -466,7 +462,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::get('business-others-component-edit/{serviceId}/{position}/{type}', 'AssetLite\BusinessOthersController@editComponent');
     Route::post('business-others-component-update', 'AssetLite\BusinessOthersController@updateComponents')
-            ->name("business.component.update");
+        ->name("business.component.update");
 
     Route::get('business-others-component-delete/{serviceId}/{position}/{type}', 'AssetLite\BusinessOthersController@deleteComponent');
     Route::get('business-other-component-sort', 'AssetLite\BusinessOthersController@sortComponent');
@@ -576,11 +572,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('programs/progeneral/{type}/create', 'AssetLite\EcareerController@progeneralCreate')->name('programs.progeneral.create');
     Route::post('programs/progeneral/store', 'AssetLite\EcareerController@progeneralStore')->name('programs.progeneral.store');
 
-   Route::get('programs/progeneral/{id}/{type}/edit', 'AssetLite\EcareerController@progeneralEdit')->name('programs.progeneral.edit');
-   Route::post('programs/progeneral/{id}/update', 'AssetLite\EcareerController@progeneralUpdate')->name('programs.progeneral.update');
-   Route::get('programs/progeneral/destroy/{id}', 'AssetLite\EcareerController@progeneralDestroy')->name('programs.progeneral.destroy');
+    Route::get('programs/progeneral/{id}/{type}/edit', 'AssetLite\EcareerController@progeneralEdit')->name('programs.progeneral.edit');
+    Route::post('programs/progeneral/{id}/update', 'AssetLite\EcareerController@progeneralUpdate')->name('programs.progeneral.update');
+    Route::get('programs/progeneral/destroy/{id}', 'AssetLite\EcareerController@progeneralDestroy')->name('programs.progeneral.destroy');
 
-   Route::get('programs/progeneral/{type}', 'AssetLite\EcareerController@progeneralIndex')->name('programs.progeneral');
+    Route::get('programs/progeneral/{type}', 'AssetLite\EcareerController@progeneralIndex')->name('programs.progeneral');
 
 
 
@@ -642,51 +638,51 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::resource('app-service/category', 'AssetLite\AppServiceCategoryController')->except('show', 'destroy');
     Route::get('app-service/category/destroy/{id}', 'AssetLite\AppServiceCategoryController@destroy');
 
-   // App & Service Vendor API =========================================================
-   Route::resource('app-service/vendor-api', 'AssetLite\AppServiceVendorApiController')->except('show', 'destroy');
-   Route::get('app-service/vendor-api/destroy/{id}', 'AssetLite\AppServiceVendorApiController@destroy');
+    // App & Service Vendor API =========================================================
+    Route::resource('app-service/vendor-api', 'AssetLite\AppServiceVendorApiController')->except('show', 'destroy');
+    Route::get('app-service/vendor-api/destroy/{id}', 'AssetLite\AppServiceVendorApiController@destroy');
 
-   // App & Service Product =========================================================
-   Route::resource('app-service-product', 'AssetLite\AppServiceProductController')->except('show', 'destroy');
-   Route::get('app-service/product/destroy/{id}', 'AssetLite\AppServiceProductController@destroy');
+    // App & Service Product =========================================================
+    Route::resource('app-service-product', 'AssetLite\AppServiceProductController')->except('show', 'destroy');
+    Route::get('app-service/product/destroy/{id}', 'AssetLite\AppServiceProductController@destroy');
 
-   Route::get('app-service/category-find/{id}', 'AssetLite\AppServiceProductController@tabWiseCategory');
-
-
-   # App & Service details page
-   Route::get('app-service/details/{type}/{id}', 'AssetLite\AppServiceProductDetailsController@productDetails')
-         ->name('app_service.details.list');
-
-   Route::post('app-service/details/{type}/{id}/store', 'AssetLite\AppServiceProductDetailsController@store')
-         ->name('app_service.details.store');
-
-   Route::get('app-service/details/{type}/{id}/edit/{sectionID}', 'AssetLite\AppServiceProductDetailsController@edit')
-         ->name('app_service.details.edit');
-
-   Route::put('app-service/details/{type}/{id}/update/{sectionID}', 'AssetLite\AppServiceProductDetailsController@update')
-         ->name('app_service.details.update');
-
-   Route::get('app-service/sections/{type}/{id}/destroy/{sectionID}', 'AssetLite\AppServiceProductDetailsController@destroy')->name('app_service.sections.destroy');
+    Route::get('app-service/category-find/{id}', 'AssetLite\AppServiceProductController@tabWiseCategory');
 
 
+    # App & Service details page
+    Route::get('app-service/details/{type}/{id}', 'AssetLite\AppServiceProductDetailsController@productDetails')
+        ->name('app_service.details.list');
 
-   Route::post('app-service/details/{type}/{id}/fixed-section/', 'AssetLite\AppServiceProductDetailsController@fixedSectionUpdate')
-         ->name('app_service.details.fixed-section');
+    Route::post('app-service/details/{type}/{id}/store', 'AssetLite\AppServiceProductDetailsController@store')
+        ->name('app_service.details.store');
 
-   Route::get('/app-service-sections-sortable', 'AssetLite\AppServiceProductDetailsController@sectionsSortable');
-   Route::get('/app-service-component-attribute-sortable', 'AssetLite\ComponentController@multiAttributeSortable');
+    Route::get('app-service/details/{type}/{id}/edit/{sectionID}', 'AssetLite\AppServiceProductDetailsController@edit')
+        ->name('app_service.details.edit');
 
-   # App & Service component
-   Route::get('app-service/{type}/component/{id}/edit', 'AssetLite\ComponentController@conponentEdit')->name('appservice.component.edit');
-   Route::get('app-service/component/{type}/{id}', 'AssetLite\ComponentController@conponentList')->name('appservice.component.list');
-   Route::get('app-service/component/create', 'AssetLite\ComponentController@conponentCreate')->name('appservice.component.create');
-   Route::post('app-service/component/store', 'AssetLite\ComponentController@conponentStore')->name('appservice.component.store');
-   // Get component multi attr
-   Route::get('app-service/component/itemattr', 'AssetLite\ComponentController@conponentItemAttr')->name('appservice.component.itemattr');
-   Route::post('app-service/component/itemattr/store', 'AssetLite\ComponentController@conponentItemAttrStore')->name('appservice.component.itemattr.store');
-   Route::post('app-service/component/itemattr/destory', 'AssetLite\ComponentController@conponentItemAttrDestroy')->name('appservice.component.itemattr.destory');
+    Route::put('app-service/details/{type}/{id}/update/{sectionID}', 'AssetLite\AppServiceProductDetailsController@update')
+        ->name('app_service.details.update');
+
+    Route::get('app-service/sections/{type}/{id}/destroy/{sectionID}', 'AssetLite\AppServiceProductDetailsController@destroy')->name('app_service.sections.destroy');
 
 
-   // Lead Management ======================================================
-   Route::get('lead-requested-list', 'AssetLite\LeadManagementController@leadRequestedList')->name('lead-list');
+
+    Route::post('app-service/details/{type}/{id}/fixed-section/', 'AssetLite\AppServiceProductDetailsController@fixedSectionUpdate')
+        ->name('app_service.details.fixed-section');
+
+    Route::get('/app-service-sections-sortable', 'AssetLite\AppServiceProductDetailsController@sectionsSortable');
+    Route::get('/app-service-component-attribute-sortable', 'AssetLite\ComponentController@multiAttributeSortable');
+
+    # App & Service component
+    Route::get('app-service/{type}/component/{id}/edit', 'AssetLite\ComponentController@conponentEdit')->name('appservice.component.edit');
+    Route::get('app-service/component/{type}/{id}', 'AssetLite\ComponentController@conponentList')->name('appservice.component.list');
+    Route::get('app-service/component/create', 'AssetLite\ComponentController@conponentCreate')->name('appservice.component.create');
+    Route::post('app-service/component/store', 'AssetLite\ComponentController@conponentStore')->name('appservice.component.store');
+    // Get component multi attr
+    Route::get('app-service/component/itemattr', 'AssetLite\ComponentController@conponentItemAttr')->name('appservice.component.itemattr');
+    Route::post('app-service/component/itemattr/store', 'AssetLite\ComponentController@conponentItemAttrStore')->name('appservice.component.itemattr.store');
+    Route::post('app-service/component/itemattr/destory', 'AssetLite\ComponentController@conponentItemAttrDestroy')->name('appservice.component.itemattr.destory');
+
+
+    // Lead Management ======================================================
+    Route::get('lead-requested-list', 'AssetLite\LeadManagementController@leadRequestedList')->name('lead-list');
 });
