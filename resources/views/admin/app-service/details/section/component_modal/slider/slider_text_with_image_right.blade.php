@@ -192,10 +192,11 @@
 <script type="text/javascript">
 	$(document).ready(function () {
 	   
+	   var $padrentSelector = $('#slider_text_with_image_right');
 	   // Add multiple item
 	   $('.add_moreslider_item').on('click', function(){
 
-	     var i = parseInt($('#multi_item_count').val(), 10);
+	     var i = parseInt($padrentSelector.find('#multi_item_count').val(), 10);
 	     // $('#slider_content_section').empty();
 
 	     i = i+1;
@@ -208,7 +209,7 @@
 
 	     
 
-	     $('#multi_item_count').val(i);
+	     $padrentSelector.find('#multi_item_count').val(i);
 
 
 	   });
