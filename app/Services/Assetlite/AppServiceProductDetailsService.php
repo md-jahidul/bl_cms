@@ -311,9 +311,19 @@ class AppServiceProductDetailsService
 			   	$results['component'][$key]['multiple_attributes'] = json_encode($res);
 			   }
 
+			   if( isset($value->other_attributes) && !empty($value->other_attributes) ){
+			   	$other_res = json_decode($value->other_attributes, true);
+			   	if( !empty($other_res) && count($other_res) > 0 ){
+			   		foreach ($other_res as $other_key => $other_value) {
+			   			$results['component'][$key][$other_key] = $other_value;
+			   		}
+			   	}
+			   	
+			   }
+
 			   # get component type
 			   $results['primary_component_type'] = $value->component_type;
-			}
+			} // end foreach
 		}
 		
 

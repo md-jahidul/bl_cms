@@ -190,6 +190,17 @@
      $('#select_video_type').on('change', function(){
       var selected = $(this).val();
 
+      if( selected == 'youtube_video' ){
+
+        $(this).closest('form').find('div.youtube_video').show();
+        $(this).closest('form').find('div.uploaded_video').hide();
+
+      }
+      else if(selected == 'uploaded_video'){
+        $(this).closest('form').find('div.uploaded_video').show();
+        $(this).closest('form').find('div.youtube_video').hide();
+      }
+
       console.log(selected);
      });
 

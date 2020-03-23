@@ -647,6 +647,9 @@ function matchRelatedProduct($id, $roles)
 									$parentSelector.find("input[name='component["+cpk+"][id]']").val(cv);
 								 }
 
+								  if( ck == 'video' ){
+								 	$parentSelector.find("input[type='text'][name='component["+cpk+"][video_url]']").val(cv);
+								  }
 
 								 if( ck == 'description_en' ){                            
 								 $parentSelector.find("textarea[name='component["+cpk+"][description_en]']").val(cv);
@@ -667,6 +670,44 @@ function matchRelatedProduct($id, $roles)
 
 								 $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
 								 }
+
+
+								 // Other attribute parse
+								 if( ck == 'other_attributes' ){
+								 	if( typeof cv !== 'undefined' ){
+								 		var otherAttrData = eval(JSON.parse(cv));
+
+								 		
+
+								 		$.each(otherAttrData, function(ock, ocv){
+
+								 			// $parentSelector.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
+
+								 			if( ock == 'video_type' ){
+								 				if( ocv == 'youtube_video' ){
+
+								 					$parentSelector.find('#select_video_type').children("option[value='youtube_video']").attr('selected', true).siblings().attr('selected', false);
+
+								 					$parentSelector.find('.youtube_video.form-group').show();
+								 					$parentSelector.find('.uploaded_video.form-group').hide();
+
+								 				}
+								 				else if( ocv == 'uploaded_video' ){
+								 					$parentSelector.find('#select_video_type').children("option[value='uploaded_video']").attr('selected', true).siblings().attr('selected', false);
+
+								 					$parentSelector.find('.uploaded_video.form-group').show();
+								 					$parentSelector.find('.youtube_video.form-group').hide();
+								 				}
+								 			}else{
+								 				$parentSelector.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
+								 			}
+
+								 		});
+
+								 	}
+								 }
+
+
 
 							});
 
