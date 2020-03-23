@@ -473,6 +473,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('roaming/get-single-category/{catId}', 'AssetLite\RoamingGeneralController@getSingleCategory');
     Route::post('roaming/update-category', 'AssetLite\RoamingGeneralController@updateCategory');
     Route::get('roaming/category-sort', 'AssetLite\RoamingGeneralController@categorySortChange');
+    Route::get('roaming/edit-general-pages/{pageId}', 'AssetLite\RoamingGeneralController@editPage');
+    Route::post('roaming/update-general-page', 'AssetLite\RoamingGeneralController@updatePage');
     Route::get('roaming/operator-list', 'AssetLite\RoamingOperatorController@index');
 
     Route::post('roaming-operator-list', 'AssetLite\RoamingOperatorController@roamingOperatorList')
