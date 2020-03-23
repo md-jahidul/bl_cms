@@ -35,7 +35,6 @@
                                    } else{
                                       $status = "Inactive";
                                    }
-
                             @endphp
 
                         <tr>

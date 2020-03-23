@@ -87,7 +87,8 @@ class Helper
             "USSD_CODE_LIST"          => "View USSD code",
             "VOICE_BUNDLE"            => "Voice Bundles",
             "BALANCE_TRANSFER"        => "Balance Transfer",
-            "CONTACT_BACKUP"          => "Contact Backup"
+            "CONTACT_BACKUP"          => "Contact Backup",
+            "DIAL"                    => "Dial",
 
         ];
     }

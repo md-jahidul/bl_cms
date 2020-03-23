@@ -214,6 +214,43 @@
         </li>
     @endif
 
+        @if( auth()->user()->can_view('Product') )
+        <li class="nav-item"><a href="#"><i class="la la-briefcase"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Roaming</span></a>
+            <ul class="menu-content">
+
+                <li class="{{ is_active_url('roaming-general') }}">
+                    <a class="menu-item" href="{{ url('roaming-general') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i>Category & Pages</a>
+                </li>
+                <li class="{{ is_active_url('roaming-offers') }}">
+                    <a class="menu-item" href="{{ url('roaming-offers') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Offers</a>
+                </li>
+
+                <li class="{{ is_active_url('roaming-rates') }}">
+                    <a class="menu-item" href="{{ url('roaming-rates') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Roaming Rates</a>
+                </li>
+
+                <li class="{{ is_active_url('roaming-info-tips') }}">
+                    <a class="menu-item" href="{{ url('roaming-info-tips') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Info & Tips</a>
+                </li>
+
+                <li class="{{ is_active_url('roaming/operators') }}">
+                    <a class="menu-item" href="{{ url('roaming/operators') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Roaming Operators</a>
+                </li>
+
+            </ul>
+        </li>
+    @endif
+
         <li class="nav-item"><a href="#"><i class="la la-align-justify"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">About Us</span></a>
             <ul class="menu-content">
@@ -223,14 +260,19 @@
                        data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Banglalink</a>
                 </li>
 
-                <li class="{{ is_active_url('about-slider') }}">
-                    <a class="menu-item" href="{{ url('about-slider') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Slider</a>
-                </li>
-
                 <li class="{{ is_active_url('management') . is_active_url('management/create') }}">
                     <a class="menu-item" href="{{ url('management') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Management</a>
+                </li>
+
+                <li class="{{ is_active_url('about/career') }}">
+                    <a class="menu-item" href="{{ route('about-career.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> About Career</a>
+                </li>
+
+                <li class="{{ is_active_url('about-slider') }}">
+                    <a class="menu-item" href="{{ url('about-slider') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Slider</a>
                 </li>
 
             </ul>
@@ -413,7 +455,7 @@
         <li class="{{ is_active_url('/popular-search') }} nav-item">
             <a href="{{ url('popular-search') }}">
                 <i class="la la-search"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Popular Search</span>
+                <span class="menu-title" data-i18n="nav.templates.main">Search</span>
             </a>
         </li>
         <li class="{{ is_active_url('/easy-payment-card') }} nav-item">

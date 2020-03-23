@@ -125,6 +125,8 @@ class AppServiceProductController extends Controller
             $q->select('id', 'name_en', 'alias');
         }]);
 
+//        return $appServiceProduct->start_date;
+
         $appServiceCategory = $this->appServiceCategoryRepository
             ->findByProperties(
                 ['app_service_tab_id' => $appServiceProduct->app_service_tab_id],

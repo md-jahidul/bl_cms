@@ -14,7 +14,7 @@ class PopularSearchRepository extends BaseRepository {
     public $modelName = SearchPopularKeywords::class;
 
     public function getPopularData() {
-        $response = $this->model->get();
+        $response = $this->model->orderBy('sort')->get();
         return $response;
     }
 
@@ -65,6 +65,32 @@ class PopularSearchRepository extends BaseRepository {
             $response = [
                 'success' => 0,
                 'errors' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
+    }
+    
+    public function changeKeywordSorting($request) {
+        try {
+
+            $positions = $request->position;
+            foreach ($positions as $position) {
+                $kwId = $position[0];
+                $new_position = $position[1];
+                $update = $this->model->findOrFail($kwId);
+                $update['sort'] = $new_position;
+                $update->update();
+            }
+            
+            $response = [
+                'success' => 1,
+                'message' => 'Success'
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
             ];
             return response()->json($response, 500);
         }

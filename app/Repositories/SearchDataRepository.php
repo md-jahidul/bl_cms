@@ -14,11 +14,11 @@ class SearchDataRepository extends BaseRepository {
     public $modelName = SearchData::class;
 
     public function saveData($productId, $name, $url, $type, $tag) {
-        $previous = $this->model->where('product_id', $productId);
+        $previous = $this->model->where('keyword_id', $productId);
         if ($previous->count() > 0) {
            $save = $previous->update(
                     array(
-                        'product_name' => $name,
+                        'keyword' => $name,
                         'url' => $url,
                         'type' => $type,
                         'tag' => $tag,
@@ -27,8 +27,9 @@ class SearchDataRepository extends BaseRepository {
         } else {
            $save = $this->model->insert(
                     array(
-                        'product_id' => $productId,
-                        'product_name' => $name,
+                        'keyword_id' => $productId,
+                        'keyword_type' => 'offer-product',
+                        'keyword' => $name,
                         'url' => $url,
                         'type' => $type,
                         'tag' => $tag,

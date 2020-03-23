@@ -72,7 +72,7 @@ class ComponentService
             $data['other_attributes'] = json_encode(['video_type' => 'youtube_video']);
         }
 
-        $data['page_type'] = self::PAGE_TYPE;
+        $data['page_type'] = self::PAGE_TYPE['app_services'];
 
         $results = [];
         if (isset($data['multi_item']) && !empty($data['multi_item'])) {
@@ -106,7 +106,7 @@ class ComponentService
 
     public function componentStore($data, $sectionId)
     {
-
+//        dd($data);
 
         if (request()->hasFile('image')) {
             $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
@@ -158,34 +158,43 @@ class ComponentService
 
     public function componentUpdate($data, $id)
     {
-
         $component = $this->findOne($id);
 
-        // get original data
-        $new_multiple_attributes = $component->multiple_attributes;
-
-        // contains all the inputs from the form as an array
-        $input_multiple_attributes = isset($data['multiple_attributes']) ? $data['multiple_attributes'] : null;
-
-        // loop over the product array
-        if ($input_multiple_attributes) {
-            foreach ($input_multiple_attributes as $data_id => $inputData) {
-                foreach ($inputData as $key => $value) {
-                    // set the new value
-                    $new_multiple_attributes[$data_id][$key] = is_object($value) ? $this->upload($value, 'assetlite/images/product_details') : $value;
+        if (isset($data['multi_item']) && !empty($data['multi_item'])) {
+            $request_multi = $data['multi_item'];
+            $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
+            for ($i = 1; $i <= $item_count; $i++) {
+                foreach ($data['multi_item'] as $key => $value) {
+                    $sub_data = [];
+                    $check_index = explode('-', $key);
+                    if ($check_index[1] == $i) {
+                        if (request()->hasFile('multi_item.' . $key)) {
+                            $value = $this->upload($value, 'assetlite/images/product_details');
+                        }
+                        $results[$i][$check_index[0]] = $value;
+                    }
                 }
             }
         }
 
-        if (request()->hasFile('image')) {
-            $data['image'] = $this->upload($data['image'], 'assetlite/images/banner/product_details');
-        }
+        // get original data
+        $new_multiple_attributes = $component->multiple_attributes;
 
+//         contains all the inputs from the form as an array
+        $input_multiple_attributes = isset($results) ? array_values($results) : null;
+
+//         loop over the product array
+        if ($input_multiple_attributes) {
+            foreach ($input_multiple_attributes as $data_id => $inputData) {
+                foreach ($inputData as $key => $value) {
+                    // set the new value
+                    $new_multiple_attributes[$data_id][$key] = $value;
+                }
+            }
+        }
 
         $data['multiple_attributes'] = $new_multiple_attributes;
 
-
-        $data['page_type'] = "other_offer";
         $component->update($data);
         return response("Component update successfully!!");
     }
