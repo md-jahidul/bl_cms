@@ -27,52 +27,7 @@
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-{{--                                                    <div class="col-md-8 col-sm-12">--}}
-{{--                                                        <fieldset>--}}
-{{--                                                            <input type="checkbox" id="input-text">--}}
-{{--                                                            <label for="input-text" class="">Text Field</label>--}}
-{{--                                                        </fieldset>--}}
 
-{{--                                                        <fieldset>--}}
-{{--                                                            <input type="checkbox" id="extra-title">--}}
-{{--                                                            <label for="extra-title" class="">Extra Title</label>--}}
-{{--                                                        </fieldset>--}}
-
-{{--                                                        <fieldset>--}}
-{{--                                                            <input type="checkbox" id="text-area">--}}
-{{--                                                            <label for="text-area" class="">TextArea</label>--}}
-{{--                                                        </fieldset>--}}
-
-{{--                                                        <fieldset>--}}
-{{--                                                            <input type="checkbox" id="text-editor">--}}
-{{--                                                            <label for="text-editor" class="">Text Editor</label>--}}
-{{--                                                        </fieldset>--}}
-
-{{--                                                        <fieldset>--}}
-{{--                                                            <input type="checkbox" id="dropdown">--}}
-{{--                                                            <label for="text-editor" class="">Dropdown</label>--}}
-{{--                                                        </fieldset>--}}
-
-{{--                                                        <fieldset>--}}
-{{--                                                            <input type="checkbox" id="image-field">--}}
-{{--                                                            <label for="image-field" class="">Image Field</label>--}}
-{{--                                                        </fieldset>--}}
-
-{{--                                                        <fieldset>--}}
-{{--                                                            <input type="checkbox" id="multi-image">--}}
-{{--                                                            <label for="multi-image" class="">Multiple Image Field</label>--}}
-{{--                                                        </fieldset>--}}
-
-{{--                                                        <fieldset>--}}
-{{--                                                            <input type="checkbox" id="button-check">--}}
-{{--                                                            <label for="button" class="">Button</label>--}}
-{{--                                                        </fieldset>--}}
-
-{{--                                                        <fieldset>--}}
-{{--                                                            <input type="checkbox" id="related_product">--}}
-{{--                                                            <label for="related_product" class="">Related Product</label>--}}
-{{--                                                        </fieldset>--}}
-{{--                                                    </div>--}}
                                                 </div>
                                             </div>
                                         </div>
@@ -189,6 +144,17 @@
                                                         @endif
                                                     </div>
                                                 </slot>
+
+                                                <div class="col-md-12 mt-2">
+                                                    <div class="form-group">
+                                                        <label for="title" class="mr-1">Status:</label>
+                                                        <input type="radio" name="status" value="1" id="active" checked>
+                                                        <label for="active" class="mr-1">Active</label>
+
+                                                        <input type="radio" name="status" value="0" id="inactive">
+                                                        <label for="inactive">Inactive</label>
+                                                    </div>
+                                                </div>
 
                                                 <div class="form-actions col-md-12">
                                                     <div class="pull-right">

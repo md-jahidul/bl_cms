@@ -25,54 +25,29 @@ function matchRelatedProduct($id, $roles)
 @section('content')
 	<section>
 		
-		<!-- # Section add component -->
-		<div class="card">
-			<div class="card-content collapse show">
-				<div class="card-body card-dashboard">
-					<h4 class="pb-1"><strong>Add section components</strong></h4>
-					<div class="row">
-						<div class="col-sm-4">
-							<div class="form-group">
-								<label for="category_type">Select Component Type</label>
-								<select id="component_type" class="form-control" name="component_type" aria-invalid="false">
-									<option value="text_with_image_right">Text with image right</option>
-									<option value="text_with_image_bottom">Text with image bottom</option>
-									<option value="slider_text_with_image_right">Slider text with image right</option>
-									<option value="video_with_text_right">Video with text right</option>
-									<option value="multiple_image_banner">Multiple image banner</option>
-									<option value="pricing_sections">Pricing Multiple table</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<a id="add_component_btn" href="{{ route("app-service-product.create") }}" class="btn btn-primary  round btn-glow px-1" data-toggle="modal" data-target="#text_with_image_right"><i class="la la-plus"></i>
-									Add Component
-								</a>
-							</div>
-						</div>
-						<div class="col-sm-4"></div>
-						<div class="col-sm-4">
-							<div class="form-group">
-								<label for="category_type">Component Preview</label>
-								<div id="component_preview" class="component_preview" style="max-width: 400px;min-height: 200px;">
-									<img id="component_preview_img" class="img-fluid" style="border: 1px solid #eee;" src="{{asset('app-assets/images/app_services/text_with_image_right.png')}}" alt="">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 		
+		<!-- include tab wise product details -->
+		@if($tab_type == "app")
+			@include('admin.app-service.details.section.tab-details.app_tab_details')
+		@elseif($tab_type == "vas")
+			@include('admin.app-service.details.section.tab-details.vas_tab_details')
+		@elseif($tab_type == "financial")
+			@include('admin.app-service.details.section.tab-details.financial_tab_details')
+		@elseif($tab_type == "others")
+			@include('admin.app-service.details.section.tab-details.others_tab_details')
+		@endif
 
 		
-
+		@yield('component_type_selector')
+		
+		
 		<!-- # Section list with component card -->
 		<div class="card">
 			<div class="card-content collapse show">
 				<div class="card-body card-dashboard">
 					<h4 class="pb-1"><strong>Section Component List</strong></h4>
 					<table class="table table-striped table-bordered"
-						   role="grid" aria-describedby="Example1_info" style="">
+							 role="grid" aria-describedby="Example1_info" style="">
 						<thead>
 							<tr>
 								<td width="3%">#</td>
@@ -84,7 +59,7 @@ function matchRelatedProduct($id, $roles)
 								<th width="12%" class="">Action</th>
 							</tr>
 						</thead>
-						<tbody id="sortable">
+						<tbody id="section_sortable">
 {{--                            @if( !empty($section_list) )--}}
 								@foreach($section_list['section_body'] as $list)
 
@@ -133,8 +108,8 @@ function matchRelatedProduct($id, $roles)
 		</div>
 
 	</section>
-   
-   <!-- Fixed sections -->
+	 
+	 <!-- Fixed sections -->
 	<section>
 		<div class="card">
 			<div class="card-content collapse show">
@@ -173,7 +148,7 @@ function matchRelatedProduct($id, $roles)
 									<div class="form-group col-md-4 {{ $errors->has('title_en') ? ' error' : '' }}">
 										<label for="title_en">Title (English)</label>
 										<input type="text" name="title_en" id="title_en" class="form-control" placeholder="Enter offer name in English"
-											   value="{{ $fixedSectionData['title_en'] }}">
+												 value="{{ $fixedSectionData['title_en'] }}">
 										<div class="help-block"></div>
 										@if ($errors->has('title_en'))
 											<div class="help-block">{{ $errors->first('title_en') }}</div>
@@ -183,7 +158,7 @@ function matchRelatedProduct($id, $roles)
 									<div class="form-group col-md-4 {{ $errors->has('title_bn') ? ' error' : '' }}">
 										<label for="title_bn">Title (Bangla)</label>
 										<input type="text" name="title_bn" id="title_bn" class="form-control" placeholder="Enter offer name in Bangla"
-											   value="{{ $fixedSectionData['title_bn'] }}">
+												 value="{{ $fixedSectionData['title_bn'] }}">
 										<div class="help-block"></div>
 										@if ($errors->has('title_bn'))
 											<div class="help-block">{{ $errors->first('title_bn') }}</div>
@@ -222,21 +197,8 @@ function matchRelatedProduct($id, $roles)
 		</div>
 	</section>
 
-
-	<!-- # Component modal -->
-	@include('admin.app-service.details.section.component_modal.text_with_image_right')
-	@include('admin.app-service.details.section.component_modal.text_with_image_bottom')
-	@include('admin.app-service.details.section.component_modal.video_with_text_right')
-	@include('admin.app-service.details.section.component_modal.pricing_sections')
 	
-	<!-- multi image slider -->
-	@include('admin.app-service.details.section.component_modal.slider.slider_text_with_image_right')
-	@include('admin.app-service.details.section.component_modal.slider.edit_slider_text_with_image_right')
-	@include('admin.app-service.details.section.component_modal.slider.single_item_edit_slider_text_with_image_right')
-	<!-- multi image banner -->
-	@include('admin.app-service.details.section.component_modal.multi_banner.multiple_image_banner')
-	@include('admin.app-service.details.section.component_modal.multi_banner.edit_multiple_image_banner')
-	@include('admin.app-service.details.section.component_modal.multi_banner.single_item_edit_multiple_image_banner')
+	@yield('component_modal_toadd')
 
 
 @stop
@@ -270,8 +232,6 @@ function matchRelatedProduct($id, $roles)
 
 <script type="text/javascript">
 
-	var auto_save_url = "{{ url('app-service-sections-sortable') }}";
-
 	jQuery(document).ready(function($){
 		// Preview changes on component selection
 		$('#component_type').on('change', function(){
@@ -281,7 +241,6 @@ function matchRelatedProduct($id, $roles)
 
 			$('#add_component_btn').attr('data-target', '#'+$(this).val());
 
-			// console.log($(this).val());
 		});
 
 
@@ -296,8 +255,6 @@ function matchRelatedProduct($id, $roles)
 
 		var editUrl = $(this).attr('href');
 		var modalComponent = $(this).attr('data-sections');
-
-		
 
 		$.ajax({
 			url: editUrl,
@@ -326,11 +283,11 @@ function matchRelatedProduct($id, $roles)
 						$.each(result.data.sections, function(k, v){
 
 							if( k == 'title_en' ){     
-							   $parentSelectorEdit.find("input[name='sections[title_en]']").val(v);
+								 $parentSelectorEdit.find("input[name='sections[title_en]']").val(v);
 							}
 
 							if( k == 'title_bn' ){     
-							   $parentSelectorEdit.find("input[name='sections[title_bn]']").val(v);
+								 $parentSelectorEdit.find("input[name='sections[title_bn]']").val(v);
 							}
 							
 						});
@@ -339,10 +296,10 @@ function matchRelatedProduct($id, $roles)
 						$parentSelectorEdit.find('.section_id').val(result.data.sections.id);
 
 						$("input[name='sections[status]']").each(function(sk, sv){
-						   // console.log($(sv).val());
-						   if( $(sv).val() == result.data.sections.status ){
-							   $(sv).attr('checked', true);
-						   }
+							 // console.log($(sv).val());
+							 if( $(sv).val() == result.data.sections.status ){
+								 $(sv).attr('checked', true);
+							 }
 
 						});
 
@@ -352,12 +309,12 @@ function matchRelatedProduct($id, $roles)
 
 							$.each(cpv, function(ck, cv){
 
-							   if( ck == 'id' ){                            
+								 if( ck == 'id' ){                            
 								 $parentSelectorEdit.find("input[name='component["+cpk+"][id]']").val(cv);
 								 $('.tablecompoent_'+cpk).attr('data-component_id', cv);
-							   }
+								 }
 
-							   // Multiple attribute parse
+								 // Multiple attribute parse
 								if( ck == 'multiple_attributes' ){
 
 									if( typeof cv !== 'undefined' ){
@@ -379,16 +336,16 @@ function matchRelatedProduct($id, $roles)
 
 										// Enable sortable for slider
 										$("#slider_sortable").sortable({
-										    update: function (event, ui) {
-										        $(this).children().each(function (index) {
+												update: function (event, ui) {
+														$(this).children().each(function (index) {
 
-										            if ($(this).attr('data-position') != (index + 1)) {
-										                $(this).attr('data-position', (index + 1));
-										            }
-									        		 	$(this).addClass('sorting_updated');
-										        });
-										        saveNewPositionsMultiAttr($(this));
-										    }
+																if ($(this).attr('data-position') != (index + 1)) {
+																		$(this).attr('data-position', (index + 1));
+																}
+																$(this).addClass('sorting_updated');
+														});
+														saveNewPositionsMultiAttr($(this));
+												}
 										});
 
 									}
@@ -400,7 +357,7 @@ function matchRelatedProduct($id, $roles)
 									if( typeof cv !== 'undefined' ){
 										var otherAttrData = eval(JSON.parse(cv));
 
-										$.each(otherAttrData, function(ock, ocv){
+										$.each(otherAttrData, function(ock, ocv){  
 
 											$parentSelectorEdit.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
 
@@ -429,10 +386,10 @@ function matchRelatedProduct($id, $roles)
 						$parentSelectorEdit.find('.section_id').val(result.data.sections.id);
 
 						$("input[name='sections[status]']").each(function(sk, sv){
-						   // console.log($(sv).val());
-						   if( $(sv).val() == result.data.sections.status ){
-							   $(sv).attr('checked', true);
-						   }
+							 // console.log($(sv).val());
+							 if( $(sv).val() == result.data.sections.status ){
+								 $(sv).attr('checked', true);
+							 }
 
 						});
 
@@ -442,12 +399,12 @@ function matchRelatedProduct($id, $roles)
 
 							$.each(cpv, function(ck, cv){
 
-							   if( ck == 'id' ){                            
+								 if( ck == 'id' ){                            
 								 $parentSelectorEdit.find("input[name='component["+cpk+"][id]']").val(cv);
 								 $('.tablecompoent_'+cpk).attr('data-component_id', cv);
-							   }
+								 }
 
-							   // Multiple attribute parse
+								 // Multiple attribute parse
 								if( ck == 'multiple_attributes' ){
 									// console.log(cv);
 
@@ -461,7 +418,7 @@ function matchRelatedProduct($id, $roles)
 
 											var html = '';
 
-											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" style="max-width:100px;" /></td><td>'+mcv.alt_text+'</td><td>'+mcv.status+'</td><td><a href="#" class="banner_multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a></td></tr>';
+											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" style="max-width:100px;" /></td><td>'+mcv.alt_text+'</td><td>'+mcv.status+'</td><td><a href="#" class="banner_multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a><a href="#" class="border-0 btn-sm btn-outline-danger delete_multi_attr_item" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'" title="Delete"><i class="la la-trash"></i></a></td></tr>';
 
 											$parentSelectorEdit.find('#slider_sortable').append(html);
 
@@ -470,16 +427,16 @@ function matchRelatedProduct($id, $roles)
 
 										// Enable sortable for slider
 										$parentSelectorEdit.find("#slider_sortable").sortable({
-										    update: function (event, ui) {
-										        $(this).children().each(function (index) {
+												update: function (event, ui) {
+														$(this).children().each(function (index) {
 
-										            if ($(this).attr('data-position') != (index + 1)) {
-										                $(this).attr('data-position', (index + 1));
-										            }
-									        		 	$(this).addClass('sorting_updated');
-										        });
-										        saveNewPositionsMultiAttr($(this));
-										    }
+																if ($(this).attr('data-position') != (index + 1)) {
+																		$(this).attr('data-position', (index + 1));
+																}
+																$(this).addClass('sorting_updated');
+														});
+														saveNewPositionsMultiAttr($(this));
+												}
 										});
 
 									}
@@ -507,6 +464,135 @@ function matchRelatedProduct($id, $roles)
 
 
 					}
+					 // Check component is Accordion?
+					else if( result.data.sections.section_type == 'accordion_section' ){
+
+						var $parentSelectorEdit = $('#'+modalComponent);
+
+						$parentSelectorEdit.find('#accordion').empty();
+
+						$parentSelectorEdit.modal('show');
+						
+						// Add section id
+						$parentSelectorEdit.find('.section_id').val(result.data.sections.id);
+
+						$("input[name='sections[status]']").each(function(sk, sv){
+							 // console.log($(sv).val());
+							 if( $(sv).val() == result.data.sections.status ){
+								 $(sv).attr('checked', true);
+							 }
+
+						});
+
+						// console.log(result.data.component);
+
+						// Compoent foreach
+						$.each(result.data.component, function(cpk, cpv){
+
+							$.each(cpv, function(ck, cv){
+
+								 if( ck == 'id' ){                            
+								 $parentSelectorEdit.find("input[name='component["+cpk+"][id]']").val(cv);
+								 $('.accordion_compoent_'+cpk).attr('data-component_id', cv);
+								 }
+
+								 // Multiple attribute parse
+								if( ck == 'multiple_attributes' ){
+									// console.log(cv);
+
+									if( typeof cv !== 'undefined' ){
+										var multiData = eval(JSON.parse(cv));
+										// $parentSelectorEdit.find('#slider_sortable').empty();
+										 console.log();
+
+										 var lastItemId = multiData[multiData.length-1].id;
+
+										 $parentSelectorEdit.find("input[name='component["+cpk+"][multi_item_count]']").val(lastItemId);
+
+										var component_id = $('.accordion_compoent_'+cpk).attr('data-component_id');
+
+										$.each(multiData, function(mck, mcv){
+
+											var html = '';
+
+											mck++;
+
+											html += '<div class="card accordion collapse-icon accordion-icon-rotate" data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><input type="hidden" name="component[0][multi_item][id-'+mck+']" value="'+mcv.id+'"><input type="hidden" name="component[0][multi_item][display_order-'+mck+']" value="'+mcv.display_order+'"><div class="card-header bg-info info"> <div class="row"> <div class="col-sm-12 m_bottom_6"> <a class="card-link collapsed" data-toggle="collapse" href="#collapse_'+mck+'" aria-expanded="false"> <strong><i class="la la-sort"></i> Accordion Title #'+mck+'</strong> </a> </div></div><div class="row card_header_extra"> <div class="form-group col-md-6 "> <label for="title_en" class="required">Title (English)</label> <input type="text" name="component[0][multi_item][title_en-'+mck+']" class="form-control" value="'+mcv.title_en+'" required> <div class="help-block"></div></div><div class="form-group col-md-6 "> <label for="title_bn" class="required">Title (Bangla)</label> <input type="text" name="component[0][multi_item][title_bn-'+mck+']" class="form-control" value="'+mcv.title_bn+'" required> <div class="help-block"></div></div></div></div><div id="collapse_'+mck+'" class="collapse show1 border-info" data-parent="#accordion"> <div class="card-body"> <div class="row"> <div class="form-group col-md-6 "> <label for="title_en" class="required1">Content Title (English)</label> <input type="text" name="component[0][multi_item][content_title_en-'+mck+']" class="form-control" value="'+mcv.content_title_en+'" > <div class="help-block"></div></div><div class="form-group col-md-6 "> <label for="title_bn" class="required1">Content Title (Bangla)</label> <input type="text" name="component[0][multi_item][content_title_bn-'+mck+']" class="form-control" value="'+mcv.content_title_bn+'" > <div class="help-block"></div></div><div class="col-md-6"> <div class="form-group"> <label for="exampleInputPassword1">Accordion content (English)</label> <textarea name="component[0][multi_item][editor_en-'+mck+']" class="form-control js_editor_box" rows="5" placeholder="Enter description">'+mcv.editor_en+'</textarea> </div></div><div class="col-md-6"> <div class="form-group"> <label for="exampleInputPassword1">Accordion content (Bangla)</label> <textarea name="component[0][multi_item][editor_bn-'+mck+']" class="form-control js_editor_box" rows="5" placeholder="Enter description">'+mcv.editor_bn+'</textarea> </div></div></div></div><div class="card-footer"> <div class="row"> <div class="col-md-6"> <div class="form-group1">';
+
+											if( mcv.status == "1" ){
+												html += '<label for="title" class="mr-1">Status:</label> <input type="radio" name="component[0][multi_item][status-'+mck+']" value="1" checked> <label for="active" class="mr-1">Active</label> <input type="radio" name="component[0][multi_item][status-'+mck+']" value="0"> <label for="inactive">Inactive</label>';
+											}
+											else{
+												html += '<label for="title" class="mr-1">Status:</label> <input type="radio" name="component[0][multi_item][status-'+mck+']" value="1"> <label for="active" class="mr-1">Active</label> <input type="radio" name="component[0][multi_item][status-'+mck+']" value="0" checked> <label for="inactive">Inactive</label>';
+											}
+										
+
+										html += '</div></div><div class="col-md-6"> <div class="float-right"> <a href="#" class="border-0 btn-sm btn-outline-danger delete_accordion_item" data-item_id="'+mck+'" title="Delete"> <i class="la la-trash"></i> </a> </div></div></div></div></div></div>';
+
+											$parentSelectorEdit.find('#accordion').append(html);
+
+										});
+
+										// Enable sortable for slider
+										$parentSelectorEdit.find("#accordion").sortable({
+												connectWith: "#accordion",
+									      handle: ".card-header .card-link",
+									      cancel: ".portlet-toggle",
+									      placeholder: "portlet-placeholder ui-corner-all",
+												update: function (event, ui) {
+														$(this).children().each(function (index) {
+
+																if ($(this).attr('data-position') != (index + 1)) {
+																		$(this).attr('data-position', (index + 1));
+																}
+																$(this).addClass('sorting_updated');
+														});
+														saveNewPositionsMultiAttr($(this));
+												}
+										});
+
+									}
+								}
+
+
+								// Other attribute parse
+								if( ck == 'other_attributes' ){
+									if( typeof cv !== 'undefined' ){
+										var otherAttrData = eval(JSON.parse(cv));
+
+										$.each(otherAttrData, function(ock, ocv){
+
+											$parentSelectorEdit.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
+
+										});
+
+									}
+								}
+
+
+							});
+
+						});
+						
+
+						// editor reload
+						$('.js_editor_box').each(function(k, v){
+						   $(this).summernote({
+						       toolbar: [
+						           ['style', ['bold', 'italic', 'underline', 'clear']],
+						           ['font', ['strikethrough', 'superscript', 'subscript']],
+						           ['fontsize', ['fontsize']],
+						           ['color', ['color']],
+						           // ['table', ['table']],
+						           ['para', ['ul', 'ol', 'paragraph']],
+						           ['view', ['fullscreen', 'codeview']]
+						       ],
+						       height:200
+						   });
+						});
+
+
+					}
 					else{
 						$('#'+modalComponent).modal('show');
 
@@ -514,11 +600,11 @@ function matchRelatedProduct($id, $roles)
 						$.each(result.data.sections, function(k, v){
 
 							if( k == 'title_en' ){     
-							   $parentSelector.find("input[name='sections[title_en]']").val(v);
+								 $parentSelector.find("input[name='sections[title_en]']").val(v);
 							}
 
 							if( k == 'title_bn' ){     
-							   $parentSelector.find("input[name='sections[title_bn]']").val(v);
+								 $parentSelector.find("input[name='sections[title_bn]']").val(v);
 							}
 							
 						});
@@ -527,10 +613,10 @@ function matchRelatedProduct($id, $roles)
 						$parentSelector.find('.section_id').val(result.data.sections.id);
 
 						$("input[name='sections[status]']").each(function(sk, sv){
-						   // console.log($(sv).val());
-						   if( $(sv).val() == result.data.sections.status ){
-							   $(sv).attr('checked', true);
-						   }
+							 // console.log($(sv).val());
+							 if( $(sv).val() == result.data.sections.status ){
+								 $(sv).attr('checked', true);
+							 }
 
 						});
 
@@ -540,47 +626,88 @@ function matchRelatedProduct($id, $roles)
 
 							$.each(cpv, function(ck, cv){
 
-							   if( ck == 'title_en' ){                            
+								 if( ck == 'title_en' ){                            
 								 $parentSelector.find("input[name='component["+cpk+"][title_en]']").val(cv);
-							   }
+								 }
 
-							   if( ck == 'title_bn' ){                            
+								 if( ck == 'title_bn' ){                            
 								 $parentSelector.find("input[name='component["+cpk+"][title_bn]']").val(cv);
-							   }
+								 }
 
-							   if( ck == 'alt_text' ){                            
+								 if( ck == 'alt_text' ){                            
 								 $parentSelector.find("input[name='component["+cpk+"][alt_text]']").val(cv);
-							   }
+								 }
 
 
-							   if( ck == 'image' ){
+								 if( ck == 'image' ){
 								 $parentSelector.find('.imgDisplay').attr('src', baseUrl + cv).show();
-							   }
+								 }
 
-							   if( ck == 'id' ){
-								  $parentSelector.find("input[name='component["+cpk+"][id]']").val(cv);
-							   }
+								 if( ck == 'id' ){
+									$parentSelector.find("input[name='component["+cpk+"][id]']").val(cv);
+								 }
 
+								  if( ck == 'video' ){
+								 	$parentSelector.find("input[type='text'][name='component["+cpk+"][video_url]']").val(cv);
+								  }
 
-							   if( ck == 'description_en' ){                            
+								 if( ck == 'description_en' ){                            
 								 $parentSelector.find("textarea[name='component["+cpk+"][description_en]']").val(cv);
-							   }
+								 }
 
-							   if( ck == 'description_bn' ){                            
+								 if( ck == 'description_bn' ){                            
 								 $parentSelector.find("textarea[name='component["+cpk+"][description_bn]']").val(cv);
-							   }
+								 }
 
-							   if( ck == 'editor_en' ){                            
+								 if( ck == 'editor_en' ){                            
 								 $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").val(cv);
 
 								 $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
-							   }
+								 }
 
-							   if( ck == 'editor_bn' ){                            
+								 if( ck == 'editor_bn' ){                            
 								 $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").val(cv);
 
 								 $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
-							   }
+								 }
+
+
+								 // Other attribute parse
+								 if( ck == 'other_attributes' ){
+								 	if( typeof cv !== 'undefined' ){
+								 		var otherAttrData = eval(JSON.parse(cv));
+
+								 		
+
+								 		$.each(otherAttrData, function(ock, ocv){
+
+								 			// $parentSelector.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
+
+								 			if( ock == 'video_type' ){
+								 				if( ocv == 'youtube_video' ){
+
+								 					$parentSelector.find('#select_video_type').children("option[value='youtube_video']").attr('selected', true).siblings().attr('selected', false);
+
+								 					$parentSelector.find('.youtube_video.form-group').show();
+								 					$parentSelector.find('.uploaded_video.form-group').hide();
+
+								 				}
+								 				else if( ocv == 'uploaded_video' ){
+								 					$parentSelector.find('#select_video_type').children("option[value='uploaded_video']").attr('selected', true).siblings().attr('selected', false);
+
+								 					$parentSelector.find('.uploaded_video.form-group').show();
+								 					$parentSelector.find('.youtube_video.form-group').hide();
+								 				}
+								 			}else{
+								 				$parentSelector.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
+								 			}
+
+								 		});
+
+								 	}
+								 }
+
+
 
 							});
 
@@ -608,76 +735,121 @@ function matchRelatedProduct($id, $roles)
 
 	// multi attribute sortable
 	function saveNewPositionsMultiAttr($this)
-	    {
-	        var positions = [];
-	        $('.sorting_updated').each(function () {
-	            positions.push([
-	                $(this).attr('data-index'),
-	                $(this).attr('data-position')
-	            ]);
-	        });
-	        // var component_id = null;
+			{
+					var positions = [];
+					$('.sorting_updated').each(function () {
+							positions.push([
+									$(this).attr('data-index'),
+									$(this).attr('data-position')
+							]);
+					});
+					// var component_id = null;
 
-	        var componentID = $this.attr('data-component_id');
+					var componentID = $this.attr('data-component_id');
 
-	        // console.log(componentID);
+					// console.log(componentID);
 
-	        $.ajax({
+					$.ajax({
+							methods: "POST",
+							url: "{{ url('app-service-component-attribute-sortable') }}",
+							data: {
+									update: 1,
+									position: positions,
+									component_id: componentID,
+							},
+							success: function (data) {
+									console.log(data)
+							},
+							error: function () {
+									// window.location.replace(auto_save_url);
+							}
+					});
+			}
+			
+
+			// Delete multiple attribute items
+			$(document).on('click', '.delete_multi_attr_item', function(e){
+				e.preventDefault();
+
+				// var confirm = confirm('Are you sure?');
+				$this = $(this);
+
+				if( confirm("Are you sure?") ){
+
+					var itemID = $this.attr('data-item_id');
+					var componentID = $this.attr('data-component_id');	    		
+
+					$.ajax({
+							type: "POST",
+							url: "{{ route('appservice.component.itemattr.destory') }}",
+							data: {	    		        
+									item_id: itemID,
+									component_id: componentID,
+									_token : "{{csrf_token()}}"
+							},
+							success: function (data) {
+									console.log(data)
+
+									if( data.status == "SUCCESS" ){
+
+											$this.parents('tr').remove();
+									}
+
+							},
+							error: function () {
+									// window.location.replace(auto_save_url);
+							}
+					});
+
+				}
+
+
+			});
+
+
+
+			// Section sortable
+			$("#section_sortable").sortable({
+					update: function (event, ui) {
+							$(this).children().each(function (index) {
+
+									if ($(this).attr('data-position') != (index + 1)) {
+											$(this).attr('data-position', (index + 1));
+									}
+									$(this).addClass('sorting_updated');
+							});
+							saveNewPositionsSections($(this));
+					}
+			});
+
+
+			// multi attribute sortable
+			function saveNewPositionsSections($this)
+			{
+					var positions = [];
+					$('.sorting_updated').each(function () {
+							positions.push([
+									$(this).attr('data-index'),
+									$(this).attr('data-position')
+							]);
+					});
+
+					$.ajax({
 	            methods: "POST",
-	            url: "{{ url('app-service-component-attribute-sortable') }}",
+	            url: "{{ url('app-service-sections-sortable') }}",
 	            data: {
 	                update: 1,
-	                position: positions,
-	                component_id: componentID,
+	                position: positions
 	            },
 	            success: function (data) {
 	                console.log(data)
 	            },
 	            error: function () {
-	                // window.location.replace(auto_save_url);
+	                window.location.replace(auto_save_url);
 	            }
 	        });
-	    }
-	    
 
-	    // Delete multiple attribute items
-	    $(document).on('click', '.delete_multi_attr_item', function(e){
-	    	e.preventDefault();
-
-	    	// var confirm = confirm('Are you sure?');
-	    	$this = $(this);
-
-	    	if( confirm("Are you sure?") ){
-
-	    		var itemID = $this.attr('data-item_id');
-	    		var componentID = $this.attr('data-component_id');	    		
-
-	    		$.ajax({
-	    		    type: "POST",
-	    		    url: "{{ route('appservice.component.itemattr.destory') }}",
-	    		    data: {	    		        
-	    		        item_id: itemID,
-	    		        component_id: componentID,
-	    		        _token : "{{csrf_token()}}"
-	    		    },
-	    		    success: function (data) {
-	    		        console.log(data)
-
-	    		        if( data.status == "SUCCESS" ){
-
-	    		        		$this.parents('tr').remove();
-	    		        }
-
-	    		    },
-	    		    error: function () {
-	    		        // window.location.replace(auto_save_url);
-	    		    }
-	    		});
-
-	    	}
-
-
-	    });
+			}
 
 
 </script>

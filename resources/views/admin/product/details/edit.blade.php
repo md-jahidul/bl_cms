@@ -29,22 +29,27 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                    <label for="title_bn" class="required">Title (Bangla)</label>
+                                    <label for="title_bn" class="">Title (Bangla)</label>
                                     <input type="text" name="title_bn"  class="form-control" placeholder="Enter company name bangla"
-                                           value="{{ $section->title_bn }}" required data-validation-required-message="Enter company name in Bangla">
+                                           value="{{ $section->title_bn }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    <label for="tag_category_id">Section Type</label>
-                                    <select class="form-control" name="section_type">
+                                <div class="form-group col-md-6  {{ $errors->has('section_type') ? ' error' : '' }}">
+                                    <label for="tag_category_id" class="required">Section Type</label>
+                                    <select class="form-control" name="section_type" required
+                                            data-validation-required-message="Please select section type">
                                         <option value="">---Select Section Type---</option>
                                         <option value="multi_section" {{ ($section->section_type == "multi_section") ? "selected" : '' }}>Multi Component Section</option>
                                         <option value="tab_section" {{ ($section->section_type == "tab_section") ? "selected" : '' }}>Tab Section</option>
                                     </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('section_type'))
+                                        <div class="help-block">  {{ $errors->first('section_type') }}</div>
+                                    @endif
                                 </div>
 
 {{--                                <div class="col-md-6 mt-1">--}}

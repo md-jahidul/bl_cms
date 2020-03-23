@@ -110,15 +110,15 @@
                                     @include('layouts.partials.products.internet')
                                 </slot>
 
-{{--                                <slot id="packages" data-offer-type="packages" style="display: none">--}}
-{{--                                    @include('layouts.partials.products.packages')--}}
-{{--                                </slot>--}}
+{{--                            <slot id="packages" data-offer-type="packages" style="display: none">--}}
+{{--                                @include('layouts.partials.products.packages')--}}
+{{--                            </slot>--}}
 
-{{--                                <slot id="others" data-offer-type="others" style="display: none">--}}
-{{--                                    @include('layouts.partials.products.other')--}}
-{{--                                </slot>--}}
+{{--                            <slot id="others" data-offer-type="others" style="display: none">--}}
+{{--                                @include('layouts.partials.products.other')--}}
+{{--                            </slot>--}}
 
-                                @if( strtolower($type) == 'prepaid')
+                                @if(strtolower($type) == 'prepaid')
                                     <slot id="call_rate" data-offer-type="call_rate" style="display: none">
                                         @include('layouts.partials.products.common-field.product_code')
                                         @include('layouts.partials.products.call_rate')
@@ -146,8 +146,6 @@
                                 </div>
 
                                 @include('layouts.partials.products.common-field.balance_check')
-
-
 
                                 <div class="form-group col-md-6 ">
                                     <label for="price">Offer Price</label>
@@ -196,7 +194,6 @@
                                         <label for="title" class="mr-1">Status:</label>
                                         <input type="radio" name="status" value="1" id="active" checked>
                                         <label for="active" class="mr-1">Active</label>
-
                                         <input type="radio" name="status" value="0" id="inactive">
                                         <label for="inactive">Inactive</label>
                                     </div>

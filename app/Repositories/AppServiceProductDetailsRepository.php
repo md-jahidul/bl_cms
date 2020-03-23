@@ -23,7 +23,7 @@ class AppServiceProductDetailsRepository extends BaseRepository
         return $this->model->with('sectionComponent')->where('product_id', $product_id)
             ->where('category', 'component_sections')
             ->whereNull('deleted_at')
-            ->orderBy('section_order')
+            ->orderBy('section_order', 'asc')
             ->get();
     }
 

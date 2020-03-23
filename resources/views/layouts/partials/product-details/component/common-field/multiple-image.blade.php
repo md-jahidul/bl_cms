@@ -3,8 +3,6 @@
     <div class="form-group">
         <label for="message">Multiple Image</label>
         <input type="file" class="dropify" name="multi_item[image_url-1]" data-height="80"/>
-
-        {{--                                                            <input type="file" class="dropify" name="multiple_attributes[image][image_url_1]" data-height="80"/>--}}
         <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
     </div>
 </div>
@@ -13,7 +11,6 @@
     <label for="alt_text">Alt Text</label>
     <input type="text" name="multi_item[alt_text-1]" class="form-control">
 
-    {{--                                                        <input type="text" name="multiple_attributes[alt_text][alt_text_1]" class="form-control">--}}
 </div>
 
 <div class="form-group col-md-1">

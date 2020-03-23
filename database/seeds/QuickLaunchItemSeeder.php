@@ -30,6 +30,7 @@ class QuickLaunchItemSeeder extends Seeder
                 'alt_text' => $item,
                 'link' => strtolower(str_replace(" ", "-", $item)),
                 'type' => 'panel',
+                'slug' => str_replace(' ', '_', strtolower($item)),
                 'status' => 1,
                 'display_order' => ++$key
             ];
@@ -43,6 +44,7 @@ class QuickLaunchItemSeeder extends Seeder
                 'alt_text' => $item,
                 'link' => strtolower(str_replace(" ", "-", $item)),
                 'type' => 'button',
+                'slug' => str_replace(' ', '_', strtolower($item)),
                 'status' => 1,
                 'display_order' => ++$key
             ];
