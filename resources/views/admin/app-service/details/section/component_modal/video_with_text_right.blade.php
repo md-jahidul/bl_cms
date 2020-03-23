@@ -188,7 +188,9 @@
   $(document).ready(function () {
      
      $('#select_video_type').on('change', function(){
-      
+      var selected = $(this).val();
+
+      console.log(selected);
      });
 
 

@@ -87,9 +87,6 @@ class AppServiceProductDetailsController extends Controller
 
             # Update section data
             $section_data = $data['sections'];
-
-            // dd($data['sections']);
-
             if( isset($section_data['id']) && !empty($section_data['id']) ){
 
                 $this->appServiceProductDetailsService->updateAppServiceDetailsSection($section_data, $section_data['id']);
@@ -156,6 +153,8 @@ class AppServiceProductDetailsController extends Controller
         // $section = $this->appServiceProductDetailsService->getSectionComponentByID($section_id);
         
         // return view('admin.app-service.details.section.edit', compact('tab_type', 'product_id', 'section'));
+        
+
 
         $section = $this->appServiceProductDetailsService->getJsonSectionComponentList($section_id);
 

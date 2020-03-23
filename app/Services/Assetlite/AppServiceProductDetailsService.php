@@ -62,10 +62,12 @@ class AppServiceProductDetailsService
 		# Save sections data
 		$sections_data = $data['sections'];
 
-		// dd($data);
+		
 		
 		
 		$sections_data['product_id'] = $product_id;
+		$sections_data['section_order'] = 99;
+
 		$sections_saved_data = $this->save($sections_data);
 
 		if( isset($sections_saved_data->id) && !empty($sections_saved_data->id) ){
@@ -110,7 +112,7 @@ class AppServiceProductDetailsService
 
 						            }
 
-						            $results[$i][$check_index[0]] = $m_value;
+						            $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
 						            
 						        }
 						    }
@@ -150,6 +152,8 @@ class AppServiceProductDetailsService
 	 */
 	public function updateAppServiceDetailsComponent($data, $compoent_id, $key = null){
 
+		// dd(request()->input('update'));
+
 		$component = $this->componentRepository->findOne($compoent_id);
 		
 		if( isset($data['image_url']) && !empty($data['image_url']) ){
@@ -177,35 +181,39 @@ class AppServiceProductDetailsService
 			                $m_value = $this->upload($data['multi_item'][$m_key], 'assetlite/images/app-service/product/details');
 			            }
 
-			            $results[$i][$check_index[0]] = $m_value;
+			            $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
 			            
 			        }
 			    }
 			}
 
-			
-			# get existing multiattr data
-			$existing_multi_data = $component->multiple_attributes;
-
-			if( !empty($existing_multi_data) ){
-				$existing_multi_data = json_decode($existing_multi_data, true);
-
-				$last_array_id = end($existing_multi_data)['id'];
-				$last_display_order_id = end($existing_multi_data)['display_order'];
-
-				$new_results = array_map(function($value) use ($last_array_id, $last_display_order_id){
-
-					$value['id'] = ($value['id'] + $last_array_id);
-					$value['display_order'] = $value['id'];
-
-					return $value;
-
-				}, $results);
-
+			if( request()->input('update') == 'full_update_multi_attr' ){
+				$final_results = $results;
 			}
+			else{
+				# get existing multiattr data
+				$existing_multi_data = $component->multiple_attributes;
 
-			$final_results = array_merge($existing_multi_data, $new_results);
+				if( !empty($existing_multi_data) ){
+					$existing_multi_data = json_decode($existing_multi_data, true);
 
+					$last_array_id = end($existing_multi_data)['id'];
+					$last_display_order_id = end($existing_multi_data)['display_order'];
+
+					$new_results = array_map(function($value) use ($last_array_id, $last_display_order_id){
+
+						$value['id'] = ($value['id'] + $last_array_id);
+						$value['display_order'] = $value['id'];
+
+						return $value;
+
+					}, $results);
+
+				}
+
+				$final_results = array_merge($existing_multi_data, $new_results);
+			}
+			
 			$data['multiple_attributes'] = !empty($final_results) ? json_encode($final_results) : null;
 
 		}
@@ -217,6 +225,8 @@ class AppServiceProductDetailsService
 		elseif( isset($data['video_url']) ){
 			$data['video'] = $data['video_url'];
 		}
+
+
 
 		$component->update($data);
 
