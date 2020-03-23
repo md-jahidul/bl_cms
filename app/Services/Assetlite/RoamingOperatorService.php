@@ -12,6 +12,7 @@ use App\Repositories\RoamingOperatorRepository;
 use App\Repositories\TagCategoryRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class RoamingOperatorService {
@@ -73,39 +74,19 @@ class RoamingOperatorService {
      * Save internet package
      * @return Response
      */
-    public function saveInternet($request) {
+    public function saveOperator($request) {
         try {
-
             $request->validate([
-                'product_code' => 'required',
-                'product_code_ev' => 'required',
-                'product_code_with_renew' => 'required',
-                'product_commercial_name_en' => 'required',
-                'product_commercial_name_bn' => 'required',
-                'product_short_description' => 'required',
-                'activation_ussd_code' => 'required',
-                'balance_check_ussd_code' => 'required',
-                'data_volume' => 'required',
-                'volume_data_unit' => 'required',
-                'validity' => 'required',
-                'validity_unit' => 'required',
-                'mrp' => 'required',
-                'price' => 'required',
+                'country_en' => 'required',
+                'country_bn' => 'required',
+                'operator_en' => 'required',
+                'operator_bn' => 'required',
+                'tap_code' => 'required',
             ]);
-
-            //file upload in storege
-            $bannerPath = "";
-            if ($request['banner_photo'] != "") {
-                $bannerPath = $this->upload($request['banner_photo'], 'assetlite/images/business-images');
-            }
-
-            $this->internetRepo->saveInternet($bannerPath, $request);
-
+            $this->save($request->all());
             $response = [
                 'success' => 1,
             ];
-
-
             return $response;
         } catch (\Exception $e) {
             $response = [
@@ -117,43 +98,24 @@ class RoamingOperatorService {
     }
 
     /**
-     * Save internet package
-     * @return Response
+     * @param $request
+     * @return array
      */
-    public function updateInternet($request) {
+    public function updateOperator($request, $id)
+    {
         try {
-
             $request->validate([
-                'product_code' => 'required',
-                'product_code_ev' => 'required',
-                'product_code_with_renew' => 'required',
-                'product_commercial_name_en' => 'required',
-                'product_commercial_name_bn' => 'required',
-                'product_short_description' => 'required',
-                'activation_ussd_code' => 'required',
-                'balance_check_ussd_code' => 'required',
-                'data_volume' => 'required',
-                'volume_data_unit' => 'required',
-                'validity' => 'required',
-                'validity_unit' => 'required',
-                'mrp' => 'required',
-                'price' => 'required',
+                'country_en' => 'required',
+                'country_bn' => 'required',
+                'operator_en' => 'required',
+                'operator_bn' => 'required',
+                'tap_code' => 'required',
             ]);
-
-            //file upload in storege
-            $bannerPath = "";
-            if ($request['banner_photo'] != "") {
-                $bannerPath = $this->upload($request['banner_photo'], 'assetlite/images/business-images');
-                $this->deleteFile($request['old_banner']);
-            }
-
-            $this->internetRepo->saveInternet($bannerPath, $request);
-
+            $operator = $this->findOne($id);
+            $operator->update($request->all());
             $response = [
                 'success' => 1,
             ];
-
-
             return $response;
         } catch (\Exception $e) {
             $response = [
@@ -166,7 +128,7 @@ class RoamingOperatorService {
 
     /**
      * Upload/Save excel file
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function saveExcel($request)
     {
@@ -185,13 +147,12 @@ class RoamingOperatorService {
 
     /**
      * Delete Internet package
-     * @return Response
+     * @param $operatorId
+     * @return JsonResponse
      */
-    public function deletePackage($packageId) {
-        $package = $this->internetRepo->getInternetById($packageId);
-        $this->deleteFile($package->banner_photo);
-        $response = $this->internetRepo->deletePackage($packageId);
-        return $response;
+    public function deleteOperator($operatorId)
+    {
+        return $this->roamingOperatorRepository->deleteOperator($operatorId);
     }
 
 }

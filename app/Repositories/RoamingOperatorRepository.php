@@ -26,7 +26,7 @@ class RoamingOperatorRepository extends BaseRepository {
 
 
         $all_items_count = $builder->count();
-        $items = $builder->skip($start)->take($length)->get();
+        $items = $builder->skip($start)->take($length)->latest()->get();
 
         $response = [
             'draw' => $draw,
@@ -160,10 +160,10 @@ class RoamingOperatorRepository extends BaseRepository {
         }
     }
 
-    public function deletePackage($packageId) {
+    public function deleteOperator($operatorId) {
         try {
-            if ($packageId > 0) {
-                $package = $this->model->findOrFail($packageId);
+            if ($operatorId > 0) {
+                $package = $this->model->findOrFail($operatorId);
                 $package->delete();
             } else {
                 $this->model->truncate();
