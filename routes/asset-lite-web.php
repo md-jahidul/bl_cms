@@ -473,9 +473,23 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('roaming/get-single-category/{catId}', 'AssetLite\RoamingGeneralController@getSingleCategory');
     Route::post('roaming/update-category', 'AssetLite\RoamingGeneralController@updateCategory');
     Route::get('roaming/category-sort', 'AssetLite\RoamingGeneralController@categorySortChange');
+
     Route::get('roaming/edit-general-pages/{pageId}', 'AssetLite\RoamingGeneralController@editPage');
     Route::post('roaming/update-general-page', 'AssetLite\RoamingGeneralController@updatePage');
-    Route::get('roaming/operator-list', 'AssetLite\RoamingOperatorController@index');
+    
+
+    Route::get('roaming/operators', 'AssetLite\RoamingOperatorController@index');
+
+    Route::get('roaming/operator/create', 'AssetLite\RoamingOperatorController@operatorCreate');
+
+    Route::post('roaming/operator/store', 'AssetLite\RoamingOperatorController@operatorStore')
+        ->name('operator.store');
+
+    Route::get('roaming/operator/edit/{id}', 'AssetLite\RoamingOperatorController@operatorEdit');
+
+    Route::put('roaming/operator/update/{operatorId}', 'AssetLite\RoamingOperatorController@updateOperator')
+        ->name('operator.update');
+
 
     Route::post('roaming-operator-list', 'AssetLite\RoamingOperatorController@roamingOperatorList')
         ->name('roaming.operator.list.ajax');
@@ -483,6 +497,9 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('roaming/operator-excel', 'AssetLite\RoamingOperatorController@uploadOperatorExcel')
         ->name('roaming.operator-excel.save');
 
+    Route::get('roaming-operator-status-change/{pakcageId}', 'AssetLite\RoamingOperatorController@operatorStatusChange');
+
+    Route::get('roaming-operator/destroy/{operatorId?}', 'AssetLite\RoamingOperatorController@deleteOperator');
 
     // eCarrer ============================================
     Route::get('life-at-banglalink/general', 'AssetLite\EcareerController@generalIndex')->name('life.at.banglalink.general');

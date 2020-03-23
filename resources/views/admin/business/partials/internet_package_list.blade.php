@@ -37,6 +37,11 @@
 
 <script>
     $(function () {
+
+
+
+
+
         $("#internet_package_list").dataTable({
             scrollX: true,
             processing: true,

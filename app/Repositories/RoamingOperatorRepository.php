@@ -26,7 +26,7 @@ class RoamingOperatorRepository extends BaseRepository {
 
 
         $all_items_count = $builder->count();
-        $items = $builder->skip($start)->take($length)->get();
+        $items = $builder->skip($start)->take($length)->latest()->get();
 
         $response = [
             'draw' => $draw,
@@ -37,16 +37,16 @@ class RoamingOperatorRepository extends BaseRepository {
 
         $items->each(function ($item) use (&$response) {
 
-//            $statusBtn = "<a href='$item->id' class='btn-sm btn-success package_change_status'>Active</a>";
-//            if ($item->status == 0) {
-//                $statusBtn = "<a href='$item->id' class='btn-sm btn-warning package_change_status'>Inactive</a>";
-//            }
+            $statusBtn = "<a href='$item->id' class='btn-sm btn-success operator_change_status'>Active</a>";
+            if ($item->status == 0) {
+                $statusBtn = "<a href='$item->id' class='btn-sm btn-warning operator_change_status'>Inactive</a>";
+            }
             $response['data'][] = [
                 'id' => $item->id,
                 'country_en' => $item->country_en,
-                'operator_en' => $item->country_en,
+                'operator_en' => $item->operator_en,
                 'tap_code' => $item->tap_code,
-//                'status' => $statusBtn
+                'status' => $statusBtn
             ];
         });
 
@@ -143,13 +143,10 @@ class RoamingOperatorRepository extends BaseRepository {
 
     public function statusChange($packageId) {
         try {
-
             $card = $this->model->findOrFail($packageId);
-
             $status = $card->status == 1 ? 0 : 1;
             $card->status = $status;
             $card->save();
-
             $response = [
                 'success' => 1
             ];
@@ -163,10 +160,10 @@ class RoamingOperatorRepository extends BaseRepository {
         }
     }
 
-    public function deletePackage($packageId) {
+    public function deleteOperator($operatorId) {
         try {
-            if ($packageId > 0) {
-                $package = $this->model->findOrFail($packageId);
+            if ($operatorId > 0) {
+                $package = $this->model->findOrFail($operatorId);
                 $package->delete();
             } else {
                 $this->model->truncate();

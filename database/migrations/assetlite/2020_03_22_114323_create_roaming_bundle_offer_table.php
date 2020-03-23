@@ -26,6 +26,7 @@ class CreateRoamingBundleOfferTable extends Migration
             $table->decimal('mrp', 8, 2)->nullable();
             $table->decimal('price', 8, 2)->nullable();
             $table->decimal('tax', 8, 2)->nullable();
+            $table->tinyInteger('status')->default(1)->comment('1=show,0=hide');
             $table->timestamps();
         });
     }

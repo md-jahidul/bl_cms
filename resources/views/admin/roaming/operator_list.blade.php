@@ -2,8 +2,8 @@
 @section('title', 'Roaming Operator')
 @section('card_name', 'Roaming Operators')
 @section('action')
-    <a href="{{ url('business-internet-create') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
-        Add Package
+    <a href="{{ url('roaming/operator/create') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+        Add Operator
     </a>
 @endsection
 @section('content')
@@ -23,8 +23,8 @@
                                 @csrf
                                 <div class="col-md-12 col-xs-12">
                                     <div class="form-group">
-                                        <label for="message">Upload Internet Package List</label>
-                                        <a href="{{ asset('sample-format/business-internet-product.xlsx')}}" class="badge badge-info ml-2">Download Sample Format</a></br>
+                                        <label for="message">Upload Roaming Operator List</label>
+                                        <a href="{{ asset('sample-format/roaming-operators.xlsx')}}" class="badge badge-info ml-2">Download Sample Format</a></br>
                                         <input type="file" class="dropify" name="package_file" data-height="80"
                                                data-allowed-file-extensions='["xlsx", "xls"]' required/>
                                     </div>
@@ -38,7 +38,7 @@
 
                         </div>
                     </div>
-                    @include('admin.roaming.partials.roaming-operator-list')
+                    @include('admin.roaming.partials.operator-table-list')
                 </div>
             </div>
         </div>
@@ -122,7 +122,7 @@ if (Session::has('sussess')) {
                     success: function (result) {
                         if (result.success) {
                             swal.fire({
-                                title: 'Internet package excel is uploaded successfully!',
+                                title: 'Roaming operator excel is uploaded successfully!',
                                 type: 'success',
                                 timer: 2000,
                                 showConfirmButton: false
@@ -142,7 +142,7 @@ if (Session::has('sussess')) {
                     },
                     error: function (data) {
                         swal.fire({
-                            title: 'Failed to upload internet package excel',
+                            title: 'Failed to upload roaming operator excel',
                             type: 'error',
                         });
                     }
