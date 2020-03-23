@@ -68,6 +68,8 @@ class RoamingGeneralService {
             $request->validate([
                 'name_en' => 'required',
                 'name_bn' => 'required',
+                'page_url' => 'required|regex:/^\S*$/u',
+                'banner_name' => 'required|regex:/^\S*$/u',
             ]);
 
             //file upload in storege
@@ -91,7 +93,7 @@ class RoamingGeneralService {
             }
 
             //save data in database 
-            $saveNews = $this->catRepo->updateCategory($webPath, $mobilePath, $request);
+            $this->catRepo->updateCategory($webPath, $mobilePath, $request);
 
 
 
@@ -126,6 +128,14 @@ class RoamingGeneralService {
      */
     public function getPages() {
         $response = $this->pagesRepo->getPageList();
+        return $response;
+    }
+    /**
+     * Get Roaming general page by ID
+     * @return Response
+     */
+    public function getPageById($pageId) {
+        $response = $this->pagesRepo->getPage($pageId);
         return $response;
     }
 

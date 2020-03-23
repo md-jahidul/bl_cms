@@ -7,10 +7,12 @@ use App\Services\BusinessInternetService;
 use App\Services\RoamingOperatorService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
-use Session;
 
 class RoamingOperatorController extends Controller
 {
@@ -35,7 +37,7 @@ class RoamingOperatorController extends Controller
      */
     public function index()
     {
-        return view('admin.roaming.operator.list');
+        return view('admin.roaming.operator_list');
     }
 
     /**
@@ -49,90 +51,75 @@ class RoamingOperatorController extends Controller
 
 
     /**
-     * Internet Create Form
-     *
-     * @param NA
      * @return Factory|View
-     * @Bulbul Mahmud Nito || 12/03/2020
      */
-//    public function internetCreate() {
-//        $otherPorducts = $this->internetService->getAllPackage();
-//        $tags = $this->internetService->getTags();
-//        return view('admin.business.internet_package_create', compact('otherPorducts', 'tags'));
-//    }
+    public function operatorCreate()
+    {
+        return view('admin.roaming.operator_create');
+    }
 
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return RedirectResponse|Redirector
      */
-//    public function saveInternetPackage(Request $request) {
-//
-//        $response = $this->internetService->saveInternet($request);
-//
-//        if ($response['success'] == 1) {
-//            Session::flash('sussess', 'Package is saved!');
-//        } else {
-//            Session::flash('error', 'Package saving process failed!');
-//        }
-//
-//        return redirect('/business-internet');
-//    }
+    public function operatorStore(Request $request)
+    {
+        $response = $this->roamingOperatorService->saveOperator($request);
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Operator is saved!');
+        } else {
+            Session::flash('error', 'Operator saving process failed!');
+        }
+        return redirect('/roaming/operators');
+    }
 
 
     /**
-     * Internet edit Form
-     *
-     * @param NA
+     * @param $operatorId
      * @return Factory|View
-     * @Bulbul Mahmud Nito || 12/03/2020
      */
-    public function internetEdit($internetId) {
-        $internet = $this->internetService->getInternetById($internetId);
-        $otherPorducts = $this->internetService->getAllPackage($internetId);
-        $tags = $this->internetService->getTags();
-        return view('admin.business.internet_package_edit', compact('internet', 'otherPorducts', 'tags'));
+    public function operatorEdit($operatorId)
+    {
+        $operator = $this->roamingOperatorService->findOne($operatorId);
+        return view('admin.roaming.operator_edit', compact('operator'));
     }
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return RedirectResponse|Redirector
      */
-    public function updateInternetPackage(Request $request) {
-
-        $response = $this->internetService->updateInternet($request);
-
-//        dd($response);
+    public function updateOperator(Request $request, $id)
+    {
+        $response = $this->roamingOperatorService->updateOperator($request, $id);
 
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Package is updated!');
         } else {
             Session::flash('error', 'Package updating process failed!');
         }
-
-        return redirect('/business-internet');
+        return redirect('/roaming/operators');
     }
 
 
     public function roamingOperatorList(Request $request)
     {
-        $response = $this->roamingOperatorService->getRoamingOperators($request);
-
-//        dd($response);
-        return $response;
+        return $this->roamingOperatorService->getRoamingOperators($request);
     }
 
     public function operatorStatusChange($id)
     {
-//        dd($id);
-        $response = $this->roamingOperatorService->statusChange($id);
-        return $response;
+        return $this->roamingOperatorService->statusChange($id);
     }
 
-    public function deletePackage($packageId = 0) {
+    public function allOperatorDelete()
+    {
+        return $this->roamingOperatorService->deleteOperatorAll();
+    }
 
-        $response = $this->internetService->deletePackage($packageId);
-        return $response;
+    public function deleteOperator($operatorId = 0)
+    {
+        return $this->roamingOperatorService->deleteOperator($operatorId);
     }
 
 }

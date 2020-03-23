@@ -3,7 +3,7 @@
     <div class="col-md-12 col-xs-12">
 
         <div class="col-md-8 col-xs-12 pull-right">
-            <a href="javascript:;" class="btn btn-danger all_package_delete float-right">Delete All</a>
+            <a href="javascript:;" class="btn btn-danger all_operator_delete float-right">Delete All</a>
         </div>
 
     </div>
@@ -30,8 +30,6 @@
 </div>
 
 @push('page-js')
-
-
     <script>
         $(function () {
             $("#roaming_operator_list").dataTable({
@@ -87,8 +85,8 @@
                         name: 'actions',
                         className: 'filter_data',
                         render: function (data, type, row) {
-                            let edit_url = "{{ URL('business-internet-edit') }}" + "/" + row.id;
-                            let delete_url = "{{ URL('delete-business-internet-package') }}" + "/" + row.id;
+                            let edit_url = "{{ URL('roaming/operator/edit') }}" + "/" + row.id;
+                            let delete_url = "{{ URL('roaming-operator/destroy') }}" + "/" + row.id;
                             return `<div class="btn-group" role="group" aria-label="Delete">
                         <a href=" ` + edit_url + ` "class="btn btn-sm btn-icon btn-outline-info edit_package"><i class="la la-edit"></i></a>
                         <a href=" ` + delete_url + ` "class="btn btn-sm btn-icon btn-outline-danger delete_package"><i class="la la-trash"></i></a>
@@ -105,9 +103,6 @@
             });
 
 
-
-
-
             //change show/hide status of device offer
             $("#roaming_operator_list").on('click', '.operator_change_status', function (e) {
                 var packageId = $(this).attr('href');
@@ -119,7 +114,7 @@
                     success: function (result) {
                         if (result.success == 1) {
                             swal.fire({
-                                title: 'Internet Package status is changed!',
+                                title: 'Roaming operator status is changed!',
                                 type: 'success',
                                 timer: 2000,
                                 showConfirmButton: false
@@ -147,49 +142,49 @@
                 e.preventDefault();
             });
 
-            //change activation status of internet
-            $("#internet_package_list").on('click', '.operator_change_status', function (e) {
-                var packageId = $(this).attr('href');
+            {{--//change activation status of internet--}}
+            {{--$("#internet_package_list").on('click', '.operator_change_status', function (e) {--}}
+            {{--    var packageId = $(this).attr('href');--}}
 
-                $.ajax({
-                    url: '{{ url("business-internet-status-change")}}/' + packageId,
-                    cache: false,
-                    type: "GET",
-                    success: function (result) {
-                        if (result.success == 1) {
-                            swal.fire({
-                                title: 'Internet Package status is changed!',
-                                type: 'success',
-                                timer: 2000,
-                                showConfirmButton: false
-                            });
+            {{--    $.ajax({--}}
+            {{--        url: '{{ url("business-internet-status-change")}}/' + packageId,--}}
+            {{--        cache: false,--}}
+            {{--        type: "GET",--}}
+            {{--        success: function (result) {--}}
+            {{--            if (result.success == 1) {--}}
+            {{--                swal.fire({--}}
+            {{--                    title: 'Internet Package status is changed!',--}}
+            {{--                    type: 'success',--}}
+            {{--                    timer: 2000,--}}
+            {{--                    showConfirmButton: false--}}
+            {{--                });--}}
 
-                            $('#internet_package_list').DataTable().ajax.reload();
+            {{--                $('#internet_package_list').DataTable().ajax.reload();--}}
 
-                        } else {
-                            swal.close();
-                            swal.fire({
-                                title: result.message,
-                                timer: 3000,
-                                type: 'error',
-                            });
-                        }
+            {{--            } else {--}}
+            {{--                swal.close();--}}
+            {{--                swal.fire({--}}
+            {{--                    title: result.message,--}}
+            {{--                    timer: 3000,--}}
+            {{--                    type: 'error',--}}
+            {{--                });--}}
+            {{--            }--}}
 
-                    },
-                    error: function (data) {
-                        swal.fire({
-                            title: 'Status change process failed!',
-                            type: 'error',
-                        });
-                    }
-                });
-                e.preventDefault();
-            });
+            {{--        },--}}
+            {{--        error: function (data) {--}}
+            {{--            swal.fire({--}}
+            {{--                title: 'Status change process failed!',--}}
+            {{--                type: 'error',--}}
+            {{--            });--}}
+            {{--        }--}}
+            {{--    });--}}
+            {{--    e.preventDefault();--}}
+            {{--});--}}
 
             //delete device offer
-            $("#internet_package_list").on('click', '.delete_package', function (e) {
+            $("#roaming_operator_list").on('click', '.delete_package', function (e) {
                 var deleteUrl = $(this).attr('href');
-                var cnfrm = confirm("Do you want to delete this package?");
+                var cnfrm = confirm("Do you want to delete this operator?");
                 if (cnfrm) {
                     $.ajax({
                         url: deleteUrl,
@@ -198,13 +193,13 @@
                         success: function (result) {
                             if (result.success == 1) {
                                 swal.fire({
-                                    title: 'Internet package is deleted!',
+                                    title: 'Roaming operator is deleted!',
                                     type: 'success',
                                     timer: 3000,
                                     showConfirmButton: false
                                 });
 
-                                $('#internet_package_list').DataTable().ajax.reload();
+                                $('#roaming_operator_list').DataTable().ajax.reload();
 
                             } else {
                                 swal.close();
@@ -227,9 +222,9 @@
                 e.preventDefault();
             });
             //delete all device offer
-            $('.all_package_delete').on('click', function (e) {
-                var deleteUrl = "{{ URL('delete-business-internet-package') }}";
-                var cnfrm = confirm("Do you want to delete all package?");
+            $('.all_operator_delete').on('click', function (e) {
+                var deleteUrl = "{{ URL('roaming-operator/destroy') }}";
+                var cnfrm = confirm("Do you want to delete all Operator?");
                 if (cnfrm) {
                     $.ajax({
                         url: deleteUrl,
@@ -238,13 +233,13 @@
                         success: function (result) {
                             if (result.success == 1) {
                                 swal.fire({
-                                    title: 'All device offers are deleted!',
+                                    title: 'All roaming operator are deleted!',
                                     type: 'success',
                                     timer: 3000,
                                     showConfirmButton: false
                                 });
 
-                                $('#internet_package_list').DataTable().ajax.reload();
+                                $('#roaming_operator_list').DataTable().ajax.reload();
 
                             } else {
                                 swal.close();

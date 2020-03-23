@@ -81,6 +81,31 @@ class RoamingGeneralController extends Controller {
         return $sortChange;
     }
     
+     /**
+     * Edit form for general page
+     * 
+     * @param $pageId
+     * @return Factory|View
+     * @Bulbul Mahmud Nito || 20/03/2020
+     */
+    public function editPage($pageId) {
+        $page = $this->generalService->getPageById($pageId);
+        
+        return view('admin.roaming.edit_general_page', compact('page'));
+    }
+     /**
+     * Update general page
+     * 
+     * @param Request $request
+     * @return Factory|View
+     * @Bulbul Mahmud Nito || 23/03/2020
+     */
+    public function updatePage(Request $request) {
+        print_r($request->all());die();
+        $page = $this->generalService->getPageById($pageId);
+        
+        return view('admin.roaming.edit_general_page', compact('page'));
+    }
     
     
     
