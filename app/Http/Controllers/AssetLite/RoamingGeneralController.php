@@ -84,14 +84,15 @@ class RoamingGeneralController extends Controller {
      /**
      * Edit form for general page
      * 
-     * @param $pageId
+     * @param $type, $pageId
      * @return Factory|View
      * @Bulbul Mahmud Nito || 20/03/2020
      */
-    public function editPage($pageId) {
+    public function editPage($type, $pageId) {
         $page = $this->generalService->getPageById($pageId);
+        $components = $this->generalService->getPageComponents($pageId);
         
-        return view('admin.roaming.edit_general_page', compact('page'));
+        return view('admin.roaming.general_page_components', compact('type', 'page', 'components'));
     }
      /**
      * Update general page
@@ -101,10 +102,10 @@ class RoamingGeneralController extends Controller {
      * @Bulbul Mahmud Nito || 23/03/2020
      */
     public function updatePage(Request $request) {
-        print_r($request->all());die();
-        $page = $this->generalService->getPageById($pageId);
+//        print_r($request->all());die();
+        $page = $this->generalService->updatePage($request);
         
-        return view('admin.roaming.edit_general_page', compact('page'));
+//        return view('admin.roaming.edit_general_page', compact('page'));
     }
     
     
