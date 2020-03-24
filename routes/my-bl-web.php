@@ -136,9 +136,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     Route::get('notification/all/{id}', 'CMS\NotificationController@showAll')->name('notification.show-all');;
 
 
-
     // Push Notification
     Route::post('push-notification', 'CMS\PushNotificationController@sendNotification')->name('notification.send');
+    Route::post('push-notification', 'CMS\PushNotificationController@sendNotificationToAll')->name('notification.send-all');
 
     // terms and conditions
 

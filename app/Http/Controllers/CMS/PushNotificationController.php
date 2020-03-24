@@ -146,12 +146,12 @@ class PushNotificationController extends Controller
 
 
     /**
-     * Send Notification
+     * Send Notification to All customers
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function sendNotification_ALL(Request $request)
+    public function sendNotificationToALL(Request $request)
     {
         $user_phone = [];
         $notification_id = $request->input('id');
@@ -178,6 +178,7 @@ class PushNotificationController extends Controller
 
             ];
         } else {
+
             $notification = [
                 'title' => $request->input('title'),
                 'body' => $request->input('message'),
@@ -194,16 +195,17 @@ class PushNotificationController extends Controller
             ];
         }
 
-
-        NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+        /*NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
             ->onQueue('notification');
 
         session()->flash('success', "Notification has been sent successfully");
 
-        return redirect(route('notification.index'));
+        return redirect(route('notification.index'));*/
 
 
-        /* $response = PushNotificationService::sendNotification($notification);
+         $response = PushNotificationService::sendNotification($notification);
+
+         dd($response);
 
 
          if(json_decode($response)->status == "SUCCESS"){
@@ -218,6 +220,6 @@ class PushNotificationController extends Controller
              return redirect(route('notification.index'));
          }
 
-         session()->flash('success',"Notification send Failed");*/
+         session()->flash('success',"Notification send Failed");
     }
 }
