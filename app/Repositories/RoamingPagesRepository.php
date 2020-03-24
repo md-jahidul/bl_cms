@@ -17,7 +17,30 @@ class RoamingPagesRepository extends BaseRepository {
         $response = $this->model->get();
         return $response;
     }
+    public function getPage($pageId) {
+        $response = $this->model->findOrFail($pageId);
+        return $response;
+    }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public function getCategory($catId) {
         $categoriy = $this->model->findOrFail($catId);
         return $categoriy;
