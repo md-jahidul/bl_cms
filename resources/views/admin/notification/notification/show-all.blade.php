@@ -22,9 +22,9 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
 
-                    <form class="form" method="POST" {{--action="{{route('notification.send')}}"--}} id="sendNotificationForm" enctype="multipart/form-data">
+                    <form class="form" method="POST" {{--action="{{route('notification.send-all')}}"--}} id="sendNotificationForm" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group">
+                        <div class="form-group col-md-8">
                             <label for="title">Title</label>
                             <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$notification->title}}">
                             <input type="hidden"  name="id" id="id" value="{{$notification->id}}">
@@ -33,31 +33,42 @@
                             <input type="hidden"  name="category_name" id="category_name" value="{{$notification->NotificationCategory->name}}">
 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-8">
                             <label for="message">Message</label>
-                            <textarea class="form-control col-md-12" name="message" id="message"> {{$notification->body}}</textarea>
+                            <textarea class="form-control col-md-12" name="message" id="message" rows="4"> {{$notification->body}}</textarea>
                         </div>
 
-                        <div class="form-group">
+                        {{--<div class="form-group col-md-8">
+                        <label for="message">Select Type</label> </br>
+                        <select id="user-multiple-selected" name="user_phone[]" multiple="multiple" style="width: auto">
+                            @foreach ($users as $user)
+                                <option value="{{$user->phone}}">{{$user->phone}}({{$user->name}})</option>
+                            @endforeach
+                        </select>
+                            <label class="radio-inline"><input type="radio" name="optradio" checked>Option 1</label>
+                            <label class="radio-inline"><input type="radio" name="optradio">Option 2</label>
+                        </div>--}}
 
-{{--                            <label for="message">Select User</label> </br>
+                        <div class="form-group col-md-8">
+                            <div class="form-group {{ $errors->has('is_active') ? ' error' : '' }}">
+                                <label for="is_active" style="margin-right: 10px; padding: 5px" >Select Type</label>
+                                <input type="radio" name="is_active" value="1" id="input-radio-15"  checked>
+                                <label for="input-radio-15" class="mr-1">All</label>
+                                <input type="radio" name="is_active" value="0" id="input-radio-16">
+                                <label for="input-radio-16">Individual</label>
+                                @if ($errors->has('is_active'))
+                                    <div class="help-block">  {{ $errors->first('is_active') }}</div>
+                                @endif
+                            </div>
+                        </div>
 
-                            <select id="user-multiple-selected" name="user_phone[]" multiple="multiple" style="width: auto">
-
-                                @foreach ($users as $user)
-                                    <option value="{{$user->phone}}">{{$user->phone}}({{$user->name}})</option>
-                                @endforeach
-
-                            </select>--}}
-                            <label for="message">Upload Customer List</label> <a href="{{ asset('sample-format/customers.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
-                            <input type="file" class="dropify" name="customer_file" data-height="80"
-                                   data-allowed-file-extensions="xlsx" required/>
-
+                        <div class="form-group col-md-8">
+                            <label id="numbers" for="numbers">Customer mobile number</label>
+                            <textarea placeholder="0199998963,01999998965,..." class="form-control col-md-12" name="user_phone" id="user_phone" rows="3"></textarea>
                         </div>
 
 
-
-                        <div class="col-md-12" >
+                        <div class="col-md-8" >
                             <div class="form-group float-right" style="margin-top:15px;">
                                 <button class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
                             </div>
@@ -93,38 +104,46 @@
 
 
     <script>
+
+        $("#numbers").hide();
+        $("#user_phone").hide();
+
+        $("input[type='radio'][name='is_active']").click(function() {
+            if( $(this).attr("value") == "0" ) {
+                $("#numbers").show();
+                $("#user_phone").show();
+            }
+            else {
+                $("#numbers").hide();
+                $("#user_phone").hide();
+            }
+        });
+
         $(function () {
             $('#user-multiple-selected').multiselect({
                     includeSelectAllOption: true
                 }
             );
 
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Browse for an Excel File to upload',
-                    'replace': 'Click to replace',
-                    'remove': 'Remove',
-                    'error': 'Choose correct file format'
-                }
-            });
 
             /* file handled  */
             $('#sendNotificationForm').submit(function (e) {
                 e.preventDefault();
 
-                swal.fire({
-                    title: 'Data Uploading.Please Wait ...',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    onOpen: () => {
-                        swal.showLoading();
-                    }
-                });
+                Swal.fire({
+                    title: 'Are you sure?',
+                    type: 'warning',
+                    html: jQuery('.info_btn').html(),
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
 
                 let formData = new FormData($(this)[0]);
 
                 $.ajax({
-                    url: '{{ route('notification.send')}}',
+                    url: '{{ route('notification.send-all')}}',
                     type: 'POST',
                     cache: false,
                     contentType: false,
@@ -157,6 +176,8 @@
                             type: 'error',
                         });
                     }
+                });
+
                 });
 
             });
