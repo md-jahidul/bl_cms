@@ -43,6 +43,9 @@ class ProductDetailsController extends Controller
         'text_and_button' => 'Text And Button',
         'table_component' => 'Table Component',
 
+        'text_component' => 'Text Component',
+        'features_component' => 'Features Component',
+
 //        'single_image' => 'Single Image',
 
         'bullet_text' => 'Bullet Text',
