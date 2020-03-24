@@ -72,10 +72,11 @@ class ProductDetailsController extends Controller
 
 
     /**
+     * @param $simType
      * @param $productDetailsId
      * @return Factory|View
      */
-    public function sectionList($offerType, $productDetailsId)
+    public function sectionList($simType, $productDetailsId)
     {
         $productType = $this->productService->findOne($productDetailsId);
         $productType = $productType->offer_category_id;
@@ -83,45 +84,48 @@ class ProductDetailsController extends Controller
         $productSections = $this->productDetailsSectionService->findBySection($productDetailsId);
         $bannerRelatedProduct = $this->bannerImgRelatedProductService->findBannerAndRelatedProduct($productDetailsId);
 
-        return view('admin.product.details.index', compact('productSections', 'offerType','productDetailsId', 'products', 'productType', 'bannerRelatedProduct')
+        return view('admin.product.details.index', compact('productSections', 'simType','productDetailsId', 'products', 'productType', 'bannerRelatedProduct')
         );
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param $simType
      * @param $productDetailsId
      * @return Factory|View
      */
-    public function create($productDetailsId)
+    public function create($simType, $productDetailsId)
     {
-        return view('admin.product.details.create', compact('productDetailsId'));
+        return view('admin.product.details.create', compact('productDetailsId', 'simType'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
+     * @param $simType
+     * @param $id
      * @return RedirectResponse|Redirector
      */
-    public function storeSection(Request $request, $id)
+    public function storeSection(Request $request, $simType, $id)
     {
         $response = $this->productDetailsSectionService->sectionStore($request->all());
         Session::flash('success', $response->content());
-        return redirect(route('section-list', $id));
+        return redirect(route('section-list', [$simType, $id]));
     }
 
-    public function editSection($productDetailsId, $id)
+    public function editSection($simType, $productDetailsId, $id)
     {
         $section = $this->productDetailsSectionService->findOne($id);
-        return view('admin.product.details.edit', compact('section', 'productDetailsId'));
+        return view('admin.product.details.edit', compact('section', 'productDetailsId', 'simType'));
     }
 
-    public function updateSection(Request $request, $productDetailsId, $id)
+    public function updateSection(Request $request, $simType, $productDetailsId, $id)
     {
         $response = $this->productDetailsSectionService->sectionUpdate($request->all(), $id);
         Session::flash('message', $response->content());
-        return redirect(route('section-list', $productDetailsId));
+        return redirect(route('section-list', [$simType, $productDetailsId]));
     }
 
     /**
@@ -200,14 +204,15 @@ class ProductDetailsController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @param $simType
      * @param $productDetailsId
      * @param $sectionId
      * @return UrlGenerator|string
      */
-    public function sectionDestroy($productDetailsId, $sectionId)
+    public function sectionDestroy($simType, $productDetailsId, $sectionId)
     {
         $this->productDetailsSectionService->sectionDestroy($sectionId);
-        return url(route('section-list', $productDetailsId));
+        return url(route('section-list', [$simType, $productDetailsId]));
     }
 
     public function componentSortable(Request $request)

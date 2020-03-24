@@ -38,9 +38,8 @@
                                         <td>{{ $product->product_core['activation_ussd'] }}</td>
                                         <td>{{ $product->offer_category->name_en }}</td>
                                         <td class="text-center">
-
 {{--                                            // Other Details ==============================================--}}
-                                            @if(strtolower( $product->offer_category->name_en) == "others")
+                                            @if(strtolower( $product->offer_category->name_en) == "others" || $type == 'postpaid' && $product->offer_category->name_en == 'Packages')
                                                 <a href="{{ route('section-list', [$type, $product->id]) }}"
                                                     class="btn-sm btn-outline-primary border">Details</a>
                                             @else

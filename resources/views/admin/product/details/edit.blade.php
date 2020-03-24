@@ -2,11 +2,11 @@
 @section('title', 'Section Edit')
 @section('card_name', 'Section Edit')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ route('section-list', [$productDetailsId]) }}"> Section List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ route('section-list', [$simType, $productDetailsId]) }}"> Section List</a></li>
     <li class="breadcrumb-item active"> Section Edit</li>
 @endsection
 @section('action')
-    <a href="{{ route('section-list', [$productDetailsId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ route('section-list', [$simType, $productDetailsId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -14,7 +14,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('section-update', [$productDetailsId, $section->id]) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route('section-update', [$simType, $productDetailsId, $section->id]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             <div class="row">
 {{--                                <input type="hidden" name="product_id" value="{{ $productDetailsId }}">--}}
