@@ -64,7 +64,7 @@
 
                         <div class="form-group col-md-8">
                             <label id="numbers" for="numbers">Customer mobile number</label>
-                            <textarea class="form-control col-md-12" name="user_phone" id="user_phone" rows="3"></textarea>
+                            <textarea placeholder="0199998963,01999998965,..." class="form-control col-md-12" name="user_phone" id="user_phone" rows="3"></textarea>
                         </div>
 
 
@@ -125,38 +125,19 @@
                 }
             );
 
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Browse for an Excel File to upload',
-                    'replace': 'Click to replace',
-                    'remove': 'Remove',
-                    'error': 'Choose correct file format'
-                }
-            });
 
             /* file handled  */
             $('#sendNotificationForm').submit(function (e) {
                 e.preventDefault();
 
-              /*  swal.fire({
-                    title: 'Data Uploading.Please Wait ...',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    onOpen: () => {
-                        swal.showLoading();
-                    }
-                });*/
-
-
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
                     type: 'warning',
-                    html: jQuery('.delete_btn').html(),
+                    html: jQuery('.info_btn').html(),
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, Send it!'
+                    confirmButtonText: 'Yes'
                 }).then((result) => {
 
                 let formData = new FormData($(this)[0]);
