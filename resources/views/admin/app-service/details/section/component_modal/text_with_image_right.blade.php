@@ -41,7 +41,7 @@
 							    <label for="alt_text" class="">Image (optional)</label>
 							    <div class="custom-file">
 							        <input type="file" name="component[0][image_url]" class="custom-file-input image_with_preview">
-							        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+							        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>s
 							    </div>
 							    <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
 
