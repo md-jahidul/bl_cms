@@ -16,9 +16,10 @@
         $sortable = false;
     }
 
-
     if( 
-        $parent_categories['category'] == 'life_at_bl_teams'
+        $parent_categories['category'] == 'life_at_bl_teams' ||
+        ($parent_categories['category'] == 'programs_progeneral' && $parent_categories['additional_type'] == 'programs_news_section')
+
     ){
         $single_item = true;
     }
