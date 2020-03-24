@@ -51,12 +51,12 @@ function matchRelatedProduct($id, $roles)
 						<thead>
 							<tr>
 								<td width="3%">#</td>
-								<th width="20%">Component Name</th>
+								<th width="15%">Component Name</th>
 								<th width="15%">Preview</th>
-								{{-- <th width="5%">Section Title</th> --}}
+								<th width="15%">Title</th>
 								{{-- <th>Category</th> --}}
-								<th width="12%" class="">Status</th>
-								<th width="12%" class="">Action</th>
+								<th width="5%" class="">Status</th>
+								<th width="8%" class="">Action</th>
 							</tr>
 						</thead>
 						<tbody id="section_sortable">
@@ -75,6 +75,18 @@ function matchRelatedProduct($id, $roles)
 												<div class="component_preview" style="max-width: 400px;">
 												<img class="img-fluid" style="border: 1px solid #eee;" src="{{asset('app-assets/images/app_services/'.$list->section_type.'.png')}}" alt="">
 												</div>
+												@endif
+											</td>
+
+											<td>
+												@if( !empty($list->title_en) )
+													{{ $list->title_en }}
+												@else
+													@if( isset($list->sectionComponent->first()->title_en) && !empty($list->sectionComponent->first()->title_en) )
+														{{ $list->sectionComponent->first()->title_en }}
+													@elseif( isset($list->sectionComponent->first()->description_en) && !empty($list->sectionComponent->first()->description_en) )
+														{{ $list->sectionComponent->first()->description_en }}
+													@endif
 												@endif
 											</td>
 
@@ -125,7 +137,7 @@ function matchRelatedProduct($id, $roles)
 								<div class="form-group col-md-6 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
 									<label for="mobileImg">Banner Image</label>
 									<div class="custom-file">
-										<input type="file" name="image" class="custom-file-input" id="image">
+										<input type="file" name="image" class="custom-file-input image_with_preview">
 										<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
 									</div>
 									<span class="text-primary">Please given file type (.png, .jpg)</span>
@@ -138,9 +150,9 @@ function matchRelatedProduct($id, $roles)
 
 								<div class="form-group col-md-6">
 									@if($fixedSectionData['image'])
-										<img src="{{ config('filesystems.file_base_url') . $fixedSectionData['image'] }}" height="100" width="200" id="imgDisplay">
+										<img src="{{ config('filesystems.file_base_url') . $fixedSectionData['image'] }}" height="100" width="200" class="imgDisplay">
 									@else
-										<img height="100" width="200" id="imgDisplay" style="display: none">
+										<img height="100" width="200" class="imgDisplay" style="display: none">
 									@endif
 								</div>
 
@@ -327,7 +339,14 @@ function matchRelatedProduct($id, $roles)
 
 											var html = '';
 
-											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" style="max-width:100px;" /></td><td>'+mcv.title_en+'</td><td>'+mcv.status+'</td><td><a href="#" class="multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a><a href="#" class="border-0 btn-sm btn-outline-danger delete_multi_attr_item" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'" title="Delete"><i class="la la-trash"></i></a></td></tr>';
+											if( mcv.status == "1" ){
+												var statusText = 'Active';
+											}
+											else{
+												var statusText = 'Inactive';
+											}
+
+											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" style="max-width:100px;" /></td><td>'+mcv.title_en+'</td><td>'+statusText+'</td><td><a href="#" class="multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a><a href="#" class="border-0 btn-sm btn-outline-danger delete_multi_attr_item" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'" title="Delete"><i class="la la-trash"></i></a></td></tr>';
 
 											$('#slider_sortable').append(html);
 
@@ -418,7 +437,14 @@ function matchRelatedProduct($id, $roles)
 
 											var html = '';
 
-											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" style="max-width:100px;" /></td><td>'+mcv.alt_text+'</td><td>'+mcv.status+'</td><td><a href="#" class="banner_multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a><a href="#" class="border-0 btn-sm btn-outline-danger delete_multi_attr_item" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'" title="Delete"><i class="la la-trash"></i></a></td></tr>';
+											if( mcv.status == "1" ){
+												var statusText = 'Active';
+											}
+											else{
+												var statusText = 'Inactive';
+											}
+
+											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" style="max-width:100px;" /></td><td>'+mcv.alt_text+'</td><td>'+statusText+'</td><td><a href="#" class="banner_multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a><a href="#" class="border-0 btn-sm btn-outline-danger delete_multi_attr_item" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'" title="Delete"><i class="la la-trash"></i></a></td></tr>';
 
 											$parentSelectorEdit.find('#slider_sortable').append(html);
 
@@ -850,6 +876,22 @@ function matchRelatedProduct($id, $roles)
 	        });
 
 			}
+
+
+// Image with Preview
+$(document).on('change', '.image_with_preview', function(){
+	var input = this;
+	if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+          $(input).parents('.form-group').next('.form-group').find('.imgDisplay').css('display', 'block');
+          $(input).parents('.form-group').next('.form-group').find('.imgDisplay').attr('src', e.target.result);
+
+      }
+      reader.readAsDataURL(input.files[0]);
+  }
+	// console.log(input.files[0]);
+});
 
 
 </script>

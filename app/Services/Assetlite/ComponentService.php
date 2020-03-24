@@ -112,15 +112,6 @@ class ComponentService
             $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
         }
 
-//        $input_multiple_attributes = $data['multiple_attributes'];
-//
-//        // loop over the product array
-//        foreach ($input_multiple_attributes as $data_id => $inputData) {
-//            foreach ($inputData as $key => $value) {
-//                // set the new value
-//                $new_multiple_attributes[$data_id][$key] = is_object($value) ? $this->upload($value, 'assetlite/images/product_details') : $value;
-//            }
-//        }
 
         $results = [];
         if (isset($data['multi_item']) && !empty($data['multi_item'])) {
@@ -142,10 +133,7 @@ class ComponentService
 
         $data['multiple_attributes'] = (count($results) > 1) ? array_values($results) : null;
 
-//        ($new_multiple_attributes['alt_text']['alt_text_1']) ? $data['multiple_attributes'] = $new_multiple_attributes : $data['multiple_attributes'] = null;
-
         $countComponents = $this->componentRepository->list($sectionId, self::PAGE_TYPE['product_details']);
-//        dd(count($countComponents));
 
         $data['component_order'] = count($countComponents) + 1;
 
@@ -370,7 +358,7 @@ class ComponentService
                 }
 
                 return $value;
-                
+
 
             }, $multiple_attributes);
 
@@ -385,7 +373,7 @@ class ComponentService
             return false;
         }
 
-        
+
 
 
     }
