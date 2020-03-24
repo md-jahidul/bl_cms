@@ -25,7 +25,7 @@ class RoamingPagesRepository extends BaseRepository {
     }
 
     public function getPageComponents($pageId) {
-        $response = RoamingPageComponents::where('parent_id', $pageId)->get();
+        $response = RoamingPageComponents::where('parent_id', $pageId)->orderBy('position')->get();
         return $response;
     }
 
@@ -106,6 +106,64 @@ class RoamingPagesRepository extends BaseRepository {
         }
         return $response;
     }
+    
+     public function changeComponentSorting($request) {
+        try {
+
+            $positions = $request->position;
+            foreach ($positions as $position) {
+                $comId = $position[0];
+                $new_position = $position[1];
+                $update = RoamingPageComponents::findOrFail($comId);
+                $update['position'] = $new_position;
+                $update->update();
+            }
+
+            $response = [
+                'success' => 1,
+                'message' => 'Success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     public function changeCategorySorting($request) {
         try {

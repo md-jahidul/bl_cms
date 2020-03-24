@@ -476,6 +476,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::get('roaming/general-page-component/{type}/{pageId?}', 'AssetLite\RoamingGeneralController@editPage');
     Route::post('roaming/update-general-page', 'AssetLite\RoamingGeneralController@updatePage');
+    Route::get('roaming/page-component-sort', 'AssetLite\RoamingGeneralController@componentSortChange');
 
 
     Route::get('roaming/operators', 'AssetLite\RoamingOperatorController@index');

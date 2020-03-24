@@ -1,57 +1,60 @@
 @extends('layouts.admin')
 @section('title', 'Roaming General Pages Edit')
-@section('card_name', 'Roaming General Pages Edit')
-
+@section('card_name', 'Page Edit')
+@section('breadcrumb')
+<li class="breadcrumb-item active"> <a href="{{ url('roaming-general') }}"> Category & Page List</a></li>
+<li class="breadcrumb-item active"> Update Components</li>
+@endsection
 @section('content')
 <section>
     <div class="card">
-            <div class="card-content collapse show">
-                <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>Page: {{ ucwords( str_replace('-', ' ', $page->page_type)) }} Components</strong></h4>
-                    <div class="row">
+        <div class="card-content collapse show">
+            <div class="card-body card-dashboard">
+                <h4 class="pb-1"><strong>{{ ucwords( str_replace('-', ' ', $page->page_type)) }} Components</strong></h4>
+                <div class="row">
 
-                        <div class="col-md-12 col-xs-12">
-
-
-                            <table class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th width="22%">Type</th>
-                                <th width="72%">Text</th>
-                            </tr>
-                        </thead>
-                        <tbody class="component_sortable">
-                            @foreach($components as $cam)
-                            <tr data-index="{{ $cam->id }}" data-position="{{ $cam->position }}">
-
-                                <td class="category_name cursor-move">
-                                    <i class="icon-cursor-move icons"></i> 
-
-                                    <strong class="text-info">
-                                        
-                                        {{ ucwords( str_replace('_', ' ', $page->component_type)) }} </strong>
-                                </td>
-                                
-                                <td>
-                                    {{ $cam->body_text_en }} 
-                                </td>
-
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <div class="col-md-12 col-xs-12">
 
 
-                        </div>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="22%">Type</th>
+                                    <th width="72%">Text</th>
+                                </tr>
+                            </thead>
+                            <tbody class="component_sortable">
+                                @foreach($components as $cam)
+                                <tr data-index="{{ $cam->id }}" data-position="{{ $cam->position }}">
 
+                                    <td class="category_name cursor-move">
+                                        <i class="icon-cursor-move icons"></i> 
+
+                                        <strong class="text-info">
+
+                                            {{ ucwords( str_replace('_', ' ', $cam->component_type)) }} </strong>
+                                    </td>
+
+                                    <td>
+                                        {{ $cam->body_text_en }} 
+                                    </td>
+
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
 
 
                     </div>
 
+
+
                 </div>
+
             </div>
         </div>
-    
+    </div>
+
 
     <form method="POST" action="{{ url('roaming/update-general-page') }}" class="form" enctype="multipart/form-data">
         @csrf
@@ -104,7 +107,110 @@
                     <div class="row">
 
                         <div class="col-md-7 col-xs-12 element_wrap">
+                            <?php $position = 1; ?>
+                            
+                            @foreach($components as $com)
+                            
+                            <?php
+                            $position = $com->position;
+                            ?>
 
+                            @if($com->component_type == 'feature_title')
+
+                            <div class="form-group row bg-light p-2 mr-1 mt-1">
+                                <input type="hidden" name="component_position[{{$com->position}}]">
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Feature Title (EN) 
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" value="{{$com->body_text_en}}"  name="feature_title_en[{{$com->position}}]">
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label class="display-block">Feature Title (BN) <span class="text-danger">*</span>
+                                        <a href="javascript:;" class="pull-right text-danger remove_feature_title"><i class="la la-close"></i></a>
+                                    </label>
+                                    <input type="text" class="form-control" value="{{$com->body_text_bn}}" name="feature_title_bn[{{$com->position}}]">
+
+                                </div>
+
+                            </div>
+
+                            @endif
+
+
+                            @if($com->component_type == 'highlights_title')
+
+                            <div class="form-group row bg-light p-2 mr-1 mt-1">
+                                <input type="hidden" name="component_position[{{$com->position}}]">
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Highlights Title (EN) 
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" value="{{$com->body_text_en}}" name="highlights_title_en[{{$com->position}}]">
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label class="display-block">Highlights Title (BN) <span class="text-danger">*</span>
+                                        <a href="javascript:;" class="pull-right text-danger remove_highlights_title"><i class="la la-close"></i></a>
+                                    </label>
+                                    <input type="text" class="form-control" value="{{$com->body_text_bn}}" name="highlights_title_bn[{{$com->position}}]">
+                                </div>
+                            </div>
+
+                            @endif
+
+                            @if($com->component_type == 'advance_title')
+
+                            <div class="form-group row bg-light p-2 mr-1 mt-1">
+                                <input type="hidden" name="component_position[{{$com->position}}]">
+                                <div class="col-md-6 col-xs-12">
+                                    <label class="display-block">Advance Title (EN) 
+                                        <span class="text-danger">*</span>
+
+                                        <strong class="pull-right text-info">
+                                            <input type="checkbox" value="1" name="advance_title_big_font[{{$com->position}}]" @if($com->big_font == 1) checked @endif> Big Font
+                                        </strong>
+
+                                    </label>
+                                    <textarea class="form-control" name="advance_title_en[{{$com->position}}]">{{$com->body_text_en}}</textarea>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label class="display-block">Advance Title (BN) <span class="text-danger">*</span>
+                                        <a href="javascript:;" class="pull-right text-danger remove_advance_title"><i class="la la-close"></i></a>
+                                    </label>
+                                    <textarea class="form-control" name="advance_title_bn[{{$com->position}}]">{{$com->body_text_bn}}</textarea>
+                                </div>
+                            </div>
+
+
+                            @endif
+
+                            @if($com->component_type == 'condition_list')
+
+                            <div class="form-group row bg-light p-2 mr-1 mt-1">
+                                <input type="hidden" name="component_position[{{$com->position}}]">
+                                <div class="col-md-6 col-xs-12">
+                                    <label class="display-block">Condition List (EN) 
+                                        <span class="text-danger">*</span>
+
+                                        <strong class="pull-right text-info">
+                                            <input type="checkbox" value="1" name="payment_block[{{$com->position}}]" @if($com->payment_block == 1) checked @endif> Payment Block
+                                        </strong>
+
+                                    </label>
+                                    <textarea class="form-control details_editor_edit" name="condition_list_en[{{$com->position}}]">{{$com->body_text_en}}</textarea>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label class="display-block">Condition Title (BN) <span class="text-danger">*</span>
+                                        <a href="javascript:;" class="pull-right text-danger remove_condition_list"><i class="la la-close"></i></a>
+                                    </label>
+                                    <textarea class="form-control details_editor_edit" name="condition_list_bn[{{$com->position}}]">{{$com->body_text_bn}}</textarea>
+                                </div>
+                            </div>
+
+
+                            @endif
+
+                            @endforeach
 
                         </div>
 
@@ -127,7 +233,7 @@
 
     <div class="feature_title_wrap display-hidden">
 
-        <div class="form-group row">
+        <div class="form-group row bg-light p-2 mr-1 mt-1">
             <input type="hidden" class="component_position">
             <div class="col-md-6 col-xs-12">
                 <label>Feature Title (EN) 
@@ -140,15 +246,16 @@
                     <a href="javascript:;" class="pull-right text-danger remove_feature_title"><i class="la la-close"></i></a>
                 </label>
                 <input type="text" class="form-control feature_title_bn" placeholder="Feature Title BN">
+
             </div>
-            <hr>
+
         </div>
 
     </div>
 
     <div class="highlights_title_wrap display-hidden">
 
-        <div class="form-group row">
+        <div class="form-group row bg-light p-2 mr-1 mt-1">
             <input type="hidden" class="component_position">
             <div class="col-md-6 col-xs-12">
                 <label>Highlights Title (EN) 
@@ -162,14 +269,13 @@
                 </label>
                 <input type="text" class="form-control highlights_title_bn" placeholder="Highlights Title BN">
             </div>
-            <hr>
         </div>
 
     </div>
 
     <div class="advance_title_wrap display-hidden">
 
-        <div class="form-group row">
+        <div class="form-group row bg-light p-2 mr-1 mt-1">
             <input type="hidden" class="component_position">
             <div class="col-md-6 col-xs-12">
                 <label class="display-block">Advance Title (EN) 
@@ -188,7 +294,6 @@
                 </label>
                 <textarea class="form-control advance_title_bn"></textarea>
             </div>
-            <hr>
         </div>
 
     </div>
@@ -196,7 +301,7 @@
 
     <div class="condition_list_wrap display-hidden">
 
-        <div class="form-group row">
+        <div class="form-group row bg-light p-2 mr-1 mt-1">
             <input type="hidden" class="component_position">
             <div class="col-md-6 col-xs-12">
                 <label class="display-block">Condition List (EN) 
@@ -215,7 +320,6 @@
                 </label>
                 <textarea class="form-control details_editor condition_list_bn"></textarea>
             </div>
-            <hr>
         </div>
 
     </div>
@@ -266,50 +370,50 @@ if (Session::has('error')) {
         });
 
 <?php } ?>
-    
-    
+
+
     function saveNewPositions(save_url)
-        {
-            var positions = [];
-            $('.update').each(function () {
-                positions.push([
-                    $(this).attr('data-index'),
-                    $(this).attr('data-position')
-                ]);
-            })
-            $.ajax({
-                type: "GET",
-                url: save_url,
-                data: {
-                    update: 1,
-                    position: positions
-                },
-                success: function (data) {
-                },
-                error: function () {
-                    swal.fire({
-                        title: 'Failed to sort data',
-                        type: 'error',
-                    });
-                }
-            });
-        }
-
-        $(".component_sortable").sortable({
-
-            update: function (event, ui) {
-                $(this).children().each(function (index) {
-                    if ($(this).attr('data-position') != (index + 1)) {
-                        $(this).attr('data-position', (index + 1)).addClass('update')
-                    }
+    {
+        var positions = [];
+        $('.component_sortable tr').each(function () {
+            positions.push([
+                $(this).attr('data-index'),
+                $(this).attr('data-position')
+            ]);
+        })
+        $.ajax({
+            type: "GET",
+            url: save_url,
+            data: {
+                update: 1,
+                position: positions
+            },
+            success: function (data) {
+            },
+            error: function () {
+                swal.fire({
+                    title: 'Failed to sort data',
+                    type: 'error',
                 });
-                var save_url = "{{ url('roaming/page-component-sort') }}";
-                saveNewPositions(save_url);
             }
         });
-        
+    }
 
-    var position = 1;
+    $(".component_sortable").sortable({
+
+        update: function (event, ui) {
+            $(this).children().each(function (index) {
+                if ($(this).attr('data-position') != (index + 1)) {
+                    $(this).attr('data-position', (index + 1)).addClass('update')
+                }
+            });
+            var save_url = "{{ url('roaming/page-component-sort') }}";
+            saveNewPositions(save_url);
+        }
+    });
+
+
+    var position = "<?php echo $position+1 ?>";
 
     //add feature title
     $('.add_feature_title').on('click', function () {
@@ -338,7 +442,7 @@ if (Session::has('error')) {
             $(this).remove();
         });
 
-        position--;
+     
 
     });
 
@@ -369,7 +473,7 @@ if (Session::has('error')) {
             $(this).remove();
         });
 
-        position--;
+ 
 
     });
 
@@ -403,7 +507,7 @@ if (Session::has('error')) {
             $(this).remove();
         });
 
-        position--;
+     
 
     });
 
@@ -444,15 +548,29 @@ if (Session::has('error')) {
     });
 
     //remove highlights title
-    $('.element_wrap').on('click', '.remove_advance_title', function () {
+    $('.element_wrap').on('click', '.remove_condition_list', function () {
 
         $(this).parents('.form-group').fadeOut(300, function () {
             $(this).remove();
         });
 
-        position--;
+
 
     });
+    
+    
+     $(".element_wrap textarea.details_editor_edit").summernote({
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                // ['table', ['table']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['view', ['fullscreen', 'codeview']]
+            ],
+            height: 200
+        });
 
 
 

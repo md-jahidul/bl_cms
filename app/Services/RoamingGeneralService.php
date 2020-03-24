@@ -119,6 +119,7 @@ class RoamingGeneralService {
         $response = $this->catRepo->changeCategorySorting($request);
         return $response;
     }
+ 
 
     /**
      * Get Roaming general pages
@@ -145,6 +146,15 @@ class RoamingGeneralService {
         return $response;
     }
     
+       /**
+     * Change category sorting
+     * @return Response
+     */
+    public function changeComponentSort($request) {
+        $response = $this->pagesRepo->changeComponentSorting($request);
+        return $response;
+    }
+    
     
     /**
      * update roaming category
@@ -164,9 +174,6 @@ class RoamingGeneralService {
             //save data in database 
             $update = $this->pagesRepo->updatePage($request);
             
-            print_r($update);die();
-
-
 
             $response = [
                 'success' => 1,
