@@ -73,7 +73,7 @@ class RoamingGeneralService {
             ]);
 
             //file upload in storege
-            $webPath = "";
+            $webPath = $request['old_web'];
             if ($request['banner_web'] != "") {
                 $webPath = $this->upload($request['banner_web'], 'assetlite/images/roaming');
 
@@ -82,7 +82,7 @@ class RoamingGeneralService {
                     $this->deleteFile($request['old_web']);
                 }
             }
-            $mobilePath = "";
+            $mobilePath = $request['old_mobile'];
             if ($request['banner_mobile'] != "") {
                 $mobilePath = $this->upload($request['banner_mobile'], 'assetlite/images/roaming');
 
