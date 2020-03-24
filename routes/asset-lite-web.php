@@ -198,19 +198,19 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('product-details/{type}/{productDetailsId}/section', 'AssetLite\ProductDetailsController@sectionList')
         ->name('section-list');
 
-    Route::get('product-details/{productDetailsId}/section-create', 'AssetLite\ProductDetailsController@create')
+    Route::get('product-details/{type}/{productDetailsId}/section-create', 'AssetLite\ProductDetailsController@create')
         ->name('section-create');
 
-    Route::post('product-details/{productDetailsId}/section-store', 'AssetLite\ProductDetailsController@storeSection')
+    Route::post('product-details/{type}/{productDetailsId}/section-store', 'AssetLite\ProductDetailsController@storeSection')
         ->name('section-store');
 
-    Route::get('product-details/{productDetailsId}/section-edit/{id}', 'AssetLite\ProductDetailsController@editSection')
+    Route::get('product-details/{type}/{productDetailsId}/section-edit/{id}', 'AssetLite\ProductDetailsController@editSection')
         ->name('section-edit');
 
-    Route::post('product-details/{productDetailsId}/section-update/{id}', 'AssetLite\ProductDetailsController@updateSection')
+    Route::post('product-details/{type}/{productDetailsId}/section-update/{id}', 'AssetLite\ProductDetailsController@updateSection')
         ->name('section-update');
 
-    Route::get('product-details/{productDetailsId}/section-delete/{id}', 'AssetLite\ProductDetailsController@sectionDestroy')
+    Route::get('product-details/{type}/{productDetailsId}/section-delete/{id}', 'AssetLite\ProductDetailsController@sectionDestroy')
         ->name('section-destroy');
 
     Route::get('product-details/section-sortable', 'AssetLite\ProductDetailsController@sectionSortable');

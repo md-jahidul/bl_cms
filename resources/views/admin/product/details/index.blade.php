@@ -20,11 +20,11 @@
     <li class="breadcrumb-item active">Section List</li>
 @endsection
 @section('action')
-    <a href="{{ url("offers/$offerType") }}" class="btn btn-outline-secondary round btn-glow px-2"><i class="la la-arrow-left"></i>
+    <a href="{{ url("offers/$simType") }}" class="btn btn-outline-secondary round btn-glow px-2"><i class="la la-arrow-left"></i>
         Back To Product
     </a>
 
-    <a href="{{ route('section-create', [$productDetailsId]) }}" class="btn btn-success  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{ route('section-create', [$simType, $productDetailsId]) }}" class="btn btn-success  round btn-glow px-2"><i class="la la-plus"></i>
         Add Section
     </a>
 @endsection
@@ -57,8 +57,8 @@
                                        class="btn-sm btn-outline-primary border">Components</a>
                                 </td>
                                 <td class="action" width="8%">
-                                    <a href="{{ route('section-edit', [$productDetailsId, $section->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ route('section-destroy', [$productDetailsId, $section->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $section->id }}" title="Delete the user">
+                                    <a href="{{ route('section-edit', [$simType, $productDetailsId, $section->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    <a href="#" remove="{{ route('section-destroy', [$simType, $productDetailsId, $section->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $section->id }}" title="Delete the user">
                                         <i class="la la-trash"></i>
                                     </a>
                                 </td>
