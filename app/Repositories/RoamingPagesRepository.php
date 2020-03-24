@@ -8,6 +8,7 @@
 namespace App\Repositories;
 
 use App\Models\RoamingGeneralPages;
+use App\Models\RoamingPageComponents;
 
 class RoamingPagesRepository extends BaseRepository {
 
@@ -17,47 +18,82 @@ class RoamingPagesRepository extends BaseRepository {
         $response = $this->model->get();
         return $response;
     }
+
     public function getPage($pageId) {
         $response = $this->model->findOrFail($pageId);
         return $response;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    public function getCategory($catId) {
-        $categoriy = $this->model->findOrFail($catId);
-        return $categoriy;
+    public function getPageComponents($pageId) {
+        $response = RoamingPageComponents::where('parent_id', $pageId)->orderBy('position')->get();
+        return $response;
     }
 
-    public function updateCategory($webPath, $mobilePath, $request) {
+    public function updatePage($request) {
         try {
+            if ($request->page_type == 'info-and-tips') {
+                
+            } else {
+                $page = $this->model->findOrFail($request->page_id);
+                $page->title_en = $request->title_en;
+                $page->title_bn = $request->title_bn;
+                $page->save();
+            }
 
-            $category = $this->model->findOrFail($request->cat_id);
+            //delete all previous components
+            RoamingPageComponents::where(array('page_type' => $request->page_type, 'parent_id' => $request->page_id))->delete();
 
-            $category->name_en = $request->name_en;
-            $category->name_bn = $request->name_bn;
-            $category->banner_web = $webPath;
-            $category->banner_mobile = $mobilePath;
-            $category->alt_text = $request->alt_text;
-            $category->status = $request->status;
-            $category->save();
+            $insert = [];
+
+            $count = 0;
+            foreach ($request->component_position as $k => $val) {
+                $insert[$count]['page_type'] = $request->page_type;
+                $insert[$count]['parent_id'] = $request->page_id;
+
+                if (isset($request->feature_title_en[$k])) {
+                    $insert[$count]['body_text_en'] = $request->feature_title_en[$k];
+                    $insert[$count]['body_text_bn'] = $request->feature_title_bn[$k];
+                    $insert[$count]['big_font'] = 0;
+                    $insert[$count]['payment_block'] = 0;
+                    $insert[$count]['position'] = $k;
+                    $insert[$count]['component_type'] = 'feature_title';
+                }
+
+
+                if (isset($request->highlights_title_en[$k])) {
+                    $insert[$count]['body_text_en'] = $request->highlights_title_en[$k];
+                    $insert[$count]['body_text_bn'] = $request->highlights_title_bn[$k];
+                    $insert[$count]['big_font'] = 0;
+                    $insert[$count]['payment_block'] = 0;
+                    $insert[$count]['position'] = $k;
+                    $insert[$count]['component_type'] = 'highlights_title';
+                }
+
+                if (isset($request->advance_title_en[$k])) {
+                    $insert[$count]['body_text_en'] = $request->advance_title_en[$k];
+                    $insert[$count]['body_text_bn'] = $request->advance_title_bn[$k];
+                    $insert[$count]['big_font'] = isset($request->advance_title_big_font[$k]) ? 1 : 0;
+                    $insert[$count]['payment_block'] = 0;
+                    $insert[$count]['position'] = $k;
+                    $insert[$count]['component_type'] = 'advance_title';
+                }
+
+                if (isset($request->condition_list_en[$k])) {
+                    $insert[$count]['body_text_en'] = $request->condition_list_en[$k];
+                    $insert[$count]['body_text_bn'] = $request->condition_list_bn[$k];
+                    $insert[$count]['big_font'] = 0;
+                    $insert[$count]['payment_block'] = isset($request->payment_block[$k]) ? 1 : 0;
+                    $insert[$count]['position'] = $k;
+                    $insert[$count]['component_type'] = 'condition_list';
+                }
+
+
+
+                $count++;
+            }
+
+            RoamingPageComponents::insert($insert);
+
 
             $response = [
                 'success' => 1,
@@ -70,17 +106,16 @@ class RoamingPagesRepository extends BaseRepository {
         }
         return $response;
     }
-
- 
-    public function changeCategorySorting($request) {
+    
+     public function changeComponentSorting($request) {
         try {
 
             $positions = $request->position;
             foreach ($positions as $position) {
-                $categoryId = $position[0];
+                $comId = $position[0];
                 $new_position = $position[1];
-                $update = $this->model->findOrFail($categoryId);
-                $update['sort'] = $new_position;
+                $update = RoamingPageComponents::findOrFail($comId);
+                $update['position'] = $new_position;
                 $update->update();
             }
 
@@ -108,6 +143,53 @@ class RoamingPagesRepository extends BaseRepository {
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    public function changeCategorySorting($request) {
+        try {
+
+            $positions = $request->position;
+            foreach ($positions as $position) {
+                $categoryId = $position[0];
+                $new_position = $position[1];
+                $update = $this->model->findOrFail($categoryId);
+                $update['sort'] = $new_position;
+                $update->update();
+            }
+
+            $response = [
+                'success' => 1,
+                'message' => 'Success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
+    }
 
     public function changeHomeShowStatus($catId) {
         try {
