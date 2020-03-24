@@ -78,7 +78,7 @@
                 <div class="card-body card-dashboard">
                     <h4 class="menu-title"><strong>Banner And Related Product</strong></h4><hr>
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('bannerImg-relatedPro',[$productDetailsId]) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route('bannerImg-relatedPro',[$simType, $productDetailsId]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             {{method_field('POST')}}
                             <div class="row">

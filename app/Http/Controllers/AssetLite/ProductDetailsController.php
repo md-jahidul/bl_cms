@@ -43,6 +43,9 @@ class ProductDetailsController extends Controller
         'text_and_button' => 'Text And Button',
         'table_component' => 'Table Component',
 
+        'text_component' => 'Text Component',
+        'features_component' => 'Features Component',
+
 //        'single_image' => 'Single Image',
 
         'bullet_text' => 'Bullet Text',
@@ -84,8 +87,14 @@ class ProductDetailsController extends Controller
         $productSections = $this->productDetailsSectionService->findBySection($productDetailsId);
         $bannerRelatedProduct = $this->bannerImgRelatedProductService->findBannerAndRelatedProduct($productDetailsId);
 
-        return view('admin.product.details.index', compact('productSections', 'simType','productDetailsId', 'products', 'productType', 'bannerRelatedProduct')
-        );
+        return view('admin.product.details.index', compact(
+            'productSections',
+            'simType',
+            'productDetailsId',
+            'products',
+            'productType',
+            'bannerRelatedProduct'
+        ));
     }
 
     /**
@@ -189,11 +198,11 @@ class ProductDetailsController extends Controller
     }
 
 
-    public function bannerImgRelatedPro(Request $request, $productId)
+    public function bannerImgRelatedPro(Request $request, $simType, $productId)
     {
         $response = $this->bannerImgRelatedProductService->storeImgProduct($request->all(), $productId);
         Session::flash('success', $response->content());
-        return redirect(route('section-list', $productId));
+        return redirect(route('section-list', [$simType, $productId]));
     }
 
     public function sectionSortable(Request $request)
