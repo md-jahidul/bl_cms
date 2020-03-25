@@ -26,9 +26,9 @@
                             @method('put')
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
-                                    <label for="product_code" class="required">Product Code</label>
+                                    <label for="product_code" class="">Product Code</label>
                                     <input type="text" class="form-control" placeholder="Enter offer validity in English" readonly
-                                           value="{{ $partnerOffer->product_code }}" required data-validation-required-message="Enter offer validity in English">
+                                           value="{{ $partnerOffer->product_code }}" >
                                     <div class="help-block"></div>
                                     @if ($errors->has('product_code'))
                                         <div class="help-block">{{ $errors->first('product_code') }}</div>

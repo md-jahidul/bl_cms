@@ -20,9 +20,9 @@
                             @csrf
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
-                                    <label for="product_code" class="required">Product Code</label>
+                                    <label for="product_code" class="">Product Code</label>
                                     <input type="text" name="product_code"  class="form-control" placeholder="Enter unique product code"
-                                           value="{{ old("product_code") ? old("product_code") : '' }}" required data-validation-required-message="Enter unique product code">
+                                           value="{{ old("product_code") ? old("product_code") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('product_code'))
                                         <div class="help-block">{{ $errors->first('product_code') }}</div>
