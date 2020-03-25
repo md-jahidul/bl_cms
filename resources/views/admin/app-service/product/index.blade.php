@@ -33,6 +33,7 @@
                                 <th width="12%" class="">Action</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             @foreach($appServiceProduct as $product)
                                 {{--@if($product->product != '')--}}
@@ -44,7 +45,7 @@
                                         <td>{{ $product->price_tk }}</td>
                                         <td>{{ $product->ussd_en }}</td>
                                         <td>{{ $product->appServiceTab->name_en }}</td>
-                                        <td>{{ $product->appServiceCat->title_en }}</td>
+                                        <td>@if(isset($product->appServiceCat->title_en)){{ $product->appServiceCat->title_en }}@endif</td>
                                         <td class="text-center">
                                              <a href="{{ route( "app_service.details.list", ['type' => $product->appServiceTab->alias, 'id' => $product->id] ) }}" class="btn-sm btn-outline-warning border">Details</a>
                                         </td>
