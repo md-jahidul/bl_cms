@@ -25,13 +25,24 @@
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('isd_short_text') ? ' error' : '' }}">
-    <label for="isd_short_text" class="required">ISD Short Text</label>
+    <label for="isd_short_text" class="required">ISD Short Text (English)</label>
     <input type="text" name="offer_info[isd_short_text]"  class="form-control" placeholder="Enter ISD short text"
            value="{{ (!empty($offerInfo['isd_short_text'])) ? $offerInfo['isd_short_text'] : old("offer_info.isd_short_text") ?? '' }}" required>
             <span class="text-warning">Example: Tk. 1000 ISD Call</span>
     <div class="help-block"></div>
     @if ($errors->has('isd_short_text'))
         <div class="help-block">  {{ $errors->first('isd_short_text') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-6 {{ $errors->has('isd_short_text_bn') ? ' error' : '' }}">
+    <label for="isd_short_text_bn" class="required">ISD Short Text (Bangla)</label>
+    <input type="text" name="offer_info[isd_short_text_bn]"  class="form-control" placeholder="Enter ISD short text"
+           value="{{ (!empty($offerInfo['isd_short_text_bn'])) ? $offerInfo['isd_short_text_bn'] : old("offer_info.isd_short_text_bn") ?? '' }}" required>
+    <span class="text-warning">Example: Tk. 1000 ISD Call</span>
+    <div class="help-block"></div>
+    @if ($errors->has('isd_short_text_bn'))
+        <div class="help-block">  {{ $errors->first('isd_short_text_bn') }}</div>
     @endif
 </div>
 
@@ -48,7 +59,7 @@
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('minute_volume_short_text') ? ' error' : '' }}">
-    <label for="minute_volume_short_text" class="required">Minute Volume Short Text</label>
+    <label for="minute_volume_short_text" class="required">Minute Volume Short Text (English)</label>
     <input type="text" name="offer_info[minute_volume_short_text]"  class="form-control" placeholder="Enter minute offer"
            value="{{ (!empty($offerInfo['minute_volume_short_text'])) ? $offerInfo['minute_volume_short_text'] : old("offer_info.minute_volume_short_text") ?? '' }}"
            required data-validation-required-message="Enter view list url">
@@ -56,6 +67,18 @@
     <div class="help-block"></div>
     @if ($errors->has('minute_volume_short_text'))
         <div class="help-block">  {{ $errors->first('minute_volume_short_text') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-6 {{ $errors->has('minute_volume_short_text_bn') ? ' error' : '' }}">
+    <label for="minute_volume_short_text_bn" class="required">Minute Volume Short Text (Bangla)</label>
+    <input type="text" name="offer_info[minute_volume_short_text_bn]"  class="form-control" placeholder="Enter minute offer"
+           value="{{ (!empty($offerInfo['minute_volume_short_text_bn'])) ? $offerInfo['minute_volume_short_text_bn'] : old("offer_info.minute_volume_short_text_bn") ?? '' }}"
+           required data-validation-required-message="Enter view list url">
+    <span class="text-warning">Example: Video Call</span>
+    <div class="help-block"></div>
+    @if ($errors->has('minute_volume_short_text_bn'))
+        <div class="help-block">  {{ $errors->first('minute_volume_short_text_bn') }}</div>
     @endif
 </div>
 
@@ -72,7 +95,7 @@
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('local_sms_short_text') ? ' error' : '' }}">
-    <label for="local_sms_short_text" class="required">Local SMS Short Text</label>
+    <label for="local_sms_short_text" class="required">Local SMS Short Text (English)</label>
     <input type="text" name="offer_info[local_sms_short_text]"  class="form-control" placeholder="Enter minute offer"
            value="{{ (!empty($offerInfo['local_sms_short_text'])) ? $offerInfo['local_sms_short_text'] : old("offer_info.local_sms_short_text") ?? '' }}"
            required data-validation-required-message="Enter view list url">
@@ -80,6 +103,18 @@
     <div class="help-block"></div>
     @if ($errors->has('local_sms_short_text'))
         <div class="help-block">  {{ $errors->first('local_sms_short_text') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-6 {{ $errors->has('local_sms_short_text_bn') ? ' error' : '' }}">
+    <label for="local_sms_short_text_bn" class="required">Local SMS Short Text (Bangla)</label>
+    <input type="text" name="offer_info[local_sms_short_text_bn]"  class="form-control" placeholder="Enter minute offer"
+           value="{{ (!empty($offerInfo['local_sms_short_text_bn'])) ? $offerInfo['local_sms_short_text_bn'] : old("offer_info.local_sms_short_text_bn") ?? '' }}"
+           required data-validation-required-message="Enter view list url">
+    <span class="text-warning">Example: Local</span>
+    <div class="help-block"></div>
+    @if ($errors->has('local_sms_short_text_bn'))
+        <div class="help-block">  {{ $errors->first('local_sms_short_text_bn') }}</div>
     @endif
 </div>
 
@@ -96,7 +131,7 @@
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('international_sms_short_text') ? ' error' : '' }}">
-    <label for="international_sms_short_text" class="required">International SMS Short Text</label>
+    <label for="international_sms_short_text" class="required">International SMS Short Text (English)</label>
     <input type="text" name="offer_info[international_sms_short_text]"  class="form-control" placeholder="Enter minute offer"
            value="{{ (!empty($offerInfo['international_sms_short_text'])) ? $offerInfo['international_sms_short_text'] : old("offer_info.international_sms_short_text") ?? '' }}"
            required data-validation-required-message="Enter view list url">
@@ -104,6 +139,18 @@
     <div class="help-block"></div>
     @if ($errors->has('international_sms_short_text'))
         <div class="help-block">  {{ $errors->first('international_sms_short_text') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-6 {{ $errors->has('international_sms_short_text_bn') ? ' error' : '' }}">
+    <label for="international_sms_short_text_bn" class="required">International SMS Short Text (Bangla)</label>
+    <input type="text" name="offer_info[international_sms_short_text_bn]"  class="form-control" placeholder="Enter minute offer"
+           value="{{ (!empty($offerInfo['international_sms_short_text_bn'])) ? $offerInfo['international_sms_short_text_bn'] : old("offer_info.international_sms_short_text_bn") ?? '' }}"
+           required data-validation-required-message="Enter view list url">
+    <span class="text-warning">Example: International</span>
+    <div class="help-block"></div>
+    @if ($errors->has('international_sms_short_text_bn'))
+        <div class="help-block">  {{ $errors->first('international_sms_short_text_bn') }}</div>
     @endif
 </div>
 
