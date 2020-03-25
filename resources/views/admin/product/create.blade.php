@@ -19,7 +19,6 @@
                         <form id="product_form" role="form" action="{{ route('product.store', strtolower($type)) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="offer_category_id" class="required">Offer Type</label>
                                     <select class="form-control required" name="offer_category_id" id="offer_type"
@@ -55,17 +54,6 @@
                                     @endif
                                 </div>
 
-
-                                <slot id="others" data-offer-type="others" style="display: none">
-                                    @include('layouts.partials.products.other')
-                                </slot>
-
-                                <slot id="packages" data-offer-type="packages" style="display: none">
-                                    @include('layouts.partials.products.packages')
-                                    @include('layouts.partials.products.common-field.call_rate_unit')
-                                </slot>
-
-
                                 <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
                                     <label for="product_code" class="required">Product Code</label>
                                     <select id="product_core" name="product_code"
@@ -81,6 +69,10 @@
                                         <div class="help-block">{{ $errors->first('product_code') }}</div>
                                     @endif
                                 </div>
+
+                                <slot id="others" data-offer-type="others" style="display: none">
+                                    @include('layouts.partials.products.other')
+                                </slot>
 
                                 <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
                                     <label for="start_date">Start Date</label>
@@ -105,6 +97,12 @@
                                         <div class="help-block">{{ $errors->first('end_date') }}</div>
                                     @endif
                                 </div>
+
+                                <slot id="packages" data-offer-type="packages" style="display: none">
+                                    @include('layouts.partials.products.packages')
+                                    @include('layouts.partials.products.common-field.call_rate_unit')
+                                </slot>
+
 
                                 <slot id="internet" data-offer-type="internet" style="display: none">
                                     @include('layouts.partials.products.internet')

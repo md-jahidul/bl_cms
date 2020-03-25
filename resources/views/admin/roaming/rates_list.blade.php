@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Roaming Operator')
-@section('card_name', 'Roaming Operators')
+@section('title', 'Roaming Rates')
+@section('card_name', 'Roaming Rates')
 @section('action')
     <a href="{{ url('roaming/operator/create') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
-        Add Operator
+        Add Rates
     </a>
 @endsection
 @section('content')

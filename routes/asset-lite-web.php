@@ -478,29 +478,26 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('roaming/update-general-page', 'AssetLite\RoamingGeneralController@updatePage');
     Route::get('roaming/page-component-sort', 'AssetLite\RoamingGeneralController@componentSortChange');
 
-
+    // Operator
     Route::get('roaming/operators', 'AssetLite\RoamingOperatorController@index');
-
     Route::get('roaming/operator/create', 'AssetLite\RoamingOperatorController@operatorCreate');
-
     Route::post('roaming/operator/store', 'AssetLite\RoamingOperatorController@operatorStore')
         ->name('operator.store');
-
     Route::get('roaming/operator/edit/{id}', 'AssetLite\RoamingOperatorController@operatorEdit');
-
     Route::put('roaming/operator/update/{operatorId}', 'AssetLite\RoamingOperatorController@updateOperator')
         ->name('operator.update');
-
-
     Route::post('roaming-operator-list', 'AssetLite\RoamingOperatorController@roamingOperatorList')
         ->name('roaming.operator.list.ajax');
-
     Route::post('roaming/operator-excel', 'AssetLite\RoamingOperatorController@uploadOperatorExcel')
         ->name('roaming.operator-excel.save');
-
     Route::get('roaming-operator-status-change/{pakcageId}', 'AssetLite\RoamingOperatorController@operatorStatusChange');
-
     Route::get('roaming-operator/destroy/{operatorId?}', 'AssetLite\RoamingOperatorController@deleteOperator');
+    // Rate
+    Route::get('roaming/rates', 'AssetLite\RoamingOperatorController@index');
+    Route::post('roaming-rates-list', 'AssetLite\RoamingOperatorController@roamingOperatorList')
+        ->name('roaming.rates.list.ajax');
+    Route::post('roaming/rates-excel', 'AssetLite\RoamingOperatorController@uploadOperatorExcel')
+        ->name('roaming.rates-excel.save');
 
     // eCarrer ============================================
     Route::get('life-at-banglalink/general', 'AssetLite\EcareerController@generalIndex')->name('life.at.banglalink.general');
