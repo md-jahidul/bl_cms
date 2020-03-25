@@ -132,10 +132,10 @@ function matchRelatedProduct($id, $roles)
 							@csrf
 							{{method_field('POST')}}
 							<div class="row">
-								<input type="hidden" name="category" value="{{ $tab_type }}_banner_image" class="custom-file-input" id="imgTwo">
+								<input type="hidden" name="category" value="app_banner_fixed_section" class="custom-file-input" id="imgTwo">
 
-								<div class="form-group col-md-6 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
-									<label for="mobileImg">Banner Image</label>
+								<div class="form-group col-md-4 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
+									<label for="mobileImg">Banner Image (Desktop)</label>
 									<div class="custom-file">
 										<input type="file" name="image" class="custom-file-input image_with_preview">
 										<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
@@ -148,13 +148,37 @@ function matchRelatedProduct($id, $roles)
 									@endif
 								</div>
 
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-2">
 									@if($fixedSectionData['image'])
-										<img src="{{ config('filesystems.file_base_url') . $fixedSectionData['image'] }}" height="100" width="200" class="imgDisplay">
+										<img src="{{ config('filesystems.file_base_url') . $fixedSectionData['image'] }}" height="100" width="200" class="imgDisplay img-fluid">
 									@else
-										<img height="100" width="200" class="imgDisplay" style="display: none">
+										<img height="100" width="200" class="imgDisplay img-fluid" style="display: none">
 									@endif
 								</div>
+								
+
+								<div class="form-group col-md-4 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
+									<label for="mobileImg">Banner Image (Mobile)</label>
+									<div class="custom-file">
+										<input type="file" name="other_attributes[image_mobile]" class="custom-file-input image_with_preview">
+										<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+									</div>
+									<span class="text-primary">Please given file type (.png, .jpg)</span>
+
+									<div class="help-block"></div>
+									@if ($errors->has('banner_image'))
+										<div class="help-block">  {{ $errors->first('image') }}</div>
+									@endif
+								</div>
+
+								<div class="form-group col-md-2">
+									@if( isset($fixedSectionData['other_attributes']['image_mobile']) )
+										<img src="{{ config('filesystems.file_base_url') . $fixedSectionData['other_attributes']['image_mobile'] }}" height="100" width="200" class="imgDisplay img-fluid">
+									@else
+										<img height="100" width="200" class="imgDisplay img-fluid" style="display: none">
+									@endif
+								</div>
+
 
 								@if($tab_type == "app" || $tab_type == "vas")
 									<div class="form-group col-md-4 {{ $errors->has('title_en') ? ' error' : '' }}">
@@ -237,6 +261,7 @@ function matchRelatedProduct($id, $roles)
 		.modal-lg.modal_lg_custom{
 			max-width: 1200px;
 		}
+		.note-editable { font-size: 14px; }
 	</style>
 @endpush
 

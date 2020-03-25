@@ -29,7 +29,7 @@ class UpdateMyblProductRequest extends FormRequest
     {
         return [
             'offer_section_slug'    => 'string|exists:my_bl_internet_offers_categories,slug',
-            'tag'                   => 'max:10',
+            'tag'                   => 'max:20',
             'show_in_app'           => 'boolean',
             'is_rate_cutter_offer'  => 'boolean',
             'media'                 => 'mimes:jpeg,jpg,png|dimensions:ratio=16/9|max:3000'

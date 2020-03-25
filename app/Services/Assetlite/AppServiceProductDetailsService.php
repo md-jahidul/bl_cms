@@ -266,11 +266,17 @@ class AppServiceProductDetailsService
 
 	public function fixedSectionUpdate($data, $tab_type, $product_id)
 	{
+		
 		if (request()->hasFile('image')) {
 			$data['image'] = $this->upload($data['image'], 'assetlite/images/app-service/product-details');
 		}
 		$data['tab_type'] = $tab_type;
 		$data['product_id'] = $product_id;
+
+		if ( request()->hasFile('other_attributes.image_mobile') ) {
+			$data['other_attributes']['image_mobile'] = $this->upload($data['other_attributes']['image_mobile'], 'assetlite/images/app-service/product-details');
+		}
+
 		$findFixedSection = $this->appServiceProductDetailsRepository->checkFixedSection($product_id);
 
 		if (!$findFixedSection) {
@@ -280,6 +286,7 @@ class AppServiceProductDetailsService
 				$data['other_attributes'] = null;
 			}
 			$this->deleteFile($findFixedSection['image']);
+
 			$findFixedSection->update($data);
 		}
 		return Response('App Service Section Update Successfully');
