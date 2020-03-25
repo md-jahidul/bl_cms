@@ -45,7 +45,7 @@
 									<div class="form-group col-md-4 {{ $errors->has('image_url') ? ' error' : '' }}">
 									    <label for="alt_text" class="">Image (optional)</label>
 									    <div class="custom-file">
-									        <input type="file" name="component_multi_attr[image_url]" class="custom-file-input" id="image">
+									        <input type="file" name="component_multi_attr[image_url]" class="custom-file-input image_with_preview">
 									        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
 									    </div>
 									    <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
@@ -57,7 +57,7 @@
 									</div>
 
 									<div class="form-group col-md-1">
-									    <img style="height:70px;width:70px;display:none" id="imgDisplay">
+									    <img style="height:70px;width:70px;display:none" class="imgDisplay">
 									</div>
 
 

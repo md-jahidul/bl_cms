@@ -61,7 +61,9 @@ class EcareerItemController extends Controller
 			}
 		}
 
-		return view('admin.ecarrer-items.create', compact('parent_id', 'ecarrer_section_slug', 'parent_data'));
+		$parent_categories = $this->ecarrerItemService->getParentCategories($parent_id);
+
+		return view('admin.ecarrer-items.create', compact('parent_id', 'ecarrer_section_slug', 'parent_data', 'parent_categories'));
 	}
 
 	/**
@@ -112,7 +114,9 @@ class EcareerItemController extends Controller
 			}
 		}
 
-		return view('admin.ecarrer-items.edit', compact('ecarrer_item', 'parent_id', 'ecarrer_section_slug', 'parent_data'));
+		$parent_categories = $this->ecarrerItemService->getParentCategories($parent_id);
+
+		return view('admin.ecarrer-items.edit', compact('ecarrer_item', 'parent_id', 'ecarrer_section_slug', 'parent_data', 'parent_categories'));
 
 	}
 

@@ -31,7 +31,7 @@
                                 
                                 <td class="text-center">
 
-                                    <a href="{{$p->id}}" class=" page_edit">
+                                    <a href="{{ url('roaming/general-page-component/page/'.$p->id)}}" class=" page_edit">
                                         <i class="la la-edit"></i>
                                     </a>
 

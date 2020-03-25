@@ -11,7 +11,8 @@ class CreateRoamingRatesTable extends Migration {
      *
      * @return void
      */
-    public function up() {
+    public function up()
+    {
         Schema::create('roaming_rates', function (Blueprint $table) {
             $table->increments('id');
             $table->string('region', 200);
@@ -29,7 +30,8 @@ class CreateRoamingRatesTable extends Migration {
      *
      * @return void
      */
-    public function down() {
+    public function down()
+    {
         Schema::dropIfExists('roaming_rates');
     }
 

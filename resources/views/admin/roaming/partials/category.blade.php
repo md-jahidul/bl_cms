@@ -58,10 +58,10 @@
 
                 </div>
 
-                <div class="col-md-12 col-xs-12 cat_update_form" style="display: block;">
+                <div class="col-md-12 col-xs-12 cat_update_form" style="display: none;">
                     <br>
                     <h4 class="pb-1"><strong>Update Category</strong></h4>
-                     <hr>
+                    <hr>
                     <form method="POST" action="{{ url('roaming/update-category') }}" class="form uploadCategoryBanner" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden"  class="cat_id" name="cat_id">
@@ -78,21 +78,21 @@
                                 <label>URL <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control page_url" required name="page_url" placeholder="URL">
                                 <small class="text-info">
-                                    <strong>i.e:</strong> roaming-rates<br>
-                                    <strong>Note: </strong> Don't use spaces in the URL string
+                                    <strong>i.e:</strong> roaming-rates (no spaces)<br>
                                 </small>
                             </div>
-                            
+
                             <div class="col-md-3 col-xs-12">
                                 <label>Banner Photo Name<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control page_url" required name="page_url" placeholder="URL">
+                                <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
                                 <small class="text-info">
-                                    <strong>i.e:</strong> about-roaming-banner<br>
+                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
                                     <strong>Note: </strong> Don't need MIME type like jpg,png
                                 </small>
                             </div>
 
                         </div>
+
 
                         <div class="form-group row">
 
@@ -106,41 +106,41 @@
                                 <input type="file" class="dropify" name="banner_mobile" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                             </div>
-                            <div class="col-md-3 col-xs-12">
-                                <label>Page Header (HTML)</label>
-                                <textarea class="form-control html_header" name="html_header"></textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> Title, meta, canonical and other tags
-                                </small>
-                            </div>
-                            <div class="col-md-3 col-xs-12">
-                                <label>Schema Markup</label>
-                                <textarea class="form-control html_header" name="html_header"></textarea>
-                                 <small class="text-info">
-                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
-                                </small>
-                            </div>
+
                             <div class="col-md-3 col-xs-12">
                                 <label>Alt Text</label>
                                 <input type="text" class="form-control alt_text" name="alt_text" placeholder="Alt Text">
                             </div>
-                            
-                            
-                            <div class="col-md-4 col-xs-12">
+
+
+                            <div class="col-md-3 col-xs-12">
                                 <label class="display-block">&nbsp;</label>
-                                
+
                                 <label class="mr-1">
                                     <input type="radio" name="status" value="1" class="status_active"> Active
                                 </label>
-                                
-                                
+
+
                                 <label><input type="radio" name="status" value="0" class="status_inactive"> Inactive</label>
                             </div>
 
                         </div>
 
                         <div class="form-group row">
-
+                            <div class="col-md-6 col-xs-12">
+                                <label>Page Header (HTML)</label>
+                                <textarea class="form-control html_header" rows="7" name="html_header"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <label>Schema Markup</label>
+                                <textarea class="form-control schema_markup" rows="7" name="schema_markup"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                </small>
+                            </div>
                         </div>
 
 
@@ -165,95 +165,99 @@
 @push('page-js')
 
 <script>
-$(function () {
+    $(function () {
 
-    function saveNewPositions(save_url)
-    {
-        var positions = [];
-        $('.update').each(function () {
-            positions.push([
-                $(this).attr('data-index'),
-                $(this).attr('data-position')
-            ]);
-        })
-        $.ajax({
-            type: "GET",
-            url: save_url,
-            data: {
-                update: 1,
-                position: positions
-            },
-            success: function (data) {
-            },
-            error: function () {
-                swal.fire({
-                    title: 'Failed to sort data',
-                    type: 'error',
-                });
-            }
-        });
-    }
-
-    $(".category_sortable").sortable({
-
-        update: function (event, ui) {
-            $(this).children().each(function (index) {
-                if ($(this).attr('data-position') != (index + 1)) {
-                    $(this).attr('data-position', (index + 1)).addClass('update')
+        function saveNewPositions(save_url)
+        {
+            var positions = [];
+            $('.update').each(function () {
+                positions.push([
+                    $(this).attr('data-index'),
+                    $(this).attr('data-position')
+                ]);
+            })
+            $.ajax({
+                type: "GET",
+                url: save_url,
+                data: {
+                    update: 1,
+                    position: positions
+                },
+                success: function (data) {
+                },
+                error: function () {
+                    swal.fire({
+                        title: 'Failed to sort data',
+                        type: 'error',
+                    });
                 }
             });
-            var save_url = "{{ url('roaming/category-sort') }}";
-            saveNewPositions(save_url);
         }
-    });
 
-    $('.category_edit').on('click', function (e) {
-        e.preventDefault();
+        $(".category_sortable").sortable({
 
-        let catId = $(this).attr('href');
-        $('.cat_id').val(catId);
-        $(".cat_update_form").show(200);
-        $.ajax({
-            url: '{{ url("roaming/get-single-category")}}/' + catId,
-            type: 'GET',
-            cache: false,
-            success: function (result) {
-
-                $('.name_en').val(result.name_en);
-                $('.name_bn').val(result.name_bn);
-                $('.alt_text').val(result.alt_text);
-                $('.old_web').val(result.banner_web);
-                $('.old_mobile').val(result.banner_mobile);
-                
-                if(result.status == '1'){
-                    $(".status_active").attr('checked', 'checked');
-                }else{
-                    $(".status_inactive").attr('checked', 'checked');
-                }
-
-
-            },
-            error: function (data) {
-                swal.fire({
-                    title: 'Failed',
-                    type: 'error',
+            update: function (event, ui) {
+                $(this).children().each(function (index) {
+                    if ($(this).attr('data-position') != (index + 1)) {
+                        $(this).attr('data-position', (index + 1)).addClass('update')
+                    }
                 });
+                var save_url = "{{ url('roaming/category-sort') }}";
+                saveNewPositions(save_url);
             }
         });
+
+        $('.category_edit').on('click', function (e) {
+            e.preventDefault();
+
+            let catId = $(this).attr('href');
+            $('.cat_id').val(catId);
+            $(".cat_update_form").show(200);
+            $.ajax({
+                url: '{{ url("roaming/get-single-category")}}/' + catId,
+                type: 'GET',
+                cache: false,
+                success: function (result) {
+
+                    $('.name_en').val(result.name_en);
+                    $('.name_bn').val(result.name_bn);
+                    $('.alt_text').val(result.alt_text);
+                    $('.old_web').val(result.banner_web);
+                    $('.old_mobile').val(result.banner_mobile);
+                    $('.page_url').val(result.url_slug);
+                    $('.banner_name').val(result.banner_name);
+                    $('.html_header').val(result.page_header);
+                    $('.schema_markup').val(result.schema_markup);
+
+                    if (result.status == '1') {
+                        $(".status_active").attr('checked', 'checked');
+                    } else {
+                        $(".status_inactive").attr('checked', 'checked');
+                    }
+
+
+                },
+                error: function (data) {
+                    swal.fire({
+                        title: 'Failed',
+                        type: 'error',
+                    });
+                }
+            });
+        });
+
+        //show dropify for  photo
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Browse for photo',
+                'replace': 'Click to replace',
+                'remove': 'Remove',
+                'error': 'Choose correct file format'
+            }
+        });
+
+
     });
-
-    //show dropify for  photo
-    $('.dropify').dropify({
-        messages: {
-            'default': 'Browse for photo',
-            'replace': 'Click to replace',
-            'remove': 'Remove',
-            'error': 'Choose correct file format'
-        }
-    });
-
-
-});
 
 
 </script>

@@ -192,25 +192,25 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('offers/{type}/{id}/details/update', 'AssetLite\ProductController@productDetailsUpdate')
         ->name('product.details-update');
 
-    Route::post('product-details/{productId}/banner-image/related-product', 'AssetLite\ProductDetailsController@bannerImgRelatedPro')
+    Route::post('product-details/{simType}/{productId}/banner-image/related-product', 'AssetLite\ProductDetailsController@bannerImgRelatedPro')
         ->name('bannerImg-relatedPro');
 
-    Route::get('product-details/{type}/{productDetailsId}/section', 'AssetLite\ProductDetailsController@sectionList')
+    Route::get('product-details/{simType}/{productDetailsId}/section', 'AssetLite\ProductDetailsController@sectionList')
         ->name('section-list');
 
-    Route::get('product-details/{productDetailsId}/section-create', 'AssetLite\ProductDetailsController@create')
+    Route::get('product-details/{type}/{productDetailsId}/section-create', 'AssetLite\ProductDetailsController@create')
         ->name('section-create');
 
-    Route::post('product-details/{productDetailsId}/section-store', 'AssetLite\ProductDetailsController@storeSection')
+    Route::post('product-details/{simType}/{productDetailsId}/section-store', 'AssetLite\ProductDetailsController@storeSection')
         ->name('section-store');
 
-    Route::get('product-details/{productDetailsId}/section-edit/{id}', 'AssetLite\ProductDetailsController@editSection')
+    Route::get('product-details/{simType}/{productDetailsId}/section-edit/{id}', 'AssetLite\ProductDetailsController@editSection')
         ->name('section-edit');
 
-    Route::post('product-details/{productDetailsId}/section-update/{id}', 'AssetLite\ProductDetailsController@updateSection')
+    Route::post('product-details/{simType}/{productDetailsId}/section-update/{id}', 'AssetLite\ProductDetailsController@updateSection')
         ->name('section-update');
 
-    Route::get('product-details/{productDetailsId}/section-delete/{id}', 'AssetLite\ProductDetailsController@sectionDestroy')
+    Route::get('product-details/{simType}/{productDetailsId}/section-delete/{id}', 'AssetLite\ProductDetailsController@sectionDestroy')
         ->name('section-destroy');
 
     Route::get('product-details/section-sortable', 'AssetLite\ProductDetailsController@sectionSortable');
@@ -473,7 +473,24 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('roaming/get-single-category/{catId}', 'AssetLite\RoamingGeneralController@getSingleCategory');
     Route::post('roaming/update-category', 'AssetLite\RoamingGeneralController@updateCategory');
     Route::get('roaming/category-sort', 'AssetLite\RoamingGeneralController@categorySortChange');
+
+    Route::get('roaming/general-page-component/{type}/{pageId?}', 'AssetLite\RoamingGeneralController@editPage');
+    Route::post('roaming/update-general-page', 'AssetLite\RoamingGeneralController@updatePage');
+    Route::get('roaming/page-component-sort', 'AssetLite\RoamingGeneralController@componentSortChange');
+
+
     Route::get('roaming/operators', 'AssetLite\RoamingOperatorController@index');
+
+    Route::get('roaming/operator/create', 'AssetLite\RoamingOperatorController@operatorCreate');
+
+    Route::post('roaming/operator/store', 'AssetLite\RoamingOperatorController@operatorStore')
+        ->name('operator.store');
+
+    Route::get('roaming/operator/edit/{id}', 'AssetLite\RoamingOperatorController@operatorEdit');
+
+    Route::put('roaming/operator/update/{operatorId}', 'AssetLite\RoamingOperatorController@updateOperator')
+        ->name('operator.update');
+
 
     Route::post('roaming-operator-list', 'AssetLite\RoamingOperatorController@roamingOperatorList')
         ->name('roaming.operator.list.ajax');
@@ -483,6 +500,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::get('roaming-operator-status-change/{pakcageId}', 'AssetLite\RoamingOperatorController@operatorStatusChange');
 
+    Route::get('roaming-operator/destroy/{operatorId?}', 'AssetLite\RoamingOperatorController@deleteOperator');
 
     // eCarrer ============================================
     Route::get('life-at-banglalink/general', 'AssetLite\EcareerController@generalIndex')->name('life.at.banglalink.general');

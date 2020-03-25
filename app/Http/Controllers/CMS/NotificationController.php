@@ -102,6 +102,24 @@ class NotificationController extends Controller
             ->with('users', $users);
     }
 
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showAll($id)
+    {
+        $notification = $this->notificationService->findOne($id, 'NotificationCategory');
+
+        $users = $this->userService->getUserListForNotification();
+
+        return view('admin.notification.notification.show-all')
+            ->with('notification', $notification)
+            ->with('users', $users);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

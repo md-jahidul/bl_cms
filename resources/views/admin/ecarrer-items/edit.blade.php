@@ -8,6 +8,20 @@
 @section('action')
     <a href="{{ url("ecarrer-items/$parent_id/list") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
 @endsection
+
+@php
+
+if( 
+    $parent_categories['category'] == 'programs_photogallery'
+){
+    $hide_title = true;
+}
+else{
+    $hide_title = false;
+}
+
+@endphp
+
 @section('content')
     <section>
         <div class="card">
@@ -21,6 +35,8 @@
                             {{method_field('POST')}}
                             <div class="row">
                                 <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+
+                                @if( !$hide_title )
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">
                                         @if( $ecarrer_section_slug == 'programs_sapbatches' )
@@ -36,7 +52,9 @@
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
+                                @endif
                                 
+                                @if( !$hide_title )
                                 @if( $ecarrer_section_slug != 'life_at_bl_contact' )
                                     <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                         <label for="title_bn" class="required1">
@@ -53,6 +71,7 @@
                                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                         @endif
                                     </div>
+                                @endif
                                 @endif
 
                                 <!-- Include additional field layout for individual section requirement -->
