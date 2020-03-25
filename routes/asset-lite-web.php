@@ -474,8 +474,9 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('roaming/update-category', 'AssetLite\RoamingGeneralController@updateCategory');
     Route::get('roaming/category-sort', 'AssetLite\RoamingGeneralController@categorySortChange');
 
-    Route::get('roaming/edit-general-pages/{pageId}', 'AssetLite\RoamingGeneralController@editPage');
+    Route::get('roaming/general-page-component/{type}/{pageId?}', 'AssetLite\RoamingGeneralController@editPage');
     Route::post('roaming/update-general-page', 'AssetLite\RoamingGeneralController@updatePage');
+    Route::get('roaming/page-component-sort', 'AssetLite\RoamingGeneralController@componentSortChange');
 
 
     Route::get('roaming/operators', 'AssetLite\RoamingOperatorController@index');

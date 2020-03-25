@@ -8,7 +8,8 @@
 @php
     if( 
         $parent_categories['category'] == 'life_at_bl_events' ||
-        $parent_categories['category'] == 'life_at_bl_general'
+        $parent_categories['category'] == 'life_at_bl_general' ||
+        $parent_categories['category'] == 'programs_photogallery' 
     ){
         $sortable = true;
     }
@@ -16,9 +17,10 @@
         $sortable = false;
     }
 
-
     if( 
-        $parent_categories['category'] == 'life_at_bl_teams'
+        $parent_categories['category'] == 'life_at_bl_teams' ||
+        ($parent_categories['category'] == 'programs_progeneral' && $parent_categories['additional_type'] == 'programs_news_section')
+
     ){
         $single_item = true;
     }
@@ -56,7 +58,9 @@
                             
                             @if( 
                                 $parent_categories['category'] == 'life_at_bl_events' || 
-                                $parent_categories['category'] == 'life_at_bl_general' )
+                                $parent_categories['category'] == 'life_at_bl_general' ||
+                                $parent_categories['category'] == 'programs_photogallery'
+                                )
                                 <th>Images</th>
                             @endif
 
@@ -74,7 +78,8 @@
                                 <td>{{ ++$key }}</td>
                                 @if( 
                                     $parent_categories['category'] == 'life_at_bl_events' ||
-                                    $parent_categories['category'] == 'life_at_bl_general'
+                                    $parent_categories['category'] == 'life_at_bl_general' ||
+                                    $parent_categories['category'] == 'programs_photogallery'
                                      )
                                     <td width="10%">
                                         @if( !empty($items->image) )

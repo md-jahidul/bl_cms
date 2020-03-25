@@ -30,7 +30,7 @@ class AppServiceProductDetailsRepository extends BaseRepository
     public function fixedSection($product_id)
     {
         return $this->model->where('product_id', $product_id)
-            ->whereNull('section_name')
+            ->where('category', 'app_banner_fixed_section')
             ->whereNull('deleted_at')
             ->first();
     }
@@ -39,7 +39,7 @@ class AppServiceProductDetailsRepository extends BaseRepository
     {
         return $this->model
             ->where('product_id', $product_id)
-            ->whereNotNull('category')
+            ->where('category', 'app_banner_fixed_section')
             ->first();
     }
 
