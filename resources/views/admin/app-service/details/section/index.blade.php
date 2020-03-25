@@ -261,6 +261,7 @@ function matchRelatedProduct($id, $roles)
 		.modal-lg.modal_lg_custom{
 			max-width: 1200px;
 		}
+		.note-editable { font-size: 14px; }
 	</style>
 @endpush
 
