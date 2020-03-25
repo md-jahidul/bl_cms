@@ -38,18 +38,18 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
-                                    <label for="description_en" class="required">Description (English)</label>
+                                    <label for="description_en">Description (English)</label>
                                     <textarea type="text" name="description_en"  class="form-control" placeholder="Enter description in English"
-                                              required data-validation-required-message="Enter description in english">{{ $aboutCareer->description_en }}</textarea>
+                                              >{{ $aboutCareer->description_en }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('description_en'))
                                         <div class="help-block">  {{ $errors->first('description_en') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-group col-md-6 {{ $errors->has('description_bn') ? ' error' : '' }}">
-                                    <label for="description_bn" class="required">Description (Bangla)</label>
+                                    <label for="description_bn">Description (Bangla)</label>
                                     <textarea type="text" name="description_bn"  class="form-control" placeholder="Enter description in Bangla"
-                                              required data-validation-required-message="Enter description in Bangla">{{ $aboutCareer->description_bn }}</textarea>
+                                              >{{ $aboutCareer->description_bn }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('description_bn'))
                                         <div class="help-block">  {{ $errors->first('description_bn') }}</div>
