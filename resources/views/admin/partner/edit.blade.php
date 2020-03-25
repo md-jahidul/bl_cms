@@ -108,7 +108,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group col-md-1 pt-1">
-                                    <img class="" src="{{ config('filesystems.file_base_url') . $partner->company_logo }}" height="60" width="105" id="imgDisplay">
+                                    <img class="" src="{{ config('filesystems.file_base_url') . $partner->company_logo }}" height="60" width="70" id="imgDisplay">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('google_play_link') ? ' error' : '' }}">
@@ -143,8 +143,6 @@
                                     @endif
                                 </div>
 
-
-
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
@@ -153,8 +151,6 @@
                                     </div>
                                 </div>
                             </div>
-                            @csrf
-                            @method('PUT')
                         </form>
                     </div>
                 </div>
