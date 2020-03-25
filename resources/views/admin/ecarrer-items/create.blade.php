@@ -7,6 +7,22 @@
 @section('action')
     <a href="{{ url("ecarrer-items/$parent_id/list") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
+
+{{-- {{ dd($parent_categories) }} --}}
+
+@php
+
+if( 
+    $parent_categories['category'] == 'programs_photogallery'
+){
+    $hide_title = true;
+}
+else{
+    $hide_title = false;
+}
+
+@endphp
+
 @section('content')
     <section>
         <div class="card">
@@ -15,6 +31,7 @@
                     <div class="card-body card-dashboard">
                         <form id="general_section" role="form" action="{{ route('ecarrer.items.store', $parent_id) }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
+                                @if( !$hide_title )
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">
                                         @if( ($ecarrer_section_slug == 'programs_sapbatches') || ($ecarrer_section_slug == 'programs_ennovatorbatches') )
@@ -30,7 +47,9 @@
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
+                                @endif
                                 
+                                @if( !$hide_title )
                                 @if( $ecarrer_section_slug != 'life_at_bl_contact' )
                                     <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                         <label for="title_bn" class="required1">
@@ -47,6 +66,7 @@
                                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                         @endif
                                     </div>
+                                @endif
                                 @endif
 
 

@@ -28,7 +28,7 @@
 						<div class="form-group">
 							<label for="category_type">Component Preview</label>
 							<div id="component_preview" class="component_preview" style="max-width: 400px;min-height: 200px;">
-								<img id="component_preview_img" class="img-fluid" style="border: 1px solid #eee;" src="{{asset('app-assets/images/app_services/title_text_editor.png')}}" alt="">
+								<img id="component_preview_img" class="img-fluid" style="border: 1px solid #eee;" src="{{asset('app-assets/images/app_services/editor_only_section.png')}}" alt="">
 							</div>
 						</div>
 					</div>
