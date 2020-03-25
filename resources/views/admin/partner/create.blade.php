@@ -37,49 +37,49 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('company_website') ? ' error' : '' }}">
-                                    <label for="company_website" class="required">Company Website</label>
+                                    <label for="company_website" class="">Company Website</label>
                                     <input type="url" name="company_website"  class="form-control" placeholder="Enter company website"
-                                           value="{{ old("company_website") ? old("company_website") : '' }}" required data-validation-required-message="Enter company website">
+                                           value="{{ old("company_website") ? old("company_website") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('company_website'))
                                         <div class="help-block">  {{ $errors->first('company_website') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('contact_person_name') ? ' error' : '' }}">
-                                    <label for="contact_person_name" >Contact Person Name</label>
-                                    <input type="text" name="contact_person_name"  class="form-control" placeholder="Enter contact person name"
-                                           value="{{ old("contact_person_name") ? old("contact_person_name") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('contact_person_name'))
-                                        <div class="help-block">  {{ $errors->first('contact_person_name') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('contact_person_name') ? ' error' : '' }}">--}}
+{{--                                    <label for="contact_person_name" >Contact Person Name</label>--}}
+{{--                                    <input type="text" name="contact_person_name"  class="form-control" placeholder="Enter contact person name"--}}
+{{--                                           value="{{ old("contact_person_name") ? old("contact_person_name") : '' }}">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('contact_person_name'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('contact_person_name') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-6 {{ $errors->has('contact_person_email') ? ' error' : '' }}">
-                                    <label for="contact_person_email">Contact Person Email</label>
-                                    <input type="text" name="contact_person_email"  class="form-control" placeholder="Enter contact person name"
-                                           value="{{ old("contact_person_email") ? old("contact_person_email") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('contact_person_email'))
-                                        <div class="help-block">  {{ $errors->first('contact_person_email') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('contact_person_email') ? ' error' : '' }}">--}}
+{{--                                    <label for="contact_person_email">Contact Person Email</label>--}}
+{{--                                    <input type="text" name="contact_person_email"  class="form-control" placeholder="Enter contact person name"--}}
+{{--                                           value="{{ old("contact_person_email") ? old("contact_person_email") : '' }}">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('contact_person_email'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('contact_person_email') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-6 {{ $errors->has('contact_person_mobile') ? ' error' : '' }}">
-                                    <label for="contact_person_mobile">Contact Person Mobile Number</label>
-                                    <input type="number" name="contact_person_mobile"  class="form-control" placeholder="Enter contact person name"
-                                           value="{{ old("contact_person_mobile") ? old("contact_person_mobile") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('contact_person_mobile'))
-                                        <div class="help-block">  {{ $errors->first('contact_person_mobile') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('contact_person_mobile') ? ' error' : '' }}">--}}
+{{--                                    <label for="contact_person_mobile">Contact Person Mobile Number</label>--}}
+{{--                                    <input type="number" name="contact_person_mobile"  class="form-control" placeholder="Enter contact person name"--}}
+{{--                                           value="{{ old("contact_person_mobile") ? old("contact_person_mobile") : '' }}">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('contact_person_mobile'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('contact_person_mobile') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
                                 <div class="form-group col-md-6 mb-0{{ $errors->has('partner_category_id') ? ' error' : '' }}">
                                     <label for="partner_category_id" class="required">Company Category</label>
                                     <fieldset class="form-group position-relative">
-                                        <select class="form-control input-sm" name="partner_category_id" id="SmallSelect" required data-validation-required-message="Please partner category">
+                                        <select class="form-control input-sm" name="partner_category_id" id="SmallSelect" required data-validation-required-message="Please select partner category">
                                             <option selected="" value="">--Select partner category--</option>
                                             @foreach($partnerCategories as $partnerCategory)
                                                 <option value="{{ $partnerCategory->id }}" {{ (old('partner_category_id') == $partnerCategory->id) ? 'selected' : "" }}>
@@ -113,9 +113,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('google_play_link') ? ' error' : '' }}">
-                                    <label for="google_play_link" class="required">Google Play Store Link</label>
+                                    <label for="google_play_link">Google Play Store Link</label>
                                     <input type="url" name="google_play_link"  class="form-control" placeholder="Enter google play store link"
-                                           value="{{ old("google_play_link") ? old("google_play_link") : '' }}" required data-validation-required-message="Enter google play store link"/>
+                                           value="{{ old("google_play_link") ? old("google_play_link") : '' }}" />
                                     <div class="help-block"></div>
                                     @if ($errors->has('google_play_link'))
                                         <div class="help-block">  {{ $errors->first('google_play_link') }}</div>
@@ -123,9 +123,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('apple_app_store_link') ? ' error' : '' }}">
-                                    <label for="apple_app_store_link" class="required">Apple App Store Link</label>
+                                    <label for="apple_app_store_link">Apple App Store Link</label>
                                     <input type="url" name="apple_app_store_link" class="form-control" placeholder="Enter apple app store link"
-                                           value="{{ old("apple_app_store_link") ? old("apple_app_store_link") : '' }}" required data-validation-required-message="Enter apple app store link">
+                                           value="{{ old("apple_app_store_link") ? old("apple_app_store_link") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('apple_app_store_link'))
                                         <div class="help-block">  {{ $errors->first('apple_app_store_link') }}</div>
