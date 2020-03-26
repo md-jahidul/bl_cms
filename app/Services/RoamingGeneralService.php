@@ -75,7 +75,7 @@ class RoamingGeneralService {
                 $webPath = $this->upload($request['banner_web'], 'assetlite/images/roaming');
 
                 //delete old web photo
-                if ($request['old_photo']) {
+                if ($request['old_web']) {
                     $this->deleteFile($request['old_web']);
                 }
             }

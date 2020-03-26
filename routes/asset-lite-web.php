@@ -474,9 +474,18 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('roaming/update-category', 'AssetLite\RoamingGeneralController@updateCategory');
     Route::get('roaming/category-sort', 'AssetLite\RoamingGeneralController@categorySortChange');
 
+
     Route::get('roaming/general-page-component/{type}/{pageId?}', 'AssetLite\RoamingGeneralController@editPage');
     Route::post('roaming/update-general-page', 'AssetLite\RoamingGeneralController@updatePage');
     Route::get('roaming/page-component-sort', 'AssetLite\RoamingGeneralController@componentSortChange');
+    
+    Route::get('roaming-offers', 'AssetLite\RoamingOfferController@index');
+    Route::get('roaming/get-offer-single-category/{catId}', 'AssetLite\RoamingOfferController@getSingleCategory');
+    Route::post('roaming/save-offer-category', 'AssetLite\RoamingOfferController@saveCategory');
+    Route::get('roaming/offer-category-sort', 'AssetLite\RoamingOfferController@categorySortChange');
+    Route::get('roaming/offer-product-create', 'AssetLite\RoamingOfferController@createOffer');
+    Route::get('roaming/edit-other-offer/{offerId}', 'AssetLite\RoamingOfferController@editOffer');
+    Route::post('roaming/save-other-offer', 'AssetLite\RoamingOfferController@saveOffer');
 
     // Operator
     Route::get('roaming/operators', 'AssetLite\RoamingOperatorController@index');
