@@ -301,4 +301,50 @@ class RoamingOfferService {
         }
     }
 
+    /**
+     * update roaming category
+     * @return Response
+     */
+    public function deleteOffer($offerId) {
+        try {
+
+            $offer = $this->offerRepo->getOfferById($offerId);
+
+            //delete old mobile photo
+            if ($offer->banner_web != "") {
+                $this->deleteFile($offer->banner_web);
+            }
+            if ($offer->banner_mobile != "") {
+                $this->deleteFile($offer->banner_mobile);
+            }
+
+            //delete data 
+            $this->offerRepo->deleteOffer($offerId);
+
+
+
+            $response = [
+                'success' => 1,
+            ];
+
+
+            return $response;
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e
+            ];
+            return $response;
+        }
+    }
+    
+        /**
+     * Get Roaming offers
+     * @return Response
+     */
+    public function getOfferComponents($offerId) {
+        $response = $this->offerRepo->getOfferComponents($offerId);
+        return $response;
+    }
+
 }

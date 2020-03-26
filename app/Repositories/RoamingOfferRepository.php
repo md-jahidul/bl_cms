@@ -79,10 +79,11 @@ class RoamingOfferRepository extends BaseRepository {
 
     public function getOffers() {
         $response = $this->model->select('roaming_other_offer.*', 'c.name_en as category_name')
-                ->leftJoin('roaming_other_offer_category as c', 'c.id', '=', 'roaming_other_offer.category_id')
-                ->orderBy('roaming_other_offer.id', 'desc')->get();
+                        ->leftJoin('roaming_other_offer_category as c', 'c.id', '=', 'roaming_other_offer.category_id')
+                        ->orderBy('roaming_other_offer.id', 'desc')->get();
         return $response;
     }
+
     public function getOfferById($offerId) {
         $response = $this->model->findOrFail($offerId);
         return $response;
@@ -91,10 +92,10 @@ class RoamingOfferRepository extends BaseRepository {
     public function saveOffer($webPath, $mobilePath, $request) {
         try {
 
-            if($request->offer_id == ""){
-            $offer = $this->model;
-            }else{
-              $offer = $this->model->findOrFail($request->offer_id);  
+            if ($request->offer_id == "") {
+                $offer = $this->model;
+            } else {
+                $offer = $this->model->findOrFail($request->offer_id);
             }
 
             $offer->category_id = $request->category_id;
@@ -125,6 +126,26 @@ class RoamingOfferRepository extends BaseRepository {
                 'errors' => $e->getMessage()
             ];
         }
+        return $response;
+    }
+
+    public function deleteOffer($offerId) {
+        try {
+            $this->model->findORFail($offerId)->delete();
+            $response = [
+                'success' => 1,
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'errors' => $e->getMessage()
+            ];
+        }
+        return $response;
+    }
+    
+     public function getOfferComponents($offerId) {
+        $response = RoamingOtherOfferComponents::where('parent_id', $offerId)->get();
         return $response;
     }
 
