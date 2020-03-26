@@ -5,6 +5,7 @@
 <!--    <a href="{{ url('roaming/rates/create') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
         Add Rates
     </a>-->
+
 @endsection
 @section('content')
     <section>
