@@ -229,11 +229,6 @@
                             class="la la-caret-right"></i> Offers</a>
                 </li>
 
-                <li class="{{ is_active_url('roaming-rates') }}">
-                    <a class="menu-item" href="{{ url('roaming-rates') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-caret-right"></i> Roaming Rates</a>
-                </li>
 
                 <li class="{{ is_active_url('roaming-info-tips') }}">
                     <a class="menu-item" href="{{ url('roaming-info-tips') }}"
@@ -241,16 +236,23 @@
                             class="la la-caret-right"></i> Info & Tips</a>
                 </li>
 
+
                 <li class="{{ is_active_url('roaming/operators') }}">
                     <a class="menu-item" href="{{ url('roaming/operators') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-caret-right"></i> Roaming Operators</a>
                 </li>
 
-                <li class="{{ is_active_url('roaming/operators') }}">
-                    <a class="menu-item" href="{{ url('roaming/operators') }}"
+                <li class="{{ is_active_url('roaming/bundle') }}">
+                    <a class="menu-item" href="{{ url('roaming/bundle') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-caret-right"></i> Roaming Operators</a>
+                            class="la la-caret-right"></i> Roaming Bundle</a>
+                </li>
+
+                <li class="{{ is_active_url('roaming/rates') }}">
+                    <a class="menu-item" href="{{ url('roaming/rates') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-caret-right"></i> Roaming Rates</a>
                 </li>
 
             </ul>
