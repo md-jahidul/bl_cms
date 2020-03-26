@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Services\RoamingRateService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -14,17 +15,17 @@ use Illuminate\View\View;
 class RoamingRateController extends Controller
 {
     /**
-     * @var RoamingOperatorService
+     * @var RoamingRateService
      */
-    private $roamingOperatorService;
+    private $roamingRateService;
 
     /**
      * BusinessInternetController constructor.
-     * @param RoamingOperatorService $roamingOperatorService
+     * @param RoamingRateService $roamingRateService
      */
-    public function __construct(RoamingOperatorService $roamingOperatorService)
+    public function __construct(RoamingRateService $roamingRateService)
     {
-        $this->roamingOperatorService = $roamingOperatorService;
+        $this->roamingRateService = $roamingRateService;
     }
 
     /**
@@ -33,25 +34,25 @@ class RoamingRateController extends Controller
      */
     public function index()
     {
-        return view('admin.roaming.operator_list');
+        return view('admin.roaming.rates_list');
     }
 
     /**
      * @param Request $request
      * @return JsonResponse
      */
-    public function uploadOperatorExcel(Request $request)
+    public function uploadRatesExcel(Request $request)
     {
-        return $this->roamingOperatorService->saveExcel($request);
+        return $this->roamingRateService->saveExcel($request);
     }
 
 
     /**
      * @return Factory|View
      */
-    public function operatorCreate()
+    public function ratesCreate()
     {
-        return view('admin.roaming.operator_create');
+        return view('admin.roaming.rates_create');
     }
 
 
@@ -59,62 +60,62 @@ class RoamingRateController extends Controller
      * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function operatorStore(Request $request)
+    public function ratesStore(Request $request)
     {
-        $response = $this->roamingOperatorService->saveOperator($request);
+        $response = $this->roamingRateService->saveRate($request);
         if ($response['success'] == 1) {
-            Session::flash('sussess', 'Operator is saved!');
+            Session::flash('sussess', 'Rate is saved!');
         } else {
-            Session::flash('error', 'Operator saving process failed!');
+            Session::flash('error', 'Rate saving process failed!');
         }
-        return redirect('/roaming/operators');
+        return redirect('/roaming/rates');
     }
 
 
     /**
-     * @param $operatorId
+     * @param $ratesId
      * @return Factory|View
      */
-    public function operatorEdit($operatorId)
+    public function ratesEdit($ratesId)
     {
-        $operator = $this->roamingOperatorService->findOne($operatorId);
-        return view('admin.roaming.operator_edit', compact('operator'));
+        $rates = $this->roamingRateService->findOne($ratesId);
+        return view('admin.roaming.rates_edit', compact('rates'));
     }
 
     /**
      * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function updateOperator(Request $request, $id)
+    public function updateRate(Request $request, $id)
     {
-        $response = $this->roamingOperatorService->updateOperator($request, $id);
+        $response = $this->roamingRateService->updateRate($request, $id);
 
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Package is updated!');
         } else {
             Session::flash('error', 'Package updating process failed!');
         }
-        return redirect('/roaming/operators');
+        return redirect('/roaming/rates');
     }
 
 
-    public function roamingOperatorList(Request $request)
+    public function roamingRatesList(Request $request)
     {
-        return $this->roamingOperatorService->getRoamingOperators($request);
+        return $this->roamingRateService->getRoamingRates($request);
     }
 
-    public function operatorStatusChange($id)
+    public function ratesStatusChange($id)
     {
-        return $this->roamingOperatorService->statusChange($id);
+        return $this->roamingRateService->statusChange($id);
     }
 
-    public function allOperatorDelete()
+    public function allRateDelete()
     {
-        return $this->roamingOperatorService->deleteOperatorAll();
+        return $this->roamingRateService->deleteRateAll();
     }
 
-    public function deleteOperator($operatorId = 0)
+    public function deleteRate($ratesId = 0)
     {
-        return $this->roamingOperatorService->deleteOperator($operatorId);
+        return $this->roamingRateService->deleteRate($ratesId);
     }
 }

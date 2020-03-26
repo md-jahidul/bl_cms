@@ -67,17 +67,17 @@ class RoamingPagesRepository extends BaseRepository {
                     $insert[$count]['headline_bn'] = $request->list_headline_bn[$k];
                     $insert[$count]['body_text_en'] = $request->list_textarea_en[$k];
                     $insert[$count]['body_text_bn'] = $request->list_textarea_bn[$k];
-                    $insert[$count]['show_button'] =  0;
+                    $insert[$count]['show_button'] = 0;
                     $insert[$count]['position'] = $k;
                     $insert[$count]['component_type'] = 'list-component';
                 }
-                
+
                 if (isset($request->free_textarea_en[$k])) {
                     $insert[$count]['headline_en'] = "";
                     $insert[$count]['headline_bn'] = "";
                     $insert[$count]['body_text_en'] = $request->free_textarea_en[$k];
                     $insert[$count]['body_text_bn'] = $request->free_textarea_bn[$k];
-                    $insert[$count]['show_button'] =  0;
+                    $insert[$count]['show_button'] = 0;
                     $insert[$count]['position'] = $k;
                     $insert[$count]['component_type'] = 'free-text';
                 }
@@ -100,8 +100,8 @@ class RoamingPagesRepository extends BaseRepository {
         }
         return $response;
     }
-    
-     public function changeComponentSorting($request) {
+
+    public function changeComponentSorting($request) {
         try {
 
             $positions = $request->position;
@@ -126,31 +126,25 @@ class RoamingPagesRepository extends BaseRepository {
             return response()->json($response, 500);
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    public function deleteComponent($comId) {
+
+        try {
+
+            RoamingPageComponents::findOrFail($comId)->delete();
+
+            $response = [
+                'success' => 1,
+                'message' => 'Success',
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+        }
+        return $response;
+    }
     
     
     
@@ -180,51 +174,6 @@ class RoamingPagesRepository extends BaseRepository {
             $response = [
                 'success' => 0,
                 'message' => $e->getMessage()
-            ];
-            return response()->json($response, 500);
-        }
-    }
-
-    public function changeHomeShowStatus($catId) {
-        try {
-
-            $category = $this->model->findOrFail($catId);
-
-            $status = $category->home_show == 1 ? 0 : 1;
-            $category->home_show = $status;
-            $category->save();
-
-            $response = [
-                'success' => 1,
-                'show_status' => $status,
-            ];
-            return response()->json($response, 200);
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'errors' => $e->getMessage()
-            ];
-            return response()->json($response, 500);
-        }
-    }
-
-    public function deleteCards($cardId) {
-        try {
-            if ($cardId > 0) {
-                $card = $this->model->findOrFail($cardId);
-                $card->delete();
-            } else {
-                $this->model->truncate();
-            }
-
-            $response = [
-                'success' => 1
-            ];
-            return response()->json($response, 200);
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'errors' => $e->getMessage()
             ];
             return response()->json($response, 500);
         }

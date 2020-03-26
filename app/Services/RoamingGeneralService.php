@@ -154,6 +154,30 @@ class RoamingGeneralService {
         $response = $this->pagesRepo->changeComponentSorting($request);
         return $response;
     }
+       /**
+     * Change category sorting
+     * @return Response
+     */
+    public function deleteComponent($comId) {
+        
+         try {
+
+            $response = $this->pagesRepo->deleteComponent($comId);
+
+            $response = [
+                'success' => 1,
+            ];
+
+
+            return $response;
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return $response;
+        }
+    }
     
     
     /**
@@ -177,7 +201,6 @@ class RoamingGeneralService {
 
             $response = [
                 'success' => 1,
-                'message' => "News Saved"
             ];
 
 

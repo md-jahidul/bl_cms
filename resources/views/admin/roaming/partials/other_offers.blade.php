@@ -37,13 +37,13 @@
                                 
                                 <td class="text-center">
 
-                                    <a href="{{ url('roaming/edit-other-offer/'.$v->id)}}" class="btn btn-sm btn-info">
+                                    <a href="{{ url('roaming/edit-other-offer-component/'.$v->id)}}" class="btn btn-sm btn-info">
                                         Components
                                     </a>
                                     <a href="{{ url('roaming/edit-other-offer/'.$v->id)}}" class="btn btn-sm btn-outline-primary">
                                         <i class="la la-edit"></i>
                                     </a>
-                                    <a href="{{ url('roaming/delete-other-offer/'.$v->id)}}" class="btn btn-sm btn-outline-red">
+                                    <a href="{{ url('roaming/delete-other-offer/'.$v->id)}}" class="btn btn-sm btn-outline-red delete_offers">
                                         <i class="la la-trash"></i>
                                     </a>
 
@@ -65,6 +65,17 @@
 
 @push('page-js')
 
+<script type="text/javascript">
 
+$(function(){
+    $(".delete_offers").on('click', function(){
+       var conf = confirm("Do you want to delete this offer?");
+       if(conf){
+           return true;
+       }
+       return false;
+    });
+});
+</script>
 
 @endpush
