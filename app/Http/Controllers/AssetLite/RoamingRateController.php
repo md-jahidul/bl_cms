@@ -109,10 +109,6 @@ class RoamingRateController extends Controller
         return $this->roamingRateService->statusChange($id);
     }
 
-    public function allRateDelete()
-    {
-        return $this->roamingRateService->deleteRateAll();
-    }
 
     public function deleteRates($ratesId = 0)
     {

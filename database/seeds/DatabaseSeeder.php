@@ -82,5 +82,9 @@ class DatabaseSeeder extends Seeder
         $this->call(AppServiceProductDetailsTableSeeder::class);
         $this->call(EcarrerEcarrerPortalsTableSeeder::class);
         $this->call(EcarrerEcarrerPortalItemsTableSeeder::class);
+        $this->call(AppServiceAppServiceVendorApisTableSeeder::class);
+        $this->call(AppServiceAppServiceProductsTableSeeder::class);
+        $this->call(AppServiceAppServiceProductDetailsTableSeeder::class);
+        $this->call(AppServiceComponentsTableSeeder::class);
     }
 }

@@ -35,7 +35,20 @@
                                     </td>
 
                                     <td>
-                                        {{ $c->body_text_en }} 
+                                        @if($c->component_type == 'text')
+                                        <?php
+                                        $textEn = json_decode($c->body_text_en);
+                                        echo "<strong>Headline: </strong>" . $textEn->headline_en;
+                                        ?>
+                                        @endif
+
+                                        @if($c->component_type == 'table')
+                                        <?php
+                                        $tableEn = json_decode($c->body_text_en);
+                                        echo "<strong>Heads: </strong>" . implode(', ', $tableEn->head_en);
+                                        ?>
+                                        @endif
+
                                     </td>
                                     <td>
                                         <a href="{{url('roaming/offer-component-delete/'.$offerId. '/'. $c->id)}}" class="pull-right text-danger delete_component">
@@ -90,30 +103,50 @@
 
                             @if($com->component_type == 'text')
 
+                            <?php
+                            $textEn = json_decode($com->body_text_en);
+                            $textBn = json_decode($com->body_text_bn);
+                            ?>
+
                             <div class="form-group row bg-light p-2 mr-1 mt-1">
-                                <input type="hidden" name="component_position[{{$position}}]">
+                                <input type="hidden" name="component_position[{{$com->position}}]">
 
                                 <div class="col-md-8 col-xs-12">
                                     <h5 class="font-weight-bold">Text Component</h5>
                                     <hr>
                                     <div class="row">
+
                                         <div class="col-md-6 col-xs-12">
-                                            <label>Text (EN)</label>
-                                            <textarea class="form-control details_editor_edit" name="free_textarea_en[{{$position}}]">{{$com->body_text_en}}</textarea>
+                                            <label>Headline (EN) 
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" required class="form-control" value="{{$textEn->headline_en}}" name="headline_en[{{$com->position}}]">
                                         </div>
                                         <div class="col-md-6 col-xs-12">
-                                            <label class="display-block">Text (BN)
+                                            <label class="display-block">Headline (BN) <span class="text-danger">*</span>
                                                 <a href="javascript:;" class="pull-right text-danger remove_component"><i class="la la-close"></i></a>
                                             </label>
-                                            <textarea class="form-control details_editor_edit" name="free_textarea_bn[{{$position}}]">{{$com->body_text_bn}}</textarea>
+                                            <input type="text" required class="form-control"  value="{{$textBn->headline_bn}}"  name="headline_bn[{{$com->position}}]">
+
+                                        </div>
+
+                                        <div class="col-md-6 col-xs-12">
+                                            <label>Text (EN)</label>
+                                            <textarea class="form-control details_editor_edit" name="textarea_en[{{$com->position}}]">{{$textEn->text_en}}</textarea>
+                                        </div>
+                                        <div class="col-md-6 col-xs-12">
+                                            <label>Text (BN)</label>
+                                            <textarea class="form-control details_editor_edit" name="textarea_bn[{{$com->position}}]">{{$textBn->text_bn}}</textarea>
                                         </div>
 
 
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-xs-12">
-                                    <h6 class="font-weight-bold">Sample/Instruction (Free Text Component)</h6>
-                                    <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/general_page_freetext.png')}}" width="100%">
+                                    <h6 class="font-weight-bold">Sample/Instruction (Text Component)</h6>
+                                    <a href="{{asset('app-assets/images/roaming/offer_text_component.png')}}" target="_blank">
+                                        <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/offer_text_component.png')}}" width="100%">
+                                    </a>
 
                                 </div>
 
@@ -126,53 +159,85 @@
                             @if($com->component_type == 'table')
 
                             <div class="form-group row bg-light p-2 mr-1 mt-1">
-                                <input type="hidden" name="component_position[{{$position}}]">
+                                <input type="hidden" name="component_position[{{$com->position}}]">
 
-                                <div class="col-md-8 col-xs-12">
-                                    <h5 class="font-weight-bold">Table Component</h5>
+                                <div class="col-md-10 col-xs-12">
+                                    <h5 class="font-weight-bold">Table Component
+                                    <a href="javascript:;" class="pull-right text-danger remove_component"><i class="la la-close"></i></a>
+                                    </h5>
                                     <hr>
-                                    <div class="row">
-                                        <div class="col-md-6 col-xs-12">
-                                            <label class="display-block">Headline (EN) 
-                                                <span class="text-danger">*</span>
-                                                <strong class="pull-right text-danger">
-                                                    <input type="checkbox" @if($com->show_button == 1) checked @endif value="1" name="show_button[{{$position}}]"> Show Button
-                                                </strong>
-                                            </label>
-                                            <input type="text" class="form-control" value="{{$com->headline_en}}" name="headline_text_title_en[{{$position}}]"  placeholder="Headline EN">
-                                        </div>
-                                        <div class="col-md-6 col-xs-12">
-                                            <label class="display-block">Headline (BN) <span class="text-danger">*</span>
-                                                <a href="javascript:;" class="pull-right text-danger remove_component"><i class="la la-close"></i></a>
-                                            </label>
-                                            <input type="text" class="form-control" value="{{$com->headline_bn}}" name="headline_text_title_bn[{{$position}}]" placeholder="Headline BN">
+
+
+                                    <div class="row table_wrap">
+                                        <?php
+                                        $tableEn = json_decode($com->body_text_en);
+                                        $tableBn = json_decode($com->body_text_bn);
+
+                                        $width = 100 / count($tableEn->head_en);
+                                        ?>
+                                        <div class="col-md-12 col-xs-12">
+                                            <h6>Table Head (EN):</h6>
+
+                                            @foreach($tableEn->head_en as $k => $head)
+                                            <input type="text" placeholder="Head (EN) {{$k+1}}" name="head_en[{{$com->position}}][]" value="{{$head}}" width="{{$width}}%">
+                                            @endforeach
+                                            <hr>
 
                                         </div>
-                                        <div class="col-md-6 col-xs-12">
-                                            <label>Text (EN)</label>
-                                            <textarea class="form-control" name="headline_text_textarea_en[{{$position}}]">{{$com->body_text_en}}</textarea>
-                                        </div>
-                                        <div class="col-md-6 col-xs-12">
-                                            <label>Text (BN)</label>
-                                            <textarea class="form-control" name="headline_text_textarea_bn[{{$position}}]">{{$com->body_text_bn}}</textarea>
+
+                                        <div class="col-md-12 col-xs-12">
+                                            <h6>Table Columns (EN):</h6>
+
+                                            @foreach($tableEn->rows_en as $rows)
+
+                                            @foreach($rows as $k => $cols)
+                                            <input type="text" value="{{$cols}}" name="col_en[{{$com->position}}][{{$k}}][]" width="{{$width}}%">
+                                            @endforeach
+                                            <br>
+
+                                            @endforeach
+
                                         </div>
 
+
+                                        <div class="col-md-12 col-xs-12">
+                                            <h6><hr>Table Head (BN):</h6>
+
+                                            @foreach($tableBn->head_bn as $k => $head)
+                                            <input type="text" placeholder="Head (EN) {{$k+1}}" name="head_bn[{{$com->position}}][]" value="{{$head}}" width="{{$width}}%">
+                                            @endforeach
+
+                                            <hr>
+                                        </div>
+
+                                        <div class="col-md-12 col-xs-12">
+                                            <h6>Table Columns (BN):</h6>
+
+                                            @foreach($tableBn->rows_bn as $rows)
+
+                                            @foreach($rows as $k => $cols)
+                                            <input type="text" value="{{$cols}}" name="col_bn[{{$com->position}}][{{$k}}][]" width="{{$width}}%">
+                                            @endforeach
+                                            <br>
+
+                                            @endforeach
+
+                                        </div>
 
                                     </div>
-                                </div>
-                                <div class="col-md-4 col-xs-12">
-                                    <h6 class="font-weight-bold">Sample/Instruction (Headline & Text Component)</h6>
-                                    <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/general_page_headline_text.png')}}" width="100%">
+
 
                                 </div>
+                                <div class="col-md-2 col-xs-12">
+                                    <h6 class="font-weight-bold">Sample/Instruction (List Component)</h6>
+                                    <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/offer_table_component.png')}}" width="100%">
+
+                                </div>
+
 
                             </div>
 
                             @endif
-
-
-
-
 
 
 
@@ -365,7 +430,7 @@ if (Session::has('error')) {
                     $(this).attr('data-position', (index + 1)).addClass('update')
                 }
             });
-            var save_url = "{{ url('roaming/page-component-sort') }}";
+            var save_url = "{{ url('roaming/offer-component-sort') }}";
             saveNewPositions(save_url);
         }
     });
@@ -443,33 +508,65 @@ if (Session::has('error')) {
         var cols = $(this).parents('.row').find('.table_columns').val();
         var pos = $(this).parents('.form-group').find('.component_position').val();
 
-        var tableHead = "<div class='col-md-12 col-xs-12'><h6>Table Head:</h6>";
+        //English table
+        var tableHeadEn = "<div class='col-md-12 col-xs-12'><h6>Table Head (EN):</h6>";
 
         var i;
         var width = 100 / cols;
         for (i = 0; i < cols; i++) {
-            tableHead += "<input type='text' placeholder='Head " + (i + 1) + "' name='head[" + pos + "][]' width='" + width + "%'>";
+            tableHeadEn += "<input type='text' placeholder='Head (EN) " + (i + 1) + "' name='head_en[" + pos + "][]' width='" + width + "%'>";
         }
-        
-         tableHead += "<hr></div>";
 
-        var tableRows = "<div class='col-md-12 col-xs-12'><h6>Table Columns:</h6>";
-        
+        tableHeadEn += "<hr></div>";
+
+        var tableRowsEn = "<div class='col-md-12 col-xs-12'><h6>Table Columns (EN):</h6>";
+
         var r;
         for (r = 0; r < rows; r++) {
-            
+
             var c;
             for (c = 0; c < cols; c++) {
 
-                tableRows += "<input type='text' name='col[" + pos + "][]' width='" + width + "%'>";
+                tableRowsEn += "<input type='text' name='col_en[" + pos + "][" + r + "][]' width='" + width + "%'>";
             }
-            tableRows += "<br>";
+            tableRowsEn += "<br>";
         }
-         tableRows += "</div>";
-         
-         var tableData = tableHead + tableRows;
+        tableRowsEn += "</div>";
 
-       
+
+
+
+
+        //bangla table
+        var tableHeadBn = "<div class='col-md-12 col-xs-12'><h6><hr>Table Head (BN):</h6>";
+
+        var i;
+        var width = 100 / cols;
+        for (i = 0; i < cols; i++) {
+            tableHeadBn += "<input type='text' placeholder='Head (BN) " + (i + 1) + "' name='head_bn[" + pos + "][]' width='" + width + "%'>";
+        }
+
+        tableHeadBn += "<hr></div>";
+
+        var tableRowsBn = "<div class='col-md-12 col-xs-12'><h6>Table Columns (BN):</h6>";
+
+        var r;
+        for (r = 0; r < rows; r++) {
+
+            var c;
+            for (c = 0; c < cols; c++) {
+
+                tableRowsBn += "<input type='text' name='col_bn[" + pos + "][" + r + "][]' width='" + width + "%'>";
+            }
+            tableRowsBn += "<br>";
+        }
+        tableRowsBn += "</div>";
+
+
+
+        var tableData = tableHeadEn + tableRowsEn + tableHeadBn + tableRowsBn;
+
+
 
         $(this).parents(".form-group").find(".table_wrap").html(tableData);
 
