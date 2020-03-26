@@ -143,10 +143,113 @@ class RoamingOfferRepository extends BaseRepository {
         }
         return $response;
     }
-    
-     public function getOfferComponents($offerId) {
-        $response = RoamingOtherOfferComponents::where('parent_id', $offerId)->get();
+
+    public function getOfferComponents($offerId) {
+        $response = RoamingOtherOfferComponents::where('parent_id', $offerId)->orderBy('position')->get();
         return $response;
+    }
+
+    public function saveComponents($request) {
+        try {
+
+
+            //delete all previous components
+            RoamingOtherOfferComponents::where(array('parent_id' => $request->parent_id))->delete();
+
+            $insert = [];
+
+            $count = 0;
+            foreach ($request->component_position as $k => $val) {
+                $insert[$count]['parent_id'] = $request->parent_id;
+
+                if (isset($request->head_en[$k])) {
+                    
+                     $tableArrayEn = array(
+                        'head_en' => $request->head_en[$k],
+                        'rows_en' => $request->col_en[$k]
+                    );
+                    $tableJsonEn = json_encode($tableArrayEn);
+                    
+                     $tableArrayBn = array(
+                        'head_bn' => $request->head_bn[$k],
+                        'rows_bn' => $request->col_bn[$k]
+                    );
+                    $tableJsonBn = json_encode($tableArrayBn);
+
+                    $insert[$count]['body_text_en'] = $tableJsonEn;
+                    $insert[$count]['body_text_bn'] = $tableJsonBn;
+                    
+                    $insert[$count]['position'] = $k;
+                    $insert[$count]['component_type'] = 'table';
+                }
+
+                if (isset($request->headline_en[$k])) {
+
+                    $textArrayEn = array(
+                        'headline_en' => $request->headline_en[$k],
+                        'text_en' => $request->textarea_en[$k]
+                    );
+                    $textJsonEn = json_encode($textArrayEn);
+
+                    $textArrayBn = array(
+                        'headline_bn' => $request->headline_bn[$k],
+                        'text_bn' => $request->textarea_bn[$k]
+                    );
+                    $textJsonBn = json_encode($textArrayBn);
+
+                    $insert[$count]['body_text_en'] = $textJsonEn;
+                    $insert[$count]['body_text_bn'] = $textJsonBn;
+                    $insert[$count]['position'] = $k;
+                    $insert[$count]['component_type'] = 'text';
+                }
+
+
+
+
+                $count++;
+            }
+            
+
+            RoamingOtherOfferComponents::insert($insert);
+
+
+            $response = [
+                'success' => 1,
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'errors' => $e->getMessage()
+            ];
+        }
+        return $response;
+    }
+    
+    
+    public function changeComponentSorting($request) {
+        try {
+
+            $positions = $request->position;
+            foreach ($positions as $position) {
+                $comId = $position[0];
+                $new_position = $position[1];
+                $update = RoamingOtherOfferComponents::findOrFail($comId);
+                $update['position'] = $new_position;
+                $update->update();
+            }
+
+            $response = [
+                'success' => 1,
+                'message' => 'Success',
+            ];
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
     }
 
 }

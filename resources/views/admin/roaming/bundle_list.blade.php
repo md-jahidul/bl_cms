@@ -2,9 +2,9 @@
 @section('title', 'Roaming Bundle')
 @section('card_name', 'Roaming Bundle')
 @section('action')
-    <a href="{{ url('roaming/bundle/create') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+<!--    <a href="{{ url('roaming/bundle/create') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
         Add Bundle
-    </a>
+    </a>-->
 @endsection
 @section('content')
     <section>

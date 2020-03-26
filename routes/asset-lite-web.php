@@ -490,6 +490,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('roaming/delete-other-offer/{offerId}', 'AssetLite\RoamingOfferController@deleteOffer');
     Route::get('roaming/edit-other-offer-component/{offerId}', 'AssetLite\RoamingOfferController@editComponent');
     Route::post('roaming/update-offer-component/', 'AssetLite\RoamingOfferController@updateComponent');
+    Route::get('roaming/offer-component-sort', 'AssetLite\RoamingOfferController@componentSortChange');
 
     // Operator
     Route::get('roaming/operators', 'AssetLite\RoamingOperatorController@index');

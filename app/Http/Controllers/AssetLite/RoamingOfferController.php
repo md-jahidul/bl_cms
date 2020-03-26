@@ -167,24 +167,32 @@ class RoamingOfferController extends Controller {
      * 
      * @param Request $request
      * @return Factory|View
-     * @Bulbul Mahmud Nito || 25/03/2020
+     * @Bulbul Mahmud Nito || 26/03/2020
      */
     public function updateComponent(Request $request) {
-        print_r($request->all());die();
+//        print_r($request->all());die();
 
-        if ($request->offer_id == "") {
-            $response = $this->offerService->saveOffer($request);
-        } else {
-            $response = $this->offerService->updateOffer($request);
-        }
-
+            $response = $this->offerService->updateComponents($request);
+      
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Offer is saved!');
         } else {
             Session::flash('error', 'Offer saving process failed!');
         }
 
-        return redirect('roaming-offers');
+        return redirect('roaming/edit-other-offer-component/'.$request->parent_id);
+    }
+    
+     /**
+     * Component Sorting Change.
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     * @Dev Bulbul Mahmud Nito || 26/03/2020
+     */
+    public function componentSortChange(Request $request) {
+        $sortChange = $this->offerService->changeComponentSort($request);
+        return $sortChange;
     }
 
 }

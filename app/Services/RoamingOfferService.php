@@ -346,5 +346,41 @@ class RoamingOfferService {
         $response = $this->offerRepo->getOfferComponents($offerId);
         return $response;
     }
+    
+    
+     /**
+     * update roaming category
+     * @return Response
+     */
+    public function updateComponents($request) {
+        try {
+
+
+            //save data in database 
+        $this->offerRepo->saveComponents($request);
+
+            $response = [
+                'success' => 1,
+            ];
+
+
+            return $response;
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return $response;
+        }
+    }
+    
+         /**
+     * Change component sorting
+     * @return Response
+     */
+    public function changeComponentSort($request) {
+        $response = $this->offerRepo->changeComponentSorting($request);
+        return $response;
+    }
 
 }

@@ -7,9 +7,7 @@
 
 namespace App\Services;
 
-use App\Repositories\BusinessInternetRepository;
 use App\Repositories\RoamingOperatorRepository;
-use App\Repositories\TagCategoryRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Http\JsonResponse;

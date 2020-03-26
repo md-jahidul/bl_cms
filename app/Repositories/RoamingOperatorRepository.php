@@ -105,11 +105,11 @@ class RoamingOperatorRepository extends BaseRepository {
                     $totalCell = count($cells);
                     if ($rowNumber > 1) {
                         $insertdata[] = array(
-                            'country_en' => $cells[0]->getValue(),
-                            'country_bn' => $cells[1]->getValue(),
-                            'operator_en' => $cells[2]->getValue(),
-                            'operator_bn' => $cells[3]->getValue(),
-                            'tap_code' => $cells[4]->getValue(),
+                            'country_en' => trim($cells[0]->getValue()),
+                            'country_bn' => trim($cells[1]->getValue()),
+                            'operator_en' => trim($cells[2]->getValue()),
+                            'operator_bn' => trim($cells[3]->getValue()),
+                            'tap_code' => trim($cells[4]->getValue()),
                         );
                     }
                     $rowNumber++;

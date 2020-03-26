@@ -2,9 +2,9 @@
 @section('title', 'Roaming Rates')
 @section('card_name', 'Roaming Rates')
 @section('action')
-    <a href="{{ url('roaming/rates/create') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+<!--    <a href="{{ url('roaming/rates/create') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
         Add Rates
-    </a>
+    </a>-->
 @endsection
 @section('content')
     <section>
