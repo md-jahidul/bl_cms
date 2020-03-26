@@ -106,10 +106,10 @@ class RoamingBundleRepository extends BaseRepository
 
                     if ($rowNumber > 1) {
                         $insertdata[] = array(
-                            'product_code' => trim($cells[0]->getValue()),
-                            'subscription_type' => trim($cells[1]->getValue()),
-                            'country' => trim($cells[2]->getValue()),
-                            'operator' => trim($cells[3]->getValue()),
+                            'product_code' => trim(iconv("UTF-8","ISO-8859-1",$cells[0]->getValue())," \t\n\r\0\x0B\xA0"),
+                            'subscription_type' => trim(iconv("UTF-8","ISO-8859-1",$cells[1]->getValue())," \t\n\r\0\x0B\xA0"),
+                            'country' => trim(iconv("UTF-8","ISO-8859-1",$cells[2]->getValue())," \t\n\r\0\x0B\xA0"),
+                            'operator' => trim(iconv("UTF-8","ISO-8859-1",$cells[3]->getValue())," \t\n\r\0\x0B\xA0"),
                             'package_name_en' => trim($cells[4]->getValue()),
                             'package_name_bn' => trim($cells[5]->getValue()),
                             'data_volume' => trim($cells[6]->getValue()),

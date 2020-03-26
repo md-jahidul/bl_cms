@@ -13,7 +13,7 @@ class AddLikeColumnInRoamingBundleOffer extends Migration
      */
     public function up()
     {
-        Schema::table('roaming_bundle_offer', function (Blueprint $table) {
+        Schema::table('roaming_bundle_offers', function (Blueprint $table) {
             $table->mediumInteger('like')->default(0)->after('price');
         });
     }
@@ -25,7 +25,7 @@ class AddLikeColumnInRoamingBundleOffer extends Migration
      */
     public function down()
     {
-        Schema::table('roaming_bundle_offer', function (Blueprint $table) {
+        Schema::table('roaming_bundle_offers', function (Blueprint $table) {
             $table->dropColumn('like');
         });
     }
