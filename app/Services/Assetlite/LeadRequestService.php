@@ -37,4 +37,11 @@ class LeadRequestService
     {
         return $this->findAll();
     }
+
+    public function updateStatus($data, $id)
+    {
+        $leadData = $this->findOne($id);
+        $leadData->update($data);
+        return response('Status update successfully!');
+    }
 }
