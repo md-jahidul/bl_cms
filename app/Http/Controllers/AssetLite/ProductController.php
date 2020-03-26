@@ -75,9 +75,12 @@ class ProductController extends Controller
             ->with(['offer_category' => function ($query) {
                 $query->select('id', 'name_en');
             }, 'product_core'])
-            ->select('id', 'product_code', 'offer_category_id', 'name_en', 'show_in_home', 'status')
+//            ->select('id', 'product_code', 'offer_category_id', 'name_en', 'show_in_home', 'status')
             ->latest()
             ->get();
+
+//        return $products;
+
         return view('admin.product.index', compact('products', 'type'));
     }
 
@@ -147,12 +150,8 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
-//        $data = $request->all();
-//        $otherOfferId = $data['offer_info']['other_offer_type_id'];
-//
-//        dd(gettype($otherOfferId));
 
-//        $offerId = [10, 11, 12, 13, 14, 15, 16, 18]
+//        return $request->all();
 
         $bondhoSimOffer = $this->productService->findBondhoSim();
 

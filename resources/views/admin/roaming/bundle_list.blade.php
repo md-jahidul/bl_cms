@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Roaming Rates')
-@section('card_name', 'Roaming Rates')
+@section('title', 'Roaming Bundle')
+@section('card_name', 'Roaming Bundle')
 @section('action')
-    <a href="{{ url('roaming/rates/create') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
-        Add Rates
+    <a href="{{ url('roaming/bundle/create') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+        Add Bundle
     </a>
 @endsection
 @section('content')
@@ -19,13 +19,13 @@
                 <div class="card-body card-dashboard">
                     <div class="row">
                         <div class="col-md-12 col-xs-12">
-                            <form class="form" method="POST"  id="uploadRates" enctype="multipart/form-data">
+                            <form class="form" method="POST"  id="uploadBundle" enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-md-12 col-xs-12">
                                     <div class="form-group">
-                                        <label for="message">Upload Roaming Rates List</label>
-                                        <a href="{{ asset('sample-format/roaming-rates.xlsx')}}" class="badge badge-info ml-2">Download Sample Format</a></br>
-                                        <input type="file" class="dropify" name="rates_file" data-height="80"
+                                        <label for="message">Upload Roaming Bundle List</label>
+                                        <a href="{{ asset('sample-format/roaming-bundle-offers.xlsx')}}" class="badge badge-info ml-2">Download Sample Format</a></br>
+                                        <input type="file" class="dropify" name="bundle_file" data-height="80"
                                                data-allowed-file-extensions='["xlsx", "xls"]' required/>
                                     </div>
 
@@ -38,7 +38,7 @@
 
                         </div>
                     </div>
-                    @include('admin.roaming.partials.rates-table-list')
+                    @include('admin.roaming.partials.bundle-table-list')
                 </div>
             </div>
         </div>
@@ -98,7 +98,7 @@ if (Session::has('sussess')) {
             });
 
             /* file handled  */
-            $('#uploadRates').submit(function (e) {
+            $('#uploadBundle').submit(function (e) {
                 e.preventDefault();
 
                 swal.fire({
@@ -113,7 +113,7 @@ if (Session::has('sussess')) {
                 let formData = new FormData($(this)[0]);
 
                 $.ajax({
-                    url: '{{ route("roaming.rates-excel.save")}}',
+                    url: '{{ route("roaming.bundle-excel.save")}}',
                     type: 'POST',
                     cache: false,
                     contentType: false,
@@ -122,13 +122,13 @@ if (Session::has('sussess')) {
                     success: function (result) {
                         if (result.success) {
                             swal.fire({
-                                title: 'Roaming rates excel is uploaded successfully!',
+                                title: 'Roaming bundle excel is uploaded successfully!',
                                 type: 'success',
                                 timer: 2000,
                                 showConfirmButton: false
                             });
 
-                            $('#roaming_rates_list').DataTable().ajax.reload();
+                            $('#roaming_bundle_list').DataTable().ajax.reload();
 
                         } else {
                             swal.close();
@@ -142,7 +142,7 @@ if (Session::has('sussess')) {
                     },
                     error: function (data) {
                         swal.fire({
-                            title: 'Failed to upload roaming rates excel',
+                            title: 'Failed to upload roaming bundle excel',
                             type: 'error',
                         });
                     }

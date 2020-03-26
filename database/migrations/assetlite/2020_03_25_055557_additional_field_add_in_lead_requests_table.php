@@ -16,6 +16,7 @@ class AdditionalFieldAddInLeadRequestsTable extends Migration
         Schema::table('lead_requests', function (Blueprint $table) {
             $table->string('category')->after('id')->nullable();
             $table->string('sub_category')->after('category')->nullable();
+            $table->string('status')->after('request_type')->default('pending');
         });
     }
 

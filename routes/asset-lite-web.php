@@ -491,29 +491,50 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('roaming/edit-other-offer-component/{offerId}', 'AssetLite\RoamingOfferController@editComponent');
     Route::post('roaming/update-offer-component/', 'AssetLite\RoamingOfferController@updateComponent');
 
-
+    // Operator
     Route::get('roaming/operators', 'AssetLite\RoamingOperatorController@index');
-
     Route::get('roaming/operator/create', 'AssetLite\RoamingOperatorController@operatorCreate');
-
     Route::post('roaming/operator/store', 'AssetLite\RoamingOperatorController@operatorStore')
         ->name('operator.store');
-
     Route::get('roaming/operator/edit/{id}', 'AssetLite\RoamingOperatorController@operatorEdit');
-
     Route::put('roaming/operator/update/{operatorId}', 'AssetLite\RoamingOperatorController@updateOperator')
         ->name('operator.update');
-
-
     Route::post('roaming-operator-list', 'AssetLite\RoamingOperatorController@roamingOperatorList')
         ->name('roaming.operator.list.ajax');
-
     Route::post('roaming/operator-excel', 'AssetLite\RoamingOperatorController@uploadOperatorExcel')
         ->name('roaming.operator-excel.save');
-
-    Route::get('roaming-operator-status-change/{pakcageId}', 'AssetLite\RoamingOperatorController@operatorStatusChange');
-
+    Route::get('roaming-operator-status-change/{operatorId}', 'AssetLite\RoamingOperatorController@operatorStatusChange');
     Route::get('roaming-operator/destroy/{operatorId?}', 'AssetLite\RoamingOperatorController@deleteOperator');
+    // Rate
+    Route::get('roaming/rates', 'AssetLite\RoamingRateController@index');
+    Route::get('roaming/rates/create', 'AssetLite\RoamingRateController@ratesCreate');
+    Route::post('roaming/rates/store', 'AssetLite\RoamingRateController@ratesStore')
+        ->name('rates.store');
+    Route::get('roaming/rates/edit/{id}', 'AssetLite\RoamingRateController@ratesEdit');
+    Route::put('roaming/rates/update/{ratesId}', 'AssetLite\RoamingRateController@updateRates')
+        ->name('rates.update');
+    Route::post('roaming-rates-list', 'AssetLite\RoamingRateController@roamingRatesList')
+        ->name('roaming.rates.list.ajax');
+    Route::post('roaming/rates-excel', 'AssetLite\RoamingRateController@uploadRatesExcel')
+        ->name('roaming.rates-excel.save');
+    Route::get('roaming-rates-status-change/{rateId}', 'AssetLite\RoamingRateController@ratesStatusChange');
+    Route::get('roaming-rates/destroy/{rateId?}', 'AssetLite\RoamingRateController@deleteRates');
+
+    // Bundle
+    Route::get('roaming/bundle', 'AssetLite\RoamingBundleController@index');
+    Route::get('roaming/bundle/create', 'AssetLite\RoamingBundleController@bundleCreate');
+    Route::post('roaming/bundle/store', 'AssetLite\RoamingBundleController@bundleStore')
+        ->name('bundle.store');
+    Route::get('roaming/bundle/edit/{id}', 'AssetLite\RoamingBundleController@bundleEdit');
+    Route::put('roaming/bundle/update/{bundleId}', 'AssetLite\RoamingBundleController@updateBundle')
+        ->name('bundle.update');
+    Route::post('roaming-bundle-list', 'AssetLite\RoamingBundleController@roamingBundleList')
+        ->name('roaming.bundle.list.ajax');
+    Route::post('roaming/bundle-excel', 'AssetLite\RoamingBundleController@uploadBundleExcel')
+        ->name('roaming.bundle-excel.save');
+    Route::get('roaming-bundle-status-change/{rateId}', 'AssetLite\RoamingBundleController@bundleStatusChange');
+    Route::get('roaming-bundle/destroy/{rateId?}', 'AssetLite\RoamingBundleController@deleteBundle');
+
 
     // eCarrer ============================================
     Route::get('life-at-banglalink/general', 'AssetLite\EcareerController@generalIndex')->name('life.at.banglalink.general');
