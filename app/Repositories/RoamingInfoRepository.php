@@ -2,26 +2,34 @@
 
 /**
  * User: Bulbul Mahmud Nito
- * Date: 20/03/2020
+ * Date: 27/03/2020
  */
 
 namespace App\Repositories;
 
-use App\Models\RoamingOfferCategory;
-use App\Models\RoamingOtherOffer;
-use App\Models\RoamingOtherOfferComponents;
+use App\Models\RoamingInfo;
+use App\Models\RoamingInfoCategory;
+use App\Models\RoamingInfoComponents;
 
-class RoamingOfferRepository extends BaseRepository {
+class RoamingInfoRepository extends BaseRepository {
 
-    public $modelName = RoamingOtherOffer::class;
-
-    public function getCategoryList() {
-        $categories = RoamingOfferCategory::orderBy('sort')->get();
+    public $modelName = RoamingInfo::class;
+    
+    
+     public function getCategoryList() {
+        $categories = RoamingInfoCategory::orderBy('sort')->get();
         return $categories;
+    }
+    
+       public function getInfo() {
+        $response = $this->model->select('roaming_info_tips.*', 'c.name_en as category_name')
+                        ->leftJoin('roaming_info_tips_category as c', 'c.id', '=', 'roaming_info_tips.category_id')
+                        ->orderBy('roaming_info_tips.id', 'desc')->get();
+        return $response;
     }
 
     public function getCategory($catId) {
-        $categoriy = RoamingOfferCategory::findOrFail($catId);
+        $categoriy = RoamingInfoCategory::findOrFail($catId);
         return $categoriy;
     }
 
@@ -29,9 +37,9 @@ class RoamingOfferRepository extends BaseRepository {
         try {
 
             if ($request->cat_id != "") {
-                $category = RoamingOfferCategory::findOrFail($request->cat_id);
+                $category = RoamingInfoCategory::findOrFail($request->cat_id);
             } else {
-                $category = new RoamingOfferCategory();
+                $category = new RoamingInfoCategory();
             }
 
             $category->name_en = $request->name_en;
@@ -50,7 +58,7 @@ class RoamingOfferRepository extends BaseRepository {
         }
         return $response;
     }
-
+    
     public function changeCategorySorting($request) {
         try {
 
@@ -58,7 +66,7 @@ class RoamingOfferRepository extends BaseRepository {
             foreach ($positions as $position) {
                 $categoryId = $position[0];
                 $new_position = $position[1];
-                $update = RoamingOfferCategory::findOrFail($categoryId);
+                $update = RoamingInfoCategory::findOrFail($categoryId);
                 $update['sort'] = $new_position;
                 $update->update();
             }
@@ -76,46 +84,37 @@ class RoamingOfferRepository extends BaseRepository {
             return response()->json($response, 500);
         }
     }
-
-    public function getOffers() {
-        $response = $this->model->select('roaming_other_offer.*', 'c.name_en as category_name')
-                        ->leftJoin('roaming_other_offer_category as c', 'c.id', '=', 'roaming_other_offer.category_id')
-                        ->orderBy('roaming_other_offer.id', 'desc')->get();
+    
+     public function getInfoById($infoId) {
+        $response = $this->model->findOrFail($infoId);
         return $response;
     }
-
-    public function getOfferById($offerId) {
-        $response = $this->model->findOrFail($offerId);
-        return $response;
-    }
-
-    public function saveOffer($webPath, $mobilePath, $request) {
+    
+     public function saveInfo($webPath, $mobilePath, $request) {
         try {
 
-            if ($request->offer_id == "") {
-                $offer = $this->model;
+            if ($request->info_id == "") {
+                $info = $this->model;
             } else {
-                $offer = $this->model->findOrFail($request->offer_id);
+                $info = $this->model->findOrFail($request->info_id);
             }
 
-            $offer->category_id = $request->category_id;
-            $offer->name_en = $request->name_en;
-            $offer->name_bn = $request->name_bn;
-            $offer->card_text_en = $request->card_text_en;
-            $offer->card_text_bn = $request->card_text_bn;
-            $offer->short_text_en = $request->short_text_en;
-            $offer->short_text_bn = $request->short_text_bn;
-            $offer->details_en = $request->details_en;
-            $offer->details_bn = $request->details_bn;
-            $offer->banner_name = $request->banner_name;
-            $offer->banner_web = $webPath;
-            $offer->banner_mobile = $mobilePath;
-            $offer->alt_text = $request->alt_text;
-            $offer->url_slug = $request->url_slug;
-            $offer->page_header = $request->html_header;
-            $offer->schema_markup = $request->schema_markup;
-            $offer->status = $request->status;
-            $offer->save();
+            $info->category_id = $request->category_id;
+            $info->name_en = $request->name_en;
+            $info->name_bn = $request->name_bn;
+            $info->card_text_en = $request->card_text_en;
+            $info->card_text_bn = $request->card_text_bn;
+            $info->short_text_en = $request->short_text_en;
+            $info->short_text_bn = $request->short_text_bn;
+            $info->banner_name = $request->banner_name;
+            $info->banner_web = $webPath;
+            $info->banner_mobile = $mobilePath;
+            $info->alt_text = $request->alt_text;
+            $info->url_slug = $request->url_slug;
+            $info->page_header = $request->html_header;
+            $info->schema_markup = $request->schema_markup;
+            $info->status = $request->status;
+            $info->save();
 
             $response = [
                 'success' => 1,
@@ -128,11 +127,11 @@ class RoamingOfferRepository extends BaseRepository {
         }
         return $response;
     }
-
-    public function deleteOffer($offerId) {
+    
+      public function deleteInfo($infoId) {
         try {
-            $this->model->findORFail($offerId)->delete();
-            RoamingOtherOfferComponents::where('parent_id', $offerId)->delete();
+            $this->model->findORFail($infoId)->delete();
+            RoamingInfoComponents::where('parent_id', $infoId)->delete();
             $response = [
                 'success' => 1,
             ];
@@ -144,11 +143,37 @@ class RoamingOfferRepository extends BaseRepository {
         }
         return $response;
     }
-
-    public function getOfferComponents($offerId) {
-        $response = RoamingOtherOfferComponents::where('parent_id', $offerId)->orderBy('position')->get();
+    
+     public function getInfoComponents($infoId) {
+        $response = RoamingInfoComponents::where('parent_id', $infoId)->orderBy('position')->get();
         return $response;
     }
+    
+     /*###################################### DONE  #################################################*/
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+   
+
+    
+
+ 
+
+   
+
+   
+
+  
+
+   
 
     public function saveComponents($request) {
         try {

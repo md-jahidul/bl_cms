@@ -480,6 +480,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('roaming/page-component-sort', 'AssetLite\RoamingGeneralController@componentSortChange');
     Route::get('roaming/page-component-delete/{pageId}/{comId}', 'AssetLite\RoamingGeneralController@componentDelete');
     
+    
+    //offer
     Route::get('roaming-offers', 'AssetLite\RoamingOfferController@index');
     Route::get('roaming/get-offer-single-category/{catId}', 'AssetLite\RoamingOfferController@getSingleCategory');
     Route::post('roaming/save-offer-category', 'AssetLite\RoamingOfferController@saveCategory');
@@ -488,6 +490,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('roaming/edit-other-offer/{offerId}', 'AssetLite\RoamingOfferController@editOffer');
     Route::post('roaming/save-other-offer', 'AssetLite\RoamingOfferController@saveOffer');
     Route::get('roaming/delete-other-offer/{offerId}', 'AssetLite\RoamingOfferController@deleteOffer');
+    
     Route::get('roaming/edit-other-offer-component/{offerId}', 'AssetLite\RoamingOfferController@editComponent');
     Route::post('roaming/update-offer-component/', 'AssetLite\RoamingOfferController@updateComponent');
     Route::get('roaming/offer-component-sort', 'AssetLite\RoamingOfferController@componentSortChange');
@@ -506,6 +509,7 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('roaming.operator-excel.save');
     Route::get('roaming-operator-status-change/{operatorId}', 'AssetLite\RoamingOperatorController@operatorStatusChange');
     Route::get('roaming-operator/destroy/{operatorId?}', 'AssetLite\RoamingOperatorController@deleteOperator');
+    
     // Rate
     Route::get('roaming/rates', 'AssetLite\RoamingRateController@index');
     Route::get('roaming/rates/create', 'AssetLite\RoamingRateController@ratesCreate');
@@ -535,6 +539,18 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('roaming.bundle-excel.save');
     Route::get('roaming-bundle-status-change/{rateId}', 'AssetLite\RoamingBundleController@bundleStatusChange');
     Route::get('roaming-bundle/destroy/{rateId?}', 'AssetLite\RoamingBundleController@deleteBundle');
+    
+    //info & Tips
+    Route::get('roaming-info-tips', 'AssetLite\RoamingInfoController@index');
+    Route::get('roaming/get-info-single-category/{catId}', 'AssetLite\RoamingInfoController@getSingleCategory');
+    Route::post('roaming/save-info-category', 'AssetLite\RoamingInfoController@saveCategory');
+    Route::get('roaming/info-category-sort', 'AssetLite\RoamingInfoController@categorySortChange');
+    
+    Route::get('roaming/info-tips-create', 'AssetLite\RoamingInfoController@createInfo');
+    Route::get('roaming/edit-info/{infoId}', 'AssetLite\RoamingInfoController@editInfo');
+    Route::post('roaming/save-info-tips', 'AssetLite\RoamingInfoController@saveInfo');
+    Route::get('roaming/delete-info/{infoId}', 'AssetLite\RoamingInfoController@deleteInfo');
+    Route::get('roaming/edit-info-component/{infoId}', 'AssetLite\RoamingInfoController@editComponent');
 
 
     // eCarrer ============================================
