@@ -193,6 +193,7 @@ class ProductDetailsController extends Controller
      */
     public function componentUpdate(Request $request, $productDetailsId, $sectionId, $id)
     {
+        return $request->all();
         $this->componentService->componentUpdate($request->all(), $id);
         return redirect(route('component-list', [$productDetailsId, $sectionId]));
     }

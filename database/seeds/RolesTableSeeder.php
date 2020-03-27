@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Role;
 use Carbon\Carbon;
 
 class RolesTableSeeder extends Seeder
@@ -50,14 +51,18 @@ class RolesTableSeeder extends Seeder
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ],
-//            [
-//                'name' => 'Lead Super User',
-//                'alias' => 'lead_super_user',
-//                'user_type' => 'assetlite',
-//                'created_at' => Carbon::now()->toDateTimeString(),
-//                'updated_at' => Carbon::now()->toDateTimeString(),
-//            ]
+            [
+                'name' => 'Lead Super User',
+                'alias' => 'lead_super_user',
+                'user_type' => 'assetlite',
+                'feature_type' => 'lead_user_role',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]
         ];
-        DB::table('roles')->insert($roles);
+
+        foreach ($roles as $role) {
+            Role::create($role);
+        }
     }
 }
