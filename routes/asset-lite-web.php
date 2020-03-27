@@ -494,6 +494,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('roaming/edit-other-offer-component/{offerId}', 'AssetLite\RoamingOfferController@editComponent');
     Route::post('roaming/update-offer-component/', 'AssetLite\RoamingOfferController@updateComponent');
     Route::get('roaming/offer-component-sort', 'AssetLite\RoamingOfferController@componentSortChange');
+    Route::get('roaming/offer-component-delete/{offerId}/{comId}', 'AssetLite\RoamingOfferController@componentDelete');
 
     // Operator
     Route::get('roaming/operators', 'AssetLite\RoamingOperatorController@index');
@@ -552,6 +553,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('roaming/delete-info/{infoId}', 'AssetLite\RoamingInfoController@deleteInfo');
     Route::get('roaming/edit-info-component/{infoId}', 'AssetLite\RoamingInfoController@editComponent');
     Route::post('roaming/update-info-component/', 'AssetLite\RoamingInfoController@updateComponent');
+    Route::get('roaming/info-component-sort', 'AssetLite\RoamingInfoController@componentSortChange');
+    Route::get('roaming/info-component-delete/{infoId}/{comId}', 'AssetLite\RoamingInfoController@componentDelete');
 
 
     // eCarrer ============================================

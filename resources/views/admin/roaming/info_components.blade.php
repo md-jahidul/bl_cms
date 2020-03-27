@@ -162,6 +162,8 @@
 
                     <div class="col-md-3 col-xs-12">
                         <label>Photo 1 <span class="text-danger">*</span></label>
+                        <input type="hidden" class="photo_one_old" value="">
+                        
                         <input type="file" class="dropify photo_one" required data-height="70"
                                data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                         <label>Alt Text</label>
@@ -169,6 +171,8 @@
                     </div>
                     <div class="col-md-3 col-xs-12">
                         <label>Photo 2</label>
+                        <input type="hidden" class="photo_two_old" value="">
+                        
                         <input type="file" class="dropify photo_two" data-height="70"
                                data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                         <label>Alt Text</label>
@@ -176,6 +180,8 @@
                     </div>
                     <div class="col-md-3 col-xs-12">
                         <label>Photo 3</label>
+                        <input type="hidden" class="photo_three_old" value="">
+                        
                         <input type="file" class="dropify photo_three" data-height="70"
                                data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                         <label>Alt Text</label>
@@ -183,6 +189,7 @@
                     </div>
                     <div class="col-md-3 col-xs-12">
                         <label>Photo 4</label>
+                        <input type="hidden" class="photo_four_old" value="">
                         <input type="file" class="dropify photo_four" data-height="70"
                                data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                         <label>Alt Text</label>
@@ -194,7 +201,7 @@
                 </div>
             </div>
             <div class="col-md-4 col-xs-12">
-                <h6 class="font-weight-bold">Sample/Instruction (Text Component)</h6>
+                <h6 class="font-weight-bold">Sample/Instruction</h6>
                 <a href="{{asset('app-assets/images/roaming/info_photo_component.png')}}" target="_blank">
                     <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/info_photo_component.png')}}" width="100%">
                 </a>
@@ -230,7 +237,7 @@
                 </div>
             </div>
             <div class="col-md-2 col-xs-12">
-                <h6 class="font-weight-bold">Sample/Instruction (List Component)</h6>
+                <h6 class="font-weight-bold">Sample/Instruction</h6>
                 <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/offer_table_component.png')}}" width="100%">
 
             </div>
@@ -267,7 +274,7 @@
                 </div>
             </div>
             <div class="col-md-4 col-xs-12">
-                <h6 class="font-weight-bold">Sample/Instruction (Text Component)</h6>
+                <h6 class="font-weight-bold">Sample/Instruction</h6>
                 <a href="{{asset('app-assets/images/roaming/info_headline.png')}}" target="_blank">
                     <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/info_headline.png')}}" width="100%">
                 </a>
@@ -316,7 +323,7 @@
                 </div>
             </div>
             <div class="col-md-4 col-xs-12">
-                <h6 class="font-weight-bold">Sample/Instruction (Text Component)</h6>
+                <h6 class="font-weight-bold">Sample/Instruction</h6>
                 <a href="{{asset('app-assets/images/roaming/info_accordion.png')}}" target="_blank">
                     <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/info_accordion.png')}}" width="100%">
                 </a>
@@ -365,7 +372,7 @@
                 </div>
             </div>
             <div class="col-md-4 col-xs-12">
-                <h6 class="font-weight-bold">Sample/Instruction (Text Component)</h6>
+                <h6 class="font-weight-bold">Sample/Instruction</h6>
                 <a href="{{asset('app-assets/images/roaming/offer_text_component.png')}}" target="_blank">
                     <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/offer_text_component.png')}}" width="100%">
                 </a>
@@ -465,7 +472,7 @@ if (Session::has('error')) {
                     $(this).attr('data-position', (index + 1)).addClass('update')
                 }
             });
-            var save_url = "{{ url('roaming/offer-component-sort') }}";
+            var save_url = "{{ url('roaming/info-component-sort') }}";
             saveNewPositions(save_url);
         }
     });
@@ -498,6 +505,7 @@ if (Session::has('error')) {
 
         var photo1 = 'photo_one[' + position + ']';
         $(html).find('.photo_one').attr('name', photo1);
+
         var alt1 = 'alt_one[' + position + ']';
         $(html).find('.alt_one').attr('name', alt1);
 
@@ -515,6 +523,18 @@ if (Session::has('error')) {
         $(html).find('.photo_four').attr('name', photo4);
         var alt4 = 'alt_four[' + position + ']';
         $(html).find('.alt_four').attr('name', alt4);
+        
+        var photo1Old = 'photo_one_old[' + position + ']';
+        $(html).find('.photo_one_old').attr('name', photo1Old);
+        
+        var photo2Old = 'photo_two_old[' + position + ']';
+        $(html).find('.photo_two_old').attr('name', photo2Old);
+        
+        var photo3Old = 'photo_three_old[' + position + ']';
+        $(html).find('.photo_three_old').attr('name', photo3Old);
+        
+        var photo4Old = 'photo_four_old[' + position + ']';
+        $(html).find('.photo_four_old').attr('name', photo4Old);
 
 
         $('.element_wrap').append(html);

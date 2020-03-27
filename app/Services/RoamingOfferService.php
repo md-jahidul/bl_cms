@@ -382,5 +382,14 @@ class RoamingOfferService {
         $response = $this->offerRepo->changeComponentSorting($request);
         return $response;
     }
+    
+         /**
+     * delete component 
+     * @return Response
+     */
+    public function componentDelete($comId) {
+        $response = $this->offerRepo->componentDelete($comId);
+        return $response;
+    }
 
 }

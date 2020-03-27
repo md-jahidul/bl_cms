@@ -194,5 +194,25 @@ class RoamingOfferController extends Controller {
         $sortChange = $this->offerService->changeComponentSort($request);
         return $sortChange;
     }
+    
+    
+    /**
+     * Component delete.
+     * 
+     * @param $infoId, $comId
+     * @return JsonResponse
+     * @Dev Bulbul Mahmud Nito || 27/03/2020
+     */
+    public function componentDelete($offerId, $comId) {
+        
+        $response = $this->offerService->componentDelete($comId);
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Component is deleted!');
+        } else {
+            Session::flash('error', 'Component delete process failed!');
+        }
+
+        return redirect('roaming/edit-other-offer-component/' . $offerId);
+    }
 
 }
