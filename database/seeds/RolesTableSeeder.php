@@ -12,6 +12,8 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement("SET FOREIGN_KEY_CHECKS =0;");
+        DB::table('roles')->truncate();
         $roles = [
             [
                 'name' => 'My Bl Admin',
@@ -47,7 +49,14 @@ class RolesTableSeeder extends Seeder
                 'user_type' => 'assetlite',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
-            ]
+            ],
+//            [
+//                'name' => 'Lead Super User',
+//                'alias' => 'lead_super_user',
+//                'user_type' => 'assetlite',
+//                'created_at' => Carbon::now()->toDateTimeString(),
+//                'updated_at' => Carbon::now()->toDateTimeString(),
+//            ]
         ];
         DB::table('roles')->insert($roles);
     }

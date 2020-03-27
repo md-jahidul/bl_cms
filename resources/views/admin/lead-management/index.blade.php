@@ -44,7 +44,7 @@
                                         </strong>
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ url("partners/edit") }}" role="button" class="btn-sm btn-info border-0"><i class="la la-paper-plane" aria-hidden="true"></i> Send</a>
+                                        <a href="{{ route("lead.send_mail_form") }}" role="button" class="btn-sm btn-info border-0"><i class="la la-paper-plane" aria-hidden="true"></i> Send</a>
                                         <a href="{{ route('lead.details', $info->id) }}" role="button" class="btn-sm btn-success border-0"><i class="la la-refresh" aria-hidden="true"></i> Update</a>
                                     </td>
                                 </tr>

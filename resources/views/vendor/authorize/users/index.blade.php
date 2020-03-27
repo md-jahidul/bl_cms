@@ -37,8 +37,6 @@
                                      }
                                 @endphp
 
-
-
                                 <tr data-id="{{ $item->id  }}">
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->name }}</td>
@@ -69,6 +67,7 @@
                                         @endif
                                     </td>
                                 </tr>
+
                             @endforeach
                             </tbody>
                         </table>
