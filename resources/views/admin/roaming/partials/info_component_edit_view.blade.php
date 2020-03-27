@@ -38,7 +38,7 @@ $photoBn = json_decode($com->body_text_bn);
 
                 <img src="{{ config('filesystems.file_base_url') . $photoEn->photos[0] }}" alt="Banner Photo" width="100%" />
 
-                <input type="file" class="dropify" name="photo_one[{{$com->position}}]" required data-height="70"
+                <input type="file" class="dropify_edit" name="photo_one[{{$com->position}}]" required data-height="70"
                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
                 <label>Alt Text</label>
@@ -51,7 +51,7 @@ $photoBn = json_decode($com->body_text_bn);
 
                 <img src="{{ config('filesystems.file_base_url') . $photoEn->photos[1] }}" alt="Banner Photo" width="100%" />
 
-                <input type="file" class="dropify" name="photo_two[{{$com->position}}]" data-height="70"
+                <input type="file" class="dropify_edit" name="photo_two[{{$com->position}}]" data-height="70"
                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
                 <label>Alt Text</label>
@@ -63,7 +63,7 @@ $photoBn = json_decode($com->body_text_bn);
 
                 <img src="{{ config('filesystems.file_base_url') . $photoEn->photos[2] }}" alt=" Photo" width="100%" />
 
-                <input type="file" class="dropify" name="photo_three[{{$com->position}}]" data-height="70"
+                <input type="file" class="dropify_edit" name="photo_three[{{$com->position}}]" data-height="70"
                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                 <label>Alt Text</label>
                 <input type="text" class="form-control" name="alt_three[{{$com->position}}]" value="{{$photoBn->alt_text[2]}}" placeholder="Alt Text">
@@ -74,7 +74,7 @@ $photoBn = json_decode($com->body_text_bn);
 
                 <img src="{{ config('filesystems.file_base_url') . $photoEn->photos[3] }}" alt=" Photo" width="100%" />
 
-                <input type="file" class="dropify" name="photo_four[{{$com->position}}]" data-height="70"
+                <input type="file" class="dropify_edit" name="photo_four[{{$com->position}}]" data-height="70"
                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
                 <label>Alt Text</label>
@@ -249,7 +249,7 @@ $textBn = json_decode($com->body_text_bn);
 
 
         //show dropify for  photo
-        $('.dropify').dropify({
+        $('.dropify_edit').dropify({
             messages: {
                 'default': 'Browse for photo',
                 'replace': 'Click to replace',
