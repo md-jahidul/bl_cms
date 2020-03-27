@@ -6,6 +6,7 @@ use App\Http\Requests\UserStoreRequest;
 use App\Models\RoleUser;
 use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -35,12 +37,22 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return Factory|View
      */
     public function index()
     {
         $userType = Auth::user()->type;
-        $users = User::where('type', $userType)->with('roles')->get();
+
+        $featureType = Auth::user()->feature_type;
+
+        if ($featureType == 'lead_user') {
+            $users = User::where('type', $userType)
+                ->where('feature_type', $featureType)
+                ->with('roles')->get();
+        } else {
+            $users = User::where('type', $userType)->with('roles')->get();
+        }
+
         return view('vendor.authorize.users.index', compact('users'));
     }
 

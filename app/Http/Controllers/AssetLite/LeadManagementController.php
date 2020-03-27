@@ -48,4 +48,20 @@ class LeadManagementController extends Controller
         return redirect(route('lead-list'));
     }
 
+    public function sendMailForm()
+    {
+        return view('admin.lead-management.send_mail_form');
+    }
+
+    public function sendMail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'message' => 'required'
+        ]);
+        $response = $this->leadRequestService->sendMail($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect(route('lead-list'));
+    }
+
 }
