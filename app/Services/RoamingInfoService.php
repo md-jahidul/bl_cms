@@ -32,15 +32,7 @@ class RoamingInfoService {
         $this->infoRepo = $infoRepo;
     }
 
-    /**
-     * Get Roaming offer categories
-     * @return Response
-     */
-    public function getCategories() {
-        $response = $this->infoRepo->getCategoryList();
-        return $response;
-    }
-
+    
     /**
      * Get Roaming offers
      * @return Response
@@ -50,52 +42,7 @@ class RoamingInfoService {
         return $response;
     }
 
-    /**
-     * Get single category data by Id
-     * @return Response
-     */
-    public function getCategoryById($catId) {
-        $response = $this->infoRepo->getCategory($catId);
-        return $response;
-    }
-
-    /**
-     * update roaming category
-     * @return Response
-     */
-    public function updateCategory($request) {
-        try {
-
-            $request->validate([
-                'name_en' => 'required',
-                'name_bn' => 'required',
-            ]);
-            //save data in database 
-            $this->infoRepo->updateCategory($request);
-
-            $response = [
-                'success' => 1,
-            ];
-
-            return $response;
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'message' => $e->getMessage()
-            ];
-            return $response;
-        }
-    }
-
-    /**
-     * Change category sorting
-     * @return Response
-     */
-    public function changeCategorySort($request) {
-        $response = $this->infoRepo->changeCategorySorting($request);
-        return $response;
-    }
-
+   
     /**
      * Get Roaming info
      * @return Response
@@ -372,18 +319,29 @@ class RoamingInfoService {
             return $response;
         }
     }
+    
+     /**
+     * Change component sorting
+     * @return Response
+     */
+    public function changeComponentSort($request) {
+        $response = $this->infoRepo->changeComponentSorting($request);
+        return $response;
+    }
+    
+     /**
+     * delete component 
+     * @return Response
+     */
+    public function componentDelete($comId) {
+        $response = $this->infoRepo->componentDelete($comId);
+        return $response;
+    }
 
     /* ###################################### DONE  ################################################# */
 
  
 
-    /**
-     * Change component sorting
-     * @return Response
-     */
-    public function changeComponentSort($request) {
-        $response = $this->offerRepo->changeComponentSorting($request);
-        return $response;
-    }
+   
 
 }

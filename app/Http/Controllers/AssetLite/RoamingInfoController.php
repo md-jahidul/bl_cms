@@ -18,7 +18,7 @@ class RoamingInfoController extends Controller {
     public function __construct(RoamingInfoService $infoService) {
         $this->infoService = $infoService;
     }
-    
+
     /**
      * Display Categories, and info/tips list
      * 
@@ -27,57 +27,12 @@ class RoamingInfoController extends Controller {
      * @Bulbul Mahmud Nito || 27/03/2020
      */
     public function index() {
-        $categories = $this->infoService->getCategories();
         $info = $this->infoService->getInfoList();
 
-        return view('admin.roaming.info_tips', compact('categories', 'info'));
-    }
-    
-        /**
-     * Get category by ID
-     * 
-     * @param cat ID $catId
-     * @return JsonResponse
-     * @Dev Bulbul Mahmud Nito ||  27/03/2020
-     */
-    public function getSingleCategory($catId) {
-
-        $response = $this->infoService->getCategoryById($catId);
-        return $response;
+        return view('admin.roaming.info_tips', compact('info'));
     }
 
-    /**
-     * Update category
-     * 
-     * @param Request $request
-     * @return JsonResponse
-     * @Dev Bulbul Mahmud Nito ||  27/03/2020
-     */
-    public function saveCategory(Request $request) {
-
-        $response = $this->infoService->updateCategory($request);
-
-        if ($response['success'] == 1) {
-            Session::flash('sussess', 'Category is saved!');
-        } else {
-            Session::flash('error', 'Category saving process failed!');
-        }
-
-        return redirect('/roaming-info-tips');
-    }
-    
-     /**
-     * Category Sorting Change.
-     * 
-     * @param Request $request
-     * @return JsonResponse
-     * @Dev Bulbul Mahmud Nito || 27/03/2020
-     */
-    public function categorySortChange(Request $request) {
-        $sortChange = $this->infoService->changeCategorySort($request);
-        return $sortChange;
-    }
-    
+   
     /**
      * Add Info & Tips Form
      * 
@@ -91,8 +46,8 @@ class RoamingInfoController extends Controller {
 
         return view('admin.roaming.create_info_tips', compact('categories'));
     }
-    
-      /**
+
+    /**
      * edit info and tips form
      * 
      * @param No
@@ -104,8 +59,7 @@ class RoamingInfoController extends Controller {
         $info = $this->infoService->getInfoById($infoId);
         return view('admin.roaming.edit_info', compact('categories', 'info'));
     }
-    
-    
+
     /**
      * Save info & tips
      * 
@@ -130,8 +84,8 @@ class RoamingInfoController extends Controller {
 
         return redirect('roaming-info-tips');
     }
-    
-       /**
+
+    /**
      * Delete info & tips
      * 
      * @param $infoId
@@ -148,9 +102,8 @@ class RoamingInfoController extends Controller {
 
         return redirect('roaming-info-tips');
     }
-    
-      
-      /**
+
+    /**
      * edit components
      * 
      * @param $infoId
@@ -161,9 +114,8 @@ class RoamingInfoController extends Controller {
         $components = $this->infoService->getInfoComponents($infoId);
         return view('admin.roaming.info_components', compact('components', 'infoId'));
     }
-      
-    
-      /**
+
+    /**
      * Update components
      * 
      * @param Request $request
@@ -173,47 +125,47 @@ class RoamingInfoController extends Controller {
     public function updateComponent(Request $request) {
 //        print_r($request->all());die();
 
-            $response = $this->infoService->updateComponents($request);
-      
+        $response = $this->infoService->updateComponents($request);
+
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Components are saved!');
         } else {
             Session::flash('error', 'Components saving process failed!');
         }
 
-        return redirect('roaming/edit-info-component/'.$request->parent_id);
+        return redirect('roaming/edit-info-component/' . $request->parent_id);
     }
-    
-    
-     /*###################################### DONE  #################################################*/
 
-    
-
-
-
-   
-
-    
-
-  
-  
-
-    
-
- 
-    
-
-    
-     /**
+    /**
      * Component Sorting Change.
      * 
      * @param Request $request
      * @return JsonResponse
-     * @Dev Bulbul Mahmud Nito || 26/03/2020
+     * @Dev Bulbul Mahmud Nito || 27/03/2020
      */
     public function componentSortChange(Request $request) {
-        $sortChange = $this->offerService->changeComponentSort($request);
+        $sortChange = $this->infoService->changeComponentSort($request);
         return $sortChange;
     }
 
+    /**
+     * Component delete.
+     * 
+     * @param $infoId, $comId
+     * @return JsonResponse
+     * @Dev Bulbul Mahmud Nito || 27/03/2020
+     */
+    public function componentDelete($infoId, $comId) {
+        
+        $response = $this->infoService->componentDelete($comId);
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Component is deleted!');
+        } else {
+            Session::flash('error', 'Component delete process failed!');
+        }
+
+        return redirect('roaming/edit-info-component/' . $infoId);
+    }
+
+    /* ###################################### DONE  ################################################# */
 }

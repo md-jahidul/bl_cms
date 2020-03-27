@@ -13,86 +13,26 @@ use App\Models\RoamingInfoComponents;
 use App\Traits\FileTrait;
 
 class RoamingInfoRepository extends BaseRepository {
-    
+
     use FileTrait;
 
     public $modelName = RoamingInfo::class;
-    
-    
-     public function getCategoryList() {
-        $categories = RoamingInfoCategory::orderBy('sort')->get();
-        return $categories;
-    }
-    
-       public function getInfo() {
+
+
+    public function getInfo() {
         $response = $this->model
                         ->orderBy('id', 'desc')->get();
         return $response;
     }
 
-    public function getCategory($catId) {
-        $categoriy = RoamingInfoCategory::findOrFail($catId);
-        return $categoriy;
-    }
 
-    public function updateCategory($request) {
-        try {
 
-            if ($request->cat_id != "") {
-                $category = RoamingInfoCategory::findOrFail($request->cat_id);
-            } else {
-                $category = new RoamingInfoCategory();
-            }
-
-            $category->name_en = $request->name_en;
-            $category->name_bn = $request->name_bn;
-            $category->status = $request->status;
-            $category->save();
-
-            $response = [
-                'success' => 1,
-            ];
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'errors' => $e->getMessage()
-            ];
-        }
-        return $response;
-    }
-    
-    public function changeCategorySorting($request) {
-        try {
-
-            $positions = $request->position;
-            foreach ($positions as $position) {
-                $categoryId = $position[0];
-                $new_position = $position[1];
-                $update = RoamingInfoCategory::findOrFail($categoryId);
-                $update['sort'] = $new_position;
-                $update->update();
-            }
-
-            $response = [
-                'success' => 1,
-                'message' => 'Success',
-            ];
-            return response()->json($response, 200);
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'message' => $e->getMessage()
-            ];
-            return response()->json($response, 500);
-        }
-    }
-    
-     public function getInfoById($infoId) {
+    public function getInfoById($infoId) {
         $response = $this->model->findOrFail($infoId);
         return $response;
     }
-    
-     public function saveInfo($webPath, $mobilePath, $request) {
+
+    public function saveInfo($webPath, $mobilePath, $request) {
         try {
 
             if ($request->info_id == "") {
@@ -129,8 +69,8 @@ class RoamingInfoRepository extends BaseRepository {
         }
         return $response;
     }
-    
-      public function deleteInfo($infoId) {
+
+    public function deleteInfo($infoId) {
         try {
             $this->model->findORFail($infoId)->delete();
             RoamingInfoComponents::where('parent_id', $infoId)->delete();
@@ -145,14 +85,13 @@ class RoamingInfoRepository extends BaseRepository {
         }
         return $response;
     }
-    
-     public function getInfoComponents($infoId) {
+
+    public function getInfoComponents($infoId) {
         $response = RoamingInfoComponents::where('parent_id', $infoId)->orderBy('position')->get();
         return $response;
     }
-    
-    
-     public function saveComponents($request) {
+
+    public function saveComponents($request) {
         try {
 
 
@@ -162,29 +101,32 @@ class RoamingInfoRepository extends BaseRepository {
             $insert = [];
 
             $count = 0;
+            $photo = [];
             foreach ($request->component_position as $k => $val) {
                 $insert[$count]['parent_id'] = $request->parent_id;
 
                 //photo component
-                if (isset($request->photo_one[$k])) {
-                    
-                    $photo[] = $this->upload($request->photo_one[$k], 'assetlite/images/roaming');
-                    $photo[] = isset($request->photo_two[$k]) ? $this->upload($request->photo_two[$k], 'assetlite/images/roaming') : "";
-                    $photo[] = isset($request->photo_three[$k]) ? $this->upload($request->photo_three[$k], 'assetlite/images/roaming') : "";
-                    $photo[] = isset($request->photo_four[$k]) ? $this->upload($request->photo_four[$k], 'assetlite/images/roaming') : "";
-                    
-                     $arrayEn = array(
+                if (isset($request->photo_one[$k]) || isset($request->photo_one_old[$k])) {
+
+                    $photo[] = isset($request->photo_one[$k]) ? $this->upload($request->photo_one[$k], 'assetlite/images/roaming') : $request->photo_one_old[$k];
+                    $photo[] = isset($request->photo_two[$k]) ? $this->upload($request->photo_two[$k], 'assetlite/images/roaming') : $request->photo_two_old[$k];
+                    $photo[] = isset($request->photo_three[$k]) ? $this->upload($request->photo_three[$k], 'assetlite/images/roaming') : $request->photo_three_old[$k];
+                    $photo[] = isset($request->photo_four[$k]) ? $this->upload($request->photo_four[$k], 'assetlite/images/roaming') : $request->photo_four_old[$k];
+
+
+                    $arrayEn = array(
                         'headline_en' => $request->headline_en[$k],
                         'photos' => $photo
                     );
+                    $photo = [];
                     $jsonEn = json_encode($arrayEn);
-                    
+
                     $alt[] = $request->alt_one[$k];
                     $alt[] = $request->alt_two[$k];
                     $alt[] = $request->alt_three[$k];
                     $alt[] = $request->alt_four[$k];
-                    
-                     $arrayBn = array(
+
+                    $arrayBn = array(
                         'headline_bn' => $request->headline_bn[$k],
                         'alt_text' => $alt
                     );
@@ -192,21 +134,21 @@ class RoamingInfoRepository extends BaseRepository {
 
                     $insert[$count]['body_text_en'] = $jsonEn;
                     $insert[$count]['body_text_bn'] = $jsonBn;
-                    
+
                     $insert[$count]['position'] = $k;
                     $insert[$count]['component_type'] = 'photo';
                 }
-                
+
                 //table component
                 if (isset($request->head_en[$k])) {
-                    
-                     $tableArrayEn = array(
+
+                    $tableArrayEn = array(
                         'head_en' => $request->head_en[$k],
                         'rows_en' => $request->col_en[$k]
                     );
                     $tableJsonEn = json_encode($tableArrayEn);
-                    
-                     $tableArrayBn = array(
+
+                    $tableArrayBn = array(
                         'head_bn' => $request->head_bn[$k],
                         'rows_bn' => $request->col_bn[$k]
                     );
@@ -214,7 +156,7 @@ class RoamingInfoRepository extends BaseRepository {
 
                     $insert[$count]['body_text_en'] = $tableJsonEn;
                     $insert[$count]['body_text_bn'] = $tableJsonBn;
-                    
+
                     $insert[$count]['position'] = $k;
                     $insert[$count]['component_type'] = 'table';
                 }
@@ -258,7 +200,7 @@ class RoamingInfoRepository extends BaseRepository {
                     $insert[$count]['position'] = $k;
                     $insert[$count]['component_type'] = 'accordion';
                 }
-                
+
                 //list component
                 if (isset($request->list_headline_en[$k])) {
 
@@ -285,9 +227,9 @@ class RoamingInfoRepository extends BaseRepository {
 
                 $count++;
             }
-            
+
 //            print_r($insert);die();
-            
+
 
             RoamingInfoComponents::insert($insert);
 
@@ -303,36 +245,7 @@ class RoamingInfoRepository extends BaseRepository {
         }
         return $response;
     }
-    
-     /*###################################### DONE  #################################################*/
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
-   
-
-    
-
- 
-
-   
-
-   
-
-  
-
-   
-
-   
-    
-    
     public function changeComponentSorting($request) {
         try {
 
@@ -340,7 +253,7 @@ class RoamingInfoRepository extends BaseRepository {
             foreach ($positions as $position) {
                 $comId = $position[0];
                 $new_position = $position[1];
-                $update = RoamingOtherOfferComponents::findOrFail($comId);
+                $update = RoamingInfoComponents::findOrFail($comId);
                 $update['position'] = $new_position;
                 $update->update();
             }
@@ -359,4 +272,34 @@ class RoamingInfoRepository extends BaseRepository {
         }
     }
 
+    public function componentDelete($comId) {
+
+        try {
+            $component = RoamingInfoComponents::findOrFail($comId);
+
+            if ($component->component_type == 'photo') {
+                $bodyEn = json_decode($component->body_text_en);
+                foreach ($bodyEn->photos as $val) {
+                    if ($val != "") {
+                        
+                        $this->deleteFile($val);
+                    }
+                }
+            }
+
+            $component->delete();
+
+            $response = [
+                'success' => 1,
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'errors' => $e->getMessage()
+            ];
+        }
+        return $response;
+    }
+
+    /* ###################################### DONE  ################################################# */
 }

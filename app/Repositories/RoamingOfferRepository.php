@@ -252,5 +252,25 @@ class RoamingOfferRepository extends BaseRepository {
             return response()->json($response, 500);
         }
     }
+    
+      public function componentDelete($comId) {
+
+        try {
+            $component = RoamingOtherOfferComponents::findOrFail($comId);
+
+
+            $component->delete();
+
+            $response = [
+                'success' => 1,
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'errors' => $e->getMessage()
+            ];
+        }
+        return $response;
+    }
 
 }
