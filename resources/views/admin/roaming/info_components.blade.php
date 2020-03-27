@@ -26,7 +26,16 @@
                                 </tr>
                             </thead>
                             <tbody class="component_sortable">
+
+                                <?php
+                                $position = 0;
+                                ?>
+
                                 @foreach($components as $c)
+
+                                <?php
+                                $position = $c->position;
+                                ?>
                                 <tr data-index="{{ $c->id }}" data-position="{{ $c->position }}">
 
                                     <td class="cursor-move">
@@ -107,7 +116,7 @@
                     <div class="row">
 
                         <div class="col-md-12 col-xs-12 element_wrap">
-                           
+
 
                             @include('admin.roaming.partials.info_component_edit_view')
 
@@ -419,6 +428,7 @@ if (Session::has('error')) {
 
 <?php } ?>
 
+    var position = "<?php echo $position + 1 ?>";
 
     function saveNewPositions(save_url)
     {

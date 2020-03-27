@@ -2,9 +2,6 @@
 
 @foreach($components as $com)
 
-<?php
-$position = $com->position;
-?>
 
 
 @if($com->component_type == 'photo')
@@ -249,7 +246,7 @@ $textBn = json_decode($com->body_text_bn);
 <script>
     $(function () {
 
-        var position = "<?php echo $position + 1 ?>";
+
 
         //show dropify for  photo
         $('.dropify').dropify({
