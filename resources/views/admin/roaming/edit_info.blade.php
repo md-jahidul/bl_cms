@@ -24,19 +24,11 @@
 
                             <div class="form-group row">
                                 <div class="col-md-3 col-xs-12">
-                                    <label> Category <span class="text-danger">*</span></label>
-                                    <select name="category_id" class="form-control">
-                                        <option value="">Select Category</option>
-                                        @foreach($categories as $c)
-                                        <option value="{{$c->id}}" @if($info->category_id == $c->id) selected @endif>{{$c->name_en}}</option>
-                                        @endforeach
-                                    </select>
+                                   <label> Name (EN) <span class="text-danger">*</span></label>
+                                    <input type="text" value="{{$info->name_en}}" class="form-control" required name="name_en" placeholder="Name EN">
                                 </div>
 
                                 <div class="col-md-3 col-xs-12">
-                                    <label> Name (EN) <span class="text-d                                    anger">*</span></label>
-                                    <input type="text" value="{{$info->name_en}}" class="form-control" required name="name_en" placeholder="Name EN">
-
                                     <label>Name (BN) <span class="text-danger">*</span></label>
                                     <input type="text" value="{{$info->name_bn}}" class="form-control" required name="name_bn" placeholder="Name BN">
                                 </div>

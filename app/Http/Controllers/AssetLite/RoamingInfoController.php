@@ -161,6 +161,28 @@ class RoamingInfoController extends Controller {
         $components = $this->infoService->getInfoComponents($infoId);
         return view('admin.roaming.info_components', compact('components', 'infoId'));
     }
+      
+    
+      /**
+     * Update components
+     * 
+     * @param Request $request
+     * @return Factory|View
+     * @Bulbul Mahmud Nito || 27/03/2020
+     */
+    public function updateComponent(Request $request) {
+//        print_r($request->all());die();
+
+            $response = $this->infoService->updateComponents($request);
+      
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Components are saved!');
+        } else {
+            Session::flash('error', 'Components saving process failed!');
+        }
+
+        return redirect('roaming/edit-info-component/'.$request->parent_id);
+    }
     
     
      /*###################################### DONE  #################################################*/
@@ -180,28 +202,7 @@ class RoamingInfoController extends Controller {
 
  
     
-  
-    
-      /**
-     * Update other offer components
-     * 
-     * @param Request $request
-     * @return Factory|View
-     * @Bulbul Mahmud Nito || 26/03/2020
-     */
-    public function updateComponent(Request $request) {
-//        print_r($request->all());die();
 
-            $response = $this->offerService->updateComponents($request);
-      
-        if ($response['success'] == 1) {
-            Session::flash('sussess', 'Offer is saved!');
-        } else {
-            Session::flash('error', 'Offer saving process failed!');
-        }
-
-        return redirect('roaming/edit-other-offer-component/'.$request->parent_id);
-    }
     
      /**
      * Component Sorting Change.

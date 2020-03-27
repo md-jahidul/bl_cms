@@ -551,6 +551,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('roaming/save-info-tips', 'AssetLite\RoamingInfoController@saveInfo');
     Route::get('roaming/delete-info/{infoId}', 'AssetLite\RoamingInfoController@deleteInfo');
     Route::get('roaming/edit-info-component/{infoId}', 'AssetLite\RoamingInfoController@editComponent');
+    Route::post('roaming/update-info-component/', 'AssetLite\RoamingInfoController@updateComponent');
 
 
     // eCarrer ============================================

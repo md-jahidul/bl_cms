@@ -4,7 +4,6 @@
 @section('content')
 <section>
 
-    @include('admin.roaming.partials.info_category')
     @include('admin.roaming.partials.info_list')
     
 
