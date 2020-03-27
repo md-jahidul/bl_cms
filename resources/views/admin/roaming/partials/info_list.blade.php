@@ -12,9 +12,8 @@
                         <thead>
                             <tr>
                                 <th width="22%">Name</th>
-                                <th width="22%">Card Text</th>
-                                <th width="22%">URL</th>
-                                <th width="">Category</th>
+                                <th width="35%">Card Text</th>
+                                <th width="20%">URL</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -31,9 +30,7 @@
                                 <td>
                                    {{ $v->url_slug }} 
                                 </td>
-                                <td>
-                                   {{ $v->category_name }} 
-                                </td>
+                              
                                 
                                 <td class="text-center">
 

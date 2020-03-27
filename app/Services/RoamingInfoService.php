@@ -346,11 +346,9 @@ class RoamingInfoService {
         $response = $this->infoRepo->getInfoComponents($infoId);
         return $response;
     }
-
-    /* ###################################### DONE  ################################################# */
-
-    /**
-     * update roaming category
+    
+       /**
+     * update components
      * @return Response
      */
     public function updateComponents($request) {
@@ -358,7 +356,7 @@ class RoamingInfoService {
 
 
             //save data in database 
-            $this->offerRepo->saveComponents($request);
+            $this->infoRepo->saveComponents($request);
 
             $response = [
                 'success' => 1,
@@ -374,6 +372,10 @@ class RoamingInfoService {
             return $response;
         }
     }
+
+    /* ###################################### DONE  ################################################# */
+
+ 
 
     /**
      * Change component sorting

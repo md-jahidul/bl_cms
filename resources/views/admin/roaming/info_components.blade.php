@@ -38,31 +38,31 @@
                                         <?php
                                         $textEn = json_decode($c->body_text_en);
                                         ?>
-                                        
+
                                         @if($c->component_type == 'photo')
                                         <strong>Photo Headline: </strong> {{ $textEn->headline_en }}
                                         @endif
 
                                         @if($c->component_type == 'table')
                                         <strong>Heads: </strong> {{ implode(', ', $textEn->head_en) }}
-                                       
+
                                         @endif
-                                        
+
                                         @if($c->component_type == 'headline')
-                                        <strong>Headline: </strong> {{ $textEn->headline_en }}
+                                        <strong>Headline: </strong> {{ $textEn->headline_only_en }}
                                         @endif
-                                        
+
                                         @if($c->component_type == 'accordion')
-                                        <strong>Accordion Head: </strong> {{ $textEn->headline_en }}
+                                        <strong>Accordion Head: </strong> {{ $textEn->accordion_headline_en }}
                                         @endif
-                                        
-                                        @if($c->component_type == 'list-component')
-                                        <strong>List Headline: </strong> {{ $textEn->headline_en }}
+
+                                        @if($c->component_type == 'list')
+                                        <strong>List Headline: </strong> {{ $textEn->list_headline_en }}
                                         @endif
 
                                     </td>
                                     <td>
-                                        <a href="{{url('roaming/offer-component-delete/'.$infoId. '/'. $c->id)}}" class="pull-right text-danger delete_component">
+                                        <a href="{{url('roaming/info-component-delete/'.$infoId. '/'. $c->id)}}" class="pull-right text-danger delete_component">
                                             <i class="la la-trash"></i>
                                         </a>
                                     </td>
@@ -85,7 +85,7 @@
 
 
 
-    <form method="POST" action="{{ url('roaming/update-offer-component') }}" class="form" enctype="multipart/form-data">
+    <form method="POST" action="{{ url('roaming/update-info-component') }}" class="form" enctype="multipart/form-data">
         @csrf
         <input type="hidden"  value="{{$infoId}}" name="parent_id">
 
@@ -98,165 +98,18 @@
                     <strong>Add Component: </strong>
                     <a href="javascript:;" class="btn btn-sm btn-info add_photo">Photo</a>
                     <a href="javascript:;" class="btn btn-sm btn-info add_table">Table</a>
-                    <a href="javascript:;" class="btn btn-sm btn-info add_text">Headline (only)</a>
-                    <a href="javascript:;" class="btn btn-sm btn-info add_text">Accordion</a>
-                    <a href="javascript:;" class="btn btn-sm btn-info add_text">List</a>
-                    
+                    <a href="javascript:;" class="btn btn-sm btn-info add_headline">Headline (only)</a>
+                    <a href="javascript:;" class="btn btn-sm btn-info add_accordion">Accordion</a>
+                    <a href="javascript:;" class="btn btn-sm btn-info add_list">List</a>
+
 
                     <hr>
                     <div class="row">
 
                         <div class="col-md-12 col-xs-12 element_wrap">
-                            <?php $position = 1; ?>
+                           
 
-                            @foreach($components as $com)
-
-                            <?php
-                            $position = $com->position;
-                            ?>
-
-
-                            @if($com->component_type == 'text')
-
-                            <?php
-                            $textEn = json_decode($com->body_text_en);
-                            $textBn = json_decode($com->body_text_bn);
-                            ?>
-
-                            <div class="form-group row bg-light p-2 mr-1 mt-1">
-                                <input type="hidden" name="component_position[{{$com->position}}]">
-
-                                <div class="col-md-8 col-xs-12">
-                                    <h5 class="font-weight-bold">Text Component</h5>
-                                    <hr>
-                                    <div class="row">
-
-                                        <div class="col-md-6 col-xs-12">
-                                            <label>Headline (EN) 
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <input type="text" required class="form-control" value="{{$textEn->headline_en}}" name="headline_en[{{$com->position}}]">
-                                        </div>
-                                        <div class="col-md-6 col-xs-12">
-                                            <label class="display-block">Headline (BN) <span class="text-danger">*</span>
-                                                <a href="javascript:;" class="pull-right text-danger remove_component"><i class="la la-close"></i></a>
-                                            </label>
-                                            <input type="text" required class="form-control"  value="{{$textBn->headline_bn}}"  name="headline_bn[{{$com->position}}]">
-
-                                        </div>
-
-                                        <div class="col-md-6 col-xs-12">
-                                            <label>Text (EN)</label>
-                                            <textarea class="form-control details_editor_edit" name="textarea_en[{{$com->position}}]">{{$textEn->text_en}}</textarea>
-                                        </div>
-                                        <div class="col-md-6 col-xs-12">
-                                            <label>Text (BN)</label>
-                                            <textarea class="form-control details_editor_edit" name="textarea_bn[{{$com->position}}]">{{$textBn->text_bn}}</textarea>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-xs-12">
-                                    <h6 class="font-weight-bold">Sample/Instruction (Text Component)</h6>
-                                    <a href="{{asset('app-assets/images/roaming/offer_text_component.png')}}" target="_blank">
-                                        <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/offer_text_component.png')}}" width="100%">
-                                    </a>
-
-                                </div>
-
-
-                            </div>
-
-                            @endif
-
-
-                            @if($com->component_type == 'table')
-
-                            <div class="form-group row bg-light p-2 mr-1 mt-1">
-                                <input type="hidden" name="component_position[{{$com->position}}]">
-
-                                <div class="col-md-10 col-xs-12">
-                                    <h5 class="font-weight-bold">Table Component
-                                    <a href="javascript:;" class="pull-right text-danger remove_component"><i class="la la-close"></i></a>
-                                    </h5>
-                                    <hr>
-
-
-                                    <div class="row table_wrap">
-                                        <?php
-                                        $tableEn = json_decode($com->body_text_en);
-                                        $tableBn = json_decode($com->body_text_bn);
-
-                                        $width = 100 / count($tableEn->head_en);
-                                        ?>
-                                        <div class="col-md-12 col-xs-12">
-                                            <h6>Table Head (EN):</h6>
-
-                                            @foreach($tableEn->head_en as $k => $head)
-                                            <input type="text" placeholder="Head (EN) {{$k+1}}" name="head_en[{{$com->position}}][]" value="{{$head}}" width="{{$width}}%">
-                                            @endforeach
-                                            <hr>
-
-                                        </div>
-
-                                        <div class="col-md-12 col-xs-12">
-                                            <h6>Table Columns (EN):</h6>
-
-                                            @foreach($tableEn->rows_en as $k => $rows)
-
-                                            @foreach($rows as $cols)
-                                            <input type="text" value="{{$cols}}" name="col_en[{{$com->position}}][{{$k}}][]" width="{{$width}}%">
-                                            @endforeach
-                                            <br>
-
-                                            @endforeach
-
-                                        </div>
-
-
-                                        <div class="col-md-12 col-xs-12">
-                                            <h6><hr>Table Head (BN):</h6>
-
-                                            @foreach($tableBn->head_bn as $k => $head)
-                                            <input type="text" placeholder="Head (EN) {{$k+1}}" name="head_bn[{{$com->position}}][]" value="{{$head}}" width="{{$width}}%">
-                                            @endforeach
-
-                                            <hr>
-                                        </div>
-
-                                        <div class="col-md-12 col-xs-12">
-                                            <h6>Table Columns (BN):</h6>
-
-                                            @foreach($tableBn->rows_bn as $k => $rows)
-
-                                            @foreach($rows as $cols)
-                                            <input type="text" value="{{$cols}}" name="col_bn[{{$com->position}}][{{$k}}][]" width="{{$width}}%">
-                                            @endforeach
-                                            <br>
-
-                                            @endforeach
-
-                                        </div>
-
-                                    </div>
-
-
-                                </div>
-                                <div class="col-md-2 col-xs-12">
-                                    <h6 class="font-weight-bold">Sample/Instruction (List Component)</h6>
-                                    <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/offer_table_component.png')}}" width="100%">
-
-                                </div>
-
-
-                            </div>
-
-                            @endif
-
-
-
-                            @endforeach
+                            @include('admin.roaming.partials.info_component_edit_view')
 
                         </div>
 
@@ -274,13 +127,13 @@
     </form>
 
 
-    <div class="text_component_wrap display-hidden">
+    <div class="photo_component_wrap display-hidden">
 
         <div class="form-group row bg-light p-2 mr-1 mt-1">
             <input type="hidden" class="component_position">
 
             <div class="col-md-8 col-xs-12">
-                <h5 class="font-weight-bold">Text Component</h5>
+                <h5 class="font-weight-bold">Photo Component</h5>
                 <hr>
                 <div class="row">
 
@@ -298,22 +151,43 @@
 
                     </div>
 
-                    <div class="col-md-6 col-xs-12">
-                        <label>Text (EN)</label>
-                        <textarea class="form-control details_editor textarea_en"></textarea>
+                    <div class="col-md-3 col-xs-12">
+                        <label>Photo 1 <span class="text-danger">*</span></label>
+                        <input type="file" class="dropify photo_one" required data-height="70"
+                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                        <label>Alt Text</label>
+                        <input type="text" class="form-control alt_one" placeholder="Alt Text">
                     </div>
-                    <div class="col-md-6 col-xs-12">
-                        <label>Text (BN)</label>
-                        <textarea class="form-control details_editor textarea_bn"></textarea>
+                    <div class="col-md-3 col-xs-12">
+                        <label>Photo 2</label>
+                        <input type="file" class="dropify photo_two" data-height="70"
+                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                        <label>Alt Text</label>
+                        <input type="text" class="form-control alt_two" placeholder="Alt Text">
                     </div>
+                    <div class="col-md-3 col-xs-12">
+                        <label>Photo 3</label>
+                        <input type="file" class="dropify photo_three" data-height="70"
+                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                        <label>Alt Text</label>
+                        <input type="text" class="form-control alt_three" placeholder="Alt Text">
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        <label>Photo 4</label>
+                        <input type="file" class="dropify photo_four" data-height="70"
+                               data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                        <label>Alt Text</label>
+                        <input type="text" class="form-control alt_four" placeholder="Alt Text">
+                    </div>
+
 
 
                 </div>
             </div>
             <div class="col-md-4 col-xs-12">
                 <h6 class="font-weight-bold">Sample/Instruction (Text Component)</h6>
-                <a href="{{asset('app-assets/images/roaming/offer_text_component.png')}}" target="_blank">
-                    <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/offer_text_component.png')}}" width="100%">
+                <a href="{{asset('app-assets/images/roaming/info_photo_component.png')}}" target="_blank">
+                    <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/info_photo_component.png')}}" width="100%">
                 </a>
 
             </div>
@@ -322,7 +196,6 @@
         </div>
 
     </div>
-
 
     <div class="table_component_wrap display-hidden">
 
@@ -350,6 +223,143 @@
             <div class="col-md-2 col-xs-12">
                 <h6 class="font-weight-bold">Sample/Instruction (List Component)</h6>
                 <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/offer_table_component.png')}}" width="100%">
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="headline_component_wrap display-hidden">
+
+        <div class="form-group row bg-light p-2 mr-1 mt-1">
+            <input type="hidden" class="component_position">
+
+            <div class="col-md-8 col-xs-12">
+                <h5 class="font-weight-bold">Headline Component (For H2)</h5>
+                <hr>
+                <div class="row">
+
+                    <div class="col-md-6 col-xs-12">
+                        <label>Headline (EN) 
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" required class="form-control headline_only_en"  placeholder="Headline EN">
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <label class="display-block">Headline (BN) <span class="text-danger">*</span>
+                            <a href="javascript:;" class="pull-right text-danger remove_component"><i class="la la-close"></i></a>
+                        </label>
+                        <input type="text" required class="form-control headline_only_bn" placeholder="Headline BN">
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <h6 class="font-weight-bold">Sample/Instruction (Text Component)</h6>
+                <a href="{{asset('app-assets/images/roaming/info_headline.png')}}" target="_blank">
+                    <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/info_headline.png')}}" width="100%">
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="accordion_component_wrap display-hidden">
+
+        <div class="form-group row bg-light p-2 mr-1 mt-1">
+            <input type="hidden" class="component_position">
+
+            <div class="col-md-8 col-xs-12">
+                <h5 class="font-weight-bold">Accordion Component</h5>
+                <hr>
+                <div class="row">
+
+                    <div class="col-md-6 col-xs-12">
+                        <label>Accordion Head (EN) 
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" required class="form-control accordion_headline_en"  placeholder="Headline EN">
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <label class="display-block">Accordion Head (BN) <span class="text-danger">*</span>
+                            <a href="javascript:;" class="pull-right text-danger remove_component"><i class="la la-close"></i></a>
+                        </label>
+                        <input type="text" required class="form-control accordion_headline_bn" placeholder="Headline BN">
+
+                    </div>
+
+                    <div class="col-md-6 col-xs-12">
+                        <label>Body Text (EN)</label>
+                        <textarea class="form-control details_editor accordion_textarea_en"></textarea>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <label>Body Text (BN)</label>
+                        <textarea class="form-control details_editor accordion_textarea_bn"></textarea>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <h6 class="font-weight-bold">Sample/Instruction (Text Component)</h6>
+                <a href="{{asset('app-assets/images/roaming/info_accordion.png')}}" target="_blank">
+                    <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/info_accordion.png')}}" width="100%">
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="list_component_wrap display-hidden">
+
+        <div class="form-group row bg-light p-2 mr-1 mt-1">
+            <input type="hidden" class="component_position">
+
+            <div class="col-md-8 col-xs-12">
+                <h5 class="font-weight-bold">List Component</h5>
+                <hr>
+                <div class="row">
+
+                    <div class="col-md-6 col-xs-12">
+                        <label>List Headline (EN) 
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" required class="form-control list_headline_en"  placeholder="Headline EN">
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <label class="display-block">List Headline (BN) <span class="text-danger">*</span>
+                            <a href="javascript:;" class="pull-right text-danger remove_component"><i class="la la-close"></i></a>
+                        </label>
+                        <input type="text" required class="form-control list_headline_bn" placeholder="Headline BN">
+
+                    </div>
+
+                    <div class="col-md-6 col-xs-12">
+                        <label>List Body (EN)</label>
+                        <textarea class="form-control details_editor list_textarea_en"></textarea>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <label>List Body (BN)</label>
+                        <textarea class="form-control details_editor list_textarea_bn"></textarea>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <h6 class="font-weight-bold">Sample/Instruction (Text Component)</h6>
+                <a href="{{asset('app-assets/images/roaming/offer_text_component.png')}}" target="_blank">
+                    <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/offer_text_component.png')}}" width="100%">
+                </a>
 
             </div>
 
@@ -459,13 +469,13 @@ if (Session::has('error')) {
     });
 
 
-    var position = "<?php echo $position + 1 ?>";
 
 
-    //add list component
-    $('.add_text').on('click', function () {
 
-        var html = $(".text_component_wrap .form-group").clone();
+    //add photo component
+    $('.add_photo').on('click', function () {
+
+        var html = $(".photo_component_wrap .form-group").clone();
 
         var comPosition = 'component_position[' + position + ']';
         $(html).find('.component_position').attr('name', comPosition);
@@ -476,11 +486,86 @@ if (Session::has('error')) {
         var head_bn = 'headline_bn[' + position + ']';
         $(html).find('.headline_bn').attr('name', head_bn);
 
-        var text_en = 'textarea_en[' + position + ']';
-        $(html).find('.textarea_en').attr('name', text_en);
+        var photo1 = 'photo_one[' + position + ']';
+        $(html).find('.photo_one').attr('name', photo1);
+        var alt1 = 'alt_one[' + position + ']';
+        $(html).find('.alt_one').attr('name', alt1);
 
-        var text_bn = 'textarea_bn[' + position + ']';
-        $(html).find('.textarea_bn').attr('name', text_bn);
+        var photo2 = 'photo_two[' + position + ']';
+        $(html).find('.photo_two').attr('name', photo2);
+        var alt2 = 'alt_two[' + position + ']';
+        $(html).find('.alt_two').attr('name', alt2);
+
+        var photo3 = 'photo_three[' + position + ']';
+        $(html).find('.photo_three').attr('name', photo3);
+        var alt3 = 'alt_three[' + position + ']';
+        $(html).find('.alt_three').attr('name', alt3);
+
+        var photo4 = 'photo_four[' + position + ']';
+        $(html).find('.photo_four').attr('name', photo4);
+        var alt4 = 'alt_four[' + position + ']';
+        $(html).find('.alt_four').attr('name', alt4);
+
+
+        $('.element_wrap').append(html);
+
+        //show dropify for  photo
+        $('.element_wrap .dropify').dropify({
+            messages: {
+                'default': 'Browse for photo',
+                'replace': 'Click to replace',
+                'remove': 'Remove',
+                'error': 'Choose correct file format'
+            }
+        });
+
+
+
+        position++;
+
+    });
+
+
+    //add headline component
+    $('.add_headline').on('click', function () {
+
+        var html = $(".headline_component_wrap .form-group").clone();
+
+        var comPosition = 'component_position[' + position + ']';
+        $(html).find('.component_position').attr('name', comPosition);
+
+        var head_en = 'headline_only_en[' + position + ']';
+        $(html).find('.headline_only_en').attr('name', head_en);
+
+        var head_bn = 'headline_only_bn[' + position + ']';
+        $(html).find('.headline_only_bn').attr('name', head_bn);
+
+        $('.element_wrap').append(html);
+        position++;
+
+    });
+
+
+
+    //add list component
+    $('.add_accordion').on('click', function () {
+
+        var html = $(".accordion_component_wrap .form-group").clone();
+
+        var comPosition = 'component_position[' + position + ']';
+        $(html).find('.component_position').attr('name', comPosition);
+
+        var head_en = 'accordion_headline_en[' + position + ']';
+        $(html).find('.accordion_headline_en').attr('name', head_en);
+
+        var head_bn = 'accordion_headline_bn[' + position + ']';
+        $(html).find('.accordion_headline_bn').attr('name', head_bn);
+
+        var text_en = 'accordion_textarea_en[' + position + ']';
+        $(html).find('.accordion_textarea_en').attr('name', text_en);
+
+        var text_bn = 'accordion_textarea_bn[' + position + ']';
+        $(html).find('.accordion_textarea_bn').attr('name', text_bn);
 
 
 
@@ -502,7 +587,49 @@ if (Session::has('error')) {
         position++;
 
     });
+
     //add list component
+    $('.add_list').on('click', function () {
+
+        var html = $(".list_component_wrap .form-group").clone();
+
+        var comPosition = 'component_position[' + position + ']';
+        $(html).find('.component_position').attr('name', comPosition);
+
+        var head_en = 'list_headline_en[' + position + ']';
+        $(html).find('.list_headline_en').attr('name', head_en);
+
+        var head_bn = 'list_headline_bn[' + position + ']';
+        $(html).find('.list_headline_bn').attr('name', head_bn);
+
+        var text_en = 'list_textarea_en[' + position + ']';
+        $(html).find('.list_textarea_en').attr('name', text_en);
+
+        var text_bn = 'list_textarea_bn[' + position + ']';
+        $(html).find('.list_textarea_bn').attr('name', text_bn);
+
+
+
+        $('.element_wrap').append(html);
+
+        $(".element_wrap textarea.details_editor").summernote({
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                // ['table', ['table']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['view', ['fullscreen', 'codeview']]
+            ],
+            height: 200
+        });
+
+        position++;
+
+    });
+
+    //add table component
     $('.add_table').on('click', function () {
 
         var html = $(".table_component_wrap .form-group").clone();
@@ -606,6 +733,7 @@ if (Session::has('error')) {
             event.preventDefault();
         }
     });
+
 
 
 

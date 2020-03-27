@@ -10,8 +10,11 @@ namespace App\Repositories;
 use App\Models\RoamingInfo;
 use App\Models\RoamingInfoCategory;
 use App\Models\RoamingInfoComponents;
+use App\Traits\FileTrait;
 
 class RoamingInfoRepository extends BaseRepository {
+    
+    use FileTrait;
 
     public $modelName = RoamingInfo::class;
     
@@ -22,9 +25,8 @@ class RoamingInfoRepository extends BaseRepository {
     }
     
        public function getInfo() {
-        $response = $this->model->select('roaming_info_tips.*', 'c.name_en as category_name')
-                        ->leftJoin('roaming_info_tips_category as c', 'c.id', '=', 'roaming_info_tips.category_id')
-                        ->orderBy('roaming_info_tips.id', 'desc')->get();
+        $response = $this->model
+                        ->orderBy('id', 'desc')->get();
         return $response;
     }
 
@@ -149,6 +151,159 @@ class RoamingInfoRepository extends BaseRepository {
         return $response;
     }
     
+    
+     public function saveComponents($request) {
+        try {
+
+
+            //delete all previous components
+            RoamingInfoComponents::where(array('parent_id' => $request->parent_id))->delete();
+
+            $insert = [];
+
+            $count = 0;
+            foreach ($request->component_position as $k => $val) {
+                $insert[$count]['parent_id'] = $request->parent_id;
+
+                //photo component
+                if (isset($request->photo_one[$k])) {
+                    
+                    $photo[] = $this->upload($request->photo_one[$k], 'assetlite/images/roaming');
+                    $photo[] = isset($request->photo_two[$k]) ? $this->upload($request->photo_two[$k], 'assetlite/images/roaming') : "";
+                    $photo[] = isset($request->photo_three[$k]) ? $this->upload($request->photo_three[$k], 'assetlite/images/roaming') : "";
+                    $photo[] = isset($request->photo_four[$k]) ? $this->upload($request->photo_four[$k], 'assetlite/images/roaming') : "";
+                    
+                     $arrayEn = array(
+                        'headline_en' => $request->headline_en[$k],
+                        'photos' => $photo
+                    );
+                    $jsonEn = json_encode($arrayEn);
+                    
+                    $alt[] = $request->alt_one[$k];
+                    $alt[] = $request->alt_two[$k];
+                    $alt[] = $request->alt_three[$k];
+                    $alt[] = $request->alt_four[$k];
+                    
+                     $arrayBn = array(
+                        'headline_bn' => $request->headline_bn[$k],
+                        'alt_text' => $alt
+                    );
+                    $jsonBn = json_encode($arrayBn);
+
+                    $insert[$count]['body_text_en'] = $jsonEn;
+                    $insert[$count]['body_text_bn'] = $jsonBn;
+                    
+                    $insert[$count]['position'] = $k;
+                    $insert[$count]['component_type'] = 'photo';
+                }
+                
+                //table component
+                if (isset($request->head_en[$k])) {
+                    
+                     $tableArrayEn = array(
+                        'head_en' => $request->head_en[$k],
+                        'rows_en' => $request->col_en[$k]
+                    );
+                    $tableJsonEn = json_encode($tableArrayEn);
+                    
+                     $tableArrayBn = array(
+                        'head_bn' => $request->head_bn[$k],
+                        'rows_bn' => $request->col_bn[$k]
+                    );
+                    $tableJsonBn = json_encode($tableArrayBn);
+
+                    $insert[$count]['body_text_en'] = $tableJsonEn;
+                    $insert[$count]['body_text_bn'] = $tableJsonBn;
+                    
+                    $insert[$count]['position'] = $k;
+                    $insert[$count]['component_type'] = 'table';
+                }
+
+                //headline component
+                if (isset($request->headline_only_en[$k])) {
+
+                    $arrayEn = array(
+                        'headline_only_en' => $request->headline_only_en[$k],
+                    );
+                    $jsonEn = json_encode($arrayEn);
+
+                    $arrayBn = array(
+                        'headline_only_bn' => $request->headline_only_bn[$k],
+                    );
+                    $jsonBn = json_encode($arrayBn);
+
+                    $insert[$count]['body_text_en'] = $jsonEn;
+                    $insert[$count]['body_text_bn'] = $jsonBn;
+                    $insert[$count]['position'] = $k;
+                    $insert[$count]['component_type'] = 'headline';
+                }
+
+                //accordion component
+                if (isset($request->accordion_headline_en[$k])) {
+
+                    $arrayEn = array(
+                        'accordion_headline_en' => $request->accordion_headline_en[$k],
+                        'accordion_textarea_en' => $request->accordion_textarea_en[$k]
+                    );
+                    $jsonEn = json_encode($arrayEn);
+
+                    $arrayBn = array(
+                        'accordion_headline_bn' => $request->accordion_headline_bn[$k],
+                        'accordion_textarea_bn' => $request->accordion_textarea_bn[$k]
+                    );
+                    $jsonBn = json_encode($arrayBn);
+
+                    $insert[$count]['body_text_en'] = $jsonEn;
+                    $insert[$count]['body_text_bn'] = $jsonBn;
+                    $insert[$count]['position'] = $k;
+                    $insert[$count]['component_type'] = 'accordion';
+                }
+                
+                //list component
+                if (isset($request->list_headline_en[$k])) {
+
+                    $arrayEn = array(
+                        'list_headline_en' => $request->list_headline_en[$k],
+                        'list_textarea_en' => $request->list_textarea_en[$k]
+                    );
+                    $jsonEn = json_encode($arrayEn);
+
+                    $arrayBn = array(
+                        'list_headline_bn' => $request->list_headline_bn[$k],
+                        'list_textarea_bn' => $request->list_textarea_bn[$k]
+                    );
+                    $jsonBn = json_encode($arrayBn);
+
+                    $insert[$count]['body_text_en'] = $jsonEn;
+                    $insert[$count]['body_text_bn'] = $jsonBn;
+                    $insert[$count]['position'] = $k;
+                    $insert[$count]['component_type'] = 'list';
+                }
+
+
+
+
+                $count++;
+            }
+            
+//            print_r($insert);die();
+            
+
+            RoamingInfoComponents::insert($insert);
+
+
+            $response = [
+                'success' => 1,
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'errors' => $e->getMessage()
+            ];
+        }
+        return $response;
+    }
+    
      /*###################################### DONE  #################################################*/
     
     
@@ -175,81 +330,7 @@ class RoamingInfoRepository extends BaseRepository {
 
    
 
-    public function saveComponents($request) {
-        try {
-
-
-            //delete all previous components
-            RoamingOtherOfferComponents::where(array('parent_id' => $request->parent_id))->delete();
-
-            $insert = [];
-
-            $count = 0;
-            foreach ($request->component_position as $k => $val) {
-                $insert[$count]['parent_id'] = $request->parent_id;
-
-                if (isset($request->head_en[$k])) {
-                    
-                     $tableArrayEn = array(
-                        'head_en' => $request->head_en[$k],
-                        'rows_en' => $request->col_en[$k]
-                    );
-                    $tableJsonEn = json_encode($tableArrayEn);
-                    
-                     $tableArrayBn = array(
-                        'head_bn' => $request->head_bn[$k],
-                        'rows_bn' => $request->col_bn[$k]
-                    );
-                    $tableJsonBn = json_encode($tableArrayBn);
-
-                    $insert[$count]['body_text_en'] = $tableJsonEn;
-                    $insert[$count]['body_text_bn'] = $tableJsonBn;
-                    
-                    $insert[$count]['position'] = $k;
-                    $insert[$count]['component_type'] = 'table';
-                }
-
-                if (isset($request->headline_en[$k])) {
-
-                    $textArrayEn = array(
-                        'headline_en' => $request->headline_en[$k],
-                        'text_en' => $request->textarea_en[$k]
-                    );
-                    $textJsonEn = json_encode($textArrayEn);
-
-                    $textArrayBn = array(
-                        'headline_bn' => $request->headline_bn[$k],
-                        'text_bn' => $request->textarea_bn[$k]
-                    );
-                    $textJsonBn = json_encode($textArrayBn);
-
-                    $insert[$count]['body_text_en'] = $textJsonEn;
-                    $insert[$count]['body_text_bn'] = $textJsonBn;
-                    $insert[$count]['position'] = $k;
-                    $insert[$count]['component_type'] = 'text';
-                }
-
-
-
-
-                $count++;
-            }
-            
-
-            RoamingOtherOfferComponents::insert($insert);
-
-
-            $response = [
-                'success' => 1,
-            ];
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'errors' => $e->getMessage()
-            ];
-        }
-        return $response;
-    }
+   
     
     
     public function changeComponentSorting($request) {
