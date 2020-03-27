@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Roaming Offer Components')
-@section('card_name', 'Offer Components')
+@section('title', 'Roaming Info & Tips Components')
+@section('card_name', 'Info & Tips Components')
 @section('breadcrumb')
-<li class="breadcrumb-item active"> <a href="{{ url('roaming-offers') }}">Roaming Offers</a></li>
+<li class="breadcrumb-item active"> <a href="{{ url('roaming-info-tips') }}">Info & Tips</a></li>
 <li class="breadcrumb-item active"> Update Components</li>
 @endsection
 @section('content')
@@ -35,23 +35,34 @@
                                     </td>
 
                                     <td>
-                                        @if($c->component_type == 'text')
                                         <?php
                                         $textEn = json_decode($c->body_text_en);
-                                        echo "<strong>Headline: </strong>" . $textEn->headline_en;
                                         ?>
+                                        
+                                        @if($c->component_type == 'photo')
+                                        <strong>Photo Headline: </strong> {{ $textEn->headline_en }}
                                         @endif
 
                                         @if($c->component_type == 'table')
-                                        <?php
-                                        $tableEn = json_decode($c->body_text_en);
-                                        echo "<strong>Heads: </strong>" . implode(', ', $tableEn->head_en);
-                                        ?>
+                                        <strong>Heads: </strong> {{ implode(', ', $textEn->head_en) }}
+                                       
+                                        @endif
+                                        
+                                        @if($c->component_type == 'headline')
+                                        <strong>Headline: </strong> {{ $textEn->headline_en }}
+                                        @endif
+                                        
+                                        @if($c->component_type == 'accordion')
+                                        <strong>Accordion Head: </strong> {{ $textEn->headline_en }}
+                                        @endif
+                                        
+                                        @if($c->component_type == 'list-component')
+                                        <strong>List Headline: </strong> {{ $textEn->headline_en }}
                                         @endif
 
                                     </td>
                                     <td>
-                                        <a href="{{url('roaming/offer-component-delete/'.$offerId. '/'. $c->id)}}" class="pull-right text-danger delete_component">
+                                        <a href="{{url('roaming/offer-component-delete/'.$infoId. '/'. $c->id)}}" class="pull-right text-danger delete_component">
                                             <i class="la la-trash"></i>
                                         </a>
                                     </td>
@@ -76,7 +87,7 @@
 
     <form method="POST" action="{{ url('roaming/update-offer-component') }}" class="form" enctype="multipart/form-data">
         @csrf
-        <input type="hidden"  value="{{$offerId}}" name="parent_id">
+        <input type="hidden"  value="{{$infoId}}" name="parent_id">
 
 
 
@@ -85,8 +96,12 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <strong>Add Component: </strong>
-                    <a href="javascript:;" class="btn btn-sm btn-info add_text">Text Component</a>
-                    <a href="javascript:;" class="btn btn-sm btn-info add_table">Table Component</a>
+                    <a href="javascript:;" class="btn btn-sm btn-info add_photo">Photo</a>
+                    <a href="javascript:;" class="btn btn-sm btn-info add_table">Table</a>
+                    <a href="javascript:;" class="btn btn-sm btn-info add_text">Headline (only)</a>
+                    <a href="javascript:;" class="btn btn-sm btn-info add_text">Accordion</a>
+                    <a href="javascript:;" class="btn btn-sm btn-info add_text">List</a>
+                    
 
                     <hr>
                     <div class="row">
