@@ -47,23 +47,27 @@ trait Authorizable
                 return true;
             }
         }
-        
+
         return false;
     }
 
     public function can_view($feature, $action = 'index')
     {
-
         if (!$this->isAdmin()) {
             if (!count($this->roles)) {
                 return false;
             }
-    
+
             foreach ($this->roles as $role) {
+
+
                 $permission = $role->permissions
-                                    ->where('controller', $feature . 'Controller')
-                                    ->where('action', $action);
-    
+//                    ->where('controller', "LeadManagement" . 'Controller')
+                    ->where('controller', $feature . 'Controller')
+                    ->where('action', $action);
+
+//                dd($permission);
+
                 if (count($permission) > 0) {
                     return true;
                 }

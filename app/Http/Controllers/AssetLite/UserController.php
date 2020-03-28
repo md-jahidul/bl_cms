@@ -18,6 +18,12 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    const LEAD_USER = "lead_user";
+    const LEAD_USER_ROLE = "lead_user_role";
+    const SUPER_ADMIN = [
+            'assetlite_super_Admin' => 5,
+            'lead_super_Admin' => 9
+        ];
 
     /***
      * @var UserService
@@ -41,10 +47,9 @@ class UserController extends Controller
      */
     public function index()
     {
+        $superAdmin = self::SUPER_ADMIN;
         $userType = Auth::user()->type;
-
         $featureType = Auth::user()->feature_type;
-
         if ($featureType == 'lead_user') {
             $users = User::where('type', $userType)
                 ->where('feature_type', $featureType)
@@ -53,7 +58,25 @@ class UserController extends Controller
             $users = User::where('type', $userType)->with('roles')->get();
         }
 
-        return view('vendor.authorize.users.index', compact('users'));
+        return view('vendor.authorize.users.index', compact('users', 'superAdmin'));
+    }
+
+    private function roleFilter()
+    {
+        $type = Auth::user()->type;
+        $featureType = Auth::user()->feature_type;
+        if ($featureType == self::LEAD_USER) {
+            $roles = Role::where('user_type', $type)
+                ->where('alias', '!=', 'lead_super_admin')
+                ->where('feature_type', self::LEAD_USER_ROLE)
+                ->get();
+        } else {
+            $roles = Role::where('user_type', $type)
+                ->where('alias', '!=', 'assetlite_super_admin')
+                ->get();
+        }
+
+        return $roles;
     }
 
     /**
@@ -63,8 +86,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $userType = Auth::user()->type;
-        $roles = Role::where('user_type', $userType)->where('alias', '!=', 'assetlite_super_admin')->get();
+        $roles = $this->roleFilter();
+//        $roles = Role::where('user_type', $userType)->where('alias', '!=', 'assetlite_super_admin')->get();
         return view('vendor.authorize.users.create', compact('roles'));
     }
 
@@ -76,9 +99,7 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-
         $this->userService->storeUser($request);
-
         $user = new User();
         $user->name = request()->name;
         $user->email = request()->email;
@@ -103,10 +124,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $userType = Auth::user()->type;
+//        $userType = Auth::user()->type;
         $superAdminId = Auth::user()->roles[0]->id;
         $user = User::findOrFail($id);
-        $roles = Role::where('user_type', $userType)->where('alias', '!=', 'assetlite_admin')->get();
+        $roles = $this->roleFilter();
+//        $roles = Role::where('user_type', $userType)->where('alias', '!=', 'assetlite_admin')->get();
         return view('vendor.authorize.users.edit', compact('user', 'roles', 'superAdminId'));
     }
 
