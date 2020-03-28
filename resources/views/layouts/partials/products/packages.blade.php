@@ -27,6 +27,7 @@
 <slot id="{{ strtolower($type) == 'prepaid' ? 'prepaid_plans' : 'postpaid_plans' }}" class="{{ ($offertype == 5 || $offertype == 7) ? '' : 'd-none' }}">
     @include('layouts.partials.products.common-field.call_rate')
     @include('layouts.partials.products.common-field.sms_rate')
+    @include('layouts.partials.products.common-field.sms_rate_unit')
 </slot>
 
 
