@@ -106,19 +106,19 @@ class RoamingBundleRepository extends BaseRepository
 
                     if ($rowNumber > 1) {
                         $insertdata[] = array(
-                            'product_code' => $cells[0]->getValue(),
-                            'subscription_type' => $cells[1]->getValue(),
-                            'country' => $cells[2]->getValue(),
-                            'operator' => $cells[3]->getValue(),
-                            'package_name_en' => $cells[4]->getValue(),
-                            'package_name_bn' => $cells[5]->getValue(),
-                            'data_volume' => $cells[6]->getValue(),
-                            'volume_data_unit' => $cells[7]->getValue(),
-                            'validity' => $cells[8]->getValue(),
-                            'validity_unit' => $cells[9]->getValue(),
-                            'mrp' => $cells[10]->getValue(),
-                            'price' => $cells[11]->getValue(),
-                            'tax' => $cells[12]->getValue(),
+                            'product_code' => trim(iconv("UTF-8","ISO-8859-1",$cells[0]->getValue())," \t\n\r\0\x0B\xA0"),
+                            'subscription_type' => trim(iconv("UTF-8","ISO-8859-1",$cells[1]->getValue())," \t\n\r\0\x0B\xA0"),
+                            'country' => trim(iconv("UTF-8","ISO-8859-1",$cells[2]->getValue())," \t\n\r\0\x0B\xA0"),
+                            'operator' => trim(iconv("UTF-8","ISO-8859-1",$cells[3]->getValue())," \t\n\r\0\x0B\xA0"),
+                            'package_name_en' => trim($cells[4]->getValue()),
+                            'package_name_bn' => trim($cells[5]->getValue()),
+                            'data_volume' => trim($cells[6]->getValue()),
+                            'volume_data_unit' => trim($cells[7]->getValue()),
+                            'validity' => trim($cells[8]->getValue()),
+                            'validity_unit' => trim($cells[9]->getValue()),
+                            'mrp' => trim($cells[10]->getValue()),
+                            'price' => trim($cells[11]->getValue()),
+                            'tax' => trim($cells[12]->getValue()),
                         );
                     }
                     $rowNumber++;

@@ -103,7 +103,25 @@ class RoamingGeneralController extends Controller {
 //        print_r($request->all());die();
         $page = $this->generalService->updatePage($request);
 
-        return redirect('roaming/general-page-component/page/'.$request->page_id);
+        return redirect('roaming/general-page-component/page/' . $request->page_id);
+    }
+
+    /**
+     * Component delete.
+     * 
+     * @param $pageId, $comId
+     * @return JsonResponse
+     * @Dev Bulbul Mahmud Nito || 25/03/2020
+     */
+    public function componentDelete($pageId, $comId) {
+        $response = $this->generalService->deleteComponent($comId);
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Component is deleted!');
+        } else {
+            Session::flash('error', 'Component deleting process failed!');
+        }
+
+        return redirect('roaming/general-page-component/page/'.$pageId);
     }
 
     /**

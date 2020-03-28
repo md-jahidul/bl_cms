@@ -78,24 +78,30 @@
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th width="22%">Type</th>
-                                        <th width="72%">Text</th>
+                                        <th width="20%">Type</th>
+                                        <th width="70%">Text</th>
+                                        <th width="10%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody class="component_sortable">
-                                    @foreach($components as $cam)
-                                    <tr data-index="{{ $cam->id }}" data-position="{{ $cam->position }}">
+                                    @foreach($components as $c)
+                                    <tr data-index="{{ $c->id }}" data-position="{{ $c->position }}">
 
                                         <td class="category_name cursor-move">
                                             <i class="icon-cursor-move icons"></i> 
 
                                             <strong class="text-info">
 
-                                                {{ ucwords( str_replace('_', ' ', $cam->component_type)) }} </strong>
+                                                {{ ucwords( str_replace('_', ' ', $c->component_type)) }} </strong>
                                         </td>
 
                                         <td>
-                                            {{ $cam->body_text_en }} 
+                                            {{ $c->body_text_en }} 
+                                        </td>
+                                        <td>
+                                            <a href="{{url('roaming/page-component-delete/'.$page->id. '/'. $c->id)}}" class="pull-right text-danger delete_component">
+                                                <i class="la la-trash"></i>
+                                            </a>
                                         </td>
 
                                     </tr>
@@ -151,13 +157,13 @@
                                                     <input type="checkbox" @if($com->show_button == 1) checked @endif value="1" name="show_button[{{$position}}]"> Show Button
                                                 </strong>
                                             </label>
-                                            <input type="text" class="form-control" value="{{$com->headline_en}}" name="headline_text_title_en[{{$position}}]"  placeholder="Headline EN">
+                                            <input type="text" class="form-control" required value="{{$com->headline_en}}" name="headline_text_title_en[{{$position}}]"  placeholder="Headline EN">
                                         </div>
                                         <div class="col-md-6 col-xs-12">
                                             <label class="display-block">Headline (BN) <span class="text-danger">*</span>
                                                 <a href="javascript:;" class="pull-right text-danger remove_component"><i class="la la-close"></i></a>
                                             </label>
-                                            <input type="text" class="form-control" value="{{$com->headline_bn}}" name="headline_text_title_bn[{{$position}}]" placeholder="Headline BN">
+                                            <input type="text" class="form-control" required value="{{$com->headline_bn}}" name="headline_text_title_bn[{{$position}}]" placeholder="Headline BN">
 
                                         </div>
                                         <div class="col-md-6 col-xs-12">
@@ -195,13 +201,13 @@
                                             <label>Headline (EN) 
                                                 <span class="text-danger">*</span>
                                             </label>
-                                            <input type="text" class="form-control" value="{{$com->headline_en}}" name="list_headline_en[{{$position}}]"  placeholder="Headline EN">
+                                            <input type="text" class="form-control" required value="{{$com->headline_en}}" name="list_headline_en[{{$position}}]"  placeholder="Headline EN">
                                         </div>
                                         <div class="col-md-6 col-xs-12">
                                             <label class="display-block">Headline (BN) <span class="text-danger">*</span>
                                                 <a href="javascript:;" class="pull-right text-danger remove_component"><i class="la la-close"></i></a>
                                             </label>
-                                            <input type="text" class="form-control" value="{{$com->headline_bn}}" name="list_headline_bn[{{$position}}]" placeholder="Headline BN">
+                                            <input type="text" class="form-control" required value="{{$com->headline_bn}}" name="list_headline_bn[{{$position}}]" placeholder="Headline BN">
 
                                         </div>
                                         <div class="col-md-6 col-xs-12">
@@ -496,6 +502,14 @@ if (Session::has('error')) {
             var save_url = "{{ url('roaming/page-component-sort') }}";
             saveNewPositions(save_url);
         }
+    });
+    
+    $('.delete_component').on('click', function(){
+        var confrm = confirm("Do you want to delete this component?");
+        if(confrm){
+            return true;
+        }
+        return false;
     });
 
 

@@ -1,8 +1,8 @@
 <div class="card">
     <div class="card-content collapse show">
         <div class="card-body card-dashboard">
-            <h4 class="pb-1"><strong>Other Offers</strong>
-            <a href="{{ url('roaming/offer-product-create') }}" class="btn btn-sm btn-info pull-right">Add Offer</a>
+            <h4 class="pb-1"><strong>Info & Tips List</strong>
+            <a href="{{ url('roaming/info-tips-create') }}" class="btn btn-sm btn-info pull-right">Add Info & Tips</a>
             </h4>
             <div class="row">
 
@@ -12,14 +12,13 @@
                         <thead>
                             <tr>
                                 <th width="22%">Name</th>
-                                <th width="22%">Card Text</th>
-                                <th width="22%">URL</th>
-                                <th width="">Category</th>
+                                <th width="35%">Card Text</th>
+                                <th width="20%">URL</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($offers as $v)
+                            @foreach($info as $v)
                             <tr>
 
                                 <td>
@@ -31,19 +30,17 @@
                                 <td>
                                    {{ $v->url_slug }} 
                                 </td>
-                                <td>
-                                   {{ $v->category_name }} 
-                                </td>
+                              
                                 
                                 <td class="text-center">
 
-                                    <a href="{{ url('roaming/edit-other-offer-component/'.$v->id)}}" class="btn btn-sm btn-info">
+                                    <a href="{{ url('roaming/edit-info-component/'.$v->id)}}" class="btn btn-sm btn-info">
                                         Components
                                     </a>
-                                    <a href="{{ url('roaming/edit-other-offer/'.$v->id)}}" class="btn btn-sm btn-outline-primary">
+                                    <a href="{{ url('roaming/edit-info/'.$v->id)}}" class="btn btn-sm btn-outline-primary">
                                         <i class="la la-edit"></i>
                                     </a>
-                                    <a href="{{ url('roaming/delete-other-offer/'.$v->id)}}" class="btn btn-sm btn-outline-red delete_offers">
+                                    <a href="{{ url('roaming/delete-info/'.$v->id)}}" class="btn btn-sm btn-outline-red delete_offers">
                                         <i class="la la-trash"></i>
                                     </a>
 

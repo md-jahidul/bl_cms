@@ -114,20 +114,20 @@ class RoamingRateRepository extends BaseRepository {
                     if ($rowNumber > 1) {
 //                        dd($cells);
                         $insertdata[] = array(
-                            'subscription_type' => $cells[0]->getValue(),
-                            'region' => $cells[1]->getValue(),
-                            'country' => $cells[2]->getValue(),
-                            'operator' => $cells[3]->getValue(),
-                            'rate_visiting_country' => $cells[4]->getValue(),
-                            'rate_bangladesh' => $cells[5]->getValue(),
-                            'sms_rate' => $cells[6]->getValue(),
-                            'gprs' => $cells[7]->getValue(),
+                            'subscription_type' => trim($cells[0]->getValue()),
+                            'region' => trim(iconv("UTF-8","ISO-8859-1",$cells[1]->getValue())," \t\n\r\0\x0B\xA0"),
+                            'country' => trim(iconv("UTF-8","ISO-8859-1",$cells[2]->getValue())," \t\n\r\0\x0B\xA0"),
+                            'operator' => trim(iconv("UTF-8","ISO-8859-1",$cells[3]->getValue())," \t\n\r\0\x0B\xA0"),
+                            'rate_visiting_country' => trim($cells[4]->getValue()),
+                            'rate_bangladesh' => trim($cells[5]->getValue()),
+                            'sms_rate' => trim($cells[6]->getValue()),
+                            'gprs' => trim($cells[7]->getValue()),
                         );
                     }
                     $rowNumber++;
                 }
             }
-
+            
 
             if (!empty($insertdata)) {
                 $this->model->insert($insertdata);

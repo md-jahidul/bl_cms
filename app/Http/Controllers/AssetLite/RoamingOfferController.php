@@ -104,6 +104,7 @@ class RoamingOfferController extends Controller {
         $offer = $this->offerService->getOfferById($offerId);
         return view('admin.roaming.edit_other_offer', compact('categories', 'offer'));
     }
+  
 
     /**
      * Save other offer
@@ -131,15 +132,87 @@ class RoamingOfferController extends Controller {
     }
 
     /**
+     * Delete other offer
+     * 
+     * @param $offerId
+     * @return JsonResponse
+     * @Dev Bulbul Mahmud Nito || 25/03/2020
+     */
+    public function deleteOffer($offerId) {
+        $response = $this->offerService->deleteOffer($offerId);
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Offer is deleted!');
+        } else {
+            Session::flash('error', 'Offer deleting process failed!');
+        }
+
+        return redirect('roaming-offers');
+    }
+    
+    
+      /**
+     * edit other offer components
+     * 
+     * @param $offerId
+     * @return Factory|View
+     * @Bulbul Mahmud Nito || 25/03/2020
+     */
+    public function editComponent($offerId) {
+        $components = $this->offerService->getOfferComponents($offerId);
+        return view('admin.roaming.offer_components', compact('components', 'offerId'));
+    }
+    
+      /**
+     * Update other offer components
+     * 
+     * @param Request $request
+     * @return Factory|View
+     * @Bulbul Mahmud Nito || 26/03/2020
+     */
+    public function updateComponent(Request $request) {
+//        print_r($request->all());die();
+
+            $response = $this->offerService->updateComponents($request);
+      
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Offer is saved!');
+        } else {
+            Session::flash('error', 'Offer saving process failed!');
+        }
+
+        return redirect('roaming/edit-other-offer-component/'.$request->parent_id);
+    }
+    
+     /**
      * Component Sorting Change.
      * 
      * @param Request $request
      * @return JsonResponse
-     * @Dev Bulbul Mahmud Nito || 24/03/2020
+     * @Dev Bulbul Mahmud Nito || 26/03/2020
      */
     public function componentSortChange(Request $request) {
-        $sortChange = $this->generalService->changeComponentSort($request);
+        $sortChange = $this->offerService->changeComponentSort($request);
         return $sortChange;
+    }
+    
+    
+    /**
+     * Component delete.
+     * 
+     * @param $infoId, $comId
+     * @return JsonResponse
+     * @Dev Bulbul Mahmud Nito || 27/03/2020
+     */
+    public function componentDelete($offerId, $comId) {
+        
+        $response = $this->offerService->componentDelete($comId);
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Component is deleted!');
+        } else {
+            Session::flash('error', 'Component delete process failed!');
+        }
+
+        return redirect('roaming/edit-other-offer-component/' . $offerId);
     }
 
 }

@@ -7,46 +7,48 @@
 
 namespace App\Services;
 
-use App\Repositories\RoamingOfferRepository;
+use App\Repositories\RoamingInfoRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Http\Response;
 
-class RoamingOfferService {
+class RoamingInfoService {
 
     use CrudTrait;
     use FileTrait;
 
     /**
-     * @var $catRepo
+     * @var $infoRepo
      */
-    protected $offerRepo;
+    protected $infoRepo;
 
     /**
-     * RoamingGeneralService constructor.
-     * @param RoamingOfferRepository $offerRepo
+     * RoamingInfoService constructor.
+     * @param RoamingInfoRepository $infoRepo
      */
     public function __construct(
-    RoamingOfferRepository $offerRepo
+    RoamingInfoRepository $infoRepo
     ) {
-        $this->offerRepo = $offerRepo;
+        $this->infoRepo = $infoRepo;
     }
 
+    
     /**
-     * Get Roaming offer categories
+     * Get Roaming offers
      * @return Response
      */
-    public function getCategories() {
-        $response = $this->offerRepo->getCategoryList();
+    public function getInfoList() {
+        $response = $this->infoRepo->getInfo();
         return $response;
     }
 
+   
     /**
-     * Get single category data by Id
+     * Get Roaming info
      * @return Response
      */
-    public function getCategoryById($catId) {
-        $response = $this->offerRepo->getCategory($catId);
+    public function getInfoById($infoId) {
+        $response = $this->infoRepo->getInfoById($infoId);
         return $response;
     }
 
@@ -54,62 +56,7 @@ class RoamingOfferService {
      * update roaming category
      * @return Response
      */
-    public function updateCategory($request) {
-        try {
-
-            $request->validate([
-                'name_en' => 'required',
-                'name_bn' => 'required',
-            ]);
-            //save data in database 
-            $this->offerRepo->updateCategory($request);
-
-            $response = [
-                'success' => 1,
-            ];
-
-            return $response;
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'message' => $e->getMessage()
-            ];
-            return $response;
-        }
-    }
-
-    /**
-     * Change category sorting
-     * @return Response
-     */
-    public function changeCategorySort($request) {
-        $response = $this->offerRepo->changeCategorySorting($request);
-        return $response;
-    }
-
-    /**
-     * Get Roaming offers
-     * @return Response
-     */
-    public function getOffers() {
-        $response = $this->offerRepo->getOffers();
-        return $response;
-    }
-
-    /**
-     * Get Roaming offers
-     * @return Response
-     */
-    public function getOfferById($offerId) {
-        $response = $this->offerRepo->getOfferById($offerId);
-        return $response;
-    }
-
-    /**
-     * update roaming category
-     * @return Response
-     */
-    public function saveOffer($request) {
+    public function saveInfo($request) {
         try {
 
             $request->validate([
@@ -165,7 +112,7 @@ class RoamingOfferService {
 
 
             //save data in database 
-            $this->offerRepo->saveOffer($seoNameWeb, $seoNameMob, $request);
+            $this->infoRepo->saveInfo($seoNameWeb, $seoNameMob, $request);
 
 
 
@@ -178,17 +125,17 @@ class RoamingOfferService {
         } catch (\Exception $e) {
             $response = [
                 'success' => 0,
-                'message' => $e
+                'message' => $e->getMessage()
             ];
             return $response;
         }
     }
 
     /**
-     * update roaming category
+     * update info
      * @return Response
      */
-    public function updateOffer($request) {
+    public function updateInfo($request) {
         try {
 
             $request->validate([
@@ -282,7 +229,7 @@ class RoamingOfferService {
             }
 
             //save data in database 
-            $this->offerRepo->saveOffer($seoNameWeb, $seoNameMob, $request);
+            $this->infoRepo->saveInfo($seoNameWeb, $seoNameMob, $request);
 
 
 
@@ -305,21 +252,21 @@ class RoamingOfferService {
      * update roaming category
      * @return Response
      */
-    public function deleteOffer($offerId) {
+    public function deleteInfo($infoId) {
         try {
 
-            $offer = $this->offerRepo->getOfferById($offerId);
+            $info = $this->infoRepo->getInfoById($infoId);
 
             //delete old mobile photo
-            if ($offer->banner_web != "") {
-                $this->deleteFile($offer->banner_web);
+            if ($info->banner_web != "") {
+                $this->deleteFile($info->banner_web);
             }
-            if ($offer->banner_mobile != "") {
-                $this->deleteFile($offer->banner_mobile);
+            if ($info->banner_mobile != "") {
+                $this->deleteFile($info->banner_mobile);
             }
 
             //delete data 
-            $this->offerRepo->deleteOffer($offerId);
+            $this->infoRepo->deleteInfo($infoId);
 
 
 
@@ -332,24 +279,23 @@ class RoamingOfferService {
         } catch (\Exception $e) {
             $response = [
                 'success' => 0,
-                'message' => $e
+                'message' => $e->getMessage()
             ];
             return $response;
         }
     }
-    
-        /**
+
+    /**
      * Get Roaming offers
      * @return Response
      */
-    public function getOfferComponents($offerId) {
-        $response = $this->offerRepo->getOfferComponents($offerId);
+    public function getInfoComponents($infoId) {
+        $response = $this->infoRepo->getInfoComponents($infoId);
         return $response;
     }
     
-    
-     /**
-     * update roaming category
+       /**
+     * update components
      * @return Response
      */
     public function updateComponents($request) {
@@ -357,7 +303,7 @@ class RoamingOfferService {
 
 
             //save data in database 
-        $this->offerRepo->saveComponents($request);
+            $this->infoRepo->saveComponents($request);
 
             $response = [
                 'success' => 1,
@@ -374,22 +320,28 @@ class RoamingOfferService {
         }
     }
     
-         /**
+     /**
      * Change component sorting
      * @return Response
      */
     public function changeComponentSort($request) {
-        $response = $this->offerRepo->changeComponentSorting($request);
+        $response = $this->infoRepo->changeComponentSorting($request);
         return $response;
     }
     
-         /**
+     /**
      * delete component 
      * @return Response
      */
     public function componentDelete($comId) {
-        $response = $this->offerRepo->componentDelete($comId);
+        $response = $this->infoRepo->componentDelete($comId);
         return $response;
     }
+
+    /* ###################################### DONE  ################################################# */
+
+ 
+
+   
 
 }

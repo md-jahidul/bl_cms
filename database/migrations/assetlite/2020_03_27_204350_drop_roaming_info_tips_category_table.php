@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddLikeColumnInRoamingBundleOffer extends Migration
+class DropRoamingInfoTipsCategoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,7 @@ class AddLikeColumnInRoamingBundleOffer extends Migration
      */
     public function up()
     {
-        Schema::table('roaming_bundle_offers', function (Blueprint $table) {
-            $table->mediumInteger('like')->default(0)->after('price');
-        });
+         Schema::dropIfExists('roaming_info_tips_category');
     }
 
     /**
@@ -25,8 +23,6 @@ class AddLikeColumnInRoamingBundleOffer extends Migration
      */
     public function down()
     {
-        Schema::table('roaming_bundle_offers', function (Blueprint $table) {
-            $table->dropColumn('like');
-        });
+        //
     }
 }
