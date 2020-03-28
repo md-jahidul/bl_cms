@@ -32,6 +32,7 @@ class ProductCore extends Model
         'call_rate',
         'call_rate_unit',
         'sms_rate',
+        'sms_rate_unit',
         'is_bundle',
         'is_auto_renewable',
         'is_recharge_offer',

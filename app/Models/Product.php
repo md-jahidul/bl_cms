@@ -40,6 +40,7 @@ class Product extends Model
             'rate_cutter_offer',
             'rate_cutter_unit',
             'call_rate_unit_bn',
+            'sms_rate_unit_bn',
             'special_product'
         ];
 
