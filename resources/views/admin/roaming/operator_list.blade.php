@@ -2,9 +2,9 @@
 @section('title', 'Roaming Operator')
 @section('card_name', 'Roaming Operators')
 @section('action')
-    <a href="{{ url('roaming/operator/create') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
-        Add Operator
-    </a>
+{{--    <a href="{{ url('roaming/operator/create') }}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>--}}
+{{--        Add Operator--}}
+{{--    </a>--}}
 @endsection
 @section('content')
     <section>

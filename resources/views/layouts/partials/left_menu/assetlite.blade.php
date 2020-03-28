@@ -2,7 +2,6 @@
 {{---------------------------------------------------------Asset Lite-------------------------------------------------}}
 {{--------------------------------------------------------------------------------------------------------------------}}
 @if(Auth::user()->type == 'assetlite')
-
     @if( auth()->user()->can_view('User') || auth()->user()->can_view('Role') || auth()->user()->can_view('Permissions') )
         <li class="nav-item"><a href="#"><i class="la la-users"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
@@ -35,7 +34,6 @@
     @endif
 
     @if( auth()->user()->can_view('QuickLaunch') )
-
         <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Quick launch Management</span></a>
             <ul class="menu-content">
@@ -259,10 +257,10 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('AboutUs') )
         <li class="nav-item"><a href="#"><i class="la la-align-justify"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">About Us</span></a>
             <ul class="menu-content">
-
                 <li class="{{ is_active_url('about-us') . is_active_url('about-us/create') }}">
                     <a class="menu-item" href="{{ url('about-us') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Banglalink</a>
@@ -282,10 +280,9 @@
                     <a class="menu-item" href="{{ url('about-slider') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Slider</a>
                 </li>
-
             </ul>
         </li>
-
+    @endif
 
     @if( auth()->user()->can_view('Partner') )
         <li class="nav-item"><a href="#"><i class="la la-gift"></i>
@@ -317,7 +314,7 @@
     @endif
 
     <!-- // eCarrer portal -->
-    {{-- @if( auth()->user()->can_view('Slider', 'singleSlider') || auth()->user()->can_view('Slider', 'multiSlider') ) --}}
+     @if( auth()->user()->can_view('Ecareer'))
         <li class="nav-item"><a href="#"><i class="la la-bell"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">eCareer</span></a>
             <ul class="menu-content">
@@ -330,32 +327,30 @@
 
                 <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('product.core.list') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-motorcycle"></i> Life at Banglalink</a>
-                            <ul class="menu-content">
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-motorcycle"></i> Life at Banglalink</a>
+                    <ul class="menu-content">
+                        <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('life.at.banglalink.general') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> General</a>
+                        </li>
+                        <li class="{{ request()->is('life-at-banglalink/teams*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('life.at.banglalink.teams') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> Teams</a>
+                        </li>
+                        <li class="{{ request()->is('life-at-banglalink/diversity*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('life.at.banglalink.diversity') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> Diversity</a>
+                        </li>
+                        <li class="{{ request()->is('life-at-banglalink/events*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('life.at.banglalink.events') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> Events and Activites</a>
+                        </li>
 
-                                <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('life.at.banglalink.general') }}"
-                                       data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> General</a>
-                                </li>
-                                <li class="{{ request()->is('life-at-banglalink/teams*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('life.at.banglalink.teams') }}"
-                                       data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> Teams</a>
-                                </li>
-                                <li class="{{ request()->is('life-at-banglalink/diversity*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('life.at.banglalink.diversity') }}"
-                                       data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> Diversity</a>
-                                </li>
-                                <li class="{{ request()->is('life-at-banglalink/events*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('life.at.banglalink.events') }}"
-                                       data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> Events and Activites</a>
-                                </li>
-
-                            </ul>
+                    </ul>
                 </li>
                 <li class="{{ is_active_url('programs/progeneral') .' '. is_active_url('programs/progeneral/create') }}">
                     <a class="menu-item" href="#"
@@ -437,7 +432,7 @@
 
             </ul>
         </li>
-    {{-- @endif --}}
+     @endif
 
     @if( auth()->user()->can_view('Product-core') )
         <li class="nav-item"><a href="#"><i class="la la-gift"></i>
@@ -480,7 +475,9 @@
         </li>
     @endif
 
-    @if( auth()->user()->can_view('Lead-management') )
+{{--    {{ dd(auth()->user()->can_view('LeadManagement')) }}--}}
+
+    @if( auth()->user()->can_view('LeadManagement', 'leadRequestedList') )
         <li class="nav-item"><a href="#"><i class="la la-lemon-o"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Lead-management</span></a>
             <ul class="menu-content">

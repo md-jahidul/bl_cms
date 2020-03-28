@@ -189,7 +189,7 @@ class ProductDetailsController extends Controller
      * @param $productDetailsId
      * @param $sectionId
      * @param int $id
-     * @return Response
+     * @return RedirectResponse|Redirector
      */
     public function componentUpdate(Request $request, $productDetailsId, $sectionId, $id)
     {

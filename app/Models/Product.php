@@ -28,6 +28,7 @@ class Product extends Model
             'offer_category_id',
             'contextual_message',
             'like',
+            'validity_postpaid',
             'status',
             'display_order',
             'purchase_option',

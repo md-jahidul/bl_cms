@@ -37,21 +37,22 @@
                                      }
                                 @endphp
 
-
-
                                 <tr data-id="{{ $item->id  }}">
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>{!!  $roles_dom !!}</td>
                                     <td>
-                                        @if($item->id !=  5 && $item->id != Auth::user()->id)
-                                            <a href="{{ url('/' . Config("authorization.route-prefix") . '/users/' . $item->id . '/edit') }}" role="button"
-                                           class=" border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        @endif
+{{--                                        @if($item->id !=  5 && $item->id != Auth::user()->id)--}}
+{{--                                            <a href="{{ url('/' . Config("authorization.route-prefix") . '/users/' . $item->id . '/edit') }}" role="button"--}}
+{{--                                           class=" border-0"><i class="la la-pencil" aria-hidden="true"></i></a>--}}
+{{--                                        @endif--}}
 
                                         @if($item->id != Auth::user()->id )
-                                            @if($item->id !=  5)
+                                            @if($item->id !=  $superAdmin['assetlite_super_Admin'] && $item->id != $superAdmin['lead_super_Admin'])
+                                                <a href="{{ url('/' . Config("authorization.route-prefix") . '/users/' . $item->id . '/edit') }}" role="button"
+                                                   class=" border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+
                                                 {!! Form::open([
                                                     'method'=>'DELETE',
                                                     'url' => ['/' . Config("authorization.route-prefix") . '/users', $item->id],
@@ -69,6 +70,7 @@
                                         @endif
                                     </td>
                                 </tr>
+
                             @endforeach
                             </tbody>
                         </table>

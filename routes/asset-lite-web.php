@@ -741,5 +741,16 @@ Route::middleware('authorize', 'auth')->group(function () {
 
 
     // Lead Management ======================================================
-    Route::get('lead-requested-list', 'AssetLite\LeadManagementController@leadRequestedList')->name('lead-list');
+    Route::get('lead-requested-list', 'AssetLite\LeadManagementController@leadRequestedList')
+        ->name('lead-list');
+    Route::get('lead-requested/details/{id}', 'AssetLite\LeadManagementController@viewDetails')
+        ->name('lead.details');
+    Route::put('lead-requested/change-status/{id}', 'AssetLite\LeadManagementController@changeStatus')
+        ->name('lead.change_status');
+
+    Route::get('lead-requested/send-mail-form', 'AssetLite\LeadManagementController@sendMailForm')
+        ->name('lead.send_mail_form');
+
+    Route::post('lead-requested/send-mail', 'AssetLite\LeadManagementController@sendMail')
+        ->name('lead.send_mail');
 });

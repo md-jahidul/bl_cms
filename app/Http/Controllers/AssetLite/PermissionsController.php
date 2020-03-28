@@ -7,12 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 use App\Models\Role;
 
 class PermissionsController extends Controller
 {
+
+    const LEAD_USER = "lead_user";
+    const LEAD_USER_ROLE = "lead_user_role";
 
     /**
      * PermissionsController constructor.
@@ -31,13 +34,26 @@ class PermissionsController extends Controller
      */
     public function index()
     {
-        $roles = Role::where('user_type', Auth::user()->type)
-                        ->where('alias', '!=', 'assetlite_super_admin')
-                        ->pluck('name', 'id');
+
+        $type = Auth::user()->type;
+        $featureType = Auth::user()->feature_type;
+        if ($featureType == self::LEAD_USER) {
+            $roles = Role::where('user_type', $type)
+                ->where('feature_type', self::LEAD_USER_ROLE)
+                ->pluck('name', 'id');
+        } else {
+            $roles = Role::where('user_type', $type)
+                ->where('alias', '!=', 'assetlite_super_admin')
+                ->pluck('name', 'id');
+        }
 
         $actions = $this->getRoutes();
 
-//        return $actions;
+        foreach ($actions as $key => $action){
+//            dd($actions);
+        }
+
+//        dd($actions);
 
         return view('vendor.authorize.permissions.index', compact('roles', 'actions'));
     }
