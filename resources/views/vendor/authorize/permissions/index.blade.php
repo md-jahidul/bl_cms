@@ -69,12 +69,8 @@
                             {!! Form::submit('Update', ['class' => 'btn btn-primary float-right update']) !!}
                         </div>
                     </div>
-
-                    {{--                    <ul id="tree">--}}
                     @foreach($actions as $namespace => $controllers)
                         <h3 class="mb-2">{{ mapStr($namespace) }}</h3>
-                        {{--  <li>{{ mapStr($namespace) }}--}}
-                        {{--      <button class="btn select-all">Select All</button>--}}
                         <table class="table table-striped table-bordered">
                             <thead>
                             <tr>
@@ -84,30 +80,52 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @php $i = 1 @endphp
                             @foreach($controllers as $controller => $methods)
-                                @php
-                                    $actions = arrayMerge(  $methods );
-                                @endphp
-                                <tr class="item{{ $loop->iteration -1 }}">
-                                    <td style="vertical-align:middle"><label>{{ $loop->iteration -1  }}</label></td>
-                                    <td style="vertical-align:middle"><label>{{ str_replace("Controller","", $controller)  }}</label></td>
-                                    <td>
-                                        @foreach( $actions as $method => $action)
-                                            <label style="display: block">
-{{--                                                @if($controller == 'HomeController' && $action == 'index')--}}
-{{--                                                    {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . explode ("_",$method)[0] . '-' . $action, null, ['class' => 'field', 'checked']) }}--}}
-{{--                                                @else--}}
-{{--                                                @endif--}}
+                                {{--Lead And User Management Feature--}}
+                                @if(Auth::user()->feature_type == "lead_user")
+                                    @if($controller == "UserController" ||
+                                        $controller == "PermissionsController" ||
+                                        $controller == "RoleController" ||
+                                        $controller == "LeadManagementController"
+                                        )
+                                        @php
+                                            $actions = arrayMerge(  $methods );
+                                        @endphp
+                                        <tr class="item{{ $loop->iteration -1 }}">
+                                            <td style="vertical-align:middle"><label>{{ $i++  }}</label></td>
+                                            <td style="vertical-align:middle"><label>{{ str_replace("Controller","", $controller)  }}</label></td>
+                                            <td>
+                                                @foreach( $actions as $method => $action)
+                                                    <label style="display: block">
+                                                        {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . explode ("_",$method)[0] . '-' . $action, null, ['class' => 'field']) }}
+                                                        {{ mapStr($action) }}
+                                                    </label>
+                                                @endforeach
+                                            </td>
+                                        </tr>
+                                    @endif
+                                {{--All Feature Item--}}
+                                @else
+                                    @php
+                                        $actions = arrayMerge(  $methods );
+                                    @endphp
+                                    <tr class="item{{ $loop->iteration -1 }}">
+                                        <td style="vertical-align:middle"><label>{{ $loop->iteration -1  }}</label></td>
+                                        <td style="vertical-align:middle"><label>{{ str_replace("Controller","", $controller)  }}</label></td>
+                                        <td>
+                                            @foreach( $actions as $method => $action)
+                                                <label style="display: block">
                                                     {{ Form::checkbox('actions[]', $namespace . '-' . $controller . '-' . explode ("_",$method)[0] . '-' . $action, null, ['class' => 'field']) }}
                                                     {{ mapStr($action) }}
-                                            </label>
-                                        @endforeach
-                                    </td>
-                                </tr>
+                                                </label>
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                             </tbody>
                         </table>
-                        {{--                            </li>--}}
                     @endforeach
 
                     <div class="pb-2">

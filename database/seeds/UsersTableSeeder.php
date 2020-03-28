@@ -119,7 +119,27 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Lead Admin',
                 'email' => 'lead-admin@user.com',
-                'phone' => '01913415567',
+                'phone' => '01913455567',
+                'type' => 'assetlite',
+                'feature_type' => 'lead_user',
+                'uid' => uniqid(),
+                'password' => Hash::make('123456'),
+                'device_token' =>  "cbccwirrVwU:APA91bEJZkLi9mWV5hh6EjtFFLegw6_f4_eBGlqJ02KnHo7cW4KuyfJZIfQ-_VEDdCr3Kf3Lg9kj9e7ihELO3aHGrlZJxYGsOTPObHjEOLSAJPAOm_KI9QpvQM28wPW0D3BK2MllIMv2"
+            ],
+            [
+                'name' => 'Lead POC',
+                'email' => 'lead-poc@user.com',
+                'phone' => '01913915567',
+                'type' => 'assetlite',
+                'feature_type' => 'lead_user',
+                'uid' => uniqid(),
+                'password' => Hash::make('123456'),
+                'device_token' =>  "cbccwirrVwU:APA91bEJZkLi9mWV5hh6EjtFFLegw6_f4_eBGlqJ02KnHo7cW4KuyfJZIfQ-_VEDdCr3Kf3Lg9kj9e7ihELO3aHGrlZJxYGsOTPObHjEOLSAJPAOm_KI9QpvQM28wPW0D3BK2MllIMv2"
+            ],
+            [
+                'name' => 'Lead User',
+                'email' => 'lead-user@user.com',
+                'phone' => '01913415367',
                 'type' => 'assetlite',
                 'feature_type' => 'lead_user',
                 'uid' => uniqid(),
