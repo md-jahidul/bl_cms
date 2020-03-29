@@ -40,7 +40,8 @@ class ShortCutController extends Controller
      */
     public function index()
     {
-        return view('admin.short_cuts.index')->with('short_cuts', ShortCut::all());
+        $short_cuts = $this->shortCutService->getShortcutList();
+        return view('admin.short_cuts.index')->with('short_cuts', $short_cuts);
     }
 
     /**
@@ -111,8 +112,13 @@ class ShortCutController extends Controller
      */
     public function destroy($id)
     {
-        //return $id;
         session()->flash('error', $this->shortCutService->destroyShortCut($id)->getContent());
         return url('shortcuts');
+    }
+
+
+    public function shortcutSortable(Request $request)
+    {
+        $this->shortCutService->tableSortable($request);
     }
 }

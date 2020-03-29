@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 /**
  * Class ProductCoreService
@@ -697,11 +698,13 @@ class ProductCoreService
             $file = $request->media;
             $path = $file->storeAs(
                 'products/images',
-                $product_code . '.' . $file->getClientOriginalExtension(),
+                $product_code . '_' . strtotime(now()) . '.' . $file->getClientOriginalExtension(),
                 'public'
             );
 
             $data['media'] = $path;
+        } else {
+            $data['media'] = null;
         }
 
         if ($request->has('offer_section_slug')) {
@@ -774,7 +777,7 @@ class ProductCoreService
             $model = ProductCore::where('product_code', $product_code);
             $model->update($data_request);
 
-            Redis::del('available_products:*');
+            $this->resetProductRedisKeys();
 
             DB::commit();
         } catch (Exception $e) {
@@ -866,5 +869,20 @@ class ProductCoreService
 
         Log::info(json_encode($problem));
         $writer->close();
+    }
+
+    public function resetProductRedisKeys()
+    {
+        $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';
+        $keys = Redis::keys('available_products:*');
+        $values = [];
+
+        foreach ($keys as $key) {
+            $values [] = str_replace($pattern, '', $key);
+        }
+        //Log::info(json_encode($values));
+        if (!empty($values)) {
+            Redis::del($values);
+        }
     }
 }
