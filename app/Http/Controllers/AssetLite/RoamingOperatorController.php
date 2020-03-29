@@ -58,21 +58,6 @@ class RoamingOperatorController extends Controller
     }
 
 
-    /**
-     * @param Request $request
-     * @return RedirectResponse|Redirector
-     */
-    public function operatorStore(Request $request)
-    {
-        $response = $this->roamingOperatorService->saveOperator($request);
-        if ($response['success'] == 1) {
-            Session::flash('sussess', 'Operator is saved!');
-        } else {
-            Session::flash('error', 'Operator saving process failed!');
-        }
-        return redirect('/roaming/operators');
-    }
-
 
     /**
      * @param $operatorId
@@ -88,14 +73,14 @@ class RoamingOperatorController extends Controller
      * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function updateOperator(Request $request, $id)
+    public function saveOperator(Request $request)
     {
-        $response = $this->roamingOperatorService->updateOperator($request, $id);
+        $response = $this->roamingOperatorService->updateOperator($request);
 
         if ($response['success'] == 1) {
-            Session::flash('sussess', 'Package is updated!');
+            Session::flash('sussess', 'Operator is saved!');
         } else {
-            Session::flash('error', 'Package updating process failed!');
+            Session::flash('error', 'Operator saving process failed!');
         }
         return redirect('/roaming/operators');
     }
