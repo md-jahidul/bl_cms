@@ -17,7 +17,7 @@ class ModifyColumnInPartnerTable extends Migration
             $table->string('company_name_en')->nullable()->change();
             $table->string('company_name_bn')->nullable()->change();
             $table->string('company_logo')->nullable()->change();
-            $table->string('company_address')->nullable()->change();
+            $table->text('company_address')->nullable()->change();
             $table->string('company_website')->nullable()->change();
             $table->string('contact_person_name')->nullable()->change();
             $table->string('contact_person_email')->nullable()->change();
