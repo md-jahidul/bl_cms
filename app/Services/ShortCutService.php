@@ -36,6 +36,13 @@ class ShortCutService
         $this->setActionRepository($shortCutRepository);
     }
 
+
+
+    public function getShortcutList()
+    {
+       return $this->shortCutRepository->getShortcutList();
+    }
+
     /**
      * Storing the banner resource
      * @return Response
@@ -82,5 +89,16 @@ class ShortCutService
         unlink($shortcut['icon']);
         $shortcut->delete();
         return Response('Shortcut has been successfully deleted');
+    }
+
+
+    /**
+     * @param $request
+     * @return Response
+     */
+    public function tableSortable($request)
+    {
+        $this->shortCutRepository->sortShortcutsList($request);
+        return new Response('update successfully');
     }
 }

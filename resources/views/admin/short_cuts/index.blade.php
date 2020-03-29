@@ -186,7 +186,7 @@
                         </thead>
                         <tbody id="sortable">
                         @foreach ($short_cuts as $short_cut)
-                            <tr data-index="{{ $short_cut->id }}" data-position="{{ $item->display_order }}">
+                            <tr data-index="{{ $short_cut->id }}" data-position="{{ $short_cut->display_order }}">
                                 <td width="5%"><i class="icon-cursor-move icons"></i></td>
                                {{-- <td width="10%">{{$short_cut->id}}</td>--}}
                                 <td>{{$short_cut->title}}</td>
@@ -253,6 +253,19 @@
     </h1>
 @endsection
 
+@push('page-css')
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+    <style>
+        #sortable tr td{
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+
+        table.dataTable {
+            border-spacing: 1px;
+        }
+    </style>
+@endpush
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
@@ -268,6 +281,8 @@
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js"
             type="text/javascript"></script>
     <script>
+
+        var auto_save_url = "{{ url('shortcuts-sortable') }}";
 
         $(function () {
             var parse_data;
