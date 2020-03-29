@@ -11,9 +11,10 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
-use Redis;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -97,7 +98,8 @@ class MyblProductEntryController extends Controller
 
             $this->service->mapMyBlProduct($path);
 
-            Redis::del('available_products:*');
+            // reset product keys from redis
+            $this->service->resetProductRedisKeys();
 
             $response = [
                 'success' => 'SUCCESS'

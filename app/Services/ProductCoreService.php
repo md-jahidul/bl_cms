@@ -774,7 +774,7 @@ class ProductCoreService
             $model = ProductCore::where('product_code', $product_code);
             $model->update($data_request);
 
-            Redis::del('available_products:*');
+            $this->resetProductRedisKeys();
 
             DB::commit();
         } catch (Exception $e) {
@@ -866,5 +866,14 @@ class ProductCoreService
 
         Log::info(json_encode($problem));
         $writer->close();
+    }
+
+    public function resetProductRedisKeys()
+    {
+        $keys = Redis::keys('available_products:');
+        if (!empty($keys)) {
+            Redis::del($keys);
+            Log::info('Product Redis key reset');
+        }
     }
 }
