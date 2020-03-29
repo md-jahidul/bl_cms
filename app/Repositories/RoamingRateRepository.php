@@ -16,17 +16,23 @@ class RoamingRateRepository extends BaseRepository {
 
     public $modelName = RoamingRate::class;
 
-    public function getRateList($request)
-    {
+    public function getRateList($request) {
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');
 
-        $builder = $this->model;
+        $query = $this->model;
+
+        $searchStr = $request->get('search');
+
+        if ($searchStr['value'] != "") {
+            $searchVal = $searchStr['value'];
+            $query = $query->whereRaw("region Like '%$searchVal%' OR country Like '%$searchVal%' OR operator Like '%$searchVal%'");
+        }
 
 
-        $all_items_count = $builder->count();
-        $items = $builder->skip($start)->take($length)->latest()->get();
+        $all_items_count = $query->count();
+        $items = $query->skip($start)->take($length)->latest()->get();
 
         $response = [
             'draw' => $draw,
@@ -57,23 +63,21 @@ class RoamingRateRepository extends BaseRepository {
         return $response;
     }
 
-    public function getInternetById($internetId){
-         return $this->model->findOrFail($internetId);
+    public function getInternetById($internetId) {
+        return $this->model->findOrFail($internetId);
     }
 
     public function getAllPackage($internetId) {
         $allProducts = $this->model->select('id', 'product_code', 'product_name')->where('status', 1);
-        if($internetId > 0){
+        if ($internetId > 0) {
             $allProducts->where('id', '!=', $internetId);
         }
         $data = $allProducts->get();
 
         return $data;
-
     }
 
-    public function saveInternet($bannerPath, $request)
-    {
+    public function saveInternet($bannerPath, $request) {
         $insertdata = array(
             'product_code' => $request->product_code,
             'product_code_ev' => $request->product_code_ev,
@@ -115,9 +119,9 @@ class RoamingRateRepository extends BaseRepository {
 //                        dd($cells);
                         $insertdata[] = array(
                             'subscription_type' => trim($cells[0]->getValue()),
-                            'region' => trim(iconv("UTF-8","ISO-8859-1",$cells[1]->getValue())," \t\n\r\0\x0B\xA0"),
-                            'country' => trim(iconv("UTF-8","ISO-8859-1",$cells[2]->getValue())," \t\n\r\0\x0B\xA0"),
-                            'operator' => trim(iconv("UTF-8","ISO-8859-1",$cells[3]->getValue())," \t\n\r\0\x0B\xA0"),
+                            'region' => trim(iconv("UTF-8", "ISO-8859-1", $cells[1]->getValue()), " \t\n\r\0\x0B\xA0"),
+                            'country' => trim(iconv("UTF-8", "ISO-8859-1", $cells[2]->getValue()), " \t\n\r\0\x0B\xA0"),
+                            'operator' => trim(iconv("UTF-8", "ISO-8859-1", $cells[3]->getValue()), " \t\n\r\0\x0B\xA0"),
                             'rate_visiting_country' => trim($cells[4]->getValue()),
                             'rate_bangladesh' => trim($cells[5]->getValue()),
                             'sms_rate' => trim($cells[6]->getValue()),
@@ -127,7 +131,7 @@ class RoamingRateRepository extends BaseRepository {
                     $rowNumber++;
                 }
             }
-            
+
 
             if (!empty($insertdata)) {
                 $this->model->insert($insertdata);

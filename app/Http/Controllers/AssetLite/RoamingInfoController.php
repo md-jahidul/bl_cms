@@ -42,9 +42,8 @@ class RoamingInfoController extends Controller {
      */
     public function createInfo() {
 
-        $categories = $this->infoService->getCategories();
 
-        return view('admin.roaming.create_info_tips', compact('categories'));
+        return view('admin.roaming.create_info_tips');
     }
 
     /**
@@ -55,9 +54,8 @@ class RoamingInfoController extends Controller {
      * @Bulbul Mahmud Nito || 27/03/2020
      */
     public function editInfo($infoId) {
-        $categories = $this->infoService->getCategories();
         $info = $this->infoService->getInfoById($infoId);
-        return view('admin.roaming.edit_info', compact('categories', 'info'));
+        return view('admin.roaming.edit_info', compact('info'));
     }
 
     /**

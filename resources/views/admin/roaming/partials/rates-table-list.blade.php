@@ -39,7 +39,7 @@
             $("#roaming_rates_list").dataTable({
                 scrollX: true,
                 processing: true,
-                searching: false,
+                searching: true,
                 serverSide: true,
                 ordering: false,
                 autoWidth: false,

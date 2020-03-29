@@ -6,7 +6,7 @@
 <li class="breadcrumb-item active">Operator Create</li>
 @endsection
 @section('action')
-<a href="{{ url('roaming/operators') }}" class="btn btn-sm btn-secondary"><i class="la la-arrow-left"></i>Back</a>
+<a href="{{ url('roaming/operators') }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
 @endsection
 @section('content')
 <section>
@@ -14,52 +14,62 @@
         <div class="card-content collapse show">
             <div class="card-body card-dashboard">
                 <div class="card-body card-dashboard">
-                    <form method="POST" action="{{ route('operator.store') }}" class="form home_news_form" enctype="multipart/form-data">
+                     <form method="POST" action="{{ route('operator.store') }}" class="form home_news_form" novalidate enctype="multipart/form-data">
+                           <input type="hidden" name="operator_id">
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label class="required">Country English</label>
-                                <input type="text" class="form-control" value="{{ old("country_en") ? old("country_en") : '' }}"
+                                <label class="required">Country (EN)</label>
+                                <input type="text" class="form-control"
                                        required name="country_en" placeholder="Enter country name in English">
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label class="required">Country Bangla</label>
-                                <input type="text" class="form-control" value="{{ old("country_bn") ? old("country_bn") : '' }}"
-                                       name="country_bn" placeholder="Enter country name in Bangla" required>
+                                <label>Country (BN)</label>
+                                <input type="text" class="form-control"
+                                       name="country_bn" placeholder="Enter country name in Bangla">
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label>Operator English<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{ old("operator_en") ? old("operator_en") : '' }}"
+                                <label class="required">Operator (EN)</label>
+                                <input type="text" class="form-control"
                                        required name="operator_en" placeholder="Enter operator name in English">
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label>Operator Bangla</label>
-                                <input type="text" class="form-control" value="{{ old("operator_bn") ? old("operator_bn") : '' }}"
+                                <label>Operator (BN)</label>
+                                <input type="text" class="form-control"
                                        name="operator_bn" placeholder="Enter operator name in Bangla">
                             </div>
 
+                            <div class="form-group row">
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label> Instructions To Setup (EN)</label>
+                                    <textarea class="form-control text_editor" name="details_en"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note:</strong> It'll show in offer page pop-up
+                                    </small>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Instructions To Setup (BN)</label>
+                                    <textarea class="form-control text_editor" name="details_bn"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note:</strong> It'll show in offer page pop-up
+                                    </small>
+                                </div>
+                            </div>
+
                             <div class="form-group col-md-6">
-                                <label>Tap Code<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{ old("tap_code") ? old("tap_code") : '' }}"
-                                       required name="tap_code" placeholder="Enter tap code">
+                                <label>Tap Code</label>
+                                <input type="text" class="form-control"
+                                       name="tap_code" placeholder="Enter tap code">
                             </div>
-                            {{--                        </div>--}}
-                            <div class="form-group col-md-6 mt-2">
-                                <label for="title" class="required mr-1">Status:</label>
-
-                                <input type="radio" name="status" value="1" id="input-radio-15" checked>
-                                <label for="input-radio-15" class="mr-1">Active</label>
-
-                                <input type="radio" name="status" value="0" id="input-radio-16">
-                                <label for="input-radio-16">Inactive</label>
-                            </div>
+                           
 
                             <div class="form-actions col-md-12">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-primary"><i
-                                            class="la la-check-square-o"></i> Save
+                                            class="la la-check-square-o"></i> Update
                                     </button>
                                 </div>
                             </div>
@@ -83,8 +93,33 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
-@endpush
 
+<script>
+$(function () {
+
+
+    $(".text_editor").summernote({
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+// ['table', ['table']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['view', ['fullscreen', 'codeview']]
+        ],
+        height: 170
+    });
+
+
+
+
+
+});
+
+
+</script>
+@endpush
 
 
 

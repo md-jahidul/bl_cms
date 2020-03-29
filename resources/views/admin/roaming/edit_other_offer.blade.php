@@ -88,18 +88,18 @@
 
                             <div class="form-group row">
 
-                                <div class="col-md-4 col-xs-12">
-                                    <label> Details (EN)</label>
-                                    <textarea class="form-control text_editor" name="details_en">{{$offer->details_en}}</textarea>
+                               <div class="col-md-4 col-xs-12">
+                                    <label>Page Header (HTML)</label>
+                                    <textarea class="form-control html_header" rows="7" name="html_header">{{$offer->page_header}}</textarea>
                                     <small class="text-info">
-                                        <strong>Note:</strong> It'll show in details bottom accordion
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
                                     </small>
                                 </div>
                                 <div class="col-md-4 col-xs-12">
-                                    <label>Details (BN)</label>
-                                    <textarea class="form-control text_editor" name="details_bn">{{$offer->details_bn}}</textarea>
+                                    <label>Schema Markup</label>
+                                    <textarea class="form-control schema_markup" rows="7" name="schema_markup">{{$offer->schema_markup}}</textarea>
                                     <small class="text-info">
-                                        <strong>Note:</strong> It'll show in details bottom accordion
+                                        <strong>Note: </strong> JSON-LD (Recommended by Google)
                                     </small>
                                 </div>
 
@@ -138,23 +138,7 @@
 
                             </div>
 
-                            <div class="form-group row">
-                                <div class="col-md-6 col-xs-12">
-                                    <label>Page Header (HTML)</label>
-                                    <textarea class="form-control html_header" rows="7" name="html_header">{{$offer->page_header}}</textarea>
-                                    <small class="text-info">
-                                        <strong>Note: </strong> Title, meta, canonical and other tags
-                                    </small>
-                                </div>
-                                <div class="col-md-6 col-xs-12">
-                                    <label>Schema Markup</label>
-                                    <textarea class="form-control schema_markup" rows="7" name="schema_markup">{{$offer->schema_markup}}</textarea>
-                                    <small class="text-info">
-                                        <strong>Note: </strong> JSON-LD (Recommended by Google)
-                                    </small>
-                                </div>
-                            </div>
-
+                           
                         </div>
 
 

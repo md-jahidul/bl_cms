@@ -16,17 +16,26 @@ class RoamingOperatorRepository extends BaseRepository {
 
     public $modelName = RoamingOperator::class;
 
-    public function getOperatorList($request)
-    {
+    public function getOperatorList($request) {
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');
 
-        $builder = $this->model;
+        $query = $this->model;
 
 
-        $all_items_count = $builder->count();
-        $items = $builder->skip($start)->take($length)->latest()->get();
+        $searchStr = $request->get('search');
+
+        if ($searchStr['value'] != "") {
+            $searchVal = $searchStr['value'];
+            $query = $query->whereRaw("country_en Like '%$searchVal%' OR operator_en Like '%$searchVal%'");
+        }
+
+
+
+
+        $all_items_count = $query->count();
+        $items = $query->skip($start)->take($length)->latest()->get();
 
         $response = [
             'draw' => $draw,
@@ -37,54 +46,21 @@ class RoamingOperatorRepository extends BaseRepository {
 
         $items->each(function ($item) use (&$response) {
 
-            $statusBtn = "<a href='$item->id' class='btn-sm btn-success operator_change_status'>Active</a>";
-            if ($item->status == 0) {
-                $statusBtn = "<a href='$item->id' class='btn-sm btn-warning operator_change_status'>Inactive</a>";
-            }
+           
             $response['data'][] = [
                 'id' => $item->id,
                 'country_en' => $item->country_en,
                 'operator_en' => $item->operator_en,
                 'tap_code' => $item->tap_code,
-                'status' => $statusBtn
             ];
         });
 
         return $response;
     }
 
-    public function getInternetById($internetId){
-         return $this->model->findOrFail($internetId);
-    }
 
-    public function getAllPackage($internetId) {
-        $allProducts = $this->model->select('id', 'product_code', 'product_name')->where('status', 1);
-        if($internetId > 0){
-            $allProducts->where('id', '!=', $internetId);
-        }
-        $data = $allProducts->get();
 
-        return $data;
-
-    }
-
-    public function saveInternet($bannerPath, $request)
-    {
-        $insertdata = array(
-            'product_code' => $request->product_code,
-            'product_code_ev' => $request->product_code_ev,
-            'product_code_with_renew' => $request->product_code_with_renew,
-            'product_name' => $request->product_name,
-            'package_details_bn' => $request->package_details_bn,
-        );
-
-        if ($request->internet_id) {
-//          dd($insertdata);
-            $this->model->where('id', $request->internet_id)->update($insertdata);
-        } else {
-            return $this->model->insert($insertdata);
-        }
-    }
+  
 
     public function saveExcelFile($request) {
         try {
@@ -105,11 +81,11 @@ class RoamingOperatorRepository extends BaseRepository {
                     $totalCell = count($cells);
                     if ($rowNumber > 1) {
                         $insertdata[] = array(
-                            'country_en' => trim(iconv("UTF-8","ISO-8859-1",$cells[0]->getValue())," \t\n\r\0\x0B\xA0"),
-                            'country_bn' => trim(iconv("UTF-8","ISO-8859-1",$cells[1]->getValue())," \t\n\r\0\x0B\xA0"),
-                            'operator_en' => trim(iconv("UTF-8","ISO-8859-1",$cells[2]->getValue())," \t\n\r\0\x0B\xA0"),
-                            'operator_bn' => trim(iconv("UTF-8","ISO-8859-1",$cells[3]->getValue())," \t\n\r\0\x0B\xA0"),
-                            'tap_code' => trim(iconv("UTF-8","ISO-8859-1",$cells[4]->getValue())," \t\n\r\0\x0B\xA0"),
+                            'country_en' => trim(iconv("UTF-8", "ISO-8859-1", $cells[0]->getValue()), " \t\n\r\0\x0B\xA0"),
+                            'country_bn' => trim(iconv("UTF-8", "ISO-8859-1", $cells[1]->getValue()), " \t\n\r\0\x0B\xA0"),
+                            'operator_en' => trim(iconv("UTF-8", "ISO-8859-1", $cells[2]->getValue()), " \t\n\r\0\x0B\xA0"),
+                            'operator_bn' => trim(iconv("UTF-8", "ISO-8859-1", $cells[3]->getValue()), " \t\n\r\0\x0B\xA0"),
+                            'tap_code' => trim(iconv("UTF-8", "ISO-8859-1", $cells[4]->getValue()), " \t\n\r\0\x0B\xA0"),
                         );
                     }
                     $rowNumber++;
@@ -138,6 +114,25 @@ class RoamingOperatorRepository extends BaseRepository {
                 'message' => $e->getMessage()
             ];
             return response()->json($response, 500);
+        }
+    }
+    
+      public function saveOperator($request) {
+        $insertdata = array(
+            'country_en' => $request->country_en,
+            'country_bn' => $request->country_bn,
+            'operator_en' => $request->operator_en,
+            'operator_bn' => $request->operator_bn,
+            'details_en' => $request->details_en,
+            'details_bn' => $request->details_bn,
+            'tap_code' => $request->tap_code,
+        );
+
+        if ($request->operator_id) {
+//          dd($insertdata);
+            $this->model->where('id', $request->operator_id)->update($insertdata);
+        } else {
+            return $this->model->insert($insertdata);
         }
     }
 

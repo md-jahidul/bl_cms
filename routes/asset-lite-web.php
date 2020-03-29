@@ -499,10 +499,10 @@ Route::middleware('authorize', 'auth')->group(function () {
     // Operator
     Route::get('roaming/operators', 'AssetLite\RoamingOperatorController@index');
     Route::get('roaming/operator/create', 'AssetLite\RoamingOperatorController@operatorCreate');
-    Route::post('roaming/operator/store', 'AssetLite\RoamingOperatorController@operatorStore')
+    Route::post('roaming/operator/store', 'AssetLite\RoamingOperatorController@saveOperator')
         ->name('operator.store');
     Route::get('roaming/operator/edit/{id}', 'AssetLite\RoamingOperatorController@operatorEdit');
-    Route::put('roaming/operator/update/{operatorId}', 'AssetLite\RoamingOperatorController@updateOperator')
+    Route::put('roaming/operator/update', 'AssetLite\RoamingOperatorController@saveOperator')
         ->name('operator.update');
     Route::post('roaming-operator-list', 'AssetLite\RoamingOperatorController@roamingOperatorList')
         ->name('roaming.operator.list.ajax');

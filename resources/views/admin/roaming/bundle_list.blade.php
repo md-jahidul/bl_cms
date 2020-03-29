@@ -24,7 +24,7 @@
                                 <div class="col-md-12 col-xs-12">
                                     <div class="form-group">
                                         <label for="message">Upload Roaming Bundle List</label>
-                                        <a href="{{ asset('sample-format/roaming-bundle-offers.xlsx')}}" class="badge badge-info ml-2">Download Sample Format</a></br>
+                                        <a href="{{ asset('sample-format/roaming-bundle-excel.xlsx')}}" class="badge badge-info ml-2">Download Sample Format</a></br>
                                         <input type="file" class="dropify" name="bundle_file" data-height="80"
                                                data-allowed-file-extensions='["xlsx", "xls"]' required/>
                                     </div>

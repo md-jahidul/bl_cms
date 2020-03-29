@@ -49,6 +49,13 @@
                                         ?>
                                         @endif
 
+                                        @if($c->component_type == 'accordion')
+                                        <?php
+                                        $tableEn = json_decode($c->body_text_en);
+                                        echo "<strong>Accordion Head: </strong>" . $tableEn->accordion_headline_en;
+                                        ?>
+                                        @endif
+
                                     </td>
                                     <td>
                                         <a href="{{url('roaming/offer-component-delete/'.$offerId. '/'. $c->id)}}" class="pull-right text-danger delete_component">
@@ -87,6 +94,7 @@
                     <strong>Add Component: </strong>
                     <a href="javascript:;" class="btn btn-sm btn-info add_text">Text Component</a>
                     <a href="javascript:;" class="btn btn-sm btn-info add_table">Table Component</a>
+                    <a href="javascript:;" class="btn btn-sm btn-info add_accordion">Accordion</a>
 
                     <hr>
                     <div class="row">
@@ -163,7 +171,7 @@
 
                                 <div class="col-md-10 col-xs-12">
                                     <h5 class="font-weight-bold">Table Component
-                                    <a href="javascript:;" class="pull-right text-danger remove_component"><i class="la la-close"></i></a>
+                                        <a href="javascript:;" class="pull-right text-danger remove_component"><i class="la la-close"></i></a>
                                     </h5>
                                     <hr>
 
@@ -231,6 +239,62 @@
                                 <div class="col-md-2 col-xs-12">
                                     <h6 class="font-weight-bold">Sample/Instruction (List Component)</h6>
                                     <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/offer_table_component.png')}}" width="100%">
+
+                                </div>
+
+
+                            </div>
+
+                            @endif
+
+
+
+                            @if($com->component_type == 'accordion')
+
+                            <?php
+                            $textEn = json_decode($com->body_text_en);
+                            $textBn = json_decode($com->body_text_bn);
+                            ?>
+
+                            <div class="form-group row bg-light p-2 mr-1 mt-1">
+                                <input type="hidden" name="component_position[{{$com->position}}]">
+
+                                <div class="col-md-8 col-xs-12">
+                                    <h5 class="font-weight-bold">Accordion Component</h5>
+                                    <hr>
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-xs-12">
+                                            <label>Accordion Head (EN) 
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" required class="form-control" value="{{$textEn->accordion_headline_en}}" name="accordion_headline_en[{{$com->position}}]">
+                                        </div>
+                                        <div class="col-md-6 col-xs-12">
+                                            <label class="display-block">Accordion Head (BN) <span class="text-danger">*</span>
+                                                <a href="javascript:;" class="pull-right text-danger remove_component"><i class="la la-close"></i></a>
+                                            </label>
+                                            <input type="text" required class="form-control"  value="{{$textBn->accordion_headline_bn}}"  name="accordion_headline_bn[{{$com->position}}]">
+
+                                        </div>
+
+                                        <div class="col-md-6 col-xs-12">
+                                            <label>Body Text (EN)</label>
+                                            <textarea class="form-control details_editor_edit" name="accordion_textarea_en[{{$com->position}}]">{{$textEn->accordion_textarea_en}}</textarea>
+                                        </div>
+                                        <div class="col-md-6 col-xs-12">
+                                            <label>Body Text (BN)</label>
+                                            <textarea class="form-control details_editor_edit" name="accordion_textarea_bn[{{$com->position}}]">{{$textBn->accordion_textarea_bn}}</textarea>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xs-12">
+                                    <h6 class="font-weight-bold">Sample/Instruction</h6>
+                                    <a href="{{asset('app-assets/images/roaming/info_accordion.png')}}" target="_blank">
+                                        <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/info_accordion.png')}}" width="100%">
+                                    </a>
 
                                 </div>
 
@@ -335,6 +399,55 @@
             <div class="col-md-2 col-xs-12">
                 <h6 class="font-weight-bold">Sample/Instruction (List Component)</h6>
                 <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/offer_table_component.png')}}" width="100%">
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="accordion_component_wrap display-hidden">
+
+        <div class="form-group row bg-light p-2 mr-1 mt-1">
+            <input type="hidden" class="component_position">
+
+            <div class="col-md-8 col-xs-12">
+                <h5 class="font-weight-bold">Accordion Component</h5>
+                <hr>
+                <div class="row">
+
+                    <div class="col-md-6 col-xs-12">
+                        <label>Accordion Head (EN) 
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" required class="form-control accordion_headline_en"  placeholder="Headline EN">
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <label class="display-block">Accordion Head (BN) <span class="text-danger">*</span>
+                            <a href="javascript:;" class="pull-right text-danger remove_component"><i class="la la-close"></i></a>
+                        </label>
+                        <input type="text" required class="form-control accordion_headline_bn" placeholder="Headline BN">
+
+                    </div>
+
+                    <div class="col-md-6 col-xs-12">
+                        <label>Body Text (EN)</label>
+                        <textarea class="form-control details_editor accordion_textarea_en"></textarea>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <label>Body Text (BN)</label>
+                        <textarea class="form-control details_editor accordion_textarea_bn"></textarea>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <h6 class="font-weight-bold">Sample/Instruction</h6>
+                <a href="{{asset('app-assets/images/roaming/info_accordion.png')}}" target="_blank">
+                    <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/info_accordion.png')}}" width="100%">
+                </a>
 
             </div>
 
@@ -571,6 +684,48 @@ if (Session::has('error')) {
         $(this).parents(".form-group").find(".table_wrap").html(tableData);
 
         return false;
+    });
+
+
+    //add list component
+    $('.add_accordion').on('click', function () {
+
+        var html = $(".accordion_component_wrap .form-group").clone();
+
+        var comPosition = 'component_position[' + position + ']';
+        $(html).find('.component_position').attr('name', comPosition);
+
+        var head_en = 'accordion_headline_en[' + position + ']';
+        $(html).find('.accordion_headline_en').attr('name', head_en);
+
+        var head_bn = 'accordion_headline_bn[' + position + ']';
+        $(html).find('.accordion_headline_bn').attr('name', head_bn);
+
+        var text_en = 'accordion_textarea_en[' + position + ']';
+        $(html).find('.accordion_textarea_en').attr('name', text_en);
+
+        var text_bn = 'accordion_textarea_bn[' + position + ']';
+        $(html).find('.accordion_textarea_bn').attr('name', text_bn);
+
+
+
+        $('.element_wrap').append(html);
+
+        $(".element_wrap textarea.details_editor").summernote({
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                // ['table', ['table']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['view', ['fullscreen', 'codeview']]
+            ],
+            height: 200
+        });
+
+        position++;
+
     });
 
 
