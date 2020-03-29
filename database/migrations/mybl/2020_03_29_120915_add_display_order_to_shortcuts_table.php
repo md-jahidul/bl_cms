@@ -13,7 +13,7 @@ class AddDisplayOrderToShortcutsTable extends Migration
      */
     public function up()
     {
-        Schema::table('shotcuts', function (Blueprint $table) {
+        Schema::table('shortcuts', function (Blueprint $table) {
             $table->integer('display_order')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AddDisplayOrderToShortcutsTable extends Migration
      */
     public function down()
     {
-        Schema::table('shotcuts', function (Blueprint $table) {
+        Schema::table('shortcuts', function (Blueprint $table) {
             $table->dropColumn('display_order');
         });
     }
