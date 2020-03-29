@@ -12,6 +12,8 @@ use Session;
 
 class RolesController extends Controller
 {
+    const LEAD_USER = "lead_user";
+    const LEAD_USER_ROLE = "lead_user_role";
 
     /**
      * @var RoleService
@@ -34,9 +36,16 @@ class RolesController extends Controller
      */
     public function index()
     {
-//        $roles = $this->roleService->findAll();
         $type = Auth::user()->type;
-        $roles = Role::where('user_type', $type)->get();
+        $featureType = Auth::user()->feature_type;
+        if ($featureType == self::LEAD_USER) {
+            $roles = Role::where('user_type', $type)
+                ->where('feature_type', self::LEAD_USER_ROLE)
+                ->get();
+        } else {
+            $roles = Role::where('user_type', $type)->get();
+        }
+
         return view('vendor.authorize.roles.index', compact('roles'));
     }
 
@@ -61,6 +70,7 @@ class RolesController extends Controller
     {
         $requestData = $request->all();
         $requestData['user_type'] = Auth::user()->type;
+        $requestData['feature_type'] = (Auth::user()->feature_type == self::LEAD_USER) ? self::LEAD_USER_ROLE : null;
         Role::create($requestData);
         Session::flash('message', 'Role added!');
         return redirect(Config("authorization.route-prefix") . '/roles');

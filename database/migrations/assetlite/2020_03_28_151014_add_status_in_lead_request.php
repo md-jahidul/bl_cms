@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AdditionalFieldAddInLeadRequestsTable extends Migration
+class AddStatusInLeadRequest extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AdditionalFieldAddInLeadRequestsTable extends Migration
     public function up()
     {
         Schema::table('lead_requests', function (Blueprint $table) {
-            $table->string('category')->after('id')->nullable();
-            $table->string('sub_category')->after('category')->nullable();
+            $table->string('status')->after('request_type')->default('pending');
         });
     }
 
@@ -27,8 +26,7 @@ class AdditionalFieldAddInLeadRequestsTable extends Migration
     public function down()
     {
         Schema::table('lead_requests', function (Blueprint $table) {
-            $table->dropColumn('category');
-            $table->dropColumn('sub_category');
+            $table->dropColumn('status');
         });
     }
 }

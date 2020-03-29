@@ -28,6 +28,7 @@ class Product extends Model
             'offer_category_id',
             'contextual_message',
             'like',
+            'validity_postpaid',
             'status',
             'display_order',
             'purchase_option',
@@ -39,6 +40,7 @@ class Product extends Model
             'rate_cutter_offer',
             'rate_cutter_unit',
             'call_rate_unit_bn',
+            'sms_rate_unit_bn',
             'special_product'
         ];
 

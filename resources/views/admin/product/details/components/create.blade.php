@@ -41,7 +41,7 @@
 
                                                 <div class="form-group col-md-12 {{ $errors->has('editor_en') ? ' error' : '' }}">
                                                     <label for="editor_en" class="required">Component Type</label>
-                                                    <select name="component_type" class="form-control required" id="component-type"
+                                                    <select name="component_type" class="form-control required" id="component_type"
                                                             required data-validation-required-message="Please select component type">
                                                         <option value="">--Select Data Type--</option>
                                                         @foreach($dataTypes as $key => $item)
@@ -97,11 +97,17 @@
 
                                                 {{--Features Component--}}
                                                 <slot id="features_component" data-offer-type="features_component" class="d-none">
-                                                    @include('layouts.partials.product-details.component.common-field.title')
+                                                    @include('layouts.partials.product-details.component.common-field.title', ['title_en' => "Component (English)", 'title_bn' => 'Component (Bangla)'])
 
                                                     <div class="form-group col-md-12 text-right">
                                                         <label for="alt_text"></label>
                                                         <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="features"><i class="la la-plus"></i></button>
+                                                    </div>
+
+                                                    <div class="form-group col-md-12 mb-0">
+                                                        <div class="alert alert-secondary">
+                                                            <strong>Feature 1</strong>
+                                                        </div>
                                                     </div>
 
                                                     <div class="form-group col-md-6">
@@ -324,17 +330,22 @@
                 $('.'+rowId).remove();
             });
 
-            // Multi Image Component
+            // Multi Feature Component
             $(document).on('click', '#features', function () {
                 var option_count = $('.component-count');
                 var total_option = option_count.length + 2;
 
                 var FeatureInput = '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +
-                    ' <div class="form-group col-md-6">\n' +
+                    ' <div class="form-group col-md-12 mb-0 option-'+total_option+'">\n' +
+                    '     <div class="alert alert-secondary">\n' +
+                    '         <strong>Feature '+total_option+'</strong>\n' +
+                    '     </div>\n' +
+                    ' </div>\n' +
+                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
                     '     <label for="alt_text">Feature Title (English)</label>\n' +
                     '     <input type="text" name="multi_item[feature_title_en-'+total_option+']" class="form-control">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6">\n' +
+                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
                     '     <label for="alt_text">Feature Title (Bangla)</label>\n' +
                     '     <input type="text" name="multi_item[feature_title_bn-'+total_option+']" class="form-control">\n' +
                     ' </div>\n' +
@@ -345,24 +356,23 @@
                     '         <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
                     '     </div>\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6 option-'+total_option+'"">\n' +
+                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
                     '     <label for="alt_text">Alt Text</label>\n' +
                     '     <input type="text" name="multi_item[alt_text-'+total_option+']" class="form-control">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6 option-'+total_option+'"">\n' +
+                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
                     '     <label for="button_en">Button Title (English)</label>\n' +
                     '     <input type="text" name="multi_item[button_en-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6 option-'+total_option+'"">\n' +
+                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
                     '     <label for="button_bn" >Button Title (Bangla)</label>\n' +
                     '     <input type="text" name="multi_item[button_bn-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6 option-'+total_option+'"">\n' +
+                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
                     '     <label for="button_link" >Button URL</label>\n' +
                     '     <input type="text" name="multi_item[button_link-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
                     ' </div>\n' +
                     '<div class="form-group col-md-1 option-'+total_option+'">\n' +
-                    '   <label for="alt_text"></label>\n' +
                     '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
                     '</div>';
                 $('#features_component').append(FeatureInput);

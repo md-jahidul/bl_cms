@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Product Details')
-@section('card_name', 'Product Details')
+@section('title', 'Lead Info')
+@section('card_name', 'Lead Request Info')
 @section('breadcrumb')
-    <li class="breadcrumb-item "><a href="{{--{{ url('partners') }}--}}"> Product List</a></li>
-    <li class="breadcrumb-item active">Product Details</li>
+    <li class="breadcrumb-item "><a href="{{ route('lead-list') }}"> Lead Request List</a></li>
+    <li class="breadcrumb-item active">Lead Request Details</li>
 @endsection
 @section('action')
 {{--    <a href="{{ route('product.list', $type) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Back </a>--}}
@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="col-md-6 float-left">
-                            <h4 class="card-title" id="striped-row-layout-card-center pt-2"><i class="la la-th-list"></i> <strong>Product Details</strong></h4>
+                            <h4 class="card-title" id="striped-row-layout-card-center pt-2"><i class="la la-th-list"></i> <strong>Lead Request Details</strong></h4>
                         </div>
                         <div class="col-md-3 float-right">
                             <select class="form-control bg-warning text-white" name="status" id="selectColor2">

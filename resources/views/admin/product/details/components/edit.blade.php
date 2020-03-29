@@ -17,7 +17,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('component-update',[$productDetailsId, $sectionId, $component->id]) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" id="product_form" action="{{ route('component-update',[$productDetailsId, $sectionId, $component->id]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="app-content">
@@ -46,10 +46,11 @@
                                                 <div class="form-group col-md-12 {{ $errors->has('editor_en') ? ' error' : '' }}">
                                                     <label for="editor_en" class="required">Component Type</label>
 
-                                                    <select name="component_type" class="form-control" required data-validation-required-message="Please select component type">
+                                                    <select name="component_type" class="form-control" id="component_type"
+                                                            required data-validation-required-message="Please select component type">
                                                         <option value="">--Select Data Type--</option>
                                                         @foreach($dataTypes as $key => $type)
-                                                            <option value="{{ $key }}" {{ ($component->component_type == $key) ? 'selected' : '' }}>{{ $type }}</option>
+                                                            <option data-alias="{{ $key }}" value="{{ $key }}" {{ ($component->component_type == $key) ? 'selected' : '' }}>{{ $type }}</option>
                                                         @endforeach
                                                     </select>
                                                     <div class="help-block"></div>
@@ -95,6 +96,86 @@
                                                     @include('layouts.partials.product-details.component.common-field.text-editor')
                                                 </slot>
 
+                                                {{--Text Component--}}
+                                                <slot id="text_component" data-offer-type="text_component" class="{{ ($component->component_type ==  "text_component"  ) ? '' : "d-none" }}">
+                                                    @include('layouts.partials.product-details.component.common-field.text-area')
+                                                </slot>
+
+                                                {{--Features Component--}}
+                                                <slot id="features_component" data-offer-type="features_component" class="{{ ($component->component_type ==  "features_component"  ) ? '' : "d-none" }}">
+                                                    @include('layouts.partials.product-details.component.common-field.title', ['title_en' => "Component (English)", 'title_bn' => 'Component (Bangla)'])
+                                                    <div class="form-group col-md-12 text-right">
+                                                        <label for="alt_text"></label>
+                                                        <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="features"><i class="la la-plus"></i></button>
+                                                    </div>
+                                                @php( $i = 0 )
+                                                @if(isset($multipleImage))
+                                                    @foreach($multipleImage as $key => $image)
+                                                        @php($i++)
+
+                                                        <div class="form-group col-md-12 mb-0">
+                                                            <div class="alert alert-secondary">
+                                                                <strong>Feature {{$i}}</strong>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-md-6 component_count">
+                                                            <label for="alt_text">Feature Title (English)</label>
+                                                            <input type="text" name="multi_item[feature_title_en-{{$i}}]" class="form-control" value="{{ $image['feature_title_en'] }}">
+                                                        </div>
+
+                                                        <div class="form-group col-md-6">
+                                                            <label for="alt_text">Feature Title (Bangla)</label>
+                                                            <input type="text" name="multi_item[feature_title_bn-{{$i}}]" class="form-control" value="{{ $image['feature_title_bn'] }}">
+                                                        </div>
+
+                                                        <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$i}}">
+
+                                                        <div class="col-md-12 col-xs-12 option-{{ $i }}">
+                                                            <div class="form-group">
+                                                                <label for="message">Multiple Image</label>
+                                                                <input type="file" class="dropify" name="multi_item[image_url-{{ $i }}]"
+                                                                       data-default-file="{{ config('filesystems.file_base_url') . $image['image_url'] }}"
+                                                                       data-height="80"/>
+                                                                <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-md-6 option-{{ $i }}">
+                                                            <label for="alt_text">Alt Text</label>
+                                                            <input type="text" name="multi_item[alt_text-{{ $i }}]" value="{{ $image['alt_text'] }}" class="form-control">
+                                                        </div>
+
+                                                        <div class="form-group col-md-6">
+                                                            <label for="button_en">Button Title (English)</label>
+                                                            <input type="text" name="multi_item[button_en-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla" value="{{ $image['button_en'] }}">
+                                                        </div>
+
+                                                        <div class="form-group col-md-6">
+                                                            <label for="button_bn" >Button Title (Bangla)</label>
+                                                            <input type="text" name="multi_item[button_bn-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla" value="{{ $image['button_bn'] }}">
+                                                        </div>
+
+                                                        <div class="form-group col-md-6">
+                                                            <label for="button_link" >Button URL</label>
+                                                            <input type="text" name="multi_item[button_link-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla" value="{{ $image['button_link'] }}">
+                                                        </div>
+
+{{--                                                        @if($i == 1)--}}
+{{--                                                            <div class="form-group col-md-1">--}}
+{{--                                                                <label for="alt_text"></label>--}}
+{{--                                                                <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>--}}
+{{--                                                            </div>--}}
+{{--                                                            --}}{{-- @else--}}
+{{--                                                            --}}{{-- <div class="form-group col-md-1 option-{{ $i }}">--}}
+{{--                                                            --}}{{--     <label for="alt_text"></label>--}}
+{{--                                                            --}}{{--     <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-{{ $i }}" ><i data-id="option-{{ $i }}" class="la la-trash"></i></button>--}}
+{{--                                                            --}}{{-- </div>--}}
+{{--                                                        @endif--}}
+                                                    @endforeach
+                                                @endif
+                                                </slot>
+
                                                 {{--Bullet Text--}}
                                                 <slot id="bullet_text" data-offer-type="large_title_with_text" class="{{ ($component->component_type ==  "bullet_text"  ) ? '' : "d-none" }}">
                                                     @include('layouts.partials.product-details.component.common-field.title')
@@ -113,8 +194,8 @@
                                                     @include('layouts.partials.product-details.component.common-field.title')
                                                     @php( $i = 0 )
                                                     @if(isset($multipleImage))
-                                                        @foreach($multipleImage as $key => $image)
-                                                            @php($i++)
+                                                            @foreach($multipleImage as $key => $image)
+                                                                @php($i++)
                                                             <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$i}}">
                                                             <div class="col-md-6 col-xs-6 option-{{ $i }} options-count">
                                                                 <div class="form-group">
@@ -194,7 +275,7 @@
 
                                                 <div class="form-actions col-md-12">
                                                     <div class="pull-right">
-                                                        <button type="submit" class="btn btn-primary"><i
+                                                        <button type="submit" id="save" class="btn btn-primary"><i
                                                                 class="la la-check-square-o"></i> Update
                                                         </button>
                                                     </div>
@@ -236,6 +317,8 @@
     <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
@@ -298,6 +381,59 @@
                 $('.'+rowId).remove();
             });
 
+            // Multi Feature Component
+            $(document).on('click', '#features', function () {
+                var option_count = $('.component_count');
+                var total_option = option_count.length + 2;
+
+                var FeatureInput = '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +
+                    ' <div class="form-group col-md-12 mb-0 option-'+total_option+'">\n' +
+                    '     <div class="alert alert-secondary">\n' +
+                    '         <strong>Feature '+total_option+'</strong>\n' +
+                    '     </div>\n' +
+                    ' </div>\n' +
+                    ' <div class="form-group col-md-6 component_count option-'+total_option+'">\n' +
+                    '     <label for="alt_text">Feature Title (English)</label>\n' +
+                    '     <input type="text" name="multi_item[feature_title_en-'+total_option+']" class="form-control">\n' +
+                    ' </div>\n' +
+                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '     <label for="alt_text">Feature Title (Bangla)</label>\n' +
+                    '     <input type="text" name="multi_item[feature_title_bn-'+total_option+']" class="form-control">\n' +
+                    ' </div>\n' +
+                    ' <div class="col-md-12 col-xs-12 component-count option-'+total_option+'"">\n' +
+                    '     <div class="form-group">\n' +
+                    '         <label for="message">Feature Icon</label>\n' +
+                    '         <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +
+                    '         <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
+                    '     </div>\n' +
+                    ' </div>\n' +
+                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '     <label for="alt_text">Alt Text</label>\n' +
+                    '     <input type="text" name="multi_item[alt_text-'+total_option+']" class="form-control">\n' +
+                    ' </div>\n' +
+                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '     <label for="button_en">Button Title (English)</label>\n' +
+                    '     <input type="text" name="multi_item[button_en-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
+                    ' </div>\n' +
+                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '     <label for="button_bn" >Button Title (Bangla)</label>\n' +
+                    '     <input type="text" name="multi_item[button_bn-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
+                    ' </div>\n' +
+                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '     <label for="button_link" >Button URL</label>\n' +
+                    '     <input type="text" name="multi_item[button_link-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
+                    ' </div>\n' +
+                    '<div class="form-group col-md-1 option-'+total_option+'">\n' +
+                    '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
+                    '</div>';
+                $('#features_component').append(FeatureInput);
+                dropify();
+            });
+
+            $(document).on('click', '.remove-image', function (event) {
+                var rowId = $(event.target).attr('data-id');
+                $('.'+rowId).remove();
+            });
 
         })
     </script>
