@@ -70,6 +70,7 @@ class RolesController extends Controller
     {
         $requestData = $request->all();
         $requestData['user_type'] = Auth::user()->type;
+        $requestData['feature_type'] = (Auth::user()->feature_type == self::LEAD_USER) ? self::LEAD_USER_ROLE : null;
         Role::create($requestData);
         Session::flash('message', 'Role added!');
         return redirect(Config("authorization.route-prefix") . '/roles');

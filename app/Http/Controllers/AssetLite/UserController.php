@@ -105,6 +105,7 @@ class UserController extends Controller
         $user->email = request()->email;
         $user->uid = 'Null';
         $user->type = Auth::user()->type;
+        $user->feature_type = (Auth::user()->feature_type == "lead_user") ? "lead_user" : null;
         $user->phone = '019112' . rand(10000, 99999);
         $user->password = Hash::make(request()->password);
         $user->save();
