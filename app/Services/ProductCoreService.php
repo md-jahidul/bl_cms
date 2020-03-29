@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 /**
  * Class ProductCoreService
@@ -870,10 +871,16 @@ class ProductCoreService
 
     public function resetProductRedisKeys()
     {
-        $keys = Redis::keys('available_products:');
-        if (!empty($keys)) {
-            Redis::del($keys);
-            Log::info('Product Redis key reset');
+        $pattern = Str::slug(env('REDIS_PREFIX', 'laravel'), '_') . '_database_';
+        $keys = Redis::keys('available_products:*');
+        $values = [];
+
+        foreach ($keys as $key) {
+            $values [] = str_replace($pattern, '', $key);
+        }
+        //Log::info(json_encode($values));
+        if (!empty($values)) {
+            Redis::del($values);
         }
     }
 }
