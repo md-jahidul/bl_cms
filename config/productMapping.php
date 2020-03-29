@@ -84,6 +84,7 @@ return [
             'internet_volume_mb'   => 13,
             'data_volume_unit'     => 14,
             'validity'             => 15,
+            'validity_in_days'     => 15,
             'validity_unit'        => 16,
             'mrp_price'            => 17,
             'price'                => 18,

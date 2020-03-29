@@ -531,13 +531,27 @@ class ProductCoreService
                                     $data_volume_unit = $cells [$index]->getValue();
                                     $core_data [$field] = $data_volume_unit;
                                     break;
+
+                                case "validity":
+                                    $validity = $cells [$index]->getValue();
+                                    if (!is_string($validity)) {
+                                        $core_data [$field] = $validity;
+                                    }
+                                    break;
+
                                 case "validity_in_days":
                                     $validity = $cells [$config['validity']]->getValue();
-                                    $unit = $cells [$config['validity_unit']]->getValue();
-                                    if (strtolower($unit) == 'hours') {
-                                        $validity = round($validity / 24);
+
+                                    if ($validity == "Bill period") {
+                                        $assetLiteProduct['validity_postpaid'] = $validity;
+//                                        dd($assetLiteProduct);
+                                    } else {
+                                        $unit = $cells [$config['validity_unit']]->getValue();
+                                        if (strtolower($unit) == 'hours') {
+                                            $validity = round($validity / 24);
+                                        }
+                                        $core_data [$field] = ($validity == "") ? null : $validity;
                                     }
-                                    $core_data [$field] = ($validity == "") ? null : $validity;
                                     break;
 
                                 case "is_amar_offer":

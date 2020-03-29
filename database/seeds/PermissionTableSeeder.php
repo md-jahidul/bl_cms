@@ -21,12 +21,12 @@ class PermissionTableSeeder extends Seeder
     {
         DB::table('permissions')->insert(
             [
-            'role_id' => $role_id,
-            'namespace' => 'App\Http\Controllers\AssetLite',
-            'controller' => $controller,
-            'method' => $method,
-            'action' => $action,
-            'allowed' => 1
+                'role_id' => $role_id,
+                'namespace' => 'App\Http\Controllers\AssetLite',
+                'controller' => $controller,
+                'method' => $method,
+                'action' => $action,
+                'allowed' => 1
             ]
         );
     }

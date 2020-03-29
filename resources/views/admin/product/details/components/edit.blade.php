@@ -17,7 +17,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('component-update',[$productDetailsId, $sectionId, $component->id]) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" id="product_form" action="{{ route('component-update',[$productDetailsId, $sectionId, $component->id]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="app-content">
@@ -46,10 +46,11 @@
                                                 <div class="form-group col-md-12 {{ $errors->has('editor_en') ? ' error' : '' }}">
                                                     <label for="editor_en" class="required">Component Type</label>
 
-                                                    <select name="component_type" class="form-control" required data-validation-required-message="Please select component type">
+                                                    <select name="component_type" class="form-control" id="component_type"
+                                                            required data-validation-required-message="Please select component type">
                                                         <option value="">--Select Data Type--</option>
                                                         @foreach($dataTypes as $key => $type)
-                                                            <option value="{{ $key }}" {{ ($component->component_type == $key) ? 'selected' : '' }}>{{ $type }}</option>
+                                                            <option data-alias="{{ $key }}" value="{{ $key }}" {{ ($component->component_type == $key) ? 'selected' : '' }}>{{ $type }}</option>
                                                         @endforeach
                                                     </select>
                                                     <div class="help-block"></div>
@@ -194,7 +195,7 @@
 
                                                 <div class="form-actions col-md-12">
                                                     <div class="pull-right">
-                                                        <button type="submit" class="btn btn-primary"><i
+                                                        <button type="submit" id="save" class="btn btn-primary"><i
                                                                 class="la la-check-square-o"></i> Update
                                                         </button>
                                                     </div>
@@ -236,6 +237,8 @@
     <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>

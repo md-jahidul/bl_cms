@@ -2,6 +2,7 @@
 
 namespace App\Services\Banglalink;
 
+use App\Mail\LeadInfoMail;
 use App\Repositories\Contracts\Collection;
 use App\Repositories\LeadRequestRepository;
 use App\Services\ApiBaseService;
@@ -10,6 +11,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Class FnfService
@@ -36,5 +38,18 @@ class LeadRequestService
     public function leadRequestedData()
     {
         return $this->findAll();
+    }
+
+    public function updateStatus($data, $id)
+    {
+        $leadData = $this->findOne($id);
+        $leadData->update($data);
+        return response('Status update successfully!');
+    }
+
+    public function sendMail($data)
+    {
+        Mail::to($data['email'])->send(new LeadInfoMail($data));
+        return response('Mail send successfully');
     }
 }

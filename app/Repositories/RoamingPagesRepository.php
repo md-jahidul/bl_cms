@@ -37,6 +37,8 @@ class RoamingPagesRepository extends BaseRepository {
                 $page = $this->model->findOrFail($request->page_id);
                 $page->title_en = $request->title_en;
                 $page->title_bn = $request->title_bn;
+                $page->short_description_en = $request->short_description_en;
+                $page->short_description_bn = $request->short_description_bn;
                 $page->save();
             }
 
@@ -50,43 +52,35 @@ class RoamingPagesRepository extends BaseRepository {
                 $insert[$count]['page_type'] = $request->page_type;
                 $insert[$count]['parent_id'] = $request->page_id;
 
-                if (isset($request->feature_title_en[$k])) {
-                    $insert[$count]['body_text_en'] = $request->feature_title_en[$k];
-                    $insert[$count]['body_text_bn'] = $request->feature_title_bn[$k];
-                    $insert[$count]['big_font'] = 0;
-                    $insert[$count]['payment_block'] = 0;
+                if (isset($request->headline_text_title_en[$k])) {
+                    $insert[$count]['headline_en'] = $request->headline_text_title_en[$k];
+                    $insert[$count]['headline_bn'] = $request->headline_text_title_bn[$k];
+                    $insert[$count]['body_text_en'] = $request->headline_text_textarea_en[$k];
+                    $insert[$count]['body_text_bn'] = $request->headline_text_textarea_bn[$k];
+                    $insert[$count]['show_button'] = isset($request->show_button[$k]) ? 1 : 0;
                     $insert[$count]['position'] = $k;
-                    $insert[$count]['component_type'] = 'feature_title';
+                    $insert[$count]['component_type'] = 'headline-text';
                 }
 
-
-                if (isset($request->highlights_title_en[$k])) {
-                    $insert[$count]['body_text_en'] = $request->highlights_title_en[$k];
-                    $insert[$count]['body_text_bn'] = $request->highlights_title_bn[$k];
-                    $insert[$count]['big_font'] = 0;
-                    $insert[$count]['payment_block'] = 0;
+                if (isset($request->list_headline_en[$k])) {
+                    $insert[$count]['headline_en'] = $request->list_headline_en[$k];
+                    $insert[$count]['headline_bn'] = $request->list_headline_bn[$k];
+                    $insert[$count]['body_text_en'] = $request->list_textarea_en[$k];
+                    $insert[$count]['body_text_bn'] = $request->list_textarea_bn[$k];
+                    $insert[$count]['show_button'] = 0;
                     $insert[$count]['position'] = $k;
-                    $insert[$count]['component_type'] = 'highlights_title';
+                    $insert[$count]['component_type'] = 'list-component';
                 }
 
-                if (isset($request->advance_title_en[$k])) {
-                    $insert[$count]['body_text_en'] = $request->advance_title_en[$k];
-                    $insert[$count]['body_text_bn'] = $request->advance_title_bn[$k];
-                    $insert[$count]['big_font'] = isset($request->advance_title_big_font[$k]) ? 1 : 0;
-                    $insert[$count]['payment_block'] = 0;
+                if (isset($request->free_textarea_en[$k])) {
+                    $insert[$count]['headline_en'] = "";
+                    $insert[$count]['headline_bn'] = "";
+                    $insert[$count]['body_text_en'] = $request->free_textarea_en[$k];
+                    $insert[$count]['body_text_bn'] = $request->free_textarea_bn[$k];
+                    $insert[$count]['show_button'] = 0;
                     $insert[$count]['position'] = $k;
-                    $insert[$count]['component_type'] = 'advance_title';
+                    $insert[$count]['component_type'] = 'free-text';
                 }
-
-                if (isset($request->condition_list_en[$k])) {
-                    $insert[$count]['body_text_en'] = $request->condition_list_en[$k];
-                    $insert[$count]['body_text_bn'] = $request->condition_list_bn[$k];
-                    $insert[$count]['big_font'] = 0;
-                    $insert[$count]['payment_block'] = isset($request->payment_block[$k]) ? 1 : 0;
-                    $insert[$count]['position'] = $k;
-                    $insert[$count]['component_type'] = 'condition_list';
-                }
-
 
 
                 $count++;
@@ -106,8 +100,8 @@ class RoamingPagesRepository extends BaseRepository {
         }
         return $response;
     }
-    
-     public function changeComponentSorting($request) {
+
+    public function changeComponentSorting($request) {
         try {
 
             $positions = $request->position;
@@ -132,31 +126,25 @@ class RoamingPagesRepository extends BaseRepository {
             return response()->json($response, 500);
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    public function deleteComponent($comId) {
+
+        try {
+
+            RoamingPageComponents::findOrFail($comId)->delete();
+
+            $response = [
+                'success' => 1,
+                'message' => 'Success',
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+        }
+        return $response;
+    }
     
     
     
@@ -186,51 +174,6 @@ class RoamingPagesRepository extends BaseRepository {
             $response = [
                 'success' => 0,
                 'message' => $e->getMessage()
-            ];
-            return response()->json($response, 500);
-        }
-    }
-
-    public function changeHomeShowStatus($catId) {
-        try {
-
-            $category = $this->model->findOrFail($catId);
-
-            $status = $category->home_show == 1 ? 0 : 1;
-            $category->home_show = $status;
-            $category->save();
-
-            $response = [
-                'success' => 1,
-                'show_status' => $status,
-            ];
-            return response()->json($response, 200);
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'errors' => $e->getMessage()
-            ];
-            return response()->json($response, 500);
-        }
-    }
-
-    public function deleteCards($cardId) {
-        try {
-            if ($cardId > 0) {
-                $card = $this->model->findOrFail($cardId);
-                $card->delete();
-            } else {
-                $this->model->truncate();
-            }
-
-            $response = [
-                'success' => 1
-            ];
-            return response()->json($response, 200);
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'errors' => $e->getMessage()
             ];
             return response()->json($response, 500);
         }

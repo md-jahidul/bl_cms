@@ -7,74 +7,64 @@
 
 namespace App\Services;
 
-use App\Repositories\BusinessInternetRepository;
-use App\Repositories\RoamingOperatorRepository;
-use App\Repositories\TagCategoryRepository;
+use App\Repositories\RoamingBundleRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 
-class RoamingOperatorService {
 
+class RoamingBundleService
+{
     use CrudTrait;
     use FileTrait;
 
     /**
-     * @var RoamingOperatorRepository
+     * @var RoamingBundleRepository
      */
-    private $roamingOperatorRepository;
+    private $roamingBundleRepository;
 
     /**
      * BusinessInternetService constructor.
-     * @param RoamingOperatorRepository $roamingOperatorRepository
+     * @param RoamingBundleRepository $roamingBundleRepository
      */
-    public function __construct(RoamingOperatorRepository $roamingOperatorRepository) {
-        $this->roamingOperatorRepository = $roamingOperatorRepository;
-        $this->setActionRepository($roamingOperatorRepository);
+    public function __construct(RoamingBundleRepository $roamingBundleRepository)
+    {
+        $this->roamingBundleRepository = $roamingBundleRepository;
+        $this->setActionRepository($roamingBundleRepository);
     }
 
     /**
      * Get Internet package
      * @return array
      */
-    public function getRoamingOperators($request)
+    public function getRoamingBundle($request)
     {
-        return $this->roamingOperatorRepository->getOperatorList($request);
+        return $this->roamingBundleRepository->getBundleList($request);
     }
 
-    /**
-     * Get Internet package by id
-     * @return Response
-     */
-    public function getInternetById($internetId) {
-        $response = $this->internetRepo->getInternetById($internetId);
-        return $response;
-    }
-
-    /**
-     * Get Internet package for drop down
-     * @return Response
-     */
-    public function getAllPackage($internetId = 0) {
-        $response = $this->internetRepo->getAllPackage($internetId);
-        return $response;
-    }
-
-    /**
-     * Get tags
-     * @return Response
-     */
-    public function getTags() {
-        $response = $this->tagsRepo->getTags();
-        return $response;
-    }
+//    /**
+//     * Get Internet package by id
+//     * @return Response
+//     */
+//    public function getInternetById($internetId) {
+//        $response = $this->roamingBundleRepository->getInternetById($internetId);
+//        return $response;
+//    }
+//
+//    /**
+//     * Get Internet package for drop down
+//     * @return Response
+//     */
+//    public function getAllPackage($internetId = 0) {
+//        $response = $this->roamingBundleRepository->getAllPackage($internetId);
+//        return $response;
+//    }
 
     /**
      * Save internet package
-     * @return Response
+     * @return array
      */
-    public function saveOperator($request) {
+    public function saveBundle($request) {
         try {
             $request->validate([
                 'country_en' => 'required',
@@ -101,7 +91,7 @@ class RoamingOperatorService {
      * @param $request
      * @return array
      */
-    public function updateOperator($request, $id)
+    public function updateBundle($request, $id)
     {
         try {
             $request->validate([
@@ -128,21 +118,21 @@ class RoamingOperatorService {
 
     /**
      * Upload/Save excel file
+     * @param $request
      * @return JsonResponse
      */
     public function saveExcel($request)
     {
-        return $this->roamingOperatorRepository->saveExcelFile($request);
+        return $this->roamingBundleRepository->saveExcelFile($request);
     }
 
     /**
      * change showing status
-     * @return Response
+     * @return JsonResponse
      */
     public function statusChange($id)
     {
-        $response = $this->roamingOperatorRepository->statusChange($id);
-        return $response;
+        return $this->roamingBundleRepository->statusChange($id);
     }
 
     /**
@@ -150,9 +140,9 @@ class RoamingOperatorService {
      * @param $operatorId
      * @return JsonResponse
      */
-    public function deleteOperator($operatorId)
+    public function deleteBundle($operatorId)
     {
-        return $this->roamingOperatorRepository->deleteOperator($operatorId);
+        return $this->roamingBundleRepository->deleteBundle($operatorId);
     }
 
 }

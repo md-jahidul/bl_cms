@@ -63,11 +63,12 @@ var product = (function () {
     let $otherOfferType = $('#other_offer_type');
     let $startupOfferDetails = $('#design_structure');
 
-    let $productDetailsComponent = $('#component-type');
+    let $productDetailsComponent = $('#component_type');
 
     $removeDomSelect = [$offerType, $packageType, $otherOfferType, $startupOfferDetails, $productDetailsComponent];
     $removeDomSelect.forEach(function ($ele) {
         $ele.on('change', function () {
+            console.log($ele);
             product.select_change($ele);
         });
     })
@@ -150,13 +151,13 @@ var product = (function () {
         var selectedProductCode = $(this).children("option:selected").val();
         var requestUrl = $(this).attr('data-url');
 
-        console.log(requestUrl);
+        // console.log(requestUrl);
         $.ajax({
             method: "GET",
             url: requestUrl + '/' + selectedProductCode,
         }).done(function (data) {
-            console.log(data.validity_unit);
-            console.log(data);
+            // console.log(data.validity_unit);
+            // console.log(data);
             checkType(data.content_type, data)
         });
     })
