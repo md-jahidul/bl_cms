@@ -698,11 +698,13 @@ class ProductCoreService
             $file = $request->media;
             $path = $file->storeAs(
                 'products/images',
-                $product_code . '.' . $file->getClientOriginalExtension(),
+                $product_code . '_' . strtotime(now()) . '.' . $file->getClientOriginalExtension(),
                 'public'
             );
 
             $data['media'] = $path;
+        } else {
+            $data['media'] = null;
         }
 
         if ($request->has('offer_section_slug')) {
