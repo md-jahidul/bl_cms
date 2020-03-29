@@ -16,9 +16,6 @@
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ route('users.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
-                                @if($featureType = Auth::user()->feature_type == "lead_user")
-                                    <input type="hidden" name="feature_type" value="lead_user">
-                                @endif
                                 <div class="form-group col-md-6 {{ $errors->has('name') ? ' error' : '' }}">
                                     <label for="name" class="required">Name</label>
                                     <input type="text" name="name"  class="form-control" placeholder="Enter user name"
