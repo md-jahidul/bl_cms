@@ -43,10 +43,7 @@ class RoamingBundleRepository extends BaseRepository {
 
         $items->each(function ($item) use (&$response) {
 
-            $statusBtn = "<a href='$item->id' class='btn-sm btn-success bundle_change_status'>Active</a>";
-            if ($item->status == 0) {
-                $statusBtn = "<a href='$item->id' class='btn-sm btn-warning bundle_change_status'>Inactive</a>";
-            }
+           
             $response['data'][] = [
                 'id' => $item->id,
                 'product_code' => $item->product_code,
@@ -54,7 +51,6 @@ class RoamingBundleRepository extends BaseRepository {
                 'country' => $item->country,
                 'operator' => $item->operator,
                 'package_name_en' => $item->package_name_en,
-                'status' => $statusBtn
             ];
         });
 
