@@ -96,7 +96,7 @@
                                                 </slot>
 
                                                 {{--Features Component--}}
-                                                <slot id="features_component" data-offer-type="features_component" class="">
+                                                <slot id="features_component" data-offer-type="features_component" class="d-none">
                                                     @include('layouts.partials.product-details.component.common-field.title', ['title_en' => "Component (English)", 'title_bn' => 'Component (Bangla)'])
 
                                                     <div class="form-group col-md-12 text-right">
@@ -330,7 +330,7 @@
                 $('.'+rowId).remove();
             });
 
-            // Multi Image Component
+            // Multi Feature Component
             $(document).on('click', '#features', function () {
                 var option_count = $('.component-count');
                 var total_option = option_count.length + 2;
