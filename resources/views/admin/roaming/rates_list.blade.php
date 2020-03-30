@@ -25,7 +25,7 @@
                                 <div class="col-md-12 col-xs-12">
                                     <div class="form-group">
                                         <label for="message">Upload Roaming Rates List</label>
-                                        <a href="{{ asset('sample-format/roaming-rates.xlsx')}}" class="badge badge-info ml-2">Download Sample Format</a></br>
+                                        <a href="{{ asset('sample-format/roaming-rates-excel.xlsx')}}" class="badge badge-info ml-2">Download Sample Format</a></br>
                                         <input type="file" class="dropify" name="rates_file" data-height="80"
                                                data-allowed-file-extensions='["xlsx", "xls"]' required/>
                                     </div>

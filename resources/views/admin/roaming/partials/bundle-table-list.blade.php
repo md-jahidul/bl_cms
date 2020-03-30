@@ -21,7 +21,6 @@
                 <th>Country</th>
                 <th>Operator</th>
                 <th>Package Name</th>
-                <th>Status</th>
                 <th class="filter_data">Actions</th>
             </tr>
             </thead>
@@ -37,7 +36,7 @@
             $("#roaming_bundle_list").dataTable({
                 scrollX: true,
                 processing: true,
-                searching: false,
+                searching: true,
                 serverSide: true,
                 ordering: false,
                 autoWidth: false,
@@ -89,12 +88,7 @@
                             return row.package_name_en;
                         }
                     },
-                    {
-                        name: 'status',
-                        render: function (data, type, row) {
-                            return row.status;
-                        }
-                    },
+                   
                     {
                         name: 'actions',
                         className: 'filter_data',
@@ -102,7 +96,7 @@
                             let edit_url = "{{ URL('roaming/bundle/edit') }}" + "/" + row.id;
                             let delete_url = "{{ URL('roaming-bundle/destroy') }}" + "/" + row.id;
                             return `<div class="btn-group" role="group" aria-label="Delete">
-                        <a href=" ` + edit_url + ` "class="btn btn-sm btn-icon btn-outline-info edit_package"><i class="la la-edit"></i></a>
+
                         <a href=" ` + delete_url + ` "class="btn btn-sm btn-icon btn-outline-danger delete_package"><i class="la la-trash"></i></a>
                       </div>`
                         }

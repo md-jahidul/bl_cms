@@ -11,22 +11,28 @@ use App\Models\RoamingBundleOffer;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
 
-class RoamingBundleRepository extends BaseRepository
-{
+class RoamingBundleRepository extends BaseRepository {
 
     public $modelName = RoamingBundleOffer::class;
 
-    public function getBundleList($request)
-    {
+    public function getBundleList($request) {
         $draw = $request->get('draw');
         $start = $request->get('start');
         $length = $request->get('length');
 
-        $builder = $this->model;
+        $query = $this->model;
+
+        $searchStr = $request->get('search');
+
+        if ($searchStr['value'] != "") {
+            $searchVal = $searchStr['value'];
+            $query = $query->whereRaw("product_code Like '%$searchVal%' OR country Like '%$searchVal%' OR operator Like '%$searchVal%' OR package_name_en Like '%$searchVal%'");
+        }
 
 
-        $all_items_count = $builder->count();
-        $items = $builder->skip($start)->take($length)->latest()->get();
+
+        $all_items_count = $query->count();
+        $items = $query->skip($start)->take($length)->latest()->get();
 
         $response = [
             'draw' => $draw,
@@ -37,10 +43,7 @@ class RoamingBundleRepository extends BaseRepository
 
         $items->each(function ($item) use (&$response) {
 
-            $statusBtn = "<a href='$item->id' class='btn-sm btn-success bundle_change_status'>Active</a>";
-            if ($item->status == 0) {
-                $statusBtn = "<a href='$item->id' class='btn-sm btn-warning bundle_change_status'>Inactive</a>";
-            }
+           
             $response['data'][] = [
                 'id' => $item->id,
                 'product_code' => $item->product_code,
@@ -48,20 +51,17 @@ class RoamingBundleRepository extends BaseRepository
                 'country' => $item->country,
                 'operator' => $item->operator,
                 'package_name_en' => $item->package_name_en,
-                'status' => $statusBtn
             ];
         });
 
         return $response;
     }
 
-    public function getInternetById($internetId)
-    {
+    public function getInternetById($internetId) {
         return $this->model->findOrFail($internetId);
     }
 
-    public function getAllPackage($internetId)
-    {
+    public function getAllPackage($internetId) {
         $allProducts = $this->model->select('id', 'product_code', 'product_name')->where('status', 1);
         if ($internetId > 0) {
             $allProducts->where('id', '!=', $internetId);
@@ -70,8 +70,7 @@ class RoamingBundleRepository extends BaseRepository
         return $data;
     }
 
-    public function saveInternet($bannerPath, $request)
-    {
+    public function saveInternet($bannerPath, $request) {
         $insertdata = array(
             'product_code' => $request->product_code,
             'product_code_ev' => $request->product_code_ev,
@@ -86,8 +85,7 @@ class RoamingBundleRepository extends BaseRepository
         }
     }
 
-    public function saveExcelFile($request)
-    {
+    public function saveExcelFile($request) {
         try {
             $request->validate([
                 'bundle_file' => 'required|mimes:xls,xlsx'
@@ -106,10 +104,10 @@ class RoamingBundleRepository extends BaseRepository
 
                     if ($rowNumber > 1) {
                         $insertdata[] = array(
-                            'product_code' => trim(iconv("UTF-8","ISO-8859-1",$cells[0]->getValue())," \t\n\r\0\x0B\xA0"),
-                            'subscription_type' => trim(iconv("UTF-8","ISO-8859-1",$cells[1]->getValue())," \t\n\r\0\x0B\xA0"),
-                            'country' => trim(iconv("UTF-8","ISO-8859-1",$cells[2]->getValue())," \t\n\r\0\x0B\xA0"),
-                            'operator' => trim(iconv("UTF-8","ISO-8859-1",$cells[3]->getValue())," \t\n\r\0\x0B\xA0"),
+                            'product_code' => trim(iconv("UTF-8", "ISO-8859-1", $cells[0]->getValue()), " \t\n\r\0\x0B\xA0"),
+                            'subscription_type' => trim(iconv("UTF-8", "ISO-8859-1", $cells[1]->getValue()), " \t\n\r\0\x0B\xA0"),
+                            'country' => trim(iconv("UTF-8", "ISO-8859-1", $cells[2]->getValue()), " \t\n\r\0\x0B\xA0"),
+                            'operator' => trim(iconv("UTF-8", "ISO-8859-1", $cells[3]->getValue()), " \t\n\r\0\x0B\xA0"),
                             'package_name_en' => trim($cells[4]->getValue()),
                             'package_name_bn' => trim($cells[5]->getValue()),
                             'data_volume' => trim($cells[6]->getValue()),
@@ -150,8 +148,7 @@ class RoamingBundleRepository extends BaseRepository
         }
     }
 
-    public function statusChange($packageId)
-    {
+    public function statusChange($packageId) {
         try {
             $card = $this->model->findOrFail($packageId);
             $status = $card->status == 1 ? 0 : 1;
@@ -170,8 +167,7 @@ class RoamingBundleRepository extends BaseRepository
         }
     }
 
-    public function deleteBundle($operatorId)
-    {
+    public function deleteBundle($operatorId) {
         try {
             if ($operatorId > 0) {
                 $package = $this->model->findOrFail($operatorId);

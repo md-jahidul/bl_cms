@@ -105,8 +105,6 @@ class RoamingOfferRepository extends BaseRepository {
             $offer->card_text_bn = $request->card_text_bn;
             $offer->short_text_en = $request->short_text_en;
             $offer->short_text_bn = $request->short_text_bn;
-            $offer->details_en = $request->details_en;
-            $offer->details_bn = $request->details_bn;
             $offer->banner_name = $request->banner_name;
             $offer->banner_web = $webPath;
             $offer->banner_mobile = $mobilePath;
@@ -202,6 +200,28 @@ class RoamingOfferRepository extends BaseRepository {
                     $insert[$count]['body_text_bn'] = $textJsonBn;
                     $insert[$count]['position'] = $k;
                     $insert[$count]['component_type'] = 'text';
+                }
+                
+                
+                  //accordion component
+                if (isset($request->accordion_headline_en[$k])) {
+
+                    $arrayEn = array(
+                        'accordion_headline_en' => $request->accordion_headline_en[$k],
+                        'accordion_textarea_en' => $request->accordion_textarea_en[$k]
+                    );
+                    $jsonEn = json_encode($arrayEn);
+
+                    $arrayBn = array(
+                        'accordion_headline_bn' => $request->accordion_headline_bn[$k],
+                        'accordion_textarea_bn' => $request->accordion_textarea_bn[$k]
+                    );
+                    $jsonBn = json_encode($arrayBn);
+
+                    $insert[$count]['body_text_en'] = $jsonEn;
+                    $insert[$count]['body_text_bn'] = $jsonBn;
+                    $insert[$count]['position'] = $k;
+                    $insert[$count]['component_type'] = 'accordion';
                 }
 
 

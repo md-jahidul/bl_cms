@@ -41,47 +41,22 @@ class RoamingOperatorService {
         return $this->roamingOperatorRepository->getOperatorList($request);
     }
 
-    /**
-     * Get Internet package by id
-     * @return Response
-     */
-    public function getInternetById($internetId) {
-        $response = $this->internetRepo->getInternetById($internetId);
-        return $response;
-    }
+
 
     /**
-     * Get Internet package for drop down
-     * @return Response
+     * @param $request
+     * @return array
      */
-    public function getAllPackage($internetId = 0) {
-        $response = $this->internetRepo->getAllPackage($internetId);
-        return $response;
-    }
-
-    /**
-     * Get tags
-     * @return Response
-     */
-    public function getTags() {
-        $response = $this->tagsRepo->getTags();
-        return $response;
-    }
-
-    /**
-     * Save internet package
-     * @return Response
-     */
-    public function saveOperator($request) {
+    public function updateOperator($request)
+    {
         try {
             $request->validate([
                 'country_en' => 'required',
-                'country_bn' => 'required',
-                'operator_en' => 'required',
-                'operator_bn' => 'required',
-                'tap_code' => 'required',
+                'operator_en' => 'required'
             ]);
-            $this->save($request->all());
+            
+            $this->roamingOperatorRepository->saveOperator($request);
+            
             $response = [
                 'success' => 1,
             ];
@@ -90,35 +65,6 @@ class RoamingOperatorService {
             $response = [
                 'success' => 0,
                 'message' => $e->getMessage()
-            ];
-            return $response;
-        }
-    }
-
-    /**
-     * @param $request
-     * @return array
-     */
-    public function updateOperator($request, $id)
-    {
-        try {
-            $request->validate([
-                'country_en' => 'required',
-                'country_bn' => 'required',
-                'operator_en' => 'required',
-                'operator_bn' => 'required',
-                'tap_code' => 'required',
-            ]);
-            $operator = $this->findOne($id);
-            $operator->update($request->all());
-            $response = [
-                'success' => 1,
-            ];
-            return $response;
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'message' => $e
             ];
             return $response;
         }
