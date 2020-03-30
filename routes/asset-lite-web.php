@@ -216,28 +216,28 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('product-details/section-sortable', 'AssetLite\ProductDetailsController@sectionSortable');
 
     Route::get(
-        'product-details/{productDetailsId}/section/{sid}/components-list',
+        'product-details/{simType}/{productDetailsId}/section/{sid}/components-list',
         'AssetLite\ProductDetailsController@componentList'
     )->name('component-list');
 
 
     Route::get(
-        'product-details/{productDetailsId}/section/{SectionId}/components-create',
+        'product-details/{simType}/{productDetailsId}/section/{SectionId}/components-create',
         'AssetLite\ProductDetailsController@componentCreate'
     )->name('component-create');
 
-    Route::post('product-details/{productDetailsId}/components-store/{SectionId}', 'AssetLite\ProductDetailsController@componentStore')
+    Route::post('product-details/{simType}/{productDetailsId}/components-store/{SectionId}', 'AssetLite\ProductDetailsController@componentStore')
         ->name('component-store');
 
     Route::get(
-        'product-details/{productDetailsId}/section/{sid}/component/{id}/edit',
+        'product-details/{simType}/{productDetailsId}/section/{sid}/component/{id}/edit',
         'AssetLite\ProductDetailsController@componentEdit'
     )->name('component-edit');
 
-    Route::put('product-details/{productDetailsId}/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
+    Route::put('product-details/{simType}/{productDetailsId}/section/{sid}/component/{id}/update', 'AssetLite\ProductDetailsController@componentUpdate')
         ->name('component-update');
 
-    Route::get('product-details/{productDetailsId}/section/{sid}/component/{id}/delete', 'AssetLite\ProductDetailsController@componentDestroy')
+    Route::get('product-details/{simType}/{productDetailsId}/section/{sid}/component/{id}/delete', 'AssetLite\ProductDetailsController@componentDestroy')
         ->name('component-delete');
 
     Route::get('component-sortable', 'AssetLite\ProductDetailsController@componentSortable');
@@ -479,8 +479,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('roaming/update-general-page', 'AssetLite\RoamingGeneralController@updatePage');
     Route::get('roaming/page-component-sort', 'AssetLite\RoamingGeneralController@componentSortChange');
     Route::get('roaming/page-component-delete/{pageId}/{comId}', 'AssetLite\RoamingGeneralController@componentDelete');
-    
-    
+
+
     //offer
     Route::get('roaming-offers', 'AssetLite\RoamingOfferController@index');
     Route::get('roaming/get-offer-single-category/{catId}', 'AssetLite\RoamingOfferController@getSingleCategory');
@@ -490,7 +490,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('roaming/edit-other-offer/{offerId}', 'AssetLite\RoamingOfferController@editOffer');
     Route::post('roaming/save-other-offer', 'AssetLite\RoamingOfferController@saveOffer');
     Route::get('roaming/delete-other-offer/{offerId}', 'AssetLite\RoamingOfferController@deleteOffer');
-    
+
     Route::get('roaming/edit-other-offer-component/{offerId}', 'AssetLite\RoamingOfferController@editComponent');
     Route::post('roaming/update-offer-component/', 'AssetLite\RoamingOfferController@updateComponent');
     Route::get('roaming/offer-component-sort', 'AssetLite\RoamingOfferController@componentSortChange');
@@ -510,7 +510,7 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('roaming.operator-excel.save');
     Route::get('roaming-operator-status-change/{operatorId}', 'AssetLite\RoamingOperatorController@operatorStatusChange');
     Route::get('roaming-operator/destroy/{operatorId?}', 'AssetLite\RoamingOperatorController@deleteOperator');
-    
+
     // Rate
     Route::get('roaming/rates', 'AssetLite\RoamingRateController@index');
     Route::get('roaming/rates/create', 'AssetLite\RoamingRateController@ratesCreate');
@@ -540,13 +540,13 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('roaming.bundle-excel.save');
     Route::get('roaming-bundle-status-change/{rateId}', 'AssetLite\RoamingBundleController@bundleStatusChange');
     Route::get('roaming-bundle/destroy/{rateId?}', 'AssetLite\RoamingBundleController@deleteBundle');
-    
+
     //info & Tips
     Route::get('roaming-info-tips', 'AssetLite\RoamingInfoController@index');
     Route::get('roaming/get-info-single-category/{catId}', 'AssetLite\RoamingInfoController@getSingleCategory');
     Route::post('roaming/save-info-category', 'AssetLite\RoamingInfoController@saveCategory');
     Route::get('roaming/info-category-sort', 'AssetLite\RoamingInfoController@categorySortChange');
-    
+
     Route::get('roaming/info-tips-create', 'AssetLite\RoamingInfoController@createInfo');
     Route::get('roaming/edit-info/{infoId}', 'AssetLite\RoamingInfoController@editInfo');
     Route::post('roaming/save-info-tips', 'AssetLite\RoamingInfoController@saveInfo');

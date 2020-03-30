@@ -3,11 +3,11 @@
 @section('card_name', 'Component Create')
 @section('breadcrumb')
     <li class="breadcrumb-item active"> <a href="{{ route('section-list', [$productDetailsId, $sectionId]) }}"> Section List</a></li>
-    <li class="breadcrumb-item active"> <a href="{{ route('component-list', [$productDetailsId, $sectionId]) }}"> Component List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ route('component-list', [$simType, $productDetailsId, $sectionId]) }}"> Component List</a></li>
     <li class="breadcrumb-item active"> Component Create</li>
 @endsection
 @section('action')
-    <a href="{{  route('component-list', [$productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{  route('component-list', [$simType, $productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -15,7 +15,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" id="product_form" action="{{ route('component-store', [$productDetailsId, $sectionId]) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" id="product_form" action="{{ route('component-store', [$simType, $productDetailsId, $sectionId]) }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="app-content">
                                 <h3>Component Fields</h3><hr>
                                 <div class="sidebar-right">
