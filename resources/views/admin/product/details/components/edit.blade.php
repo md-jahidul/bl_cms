@@ -2,22 +2,19 @@
 @section('title', 'Component')
 @section('card_name', 'Component')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{  route('component-list', [ $productDetailsId, $sectionId]) }}"> Component List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{  route('component-list', [$simType, $productDetailsId, $sectionId]) }}"> Component List</a></li>
     <li class="breadcrumb-item active"> Component Edit</li>
 @endsection
 @section('action')
-    <a href="{{  route('component-list', [ $productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{  route('component-list', [$simType, $productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
-
-
-
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" id="product_form" action="{{ route('component-update',[$productDetailsId, $sectionId, $component->id]) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" id="product_form" action="{{ route('component-update',[$simType, $productDetailsId, $sectionId, $component->id]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="app-content">
@@ -384,7 +381,7 @@
             // Multi Feature Component
             $(document).on('click', '#features', function () {
                 var option_count = $('.component_count');
-                var total_option = option_count.length + 2;
+                var total_option = option_count.length + 1;
 
                 var FeatureInput = '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +
                     ' <div class="form-group col-md-12 mb-0 option-'+total_option+'">\n' +

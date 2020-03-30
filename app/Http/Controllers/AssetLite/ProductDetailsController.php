@@ -138,29 +138,29 @@ class ProductDetailsController extends Controller
     }
 
     /**
+     * @param $simType
      * @param $productDetailsId
      * @param $sectionId
      * @return Factory|View
      */
-    public function componentList($productDetailsId, $sectionId)
+    public function componentList($simType, $productDetailsId, $sectionId)
     {
         $components = $this->componentService->componentList($sectionId, 'product_details');
-//        return $components;
-        return view('admin.product.details.components.index', compact('components', 'sectionId', 'productDetailsId'));
+        return view('admin.product.details.components.index', compact('components', 'sectionId','simType', 'productDetailsId'));
     }
 
-    public function componentCreate($productDetailsId, $sectionId)
+    public function componentCreate($simType, $productDetailsId, $sectionId)
     {
         $dataTypes = $this->dataTypes;
         $products = $this->productService->produtcs();
-        return view('admin.product.details.components.create', compact('sectionId', 'productDetailsId', 'dataTypes', 'products'));
+        return view('admin.product.details.components.create', compact('sectionId', 'productDetailsId', 'dataTypes', 'simType', 'products'));
     }
 
-    public function componentStore(Request $request, $productDetailsId, $sectionID)
+    public function componentStore(Request $request, $simType, $productDetailsId, $sectionID)
     {
         $response = $this->componentService->componentStore($request->all(), $sectionID);
         Session::flash('success', $response->content());
-        return redirect(route('component-list', [$productDetailsId, $sectionID]));
+        return redirect(route('component-list', [$simType, $productDetailsId, $sectionID]));
     }
 
 
@@ -172,13 +172,13 @@ class ProductDetailsController extends Controller
      * @param int $id
      * @return Factory|View
      */
-    public function componentEdit($productDetailsId, $sectionId, $id)
+    public function componentEdit($simType, $productDetailsId, $sectionId, $id)
     {
         $dataTypes = $this->dataTypes;
         $component = $this->componentService->findOne($id);
         $multipleImage = $component['multiple_attributes'];
         $products = $this->productService->produtcs();
-        return view('admin.product.details.components.edit', compact('component', 'products', 'multipleImage', 'dataTypes', 'sectionId', 'productDetailsId'));
+        return view('admin.product.details.components.edit', compact('component', 'products', 'multipleImage', 'dataTypes', 'sectionId', 'simType', 'productDetailsId'));
     }
 
     /**
@@ -190,10 +190,10 @@ class ProductDetailsController extends Controller
      * @param int $id
      * @return RedirectResponse|Redirector
      */
-    public function componentUpdate(Request $request, $productDetailsId, $sectionId, $id)
+    public function componentUpdate(Request $request, $simType, $productDetailsId, $sectionId, $id)
     {
         $this->componentService->componentUpdate($request->all(), $id);
-        return redirect(route('component-list', [$productDetailsId, $sectionId]));
+        return redirect(route('component-list', [$simType, $productDetailsId, $sectionId]));
     }
 
 
@@ -235,9 +235,9 @@ class ProductDetailsController extends Controller
      * @return string
      * @throws \Exception
      */
-    public function componentDestroy($productId, $sectionId, $id)
+    public function componentDestroy($simType, $productId, $sectionId, $id)
     {
         $this->componentService->deleteComponent($id);
-        return url(route('component-list', [$productId, $sectionId]));
+        return url(route('component-list', [$simType, $productId, $sectionId]));
     }
 }
