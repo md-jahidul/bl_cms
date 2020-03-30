@@ -161,7 +161,7 @@ class PushNotificationController extends Controller
         try {
 
         if ($request->filled('user_phone')) {
-          
+
             $phone_list = explode(",", $request->input('user_phone'));
             $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $phone_list);
 
@@ -180,7 +180,7 @@ class PushNotificationController extends Controller
                 ]
 
             ];
-        } else if($is_all == "1") { dd('test');
+        } else if($is_all == "1") {
 
             $notification = [
                 'title' => $request->input('title'),
