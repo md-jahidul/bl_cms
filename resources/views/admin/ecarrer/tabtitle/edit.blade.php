@@ -16,12 +16,12 @@
 
 
                     <div class="card-body card-dashboard">
-                        <form id="topbanner_section" role="form" action="{{ url('programs/tab-title/'.$sections->id.'/update') }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form id="topbanner_section" role="form" action="{{ url("programs/tab-title/$sections->id/update") }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             {{method_field('POST')}}
                             <div class="row">
                                 <input type="hidden" name="section_category" value="{{ $sections->category }}">
-                                <div class="form-group col-md-4 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title (English)</label>
                                     <input type="text" name="title_en"  class="form-control section_name" placeholder="Enter title_en (english)"
                                            value="{{ $sections->title_en }}" required data-validation-required-message="Enter slider title_en (english)">
@@ -30,18 +30,8 @@
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
-                                
-                                <div class="form-group col-md-4 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                    <label for="title_bn" class="required1">Title (Bangla)</label>
-                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title (bangla)"
-                                           value="{{ $sections->title_bn }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('title_bn'))
-                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
-                                    @endif
-                                </div>
 
-                                <div class="form-group col-md-4 {{ $errors->has('slug') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('slug') ? ' error' : '' }}">
                                     <label for="slug" class="required">Slug</label>
                                     <input type="text" name="slug"  class="form-control section_slug"
                                            value="{{ $sections->slug }}" required readonly  data-validation-required-message="Slug name can not be emply">
@@ -51,7 +41,15 @@
                                     @endif
                                 </div>
 
-                                
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_bn" class="required1">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title (bangla)"
+                                           value="{{ $sections->title_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
 
 
                                 {{-- <div class="col-md-12">
@@ -71,7 +69,7 @@
                                         </select>
                                 </div> --}}
 
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label for="alt_text"></label>
                                     <div class="form-group">
                                         <label for="title" class="required mr-1">Status:</label>
