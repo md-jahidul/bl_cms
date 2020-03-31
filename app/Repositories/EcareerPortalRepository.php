@@ -42,6 +42,10 @@ class EcareerPortalRepository extends BaseRepository
     public function getSectionDataByID($id){
         return $this->model::where('id', $id)->whereNull('deleted_at')->first();
     }
+    
+    public function updateMainSection($data, $id){
+        return $this->model::where('id', $id)->update($data);
+    }
 
 
 

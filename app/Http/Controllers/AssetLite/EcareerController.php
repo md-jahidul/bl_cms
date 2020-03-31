@@ -615,10 +615,8 @@ class EcareerController extends Controller
 		    return redirect('life-at-banglalink/topbanner');
 		}
 
-		$data_types = null;
-
-		$this->ecarrerService->updateEcarrerSection($request->except(['slug']), $id, $data_types);
-
+		$response = $this->ecarrerService->updateMainSection($request->except(['slug']), $id);
+                
 		Session::flash('message', 'Banner updated successfully!');
 		return redirect('life-at-banglalink/topbanner');
 

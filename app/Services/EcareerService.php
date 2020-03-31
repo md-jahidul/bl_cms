@@ -190,6 +190,71 @@ class EcareerService
 
         return Response('Section updated successfully');
     }
+    
+    
+     /**
+     * [updateEcarrerGeneralSection description]
+     * @param  [type] $data [description]
+     * @param  [type] $id   [description]
+     * @return [type]       [description]
+     */
+    public function updateMainSection($data, $id) {
+        try {
+            $general_section = $this->findOne($id);
+            
+            
+            $update['title_en'] = $data['title_en'];
+            $update['title_bn'] = $data['title_bn'];
+            $update['alt_text'] = $data['alt_text'];
+            $update['page_header'] = $data['page_header'];
+            $update['schema_markup'] = $data['schema_markup'];
+            $update['route_slug'] = $data['route_slug'];
+            $update['is_active'] = $data['is_active'];
+
+
+            if (!empty($data['slug'])) {
+                $update['slug'] = str_replace(" ", "_", strtolower($data['slug']));
+            }
+
+            if (!empty($data['image_url'])) {
+                $photoName = $data['banner_name'] . '-web';
+
+                $update['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section', $photoName);
+
+                //delete old web photo
+                if ($data['old_web_img']) {
+                    $this->deleteFile($request['old_web_img']);
+                }
+            }
+
+            if (!empty($data['image_url_mobile'])) {
+                $photoName = $data['banner_name'] . '-mobile';
+
+                $update['image_mobile'] = $this->upload($data['image_url_mobile'], 'assetlite/images/ecarrer/general_section', $photoName);
+
+                //delete old web photo
+                if ($data['old_mob_img']) {
+                    $this->deleteFile($request['old_mob_img']);
+                }
+            }
+
+            $this->ecarrerPortalRepository->updateMainSection($update, $id);
+
+
+            $response = [
+                'success' => 1,
+            ];
+
+
+            return $response;
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e
+            ];
+            return $response;
+        }
+    }
 
 
     /**

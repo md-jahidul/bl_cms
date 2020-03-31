@@ -21,14 +21,49 @@ trait FileTrait
      * @param directoryPath - Directory path relative to base upload path
      * @return file path
      */
-    protected function upload($file, $directoryPath)
+    protected function upload($file, $directoryPath, $fileName = "")
     {
         $path = $file->store(
             $directoryPath,
             $this->disk
         );
+        
+        if($fileName != ""){
+           $renamedPath = $this->rename($path, $fileName, $directoryPath); 
+           return $renamedPath;
+        }
+        
+        
         return $path;
+        
+        
     }
+    
+    
+    /**
+     * Rename after upload
+     * @param file name
+     * @param directoryPath - Directory path relative to base upload path
+     * @return file path
+     * @Dev Bulbul Mahmud Nito || 30/03/2020
+     */
+    protected function rename($path, $fileName, $directoryPath)
+    {
+                $pathToArray = explode('/', $path);
+                $imgName = end($pathToArray);
+                $mimeArray = explode('.', $imgName);
+                $mime = end($mimeArray);
+
+                $oldImg = env('UPLOAD_BASE_PATH') . "/" . $path;
+                
+                $newName = $directoryPath. "/" . $fileName . "." . $mime;
+                $newPath = env('UPLOAD_BASE_PATH') ."/" . $newName;
+                rename($oldImg, $newPath);
+                
+                return $newName;
+    }
+    
+    
     /**
      * Download the attachments
      * @param filePath full file path including folder name and file name with extension relative to base path
