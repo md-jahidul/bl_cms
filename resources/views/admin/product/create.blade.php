@@ -34,6 +34,22 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
+                                    <label for="product_code" class="required">Product Code</label>
+                                    <select id="product_core" name="product_code"
+                                            data-url="{{ url('product-core/match') }}"
+                                            required data-validation-required-message="Please select product code">
+                                        <option value="">Select product code</option>
+                                        @foreach($productCoreCodes as $productCodes)
+                                            <option value="{{ $productCodes['product_code'] }}">{{ $productCodes['product_code'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('product_code'))
+                                        <div class="help-block">{{ $errors->first('product_code') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
                                     <label for="name_en">Offer Name (English)</label>
                                     <input type="text" name="name_en" id="name_en" class="form-control" placeholder="Enter offer name in English"
@@ -51,22 +67,6 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_bn'))
                                         <div class="help-block">{{ $errors->first('name_bn') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('product_code') ? ' error' : '' }}">
-                                    <label for="product_code" class="required">Product Code</label>
-                                    <select id="product_core" name="product_code"
-                                            data-url="{{ url('product-core/match') }}"
-                                            required data-validation-required-message="Please select product code">
-                                        <option value="">Select product code</option>
-                                        @foreach($productCoreCodes as $productCodes)
-                                            <option value="{{ $productCodes['product_code'] }}">{{ $productCodes['product_code'] }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('product_code'))
-                                        <div class="help-block">{{ $errors->first('product_code') }}</div>
                                     @endif
                                 </div>
 
@@ -98,12 +98,6 @@
                                     @endif
                                 </div>
 
-                                <slot id="packages" data-offer-type="packages" style="display: none">
-                                    @include('layouts.partials.products.packages')
-                                    @include('layouts.partials.products.common-field.call_rate_unit')
-                                </slot>
-
-
                                 <slot id="internet" data-offer-type="internet" style="display: none">
                                     @include('layouts.partials.products.internet')
                                 </slot>
@@ -117,59 +111,63 @@
 {{--                            </slot>--}}
 
                                 @if(strtolower($type) == 'prepaid')
-                                    <slot id="call_rate" data-offer-type="call_rate" style="display: none">
-                                        @include('layouts.partials.products.common-field.product_code')
-                                        @include('layouts.partials.products.call_rate')
-                                    </slot>
                                     <slot id="voice" data-offer-type="voice" style="display: none">
-                                        @include('layouts.partials.products.common-field.call_rate_unit')
                                         @include('layouts.partials.products.voice')
                                     </slot>
                                     <slot id="bundles" data-offer-type="bundles" style="display: none">
                                         @include('layouts.partials.products.bundle')
                                     </slot>
+
+                                    <slot id="call_rate" data-offer-type="call_rate" style="display: none">
+                                        @include('layouts.partials.products.call_rate')
+                                    </slot>
                                 @endif
 
-                                <div class="form-group col-md-6">
-                                    <label for="activation_ussd">USSD Code (English)</label>
-                                    <input type="text" name="activation_ussd" id="activation_ussd" class="form-control" placeholder="Enter offer ussd code in English"
-                                           value="{{ old("activation_ussd") ? old("activation_ussd") : '' }}">
-                                    <div class="help-block"></div>
-                                </div>
+                                <slot id="packages" data-offer-type="packages" style="display: none">
+                                    @include('layouts.partials.products.packages')
+{{--                                    @include('layouts.partials.products.common-field.call_rate_unit')--}}
+                                </slot>
 
-                                <div class="form-group col-md-6">
-                                    <label for="ussd_bn">USSD Code (Bangla)</label>
-                                    <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd code in Bangla"
-                                           value="{{ old("ussd_bn") ? old("ussd_bn") : '' }}">
-                                </div>
+{{--                                <div class="form-group col-md-6">--}}
+{{--                                    <label for="activation_ussd">USSD Code (English)</label>--}}
+{{--                                    <input type="text" name="activation_ussd" id="activation_ussd" class="form-control" placeholder="Enter offer ussd code in English"--}}
+{{--                                           value="{{ old("activation_ussd") ? old("activation_ussd") : '' }}">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                </div>--}}
 
-                                @include('layouts.partials.products.common-field.balance_check')
+{{--                                <div class="form-group col-md-6">--}}
+{{--                                    <label for="ussd_bn">USSD Code (Bangla)</label>--}}
+{{--                                    <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd code in Bangla"--}}
+{{--                                           value="{{ old("ussd_bn") ? old("ussd_bn") : '' }}">--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-6 ">
-                                    <label for="price">Offer Price</label>
-                                        <input type="text" name="price" id="price"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
-                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                                           value="{{ old("price") ? old("price") : '' }}">
-                                    <div class="help-block"></div>
-                                </div>
+{{--                                @include('layouts.partials.products.common-field.balance_check')--}}
 
-                                <div class="form-group col-md-6 ">
-                                    <label for="price">Vat</label>
-                                        <input type="text" name="vat" id="vat" class="form-control" placeholder="Enter offer price in taka" step="0.001"
-                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                                           value="{{ old("price") ? old("price") : '' }}">
-                                    <div class="help-block"></div>
-                                </div>
+{{--                                <div class="form-group col-md-6 ">--}}
+{{--                                    <label for="price">Offer Price</label>--}}
+{{--                                        <input type="text" name="price" id="price"  class="form-control" placeholder="Enter offer price in taka" step="0.001"--}}
+{{--                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"--}}
+{{--                                           value="{{ old("price") ? old("price") : '' }}">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-6">
-                                    <label for="tag_category_id">Tag</label>
-                                    <select class="form-control" name="tag_category_id">
-                                        <option value="">---Select Tag---</option>
-                                        @foreach($tags as $tag)
-                                            <option value="{{ $tag->id }}">{{ $tag->name_en }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+{{--                                <div class="form-group col-md-6 ">--}}
+{{--                                    <label for="price">Vat</label>--}}
+{{--                                        <input type="text" name="vat" id="vat" class="ftorm-control" placeholder="Enter offer price in taka" step="0.001"--}}
+{{--                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"--}}
+{{--                                           value="{{ old("price") ? old("price") : '' }}">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                </div>--}}
+
+{{--                                <div class="form-group col-md-6">--}}
+{{--                                    <label for="tag_category_id">Tag</label>--}}
+{{--                                    <select class="form-control" name="tag_category_id">--}}
+{{--                                        <option value="">---Select Tag---</option>--}}
+{{--                                        @foreach($tags as $tag)--}}
+{{--                                            <option value="{{ $tag->id }}">{{ $tag->name_en }}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
 
                                 <div class="col-md-6">
                                     <label></label>
