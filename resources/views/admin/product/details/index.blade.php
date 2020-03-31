@@ -53,7 +53,7 @@
                                 <td class="pt-2">{{ $section->title_bn }}</td>
                                 <td class="pt-2">{{ str_replace('_', ' ', $section->section_type) }}</td>
                                 <td class="pt-2">
-                                    <a href="{{ route('component-list', [$productDetailsId, $section->id]) }}"
+                                    <a href="{{ route('component-list', [$simType, $productDetailsId, $section->id]) }}"
                                        class="btn-sm btn-outline-primary border">Components</a>
                                 </td>
                                 <td class="action" width="8%">

@@ -2,12 +2,12 @@
 @section('title', 'Component List')
 @section('card_name', 'Component List')
 @section('breadcrumb')
-    <li class="breadcrumb-item "><a href="{{ route("section-list", [$productDetailsId, $sectionId]) }}">Section List</a></li>
+    <li class="breadcrumb-item "><a href="{{ route("section-list", [$simType, $productDetailsId]) }}">Section List</a></li>
     <li class="breadcrumb-item ">Component List</li>
 @endsection
 @section('action')
 
-<a href="{{ route("component-create", [$productDetailsId, $sectionId]) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>Add Component</a>
+<a href="{{ route("component-create", [$simType, $productDetailsId, $sectionId]) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>Add Component</a>
 
 @endsection
 @section('content')
@@ -32,8 +32,8 @@
                                     <td>{{ ucwords(str_replace('_', ' ', $list->component_type)) }}</td>
                                     <td>{{ $list->title_en  }}</td>
                                     <td class="text-right">
-                                        <a href="{{ route("component-edit", [$productDetailsId, $sectionId, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ route('component-delete', [$productDetailsId, $sectionId, $list->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
+                                        <a href="{{ route("component-edit", [$simType, $productDetailsId, $sectionId, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <a href="#" remove="{{ route('component-delete', [$simType, $productDetailsId, $sectionId, $list->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
                                             <i class="la la-trash"></i>
                                         </a>
                                     </td>

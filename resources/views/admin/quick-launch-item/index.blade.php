@@ -32,9 +32,13 @@
                                 <td>{{$quickLaunchItem->link}}</td>
                                 <td class="action" width="8%">
                                     <a href="{{ url("quick-launch/$type/$quickLaunchItem->id/edit") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("quick-launch/$type/destroy/$quickLaunchItem->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $quickLaunchItem->id }}" title="Delete the user">
-                                        <i class="la la-trash"></i>
-                                    </a>
+                                    @if($quickLaunchItem->slug != "customer_care")
+                                        <a href="#" remove="{{ url("quick-launch/$type/destroy/$quickLaunchItem->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $quickLaunchItem->id }}" title="Delete the user">
+                                            <i class="la la-trash"></i>
+                                        </a>
+                                    @else
+                                        <a href="#" class="border-0 btn btn-outline-danger delete_btn disabled"><i class="la la-trash"></i></a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

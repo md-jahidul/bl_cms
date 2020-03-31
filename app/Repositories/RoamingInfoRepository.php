@@ -41,7 +41,6 @@ class RoamingInfoRepository extends BaseRepository {
                 $info = $this->model->findOrFail($request->info_id);
             }
 
-            $info->category_id = $request->category_id;
             $info->name_en = $request->name_en;
             $info->name_bn = $request->name_bn;
             $info->card_text_en = $request->card_text_en;

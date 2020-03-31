@@ -322,7 +322,7 @@
                 <li class="{{ request()->is('life-at-banglalink/topbanner*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('life.at.banglalink.topbanner') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-magic"></i> Top Banner</a>
+                            class="la la-cogs"></i> Sections</a>
                 </li>
 
                 <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">

@@ -78,11 +78,8 @@ class AppServiceProductController extends Controller
     {
         $appServiceTabs = $this->appServiceTabRepository->findByProperties(array(), ['id', 'name_en', 'alias']);
         $vasVendorList = $this->appServiceVendorApiService->findAll();
-
-//        return $vasVendorList;
-
         $tags = $this->tagCategoryService->findAll();
-        return view('admin.app-service.product.create', compact('tags', 'appServiceTabs', 'appServiceCat', 'vasVendorList'));
+        return view('admin.app-service.product.create', compact('tags', 'appServiceTabs', 'vasVendorList'));
     }
 
     /**
@@ -132,15 +129,11 @@ class AppServiceProductController extends Controller
                 ['app_service_tab_id' => $appServiceProduct->app_service_tab_id],
                 ['id', 'title_en', 'alias']
             );
-
-
-//        return $appServiceProduct;
-
         $tags = $this->tagCategoryService->findAll();
+
         return view('admin.app-service.product.edit', compact(
             'tags',
             'appServiceTabs',
-            'appServiceCat',
             'appServiceProduct',
             'appServiceCategory',
             'vasVendorList'
