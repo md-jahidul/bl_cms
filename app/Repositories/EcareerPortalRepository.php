@@ -43,10 +43,11 @@ class EcareerPortalRepository extends BaseRepository
         return $this->model::where('id', $id)->whereNull('deleted_at')->first();
     }
     
+    //update category and sub category
     public function updateMainSection($data, $id){
         return $this->model::where('id', $id)->update($data);
     }
-
+    
 
 
 
