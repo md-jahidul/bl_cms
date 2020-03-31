@@ -10,10 +10,11 @@
     }
 
     function specialProductMatch($id,$relatedProducts){
-        foreach ($relatedProducts as $relatedProduct)
-        {
-            if ((int)$relatedProduct == $id) {
-                return true;
+        if ($relatedProducts) {
+            foreach ($relatedProducts as $relatedProduct) {
+                if ((int)$relatedProduct == $id) {
+                    return true;
+                }
             }
         }
         return false;
