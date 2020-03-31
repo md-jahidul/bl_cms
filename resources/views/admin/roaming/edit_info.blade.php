@@ -2,8 +2,8 @@
 @section('title', 'Roaming Other Offer Create')
 @section('card_name', 'Offer Create')
 @section('breadcrumb')
-<li class="breadcrumb-item active"> <a href="{{ url('roaming-offers') }}"> Offers</a></li>
-<li class="breadcrumb-item active"> Create Offer</li>
+<li class="breadcrumb-item active"> <a href="{{ url('roaming-info-tips') }}"> Info & Tips</a></li>
+<li class="breadcrumb-item active"> Edit</li>
 @endsection
 @section('content')
 <section>

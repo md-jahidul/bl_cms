@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyRoamingGeneralPagesTable extends Migration
+class ModifyRoamingInfoTipsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class ModifyRoamingGeneralPagesTable extends Migration
      */
     public function up()
     {
-         Schema::table('roaming_general_pages', function (Blueprint $table) {
-             $table->text('short_description_en')->nullable()->change();
-             $table->text('short_description_bn')->nullable()->change();
+         Schema::table('roaming_info_tips', function (Blueprint $table) {
+             $table->dropColumn(['category_id']);
         });
     }
 

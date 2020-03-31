@@ -615,10 +615,8 @@ class EcareerController extends Controller
 		    return redirect('life-at-banglalink/topbanner');
 		}
 
-		$data_types = null;
-
-		$this->ecarrerService->updateEcarrerSection($request->except(['slug']), $id, $data_types);
-
+		$response = $this->ecarrerService->updateMainSection($request->except(['slug']), $id);
+                
 		Session::flash('message', 'Banner updated successfully!');
 		return redirect('life-at-banglalink/topbanner');
 
@@ -1729,6 +1727,7 @@ class EcareerController extends Controller
 		$validator = Validator::make($request->all(), [
 		    // 'title_en' => 'required',
 		    // 'slug' => 'required',
+                    'route_slug' => 'required|regex:/^\S*$/u',
 		    'image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
 		]);
 		if ($validator->fails()) {
@@ -1736,12 +1735,12 @@ class EcareerController extends Controller
 		    return redirect('programs/tab-title');
 		}
 
-		$data_types = null;
+		
 
-		$this->ecarrerService->updateEcarrerSection($request->except(['slug']), $id, $data_types);
+		$this->ecarrerService->updateSubSection($request->except(['slug']), $id);
 
 		Session::flash('message', 'Banner updated successfully!');
-		return redirect('programs/tab-title');
+//		return redirect('programs/tab-title');
 
 	}
 
