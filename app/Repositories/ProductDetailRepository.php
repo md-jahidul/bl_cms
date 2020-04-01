@@ -22,5 +22,10 @@ class ProductDetailRepository extends BaseRepository
            'product_id' => $productId
         ]);
     }
+    
+    public function saveProductDetails($data, $productId)
+    {
+        $this->model->where('product_id', $productId)->update($data);
+    }
 
 }
