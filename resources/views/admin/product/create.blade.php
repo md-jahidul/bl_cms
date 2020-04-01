@@ -19,6 +19,16 @@
                         <form id="product_form" role="form" action="{{ route('product.store', strtolower($type)) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             <div class="row">
+                                @if($errors->any())
+                                    <div class="form-group col-md-12 mb-0">
+                                        <div class="alert bg-danger alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            {{ implode('', $errors->all(':message')) }}
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="form-group col-md-6 {{ $errors->has('offer_category_id') ? ' error' : '' }}">
                                     <label for="offer_category_id" class="required">Offer Type</label>
                                     <select class="form-control required" name="offer_category_id" id="offer_type"
@@ -44,6 +54,7 @@
                                             <option value="{{ $productCodes['product_code'] }}">{{ $productCodes['product_code'] }}</option>
                                         @endforeach
                                     </select>
+                                    <span class="text-warning">If product existing in core product. select dropdown. otherwise type than enter</span>
                                     <div class="help-block"></div>
                                     @if ($errors->has('product_code'))
                                         <div class="help-block">{{ $errors->first('product_code') }}</div>
@@ -69,10 +80,6 @@
                                         <div class="help-block">{{ $errors->first('name_bn') }}</div>
                                     @endif
                                 </div>
-
-                                <slot id="others" data-offer-type="others" style="display: none">
-                                    @include('layouts.partials.products.other')
-                                </slot>
 
                                 <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
                                     <label for="start_date">Start Date</label>
@@ -102,14 +109,6 @@
                                     @include('layouts.partials.products.internet')
                                 </slot>
 
-{{--                            <slot id="packages" data-offer-type="packages" style="display: none">--}}
-{{--                                @include('layouts.partials.products.packages')--}}
-{{--                            </slot>--}}
-
-{{--                            <slot id="others" data-offer-type="others" style="display: none">--}}
-{{--                                @include('layouts.partials.products.other')--}}
-{{--                            </slot>--}}
-
                                 @if(strtolower($type) == 'prepaid')
                                     <slot id="voice" data-offer-type="voice" style="display: none">
                                         @include('layouts.partials.products.voice')
@@ -125,49 +124,12 @@
 
                                 <slot id="packages" data-offer-type="packages" style="display: none">
                                     @include('layouts.partials.products.packages')
-{{--                                    @include('layouts.partials.products.common-field.call_rate_unit')--}}
                                 </slot>
 
-{{--                                <div class="form-group col-md-6">--}}
-{{--                                    <label for="activation_ussd">USSD Code (English)</label>--}}
-{{--                                    <input type="text" name="activation_ussd" id="activation_ussd" class="form-control" placeholder="Enter offer ussd code in English"--}}
-{{--                                           value="{{ old("activation_ussd") ? old("activation_ussd") : '' }}">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                </div>--}}
+                                <slot id="others" data-offer-type="others" style="display: none">
+                                    @include('layouts.partials.products.other')
+                                </slot>
 
-{{--                                <div class="form-group col-md-6">--}}
-{{--                                    <label for="ussd_bn">USSD Code (Bangla)</label>--}}
-{{--                                    <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd code in Bangla"--}}
-{{--                                           value="{{ old("ussd_bn") ? old("ussd_bn") : '' }}">--}}
-{{--                                </div>--}}
-
-{{--                                @include('layouts.partials.products.common-field.balance_check')--}}
-
-{{--                                <div class="form-group col-md-6 ">--}}
-{{--                                    <label for="price">Offer Price</label>--}}
-{{--                                        <input type="text" name="price" id="price"  class="form-control" placeholder="Enter offer price in taka" step="0.001"--}}
-{{--                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"--}}
-{{--                                           value="{{ old("price") ? old("price") : '' }}">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="form-group col-md-6 ">--}}
-{{--                                    <label for="price">Vat</label>--}}
-{{--                                        <input type="text" name="vat" id="vat" class="ftorm-control" placeholder="Enter offer price in taka" step="0.001"--}}
-{{--                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"--}}
-{{--                                           value="{{ old("price") ? old("price") : '' }}">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="form-group col-md-6">--}}
-{{--                                    <label for="tag_category_id">Tag</label>--}}
-{{--                                    <select class="form-control" name="tag_category_id">--}}
-{{--                                        <option value="">---Select Tag---</option>--}}
-{{--                                        @foreach($tags as $tag)--}}
-{{--                                            <option value="{{ $tag->id }}">{{ $tag->name_en }}</option>--}}
-{{--                                        @endforeach--}}
-{{--                                    </select>--}}
-{{--                                </div>--}}
 
                                 <div class="col-md-6">
                                     <label></label>

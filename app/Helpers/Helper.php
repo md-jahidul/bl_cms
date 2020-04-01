@@ -56,12 +56,16 @@ class Helper
         return [
             "AMAR_OFFER"              => "Amar Offer",
             "BALANCE_DETAILS"         => "Balance details > Balance",
+            "BALANCE_TRANSFER"        => "Balance Transfer",
+            "CONTACT_BACKUP"          => "Contact Backup",
+            "DIAL"                    => "Dial",
             "INTERNET_DETAILS"        => "Balance details > Internet",
             "MINTUES_DETAILS"         => "Balance details > Minutes",
             "SMS_DETAILS"             => "Balance details > SMS",
             "FAQ"                     => "FAQ",
             "FNF"                     => "FnF",
             "HOME"                    => "Home Menu",
+            "URL"                     => "External Link",
             "INTERNET_EXCLUSIVE_PACK" => "Internet packs > Buy Packs > Exclusive Pack",
             "INTERNET_MONTHLY_PACK"   => "Internet packs > Buy Packs > Monthly Pack",
             "INTERNET_POWER_PACK"     => "Internet packs > Buy Packs > Power Pack",
@@ -85,11 +89,7 @@ class Helper
             "T&C"                     => "T&C",
             "USAGE_HISTORY"           => "Usage History",
             "USSD_CODE_LIST"          => "View USSD code",
-            "VOICE_BUNDLE"            => "Voice Bundles",
-            "BALANCE_TRANSFER"        => "Balance Transfer",
-            "CONTACT_BACKUP"          => "Contact Backup",
-            "DIAL"                    => "Dial",
-            "URL"                     => "URL",
+            "VOICE_BUNDLE"            => "Voice Bundles"
 
         ];
     }

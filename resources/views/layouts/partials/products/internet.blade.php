@@ -11,7 +11,7 @@
     @include('layouts.partials.products.common-field.recharge_code')
 @endif
 
-@include('layouts.partials.products.common-field.recharge_code')
+{{--@include('layouts.partials.products.common-field.recharge_code')--}}
 
 @include('layouts.partials.products.common-field.price_vat_mrp')
 
@@ -24,6 +24,8 @@
 @include('layouts.partials.products.common-field.ussd_code')
 
 @include('layouts.partials.products.common-field.balance_check')
+
+@include('layouts.partials.products.common-field.tag')
 
 
 

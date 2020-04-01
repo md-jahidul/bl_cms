@@ -10,7 +10,7 @@
     <label for="price">Price</label>
     <input type="text" name="price" id="price"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
            oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-           value="{{ (!empty($product->ussd_bn)) ? $product->ussd_bn : old("ussd_bn") ?? '' }}">
+           value="{{ (!empty($product->product_core->price)) ? $product->product_core->price : old("price") ?? '' }}">
     <div class="help-block"></div>
 </div>
 
