@@ -27,14 +27,14 @@ class ShortCutStoreRequest extends FormRequest
             'title' => 'required|max:200|unique:shortcuts,title,' . $this->id,
             'icon' => 'required_if:value_exist,no|image|mimes:jpeg,jpg,png'
         ];
-/*
+
         if ($this->component_identifier == "URL") {
             $rules ['other_info'] = 'required|url';
         }
 
         if ($this->component_identifier == "DIAL") {
             $rules ['other_info'] = 'required|numeric,regex:/^\*[0-9\*#]*[0-9]+[0-9\*#]*#$/';
-        }*/
+        }
 
         return $rules;
     }
@@ -43,10 +43,10 @@ class ShortCutStoreRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function attributes()
     {
         return [
-
+            'other_info' => 'Number/ URL',
         ];
     }
 }

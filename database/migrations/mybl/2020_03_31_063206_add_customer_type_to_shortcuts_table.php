@@ -17,7 +17,7 @@ class AddCustomerTypeToShortcutsTable extends Migration
     public function up()
     {
         Schema::table('shortcuts', function (Blueprint $table) {
-            $table->string('customer_type')->after('is_default');
+            $table->string('customer_type')->after('is_default')->default('ALL');
         });
     }
 

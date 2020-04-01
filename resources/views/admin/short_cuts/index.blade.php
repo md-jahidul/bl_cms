@@ -52,17 +52,10 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="title" class="required">Title :</label>
-                            <input
-                                required
-                                {{--                                data-validation-required-message="Title is required"
-                                                                maxlength="50"
-                                                                data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                                                data-validation-regex-message="Title must start with alphabets"
-                                                                data-validation-maxlength-message="Title can not be more then 50 Characters"
-                                                                style="height:100%"--}}
-                                value="@if(isset($short_cut_info)){{$short_cut_info->title}} @elseif(old("title")) {{old("title")}} @endif"
-                                type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                                id="title" placeholder="Enter Shorcut Name..">
+                            <input required
+                                   value="@if(isset($short_cut_info)){{$short_cut_info->title}} @elseif(old("title")) {{old("title")}} @endif"
+                                   type="text" name="title" class="form-control @error('title') is-invalid @enderror"
+                                   id="title" placeholder="Enter Shorcut Name..">
                             <div class="help-block">
                                 <small class="text-info"> Title can not be more then 50 Characters</small>
                             </div>
@@ -87,12 +80,11 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="image" class="required">Upload Icon :</label>
                             @if (isset($short_cut_info))
-                                <input type="file" required
+                                <input type="file"
                                        id="icon"
                                        class="dropify"
                                        name="icon"
@@ -125,7 +117,8 @@
 
                         <div class="form-group">
                             <label>Navigate Action </label>
-                            <select name="component_identifier" class="browser-default custom-select" id="navigate_action">
+                            <select name="component_identifier" class="browser-default custom-select"
+                                    id="navigate_action" required>
                                 <option value="">Select Action</option>
                                 @foreach ($actionList as $key => $value)
                                     <option
@@ -144,31 +137,29 @@
                     <div id="append_div" class="col-md-4">
                         @if(isset($short_cut_info))
                             @if($info = json_decode($short_cut_info->other_info))
-                            {{--{{ dd( @if($json_decode($short_cut_info->other_info)) @endif }}--}}
-                            <div class="form-group" id="other_info">
-                                <label>@if($short_cut_info->component_identifier == "DIAL") Dial Number @else Redirect
-                                    URL @endif </label>
-                                <input type="text" name="other_info" class="form-control" required
-                                       value="@if($info) {{$info->content}} @endif">
-                                <div class="help-block"></div>
-                            </div>
+                                {{--{{ dd( @if($json_decode($short_cut_info->other_info)) @endif }}--}}
+                                <div class="form-group other-info-div">
+                                    <label>@if($short_cut_info->component_identifier == "DIAL") Dial Number @else
+                                            Redirect
+                                            URL @endif </label>
+                                    <input type="text" name="other_info" class="form-control" required
+                                           value="@if($info) {{$info->content}} @endif">
+                                    <div class="help-block"></div>
+                                </div>
                             @endif
                         @endif
                     </div>
 
                     <div class="col-md-4">
-                        {{--                        <div class="pull-right">--}}
+                        <small class="text-danger"> @error('other_info') {{ $message }} @enderror </small>
                         @if(isset($short_cut_info))
-                            <button type="submit" id="update_btn" style="width:100%" class="btn btn-info submit-btn">
-                                Update
+                            <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Update
                                 Shortcut
                             </button>
                         @else
-                            <button type="submit" id="add_btn" style="width:100%" class="btn btn-info submit-btn">Add
-                                Shortcut
+                            <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Add Shortcut
                             </button>
                         @endif
-                        {{--                        </div>--}}
                     </div>
                 </div>
             </div>
@@ -181,20 +172,19 @@
                            role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width='5%'><i class="icon-cursor-move icons"></i></th>
-                            {{--<th width="10%">id</th>--}}
+                            <th width="10%">id</th>
                             <th>Title</th>
                             <th>Navigate Action</th>
                             <th> Icon</th>
                             <th>Is Default</th>
+                            <th>Customer Type</th>
                             <th>Action</th>
                         </tr>
                         </thead>
-                        <tbody id="sortable">
+                        <tbody>
                         @foreach ($short_cuts as $short_cut)
-                            <tr data-index="{{ $short_cut->id }}" data-position="{{ $short_cut->display_order }}">
-                                <td width="5%"><i class="icon-cursor-move icons"></i></td>
-                                {{-- <td width="10%">{{$short_cut->id}}</td>--}}
+                            <tr>
+                                <td width="10%">{{$short_cut->id}}</td>
                                 <td>{{$short_cut->title}}</td>
                                 <td>
                                     {{ isset($actionList [$short_cut->component_identifier])?$actionList [$short_cut->component_identifier] : '' }}
@@ -203,6 +193,9 @@
                                          alt="" srcset=""></td>
                                 <td width="10%">
                                     @if($short_cut->is_default==1) Default @else Not Default @endif
+                                </td>
+                                <td width="10%">
+                                    {{ $short_cut->customer_type }}
                                 </td>
                                 <td>
                                     <div class="form-group">
@@ -236,19 +229,12 @@
 
 @endsection
 
-@push('page-css')
-    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
-    <style>
-        #sortable tr td {
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-        }
+@section('content_right_side_bar')
+    <h1>
+        info
+    </h1>
+@endsection
 
-        table.dataTable {
-            border-spacing: 1px;
-        }
-    </style>
-@endpush
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
@@ -266,8 +252,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
 
-        var auto_save_url = "{{ url('shortcuts-sortable') }}";
-
         $(function () {
             var content = "";
             var url_html;
@@ -278,10 +262,10 @@
             if (js_data) {
                 parse_data = JSON.parse(js_data);
                 other_info = parse_data.other_info;
-                content = other_info.content;
+                if (other_info) {
+                    content = other_info.content;
+                }
             }
-
-            console.log(js_data);
 
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
@@ -317,22 +301,21 @@
                 })
             })
             // add dial number
-
             dial_html = ` <div class="form-group other-info-div">
                                         <label>Dial Number</label>
-                                        <input type="text" name="other_info" class="form-control" value="${content}" required>
+                                        <input type="text" name="other_info" class="form-control" value="${content}" placeholder="Enter Valid Number" required>
                                         <div class="help-block"></div>
                                     </div>`;
 
             url_html = ` <div class="form-group other-info-div">
                                         <label>Redirect External URL</label>
-                                        <input type="text" name="other_info" class="form-control" value="${content}" required>
+                                        <input type="text" name="other_info" class="form-control" value="${content}" placeholder="Enter Valid URL" required>
                                         <div class="help-block"></div>
                                     </div>`;
 
+
             $('#navigate_action').on('change', function () {
                 let action = $(this).val();
-                alert(action);
                 if (action == 'DIAL') {
                     $("#append_div").html(dial_html);
                 } else if (action == 'URL') {
@@ -353,18 +336,18 @@
                 searching: true,
                 "bDestroy": true,
             });
-        });
 
-        $('.dropify').dropify({
-            messages: {
-                'default': 'Browse for an Icon to upload',
-                'replace': 'Click to replace',
-                'remove': 'Remove',
-                'error': 'Choose correct Icon file'
-            },
-            error: {
-                'imageFormat': 'The image ratio must be 1:1.'
-            }
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Icon to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct Icon file'
+                },
+                error: {
+                    'imageFormat': 'The image ratio must be 1:1.'
+                }
+            });
         });
 
     </script>
