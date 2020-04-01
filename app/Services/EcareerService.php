@@ -200,8 +200,6 @@ class EcareerService
      */
     public function updateMainSection($data, $id) {
         try {
-            $general_section = $this->findOne($id);
-            
             
             $update['title_en'] = $data['title_en'];
             $update['title_bn'] = $data['title_bn'];
@@ -237,6 +235,39 @@ class EcareerService
                     $this->deleteFile($request['old_mob_img']);
                 }
             }
+
+            $this->ecarrerPortalRepository->updateMainSection($update, $id);
+
+
+            $response = [
+                'success' => 1,
+            ];
+
+
+            return $response;
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e
+            ];
+            return $response;
+        }
+    }
+     /**
+     * [updateEcarrerGeneralSection description]
+     * @param  [type] $data [description]
+     * @param  [type] $id   [description]
+     * @return [type]       [description]
+     */
+    public function updateSubSection($data, $id) {
+        try {
+            
+            $update['title_en'] = $data['title_en'];
+            $update['title_bn'] = $data['title_bn'];
+            $update['page_header'] = $data['page_header'];
+            $update['schema_markup'] = $data['schema_markup'];
+            $update['route_slug'] = $data['route_slug'];
+            $update['is_active'] = $data['is_active'];
 
             $this->ecarrerPortalRepository->updateMainSection($update, $id);
 

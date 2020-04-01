@@ -123,7 +123,9 @@ class ProductCoreService
         if (empty($productCode)) {
             $data['name'] = $data['name_en'];
             $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
-            $data['mrp_price'] = $data['price'] + $data['vat'];
+            $data['recharge_product_code'] = isset($data['recharge_product_code']) ? str_replace(' ', '', strtoupper($data['recharge_product_code'])) : null;
+            $data['renew_product_code'] = isset($data['renew_product_code']) ? str_replace(' ', '', strtoupper($data['renew_product_code'])) : null;
+//            $data['mrp_price'] = $data['price'] + $data['vat'];
 //            $data['is_recharge_offer'] = $data['is_recharge'];
             $data['commercial_name_en'] = $data['name_en'];
             $data['commercial_name_bn'] = $data['name_bn'];
