@@ -14,7 +14,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
     {
 
 
-        \DB::table('ecareer_portal_items')->truncate();
+        \DB::table('ecareer_portal_items')->delete();
 
         \DB::table('ecareer_portal_items')->insert(array (
             0 =>
