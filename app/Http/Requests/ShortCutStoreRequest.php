@@ -33,7 +33,7 @@ class ShortCutStoreRequest extends FormRequest
         }
 
         if ($this->component_identifier == "DIAL") {
-            $rules ['other_info'] = 'required|numeric,regex:/^\*[0-9\*#]*[0-9]+[0-9\*#]*#$/';
+            $rules ['other_info'] = 'required';
         }
 
         return $rules;
