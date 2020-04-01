@@ -12,12 +12,12 @@ class EcarrerPortalsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
-        \DB::table('ecarrer_portals')->delete();
-        
-        \DB::table('ecarrer_portals')->insert(array (
-            0 => 
+
+        \DB::table('ecareer_portals')->delete();
+
+        \DB::table('ecareer_portals')->insert(array (
+            0 =>
             array (
                 'id' => 1,
                 'title_en' => 'Life At Banglalink Changed',
@@ -39,7 +39,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-20 11:33:10',
                 'deleted_at' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'title_en' => 'Commercial',
@@ -61,7 +61,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:25:05',
                 'deleted_at' => NULL,
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 6,
                 'title_en' => 'Values',
@@ -83,7 +83,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 14:05:56',
                 'deleted_at' => NULL,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 7,
                 'title_en' => 'We At campus',
@@ -105,7 +105,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 14:06:06',
                 'deleted_at' => NULL,
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 9,
                 'title_en' => 'Photo Gallery slider',
@@ -127,7 +127,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:42:27',
                 'deleted_at' => NULL,
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 10,
                 'title_en' => 'Brain Station 23',
@@ -149,7 +149,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 09:39:10',
                 'deleted_at' => NULL,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 11,
                 'title_en' => 'First Box',
@@ -171,7 +171,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 10:00:34',
                 'deleted_at' => NULL,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 12,
                 'title_en' => 'Contact Us',
@@ -193,7 +193,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 10:00:21',
                 'deleted_at' => NULL,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 13,
                 'title_en' => 'Connect Us At Social Media',
@@ -215,7 +215,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 10:01:48',
                 'deleted_at' => NULL,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 14,
                 'title_en' => 'Batch 1',
@@ -237,7 +237,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:15:25',
                 'deleted_at' => NULL,
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 15,
                 'title_en' => 'Life At Banglalink',
@@ -259,7 +259,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 06:51:09',
                 'deleted_at' => NULL,
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 16,
                 'title_en' => 'Programs',
@@ -281,7 +281,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 06:51:15',
                 'deleted_at' => NULL,
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 17,
                 'title_en' => 'Vacancy',
@@ -303,7 +303,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 06:51:21',
                 'deleted_at' => NULL,
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 18,
                 'title_en' => 'Technology',
@@ -325,7 +325,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:25:08',
                 'deleted_at' => NULL,
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 19,
                 'title_en' => 'Enablers',
@@ -347,7 +347,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:25:11',
                 'deleted_at' => NULL,
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 20,
                 'title_en' => 'SAP News Section',
@@ -369,7 +369,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:59:59',
                 'deleted_at' => NULL,
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 21,
                 'title_en' => 'Diversity Changed',
@@ -391,7 +391,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:29:49',
                 'deleted_at' => NULL,
             ),
-            17 => 
+            17 =>
             array (
                 'id' => 22,
                 'title_en' => 'Events & Activities',
@@ -413,7 +413,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 14:02:30',
                 'deleted_at' => NULL,
             ),
-            18 => 
+            18 =>
             array (
                 'id' => 23,
                 'title_en' => 'Testimonials',
@@ -435,7 +435,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:00:05',
                 'deleted_at' => NULL,
             ),
-            19 => 
+            19 =>
             array (
                 'id' => 24,
                 'title_en' => 'Box icon sections for Ennovators',
@@ -457,7 +457,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:48:16',
                 'deleted_at' => NULL,
             ),
-            20 => 
+            20 =>
             array (
                 'id' => 25,
                 'title_en' => 'Previous Batches',
@@ -479,7 +479,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:15:30',
                 'deleted_at' => NULL,
             ),
-            21 => 
+            21 =>
             array (
                 'id' => 26,
                 'title_en' => 'asd',
@@ -501,7 +501,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:00:10',
                 'deleted_at' => NULL,
             ),
-            22 => 
+            22 =>
             array (
                 'id' => 27,
                 'title_en' => 'Teams',
@@ -523,7 +523,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:25:13',
                 'deleted_at' => NULL,
             ),
-            23 => 
+            23 =>
             array (
                 'id' => 28,
                 'title_en' => 'How We Hire',
@@ -545,7 +545,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 09:31:03',
                 'deleted_at' => NULL,
             ),
-            24 => 
+            24 =>
             array (
                 'id' => 29,
                 'title_en' => 'Job Offers',
@@ -567,7 +567,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 06:56:25',
                 'deleted_at' => NULL,
             ),
-            25 => 
+            25 =>
             array (
                 'id' => 30,
                 'title_en' => 'Second Box',
@@ -589,7 +589,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 10:00:43',
                 'deleted_at' => NULL,
             ),
-            26 => 
+            26 =>
             array (
                 'id' => 31,
                 'title_en' => 'Third Box',
@@ -611,7 +611,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 10:00:52',
                 'deleted_at' => NULL,
             ),
-            27 => 
+            27 =>
             array (
                 'id' => 34,
                 'title_en' => 'Steps',
@@ -633,7 +633,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:00:15',
                 'deleted_at' => NULL,
             ),
-            28 => 
+            28 =>
             array (
                 'id' => 35,
                 'title_en' => 'Previous Batches',
@@ -655,7 +655,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:15:00',
                 'deleted_at' => NULL,
             ),
-            29 => 
+            29 =>
             array (
                 'id' => 36,
                 'title_en' => 'Batch 1',
@@ -677,7 +677,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:15:05',
                 'deleted_at' => NULL,
             ),
-            30 => 
+            30 =>
             array (
                 'id' => 37,
                 'title_en' => 'Batch 2',
@@ -699,7 +699,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:15:17',
                 'deleted_at' => NULL,
             ),
-            31 => 
+            31 =>
             array (
                 'id' => 38,
                 'title_en' => 'Events',
@@ -721,7 +721,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:00:20',
                 'deleted_at' => NULL,
             ),
-            32 => 
+            32 =>
             array (
                 'id' => 39,
                 'title_en' => 'Photo Gallery',
@@ -743,7 +743,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:42:32',
                 'deleted_at' => NULL,
             ),
-            33 => 
+            33 =>
             array (
                 'id' => 40,
                 'title_en' => 'test',
@@ -765,7 +765,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 06:06:56',
                 'deleted_at' => '2020-02-17 06:06:56',
             ),
-            34 => 
+            34 =>
             array (
                 'id' => 41,
                 'title_en' => 'test',
@@ -787,7 +787,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 06:00:22',
                 'deleted_at' => '2020-02-17 06:00:22',
             ),
-            35 => 
+            35 =>
             array (
                 'id' => 42,
                 'title_en' => 'test',
@@ -809,7 +809,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 06:00:18',
                 'deleted_at' => '2020-02-17 06:00:18',
             ),
-            36 => 
+            36 =>
             array (
                 'id' => 43,
                 'title_en' => 'arawrfasfasfafwfwqwrweweqweqweqweqwe',
@@ -831,7 +831,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 06:00:13',
                 'deleted_at' => '2020-02-17 06:00:13',
             ),
-            37 => 
+            37 =>
             array (
                 'id' => 44,
                 'title_en' => 'aset',
@@ -853,7 +853,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 06:06:52',
                 'deleted_at' => '2020-02-17 06:06:52',
             ),
-            38 => 
+            38 =>
             array (
                 'id' => 45,
                 'title_en' => 'Strategic Assistant Program',
@@ -875,7 +875,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 07:18:25',
                 'deleted_at' => NULL,
             ),
-            39 => 
+            39 =>
             array (
                 'id' => 46,
                 'title_en' => 'Ennovators',
@@ -897,7 +897,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 07:18:25',
                 'deleted_at' => NULL,
             ),
-            40 => 
+            40 =>
             array (
                 'id' => 47,
                 'title_en' => 'Advanced Internship Program',
@@ -919,7 +919,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 07:18:25',
                 'deleted_at' => NULL,
             ),
-            41 => 
+            41 =>
             array (
                 'id' => 48,
                 'title_en' => 'Sap News Section',
@@ -941,7 +941,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:00:26',
                 'deleted_at' => NULL,
             ),
-            42 => 
+            42 =>
             array (
                 'id' => 49,
                 'title_en' => 'Box icon sections for SAP',
@@ -963,7 +963,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:48:23',
                 'deleted_at' => NULL,
             ),
-            43 => 
+            43 =>
             array (
                 'id' => 50,
                 'title_en' => 'Steps',
@@ -985,7 +985,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:00:32',
                 'deleted_at' => NULL,
             ),
-            44 => 
+            44 =>
             array (
                 'id' => 51,
                 'title_en' => 'AIP News Sections',
@@ -1007,7 +1007,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:00:38',
                 'deleted_at' => NULL,
             ),
-            45 => 
+            45 =>
             array (
                 'id' => 52,
                 'title_en' => 'Box icon sections for AIP',
@@ -1029,7 +1029,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:48:29',
                 'deleted_at' => NULL,
             ),
-            46 => 
+            46 =>
             array (
                 'id' => 53,
                 'title_en' => 'Steps',
@@ -1051,7 +1051,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:00:45',
                 'deleted_at' => NULL,
             ),
-            47 => 
+            47 =>
             array (
                 'id' => 54,
                 'title_en' => 'Events',
@@ -1073,7 +1073,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:00:51',
                 'deleted_at' => NULL,
             ),
-            48 => 
+            48 =>
             array (
                 'id' => 55,
                 'title_en' => 'Photo Gallery',
@@ -1095,7 +1095,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:42:37',
                 'deleted_at' => NULL,
             ),
-            49 => 
+            49 =>
             array (
                 'id' => 56,
                 'title_en' => 'Ut quis doloremque',
@@ -1117,7 +1117,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 10:00:15',
                 'deleted_at' => '2020-02-19 10:00:15',
             ),
-            50 => 
+            50 =>
             array (
                 'id' => 57,
                 'title_en' => 'Batch 2',
@@ -1140,7 +1140,7 @@ class EcarrerPortalsTableSeeder extends Seeder
                 'deleted_at' => '2020-02-24 09:18:43',
             ),
         ));
-        
-        
+
+
     }
 }

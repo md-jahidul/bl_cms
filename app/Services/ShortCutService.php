@@ -40,7 +40,7 @@ class ShortCutService
 
     public function getShortcutList()
     {
-       return $this->shortCutRepository->getShortcutList();
+        return $this->shortCutRepository->getShortcutList();
     }
 
     /**
@@ -50,6 +50,13 @@ class ShortCutService
     public function storeShortCut($shortCut)
     {
         $shortCut['icon'] = 'storage/' . $shortCut['icon']->store('short_cuts_icon');
+        if (isset($shortCut['other_info'])) {
+            $shortCut['other_info'] = json_encode([
+               'type' => strtolower($shortCut['component_identifier']),
+               'content' => $shortCut['other_info']
+            ]);
+        }
+
         $this->save($shortCut);
         return new Response("Shortcut has been successfully created");
     }
