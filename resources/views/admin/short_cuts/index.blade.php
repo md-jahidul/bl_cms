@@ -172,7 +172,7 @@
                            role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
-                            <th width="10%">id</th>
+                            <th width='5%'><i class="icon-cursor-move icons"></i></th>
                             <th>Title</th>
                             <th>Navigate Action</th>
                             <th> Icon</th>
@@ -181,10 +181,10 @@
                             <th>Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable">
                         @foreach ($short_cuts as $short_cut)
-                            <tr>
-                                <td width="10%">{{$short_cut->id}}</td>
+                            <tr data-index="{{ $short_cut->id }}" data-position="{{ $short_cut->display_order }}">
+                                <td width="5%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{$short_cut->title}}</td>
                                 <td>
                                     {{ isset($actionList [$short_cut->component_identifier])?$actionList [$short_cut->component_identifier] : '' }}
@@ -251,6 +251,8 @@
             type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
+
+        var auto_save_url = "{{ url('shortcuts-sortable') }}";
 
         $(function () {
             var content = "";
