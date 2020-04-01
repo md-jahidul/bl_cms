@@ -238,7 +238,7 @@ class EcareerService {
                 }
             }
 
-            if ($status == true) {
+            if ($status != false) {
                 $this->ecarrerPortalRepository->updateMainSection($update, $id);
 
                 $response = [
@@ -246,7 +246,7 @@ class EcareerService {
                 ];
             } else {
                 $response = [
-                    'success' => 0,
+                    'success' => 2,
                 ];
             }
 

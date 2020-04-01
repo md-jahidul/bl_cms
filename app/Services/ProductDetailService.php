@@ -13,9 +13,8 @@ use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
+class ProductDetailService {
 
-class ProductDetailService
-{
     use CrudTrait;
     use FileTrait;
 
@@ -23,7 +22,6 @@ class ProductDetailService
      * @var $partnerOfferDetailRepository
      */
     protected $productDetailRepository;
-
     protected $productRepository;
 
     /**
@@ -32,21 +30,18 @@ class ProductDetailService
      * @param ProductRepository $productRepository
      */
     public function __construct(
-        ProductDetailRepository $productDetailRepository,
-        ProductRepository $productRepository
+    ProductDetailRepository $productDetailRepository, ProductRepository $productRepository
     ) {
         $this->productDetailRepository = $productDetailRepository;
         $this->productRepository = $productRepository;
         $this->setActionRepository($productDetailRepository);
     }
 
-
     /**
      * @param $request
      * @param $id
      */
-    public function updateOtherRelatedProduct($request, $id)
-    {
+    public function updateOtherRelatedProduct($request, $id) {
 
         $otherRelatedProducts = OtherRelatedProduct::where('product_id', $id)->get();
         if (count($otherRelatedProducts) > 0) {
@@ -71,8 +66,7 @@ class ProductDetailService
      * @param $requset
      * @param $id
      */
-    public function updateRelatedProduct($requset, $id)
-    {
+    public function updateRelatedProduct($requset, $id) {
         $products = RelatedProduct::where('product_id', $id)->get();
         if (count($products) > 0) {
             foreach ($products as $product) {
@@ -96,28 +90,110 @@ class ProductDetailService
      * @param $productId
      * @return ResponseFactory|Response
      */
-    public function updateProductDetails($data, $productId)
-    {
-        $productDetails = $this->productDetailRepository->findOneByProperties(['product_id' => $productId]);
+    public function updateProductDetails($data, $productId) {
+        try {
 
-        if (!empty($data['banner_image_url'])) {
-            $data['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/product_details');
-        }
+          
+//            die();
+            $status = true;
 
-        $bondhoSimOffers = $this->productRepository->countBondhoSimOffer();
+            $productDetails = $this->productDetailRepository->findOneByProperties(['product_id' => $productId]);
 
-        if (isset($data['other_offer_type_id'])) {
-            foreach ($bondhoSimOffers as $bondhoSimOffer) {
-                if ($bondhoSimOffer->offer_info['other_offer_type_id'] == 13) {
-                    $productDetails = $this->productDetailRepository->findOneByProperties(['product_id' => $bondhoSimOffer->id]);
-                    $productDetails->update($data);
+
+            $update = [];
+
+            $update['offer_details_en'] = $data['offer_details_en'];
+            $update['offer_details_bn'] = $data['offer_details_bn'];
+            $update['url_slug'] = $data['url_slug'];
+            $update['schema_markup'] = $data['schema_markup'];
+            $update['page_header'] = $data['page_header'];
+            $update['banner_name'] = $data['banner_name'];
+            
+            if (!empty($data['banner_image_url'])) {
+                
+                //delete old web photo
+                if ($data['old_web_img'] != "") {
+                    $this->deleteFile($data['old_web_img']);
+                }
+                
+                $photoName = $data['banner_name'] . '-web';
+                $update['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/product_details', $photoName);
+                $status = $update['banner_image_url'];
+                
+                
+            }
+
+            if (!empty($data['banner_image_mobile'])) {
+                
+                 //delete old web photo
+                if ($data['old_mob_img'] != "") {
+                    $this->deleteFile($data['old_mob_img']);
+                }
+         
+                $photoName = $data['banner_name'] . '-mobile';
+                $update['banner_image_mobile'] = $this->upload($data['banner_image_mobile'], 'assetlite/images/banner/product_details', $photoName);
+//                         dd( $update['banner_image_mobile']);
+                $status = $update['banner_image_mobile'];
+
+            }
+
+            //only rename
+            if ($data['old_banner_name'] != $data['banner_name']) {
+                //rename web
+                if (empty($data['banner_image_url']) && $data['old_web_img'] != "") {
+                    $fileName = $data['banner_name'] . '-web';
+                    $directoryPath = 'assetlite/images/banner/product_details';
+                    $update['banner_image_url'] = $this->rename($data['old_web_img'], $fileName, $directoryPath);
+
+                    $status = $update['banner_image_url'];
+                }
+
+                if (empty($data['banner_image_mobile']) && $data['old_mob_img'] != "") {
+                    $fileName = $data['banner_name'] . '-mobile';
+                    $directoryPath = 'assetlite/images/banner/product_details';
+                    $update['banner_image_mobile'] = $this->rename($data['old_mob_img'], $fileName, $directoryPath);
+
+                    $status = $update['banner_image_mobile'];
                 }
             }
+
+
+            if ($status != false) {
+                $bondhoSimOffers = $this->productRepository->countBondhoSimOffer();
+
+                if (isset($data['other_offer_type_id'])) {
+                    foreach ($bondhoSimOffers as $bondhoSimOffer) {
+                        if ($bondhoSimOffer->offer_info['other_offer_type_id'] == 13) {
+//                            $productDetails = $this->productDetailRepository->findOneByProperties(['product_id' => $bondhoSimOffer->id]);
+                             $this->productDetailRepository->saveProductDetails($update, $bondhoSimOffer->id);
+//                            $productDetails->update($data);
+                        }
+                    }
+                }
+                
+//                dd($update);
+                $this->productDetailRepository->saveProductDetails($update, $productId);
+
+//                $productDetails->update($data);
+
+                $response = [
+                    'success' => 1,
+                ];
+            } else {
+                $response = [
+                    'success' => 2,
+                ];
+            }
+
+
+            return $response;
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return $response;
         }
-
-
-        $productDetails->update($data);
-        return Response('Product Details update successfully!');
     }
 
 }

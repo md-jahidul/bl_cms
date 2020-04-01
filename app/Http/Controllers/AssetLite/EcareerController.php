@@ -582,8 +582,10 @@ class EcareerController extends Controller {
         
         if ($response['success'] == 1) {
             Session::flash('message', 'Section updated successfully!');
-        } else {
+        } else if($response['success'] == 2){
             Session::flash('error', "The banner name is not unique!");
+        }else{
+            Session::flash('error', $response['message']);
         }
         return redirect('life-at-banglalink/topbanner');
     }

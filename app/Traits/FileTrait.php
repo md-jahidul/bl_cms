@@ -28,10 +28,10 @@ trait FileTrait {
 
         if ($fileName != "") {
             $renamedPath = $this->rename($path, $fileName, $directoryPath);
-            
-            if($renamedPath == false){
-              $this->deleteFile($path);
-            }
+//
+//            if ($renamedPath == false) {
+//                $this->deleteFile($path);
+//            }
             return $renamedPath;
         }
 
@@ -47,22 +47,19 @@ trait FileTrait {
      * @Dev Bulbul Mahmud Nito || 30/03/2020
      */
     protected function rename($path, $fileName, $directoryPath) {
+
+        $oldImg = env('UPLOAD_BASE_PATH') . "/" . $path;
+
         $pathToArray = explode('/', $path);
         $imgName = end($pathToArray);
         $mimeArray = explode('.', $imgName);
         $mime = end($mimeArray);
 
-        $oldImg = env('UPLOAD_BASE_PATH') . "/" . $path;
-
         $newName = $directoryPath . "/" . $fileName . "." . $mime;
         $newPath = env('UPLOAD_BASE_PATH') . "/" . $newName;
 
-        if (file_exists($newPath)) {
-            return false;
-        } else {
-            @rename($oldImg, $newPath);
-            return $newName;
-        }
+        @rename($oldImg, $newPath);
+        return $newName;
     }
 
     /**

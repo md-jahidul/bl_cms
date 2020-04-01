@@ -12,28 +12,24 @@ use Illuminate\View\View;
 use App\Http\Controllers\AssetLite\ConfigController;
 use Illuminate\Support\Facades\Validator;
 
-class OfferCategoryController extends Controller
-{
-    private $offerCategoryService;
+class OfferCategoryController extends Controller {
 
+    private $offerCategoryService;
 
     /**
      * OfferCategoryController constructor.
      * @param OfferCategoryService $offerCategoryService
      */
-    public function __construct(OfferCategoryService $offerCategoryService)
-    {
+    public function __construct(OfferCategoryService $offerCategoryService) {
         $this->offerCategoryService = $offerCategoryService;
     }
-
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($parent_id = 0, $type = null)
-    {
+    public function index($parent_id = 0, $type = null) {
         // $type = OfferCategory::find($parent_id)->name;
         $offerCategories = OfferCategory::where('parent_id', $parent_id)->with('type')->get();
 
@@ -54,8 +50,7 @@ class OfferCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -65,8 +60,7 @@ class OfferCategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -76,8 +70,7 @@ class OfferCategoryController extends Controller
      * @param  \App\Models\OfferCategory  $offerCategory
      * @return \Illuminate\Http\Response
      */
-    public function show(OfferCategory $offerCategory)
-    {
+    public function show(OfferCategory $offerCategory) {
         //
     }
 
@@ -85,8 +78,7 @@ class OfferCategoryController extends Controller
      * @param $id
      * @return Factory|View
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         $offer = OfferCategory::findOrFail($id);
         return view('admin.category.offer.edit', compact('offer'));
     }
@@ -95,8 +87,7 @@ class OfferCategoryController extends Controller
      * @param $id
      * @return Factory|View
      */
-    public function childEdit($parent_id,$type,$id)
-    {
+    public function childEdit($parent_id, $type, $id) {
         $offer = OfferCategory::findOrFail($id);
         return view('admin.category.offer.child_edit', compact('offer', 'parent_id', 'type'));
     }
@@ -105,8 +96,7 @@ class OfferCategoryController extends Controller
      * @param $id
      * @return Factory|\Illuminate\View\View3
      */
-    public function childUpdate(Request $request, $parent_id, $id)
-    {
+    public function childUpdate(Request $request, $parent_id, $id) {
         $type = $request->type;
         $offer = OfferCategory::findOrFail($id);
         $offer->update($request->all());
@@ -120,25 +110,36 @@ class OfferCategoryController extends Controller
      * @param  \App\Models\OfferCategory  $offerCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //$offer = OfferCategory::findOrFail($id);
-        
+
         $image_upload_size = ConfigController::adminImageUploadSize();
         $image_upload_type = ConfigController::adminImageUploadType();
-        
+
         # Check Image upload validation
         $validator = Validator::make($request->all(), [
-            'banner_image_url' => 'required|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+                    'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
+                    'url_slug' => 'required|regex:/^\S*$/u',
+                    'banner_image_url' => 'mimes:' . $image_upload_type . '|max:' . $image_upload_size // 2M
         ]);
         if ($validator->fails()) {
             Session::flash('error', $validator->messages()->first());
             return redirect('offer-categories');
         }
 
-        $this->offerCategoryService->updateOfferCategory($request->all(), $id);
+        $response = $this->offerCategoryService->updateOfferCategory($request->all(), $id);
+        
+//        dd($response);
 
-        Session::flash('message', 'Offer Update successfully!');
+        if ($response['success'] == 1) {
+            Session::flash('message', 'Offer Update successfully!');
+        } else if ($response['success'] == 2) {
+            Session::flash('error', "The banner name is not unique or banner file not found");
+        } else {
+            Session::flash('error', $response['message']);
+        }
+
+
         return redirect('offer-categories');
     }
 
@@ -148,8 +149,8 @@ class OfferCategoryController extends Controller
      * @param  \App\Models\OfferCategory  $offerCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OfferCategory $offerCategory)
-    {
+    public function destroy(OfferCategory $offerCategory) {
         //
     }
+
 }
