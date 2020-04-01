@@ -9,8 +9,8 @@ use App\Traits\FileTrait;
 use Illuminate\Http\Response;
 use Carbon\Carbon;
 
-class EcareerService
-{
+class EcareerService {
+
     use CrudTrait;
     use FileTrait;
 
@@ -29,13 +29,11 @@ class EcareerService
      * PrizeService constructor.
      * @param PrizeRepository $prizeRepository
      */
-    public function __construct(EcareerPortalRepository $ecarrerPortalRepository, EcareerPortalItemRepository $ecarrerPortalItemRepository)
-    {
+    public function __construct(EcareerPortalRepository $ecarrerPortalRepository, EcareerPortalItemRepository $ecarrerPortalItemRepository) {
         $this->ecarrerPortalRepository = $ecarrerPortalRepository;
         $this->ecarrerPortalItemRepository = $ecarrerPortalItemRepository;
         $this->setActionRepository($ecarrerPortalRepository);
     }
-
 
     /**
      * store general section parent item on create
@@ -43,43 +41,35 @@ class EcareerService
      * @return [type]          [description]
      */
     // public function storeEcarrerGeneralSection($data){
-
     //     # Life at Banglalink General section
     //     $data['category'] = 'life_at_bl_general';
     //     # This section has child item available
     //     $data['has_items'] = 1;
-
     //     $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
-
     //     if (!empty($data['image_url'])) {
     //         $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
     //     }
-
     //     $this->save($data);
     //     return new Response('Section created successfully');
-
     // }
 
     /**
      * Get all general section for life of banglalink
      * @return [type] [description]
      */
-    public function generalSections(){
+    public function generalSections() {
 
         return $this->ecarrerPortalRepository->getSectionsByCategory('life_at_bl_general');
-
     }
 
     /**
      * General section by ID
      * @return [type] [description]
      */
-    public function generalSectionById($id){
+    public function generalSectionById($id) {
 
         return $this->findOne($id);
-
     }
-
 
     /**
      * [updateEcarrerGeneralSection description]
@@ -90,27 +80,20 @@ class EcareerService
     // public function updateEcarrerGeneralSection($data, $id)
     // {
     //     $general_section = $this->findOne($id);
-
     //     $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
-
     //     if (!empty($data['image_url'])) {
-
     //         $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
     //     }
-
     //     $general_section->update($data);
-
     //     return Response('Section updated successfully');
     // }
-
 
     /**
      * @param $id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      * @throws \Exception
      */
-    public function sectionDelete($id)
-    {
+    public function sectionDelete($id) {
         $section = $this->findOne($id);
         $data['deleted_at'] = Carbon::now();
         $section->update($data);
@@ -120,24 +103,21 @@ class EcareerService
         return Response('Section deleted successfully !');
     }
 
-
     /**
      * Life at bl teams sections
      * @return [type] [description]
      */
-    public function ecarrerSectionsList($categoryTypes){
+    public function ecarrerSectionsList($categoryTypes) {
 
         return $this->ecarrerPortalRepository->getSectionsByCategory($categoryTypes);
-
     }
-
 
     /**
      * store teams section on create
      * @param  [type] $request [description]
      * @return [type]          [description]
      */
-    public function storeEcarrerSection($data, $data_types = null){
+    public function storeEcarrerSection($data, $data_types = null) {
 
         # Life at Banglalink General section
         $data['category'] = !empty($data_types['category']) ? $data_types['category'] : null;
@@ -146,7 +126,7 @@ class EcareerService
         $data['route_slug'] = !empty($data_types['route_slug']) ? $data_types['route_slug'] : null;
         $data['additional_info'] = !empty($data_types['additional_info']) ? $data_types['additional_info'] : null;
 
-        if( !empty($data['slug']) ){
+        if (!empty($data['slug'])) {
             $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
         }
 
@@ -156,10 +136,7 @@ class EcareerService
 
         $this->save($data);
         return new Response('Section created successfully');
-
     }
-
-
 
     /**
      * [updateEcarrerGeneralSection description]
@@ -167,11 +144,10 @@ class EcareerService
      * @param  [type] $id   [description]
      * @return [type]       [description]
      */
-    public function updateEcarrerSection($data, $id, $data_types = null)
-    {
+    public function updateEcarrerSection($data, $id, $data_types = null) {
         $general_section = $this->findOne($id);
 
-        if( !empty($data['slug']) ){
+        if (!empty($data['slug'])) {
             $data['slug'] = str_replace(" ", "_", strtolower($data['slug']));
         }
 
@@ -180,7 +156,7 @@ class EcareerService
             $data['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section');
         }
 
-        if( isset($data_types['has_items']) ){
+        if (isset($data_types['has_items'])) {
             $data['has_items'] = $data_types['has_items'];
         }
 
@@ -190,9 +166,8 @@ class EcareerService
 
         return Response('Section updated successfully');
     }
-    
-    
-     /**
+
+    /**
      * [updateEcarrerGeneralSection description]
      * @param  [type] $data [description]
      * @param  [type] $id   [description]
@@ -200,10 +175,13 @@ class EcareerService
      */
     public function updateMainSection($data, $id) {
         try {
-            
+
+            $status = true;
+
             $update['title_en'] = $data['title_en'];
             $update['title_bn'] = $data['title_bn'];
             $update['alt_text'] = $data['alt_text'];
+            $update['banner_name'] = $data['banner_name'];
             $update['page_header'] = $data['page_header'];
             $update['schema_markup'] = $data['schema_markup'];
             $update['route_slug'] = $data['route_slug'];
@@ -219,9 +197,11 @@ class EcareerService
 
                 $update['image'] = $this->upload($data['image_url'], 'assetlite/images/ecarrer/general_section', $photoName);
 
+                $status = $update['image'];
+
                 //delete old web photo
                 if ($data['old_web_img']) {
-                    $this->deleteFile($request['old_web_img']);
+                    $this->deleteFile($data['old_web_img']);
                 }
             }
 
@@ -230,30 +210,60 @@ class EcareerService
 
                 $update['image_mobile'] = $this->upload($data['image_url_mobile'], 'assetlite/images/ecarrer/general_section', $photoName);
 
+                $status = $update['image_mobile'];
+
                 //delete old web photo
                 if ($data['old_mob_img']) {
-                    $this->deleteFile($request['old_mob_img']);
+                    $this->deleteFile($data['old_mob_img']);
                 }
             }
 
-            $this->ecarrerPortalRepository->updateMainSection($update, $id);
+            //only rename
+
+            if ($data['old_banner_name'] != $data['banner_name']) {
+                //rename web
+                if (empty($data['image_url'])) {
+                    $fileName = $data['banner_name'] . '-web';
+                    $directoryPath = 'assetlite/images/ecarrer/general_section';
+                    $update['image'] = $this->rename($data['old_web_img'], $fileName, $directoryPath);
+                    $status = $update['image'];
+                }
+
+                if (empty($data['image_url_mobile'])) {
+                    $fileName = $data['banner_name'] . '-mobile';
+                    $directoryPath = 'assetlite/images/ecarrer/general_section';
+                    $update['image_mobile'] = $this->rename($data['old_mob_img'], $fileName, $directoryPath);
+
+                    $status = $update['image_mobile'];
+                }
+            }
+
+            if ($status == true) {
+                $this->ecarrerPortalRepository->updateMainSection($update, $id);
+
+                $response = [
+                    'success' => 1,
+                ];
+            } else {
+                $response = [
+                    'success' => 0,
+                ];
+            }
 
 
-            $response = [
-                'success' => 1,
-            ];
 
 
             return $response;
         } catch (\Exception $e) {
             $response = [
                 'success' => 0,
-                'message' => $e
+                'message' => $e->getMessage()
             ];
             return $response;
         }
     }
-     /**
+
+    /**
      * [updateEcarrerGeneralSection description]
      * @param  [type] $data [description]
      * @param  [type] $id   [description]
@@ -261,7 +271,7 @@ class EcareerService
      */
     public function updateSubSection($data, $id) {
         try {
-            
+
             $update['title_en'] = $data['title_en'];
             $update['title_bn'] = $data['title_bn'];
             $update['page_header'] = $data['page_header'];
@@ -287,32 +297,27 @@ class EcareerService
         }
     }
 
-
     /**
      * [getRouteSlug description]
      * @param  [type] $request [description]
      * @return [type]          [description]
      */
-    public function getRouteSlug($path, $additional_route_param = null){
-        if( !empty($path) ){
+    public function getRouteSlug($path, $additional_route_param = null) {
+        if (!empty($path)) {
             $match = explode('/', $path);
-            if( !empty($match[0]) && !empty($match[1]) ){
+            if (!empty($match[0]) && !empty($match[1])) {
 
-                if( !empty($additional_route_param) ){
-                    return $match[0].'/'.$match[1].'/'.$additional_route_param;
+                if (!empty($additional_route_param)) {
+                    return $match[0] . '/' . $match[1] . '/' . $additional_route_param;
+                } else {
+                    return $match[0] . '/' . $match[1];
                 }
-                else{
-                    return $match[0].'/'.$match[1];
-                }
-            }
-            else{
+            } else {
                 return null;
             }
-        }
-        else{
+        } else {
             return null;
         }
-
     }
 
 }

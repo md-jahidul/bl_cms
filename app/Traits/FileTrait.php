@@ -11,8 +11,8 @@ namespace App\Traits;
 
 use Illuminate\Support\Facades\Storage;
 
-trait FileTrait
-{
+trait FileTrait {
+
     protected $disk = 'internal';
 
     /**
@@ -21,25 +21,24 @@ trait FileTrait
      * @param directoryPath - Directory path relative to base upload path
      * @return file path
      */
-    protected function upload($file, $directoryPath, $fileName = "")
-    {
+    protected function upload($file, $directoryPath, $fileName = "") {
         $path = $file->store(
-            $directoryPath,
-            $this->disk
+                $directoryPath, $this->disk
         );
-        
-        if($fileName != ""){
-           $renamedPath = $this->rename($path, $fileName, $directoryPath); 
-           return $renamedPath;
+
+        if ($fileName != "") {
+            $renamedPath = $this->rename($path, $fileName, $directoryPath);
+            
+            if($renamedPath == false){
+              $this->deleteFile($path);
+            }
+            return $renamedPath;
         }
-        
-        
+
+
         return $path;
-        
-        
     }
-    
-    
+
     /**
      * Rename after upload
      * @param file name
@@ -47,31 +46,32 @@ trait FileTrait
      * @return file path
      * @Dev Bulbul Mahmud Nito || 30/03/2020
      */
-    protected function rename($path, $fileName, $directoryPath)
-    {
-                $pathToArray = explode('/', $path);
-                $imgName = end($pathToArray);
-                $mimeArray = explode('.', $imgName);
-                $mime = end($mimeArray);
+    protected function rename($path, $fileName, $directoryPath) {
+        $pathToArray = explode('/', $path);
+        $imgName = end($pathToArray);
+        $mimeArray = explode('.', $imgName);
+        $mime = end($mimeArray);
 
-                $oldImg = env('UPLOAD_BASE_PATH') . "/" . $path;
-                
-                $newName = $directoryPath. "/" . $fileName . "." . $mime;
-                $newPath = env('UPLOAD_BASE_PATH') ."/" . $newName;
-                rename($oldImg, $newPath);
-                
-                return $newName;
+        $oldImg = env('UPLOAD_BASE_PATH') . "/" . $path;
+
+        $newName = $directoryPath . "/" . $fileName . "." . $mime;
+        $newPath = env('UPLOAD_BASE_PATH') . "/" . $newName;
+
+        if (file_exists($newPath)) {
+            return false;
+        } else {
+            @rename($oldImg, $newPath);
+            return $newName;
+        }
     }
-    
-    
+
     /**
      * Download the attachments
      * @param filePath full file path including folder name and file name with extension relative to base path
      * @param displayName name of the downloaded file
      * @return file
      */
-    protected function download($filePath, $displayName)
-    {
+    protected function download($filePath, $displayName) {
         return Storage::disk($this->disk)->download($filePath, $displayName);
     }
 
@@ -80,8 +80,7 @@ trait FileTrait
      * @param filePath full file path including folder name and file name with extension relative to base path
      * @return file
      */
-    protected function view($filePath)
-    {
+    protected function view($filePath) {
         $headers = array(
             'Content-Disposition' => 'inline',
         );
@@ -92,8 +91,8 @@ trait FileTrait
      * @param filePath full file path including folder name and file name with extension relative to base path
      * @return bool
      */
-    protected function deleteFile($filePath)
-    {
+    protected function deleteFile($filePath) {
         return Storage::disk($this->disk)->delete($filePath);
     }
+
 }
