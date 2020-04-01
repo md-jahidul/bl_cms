@@ -16,7 +16,7 @@
     <section>
         <form
             action=" @if(isset($short_cut_info)) {{route('short_cuts.update',$short_cut_info->id)}} @else {{route('short_cuts.store')}} @endif "
-            method="post" enctype="multipart/form-data" novalidate>
+            method="post" enctype="multipart/form-data">
 
             @csrf
             @if(isset($short_cut_info)) @method('put') @else @method('post') @endif
@@ -29,21 +29,33 @@
                             Create Shortcuts
                         @endif
                     </h4>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="customer_type" class="required">Customer Type</label>
+                            <select required class="form-control" value="" name="customer_type" id="customer_type">
+                                <option
+                                    @if(isset($short_cut_info)) @if($short_cut_info->customer_type == "ALL") selected
+                                    @endif @endif value="ALL">All
+                                </option>
+                                <option
+                                    @if(isset($short_cut_info)) @if($short_cut_info->customer_type== "PREPAID") selected
+                                    @endif @endif value="PREPAID">Prepaid
+                                </option>
+                                <option
+                                    @if(isset($short_cut_info)) @if($short_cut_info->customer_type== "POSTPAID") selected
+                                    @endif @endif value="POSTPAID">Postpaid
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="title" class="required">Title :</label>
-                            <input
-
-                                required
-                                data-validation-required-message="Title is required"
-                                maxlength="50"
-                                data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                data-validation-regex-message="Title must start with alphabets"
-                                data-validation-maxlength-message="Title can not be more then 50 Characters"
-                                style="height:100%"
-                                value="@if(isset($short_cut_info)){{$short_cut_info->title}} @elseif(old("title")) {{old("title")}} @endif"
-                                type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                                id="title" placeholder="Enter Shorcut Name..">
+                            <input required
+                                   value="@if(isset($short_cut_info)){{$short_cut_info->title}} @elseif(old("title")) {{old("title")}} @endif"
+                                   type="text" name="title" class="form-control @error('title') is-invalid @enderror"
+                                   id="title" placeholder="Enter Shorcut Name..">
                             <div class="help-block">
                                 <small class="text-info"> Title can not be more then 50 Characters</small>
                             </div>
@@ -55,7 +67,7 @@
                             <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="default">Default :</label>
                             <select required class="form-control" value="" name="is_default" id="default">
@@ -68,49 +80,28 @@
                             </select>
                         </div>
                     </div>
-
-                    @if(isset($short_cut_info))
-                        <div class="col-md-12 mb-1">
-                            <img style="height:100px;width:200px" id="imgDisplay" src="{{asset($short_cut_info->icon)}}"
-                                 alt="" srcset="">
-                        </div>
-                    @else
-                        <div class="col-md-12 mb-1">
-                            <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt="" srcset="">
-                        </div>
-                    @endif
-
-
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="image" class="required">Upload Icon :</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input accept="image/*"
-                                           @if(!isset($short_cut_info)) data-validation-required-message="Icon is required"
-                                           @endif
-                                           onchange="createImageBitmap(this.files[0]).then((bmp) => {
-
-                                    if(bmp.width/bmp.height == 1/1){
-                                        console.log('yes')
-                                        document.getElementById('submitForm').disabled = false;
-                                        document.getElementById('massage').innerHTML = '';
-                                        this.style.border = 'none';
-                                        this.nextElementSibling.innerHTML = '';
-                                    }else{
-                                        console.log('no')
-                                        this.style.border = '1px solid red';
-                                        document.getElementById('massage').innerHTML = '<b>Image aspact ratio must 1:1(Change the picture to enable button)</b>';
-                                        document.getElementById('massage').classList.add('text-danger');
-                                        document.getElementById('submitForm').disabled = true;
-                                    }
-                                })"
-                                           id="image" @if(!isset($short_cut_info)) required @endif  name="icon"
-                                           type="file" class="custom-file-input @error('icon') is-invalid @enderror"
-                                           id="icon">
-                                    <label class="custom-file-label" for="icon">Upload icon...</label>
-                                </div>
-                            </div>
+                            @if (isset($short_cut_info))
+                                <input type="file"
+                                       id="icon"
+                                       class="dropify"
+                                       name="icon"
+                                       data-height="70"
+                                       data-allowed-formats="square"
+                                       data-allowed-file-extensions="png"
+                                       data-default-file="{{ asset($short_cut_info->icon) }}"
+                                />
+                            @else
+                                <input type="file" required
+                                       id="icon"
+                                       name="icon"
+                                       class="dropify"
+                                       data-allowed-formats="square"
+                                       data-allowed-file-extensions="png"
+                                       data-height="70"/>
+                            @endif
                             <div class="help-block">
                                 <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                 <small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small>
@@ -119,19 +110,20 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6" id="action_div">
+                    <div class="col-md-4" id="action_div">
                         @php
                             $actionList = Helper::navigationActionList();
                         @endphp
 
                         <div class="form-group">
                             <label>Navigate Action </label>
-                            <select name="component_identifier" class="browser-default custom-select" id="navigate_action">
+                            <select name="component_identifier" class="browser-default custom-select"
+                                    id="navigate_action" required>
                                 <option value="">Select Action</option>
                                 @foreach ($actionList as $key => $value)
                                     <option
                                         @if(isset($short_cut_info->component_identifier) && $short_cut_info->component_identifier == $key)
-                                            selected
+                                        selected
                                         @endif
                                         value="{{ $key }}">
                                         {{ $value }}
@@ -142,27 +134,32 @@
                         </div>
                     </div>
 
-                    <div id="append_div" class="col-md-6">
+                    <div id="append_div" class="col-md-4">
                         @if(isset($short_cut_info))
-                            <div class="form-group" id="dial_input_div">
-                                <label>Dial Number</label>
-                                <input type="text" name="dial_number" class="form-control" required value="{{ $short_cut_info->dial_number }}">
-                                <div class="help-block"></div>
-                            </div>
+                            @if($info = json_decode($short_cut_info->other_info))
+                                {{--{{ dd( @if($json_decode($short_cut_info->other_info)) @endif }}--}}
+                                <div class="form-group other-info-div">
+                                    <label>@if($short_cut_info->component_identifier == "DIAL") Dial Number @else
+                                            Redirect
+                                            URL @endif </label>
+                                    <input type="text" name="other_info" class="form-control" required
+                                           value="@if($info) {{$info->content}} @endif">
+                                    <div class="help-block"></div>
+                                </div>
+                            @endif
                         @endif
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="pull-right" >
-                            @if(isset($short_cut_info))
-                                <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Update
-                                    Shortcut
-                                </button>
-                            @else
-                                <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Add Shortcut
-                                </button>
-                            @endif
-                        </div>
+                    <div class="col-md-4">
+                        <small class="text-danger"> @error('other_info') {{ $message }} @enderror </small>
+                        @if(isset($short_cut_info))
+                            <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Update
+                                Shortcut
+                            </button>
+                        @else
+                            <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Add Shortcut
+                            </button>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -176,11 +173,11 @@
                         <thead>
                         <tr>
                             <th width='5%'><i class="icon-cursor-move icons"></i></th>
-                            {{--<th width="10%">id</th>--}}
                             <th>Title</th>
                             <th>Navigate Action</th>
                             <th> Icon</th>
                             <th>Is Default</th>
+                            <th>Customer Type</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -188,7 +185,6 @@
                         @foreach ($short_cuts as $short_cut)
                             <tr data-index="{{ $short_cut->id }}" data-position="{{ $short_cut->display_order }}">
                                 <td width="5%"><i class="icon-cursor-move icons"></i></td>
-                               {{-- <td width="10%">{{$short_cut->id}}</td>--}}
                                 <td>{{$short_cut->title}}</td>
                                 <td>
                                     {{ isset($actionList [$short_cut->component_identifier])?$actionList [$short_cut->component_identifier] : '' }}
@@ -198,24 +194,10 @@
                                 <td width="10%">
                                     @if($short_cut->is_default==1) Default @else Not Default @endif
                                 </td>
+                                <td width="10%">
+                                    {{ $short_cut->customer_type }}
+                                </td>
                                 <td>
-                                    {{--                                    <div class="row justify-content-md-center no-gutters">
-                                                                            <div class="col-md-2">
-                                                                                <a role="button" data-toggle="tooltip"
-                                                                                   data-original-title="Edit Slider Information" data-placement="left"
-                                                                                   href="{{route('short_cuts.edit',$short_cut->id)}}"
-                                                                                   class="btn-pancil btn btn-outline-success">
-                                                                                    <i class="la la-pencil"></i>
-                                                                                </a>
-                                                                            </div>
-
-                                                                            <div class="col-md-2">
-                                                                                <button data-id="{{$short_cut->id}}" data-toggle="tooltip"
-                                                                                        data-original-title="Delete Slider" data-placement="right"
-                                                                                        class="btn btn-outline-danger delete" onclick=""><i
-                                                                                        class="la la-trash"></i></button>
-                                                                            </div>
-                                                                        </div>--}}
                                     <div class="form-group">
                                         <div class="btn-group" role="group">
                                             <a type="button"
@@ -253,25 +235,12 @@
     </h1>
 @endsection
 
-@push('page-css')
-    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
-    <style>
-        #sortable tr td{
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-        }
-
-        table.dataTable {
-            border-spacing: 1px;
-        }
-    </style>
-@endpush
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css"
           href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
-    <style></style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
@@ -280,21 +249,25 @@
             type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js"
             type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
 
         var auto_save_url = "{{ url('shortcuts-sortable') }}";
 
         $(function () {
+            var content = "";
+            var url_html;
             var parse_data;
-            let dial_html, dial_number = '';
+            let dial_html, other_info = '';
             var js_data = '<?php echo isset($short_cut_info) ? json_encode($short_cut_info) : null; ?>';
 
-            if(js_data){
+            if (js_data) {
                 parse_data = JSON.parse(js_data);
-                dial_number = parse_data.dial_number;
+                other_info = parse_data.other_info;
+                if (other_info) {
+                    content = other_info.content;
+                }
             }
-
-            console.log(js_data);
 
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
@@ -330,19 +303,27 @@
                 })
             })
             // add dial number
-
-            dial_html = ` <div class="form-group" id="dial_input_div">
+            dial_html = ` <div class="form-group other-info-div">
                                         <label>Dial Number</label>
-                                        <input type="text" name="dial_number" class="form-control" value="${dial_number}" required>
+                                        <input type="text" name="other_info" class="form-control" value="${content}" placeholder="Enter Valid Number" required>
                                         <div class="help-block"></div>
                                     </div>`;
 
+            url_html = ` <div class="form-group other-info-div">
+                                        <label>Redirect External URL</label>
+                                        <input type="text" name="other_info" class="form-control" value="${content}" placeholder="Enter Valid URL" required>
+                                        <div class="help-block"></div>
+                                    </div>`;
+
+
             $('#navigate_action').on('change', function () {
                 let action = $(this).val();
-                if(action == 'DIAL'){
+                if (action == 'DIAL') {
                     $("#append_div").html(dial_html);
-                }else{
-                    $("#dial_input_div").remove();
+                } else if (action == 'URL') {
+                    $("#append_div").html(url_html);
+                } else {
+                    $(".other-info-div").remove();
                 }
             })
         });
@@ -356,6 +337,18 @@
                 paging: true,
                 searching: true,
                 "bDestroy": true,
+            });
+
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Icon to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct Icon file'
+                },
+                error: {
+                    'imageFormat': 'The image ratio must be 1:1.'
+                }
             });
         });
 
