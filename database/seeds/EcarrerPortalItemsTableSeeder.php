@@ -12,12 +12,12 @@ class EcarrerPortalItemsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
-        \DB::table('ecarrer_portal_items')->delete();
-        
-        \DB::table('ecarrer_portal_items')->insert(array (
-            0 => 
+
+        \DB::table('ecareer_portal_items')->truncate();
+
+        \DB::table('ecareer_portal_items')->insert(array (
+            0 =>
             array (
                 'id' => 1,
                 'ecarrer_portals_id' => 1,
@@ -37,7 +37,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-20 11:34:37',
                 'deleted_at' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'ecarrer_portals_id' => 1,
@@ -57,7 +57,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-05 12:01:36',
                 'deleted_at' => '2020-02-05 12:01:36',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'ecarrer_portals_id' => 1,
@@ -77,7 +77,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-20 09:50:37',
                 'deleted_at' => NULL,
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'ecarrer_portals_id' => 2,
@@ -97,7 +97,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:25:06',
                 'deleted_at' => '2020-02-24 08:25:06',
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'ecarrer_portals_id' => 2,
@@ -117,7 +117,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:25:06',
                 'deleted_at' => '2020-02-24 08:25:06',
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'ecarrer_portals_id' => 12,
@@ -137,7 +137,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-06 07:17:44',
                 'deleted_at' => NULL,
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'ecarrer_portals_id' => 14,
@@ -157,7 +157,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:16:53',
                 'deleted_at' => NULL,
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'ecarrer_portals_id' => 12,
@@ -177,7 +177,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-06 07:18:23',
                 'deleted_at' => NULL,
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'ecarrer_portals_id' => 18,
@@ -197,7 +197,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:25:08',
                 'deleted_at' => NULL,
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'ecarrer_portals_id' => 20,
@@ -217,7 +217,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-16 04:46:48',
                 'deleted_at' => NULL,
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
                 'ecarrer_portals_id' => 9,
@@ -237,7 +237,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-06 07:39:11',
                 'deleted_at' => NULL,
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 12,
                 'ecarrer_portals_id' => 9,
@@ -257,7 +257,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-06 07:39:29',
                 'deleted_at' => NULL,
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 13,
                 'ecarrer_portals_id' => 13,
@@ -277,7 +277,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-06 07:45:40',
                 'deleted_at' => NULL,
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 14,
                 'ecarrer_portals_id' => 13,
@@ -297,7 +297,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 10:38:02',
                 'deleted_at' => NULL,
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 15,
                 'ecarrer_portals_id' => 21,
@@ -317,7 +317,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:29:49',
                 'deleted_at' => '2020-02-24 08:29:49',
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 16,
                 'ecarrer_portals_id' => 22,
@@ -337,7 +337,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 14:03:29',
                 'deleted_at' => NULL,
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 17,
                 'ecarrer_portals_id' => 23,
@@ -357,7 +357,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-13 13:11:06',
                 'deleted_at' => NULL,
             ),
-            17 => 
+            17 =>
             array (
                 'id' => 18,
                 'ecarrer_portals_id' => 14,
@@ -377,7 +377,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:16:40',
                 'deleted_at' => NULL,
             ),
-            18 => 
+            18 =>
             array (
                 'id' => 19,
                 'ecarrer_portals_id' => 6,
@@ -397,7 +397,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 09:31:07',
                 'deleted_at' => NULL,
             ),
-            19 => 
+            19 =>
             array (
                 'id' => 20,
                 'ecarrer_portals_id' => 6,
@@ -417,7 +417,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 09:23:59',
                 'deleted_at' => NULL,
             ),
-            20 => 
+            20 =>
             array (
                 'id' => 21,
                 'ecarrer_portals_id' => 7,
@@ -437,7 +437,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-11 09:08:55',
                 'deleted_at' => NULL,
             ),
-            21 => 
+            21 =>
             array (
                 'id' => 22,
                 'ecarrer_portals_id' => 7,
@@ -457,7 +457,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 09:54:09',
                 'deleted_at' => NULL,
             ),
-            22 => 
+            22 =>
             array (
                 'id' => 23,
                 'ecarrer_portals_id' => 22,
@@ -477,7 +477,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 07:43:48',
                 'deleted_at' => NULL,
             ),
-            23 => 
+            23 =>
             array (
                 'id' => 24,
                 'ecarrer_portals_id' => 22,
@@ -497,7 +497,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 08:11:50',
                 'deleted_at' => '2020-02-17 08:11:50',
             ),
-            24 => 
+            24 =>
             array (
                 'id' => 25,
                 'ecarrer_portals_id' => 22,
@@ -517,7 +517,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 08:07:00',
                 'deleted_at' => NULL,
             ),
-            25 => 
+            25 =>
             array (
                 'id' => 26,
                 'ecarrer_portals_id' => 22,
@@ -537,7 +537,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 08:08:05',
                 'deleted_at' => NULL,
             ),
-            26 => 
+            26 =>
             array (
                 'id' => 27,
                 'ecarrer_portals_id' => 22,
@@ -557,7 +557,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 07:47:45',
                 'deleted_at' => NULL,
             ),
-            27 => 
+            27 =>
             array (
                 'id' => 28,
                 'ecarrer_portals_id' => 21,
@@ -577,7 +577,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:29:49',
                 'deleted_at' => NULL,
             ),
-            28 => 
+            28 =>
             array (
                 'id' => 29,
                 'ecarrer_portals_id' => 6,
@@ -597,7 +597,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 09:24:04',
                 'deleted_at' => NULL,
             ),
-            29 => 
+            29 =>
             array (
                 'id' => 30,
                 'ecarrer_portals_id' => 6,
@@ -617,7 +617,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 09:24:08',
                 'deleted_at' => NULL,
             ),
-            30 => 
+            30 =>
             array (
                 'id' => 31,
                 'ecarrer_portals_id' => 6,
@@ -637,7 +637,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 09:23:50',
                 'deleted_at' => NULL,
             ),
-            31 => 
+            31 =>
             array (
                 'id' => 32,
                 'ecarrer_portals_id' => 24,
@@ -657,7 +657,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-13 12:25:28',
                 'deleted_at' => NULL,
             ),
-            32 => 
+            32 =>
             array (
                 'id' => 33,
                 'ecarrer_portals_id' => 24,
@@ -677,7 +677,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-13 12:25:50',
                 'deleted_at' => NULL,
             ),
-            33 => 
+            33 =>
             array (
                 'id' => 34,
                 'ecarrer_portals_id' => 34,
@@ -697,7 +697,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:07:04',
                 'deleted_at' => NULL,
             ),
-            34 => 
+            34 =>
             array (
                 'id' => 35,
                 'ecarrer_portals_id' => 34,
@@ -717,7 +717,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-13 12:33:40',
                 'deleted_at' => NULL,
             ),
-            35 => 
+            35 =>
             array (
                 'id' => 36,
                 'ecarrer_portals_id' => 36,
@@ -737,7 +737,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-13 12:40:27',
                 'deleted_at' => NULL,
             ),
-            36 => 
+            36 =>
             array (
                 'id' => 37,
                 'ecarrer_portals_id' => 36,
@@ -757,7 +757,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-13 12:40:56',
                 'deleted_at' => NULL,
             ),
-            37 => 
+            37 =>
             array (
                 'id' => 38,
                 'ecarrer_portals_id' => 37,
@@ -777,7 +777,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-13 12:41:45',
                 'deleted_at' => NULL,
             ),
-            38 => 
+            38 =>
             array (
                 'id' => 39,
                 'ecarrer_portals_id' => 38,
@@ -797,7 +797,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-13 12:43:37',
                 'deleted_at' => NULL,
             ),
-            39 => 
+            39 =>
             array (
                 'id' => 40,
                 'ecarrer_portals_id' => 38,
@@ -817,7 +817,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-13 12:44:00',
                 'deleted_at' => NULL,
             ),
-            40 => 
+            40 =>
             array (
                 'id' => 41,
                 'ecarrer_portals_id' => 39,
@@ -837,7 +837,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-13 12:47:32',
                 'deleted_at' => NULL,
             ),
-            41 => 
+            41 =>
             array (
                 'id' => 42,
                 'ecarrer_portals_id' => 39,
@@ -857,7 +857,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-13 12:47:58',
                 'deleted_at' => NULL,
             ),
-            42 => 
+            42 =>
             array (
                 'id' => 43,
                 'ecarrer_portals_id' => 23,
@@ -877,7 +877,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-13 13:11:39',
                 'deleted_at' => NULL,
             ),
-            43 => 
+            43 =>
             array (
                 'id' => 44,
                 'ecarrer_portals_id' => 2,
@@ -897,7 +897,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:25:06',
                 'deleted_at' => '2020-02-24 08:25:06',
             ),
-            44 => 
+            44 =>
             array (
                 'id' => 45,
                 'ecarrer_portals_id' => 19,
@@ -917,7 +917,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:25:11',
                 'deleted_at' => NULL,
             ),
-            45 => 
+            45 =>
             array (
                 'id' => 46,
                 'ecarrer_portals_id' => 21,
@@ -937,7 +937,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:29:49',
                 'deleted_at' => NULL,
             ),
-            46 => 
+            46 =>
             array (
                 'id' => 47,
                 'ecarrer_portals_id' => 21,
@@ -957,7 +957,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:29:49',
                 'deleted_at' => '2020-02-24 08:29:49',
             ),
-            47 => 
+            47 =>
             array (
                 'id' => 48,
                 'ecarrer_portals_id' => 21,
@@ -977,7 +977,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:29:49',
                 'deleted_at' => NULL,
             ),
-            48 => 
+            48 =>
             array (
                 'id' => 49,
                 'ecarrer_portals_id' => 21,
@@ -997,7 +997,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:29:49',
                 'deleted_at' => '2020-02-24 08:29:49',
             ),
-            49 => 
+            49 =>
             array (
                 'id' => 50,
                 'ecarrer_portals_id' => 21,
@@ -1017,7 +1017,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:29:49',
                 'deleted_at' => NULL,
             ),
-            50 => 
+            50 =>
             array (
                 'id' => 51,
                 'ecarrer_portals_id' => 6,
@@ -1037,7 +1037,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 09:28:07',
                 'deleted_at' => '2020-02-17 09:28:07',
             ),
-            51 => 
+            51 =>
             array (
                 'id' => 52,
                 'ecarrer_portals_id' => 13,
@@ -1057,7 +1057,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 10:21:55',
                 'deleted_at' => '2020-02-17 10:21:55',
             ),
-            52 => 
+            52 =>
             array (
                 'id' => 53,
                 'ecarrer_portals_id' => 13,
@@ -1077,7 +1077,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-17 10:32:06',
                 'deleted_at' => NULL,
             ),
-            53 => 
+            53 =>
             array (
                 'id' => 54,
                 'ecarrer_portals_id' => 48,
@@ -1097,7 +1097,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:02:58',
                 'deleted_at' => NULL,
             ),
-            54 => 
+            54 =>
             array (
                 'id' => 55,
                 'ecarrer_portals_id' => 49,
@@ -1117,7 +1117,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 04:19:47',
                 'deleted_at' => NULL,
             ),
-            55 => 
+            55 =>
             array (
                 'id' => 56,
                 'ecarrer_portals_id' => 49,
@@ -1137,7 +1137,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 04:20:10',
                 'deleted_at' => NULL,
             ),
-            56 => 
+            56 =>
             array (
                 'id' => 57,
                 'ecarrer_portals_id' => 49,
@@ -1157,7 +1157,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 04:20:26',
                 'deleted_at' => NULL,
             ),
-            57 => 
+            57 =>
             array (
                 'id' => 58,
                 'ecarrer_portals_id' => 49,
@@ -1177,7 +1177,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 04:20:40',
                 'deleted_at' => NULL,
             ),
-            58 => 
+            58 =>
             array (
                 'id' => 59,
                 'ecarrer_portals_id' => 50,
@@ -1197,7 +1197,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:06:23',
                 'deleted_at' => NULL,
             ),
-            59 => 
+            59 =>
             array (
                 'id' => 60,
                 'ecarrer_portals_id' => 50,
@@ -1217,7 +1217,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:06:31',
                 'deleted_at' => NULL,
             ),
-            60 => 
+            60 =>
             array (
                 'id' => 61,
                 'ecarrer_portals_id' => 50,
@@ -1237,7 +1237,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 04:22:39',
                 'deleted_at' => NULL,
             ),
-            61 => 
+            61 =>
             array (
                 'id' => 62,
                 'ecarrer_portals_id' => 50,
@@ -1257,7 +1257,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 04:22:55',
                 'deleted_at' => NULL,
             ),
-            62 => 
+            62 =>
             array (
                 'id' => 63,
                 'ecarrer_portals_id' => 51,
@@ -1277,7 +1277,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 04:25:23',
                 'deleted_at' => NULL,
             ),
-            63 => 
+            63 =>
             array (
                 'id' => 64,
                 'ecarrer_portals_id' => 52,
@@ -1297,7 +1297,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 04:26:58',
                 'deleted_at' => NULL,
             ),
-            64 => 
+            64 =>
             array (
                 'id' => 65,
                 'ecarrer_portals_id' => 52,
@@ -1317,7 +1317,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 04:27:13',
                 'deleted_at' => NULL,
             ),
-            65 => 
+            65 =>
             array (
                 'id' => 66,
                 'ecarrer_portals_id' => 52,
@@ -1337,7 +1337,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 04:27:29',
                 'deleted_at' => NULL,
             ),
-            66 => 
+            66 =>
             array (
                 'id' => 67,
                 'ecarrer_portals_id' => 52,
@@ -1357,7 +1357,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 04:27:50',
                 'deleted_at' => NULL,
             ),
-            67 => 
+            67 =>
             array (
                 'id' => 68,
                 'ecarrer_portals_id' => 53,
@@ -1377,7 +1377,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 04:29:07',
                 'deleted_at' => NULL,
             ),
-            68 => 
+            68 =>
             array (
                 'id' => 69,
                 'ecarrer_portals_id' => 53,
@@ -1397,7 +1397,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:08:37',
                 'deleted_at' => NULL,
             ),
-            69 => 
+            69 =>
             array (
                 'id' => 70,
                 'ecarrer_portals_id' => 53,
@@ -1417,7 +1417,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 04:29:48',
                 'deleted_at' => NULL,
             ),
-            70 => 
+            70 =>
             array (
                 'id' => 71,
                 'ecarrer_portals_id' => 53,
@@ -1437,7 +1437,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 04:30:01',
                 'deleted_at' => NULL,
             ),
-            71 => 
+            71 =>
             array (
                 'id' => 72,
                 'ecarrer_portals_id' => 54,
@@ -1457,7 +1457,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 05:08:00',
                 'deleted_at' => NULL,
             ),
-            72 => 
+            72 =>
             array (
                 'id' => 73,
                 'ecarrer_portals_id' => 54,
@@ -1477,7 +1477,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 05:08:35',
                 'deleted_at' => NULL,
             ),
-            73 => 
+            73 =>
             array (
                 'id' => 74,
                 'ecarrer_portals_id' => 55,
@@ -1497,7 +1497,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 05:10:27',
                 'deleted_at' => NULL,
             ),
-            74 => 
+            74 =>
             array (
                 'id' => 75,
                 'ecarrer_portals_id' => 55,
@@ -1517,7 +1517,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-19 05:10:44',
                 'deleted_at' => NULL,
             ),
-            75 => 
+            75 =>
             array (
                 'id' => 76,
                 'ecarrer_portals_id' => 57,
@@ -1537,7 +1537,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:18:43',
                 'deleted_at' => '2020-02-24 09:18:43',
             ),
-            76 => 
+            76 =>
             array (
                 'id' => 77,
                 'ecarrer_portals_id' => 2,
@@ -1557,7 +1557,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 08:25:06',
                 'deleted_at' => NULL,
             ),
-            77 => 
+            77 =>
             array (
                 'id' => 78,
                 'ecarrer_portals_id' => 34,
@@ -1577,7 +1577,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'updated_at' => '2020-02-24 09:07:44',
                 'deleted_at' => NULL,
             ),
-            78 => 
+            78 =>
             array (
                 'id' => 79,
                 'ecarrer_portals_id' => 34,
@@ -1598,7 +1598,7 @@ class EcarrerPortalItemsTableSeeder extends Seeder
                 'deleted_at' => NULL,
             ),
         ));
-        
-        
+
+
     }
 }
