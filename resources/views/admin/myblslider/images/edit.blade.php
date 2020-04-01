@@ -21,26 +21,21 @@
                             <input type="hidden" hidden value="{{$imageInfo->id}}" name="id">
 
 
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-12">
                                 <div class="form-group {{ $errors->has('user_type') ? ' error' : '' }}">
-
-                                    <input type="radio" name="user_type" value="1" id="input-radio-15" @if($status == 1) {{ 'checked' }} @endif checked>
-                                    <label for="input-radio-15" class="mr-3">All</label>
-                                    <input type="radio" name="user_type" value="0" id="input-radio-16" @if($status == 0) {{ 'checked' }} @endif>
-                                    <label for="input-radio-16" class="mr-3">Prepaid</label>
-                                    <input type="radio" name="user_type" value="1" id="input-radio-17" @if($status == 1) {{ 'checked' }} @endif>
-                                    <label for="input-radio-17" class="mr-3">Postpaid</label>
-                                    <input type="radio" name="user_type" value="0" id="input-radio-18" @if($status == 0) {{ 'checked' }} @endif>
-                                    <label for="input-radio-18" class="mr-3">Propaid</label>
-
-                                    @if ($errors->has('user_type'))
-                                        <div class="help-block">  {{ $errors->first('user_type') }}</div>
-                                    @endif
+                                <input type="radio" name="user_type" value="all" id="radio-15" @if($imageInfo->user_type == "all") {{ 'checked' }} @endif checked>
+                                <label for="input-radio-15" class="mr-3">All</label>
+                                <input type="radio" name="user_type" value="prepaid" id="radio-16" @if($imageInfo->user_type == "prepaid") {{ 'checked' }} @endif>
+                                <label for="input-radio-16" class="mr-3">Prepaid</label>
+                                <input type="radio" name="user_type" value="postpaid" id="radio-17" @if($imageInfo->user_type == "postpaid") {{ 'checked' }} @endif>
+                                <label for="input-radio-17" class="mr-3">Postpaid</label>
+                                <input type="radio" name="user_type" value="propaid" id="radio-18" @if($imageInfo->user_type == "propaid") {{ 'checked' }} @endif>
+                                <label for="input-radio-18" class="mr-3">Propaid</label>
                                 </div>
                             </div>
 
 
-                            <div class="form-group col-md-12 mb-2">
+                            <div class="form-group col-md-6">
                                 <label for="title">Title: <small
                                         class="text-danger">*</small> </label>
                                 <input
@@ -71,6 +66,31 @@
                                 <small
                                     class="text-danger"> @error('alt_text') {{ $message }} @enderror </small>
                                 <div class="help-block"></div>
+                            </div>
+
+
+                            <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                <label for="start_date">Start Date</label>
+                                <div class='input-group'>
+                                    <input type='text' class="form-control" name="start_date" id="start_date"
+                                           placeholder="Please select start date"
+                                           value="{{old('start_date') ? old('start_date'): $imageInfo->start_date}}">
+                                </div>
+                                <div class="help-block"></div>
+                                @if ($errors->has('start_date'))
+                                    <div class="help-block">{{ $errors->first('start_date') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                <label for="end_date">End Date</label>
+                                <input type="text"  class="form-control" name="end_date" id="end_date"
+                                       placeholder="Please select end date"
+                                       value="{{old('end_date') ? old('end_date'): $imageInfo->end_date}}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('end_date'))
+                                    <div class="help-block">{{ $errors->first('end_date') }}</div>
+                                @endif
                             </div>
 
                             @php
@@ -109,13 +129,15 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12 mb-1">
-                                <img style="height:100px;width:200px"
-                                     id="img_display"
-                                     src="{{asset($imageInfo->image_url)}}" alt="" srcset="">
+                            <div id="link" class="form-group col-md-6">
+                                <label id="label_link" for="numbers">Web or Deep Link</label>
+                                <div class='input-group'>
+                                    <input type='text' class="form-control" name="web_deep_link" id="web_deep_link"
+                                           placeholder="Please enter link" />
+                                </div>
                             </div>
-                            <div class="col-md-12">
 
+                            <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="image">Upload Image :</label>
                                     <div class="input-group" id="image_input_div">
@@ -138,10 +160,20 @@
                                     <small id="message"></small>
                                 </div>
                             </div>
-                            <div class="col-2">
-                                <button type="submit" style="width:100%"
-                                        id="submitForm"
+
+                            <div class="col-md-12 mb-1">
+                                <img style="height:100px;width:200px" id="img_display" src="{{asset($imageInfo->image_url)}}" alt="" srcset="">
+                            </div>
+
+                           {{-- <div class="col-2">
+                                <button type="submit" style="width:100%" id="submitForm"
                                         class=" btn btn-success">Submit
+                                </button>
+                            </div>--}}
+
+                            <div class="form-group col-md-12">
+                                <button style="float: right" type="submit" id="submitForm" class="btn btn-success round px-2">
+                                    <i class="la la-check-square-o"></i> Submit
                                 </button>
                             </div>
                         </form>
@@ -188,6 +220,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 
     <script>
+
         $(function () {
             $('.dropify').dropify({
                 messages: {
