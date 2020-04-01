@@ -150,8 +150,7 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request, $type)
     {
-
-//        return $request->all();
+//        dd($request->all());
 
         $bondhoSimOffer = $this->productService->findBondhoSim();
 

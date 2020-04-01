@@ -12,3 +12,5 @@
 
 @include('layouts.partials.products.common-field.validity')
 
+@include('layouts.partials.products.common-field.tag')
+
