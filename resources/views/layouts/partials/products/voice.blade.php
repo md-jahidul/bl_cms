@@ -24,4 +24,6 @@
 
 @include('layouts.partials.products.common-field.balance_check')
 
+@include('layouts.partials.products.common-field.tag')
+
 
