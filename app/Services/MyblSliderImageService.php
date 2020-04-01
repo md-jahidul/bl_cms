@@ -1,19 +1,12 @@
 <?php
-
-/**
- * Created by PhpStorm.
- * User: bs-205
- * Date: 18/08/19
- * Time: 17:23
- */
-
 namespace App\Services;
 
-use App\Repositories\SliderImageRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use DB;
 use Illuminate\Support\Facades\Log;
+use App\Repositories\SliderImageRepository;
+
 
 class MyblSliderImageService
 {

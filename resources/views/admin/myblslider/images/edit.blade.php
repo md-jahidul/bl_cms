@@ -19,6 +19,27 @@
                             @csrf
                             @method('put')
                             <input type="hidden" hidden value="{{$imageInfo->id}}" name="id">
+
+
+                            <div class="form-group col-md-6">
+                                <div class="form-group {{ $errors->has('user_type') ? ' error' : '' }}">
+
+                                    <input type="radio" name="user_type" value="1" id="input-radio-15" @if($status == 1) {{ 'checked' }} @endif checked>
+                                    <label for="input-radio-15" class="mr-3">All</label>
+                                    <input type="radio" name="user_type" value="0" id="input-radio-16" @if($status == 0) {{ 'checked' }} @endif>
+                                    <label for="input-radio-16" class="mr-3">Prepaid</label>
+                                    <input type="radio" name="user_type" value="1" id="input-radio-17" @if($status == 1) {{ 'checked' }} @endif>
+                                    <label for="input-radio-17" class="mr-3">Postpaid</label>
+                                    <input type="radio" name="user_type" value="0" id="input-radio-18" @if($status == 0) {{ 'checked' }} @endif>
+                                    <label for="input-radio-18" class="mr-3">Propaid</label>
+
+                                    @if ($errors->has('user_type'))
+                                        <div class="help-block">  {{ $errors->first('user_type') }}</div>
+                                    @endif
+                                </div>
+                            </div>
+
+
                             <div class="form-group col-md-12 mb-2">
                                 <label for="title">Title: <small
                                         class="text-danger">*</small> </label>
@@ -40,10 +61,8 @@
                             <div class="form-group col-md-6 mb-2">
                                 <label for="alt_text">Alt Text: </label>
                                 <input
-                                    required
                                     maxlength="200"
                                     data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                    data-validation-required-message="Alt Text is required"
                                     data-validation-regex-message="Alt Text must start with alphabets"
                                     data-validation-maxlength-message="Alt Text can not be more then 200 Characters"
                                     value="{{$imageInfo->alt_text}}" id="alt_text" type="text"
@@ -150,7 +169,37 @@
 @push('style')
 
 @endpush
+
+@push('page-css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+@endpush
+
 @push('page-js')
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
+    <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+
+    <script>
+        $(function () {
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Image File to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                }
+            });
+        })
+    </script>
+
 
     <script>
 

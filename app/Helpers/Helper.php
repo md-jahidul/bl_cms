@@ -89,6 +89,7 @@ class Helper
             "BALANCE_TRANSFER"        => "Balance Transfer",
             "CONTACT_BACKUP"          => "Contact Backup",
             "DIAL"                    => "Dial",
+            "URL"                     => "URL",
 
         ];
     }
