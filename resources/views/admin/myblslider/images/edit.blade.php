@@ -129,13 +129,26 @@
                                 </div>
                             </div>
 
-                            <div id="link" class="form-group col-md-6">
-                                <label id="label_link" for="numbers">Web or Deep Link</label>
-                                <div class='input-group'>
-                                    <input type='text' class="form-control" name="web_deep_link" id="web_deep_link"
-                                           placeholder="Please enter link" />
+                            @if($imageInfo->redirect_url == "URL")
+                                <div id="link" class="form-group col-md-6">
+                                    <label id="label_link" for="numbers">Web or Deep Link</label>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" name="web_deep_link" id="web_deep_link"
+                                               placeholder="Please enter link"
+                                               value="{{old('web_deep_link') ? old('web_deep_link'): $imageInfo->web_deep_link}}"/>
+                                    </div>
                                 </div>
-                            </div>
+                            @else
+                                <div id="link" style="display: none" class="form-group col-md-6">
+                                    <label id="label_link" for="numbers">Web or Deep Link</label>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" name="web_deep_link" id="web_deep_link"
+                                               placeholder="Please enter link" />
+                                    </div>
+                                </div>
+                            @endif
+
+
 
                             <div class="col-md-8">
                                 <div class="form-group">
