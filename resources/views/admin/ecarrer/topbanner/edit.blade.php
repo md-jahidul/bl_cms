@@ -97,7 +97,7 @@
                                 @endif
 
                                 @if( !empty($sections->image) )
-                                <img style="width:100%;display:block" src="{{ config('filesystems.file_base_url') . $sections->image}}" id="imgDisplay">
+                                <img style="width:100%;display:block" src="{{ config('filesystems.file_base_url') . $sections->image_mobile}}" id="imgDisplay">
                                 @endif
                             </div>
 
@@ -131,7 +131,8 @@
 
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Banner Photo Name</label>
-                                <input type="text" class="form-control" name="banner_name" placeholder="Photo Name">
+                                <input type="hidden" name="old_banner_name" value="{{$sections->banner_name}}">
+                                <input type="text" class="form-control" name="banner_name" value="{{$sections->banner_name}}" placeholder="Photo Name">
                                 <small class="text-info">
                                     <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
                                     <strong>Note: </strong> Don't need MIME type like jpg,png
@@ -141,7 +142,7 @@
 
 
                                 <br>
-                                <label> URL <span class="text-danger">*</span></label>
+                                <label> URL (route slug) <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" value="{{$sections->route_slug}}" required name="route_slug" placeholder="URL">
                                 <small class="text-info">
                                     <strong>i.e:</strong> Buy-tickets-on-discount (no spaces)<br>

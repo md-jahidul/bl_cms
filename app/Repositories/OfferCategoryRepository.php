@@ -28,4 +28,10 @@ class OfferCategoryRepository extends BaseRepository
     {
         return $this->model->where('parent_id', 4)->get();
     }
+
+    public function saveCategory($data, $id)
+    {
+        $this->model->findOrFail($id)->update($data);
+        
+    }
 }
