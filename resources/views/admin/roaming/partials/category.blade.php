@@ -100,11 +100,15 @@
                                 <label>Banner (Web)</label>
                                 <input type="file" class="dropify" name="banner_web" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+
+                                <p class="banner_web"></p>
                             </div>
                             <div class="col-md-3 col-xs-12">
                                 <label>Banner (Mobile)</label>
                                 <input type="file" class="dropify" name="banner_mobile" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+
+                                <p class="banner_mobile"></p>
                             </div>
 
                             <div class="col-md-3 col-xs-12">
@@ -228,6 +232,18 @@
                     $('.banner_name').val(result.banner_name);
                     $('.html_header').val(result.page_header);
                     $('.schema_markup').val(result.schema_markup);
+
+                    $('.banner_web').html("");
+                    if (result.banner_web != null) {
+                        var bannerWeb = "<img src='" + "{{ config('filesystems.file_base_url') }}" + result.banner_web + "' width='100%'>";
+                        $('.banner_web').html(bannerWeb);
+                    }
+
+                    $('.banner_mobile').html("");
+                    if (result.banner_mobile != null) {
+                        var bannerMob = "<img src='" + "{{ config('filesystems.file_base_url') }}" + result.banner_mobile + "' width='100%'>";
+                        $('.banner_mobile').html(bannerMob);
+                    }
 
                     if (result.status == '1') {
                         $(".status_active").attr('checked', 'checked');

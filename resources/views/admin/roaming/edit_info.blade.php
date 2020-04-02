@@ -69,11 +69,21 @@
                                     <label>Banner (Web)</label>
                                     <input type="file" class="dropify" name="banner_web" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    
+                                    @if($info->banner_web != "")
+                                    <img src="{{ config('filesystems.file_base_url') . $info->banner_web }}" width="100%">
+                                    @endif
+                                    
                                 </div>
                                 <div class="col-md-3 col-xs-12">
                                     <label>Banner (Mobile)</label>
                                     <input type="file" class="dropify" name="banner_mobile" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    
+                                    @if($info->banner_mobile != "")
+                                    <img src="{{ config('filesystems.file_base_url') . $info->banner_mobile }}" width="100%">
+                                    @endif
+                                    
                                 </div>
 
                             </div>
