@@ -95,8 +95,10 @@ class ProductController extends Controller {
      * @param $type
      * @return Factory|View
      */
-    public function create($type) {
-        $this->info['productCoreCodes'] = $this->productService->unusedProductCore();
+
+    public function create($type)
+    {
+        $this->info['productCoreCodes'] = $this->productService->unusedProductCore($type);
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['type'] = $type;
         $this->info['tags'] = $this->tagCategoryService->findAll();
@@ -251,7 +253,7 @@ class ProductController extends Controller {
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
         $this->productDetailService->updateRelatedProduct($request, $id);
         $response = $this->productDetailService->updateProductDetails($request->all(), $id);
-        
+
 
         if ($response['success'] == 1) {
             Session::flash('success', 'Product Details update successfully!');

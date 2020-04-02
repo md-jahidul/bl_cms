@@ -52,3 +52,33 @@
            value="{{ !empty($appServiceProduct->send_to) ? $appServiceProduct->send_to : null }}">
     <div class="help-block"></div>
 </div>
+
+<div class="form-group col-md-6 ">
+    <label for="dial_code">Dial Code</label>
+    <input type="text" name="dial_code" class="form-control" placeholder="Enter dial code"
+           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+           value="{{ !empty($appServiceProduct->dial_code) ? $appServiceProduct->dial_code : null }}">
+    <div class="help-block"></div>
+</div>
+
+<div class="form-group col-md-6 ">
+    <label for="web_link">Web Link</label>
+    <input type="url" name="web_link" class="form-control" placeholder="Enter web link"
+{{--           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"--}}
+           value="{{ !empty($appServiceProduct->web_link) ? $appServiceProduct->web_link : null }}">
+    <div class="help-block"></div>
+</div>
+
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="can_active" class="mr-1">Can Active:</label>
+        <input type="checkbox" name="can_active" value="1" id="can_active" {{ isset($appServiceProduct->can_active) ?? ($appServiceProduct->can_active == 1) ? 'checked' : '' }}>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="show_in_vas" class="mr-1">Show In VAS Tab:</label>
+        <input type="checkbox" name="show_in_vas" value="1" id="show_in_vas" {{ isset($appServiceProduct->show_in_vas) ?? ($appServiceProduct->show_in_vas == 1) ? 'checked' : '' }}>
+    </div>
+</div>

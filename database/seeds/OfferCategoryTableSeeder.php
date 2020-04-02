@@ -24,9 +24,12 @@ class OfferCategoryTableSeeder extends Seeder
             ['name' => 'Start-up offers', 'type' => 1, 'description' => 'Description 2'],
             ['name' => 'Postpaid Plans', 'type' => 2, 'description' => 'Description 1'],
             ['name' => 'Icon Plans', 'type' => 2, 'description' => 'Description 2'],
+//            ['name' => 'Propaid Plans', 'type' => 2, 'description' => 'Description 2'],
         ];
 
-        $package_categoriesBn = ['প্রিপেইড প্ল্যানস', 'স্টার্ট-আপ অফার', 'পোস্টপেইড প্ল্যানস', 'আইকন প্ল্যানস'];
+        $package_categoriesBn = ['প্রিপেইড প্ল্যানস', 'স্টার্ট-আপ অফার', 'পোস্টপেইড প্ল্যানস', 'আইকন প্ল্যানস'
+//            'প্রিপেইড প্ল্যানস'
+        ];
 
         $other_offer_categories = [
             ['name' => 'Balance Transfer', 'type' => 1, 'description' => 'Description 1'],
@@ -90,5 +93,14 @@ class OfferCategoryTableSeeder extends Seeder
                 }
             }
         }
+
+        OfferCategory::create([
+            'id' =>  20,
+            'parent_id' =>  4,
+            'name_en' => "Propaid Plans",
+            'name_bn' =>  'প্রিপেইড প্ল্যানস',
+            'alias' => "propaid_plans",
+            'type_id' => 2,
+        ]);
     }
 }
