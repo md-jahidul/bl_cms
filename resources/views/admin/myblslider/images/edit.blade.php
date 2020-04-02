@@ -175,9 +175,11 @@
                                 </div>
                             @endif--}}
 
+
+
                             <div id="append_div" class="col-md-6">
                                 @if(isset($imageInfo))
-                                    @if($info = json_decode($imageInfo->other_attributes))
+                                    @if($info = json_decode(json_encode($imageInfo->other_attributes)))
                                         <div class="form-group other-info-div">
                                             <label>@if($imageInfo->redirect_url == "DIAL") Dial Number @else
                                                     Redirect
@@ -266,6 +268,7 @@
         let dial_html, other_attributes = '';
         var js_data = '<?php echo isset($imageInfo) ? json_encode($imageInfo) : null; ?>';
 
+
         if (js_data) {
             parse_data = JSON.parse(js_data);
             other_attributes = parse_data.other_attributes;
@@ -273,7 +276,6 @@
                 content = other_attributes.content;
             }
         }
-
 
         // add dial number
         dial_html = ` <div class="form-group other-info-div">
