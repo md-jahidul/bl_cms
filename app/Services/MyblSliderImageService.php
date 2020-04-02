@@ -57,7 +57,10 @@ class MyblSliderImageService
                 'content' => $image['other_attributes']
             ];
 
-            $image['other_attributes'] = json_encode($other_attributes);
+           // $image['other_attributes'] = json_encode($other_attributes, JSON_UNESCAPED_SLASHES);
+
+            $image['other_attributes'] = $other_attributes;
+
         }
 
         $this->save($image);
@@ -98,7 +101,9 @@ class MyblSliderImageService
                 'content' => $data['other_attributes']
             ];
 
-            $data['other_attributes'] = json_encode($other_attributes);
+           // $data['other_attributes'] = json_encode($other_attributes);
+
+            $data['other_attributes'] = $other_attributes;
         }
 
         $sliderImage->update($data);
