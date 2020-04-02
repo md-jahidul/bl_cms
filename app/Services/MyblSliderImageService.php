@@ -40,7 +40,6 @@ class MyblSliderImageService
      */
     public function storeSliderImage($image)
     {
-        //dd($image);
         $image_data = $this->sliderImageRepository->sliderImage($image['slider_id']);
         if (empty($image_data)) {
             $i = 1;
@@ -50,6 +49,17 @@ class MyblSliderImageService
 
         $image['image_url'] = 'storage/' . $image['image_url']->store('Slider_image');
         $image['sequence'] = $i;
+
+
+        if (isset($image['other_attributes'])) {
+            $other_attributes = [
+                'type' => strtolower($image['redirect_url']),
+                'content' => $image['other_attributes']
+            ];
+
+            $image['other_attributes'] = json_encode($other_attributes);
+        }
+
         $this->save($image);
 
         return new Response("Image has been successfully added");

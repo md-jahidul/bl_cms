@@ -118,7 +118,7 @@
 
                             <div class="form-group col-md-6 mb-2">
                                 <label for="redirect_url" >Slider Action </label>
-                                <select name="redirect_url" class="browser-default custom-select">
+                                <select id="navigate_action" name="redirect_url" class="browser-default custom-select">
                                     <option value="">Select Action</option>
                                     @foreach ($actionList as $key => $value)
                                         <option value="{{ $key }}" {{ ( $key == $imageInfo->redirect_url) ? 'selected' : '' }}>
@@ -154,7 +154,9 @@
                                 </div>
                             </div>
 
-                            @if($imageInfo->redirect_url == "URL")
+
+
+                          {{--  @if($imageInfo->redirect_url == "URL")
                                 <div id="link" class="form-group col-md-6">
                                     <label id="label_link" for="numbers">Web or Deep Link</label>
                                     <div class='input-group'>
@@ -171,7 +173,22 @@
                                                placeholder="Please enter link" />
                                     </div>
                                 </div>
-                            @endif
+                            @endif--}}
+                            
+                            <div id="append_div" class="col-md-6">
+                                @if(isset($imageInfo))
+                                    @if($info = json_decode($imageInfo->other_attributes))
+                                        <div class="form-group other-info-div">
+                                            <label>@if($imageInfo->redirect_url == "DIAL") Dial Number @else
+                                                    Redirect
+                                                    URL @endif </label>
+                                            <input type="text" name="other_attributes" class="form-control" required
+                                                   value="@if($info) {{$info->content}} @endif">
+                                            <div class="help-block"></div>
+                                        </div>
+                                    @endif
+                                @endif
+                            </div>
 
                             <div class="col-md-8">
                                 <img style="height:100px;width:200px" id="img_display" src="{{asset($imageInfo->image_url)}}" alt="" srcset="">
@@ -242,7 +259,52 @@
                     'error': 'Choose correct file format'
                 }
             });
-        })
+
+        var content = "";
+        var url_html;
+        var parse_data;
+        let dial_html, other_attributes = '';
+        var js_data = '<?php echo isset($imageInfo) ? json_encode($imageInfo) : null; ?>';
+
+        if (js_data) {
+            parse_data = JSON.parse(js_data);
+            other_attributes = parse_data.other_attributes;
+            if (other_attributes) {
+                content = other_attributes.content;
+            }
+        }
+
+
+        // add dial number
+        dial_html = ` <div class="form-group other-info-div">
+                                        <label>Dial Number</label>
+                                        <input type="text" name="other_attributes" class="form-control" value="${content}" placeholder="Enter Valid Number" required>
+                                        <div class="help-block"></div>
+                                    </div>`;
+
+        url_html = ` <div class="form-group other-info-div">
+                                        <label>Redirect External URL</label>
+                                        <input type="text" name="other_attributes" class="form-control" value="${content}" placeholder="Enter Valid URL" required>
+                                        <div class="help-block"></div>
+                                    </div>`;
+
+
+        $('#navigate_action').on('change', function () {
+            let action = $(this).val();
+            if (action == 'DIAL') {
+                $("#append_div").html(dial_html);
+            } else if (action == 'URL') {
+                $("#append_div").html(url_html);
+            } else {
+                $(".other-info-div").remove();
+            }
+          })
+
+        });
+
+
+
+
     </script>
 
 

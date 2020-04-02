@@ -65,7 +65,7 @@ class Helper
             "FAQ"                     => "FAQ",
             "FNF"                     => "FnF",
             "HOME"                    => "Home Menu",
-            "URL"                    => "External Link",
+            "URL"                     => "External Link",
             "INTERNET_EXCLUSIVE_PACK" => "Internet packs > Buy Packs > Exclusive Pack",
             "INTERNET_MONTHLY_PACK"   => "Internet packs > Buy Packs > Monthly Pack",
             "INTERNET_POWER_PACK"     => "Internet packs > Buy Packs > Power Pack",
