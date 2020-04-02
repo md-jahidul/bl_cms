@@ -174,7 +174,7 @@
                                     </div>
                                 </div>
                             @endif--}}
-                            
+
                             <div id="append_div" class="col-md-6">
                                 @if(isset($imageInfo))
                                     @if($info = json_decode($imageInfo->other_attributes))

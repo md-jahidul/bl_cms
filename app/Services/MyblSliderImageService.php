@@ -79,6 +79,7 @@ class MyblSliderImageService
     public function updateSliderImage($data, $id)
     {
         $sliderImage = $this->findOne($id);
+
         if (!isset($data['image_url'])) {
             $data['image_url'] = $sliderImage->image_url;
         } else {
@@ -89,7 +90,20 @@ class MyblSliderImageService
             }
             $data['image_url'] = 'storage/' . $data['image_url']->store('Slider_image');
         }
+
+
+        if (isset($data['other_attributes'])) {
+            $other_attributes = [
+                'type' => strtolower($data['redirect_url']),
+                'content' => $data['other_attributes']
+            ];
+
+            $data['other_attributes'] = json_encode($other_attributes);
+        }
+
         $sliderImage->update($data);
+
+
         return new Response("Image has has been successfully updated");
     }
 
