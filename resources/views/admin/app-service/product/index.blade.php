@@ -22,10 +22,10 @@
                         <thead>
                             <tr>
                                 <td width="3%">#</td>
-                                <th width="20%">Product Name</th>
+                                <th width="15%">Product Title</th>
                                 <th width="20%">Product Description</th>
                                 <th width="5%">Price</th>
-                                <th>USSD</th>
+{{--                                <th width="5%">USSD</th>--}}
                                 <th width="5%">Tab</th>
                                 <th>Category</th>
                                 <th class="text-center" width="8%">Details</th>
@@ -43,7 +43,7 @@
                                         <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                         <td>{{ $product->description_en }}</td>
                                         <td>{{ $product->price_tk }}</td>
-                                        <td>{{ $product->ussd_en }}</td>
+{{--                                        <td>{{ $product->ussd_en }}</td>--}}
                                         <td>{{ $product->appServiceTab->name_en }}</td>
                                         <td>@if(isset($product->appServiceCat->title_en)){{ $product->appServiceCat->title_en }}@endif</td>
                                         <td class="text-center">

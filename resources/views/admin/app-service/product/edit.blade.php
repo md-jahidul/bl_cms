@@ -19,49 +19,6 @@
                             @csrf
                             {{ method_field('PUT') }}
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
-                                    <label for="name_en" class="required">Offer Title (English)</label>
-                                    <input type="text" name="name_en" id="name_en" class="form-control" required data-validation-required-message="Please enter title" placeholder="Enter offer name in English"
-                                           value="{{ $appServiceProduct->name_en }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('name_en'))
-                                        <div class="help-block">{{ $errors->first('name_en') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
-                                    <label for="name_bn" class="required">Offer Title (Bangla)</label>
-                                    <input type="text" name="name_bn" id="name_bn" class="form-control" required data-validation-required-message="Please enter title" placeholder="Enter offer name in Bangla"
-                                           value="{{ $appServiceProduct->name_bn }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('name_bn'))
-                                        <div class="help-block">{{ $errors->first('name_bn') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
-                                    <label for="start_date">Start Date</label>
-                                    <div class='input-group'>
-                                        <input type='text' class="form-control" name="start_date" id="start_date"
-                                               value="{{ $appServiceProduct->start_date }}" placeholder="Please select start date" />
-                                    </div>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('start_date'))
-                                        <div class="help-block">{{ $errors->first('start_date') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
-                                    <label for="end_date">End Date</label>
-                                    <input type="text" name="end_date" id="end_date" class="form-control"
-                                           placeholder="Please select end date"
-                                           value="{{ $appServiceProduct->end_date }}" autocomplete="0">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('end_date'))
-                                        <div class="help-block">{{ $errors->first('end_date') }}</div>
-                                    @endif
-                                </div>
-
                                 <div class="form-group col-md-6 {{ $errors->has('app_service_tab_id') ? ' error' : '' }}">
                                     <label for="app_service_tab_id" class="required">App & Service Type</label>
                                     <select class="form-control required" name="app_service_tab_id" id="offer_type"
@@ -92,18 +49,68 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
+                                    <label for="name_en" class="required">Offer Title (English)</label>
+                                    <input type="text" name="name_en" id="name_en" class="form-control" required data-validation-required-message="Please enter title" placeholder="Enter offer name in English"
+                                           value="{{ $appServiceProduct->name_en }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('name_en'))
+                                        <div class="help-block">{{ $errors->first('name_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('name_bn') ? ' error' : '' }}">
+                                    <label for="name_bn" class="required">Offer Title (Bangla)</label>
+                                    <input type="text" name="name_bn" id="name_bn" class="form-control" required data-validation-required-message="Please enter title" placeholder="Enter offer name in Bangla"
+                                           value="{{ $appServiceProduct->name_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('name_bn'))
+                                        <div class="help-block">{{ $errors->first('name_bn') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 ">
-                                    <label for="price_tk">Offer Price</label>
-                                    <input type="text" name="price_tk" id="price_tk"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
-                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                                           value="{{ $appServiceProduct->price_tk }}">
+                                    <label for="description_en" class="required">Description (English)</label>
+                                    <textarea type="text" name="description_en" class="form-control" required data-validation-required-message="Please select type" placeholder="Enter description in English"
+                                    >{{ $appServiceProduct->description_en }}</textarea>
                                     <div class="help-block"></div>
                                 </div>
 
                                 <div class="form-group col-md-6 ">
-                                    <label for="validity_unit">Validity Unit</label>
-                                    <input type="text" name="validity_unit" class="form-control" placeholder="Enter offer validity unit"
-                                           value="{{ $appServiceProduct->validity_unit }}">
+                                    <label for="description_bn" class="required">Description (Bangla)</label>
+                                    <textarea type="text" name="description_bn" class="form-control" required data-validation-required-message="Please select type" placeholder="Enter description in Bangla"
+                                    >{{ $appServiceProduct->description_bn }}</textarea>
+                                    <div class="help-block"></div>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                    <label for="start_date">Start Date</label>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" name="start_date" id="start_date"
+                                               value="{{ $appServiceProduct->start_date }}" placeholder="Please select start date" />
+                                    </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('start_date'))
+                                        <div class="help-block">{{ $errors->first('start_date') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                    <label for="end_date">End Date</label>
+                                    <input type="text" name="end_date" id="end_date" class="form-control"
+                                           placeholder="Please select end date"
+                                           value="{{ $appServiceProduct->end_date }}" autocomplete="0">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('end_date'))
+                                        <div class="help-block">{{ $errors->first('end_date') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 ">
+                                    <label for="price_tk">Price</label>
+                                    <input type="text" name="price_tk" id="price_tk"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
+                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+                                           value="{{ $appServiceProduct->price_tk }}">
                                     <div class="help-block"></div>
                                 </div>
 
@@ -129,38 +136,6 @@
                                 <slot id="vas" data-offer-type="vas" class="{{ $appServiceProduct->appServiceTab->alias == 'vas' ? '' : 'd-none' }}">
                                     @include('layouts.partials.app-service.vas')
                                 </slot>
-
-                                <div class="form-group col-md-6 ">
-                                    <label for="description_en" class="required">Description (English)</label>
-                                    <textarea type="text" name="description_en" class="form-control" required data-validation-required-message="Please select type" placeholder="Enter description in English"
-                                    >{{ $appServiceProduct->description_en }}</textarea>
-                                    <div class="help-block"></div>
-                                </div>
-
-                                <div class="form-group col-md-6 ">
-                                    <label for="description_bn" class="required">Description (Bangla)</label>
-                                    <textarea type="text" name="description_bn" class="form-control" required data-validation-required-message="Please select type" placeholder="Enter description in Bangla"
-                                    >{{ $appServiceProduct->description_bn }}</textarea>
-                                    <div class="help-block"></div>
-                                </div>
-
-
-
-                                <div class="col-md-6">
-                                    <label></label>
-                                    <div class="form-group">
-                                        <label for="can_active" class="mr-1">Can Active:</label>
-                                        <input type="checkbox" name="can_active" value="1" id="can_active" {{ ($appServiceProduct->can_active == 1) ? 'checked' : '' }}>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    {{--                                    <label></label>--}}
-                                    <div class="form-group">
-                                        <label for="show_in_vas" class="mr-1">Show In VAS Tab:</label>
-                                        <input type="checkbox" name="show_in_vas" value="1" id="show_in_vas" {{ ($appServiceProduct->show_in_vas == 1) ? 'checked' : '' }}>
-                                    </div>
-                                </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">

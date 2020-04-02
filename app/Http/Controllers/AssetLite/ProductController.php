@@ -107,7 +107,7 @@ class ProductController extends Controller
 
     public function create($type)
     {
-        $this->info['productCoreCodes'] = $this->productService->unusedProductCore();
+        $this->info['productCoreCodes'] = $this->productService->unusedProductCore($type);
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['type'] = $type;
         $this->info['tags'] = $this->tagCategoryService->findAll();
