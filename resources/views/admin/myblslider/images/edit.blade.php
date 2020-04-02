@@ -93,24 +93,6 @@
                                 @endif
                             </div>
 
-                            @php
-                                $actionList = Helper::navigationActionList();
-                            @endphp
-
-                            <div class="form-group col-md-6 mb-2">
-                                <label for="redirect_url" >Slider Action </label>
-                                <select name="redirect_url" class="browser-default custom-select">
-                                    <option value="">Select Action</option>
-                                    @foreach ($actionList as $key => $value)
-                                        <option value="{{ $key }}" {{ ( $key == $imageInfo->redirect_url) ? 'selected' : '' }}>
-                                            {{ $value }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <div class="help-block"></div>
-                            </div>
-
-
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="is_active">Active Status:</label>
@@ -129,28 +111,26 @@
                                 </div>
                             </div>
 
-                            @if($imageInfo->redirect_url == "URL")
-                                <div id="link" class="form-group col-md-6">
-                                    <label id="label_link" for="numbers">Web or Deep Link</label>
-                                    <div class='input-group'>
-                                        <input type='text' class="form-control" name="web_deep_link" id="web_deep_link"
-                                               placeholder="Please enter link"
-                                               value="{{old('web_deep_link') ? old('web_deep_link'): $imageInfo->web_deep_link}}"/>
-                                    </div>
-                                </div>
-                            @else
-                                <div id="link" style="display: none" class="form-group col-md-6">
-                                    <label id="label_link" for="numbers">Web or Deep Link</label>
-                                    <div class='input-group'>
-                                        <input type='text' class="form-control" name="web_deep_link" id="web_deep_link"
-                                               placeholder="Please enter link" />
-                                    </div>
-                                </div>
-                            @endif
+
+                            @php
+                                $actionList = Helper::navigationActionList();
+                            @endphp
+
+                            <div class="form-group col-md-6 mb-2">
+                                <label for="redirect_url" >Slider Action </label>
+                                <select name="redirect_url" class="browser-default custom-select">
+                                    <option value="">Select Action</option>
+                                    @foreach ($actionList as $key => $value)
+                                        <option value="{{ $key }}" {{ ( $key == $imageInfo->redirect_url) ? 'selected' : '' }}>
+                                            {{ $value }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <div class="help-block"></div>
+                            </div>
 
 
-
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="image">Upload Image :</label>
                                     <div class="input-group" id="image_input_div">
@@ -174,7 +154,26 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12 mb-1">
+                            @if($imageInfo->redirect_url == "URL")
+                                <div id="link" class="form-group col-md-6">
+                                    <label id="label_link" for="numbers">Web or Deep Link</label>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" name="web_deep_link" id="web_deep_link"
+                                               placeholder="Please enter link"
+                                               value="{{old('web_deep_link') ? old('web_deep_link'): $imageInfo->web_deep_link}}"/>
+                                    </div>
+                                </div>
+                            @else
+                                <div id="link" style="display: none" class="form-group col-md-6">
+                                    <label id="label_link" for="numbers">Web or Deep Link</label>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" name="web_deep_link" id="web_deep_link"
+                                               placeholder="Please enter link" />
+                                    </div>
+                                </div>
+                            @endif
+
+                            <div class="col-md-8">
                                 <img style="height:100px;width:200px" id="img_display" src="{{asset($imageInfo->image_url)}}" alt="" srcset="">
                             </div>
 

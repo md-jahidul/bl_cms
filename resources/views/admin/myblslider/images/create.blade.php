@@ -104,6 +104,17 @@
                                     @endif
                                 </div>
 
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="is_active">Active Status:</label>
+                                        <select class="form-control" id="is_active"
+                                                name="is_active">
+                                            <option value="1"> Active </option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 @php
                                     $actionList = Helper::navigationActionList();
                                 @endphp
@@ -121,28 +132,8 @@
                                     <div class="help-block"></div>
                                 </div>
 
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="is_active">Active Status:</label>
-                                        <select class="form-control" id="is_active"
-                                                name="is_active">
-                                            <option value="1"> Active </option>
-                                            <option value="0">Inactive</option>
-                                        </select>
-                                    </div>
-                                </div>
 
-
-                                <div id="link" class="form-group col-md-6">
-                                    <label id="label_link" for="numbers">Web or Deep Link</label>
-                                    <div class='input-group'>
-                                        <input type='text' class="form-control" name="web_deep_link" id="web_deep_link"
-                                               placeholder="Please enter link" />
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="image" class="required">Upload Image :</label>
                                             <div class="input-group">
@@ -175,6 +166,15 @@
                                         </div>
                                         <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
                                         <small id="massage"></small>
+                                    </div>
+                                </div>
+
+
+                                <div id="link" class="form-group col-md-6">
+                                    <label id="label_link" for="numbers">Web or Deep Link</label>
+                                    <div class='input-group'>
+                                        <input type='text' class="form-control" name="web_deep_link" id="web_deep_link"
+                                               placeholder="Please enter link" />
                                     </div>
                                 </div>
 
