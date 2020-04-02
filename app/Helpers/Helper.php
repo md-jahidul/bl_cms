@@ -89,8 +89,7 @@ class Helper
             "T&C"                     => "T&C",
             "USAGE_HISTORY"           => "Usage History",
             "USSD_CODE_LIST"          => "View USSD code",
-            "VOICE_BUNDLE"            => "Voice Bundles"
-
+            "VOICE_BUNDLE"            => "Voice Bundles",
         ];
     }
 

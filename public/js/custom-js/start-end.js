@@ -7,11 +7,12 @@ $(function () {
         minDate: date,
     });
     $('#end_date').datetimepicker({
-        format : 'YYYY/MM/DD HH:mm:ss',
+        format : 'YYYY-MM-DD HH:mm:ss',
         showClose: true,
         useCurrent: false, //Important! See issue #1075
 
     });
+
     $("#start_date").on("dp.change", function (e) {
         $('#end_date').data("DateTimePicker").minDate(e.date);
     });
