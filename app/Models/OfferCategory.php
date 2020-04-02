@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class OfferCategory extends Model
 {
-    protected $fillable = ['id', 'name_en', 'name_bn', 'banner_image_url', 'banner_alt_text'];
+
+    protected $fillable = ['name_en', 'name_bn', 'banner_image_url', 'banner_alt_text', 'banner_image_mobile', 'url_slug', 'page_header', 'banner_name', 'schema_markup'];
 
     public function scopePackageType($query, $type = 'prepaid')
     {

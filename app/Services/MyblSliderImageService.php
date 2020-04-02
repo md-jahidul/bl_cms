@@ -1,19 +1,12 @@
 <?php
-
-/**
- * Created by PhpStorm.
- * User: bs-205
- * Date: 18/08/19
- * Time: 17:23
- */
-
 namespace App\Services;
 
-use App\Repositories\SliderImageRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use DB;
 use Illuminate\Support\Facades\Log;
+use App\Repositories\SliderImageRepository;
+
 
 class MyblSliderImageService
 {
@@ -47,7 +40,6 @@ class MyblSliderImageService
      */
     public function storeSliderImage($image)
     {
-        //dd($image);
         $image_data = $this->sliderImageRepository->sliderImage($image['slider_id']);
         if (empty($image_data)) {
             $i = 1;
@@ -57,6 +49,17 @@ class MyblSliderImageService
 
         $image['image_url'] = 'storage/' . $image['image_url']->store('Slider_image');
         $image['sequence'] = $i;
+
+
+        if (isset($image['other_attributes'])) {
+            $other_attributes = [
+                'type' => strtolower($image['redirect_url']),
+                'content' => $image['other_attributes']
+            ];
+
+            $image['other_attributes'] = json_encode($other_attributes);
+        }
+
         $this->save($image);
 
         return new Response("Image has been successfully added");
@@ -76,6 +79,7 @@ class MyblSliderImageService
     public function updateSliderImage($data, $id)
     {
         $sliderImage = $this->findOne($id);
+
         if (!isset($data['image_url'])) {
             $data['image_url'] = $sliderImage->image_url;
         } else {
@@ -86,7 +90,20 @@ class MyblSliderImageService
             }
             $data['image_url'] = 'storage/' . $data['image_url']->store('Slider_image');
         }
+
+
+        if (isset($data['other_attributes'])) {
+            $other_attributes = [
+                'type' => strtolower($data['redirect_url']),
+                'content' => $data['other_attributes']
+            ];
+
+            $data['other_attributes'] = json_encode($other_attributes);
+        }
+
         $sliderImage->update($data);
+
+
         return new Response("Image has has been successfully updated");
     }
 
