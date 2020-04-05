@@ -140,44 +140,46 @@
                     confirmButtonText: 'Yes'
                 }).then((result) => {
 
-                let formData = new FormData($(this)[0]);
+                    if (result.value) {
 
-                $.ajax({
-                    url: '{{ route('notification.send-all')}}',
-                    type: 'POST',
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: formData,
-                    success: function (result) {
+                        let formData = new FormData($(this)[0]);
 
-                        if (result.success) {
-                            swal.fire({
-                                title: 'Notification sent Successfully!',
-                                type: 'success',
-                                timer: 2000,
-                                showConfirmButton: false
-                            });
+                        $.ajax({
+                            url: '{{ route('notification.send-all')}}',
+                            type: 'POST',
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: formData,
+                            success: function (result) {
 
-                            window.location.href = '{{route("notification.index")}}';
+                                if (result.success) {
+                                    swal.fire({
+                                        title: 'Notification sent Successfully!',
+                                        type: 'success',
+                                        timer: 2000,
+                                        showConfirmButton: false
+                                    });
 
-                        } else {
-                            swal.close();
-                            swal.fire({
-                                title: result.message,
-                                type: 'error',
-                            });
-                        }
+                                    window.location.href = '{{route("notification.index")}}';
 
-                    },
-                    error: function (data) {
-                        swal.fire({
-                            title: 'Failed to send Notifications',
-                            type: 'error',
+                                } else {
+                                    swal.close();
+                                    swal.fire({
+                                        title: result.message,
+                                        type: 'error',
+                                    });
+                                }
+
+                            },
+                            error: function (data) {
+                                swal.fire({
+                                    title: 'Failed to send Notifications',
+                                    type: 'error',
+                                });
+                            }
                         });
                     }
-                });
-
                 });
 
             });
