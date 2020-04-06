@@ -62,7 +62,7 @@
                                         <input type="file" name="image_url" class="custom-file-input" id="image" required data-validation-required-message="Select a quick launch icon">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>
