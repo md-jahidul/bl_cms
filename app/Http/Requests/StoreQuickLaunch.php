@@ -26,7 +26,7 @@ class StoreQuickLaunch extends FormRequest
         return [
             'title_en' => 'required',
             'title_bn' => 'required',
-            'image_url' => 'required|mimes:png,jpeg',
+            'image_url' => 'required|mimes:png,jpeg,svg',
             'alt_text' => 'required',
             'link' => 'required',
             'status' => 'required',

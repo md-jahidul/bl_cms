@@ -61,7 +61,7 @@
                                         <input type="file" name="image_url" class="custom-file-input" id="image">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
                                 </div>
 
                                 <div class="form-group col-md-6">
