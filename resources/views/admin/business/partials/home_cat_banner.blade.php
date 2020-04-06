@@ -2,7 +2,7 @@
     <div class="card-content collapse show">
         <div class="card-body card-dashboard">
             <div class="row">
-                <div class="col-md-12 col-xs-12">
+                <div class="col-md-5 col-xs-12">
                     <h4 class="pb-1"><strong>Categories/Manus</strong></h4>
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -32,7 +32,7 @@
                                     </a>
                                 </td>
                                 <td class="banner_photo">
-                                <img src="{{ config('filesystems.file_base_url') . $cat->banner_photo }}" height="40px">
+                                <img src="{{ config('filesystems.file_base_url') . $cat->banner_photo }}" height="20px">
                                 
                                 </td>
                                 <td>
