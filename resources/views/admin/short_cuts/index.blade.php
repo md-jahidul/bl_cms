@@ -261,7 +261,7 @@
             let dial_html, other_info = '';
             var js_data = `<?php echo isset($short_cut_info) ? $short_cut_info->other_info : null; ?>`;
 
-            console.log(js_data);
+            //console.log(js_data);
 
             if (js_data) {
                 parse_data = JSON.parse(js_data);
