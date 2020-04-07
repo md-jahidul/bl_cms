@@ -1,14 +1,14 @@
 <?php
 function matchRelatedProduct($id, $roles)
 {
-	if ($roles) {
-		foreach ($roles as $role) {
-			if ($role == $id) {
-				return true;
-			}
-		}
-	}
-	return false;
+    if ($roles) {
+        foreach ($roles as $role) {
+            if ($role == $id) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 ?>
 
@@ -20,12 +20,12 @@ function matchRelatedProduct($id, $roles)
 	<li class="breadcrumb-item ">Section List</li>
 @endsection
 @section('action')
-	
+
 @endsection
 @section('content')
 	<section>
-		
-		
+
+
 		<!-- include tab wise product details -->
 		@if($tab_type == "app")
 			@include('admin.app-service.details.section.tab-details.app_tab_details')
@@ -37,10 +37,10 @@ function matchRelatedProduct($id, $roles)
 			@include('admin.app-service.details.section.tab-details.others_tab_details')
 		@endif
 
-		
+
 		@yield('component_type_selector')
-		
-		
+
+
 		<!-- # Section list with component card -->
 		<div class="card">
 			<div class="card-content collapse show">
@@ -102,7 +102,7 @@ function matchRelatedProduct($id, $roles)
 											<td>
 												<a href="{{ route("app_service.details.edit", [$tab_type, $product_id, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0 section_component_edit" data-sections="{{$list->section_type}}">
 													<i class="la la-pencil" aria-hidden="true"></i></a>
-												
+
 												@if( $list->is_default == 0 )
 													<a href="#" remove="{{ route("app_service.sections.destroy", [$tab_type, $product_id, $list->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
 														<i class="la la-trash"></i>
@@ -120,7 +120,7 @@ function matchRelatedProduct($id, $roles)
 		</div>
 
 	</section>
-	 
+
 	 <!-- Fixed sections -->
 	<section>
 		<div class="card">
@@ -155,7 +155,7 @@ function matchRelatedProduct($id, $roles)
 										<img height="100" width="200" class="imgDisplay img-fluid" style="display: none">
 									@endif
 								</div>
-								
+
 
 								<div class="form-group col-md-4 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
 									<label for="mobileImg">Banner Image (Mobile)</label>
@@ -206,7 +206,7 @@ function matchRelatedProduct($id, $roles)
 										<div class="role-select">
 											<select class="select2 form-control" multiple="multiple" name="other_attributes[related_product_id][]">
 												@foreach($products as $product)
-													<option value="{{ $product->id }}" {{ matchRelatedProduct($product->id, $fixedSectionData['other_attributes']['related_product_id']) ? 'selected' : '' }}>{{$product->name_en}}</option>
+													<option value="{{ $product->id }}" {{isset($fixedSectionData['other_attributes']['related_product_id']) ?? matchRelatedProduct($product->id, $fixedSectionData['other_attributes']['related_product_id']) ? 'selected' : '' }}>{{$product->name_en}}</option>
 												@endforeach
 											</select>
 										</div>
@@ -233,7 +233,7 @@ function matchRelatedProduct($id, $roles)
 		</div>
 	</section>
 
-	
+
 	@yield('component_modal_toadd')
 
 
@@ -319,14 +319,14 @@ function matchRelatedProduct($id, $roles)
 						// Set all sections
 						$.each(result.data.sections, function(k, v){
 
-							if( k == 'title_en' ){     
+							if( k == 'title_en' ){
 								 $parentSelectorEdit.find("input[name='sections[title_en]']").val(v);
 							}
 
-							if( k == 'title_bn' ){     
+							if( k == 'title_bn' ){
 								 $parentSelectorEdit.find("input[name='sections[title_bn]']").val(v);
 							}
-							
+
 						});
 
 						// Add section id
@@ -346,7 +346,7 @@ function matchRelatedProduct($id, $roles)
 
 							$.each(cpv, function(ck, cv){
 
-								 if( ck == 'id' ){                            
+								 if( ck == 'id' ){
 								 $parentSelectorEdit.find("input[name='component["+cpk+"][id]']").val(cv);
 								 $('.tablecompoent_'+cpk).attr('data-component_id', cv);
 								 }
@@ -401,7 +401,7 @@ function matchRelatedProduct($id, $roles)
 									if( typeof cv !== 'undefined' ){
 										var otherAttrData = eval(JSON.parse(cv));
 
-										$.each(otherAttrData, function(ock, ocv){  
+										$.each(otherAttrData, function(ock, ocv){
 
 											$parentSelectorEdit.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
 
@@ -424,7 +424,7 @@ function matchRelatedProduct($id, $roles)
 
 
 						$parentSelectorEdit.modal('show');
-						
+
 
 						// Add section id
 						$parentSelectorEdit.find('.section_id').val(result.data.sections.id);
@@ -443,7 +443,7 @@ function matchRelatedProduct($id, $roles)
 
 							$.each(cpv, function(ck, cv){
 
-								 if( ck == 'id' ){                            
+								 if( ck == 'id' ){
 								 $parentSelectorEdit.find("input[name='component["+cpk+"][id]']").val(cv);
 								 $('.tablecompoent_'+cpk).attr('data-component_id', cv);
 								 }
@@ -523,7 +523,7 @@ function matchRelatedProduct($id, $roles)
 						$parentSelectorEdit.find('#accordion').empty();
 
 						$parentSelectorEdit.modal('show');
-						
+
 						// Add section id
 						$parentSelectorEdit.find('.section_id').val(result.data.sections.id);
 
@@ -542,7 +542,7 @@ function matchRelatedProduct($id, $roles)
 
 							$.each(cpv, function(ck, cv){
 
-								 if( ck == 'id' ){                            
+								 if( ck == 'id' ){
 								 $parentSelectorEdit.find("input[name='component["+cpk+"][id]']").val(cv);
 								 $('.accordion_compoent_'+cpk).attr('data-component_id', cv);
 								 }
@@ -576,7 +576,7 @@ function matchRelatedProduct($id, $roles)
 											else{
 												html += '<label for="title" class="mr-1">Status:</label> <input type="radio" name="component[0][multi_item][status-'+mck+']" value="1"> <label for="active" class="mr-1">Active</label> <input type="radio" name="component[0][multi_item][status-'+mck+']" value="0" checked> <label for="inactive">Inactive</label>';
 											}
-										
+
 
 										html += '</div></div><div class="col-md-6"> <div class="float-right"> <a href="#" class="border-0 btn-sm btn-outline-danger delete_accordion_item" data-item_id="'+mck+'" title="Delete"> <i class="la la-trash"></i> </a> </div></div></div></div></div></div>';
 
@@ -624,7 +624,7 @@ function matchRelatedProduct($id, $roles)
 							});
 
 						});
-						
+
 
 						// editor reload
 						$('.js_editor_box').each(function(k, v){
@@ -650,14 +650,14 @@ function matchRelatedProduct($id, $roles)
 						// Set all sections
 						$.each(result.data.sections, function(k, v){
 
-							if( k == 'title_en' ){     
+							if( k == 'title_en' ){
 								 $parentSelector.find("input[name='sections[title_en]']").val(v);
 							}
 
-							if( k == 'title_bn' ){     
+							if( k == 'title_bn' ){
 								 $parentSelector.find("input[name='sections[title_bn]']").val(v);
 							}
-							
+
 						});
 
 						// Add section id
@@ -677,15 +677,15 @@ function matchRelatedProduct($id, $roles)
 
 							$.each(cpv, function(ck, cv){
 
-								 if( ck == 'title_en' ){                            
+								 if( ck == 'title_en' ){
 								 $parentSelector.find("input[name='component["+cpk+"][title_en]']").val(cv);
 								 }
 
-								 if( ck == 'title_bn' ){                            
+								 if( ck == 'title_bn' ){
 								 $parentSelector.find("input[name='component["+cpk+"][title_bn]']").val(cv);
 								 }
 
-								 if( ck == 'alt_text' ){                            
+								 if( ck == 'alt_text' ){
 								 $parentSelector.find("input[name='component["+cpk+"][alt_text]']").val(cv);
 								 }
 
@@ -702,21 +702,21 @@ function matchRelatedProduct($id, $roles)
 								 	$parentSelector.find("input[type='text'][name='component["+cpk+"][video_url]']").val(cv);
 								  }
 
-								 if( ck == 'description_en' ){                            
+								 if( ck == 'description_en' ){
 								 $parentSelector.find("textarea[name='component["+cpk+"][description_en]']").val(cv);
 								 }
 
-								 if( ck == 'description_bn' ){                            
+								 if( ck == 'description_bn' ){
 								 $parentSelector.find("textarea[name='component["+cpk+"][description_bn]']").val(cv);
 								 }
 
-								 if( ck == 'editor_en' ){                            
+								 if( ck == 'editor_en' ){
 								 $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").val(cv);
 
 								 $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
 								 }
 
-								 if( ck == 'editor_bn' ){                            
+								 if( ck == 'editor_bn' ){
 								 $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").val(cv);
 
 								 $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
@@ -728,7 +728,7 @@ function matchRelatedProduct($id, $roles)
 								 	if( typeof cv !== 'undefined' ){
 								 		var otherAttrData = eval(JSON.parse(cv));
 
-								 		
+
 
 								 		$.each(otherAttrData, function(ock, ocv){
 
@@ -765,7 +765,7 @@ function matchRelatedProduct($id, $roles)
 						});
 					}
 
-						
+
 
 
 				}
@@ -816,7 +816,7 @@ function matchRelatedProduct($id, $roles)
 							}
 					});
 			}
-			
+
 
 			// Delete multiple attribute items
 			$(document).on('click', '.delete_multi_attr_item', function(e){
@@ -828,12 +828,12 @@ function matchRelatedProduct($id, $roles)
 				if( confirm("Are you sure?") ){
 
 					var itemID = $this.attr('data-item_id');
-					var componentID = $this.attr('data-component_id');	    		
+					var componentID = $this.attr('data-component_id');
 
 					$.ajax({
 							type: "POST",
 							url: "{{ route('appservice.component.itemattr.destory') }}",
-							data: {	    		        
+							data: {
 									item_id: itemID,
 									component_id: componentID,
 									_token : "{{csrf_token()}}"
