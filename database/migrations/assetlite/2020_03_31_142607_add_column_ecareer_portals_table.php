@@ -25,6 +25,8 @@ class AddColumnEcareerPortalsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('ecareer_portals', function (Blueprint $table) {
+            $table->dropColumn('banner_name');
+        });
     }
 }
