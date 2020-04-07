@@ -135,7 +135,32 @@
                                     @include('layouts.partials.app-service.vas')
                                 </slot>
 
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label>Page Header (HTML)</label>
+                                    <textarea class="form-control" rows="7" name="page_header"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label>Schema Markup</label>
+                                    <textarea class="form-control" rows="7" name="schema_markup"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                    <label> URL (url slug) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required name="url_slug" placeholder="URL">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> najat-app (no spaces)<br>
+                                    </small>
+                                </div>
+
                                 <div class="col-md-6">
+                                    <label></label>
                                     <div class="form-group">
                                         <label for="title" class="mr-1">Status:</label>
                                         <input type="radio" name="status" value="1" id="active" checked>
