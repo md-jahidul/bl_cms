@@ -45,21 +45,58 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="Banner Photo">Banner Photo <span class="text-danger">*</span></label>
+                                <label for="Banner Photo">Banner Photo (Web) <span class="text-danger">*</span></label>
                                 <input type="file" class="dropify_package" name="banner_photo" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                                 <input type="hidden" name="old_banner" value="{{$service->banner_photo}}">
 
-                                <label>Alt Text</label>
-                                <input type="text" class="form-control" value="{{$service->alt_text}}" name="alt_text" placeholder="Alt Text">
+                             
 
                                 <p class="text-center">
                                     @if($service->banner_photo != "")
-                                    <img src="{{ config('filesystems.file_base_url') . $service->banner_photo }}" alt="Banner Photo" height="50px" />
+                                    <img src="{{ config('filesystems.file_base_url') . $service->banner_photo }}" alt="Banner Photo" width="100%">
                                     @endif
                                 </p>
 
 
+
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label>Banner Photo (Mobile)</label>
+                                    <input type="file" class="dropify_package" name="banner_mobile" data-height="70"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    
+                                     <input type="hidden" name="old_banner_mob" value="{{$service->banner_image_mobile}}">
+                                
+                                @if($service->banner_image_mobile != "")
+                                <img src="{{ config('filesystems.file_base_url') . $service->banner_image_mobile }}" alt="Banner Photo" width="100%">
+                                @endif
+                                
+                                </div>
+
+                                <label>Banner Photo Name<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{$service->banner_name}}" required name="banner_name" placeholder="Photo Name">
+                                
+                                <input type="hidden" value="{{$service->banner_name}}" name="old_banner_name">
+
+                                <small class="text-info">
+                                    <strong>i.e:</strong> package-banner (no spaces)<br>
+                                </small>
+                                
+                                <br>
+
+                                  <label>Alt Text</label>
+                                <input type="text" class="form-control" value="{{$service->alt_text}}" name="alt_text" placeholder="Alt Text">
+                                
+                                <br>
+                                
+                                <label>URL Slug <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" required name="url_slug" value="{{$service->url_slug}}" placeholder="URL">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> enterprise-solution (no spaces)<br>
+                                </small>
 
                             </div>
 
@@ -104,6 +141,16 @@
                                 <textarea type="text" name="short_details_bn" required class="form-control">{{$service->short_details_bn}}</textarea>
 
                             </div>
+                            
+                             <div class="form-group">
+
+                                <label>Page Header (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header">{{$service->page_header}}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+
+                            </div>
 
                         </div>
 
@@ -117,6 +164,16 @@
 
                                 <label for="Details">Offer Details (BN)</label>
                                 <textarea type="text" name="offer_details_bn" class="form-control textarea_details">{{$service->offer_details_bn}}</textarea>
+
+                            </div>
+                            
+                             <div class="form-group">
+
+                                <label>Schema Markup</label>
+                                <textarea class="form-control schema_markup" rows="7" name="schema_markup">{{$service->schema_markup}}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                </small>
 
                             </div>
 

@@ -388,6 +388,8 @@ Route::middleware('authorize', 'auth')->group(function () {
 
 
     //__category
+    Route::get('business-category-get/{catId}', 'AssetLite\BusinessGeneralController@getCategory');
+    Route::post('business/update-category', 'AssetLite\BusinessGeneralController@updateCategory');
     Route::get('business-category-name-change', 'AssetLite\BusinessGeneralController@categoryNameChange')->name('business.category.name.save');
     Route::get('business-category-home-status-change', 'AssetLite\BusinessGeneralController@categoryStatusChange')->name('business.category.home.status.change');
     Route::post('business-category-banner-save', 'AssetLite\BusinessGeneralController@categoryBannerSave')
