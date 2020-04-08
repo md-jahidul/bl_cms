@@ -80,6 +80,15 @@ class ShortCutService
         } else {
             $request['icon'] = $shortCut->icon;
         }
+        if (isset($request['other_info'])) {
+            $request['other_info'] = json_encode([
+                'type' => strtolower($request['component_identifier']),
+                'content' => $request['other_info']
+            ]);
+        } else {
+            $request['other_info'] = null;
+        }
+
         $shortCut->update($request);
 
         return new Response("Shortcut has been successfully updated");
