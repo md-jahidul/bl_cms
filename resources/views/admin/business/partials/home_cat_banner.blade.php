@@ -2,16 +2,15 @@
     <div class="card-content collapse show">
         <div class="card-body card-dashboard">
             <div class="row">
-                <div class="col-md-12 col-xs-12">
+                <div class="col-md-5 col-xs-12">
                     <h4 class="pb-1"><strong>Categories/Manus</strong></h4>
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th width="22%">Name (EN)</th>
-                                <th width="22%">Name (BN)</th>
+                                <th width="35%">Name</th>
                                 <th width="">Banner</th>
-                                <th width="20%">Upload Banner</th>
-                                <th width="20%">Home</th>
+                                <th width="35%">Home</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody class="category_sortable">
@@ -21,35 +20,15 @@
                                 <td class="category_name">
                                     <i class="icon-cursor-move icons"></i>
                                     {{ $cat->name }} 
-                                    <a class="text-info edit_category_name" type="en" href="{{$cat->id}}" type="" name='{{ $cat->name }}'>
-                                        <i class="la la-pencil-square"></i>
-                                    </a>
+                                    
                                 </td>
-                                <td class="category_name">
-                                    {{ $cat->name_bn }} 
-                                    <a class="text-info edit_category_name" type="bn" href="{{$cat->id}}" name='{{ $cat->name_bn }}'>
-                                        <i class="la la-pencil-square"></i>
-                                    </a>
-                                </td>
+                               
                                 <td class="banner_photo">
                                 <img src="{{ config('filesystems.file_base_url') . $cat->banner_photo }}" height="40px">
                                 
                                 </td>
+                               
                                 <td>
-                                    <div class="row">
-                                       
-                                            <form method="POST" class="form uploadCategoryBanner" enctype="multipart/form-data">
-                                                @csrf
-                                                <input type="file" class="pull-left" name="banner_photo">
-                                                <input type="hidden" value="{{$cat->id}}" name="cat_id">
-                                                <input type="hidden" value="{{$cat->banner_photo}}" name="old_photo">
-                                                <input type="text" placeholder="Alt Text" class="form-control" value="{{$cat->alt_text}}" name="alt_text">
-                                                <button type="submit" class="btn btn-sm btn-info pull-right">Save</button>
-                                            </form>
-                                    </div>
-
-                                </td>
-                                <td class="text-center">
 
                                     @if($cat->home_show == 1)
                                     <a href="{{$cat->id}}" class="btn btn-sm btn-success category_home_show">Showing</a>
@@ -57,6 +36,11 @@
                                     <a href="{{$cat->id}}" class="btn btn-sm btn-warning category_home_show">Hidden</a>
                                     @endif
 
+                                </td>
+                                <td>
+                                    <a class="text-info edit_category" href="{{$cat->id}}">
+                                        <i class="la la-pencil-square"></i>
+                                    </a>
                                 </td>
 
 
@@ -66,6 +50,104 @@
                     </table>
 
                 </div>
+                
+                <div class="col-md-7 col-xs-12 cat_update_form" style="display: none;">
+                     <h4 class="pb-1"><strong>Update Category</strong></h4>
+                    <hr>
+                    <form method="POST" action="{{ url('business/update-category') }}" class="form" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden"  class="cat_id" name="cat_id">
+                        <div class="form-group row">
+                            <div class="col-md-4 col-xs-12">
+                                <label>Name (EN) <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control name_en" required name="name_en" placeholder="Name EN">
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <label>Name (BN) <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control name_bn" required name="name_bn" placeholder="Name BN">
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <label>URL Slug <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control page_url" required name="url_slug" placeholder="URL">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> roaming-rates (no spaces)<br>
+                                </small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group row">
+                            
+                            <div class="col-md-4 col-xs-12">
+                                <label>Banner (Web)</label>
+                                <input type="file" class="" name="banner_web" data-height="70"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+
+                                <input type="hidden" class="old_web_img" name="old_web_img">
+                               
+                                <p class="banner_web"></p>
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <label>Banner (Mobile)</label>
+                                <input type="file" class="" name="banner_mobile" data-height="70"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                
+                                 <input type="hidden" class="old_mob_img" name="old_mob_img">
+                                 
+
+                                <p class="banner_mobile"></p>
+                            </div>
+                            
+                            <div class="col-md-4 col-xs-12">
+                                <label>Banner Photo Name<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
+                                
+                                <input type="hidden" class="old_banner_name" name="old_banner_name">
+                                
+                                <small class="text-info">
+                                    <strong>i.e:</strong> package-banner (no spaces)<br>
+                                </small>
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group row">
+                            
+                               <div class="col-md-4 col-xs-12">
+                                <label>Alt Text</label>
+                                <input type="text" class="form-control alt_text" name="alt_text" placeholder="Alt Text">
+                            </div>
+
+                             <div class="col-md-4 col-xs-12">
+                                <label>Page Header (HTML)</label>
+                                <textarea class="form-control html_header" rows="7" name="page_header"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <label>Schema Markup</label>
+                                <textarea class="form-control schema_markup" rows="7" name="schema_markup"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                </small>
+                            </div>
+                           
+                        </div>
+
+
+
+
+                        <input type="hidden" class="old_web" name="old_web">
+                        <input type="hidden" class="old_mobile" name="old_mobile">
+
+                        <button type="submit" class="btn btn-sm btn-info pull-right">Update</button>
+                    </form>
+                </div>
+                </div>
+            <div class="row">
 
                 <div class="col-md-6 col-xs-12">
                     <h4 class="pb-1"><strong>Sliding Speed</strong></h4>
@@ -167,6 +249,59 @@
     $(function () {
 
         /*######################################### Category Javascript ##################################################*/
+        
+        
+         $('.edit_category').on('click', function (e) {
+            e.preventDefault();
+
+            let catId = $(this).attr('href');
+            $('.cat_id').val(catId);
+            $(".cat_update_form").show(200);
+            $.ajax({
+                url: '{{ url("business-category-get")}}/' + catId,
+                type: 'GET',
+                cache: false,
+                success: function (result) {
+
+                    $('.name_en').val(result.name);
+                    $('.name_bn').val(result.name_bn);
+                    $('.alt_text').val(result.alt_text);
+                    $('.old_web_img').val(result.banner_photo);
+                    $('.old_mob_img').val(result.banner_image_mobile);
+                    $('.page_url').val(result.url_slug);
+                    $('.banner_name').val(result.banner_name);
+                    $('.old_banner_name').val(result.banner_name);
+                    $('.html_header').val(result.page_header);
+                    $('.schema_markup').val(result.schema_markup);
+
+                    $('.banner_web').html("");
+                    if (result.banner_photo != null) {
+                        var bannerWeb = "<img src='" + "{{ config('filesystems.file_base_url') }}" + result.banner_photo + "' width='100%'>";
+                        $('.banner_web').html(bannerWeb);
+                    }
+
+                    $('.banner_mobile').html("");
+                    if (result.banner_image_mobile != null) {
+                        var bannerMob = "<img src='" + "{{ config('filesystems.file_base_url') }}" + result.banner_image_mobile + "' width='100%'>";
+                        $('.banner_mobile').html(bannerMob);
+                    }
+
+                    if (result.status == '1') {
+                        $(".status_active").attr('checked', 'checked');
+                    } else {
+                        $(".status_inactive").attr('checked', 'checked');
+                    }
+
+
+                },
+                error: function (data) {
+                    swal.fire({
+                        title: 'Failed',
+                        type: 'error',
+                    });
+                }
+            });
+        });
 
 
 

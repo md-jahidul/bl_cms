@@ -94,15 +94,26 @@ class BusinessInternetService {
                 'validity_unit' => 'required',
                 'mrp' => 'required',
                 'price' => 'required',
+                'url_slug' => 'required|regex:/^\S*$/u',
+                'banner_name' => 'required|regex:/^\S*$/u',
             ]);
 
             //file upload in storege
-            $bannerPath = "";
-            if ($request['banner_photo'] != "") {
-                $bannerPath = $this->upload($request['banner_photo'], 'assetlite/images/business-images');
+            $photoNameWeb = $request['banner_name'] . '-web';
+            $photoNameMob = $request['banner_name'] . '-mobile';
+            $directoryPath = 'assetlite/images/business-images';
+
+            $bannerWeb = "";
+            $bannerMob = "";
+            if (!empty($request['banner_photo'])) {
+                $bannerWeb = $this->upload($request['banner_photo'], $directoryPath, $photoNameWeb);
+            }
+            
+            if (!empty($request['banner_mobile'])) {
+                $bannerMob = $this->upload($request['banner_mobile'], $directoryPath, $photoNameMob);
             }
 
-            $this->internetRepo->saveInternet($bannerPath, $request);
+            $this->internetRepo->saveInternet($bannerWeb, $bannerMob, $request);
 
             $response = [
                 'success' => 1,
@@ -123,10 +134,10 @@ class BusinessInternetService {
      * Save internet package
      * @return Response
      */
-    public function updateInternet($request) {
+    public function updateInternet($data) {
         try {
 
-            $request->validate([
+            $data->validate([
                 'product_code' => 'required',
                 'product_code_ev' => 'required',
                 'product_code_with_renew' => 'required',
@@ -141,16 +152,43 @@ class BusinessInternetService {
                 'validity_unit' => 'required',
                 'mrp' => 'required',
                 'price' => 'required',
+                'url_slug' => 'required|regex:/^\S*$/u',
+                'banner_name' => 'required|regex:/^\S*$/u',
             ]);
 
             //file upload in storege
-            $bannerPath = "";
-            if ($request['banner_photo'] != "") {
-                $bannerPath = $this->upload($request['banner_photo'], 'assetlite/images/business-images');
-                $this->deleteFile($request['old_banner']);
+
+            $photoNameWeb = $data['banner_name'] . '-web';
+            $photoNameMob = $data['banner_name'] . '-mobile';
+            $directoryPath = 'assetlite/images/business-images';
+
+            $bannerWeb = "";
+            $bannerMob = "";
+            if (!empty($data['banner_photo'])) {
+
+                $data['old_banner'] != "" ? $this->deleteFile($data['old_banner']) : "";
+                $bannerWeb = $this->upload($data['banner_photo'], $directoryPath, $photoNameWeb);
             }
 
-            $this->internetRepo->saveInternet($bannerPath, $request);
+            if (!empty($data['banner_mobile'])) {
+
+                $data['old_banner_mob'] != "" ? $this->deleteFile($data['old_banner_mob']) : "";
+                $bannerMob = $this->upload($data['banner_mobile'], $directoryPath, $photoNameMob);
+            }
+
+            //only rename
+            if ($data['old_banner_name'] != $data['banner_name']) {
+
+                if (empty($data['banner_photo'])) {
+                    $bannerWeb = $this->rename($data['old_banner'], $photoNameWeb, $directoryPath);
+                }
+
+                if (empty($data['banner_mobile'])) {
+                    $bannerMob = $this->rename($data['old_banner_mob'], $photoNameMob, $directoryPath);
+                }
+            }
+
+            $this->internetRepo->saveInternet($bannerWeb, $bannerMob, $data);
 
             $response = [
                 'success' => 1,
@@ -199,7 +237,7 @@ class BusinessInternetService {
      * @return Response
      */
     public function deletePackage($packageId) {
-        $package = $this->internetRepo->getInternetById($packageId); 
+        $package = $this->internetRepo->getInternetById($packageId);
         $this->deleteFile($package->banner_photo);
         $response = $this->internetRepo->deletePackage($packageId);
         return $response;
