@@ -46,7 +46,37 @@ class BusinessGeneralController extends Controller {
         $bannersSave = $this->businessHomeService->saveHomeBanners($request);
         return $bannersSave;
     }
-   
+
+    /**
+     * Category data by id
+     * 
+     * @param $catId
+     * @return JsonResponse
+     * @Dev Bulbul Mahmud Nito || 06/04/2020
+     */
+    public function getCategory($catId) {
+        $nameChange = $this->businessHomeService->getCategoryById($catId);
+        return $nameChange;
+    }
+
+    /**
+     * Category data update.
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     * @Dev Bulbul Mahmud Nito || 06/04/2020
+     */
+    public function updateCategory(Request $request) {
+        $response = $this->businessHomeService->updateCategory($request);
+        if ($response['success'] == 1) {
+            Session::flash('message', 'Category updated successfully!');
+        } else if ($response['success'] == 2) {
+            Session::flash('error', "The banner name is not unique!");
+        } else {
+            Session::flash('error', $response['message']);
+        }
+        return redirect('business-general');
+    }
 
     /**
      * Category name Change.
@@ -59,8 +89,8 @@ class BusinessGeneralController extends Controller {
         $nameChange = $this->businessHomeService->changeCategoryName($request);
         return $nameChange;
     }
-    
-     /**
+
+    /**
      * Category banner photo save
      * 
      * @param Request $request
@@ -97,9 +127,8 @@ class BusinessGeneralController extends Controller {
         $response = $this->businessHomeService->categoryStatusChange($catId);
         return $response;
     }
-    
-    
-     /**
+
+    /**
      * Save/update sliding speed
      * 
      * @param Request $request
@@ -121,16 +150,15 @@ class BusinessGeneralController extends Controller {
     public function homeNewsSave(Request $request) {
 
         $response = $this->businessHomeService->saveNews($request);
-        
-        if($response['success'] == 1){
-           Session::flash('sussess', 'News is saved!');  
-        }else{
-            Session::flash('error', 'News saving process failed!'); 
+
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'News is saved!');
+        } else {
+            Session::flash('error', 'News saving process failed!');
         }
-        
+
         return redirect('/business-general');
     }
-    
 
     /**
      * Get news by ID
@@ -144,8 +172,8 @@ class BusinessGeneralController extends Controller {
         $response = $this->businessHomeService->getNewsById($newsId);
         return $response;
     }
-    
-     /**
+
+    /**
      * News Sorting Change.
      * 
      * @param Request $request
@@ -156,7 +184,6 @@ class BusinessGeneralController extends Controller {
         $sortChange = $this->businessHomeService->changeNewsSort($request);
         return $sortChange;
     }
-
 
     /**
      * News status Change.
@@ -170,7 +197,7 @@ class BusinessGeneralController extends Controller {
         $response = $this->businessHomeService->newsStatusChange($newsId);
         return $response;
     }
-    
+
     /**
      * News delete.
      * 
@@ -181,17 +208,15 @@ class BusinessGeneralController extends Controller {
     public function newsDelete($newsId) {
 
         $response = $this->businessHomeService->deleteNews($newsId);
-        if($response['success'] == 1){
-           Session::flash('sussess', 'News is deleted!');  
-        }else{
-            Session::flash('error', 'News deleting process failed!'); 
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'News is deleted!');
+        } else {
+            Session::flash('error', 'News deleting process failed!');
         }
-        
+
         return redirect('/business-general');
     }
-    
-    
-    
+
     /**
      * Features Sorting Change.
      * 
@@ -203,7 +228,7 @@ class BusinessGeneralController extends Controller {
         $sortChange = $this->businessHomeService->changeFeatureSort($request);
         return $sortChange;
     }
-    
+
     /**
      * Features status Change.
      * 
@@ -216,7 +241,7 @@ class BusinessGeneralController extends Controller {
         $response = $this->businessHomeService->featureStatusChange($featureId);
         return $response;
     }
-    
+
     /**
      * Save or Update business feature
      * 
@@ -227,17 +252,16 @@ class BusinessGeneralController extends Controller {
     public function featureSave(Request $request) {
 
         $response = $this->businessHomeService->saveFeature($request);
-        
-        if($response['success'] == 1){
-           Session::flash('sussess', 'Feature is saved!');  
-        }else{
-            Session::flash('error', 'Feature saving process failed!'); 
+
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'Feature is saved!');
+        } else {
+            Session::flash('error', 'Feature saving process failed!');
         }
-        
+
         return redirect('/business-general');
     }
-    
-    
+
     /**
      * Get feature by ID
      * 
@@ -250,8 +274,8 @@ class BusinessGeneralController extends Controller {
         $response = $this->businessHomeService->getFeaturesById($featureId);
         return $response;
     }
-    
-     /**
+
+    /**
      * Feature delete.
      * 
      * @param $featureId
@@ -261,12 +285,12 @@ class BusinessGeneralController extends Controller {
     public function featureDelete($featureId) {
 
         $response = $this->businessHomeService->deleteFeature($featureId);
-        if($response['success'] == 1){
-           Session::flash('sussess', 'News is deleted!');  
-        }else{
-            Session::flash('error', 'News deleting process failed!'); 
+        if ($response['success'] == 1) {
+            Session::flash('sussess', 'News is deleted!');
+        } else {
+            Session::flash('error', 'News deleting process failed!');
         }
-        
+
         return redirect('/business-general');
     }
 

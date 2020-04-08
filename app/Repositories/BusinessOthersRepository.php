@@ -29,17 +29,25 @@ class BusinessOthersRepository extends BaseRepository {
         return $data;
     }
 
-    public function saveService($bannerPath, $iconPath, $request) {
+    public function saveService($bannerWeb, $bannerMob, $iconPath, $request) {
         $service = $this->model;
 
-        if ($bannerPath != "") {
-            $service->banner_photo = $bannerPath;
+        if ($bannerWeb != "") {
+            $service->banner_photo = $bannerWeb;
         }
+        if ($bannerMob != "") {
+            $service->banner_image_mobile = $bannerMob;
+        }
+        
         if ($iconPath != "") {
             $service->icon = $iconPath;
         }
 
         $service->alt_text = $request->alt_text;
+        $service->banner_name = $request->banner_name;
+        $service->url_slug = $request->url_slug;
+        $service->schema_markup = $request->schema_markup;
+        $service->page_header = $request->page_header;
         
         $service->name = $request->name_en;
         $service->name_bn = $request->name_bn;
@@ -160,20 +168,27 @@ class BusinessOthersRepository extends BaseRepository {
         return $service;
     }
 
-    public function updateService($bannerPath, $iconPath, $request) {
+    public function updateService($bannerWeb, $bannerMob, $iconPath, $request) {
         $serviceId = $request->service_id;
         $service = $this->model->findOrFail($serviceId);
 
         
         
         $service->name = $request->name;
-        if ($bannerPath != "") {
-            $service->banner_photo = $bannerPath;
+        if ($bannerWeb != "") {
+            $service->banner_photo = $bannerWeb;
+        }
+        if ($bannerMob != "") {
+            $service->banner_image_mobile = $bannerMob;
         }
         if ($iconPath != "") {
             $service->icon = $iconPath;
         }
           $service->alt_text = $request->alt_text;
+          $service->banner_name = $request->banner_name;
+          $service->url_slug = $request->url_slug;
+          $service->schema_markup = $request->schema_markup;
+          $service->page_header = $request->page_header;
         
         $service->name = $request->name_en;
         $service->name_bn = $request->name_bn;

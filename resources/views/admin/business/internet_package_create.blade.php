@@ -22,8 +22,6 @@
                         <div class="col-md-4 col-xs-12">
 
 
-
-
                             <div class="form-group">
                                 <label>Code<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" required name="product_code" placeholder="Product Code">
@@ -197,6 +195,20 @@
 
                             </div>
 
+
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group">
+
+                                <label for="Details">Package Details (BN)</label>
+                                <textarea type="text" name="package_details_bn" class="form-control package_details"></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4 col-xs-12">
+
                             <div class="form-group">
                                 <label for="role_id">Related Product</label>
                                 <div class="role-select">
@@ -207,25 +219,97 @@
                                     </select>
                                 </div>
                             </div>
+
                         </div>
-                        <div class="col-md-6 col-xs-12">
-                            <div class="form-group">
 
-                                <label for="Details">Package Details (BN)</label>
-                                <textarea type="text" name="package_details_bn" class="form-control package_details"></textarea>
-
-                            </div>
+                        <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
-                                <label>Banner Photo</label>
+                                <label>Banner Photo (Web)</label>
                                 <input type="file" class="dropify" name="banner_photo" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                             </div>
+
+
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+
+                            <div class="form-group">
+                                <label>Banner Photo (Mobile)</label>
+                                <input type="file" class="dropify" name="banner_mobile" data-height="70"
+                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
                                 <label>Alt Text</label>
                                 <input type="text" class="form-control" name="alt_text" placeholder="Banner Alt Text">
                             </div>
+
+
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+
+                            <label>Banner Photo Name<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
+
+                            <small class="text-info">
+                                <strong>i.e:</strong> package-banner (no spaces)<br>
+                            </small>
+
+
+                        </div>
+                        
+                        
+                         <div class="col-md-4 col-xs-12">
+
+                            <div class="form-group">
+
+                                <label>URL Slug <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" required name="url_slug" placeholder="URL">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> roaming-rates (no spaces)<br>
+                                </small>
+
+                            </div>
+
+
+                        </div>
+                        
+                        <div class="col-md-4 col-xs-12">
+
+                            <div class="form-group">
+
+                                <label>Page Header (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+
+
+                            </div>
+
+
+                        </div>
+                       
+                        <div class="col-md-4 col-xs-12">
+
+                            <div class="form-group">
+
+                                <label>Schema Markup</label>
+                                <textarea class="form-control schema_markup" rows="7" name="schema_markup"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                </small>
+
+
+
+                            </div>
+
+
                         </div>
 
                         <div class="col-md-12 col-xs-12">
