@@ -112,6 +112,7 @@
                                 @endif
 
                                 <slot class="{{ $product->offer_category_id == OfferType::PACKAGES ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
+                                    @include('layouts.partials.products.common-field.price_vat_mrp')
                                     @include('layouts.partials.products.packages')
                                 </slot>
 
