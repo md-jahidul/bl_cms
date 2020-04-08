@@ -119,6 +119,8 @@
                                     @include('layouts.partials.products.other')
                                 </slot>
 
+                                @include('layouts.partials.products.common-field.search-related-field')
+
                                 <div class="col-md-6">
                                     <label></label>
                                     <div class="form-group" id="show_in_home">

@@ -37,6 +37,11 @@ class ProductDetailService {
         $this->setActionRepository($productDetailRepository);
     }
 
+    public function findOneDetails($id)
+    {
+        return $this->productDetailRepository->findOneByProperties(['product_id' => $id], ['url_slug', 'schema_markup', 'page_header']);
+    }
+
     /**
      * @param $request
      * @param $id
@@ -93,7 +98,7 @@ class ProductDetailService {
     public function updateProductDetails($data, $productId) {
         try {
 
-          
+
 //            die();
             $status = true;
 
@@ -108,28 +113,28 @@ class ProductDetailService {
             $update['schema_markup'] = $data['schema_markup'];
             $update['page_header'] = $data['page_header'];
             $update['banner_name'] = $data['banner_name'];
-            
+
             if (!empty($data['banner_image_url'])) {
-                
+
                 //delete old web photo
                 if ($data['old_web_img'] != "") {
                     $this->deleteFile($data['old_web_img']);
                 }
-                
+
                 $photoName = $data['banner_name'] . '-web';
                 $update['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/product_details', $photoName);
                 $status = $update['banner_image_url'];
-                
-                
+
+
             }
 
             if (!empty($data['banner_image_mobile'])) {
-                
+
                  //delete old web photo
                 if ($data['old_mob_img'] != "") {
                     $this->deleteFile($data['old_mob_img']);
                 }
-         
+
                 $photoName = $data['banner_name'] . '-mobile';
                 $update['banner_image_mobile'] = $this->upload($data['banner_image_mobile'], 'assetlite/images/banner/product_details', $photoName);
 //                         dd( $update['banner_image_mobile']);
@@ -170,7 +175,7 @@ class ProductDetailService {
                         }
                     }
                 }
-                
+
 //                dd($update);
                 $this->productDetailRepository->saveProductDetails($update, $productId);
 
