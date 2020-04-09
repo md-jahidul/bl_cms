@@ -81,21 +81,21 @@
                                 @endif
 
                             </div>
-                            
+
                             <div class="form-group col-md-4 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
-                                <label for="banner_alt_text" class="required">Alt Text</label>
+                                <label for="banner_alt_text">Alt Text</label>
                                 <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
-                                       value="{{ $offer->banner_alt_text }}" required data-validation-required-message="Enter image alter text">
+                                       value="{{ $offer->banner_alt_text }}">
                                 <div class="help-block"></div>
                                 @if ($errors->has('banner_alt_text'))
                                 <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
                                 @endif
                             </div>
 
-                        
 
-                            
-                            
+
+
+
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Banner Photo Name</label>
                                 <input type="hidden" name="old_banner_name" value="{{$offer->banner_name}}">

@@ -86,6 +86,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                     <label for="mobileImg">Desktop View Image</label>
                                     <div class="custom-file">
+                                        <input type="hidden" name="old_web_img" value="{{ isset($bannerRelatedProduct->banner_image_url) ? $bannerRelatedProduct->banner_image_url : null }}">
                                         <input type="file" name="banner_image_url" class="dropify" data-height="80" id="image"
                                                data-default-file="{{ isset($bannerRelatedProduct->banner_image_url) ?  config('filesystems.file_base_url') . $bannerRelatedProduct->banner_image_url : null  }}">
                                     </div>
@@ -100,6 +101,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('mobile_view_img_url') ? ' error' : '' }}">
                                     <label for="mobileImg">Mobile View Image</label>
                                     <div class="custom-file">
+                                        <input type="hidden" name="old_mob_img" value="{{ isset($bannerRelatedProduct->mobile_view_img_url) ? $bannerRelatedProduct->mobile_view_img_url : null }}">
                                         <input type="file" name="mobile_view_img_url" class="dropify" data-height="80" id="image"
                                                data-default-file="{{ isset($bannerRelatedProduct->mobile_view_img_url) ?  config('filesystems.file_base_url') . $bannerRelatedProduct->mobile_view_img_url : null  }}">
                                     </div>
@@ -111,7 +113,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text">Alt Text</label>
                                     <input type="text" name="alt_text" id="alt_text" class="form-control" placeholder="Enter offer name in English"
                                                value="{{ isset($bannerRelatedProduct->alt_text) ? $bannerRelatedProduct->alt_text : null }}">
@@ -119,6 +121,40 @@
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">{{ $errors->first('alt_text') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                    <label> URL (url slug) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" value="{{isset($bannerRelatedProduct->url_slug) ? $bannerRelatedProduct->url_slug : null}}" required name="url_slug" placeholder="URL">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> app-and-service-title (no spaces)<br>
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label>Banner Photo Name</label>
+                                    <input type="hidden" name="old_banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}">
+                                    <input type="text" class="form-control" name="banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}"
+                                           placeholder="Photo Name">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> app-and-service-banner (no spaces)<br>
+                                        <strong>Note: </strong> Don't need MIME type like jpg,png
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label>Page Header (HTML)</label>
+                                    <textarea class="form-control" rows="7" name="page_header">{{isset($bannerRelatedProduct->page_header) ? $bannerRelatedProduct->page_header : null }}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label>Schema Markup</label>
+                                    <textarea class="form-control" rows="7" name="schema_markup">{{ isset($bannerRelatedProduct->schema_markup) ? $bannerRelatedProduct->schema_markup : null }}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                    </small>
                                 </div>
 
                                 @if($productType !== \App\Enums\OfferType::OTHERS)

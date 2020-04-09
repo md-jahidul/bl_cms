@@ -26,19 +26,20 @@
                         </thead>
                         <tbody>
                             @foreach($offerCategories as $offerCategory)
-                                <tr data-index="{{ $offerCategory->id }}" data-position="{{ $offerCategory->display_order }}">
-                                    <td width="3%">{{ $loop->iteration }}</td>
-                                    <td>{{ $offerCategory->name_en }}
-                                        {!!  (strtolower($offerCategory->alias) == 'packages' || strtolower($offerCategory->alias) == 'others') ? "<a href='".route('child_menu', [$offerCategory->id, $offerCategory->alias])."' class='btn btn-outline-primary float-md-right'> Child Menu</a>" : '' !!}
-                                    </td>
-
-                                    <td width="6%" class="text-center">
-                                        <a href="{{ url("offer-categories/$offerCategory->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        {{--<a href="#" remove="{{ url("offer-category/destroy/$offerCategory->id") }}" onclick="return false;" class="border-0 btn-sm btn-outline-danger --}}{{--delete_btn--}}{{--" data-id="{{ $offerCategory->id }}" title="Delete">--}}
-                                            {{--<i class="la la-trash"></i>--}}
-                                        {{--</a>--}}
-                                    </td>
-                                </tr>
+                                @if($offerCategory->alias != "call_rate")
+                                    <tr data-index="{{ $offerCategory->id }}" data-position="{{ $offerCategory->display_order }}">
+                                        <td width="3%">{{ $loop->iteration }}</td>
+                                        <td>{{ $offerCategory->name_en }}
+                                            {!!  (strtolower($offerCategory->alias) == 'packages' || strtolower($offerCategory->alias) == 'others') ? "<a href='".route('child_menu', [$offerCategory->id, $offerCategory->alias])."' class='btn btn-outline-primary float-md-right'> Child Menu</a>" : '' !!}
+                                        </td>
+                                        <td width="6%" class="text-center">
+                                            <a href="{{ url("offer-categories/$offerCategory->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                            {{--<a href="#" remove="{{ url("offer-category/destroy/$offerCategory->id") }}" onclick="return false;" class="border-0 btn-sm btn-outline-danger --}}{{--delete_btn--}}{{--" data-id="{{ $offerCategory->id }}" title="Delete">--}}
+                                                {{--<i class="la la-trash"></i>--}}
+                                            {{--</a>--}}
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>
