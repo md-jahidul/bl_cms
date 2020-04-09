@@ -123,6 +123,7 @@
                                 @endif
 
                                 <slot id="packages" data-offer-type="packages" style="display: none">
+                                    @include('layouts.partials.products.common-field.price_vat_mrp')
                                     @include('layouts.partials.products.packages')
                                 </slot>
 
@@ -130,6 +131,7 @@
                                     @include('layouts.partials.products.other')
                                 </slot>
 
+                                @include('layouts.partials.products.common-field.search-related-field')
 
                                 <div class="col-md-6">
                                     <label></label>

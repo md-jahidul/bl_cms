@@ -1,4 +1,4 @@
-@include('layouts.partials.products.common-field.price_vat_mrp')
+{{--@include('layouts.partials.products.common-field.price_vat_mrp')--}}
 
 @include('layouts.partials.products.common-field.internet_volume')
 
