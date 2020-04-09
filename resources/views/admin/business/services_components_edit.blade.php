@@ -2,8 +2,9 @@
 @section('title', 'Create Business Service Components')
 @section('card_name', 'Edit Components')
 @section('breadcrumb')
-<li class="breadcrumb-item active"> <a href="{{ url('business-others-components-list/'.$serviceId) }}"> Component List</a></li>
-<li class="breadcrumb-item active"> Edit Components</li>
+<li class="breadcrumb-item"> <a href="{{ url('business-other-services') }}"> Services</a></li>
+<li class="breadcrumb-item active"> <a href="{{ url('business-others-components-list/'.$serviceId) }}"> Components</a></li>
+<li class="breadcrumb-item active"> Edit</li>
 @endsection
 @section('action')
 <a href="{{ url('business-others-components-list/'.$serviceId) }}" class="btn btn-sm btn-grey-blue"><i class="la la-angle-double-left"></i>Back</a>
