@@ -3,8 +3,8 @@
 @section('card_name', 'Component List')
 
 @section('breadcrumb')
-<li class="breadcrumb-item active"> <a href="{{ url('business-other-services') }}"> Service List</a></li>
-<li class="breadcrumb-item active"> Component List</li>
+<li class="breadcrumb-item active"> <a href="{{ url('business-other-services') }}"> Services</a></li>
+<li class="breadcrumb-item active"> Components</li>
 @endsection
 
 @section('action')
