@@ -1,7 +1,7 @@
 @php
     function match($productId, $relatedProducts, $type){
 
-        $relatedProducts = ($type == "prepaid") ? $relatedProducts['prepaid_related_product_id'] : $relatedProducts['postpaid_related_product_id'];
+        $relatedProducts = isset($relatedProducts[$type . "_related_product_id"]) ? $relatedProducts[$type . "_related_product_id"] : null;
 
         if ($relatedProducts){
             foreach ($relatedProducts as $relatedProduct){
