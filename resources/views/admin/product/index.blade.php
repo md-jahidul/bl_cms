@@ -3,9 +3,11 @@
 
         $relatedProducts = ($type == "prepaid") ? $relatedProducts['prepaid_related_product_id'] : $relatedProducts['postpaid_related_product_id'];
 
-        foreach ($relatedProducts as $relatedProduct){
-            if ($productId == $relatedProduct){
-                return true;
+        if ($relatedProducts){
+            foreach ($relatedProducts as $relatedProduct){
+                if ($productId == $relatedProduct){
+                    return true;
+                }
             }
         }
         return false;
