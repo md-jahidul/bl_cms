@@ -16,7 +16,8 @@ use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
-class OfferCategoryService {
+class OfferCategoryService
+{
 
     use CrudTrait;
     use FileTrait;
@@ -30,7 +31,8 @@ class OfferCategoryService {
      * OfferCategoryService constructor.
      * @param OfferCategoryRepository $offerCategoryRepository
      */
-    public function __construct(OfferCategoryRepository $offerCategoryRepository) {
+    public function __construct(OfferCategoryRepository $offerCategoryRepository)
+    {
         $this->offerCategoryRepository = $offerCategoryRepository;
         $this->setActionRepository($offerCategoryRepository);
     }
@@ -39,11 +41,13 @@ class OfferCategoryService {
      * @param $type
      * @return mixed
      */
-    public function getOfferCategories($type) {
+    public function getOfferCategories($type)
+    {
         return $this->offerCategoryRepository->getList($type);
     }
 
-    public function packageChild() {
+    public function packageChild()
+    {
         return $this->offerCategoryRepository->child();
     }
 
@@ -51,7 +55,8 @@ class OfferCategoryService {
      * @param $data
      * @return Response
      */
-    public function storeOfferCategory($data) {
+    public function storeOfferCategory($data)
+    {
         $data['alias'] = str_replace(" ", "_", strtolower($data['name']));
         $this->save($data);
         return new Response('Offer category added successfully');
@@ -62,7 +67,8 @@ class OfferCategoryService {
      * @param $data
      * @return Response
      */
-    public function updateOfferCategory($data, $id) {
+    public function updateOfferCategory($data, $id)
+    {
         try {
 
 
@@ -90,12 +96,12 @@ class OfferCategoryService {
                 if ($data['old_web_img'] != "") {
                     $this->deleteFile($data['old_web_img']);
                 }
-                
+
                 $photoName = $data['banner_name'] . '-web';
                 $update['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/offer_image', $photoName);
                 $status = $update['banner_image_url'];
 
-                
+
             }
 
             if (!empty($data['banner_image_mobile'])) {
@@ -103,17 +109,17 @@ class OfferCategoryService {
                 if ($data['old_mob_img'] != "") {
                     $this->deleteFile($data['old_mob_img']);
                 }
-                
+
                 $photoName = $data['banner_name'] . '-mobile';
                 $update['banner_image_mobile'] = $this->upload($data['banner_image_mobile'], 'assetlite/images/banner/offer_image', $photoName);
                 $status = $update['banner_image_mobile'];
 
-                
+
             }
 
             //only rename
             if ($data['old_banner_name'] != $data['banner_name']) {
-                
+
                 if (empty($data['banner_image_url']) && $data['old_web_img'] != "") {
                     $fileName = $data['banner_name'] . '-web';
                     $directoryPath = 'assetlite/images/banner/offer_image';
@@ -158,12 +164,44 @@ class OfferCategoryService {
         }
     }
 
+    public function getRelatedProducts()
+    {
+        return $this->offerCategoryRepository->findOneByProperties(['alias' => 'packages']);
+    }
+
+    /**
+     * @param $data
+     * @return ResponseFactory|Response
+     */
+    public function storeRelatedProduct($data)
+    {
+        $offerType = $this->offerCategoryRepository->findOneByProperties(['alias' => 'packages']);
+        // get original data
+        $new_multiple_attributes = $offerType->other_attributes;
+
+        // contains all the inputs from the form as an array
+        $input_other_attributes = isset($data['other_attributes']) ?
+            $data['other_attributes'] : [$data['type'] . "_related_product_id" => []];
+
+        // loop over the product array
+        if ($input_other_attributes) {
+            foreach ($input_other_attributes as $data_id => $inputData) {
+                $new_multiple_attributes[$data_id] = $inputData;
+            }
+        }
+        $data['other_attributes'] = $new_multiple_attributes;
+        $offerType->update($data);
+
+        return response('Related product save successfully');
+    }
+
     /**
      * @param $id
      * @return ResponseFactory|Response
      * @throws Exception
      */
-    public function deleteOfferCategory($id) {
+    public function deleteOfferCategory($id)
+    {
         $offerCategory = $this->findOne($id);
         $offerCategory->delete();
         return Response('Offer category deleted successfully !');
