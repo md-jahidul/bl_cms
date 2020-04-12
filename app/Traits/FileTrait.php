@@ -47,6 +47,7 @@ trait FileTrait {
      * @Dev Bulbul Mahmud Nito || 30/03/2020
      */
     protected function rename($path, $fileName, $directoryPath) {
+        return $path;
 
 //        $oldImg = env('UPLOAD_BASE_PATH') . "/" . $path;
 //
