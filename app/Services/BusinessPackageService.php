@@ -213,6 +213,8 @@ class BusinessPackageService {
                     $bannerMob = $this->rename($data['old_banner_mob'], $photoNameMob, $directoryPath);
                 }
             }
+            
+            dd($bannerWeb);
 
             //save data in database 
             $this->packageRepo->updatePackage($bannerWeb, $bannerMob, $data);
