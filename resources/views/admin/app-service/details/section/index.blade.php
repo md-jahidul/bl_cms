@@ -10,916 +10,951 @@ function matchRelatedProduct($id, $roles)
     }
     return false;
 }
+
 ?>
 
 @extends('layouts.admin')
 @section('title', 'App & Service')
 @section('card_name', 'App & Service Product Details')
 @section('breadcrumb')
-	<li class="breadcrumb-item "><a href="{{ route('app-service-product.index') }}">App Service Product List</a></li>
-	<li class="breadcrumb-item ">Section List</li>
+    <li class="breadcrumb-item "><a href="{{ route('app-service-product.index') }}">App Service Product List</a></li>
+    <li class="breadcrumb-item ">Section List</li>
 @endsection
 @section('action')
 
 @endsection
 @section('content')
-	<section>
+    <section>
 
 
-		<!-- include tab wise product details -->
-		@if($tab_type == "app")
-			@include('admin.app-service.details.section.tab-details.app_tab_details')
-		@elseif($tab_type == "vas")
-			@include('admin.app-service.details.section.tab-details.vas_tab_details')
-		@elseif($tab_type == "financial")
-			@include('admin.app-service.details.section.tab-details.financial_tab_details')
-		@elseif($tab_type == "others")
-			@include('admin.app-service.details.section.tab-details.others_tab_details')
-		@endif
+        <!-- include tab wise product details -->
+    @if($tab_type == "app")
+        @include('admin.app-service.details.section.tab-details.app_tab_details')
+    @elseif($tab_type == "vas")
+        @include('admin.app-service.details.section.tab-details.vas_tab_details')
+    @elseif($tab_type == "financial")
+        @include('admin.app-service.details.section.tab-details.financial_tab_details')
+    @elseif($tab_type == "others")
+        @include('admin.app-service.details.section.tab-details.others_tab_details')
+    @endif
 
 
-		@yield('component_type_selector')
+    @yield('component_type_selector')
 
 
-		<!-- # Section list with component card -->
-		<div class="card">
-			<div class="card-content collapse show">
-				<div class="card-body card-dashboard">
-					<h4 class="pb-1"><strong>Section Component List</strong></h4>
-					<table class="table table-striped table-bordered"
-							 role="grid" aria-describedby="Example1_info" style="">
-						<thead>
-							<tr>
-								<td width="3%">#</td>
-								<th width="15%">Component Name</th>
-								<th width="15%">Preview</th>
-								<th width="15%">Title</th>
-								{{-- <th>Category</th> --}}
-								<th width="5%" class="">Status</th>
-								<th width="8%" class="">Action</th>
-							</tr>
-						</thead>
-						<tbody id="section_sortable">
-{{--                            @if( !empty($section_list) )--}}
-								@foreach($section_list['section_body'] as $list)
+    <!-- # Section list with component card -->
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <h4 class="pb-1"><strong>Section Component List</strong></h4>
+                    <table class="table table-striped table-bordered"
+                           role="grid" aria-describedby="Example1_info" style="">
+                        <thead>
+                        <tr>
+                            <td width="3%">#</td>
+                            <th width="15%">Component Name</th>
+                            <th width="15%">Preview</th>
+                            <th width="15%">Title</th>
+                            {{-- <th>Category</th> --}}
+                            <th width="5%" class="">Status</th>
+                            <th width="8%" class="">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody id="section_sortable">
+                        {{--                            @if( !empty($section_list) )--}}
+                        @foreach($section_list['section_body'] as $list)
 
-										@php $path = 'partner-offers-home'; @endphp
-										{{-- <tr> --}}
-										<tr data-index="{{ $list->id }}" data-position="{{ $list->section_order }}">
-											<td>{{ $loop->iteration }}</td>
+                            @php $path = 'partner-offers-home'; @endphp
+                            {{-- <tr> --}}
+                            <tr data-index="{{ $list->id }}" data-position="{{ $list->section_order }}">
+                                <td>{{ $loop->iteration }}</td>
 
-											<td>{{ $list->section_name }} {!! $list->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
+                                <td>{{ $list->section_name }} {!! $list->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
 
-											<td>
-												@if( isset($list->section_type) )
-												<div class="component_preview" style="max-width: 400px;">
-												<img class="img-fluid" style="border: 1px solid #eee;" src="{{asset('app-assets/images/app_services/'.$list->section_type.'.png')}}" alt="">
-												</div>
-												@endif
-											</td>
+                                <td>
+                                    @if( isset($list->section_type) )
+                                        <div class="component_preview" style="max-width: 400px;">
+                                            <img class="img-fluid" style="border: 1px solid #eee;"
+                                                 src="{{asset('app-assets/images/app_services/'.$list->section_type.'.png')}}"
+                                                 alt="">
+                                        </div>
+                                    @endif
+                                </td>
 
-											<td>
-												@if( !empty($list->title_en) )
-													{{ $list->title_en }}
-												@else
-													@if( isset($list->sectionComponent->first()->title_en) && !empty($list->sectionComponent->first()->title_en) )
-														{{ $list->sectionComponent->first()->title_en }}
-													@elseif( isset($list->sectionComponent->first()->description_en) && !empty($list->sectionComponent->first()->description_en) )
-														{{ $list->sectionComponent->first()->description_en }}
-													@endif
-												@endif
-											</td>
+                                <td>
+                                    @if( !empty($list->title_en) )
+                                        {{ $list->title_en }}
+                                    @else
+                                        @if( isset($list->sectionComponent->first()->title_en) && !empty($list->sectionComponent->first()->title_en) )
+                                            {{ $list->sectionComponent->first()->title_en }}
+                                        @elseif( isset($list->sectionComponent->first()->description_en) && !empty($list->sectionComponent->first()->description_en) )
+                                            {{ $list->sectionComponent->first()->description_en }}
+                                        @endif
+                                    @endif
+                                </td>
 
-											<td>
-												@if( $list->status == 1 )
-													Active
-												@else
-													Inactive
-												@endif
-												 {{-- <a href="{{ route( "appservice.component.list", ['type' => $tab_type, 'id' => $list->id] ) }}" class="btn-sm btn-outline-warning border">component</a> --}}
-											</td>
+                                <td>
+                                    @if( $list->status == 1 )
+                                        Active
+                                    @else
+                                        Inactive
+                                    @endif
+                                    {{-- <a href="{{ route( "appservice.component.list", ['type' => $tab_type, 'id' => $list->id] ) }}" class="btn-sm btn-outline-warning border">component</a> --}}
+                                </td>
 
-											<td>
-												<a href="{{ route("app_service.details.edit", [$tab_type, $product_id, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0 section_component_edit" data-sections="{{$list->section_type}}">
-													<i class="la la-pencil" aria-hidden="true"></i></a>
+                                <td>
+                                    <a href="{{ route("app_service.details.edit", [$tab_type, $product_id, $list->id]) }}"
+                                       role="button" class="btn-sm btn-outline-info border-0 section_component_edit"
+                                       data-sections="{{$list->section_type}}">
+                                        <i class="la la-pencil" aria-hidden="true"></i></a>
 
-												@if( $list->is_default == 0 )
-													<a href="#" remove="{{ route("app_service.sections.destroy", [$tab_type, $product_id, $list->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
-														<i class="la la-trash"></i>
-													</a>
-												@endif
+                                    @if( $list->is_default == 0 )
+                                        <a href="#"
+                                           remove="{{ route("app_service.sections.destroy", [$tab_type, $product_id, $list->id]) }}"
+                                           class="border-0 btn-sm btn-outline-danger delete_btn"
+                                           data-id="{{ $list->id }}" title="Delete">
+                                            <i class="la la-trash"></i>
+                                        </a>
+                                    @endif
 
-											</td>
-										</tr>
-								@endforeach
-{{--                            @endif--}}
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        {{--                            @endif--}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-	</section>
+    </section>
 
-	 <!-- Fixed sections -->
-	<section>
-		<div class="card">
-			<div class="card-content collapse show">
-				<div class="card-body card-dashboard">
-					<h4 class="menu-title"><strong>Banner And Related Product</strong></h4><hr>
-					<div class="card-body card-dashboard">
-						<form role="form" action="{{ route('app_service.details.fixed-section', [$tab_type, $product_id ]) }}" method="POST" novalidate enctype="multipart/form-data">
-							@csrf
-							{{method_field('POST')}}
-							<div class="row">
-								<input type="hidden" name="category" value="app_banner_fixed_section" class="custom-file-input" id="imgTwo">
+    <!-- Fixed sections -->
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <h4 class="menu-title"><strong>Banner And Related Product</strong></h4>
+                    <hr>
+                    <div class="card-body card-dashboard">
+                        <form role="form"
+                              action="{{ route('app_service.details.fixed-section', [$tab_type, $product_id ]) }}"
+                              method="POST" novalidate enctype="multipart/form-data">
+                            @csrf
+                            {{method_field('POST')}}
+                            <div class="row">
+                                <input type="hidden" name="category" value="app_banner_fixed_section"
+                                       class="custom-file-input" id="imgTwo">
 
-								<div class="form-group col-md-4 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
-									<label for="mobileImg">Banner Image (Desktop)</label>
-									<div class="custom-file">
-										<input type="file" name="image" class="custom-file-input image_with_preview">
-										<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-									</div>
-									<span class="text-primary">Please given file type (.png, .jpg)</span>
+                                <div class="form-group col-md-4 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
+                                    <label for="mobileImg">Banner Image (Desktop)</label>
+                                    <div class="custom-file">
+                                        <input type="hidden" name="old_web_img" value="{{ $fixedSectionData['image'] }}">
+                                        <input type="file" name="image" class="custom-file-input image_with_preview">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
 
-									<div class="help-block"></div>
-									@if ($errors->has('banner_image'))
-										<div class="help-block">  {{ $errors->first('image') }}</div>
-									@endif
-								</div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_image'))
+                                        <div class="help-block">  {{ $errors->first('image') }}</div>
+                                    @endif
+                                </div>
 
-								<div class="form-group col-md-2">
-									@if($fixedSectionData['image'])
-										<img src="{{ config('filesystems.file_base_url') . $fixedSectionData['image'] }}" height="100" width="200" class="imgDisplay img-fluid">
-									@else
-										<img height="100" width="200" class="imgDisplay img-fluid" style="display: none">
-									@endif
-								</div>
-
-
-								<div class="form-group col-md-4 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
-									<label for="mobileImg">Banner Image (Mobile)</label>
-									<div class="custom-file">
-										<input type="file" name="other_attributes[image_mobile]" class="custom-file-input image_with_preview">
-										<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-									</div>
-									<span class="text-primary">Please given file type (.png, .jpg)</span>
-
-									<div class="help-block"></div>
-									@if ($errors->has('banner_image'))
-										<div class="help-block">  {{ $errors->first('image') }}</div>
-									@endif
-								</div>
-
-								<div class="form-group col-md-2">
-									@if( isset($fixedSectionData['other_attributes']['image_mobile']) )
-										<img src="{{ config('filesystems.file_base_url') . $fixedSectionData['other_attributes']['image_mobile'] }}" height="100" width="200" class="imgDisplay img-fluid">
-									@else
-										<img height="100" width="200" class="imgDisplay img-fluid" style="display: none">
-									@endif
-								</div>
+                                <div class="form-group col-md-2">
+                                    @if($fixedSectionData['image'])
+                                        <img src="{{ config('filesystems.file_base_url') . $fixedSectionData['image'] }}"
+                                            height="100" width="200" class="imgDisplay img-fluid">
+                                    @else
+                                        <img height="100" width="200" class="imgDisplay img-fluid"
+                                             style="display: none">
+                                    @endif
+                                </div>
 
 
-								@if($tab_type == "app" || $tab_type == "vas")
-									<div class="form-group col-md-4 {{ $errors->has('title_en') ? ' error' : '' }}">
-										<label for="title_en">Title (English)</label>
-										<input type="text" name="title_en" id="title_en" class="form-control" placeholder="Enter offer name in English"
-												 value="{{ $fixedSectionData['title_en'] }}">
-										<div class="help-block"></div>
-										@if ($errors->has('title_en'))
-											<div class="help-block">{{ $errors->first('title_en') }}</div>
-										@endif
-									</div>
+                                <div class="form-group col-md-4 {{ $errors->has('image_mobile') ? ' error' : '' }}">
+                                    <label for="mobileImg">Banner Image (Mobile)</label>
+                                    <div class="custom-file">
+                                        <input type="hidden" name="old_mob_img" value="{{ $fixedSectionData['banner_image_mobile'] }}">
+                                        <input type="file" name="banner_image_mobile"
+                                               class="custom-file-input image_with_preview">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
 
-									<div class="form-group col-md-4 {{ $errors->has('title_bn') ? ' error' : '' }}">
-										<label for="title_bn">Title (Bangla)</label>
-										<input type="text" name="title_bn" id="title_bn" class="form-control" placeholder="Enter offer name in Bangla"
-												 value="{{ $fixedSectionData['title_bn'] }}">
-										<div class="help-block"></div>
-										@if ($errors->has('title_bn'))
-											<div class="help-block">{{ $errors->first('title_bn') }}</div>
-										@endif
-									</div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_mobile'))
+                                        <div class="help-block">  {{ $errors->first('image_mobile') }}</div>
+                                    @endif
+                                </div>
 
-									<div class="form-group select-role col-md-4 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
-										<label for="role_id">Related Product</label>
-										<div class="role-select">
-											<select class="select2 form-control" multiple="multiple" name="other_attributes[related_product_id][]">
-												@foreach($products as $product)
-													<option value="{{ $product->id }}" {{isset($fixedSectionData['other_attributes']['related_product_id']) ?? matchRelatedProduct($product->id, $fixedSectionData['other_attributes']['related_product_id']) ? 'selected' : '' }}>{{$product->name_en}}</option>
-												@endforeach
-											</select>
-										</div>
-										<div class="help-block"></div>
-										@if ($errors->has('role_id'))
-											<div class="help-block">  {{ $errors->first('role_id') }}</div>
-										@endif
-									</div>
-								@endif
+                                <div class="form-group col-md-2">
+                                    @if( isset($fixedSectionData['banner_image_mobile']) )
+                                        <img
+                                            src="{{ config('filesystems.file_base_url') . $fixedSectionData['banner_image_mobile'] }}"
+                                            height="100" width="200" class="imgDisplay img-fluid">
+                                    @else
+                                        <img height="100" width="200" class="imgDisplay img-fluid"
+                                             style="display: none">
+                                    @endif
+                                </div>
 
-								<div class="form-actions col-md-12">
-									<div class="pull-right">
-										<button type="submit" class="btn btn-primary"><i
-												class="la la-check-square-o"></i> Save
-										</button>
-									</div>
-								</div>
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text">Alt Text</label>
+                                    <input type="text" name="alt_text" id="alt_text" class="form-control"
+                                           placeholder="Enter alt text" value="{{ $fixedSectionData['alt_text'] }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text'))
+                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
 
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                    <label for="banner_name">Banner Name</label>
+                                    <input type="hidden" name="old_banner_name" value="{{ $fixedSectionData['banner_name'] }}">
+                                    <input type="text" name="banner_name" id="banner_name" class="form-control"
+                                           placeholder="Enter offer name in English"
+                                           value="{{ $fixedSectionData['banner_name'] }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name'))
+                                        <div class="help-block">{{ $errors->first('banner_name') }}</div>
+                                    @endif
+                                </div>
 
 
-	@yield('component_modal_toadd')
+                                @if($tab_type == "app" || $tab_type == "vas")
+                                    <div class="form-group col-md-4 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                        <label for="title_en">Title (English)</label>
+                                        <input type="text" name="title_en" id="title_en" class="form-control"
+                                               placeholder="Enter offer name in English"
+                                               value="{{ $fixedSectionData['title_en'] }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('title_en'))
+                                            <div class="help-block">{{ $errors->first('title_en') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-4 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                        <label for="title_bn">Title (Bangla)</label>
+                                        <input type="text" name="title_bn" id="title_bn" class="form-control"
+                                               placeholder="Enter offer name in Bangla"
+                                               value="{{ $fixedSectionData['title_bn'] }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('title_bn'))
+                                            <div class="help-block">{{ $errors->first('title_bn') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div
+                                        class="form-group select-role col-md-4 mb-0 {{ $errors->has('role_id') ? ' error' : '' }}">
+                                        <label for="role_id">Related Product</label>
+                                        <div class="role-select">
+                                            <select class="select2 form-control" multiple="multiple"
+                                                    name="other_attributes[related_product_id][]">
+                                                @foreach($products as $product)
+                                                    <option
+                                                        value="{{ $product->id }}" {{isset($fixedSectionData['other_attributes']['related_product_id']) ?? matchRelatedProduct($product->id, $fixedSectionData['other_attributes']['related_product_id']) ? 'selected' : '' }}>{{$product->name_en}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('role_id'))
+                                            <div class="help-block">  {{ $errors->first('role_id') }}</div>
+                                        @endif
+                                    </div>
+                                @endif
+
+                                <div class="form-actions col-md-12">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                class="la la-check-square-o"></i> Save
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    @yield('component_modal_toadd')
 
 
 @stop
 
 
 @push('page-css')
-	{{-- <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet"> --}}
-	<link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
-	<style>
-		#sortable tr td{
-			padding-top: 15px !important;
-			padding-bottom: 15px !important;
-		}
+    {{-- <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
+    <style>
+        #sortable tr td {
+            padding-top: 15px !important;
+            padding-bottom: 15px !important;
+        }
 
-		form .select-role.validate input:focus, form .select-role.issue input:focus, form .select-role.validate input{
-			border-color: unset;
-			-webkit-box-shadow: unset;
-			-moz-box-shadow: unset;
-			box-shadow: unset;
-			border-width: 0;
-			color : unset;
-		}
+        form .select-role.validate input:focus, form .select-role.issue input:focus, form .select-role.validate input {
+            border-color: unset;
+            -webkit-box-shadow: unset;
+            -moz-box-shadow: unset;
+            box-shadow: unset;
+            border-width: 0;
+            color: unset;
+        }
 
-		.modal-lg.modal_lg_custom{
-			max-width: 1200px;
-		}
-		.note-editable { font-size: 14px; }
-	</style>
+        .modal-lg.modal_lg_custom {
+            max-width: 1200px;
+        }
+
+        .note-editable {
+            font-size: 14px;
+        }
+    </style>
 @endpush
 
 @push('page-js')
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-	jQuery(document).ready(function($){
-		// Preview changes on component selection
-		$('#component_type').on('change', function(){
+        jQuery(document).ready(function ($) {
+            // Preview changes on component selection
+            $('#component_type').on('change', function () {
 
-			var assetUrl = "{{asset('app-assets/images/app_services/')}}"
-			$('#component_preview_img').attr('src', assetUrl +'/'+ $(this).val() +'.png' );
+                var assetUrl = "{{asset('app-assets/images/app_services/')}}"
+                $('#component_preview_img').attr('src', assetUrl + '/' + $(this).val() + '.png');
 
-			$('#add_component_btn').attr('data-target', '#'+$(this).val());
+                $('#add_component_btn').attr('data-target', '#' + $(this).val());
 
-		});
+            });
 
 
-	}); // Doc ready
+        }); // Doc ready
 
 
+        // Edit section components
+        $('.section_component_edit').on('click', function (e) {
+            e.preventDefault();
 
+            var editUrl = $(this).attr('href');
+            var modalComponent = $(this).attr('data-sections');
 
-	// Edit section components
-	$('.section_component_edit').on('click', function(e){
-		e.preventDefault();
+            $.ajax({
+                url: editUrl,
+                cache: false,
+                type: "GET",
+                success: function (result) {
 
-		var editUrl = $(this).attr('href');
-		var modalComponent = $(this).attr('data-sections');
+                    if (result.status == 'SUCCESS') {
+                        var $parentSelector = $('#' + modalComponent);
+                        var baseUrl = "{{ config('filesystems.file_base_url') }}";
 
-		$.ajax({
-			url: editUrl,
-			cache: false,
-			type: "GET",
-			success: function (result) {
+                        $parentSelector.find('#form_save').hide();
+                        $parentSelector.find('#form_update').show();
 
-				if( result.status == 'SUCCESS' ){
-					 var $parentSelector = $('#'+modalComponent);
-					 var baseUrl = "{{ config('filesystems.file_base_url') }}";
+                        // console.log(result.data);
 
-					 $parentSelector.find('#form_save').hide();
-					 $parentSelector.find('#form_update').show();
+                        // Check component is slider?
+                        if (result.data.sections.section_type == 'slider_text_with_image_right') {
 
-					 // console.log(result.data);
+                            var $parentSelectorEdit = $('#edit_' + modalComponent);
 
-					 // Check component is slider?
-					if( result.data.sections.section_type == 'slider_text_with_image_right' ){
 
-						var $parentSelectorEdit = $('#edit_'+modalComponent);
+                            $parentSelectorEdit.modal('show');
 
+                            // Set all sections
+                            $.each(result.data.sections, function (k, v) {
 
-						$parentSelectorEdit.modal('show');
+                                if (k == 'title_en') {
+                                    $parentSelectorEdit.find("input[name='sections[title_en]']").val(v);
+                                }
 
-						// Set all sections
-						$.each(result.data.sections, function(k, v){
+                                if (k == 'title_bn') {
+                                    $parentSelectorEdit.find("input[name='sections[title_bn]']").val(v);
+                                }
 
-							if( k == 'title_en' ){
-								 $parentSelectorEdit.find("input[name='sections[title_en]']").val(v);
-							}
+                            });
 
-							if( k == 'title_bn' ){
-								 $parentSelectorEdit.find("input[name='sections[title_bn]']").val(v);
-							}
+                            // Add section id
+                            $parentSelectorEdit.find('.section_id').val(result.data.sections.id);
 
-						});
+                            $("input[name='sections[status]']").each(function (sk, sv) {
+                                // console.log($(sv).val());
+                                if ($(sv).val() == result.data.sections.status) {
+                                    $(sv).attr('checked', true);
+                                }
 
-						// Add section id
-						$parentSelectorEdit.find('.section_id').val(result.data.sections.id);
+                            });
 
-						$("input[name='sections[status]']").each(function(sk, sv){
-							 // console.log($(sv).val());
-							 if( $(sv).val() == result.data.sections.status ){
-								 $(sv).attr('checked', true);
-							 }
 
-						});
+                            // Compoent foreach
+                            $.each(result.data.component, function (cpk, cpv) {
 
+                                $.each(cpv, function (ck, cv) {
 
-						// Compoent foreach
-						$.each(result.data.component, function(cpk, cpv){
+                                    if (ck == 'id') {
+                                        $parentSelectorEdit.find("input[name='component[" + cpk + "][id]']").val(cv);
+                                        $('.tablecompoent_' + cpk).attr('data-component_id', cv);
+                                    }
 
-							$.each(cpv, function(ck, cv){
+                                    // Multiple attribute parse
+                                    if (ck == 'multiple_attributes') {
 
-								 if( ck == 'id' ){
-								 $parentSelectorEdit.find("input[name='component["+cpk+"][id]']").val(cv);
-								 $('.tablecompoent_'+cpk).attr('data-component_id', cv);
-								 }
+                                        if (typeof cv !== 'undefined') {
+                                            var multiData = eval(JSON.parse(cv));
+                                            $('#slider_sortable').empty();
 
-								 // Multiple attribute parse
-								if( ck == 'multiple_attributes' ){
+                                            var component_id = $('.tablecompoent_' + cpk).attr('data-component_id');
 
-									if( typeof cv !== 'undefined' ){
-										var multiData = eval(JSON.parse(cv));
-										$('#slider_sortable').empty();
+                                            $.each(multiData, function (mck, mcv) {
 
-										var component_id = $('.tablecompoent_'+cpk).attr('data-component_id');
+                                                var html = '';
 
-										$.each(multiData, function(mck, mcv){
+                                                if (mcv.status == "1") {
+                                                    var statusText = 'Active';
+                                                } else {
+                                                    var statusText = 'Inactive';
+                                                }
 
-											var html = '';
+                                                html += '<tr data-index="' + mcv.id + '" data-position="' + mcv.display_order + '"><td>' + mck + '</td><td><img class="img-fluid" src="' + baseUrl + mcv.image_url + '" alt="" style="max-width:100px;" /></td><td>' + mcv.title_en + '</td><td>' + statusText + '</td><td><a href="#" class="multi_item_edit btn-sm btn-outline-info border-0" data-item_id="' + mcv.id + '" data-component_id="' + component_id + '"><i class="la la-pencil" aria-hidden="true"></i></a><a href="#" class="border-0 btn-sm btn-outline-danger delete_multi_attr_item" data-item_id="' + mcv.id + '" data-component_id="' + component_id + '" title="Delete"><i class="la la-trash"></i></a></td></tr>';
 
-											if( mcv.status == "1" ){
-												var statusText = 'Active';
-											}
-											else{
-												var statusText = 'Inactive';
-											}
+                                                $('#slider_sortable').append(html);
 
-											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" style="max-width:100px;" /></td><td>'+mcv.title_en+'</td><td>'+statusText+'</td><td><a href="#" class="multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a><a href="#" class="border-0 btn-sm btn-outline-danger delete_multi_attr_item" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'" title="Delete"><i class="la la-trash"></i></a></td></tr>';
+                                            });
 
-											$('#slider_sortable').append(html);
 
-										});
+                                            // Enable sortable for slider
+                                            $("#slider_sortable").sortable({
+                                                update: function (event, ui) {
+                                                    $(this).children().each(function (index) {
 
+                                                        if ($(this).attr('data-position') != (index + 1)) {
+                                                            $(this).attr('data-position', (index + 1));
+                                                        }
+                                                        $(this).addClass('sorting_updated');
+                                                    });
+                                                    saveNewPositionsMultiAttr($(this));
+                                                }
+                                            });
 
-										// Enable sortable for slider
-										$("#slider_sortable").sortable({
-												update: function (event, ui) {
-														$(this).children().each(function (index) {
+                                        }
+                                    }
 
-																if ($(this).attr('data-position') != (index + 1)) {
-																		$(this).attr('data-position', (index + 1));
-																}
-																$(this).addClass('sorting_updated');
-														});
-														saveNewPositionsMultiAttr($(this));
-												}
-										});
 
-									}
-								}
+                                    // Other attribute parse
+                                    if (ck == 'other_attributes') {
+                                        if (typeof cv !== 'undefined') {
+                                            var otherAttrData = eval(JSON.parse(cv));
 
+                                            $.each(otherAttrData, function (ock, ocv) {
 
-								// Other attribute parse
-								if( ck == 'other_attributes' ){
-									if( typeof cv !== 'undefined' ){
-										var otherAttrData = eval(JSON.parse(cv));
+                                                $parentSelectorEdit.find("input[name='component[" + cpk + "][other_attr][" + ock + "]']").val(ocv);
 
-										$.each(otherAttrData, function(ock, ocv){
+                                            });
 
-											$parentSelectorEdit.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
+                                        }
+                                    }
 
-										});
 
-									}
-								}
+                                });
 
+                            });
 
-							});
 
-						});
+                        }
+                        // Check component is multiple banner image?
+                        else if (result.data.sections.section_type == 'multiple_image_banner') {
 
+                            var $parentSelectorEdit = $('#edit_' + modalComponent);
 
-					}
-					 // Check component is multiple banner image?
-					else if( result.data.sections.section_type == 'multiple_image_banner' ){
 
-						var $parentSelectorEdit = $('#edit_'+modalComponent);
+                            $parentSelectorEdit.modal('show');
 
 
-						$parentSelectorEdit.modal('show');
+                            // Add section id
+                            $parentSelectorEdit.find('.section_id').val(result.data.sections.id);
 
+                            $("input[name='sections[status]']").each(function (sk, sv) {
+                                // console.log($(sv).val());
+                                if ($(sv).val() == result.data.sections.status) {
+                                    $(sv).attr('checked', true);
+                                }
 
-						// Add section id
-						$parentSelectorEdit.find('.section_id').val(result.data.sections.id);
+                            });
 
-						$("input[name='sections[status]']").each(function(sk, sv){
-							 // console.log($(sv).val());
-							 if( $(sv).val() == result.data.sections.status ){
-								 $(sv).attr('checked', true);
-							 }
 
-						});
+                            // Compoent foreach
+                            $.each(result.data.component, function (cpk, cpv) {
 
+                                $.each(cpv, function (ck, cv) {
 
-						// Compoent foreach
-						$.each(result.data.component, function(cpk, cpv){
+                                    if (ck == 'id') {
+                                        $parentSelectorEdit.find("input[name='component[" + cpk + "][id]']").val(cv);
+                                        $('.tablecompoent_' + cpk).attr('data-component_id', cv);
+                                    }
 
-							$.each(cpv, function(ck, cv){
+                                    // Multiple attribute parse
+                                    if (ck == 'multiple_attributes') {
+                                        // console.log(cv);
 
-								 if( ck == 'id' ){
-								 $parentSelectorEdit.find("input[name='component["+cpk+"][id]']").val(cv);
-								 $('.tablecompoent_'+cpk).attr('data-component_id', cv);
-								 }
+                                        if (typeof cv !== 'undefined') {
+                                            var multiData = eval(JSON.parse(cv));
+                                            $parentSelectorEdit.find('#slider_sortable').empty();
 
-								 // Multiple attribute parse
-								if( ck == 'multiple_attributes' ){
-									// console.log(cv);
+                                            var component_id = $('.tablecompoent_' + cpk).attr('data-component_id');
 
-									if( typeof cv !== 'undefined' ){
-										var multiData = eval(JSON.parse(cv));
-										$parentSelectorEdit.find('#slider_sortable').empty();
+                                            $.each(multiData, function (mck, mcv) {
 
-										var component_id = $('.tablecompoent_'+cpk).attr('data-component_id');
+                                                var html = '';
 
-										$.each(multiData, function(mck, mcv){
+                                                if (mcv.status == "1") {
+                                                    var statusText = 'Active';
+                                                } else {
+                                                    var statusText = 'Inactive';
+                                                }
 
-											var html = '';
+                                                html += '<tr data-index="' + mcv.id + '" data-position="' + mcv.display_order + '"><td>' + mck + '</td><td><img class="img-fluid" src="' + baseUrl + mcv.image_url + '" alt="" style="max-width:100px;" /></td><td>' + mcv.alt_text + '</td><td>' + statusText + '</td><td><a href="#" class="banner_multi_item_edit btn-sm btn-outline-info border-0" data-item_id="' + mcv.id + '" data-component_id="' + component_id + '"><i class="la la-pencil" aria-hidden="true"></i></a><a href="#" class="border-0 btn-sm btn-outline-danger delete_multi_attr_item" data-item_id="' + mcv.id + '" data-component_id="' + component_id + '" title="Delete"><i class="la la-trash"></i></a></td></tr>';
 
-											if( mcv.status == "1" ){
-												var statusText = 'Active';
-											}
-											else{
-												var statusText = 'Inactive';
-											}
+                                                $parentSelectorEdit.find('#slider_sortable').append(html);
 
-											html += '<tr data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><td>'+mck+'</td><td><img class="img-fluid" src="'+baseUrl + mcv.image_url+'" alt="" style="max-width:100px;" /></td><td>'+mcv.alt_text+'</td><td>'+statusText+'</td><td><a href="#" class="banner_multi_item_edit btn-sm btn-outline-info border-0" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'"><i class="la la-pencil" aria-hidden="true"></i></a><a href="#" class="border-0 btn-sm btn-outline-danger delete_multi_attr_item" data-item_id="'+mcv.id+'" data-component_id="'+component_id+'" title="Delete"><i class="la la-trash"></i></a></td></tr>';
+                                            });
 
-											$parentSelectorEdit.find('#slider_sortable').append(html);
 
-										});
+                                            // Enable sortable for slider
+                                            $parentSelectorEdit.find("#slider_sortable").sortable({
+                                                update: function (event, ui) {
+                                                    $(this).children().each(function (index) {
 
+                                                        if ($(this).attr('data-position') != (index + 1)) {
+                                                            $(this).attr('data-position', (index + 1));
+                                                        }
+                                                        $(this).addClass('sorting_updated');
+                                                    });
+                                                    saveNewPositionsMultiAttr($(this));
+                                                }
+                                            });
 
-										// Enable sortable for slider
-										$parentSelectorEdit.find("#slider_sortable").sortable({
-												update: function (event, ui) {
-														$(this).children().each(function (index) {
+                                        }
+                                    }
 
-																if ($(this).attr('data-position') != (index + 1)) {
-																		$(this).attr('data-position', (index + 1));
-																}
-																$(this).addClass('sorting_updated');
-														});
-														saveNewPositionsMultiAttr($(this));
-												}
-										});
 
-									}
-								}
+                                    // Other attribute parse
+                                    if (ck == 'other_attributes') {
+                                        if (typeof cv !== 'undefined') {
+                                            var otherAttrData = eval(JSON.parse(cv));
 
+                                            $.each(otherAttrData, function (ock, ocv) {
 
-								// Other attribute parse
-								if( ck == 'other_attributes' ){
-									if( typeof cv !== 'undefined' ){
-										var otherAttrData = eval(JSON.parse(cv));
+                                                $parentSelectorEdit.find("input[name='component[" + cpk + "][other_attr][" + ock + "]']").val(ocv);
 
-										$.each(otherAttrData, function(ock, ocv){
+                                            });
 
-											$parentSelectorEdit.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
+                                        }
+                                    }
 
-										});
 
-									}
-								}
+                                });
 
+                            });
 
-							});
 
-						});
+                        }
+                        // Check component is Accordion?
+                        else if (result.data.sections.section_type == 'accordion_section') {
 
+                            var $parentSelectorEdit = $('#' + modalComponent);
 
-					}
-					 // Check component is Accordion?
-					else if( result.data.sections.section_type == 'accordion_section' ){
+                            $parentSelectorEdit.find('#accordion').empty();
 
-						var $parentSelectorEdit = $('#'+modalComponent);
+                            $parentSelectorEdit.modal('show');
 
-						$parentSelectorEdit.find('#accordion').empty();
+                            // Add section id
+                            $parentSelectorEdit.find('.section_id').val(result.data.sections.id);
 
-						$parentSelectorEdit.modal('show');
+                            $("input[name='sections[status]']").each(function (sk, sv) {
+                                // console.log($(sv).val());
+                                if ($(sv).val() == result.data.sections.status) {
+                                    $(sv).attr('checked', true);
+                                }
 
-						// Add section id
-						$parentSelectorEdit.find('.section_id').val(result.data.sections.id);
+                            });
 
-						$("input[name='sections[status]']").each(function(sk, sv){
-							 // console.log($(sv).val());
-							 if( $(sv).val() == result.data.sections.status ){
-								 $(sv).attr('checked', true);
-							 }
+                            // console.log(result.data.component);
 
-						});
+                            // Compoent foreach
+                            $.each(result.data.component, function (cpk, cpv) {
 
-						// console.log(result.data.component);
+                                $.each(cpv, function (ck, cv) {
 
-						// Compoent foreach
-						$.each(result.data.component, function(cpk, cpv){
+                                    if (ck == 'id') {
+                                        $parentSelectorEdit.find("input[name='component[" + cpk + "][id]']").val(cv);
+                                        $('.accordion_compoent_' + cpk).attr('data-component_id', cv);
+                                    }
 
-							$.each(cpv, function(ck, cv){
+                                    // Multiple attribute parse
+                                    if (ck == 'multiple_attributes') {
+                                        // console.log(cv);
 
-								 if( ck == 'id' ){
-								 $parentSelectorEdit.find("input[name='component["+cpk+"][id]']").val(cv);
-								 $('.accordion_compoent_'+cpk).attr('data-component_id', cv);
-								 }
+                                        if (typeof cv !== 'undefined') {
+                                            var multiData = eval(JSON.parse(cv));
+                                            // $parentSelectorEdit.find('#slider_sortable').empty();
+                                            console.log();
 
-								 // Multiple attribute parse
-								if( ck == 'multiple_attributes' ){
-									// console.log(cv);
+                                            var lastItemId = multiData[multiData.length - 1].id;
 
-									if( typeof cv !== 'undefined' ){
-										var multiData = eval(JSON.parse(cv));
-										// $parentSelectorEdit.find('#slider_sortable').empty();
-										 console.log();
+                                            $parentSelectorEdit.find("input[name='component[" + cpk + "][multi_item_count]']").val(lastItemId);
 
-										 var lastItemId = multiData[multiData.length-1].id;
+                                            var component_id = $('.accordion_compoent_' + cpk).attr('data-component_id');
 
-										 $parentSelectorEdit.find("input[name='component["+cpk+"][multi_item_count]']").val(lastItemId);
+                                            $.each(multiData, function (mck, mcv) {
 
-										var component_id = $('.accordion_compoent_'+cpk).attr('data-component_id');
+                                                var html = '';
 
-										$.each(multiData, function(mck, mcv){
+                                                mck++;
 
-											var html = '';
+                                                html += '<div class="card accordion collapse-icon accordion-icon-rotate" data-index="' + mcv.id + '" data-position="' + mcv.display_order + '"><input type="hidden" name="component[0][multi_item][id-' + mck + ']" value="' + mcv.id + '"><input type="hidden" name="component[0][multi_item][display_order-' + mck + ']" value="' + mcv.display_order + '"><div class="card-header bg-info info"> <div class="row"> <div class="col-sm-12 m_bottom_6"> <a class="card-link collapsed" data-toggle="collapse" href="#collapse_' + mck + '" aria-expanded="false"> <strong><i class="la la-sort"></i> Accordion Title #' + mck + '</strong> </a> </div></div><div class="row card_header_extra"> <div class="form-group col-md-6 "> <label for="title_en" class="required">Title (English)</label> <input type="text" name="component[0][multi_item][title_en-' + mck + ']" class="form-control" value="' + mcv.title_en + '" required> <div class="help-block"></div></div><div class="form-group col-md-6 "> <label for="title_bn" class="required">Title (Bangla)</label> <input type="text" name="component[0][multi_item][title_bn-' + mck + ']" class="form-control" value="' + mcv.title_bn + '" required> <div class="help-block"></div></div></div></div><div id="collapse_' + mck + '" class="collapse show1 border-info" data-parent="#accordion"> <div class="card-body"> <div class="row"> <div class="col-md-6"> <div class="form-group"> <label for="exampleInputPassword1">Accordion content (English)</label> <textarea name="component[0][multi_item][editor_en-' + mck + ']" class="form-control js_editor_box" rows="5" placeholder="Enter description">' + mcv.editor_en + '</textarea> </div></div><div class="col-md-6"> <div class="form-group"> <label for="exampleInputPassword1">Accordion content (Bangla)</label> <textarea name="component[0][multi_item][editor_bn-' + mck + ']" class="form-control js_editor_box" rows="5" placeholder="Enter description">' + mcv.editor_bn + '</textarea> </div></div></div></div><div class="card-footer"> <div class="row"> <div class="col-md-6"> <div class="form-group1">';
 
-											mck++;
+                                                if (mcv.status == "1") {
+                                                    html += '<label for="title" class="mr-1">Status:</label> <input type="radio" name="component[0][multi_item][status-' + mck + ']" value="1" checked> <label for="active" class="mr-1">Active</label> <input type="radio" name="component[0][multi_item][status-' + mck + ']" value="0"> <label for="inactive">Inactive</label>';
+                                                } else {
+                                                    html += '<label for="title" class="mr-1">Status:</label> <input type="radio" name="component[0][multi_item][status-' + mck + ']" value="1"> <label for="active" class="mr-1">Active</label> <input type="radio" name="component[0][multi_item][status-' + mck + ']" value="0" checked> <label for="inactive">Inactive</label>';
+                                                }
 
-											html += '<div class="card accordion collapse-icon accordion-icon-rotate" data-index="'+mcv.id+'" data-position="'+mcv.display_order+'"><input type="hidden" name="component[0][multi_item][id-'+mck+']" value="'+mcv.id+'"><input type="hidden" name="component[0][multi_item][display_order-'+mck+']" value="'+mcv.display_order+'"><div class="card-header bg-info info"> <div class="row"> <div class="col-sm-12 m_bottom_6"> <a class="card-link collapsed" data-toggle="collapse" href="#collapse_'+mck+'" aria-expanded="false"> <strong><i class="la la-sort"></i> Accordion Title #'+mck+'</strong> </a> </div></div><div class="row card_header_extra"> <div class="form-group col-md-6 "> <label for="title_en" class="required">Title (English)</label> <input type="text" name="component[0][multi_item][title_en-'+mck+']" class="form-control" value="'+mcv.title_en+'" required> <div class="help-block"></div></div><div class="form-group col-md-6 "> <label for="title_bn" class="required">Title (Bangla)</label> <input type="text" name="component[0][multi_item][title_bn-'+mck+']" class="form-control" value="'+mcv.title_bn+'" required> <div class="help-block"></div></div></div></div><div id="collapse_'+mck+'" class="collapse show1 border-info" data-parent="#accordion"> <div class="card-body"> <div class="row"> <div class="col-md-6"> <div class="form-group"> <label for="exampleInputPassword1">Accordion content (English)</label> <textarea name="component[0][multi_item][editor_en-'+mck+']" class="form-control js_editor_box" rows="5" placeholder="Enter description">'+mcv.editor_en+'</textarea> </div></div><div class="col-md-6"> <div class="form-group"> <label for="exampleInputPassword1">Accordion content (Bangla)</label> <textarea name="component[0][multi_item][editor_bn-'+mck+']" class="form-control js_editor_box" rows="5" placeholder="Enter description">'+mcv.editor_bn+'</textarea> </div></div></div></div><div class="card-footer"> <div class="row"> <div class="col-md-6"> <div class="form-group1">';
 
-											if( mcv.status == "1" ){
-												html += '<label for="title" class="mr-1">Status:</label> <input type="radio" name="component[0][multi_item][status-'+mck+']" value="1" checked> <label for="active" class="mr-1">Active</label> <input type="radio" name="component[0][multi_item][status-'+mck+']" value="0"> <label for="inactive">Inactive</label>';
-											}
-											else{
-												html += '<label for="title" class="mr-1">Status:</label> <input type="radio" name="component[0][multi_item][status-'+mck+']" value="1"> <label for="active" class="mr-1">Active</label> <input type="radio" name="component[0][multi_item][status-'+mck+']" value="0" checked> <label for="inactive">Inactive</label>';
-											}
+                                                html += '</div></div><div class="col-md-6"> <div class="float-right"> <a href="#" class="border-0 btn-sm btn-outline-danger delete_accordion_item" data-item_id="' + mck + '" title="Delete"> <i class="la la-trash"></i> </a> </div></div></div></div></div></div>';
 
+                                                $parentSelectorEdit.find('#accordion').append(html);
 
-										html += '</div></div><div class="col-md-6"> <div class="float-right"> <a href="#" class="border-0 btn-sm btn-outline-danger delete_accordion_item" data-item_id="'+mck+'" title="Delete"> <i class="la la-trash"></i> </a> </div></div></div></div></div></div>';
+                                            });
 
-											$parentSelectorEdit.find('#accordion').append(html);
+                                            // Enable sortable for slider
+                                            $parentSelectorEdit.find("#accordion").sortable({
+                                                connectWith: "#accordion",
+                                                handle: ".card-header .card-link",
+                                                cancel: ".portlet-toggle",
+                                                placeholder: "portlet-placeholder ui-corner-all",
+                                                update: function (event, ui) {
+                                                    $(this).children().each(function (index) {
 
-										});
+                                                        if ($(this).attr('data-position') != (index + 1)) {
+                                                            $(this).attr('data-position', (index + 1));
+                                                        }
+                                                        $(this).addClass('sorting_updated');
+                                                    });
+                                                    saveNewPositionsMultiAttr($(this));
+                                                }
+                                            });
 
-										// Enable sortable for slider
-										$parentSelectorEdit.find("#accordion").sortable({
-												connectWith: "#accordion",
-									      handle: ".card-header .card-link",
-									      cancel: ".portlet-toggle",
-									      placeholder: "portlet-placeholder ui-corner-all",
-												update: function (event, ui) {
-														$(this).children().each(function (index) {
+                                        }
+                                    }
 
-																if ($(this).attr('data-position') != (index + 1)) {
-																		$(this).attr('data-position', (index + 1));
-																}
-																$(this).addClass('sorting_updated');
-														});
-														saveNewPositionsMultiAttr($(this));
-												}
-										});
 
-									}
-								}
+                                    // Other attribute parse
+                                    if (ck == 'other_attributes') {
+                                        if (typeof cv !== 'undefined') {
+                                            var otherAttrData = eval(JSON.parse(cv));
 
+                                            $.each(otherAttrData, function (ock, ocv) {
 
-								// Other attribute parse
-								if( ck == 'other_attributes' ){
-									if( typeof cv !== 'undefined' ){
-										var otherAttrData = eval(JSON.parse(cv));
+                                                $parentSelectorEdit.find("input[name='component[" + cpk + "][other_attr][" + ock + "]']").val(ocv);
 
-										$.each(otherAttrData, function(ock, ocv){
+                                            });
 
-											$parentSelectorEdit.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
+                                        }
+                                    }
 
-										});
 
-									}
-								}
+                                });
 
+                            });
 
-							});
 
-						});
+                            // editor reload
+                            $('.js_editor_box').each(function (k, v) {
+                                $(this).summernote({
+                                    toolbar: [
+                                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                                        ['font', ['strikethrough', 'superscript', 'subscript']],
+                                        ['fontsize', ['fontsize']],
+                                        ['color', ['color']],
+                                        // ['table', ['table']],
+                                        ['para', ['ul', 'ol', 'paragraph']],
+                                        ['view', ['fullscreen', 'codeview']]
+                                    ],
+                                    height: 200
+                                });
+                            });
 
 
-						// editor reload
-						$('.js_editor_box').each(function(k, v){
-						   $(this).summernote({
-						       toolbar: [
-						           ['style', ['bold', 'italic', 'underline', 'clear']],
-						           ['font', ['strikethrough', 'superscript', 'subscript']],
-						           ['fontsize', ['fontsize']],
-						           ['color', ['color']],
-						           // ['table', ['table']],
-						           ['para', ['ul', 'ol', 'paragraph']],
-						           ['view', ['fullscreen', 'codeview']]
-						       ],
-						       height:200
-						   });
-						});
+                        } else {
+                            $('#' + modalComponent).modal('show');
 
+                            // Set all sections
+                            $.each(result.data.sections, function (k, v) {
 
-					}
-					else{
-						$('#'+modalComponent).modal('show');
+                                if (k == 'title_en') {
+                                    $parentSelector.find("input[name='sections[title_en]']").val(v);
+                                }
 
-						// Set all sections
-						$.each(result.data.sections, function(k, v){
+                                if (k == 'title_bn') {
+                                    $parentSelector.find("input[name='sections[title_bn]']").val(v);
+                                }
 
-							if( k == 'title_en' ){
-								 $parentSelector.find("input[name='sections[title_en]']").val(v);
-							}
+                            });
 
-							if( k == 'title_bn' ){
-								 $parentSelector.find("input[name='sections[title_bn]']").val(v);
-							}
+                            // Add section id
+                            $parentSelector.find('.section_id').val(result.data.sections.id);
 
-						});
+                            $("input[name='sections[status]']").each(function (sk, sv) {
+                                // console.log($(sv).val());
+                                if ($(sv).val() == result.data.sections.status) {
+                                    $(sv).attr('checked', true);
+                                }
 
-						// Add section id
-						$parentSelector.find('.section_id').val(result.data.sections.id);
+                            });
 
-						$("input[name='sections[status]']").each(function(sk, sv){
-							 // console.log($(sv).val());
-							 if( $(sv).val() == result.data.sections.status ){
-								 $(sv).attr('checked', true);
-							 }
 
-						});
+                            // Compoent foreach
+                            $.each(result.data.component, function (cpk, cpv) {
 
+                                $.each(cpv, function (ck, cv) {
 
-						// Compoent foreach
-						$.each(result.data.component, function(cpk, cpv){
+                                    if (ck == 'title_en') {
+                                        $parentSelector.find("input[name='component[" + cpk + "][title_en]']").val(cv);
+                                    }
 
-							$.each(cpv, function(ck, cv){
+                                    if (ck == 'title_bn') {
+                                        $parentSelector.find("input[name='component[" + cpk + "][title_bn]']").val(cv);
+                                    }
 
-								 if( ck == 'title_en' ){
-								 $parentSelector.find("input[name='component["+cpk+"][title_en]']").val(cv);
-								 }
+                                    if (ck == 'alt_text') {
+                                        $parentSelector.find("input[name='component[" + cpk + "][alt_text]']").val(cv);
+                                    }
 
-								 if( ck == 'title_bn' ){
-								 $parentSelector.find("input[name='component["+cpk+"][title_bn]']").val(cv);
-								 }
 
-								 if( ck == 'alt_text' ){
-								 $parentSelector.find("input[name='component["+cpk+"][alt_text]']").val(cv);
-								 }
+                                    if (ck == 'image') {
+                                        $parentSelector.find('.imgDisplay').attr('src', baseUrl + cv).show();
+                                    }
 
+                                    if (ck == 'id') {
+                                        $parentSelector.find("input[name='component[" + cpk + "][id]']").val(cv);
+                                    }
 
-								 if( ck == 'image' ){
-								 $parentSelector.find('.imgDisplay').attr('src', baseUrl + cv).show();
-								 }
+                                    if (ck == 'video') {
+                                        $parentSelector.find("input[type='text'][name='component[" + cpk + "][video_url]']").val(cv);
+                                    }
 
-								 if( ck == 'id' ){
-									$parentSelector.find("input[name='component["+cpk+"][id]']").val(cv);
-								 }
+                                    if (ck == 'description_en') {
+                                        $parentSelector.find("textarea[name='component[" + cpk + "][description_en]']").val(cv);
+                                    }
 
-								  if( ck == 'video' ){
-								 	$parentSelector.find("input[type='text'][name='component["+cpk+"][video_url]']").val(cv);
-								  }
+                                    if (ck == 'description_bn') {
+                                        $parentSelector.find("textarea[name='component[" + cpk + "][description_bn]']").val(cv);
+                                    }
 
-								 if( ck == 'description_en' ){
-								 $parentSelector.find("textarea[name='component["+cpk+"][description_en]']").val(cv);
-								 }
+                                    if (ck == 'editor_en') {
+                                        $parentSelector.find("textarea[name='component[" + cpk + "][editor_en]']").val(cv);
 
-								 if( ck == 'description_bn' ){
-								 $parentSelector.find("textarea[name='component["+cpk+"][description_bn]']").val(cv);
-								 }
+                                        $parentSelector.find("textarea[name='component[" + cpk + "][editor_en]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
+                                    }
 
-								 if( ck == 'editor_en' ){
-								 $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").val(cv);
+                                    if (ck == 'editor_bn') {
+                                        $parentSelector.find("textarea[name='component[" + cpk + "][editor_bn]']").val(cv);
 
-								 $parentSelector.find("textarea[name='component["+cpk+"][editor_en]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
-								 }
+                                        $parentSelector.find("textarea[name='component[" + cpk + "][editor_bn]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
+                                    }
 
-								 if( ck == 'editor_bn' ){
-								 $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").val(cv);
 
-								 $parentSelector.find("textarea[name='component["+cpk+"][editor_bn]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
-								 }
+                                    // Other attribute parse
+                                    if (ck == 'other_attributes') {
+                                        if (typeof cv !== 'undefined') {
+                                            var otherAttrData = eval(JSON.parse(cv));
 
 
-								 // Other attribute parse
-								 if( ck == 'other_attributes' ){
-								 	if( typeof cv !== 'undefined' ){
-								 		var otherAttrData = eval(JSON.parse(cv));
+                                            $.each(otherAttrData, function (ock, ocv) {
 
+                                                // $parentSelector.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
 
+                                                if (ock == 'video_type') {
+                                                    if (ocv == 'youtube_video') {
 
-								 		$.each(otherAttrData, function(ock, ocv){
+                                                        $parentSelector.find('#select_video_type').children("option[value='youtube_video']").attr('selected', true).siblings().attr('selected', false);
 
-								 			// $parentSelector.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
+                                                        $parentSelector.find('.youtube_video.form-group').show();
+                                                        $parentSelector.find('.uploaded_video.form-group').hide();
 
-								 			if( ock == 'video_type' ){
-								 				if( ocv == 'youtube_video' ){
+                                                    } else if (ocv == 'uploaded_video') {
+                                                        $parentSelector.find('#select_video_type').children("option[value='uploaded_video']").attr('selected', true).siblings().attr('selected', false);
 
-								 					$parentSelector.find('#select_video_type').children("option[value='youtube_video']").attr('selected', true).siblings().attr('selected', false);
+                                                        $parentSelector.find('.uploaded_video.form-group').show();
+                                                        $parentSelector.find('.youtube_video.form-group').hide();
+                                                    }
+                                                } else {
+                                                    $parentSelector.find("input[name='component[" + cpk + "][other_attr][" + ock + "]']").val(ocv);
+                                                }
 
-								 					$parentSelector.find('.youtube_video.form-group').show();
-								 					$parentSelector.find('.uploaded_video.form-group').hide();
+                                            });
 
-								 				}
-								 				else if( ocv == 'uploaded_video' ){
-								 					$parentSelector.find('#select_video_type').children("option[value='uploaded_video']").attr('selected', true).siblings().attr('selected', false);
+                                        }
+                                    }
 
-								 					$parentSelector.find('.uploaded_video.form-group').show();
-								 					$parentSelector.find('.youtube_video.form-group').hide();
-								 				}
-								 			}else{
-								 				$parentSelector.find("input[name='component["+cpk+"][other_attr]["+ock+"]']").val(ocv);
-								 			}
 
-								 		});
+                                });
 
-								 	}
-								 }
+                            });
+                        }
 
 
+                    }
 
-							});
 
-						});
-					}
+                },
+                error: function (data) {
+                    swal.fire({
+                        title: 'Status change process failed!',
+                        type: 'error',
+                    });
+                }
+            });
 
+        });
 
 
+        // multi attribute sortable
+        function saveNewPositionsMultiAttr($this) {
+            var positions = [];
+            $('.sorting_updated').each(function () {
+                positions.push([
+                    $(this).attr('data-index'),
+                    $(this).attr('data-position')
+                ]);
+            });
+            // var component_id = null;
 
-				}
+            var componentID = $this.attr('data-component_id');
 
+            // console.log(componentID);
 
-			},
-			error: function (data) {
-				swal.fire({
-					title: 'Status change process failed!',
-					type: 'error',
-				});
-			}
-		});
+            $.ajax({
+                methods: "POST",
+                url: "{{ url('app-service-component-attribute-sortable') }}",
+                data: {
+                    update: 1,
+                    position: positions,
+                    component_id: componentID,
+                },
+                success: function (data) {
+                    console.log(data)
+                },
+                error: function () {
+                    // window.location.replace(auto_save_url);
+                }
+            });
+        }
 
-	});
 
+        // Delete multiple attribute items
+        $(document).on('click', '.delete_multi_attr_item', function (e) {
+            e.preventDefault();
 
+            // var confirm = confirm('Are you sure?');
+            $this = $(this);
 
-	// multi attribute sortable
-	function saveNewPositionsMultiAttr($this)
-			{
-					var positions = [];
-					$('.sorting_updated').each(function () {
-							positions.push([
-									$(this).attr('data-index'),
-									$(this).attr('data-position')
-							]);
-					});
-					// var component_id = null;
+            if (confirm("Are you sure?")) {
 
-					var componentID = $this.attr('data-component_id');
+                var itemID = $this.attr('data-item_id');
+                var componentID = $this.attr('data-component_id');
 
-					// console.log(componentID);
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('appservice.component.itemattr.destory') }}",
+                    data: {
+                        item_id: itemID,
+                        component_id: componentID,
+                        _token: "{{csrf_token()}}"
+                    },
+                    success: function (data) {
+                        console.log(data)
 
-					$.ajax({
-							methods: "POST",
-							url: "{{ url('app-service-component-attribute-sortable') }}",
-							data: {
-									update: 1,
-									position: positions,
-									component_id: componentID,
-							},
-							success: function (data) {
-									console.log(data)
-							},
-							error: function () {
-									// window.location.replace(auto_save_url);
-							}
-					});
-			}
+                        if (data.status == "SUCCESS") {
 
+                            $this.parents('tr').remove();
+                        }
 
-			// Delete multiple attribute items
-			$(document).on('click', '.delete_multi_attr_item', function(e){
-				e.preventDefault();
+                    },
+                    error: function () {
+                        // window.location.replace(auto_save_url);
+                    }
+                });
 
-				// var confirm = confirm('Are you sure?');
-				$this = $(this);
+            }
 
-				if( confirm("Are you sure?") ){
 
-					var itemID = $this.attr('data-item_id');
-					var componentID = $this.attr('data-component_id');
+        });
 
-					$.ajax({
-							type: "POST",
-							url: "{{ route('appservice.component.itemattr.destory') }}",
-							data: {
-									item_id: itemID,
-									component_id: componentID,
-									_token : "{{csrf_token()}}"
-							},
-							success: function (data) {
-									console.log(data)
 
-									if( data.status == "SUCCESS" ){
+        // Section sortable
+        $("#section_sortable").sortable({
+            update: function (event, ui) {
+                $(this).children().each(function (index) {
 
-											$this.parents('tr').remove();
-									}
+                    if ($(this).attr('data-position') != (index + 1)) {
+                        $(this).attr('data-position', (index + 1));
+                    }
+                    $(this).addClass('sorting_updated');
+                });
+                saveNewPositionsSections($(this));
+            }
+        });
 
-							},
-							error: function () {
-									// window.location.replace(auto_save_url);
-							}
-					});
 
-				}
+        // multi attribute sortable
+        function saveNewPositionsSections($this) {
+            var positions = [];
+            $('.sorting_updated').each(function () {
+                positions.push([
+                    $(this).attr('data-index'),
+                    $(this).attr('data-position')
+                ]);
+            });
 
+            $.ajax({
+                methods: "POST",
+                url: "{{ url('app-service-sections-sortable') }}",
+                data: {
+                    update: 1,
+                    position: positions
+                },
+                success: function (data) {
+                    console.log(data)
+                },
+                error: function () {
+                    window.location.replace(auto_save_url);
+                }
+            });
 
-			});
+        }
 
 
+        // Image with Preview
+        $(document).on('change', '.image_with_preview', function () {
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(input).parents('.form-group').next('.form-group').find('.imgDisplay').css('display', 'block');
+                    $(input).parents('.form-group').next('.form-group').find('.imgDisplay').attr('src', e.target.result);
 
-			// Section sortable
-			$("#section_sortable").sortable({
-					update: function (event, ui) {
-							$(this).children().each(function (index) {
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+            // console.log(input.files[0]);
+        });
 
-									if ($(this).attr('data-position') != (index + 1)) {
-											$(this).attr('data-position', (index + 1));
-									}
-									$(this).addClass('sorting_updated');
-							});
-							saveNewPositionsSections($(this));
-					}
-			});
 
-
-			// multi attribute sortable
-			function saveNewPositionsSections($this)
-			{
-					var positions = [];
-					$('.sorting_updated').each(function () {
-							positions.push([
-									$(this).attr('data-index'),
-									$(this).attr('data-position')
-							]);
-					});
-
-					$.ajax({
-	            methods: "POST",
-	            url: "{{ url('app-service-sections-sortable') }}",
-	            data: {
-	                update: 1,
-	                position: positions
-	            },
-	            success: function (data) {
-	                console.log(data)
-	            },
-	            error: function () {
-	                window.location.replace(auto_save_url);
-	            }
-	        });
-
-			}
-
-
-// Image with Preview
-$(document).on('change', '.image_with_preview', function(){
-	var input = this;
-	if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-          $(input).parents('.form-group').next('.form-group').find('.imgDisplay').css('display', 'block');
-          $(input).parents('.form-group').next('.form-group').find('.imgDisplay').attr('src', e.target.result);
-
-      }
-      reader.readAsDataURL(input.files[0]);
-  }
-	// console.log(input.files[0]);
-});
-
-
-</script>
+    </script>
 
 @endpush
 

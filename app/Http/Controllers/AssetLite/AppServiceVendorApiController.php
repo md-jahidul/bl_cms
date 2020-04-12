@@ -55,7 +55,7 @@ class AppServiceVendorApiController extends Controller
      */
     public function create()
     {
-        return view('admin.app-service.vendor-api.create', compact('appServiceTabs'));
+        return view('admin.app-service.vendor-api.create');
     }
 
     /**

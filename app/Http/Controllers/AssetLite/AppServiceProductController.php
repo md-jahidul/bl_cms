@@ -90,8 +90,6 @@ class AppServiceProductController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $response = $this->appServiceProductService->storeAppServiceProduct($request->all());
         Session::flash('message', $response->getContent());
         return redirect(route('app-service-product.index'));
@@ -121,8 +119,6 @@ class AppServiceProductController extends Controller
         $appServiceProduct = $this->appServiceProductService->findOne($id, ['appServiceTab' => function ($q) {
             $q->select('id', 'name_en', 'alias');
         }]);
-
-//        return $appServiceProduct->start_date;
 
         $appServiceCategory = $this->appServiceCategoryRepository
             ->findByProperties(

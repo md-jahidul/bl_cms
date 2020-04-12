@@ -112,12 +112,15 @@
                                 @endif
 
                                 <slot class="{{ $product->offer_category_id == OfferType::PACKAGES ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
+                                    @include('layouts.partials.products.common-field.price_vat_mrp')
                                     @include('layouts.partials.products.packages')
                                 </slot>
 
                                 <slot class="{{ $product->offer_category_id == OfferType::OTHERS ? '' : 'd-none' }}" id="others" data-offer-type="others">
                                     @include('layouts.partials.products.other')
                                 </slot>
+
+                                @include('layouts.partials.products.common-field.search-related-field')
 
                                 <div class="col-md-6">
                                     <label></label>

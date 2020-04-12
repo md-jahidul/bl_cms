@@ -83,7 +83,7 @@ class BusinessInternetRepository extends BaseRepository {
 
     }
 
-    public function saveInternet($bannerPath, $request) {
+    public function saveInternet($bannerWeb, $bannerMob, $request) {
 
 
 
@@ -112,12 +112,19 @@ class BusinessInternetRepository extends BaseRepository {
             'offer_type' => $request->offer_type,
             'short_text' => $request->short_text,
             'alt_text' => $request->alt_text,
+            'banner_name' => $request->banner_name,
+            'url_slug' => $request->url_slug,
+            'schema_markup' => $request->schema_markup,
+            'page_header' => $request->page_header,
             'tag_id' => $request->tag,
-            'related_product' => implode(',', $request->related_product_id),
+            'related_product' => $request->related_product_id!= "" ? implode(',', $request->related_product_id) : "",
         );
 
-        if($bannerPath != ""){
-              $insertdata['banner_photo'] = $bannerPath;
+        if($bannerWeb != ""){
+              $insertdata['banner_photo'] = $bannerWeb;
+        }
+        if($bannerMob != ""){
+              $insertdata['banner_image_mobile'] = $bannerMob;
         }
 
         if($request->internet_id){
@@ -148,7 +155,7 @@ class BusinessInternetRepository extends BaseRepository {
                     $cells = $row->getCells();
                     $totalCell = count($cells);
 
-
+                    $urlSlug = str_replace(' ', '-', $cells[3]->getValue());
                     if ($rowNumber > 1) {
                         $insertdata[] = array(
                             'product_code' => $cells[0]->getValue(),
@@ -172,7 +179,8 @@ class BusinessInternetRepository extends BaseRepository {
                             'rate_cutter_offer_unit' => $cells[18]->getValue(),
                             'offer_type' => $cells[19]->getValue(),
                             'short_text' => $cells[20]->getValue(),
-                            'sms_rate_unit' => $cells[21]->getValue()
+                            'sms_rate_unit' => $cells[21]->getValue(),
+                            'url_slug' => $urlSlug,
                         );
                     }
                     $rowNumber++;
