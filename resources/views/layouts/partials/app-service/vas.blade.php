@@ -71,8 +71,10 @@
 
 <div class="col-md-6">
     <div class="form-group">
+
         <label for="can_active" class="mr-1">Show Active Button:</label>
         <input type="checkbox" name="can_active" value="1" id="can_active" {{ (isset($appServiceProduct) && ($appServiceProduct->can_active == 1)) ? 'checked' : '' }}>
+
     </div>
 </div>
 
