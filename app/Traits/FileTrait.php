@@ -26,14 +26,14 @@ trait FileTrait {
                 $directoryPath, $this->disk
         );
 
-        if ($fileName != "") {
-            $renamedPath = $this->rename($path, $fileName, $directoryPath);
-//
-//            if ($renamedPath == false) {
-//                $this->deleteFile($path);
-//            }
-            return $renamedPath;
-        }
+//        if ($fileName != "") {
+//            $renamedPath = $this->rename($path, $fileName, $directoryPath);
+////
+////            if ($renamedPath == false) {
+////                $this->deleteFile($path);
+////            }
+//            return $renamedPath;
+//        }
 
 
         return $path;
@@ -48,18 +48,18 @@ trait FileTrait {
      */
     protected function rename($path, $fileName, $directoryPath) {
 
-        $oldImg = env('UPLOAD_BASE_PATH') . "/" . $path;
-
-        $pathToArray = explode('/', $path);
-        $imgName = end($pathToArray);
-        $mimeArray = explode('.', $imgName);
-        $mime = end($mimeArray);
-
-        $newName = $directoryPath . "/" . $fileName . "." . $mime;
-        $newPath = env('UPLOAD_BASE_PATH') . "/" . $newName;
-
-        @rename($oldImg, $newPath);
-        return $newName;
+//        $oldImg = env('UPLOAD_BASE_PATH') . "/" . $path;
+//
+//        $pathToArray = explode('/', $path);
+//        $imgName = end($pathToArray);
+//        $mimeArray = explode('.', $imgName);
+//        $mime = end($mimeArray);
+//
+//        $newName = $directoryPath . "/" . $fileName . "." . $mime;
+//        $newPath = env('UPLOAD_BASE_PATH') . "/" . $newName;
+//
+//        @rename($oldImg, $newPath);
+//        return $newName;
     }
 
     /**

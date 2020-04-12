@@ -186,7 +186,7 @@ class BusinessPackageService {
 
             $photoNameWeb = $data['banner_name'] . '-web';
             $photoNameMob = $data['banner_name'] . '-mobile';
-            $directoryPath = '/assetlite/images/business-images';
+            $directoryPath = 'assetlite/images/business-images';
 
             $bannerWeb = "";
             $bannerMob = "";
@@ -213,8 +213,6 @@ class BusinessPackageService {
                     $bannerMob = $this->rename($data['old_banner_mob'], $photoNameMob, $directoryPath);
                 }
             }
-            
-            dd($bannerWeb);
 
             //save data in database 
             $this->packageRepo->updatePackage($bannerWeb, $bannerMob, $data);

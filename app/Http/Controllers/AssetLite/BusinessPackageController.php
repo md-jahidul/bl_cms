@@ -130,7 +130,6 @@ class BusinessPackageController extends Controller {
     public function update(Request $request) {
         
          $response = $this->packageService->updatePackage($request);
-         dd($response);
         
         if($response['success'] == 1){
            Session::flash('sussess', 'Package is updated!');  
@@ -138,7 +137,7 @@ class BusinessPackageController extends Controller {
             Session::flash('error', 'Package updating process failed!'); 
         }
         
-//        return redirect('/business-package');
+        return redirect('/business-package');
     }
     
     
