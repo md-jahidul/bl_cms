@@ -704,9 +704,9 @@ class ProductCoreService
             );
 
             $data['media'] = $path;
-        } else {
+        }/* else {
             $data['media'] = null;
-        }
+        }*/
 
         if ($request->has('offer_section_slug')) {
             $data['offer_section_slug'] = $request->offer_section_slug;
