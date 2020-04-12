@@ -78,9 +78,9 @@ class ProductController extends Controller
             ->latest()
             ->get();
 
-//        return $products;
+        $packageRelatedProduct = $this->offerCategoryService->getRelatedProducts();
 
-        return view('admin.product.index', compact('products', 'type'));
+        return view('admin.product.index', compact('products', 'type', 'packageRelatedProduct'));
     }
 
     public function trendingOfferHome()
@@ -278,6 +278,13 @@ class ProductController extends Controller
 
 
         return redirect("offers/$type");
+    }
+
+    public function packageRelatedProductStore(Request $request)
+    {
+        $response = $this->offerCategoryService->storeRelatedProduct($request->all());
+        Session::flash('message', $response->content());
+        return redirect("offers/$request->type");
     }
 
     public function existProductCore($productCode)
