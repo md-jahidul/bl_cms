@@ -29,6 +29,5 @@ class TermsAndConditionsController extends Controller
            'terms_conditions' => $request->terms_conditions
         ]);
 
-        return redirect()->back()->with('success', 'Terms and Conditions are Saved');
     }
 }

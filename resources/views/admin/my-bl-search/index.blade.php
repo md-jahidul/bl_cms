@@ -1,44 +1,10 @@
 @extends('layouts.admin')
-@section('title', 'MyBl Product Entry')
-@section('card_name', 'MyBl Product Entry')
-@section('breadcrumb')
-    <li class="breadcrumb-item active">MyBl Product Entry Panel</li>
-@endsection
+@section('title', 'MyBl Search Content')
+@section('card_name', 'MyBl Search Content')
 @section('action')
 @endsection
 @section('content')
-    <section>
-        <div class="card">
-            <div class="card-content collapse show">
-                <div class="card-body card-dashboard">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form class="form" method="POST"  id="uploadProduct" enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="message">Upload Product List</label>
-                                    <p class="text-left">
-                                        <small class="warning text-muted">
-                                            Please download the format and upload in a specific format.
-                                        </small>
-                                    </p>
-                                    <input type="file" class="dropify" name="product_file" data-height="80"
-                                           data-allowed-file-extensions="xlsx" required/>
-                                </div>
-                                <div class="col-md-12" >
-                                    <div class="form-group float-right" style="margin-top:15px;">
-                                        <button class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    @include('admin.my-bl-products.partials.product_list')
-                </div>
-            </div>
-        </div>
-    </section>
-
+    @include('admin.my-bl-search.partials.content_entry')
 @endsection
 
 

@@ -194,4 +194,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
         ->name('recharge.prefill-amounts.update');
 
     Route::get('recharge/prefill-amounts/order', 'CMS\PrefillRechargeController@updatePosition');
+
+    // search content
+    Route::get('mybl-search/content', 'CMS\Search\InAppSearchContentController@index')->name('mybl-search-content.index');
+    Route::post('mybl-search/content', 'CMS\Search\InAppSearchContentController@store')->name('mybl-search-content.store');
+
 });
