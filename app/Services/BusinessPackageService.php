@@ -186,7 +186,7 @@ class BusinessPackageService {
 
             $photoNameWeb = $data['banner_name'] . '-web';
             $photoNameMob = $data['banner_name'] . '-mobile';
-            $directoryPath = 'assetlite/images/business-images';
+            $directoryPath = '/assetlite/images/business-images';
 
             $bannerWeb = "";
             $bannerMob = "";
