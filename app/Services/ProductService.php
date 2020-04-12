@@ -68,11 +68,9 @@ class ProductService
         $data['sim_category_id'] = $simId;
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
         $product = $this->save($data);
-
         //save Search Data
         $this->_saveSearchData($product);
-
-        $this->productDetailRepository->saveOrUpdateProductDetail($product->id, $data);
+//        $this->productDetailRepository->saveOrUpdateProductDetail($product->id, $data);
         return new Response('Product added successfully');
     }
 
@@ -133,7 +131,7 @@ class ProductService
     public function updateProduct($data, $type, $id)
     {
         $product = $this->productRepository->findByCode($type, $id);
-        $this->productDetailRepository->saveOrUpdateProductDetail($product->id, $data);
+//        $this->productDetailRepository->saveOrUpdateProductDetail($product->id, $data);
         $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0);
         $product->update($data);
         //save Search Data
