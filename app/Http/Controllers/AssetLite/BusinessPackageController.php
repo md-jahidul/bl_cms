@@ -138,7 +138,7 @@ class BusinessPackageController extends Controller {
             Session::flash('error', 'Package updating process failed!'); 
         }
         
-        return redirect('/business-package');
+//        return redirect('/business-package');
     }
     
     
