@@ -186,6 +186,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('offers/{type}/{id}/update', 'AssetLite\ProductController@update')->name('product.update');
     Route::get('offers/{type}/{id}/show', 'AssetLite\ProductController@show')->name('product.show');
 
+    Route::post('package/related-product/store', 'AssetLite\ProductController@packageRelatedProductStore');
+
     // Product Offers Details  ======================================
     Route::get('offers/{type}/{id}/{offerType}/details', 'AssetLite\ProductController@productDetailsEdit')
         ->name('product.details');

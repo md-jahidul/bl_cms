@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class OfferCategory extends Model
 {
 
-    protected $fillable = ['name_en', 'name_bn', 'banner_image_url', 'banner_alt_text', 'banner_image_mobile', 'url_slug', 'page_header', 'banner_name', 'schema_markup'];
+    protected $fillable = ['name_en', 'name_bn', 'banner_image_url', 'banner_alt_text', 'banner_image_mobile', 'url_slug', 'page_header', 'banner_name', 'schema_markup', 'other_attributes'];
+
+    protected $casts = [
+        'other_attributes' => 'array'
+    ];
 
     public function scopePackageType($query, $type = 'prepaid')
     {
@@ -23,4 +27,5 @@ class OfferCategory extends Model
     {
         return $this->hasMany(OfferCategory::class, 'parent_id', 'id');
     }
+
 }
