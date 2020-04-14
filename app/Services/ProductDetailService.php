@@ -97,49 +97,31 @@ class ProductDetailService {
      */
     public function updateProductDetails($data, $productId) {
         try {
-
-
-//            die();
             $status = true;
-
             $productDetails = $this->productDetailRepository->findOneByProperties(['product_id' => $productId]);
-
-
             $update = [];
-
             $update['offer_details_en'] = $data['offer_details_en'];
             $update['offer_details_bn'] = $data['offer_details_bn'];
-            $update['url_slug'] = $data['url_slug'];
-            $update['schema_markup'] = $data['schema_markup'];
-            $update['page_header'] = $data['page_header'];
             $update['banner_name'] = $data['banner_name'];
 
             if (!empty($data['banner_image_url'])) {
-
                 //delete old web photo
                 if ($data['old_web_img'] != "") {
                     $this->deleteFile($data['old_web_img']);
                 }
-
                 $photoName = $data['banner_name'] . '-web';
                 $update['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/product_details', $photoName);
                 $status = $update['banner_image_url'];
-
-
             }
 
             if (!empty($data['banner_image_mobile'])) {
-
                  //delete old web photo
                 if ($data['old_mob_img'] != "") {
                     $this->deleteFile($data['old_mob_img']);
                 }
-
                 $photoName = $data['banner_name'] . '-mobile';
                 $update['banner_image_mobile'] = $this->upload($data['banner_image_mobile'], 'assetlite/images/banner/product_details', $photoName);
-//                         dd( $update['banner_image_mobile']);
                 $status = $update['banner_image_mobile'];
-
             }
 
             //only rename
@@ -176,11 +158,8 @@ class ProductDetailService {
                     }
                 }
 
-//                dd($update);
                 $this->productDetailRepository->saveProductDetails($update, $productId);
-
 //                $productDetails->update($data);
-
                 $response = [
                     'success' => 1,
                 ];
@@ -189,8 +168,6 @@ class ProductDetailService {
                     'success' => 2,
                 ];
             }
-
-
             return $response;
         } catch (\Exception $e) {
             $response = [

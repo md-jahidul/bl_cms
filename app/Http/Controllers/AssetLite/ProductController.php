@@ -258,7 +258,7 @@ class ProductController extends Controller
 
         $validator = Validator::make($request->all(), [
             'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
-            'url_slug' => 'required|regex:/^\S*$/u',
+//            'url_slug' => 'required|regex:/^\S*$/u',
         ]);
         if ($validator->fails()) {
             Session::flash('error', $validator->messages()->first());
