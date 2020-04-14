@@ -41,7 +41,6 @@
 
                             <div class="row">
 
-
                                 <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
                                     <label for="title" class="required">Title (English)</label>
                                     <input type="text" name="title"  class="form-control" placeholder="Enter Title in English"
@@ -66,9 +65,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('banglalink_info') ? ' error' : '' }}">
                                     <label for="banglalink_info" class="required">Description (English)</label>
-                                    <textarea
-                                        required
-                                        data-validation-required-message="Description (English) is required"
+                                    <textarea required data-validation-required-message="Description (English) is required"
                                         class="form-control" name="banglalink_info" placeholder="Enter Description in English" id="banglalink_info"
                                         rows="4">{{ old("banglalink_info") ? old("banglalink_info") : $banglalink_info  }}</textarea>
 
@@ -107,9 +104,19 @@
                                     @endif--}}
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    @if(isset($about))
+                                        <img style="height:120px;width:180px;"
+                                             src="{{ config('filesystems.file_base_url') . $about->content_image }}" id="profile_image_Display">
+                                    @else
+                                        <img style="height:120px;width:180px;display:none" id="profile_image_Display">
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image') ? ' error' : '' }}">
-                                    <label for="alt_text" >Banner Image</label>
+                                    <label for="alt_text" >Banner Image (Web)</label>
                                     <div class="custom-file">
+                                        <input type="hidden" name="old_web_img" value="{{ $about->banner_image }}">
                                         <input type="file" name="banner_image" class="custom-file-input" id="image">
                                         <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
                                     </div>
@@ -120,15 +127,6 @@
                                     @endif--}}
                                 </div>
 
-                                <div class="form-group col-md-6">
-
-                                    @if(isset($about))
-                                        <img style="height:120px;width:180px;"
-                                             src="{{ config('filesystems.file_base_url') . $about->content_image }}" id="profile_image_Display">
-                                    @else
-                                        <img style="height:120px;width:180px;display:none" id="profile_image_Display">
-                                    @endif
-                                </div>
 
                                 <div class="form-group col-md-6">
                                     @if(isset($about))
@@ -139,6 +137,64 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
+                                    <span>Banner image (Mobile)</span>
+
+                                    <div class="custom-file">
+                                        <input type="hidden" name="old_mob_img" value="{{ $about->banner_image_mobile }}">
+                                        <input type="file" name="banner_image_mobile" class="custom-file-input">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    @if( !empty($about->banner_image_mobile) )
+                                        <img src="{{ config('filesystems.file_base_url') . $about->banner_image_mobile }}" style="height:100px;width:400px;margin-top:10px;">
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text">Alt Text</label>
+                                    <input type="text" name="alt_text"  class="form-control" placeholder="Enter image alter text"
+                                           value="{{ $about->alt_text }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text'))
+                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label>Banner Photo Name</label>
+                                    <input type="hidden" name="old_banner_name" value="{{$about->banner_name}}">
+                                    <input type="text" class="form-control" name="banner_name" value="{{$about->banner_name}}" placeholder="Photo Name">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> app-and-service-banner (no spaces)<br>
+                                        <strong>Note: </strong> Don't need MIME type like jpg,png
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }}">
+                                    <label> URL (url slug) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" value="{{$about->url_slug}}" required name="url_slug" placeholder="URL">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> app-and-service-title (no spaces)<br>
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label>Page Header (HTML)</label>
+                                    <textarea class="form-control" rows="7" name="page_header">{{$about->page_header}}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label>Schema Markup</label>
+                                    <textarea class="form-control" rows="7" name="schema_markup">{{$about->schema_markup}}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                    </small>
+                                </div>
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
