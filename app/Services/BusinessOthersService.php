@@ -914,7 +914,7 @@ class BusinessOthersService {
         } catch (\Exception $e) {
             $response = [
                 'success' => 0,
-                'message' => $e->getMessage()
+                'message' => $e
             ];
             return $response;
         }
