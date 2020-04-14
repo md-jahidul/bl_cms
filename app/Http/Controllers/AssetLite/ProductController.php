@@ -204,6 +204,8 @@ class ProductController extends Controller
         $this->info['offerInfo'] = $product->offer_info;
         $this->info['price_slabs'] = ProductPriceSlab::get();
 
+//        dd($product);
+
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
                 ->where('type_id', $package_id)

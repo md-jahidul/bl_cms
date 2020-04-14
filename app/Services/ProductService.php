@@ -133,6 +133,9 @@ class ProductService
         $product = $this->productRepository->findByCode($type, $id);
 //        $this->productDetailRepository->saveOrUpdateProductDetail($product->id, $data);
         $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0);
+
+//        dd($data);
+
         $product->update($data);
         //save Search Data
         $this->_saveSearchData($product);
