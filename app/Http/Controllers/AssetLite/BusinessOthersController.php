@@ -61,9 +61,7 @@ class BusinessOthersController extends Controller {
      */
     public function saveService(Request $request) {
 
-
         $response = $this->othersService->saveService($request);
-        
         
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Service is saved!');
@@ -285,6 +283,7 @@ class BusinessOthersController extends Controller {
 //        print_r($request->all()); die();
 
         $response = $this->othersService->updateService($request);
+        dd($response);
 
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Service is updated!');

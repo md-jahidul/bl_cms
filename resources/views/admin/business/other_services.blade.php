@@ -19,12 +19,12 @@
                             <thead>
                                 <tr>
                                     <th width="20%">Name</th>
-                                    <th width="20%">Banner</th>
-                                    <th class="text-center" width="15%">Component</th>
-                                    <th class="text-center" width="10%">Home Top</th>
-                                    <th class="text-center" width="10%">Home Slider</th>
-                                    <th class="text-center" width="10%">Status</th>
-                                    <th class="text-center" width="10%">Action</th>
+                                    <th width="20%">Product Photo</th>
+                                    <th class="text-center" width="10%">Component</th>
+                                    <th class="text-center" width="8%">Home Top</th>
+                                    <th class="text-center" width="8%">Home Slider</th>
+                                    <th class="text-center" width="8%">Status</th>
+                                    <th class="text-center" width="8%">Action</th>
                                 </tr>
                             </thead>
                             <tbody class="service_sortable cursor-move">
@@ -45,16 +45,24 @@
 
 
                                     <td class="text-center">
-                                        <a href="{{ url('business-others-components-list/'.$bs->id) }}" class="btn btn-sm btn-success">View</a>
-                                        <a href="{{ url('business-others-components/'.$bs->id) }}" class="btn btn-sm btn-info">Add</a>
+                                        <a href="{{ url('business-others-components-list/'.$bs->id) }}" title="View List" class="btn btn-sm btn-info">
+                                            <i class="la la-eye"></i>
+                                        </a>
+                                        <a href="{{ url('business-others-components/'.$bs->id) }}" title="Add Component" class="btn btn-sm btn-primary">
+                                            <i class="la la-plus"></i>
+                                        </a>
                                     </td>
 
                                     <td class="text-center">
 
                                         @if($bs->home_show == 1)
-                                        <a href="{{$bs->id}}" class="btn btn-sm btn-success package_home_show">Showing</a>
+                                        <a href="{{$bs->id}}" class="btn btn-sm btn-outline-info package_home_show">
+                                            <i class="la la-check-square"></i>
+                                        </a>
                                         @else
-                                        <a href="{{$bs->id}}" class="btn btn-sm btn-warning package_home_show">Hidden</a>
+                                        <a href="{{$bs->id}}" class="btn btn-sm btn-outline-danger package_home_show">
+                                            <i class="la la-remove"></i>
+                                        </a>
                                         @endif
 
                                     </td>
@@ -62,9 +70,13 @@
                                     <td class="text-center">
 
                                         @if($bs->in_home_slider == 1)
-                                        <a href="{{$bs->id}}" class="btn btn-sm btn-success package_home_slider">Yes</a>
+                                        <a href="{{$bs->id}}" class="btn btn-sm btn-outline-info package_home_slider">
+                                            <i class="la la-check-square"></i>
+                                        </a>
                                         @else
-                                        <a href="{{$bs->id}}" class="btn btn-sm btn-dark package_home_slider">No</a>
+                                        <a href="{{$bs->id}}" class="btn btn-sm btn-outline-danger package_home_slider">
+                                            <i class="la la-remove"></i>
+                                        </a>
                                         @endif
 
                                     </td>
@@ -72,9 +84,13 @@
                                     <td class="text-center">
 
                                         @if($bs->status == 1)
-                                        <a href="{{$bs->id}}" class="btn btn-sm btn-success package_status">Active</a>
+                                        <a href="{{$bs->id}}" class="btn btn-sm btn-outline-info package_status">
+                                            <i class="la la-check-square"></i>
+                                        </a>
                                         @else
-                                        <a href="{{$bs->id}}" class="btn btn-sm btn-warning package_status">Inactive</a>
+                                        <a href="{{$bs->id}}" class="btn btn-sm btn-outline-danger package_status">
+                                            <i class="la la-remove"></i>
+                                        </a>
                                         @endif
 
                                     </td>
@@ -114,12 +130,12 @@
                             <thead>
                                 <tr>
                                     <th width="20%">Name</th>
-                                    <th width="20%">Banner</th>
-                                    <th class="text-center" width="15%">Component</th>
-                                    <th class="text-center" width="10%">Home Top</th>
-                                    <th class="text-center" width="10%">Home Slider</th>
-                                    <th class="text-center" width="10%">Status</th>
-                                    <th class="text-center" width="10%">Action</th>
+                                    <th width="20%">Product Photo</th>
+                                    <th class="text-center" width="10%">Component</th>
+                                    <th class="text-center" width="8%">Home Top</th>
+                                    <th class="text-center" width="8%">Home Slider</th>
+                                    <th class="text-center" width="8%">Status</th>
+                                    <th class="text-center" width="8%">Action</th>
                                 </tr>
                             </thead>
                             <tbody class="service_sortable cursor-move">
@@ -139,27 +155,43 @@
                                         <img src="{{ config('filesystems.file_base_url') . $i->banner_photo }}" alt="Banner Photo" height="40px" />
                                     </td>
 
-                                    <td class="text-center">
-                                        <a href="{{ url('business-others-components-list/'.$i->id) }}" class="btn btn-sm btn-success">View</a>
-                                        <a href="{{ url('business-others-components/'.$i->id) }}" class="btn btn-sm btn-info">Add</a>
+                                  
+                                    
+                                     <td class="text-center">
+                                        <a href="{{ url('business-others-components-list/'.$i->id) }}" title="View List" class="btn btn-sm btn-info">
+                                            <i class="la la-eye"></i>
+                                        </a>
+                                        <a href="{{ url('business-others-components/'.$i->id) }}" title="Add Component" class="btn btn-sm btn-primary">
+                                            <i class="la la-plus"></i>
+                                        </a>
                                     </td>
 
+                                    
                                     <td class="text-center">
 
                                         @if($i->home_show == 1)
-                                        <a href="{{$i->id}}" class="btn btn-sm btn-success package_home_show">Showing</a>
+                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-info package_home_show">
+                                            <i class="la la-check-square"></i>
+                                        </a>
                                         @else
-                                        <a href="{{$i->id}}" class="btn btn-sm btn-warning package_home_show">Hidden</a>
+                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-danger package_home_show">
+                                            <i class="la la-remove"></i>
+                                        </a>
                                         @endif
 
                                     </td>
-
+                                    
+                                    
                                     <td class="text-center">
 
                                         @if($i->in_home_slider == 1)
-                                        <a href="{{$i->id}}" class="btn btn-sm btn-success package_home_slider">Yes</a>
+                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-info package_home_slider">
+                                            <i class="la la-check-square"></i>
+                                        </a>
                                         @else
-                                        <a href="{{$i->id}}" class="btn btn-sm btn-dark package_home_slider">No</a>
+                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-danger package_home_slider">
+                                            <i class="la la-remove"></i>
+                                        </a>
                                         @endif
 
                                     </td>
@@ -167,12 +199,18 @@
                                     <td class="text-center">
 
                                         @if($i->status == 1)
-                                        <a href="{{$i->id}}" class="btn btn-sm btn-success package_status">Active</a>
+                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-info package_status">
+                                            <i class="la la-check-square"></i>
+                                        </a>
                                         @else
-                                        <a href="{{$i->id}}" class="btn btn-sm btn-warning package_status">Inactive</a>
+                                        <a href="{{$i->id}}" class="btn btn-sm btn-outline-danger package_status">
+                                            <i class="la la-remove"></i>
+                                        </a>
                                         @endif
 
                                     </td>
+
+                                  
                                     <td class="text-center">
 
                                         <a class="text-info edit_package" href="{{url('business-others-service-edit/'.$i->id)}}">
@@ -209,7 +247,7 @@
                             <thead>
                                 <tr>
                                     <th width="20%">Name</th>
-                                    <th width="20%">Banner</th>
+                                    <th width="20%">Product Photo</th>
                                     <th class="text-center" width="15%">Component</th>
                                     <th class="text-center" width="10%">Home Top</th>
                                     <th class="text-center" width="10%">Home Slider</th>
@@ -232,29 +270,42 @@
                                     <td>
                                         <img src="{{ config('filesystems.file_base_url') . $o->banner_photo }}" alt="Banner Photo" height="40px" />
                                     </td>
-
-                                    <td class="text-center">
-                                        <a href="{{ url('business-others-components-list/'.$o->id) }}" class="btn btn-sm btn-success">View</a>
-                                        <a href="{{ url('business-others-components/'.$o->id) }}" class="btn btn-sm btn-info">Add</a>
+                                    
+                                     <td class="text-center">
+                                        <a href="{{ url('business-others-components-list/'.$o->id) }}" title="View List" class="btn btn-sm btn-info">
+                                            <i class="la la-eye"></i>
+                                        </a>
+                                        <a href="{{ url('business-others-components/'.$o->id) }}" title="Add Component" class="btn btn-sm btn-primary">
+                                            <i class="la la-plus"></i>
+                                        </a>
                                     </td>
 
+                                    
                                     <td class="text-center">
 
                                         @if($o->home_show == 1)
-                                        <a href="{{$o->id}}" class="btn btn-sm btn-success package_home_show">Showing</a>
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-info package_home_show">
+                                            <i class="la la-check-square"></i>
+                                        </a>
                                         @else
-                                        <a href="{{$o->id}}" class="btn btn-sm btn-warning package_home_show">Hidden</a>
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-danger package_home_show">
+                                            <i class="la la-remove"></i>
+                                        </a>
                                         @endif
 
                                     </td>
-
-
+                                    
+                                    
                                     <td class="text-center">
 
                                         @if($o->in_home_slider == 1)
-                                        <a href="{{$o->id}}" class="btn btn-sm btn-success package_home_slider">Yes</a>
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-info package_home_slider">
+                                            <i class="la la-check-square"></i>
+                                        </a>
                                         @else
-                                        <a href="{{$o->id}}" class="btn btn-sm btn-dark package_home_slider">No</a>
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-danger package_home_slider">
+                                            <i class="la la-remove"></i>
+                                        </a>
                                         @endif
 
                                     </td>
@@ -262,12 +313,17 @@
                                     <td class="text-center">
 
                                         @if($o->status == 1)
-                                        <a href="{{$o->id}}" class="btn btn-sm btn-success package_status">Active</a>
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-info package_status">
+                                            <i class="la la-check-square"></i>
+                                        </a>
                                         @else
-                                        <a href="{{$o->id}}" class="btn btn-sm btn-warning package_status">Inactive</a>
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-danger package_status">
+                                            <i class="la la-remove"></i>
+                                        </a>
                                         @endif
 
                                     </td>
+                                    
                                     <td class="text-center">
 
                                         <a class="text-info edit_package" href="{{url('business-others-service-edit/'.$o->id)}}">
@@ -400,10 +456,10 @@ if (Session::has('error')) {
                         var btn;
 
                         if (result.show_status === 1) {
-                            btn = '<a href="' + packageId + '" class="btn btn-sm btn-success package_home_show">Showing</a>';
+                            btn = '<a href="' + packageId + '" class="btn btn-sm btn-outline-info package_home_show"><i class="la la-check-square"></i></a>';
 
                         } else {
-                            btn = '<a href="' + packageId + '" class="btn btn-sm btn-warning package_home_show">Hidden</a>';
+                            btn = '<a href="' + packageId + '" class="btn btn-sm btn-outline-danger package_home_show"><i class="la la-remove"></i></a>';
                         }
                         $(thisObj).parent('td').html(btn);
 
@@ -451,10 +507,10 @@ if (Session::has('error')) {
                         var btn;
 
                         if (result.show_status === 1) {
-                            btn = '<a href="' + packageId + '" class="btn btn-sm btn-success package_home_slider">Yes</a>';
+                            btn = '<a href="' + packageId + '" class="btn btn-sm btn-outline-info package_home_slider"><i class="la la-check-square"></i></a>';
 
                         } else {
-                            btn = '<a href="' + packageId + '" class="btn btn-sm btn-black package_home_slider">No</a>';
+                            btn = '<a href="' + packageId + '" class="btn btn-sm btn-outline-danger package_home_slider"><i class="la la-remove"></i></a>';
                         }
                         $(thisObj).parent('td').html(btn);
 
@@ -502,10 +558,10 @@ if (Session::has('error')) {
                         var btn;
 
                         if (result.status === 1) {
-                            btn = '<a href="' + packageId + '" class="btn btn-sm btn-success package_status">Active</a>';
+                            btn = '<a href="' + packageId + '" class="btn btn-sm btn-outline-info package_status"><i class="la la-check-square"></i></a>';
 
                         } else {
-                            btn = '<a href="' + packageId + '" class="btn btn-sm btn-warning package_status">Inactive</a>';
+                            btn = '<a href="' + packageId + '" class="btn btn-sm btn-outline-danger package_status"><i class="la la-remove"></i></a>';
                         }
                         $(thisObj).parent('td').html(btn);
 

@@ -96,25 +96,14 @@ class BusinessOthersService {
                 'icon' => 'required|mimes:jpg,jpeg,png',
                 'url_slug' => 'required|regex:/^\S*$/u',
                 'banner_name' => 'required|regex:/^\S*$/u',
+                'details_banner_name' => 'required|regex:/^\S*$/u',
             ]);
 
 
             //file upload in storege
-            $photoNameWeb = $request['banner_name'] . '-web';
-            $photoNameMob = $request['banner_name'] . '-mobile';
+
             $directoryPath = 'assetlite/images/business-images';
 
-            $bannerWeb = "";
-            $bannerMob = "";
-            if (!empty($request['banner_photo'])) {
-
-                $bannerWeb = $this->upload($request['banner_photo'], $directoryPath, $photoNameWeb);
-            }
-
-            if (!empty($request['banner_mobile'])) {
-
-                $bannerMob = $this->upload($request['banner_mobile'], $directoryPath, $photoNameMob);
-            }
 
             //icon upload
             $iconPath = "";
@@ -122,8 +111,42 @@ class BusinessOthersService {
                 $iconPath = $this->upload($request['icon'], $directoryPath);
             }
 
+
+            //product photo
+            $photoNameWeb = $request['banner_name'] . '-web';
+            $photoNameMob = $request['banner_name'] . '-mobile';
+            $photoWeb = "";
+            $photoMob = "";
+            if (!empty($request['banner_photo'])) {
+
+                $photoWeb = $this->upload($request['banner_photo'], $directoryPath, $photoNameWeb);
+            }
+
+            if (!empty($request['banner_mobile'])) {
+
+                $photoMob = $this->upload($request['banner_mobile'], $directoryPath, $photoNameMob);
+            }
+
+
+            //details banner photo
+            $bannerNameWeb = $request['details_banner_name'] . '-web';
+            $bannerNameMob = $request['details_banner_name'] . '-mobile';
+            $bannerWeb = "";
+            $bannerMob = "";
+            if (!empty($request['details_banner_web'])) {
+
+                $bannerWeb = $this->upload($request['details_banner_web'], $directoryPath, $bannerNameWeb);
+            }
+
+            if (!empty($request['details_banner_mob'])) {
+
+                $bannerMob = $this->upload($request['details_banner_mob'], $directoryPath, $bannerNameMob);
+            }
+
+
+
             //save data in database 
-            $serviceId = $this->otherRepo->saveService($bannerWeb, $bannerMob, $iconPath, $request);
+            $serviceId = $this->otherRepo->saveService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request);
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
             $parentTypes = $types[$request->type];
 
@@ -796,43 +819,17 @@ class BusinessOthersService {
                 'short_details_bn' => 'required',
                 'url_slug' => 'required|regex:/^\S*$/u',
                 'banner_name' => 'required|regex:/^\S*$/u',
+                'details_banner_name' => 'required|regex:/^\S*$/u',
             ]);
 
             //banner file replace in storege
-            $photoNameWeb = $request['banner_name'] . '-web';
-            $photoNameMob = $request['banner_name'] . '-mobile';
             $directoryPath = 'assetlite/images/business-images';
 
-            $bannerWeb = "";
-            $bannerMob = "";
-            if (!empty($request['banner_photo'])) {
-
-                $request['old_banner'] != "" ? $this->deleteFile($request['old_banner']) : "";
-                $bannerWeb = $this->upload($request['banner_photo'], $directoryPath, $photoNameWeb);
-            }
-
-            if (!empty($request['banner_mobile'])) {
-
-                $request['old_banner_mob'] != "" ? $this->deleteFile($request['old_banner_mob']) : "";
-                $bannerMob = $this->upload($request['banner_mobile'], $directoryPath, $photoNameMob);
-            }
-
-            //only rename
-            if ($request['old_banner_name'] != $request['banner_name']) {
-
-                if (empty($request['banner_photo'])) {
-                    $bannerWeb = $this->rename($request['old_banner'], $photoNameWeb, $directoryPath);
-                }
-
-                if (empty($request['banner_mobile'])) {
-                    $bannerMob = $this->rename($request['old_banner_mob'], $photoNameMob, $directoryPath);
-                }
-            }
 
             //icon file replace in storege
             $iconPath = "";
             if ($request['icon'] != "") {
-                $iconPath = $this->upload($request['icon'], 'assetlite/images/business-images');
+                $iconPath = $this->upload($request['icon'], $directoryPath);
 
                 //delete old photo
                 if ($request['old_icon']) {
@@ -840,8 +837,66 @@ class BusinessOthersService {
                 }
             }
 
+            //product photo
+            $photoNameWeb = $request['banner_name'] . '-web';
+            $photoNameMob = $request['banner_name'] . '-mobile';
+            $photoWeb = "";
+            $photoMob = "";
+            if (!empty($request['banner_photo'])) {
+
+                $request['old_banner'] != "" ? $this->deleteFile($request['old_banner']) : "";
+                $photoWeb = $this->upload($request['banner_photo'], $directoryPath, $photoNameWeb);
+            }
+
+            if (!empty($request['banner_mobile'])) {
+
+                $request['old_banner_mob'] != "" ? $this->deleteFile($request['old_banner_mob']) : "";
+                $photoMob = $this->upload($request['banner_mobile'], $directoryPath, $photoNameMob);
+            }
+
+            //product photo rename
+            if ($request['old_banner_name'] != $request['banner_name']) {
+
+                if (empty($request['banner_photo'])) {
+                    $photoWeb = $this->rename($request['old_banner'], $photoNameWeb, $directoryPath);
+                }
+
+                if (empty($request['banner_mobile'])) {
+                    $photoMob = $this->rename($request['old_banner_mob'], $photoNameMob, $directoryPath);
+                }
+            }
+
+            //details banner
+            $bannerNameWeb = $request['details_banner_name'] . '-web';
+            $bannerNameMob = $request['details_banner_name'] . '-mobile';
+            $bannerWeb = "";
+            $bannerMob = "";
+            if (!empty($request['details_banner_web'])) {
+
+                $request['old_details_banner_web'] != "" ? $this->deleteFile($request['old_details_banner_web']) : "";
+                $bannerWeb = $this->upload($request['details_banner_web'], $directoryPath, $bannerNameWeb);
+            }
+
+            if (!empty($request['details_banner_mob'])) {
+
+                $request['old_details_banner_mob'] != "" ? $this->deleteFile($request['old_details_banner_mob']) : "";
+                $bannerMob = $this->upload($request['details_banner_mob'], $directoryPath, $bannerNameMob);
+            }
+
+            //details banner rename
+            if ($request['old_details_banner_name'] != $request['details_banner_name']) {
+
+                if (empty($request['details_banner_web'])) {
+                    $bannerWeb = $this->rename($request['old_details_banner_web'], $bannerNameWeb, $directoryPath);
+                }
+
+                if (empty($request['details_banner_mob'])) {
+                    $bannerMob = $this->rename($request['old_details_banner_mob'], $bannerNameMob, $directoryPath);
+                }
+            }
+
             //save data in database 
-            $this->otherRepo->updateService($bannerWeb, $bannerMob, $iconPath, $request);
+            $this->otherRepo->updateService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request);
 
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
             $parentTypes = $types[$request->type];
@@ -859,7 +914,7 @@ class BusinessOthersService {
         } catch (\Exception $e) {
             $response = [
                 'success' => 0,
-                'message' => $e->getMessage()
+                'message' => $e
             ];
             return $response;
         }
