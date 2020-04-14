@@ -823,7 +823,7 @@ class BusinessOthersService {
             ]);
 
             //banner file replace in storege
-            $directoryPath = 'assetlite/images/business-images/';
+            $directoryPath = 'assetlite/images/business-images';
 
 
             //icon file replace in storege
