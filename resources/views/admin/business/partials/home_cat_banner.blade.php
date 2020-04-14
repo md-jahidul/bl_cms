@@ -158,35 +158,7 @@
             
             <div class="row">
 
-                <div class="col-md-6 col-xs-12">
-                    <h4 class="pb-1"><strong>Sliding Speed</strong></h4>
-                    <table class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th width="55%">Enterprise Solution</th>
-                                <th width="55%">Home News</th>
-                                <th width="20%">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-
-                                <td>
-                                    <input type="text" class="form-control enterprise_speed" value="{{ $slidingSpeed->enterprise_speed }}" disabled="disabled">
-
-                                </td>
-                                <td class="category_name">
-                                    <input type="text" class="form-control news_speed" value="{{ $slidingSpeed->news_speed }}" disabled="disabled">
-                                </td>
-                                <td class="text-center">
-
-                                    <a href="javascript:;" class="btn btn-sm btn-success update_slider_speed">Update</a>
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                
 
                 <div class="col-md-6 col-xs-12">
                     <h4><strong>Home Banner</strong></h4>
@@ -244,6 +216,39 @@
                         </div>
                         @endforeach
                     </div>
+                </div>
+                
+                
+                <div class="col-md-6 col-xs-12">
+                    <h4><strong>Sliding Speed</strong></h4>
+                     <small><strong class="text-danger">Note: </strong>Speed in Seconds.</small>
+                    <hr>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="55%">Enterprise Solution</th>
+                                <th width="55%">Home News</th>
+                                <th width="20%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td>
+                                    <input type="text" class="form-control enterprise_speed" value="{{ $slidingSpeed->enterprise_speed }}" disabled="disabled">
+
+                                </td>
+                                <td class="category_name">
+                                    <input type="text" class="form-control news_speed" value="{{ $slidingSpeed->news_speed }}" disabled="disabled">
+                                </td>
+                                <td class="text-center">
+
+                                    <a href="javascript:;" class="btn btn-sm btn-success update_slider_speed">Update</a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
