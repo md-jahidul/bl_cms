@@ -172,8 +172,6 @@ class NotificationController extends Controller
     {
         $notifications = $this->notificationService->getNotificationReport();
 
-       // $notifications = $this->notificationService->findAll();
-      //  $category =  $this->notificationCategoryService->findAll();
         return view('admin.notification.notification.list')
             ->with('notifications', $notifications);
     }

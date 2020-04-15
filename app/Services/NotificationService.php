@@ -95,6 +95,11 @@ class NotificationService
     }
 
 
+    /**
+     * Notification Report
+     *
+     * @return mixed
+     */
     public function getNotificationReport()
     {
        return $this->notificationRepository->getNotificationReport();

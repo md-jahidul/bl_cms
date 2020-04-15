@@ -26,6 +26,7 @@
                             <th width="12%">Title</th>
                             <th width="30%">Message</th>
                             <th width="10%">Category</th>
+                            <th width="10%">Status</th>
                             {{--<th width="15%">Action</th>--}}
                         </tr>
                         </thead>
@@ -37,6 +38,7 @@
                                 <td width="12%">{{$notification['title']}}</td>
                                 <td width="30%">{{$notification['body']}}</td>
                                 <td width="10%">{{$notification['category_name']}}</td>
+                                <td width="10%">{{$notification['status']}}</td>
 
                                 {{--<td width="15%">
                                     <div class="row">
