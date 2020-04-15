@@ -1,4 +1,5 @@
-
+@include('layouts.partials.app-service.common-field.validity-unit')
+@include('layouts.partials.app-service.common-field.price')
 @include('layouts.partials.app-service.common-field.tag')
 
 @include('layouts.partials.app-service.common-field.product-image', ['imgField' => 'imgTwo', 'showImg' => 'imgShowTwo'])

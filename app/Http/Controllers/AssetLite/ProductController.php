@@ -255,14 +255,11 @@ class ProductController extends Controller
      */
     public function productDetailsUpdate(Request $request, $type, $id)
     {
-
         $validator = Validator::make($request->all(), [
             'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
-//            'url_slug' => 'required|regex:/^\S*$/u',
         ]);
         if ($validator->fails()) {
             Session::flash('error', $validator->messages()->first());
-//            return redirect("offers/$type");
         }
 
         $this->productDetailService->updateOtherRelatedProduct($request, $id);

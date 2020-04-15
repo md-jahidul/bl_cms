@@ -106,28 +106,28 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 ">
-                                    <label for="price_tk">Price</label>
-                                    <input type="text" name="price_tk" id="price_tk"  class="form-control" placeholder="Enter offer price in taka" step="0.001"
-                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
-                                           value="{{ $appServiceProduct->price_tk }}">
-                                    <div class="help-block"></div>
-                                </div>
+{{--                                <div class="form-group col-md-6 ">--}}
+{{--                                    <label for="price_tk">Price</label>--}}
+{{--                                    <input type="text" name="price_tk" id="price_tk"  class="form-control" placeholder="Enter offer price in taka" step="0.001"--}}
+{{--                                           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"--}}
+{{--                                           value="{{ $appServiceProduct->price_tk }}">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                </div>--}}
 
-                                <div class="form-group col-md-6 {{ $errors->has('validity_unit') ? ' error' : '' }}">
-                                    <label for="validity_unit" class="required">Validity Unit</label>
-                                    <select class="form-control required" name="validity_unit"
-                                            required data-validation-required-message="Please select type">
-                                        <option value="">---Validity Type---</option>
-                                        <option value="daily" {{ $appServiceProduct->validity_unit == "daily" ? 'selected' : '' }}>Daily</option>
-                                        <option value="weekly" {{ $appServiceProduct->validity_unit == "weekly" ? 'selected' : '' }}>Weekly</option>
-                                        <option value="monthly" {{ $appServiceProduct->validity_unit == "monthly" ? 'selected' : '' }}>Monthly</option>
-                                    </select>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('validity_unit'))
-                                        <div class="help-block">{{ $errors->first('validity_unit') }}</div>
-                                    @endif
-                                </div>
+{{--                                <div class="form-group col-md-6 {{ $errors->has('validity_unit') ? ' error' : '' }}">--}}
+{{--                                    <label for="validity_unit" class="required">Validity Unit</label>--}}
+{{--                                    <select class="form-control required" name="validity_unit"--}}
+{{--                                            required data-validation-required-message="Please select type">--}}
+{{--                                        <option value="">---Validity Type---</option>--}}
+{{--                                        <option value="daily" {{ $appServiceProduct->validity_unit == "daily" ? 'selected' : '' }}>Daily</option>--}}
+{{--                                        <option value="weekly" {{ $appServiceProduct->validity_unit == "weekly" ? 'selected' : '' }}>Weekly</option>--}}
+{{--                                        <option value="monthly" {{ $appServiceProduct->validity_unit == "monthly" ? 'selected' : '' }}>Monthly</option>--}}
+{{--                                    </select>--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('validity_unit'))--}}
+{{--                                        <div class="help-block">{{ $errors->first('validity_unit') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
 
                                 <slot id="app" data-offer-type="app" class="{{ $appServiceProduct->appServiceTab->alias == 'app' ? '' : 'd-none' }}">
                                     @include('layouts.partials.app-service.app')
@@ -136,6 +136,18 @@
                                 <slot id="vas" data-offer-type="vas" class="{{ $appServiceProduct->appServiceTab->alias == 'vas' ? '' : 'd-none' }}">
                                     @include('layouts.partials.app-service.vas')
                                 </slot>
+
+                                <slot id="financial" data-offer-type="financial" class="{{ $appServiceProduct->appServiceTab->alias == 'financial' ? '' : 'd-none' }}">
+                                    @include('layouts.partials.app-service.financial')
+                                </slot>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                    <label> URL (url slug) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" value="{{$appServiceProduct->url_slug}}" required name="url_slug" placeholder="URL">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> najat-app (no spaces)<br>
+                                    </small>
+                                </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label>Page Header (HTML)</label>
@@ -150,14 +162,6 @@
                                     <textarea class="form-control" rows="7" name="schema_markup">{{$appServiceProduct->schema_markup}}</textarea>
                                     <small class="text-info">
                                         <strong>Note: </strong> JSON-LD (Recommended by Google)
-                                    </small>
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                    <label> URL (url slug) <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" value="{{$appServiceProduct->url_slug}}" required name="url_slug" placeholder="URL">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> najat-app (no spaces)<br>
                                     </small>
                                 </div>
 
