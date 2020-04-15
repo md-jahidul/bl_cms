@@ -87,6 +87,13 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Notification List</a>
                 </li>
+
+                <li class="{{ is_active_url('notification') }}{{ is_active_url('notification-report') }}">
+                    <a class="menu-item" href="{{ route('notification.report') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Notification Report</a>
+                </li>
+
             </ul>
         </li>
     @endif
