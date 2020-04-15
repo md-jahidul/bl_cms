@@ -134,7 +134,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     // Notification
     route::resource('notification', 'CMS\NotificationController');
     Route::get('notification/destroy/{id}', 'CMS\NotificationController@destroy');
-    Route::get('notification/all/{id}', 'CMS\NotificationController@showAll')->name('notification.show-all');;
+    Route::get('notification/all/{id}', 'CMS\NotificationController@showAll')->name('notification.show-all');
+    Route::get('notification-report', 'CMS\NotificationController@getNotificationReport')->name('notification.report');
 
 
     // Push Notification

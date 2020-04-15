@@ -161,4 +161,20 @@ class NotificationController extends Controller
         session()->flash('error', $this->notificationService->deleteNotification($id)->getContent());
         return url('notificationCategory');
     }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getNotificationReport()
+    {
+        $notifications = $this->notificationService->getNotificationReport();
+
+       // $notifications = $this->notificationService->findAll();
+      //  $category =  $this->notificationCategoryService->findAll();
+        return view('admin.notification.notification.list')
+            ->with('notifications', $notifications);
+    }
 }

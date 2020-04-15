@@ -59,4 +59,13 @@ class NotificationRepository extends BaseRepository
 
         return array_diff($user_phone, $mute_user_phone);
     }
+
+
+    public function getNotificationReport()
+    {
+      return  Notification::where('status', 'SUCCESSFUL')
+            ->join('notification_user', 'notifications.id', '=','notification_user.notification_id')
+            ->join('customers', 'customers.id', '=', 'notification_user.user_id')
+            ->get()->toArray();
+    }
 }

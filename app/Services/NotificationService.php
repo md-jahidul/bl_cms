@@ -6,13 +6,15 @@ use App\Repositories\NotificationDraftRepository;
 use App\Repositories\NotificationRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
+use Illuminate\Notifications\Notification;
 
 class NotificationService
 {
     use CrudTrait;
 
-
-
+    /**
+     * @var NotificationRepository
+     */
     protected $notificationRepository;
 
     /**
@@ -34,6 +36,7 @@ class NotificationService
 
     /**
      * Storing the Notification resource
+     * @param $data
      * @return Response
      */
     public function storeNotification($data)
@@ -45,6 +48,7 @@ class NotificationService
     /**
      * Updating the Notification
      * @param $data
+     * @param $id
      * @return Response
      */
     public function updateNotification($data, $id)
@@ -88,5 +92,11 @@ class NotificationService
     public function checkMuteOfferForUser($category_id, $user_phone): array
     {
         return $this->notificationRepository->checkMuteOfferForUser($category_id, $user_phone);
+    }
+
+
+    public function getNotificationReport()
+    {
+       return $this->notificationRepository->getNotificationReport();
     }
 }
