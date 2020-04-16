@@ -35,12 +35,13 @@
                         <thead>
                             <tr>
                                 <td width="3%">#</td>
-                                <th width="20%">Product Name</th>
+                                <th width="10%">Product Name</th>
+                                <th width="10%">Name</th>
                                 <th width="4%">Product ID</th>
                                 <th width="6%">USSD</th>
                                 <th width="6%">Offer Type</th>
                                 <th width="8%" class="text-center">Details</th>
-                                <th width="8%" class="text-center">Trending Offer</th>
+                                <th width="4%" class="text-center">Trending Offer</th>
                                 <th width="12%" class="">Action</th>
                             </tr>
                         </thead>
@@ -50,6 +51,7 @@
                                     <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
+                                        <td>{{ $product->product_core->name }}</td>
                                         <td>{{ $product->product_code }}</td>
                                         <td>{{ $product->product_core['activation_ussd'] }}</td>
                                         <td>{{ $product->offer_category->name_en }}</td>
