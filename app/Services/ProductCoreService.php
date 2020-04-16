@@ -607,8 +607,6 @@ class ProductCoreService
                                                 ], $assetLiteProduct);
 
 
-                                $this->_saveSearchData($product);
-
                                 ProductDetail::updateOrCreate([
                                     'product_id' => $product->id
                                 ]);
@@ -630,38 +628,7 @@ class ProductCoreService
         }
     }
 
-    //save Search Data
-    private function _saveSearchData($product)
-    {
-
-
-        $productId = $product->id;
-        $name = $product->name_en;
-
-        $url = "";
-        $type = "";
-        if ($product->sim_category_id == 1 && $product->offer_category_id == 1) {
-            $url = 'prepaid/internet-offer/' . $productId;
-            $type = 'prepaid-internet';
-        }
-        if ($product->sim_category_id == 1 && $product->offer_category_id == 2) {
-            $url = 'prepaid/voice-offer/' . $productId;
-            $type = 'prepaid-voice';
-        }
-        if ($product->sim_category_id == 1 && $product->offer_category_id == 3) {
-            $url = 'prepaid/bundle-offer/' . $productId;
-            $type = 'prepaid-bundle';
-        }
-        if ($product->sim_category_id == 2 && $product->offer_category_id == 1) {
-            $url = 'postpaid/internet-offer/' . $productId;
-            $type = 'postpaid-internet';
-        }
-        $tag = "";
-        if ($product->tag_category_id) {
-            $tag = $this->tagRepository->getTagById($product->tag_category_id);
-        }
-        return $this->searchRepository->saveData($productId, $name, $url, $type, $tag);
-    }
+    
 
     /**
      *  Product search by Code

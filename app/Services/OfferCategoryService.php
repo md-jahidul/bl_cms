@@ -10,6 +10,7 @@
 namespace App\Services;
 
 use App\Repositories\OfferCategoryRepository;
+use App\Repositories\SearchDataRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Exception;
@@ -24,16 +25,19 @@ class OfferCategoryService
 
     /**
      * @var $offerCategoryRepository
+     * @var $searchRepository
      */
     protected $offerCategoryRepository;
+     protected $searchRepository;
 
     /**
      * OfferCategoryService constructor.
      * @param OfferCategoryRepository $offerCategoryRepository
      */
-    public function __construct(OfferCategoryRepository $offerCategoryRepository)
+    public function __construct(OfferCategoryRepository $offerCategoryRepository, SearchDataRepository $searchRepository)
     {
         $this->offerCategoryRepository = $offerCategoryRepository;
+        $this->searchRepository = $searchRepository;
         $this->setActionRepository($offerCategoryRepository);
     }
 
@@ -143,7 +147,8 @@ class OfferCategoryService
 
             if ($status != false) {
 
-                $this->offerCategoryRepository->saveCategory($update, $id);
+                $category = $this->offerCategoryRepository->saveCategory($update, $id);
+                $this->_updateSearchCategorySlug($id);
 
                 $response = [
                     'success' => 1,
@@ -162,6 +167,12 @@ class OfferCategoryService
             ];
             return $response;
         }
+    }
+    
+    private function _updateSearchCategorySlug($catId){
+        $category = $this->findOrFail($catId);
+        $keywordType = "offer-".$category->alias;
+        $this->searchRepository->updateByCategory($keywordType, $category->url_slug);
     }
 
     public function getRelatedProducts()
