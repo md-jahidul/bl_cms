@@ -51,7 +51,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('name_en') ? ' error' : '' }}">
                                     <label for="name_en" class="required">Offer Title (English)</label>
-                                    <input type="text" name="name_en" id="name_en" class="form-control" required data-validation-required-message="Please enter title" placeholder="Enter offer name in English"
+                                    <input type="text" name="name_en" id="name_en" class="form-control" placeholder="Enter offer name in English"
                                            value="{{ $appServiceProduct->name_en }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('name_en'))
@@ -71,7 +71,7 @@
 
                                 <div class="form-group col-md-6 ">
                                     <label for="description_en" class="required">Description (English)</label>
-                                    <textarea type="text" name="description_en" class="form-control" required data-validation-required-message="Please select type" placeholder="Enter description in English"
+                                    <textarea type="text" name="description_en" class="form-control" placeholder="Enter description in English"
                                     >{{ $appServiceProduct->description_en }}</textarea>
                                     <div class="help-block"></div>
                                 </div>
