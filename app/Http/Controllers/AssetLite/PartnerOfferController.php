@@ -132,14 +132,14 @@ class PartnerOfferController extends Controller
     public function offerDetailsEdit($partner, $id)
     {
         $partnerOfferDetail = $this->partnerOfferService->findOne($id, ['partner_offer_details']);
-        return view('admin.partner-offer.offer_details', compact('partner', 'partnerOfferDetail', 'products'));
+        return view('admin.partner-offer.offer_details', compact('partner', 'partnerOfferDetail'));
     }
 
     public function offerDetailsUpdate(Request $request, $partnet)
     {
         $image_upload_size = ConfigController::adminImageUploadSize();
         $image_upload_type = ConfigController::adminImageUploadType();
-        
+
         # Check Image upload validation
         $validator = Validator::make($request->all(), [
             'banner_image_url' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
