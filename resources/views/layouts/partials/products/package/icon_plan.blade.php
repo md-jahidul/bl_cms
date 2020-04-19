@@ -1,8 +1,8 @@
 {{--@include('layouts.partials.products.common-field.price_vat_mrp')--}}
 
-@include('layouts.partials.products.common-field.internet_volume')
+{{--@include('layouts.partials.products.common-field.internet_volume')--}}
 
-@include('layouts.partials.products.common-field.minute_volume')
+{{--@include('layouts.partials.products.common-field.minute_volume')--}}
 
 <div class="form-group col-md-6 {{ $errors->has('isd_call_tk') ? ' error' : '' }}">
     <label for="isd_call_tk" class="required">ISD Call (Tk)</label>
