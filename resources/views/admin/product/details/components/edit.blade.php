@@ -118,12 +118,12 @@
 
                                                         <div class="form-group col-md-6 component_count">
                                                             <label for="alt_text">Feature Title (English)</label>
-                                                            <input type="text" name="multi_item[feature_title_en-{{$i}}]" class="form-control" value="{{ $image['feature_title_en'] }}">
+                                                            <input type="text" name="multi_item[feature_title_en-{{$i}}]" class="form-control" value="{{ isset($image['feature_title_en']) ? $image['feature_title_en'] : null }}">
                                                         </div>
 
                                                         <div class="form-group col-md-6">
                                                             <label for="alt_text">Feature Title (Bangla)</label>
-                                                            <input type="text" name="multi_item[feature_title_bn-{{$i}}]" class="form-control" value="{{ $image['feature_title_bn'] }}">
+                                                            <input type="text" name="multi_item[feature_title_bn-{{$i}}]" class="form-control" value="{{ isset($image['feature_title_bn']) ? $image['feature_title_bn'] : null }}">
                                                         </div>
 
                                                         <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$i}}">
