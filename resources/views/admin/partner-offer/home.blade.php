@@ -29,7 +29,7 @@
                         </thead>
                         <tbody id="sortable">
                         @foreach($homePartnerOffers as $partnerOffer)
-                            @php $partnerName = strtolower(str_replace(' ', '-', $partnerOffer->partner->company_name_en)) @endphp
+{{--                            @php $partnerName = strtolower(str_replace(' ', '-', $partnerOffer->partner->company_name_en)) @endphp--}}
                             <tr data-index="{{ $partnerOffer->id }}" data-position="{{ $partnerOffer->display_order }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td><img class="" src="{{ config('filesystems.file_base_url') . $partnerOffer->partner->company_logo }}" alt="Slider Image" height="50" width="50" /></td>
