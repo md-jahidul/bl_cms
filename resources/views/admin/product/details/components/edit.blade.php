@@ -140,22 +140,22 @@
 
                                                         <div class="form-group col-md-6 option-{{ $i }}">
                                                             <label for="alt_text">Alt Text</label>
-                                                            <input type="text" name="multi_item[alt_text-{{ $i }}]" value="{{ $image['alt_text'] }}" class="form-control">
+                                                            <input type="text" name="multi_item[alt_text-{{ $i }}]" value="{{ isset($image['alt_text']) ? $image['alt_text'] : null }}" class="form-control">
                                                         </div>
 
                                                         <div class="form-group col-md-6">
                                                             <label for="button_en">Button Title (English)</label>
-                                                            <input type="text" name="multi_item[button_en-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla" value="{{ $image['button_en'] }}">
+                                                            <input type="text" name="multi_item[button_en-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla" value="{{ isset($image['button_en']) ? $image['button_en'] : null }}">
                                                         </div>
 
                                                         <div class="form-group col-md-6">
                                                             <label for="button_bn" >Button Title (Bangla)</label>
-                                                            <input type="text" name="multi_item[button_bn-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla" value="{{ $image['button_bn'] }}">
+                                                            <input type="text" name="multi_item[button_bn-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla" value="{{ isset($image['button_bn']) ? $image['button_bn'] : null }}">
                                                         </div>
 
                                                         <div class="form-group col-md-6">
                                                             <label for="button_link" >Button URL</label>
-                                                            <input type="text" name="multi_item[button_link-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla" value="{{ $image['button_link'] }}">
+                                                            <input type="text" name="multi_item[button_link-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla" value="{{ isset($image['button_link']) ? $image['button_link'] : null }}">
                                                         </div>
 
 {{--                                                        @if($i == 1)--}}
