@@ -16,15 +16,10 @@ class ProductDetailRepository extends BaseRepository
 {
     public $modelName = ProductDetail::class;
 
-    public function saveOrUpdateProductDetail($productId, $data)
+    public function saveOrUpdateProductDetail($productId)
     {
         $this->model->updateOrCreate(
-            [ 'product_id' => $productId],
-            [
-                'url_slug' => $data['url_slug'],
-                'schema_markup' => $data['schema_markup'],
-                'page_header' => $data['page_header']
-            ]
+            [ 'product_id' => $productId]
         );
     }
 
