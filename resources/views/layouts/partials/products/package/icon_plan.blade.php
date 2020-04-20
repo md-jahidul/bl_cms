@@ -74,6 +74,42 @@
     @endif
 </div>
 
+<div class="form-group col-md-6 {{ $errors->has('mms') ? ' error' : '' }}">
+    <label for="mms" class="required">MMS</label>
+    <input type="number" name="offer_info[mms]"  class="form-control" placeholder="Enter minute offer"
+           oninput="this.value =(this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1'));"
+           value="{{ (!empty($offerInfo['mms'])) ? $offerInfo['mms'] : old("offer_info.mms") ?? '' }}"
+           required data-validation-required-message="Enter view list url">
+    <div class="help-block"></div>
+    @if ($errors->has('mms'))
+        <div class="help-block">  {{ $errors->first('mms') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-6 {{ $errors->has('mms_short_text') ? ' error' : '' }}">
+    <label for="mms_short_text" class="required">MMS Short Text (English)</label>
+    <input type="text" name="offer_info[mms_short_text]"  class="form-control" placeholder="Enter minute offer"
+           value="{{ (!empty($offerInfo['mms_short_text'])) ? $offerInfo['mms_short_text'] : old("offer_info.mms_short_text") ?? '' }}"
+           required data-validation-required-message="Enter view list url">
+    <span class="text-warning">Example: Local</span>
+    <div class="help-block"></div>
+    @if ($errors->has('mms_short_text'))
+        <div class="help-block">  {{ $errors->first('mms_short_text') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-6 {{ $errors->has('mms_short_text_bn') ? ' error' : '' }}">
+    <label for="mms_short_text_bn" class="required">MMS Short Text (Bangla)</label>
+    <input type="text" name="offer_info[mms_short_text_bn]"  class="form-control" placeholder="Enter minute offer"
+           value="{{ (!empty($offerInfo['mms_short_text_bn'])) ? $offerInfo['mms_short_text_bn'] : old("offer_info.mms_short_text_bn") ?? '' }}"
+           required data-validation-required-message="Enter view list url">
+    <span class="text-warning">Example: Local</span>
+    <div class="help-block"></div>
+    @if ($errors->has('mms_short_text_bn'))
+        <div class="help-block">  {{ $errors->first('mms_short_text_bn') }}</div>
+    @endif
+</div>
+
 <div class="form-group col-md-6 {{ $errors->has('local_sms') ? ' error' : '' }}">
     <label for="local_sms" class="required">Local (SMS)</label>
     <input type="number" name="offer_info[local_sms]"  class="form-control" placeholder="Enter minute offer"
