@@ -62,6 +62,7 @@ class OfferCategoryTableSeeder extends Seeder
                     'name_en' => $offer,
                     'name_bn' => $offersBn[$i++],
                     'alias' => strtolower(str_replace(str_split('\/:*?" -<>|'), '_', $offer)),
+                    'url_slug' => strtolower(str_replace(str_split('\/:*?" -<>|'), '_', $offer)),
                 ]
             );
 
