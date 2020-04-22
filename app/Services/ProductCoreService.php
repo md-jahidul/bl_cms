@@ -602,9 +602,19 @@ class ProductCoreService
 
 
                             if ($assetLiteProduct['offer_category_id']) {
+                                
+                                //make url_slug
+                                $assetLiteProduct['url_slug'] = "";
+                                if(!empty($assetLiteProduct['name_en'])){
+                                    $urlSlug = str_replace(" ", "-", $assetLiteProduct['name_en']);
+                                    $assetLiteProduct['url_slug']  = $urlSlug;
+                                }
+                                
                                 $product = Product::updateOrCreate([
                                             'product_code' => $product_code
                                                 ], $assetLiteProduct);
+                                
+                                $this->_saveSearchData($product);
 
 
                                 ProductDetail::updateOrCreate([
@@ -626,6 +636,55 @@ class ProductCoreService
             Log::error('Product Entry Error' . $e->getMessage());
             return 0;
         }
+    }
+    
+     //save Search Data
+    private function _saveSearchData($product) {
+        $productId = $product->id;
+        $name = $product->name_en;
+
+        $url = "";
+        if ($product->sim_category_id == 1) {
+            $url .= "prepaid/";
+        }
+        if ($product->sim_category_id == 2) {
+            $url .= "postpaid/";
+        }
+
+        //category url
+        $url .= $product->offer_category->url_slug;
+
+        $keywordType = "offer-".$product->offer_category->alias;
+        
+
+        $type = "";
+        if ($product->sim_category_id == 1 && $product->offer_category_id == 1) {
+            $url .= '/' . $product->url_slug . '/' . $productId;
+            $type = 'prepaid-internet';
+        }
+        if ($product->sim_category_id == 1 && $product->offer_category_id == 2) {
+            $url .= '/' . $product->url_slug . '/' . $productId;
+            $type = 'prepaid-voice';
+        }
+        if ($product->sim_category_id == 1 && $product->offer_category_id == 3) {
+            $url .= '/' . $product->url_slug . '/' . $productId;
+            $type = 'prepaid-bundle';
+        }
+        if ($product->sim_category_id == 2 && $product->offer_category_id == 1) {
+            $url .= '/' . $product->url_slug . '/' . $productId;
+            $type = 'postpaid-internet';
+        }
+        if ($product->offer_category_id > 3) {
+            $url .= '/' . $product->url_slug . '/' . $productId;
+            $type = 'others';
+        }
+
+        $tag = "";
+        if ($product->tag_category_id) {
+            $tag = $this->tagRepository->getTagById($product->tag_category_id);
+        }
+
+        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag);
     }
 
     

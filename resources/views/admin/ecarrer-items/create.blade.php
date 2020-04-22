@@ -104,6 +104,15 @@ else{
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>
                                     @endif
                                 </div>
+                                
+                                <div class="form-group col-md-6 {{ $errors->has('video') ? ' error' : '' }}">
+                                    <label for="embed">Video Embed Code</label>
+                                    <textarea name="video" class="form-control"></textarea>
+                                    <small class="text-info">If you have banner type component then it'll work</small>
+                                    @if ($errors->has('video'))
+                                        <div class="help-block">  {{ $errors->first('video') }}</div>
+                                    @endif
+                                </div>
 
 
                                 <div class="col-md-6">

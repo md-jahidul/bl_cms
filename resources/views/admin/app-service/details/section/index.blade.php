@@ -149,7 +149,7 @@ function matchRelatedProduct($id, $relatedProductIds)
                                 <div class="form-group col-md-4 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
                                     <label for="mobileImg">Banner Image (Desktop)</label>
                                     <div class="custom-file">
-                                        <input type="hidden" name="old_web_img" value="{{ $fixedSectionData['image'] }}">
+                                        <input type="hidden" name="old_web_img" value="{{ isset($fixedSectionData['image']) ? $fixedSectionData['image'] : '' }}">
                                         <input type="file" name="image" class="custom-file-input image_with_preview">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
@@ -162,7 +162,7 @@ function matchRelatedProduct($id, $relatedProductIds)
                                 </div>
 
                                 <div class="form-group col-md-2">
-                                    @if($fixedSectionData['image'])
+                                    @if(isset($fixedSectionData['image']))
                                         <img src="{{ config('filesystems.file_base_url') . $fixedSectionData['image'] }}"
                                             height="100" width="200" class="imgDisplay img-fluid">
                                     @else
@@ -175,7 +175,7 @@ function matchRelatedProduct($id, $relatedProductIds)
                                 <div class="form-group col-md-4 {{ $errors->has('image_mobile') ? ' error' : '' }}">
                                     <label for="mobileImg">Banner Image (Mobile)</label>
                                     <div class="custom-file">
-                                        <input type="hidden" name="old_mob_img" value="{{ $fixedSectionData['banner_image_mobile'] }}">
+                                        <input type="hidden" name="old_mob_img" value="{{ isset($fixedSectionData['banner_image_mobile']) ? $fixedSectionData['banner_image_mobile'] : '' }}">
                                         <input type="file" name="banner_image_mobile"
                                                class="custom-file-input image_with_preview">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
@@ -202,7 +202,7 @@ function matchRelatedProduct($id, $relatedProductIds)
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text">Alt Text</label>
                                     <input type="text" name="alt_text" id="alt_text" class="form-control"
-                                           placeholder="Enter alt text" value="{{ $fixedSectionData['alt_text'] }}">
+                                           placeholder="Enter alt text" value="{{ isset($fixedSectionData['alt_text']) ? $fixedSectionData['alt_text'] : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">{{ $errors->first('alt_text') }}</div>
@@ -211,10 +211,10 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                                 <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
                                     <label for="banner_name">Banner Name</label>
-                                    <input type="hidden" name="old_banner_name" value="{{ $fixedSectionData['banner_name'] }}">
+                                    <input type="hidden" name="old_banner_name" value="{{ isset($fixedSectionData['banner_name']) ? $fixedSectionData['banner_name'] : '' }}">
                                     <input type="text" name="banner_name" id="banner_name" class="form-control"
                                            placeholder="Enter offer name in English"
-                                           value="{{ $fixedSectionData['banner_name'] }}">
+                                           value="{{ isset($fixedSectionData['banner_name']) ? $fixedSectionData['banner_name'] : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('banner_name'))
                                         <div class="help-block">{{ $errors->first('banner_name') }}</div>
@@ -227,7 +227,7 @@ function matchRelatedProduct($id, $relatedProductIds)
                                         <label for="title_en">Title (English)</label>
                                         <input type="text" name="title_en" id="title_en" class="form-control"
                                                placeholder="Enter offer name in English"
-                                               value="{{ $fixedSectionData['title_en'] }}">
+                                               value="{{ isset($fixedSectionData['title_en']) ? $fixedSectionData['title_en'] : '' }}">
                                         <div class="help-block"></div>
                                         @if ($errors->has('title_en'))
                                             <div class="help-block">{{ $errors->first('title_en') }}</div>
@@ -238,7 +238,7 @@ function matchRelatedProduct($id, $relatedProductIds)
                                         <label for="title_bn">Title (Bangla)</label>
                                         <input type="text" name="title_bn" id="title_bn" class="form-control"
                                                placeholder="Enter offer name in Bangla"
-                                               value="{{ $fixedSectionData['title_bn'] }}">
+                                               value="{{ isset($fixedSectionData['title_bn']) ? $fixedSectionData['title_bn'] : '' }}">
                                         <div class="help-block"></div>
                                         @if ($errors->has('title_bn'))
                                             <div class="help-block">{{ $errors->first('title_bn') }}</div>
@@ -253,7 +253,8 @@ function matchRelatedProduct($id, $relatedProductIds)
                                                     name="other_attributes[related_product_id][]">
                                                 @foreach($products as $product)
                                                     <option
-                                                        value="{{ $product->id }}" {{isset($fixedSectionData['other_attributes']['related_product_id']) && matchRelatedProduct($product->id, $fixedSectionData['other_attributes']['related_product_id']) ? 'selected' : '' }}>{{$product->name_en}}</option>
+                                                        value="{{ $product->id }}" {{ isset($fixedSectionData['other_attributes']['related_product_id']) ?? matchRelatedProduct($product->id, $fixedSectionData['other_attributes']['related_product_id']) ? 'selected' : '' }}>{{$product->name_en}}</option>
+
                                                 @endforeach
                                             </select>
                                         </div>
