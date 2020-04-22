@@ -80,6 +80,8 @@ class BannerImgRelatedProductService
 
         $data['product_id'] = $productId;
 
+        $data['related_product_id'] = isset($data['related_product_id']) ? $data['related_product_id'] : null;
+
         $this->bannerImgRelatedProductRepository->updateOrCreate($data, $productId);
         return response('Banner Image and related product save');
     }
