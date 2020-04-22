@@ -59,7 +59,6 @@ class AppServiceProductDetailsController extends Controller
         $this->info["products"] = $this->appServiceProduct->appServiceRelatedProduct($tab_type, $product_id);
         $this->info["productDetail"] = $this->appServiceProduct->detailsProduct($product_id);
         $this->info["fixedSectionData"] = $this->info["section_list"]['fixed_section'];
-
         return view('admin.app-service.details.section.index', $this->info);
     }
 
@@ -123,7 +122,7 @@ class AppServiceProductDetailsController extends Controller
         Session::flash('message', 'Section component updated succesfuly');
         return redirect(url("app-service/details/$tab_type/$product_id"));
 
-        
+
     }
 
     /**
@@ -151,9 +150,9 @@ class AppServiceProductDetailsController extends Controller
     {
 
         // $section = $this->appServiceProductDetailsService->getSectionComponentByID($section_id);
-        
+
         // return view('admin.app-service.details.section.edit', compact('tab_type', 'product_id', 'section'));
-        
+
 
 
         $section = $this->appServiceProductDetailsService->getJsonSectionComponentList($section_id);
@@ -173,9 +172,9 @@ class AppServiceProductDetailsController extends Controller
             ], 404);
         }
 
-        
 
-        
+
+
     }
 
     /**

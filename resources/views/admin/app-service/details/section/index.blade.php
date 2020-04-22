@@ -1,9 +1,9 @@
 <?php
-function matchRelatedProduct($id, $roles)
+function matchRelatedProduct($id, $relatedProductIds)
 {
-    if ($roles) {
-        foreach ($roles as $role) {
-            if ($role == $id) {
+    if ($relatedProductIds) {
+        foreach ($relatedProductIds as $productId) {
+            if ($productId == $id) {
                 return true;
             }
         }
@@ -253,7 +253,7 @@ function matchRelatedProduct($id, $roles)
                                                     name="other_attributes[related_product_id][]">
                                                 @foreach($products as $product)
                                                     <option
-                                                        value="{{ $product->id }}" {{isset($fixedSectionData['other_attributes']['related_product_id']) ?? matchRelatedProduct($product->id, $fixedSectionData['other_attributes']['related_product_id']) ? 'selected' : '' }}>{{$product->name_en}}</option>
+                                                        value="{{ $product->id }}" {{isset($fixedSectionData['other_attributes']['related_product_id']) && matchRelatedProduct($product->id, $fixedSectionData['other_attributes']['related_product_id']) ? 'selected' : '' }}>{{$product->name_en}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

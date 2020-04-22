@@ -303,10 +303,14 @@ class AppServiceProductDetailsService
 //            $data['other_attributes']['image_mobile'] = $this->upload($data['other_attributes']['image_mobile'], 'assetlite/images/app-service/product-details');
 //        }
 
+
+
         $data['tab_type'] = $tab_type;
         $data['product_id'] = $product_id;
 
         $findFixedSection = $this->appServiceProductDetailsRepository->checkFixedSection($product_id);
+
+
 
         if (!$findFixedSection) {
             $this->save($data);
@@ -314,6 +318,9 @@ class AppServiceProductDetailsService
             if (!isset($data['other_attributes'])) {
                 $data['other_attributes'] = null;
             }
+
+//            dd($data);
+
             $findFixedSection->update($data);
         }
         return Response('App Service Section Update Successfully');

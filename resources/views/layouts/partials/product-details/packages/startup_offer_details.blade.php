@@ -19,7 +19,7 @@
     <div class="form-group select-role col-md-6 {{ $errors->has('role_id') ? ' error' : '' }}">
         <label for="role_id">Special Offer</label>
         <div class="role-select">
-            <select class="select2 form-control" multiple="multiple" name="other_attributes[special_product_id][]">
+            <select class="select2 form-control" multiple="multiple" name="other_attributes[special_product_id][]" id="special_product_field">
                 @foreach($products as $product)
                     @if($product->special_product == 1)
                         <option value="{{ $product->id }}"
