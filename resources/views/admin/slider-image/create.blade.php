@@ -19,7 +19,7 @@
                         <form role="form" action="{{ route('slider_image_store', [$sliderId, $type]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                <div class="form-group col-md-4 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title (English)</label>
                                     <input type="text" name="title_en"  class="form-control" placeholder="Enter english title"
                                            value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Enter english title">
@@ -28,18 +28,18 @@
                                         <div class="help-block">{{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
+                                
+                                <div class="form-group col-md-4 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                    <label for="title_en" class="required">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter bangla title"
+                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Enter bangla title">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('title_bn'))
+                                        <div class="help-block">{{ $errors->first('title_bn') }}</div>
+                                    @endif
+                                </div>
 
-{{--                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">--}}
-{{--                                    <label for="title_bn" class="required">Title (Bangla)</label>--}}
-{{--                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter english title"--}}
-{{--                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Enter english title">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('title_bn'))--}}
-{{--                                        <div class="help-block">{{ $errors->first('title_bn') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
-                                <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
+                                <div class="form-group col-md-4 {{ $errors->has('start_date') ? ' error' : '' }}">
                                     <label for="start_date">Start Date</label>
                                     <div class='input-group'>
                                         <input type='text' class="form-control" name="start_date" id="start_date"
@@ -51,7 +51,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('end_date') ? ' error' : '' }}">
+                                <div class="form-group col-md-4 {{ $errors->has('end_date') ? ' error' : '' }}">
                                     <label for="end_date">End Date</label>
                                     <input type="text" name="end_date" id="end_date" class="form-control"
                                            placeholder="Please select end date"
@@ -60,9 +60,9 @@
                                     @if ($errors->has('end_date'))
                                         <div class="help-block">{{ $errors->first('end_date') }}</div>
                                     @endif
-                                </div>
-
-                                <div class="form-group col-md-6 mb-0 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    
+                                    <br>
+                                    
                                     <label for="alt_text" class="required">Alt Text</label>
                                     <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text"
                                            required data-validation-required-message="Enter alt text"
@@ -73,7 +73,9 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
+                               
+
+                                <div class="form-group col-md-4 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Slider Image (Desktop View)</label>
                                     <div class="custom-file">
                                         <input type="file" name="image_url" class="custom-file-input dropify"
@@ -87,7 +89,7 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
+                                <div class="form-group col-md-4 {{ $errors->has('mobile_view_img') ? ' error' : '' }}">
                                     <label for="mobileImg">Slider Image (Mobile View)</label>
                                     <div class="custom-file">
                                         <input type="file" name="mobile_view_img" class="custom-file-input dropify" data-height="80">
@@ -99,10 +101,11 @@
                                         <div class="help-block">  {{ $errors->first('mobile_view_img') }}</div>
                                     @endif
                                 </div>
-
+                                
+                                
                                 @include('layouts.partials.slider_types.'.$type )
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="alt_text"></label>
                                     <div class="form-group">
                                         <label for="title" class="required mr-1">Status:</label>
