@@ -24,7 +24,8 @@ class AppServiceTabTableSeeder extends Seeder
             AppServiceTab::create([
                 'name_en' => $item,
                 'name_bn' => $appServiceTabsBn[$key],
-                'alias' => str_replace(' ', '_', strtolower($item))
+                'alias' => str_replace(' ', '_', strtolower($item)),
+                'url_slug' => str_replace(' ', '_', strtolower($item))
             ]);
         }
 

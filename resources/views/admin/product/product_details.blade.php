@@ -198,6 +198,9 @@
         border-width: 0;
         color : unset;
     }
+    form #special_product_field .select2-container {
+         width: 100% !important;
+    }
 </style>
 
 @push('page-css')

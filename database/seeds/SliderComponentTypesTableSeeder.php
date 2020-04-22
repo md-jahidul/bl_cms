@@ -22,6 +22,7 @@ class SliderComponentTypesTableSeeder extends Seeder
                 'Digital Services',
                 'Partner Offer',
                 'Testimonial',
+                'Explore Devices',
                 'About-Media',
                 'Home',
                 'Dashboard',
