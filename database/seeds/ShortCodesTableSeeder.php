@@ -62,12 +62,12 @@ class ShortCodesTableSeeder extends Seeder {
 //                'component_type' => 'sales_service',
 //                'component_id' => null,
 //            ],
-            [
-                'page_id' => 1,
-                'component_title' => 'Explore Devices',
-                'component_type' => 'slider_single',
-                'component_id' => 7,
-            ]
+//            [
+//                'page_id' => 1,
+//                'component_title' => 'Explore Devices',
+//                'component_type' => 'slider_single',
+//                'component_id' => 7,
+//            ]
         ];
 
         foreach ($homePageComponentList as $item) {
