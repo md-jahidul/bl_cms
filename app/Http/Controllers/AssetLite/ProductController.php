@@ -227,6 +227,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $type, $id)
     {
+//        return $request->all();
         $this->productCoreService->updateProductCore($request->all(), $id);
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $type, $id);
@@ -243,7 +244,8 @@ class ProductController extends Controller
     {
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
-        $otherAttributes = $productDetail->product_details->other_attributes;
+        $otherAttributes = isset($productDetail->product_details->other_attributes) ? $productDetail->product_details->other_attributes : null;
+
         return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType', 'otherAttributes'));
     }
 

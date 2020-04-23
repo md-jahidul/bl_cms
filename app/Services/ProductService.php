@@ -63,7 +63,7 @@ class ProductService {
         $product = $this->save($data);
         //save Search Data
         $this->_saveSearchData($product);
-//        $this->productDetailRepository->saveOrUpdateProductDetail($product->id, $data);
+        $this->productDetailRepository->saveOrUpdateProductDetail($product->id);
         return new Response('Product added successfully');
     }
 
@@ -84,7 +84,7 @@ class ProductService {
         $url .= $product->offer_category->url_slug;
 
         $keywordType = "offer-".$product->offer_category->alias;
-        
+
 
         $type = "";
         if ($product->sim_category_id == 1 && $product->offer_category_id == 1) {
@@ -143,7 +143,7 @@ class ProductService {
 //        dd($data);
 
         $product->update($data);
-        
+
         //save Search Data
         $this->_saveSearchData($product);
         return Response('Product update successfully !');
