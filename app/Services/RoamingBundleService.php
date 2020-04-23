@@ -42,50 +42,6 @@ class RoamingBundleService
         return $this->roamingBundleRepository->getBundleList($request);
     }
 
-//    /**
-//     * Get Internet package by id
-//     * @return Response
-//     */
-//    public function getInternetById($internetId) {
-//        $response = $this->roamingBundleRepository->getInternetById($internetId);
-//        return $response;
-//    }
-//
-//    /**
-//     * Get Internet package for drop down
-//     * @return Response
-//     */
-//    public function getAllPackage($internetId = 0) {
-//        $response = $this->roamingBundleRepository->getAllPackage($internetId);
-//        return $response;
-//    }
-
-    /**
-     * Save internet package
-     * @return array
-     */
-    public function saveBundle($request) {
-        try {
-            $request->validate([
-                'country_en' => 'required',
-                'country_bn' => 'required',
-                'operator_en' => 'required',
-                'operator_bn' => 'required',
-                'tap_code' => 'required',
-            ]);
-            $this->save($request->all());
-            $response = [
-                'success' => 1,
-            ];
-            return $response;
-        } catch (\Exception $e) {
-            $response = [
-                'success' => 0,
-                'message' => $e->getMessage()
-            ];
-            return $response;
-        }
-    }
 
     /**
      * @param $request
@@ -94,15 +50,9 @@ class RoamingBundleService
     public function updateBundle($request, $id)
     {
         try {
-            $request->validate([
-                'country_en' => 'required',
-                'country_bn' => 'required',
-                'operator_en' => 'required',
-                'operator_bn' => 'required',
-                'tap_code' => 'required',
-            ]);
-            $operator = $this->findOne($id);
-            $operator->update($request->all());
+            
+            $bundle = $this->findOne($id);
+            $bundle->update($request->all());
             $response = [
                 'success' => 1,
             ];

@@ -112,11 +112,11 @@ class RoamingBundleRepository extends BaseRepository {
                             'package_name_bn' => trim($cells[5]->getValue()),
                             'data_volume' => trim($cells[6]->getValue()),
                             'volume_data_unit' => trim($cells[7]->getValue()),
-                            'validity' => trim($cells[8]->getValue()),
-                            'validity_unit' => trim($cells[9]->getValue()),
-                            'mrp' => trim($cells[10]->getValue()),
-                            'price' => trim($cells[11]->getValue()),
-                            'tax' => trim($cells[12]->getValue()),
+                            'sms_volume' => trim($cells[8]->getValue()),
+                            'minute_volume' => trim($cells[9]->getValue()),
+                            'validity' => trim($cells[10]->getValue()),
+                            'validity_unit' => trim($cells[11]->getValue()),
+                            'mrp' => trim($cells[12]->getValue()),
                         );
                     }
                     $rowNumber++;
