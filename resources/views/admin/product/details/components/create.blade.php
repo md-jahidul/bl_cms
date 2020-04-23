@@ -129,24 +129,29 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group col-md-6">
+                                                    <div class="form-group col-md-4">
                                                         <label for="alt_text">Alt Text</label>
-                                                        <input type="text" name="multi_item[alt_text-1]" class="form-control">
+                                                        <input type="text" name="multi_item[alt_text-1]" class="form-control" placeholder="Enter image alt text">
                                                     </div>
 
-                                                    <div class="form-group col-md-6">
+                                                    <div class="form-group col-md-4">
                                                         <label for="button_en">Button Title (English)</label>
                                                         <input type="text" name="multi_item[button_en-1]"  class="form-control" placeholder="Enter company name bangla" value="">
                                                     </div>
 
-                                                    <div class="form-group col-md-6">
+                                                    <div class="form-group col-md-4">
                                                         <label for="button_bn" >Button Title (Bangla)</label>
                                                         <input type="text" name="multi_item[button_bn-1]"  class="form-control" placeholder="Enter company name bangla" value="">
                                                     </div>
 
                                                     <div class="form-group col-md-6">
-                                                        <label for="button_link" >Button URL</label>
-                                                        <input type="text" name="multi_item[button_link-1]"  class="form-control" placeholder="Enter company name bangla" value="">
+                                                        <label for="button_link" >Details (English)</label>
+                                                        <textarea name="multi_item[details_en-1]" rows="5" class="form-control" placeholder="Enter feature details in English"></textarea>
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label for="button_link" >Details (Bangla)</label>
+                                                        <textarea name="multi_item[details_bn-1]" rows="5" class="form-control" placeholder="Enter feature details in Bangla"></textarea>
                                                     </div>
                                                 </slot>
 
@@ -356,22 +361,26 @@
                     '         <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
                     '     </div>\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    ' <div class="form-group col-md-4 option-'+total_option+'">\n' +
                     '     <label for="alt_text">Alt Text</label>\n' +
-                    '     <input type="text" name="multi_item[alt_text-'+total_option+']" class="form-control">\n' +
+                    '     <input type="text" name="multi_item[alt_text-'+total_option+']" placeholder="Enter image alt text" class="form-control">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    ' <div class="form-group col-md-4 option-'+total_option+'">\n' +
                     '     <label for="button_en">Button Title (English)</label>\n' +
                     '     <input type="text" name="multi_item[button_en-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    ' <div class="form-group col-md-4 option-'+total_option+'">\n' +
                     '     <label for="button_bn" >Button Title (Bangla)</label>\n' +
                     '     <input type="text" name="multi_item[button_bn-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
-                    '     <label for="button_link" >Button URL</label>\n' +
-                    '     <input type="text" name="multi_item[button_link-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
-                    ' </div>\n' +
+                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '     <label for="button_link" >Details (English)</label>\n' +
+                    '     <textarea name="multi_item[details_en-'+total_option+']" rows="5" class="form-control" placeholder="Enter feature details in English"></textarea>\n' +
+                    '</div>\n' +
+                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '     <label for="button_link" >Details (Bangla)</label>\n' +
+                    '     <textarea name="multi_item[details_bn-'+total_option+']" rows="5" class="form-control" placeholder="Enter feature details in Bangla"></textarea>\n' +
+                    '</div>\n' +
                     '<div class="form-group col-md-1 option-'+total_option+'">\n' +
                     '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
                     '</div>';
