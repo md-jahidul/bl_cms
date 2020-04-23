@@ -535,7 +535,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('roaming/bundle/create', 'AssetLite\RoamingBundleController@bundleCreate');
     Route::post('roaming/bundle/store', 'AssetLite\RoamingBundleController@bundleStore')
         ->name('bundle.store');
-    Route::get('roaming/bundle/edit/{id}', 'AssetLite\RoamingBundleController@bundleEdit');
+    Route::get('roaming/bundle/details/{id}', 'AssetLite\RoamingBundleController@bundleEdit');
     Route::put('roaming/bundle/update/{bundleId}', 'AssetLite\RoamingBundleController@updateBundle')
         ->name('bundle.update');
     Route::post('roaming-bundle-list', 'AssetLite\RoamingBundleController@roamingBundleList')
