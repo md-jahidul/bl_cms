@@ -162,6 +162,13 @@ class EcareerItemController extends Controller
 		return redirect("ecarrer-items/$parent_id/list");
 
 	}
+        
+        
+        //delete item photo only
+        public function deletePhoto($id){
+		$response = $this->ecarrerItemService->deleteItemPhoto($id);
+                return $response;
+	}
 
 	/**
 	 * [ecarrerItemSortable description]
