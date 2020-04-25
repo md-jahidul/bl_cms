@@ -56,12 +56,12 @@ class ShortCodesTableSeeder extends Seeder {
                 'component_id' => 5,
                 'limit' => 5
             ],
-//            [
-//                'page_id' => 1,
-//                'component_title' => 'Sales & Service',
-//                'component_type' => 'sales_service',
-//                'component_id' => null,
-//            ],
+            [
+                'page_id' => 1,
+                'component_title' => 'Sales & Service',
+                'component_type' => 'sales_service',
+                'component_id' => null,
+            ],
 //            [
 //                'page_id' => 1,
 //                'component_title' => 'Explore Devices',

@@ -578,6 +578,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::post('ecarrer-items/{parent_id}/{id}/update', 'AssetLite\EcareerItemController@update')->name('ecarrer.items.update');
     Route::get('ecarrer-items/{parent_id}/destroy/{id}', 'AssetLite\EcareerItemController@destroy')->name('ecarrer.items.destroy');
+    Route::get('ecarrer-items/photo-delete/{id}', 'AssetLite\EcareerItemController@deletePhoto');
 
     // eCarrer Life at banglalink teams =========================================================
     Route::get('life-at-banglalink/teams', 'AssetLite\EcareerController@teamsIndex')->name('life.at.banglalink.teams');
