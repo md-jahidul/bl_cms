@@ -132,7 +132,7 @@
                                                             <div class="form-group">
                                                                 <label for="message">Multiple Image</label>
                                                                 <input type="file" class="dropify" name="multi_item[image_url-{{ $i }}]"
-                                                                       data-default-file="{{ config('filesystems.file_base_url') . $image['image_url'] }}"
+                                                                       data-default-file="{{ isset($image['image_url']) ? config('filesystems.file_base_url') . $image['image_url'] : null }}"
                                                                        data-height="80"/>
                                                                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                             </div>
@@ -203,7 +203,7 @@
                                                                 <div class="form-group">
                                                                     <label for="message">Multiple Image</label>
                                                                     <input type="file" class="dropify" name="multi_item[image_url-{{ $i }}]"
-                                                                           data-default-file="{{ config('filesystems.file_base_url') . $image['image_url'] }}"
+                                                                           data-default-file="{{ isset($image['image_url']) ? config('filesystems.file_base_url') . $image['image_url'] : '' }}"
                                                                            data-height="80"/>
                                                                     <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                                 </div>
