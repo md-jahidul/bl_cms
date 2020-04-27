@@ -68,7 +68,7 @@ class ProductRepository extends BaseRepository
     
       public function getProductsForSearch($type)
     {
-        $products = $this->model->select('id', 'name_en')->orderBy('name_en');
+        $products = $this->model->select('id', 'name_en')->orderBy('name_en')->where('status', 1);
         
         if($type == 'prepaid-internet'){
             $products->where(array('sim_category_id' => 1, 'offer_category_id' => 1));
