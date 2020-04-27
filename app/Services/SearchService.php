@@ -132,12 +132,14 @@ class SearchService {
             $type = $request->type;
             
             $product = $this->productRepo->findOrFail($productId);
+            
+            $categoryUrl = $product->offer_category->url_slug;
 
             $urlArray = array(
-                'prepaid-internet' => 'prepaid/internet/'.$product->url_slug . '/' . $productId,
-                'prepaid-voice' => 'prepaid/voice/' .$product->url_slug . '/' . $productId,
-                'prepaid-bundle' => 'prepaid/bundles/' .$product->url_slug . '/' . $productId,
-                'postpaid-internet' => 'postpaid/internet/' .$product->url_slug . '/' . $productId,
+                'prepaid-internet' => "prepaid/$categoryUrl/$product->url_slug/$productId",
+                'prepaid-voice' => "prepaid/$categoryUrl/$product->url_slug/$productId",
+                'prepaid-bundle' => "prepaid/$categoryUrl/$product->url_slug/$productId",
+                'postpaid-internet' => "postpaid/$categoryUrl/$product->url_slug/$productId",
             );
             $url = $urlArray[$type];
             $this->popularRepo->saveKeyword($productId, $keyword, $url);

@@ -16,8 +16,8 @@ class SliderTableSeeder extends Seeder
         DB::statement("SET FOREIGN_KEY_CHECKS =0;");
         AlSlider::truncate();
 
-        $sliders = ['Hero','Trending', 'Digital Services', 'Lifestyle & benefits', 'Testimonial', 'About-Media','Explore Devices',];
-        $slidersBn = ['হিরো','প্রবণতা', 'ডিজিটাল পরিষেবা', 'লাইফস্টাইল এবং বেনিফিট', 'প্রশংসাপত্র', 'সম্বন্ধে-মিডিয়া', 'এক্সপ্লোর ডিভাইসগুলি'   ];
+        $sliders = ['Hero','Trending', 'Digital Services', 'Lifestyle & benefits', 'Testimonial', 'About-Media','Explore Devices', 'Corona'];
+        $slidersBn = ['হিরো','প্রবণতা', 'ডিজিটাল পরিষেবা', 'লাইফস্টাইল এবং বেনিফিট', 'প্রশংসাপত্র', 'সম্বন্ধে-মিডিয়া', 'এক্সপ্লোর ডিভাইসগুলি', 'করোনা'   ];
 
         foreach ($sliders as $key => $slider) {
             $other_attributes = [

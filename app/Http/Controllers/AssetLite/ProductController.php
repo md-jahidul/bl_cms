@@ -26,8 +26,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
-class ProductController extends Controller
-{
+class ProductController extends Controller {
 
     private $productService;
     private $productCoreService;
@@ -47,12 +46,7 @@ class ProductController extends Controller
      * @param DurationCategoryService $durationCategoryService
      */
     public function __construct(
-        ProductService $productService,
-        ProductCoreService $productCoreService,
-        ProductDetailService $productDetailService,
-        TagCategoryService $tagCategoryService,
-        OfferCategoryService $offerCategoryService,
-        DurationCategoryService $durationCategoryService
+    ProductService $productService, ProductCoreService $productCoreService, ProductDetailService $productDetailService, TagCategoryService $tagCategoryService, OfferCategoryService $offerCategoryService, DurationCategoryService $durationCategoryService
     ) {
         $this->productService = $productService;
         $this->productCoreService = $productCoreService;
@@ -68,31 +62,29 @@ class ProductController extends Controller
      * @param $type
      * @return Factory|View
      */
-    public function index($type)
-    {
+    public function index($type) {
         $products = Product::category($type)
-            ->with(['offer_category' => function ($query) {
-                $query->select('id', 'name_en');
-            }, 'product_core'])
+                ->with(['offer_category' => function ($query) {
+                        $query->select('id', 'name_en');
+                    }, 'product_core'])
 //            ->select('id', 'product_code', 'offer_category_id', 'name_en', 'show_in_home', 'status')
-            ->latest()
-            ->get();
+                ->latest()
+                ->get();
 
         $packageRelatedProduct = $this->offerCategoryService->getRelatedProducts();
 
         return view('admin.product.index', compact('products', 'type', 'packageRelatedProduct'));
     }
 
-    public function trendingOfferHome()
-    {
+    public function trendingOfferHome() {
         $trendingHomeOffers = Product::where('show_in_home', 1)
-            ->with(['product_core' => function ($query) {
-                $query->select('product_code', 'activation_ussd', 'mrp_price');
-            }, 'offer_category' => function ($query) {
-                $query->select('id', 'name_en');
-            }])
-            ->orderBy('display_order')
-            ->get();
+                ->with(['product_core' => function ($query) {
+                        $query->select('product_code', 'activation_ussd', 'mrp_price');
+                    }, 'offer_category' => function ($query) {
+                        $query->select('id', 'name_en');
+                    }])
+                ->orderBy('display_order')
+                ->get();
 
         return view('admin.product.home', compact('trendingHomeOffers'));
     }
@@ -103,9 +95,7 @@ class ProductController extends Controller
      * @param $type
      * @return Factory|View
      */
-
-    public function create($type)
-    {
+    public function create($type) {
         $this->info['productCoreCodes'] = $this->productService->unusedProductCore($type);
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['type'] = $type;
@@ -115,8 +105,8 @@ class ProductController extends Controller
 
         foreach ($this->info['offers'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
-                ->where('type_id', $package_id)
-                ->get();
+                    ->where('type_id', $package_id)
+                    ->get();
             if (count($child)) {
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
@@ -131,11 +121,10 @@ class ProductController extends Controller
      * @param string $jsonKey
      * @return void
      */
-    public function strToint($request, $jsonKey = "offer_info")
-    {
+    public function strToint($request, $jsonKey = "offer_info") {
         if (!empty($request->offer_info)) {
             foreach ($request->offer_info as $key => $info) {
-                $data[$jsonKey][$key] = is_numeric($info) ? (int)$info : $info;
+                $data[$jsonKey][$key] = is_numeric($info) ? (int) $info : $info;
                 $request->merge($data);
             }
         }
@@ -146,8 +135,15 @@ class ProductController extends Controller
      * @param $type
      * @return RedirectResponse|Redirector
      */
-    public function store(ProductStoreRequest $request, $type)
-    {
+    public function store(ProductStoreRequest $request, $type) {
+        $validator = Validator::make($request->all(), [
+                    'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug',
+        ]);
+        if ($validator->fails()) {
+            Session::flash('error', $validator->messages()->first());
+            return redirect()->back();
+        }
+
         $bondhoSimOffer = $this->productService->findBondhoSim();
         if (count($bondhoSimOffer) > 4 && isset($request->offer_info['other_offer_type_id']) == OfferType::BONDHO_SIM_OFFER) {
             Session::flash('error', 'Maximum 4 Bondho SIM offer can be created');
@@ -164,8 +160,7 @@ class ProductController extends Controller
     /**
      * @param Request $request
      */
-    public function trendingOfferSortable(Request $request)
-    {
+    public function trendingOfferSortable(Request $request) {
         $this->productService->tableSortable($request);
     }
 
@@ -176,8 +171,7 @@ class ProductController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($type, $id)
-    {
+    public function show($type, $id) {
         $productDetails = $this->productService->findOne($id);
         return view('admin.product.show', compact('productDetails', 'type'));
     }
@@ -189,8 +183,7 @@ class ProductController extends Controller
      * @param int $id
      * @return Factory|View
      */
-    public function edit($type, $id)
-    {
+    public function edit($type, $id) {
         $product = $this->productService->findProduct($type, $id);
         $productDetails = $this->productDetailService->findOneDetails($product->id);
         $package_id = SimCategory::where('alias', $type)->first()->id;
@@ -208,8 +201,8 @@ class ProductController extends Controller
 
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
-                ->where('type_id', $package_id)
-                ->get();
+                    ->where('type_id', $package_id)
+                    ->get();
             if (count($child)) {
                 $this->info[$offer->alias . '_offer_child'] = $child;
             }
@@ -225,8 +218,17 @@ class ProductController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $type, $id)
-    {
+    public function update(Request $request, $type, $id) {
+        
+        $product = $this->productService->findProduct($type, $id);
+         $validator = Validator::make($request->all(), [
+                    'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug,'.$product->id,
+        ]);
+        if ($validator->fails()) {
+            Session::flash('error', $validator->messages()->first());
+            return redirect()->back();
+        }
+        
 //        return $request->all();
         $this->productCoreService->updateProductCore($request->all(), $id);
         $this->strToint($request);
@@ -240,8 +242,7 @@ class ProductController extends Controller
      * @param $id
      * @return Factory|View
      */
-    public function productDetailsEdit($type, $id, $offerType)
-    {
+    public function productDetailsEdit($type, $id, $offerType) {
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
         $otherAttributes = isset($productDetail->product_details->other_attributes) ? $productDetail->product_details->other_attributes : null;
@@ -255,10 +256,9 @@ class ProductController extends Controller
      * @param $id
      * @return RedirectResponse|Redirector
      */
-    public function productDetailsUpdate(Request $request, $type, $id)
-    {
+    public function productDetailsUpdate(Request $request, $type, $id) {
         $validator = Validator::make($request->all(), [
-            'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
+                    'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
         ]);
         if ($validator->fails()) {
             Session::flash('error', $validator->messages()->first());
@@ -281,15 +281,13 @@ class ProductController extends Controller
         return redirect("offers/$type");
     }
 
-    public function packageRelatedProductStore(Request $request)
-    {
+    public function packageRelatedProductStore(Request $request) {
         $response = $this->offerCategoryService->storeRelatedProduct($request->all());
         Session::flash('message', $response->content());
         return redirect("offers/$request->type");
     }
 
-    public function existProductCore($productCode)
-    {
+    public function existProductCore($productCode) {
         return $this->productCoreService->findProductCore($productCode);
     }
 
@@ -298,8 +296,7 @@ class ProductController extends Controller
      * @return UrlGenerator|string
      * @throws Exception
      */
-    public function destroy($type, $id)
-    {
+    public function destroy($type, $id) {
         $response = $this->productService->deleteProduct($id);
         Session::flash('error', $response->getContent());
         return url("offers/$type");
@@ -310,8 +307,7 @@ class ProductController extends Controller
      * @return string
      * Product Core Data mapping To Product table
      */
-    public function coreDataMappingProduct($type)
-    {
+    public function coreDataMappingProduct($type) {
         $this->productService->coreData();
         return response([
             "url" => url("offers/$type"),
