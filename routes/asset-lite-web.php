@@ -462,7 +462,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('business-others-components/{serviceId}', 'AssetLite\BusinessOthersController@addComponent');
     Route::post('business-others-save', 'AssetLite\BusinessOthersController@saveService')->name("business.other.save");
     Route::post('business-component-save', 'AssetLite\BusinessOthersController@saveComponents')->name("business.component.save");
-    Route::get('business-others-components-list/{serviceId}', 'AssetLite\BusinessOthersController@componentList');
+    Route::get('business-others-components-list/{serviceId}/{type?}', 'AssetLite\BusinessOthersController@componentList');
 
     Route::get('business-others-component-edit/{serviceId}/{position}/{type}', 'AssetLite\BusinessOthersController@editComponent');
     Route::post('business-others-component-update', 'AssetLite\BusinessOthersController@updateComponents')

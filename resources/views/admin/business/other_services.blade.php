@@ -348,6 +348,118 @@
             </div>
         </div>
     </div>
+    
+    <div class="card">
+        <div class="card-content collapse show">
+            <div class="card-body card-dashboard">
+                <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                        <h4 class="pb-1"><strong>Corona Slider</strong></h4>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="20%">Name</th>
+                                    <th width="20%">Product Photo</th>
+                                    <th class="text-center" width="15%">Component</th>
+                                    <th class="text-center" width="10%">Home Top</th>
+                                    <th class="text-center" width="10%">Home Slider</th>
+                                    <th class="text-center" width="10%">Status</th>
+                                    <th class="text-center" width="10%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="service_sortable cursor-move">
+
+                                @foreach($corona as $o)
+                                <tr data-index="{{ $o->id }}" data-position="{{ $o->sort }}">
+
+                                    <td class="category_name">
+
+                                        <p class="text-bold-500 text-info">
+                                            <i class="icon-cursor-move icons"></i> &nbsp; {{ $o->name }}
+                                        </p> 
+
+                                    </td>
+                                    <td>
+                                        <img src="{{ config('filesystems.file_base_url') . $o->banner_photo }}" alt="Banner Photo" height="40px" />
+                                    </td>
+                                    
+                                     <td class="text-center">
+                                        <a href="{{ url('business-others-components-list/'.$o->id) }}" title="View List" class="btn btn-sm btn-info">
+                                            <i class="la la-eye"></i>
+                                        </a>
+                                        <a href="{{ url('business-others-components/'.$o->id) }}" title="Add Component" class="btn btn-sm btn-primary">
+                                            <i class="la la-plus"></i>
+                                        </a>
+                                    </td>
+
+                                    
+                                    <td class="text-center">
+
+                                        @if($o->home_show == 1)
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-info package_home_show">
+                                            <i class="la la-check-square"></i>
+                                        </a>
+                                        @else
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-danger package_home_show">
+                                            <i class="la la-remove"></i>
+                                        </a>
+                                        @endif
+
+                                    </td>
+                                    
+                                    
+                                    <td class="text-center">
+
+                                        @if($o->in_home_slider == 1)
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-info package_home_slider">
+                                            <i class="la la-check-square"></i>
+                                        </a>
+                                        @else
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-danger package_home_slider">
+                                            <i class="la la-remove"></i>
+                                        </a>
+                                        @endif
+
+                                    </td>
+
+                                    <td class="text-center">
+
+                                        @if($o->status == 1)
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-info package_status">
+                                            <i class="la la-check-square"></i>
+                                        </a>
+                                        @else
+                                        <a href="{{$o->id}}" class="btn btn-sm btn-outline-danger package_status">
+                                            <i class="la la-remove"></i>
+                                        </a>
+                                        @endif
+
+                                    </td>
+                                    
+                                    <td class="text-center">
+
+                                        <a class="text-info edit_package" href="{{url('business-others-service-edit/'.$o->id)}}">
+                                            <i class="la la-pencil-square"></i>
+                                        </a>
+                                        <a class="text-danger delete_package" href="{{url('business-others-service-delete/'.$o->id)}}">
+                                            <i class="la la-trash"></i>
+                                        </a>
+
+                                    </td>
+
+
+                                </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
 

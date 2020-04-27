@@ -22,6 +22,8 @@ class BusinessOthersRepository extends BaseRepository {
         }
         if ($type != "") {
             $servces->where('type', $type);
+        }else{
+            $servces->whereRaw("type NOT IN ('business-solution', 'iot', 'others')");
         }
 
         $data = $servces->get();
@@ -170,8 +172,13 @@ class BusinessOthersRepository extends BaseRepository {
         }
     }
 
-    public function getServiceById($serviceId) {
-        $service = $this->model->findOrFail($serviceId);
+    public function getServiceById($serviceId, $type) {
+        if ($type == 'corona') {
+            $service = $this->model->where('type', $serviceId)->first();
+        } else {
+            $service = $this->model->findOrFail($serviceId);
+        }
+
         return $service;
     }
 

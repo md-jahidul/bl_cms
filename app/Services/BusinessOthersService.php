@@ -786,8 +786,8 @@ class BusinessOthersService {
      * Get business package by id
      * @return Response
      */
-    public function getServiceById($serviceId) {
-        $response = $this->otherRepo->getServiceById($serviceId);
+    public function getServiceById($serviceId, $type = '') {
+        $response = $this->otherRepo->getServiceById($serviceId, $type);
         return $response;
     }
 
@@ -797,8 +797,11 @@ class BusinessOthersService {
      */
     public function getFeaturesByService($serviceType, $serviceId) {
         $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
-        $parentType = $types[$serviceType];
-        $response = $this->asgnFeatureRepo->getAssignedFeatures($serviceId, $parentType);
+        $response = [];
+        if (isset($types[$serviceType])) {
+            $parentType = $types[$serviceType];
+            $response = $this->asgnFeatureRepo->getAssignedFeatures($serviceId, $parentType);
+        }
         return $response;
     }
 

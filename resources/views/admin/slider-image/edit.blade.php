@@ -31,15 +31,15 @@
                                     @endif
                                 </div>
 
-{{--                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">--}}
-{{--                                    <label for="title_bn" class="required">Title (Bangla)</label>--}}
-{{--                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter english title"--}}
-{{--                                           value="{{ $sliderImage->title_bn }}" required data-validation-required-message="Enter english title">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('title_bn'))--}}
-{{--                                        <div class="help-block">{{ $errors->first('title_bn') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
+                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                  <label for="title_bn" class="required">Title (Bangla)</label>
+                                   <input type="text" name="title_bn"  class="form-control" placeholder="Enter english title"
+                                           value="{{ $sliderImage->title_bn }}" required data-validation-required-message="Enter english title">
+                                   <div class="help-block"></div>
+                                 @if ($errors->has('title_bn'))
+                                       <div class="help-block">{{ $errors->first('title_bn') }}</div>
+                                   @endif
+                              </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('start_date') ? ' error' : '' }}">
                                     <label for="start_date">Start Date</label>
