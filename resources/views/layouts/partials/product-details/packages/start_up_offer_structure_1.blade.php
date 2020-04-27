@@ -18,7 +18,26 @@
 </div>
 
 
+<div class="form-group col-md-6 {{ $errors->has('package_title_en') ? ' error' : '' }}">
+    <label for="package_title_en" >Detail Package Title (English)</label>
+    <input type="text" name="other_attributes[package_title_en]"
+           value="{{ !empty($otherAttributes['package_title_en']) ? $otherAttributes['package_title_en'] : '' }}"
+           class="form-control" placeholder="Enter details of first-time recharge in English" id="details">
+    <div class="help-block"></div>
+    @if ($errors->has('package_title_en'))
+        <div class="help-block">{{ $errors->first('package_title_en') }}</div>
+    @endif
+</div>
 
+<div class="form-group col-md-6 {{ $errors->has('package_title_bn') ? ' error' : '' }}">
+    <label for="package_title_bn" >Detail Package Title (Bangla)</label>
+    <input type="text" name="other_attributes[package_title_bn]"  class="form-control" placeholder="Enter first-time recharge title in English"
+           value="{{ !empty($otherAttributes['package_title_bn']) ? $otherAttributes['package_title_bn'] : '' }}" >
+    <div class="help-block"></div>
+    @if ($errors->has('package_title_bn'))
+        <div class="help-block">{{ $errors->first('package_title_bn') }}</div>
+    @endif
+</div>
 
 
 
@@ -138,14 +157,14 @@
     @endif
 </div>
 
-<div class="form-group col-md-6 {{ $errors->has('sim_activation_bonus_en') ? ' error' : '' }}">
+<div class="form-group col-md-6 {{ $errors->has('sim_activation_bonus_bn') ? ' error' : '' }}">
     <label for="offer_details_en" >SIM Activation Bonus (Bangla)</label>
-    <textarea type="text" name="other_attributes[sim_activation_bonus_en]"  class="form-control"
+    <textarea type="text" name="other_attributes[sim_activation_bonus_bn]"  class="form-control"
               placeholder="Enter details of 1GB every month"
-              id="details">{{ !empty($otherAttributes['sim_activation_bonus_en']) ? $otherAttributes['sim_activation_bonus_en'] : '' }}</textarea>
+              id="details">{{ !empty($otherAttributes['sim_activation_bonus_bn']) ? $otherAttributes['sim_activation_bonus_bn'] : '' }}</textarea>
     <div class="help-block"></div>
-    @if ($errors->has('sim_activation_bonus_en'))
-        <div class="help-block">{{ $errors->first('sim_activation_bonus_en') }}</div>
+    @if ($errors->has('sim_activation_bonus_bn'))
+        <div class="help-block">{{ $errors->first('sim_activation_bonus_bn') }}</div>
     @endif
 </div>
 
