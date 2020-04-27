@@ -95,8 +95,6 @@ class AlSliderImageService
         }
         $sliderImage->update($data);
         
-        
-        $this->saveInBusiness($data, $id);
         return Response('Slider Image update successfully !');
     }
 
