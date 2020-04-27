@@ -15,6 +15,8 @@ class AddCampaignIdToContextualCardsTable extends Migration
     {
         Schema::table('contextual_cards', function (Blueprint $table) {
             $table->string('campaign_id')->nullable()->after('description');
+            $table->string('url')->nullable()->after('campaign_id');
+            $table->string('component')->nullable()->after('url');
         });
     }
 
@@ -27,6 +29,8 @@ class AddCampaignIdToContextualCardsTable extends Migration
     {
         Schema::table('contextual_cards', function (Blueprint $table) {
             $table->dropColumn('campaign_id');
+            $table->dropColumn('url');
+            $table->dropColumn('component');
         });
     }
 }
