@@ -157,14 +157,14 @@
     @endif
 </div>
 
-<div class="form-group col-md-6 {{ $errors->has('sim_activation_bonus_en') ? ' error' : '' }}">
+<div class="form-group col-md-6 {{ $errors->has('sim_activation_bonus_bn') ? ' error' : '' }}">
     <label for="offer_details_en" >SIM Activation Bonus (Bangla)</label>
-    <textarea type="text" name="other_attributes[sim_activation_bonus_en]"  class="form-control"
+    <textarea type="text" name="other_attributes[sim_activation_bonus_bn]"  class="form-control"
               placeholder="Enter details of 1GB every month"
-              id="details">{{ !empty($otherAttributes['sim_activation_bonus_en']) ? $otherAttributes['sim_activation_bonus_en'] : '' }}</textarea>
+              id="details">{{ !empty($otherAttributes['sim_activation_bonus_bn']) ? $otherAttributes['sim_activation_bonus_bn'] : '' }}</textarea>
     <div class="help-block"></div>
-    @if ($errors->has('sim_activation_bonus_en'))
-        <div class="help-block">{{ $errors->first('sim_activation_bonus_en') }}</div>
+    @if ($errors->has('sim_activation_bonus_bn'))
+        <div class="help-block">{{ $errors->first('sim_activation_bonus_bn') }}</div>
     @endif
 </div>
 
