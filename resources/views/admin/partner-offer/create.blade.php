@@ -211,6 +211,13 @@
                             
                             <div class="col-md-4 pr-0 pt-1">
                                 <div class="form-group">
+                                    <label for="" class="mr-1">Home Show:</label>
+                                    <input type="checkbox" name="show_in_home" value="1">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 pr-0 pt-1">
+                                <div class="form-group">
                                     <label for="is_campaign" class="mr-1">Is Campaign:</label>
                                     <input type="checkbox" name="is_campaign" value="1" id="is_campaign">
                                 </div>

@@ -34,6 +34,22 @@
                                 <div class="help-block">{{ $errors->first('product_code') }}</div>
                                 @endif
                             </div>
+                            
+                             <div class="form-group col-md-4 col-xs-12 {{ $errors->has('area') ? ' error' : '' }}">
+                                <label for="offer_unit" class="required">Area</label>
+                                <select class="form-control required" name="area_id"
+                                        required data-validation-required-message="Please select area">
+                                    <option value="">---Select Offer Area---</option>
+                                    @foreach($areas as $val)
+                                    <option {{$partnerOffer->area_id == $val->id ? 'selected' : ''}} value="{{$val->id}}">{{$val->area_en}}</option>
+                                    @endforeach
+
+                                </select>
+                                <div class="help-block"></div>
+                                @if ($errors->has('area_id'))
+                                <div class="help-block">{{ $errors->first('area_id') }}</div>
+                                @endif
+                            </div>
 
                             <div class="form-group col-md-4 col-xs-12 {{ $errors->has('validity_en') ? ' error' : '' }}">
                                 <label for="validity_en" class="required">Offer Validity (English)</label>
@@ -64,7 +80,7 @@
                                 <div class='input-group'>
                                     <input type='text' class="form-control" name="start_date" id="start_date"
                                            value="{{ $partnerOffer->start_date }}"
-                                           {{--                                               required data-validation-required-message="Please select start date"--}}
+                                         
                                            placeholder="Please select start date"/>
                                 </div>
                                 <div class="help-block"></div>
@@ -156,25 +172,25 @@
                             ?>
                             <div class="form-group col-md-4 col-xs-12">
                                 <label>Phone (EN)</label>
-                                <input type="text" name="phone[en]" value="{{$phone->en}}"  class="form-control" placeholder="Enter Phone EN"
+                                <input type="text" name="phone[en]" value="{{!empty($phone) ? $phone->en : ''}}"  class="form-control" placeholder="Enter Phone EN"
                                        value="{{ old("phone[en]") ? old("phone[en]") : '' }}">
                             </div>
 
                             <div class="form-group col-md-4 col-xs-12">
                                 <label>Phone (BN)</label>
-                                <input type="text" name="phone[bn]" value="{{$phone->bn}}"  class="form-control" placeholder="Enter Phone BN"
+                                <input type="text" name="phone[bn]" value="{{!empty($phone) ? $phone->bn : ''}}"  class="form-control" placeholder="Enter Phone BN"
                                        value="{{ old("phone[bn]") ? old("phone[bn]") : '' }}">
                             </div>
 
                             <div class="form-group col-md-4 col-xs-12">
                                 <label>Location (EN)</label>
-                                <input type="text" name="location[en]" value='{{$location->en}}'  class="form-control" placeholder="Enter Location EN"
+                                <input type="text" name="location[en]" value="{{!empty($location) ? $location->en : ''}}"  class="form-control" placeholder="Enter Location EN"
                                        value="{{ old("location[en]") ? old("location[en]") : '' }}">
                             </div>
 
                             <div class="form-group col-md-4 col-xs-12">
                                 <label>Location (BN)</label>
-                                <input type="text" name="location[bn]" value='{{$location->bn}}' class="form-control" placeholder="Enter Location BN"
+                                <input type="text" name="location[bn]" value='{{!empty($location) ? $location->bn : ''}}' class="form-control" placeholder="Enter Location BN"
                                        value="{{ old("location[bn]") ? old("location[bn]") : '' }}">
                             </div>
 
@@ -226,6 +242,13 @@
                                     <input type="radio" name="is_active" value="0"
                                            id="inactive" {{ ($partnerOffer->is_active == 0) ? 'checked' : '' }}>
                                     <label for="inactive">Inactive</label>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 pr-0 pt-1">
+                                <div class="form-group">
+                                    <label for="" class="mr-1">Home Show:</label>
+                                    <input type="checkbox" name="show_in_home" {{ ($partnerOffer->show_in_home == 1) ? 'checked' : "" }} value="1">
                                 </div>
                             </div>
 
