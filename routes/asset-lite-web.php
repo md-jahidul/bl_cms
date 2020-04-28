@@ -320,6 +320,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'AssetLite\FixedPageController@metaTagsUpdate');
     Route::get('fixed-pages/{pageId}/component/{componentId}', 'AssetLite\FixedPageController@fixedPageStatusUpdate')
         ->name('update-component-status');
+
+    Route::get('/fixed-page-component-sortable', 'AssetLite\FixedPageController@componentSortable');
     // Route::get('dynamic-pages', 'AssetLite\FixedPageController@index');
 
     Route::resource('questions', 'AssetLite\QuestionController');

@@ -41,7 +41,7 @@
                                     <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
-                                        <td>{{ $product->description_en }}</td>
+                                        <td>{!! $product->description_en !!}</td>
                                         <td>{{ $product->price_tk }}</td>
 {{--                                        <td>{{ $product->ussd_en }}</td>--}}
                                         <td>{{ $product->appServiceTab->name_en }}</td>

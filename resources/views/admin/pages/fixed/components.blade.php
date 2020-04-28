@@ -25,7 +25,7 @@
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable">
                             @foreach($shortCodes as $index=>$shortCode)
                                 <tr data-index="{{ $shortCode->id }}" data-position="{{ $shortCode->display_order }}">
                                     <td width="3%">{{ $index + 1 }}</td>
@@ -92,7 +92,7 @@
             // });
         });
 
-        var auto_save_url = "{{ url('slider-image-sortable') }}";
+        var auto_save_url = "{{ url('/fixed-page-component-sortable') }}";
     </script>
 @endpush
 
