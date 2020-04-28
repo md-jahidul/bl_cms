@@ -62,7 +62,7 @@ class FixedPageController extends Controller
      */
     public function components($id)
     {
-        $shortCodes = ShortCode::where('page_id', $id)->get();
+        $shortCodes = ShortCode::where('page_id', $id)->orderBy('sequence', 'ASC')->get();
         $page =  Page::find($id)->title;
         return view('admin.pages.fixed.components', compact('shortCodes', 'page'));
     }
@@ -75,5 +75,18 @@ class FixedPageController extends Controller
         $component->save();
 
         return redirect()->route('fixed-page-components', $pageId);
+    }
+
+    public function componentSortable(Request $request)
+    {
+        $positions = $request->position;
+        foreach ($positions as $position) {
+            $menu_id = $position[0];
+            $new_position = $position[1];
+            $update_menu = ShortCode::findOrFail($menu_id);
+            $update_menu['sequence'] = $new_position;
+            $update_menu->update();
+        }
+        return "Sorting Success";
     }
 }
