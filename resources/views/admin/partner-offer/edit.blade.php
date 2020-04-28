@@ -156,25 +156,25 @@
                             ?>
                             <div class="form-group col-md-4 col-xs-12">
                                 <label>Phone (EN)</label>
-                                <input type="text" name="phone[en]" value="{{$phone->en}}"  class="form-control" placeholder="Enter Phone EN"
+                                <input type="text" name="phone[en]" value="{{!empty($phone) ? $phone->en : ''}}"  class="form-control" placeholder="Enter Phone EN"
                                        value="{{ old("phone[en]") ? old("phone[en]") : '' }}">
                             </div>
 
                             <div class="form-group col-md-4 col-xs-12">
                                 <label>Phone (BN)</label>
-                                <input type="text" name="phone[bn]" value="{{$phone->bn}}"  class="form-control" placeholder="Enter Phone BN"
+                                <input type="text" name="phone[bn]" value="{{!empty($phone) ? $phone->bn : ''}}"  class="form-control" placeholder="Enter Phone BN"
                                        value="{{ old("phone[bn]") ? old("phone[bn]") : '' }}">
                             </div>
 
                             <div class="form-group col-md-4 col-xs-12">
                                 <label>Location (EN)</label>
-                                <input type="text" name="location[en]" value='{{$location->en}}'  class="form-control" placeholder="Enter Location EN"
+                                <input type="text" name="location[en]" value="{{!empty($location) ? $location->en : ''}}"  class="form-control" placeholder="Enter Location EN"
                                        value="{{ old("location[en]") ? old("location[en]") : '' }}">
                             </div>
 
                             <div class="form-group col-md-4 col-xs-12">
                                 <label>Location (BN)</label>
-                                <input type="text" name="location[bn]" value='{{$location->bn}}' class="form-control" placeholder="Enter Location BN"
+                                <input type="text" name="location[bn]" value='{{!empty($location) ? $location->bn : ''}}' class="form-control" placeholder="Enter Location BN"
                                        value="{{ old("location[bn]") ? old("location[bn]") : '' }}">
                             </div>
 
