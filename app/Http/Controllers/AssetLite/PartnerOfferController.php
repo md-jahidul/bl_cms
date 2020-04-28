@@ -57,7 +57,8 @@ class PartnerOfferController extends Controller
      */
     public function create($parentId, $partnerName)
     {
-        return view('admin.partner-offer.create', compact('parentId', 'partnerName'));
+        $areas = $this->partnerOfferService->getAreaList();
+        return view('admin.partner-offer.create', compact('parentId', 'partnerName', 'areas'));
     }
 
     /**
