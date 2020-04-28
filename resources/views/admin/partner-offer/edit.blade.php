@@ -34,6 +34,22 @@
                                 <div class="help-block">{{ $errors->first('product_code') }}</div>
                                 @endif
                             </div>
+                            
+                             <div class="form-group col-md-4 col-xs-12 {{ $errors->has('area') ? ' error' : '' }}">
+                                <label for="offer_unit" class="required">Area</label>
+                                <select class="form-control required" name="area_id"
+                                        required data-validation-required-message="Please select area">
+                                    <option value="">---Select Offer Area---</option>
+                                    @foreach($areas as $val)
+                                    <option {{$partnerOffer->area_id == $val->id ? 'selected' : ''}} value="{{$val->id}}">{{$val->area_en}}</option>
+                                    @endforeach
+
+                                </select>
+                                <div class="help-block"></div>
+                                @if ($errors->has('area_id'))
+                                <div class="help-block">{{ $errors->first('area_id') }}</div>
+                                @endif
+                            </div>
 
                             <div class="form-group col-md-4 col-xs-12 {{ $errors->has('validity_en') ? ' error' : '' }}">
                                 <label for="validity_en" class="required">Offer Validity (English)</label>
@@ -64,7 +80,7 @@
                                 <div class='input-group'>
                                     <input type='text' class="form-control" name="start_date" id="start_date"
                                            value="{{ $partnerOffer->start_date }}"
-                                           {{--                                               required data-validation-required-message="Please select start date"--}}
+                                         
                                            placeholder="Please select start date"/>
                                 </div>
                                 <div class="help-block"></div>
