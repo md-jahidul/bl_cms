@@ -48,35 +48,6 @@
                                     @endif
                                 </div>
 
-{{--                                <div class="form-group col-md-6 {{ $errors->has('contact_person_name') ? ' error' : '' }}">--}}
-{{--                                    <label for="contact_person_name" class="required">Contact Person Name</label>--}}
-{{--                                    <input type="text" name="contact_person_name"  class="form-control" placeholder="Enter contact person name"--}}
-{{--                                           value="{{ $partner->contact_person_name }}">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('contact_person_name'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('contact_person_name') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
-{{--                                <div class="form-group col-md-6 {{ $errors->has('contact_person_email') ? ' error' : '' }}">--}}
-{{--                                    <label for="contact_person_email">Contact Person Email</label>--}}
-{{--                                    <input type="text" name="contact_person_email"  class="form-control" placeholder="Enter contact person name"--}}
-{{--                                           value="{{ old('contact_person_email') ?? $partner->contact_person_email }}">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('contact_person_email'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('contact_person_email') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-
-{{--                                <div class="form-group col-md-6 {{ $errors->has('contact_person_mobile') ? ' error' : '' }}">--}}
-{{--                                    <label for="contact_person_mobile">Contact Person Mobile Number</label>--}}
-{{--                                    <input type="text" name="contact_person_mobile"  class="form-control" placeholder="Enter contact person name"--}}
-{{--                                           value="{{ $partner->contact_person_mobile }}">--}}
-{{--                                    <div class="help-block"></div>--}}
-{{--                                    @if ($errors->has('contact_person_mobile'))--}}
-{{--                                        <div class="help-block">  {{ $errors->first('contact_person_mobile') }}</div>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
 
                                 <div class="form-group col-md-6 {{ $errors->has('partner_category_id') ? ' error' : '' }}">
                                     <label for="partner_category_id" class="required">Company Category</label>
@@ -128,18 +99,6 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('apple_app_store_link'))
                                         <div class="help-block">  {{ $errors->first('apple_app_store_link') }}</div>
-                                    @endif
-                                </div>
-
-
-
-                                <div class="form-group col-md-12 {{ $errors->has('company_address') ? ' error' : '' }}">
-                                    <label for="company_address" class="required">Company Address</label>
-                                    <textarea name="company_address" rows="4" class="form-control" placeholder="Enter company address"
-                                              required data-validation-required-message="Enter company address">{{ $partner->company_address }}</textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('company_address'))
-                                        <div class="help-block">  {{ $errors->first('company_address') }}</div>
                                     @endif
                                 </div>
 

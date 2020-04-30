@@ -90,6 +90,7 @@ class AppServiceProductController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
         $response = $this->appServiceProductService->storeAppServiceProduct($request->all());
         Session::flash('message', $response->getContent());
         return redirect(route('app-service-product.index'));
@@ -145,6 +146,8 @@ class AppServiceProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+//        dd($request->all());
+
         $response = $this->appServiceProductService->updateAppServiceProduct($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect(route('app-service-product.index'));

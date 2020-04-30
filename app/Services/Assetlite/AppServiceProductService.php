@@ -79,8 +79,12 @@ class AppServiceProductService
 //            $data['product_img_url'] = null;
 //            $this->deleteFile($appServiceProduct->product_img_url);
 //        }
+
         $data['can_active'] = (isset($data['can_active']) ? 1 : 0);
         $data['show_in_vas'] = (isset($data['show_in_vas']) ? 1 : 0);
+        $data['show_ussd'] = (isset($data['show_ussd']) ? 1 : 0);
+        $data['show_subscribe'] = (isset($data['show_subscribe']) ? 1 : 0);
+
         $appServiceProduct->update($data);
         return Response('App Service Category updated successfully');
     }

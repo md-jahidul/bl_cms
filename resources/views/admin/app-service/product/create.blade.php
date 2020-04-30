@@ -112,11 +112,14 @@
 
                             <slot id="vas" data-offer-type="vas" style="display: none">
                                 @include('layouts.partials.app-service.vas')
+
                             </slot>
 
                             <slot id="financial" data-offer-type="financial" style="display: none">
                                 @include('layouts.partials.app-service.financial')
                             </slot>
+
+
 
                             <div class="col-md-6">
                                 <label></label>
@@ -214,9 +217,9 @@ $(function () {
     $(".app_review, .app_rating").on("keypress keyup blur", function (event) {
         var max_chars = 10;
         if($(this).val().length > max_chars){
-           $(this).val($(this).val().substr(0, max_chars)); 
+           $(this).val($(this).val().substr(0, max_chars));
         }
-        
+
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
             event.preventDefault();

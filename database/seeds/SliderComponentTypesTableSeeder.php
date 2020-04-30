@@ -24,6 +24,7 @@ class SliderComponentTypesTableSeeder extends Seeder
                 'Testimonial',
                 'About-Media',
                 'Explore Devices',
+                'Corona',
                 'Home',
                 'Dashboard',
             ];

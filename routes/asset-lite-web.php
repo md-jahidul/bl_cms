@@ -320,6 +320,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'AssetLite\FixedPageController@metaTagsUpdate');
     Route::get('fixed-pages/{pageId}/component/{componentId}', 'AssetLite\FixedPageController@fixedPageStatusUpdate')
         ->name('update-component-status');
+
+    Route::get('/fixed-page-component-sortable', 'AssetLite\FixedPageController@componentSortable');
     // Route::get('dynamic-pages', 'AssetLite\FixedPageController@index');
 
     Route::resource('questions', 'AssetLite\QuestionController');
@@ -462,7 +464,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('business-others-components/{serviceId}', 'AssetLite\BusinessOthersController@addComponent');
     Route::post('business-others-save', 'AssetLite\BusinessOthersController@saveService')->name("business.other.save");
     Route::post('business-component-save', 'AssetLite\BusinessOthersController@saveComponents')->name("business.component.save");
-    Route::get('business-others-components-list/{serviceId}', 'AssetLite\BusinessOthersController@componentList');
+    Route::get('business-others-components-list/{serviceId}/{type?}', 'AssetLite\BusinessOthersController@componentList');
 
     Route::get('business-others-component-edit/{serviceId}/{position}/{type}', 'AssetLite\BusinessOthersController@editComponent');
     Route::post('business-others-component-update', 'AssetLite\BusinessOthersController@updateComponents')
