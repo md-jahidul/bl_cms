@@ -80,6 +80,11 @@ class MyblSliderImageController extends Controller
         return redirect()->back();
     }
 
+    public function getMyblProducts()
+    {
+        return $this->sliderImageService->getActiveProducts();
+    }
+
     /**
      * Display the specified resource.
      *
@@ -116,7 +121,8 @@ class MyblSliderImageController extends Controller
     public function edit($sliderImageId)
     {
         $imageInfo = SliderImage::find($sliderImageId);
-        return view('admin.myblslider.images.edit', compact('imageInfo'));
+        $products  = $this->sliderImageService->getActiveProducts();
+        return view('admin.myblslider.images.edit', compact('imageInfo', 'products'));
     }
 
     /**

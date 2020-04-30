@@ -1,12 +1,13 @@
 <?php
+
 namespace App\Services;
 
+use App\Models\MyBlProduct;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use DB;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\SliderImageRepository;
-
 
 class MyblSliderImageService
 {
@@ -60,12 +61,35 @@ class MyblSliderImageService
            // $image['other_attributes'] = json_encode($other_attributes, JSON_UNESCAPED_SLASHES);
 
             $image['other_attributes'] = $other_attributes;
-
         }
 
         $this->save($image);
 
         return new Response("Image has been successfully added");
+    }
+
+    public function getActiveProducts()
+    {
+        $builder = new MyBlProduct();
+        $builder = $builder->where('status', 1);
+
+        $products = $builder->whereHas(
+            'details',
+            function ($q) {
+                $q->whereIn('content_type', ['data','voice','sms']);
+            }
+        )->get();
+
+        $data = [];
+
+        foreach ($products as $product) {
+            $data [] = [
+                'id'    => $product->details->product_code,
+                'text' =>  '(' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
+            ];
+        }
+
+        return $data;
     }
 
     public function tableSortable($data)
