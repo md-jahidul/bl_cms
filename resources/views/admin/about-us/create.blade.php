@@ -164,6 +164,21 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    <label for="name" class="required">Select Slug:</label>
+                                    <select name="slug" required data-validation-required-message="Slug is required"  class="browser-default custom-select">
+                                        @if(isset($about))
+                                            <option value="about-banglalink" @if($about->slug == "about-banglalink") selected="selected" @endif>about-banglalink</option>
+                                            <option value="about-veon" @if($about->slug == "about-veon") selected="selected" @endif>about-veon</option>
+
+                                        @else
+                                            <option value="about-banglalink">about-banglalink</option>
+                                            <option value="about-veon">about-veon</option>
+                                        @endif
+
+                                    </select>
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label>Banner Photo Name</label>
                                     <input type="hidden" name="old_banner_name" value="@if(isset($about)){{$about->banner_name}} @else {{old("old_banner_name")}} @endif">
