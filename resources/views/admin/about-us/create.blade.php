@@ -116,7 +116,8 @@
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image') ? ' error' : '' }}">
                                     <label for="alt_text" >Banner Image (Web)</label>
                                     <div class="custom-file">
-                                        <input type="hidden" name="old_web_img" value="{{ $about->banner_image }}">
+                                        <input type="hidden" name="old_web_img"
+                                               value="@if(isset($about)){{$about->banner_image}} @elseif(old("old_web_img")) {{old("old_web_img")}} @endif">
                                         <input type="file" name="banner_image" class="custom-file-input" id="image">
                                         <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
                                     </div>
@@ -141,7 +142,8 @@
                                     <span>Banner image (Mobile)</span>
 
                                     <div class="custom-file">
-                                        <input type="hidden" name="old_mob_img" value="{{ $about->banner_image_mobile }}">
+                                        <input type="hidden" name="old_mob_img"
+                                               value="@if(isset($about)){{$about->banner_image_mobile}} @elseif(old("old_mob_img")) {{old("old_mob_img")}} @endif">
                                         <input type="file" name="banner_image_mobile" class="custom-file-input">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
@@ -155,7 +157,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text">Alt Text</label>
                                     <input type="text" name="alt_text"  class="form-control" placeholder="Enter image alter text"
-                                           value="{{ $about->alt_text }}">
+                                           value="@if(isset($about)){{$about->alt_text}} @else {{old("alt_text")}} @endif">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">  {{ $errors->first('alt_text') }}</div>
@@ -164,25 +166,27 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label>Banner Photo Name</label>
-                                    <input type="hidden" name="old_banner_name" value="{{$about->banner_name}}">
-                                    <input type="text" class="form-control" name="banner_name" value="{{$about->banner_name}}" placeholder="Photo Name">
+                                    <input type="hidden" name="old_banner_name" value="@if(isset($about)){{$about->banner_name}} @else {{old("old_banner_name")}} @endif">
+                                    <input type="text" class="form-control" name="banner_name"
+                                           value="@if(isset($about)){{$about->banner_name}} @else {{old("banner_name")}} @endif" placeholder="Photo Name">
                                     <small class="text-info">
-                                        <strong>i.e:</strong> app-and-service-banner (no spaces)<br>
+                                        <strong>i.e:</strong> about-us (no spaces)<br>
                                         <strong>Note: </strong> Don't need MIME type like jpg,png
                                     </small>
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }}">
                                     <label> URL (url slug) <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" value="{{$about->url_slug}}" required name="url_slug" placeholder="URL">
+                                    <input type="text" class="form-control"
+                                           value="@if(isset($about)){{$about->url_slug}} @else {{old("url_slug")}} @endif" required name="url_slug" placeholder="URL">
                                     <small class="text-info">
-                                        <strong>i.e:</strong> app-and-service-title (no spaces)<br>
+                                        <strong>i.e:</strong> about-us (no spaces)<br>
                                     </small>
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label>Page Header (HTML)</label>
-                                    <textarea class="form-control" rows="7" name="page_header">{{$about->page_header}}</textarea>
+                                    <textarea class="form-control" rows="7" name="page_header">@if(isset($about)){{$about->page_header}} @else {{old("page_header")}} @endif </textarea>
                                     <small class="text-info">
                                         <strong>Note: </strong> Title, meta, canonical and other tags
                                     </small>
@@ -190,7 +194,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label>Schema Markup</label>
-                                    <textarea class="form-control" rows="7" name="schema_markup">{{$about->schema_markup}}</textarea>
+                                    <textarea class="form-control" rows="7" name="schema_markup">@if(isset($about)){{$about->schema_markup}} @else {{old("schema_markup")}}@endif</textarea>
                                     <small class="text-info">
                                         <strong>Note: </strong> JSON-LD (Recommended by Google)
                                     </small>
