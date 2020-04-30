@@ -78,6 +78,7 @@ class Helper
             "NOTIFICATIONS"           => "Notifications",
             "PRIVACY_POLICY"          => "Privacy Policy",
             "PROFILE"                 => "Profile",
+            "PURCHASE"                => "Purchase Product",
             "RECHARGE"                => "Recharge",
             "RECHARGE_HISTORY"        => "Recharge History",
             "RECHARGE_OFFERS"         => "Recharge Offers",
