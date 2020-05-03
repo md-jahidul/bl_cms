@@ -16,7 +16,8 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class ProductService {
+class ProductService
+{
 
     use CrudTrait;
 
@@ -38,8 +39,9 @@ class ProductService {
      * @param TagCategoryRepository $tagRepository
      */
     public function __construct(
-    ProductRepository $productRepository, ProductDetailRepository $productDetailRepository, ProductCoreRepository $productCoreRepository, SearchDataRepository $searchRepository, TagCategoryRepository $tagRepository
-    ) {
+        ProductRepository $productRepository, ProductDetailRepository $productDetailRepository, ProductCoreRepository $productCoreRepository, SearchDataRepository $searchRepository, TagCategoryRepository $tagRepository
+    )
+    {
         $this->productRepository = $productRepository;
         $this->productCoreRepository = $productCoreRepository;
         $this->productDetailRepository = $productDetailRepository;
@@ -48,7 +50,8 @@ class ProductService {
         $this->setActionRepository($productRepository);
     }
 
-    public function produtcs() {
+    public function produtcs()
+    {
         return $this->productRepository->findByProperties([], ['id', 'product_code', 'name_en']);
     }
 
@@ -57,9 +60,19 @@ class ProductService {
      * @param $simId
      * @return Response
      */
-    public function storeProduct($data, $simId) {
+    public function storeProduct($data, $simId)
+    {
+
+        foreach ($data['offer_info'] as $key => $offerInfo) {
+            if ($offerInfo) {
+                $otherInfo[$key] = $offerInfo;
+            }
+        }
+        $data['offer_info'] = isset($otherInfo) ? $otherInfo : null;
+
         $data['sim_category_id'] = $simId;
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+        dd($data);
         $product = $this->save($data);
         //save Search Data
         $this->_saveSearchData($product);
@@ -68,7 +81,8 @@ class ProductService {
     }
 
     //save Search Data
-    private function _saveSearchData($product) {
+    private function _saveSearchData($product)
+    {
         $productId = $product->id;
         $name = $product->name_en;
 
@@ -83,7 +97,7 @@ class ProductService {
         //category url
         $url .= $product->offer_category->url_slug;
 
-        $keywordType = "offer-".$product->offer_category->alias;
+        $keywordType = "offer-" . $product->offer_category->alias;
 
 
         $type = "";
@@ -116,7 +130,8 @@ class ProductService {
         return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag);
     }
 
-    public function tableSortable($data) {
+    public function tableSortable($data)
+    {
         $this->productRepository->productOfferTableSort($data);
         return new Response('update successfully');
     }
@@ -126,7 +141,8 @@ class ProductService {
      * @param $id
      * @return mixed
      */
-    public function findRelatedProduct($type, $id) {
+    public function findRelatedProduct($type, $id)
+    {
         return $this->productRepository->relatedProducts($type, $id);
     }
 
@@ -135,7 +151,8 @@ class ProductService {
      * @param $id
      * @return ResponseFactory|Response
      */
-    public function updateProduct($data, $type, $id) {
+    public function updateProduct($data, $type, $id)
+    {
         $product = $this->productRepository->findByCode($type, $id);
 //        $this->productDetailRepository->saveOrUpdateProductDetail($product->id, $data);
         $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0);
@@ -154,11 +171,13 @@ class ProductService {
      * @param $id
      * @return mixed
      */
-    public function findProduct($type, $id) {
+    public function findProduct($type, $id)
+    {
         return $this->productRepository->findByCode($type, $id);
     }
 
-    public function detailsProduct($id) {
+    public function detailsProduct($id)
+    {
         return $this->productRepository->productDetails($id);
     }
 
@@ -167,13 +186,15 @@ class ProductService {
      * @return ResponseFactory|Response
      * @throws \Exception
      */
-    public function deleteProduct($id) {
+    public function deleteProduct($id)
+    {
         $product = $this->findOne($id);
         $product->delete();
         return Response('Product delete successfully');
     }
 
-    public function unusedProductCore($type) {
+    public function unusedProductCore($type)
+    {
         $simType = $type == "prepaid" ? 1 : 2;
         $productCoreCode = $this->productCoreRepository->findByProperties(['sim_type' => $simType], ['product_code'])->toArray();
         $productCode = $this->productRepository->findByProperties([], ['product_code'])->toArray();
@@ -192,31 +213,33 @@ class ProductService {
      * Mapping Product Core Data to Product and insert
      * @param null $offerInfo
      */
-    public function insertProduct($data, $offerId, $offerInfo = null) {
+    public function insertProduct($data, $offerId, $offerInfo = null)
+    {
         $product = Product::updateOrCreate(
-                        ['product_code' => $data['product_code'] ?? null,], [
-                    'name_en' => $data['commercial_name_en'] ?? "",
-                    'name_bn' => $data['commercial_name_bn'] ?? "",
-                    'ussd_bn' => $data['activation_ussd'] ?? null,
-                    'start_date' => "2019-12-10 20:12:10" ?? null,
-                    'sim_category_id' => $data['sim_type'] ?? null,
-                    'offer_category_id' => $offerId ?? null,
-                    'is_recharge' => $data['is_recharge_offer'] ?? 0,
-                    'status' => $data['status'],
-                    'purchase_option' => $data['purchase_option'],
-                    'offer_info' => $offerInfo
-                        ]
+            ['product_code' => $data['product_code'] ?? null,], [
+                'name_en' => $data['commercial_name_en'] ?? "",
+                'name_bn' => $data['commercial_name_bn'] ?? "",
+                'ussd_bn' => $data['activation_ussd'] ?? null,
+                'start_date' => "2019-12-10 20:12:10" ?? null,
+                'sim_category_id' => $data['sim_type'] ?? null,
+                'offer_category_id' => $offerId ?? null,
+                'is_recharge' => $data['is_recharge_offer'] ?? 0,
+                'status' => $data['status'],
+                'purchase_option' => $data['purchase_option'],
+                'offer_info' => $offerInfo
+            ]
         );
 
         ProductDetail::updateOrCreate(
-                ['product_id' => $product->id]
+            ['product_id' => $product->id]
         );
     }
 
     /**
      * @return mixed
      */
-    public function findBondhoSim() {
+    public function findBondhoSim()
+    {
         return $this->productRepository->countBondhoSimOffer();
     }
 
@@ -224,7 +247,8 @@ class ProductService {
      * @param $coreProduct
      * Check Offer Type and separate product insert method call
      */
-    public function getOfferInfo($coreProduct) {
+    public function getOfferInfo($coreProduct)
+    {
         $type = $coreProduct->assetlite_offer_type;
         switch (strtolower($type)) {
             case 'internet':
@@ -249,7 +273,8 @@ class ProductService {
         }
     }
 
-    public function coreData() {
+    public function coreData()
+    {
         $coreData = $this->productCoreRepository->findAll();
         foreach ($coreData as $coreProduct) {
             $this->getOfferInfo($coreProduct);

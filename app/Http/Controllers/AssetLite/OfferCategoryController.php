@@ -128,7 +128,7 @@ class OfferCategoryController extends Controller {
         }
 
         $response = $this->offerCategoryService->updateOfferCategory($request->all(), $id);
-        
+
 //        dd($response);
 
         if ($response['success'] == 1) {

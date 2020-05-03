@@ -135,7 +135,8 @@ class ProductController extends Controller {
      * @param $type
      * @return RedirectResponse|Redirector
      */
-    public function store(ProductStoreRequest $request, $type) {
+    public function store(ProductStoreRequest $request, $type)
+    {
         $validator = Validator::make($request->all(), [
                     'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug',
         ]);
@@ -219,7 +220,7 @@ class ProductController extends Controller {
      * @return Response
      */
     public function update(Request $request, $type, $id) {
-        
+
         $product = $this->productService->findProduct($type, $id);
          $validator = Validator::make($request->all(), [
                     'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug,'.$product->id,
@@ -228,7 +229,7 @@ class ProductController extends Controller {
             Session::flash('error', $validator->messages()->first());
             return redirect()->back();
         }
-        
+
 //        return $request->all();
         $this->productCoreService->updateProductCore($request->all(), $id);
         $this->strToint($request);
