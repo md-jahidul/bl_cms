@@ -296,6 +296,18 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('about-page/{slug}', 'AssetLite\PriyojonController@aboutPageView')->name('about-page');
     Route::put('about-page/update', 'AssetLite\PriyojonController@aboutPageUpdate')
         ->name('about-page.update');
+    
+    
+    
+
+    // Dynamic Pages ================================
+    Route::get('dynamic-pages/', 'AssetLite\DynamicPageController@index');
+    Route::get('dynamic-pages/create', 'AssetLite\DynamicPageController@create');
+    Route::get('dynamic-pages/edit/{id}', 'AssetLite\DynamicPageController@edit');
+    Route::post('dynamic-pages/save', 'AssetLite\DynamicPageController@savePage');
+    Route::get('dynamic-pages/delete/{id}', 'AssetLite\DynamicPageController@deletePage');
+    
+    
 
 //    Route::get('about-reward', 'AssetLite\PriyojonController@aboutRewardPoint')->name('about-reward');
 //    Route::put('about-reward/update', 'AssetLite\PriyojonController@aboutRewardPointUpdate')
