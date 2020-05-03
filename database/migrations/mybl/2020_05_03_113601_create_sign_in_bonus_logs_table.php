@@ -21,7 +21,6 @@ class CreateSignInBonusLogsTable extends Migration
             $table->string('msisdn');
             $table->date('date');
             $table->string('status')->default('000');
-            $table->json('request_data')->nullable();
             $table->timestamps();
         });
     }
