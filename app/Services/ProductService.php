@@ -72,7 +72,6 @@ class ProductService
 
         $data['sim_category_id'] = $simId;
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
-        dd($data);
         $product = $this->save($data);
         //save Search Data
         $this->_saveSearchData($product);
