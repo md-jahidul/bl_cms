@@ -23,21 +23,30 @@
                             @csrf
                             @if(isset($about))
                                 @method('put')
+                                
+                                 @php 
+                                 
+                                 $banglalink_info = $about->banglalink_info;
+                                 $banglalink_info_bn = $about->banglalink_info_bn; 
+                                 $details_en = $about->details_en;
+                                 $details_bn = $about->details_bn;
+                                 
+                                 @endphp
                             @else
                                 @method('post')
+                                
+                                @php 
+                                
+                                $banglalink_info = '';
+                                $banglalink_info_bn = '';
+                                $details_en = '';
+                                $details_bn = '';
+                                
+                                @endphp
                             @endif
-
-                            @if(isset($about))
-                                @php $banglalink_info = $about->banglalink_info; @endphp
-                            @else
-                                @php $banglalink_info = ''; @endphp
-                            @endif
-
-                            @if(isset($about))
-                                @php $banglalink_info_bn = $about->banglalink_info_bn; @endphp
-                            @else
-                                @php $banglalink_info_bn = ''; @endphp
-                            @endif
+                            
+                            
+         
 
                             <div class="row">
 
@@ -62,7 +71,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('banglalink_info') ? ' error' : '' }}">
-                                    <label for="banglalink_info" class="required">Description (English)</label>
+                                    <label for="banglalink_info" class="required">Short Description (EN)</label>
                                     <textarea required data-validation-required-message="Description (English) is required"
                                         class="form-control" name="banglalink_info" placeholder="Enter Description in English" id="banglalink_info"
                                         rows="4">{{ old("banglalink_info") ? old("banglalink_info") : $banglalink_info  }}</textarea>
@@ -75,7 +84,7 @@
 
 
                                 <div class="form-group col-md-6 {{ $errors->has('banglalink_info_bn') ? ' error' : '' }}">
-                                    <label for="banglalink_info_bn" class="required">Description (Bangla)</label>
+                                    <label for="banglalink_info_bn" class="required">Short Description (BN)</label>
                                     <textarea
                                         required
                                         data-validation-required-message="Description (Bangla) is required"
@@ -85,6 +94,29 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('banglalink_info_bn'))
                                         <div class="help-block">  {{ $errors->first('banglalink_info_bn') }}</div>
+                                    @endif
+                                </div>
+
+
+                                <div class="form-group col-md-6 {{ $errors->has('banglalink_info_bn') ? ' error' : '' }}">
+                                    <label for="Details">Details (EN)</label>
+                                    <textarea
+                                        class="form-control textarea_details" name="details_en">{{ old("details_en") ? old("details_en") : $details_en }}</textarea>
+
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('details_en'))
+                                        <div class="help-block">  {{ $errors->first('details_en') }}</div>
+                                    @endif
+                                </div>
+                                
+                                <div class="form-group col-md-6 {{ $errors->has('details_bn') ? ' error' : '' }}">
+                                    <label for="Details">Details (BN)</label>
+                                    <textarea
+                                        class="form-control textarea_details" name="details_bn">{{ old("details_bn") ? old("details_bn") : $details_bn }}</textarea>
+
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('details_bn'))
+                                        <div class="help-block">  {{ $errors->first('details_bn') }}</div>
                                     @endif
                                 </div>
 
@@ -233,9 +265,32 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 @endpush
 @push('page-js')
+<script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
+<script>
+$(function () {
+
+    //text editor for package details
+    $("textarea.textarea_details").summernote({
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            // ['table', ['table']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['view', ['codeview']]
+        ],
+        height: 220
+    });
+
+});
+
+
+</script>
 @endpush
 
 
