@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
 use App\Models\OfferCategory;
+use App\Models\SimCategory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -32,6 +33,8 @@ class OfferCategoryController extends Controller {
     public function index($parent_id = 0, $type = null) {
         // $type = OfferCategory::find($parent_id)->name;
         $offerCategories = OfferCategory::where('parent_id', $parent_id)->with('type')->get();
+        
+        $simCategories = SimCategory::all();
 
 
         $file = 'index';
@@ -42,7 +45,7 @@ class OfferCategoryController extends Controller {
 
 
 
-        return view('admin.category.offer.' . $file, compact('offerCategories', 'type', 'parent_id'));
+        return view('admin.category.offer.' . $file, compact('offerCategories', 'simCategories', 'type', 'parent_id'));
     }
 
     /**
