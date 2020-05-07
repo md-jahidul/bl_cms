@@ -12,10 +12,7 @@
 */
 
 
-
-
 Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
-
     //------ shortcuts -----------//
 
     // route::resource('short_cuts','CMS\ShortCutController');
@@ -30,7 +27,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     Route::get('shortcuts/create', 'CMS\ShortCutController@create')->name('short_cuts.create');
     Route::get('shortcuts/{short_cut}/edit', 'CMS\ShortCutController@edit')->name('short_cuts.edit');
     Route::put('shortcuts/{short_cut}', 'CMS\ShortCutController@update')->name('short_cuts.update');
-    Route::get('shortcuts-sortable', 'CMS\ShortCutController@shortcutSortable')->name('short_cuts.sort');;
+    Route::get('shortcuts-sortable', 'CMS\ShortCutController@shortcutSortable')->name('short_cuts.sort');
+    ;
 
     //------ shortcuts -----------//
 
@@ -65,19 +63,36 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     Route::resource('myblslider', 'CMS\MyblSliderController');
 
     Route::get('myblslider/{slider_id}/images', 'CMS\MyblSliderImageController@index')->name('myblslider.images.index');
-    Route::get('myblslider/{slider_id}/images/create', 'CMS\MyblSliderImageController@create')->name('myblslider.images.create');
+    Route::get(
+        'myblslider/{slider_id}/images/create',
+        'CMS\MyblSliderImageController@create'
+    )->name('myblslider.images.create');
     Route::post('myblslider/images/store', 'CMS\MyblSliderImageController@store')->name('myblslider.images.store');
     Route::get('myblslider/images/{id}/edit', 'CMS\MyblSliderImageController@edit')->name('myblslider.images.edit');
-    Route::put('myblslider/images/{id}/update', 'CMS\MyblSliderImageController@update')->name('myblslider.images.update');
-    Route::put('myblslider/images/{id}/update', 'CMS\MyblSliderImageController@update')->name('myblslider.images.update');
-    Route::delete('myblslider/images/{id}/delete', 'CMS\MyblSliderImageController@destroy')->name('myblslider.images.destroy');
+    Route::put(
+        'myblslider/images/{id}/update',
+        'CMS\MyblSliderImageController@update'
+    )->name('myblslider.images.update');
+    Route::put(
+        'myblslider/images/{id}/update',
+        'CMS\MyblSliderImageController@update'
+    )->name('myblslider.images.update');
+    Route::delete(
+        'myblslider/images/{id}/delete',
+        'CMS\MyblSliderImageController@destroy'
+    )->name('myblslider.images.destroy');
+
+    Route::get(
+        'myblslider/images/get-active-products',
+        'CMS\MyblSliderImageController@getMyblProducts'
+    )->name('myblslider.active-products');//getMyblProducts
 
     Route::get('myblslider/destroy/{id}', 'CMS\MyblSliderController@destroy');
     //Route::get('myblslider/edit/{slider-other-attr}','CMS\MyblSliderController@edit')->name('slider-other-attr.edit');
     // Slider
 
     // Slider Image
-/*    route::resource('myblsliderImage','CMS\MyblSliderImageController');*/
+    /*    route::resource('myblsliderImage','CMS\MyblSliderImageController');*/
     Route::get('myblslider/{id}/images', 'CMS\MyblSliderImageController@index');
     route::get('myblsliderImage/addImage/update-position', 'CMS\MyblSliderImageController@updatePosition');
     Route::get('myblslider/addImage/{sliderId}', 'CMS\MyblSliderImageController@index')->name('myblsliderImage.index');
@@ -134,12 +149,16 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     // Notification
     route::resource('notification', 'CMS\NotificationController');
     Route::get('notification/destroy/{id}', 'CMS\NotificationController@destroy');
-    Route::get('notification/all/{id}', 'CMS\NotificationController@showAll')->name('notification.show-all');;
+    Route::get('notification/all/{id}', 'CMS\NotificationController@showAll')->name('notification.show-all');
+    Route::get('notification-report', 'CMS\NotificationController@getNotificationReport')->name('notification.report');
 
 
     // Push Notification
     Route::post('push-notification', 'CMS\PushNotificationController@sendNotification')->name('notification.send');
-    Route::post('push-notification-all', 'CMS\PushNotificationController@sendNotificationToAll')->name('notification.send-all');
+    Route::post(
+        'push-notification-all',
+        'CMS\PushNotificationController@sendNotificationToAll'
+    )->name('notification.send-all');
 
     // terms and conditions
 
@@ -168,14 +187,17 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
 
 
     Route::get('mybl/core-product', 'CMS\MyblProductEntryController@index')->name('mybl.product.index');
-    Route::post('mybl/core-product/download', 'CMS\MyblProductEntryController@downloadMyblProducts')->name('mybl.product.download');
+    Route::post(
+        'mybl/core-product/download',
+        'CMS\MyblProductEntryController@downloadMyblProducts'
+    )->name('mybl.product.download');
     Route::post('mybl/core-product', 'CMS\MyblProductEntryController@uploadProductByExcel')
-                                         ->name('mybl.core-product.save');
+        ->name('mybl.core-product.save');
     Route::get('mybl/products', 'CMS\MyblProductEntryController@getMyblProducts')
         ->name('mybl.products.list');
     Route::get('mybl/core-product/details', 'ProductEntryController@getProductDetails')->name('product.details.info');
     Route::get('mybl/products/{product_code}', 'CMS\MyblProductEntryController@getProductDetails')
-          ->name('mybl.products.details');
+        ->name('mybl.products.details');
 
     Route::put('mybl/products/{product_code}', 'CMS\MyblProductEntryController@updateMyblProducts')
         ->name('mybl.product.update');
@@ -194,4 +216,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
         ->name('recharge.prefill-amounts.update');
 
     Route::get('recharge/prefill-amounts/order', 'CMS\PrefillRechargeController@updatePosition');
+
+
+    Route::get('app-launch/create', 'CMS\AppLaunchPopupController@create')->name('app-launch.new');
+    Route::post('app-launch/store', 'CMS\AppLaunchPopupController@store')->name('app-launch.store');
+    Route::get('app-launch', 'CMS\AppLaunchPopupController@index')->name('app-launch.index');
+    Route::get('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@edit')->name('app-launch.edit');
+    Route::post('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@update')->name('app-launch.update');
+    Route::delete('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@destroy')->name('app-launch.delete');
 });

@@ -35,7 +35,7 @@
 
     @if( auth()->user()->can_view('QuickLaunch') )
         <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Quick launch Management</span></a>
+                <span class="menu-title" data-i18n="nav.templates.main">Quick launch</span></a>
             <ul class="menu-content">
                 <li class="{{ is_active_url('quick-launch/panel') }} nav-item"><a href="{{ url('quick-launch/panel') }}"><i
                             class="la la-automobile"></i>
@@ -80,6 +80,10 @@
                 <li class="{{ is_active_url('/priyojon') }} nav-item"><a href="{{ url('priyojon') }}"><i
                             class="la la-futbol-o"></i>
                         <span class="menu-title" data-i18n="nav.templates.main">Priyojon Landing</span></a>
+                </li>
+                <li class="{{ is_active_url('/dynamic-pages') }} nav-item"><a href="{{ url('/dynamic-pages') }}"><i
+                            class="la la-futbol-o"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Other Pages</span></a>
                 </li>
 
             </ul>
@@ -286,7 +290,7 @@
 
     @if( auth()->user()->can_view('Partner') )
         <li class="nav-item"><a href="#"><i class="la la-gift"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Offer Management</span></a>
+                <span class="menu-title" data-i18n="nav.templates.main">Loyalty</span></a>
             <ul class="menu-content">
                 <li class="{{ is_active_url('partners') . is_active_url('partners/create')}}">
                     <a class="menu-item" href="{{ url('partners') }}" data-i18n="nav.templates.vert.classic_menu"><i

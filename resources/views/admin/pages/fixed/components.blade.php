@@ -19,16 +19,16 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                         <tr>
-                            <td width="3%">#</td>
+                            <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <th>Component Type</th>
 {{--                            <th>Component Status</th>--}}
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable">
                             @foreach($shortCodes as $index=>$shortCode)
                                 <tr data-index="{{ $shortCode->id }}" data-position="{{ $shortCode->display_order }}">
-                                    <td width="3%">{{ $index + 1 }}</td>
+                                    <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                     <td>{{ $shortCode->component_title }}{!! $shortCode->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
 {{--                                    <td>--}}
 {{--                                        @if($shortCode->is_active == 1)--}}
@@ -92,7 +92,7 @@
             // });
         });
 
-        var auto_save_url = "{{ url('slider-image-sortable') }}";
+        var auto_save_url = "{{ url('/fixed-page-component-sortable') }}";
     </script>
 @endpush
 

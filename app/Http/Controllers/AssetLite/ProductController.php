@@ -71,9 +71,9 @@ class ProductController extends Controller {
                 ->latest()
                 ->get();
 
-//        return $products;
+        $packageRelatedProduct = $this->offerCategoryService->getRelatedProducts();
 
-        return view('admin.product.index', compact('products', 'type'));
+        return view('admin.product.index', compact('products', 'type', 'packageRelatedProduct'));
     }
 
     public function trendingOfferHome() {
@@ -95,9 +95,7 @@ class ProductController extends Controller {
      * @param $type
      * @return Factory|View
      */
-
-    public function create($type)
-    {
+    public function create($type) {
         $this->info['productCoreCodes'] = $this->productService->unusedProductCore($type);
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['type'] = $type;
@@ -137,14 +135,18 @@ class ProductController extends Controller {
      * @param $type
      * @return RedirectResponse|Redirector
      */
-    public function store(ProductStoreRequest $request, $type) {
-//        dd($request->all());
+    public function store(ProductStoreRequest $request, $type)
+    {
+        $validator = Validator::make($request->all(), [
+                    'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug',
+        ]);
+        if ($validator->fails()) {
+            Session::flash('error', $validator->messages()->first());
+            return redirect()->back();
+        }
 
         $bondhoSimOffer = $this->productService->findBondhoSim();
-
-        if (count($bondhoSimOffer) > 4 &&
-                isset($request->offer_info['other_offer_type_id']) == OfferType::BONDHO_SIM_OFFER
-        ) {
+        if (count($bondhoSimOffer) > 4 && isset($request->offer_info['other_offer_type_id']) == OfferType::BONDHO_SIM_OFFER) {
             Session::flash('error', 'Maximum 4 Bondho SIM offer can be created');
             return redirect()->back();
         }
@@ -184,15 +186,19 @@ class ProductController extends Controller {
      */
     public function edit($type, $id) {
         $product = $this->productService->findProduct($type, $id);
+        $productDetails = $this->productDetailService->findOneDetails($product->id);
         $package_id = SimCategory::where('alias', $type)->first()->id;
         $this->info['previous_page'] = url()->previous();
         $this->info['type'] = $type;
         $this->info['product'] = $product;
+        $this->info['productDetails'] = $productDetails;
         $this->info['tags'] = $this->tagCategoryService->findAll();
         $this->info['offersType'] = $this->offerCategoryService->getOfferCategories($type);
         $this->info['durations'] = $this->durationCategoryService->findAll();
         $this->info['offerInfo'] = $product->offer_info;
         $this->info['price_slabs'] = ProductPriceSlab::get();
+
+//        dd($product);
 
         foreach ($this->info['offersType'] as $offer) {
             $child = OfferCategory::where('parent_id', $offer->id)
@@ -214,6 +220,17 @@ class ProductController extends Controller {
      * @return Response
      */
     public function update(Request $request, $type, $id) {
+
+        $product = $this->productService->findProduct($type, $id);
+         $validator = Validator::make($request->all(), [
+                    'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug,'.$product->id,
+        ]);
+        if ($validator->fails()) {
+            Session::flash('error', $validator->messages()->first());
+            return redirect()->back();
+        }
+
+//        return $request->all();
         $this->productCoreService->updateProductCore($request->all(), $id);
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $type, $id);
@@ -229,7 +246,8 @@ class ProductController extends Controller {
     public function productDetailsEdit($type, $id, $offerType) {
         $products = $this->productService->findRelatedProduct($type, $id);
         $productDetail = $this->productService->detailsProduct($id);
-        $otherAttributes = $productDetail->product_details->other_attributes;
+        $otherAttributes = isset($productDetail->product_details->other_attributes) ? $productDetail->product_details->other_attributes : null;
+
         return view('admin.product.product_details', compact('type', 'productDetail', 'products', 'offerType', 'otherAttributes'));
     }
 
@@ -240,14 +258,11 @@ class ProductController extends Controller {
      * @return RedirectResponse|Redirector
      */
     public function productDetailsUpdate(Request $request, $type, $id) {
-
         $validator = Validator::make($request->all(), [
                     'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
-                    'url_slug' => 'required|regex:/^\S*$/u',
         ]);
         if ($validator->fails()) {
             Session::flash('error', $validator->messages()->first());
-//            return redirect("offers/$type");
         }
 
         $this->productDetailService->updateOtherRelatedProduct($request, $id);
@@ -265,6 +280,12 @@ class ProductController extends Controller {
 
 
         return redirect("offers/$type");
+    }
+
+    public function packageRelatedProductStore(Request $request) {
+        $response = $this->offerCategoryService->storeRelatedProduct($request->all());
+        Session::flash('message', $response->content());
+        return redirect("offers/$request->type");
     }
 
     public function existProductCore($productCode) {

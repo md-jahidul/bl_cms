@@ -94,22 +94,59 @@ class BusinessOthersService {
                 'short_details_bn' => 'required',
                 'banner_photo' => 'required|mimes:jpg,jpeg,png',
                 'icon' => 'required|mimes:jpg,jpeg,png',
+                'url_slug' => 'required|regex:/^\S*$/u',
+                'banner_name' => 'required|regex:/^\S*$/u',
+                'details_banner_name' => 'required|regex:/^\S*$/u',
             ]);
 
 
-
             //file upload in storege
-            $bannerPath = "";
-            if ($request['banner_photo'] != "") {
-                $bannerPath = $this->upload($request['banner_photo'], 'assetlite/images/business-images');
-            }
+
+            $directoryPath = 'assetlite/images/business-images';
+
+
+            //icon upload
             $iconPath = "";
             if ($request['icon'] != "") {
-                $iconPath = $this->upload($request['icon'], 'assetlite/images/business-images');
+                $iconPath = $this->upload($request['icon'], $directoryPath);
             }
 
+
+            //product photo
+            $photoNameWeb = $request['banner_name'] . '-web';
+            $photoNameMob = $request['banner_name'] . '-mobile';
+            $photoWeb = "";
+            $photoMob = "";
+            if (!empty($request['banner_photo'])) {
+
+                $photoWeb = $this->upload($request['banner_photo'], $directoryPath, $photoNameWeb);
+            }
+
+            if (!empty($request['banner_mobile'])) {
+
+                $photoMob = $this->upload($request['banner_mobile'], $directoryPath, $photoNameMob);
+            }
+
+
+            //details banner photo
+            $bannerNameWeb = $request['details_banner_name'] . '-web';
+            $bannerNameMob = $request['details_banner_name'] . '-mobile';
+            $bannerWeb = "";
+            $bannerMob = "";
+            if (!empty($request['details_banner_web'])) {
+
+                $bannerWeb = $this->upload($request['details_banner_web'], $directoryPath, $bannerNameWeb);
+            }
+
+            if (!empty($request['details_banner_mob'])) {
+
+                $bannerMob = $this->upload($request['details_banner_mob'], $directoryPath, $bannerNameMob);
+            }
+
+
+
             //save data in database 
-            $serviceId = $this->otherRepo->saveService($bannerPath, $iconPath, $request);
+            $serviceId = $this->otherRepo->saveService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request);
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
             $parentTypes = $types[$request->type];
 
@@ -267,7 +304,7 @@ class BusinessOthersService {
                 $altText = $ptAlt[$position];
                 $photoVal = $ptPhoto[$position];
                 $bannerPath = $this->upload($photoVal, 'assetlite/images/business-images');
-                $this->photoTextRepo->saveComponent($position, $textEn,$textBn, $altText, $bannerPath, $serviceId, $oldComponents);
+                $this->photoTextRepo->saveComponent($position, $textEn, $textBn, $altText, $bannerPath, $serviceId, $oldComponents);
             }
         }
     }
@@ -389,17 +426,17 @@ class BusinessOthersService {
                 $pTwo = !empty($pcData['photoTwo']) ? $pcData['photoTwo'][$position] : "";
                 $pThree = !empty($pcData['photoThree']) ? $pcData['photoThree'][$position] : "";
                 $pFour = !empty($pcData['photoFour']) ? $pcData['photoFour'][$position] : "";
-                
-                $data['altOne'] = $pcData['photoOneAlt'][$position];
-                $data['altTwo']  = $pcData['photoTwoAlt'][$position];
-                $data['altThree']  = $pcData['photoThreeAlt'][$position];
-                $data['altFour']  = $pcData['photoFourAlt'][$position];
 
-                $data['onePath']  = !empty($pOne) ? $this->upload($pOne, 'assetlite/images/business-images') : "";
-                $data['twoPath']  = !empty($pTwo) ? $this->upload($pTwo, 'assetlite/images/business-images') : "";
-                $data['threePath']  = !empty($pThree) ? $this->upload($pThree, 'assetlite/images/business-images') : "";
-                $data['fourPath']  = !empty($pFour) ? $this->upload($pFour, 'assetlite/images/business-images') : "";
-                
+                $data['altOne'] = $pcData['photoOneAlt'][$position];
+                $data['altTwo'] = $pcData['photoTwoAlt'][$position];
+                $data['altThree'] = $pcData['photoThreeAlt'][$position];
+                $data['altFour'] = $pcData['photoFourAlt'][$position];
+
+                $data['onePath'] = !empty($pOne) ? $this->upload($pOne, 'assetlite/images/business-images') : "";
+                $data['twoPath'] = !empty($pTwo) ? $this->upload($pTwo, 'assetlite/images/business-images') : "";
+                $data['threePath'] = !empty($pThree) ? $this->upload($pThree, 'assetlite/images/business-images') : "";
+                $data['fourPath'] = !empty($pFour) ? $this->upload($pFour, 'assetlite/images/business-images') : "";
+
 
                 $this->photoRepo->saveComponent($position, $data, $srvsId, $oldComponents);
             }
@@ -749,8 +786,8 @@ class BusinessOthersService {
      * Get business package by id
      * @return Response
      */
-    public function getServiceById($serviceId) {
-        $response = $this->otherRepo->getServiceById($serviceId);
+    public function getServiceById($serviceId, $type = '') {
+        $response = $this->otherRepo->getServiceById($serviceId, $type);
         return $response;
     }
 
@@ -760,8 +797,11 @@ class BusinessOthersService {
      */
     public function getFeaturesByService($serviceType, $serviceId) {
         $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
-        $parentType = $types[$serviceType];
-        $response = $this->asgnFeatureRepo->getAssignedFeatures($serviceId, $parentType);
+        $response = [];
+        if (isset($types[$serviceType])) {
+            $parentType = $types[$serviceType];
+            $response = $this->asgnFeatureRepo->getAssignedFeatures($serviceId, $parentType);
+        }
         return $response;
     }
 
@@ -780,23 +820,19 @@ class BusinessOthersService {
                 'name_bn' => 'required',
                 'short_details_en' => 'required',
                 'short_details_bn' => 'required',
+                'url_slug' => 'required|regex:/^\S*$/u',
+                'banner_name' => 'required|regex:/^\S*$/u',
+                'details_banner_name' => 'required|regex:/^\S*$/u',
             ]);
 
             //banner file replace in storege
-            $bannerPath = "";
-            if ($request['banner_photo'] != "") {
-                $bannerPath = $this->upload($request['banner_photo'], 'assetlite/images/business-images');
+            $directoryPath = 'assetlite/images/business-images/';
 
-                //delete old photo
-                if ($request['old_banner']) {
-                    $this->deleteFile($request['old_banner']);
-                }
-            }
 
             //icon file replace in storege
             $iconPath = "";
             if ($request['icon'] != "") {
-                $iconPath = $this->upload($request['icon'], 'assetlite/images/business-images');
+                $iconPath = $this->upload($request['icon'], $directoryPath);
 
                 //delete old photo
                 if ($request['old_icon']) {
@@ -804,8 +840,66 @@ class BusinessOthersService {
                 }
             }
 
+            //product photo
+            $photoNameWeb = $request['banner_name'] . '-web';
+            $photoNameMob = $request['banner_name'] . '-mobile';
+            $photoWeb = "";
+            $photoMob = "";
+            if (!empty($request['banner_photo'])) {
+
+                $request['old_banner'] != "" ? $this->deleteFile($request['old_banner']) : "";
+                $photoWeb = $this->upload($request['banner_photo'], $directoryPath, $photoNameWeb);
+            }
+
+            if (!empty($request['banner_mobile'])) {
+
+                $request['old_banner_mob'] != "" ? $this->deleteFile($request['old_banner_mob']) : "";
+                $photoMob = $this->upload($request['banner_mobile'], $directoryPath, $photoNameMob);
+            }
+
+            //product photo rename
+            if ($request['old_banner_name'] != $request['banner_name']) {
+
+                if (empty($request['banner_photo'])) {
+                    $photoWeb = $this->rename($request['old_banner'], $photoNameWeb, $directoryPath);
+                }
+
+                if (empty($request['banner_mobile'])) {
+                    $photoMob = $this->rename($request['old_banner_mob'], $photoNameMob, $directoryPath);
+                }
+            }
+
+            //details banner
+            $bannerNameWeb = $request['details_banner_name'] . '-web';
+            $bannerNameMob = $request['details_banner_name'] . '-mobile';
+            $bannerWeb = "";
+            $bannerMob = "";
+            if (!empty($request['details_banner_web'])) {
+
+                $request['old_details_banner_web'] != "" ? $this->deleteFile($request['old_details_banner_web']) : "";
+                $bannerWeb = $this->upload($request['details_banner_web'], $directoryPath, $bannerNameWeb);
+            }
+
+            if (!empty($request['details_banner_mob'])) {
+
+                $request['old_details_banner_mob'] != "" ? $this->deleteFile($request['old_details_banner_mob']) : "";
+                $bannerMob = $this->upload($request['details_banner_mob'], $directoryPath, $bannerNameMob);
+            }
+
+            //details banner rename
+            if ($request['old_details_banner_name'] != $request['details_banner_name']) {
+
+                if (empty($request['details_banner_web'])) {
+                    $bannerWeb = $this->rename($request['old_details_banner_web'], $bannerNameWeb, $directoryPath);
+                }
+
+                if (empty($request['details_banner_mob'])) {
+                    $bannerMob = $this->rename($request['old_details_banner_mob'], $bannerNameMob, $directoryPath);
+                }
+            }
+
             //save data in database 
-            $this->otherRepo->updateService($bannerPath, $iconPath, $request);
+            $this->otherRepo->updateService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request);
 
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
             $parentTypes = $types[$request->type];
@@ -823,7 +917,7 @@ class BusinessOthersService {
         } catch (\Exception $e) {
             $response = [
                 'success' => 0,
-                'message' => $e->getMessage()
+                'message' => $e
             ];
             return $response;
         }

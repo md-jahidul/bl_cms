@@ -23,7 +23,7 @@
                             @method('put')
                         <div class="row">
                             <input type="hidden" name="previous_page" value="{{ $previous_page  }}">
-
+                            <input type="hidden" name="type" value="{{ $type }}">
                             <div class="form-group col-md-6 {{ $errors->has('product_type_id') ? ' error' : '' }}">
                                 <label for="offer_category_id" class="required">Offer Type</label>
                                 <select class="form-control" name="offer_category_id" id="offer_type"
@@ -99,6 +99,10 @@
                                     @include('layouts.partials.products.internet')
                                 </slot>
 
+                                <slot class="{{ $product->offer_category_id == OfferType::BUNDLES ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
+                                    @include('layouts.partials.products.bundle')
+                                </slot>
+
                                 @if(strtolower($type) == 'prepaid')
                                     <slot class="{{ $product->offer_category_id == OfferType::CALL_RATE ? '' : 'd-none' }}" id="call_rate" data-offer-type="call_rate">
                                         @include('layouts.partials.products.call_rate')
@@ -106,18 +110,22 @@
                                     <slot class="{{ $product->offer_category_id == OfferType::VOICE ? '' : 'd-none' }}" id="voice" data-offer-type="voice">
                                         @include('layouts.partials.products.voice')
                                     </slot>
-                                    <slot class="{{ $product->offer_category_id == OfferType::BUNDLES ? '' : 'd-none' }}" id="bundles" data-offer-type="bundles">
-                                        @include('layouts.partials.products.bundle')
-                                    </slot>
                                 @endif
 
                                 <slot class="{{ $product->offer_category_id == OfferType::PACKAGES ? '' : 'd-none' }}" id="packages" data-offer-type="packages">
                                     @include('layouts.partials.products.packages')
+                                    @include('layouts.partials.products.common-field.price_vat_mrp')
+                                    @include('layouts.partials.products.common-field.internet_volume')
+                                    @include('layouts.partials.products.common-field.minute_volume')
+                                    @include('layouts.partials.products.common-field.call_rate')
+                                    @include('layouts.partials.products.common-field.call_rate_unit')
                                 </slot>
 
                                 <slot class="{{ $product->offer_category_id == OfferType::OTHERS ? '' : 'd-none' }}" id="others" data-offer-type="others">
                                     @include('layouts.partials.products.other')
                                 </slot>
+
+                                @include('layouts.partials.products.common-field.search-related-field')
 
                                 <div class="col-md-6">
                                     <label></label>

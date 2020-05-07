@@ -16,13 +16,13 @@ class ProductDetailRepository extends BaseRepository
 {
     public $modelName = ProductDetail::class;
 
-    public function insertProductDetail($productId)
+    public function saveOrUpdateProductDetail($productId)
     {
-        $this->model->create([
-           'product_id' => $productId
-        ]);
+        $this->model->updateOrCreate(
+            [ 'product_id' => $productId]
+        );
     }
-    
+
     public function saveProductDetails($data, $productId)
     {
         $this->model->where('product_id', $productId)->update($data);

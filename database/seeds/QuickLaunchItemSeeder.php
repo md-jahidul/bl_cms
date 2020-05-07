@@ -13,7 +13,7 @@ class QuickLaunchItemSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('quick_launch_items')->truncate();
+//        DB::table('quick_launch_items')->truncate();
 
         $quick_launch_items = [];
         $items = ["New connection","Packages","Roaming", "Digital Services","Helpline","My BL App","Helpline","Bondho SIM Offer","Banglalink Advance","eShop","Lifestyle & Benefits","Banglalink 4G"];
@@ -26,7 +26,7 @@ class QuickLaunchItemSeeder extends Seeder
             $quick_launch_items[] = [
                 'title_en' => $item,
                 'title_bn' => $item_bn_text[$key],
-                'image_url' => 'assetlite/images/quick-launch-items/' . strtolower(str_replace(" ", "-", $item)) . '.png',
+//                'image_url' => 'assetlite/images/quick-launch-items/' . strtolower(str_replace(" ", "-", $item)) . '.png',
                 'alt_text' => $item,
                 'link' => strtolower(str_replace(" ", "-", $item)),
                 'type' => 'panel',
@@ -40,7 +40,7 @@ class QuickLaunchItemSeeder extends Seeder
             $quick_launch_items[] = [
                 'title_en' => $item,
                 'title_bn' => $qlButtonItemsBn[$key],
-                'image_url' => 'assetlite/images/quick-launch-items/' . strtolower(str_replace(" ", "-", $item)) . '.svg',
+//                'image_url' => 'assetlite/images/quick-launch-items/' . strtolower(str_replace(" ", "-", $item)) . '.svg',
                 'alt_text' => $item,
                 'link' => strtolower(str_replace(" ", "-", $item)),
                 'type' => 'button',
@@ -50,6 +50,6 @@ class QuickLaunchItemSeeder extends Seeder
             ];
         }
 
-        DB::table('quick_launch_items')->insert($quick_launch_items);
+//        DB::table('quick_launch_items')->insert($quick_launch_items);
     }
 }

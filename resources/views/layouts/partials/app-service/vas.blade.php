@@ -1,4 +1,5 @@
-
+@include('layouts.partials.app-service.common-field.validity-unit')
+@include('layouts.partials.app-service.common-field.price')
 @include('layouts.partials.app-service.common-field.tag')
 
 @include('layouts.partials.app-service.common-field.product-image', ['imgField' => 'imgTwo', 'showImg' => 'imgShowTwo'])
@@ -28,7 +29,7 @@
 <div class="form-group col-md-6">
     <label for="ussd_bn">USSD Code (Bangla)</label>
     <input type="text" name="ussd_bn"  class="form-control" placeholder="Enter offer ussd code in Bangla"
-     value="{{ !empty($appServiceProduct->ussd_bn) ? $appServiceProduct->ussd_bn : null }}">
+     value="{{ !empty($appServiceProduct->ussd_Bn) ? $appServiceProduct->ussd_Bn : null }}">
 </div>
 
 <div class="form-group col-md-6 ">
@@ -71,14 +72,28 @@
 
 <div class="col-md-6">
     <div class="form-group">
-        <label for="can_active" class="mr-1">Can Active:</label>
-        <input type="checkbox" name="can_active" value="1" id="can_active" {{ isset($appServiceProduct->can_active) ?? ($appServiceProduct->can_active == 1) ? 'checked' : '' }}>
+        <label for="can_active" class="mr-1">Show Active Button:</label>
+        <input type="checkbox" name="can_active" value="1" id="can_active" {{ (isset($appServiceProduct) && ($appServiceProduct->can_active == 1)) ? 'checked' : '' }}>
     </div>
 </div>
 
 <div class="col-md-6">
     <div class="form-group">
         <label for="show_in_vas" class="mr-1">Show In VAS Tab:</label>
-        <input type="checkbox" name="show_in_vas" value="1" id="show_in_vas" {{ isset($appServiceProduct->show_in_vas) ?? ($appServiceProduct->show_in_vas == 1) ? 'checked' : '' }}>
+        <input type="checkbox" name="show_in_vas" value="1" id="show_in_vas" {{ (isset($appServiceProduct) && ($appServiceProduct->show_in_vas == 1)) ? 'checked' : '' }} >
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="show_ussd" class="mr-1">Show USSD:</label>
+        <input type="checkbox" name="show_ussd" value="1" id="show_ussd" {{ (isset($appServiceProduct->show_ussd) && ($appServiceProduct->show_ussd == 1)) ? 'checked' : '' }} >
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="form-group">
+        <label for="show_subscribe" class="mr-1">Show Subscribe Text:</label>
+        <input type="checkbox" name="show_subscribe" value="1" id="show_subscribe" {{ isset($appServiceProduct->show_subscribe) && ($appServiceProduct->show_subscribe == 1) ? 'checked' : '' }} >
     </div>
 </div>

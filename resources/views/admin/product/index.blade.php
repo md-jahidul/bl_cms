@@ -1,3 +1,19 @@
+@php
+    function match($productId, $relatedProducts, $type){
+
+        $relatedProducts = isset($relatedProducts[$type . "_related_product_id"]) ? $relatedProducts[$type . "_related_product_id"] : null;
+
+        if ($relatedProducts){
+            foreach ($relatedProducts as $relatedProduct){
+                if ($productId == $relatedProduct){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+@endphp
+
 @extends('layouts.admin')
 @section('title', 'Product List')
 @section('card_name', 'Product List')
@@ -19,12 +35,13 @@
                         <thead>
                             <tr>
                                 <td width="3%">#</td>
-                                <th width="20%">Product Name</th>
+                                <th width="10%">Product Name</th>
+                                <th width="10%">Name</th>
                                 <th width="4%">Product ID</th>
                                 <th width="6%">USSD</th>
                                 <th width="6%">Offer Type</th>
                                 <th width="8%" class="text-center">Details</th>
-                                <th width="8%" class="text-center">Trending Offer</th>
+                                <th width="4%" class="text-center">Trending Offer</th>
                                 <th width="12%" class="">Action</th>
                             </tr>
                         </thead>
@@ -34,6 +51,7 @@
                                     <tr data-index="{{ $product->id }}" data-position="{{ $product->display_order }}">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $product->name_en }}{!! $product->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
+                                        <td>{{ $product->product_core['name'] }}</td>
                                         <td>{{ $product->product_code }}</td>
                                         <td>{{ $product->product_core['activation_ussd'] }}</td>
                                         <td>{{ $product->offer_category->name_en }}</td>
@@ -63,7 +81,49 @@
                 </div>
             </div>
         </div>
+    </section>
 
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <h4 class="menu-title"><strong>Package Related Product</strong></h4><hr>
+                    <div class="card-body card-dashboard">
+                        <form role="form" action="{{ url("package/related-product/store") }}" method="POST" novalidate enctype="multipart/form-data">
+                            @csrf
+                            {{method_field('POST')}}
+                            <div class="row">
+                                    <div class="form-group select-role col-md-12 mb-0 {{ $errors->has('related_product_id') ? ' error' : '' }}">
+                                        <label for="related_product_id">Related Product</label>
+                                        <div class="role-select">
+                                            <select class="select2 form-control" multiple="multiple" name="other_attributes[{{$type}}_related_product_id][]">
+                                                @foreach($products as $product)
+                                                    @if(strtolower($product->offer_category->name_en) == 'packages')
+                                                        <option value="{{ $product->id }}" {{ match($product->id, $packageRelatedProduct['other_attributes'], $type) ? 'selected' : '' }}>{{$product->name_en." / ".$product->product_code}}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('related_product_id'))
+                                            <div class="help-block">  {{ $errors->first('related_product_id') }}</div>
+                                        @endif
+                                    </div>
+                                    <input type="hidden" name="type" value="{{ $type }}">
+                                <div class="form-actions col-md-12">
+                                    <div class="pull-right">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                class="la la-check-square-o"></i> Save
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
 @stop

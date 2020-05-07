@@ -118,12 +118,12 @@
 
                                                         <div class="form-group col-md-6 component_count">
                                                             <label for="alt_text">Feature Title (English)</label>
-                                                            <input type="text" name="multi_item[feature_title_en-{{$i}}]" class="form-control" value="{{ $image['feature_title_en'] }}">
+                                                            <input type="text" name="multi_item[feature_title_en-{{$i}}]" class="form-control" value="{{ isset($image['feature_title_en']) ? $image['feature_title_en'] : null }}">
                                                         </div>
 
                                                         <div class="form-group col-md-6">
                                                             <label for="alt_text">Feature Title (Bangla)</label>
-                                                            <input type="text" name="multi_item[feature_title_bn-{{$i}}]" class="form-control" value="{{ $image['feature_title_bn'] }}">
+                                                            <input type="text" name="multi_item[feature_title_bn-{{$i}}]" class="form-control" value="{{ isset($image['feature_title_bn']) ? $image['feature_title_bn'] : null }}">
                                                         </div>
 
                                                         <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$i}}">
@@ -132,30 +132,35 @@
                                                             <div class="form-group">
                                                                 <label for="message">Multiple Image</label>
                                                                 <input type="file" class="dropify" name="multi_item[image_url-{{ $i }}]"
-                                                                       data-default-file="{{ config('filesystems.file_base_url') . $image['image_url'] }}"
+                                                                       data-default-file="{{ isset($image['image_url']) ? config('filesystems.file_base_url') . $image['image_url'] : null }}"
                                                                        data-height="80"/>
                                                                 <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                             </div>
                                                         </div>
 
-                                                        <div class="form-group col-md-6 option-{{ $i }}">
+                                                        <div class="form-group col-md-4 option-{{ $i }}">
                                                             <label for="alt_text">Alt Text</label>
-                                                            <input type="text" name="multi_item[alt_text-{{ $i }}]" value="{{ $image['alt_text'] }}" class="form-control">
+                                                            <input type="text" name="multi_item[alt_text-{{ $i }}]" value="{{ isset($image['alt_text']) ? $image['alt_text'] : null }}" class="form-control">
                                                         </div>
 
-                                                        <div class="form-group col-md-6">
+                                                        <div class="form-group col-md-4">
                                                             <label for="button_en">Button Title (English)</label>
-                                                            <input type="text" name="multi_item[button_en-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla" value="{{ $image['button_en'] }}">
+                                                            <input type="text" name="multi_item[button_en-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla" value="{{ isset($image['button_en']) ? $image['button_en'] : null }}">
                                                         </div>
 
-                                                        <div class="form-group col-md-6">
+                                                        <div class="form-group col-md-4">
                                                             <label for="button_bn" >Button Title (Bangla)</label>
-                                                            <input type="text" name="multi_item[button_bn-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla" value="{{ $image['button_bn'] }}">
+                                                            <input type="text" name="multi_item[button_bn-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla" value="{{ isset($image['button_bn']) ? $image['button_bn'] : null }}">
                                                         </div>
 
                                                         <div class="form-group col-md-6">
-                                                            <label for="button_link" >Button URL</label>
-                                                            <input type="text" name="multi_item[button_link-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla" value="{{ $image['button_link'] }}">
+                                                            <label for="button_link" >Details (English)</label>
+                                                            <textarea name="multi_item[details_en-{{ $i }}]" rows="5" class="form-control" placeholder="Enter feature details in English">{{ isset($image['details_en']) ? $image['details_en'] : null }}</textarea>
+                                                        </div>
+
+                                                        <div class="form-group col-md-6">
+                                                            <label for="button_link" >Details (Bangla)</label>
+                                                            <textarea name="multi_item[details_bn-{{ $i }}]" rows="5" class="form-control" placeholder="Enter feature details in Bangla">{{ isset($image['details_bn']) ? $image['details_bn'] : null }}</textarea>
                                                         </div>
 
 {{--                                                        @if($i == 1)--}}
@@ -198,7 +203,7 @@
                                                                 <div class="form-group">
                                                                     <label for="message">Multiple Image</label>
                                                                     <input type="file" class="dropify" name="multi_item[image_url-{{ $i }}]"
-                                                                           data-default-file="{{ config('filesystems.file_base_url') . $image['image_url'] }}"
+                                                                           data-default-file="{{ isset($image['image_url']) ? config('filesystems.file_base_url') . $image['image_url'] : '' }}"
                                                                            data-height="80"/>
                                                                     <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                                 </div>
@@ -404,22 +409,26 @@
                     '         <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
                     '     </div>\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    ' <div class="form-group col-md-4 option-'+total_option+'">\n' +
                     '     <label for="alt_text">Alt Text</label>\n' +
-                    '     <input type="text" name="multi_item[alt_text-'+total_option+']" class="form-control">\n' +
+                    '     <input type="text" name="multi_item[alt_text-'+total_option+']" class="form-control" placeholder="Enter image alt text">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    ' <div class="form-group col-md-4 option-'+total_option+'">\n' +
                     '     <label for="button_en">Button Title (English)</label>\n' +
                     '     <input type="text" name="multi_item[button_en-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    ' <div class="form-group col-md-4 option-'+total_option+'">\n' +
                     '     <label for="button_bn" >Button Title (Bangla)</label>\n' +
                     '     <input type="text" name="multi_item[button_bn-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6 option-'+total_option+'">\n' +
-                    '     <label for="button_link" >Button URL</label>\n' +
-                    '     <input type="text" name="multi_item[button_link-'+total_option+']"  class="form-control" placeholder="Enter company name bangla" value="">\n' +
-                    ' </div>\n' +
+                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '     <label for="button_link" >Details (English)</label>\n' +
+                    '     <textarea name="multi_item[details_en-'+total_option+']" rows="5" class="form-control" placeholder="Enter feature details in English"></textarea>\n' +
+                    '</div>\n' +
+                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '     <label for="button_link" >Details (Bangla)</label>\n' +
+                    '     <textarea name="multi_item[details_bn-'+total_option+']" rows="5" class="form-control" placeholder="Enter feature details in Bangla"></textarea>\n' +
+                    '</div>\n' +
                     '<div class="form-group col-md-1 option-'+total_option+'">\n' +
                     '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
                     '</div>';

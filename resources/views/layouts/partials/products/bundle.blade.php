@@ -7,11 +7,13 @@
 
 @include('layouts.partials.products.common-field.internet_volume')
 
+@include('layouts.partials.products.common-field.sms_volume')
+
 @include('layouts.partials.products.common-field.call_rate')
 
 @include('layouts.partials.products.common-field.call_rate_unit')
 
-@include('layouts.partials.products.common-field.sms_volume')
+@include('layouts.partials.products.common-field.sms_rate')
 
 @include('layouts.partials.products.common-field.sms_rate_unit')
 
@@ -24,4 +26,5 @@
 @include('layouts.partials.products.common-field.balance_check')
 
 @include('layouts.partials.products.common-field.tag')
+
 

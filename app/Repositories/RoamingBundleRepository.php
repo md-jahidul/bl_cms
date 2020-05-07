@@ -104,19 +104,19 @@ class RoamingBundleRepository extends BaseRepository {
 
                     if ($rowNumber > 1) {
                         $insertdata[] = array(
-                            'product_code' => trim(iconv("UTF-8", "ISO-8859-1", $cells[0]->getValue()), " \t\n\r\0\x0B\xA0"),
-                            'subscription_type' => trim(iconv("UTF-8", "ISO-8859-1", $cells[1]->getValue()), " \t\n\r\0\x0B\xA0"),
-                            'country' => trim(iconv("UTF-8", "ISO-8859-1", $cells[2]->getValue()), " \t\n\r\0\x0B\xA0"),
-                            'operator' => trim(iconv("UTF-8", "ISO-8859-1", $cells[3]->getValue()), " \t\n\r\0\x0B\xA0"),
+                            'product_code' => trim($cells[0]->getValue()),
+                            'subscription_type' => trim($cells[1]->getValue()),
+                            'country' => trim($cells[2]->getValue()),
+                            'operator' => trim($cells[3]->getValue()),
                             'package_name_en' => trim($cells[4]->getValue()),
                             'package_name_bn' => trim($cells[5]->getValue()),
                             'data_volume' => trim($cells[6]->getValue()),
                             'volume_data_unit' => trim($cells[7]->getValue()),
-                            'validity' => trim($cells[8]->getValue()),
-                            'validity_unit' => trim($cells[9]->getValue()),
-                            'mrp' => trim($cells[10]->getValue()),
-                            'price' => trim($cells[11]->getValue()),
-                            'tax' => trim($cells[12]->getValue()),
+                            'sms_volume' => trim($cells[8]->getValue()),
+                            'minute_volume' => trim($cells[9]->getValue()),
+                            'validity' => trim($cells[10]->getValue()),
+                            'validity_unit' => trim($cells[11]->getValue()),
+                            'mrp' => trim($cells[12]->getValue()),
                         );
                     }
                     $rowNumber++;

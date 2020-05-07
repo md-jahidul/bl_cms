@@ -15,7 +15,12 @@ class ProductDetail extends Model
             'offer_details_bn',
             'other_attributes',
             'banner_image_url',
-            'banner_alt_text'
+            'banner_image_mobile',
+            'banner_name',
+            'banner_alt_text',
+            'url_slug',
+            'schema_markup',
+            'page_header',
         ];
 
     protected $casts = [

@@ -186,6 +186,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('offers/{type}/{id}/update', 'AssetLite\ProductController@update')->name('product.update');
     Route::get('offers/{type}/{id}/show', 'AssetLite\ProductController@show')->name('product.show');
 
+    Route::post('package/related-product/store', 'AssetLite\ProductController@packageRelatedProductStore');
+
     // Product Offers Details  ======================================
     Route::get('offers/{type}/{id}/{offerType}/details', 'AssetLite\ProductController@productDetailsEdit')
         ->name('product.details');
@@ -262,7 +264,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::get('device-offer-status-change', 'AssetLite\DeviceOfferController@offerStatusChange')
         ->name('offer.status.change');
-    Route::get('delete-device-offer/{id}', 'AssetLite\DeviceOfferController@deleteDeviceOffer');
+    Route::get('delete-device-offer/{id?}', 'AssetLite\DeviceOfferController@deleteDeviceOffer');
 
 
 
@@ -294,6 +296,18 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('about-page/{slug}', 'AssetLite\PriyojonController@aboutPageView')->name('about-page');
     Route::put('about-page/update', 'AssetLite\PriyojonController@aboutPageUpdate')
         ->name('about-page.update');
+    
+    
+    
+
+    // Dynamic Pages ================================
+    Route::get('dynamic-pages/', 'AssetLite\DynamicPageController@index');
+    Route::get('dynamic-pages/create', 'AssetLite\DynamicPageController@create');
+    Route::get('dynamic-pages/edit/{id}', 'AssetLite\DynamicPageController@edit');
+    Route::post('dynamic-pages/save', 'AssetLite\DynamicPageController@savePage');
+    Route::get('dynamic-pages/delete/{id}', 'AssetLite\DynamicPageController@deletePage');
+    
+    
 
 //    Route::get('about-reward', 'AssetLite\PriyojonController@aboutRewardPoint')->name('about-reward');
 //    Route::put('about-reward/update', 'AssetLite\PriyojonController@aboutRewardPointUpdate')
@@ -318,6 +332,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('fixed-pages/{id}/meta-tag/{metaId}/update', 'AssetLite\FixedPageController@metaTagsUpdate');
     Route::get('fixed-pages/{pageId}/component/{componentId}', 'AssetLite\FixedPageController@fixedPageStatusUpdate')
         ->name('update-component-status');
+
+    Route::get('/fixed-page-component-sortable', 'AssetLite\FixedPageController@componentSortable');
     // Route::get('dynamic-pages', 'AssetLite\FixedPageController@index');
 
     Route::resource('questions', 'AssetLite\QuestionController');
@@ -388,6 +404,8 @@ Route::middleware('authorize', 'auth')->group(function () {
 
 
     //__category
+    Route::get('business-category-get/{catId}', 'AssetLite\BusinessGeneralController@getCategory');
+    Route::post('business/update-category', 'AssetLite\BusinessGeneralController@updateCategory');
     Route::get('business-category-name-change', 'AssetLite\BusinessGeneralController@categoryNameChange')->name('business.category.name.save');
     Route::get('business-category-home-status-change', 'AssetLite\BusinessGeneralController@categoryStatusChange')->name('business.category.home.status.change');
     Route::post('business-category-banner-save', 'AssetLite\BusinessGeneralController@categoryBannerSave')
@@ -458,7 +476,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('business-others-components/{serviceId}', 'AssetLite\BusinessOthersController@addComponent');
     Route::post('business-others-save', 'AssetLite\BusinessOthersController@saveService')->name("business.other.save");
     Route::post('business-component-save', 'AssetLite\BusinessOthersController@saveComponents')->name("business.component.save");
-    Route::get('business-others-components-list/{serviceId}', 'AssetLite\BusinessOthersController@componentList');
+    Route::get('business-others-components-list/{serviceId}/{type?}', 'AssetLite\BusinessOthersController@componentList');
 
     Route::get('business-others-component-edit/{serviceId}/{position}/{type}', 'AssetLite\BusinessOthersController@editComponent');
     Route::post('business-others-component-update', 'AssetLite\BusinessOthersController@updateComponents')
@@ -531,7 +549,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('roaming/bundle/create', 'AssetLite\RoamingBundleController@bundleCreate');
     Route::post('roaming/bundle/store', 'AssetLite\RoamingBundleController@bundleStore')
         ->name('bundle.store');
-    Route::get('roaming/bundle/edit/{id}', 'AssetLite\RoamingBundleController@bundleEdit');
+    Route::get('roaming/bundle/details/{id}', 'AssetLite\RoamingBundleController@bundleEdit');
     Route::put('roaming/bundle/update/{bundleId}', 'AssetLite\RoamingBundleController@updateBundle')
         ->name('bundle.update');
     Route::post('roaming-bundle-list', 'AssetLite\RoamingBundleController@roamingBundleList')
@@ -574,6 +592,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::post('ecarrer-items/{parent_id}/{id}/update', 'AssetLite\EcareerItemController@update')->name('ecarrer.items.update');
     Route::get('ecarrer-items/{parent_id}/destroy/{id}', 'AssetLite\EcareerItemController@destroy')->name('ecarrer.items.destroy');
+    Route::get('ecarrer-items/photo-delete/{id}', 'AssetLite\EcareerItemController@deletePhoto');
 
     // eCarrer Life at banglalink teams =========================================================
     Route::get('life-at-banglalink/teams', 'AssetLite\EcareerController@teamsIndex')->name('life.at.banglalink.teams');

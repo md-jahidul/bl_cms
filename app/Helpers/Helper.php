@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Helpers;
+
 use App\Models\Config;
+use Carbon\Carbon;
 
 class Helper
 {
@@ -78,6 +80,7 @@ class Helper
             "NOTIFICATIONS"           => "Notifications",
             "PRIVACY_POLICY"          => "Privacy Policy",
             "PROFILE"                 => "Profile",
+            "PURCHASE"                => "Purchase Product",
             "RECHARGE"                => "Recharge",
             "RECHARGE_HISTORY"        => "Recharge History",
             "RECHARGE_OFFERS"         => "Recharge Offers",
@@ -111,4 +114,21 @@ class Helper
         ];
     }
 
+
+    /**
+     * @param $start_date
+     * @param $end_date
+     */
+    public static function formateDaterangeData($start_date, $end_date)
+    {
+        //dd($end_date);
+        $s = Carbon::createFromFormat('Y-m-d H:i:s', trim($start_date))
+            ->setTimezone('Asia/Dhaka')->format('Y/m/d h:i A');
+
+        $e = Carbon::createFromFormat('Y-m-d H:i:s', trim($end_date))
+            ->setTimezone('Asia/Dhaka')->format('Y/m/d h:i A');
+
+        //dd($s . ' - ' . $e);
+        return $s . ' - ' . $e;
+    }
 }

@@ -38,8 +38,7 @@ class BusinessPackageService {
      * @param BusinessAssignedFeaturesRepository $asgnFeatureRepo
      * @param BusinessRelatedProductRepository $relatedProductRepo
      */
-    public function __construct(BusinessPackageRepository $packageRepo, BusinessFeaturesRepository $featureRepo,
-            BusinessAssignedFeaturesRepository $asgnFeatureRepo, BusinessRelatedProductRepository $relatedProductRepo) {
+    public function __construct(BusinessPackageRepository $packageRepo, BusinessFeaturesRepository $featureRepo, BusinessAssignedFeaturesRepository $asgnFeatureRepo, BusinessRelatedProductRepository $relatedProductRepo) {
         $this->packageRepo = $packageRepo;
         $this->featureRepo = $featureRepo;
         $this->asgnFeatureRepo = $asgnFeatureRepo;
@@ -78,18 +77,28 @@ class BusinessPackageService {
                 'short_details_en' => 'required',
                 'short_details_bn' => 'required',
                 'banner_photo' => 'required|mimes:jpg,jpeg,png',
+                'url_slug' => 'required|regex:/^\S*$/u',
+                'banner_name' => 'required|regex:/^\S*$/u',
             ]);
 
 
 
             //file upload in storege
-            $filePath = "";
-            if ($request['banner_photo'] != "") {
-                $filePath = $this->upload($request['banner_photo'], 'assetlite/images/business-images');
+            $bannerWeb = "";
+            $bannerMob = "";
+            $directoryPath = 'assetlite/images/business-images';
+            if (!empty($request['banner_photo'])) {
+                $photoName = $request['banner_name'] . '-web';
+                $bannerWeb = $this->upload($request['banner_photo'], $directoryPath, $photoName);
+            }
+            if (!empty($request['banner_mobile'])) {
+
+                $photoName = $request['banner_name'] . '-mobile';
+                $bannerMob = $this->upload($request['banner_mobile'], $directoryPath, $photoName);
             }
 
             //save data in database 
-            $packageId = $this->packageRepo->savePackage($filePath, $request);
+            $packageId = $this->packageRepo->savePackage($bannerWeb, $bannerMob, $request);
             $parentType = 1;
             $this->asgnFeatureRepo->assignFeature($packageId, $parentType, $request->feature);
             $this->relatedProductRepo->assignRelatedProduct($packageId, $parentType, $request->realated);
@@ -111,8 +120,8 @@ class BusinessPackageService {
             return $response;
         }
     }
-    
-     /**
+
+    /**
      * get related product
      * @return Response
      */
@@ -163,34 +172,55 @@ class BusinessPackageService {
      * update business landing page news
      * @return Response
      */
-    public function updatePackage($request) {
+    public function updatePackage($data) {
         try {
 
-            $request->validate([
+            $data->validate([
                 'name_en' => 'required',
                 'name_bn' => 'required',
                 'short_details_en' => 'required',
                 'short_details_bn' => 'required',
+                'url_slug' => 'required|regex:/^\S*$/u',
+                'banner_name' => 'required|regex:/^\S*$/u',
             ]);
 
-            //file upload in storege
-            $filePath = "";
-            if ($request['banner_photo'] != "") {
-                $filePath = $this->upload($request['banner_photo'], 'assetlite/images/business-images');
+            $photoNameWeb = $data['banner_name'] . '-web';
+            $photoNameMob = $data['banner_name'] . '-mobile';
+            $directoryPath = 'assetlite/images/business-images';
 
-                //delete old photo
-                if ($request['old_banner']) {
-                    $this->deleteFile($request['old_banner']);
+            $bannerWeb = "";
+            $bannerMob = "";
+            if (!empty($data['banner_photo'])) {
+
+                $data['old_banner'] != "" ? $this->deleteFile($data['old_banner']) : "";
+                $bannerWeb = $this->upload($data['banner_photo'], $directoryPath, $photoNameWeb);
+            }
+
+            if (!empty($data['banner_mobile'])) {
+
+                $data['old_banner_mob'] != "" ? $this->deleteFile($data['old_banner_mob']) : "";
+                $bannerMob = $this->upload($data['banner_mobile'], $directoryPath, $photoNameMob);
+            }
+
+            //only rename
+            if ($data['old_banner_name'] != $data['banner_name']) {
+
+                if (empty($data['banner_photo'])) {
+                    $bannerWeb = $this->rename($data['old_banner'], $photoNameWeb, $directoryPath);
+                }
+
+                if (empty($data['banner_mobile'])) {
+                    $bannerMob = $this->rename($data['old_banner_mob'], $photoNameMob, $directoryPath);
                 }
             }
 
             //save data in database 
-            $this->packageRepo->updatePackage($filePath, $request);
+            $this->packageRepo->updatePackage($bannerWeb, $bannerMob, $data);
             $parentType = 1;
-            $this->asgnFeatureRepo->assignFeature($request->package_id, $parentType, $request->feature);
-            
-            $this->relatedProductRepo->assignRelatedProduct($request->package_id, $parentType, $request->realated);
-            
+            $this->asgnFeatureRepo->assignFeature($data->package_id, $parentType, $data->feature);
+
+            $this->relatedProductRepo->assignRelatedProduct($data->package_id, $parentType, $data->realated);
+
 
             $response = [
                 'success' => 1,

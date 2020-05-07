@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\PartnerCategory;
+use App\Models\PartnerArea;
 use App\Models\PartnerOfferDetail;
 use App\Repositories\PartnerOfferDetailRepository;
 use App\Repositories\PartnerOfferRepository;
@@ -38,6 +39,10 @@ class PartnerOfferService
         $this->setActionRepository($partnerOfferRepository);
     }
 
+    public function getAreaList(){
+        $response = PartnerArea::get();
+        return $response;
+    }
 
     public function itemList($partnerId, $isHome = false)
     {
@@ -63,7 +68,11 @@ class PartnerOfferService
         }
         $data['display_order'] = ++$count;
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
+        $data['phone'] = json_encode($data['phone']);
+        $data['location'] = json_encode($data['location']);
+        
         $offerId = $this->save($data);
+        
         $this->partnerOfferDetailRepository->insertOfferDetail($offerId->id);
         return new Response('Partner offer added successfully');
     }
@@ -99,6 +108,27 @@ class PartnerOfferService
             $this->deleteFile($partnerOffer->campaign_img);
             $data['campaign_img'] = null;
         }
+        
+        $data['phone'] = json_encode($data['phone']);
+        $data['location'] = json_encode($data['location']);
+        
+        
+        if(isset($data['silver'])){
+        $data['silver'] == 1;
+        }else{
+           $data['silver'] = 0; 
+        }
+        if(isset($data['gold'])){
+        $data['gold'] == 1;
+        }else{
+           $data['gold'] = 0; 
+        }
+        if(isset($data['platium'])){
+        $data['platium'] == 1;
+        }else{
+           $data['platium'] = 0; 
+        }
+        
         $partnerOffer->update($data);
         return Response('Partner offer update successfully !');
     }
