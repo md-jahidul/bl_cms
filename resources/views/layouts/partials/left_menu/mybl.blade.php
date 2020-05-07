@@ -232,6 +232,13 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('AppLaunch') )
+        <li class="{{ is_active_url('app-launch')}}">
+            <a class="menu-item" href="{{ route('app-launch.index') }}">
+                <i class="ft-alert-triangle"></i>App Launch Popup</a>
+        </li>
+    @endif
+
 
     @if( auth()->user()->can_view('FaqCategory') || auth()->user()->can_view('FaqQuestions') )
         <li class=" nav-item"><a href="#"><i class="la la-question"></i>

@@ -3,6 +3,10 @@ $(function () {
     date.setDate(date.getDate());
     $('#start_date').datetimepicker({
         format : 'YYYY-MM-DD HH:mm:ss',
+/*        widgetPositioning:{
+            horizontal: 'right',
+            vertical: 'top'
+        },*/
         showClose: true,
         minDate: date,
     });
