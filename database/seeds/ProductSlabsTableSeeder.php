@@ -13,7 +13,7 @@ class ProductSlabsTableSeeder extends Seeder
     public function run()
     {
         DB::table('product_price_slabs')->truncate();
-        
+
         $slabs = [
             [
                 'range_name' => '1-13tk',
@@ -127,7 +127,6 @@ class ProductSlabsTableSeeder extends Seeder
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ],
-            
         ];
         DB::table('product_price_slabs')->insert($slabs);
     }

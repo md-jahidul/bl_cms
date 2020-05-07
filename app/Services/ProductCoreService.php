@@ -125,8 +125,6 @@ class ProductCoreService
             $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
             $data['recharge_product_code'] = isset($data['recharge_product_code']) ? str_replace(' ', '', strtoupper($data['recharge_product_code'])) : null;
             $data['renew_product_code'] = isset($data['renew_product_code']) ? str_replace(' ', '', strtoupper($data['renew_product_code'])) : null;
-//            $data['mrp_price'] = $data['price'] + $data['vat'];
-//            $data['is_recharge_offer'] = $data['is_recharge'];
             $data['commercial_name_en'] = $data['name_en'];
             $data['commercial_name_bn'] = $data['name_bn'];
             $data['content_type'] = $this->getType($data['offer_category_id']);
@@ -151,7 +149,19 @@ class ProductCoreService
     public function updateProductCore($data, $id)
     {
         $product = $this->productCoreRepository->findOneProductCore($id);
-        $product->update($data);
+        if (!$product) {
+            $data['name'] = $data['name_en'];
+            $data['product_code'] = strtoupper($id);
+            $data['recharge_product_code'] = isset($data['recharge_product_code']) ? str_replace(' ', '', strtoupper($data['recharge_product_code'])) : null;
+            $data['renew_product_code'] = isset($data['renew_product_code']) ? str_replace(' ', '', strtoupper($data['renew_product_code'])) : null;
+            $data['commercial_name_en'] = $data['name_en'];
+            $data['commercial_name_bn'] = $data['name_bn'];
+            $data['content_type'] = $this->getType($data['offer_category_id']);
+            $data['sim_type'] = (strtolower($data['type']) == 'prepaid') ? 1 : 2;
+            $this->save($data);
+        } else {
+            $product->update($data);
+        }
     }
 
     /**
@@ -602,18 +612,18 @@ class ProductCoreService
 
 
                             if ($assetLiteProduct['offer_category_id']) {
-                                
+
                                 //make url_slug
                                 $assetLiteProduct['url_slug'] = "";
                                 if(!empty($assetLiteProduct['name_en'])){
                                     $urlSlug = str_replace(" ", "-", $assetLiteProduct['name_en']);
                                     $assetLiteProduct['url_slug']  = $urlSlug;
                                 }
-                                
+
                                 $product = Product::updateOrCreate([
                                             'product_code' => $product_code
                                                 ], $assetLiteProduct);
-                                
+
                                 $this->_saveSearchData($product);
 
 
@@ -637,7 +647,7 @@ class ProductCoreService
             return 0;
         }
     }
-    
+
      //save Search Data
     private function _saveSearchData($product) {
         $productId = $product->id;
@@ -655,7 +665,7 @@ class ProductCoreService
         $url .= $product->offer_category->url_slug;
 
         $keywordType = "offer-".$product->offer_category->alias;
-        
+
 
         $type = "";
         if ($product->sim_category_id == 1 && $product->offer_category_id == 1) {
@@ -687,7 +697,7 @@ class ProductCoreService
         return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag);
     }
 
-    
+
 
     /**
      *  Product search by Code

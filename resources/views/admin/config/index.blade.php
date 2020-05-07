@@ -84,6 +84,18 @@
                                                 @endif
                                             </div>
                                         </div>
+
+                                    @elseif($config->key == "advance_minimum_balance")
+                                        <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                            <label class="col-md-3 label-control" for="row{{$key}}">Bl advance minimum balance</label>
+                                            <div class="col-md-9">
+                                                <input type="number" id="row{{$key}}" class="form-control"  value="{{ old($config->key) ?? $config->value }}" required data-validation-required-message="Enter {{$title}}" placeholder="Enter {{ $title }}" name="{{ $config->key }}">
+                                                <div class="help-block"><small>Default value 10 taka</small></div>
+                                                @if ($errors->has($config->key))
+                                                    <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
                                     @else
                                         <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
                                             <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
