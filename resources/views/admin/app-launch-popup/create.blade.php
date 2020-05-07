@@ -21,12 +21,18 @@
                             @csrf
                             <div class="row">
                                 <div class="col-md-4">
-                                    <div class="form-group">
+                                    <div class="form-group @if($errors->has('title')) error @endif">
                                         <label for="title" class="required">Title</label>
                                         <input class="form-control"
                                                name="title"
                                                id="title"
+                                               value="{{ old("title") ? old("title") : '' }}"
                                                required>
+                                        @if($errors->has('title'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('title') }}</small>
+                                            </p>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -37,6 +43,11 @@
                                             </option>
                                             <option value="html"> HTML Content</option>
                                         </select>
+                                        @if($errors->has('type'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('type') }}</small>
+                                            </p>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -45,14 +56,16 @@
                                         <div class='input-group'>
                                             <input type='text'
                                                    class="form-control datetime"
+                                                   value="{{ old("display_period") ? old("display_period") : '' }}"
                                                    name="display_period"
                                                    id="display_period"/>
+                                            @if($errors->has('display_period'))
+                                                <p class="text-left">
+                                                    <small class="danger text-muted">{{ $errors->first('display_period') }}</small>
+                                                </p>
+                                            @endif
                                         </div>
                                     </div>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('display_period'))
-                                        <div class="help-block">{{ $errors->first('display_period') }}</div>
-                                    @endif
                                 </div>
                                 <div class="col-md-8" id="content_div">
                                     <div class="form-group">
