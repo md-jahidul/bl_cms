@@ -216,4 +216,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
         ->name('recharge.prefill-amounts.update');
 
     Route::get('recharge/prefill-amounts/order', 'CMS\PrefillRechargeController@updatePosition');
+
+
+    Route::get('app-launch/create', 'CMS\AppLaunchPopupController@create')->name('app-launch.new');
+    Route::post('app-launch/store', 'CMS\AppLaunchPopupController@store')->name('app-launch.store');
+    Route::get('app-launch', 'CMS\AppLaunchPopupController@index')->name('app-launch.index');
+    Route::get('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@edit')->name('app-launch.edit');
+    Route::post('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@update')->name('app-launch.update');
+    Route::delete('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@destroy')->name('app-launch.delete');
 });
