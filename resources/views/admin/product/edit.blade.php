@@ -23,7 +23,7 @@
                             @method('put')
                         <div class="row">
                             <input type="hidden" name="previous_page" value="{{ $previous_page  }}">
-
+                            <input type="hidden" name="type" value="{{ $type }}">
                             <div class="form-group col-md-6 {{ $errors->has('product_type_id') ? ' error' : '' }}">
                                 <label for="offer_category_id" class="required">Offer Type</label>
                                 <select class="form-control" name="offer_category_id" id="offer_type"
