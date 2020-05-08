@@ -158,6 +158,8 @@ class ProductDetailsController extends Controller
 
     public function componentStore(Request $request, $simType, $productDetailsId, $sectionID)
     {
+        dd($request->all());
+
         $response = $this->componentService->componentStore($request->all(), $sectionID);
         Session::flash('success', $response->content());
         return redirect(route('component-list', [$simType, $productDetailsId, $sectionID]));
