@@ -71,14 +71,14 @@ class ProductDetailsSectionService
 
     public function sectionStore($data)
     {
-        if (!empty($data['banner_image_web'])) {
+        if (!empty($data['banner_image_url'])) {
             $photoName = $data['banner_name'] . '-web';
-            $data['banner_image_web'] = $this->upload($data['banner_image_web'], 'assetlite/images/banner/product_details', $photoName);
+            $data['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/product_details', $photoName);
         }
 
-        if (!empty($data['banner_image_mobile'])) {
+        if (!empty($data['banner_mobile_view'])) {
             $photoName = $data['banner_name'] . '-mobile';
-            $data['banner_image_mobile'] = $this->upload($data['banner_image_mobile'], 'assetlite/images/banner/product_details', $photoName);
+            $data['banner_mobile_view'] = $this->upload($data['banner_mobile_view'], 'assetlite/images/banner/product_details', $photoName);
         }
 
         $this->save($data);
@@ -95,37 +95,37 @@ class ProductDetailsSectionService
         $section = $this->findOne($id);
 
 
-        if (!empty($data['banner_image_web'])) {
+        if (!empty($data['banner_image_url'])) {
             //delete old web photo
             if ($data['old_web_img'] != "") {
                 $this->deleteFile($data['old_web_img']);
             }
             $photoName = $data['banner_name'] . '-web';
-            $data['banner_image_web'] = $this->upload($data['banner_image_web'], 'assetlite/images/banner/product_details', $photoName);
+            $data['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/product_details', $photoName);
         }
 
-        if (!empty($data['banner_image_mobile'])) {
+        if (!empty($data['banner_mobile_view'])) {
             //delete old web photo
             if ($data['old_mob_img'] != "") {
                 $this->deleteFile($data['old_mob_img']);
             }
 
             $photoName = $data['banner_name'] . '-mobile';
-            $data['banner_image_mobile'] = $this->upload($data['banner_image_mobile'], 'assetlite/images/banner/product_details', $photoName);
+            $data['banner_mobile_view'] = $this->upload($data['banner_mobile_view'], 'assetlite/images/banner/product_details', $photoName);
         }
 
         //only rename
         if ($data['old_banner_name'] != $data['banner_name']) {
-            if (empty($data['banner_image_web']) && $data['old_web_img'] != "") {
+            if (empty($data['banner_image_url']) && $data['old_web_img'] != "") {
                 $fileName = $data['banner_name'] . '-web';
                 $directoryPath = 'assetlite/images/banner/product_details';
-                $data['banner_image_web'] = $this->rename($data['old_web_img'], $fileName, $directoryPath);
+                $data['banner_image_url'] = $this->rename($data['old_web_img'], $fileName, $directoryPath);
             }
 
-            if (empty($data['banner_image_mobile']) && $data['old_mob_img'] != "") {
+            if (empty($data['banner_mobile_view']) && $data['old_mob_img'] != "") {
                 $fileName = $data['banner_name'] . '-mobile';
                 $directoryPath = 'assetlite/images/banner/product_details';
-                $data['banner_image_mobile'] = $this->rename($data['old_mob_img'], $fileName, $directoryPath);
+                $data['banner_mobile_view'] = $this->rename($data['old_mob_img'], $fileName, $directoryPath);
             }
         }
 

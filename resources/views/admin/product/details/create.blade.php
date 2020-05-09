@@ -62,30 +62,30 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('banner_image_web') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                     <label for="mobileImg">Desktop View Image</label>
                                     <div class="custom-file">
 {{--                                        <input type="hidden" name="old_web_img">--}}
-                                        <input type="file" name="banner_image_web" class="dropify" data-height="80">
+                                        <input type="file" name="banner_image_url" class="dropify" data-height="80">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
 
                                     <div class="help-block"></div>
-                                    @if ($errors->has('banner_image_web'))
-                                        <div class="help-block">  {{ $errors->first('banner_image_web') }}</div>
+                                    @if ($errors->has('banner_image_url'))
+                                        <div class="help-block">  {{ $errors->first('banner_image_url') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
                                     <label for="mobileImg">Mobile View Image</label>
                                     <div class="custom-file">
 {{--                                        <input type="hidden" name="old_mob_img" value="">--}}
-                                        <input type="file" name="banner_image_mobile" class="dropify" data-height="80">
+                                        <input type="file" name="banner_mobile_view" class="dropify" data-height="80">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('banner_image_mobile'))
-                                        <div class="help-block">  {{ $errors->first('banner_image_mobile') }}</div>
+                                    @if ($errors->has('banner_mobile_view'))
+                                        <div class="help-block">  {{ $errors->first('banner_mobile_view') }}</div>
                                     @endif
                                 </div>
 

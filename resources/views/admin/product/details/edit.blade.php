@@ -54,7 +54,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
                                     <label for="banner_name" class="">Banner Name</label>
-                                    <input type="text" name="old_banner_name" value="{{ $section->banner_name }}">
+                                    <input type="hidden" name="old_banner_name" value="{{ $section->banner_name }}">
                                     <input type="text" name="banner_name"  class="form-control" placeholder="Enter banner title"
                                            value="{{ $section->banner_name }}">
                                     <div class="help-block"></div>
@@ -63,33 +63,33 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('banner_image_web') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                     <label for="mobileImg">Desktop View Image</label>
                                     <div class="custom-file">
-                                        <input type="hidden" name="old_web_img" value="{{ isset($section->banner_image_web) ? $section->banner_image_web : null }}">
-                                        <input type="file" name="banner_image_web" class="dropify" data-height="80" id="image"
-                                               data-default-file="{{ isset($section->banner_image_web) ?  config('filesystems.file_base_url') . $section->banner_image_web : null  }}">
+                                        <input type="hidden" name="old_web_img" value="{{ isset($section->banner_image_url) ? $section->banner_image_url : null }}">
+                                        <input type="file" name="banner_image_url" class="dropify" data-height="80" id="image"
+                                               data-default-file="{{ isset($section->banner_image_url) ?  config('filesystems.file_base_url') . $section->banner_image_url : null  }}">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
 
                                     <div class="help-block"></div>
-                                    @if ($errors->has('banner_image_web'))
-                                        <div class="help-block">  {{ $errors->first('banner_image_web') }}</div>
+                                    @if ($errors->has('banner_image_url'))
+                                        <div class="help-block">  {{ $errors->first('banner_image_url') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
                                     <label for="mobileImg">Mobile View Image</label>
                                     <div class="custom-file">
-                                        <input type="hidden" name="old_mob_img" value="{{ isset($section->banner_image_mobile) ? $section->banner_image_mobile : null }}">
-                                        <input type="file" name="banner_image_mobile" class="dropify" data-height="80" id="image"
-                                               data-default-file="{{ isset($section->banner_image_mobile) ?  config('filesystems.file_base_url') . $section->banner_image_mobile : null  }}">
+                                        <input type="hidden" name="old_mob_img" value="{{ isset($section->banner_mobile_view) ? $section->banner_mobile_view : null }}">
+                                        <input type="file" name="banner_mobile_view" class="dropify" data-height="80" id="image"
+                                               data-default-file="{{ isset($section->banner_mobile_view) ?  config('filesystems.file_base_url') . $section->banner_mobile_view : null  }}">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
 
                                     <div class="help-block"></div>
-                                    @if ($errors->has('banner_image_mobile'))
-                                        <div class="help-block">  {{ $errors->first('banner_image_mobile') }}</div>
+                                    @if ($errors->has('banner_mobile_view'))
+                                        <div class="help-block">  {{ $errors->first('banner_mobile_view') }}</div>
                                     @endif
                                 </div>
 
