@@ -72,7 +72,7 @@
                                     </slot>
 
                                     {{--Table Component--}}
-                                    <slot id="table_component" data-offer-type="large_title_with_text" class="d-none">
+                                    <slot id="table_component" data-offer-type="large_title_with_text" {{--class="d-none"--}}>
                                         @include('layouts.partials.product-details.component.common-field.text-editor')
                                     </slot>
 
@@ -217,227 +217,6 @@
 
                                 </div>
                             </div>
-
-
-{{--                            <div class="app-content">--}}
-{{--                                <h3>Component Fields</h3><hr>--}}
-{{--                                <div class="sidebar-right">--}}
-{{--                                    <div class="sidebar">--}}
-{{--                                        <div class="sidebar-content card d-none d-lg-block">--}}
-{{--                                            <div class="card-body">--}}
-{{--                                                <div class="category-title">--}}
-{{--                                                    <h6><strong>Component Example Picture</strong></h6>--}}
-{{--                                                </div>--}}
-{{--                                                <hr>--}}
-{{--                                                <div class="row">--}}
-{{--                                                    <img src="{{ asset('sample-images/accordion-text.png') }}" width="400">--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="content-left">--}}
-{{--                                    <div class="content-wrapper">--}}
-
-{{--                                        <div class="content-body">--}}
-{{--                                            <div class="row">--}}
-
-{{--                                                <div class="form-group col-md-12 {{ $errors->has('editor_en') ? ' error' : '' }}">--}}
-{{--                                                    <label for="editor_en" class="required">Component Type</label>--}}
-{{--                                                    <select name="component_type" class="form-control required" id="component_type"--}}
-{{--                                                            required data-validation-required-message="Please select component type">--}}
-{{--                                                        <option value="">--Select Data Type--</option>--}}
-{{--                                                        @foreach($dataTypes as $key => $item)--}}
-{{--                                                            <option data-alias="{{ $key }}" value="{{ $key }}">{{ $item }}</option>--}}
-{{--                                                        @endforeach--}}
-{{--                                                    </select>--}}
-{{--                                                    <div class="help-block"></div>--}}
-{{--                                                    @if ($errors->has('editor_en'))--}}
-{{--                                                        <div class="help-block">{{ $errors->first('editor_en') }}</div>--}}
-{{--                                                    @endif--}}
-{{--                                                </div>--}}
-
-{{--                                                --}}{{--Large Title With Text--}}
-{{--                                                <slot id="large_title_with_text" data-offer-type="large_title_with_text" class="d-none">--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.title')--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.text-area')--}}
-{{--                                                </slot>--}}
-
-{{--                                                --}}{{--Large Title With Text Button--}}
-{{--                                                <slot id="large_title_text_button" data-offer-type="large_title_text_button" class="d-none">--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.title')--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.text-area')--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.button-field')--}}
-{{--                                                </slot>--}}
-
-{{--                                                --}}{{--Medium Title With Text--}}
-{{--                                                <slot id="medium_title_with_text" data-offer-type="medium_title_with_text" class="d-none">--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.title')--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.text-area')--}}
-{{--                                                </slot>--}}
-
-{{--                                                --}}{{--Small Title With Text--}}
-{{--                                                <slot id="small_title_with_text" data-offer-type="small_title_with_text" class="d-none">--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.title')--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.text-area')--}}
-{{--                                                </slot>--}}
-
-{{--                                                --}}{{--Text And Button--}}
-{{--                                                <slot id="text_and_button" data-offer-type="text_and_button" class="d-none">--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.text-area')--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.button-field')--}}
-{{--                                                </slot>--}}
-
-{{--                                                --}}{{--Table Component--}}
-{{--                                                <slot id="table_component" data-offer-type="large_title_with_text" class="d-none">--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.text-editor')--}}
-{{--                                                </slot>--}}
-
-{{--                                                --}}{{--Text Component--}}
-{{--                                                <slot id="text_component" data-offer-type="text_component" class="d-none">--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.text-area')--}}
-{{--                                                </slot>--}}
-
-{{--                                                --}}{{--Features Component--}}
-{{--                                                <slot id="features_component" data-offer-type="features_component" class="d-none">--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.title', ['title_en' => "Component (English)", 'title_bn' => 'Component (Bangla)'])--}}
-
-{{--                                                    <div class="form-group col-md-12 text-right">--}}
-{{--                                                        <label for="alt_text"></label>--}}
-{{--                                                        <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="features"><i class="la la-plus"></i></button>--}}
-{{--                                                    </div>--}}
-
-{{--                                                    <div class="form-group col-md-12 mb-0">--}}
-{{--                                                        <div class="alert alert-secondary">--}}
-{{--                                                            <strong>Feature 1</strong>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-
-{{--                                                    <div class="form-group col-md-6">--}}
-{{--                                                        <label for="alt_text">Feature Title (English)</label>--}}
-{{--                                                        <input type="text" name="multi_item[feature_title_en-1]" class="form-control">--}}
-{{--                                                    </div>--}}
-
-{{--                                                    <div class="form-group col-md-6">--}}
-{{--                                                        <label for="alt_text">Feature Title (Bangla)</label>--}}
-{{--                                                        <input type="text" name="multi_item[feature_title_bn-1]" class="form-control">--}}
-{{--                                                    </div>--}}
-
-{{--                                                    <input id="multi_item_count" type="hidden" name="multi_item_count" value="1">--}}
-{{--                                                    <div class="col-md-12 col-xs-12">--}}
-{{--                                                        <div class="form-group">--}}
-{{--                                                            <label for="message">Feature Icon</label>--}}
-{{--                                                            <input type="file" class="dropify" name="multi_item[image_url-1]" data-height="80"/>--}}
-{{--                                                            <span class="text-primary">Please given file type (.png, .jpg, svg)</span>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-
-{{--                                                    <div class="form-group col-md-4">--}}
-{{--                                                        <label for="alt_text">Alt Text</label>--}}
-{{--                                                        <input type="text" name="multi_item[alt_text-1]" class="form-control" placeholder="Enter image alt text">--}}
-{{--                                                    </div>--}}
-
-{{--                                                    <div class="form-group col-md-4">--}}
-{{--                                                        <label for="button_en">Button Title (English)</label>--}}
-{{--                                                        <input type="text" name="multi_item[button_en-1]"  class="form-control" placeholder="Enter company name bangla" value="">--}}
-{{--                                                    </div>--}}
-
-{{--                                                    <div class="form-group col-md-4">--}}
-{{--                                                        <label for="button_bn" >Button Title (Bangla)</label>--}}
-{{--                                                        <input type="text" name="multi_item[button_bn-1]"  class="form-control" placeholder="Enter company name bangla" value="">--}}
-{{--                                                    </div>--}}
-
-{{--                                                    <div class="form-group col-md-6">--}}
-{{--                                                        <label for="button_link" >Details (English)</label>--}}
-{{--                                                        <textarea name="multi_item[details_en-1]" rows="5" class="form-control" placeholder="Enter feature details in English"></textarea>--}}
-{{--                                                    </div>--}}
-
-{{--                                                    <div class="form-group col-md-6">--}}
-{{--                                                        <label for="button_link" >Details (Bangla)</label>--}}
-{{--                                                        <textarea name="multi_item[details_bn-1]" rows="5" class="form-control" placeholder="Enter feature details in Bangla"></textarea>--}}
-{{--                                                    </div>--}}
-{{--                                                </slot>--}}
-
-{{--                                                --}}{{--Bullet Text--}}
-{{--                                                <slot id="bullet_text" data-offer-type="large_title_with_text" class="d-none">--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.title')--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.text-editor')--}}
-{{--                                                </slot>--}}
-
-{{--                                                --}}{{--Accordion Text--}}
-{{--                                                <slot id="accordion_text" data-offer-type="accordion_text" class="d-none">--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.title')--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.text-editor')--}}
-{{--                                                </slot>--}}
-
-{{--                                                --}}{{--Multiple Image--}}
-{{--                                                <slot id="multiple_image" data-offer-type="multiple_image" class="d-none">--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.extra-title')--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.title')--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.multiple-image')--}}
-{{--                                                </slot>--}}
-
-{{--                                                --}}{{--Special Data Offer--}}
-{{--                                                <slot id="special_data_offer" data-offer-type="special_data_offer" class="d-none">--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.title')--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.related-product')--}}
-{{--                                                </slot>--}}
-
-{{--                                                --}}{{--Bondho Sim Offer--}}
-{{--                                                <slot id="bondho_sim_offer" data-offer-type="bondho_sim_offer" class="d-none">--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.related-product')--}}
-{{--                                                </slot>--}}
-
-{{--                                                --}}{{--Startup offer--}}
-{{--                                                <slot id="startup_offer" data-offer-type="startup_offer" class="d-none">--}}
-{{--                                                    @include('layouts.partials.product-details.component.common-field.related-product')--}}
-{{--                                                </slot>--}}
-
-{{--                                                <slot id="drop_down" data-offer-type="drop_down" class="d-none">--}}
-{{--                                                    <div class="form-group col-md-6">--}}
-{{--                                                        <label for="editor_bn" class="text-success">Drop Down Sample Picture</label>--}}
-{{--                                                        <img class=" img-fluid" src="{{ asset('sample-images/drop_down.png') }}" alt="Image description">--}}
-{{--                                                    </div>--}}
-
-{{--                                                    <div class="form-group col-md-6 {{ $errors->has('editor_en') ? ' error' : '' }}">--}}
-{{--                                                        <label for="editor_en" class="required" >Drop Down Data</label>--}}
-{{--                                                        <select name="other_attributes[dropdown_data_type]" class="form-control required">--}}
-{{--                                                            <option value="">--Select Dropdown Data Type--</option>--}}
-{{--                                                            --}}{{--                                                            <option value="easy_payment_card">Easy Payment Card</option>--}}
-{{--                                                            <option value="device_data_offer">Device Free Data Offer</option>--}}
-{{--                                                        </select>--}}
-{{--                                                        <div class="help-block"></div>--}}
-{{--                                                        @if ($errors->has('editor_en'))--}}
-{{--                                                            <div class="help-block">{{ $errors->first('editor_en') }}</div>--}}
-{{--                                                        @endif--}}
-{{--                                                    </div>--}}
-{{--                                                </slot>--}}
-
-{{--                                                <div class="col-md-12 mt-2">--}}
-{{--                                                    <div class="form-group">--}}
-{{--                                                        <label for="title" class="mr-1">Status:</label>--}}
-{{--                                                        <input type="radio" name="status" value="1" id="active" checked>--}}
-{{--                                                        <label for="active" class="mr-1">Active</label>--}}
-
-{{--                                                        <input type="radio" name="status" value="0" id="inactive">--}}
-{{--                                                        <label for="inactive">Inactive</label>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-
-{{--                                                <div class="form-actions col-md-12">--}}
-{{--                                                    <div class="pull-right">--}}
-{{--                                                        <button type="submit" id="save" class="btn btn-primary"><i--}}
-{{--                                                                class="la la-check-square-o"></i> Save--}}
-{{--                                                        </button>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
                             @csrf
                         </form>
                     </div>
@@ -468,7 +247,7 @@
 @push('page-js')
 {{--    <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
@@ -500,12 +279,42 @@
                     ['font', ['strikethrough', 'superscript', 'subscript']],
                     ['fontsize', ['fontsize']],
                     ['color', ['color']],
-                    // ['table', ['table']],
+                    ['table', ['table']],
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['view', ['fullscreen', 'codeview']]
                 ],
                 height:150
             })
+
+
+            // Basic TineMCE
+            tinymce.init({
+                selector: '.tinymce',
+                height: 350,
+                theme: 'modern',
+                plugins: [
+                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                    'searchreplace wordcount visualblocks visualchars code fullscreen',
+                    'insertdatetime media nonbreaking save table contextmenu directionality',
+                    'emoticons template paste textcolor colorpicker textpattern imagetools'
+                ],
+
+                table_default_attributes: {
+                    class: 'table table-primary table_large offer_table'
+                },
+
+                toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                toolbar2: 'print preview media | forecolor backcolor emoticons',
+                image_advtab: true,
+                templates: [
+                    {title: 'Test template 1', content: 'Test 1'},
+                    {title: 'Test template 2', content: 'Test 2'}
+                ],
+                content_css: [
+                    '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                    '//www.tinymce.com/css/codepen.min.css'
+                ]
+            });
 
 
             // Multi Image Component
