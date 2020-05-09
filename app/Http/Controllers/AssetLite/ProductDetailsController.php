@@ -158,7 +158,53 @@ class ProductDetailsController extends Controller
 
     public function componentStore(Request $request, $simType, $productDetailsId, $sectionID)
     {
-        dd($request->all());
+
+        $theads = $request->th_row;
+
+        $tbody = $request->tbody;
+
+        $table = "<table>";
+        $table .= "<thead>";
+        $table .= "<tr>";
+
+        foreach ($theads as $thead) {
+            $table .= "<th>" . $thead . "<th/>";
+        }
+        $table .= "<tr/>";
+        $table .= "<thead/>";
+
+        $table .= "<tbody>";
+
+        foreach ($tbody as $column => $row) {
+            $table .= "<tr>";
+            foreach ($row as $data) {
+                $table .= "<td>" . $data . "<td>";
+            }
+            $table .= "<tr/>";
+        }
+
+        $table .= "<tbody/>";
+
+        $table .= "<table/>";
+
+
+        dd($table);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         $response = $this->componentService->componentStore($request->all(), $sectionID);
         Session::flash('success', $response->content());

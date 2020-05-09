@@ -200,11 +200,32 @@
 
 
 {{--                                    Table component TEST:--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <table class="table table-bordered" id="myTable">--}}
-{{--                                        </table>--}}
-{{--                                        <button type="button" id="table-create">Try it</button>--}}
-{{--                                    </div>--}}
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered" id="myTable">
+                                            <thead>
+                                                <tr>
+                                                    <th><input type="text" class="form-control" name="th_row[]"></th>
+                                                    <th><input type="text" class="form-control" name="th_row[]"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="row_1">
+                                                    <td><input type="text" class="form-control" name="tbody[row_1][]"></td>
+                                                    <td><input type="text" class="form-control" name="tbody[row_1][]"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" class="form-control" name="tbody[row_2][]"></td>
+                                                    <td><input type="text" class="form-control" name="tbody[row_2][]"></td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                        <button type="button" id="add_row">Add Row</button>
+                                        <button type="button" id="add_column">Add Column</button>
+                                    </div>
+
+
+
 
                                     <div class="col-md-12 mt-2">
                                         <div class="form-group">
@@ -271,18 +292,55 @@
     <script>
         $(function () {
 
-            $('#table-create').click(function () {
-                myFunction()
+
+
+            $('#add_column').click(function () {
+                addColumn()
             })
-            function myFunction() {
-                var table = document.getElementById("myTable");
+
+            function addColumn() {
+                var tdTrCount = $('#myTable tbody').find('tr').length
 
 
-                // var row = table.insertRow(0);
-                // var cell1 = row.insertCell(0);
-                // var cell2 = row.insertCell(1);
-                // cell1.innerHTML = "<input type='text' class='form-control' name='row_data[]' placeholder='Enter table data'>";
-                // cell2.innerHTML = "<input type='text' class='form-control' name='row_data[]' placeholder='Enter table data'>";
+                // var rowFind = $('#myTable body').find('tr .row_1');
+
+                // console.log(rowFind)
+
+                $('#myTable thead').find('tr').append('<th><input type="text" name="th_row[]" class="form-control"></th>')
+
+                $('.row_1').append('<td><input type="text" name="tbody[row_][]" class="form-control"></td>')
+
+
+                // tdTrCount++
+
+                // var tbody = '<tr>';
+                // for (var i = 1; i<=tdTrCount; i++){
+                //     $('#myTable tbody').find('tr').append('<td><input type="text" name="tbody[row_'+i+'][]" class="form-control"></td>')
+                //     // tbody +='<td><input type="text" name="tbody[row_'+i+'][]" class="form-control"></td>';
+                // }
+                // tbody +='</tr>'
+                // $('#myTable tbody').append(tbody)
+
+                // $('#myTable tbody').find('tr').append('<td><input type="text" name="tbody[row_'+tdTrCount+'][]" class="form-control"></td>')
+            }
+
+            $('#add_row').click(function () {
+                addRow()
+            })
+            function addRow() {
+                var thCount = $('#myTable thead').find('th').length
+                var tdTrCount = $('#myTable tbody').find('tr').length
+
+                // console.log(tdTrCount)
+                tdTrCount++
+
+                var tbody = '<tr>';
+                    for (var i = 1; i<=thCount; i++){
+
+                        tbody +='<td><input type="text" name="tbody[row_'+tdTrCount+'][]" class="form-control"></td>';
+                    }
+                    tbody +='</tr>'
+                $('#myTable tbody').append(tbody)
             }
 
             function dropify(){
