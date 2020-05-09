@@ -72,7 +72,7 @@
                                     </slot>
 
                                     {{--Table Component--}}
-                                    <slot id="table_component" data-offer-type="large_title_with_text" {{--class="d-none"--}}>
+                                    <slot id="table_component" data-offer-type="large_title_with_text" class="d-none">
                                         @include('layouts.partials.product-details.component.common-field.text-editor')
                                     </slot>
 
