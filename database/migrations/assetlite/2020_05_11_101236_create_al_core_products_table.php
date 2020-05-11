@@ -48,7 +48,7 @@ class CreateAlCoreProductsTable extends Migration
 //            $table->tinyInteger('is_gift_offer')->default(false);
 //            $table->tinyInteger('show_in_app')->nullable();
 //            $table->string('offer_id')->nullable();
-//            $table->string('platform')->nullable();
+            $table->string('platform')->nullable();
             $table->json('other_info')->nullable();
             $table->tinyInteger('status')->default(1)->comment('active = 1, inactive = 0');
             $table->timestamps();
