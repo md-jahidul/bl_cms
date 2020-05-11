@@ -41,6 +41,7 @@ class CreateAlCoreProductsTable extends Migration
             $table->float('call_rate')->nullable()->comment('Paisa per second');
             $table->string('call_rate_unit')->nullable();
             $table->float('sms_rate')->nullable()->comment('Paisa per sms');
+            $table->float('sms_rate_unit')->nullable();
             $table->tinyInteger('is_auto_renewable')->nullable();
             $table->tinyInteger('is_recharge_offer')->default(0);
             $table->tinyInteger('is_gift_offer')->default(false);
