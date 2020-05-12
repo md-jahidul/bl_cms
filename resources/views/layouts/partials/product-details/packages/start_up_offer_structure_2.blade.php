@@ -1,6 +1,27 @@
 
 @include('layouts.partials.product-details.common-field.details')
 
+<div class="form-group col-md-6 {{ $errors->has('additional_details_title_en') ? ' error' : '' }}">
+    <label for="additional_details_title_en" >Additional Details Title (English)</label>
+    <input type="text" name="other_attributes[additional_details_title_en]"
+           value="{{ !empty($otherAttributes['additional_details_title_en']) ? $otherAttributes['additional_details_title_en'] : '' }}"
+           class="form-control" placeholder="Enter details of first-time recharge in English" id="details">
+    <div class="help-block"></div>
+    @if ($errors->has('additional_details_title_en'))
+        <div class="help-block">{{ $errors->first('additional_details_title_en') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-6 {{ $errors->has('additional_details_title_bn') ? ' error' : '' }}">
+    <label for="additional_details_title_bn" >Additional Details Title (Bangla)</label>
+    <input type="text" name="other_attributes[additional_details_title_bn]"  class="form-control" placeholder="Enter first-time recharge title in English"
+           value="{{ !empty($otherAttributes['additional_details_title_bn']) ? $otherAttributes['additional_details_title_bn'] : '' }}" >
+    <div class="help-block"></div>
+    @if ($errors->has('additional_details_title_bn'))
+        <div class="help-block">{{ $errors->first('additional_details_title_bn') }}</div>
+    @endif
+</div>
+
 <div class="form-group col-md-6 {{ $errors->has('additional_details_en') ? ' error' : '' }}">
     <label for="additional_details_en">Additional Details (English)</label>
     <textarea name="other_attributes[additional_details_en]"  class="form-control" placeholder="Enter additional details in English"
