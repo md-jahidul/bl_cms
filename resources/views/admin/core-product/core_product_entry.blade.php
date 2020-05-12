@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Store Location Entry')
+@section('title', 'Core Product Entry')
 @section('card_name', 'Core Product Entry')
 @section('breadcrumb')
     <li class="breadcrumb-item active">Core Product Entry Panel</li>
