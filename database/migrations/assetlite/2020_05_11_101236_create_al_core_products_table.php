@@ -52,6 +52,8 @@ class CreateAlCoreProductsTable extends Migration
             $table->json('other_info')->nullable();
             $table->tinyInteger('status')->default(1)->comment('active = 1, inactive = 0');
             $table->timestamps();
+
+            $table->index('product_code');
         });
     }
 
