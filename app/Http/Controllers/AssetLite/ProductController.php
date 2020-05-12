@@ -145,11 +145,12 @@ class ProductController extends Controller {
             return redirect()->back();
         }
 
-        $bondhoSimOffer = $this->productService->findBondhoSim();
-        if (count($bondhoSimOffer) > 4 && isset($request->offer_info['other_offer_type_id']) == OfferType::BONDHO_SIM_OFFER) {
-            Session::flash('error', 'Maximum 4 Bondho SIM offer can be created');
-            return redirect()->back();
-        }
+//        $bondhoSimOffer = $this->productService->findBondhoSim();
+//        if (count($bondhoSimOffer) > 4 && isset($request->offer_info['other_offer_type_id']) == OfferType::BONDHO_SIM_OFFER) {
+//            Session::flash('error', 'Maximum 4 Bondho SIM offer can be created');
+//            return redirect()->back();
+//        }
+
         $simId = SimCategory::where('alias', $type)->first()->id;
         $this->alCoreProductService->storeProductCore($request->all(), $simId);
         $this->strToint($request);
