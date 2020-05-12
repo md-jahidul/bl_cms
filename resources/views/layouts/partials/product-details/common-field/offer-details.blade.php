@@ -1,8 +1,10 @@
 
+
+
 <div class="form-group col-md-6 {{ $errors->has('offer_details_title_en') ? ' error' : '' }}">
     <label for="offer_details_title_en" >Title (English)</label>
-    <input type="text" name="other_attributes[offer_details_title_en]"
-           value="{{ !empty($otherAttributes['offer_details_title_en']) ? $otherAttributes['offer_details_title_en'] : '' }}"
+    <input type="text" name="offer_details_title_en"
+           value="{{ !empty($productDetail->product_details['offer_details_title_en']) ? $productDetail->product_details['offer_details_title_en'] : '' }}"
            class="form-control" placeholder="Enter details of first-time recharge in English" id="details">
     <div class="help-block"></div>
     @if ($errors->has('offer_details_title_en'))
@@ -12,8 +14,8 @@
 
 <div class="form-group col-md-6 {{ $errors->has('offer_details_title_bn') ? ' error' : '' }}">
     <label for="offer_details_title_bn" >Title (Bangla)</label>
-    <input type="text" name="other_attributes[offer_details_title_bn]"  class="form-control" placeholder="Enter first-time recharge title in English"
-           value="{{ !empty($otherAttributes['offer_details_title_bn']) ? $otherAttributes['offer_details_title_bn'] : '' }}" >
+    <input type="text" name="offer_details_title_bn"  class="form-control" placeholder="Enter first-time recharge title in English"
+           value="{{ !empty($productDetail->product_details['offer_details_title_bn']) ? $productDetail->product_details['offer_details_title_bn'] : '' }}" >
     <div class="help-block"></div>
     @if ($errors->has('offer_details_title_bn'))
         <div class="help-block">{{ $errors->first('offer_details_title_bn') }}</div>

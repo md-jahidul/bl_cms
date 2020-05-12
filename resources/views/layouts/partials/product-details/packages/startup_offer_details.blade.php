@@ -37,28 +37,6 @@
 </slot>
 
 <slot id="structure_2" class="{!! $productDetail->product_details->other_attributes['design_structure'] == 'structure_2' ? "" : "d-none" !!}" data-offer-type="structure_2">
-    <div class="form-group col-md-6 {{ $errors->has('package_title_en') ? ' error' : '' }}">
-        <label for="package_title_en" >Detail Package Title (English)</label>
-        <input type="text" name="other_attributes[package_title_en]"
-               value="{{ !empty($otherAttributes['package_title_en']) ? $otherAttributes['package_title_en'] : '' }}"
-               class="form-control" placeholder="Enter details of first-time recharge in English" id="details">
-        <div class="help-block"></div>
-        @if ($errors->has('package_title_en'))
-            <div class="help-block">{{ $errors->first('package_title_en') }}</div>
-        @endif
-    </div>
-
-    <div class="form-group col-md-6 {{ $errors->has('package_title_bn') ? ' error' : '' }}">
-        <label for="package_title_bn" >Detail Package Title (Bangla)</label>
-        <input type="text" name="other_attributes[package_title_bn]"  class="form-control" placeholder="Enter first-time recharge title in English"
-               value="{{ !empty($otherAttributes['package_title_bn']) ? $otherAttributes['package_title_bn'] : '' }}" >
-        <div class="help-block"></div>
-        @if ($errors->has('package_title_bn'))
-            <div class="help-block">{{ $errors->first('package_title_bn') }}</div>
-        @endif
-    </div>
-
-
     @include('layouts.partials.product-details.packages.start_up_offer_structure_2')
     <div class="form-group col-md-6">
         <label for="ussd">Recharge Benefits Offer</label>
