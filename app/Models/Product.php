@@ -54,7 +54,7 @@ class Product extends Model
 
     public function product_core()
     {
-        return $this->belongsTo(ProductCore::class, 'product_code', 'product_code');
+        return $this->belongsTo(AlCoreProduct::class, 'product_code', 'product_code');
     }
 
     public function scopeProductCore($query)
