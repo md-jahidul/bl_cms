@@ -11,6 +11,8 @@ class ProductDetail extends Model
             'product_id',
             'details_en',
             'details_bn',
+            'offer_details_title_en',
+            'offer_details_title_bn',
             'offer_details_en',
             'offer_details_bn',
             'other_attributes',

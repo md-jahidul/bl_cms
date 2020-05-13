@@ -9,9 +9,9 @@ use App\Models\OfferCategory;
 use App\Models\Product;
 use App\Models\SimCategory;
 use App\Models\ProductPriceSlab;
+use App\Services\AlCoreProductService;
 use App\Services\DurationCategoryService;
 use App\Services\OfferCategoryService;
-use App\Services\ProductCoreService;
 use App\Services\ProductDetailService;
 use App\Services\ProductService;
 use App\Services\TagCategoryService;
@@ -29,7 +29,7 @@ use Illuminate\View\View;
 class ProductController extends Controller {
 
     private $productService;
-    private $productCoreService;
+    private $alCoreProductService;
     private $productDetailService;
     private $tagCategoryService;
     private $offerCategoryService;
@@ -39,17 +39,17 @@ class ProductController extends Controller {
     /**
      * ProductController constructor.
      * @param ProductService $productService
-     * @param ProductCoreService $productCoreService
+     * @param AlCoreProductService $alCoreProductService
      * @param ProductDetailService $productDetailService
      * @param TagCategoryService $tagCategoryService
      * @param OfferCategoryService $offerCategoryService
      * @param DurationCategoryService $durationCategoryService
      */
     public function __construct(
-    ProductService $productService, ProductCoreService $productCoreService, ProductDetailService $productDetailService, TagCategoryService $tagCategoryService, OfferCategoryService $offerCategoryService, DurationCategoryService $durationCategoryService
+    ProductService $productService, AlCoreProductService $alCoreProductService, ProductDetailService $productDetailService, TagCategoryService $tagCategoryService, OfferCategoryService $offerCategoryService, DurationCategoryService $durationCategoryService
     ) {
         $this->productService = $productService;
-        $this->productCoreService = $productCoreService;
+        $this->alCoreProductService = $alCoreProductService;
         $this->productDetailService = $productDetailService;
         $this->tagCategoryService = $tagCategoryService;
         $this->offerCategoryService = $offerCategoryService;
@@ -145,13 +145,14 @@ class ProductController extends Controller {
             return redirect()->back();
         }
 
-        $bondhoSimOffer = $this->productService->findBondhoSim();
-        if (count($bondhoSimOffer) > 4 && isset($request->offer_info['other_offer_type_id']) == OfferType::BONDHO_SIM_OFFER) {
-            Session::flash('error', 'Maximum 4 Bondho SIM offer can be created');
-            return redirect()->back();
-        }
+//        $bondhoSimOffer = $this->productService->findBondhoSim();
+//        if (count($bondhoSimOffer) > 4 && isset($request->offer_info['other_offer_type_id']) == OfferType::BONDHO_SIM_OFFER) {
+//            Session::flash('error', 'Maximum 4 Bondho SIM offer can be created');
+//            return redirect()->back();
+//        }
+
         $simId = SimCategory::where('alias', $type)->first()->id;
-        $this->productCoreService->storeProductCore($request->all(), $simId);
+        $this->alCoreProductService->storeProductCore($request->all(), $simId);
         $this->strToint($request);
         $response = $this->productService->storeProduct($request->all(), $simId);
         Session::flash('success', $response->content());
@@ -231,7 +232,7 @@ class ProductController extends Controller {
         }
 
 //        return $request->all();
-        $this->productCoreService->updateProductCore($request->all(), $id);
+        $this->alCoreProductService->updateProductCore($request->all(), $id);
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $type, $id);
         Session::flash('message', $response->content());
@@ -289,7 +290,7 @@ class ProductController extends Controller {
     }
 
     public function existProductCore($productCode) {
-        return $this->productCoreService->findProductCore($productCode);
+        return $this->alCoreProductService->findProductCore($productCode);
     }
 
     /**
