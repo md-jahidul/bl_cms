@@ -173,7 +173,7 @@
                 <li class="{{is_active_url('minute-pack/filter/create')}}">
                     <a class="menu-item" href="{{ route('minute-pack.filter.create') }} "
                        data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-"></i> Minutes Pack Filter
+                        <i class="ft-phone-call"></i> Minutes Pack Filter
                     </a>
                 </li>
 
@@ -183,6 +183,14 @@
                         <i class="la la-flask"></i> Internet Pack Filter
                     </a>
                 </li>
+
+                <li class=" {{is_active_url('sms-pack/filter/create')}}">
+                    <a class="menu-item" href="{{ route('sms-pack.filter.create') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-send-o"></i> SMS Pack Filter
+                    </a>
+                </li>
+
                 <li class="{{is_active_url('mixed-bundle-offer/filter/create')}}">
                     <a class="menu-item" href="{{ route('mixed-bundle-offer.filter.create') }} "
                        data-i18n="nav.templates.vert.classic_menu">
