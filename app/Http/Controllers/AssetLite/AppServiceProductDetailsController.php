@@ -157,6 +157,8 @@ class AppServiceProductDetailsController extends Controller
 
         $section = $this->appServiceProductDetailsService->getJsonSectionComponentList($section_id);
 
+
+
         if( !empty($section) && count($section) > 0 ){
             return response()->json([
                 'status' => 'SUCCESS',
@@ -171,9 +173,6 @@ class AppServiceProductDetailsController extends Controller
                 'data' => []
             ], 404);
         }
-
-
-
 
     }
 

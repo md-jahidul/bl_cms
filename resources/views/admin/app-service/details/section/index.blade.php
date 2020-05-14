@@ -348,6 +348,8 @@ function matchRelatedProduct($id, $relatedProductIds)
                 type: "GET",
                 success: function (result) {
 
+                    console.log(result)
+
                     if (result.status == 'SUCCESS') {
                         var $parentSelector = $('#' + modalComponent);
                         var baseUrl = "{{ config('filesystems.file_base_url') }}";
@@ -611,11 +613,50 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                                             $.each(multiData, function (mck, mcv) {
 
+                                                console.log(mcv.editor_en)
+
                                                 var html = '';
 
                                                 mck++;
 
-                                                html += '<div class="card accordion collapse-icon accordion-icon-rotate" data-index="' + mcv.id + '" data-position="' + mcv.display_order + '"><input type="hidden" name="component[0][multi_item][id-' + mck + ']" value="' + mcv.id + '"><input type="hidden" name="component[0][multi_item][display_order-' + mck + ']" value="' + mcv.display_order + '"><div class="card-header bg-info info"> <div class="row"> <div class="col-sm-12 m_bottom_6"> <a class="card-link collapsed" data-toggle="collapse" href="#collapse_' + mck + '" aria-expanded="false"> <strong><i class="la la-sort"></i> Accordion Title #' + mck + '</strong> </a> </div></div><div class="row card_header_extra"> <div class="form-group col-md-6 "> <label for="title_en" class="required">Title (English)</label> <input type="text" name="component[0][multi_item][title_en-' + mck + ']" class="form-control" value="' + mcv.title_en + '" required> <div class="help-block"></div></div><div class="form-group col-md-6 "> <label for="title_bn" class="required">Title (Bangla)</label> <input type="text" name="component[0][multi_item][title_bn-' + mck + ']" class="form-control" value="' + mcv.title_bn + '" required> <div class="help-block"></div></div></div></div><div id="collapse_' + mck + '" class="collapse show1 border-info" data-parent="#accordion"> <div class="card-body"> <div class="row"> <div class="col-md-6"> <div class="form-group"> <label for="exampleInputPassword1">Accordion content (English)</label> <textarea name="component[0][multi_item][editor_en-' + mck + ']" class="form-control js_editor_box" rows="5" placeholder="Enter description">' + mcv.editor_en + '</textarea> </div></div><div class="col-md-6"> <div class="form-group"> <label for="exampleInputPassword1">Accordion content (Bangla)</label> <textarea name="component[0][multi_item][editor_bn-' + mck + ']" class="form-control js_editor_box" rows="5" placeholder="Enter description">' + mcv.editor_bn + '</textarea> </div></div></div></div><div class="card-footer"> <div class="row"> <div class="col-md-6"> <div class="form-group1">';
+                                                html += '<div class="card accordion collapse-icon accordion-icon-rotate" data-index="' + mcv.id + '" data-position="' + mcv.display_order + '">' +
+                                                    '<input type="hidden" name="component[0][multi_item][id-' + mck + ']" value="' + mcv.id + '">' +
+                                                    '<input type="hidden" name="component[0][multi_item][display_order-' + mck + ']" value="' + mcv.display_order + '">' +
+                                                    '<div class="card-header bg-info info"> ' +
+                                                    '<div class="row"> ' +
+                                                    '<div class="col-sm-12 m_bottom_6">' +
+                                                    ' <a class="card-link collapsed" data-toggle="collapse" href="#collapse_' + mck + '" aria-expanded="false"> ' +
+                                                    '<strong><i class="la la-sort"></i> Accordion Title #' + mck + '</strong> ' +
+                                                    '</a> ' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '<div class="row card_header_extra"> ' +
+                                                    '<div class="form-group col-md-6 "> ' +
+                                                    '<label for="title_en" class="required">Title (English)</label>' +
+                                                    ' <input type="text" name="component[0][multi_item][title_en-' + mck + ']" class="form-control" value="' + mcv.title_en + '" required> ' +
+                                                    '<div class="help-block">' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '<div class="form-group col-md-6 ">' +
+                                                    ' <label for="title_bn" class="required">Title (Bangla)</label> ' +
+                                                    '<input type="text" name="component[0][multi_item][title_bn-' + mck + ']" class="form-control" value="' + mcv.title_bn + '" required>' +
+                                                    ' <div class="help-block">' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '<div id="collapse_' + mck + '" class="collapse show1 border-info" data-parent="#accordion"> ' +
+                                                    '<div class="card-body"> ' +
+                                                    '<div class="row">' +
+                                                    ' <div class="col-md-6">' +
+                                                    ' <div class="form-group"> ' +
+                                                    '<label for="exampleInputPassword1">Accordion content (English)</label> ' +
+                                                    '<textarea name="component[0][multi_item][editor_en-' + mck + ']" class="form-control js_editor_box" rows="5" placeholder="Enter description">' + mcv.editor_en + '</textarea> ' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '<div class="col-md-6">' +
+                                                    ' <div class="form-group">' +
+                                                    ' <label for="exampleInputPassword1">Accordion content (Bangla)</label> <textarea name="component[0][multi_item][editor_bn-' + mck + ']" class="form-control js_editor_box" rows="5" placeholder="Enter description">' + mcv.editor_bn + '</textarea> </div></div></div></div><div class="card-footer"> <div class="row"> <div class="col-md-6"> <div class="form-group1">';
 
                                                 if (mcv.status == "1") {
                                                     html += '<label for="title" class="mr-1">Status:</label> <input type="radio" name="component[0][multi_item][status-' + mck + ']" value="1" checked> <label for="active" class="mr-1">Active</label> <input type="radio" name="component[0][multi_item][status-' + mck + ']" value="0"> <label for="inactive">Inactive</label>';
