@@ -226,7 +226,7 @@
                 }).then((result) => {
                     if (result.value) {
                         call = $.ajax({
-                            url: '{{route('minute-pack.filter.delete')}}',
+                            url: '{{route('sms-pack.filter.delete')}}',
                             method: 'post',
                             data: {
                                 _token: '{{csrf_token()}}',
