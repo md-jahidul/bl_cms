@@ -902,7 +902,12 @@ class BusinessOthersService {
             $this->otherRepo->updateService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request);
 
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
+            
+            if(isset($types[$request->type])){
             $parentTypes = $types[$request->type];
+            }else{
+                $parentTypes = $request->type;
+            }
             $this->asgnFeatureRepo->assignFeature($request->service_id, $parentTypes, $request->feature);
 
             $parentType = 2;

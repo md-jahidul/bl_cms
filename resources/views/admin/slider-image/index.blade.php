@@ -31,7 +31,7 @@
                             {{--                            <th>Description</th>--}}
                         <th>Alt Text</th>
                             {{--                            <th>Button Label</th>--}}
-                        <th class="text-right">Action</th>
+                        <th width="30%" class="text-right">Action</th>
                         </tr>
                     </thead>
                     <tbody id="sortable">
@@ -43,8 +43,11 @@
                             {{--                                <td>{{ $slider_ima                            ge->description }}</td>--}}
                             <td>{{ $slider_image->alt_text }}</td>
                             {{--                                <td>{{ $slider_image->url_btn_label }}</td>--}}
-                                <td class="action" width="8%">
+                                <td class="action">
                                 @if($sliderItem->title_en == 'Corona')
+                                <a href="{{ url('business-others-service-edit/'.$slider_image->id . '/corona') }}" target="_blank" class="btn btn-sm btn-outline-info">
+                                    Banner
+                                </a>
                                 <a href="{{ url('business-others-components-list/'.$slider_image->id . '/corona') }}" target="_blank" class="btn btn-sm btn-outline-info">
                                     Components
                                 </a>

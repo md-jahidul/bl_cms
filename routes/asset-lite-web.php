@@ -470,7 +470,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('business-others-active/{serviceId}', 'AssetLite\BusinessOthersController@activationStatus');
     Route::get('business-others-sort-change', 'AssetLite\BusinessOthersController@sortChange');
     Route::get('business-others-service-delete/{serviceId}', 'AssetLite\BusinessOthersController@deleteService');
-    Route::get('business-others-service-edit/{serviceId}', 'AssetLite\BusinessOthersController@edit');
+    Route::get('business-others-service-edit/{serviceId}/{type?}', 'AssetLite\BusinessOthersController@edit');
     Route::post('business-others-update', 'AssetLite\BusinessOthersController@update')->name("business.other.update");
 
     Route::get('business-others-components/{serviceId}', 'AssetLite\BusinessOthersController@addComponent');
