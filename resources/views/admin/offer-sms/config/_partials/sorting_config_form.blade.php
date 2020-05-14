@@ -40,7 +40,7 @@
         $(function () {
             let saveSortFilter = function (param) {
                 return $.ajax({
-                    url: '{{route('minute.filter.sort.save')}}',
+                    url: '{{route('sms.filter.sort.save')}}',
                     method: 'post',
                     data: param
                 });

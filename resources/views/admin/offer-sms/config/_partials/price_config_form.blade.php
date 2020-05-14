@@ -92,7 +92,7 @@
 
             let savePriceFilter = function (param) {
                 return $.ajax({
-                    url: '{{route('minute-pack.filter.price.save')}}',
+                    url: '{{route('sms-pack.filter.price.save')}}',
                     method: 'post',
                     data: param
                 });
@@ -107,7 +107,7 @@
                 serverSide: true,
                 ordering: false,
                 ajax: {
-                    url: '{{ route('minute-pack.filter.price.list') }}',
+                    url: '{{ route('sms-pack.filter.price.list') }}',
                 },
                 columns: [
                     {

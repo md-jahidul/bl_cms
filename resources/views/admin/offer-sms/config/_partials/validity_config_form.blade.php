@@ -79,7 +79,7 @@
 
             let saveValidityFilter = function (param) {
                 return $.ajax({
-                    url: '{{route('minute-pack.filter.validity.save')}}',
+                    url: '{{route('sms-pack.filter.validity.save')}}',
                     method: 'post',
                     data: param
                 });
@@ -94,7 +94,7 @@
                 serverSide: true,
                 ordering: false,
                 ajax: {
-                    url: '{{ route('minute-pack.filter.validity.list') }}',
+                    url: '{{ route('sms-pack.filter.validity.list') }}',
                 },
                 columns: [
                     {
@@ -202,7 +202,7 @@
                 }).then((result) => {
                     if (result.value) {
                         call = $.ajax({
-                            url: '{{route('minute-pack.filter.delete')}}',
+                            url: '{{route('sms-pack.filter.delete')}}',
                             method: 'post',
                             data: {
                                 _token: '{{csrf_token()}}',
