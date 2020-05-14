@@ -24,7 +24,9 @@
                         <div class="col-md-4 col-xs-12">
 
                             <input type="hidden" name="service_id" value="{{$service->id}}">
-
+                           
+                            
+                            @if($type == '')
                             <div class="form-group">
                                 <label> Select Category <span class="text-danger">*</span></label>
                                 <select class="form-control" required="required" name="type">
@@ -34,6 +36,9 @@
                                     <option @if($service->type == 'others') selected @endif value="others">Others</option>
                                 </select>
                             </div>
+                            @else
+                             <input type="hidden" name="type" value="{{$serviceId}}">
+                            @endif
 
                             <div class="form-group">
                                 <label for="Short Details">List Page Short Details (EN)</label>
