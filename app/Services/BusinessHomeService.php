@@ -238,15 +238,27 @@ class BusinessHomeService {
                     $this->deleteFile($request['old_photo']);
                 }
             }
+            
+            $filePathMob = "";
+            if ($request['banner_photo_mobile'] != "") {
+                $filePathMob = $this->upload($request['banner_photo_mobile'], 'assetlite/images/business-images');
+
+                //delete old photo
+                if ($request['old_photo_mobile']) {
+                    $this->deleteFile($request['old_photo_mobile']);
+                }
+            }
 
             //save data in database 
-            $newPhoto = $this->businessBannerRepo->saveBannerPhoto($filePath, $request['alt_text'], $request['home_sort']);
+            $newPhoto = $this->businessBannerRepo->saveBannerPhoto($filePath, $filePathMob, $request['alt_text'], $request['home_sort']);
 
             $photo = $newPhoto == "" ? $request['old_photo'] : $newPhoto;
+            $photoMob = $filePathMob == "" ? $request['old_photo_mobile'] : $filePathMob;
 
             $response = [
                 'success' => 1,
                 'photo' => $photo,
+                'photo_mob' => $photoMob,
                 'sort' => $request['home_sort'],
                 'message' => "Banner photo is uploaded successfully!"
             ];

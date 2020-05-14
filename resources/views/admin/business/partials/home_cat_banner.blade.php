@@ -20,14 +20,14 @@
                                 <td class="category_name">
                                     <i class="icon-cursor-move icons"></i>
                                     {{ $cat->name }} 
-                                    
+
                                 </td>
-                               
+
                                 <td class="banner_photo">
-                                <img src="{{ config('filesystems.file_base_url') . $cat->banner_photo }}" height="40px">
-                                
+                                    <img src="{{ config('filesystems.file_base_url') . $cat->banner_photo }}" height="40px">
+
                                 </td>
-                               
+
                                 <td>
 
                                     @if($cat->home_show == 1)
@@ -50,9 +50,9 @@
                     </table>
 
                 </div>
-                
+
                 <div class="col-md-7 col-xs-12 cat_update_form" style="display: none;">
-                     <h4 class="pb-1"><strong>Update Category</strong></h4>
+                    <h4 class="pb-1"><strong>Update Category</strong></h4>
                     <hr>
                     <form method="POST" action="{{ url('business/update-category') }}" class="form" enctype="multipart/form-data">
                         @csrf
@@ -78,33 +78,33 @@
 
 
                         <div class="form-group row">
-                            
+
                             <div class="col-md-4 col-xs-12">
                                 <label>Banner (Web)</label>
                                 <input type="file" class="" name="banner_web" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
                                 <input type="hidden" class="old_web_img" name="old_web_img">
-                               
+
                                 <p class="banner_web"></p>
                             </div>
                             <div class="col-md-4 col-xs-12">
                                 <label>Banner (Mobile)</label>
                                 <input type="file" class="" name="banner_mobile" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                
-                                 <input type="hidden" class="old_mob_img" name="old_mob_img">
-                                 
+
+                                <input type="hidden" class="old_mob_img" name="old_mob_img">
+
 
                                 <p class="banner_mobile"></p>
                             </div>
-                            
+
                             <div class="col-md-4 col-xs-12">
                                 <label>Banner Photo Name<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
-                                
+
                                 <input type="hidden" class="old_banner_name" name="old_banner_name">
-                                
+
                                 <small class="text-info">
                                     <strong>i.e:</strong> package-banner (no spaces)<br>
                                 </small>
@@ -114,13 +114,13 @@
                         </div>
 
                         <div class="form-group row">
-                            
-                               <div class="col-md-4 col-xs-12">
+
+                            <div class="col-md-4 col-xs-12">
                                 <label>Alt Text</label>
                                 <input type="text" class="form-control alt_text" name="alt_text" placeholder="Alt Text">
                             </div>
 
-                             <div class="col-md-4 col-xs-12">
+                            <div class="col-md-4 col-xs-12">
                                 <label>Page Header (HTML)</label>
                                 <textarea class="form-control html_header" rows="7" name="page_header"></textarea>
                                 <small class="text-info">
@@ -134,7 +134,7 @@
                                     <strong>Note: </strong> JSON-LD (Recommended by Google)
                                 </small>
                             </div>
-                           
+
                         </div>
 
 
@@ -146,8 +146,8 @@
                         <button type="submit" class="btn btn-sm btn-info pull-right">Update</button>
                     </form>
                 </div>
-                </div>
-           
+            </div>
+
 
         </div>
     </div>
@@ -155,10 +155,10 @@
 <div class="card">
     <div class="card-content collapse show">
         <div class="card-body card-dashboard">
-            
+
             <div class="row">
 
-                
+
 
                 <div class="col-md-6 col-xs-12">
                     <h4><strong>Home Banner</strong></h4>
@@ -178,7 +178,7 @@
                             @endphp
 
 
-                            <label for="message">Banner Photo ({{$sort}})</label>
+                            <label for="message">Banner Photo Desktop ({{$sort}})</label>
 
                             @if($b->image_name == "")
                             <img class="photo_{{$sort}}" src="" width="100%" />
@@ -202,6 +202,24 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="message">Banner Photo Mobile ({{$sort}})</label>
+
+                                    @if($b->image_name_mobile == "")
+                                    <img class="photo_mobile_{{$sort}}" src="" width="100%" />
+                                    @else
+                                    <img class="photo_mobile_{{$sort}}" src="{{ config('filesystems.file_base_url') . $b->image_name_mobile }}" alt="Home Banner Image" width="100%" />
+                                    @endif
+                                    @if($b->image_name_mobile == '')
+                                    <input type="file" class="dropify" name="banner_photo_mobile" data-height="80"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]' required>
+                                    @else
+                                    <input type="file" class="dropify" name="banner_photo_mobile" data-height="80"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    @endif
+                                    <input type="hidden" class="old_photo_mobile_{{$sort}}" name="old_photo_mobile" value="{{$b->image_name_mobile}}">
+                                </div>
+
+                                <div class="form-group">
                                     <label>Alt Text</label>
                                     <input type="text" class="form-control" value="{{ $b->alt_text }}" name="alt_text">
                                 </div>
@@ -217,11 +235,11 @@
                         @endforeach
                     </div>
                 </div>
-                
-                
+
+
                 <div class="col-md-6 col-xs-12">
                     <h4><strong>Sliding Speed</strong></h4>
-                     <small><strong class="text-danger">Note: </strong>Speed in Seconds.</small>
+                    <small><strong class="text-danger">Note: </strong>Speed in Seconds.</small>
                     <hr>
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -263,9 +281,9 @@
     $(function () {
 
         /*######################################### Category Javascript ##################################################*/
-        
-        
-         $('.edit_category').on('click', function (e) {
+
+
+        $('.edit_category').on('click', function (e) {
             e.preventDefault();
 
             let catId = $(this).attr('href');
@@ -661,13 +679,22 @@
 
                         //change photo in the view
                         let photoUrl = "{{ config('filesystems.file_base_url')}}" + result.photo;
+                        let photoMob = "{{ config('filesystems.file_base_url')}}" + result.photo_mob;
 
                         if (result.sort == 1) {
                             $(".photo_Left").attr('src', photoUrl);
                             $(".old_photo_Left").val(result.photo);
+                            
+                            $(".photo_mobile_Left").attr('src', photoMob);
+                            $(".old_photo_mobile_left").val(result.photo_mob);
+                            
+                            
                         } else {
                             $(".photo_Right").attr('src', photoUrl);
                             $(".old_photo_Right").val(result.photo);
+                            
+                            $(".photo_mobile_Right").attr('src', photoMob);
+                            $(".old_photo_mobile_Right").val(result.photo_mob);
                         }
 
 

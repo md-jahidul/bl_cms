@@ -18,11 +18,14 @@ class BusinessHomeBannerRepository extends BaseRepository {
         return $banners;
     }
     
-    public function saveBannerPhoto($filePath, $altText, $sort){
+    public function saveBannerPhoto($filePath,$filePathMob, $altText, $sort){
         $update = [];
         $update['alt_text'] = $altText;
         if($filePath != ""){
         $update['image_name'] = $filePath;
+        }
+        if($filePathMob != ""){
+        $update['image_name_mobile'] = $filePathMob;
         }
         $this->model->where('home_sort', $sort)->update($update);
         return $filePath;
