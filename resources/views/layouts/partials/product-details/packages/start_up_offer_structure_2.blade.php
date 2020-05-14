@@ -71,8 +71,8 @@
 
 <div class="form-group col-md-6 {{ $errors->has('bundle_expire_en') ? ' error' : '' }}">
     <label for="bundle_expire_en">After Bundle Expires (English)</label>
-    <input type="text" name="other_attributes[bundle_expire_en]"  class="form-control" placeholder="Enter After bundle expires in English"
-           value="{{ !empty($otherAttributes['bundle_expire_en']) ? $otherAttributes['bundle_expire_en'] : '' }}" id="details">
+    <textarea type="text" name="other_attributes[bundle_expire_en]"  class="form-control" placeholder="Enter After bundle expires in English" id="details"
+    >{{ !empty($otherAttributes['bundle_expire_en']) ? $otherAttributes['bundle_expire_en'] : '' }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('bundle_expire_en'))
         <div class="help-block">{{ $errors->first('bundle_expire_en') }}</div>
@@ -81,8 +81,8 @@
 
 <div class="form-group col-md-6 {{ $errors->has('bundle_expire_bn') ? ' error' : '' }}">
     <label for="bundle_expire_bn">After Bundle Expires (Bangla)</label>
-    <input type="text" name="other_attributes[bundle_expire_bn]"  class="form-control" placeholder="Enter After bundle expires in Bangla"
-           value="{{ !empty($otherAttributes['bundle_expire_bn']) ? $otherAttributes['bundle_expire_bn'] : '' }}" id="details">
+    <textarea type="text" name="other_attributes[bundle_expire_bn]"  class="form-control" placeholder="Enter After bundle expires in Bangla" id="details"
+    >{{ !empty($otherAttributes['bundle_expire_bn']) ? $otherAttributes['bundle_expire_bn'] : '' }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('bundle_expire_bn'))
         <div class="help-block">{{ $errors->first('bundle_expire_bn') }}</div>
