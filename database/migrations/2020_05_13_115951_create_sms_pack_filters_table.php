@@ -4,10 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-/**
- * Class CreateMinutesPackFiltersTable
- */
-class CreateMinutesPackFiltersTable extends Migration
+class CreateSmsPackFiltersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +13,7 @@ class CreateMinutesPackFiltersTable extends Migration
      */
     public function up()
     {
-        Schema::create('minutes_pack_filters', function (Blueprint $table) {
+        Schema::create('sms_pack_filters', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('offer_filter_type_id');
             $table->json('filter');
@@ -32,6 +29,6 @@ class CreateMinutesPackFiltersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('minutes_pack_filters');
+        Schema::dropIfExists('sms_pack_filters');
     }
 }

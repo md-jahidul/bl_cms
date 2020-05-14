@@ -308,4 +308,29 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
 
     Route::post('minute-pack/filter/sort/save', 'CMS\MinutePackFilterController@saveSortFilter')
         ->name('minute.filter.sort.save');
+
+    // SMS
+
+    Route::get('sms-pack/filter/create', 'CMS\SmsPackFilterController@create')
+        ->name('sms-pack.filter.create');
+    Route::post('sms-pack/price/save', 'CMS\SmsPackFilterController@savePriceFilter')
+        ->name('sms-pack.filter.price.save');
+    Route::get('sms-pack/filter/price', 'CMS\SmsPackFilterController@getPriceFilter')
+        ->name('sms-pack.filter.price.list');
+
+    Route::post('sms-pack/filter/delete', 'CMS\SmsPackFilterController@deleteFilter')
+        ->name('sms-pack.filter.delete');
+
+    Route::post('sms-pack/filter/sms/save', 'CMS\SmsPackFilterController@saveSmsFilter')
+        ->name('sms-pack.filter.sms.save');
+    Route::get('sms-pack/filter/sms', 'CMS\SmsPackFilterController@getSmsFilter')
+        ->name('sms-pack.filter.sms.list');
+
+    Route::post('sms-pack/filter/validity/save', 'CMS\SmsPackFilterController@saveValidityFilter')
+        ->name('sms-pack.filter.validity.save');
+    Route::get('sms-pack/filter/validity', 'CMS\SmsPackFilterController@getValidityFilter')
+        ->name('sms-pack.filter.validity.list');
+
+    Route::post('sms-pack/filter/sort/save', 'CMS\SmsPackFilterController@saveSortFilter')
+        ->name('sms.filter.sort.save');
 });
