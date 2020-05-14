@@ -52,9 +52,56 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                    <label for="banner_name" class="">Banner Name</label>
+                                    <input type="text" name="banner_name"  class="form-control" placeholder="Enter banner title"
+                                           value="{{ old("banner_name") ? old("banner_name") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name'))
+                                        <div class="help-block">  {{ $errors->first('banner_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                    <label for="mobileImg">Desktop View Image</label>
+                                    <div class="custom-file">
+{{--                                        <input type="hidden" name="old_web_img">--}}
+                                        <input type="file" name="banner_image_url" class="dropify" data-height="80">
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_image_url'))
+                                        <div class="help-block">  {{ $errors->first('banner_image_url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
+                                    <label for="mobileImg">Mobile View Image</label>
+                                    <div class="custom-file">
+{{--                                        <input type="hidden" name="old_mob_img" value="">--}}
+                                        <input type="file" name="banner_mobile_view" class="dropify" data-height="80">
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_mobile_view'))
+                                        <div class="help-block">  {{ $errors->first('banner_mobile_view') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label for="alt_text" class="">Alt Text</label>
+                                    <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text"
+                                           value="{{ old("alt_text") ? old("alt_text") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text'))
+                                        <div class="help-block">  {{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="col-md-6">
                                     <label></label>
-                                    <div class="form-group mt-2">
+                                    <div class="form-group mt-1">
                                         <label for="title" class="mr-1">Status:</label>
                                         <input type="radio" name="status" value="1" id="active" checked>
                                         <label for="active" class="mr-1">Active</label>
@@ -84,9 +131,20 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script>
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Browse for an Image File to upload',
+                'replace': 'Click to replace',
+                'remove': 'Remove',
+                'error': 'Choose correct file format'
+            }
+        });
+    </script>
 @endpush
 
 

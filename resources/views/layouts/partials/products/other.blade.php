@@ -63,6 +63,8 @@
 {{--Bondho SIM Offer--}}
 @if(strtolower($type) == 'prepaid')
     <slot class="{{ $offertype == \App\Enums\OfferType::BONDHO_SIM_OFFER ? '' : 'd-none' }}" id="bondho_sim_offer">
+        @include('layouts.partials.products.common-field.renew_code')
+        @include('layouts.partials.products.common-field.recharge_code')
         @include('layouts.partials.products.common-field.price_vat_mrp')
         @include('layouts.partials.products.common-field.minute_volume')
         @include('layouts.partials.products.common-field.internet_volume')

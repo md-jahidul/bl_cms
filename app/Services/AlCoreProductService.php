@@ -9,7 +9,7 @@ use App\Models\Product;
 use App\Models\ProductCore;
 use App\Models\ProductCoreHistory;
 use App\Models\ProductDetail;
-use App\Repositories\ProductCoreRepository;
+use App\Repositories\AlCoreProductRepository;
 use App\Repositories\SearchDataRepository;
 use App\Repositories\TagCategoryRepository;
 use App\Traits\CrudTrait;
@@ -31,17 +31,17 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
 
 /**
- * Class ProductCoreService
+ * Class AlCoreProductService
  * @package App\Services
  */
-class ProductCoreService
+class AlCoreProductService
 {
     use CrudTrait;
 
     /**
      * @var $partnerOfferRepository
      */
-    protected $productCoreRepository;
+    protected $alCoreProductRepository;
     protected $searchRepository;
     protected $tagRepository;
 
@@ -52,19 +52,19 @@ class ProductCoreService
 
     /**
      * ProductCoreService constructor.
-     * @param  ProductCoreRepository  $productCoreRepository
+     * @param  AlCoreProductRepository  $alCoreProductRepository
      * @param  SearchDataRepository  $searchRepository
      * @param  TagCategoryRepository  $tagRepository
      */
     public function __construct(
-        ProductCoreRepository $productCoreRepository,
+        AlCoreProductRepository $alCoreProductRepository,
         SearchDataRepository $searchRepository,
         TagCategoryRepository $tagRepository
     ) {
-        $this->productCoreRepository = $productCoreRepository;
+        $this->alCoreProductRepository = $alCoreProductRepository;
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
-        $this->setActionRepository($productCoreRepository);
+        $this->setActionRepository($alCoreProductRepository);
     }
 
     /**
@@ -118,7 +118,7 @@ class ProductCoreService
      */
     public function storeProductCore($data, $simId)
     {
-        $productCode = $this->productCoreRepository
+        $productCode = $this->alCoreProductRepository
             ->findByProperties(['product_code' => $data['product_code']])
             ->first();
         if (empty($productCode)) {
@@ -140,7 +140,7 @@ class ProductCoreService
      */
     public function findProductCore($id)
     {
-        return $this->productCoreRepository->findWithProduct($id);
+        return $this->alCoreProductRepository->findWithProduct($id);
     }
 
     /**
@@ -149,7 +149,7 @@ class ProductCoreService
      */
     public function updateProductCore($data, $id)
     {
-        $product = $this->productCoreRepository->findOneProductCore($id);
+        $product = $this->alCoreProductRepository->findOneProductCore($id);
         if (!$product) {
             $data['name'] = $data['name_en'];
             $data['product_code'] = strtoupper($id);
@@ -279,7 +279,7 @@ class ProductCoreService
 
                         try {
                             $product_code = $core_data['product_code'];
-                            $core_product = ProductCore::where('product_code', $product_code)->first();
+                            $core_product = AlCoreProduct::where('product_code', $product_code)->first();
 
                             if ($core_product) {
                                 if ($core_product->platform == 'web') {
@@ -291,7 +291,7 @@ class ProductCoreService
 
                             //dd($core_data);
 
-                            ProductCore::updateOrCreate([
+                            AlCoreProduct::updateOrCreate([
                                 'product_code' => $product_code
                             ], $core_data);
 
@@ -595,7 +595,7 @@ class ProductCoreService
 
                         try {
                             $product_code = $core_data['product_code'];
-                            $core_product = ProductCore::where('product_code', $product_code)->first();
+                            $core_product = AlCoreProduct::where('product_code', $product_code)->first();
 
                             if ($core_product) {
                                 if ($core_product->platform == 'app') {
@@ -609,7 +609,7 @@ class ProductCoreService
 
                             AlCoreProduct::updateOrCreate([
                                 'product_code' => $product_code
-                                    ], $core_data);
+                            ], $core_data);
 
 
                             if ($assetLiteProduct['offer_category_id']) {
@@ -622,8 +622,8 @@ class ProductCoreService
                                 }
 
                                 $product = Product::updateOrCreate([
-                                            'product_code' => $product_code
-                                                ], $assetLiteProduct);
+                                    'product_code' => $product_code
+                                ], $assetLiteProduct);
 
                                 $this->_saveSearchData($product);
 
@@ -649,7 +649,7 @@ class ProductCoreService
         }
     }
 
-     //save Search Data
+    //save Search Data
     private function _saveSearchData($product) {
         $productId = $product->id;
         $name = $product->name_en;
@@ -708,7 +708,7 @@ class ProductCoreService
      */
     public function searchProductCodes($keyword)
     {
-        return ProductCore::where('product_code', 'like', '%' . $keyword . '%')->get();
+        return AlCoreProduct::where('product_code', 'like', '%' . $keyword . '%')->get();
     }
 
     /**
@@ -760,7 +760,7 @@ class ProductCoreService
             $model = MyBlProduct::where('product_code', $product_code);
             $model->update($data);
 
-            $core_product = ProductCore::where('product_code', $product_code)->get()->toArray();
+            $core_product = AlCoreProduct::where('product_code', $product_code)->get()->toArray();
 
             $data_request = $request->all();
             unset($data_request['_token']);
@@ -812,7 +812,7 @@ class ProductCoreService
 
             ProductCoreHistory::create($data_history);
 
-            $model = ProductCore::where('product_code', $product_code);
+            $model = AlCoreProduct::where('product_code', $product_code);
             $model->update($data_request);
 
             $this->resetProductRedisKeys();

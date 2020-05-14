@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MyBlProductCategory;
 use App\Models\SimCategory;
+use App\Services\AlCoreProductService;
 use App\Services\ProductCoreService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,10 +17,21 @@ class ProductEntryController extends Controller
      */
     protected $service;
 
-    public function __construct(ProductCoreService $service)
+    /**
+     * @var AlCoreProductService
+     */
+    protected $alCoreProductService;
+
+    /**
+     * ProductEntryController constructor.
+     * @param ProductCoreService $service
+     * @param AlCoreProductService $alCoreProductService
+     */
+    public function __construct(ProductCoreService $service, AlCoreProductService $alCoreProductService)
     {
         $this->middleware('auth');
         $this->service = $service;
+        $this->alCoreProductService = $alCoreProductService;
     }
 
     public function test()
@@ -99,11 +111,15 @@ class ProductEntryController extends Controller
         return view('admin.core-product.core_product_entry');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function assetliteCoreProductStore(Request $request)
     {
         try {
             $file = $request->file('excel_file');
-//            dd($file);
+
             $path = $file->storeAs(
                 'products/' . strtotime(now()),
                 "products" . '.' . $file->getClientOriginalExtension(),
@@ -111,8 +127,8 @@ class ProductEntryController extends Controller
             );
 
             $path = Storage::disk('public')->path($path);
-//            dd($path);
-            $this->service->mapAssetliteProduct($path);
+
+            $this->alCoreProductService->mapAssetliteProduct($path);
 
             $response = [
                 'success' => 'SUCCESS'
