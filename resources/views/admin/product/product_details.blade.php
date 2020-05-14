@@ -268,4 +268,3 @@ $("textarea#details").summernote({
 
 
 
-
