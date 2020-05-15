@@ -11,7 +11,7 @@
 							<label for="category_type">Select Component Type</label>
 							<select id="component_type" class="form-control" name="component_type" aria-invalid="false">
 
-                                <option value="accordion_section">Accordion Text</option>
+{{--                                <option value="accordion_section">Accordion Text</option>--}}
 
                                 <option value="title_text_editor">Bullet Text</option>
 
@@ -60,7 +60,7 @@
 @include('admin.app-service.details.section.component_modal.title_text_editor')
 
 <!-- Accordion content -->
-@include('admin.app-service.details.section.component_modal.accordion.accordion')
+{{--@include('admin.app-service.details.section.component_modal.accordion.accordion')--}}
 
 <!-- multi image slider -->
 @include('admin.app-service.details.section.component_modal.slider.slider_text_with_image_right')
