@@ -104,6 +104,43 @@
 
                         </div>
                         <div class="col-md-6 col-xs-12">
+                            
+                             <div class="form-group row">
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label for="Banner Photo">Card Photo (Web)<span class="text-danger">*</span></label>
+                                    <input type="file" class="dropify_package" name="card_banner_web" data-height="70"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    
+                                    <input type="hidden" name="old_card_banner_web" value="{{$package->card_banner_web}}">
+                                    
+                                     <p class="text-center">
+                                        @if($package->banner_photo != "")
+                                        <img src="{{ config('filesystems.file_base_url') . $package->card_banner_web }}" alt="Banner Photo" width="100%" />
+                                        @endif
+                                    </p>
+                                    
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label for="Banner Photo">Card Photo (Mobile) <span class="text-danger">*</span></label>
+                                    <input type="file" class="dropify_package" name="card_banner_mobile" data-height="70"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    
+                                    <input type="hidden" name="old_card_banner_mobile" value="{{$package->card_banner_mobile}}">
+                                    
+                                     <p class="text-center">
+                                        @if($package->banner_photo != "")
+                                        <img src="{{ config('filesystems.file_base_url') . $package->card_banner_mobile }}" alt="Banner Photo" width="100%" />
+                                        @endif
+                                    </p>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Card Photo Alt Text</label>
+                                    <input type="text" class="form-control" value="{{$package->card_banner_alt_text}}"  name="card_banner_alt_text" placeholder="Alt Text">
+                                </div>
+
+                            </div>
 
                             <div class="form-group row">
 
@@ -111,7 +148,6 @@
                                 <div class="col-md-6 col-xs-12">
 
                                     <label for="Banner Photo">Banner Photo <span class="text-danger">*</span></label>
-
 
                                     <input type="hidden" name="old_banner" value="{{$package->banner_photo}}">
                                     

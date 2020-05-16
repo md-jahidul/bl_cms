@@ -170,6 +170,12 @@
         <li class=" nav-item"><a href="#"><i class="la la-flask"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Filters</span></a>
             <ul class="menu-content">
+                <li class="{{is_active_url('minute-pack/filter/create')}}">
+                    <a class="menu-item" href="{{ route('minute-pack.filter.create') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="ft-phone-call"></i> Minutes Pack Filter
+                    </a>
+                </li>
 
                 <li class=" {{is_active_url('internet-pack/filter/create')}}">
                     <a class="menu-item" href="{{ route('internet-pack.filter.create') }} "
@@ -177,6 +183,14 @@
                         <i class="la la-flask"></i> Internet Pack Filter
                     </a>
                 </li>
+
+                <li class=" {{is_active_url('sms-pack/filter/create')}}">
+                    <a class="menu-item" href="{{ route('sms-pack.filter.create') }} "
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-send-o"></i> SMS Pack Filter
+                    </a>
+                </li>
+
                 <li class="{{is_active_url('mixed-bundle-offer/filter/create')}}">
                     <a class="menu-item" href="{{ route('mixed-bundle-offer.filter.create') }} "
                        data-i18n="nav.templates.vert.classic_menu">

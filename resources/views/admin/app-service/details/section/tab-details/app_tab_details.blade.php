@@ -1,5 +1,5 @@
 @section('component_type_selector')
-	
+
 	<!-- # Section add component -->
 	<div class="card">
 		<div class="card-content collapse show">
@@ -10,6 +10,11 @@
 						<div class="form-group">
 							<label for="category_type">Select Component Type</label>
 							<select id="component_type" class="form-control" name="component_type" aria-invalid="false">
+
+{{--                                <option value="accordion_section">Accordion Text</option>--}}
+
+                                <option value="title_text_editor">Bullet Text</option>
+
 								<option value="text_with_image_right">APPS - Text with image right</option>
 								<option value="text_with_image_bottom">APPS - Text with image bottom</option>
 								<option value="slider_text_with_image_right">APPS - Slider text with image right</option>
@@ -50,6 +55,12 @@
 @include('admin.app-service.details.section.component_modal.text_with_image_bottom')
 @include('admin.app-service.details.section.component_modal.video_with_text_right')
 @include('admin.app-service.details.section.component_modal.pricing_sections')
+
+<!-- Bullet Text -->
+@include('admin.app-service.details.section.component_modal.title_text_editor')
+
+<!-- Accordion content -->
+{{--@include('admin.app-service.details.section.component_modal.accordion.accordion')--}}
 
 <!-- multi image slider -->
 @include('admin.app-service.details.section.component_modal.slider.slider_text_with_image_right')

@@ -96,6 +96,26 @@
                             <div class="form-group row">
 
                                 <div class="col-md-6 col-xs-12">
+                                    <label for="Banner Photo">Card Photo (Web)<span class="text-danger">*</span></label>
+                                    <input type="file" class="dropify_package" name="card_banner_web" data-height="70"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label for="Banner Photo">Card Photo (Mobile) <span class="text-danger">*</span></label>
+                                    <input type="file" class="dropify_package" name="card_banner_mobile" data-height="70"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Card Photo Alt Text</label>
+                                    <input type="text" class="form-control"  name="card_banner_alt_text" placeholder="Alt Text">
+                                </div>
+
+                            </div>
+                            
+                            <div class="form-group row">
+
+                                <div class="col-md-6 col-xs-12">
                                     <label for="Banner Photo">Banner Photo (Web)<span class="text-danger">*</span></label>
                                     <input type="file" class="dropify_package" name="banner_photo" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>

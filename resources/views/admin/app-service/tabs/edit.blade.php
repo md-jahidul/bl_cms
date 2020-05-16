@@ -117,6 +117,18 @@
                                     </small>
                                 </div>
 
+                                <div class="col-md-6">
+                                    <label></label>
+                                    <div class="form-group">
+                                        <label for="title" class="mr-1">Status:</label>
+                                        <input type="radio" name="status" value="1" id="active" {{ ($appServiceTab->status == 1) ? 'checked' : '' }}>
+                                        <label for="active" class="mr-1">Active</label>
+
+                                        <input type="radio" name="status" value="0" id="inactive" {{ ($appServiceTab->status == 0) ? 'checked' : '' }}>
+                                        <label for="inactive">Inactive</label>
+                                    </div>
+                                </div>
+
                                 <div class="form-group col-md-6"></div>
 
                                 <div class="form-actions col-md-12 ">

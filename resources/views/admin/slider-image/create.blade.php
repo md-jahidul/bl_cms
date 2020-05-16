@@ -28,7 +28,7 @@
                                         <div class="help-block">{{ $errors->first('title_en') }}</div>
                                     @endif
                                 </div>
-                                
+
                                 <div class="form-group col-md-4 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title (Bangla)</label>
                                     <input type="text" name="title_bn"  class="form-control" placeholder="Enter bangla title"
@@ -60,9 +60,9 @@
                                     @if ($errors->has('end_date'))
                                         <div class="help-block">{{ $errors->first('end_date') }}</div>
                                     @endif
-                                    
+
                                     <br>
-                                    
+
                                     <label for="alt_text" class="required">Alt Text</label>
                                     <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text"
                                            required data-validation-required-message="Enter alt text"
@@ -73,7 +73,7 @@
                                     @endif
                                 </div>
 
-                               
+
 
                                 <div class="form-group col-md-4 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Slider Image (Desktop View)</label>
@@ -101,8 +101,8 @@
                                         <div class="help-block">  {{ $errors->first('mobile_view_img') }}</div>
                                     @endif
                                 </div>
-                                
-                                
+
+
                                 @include('layouts.partials.slider_types.'.$type )
 
                                 <div class="col-md-4">
@@ -139,11 +139,17 @@
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/tinymce/tinymce.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
 @endpush
 @push('page-js')
+    <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
@@ -154,6 +160,19 @@
 
     <script>
         $(function () {
+            $("textarea#details").summernote({
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['table', ['table']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['view', ['fullscreen', 'codeview']]
+                ],
+                height:150
+            })
+
             $('.dropify').dropify({
                 messages: {
                     'default': 'Browse for an Image File to upload',

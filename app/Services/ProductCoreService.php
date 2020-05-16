@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AlCoreProduct;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
 use App\Models\Product;
@@ -606,7 +607,7 @@ class ProductCoreService
 
 //                            dd($core_data);
 
-                            ProductCore::updateOrCreate([
+                            AlCoreProduct::updateOrCreate([
                                 'product_code' => $product_code
                                     ], $core_data);
 

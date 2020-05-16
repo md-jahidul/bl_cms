@@ -98,16 +98,19 @@ class BusinessPackageRepository extends BaseRepository {
         }
     }
 
-    public function savePackage($bannerWeb, $bannerMob, $request) {
+    public function savePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request) {
         $package = $this->model;
 
-        if ($bannerWeb != "") {
-            $package->banner_photo = $bannerWeb;
-        }
-        if ($bannerMob != "") {
-            $package->banner_image_mobile = $bannerMob;
-        }
+
+
+        $package->card_banner_web = $cardWeb;
+        $package->card_banner_mobile = $cardMob;
+        $package->card_banner_alt_text = $request->card_banner_alt_text;
+
+        $package->banner_photo = $bannerWeb;
+        $package->banner_image_mobile = $bannerMob;
         $package->alt_text = $request->alt_text;
+
         $package->banner_name = $request->banner_name;
         $package->url_slug = $request->url_slug;
         $package->schema_markup = $request->schema_markup;
@@ -135,9 +138,14 @@ class BusinessPackageRepository extends BaseRepository {
         return $packages;
     }
 
-    public function updatePackage($bannerWeb, $bannerMob, $request) {
+    public function updatePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request) {
         $packageId = $request->package_id;
         $package = $this->model->findOrFail($packageId);
+
+
+        $package->card_banner_web = $cardWeb;
+        $package->card_banner_mobile = $cardMob;
+        $package->card_banner_alt_text = $request->card_banner_alt_text;
 
         if ($bannerWeb != "") {
             $package->banner_photo = $bannerWeb;

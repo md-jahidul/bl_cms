@@ -20,8 +20,8 @@
                 		{{ Form::hidden('component[0][component_type]', 'pricing_mutiple_table' ) }}
                      {{ Form::hidden('component[1][component_type]', 'pricing_mutiple_table' ) }}
 
-                
-                
+
+
                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                     <label for="title_en" class="required1">
                         Header Main Title (English)
@@ -47,12 +47,9 @@
                      @endif
                  </div>
 
-                  
+
                   <!-- # Price slug is required for api integration -->
                   {{ Form::hidden('sections[slug]', 'price' ) }}
-
-
-
 
 							<div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
 							    <label for="title_en" class="required1">
@@ -140,7 +137,7 @@
                            </div>
                        </div>
 
-						   
+
 
 
 
@@ -161,7 +158,7 @@
 									{{ Form::hidden('sections[multiple_component]', 0 ) }}
 							</div>
 
-                    
+
 
                 </div>
 
@@ -185,6 +182,7 @@
 @push('page-css')
    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
+   <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/tinymce/tinymce.min.css') }}">
  <style>
      .modal-xl.modal_xl_custom {
          max-width: 80%;
@@ -199,6 +197,7 @@
 
 @push('page-js')
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+<script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
 
  <script>
      $(function () {
@@ -210,7 +209,7 @@
                     ['font', ['strikethrough', 'superscript', 'subscript']],
                     ['fontsize', ['fontsize']],
                     ['color', ['color']],
-                    // ['table', ['table']],
+                    ['table', ['table']],
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['view', ['fullscreen', 'codeview']]
                 ],
@@ -218,18 +217,47 @@
             });
          });
 
-         // $("textarea#details_en").summernote({
-         //     toolbar: [
-         //         ['style', ['bold', 'italic', 'underline', 'clear']],
-         //         ['font', ['strikethrough', 'superscript', 'subscript']],
-         //         ['fontsize', ['fontsize']],
-         //         ['color', ['color']],
-         //         // ['table', ['table']],
-         //         ['para', ['ul', 'ol', 'paragraph']],
-         //         ['view', ['fullscreen', 'codeview']]
+         // Basic TineMCE
+         // tinymce.init({
+         //     selector: '.js_editor_box',
+         //     height: 350,
+         //     theme: 'modern',
+         //     plugins: [
+         //         'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+         //         'searchreplace wordcount visualblocks visualchars code fullscreen',
+         //         'insertdatetime media nonbreaking save table contextmenu directionality',
+         //         'emoticons template paste textcolor colorpicker textpattern imagetools'
          //     ],
-         //     height:200
+         //
+         //     table_default_attributes: {
+         //         class: 'table table-primary table_large offer_table'
+         //     },
+         //
+         //     toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+         //     toolbar2: 'print preview media | forecolor backcolor emoticons',
+         //     image_advtab: true,
+         //     templates: [
+         //         {title: 'Test template 1', content: 'Test 1'},
+         //         {title: 'Test template 2', content: 'Test 2'}
+         //     ],
+         //     content_css: [
+         //         '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+         //         '//www.tinymce.com/css/codepen.min.css'
+         //     ]
          // });
+
+         $("textarea#details_en").summernote({
+             toolbar: [
+                 ['style', ['bold', 'italic', 'underline', 'clear']],
+                 ['font', ['strikethrough', 'superscript', 'subscript']],
+                 ['fontsize', ['fontsize']],
+                 ['color', ['color']],
+                 // ['table', ['table']],
+                 ['para', ['ul', 'ol', 'paragraph']],
+                 ['view', ['fullscreen', 'codeview']]
+             ],
+             height:200
+         });
 
          // $("textarea#details_bn").summernote({
          //     toolbar: [
@@ -243,23 +271,6 @@
          //     ],
          //     height:200
          // });
-
-         // $('#design_structure').change(function () {
-         //     if($(this).val() === 'structure_1') {
-         //         // alert($(this).val());
-         //         $('#structure_1').show();
-         //         $('#structure_2').hide();
-         //     }else if ($(this).val() === 'structure_2'){
-         //         $('#structure_2').show();
-         //         $('#structure_1').hide();
-         //     }
-         // })
-         //
-         // $('#save').click(function () {
-         //
-         //     $(this).submit();
-         // })
-
      })
  </script>
  @endpush

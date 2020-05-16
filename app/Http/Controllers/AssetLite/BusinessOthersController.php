@@ -260,8 +260,8 @@ class BusinessOthersController extends Controller {
      * @return Redirect
      * @Bulbul Mahmud Nito || 20/02/2020
      */
-    public function edit($serviceId) {
-        $service = $this->othersService->getServiceById($serviceId);
+    public function edit($serviceId, $type = '') {
+        $service = $this->othersService->getServiceById($serviceId, $type);
         $serviceType = $service->type;
 
         $features = $this->packageService->getFeatures();
@@ -270,7 +270,7 @@ class BusinessOthersController extends Controller {
         $services = $this->othersService->getOtherService("", $serviceId);
         
         $relatedProducts = $this->othersService->relatedProducts($serviceId);
-        return view('admin.business.other_services_edit', compact('service', 'features', 'asgnFeatures', 'services', 'relatedProducts'));
+        return view('admin.business.other_services_edit', compact('service', 'features', 'asgnFeatures', 'services', 'relatedProducts', 'serviceId', 'type'));
     }
 
     /**
