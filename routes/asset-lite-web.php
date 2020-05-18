@@ -251,6 +251,8 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     //amar offer details......
     Route::get('amaroffer/details', 'AssetLite\AmarOfferController@amarOfferDetails')->name('amaroffer.list');
+    Route::post('amaroffer/banner-image/upload', 'AssetLite\AmarOfferController@bannerImageUpload')
+        ->name('banner-image-upload');
     Route::get('amaroffer/edit/{type}', 'AssetLite\AmarOfferController@edit')->name('amaroffer.edit');
     Route::put('amaroffer/update/{type}', 'AssetLite\AmarOfferController@update')->name('amaroffer.update');
 
@@ -296,9 +298,9 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('about-page/{slug}', 'AssetLite\PriyojonController@aboutPageView')->name('about-page');
     Route::put('about-page/update', 'AssetLite\PriyojonController@aboutPageUpdate')
         ->name('about-page.update');
-    
-    
-    
+
+
+
 
     // Dynamic Pages ================================
     Route::get('dynamic-pages/', 'AssetLite\DynamicPageController@index');
@@ -306,8 +308,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('dynamic-pages/edit/{id}', 'AssetLite\DynamicPageController@edit');
     Route::post('dynamic-pages/save', 'AssetLite\DynamicPageController@savePage');
     Route::get('dynamic-pages/delete/{id}', 'AssetLite\DynamicPageController@deletePage');
-    
-    
+
+
 
 //    Route::get('about-reward', 'AssetLite\PriyojonController@aboutRewardPoint')->name('about-reward');
 //    Route::put('about-reward/update', 'AssetLite\PriyojonController@aboutRewardPointUpdate')
