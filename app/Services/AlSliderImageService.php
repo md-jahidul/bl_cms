@@ -82,11 +82,6 @@ class AlSliderImageService
      */
     public function updateSliderImage($data, $id)
     {
-//        dd($data);
-//        $dd = $this->strToint($data, 'other_attributes');
-//
-//        dd($dd);
-
         $sliderImage = $this->findOne($id);
         if (request()->hasFile('image_url')) {
             $imageUrl = $this->upload($data['image_url'], 'assetlite/images/slider-images');
@@ -98,9 +93,7 @@ class AlSliderImageService
             $data['mobile_view_img'] = $imageUrl;
             $this->deleteFile($sliderImage['mobile_view_img']);
         }
-
         $sliderImage->update($data);
-
         return Response('Slider Image update successfully !');
     }
 
