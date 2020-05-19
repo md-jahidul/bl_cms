@@ -17,7 +17,7 @@ class AddBonusTypeToSignInBonusLogsTable extends Migration
     public function up()
     {
         Schema::table('sign_in_bonus_logs', function (Blueprint $table) {
-            $table->string('bonus_type')->after('msisdn')->default('signIn');
+            $table->string('bonus_type')->after('msisdn')->default('SignIn');
         });
     }
 
