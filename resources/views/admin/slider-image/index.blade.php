@@ -38,7 +38,7 @@
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <td><img class="" src="{{ config('filesystems.file_base_url') . $slider_image->image_url }}" alt="Slider Image" height="70" width="200" /></td>
                             <td>{{ $slider_image->title_en }} {!! $slider_image->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
-                            <td>{{ ($slider_image->other_attributes['redirect_url']) ? $slider_image->other_attributes['redirect_url'] : '' }}</td>
+                            <td>{{ (isset($slider_image->other_attributes['redirect_url'])) ? $slider_image->other_attributes['redirect_url'] : '' }}</td>
                             <td class="action">
                                 @if($sliderItem->title_en == 'Corona')
                                     <a href="{{ url('business-others-service-edit/'.$slider_image->id . '/corona') }}" target="_blank" class="btn btn-sm btn-outline-info">
