@@ -27,10 +27,8 @@
                         <tr>
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
                             <th>Image</th>
-                            <th width="25%">Title</th>
-                            {{--                            <th>Description</th>--}}
-                        <th>Alt Text</th>
-                            {{--                            <th>Button Label</th>--}}
+                            <th width="30%">Title</th>
+                            <th>Redirect URL</th>
                         <th width="30%" class="text-right">Action</th>
                         </tr>
                     </thead>
@@ -38,22 +36,18 @@
                         @foreach($slider_images as $index=>$slider_image)
                         <tr data-index="{{ $slider_image->id }}" data-position="{{ $slider_image->display_order }}">
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
-                            <td><img class="" src="{{ config('filesystems.file_base_url') . $slider_image->image_url }}" alt="Slider Image" height="50" width="50" /></td>
+                            <td><img class="" src="{{ config('filesystems.file_base_url') . $slider_image->image_url }}" alt="Slider Image" height="70" width="200" /></td>
                             <td>{{ $slider_image->title_en }} {!! $slider_image->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
-                            {{--                                <td>{{ $slider_ima                            ge->description }}</td>--}}
-                            <td>{{ $slider_image->alt_text }}</td>
-                            {{--                                <td>{{ $slider_image->url_btn_label }}</td>--}}
-                                <td class="action">
+                            <td>{{ (isset($slider_image->other_attributes['redirect_url'])) ? $slider_image->other_attributes['redirect_url'] : '' }}</td>
+                            <td class="action">
                                 @if($sliderItem->title_en == 'Corona')
-                                <a href="{{ url('business-others-service-edit/'.$slider_image->id . '/corona') }}" target="_blank" class="btn btn-sm btn-outline-info">
-                                    Banner
-                                </a>
-                                <a href="{{ url('business-others-components-list/'.$slider_image->id . '/corona') }}" target="_blank" class="btn btn-sm btn-outline-info">
-                                    Components
-                                </a>
-
+                                    <a href="{{ url('business-others-service-edit/'.$slider_image->id . '/corona') }}" target="_blank" class="btn btn-sm btn-outline-info">
+                                        Banner
+                                    </a>
+                                    <a href="{{ url('business-others-components-list/'.$slider_image->id . '/corona') }}" target="_blank" class="btn btn-sm btn-outline-info">
+                                        Components
+                                    </a>
                                 @endif
-
                                 <a href="{{ route('slider_image_edit', [ $slider_image->slider_id, $type, $slider_image->id ] ) }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                 <a href="#" remove="{{ url("slider/$slider_image->slider_id/$type/image/destroy/$slider_image->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $slider_image->id }}" title="Delete the user">
                                     <i class="la la-trash"></i>
