@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
+/**
+ * Class NajatContentsSettingsSeeder
+ */
 class NajatContentsSettingsSeeder extends Seeder
 {
     /**
@@ -16,16 +19,19 @@ class NajatContentsSettingsSeeder extends Seeder
                 'key' => \App\Enums\MyBlAppSettingsKey::NAJAT_CONTENTS_SETTINGS,
                 'value' => json_encode(
                     [
-                        'enable'              => false,
-                        'show_in_home'        => false,
-                        'eid_banner_duration' => 1,
+                        'is_enable'             => false,
+                        'show_in_home'          => false,
+                        'show_banner'           => false,
+                        'show_download_link'    => true,
+                        'show_iftar_sehri_time' => false,
+                        'show_namaj_time'       => true,
                     ]
                 ),
             ]
         ];
 
         foreach ($keys as $key) {
-            \App\Models\MyBlAppSettings::create($key);
+            \App\Models\MyBlAppSettings::updateOrCreate(['key' => $key['key']], ['value' => $key['value']]);
         }
     }
 }

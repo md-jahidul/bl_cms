@@ -218,6 +218,12 @@
 
                 </li>
 
+                <li class="{{ is_active_url('mybl/settings/najat')}}">
+                    <a class="menu-item" href="{{ route('mybl.settings.najat.index') }}">
+                        <i class="la la-feed"></i>Najat Content Configuration</a>
+
+                </li>
+
             </ul>
         </li>
     @endif
