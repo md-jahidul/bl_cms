@@ -109,14 +109,14 @@
                                     @include('layouts.partials.products.internet')
                                 </slot>
 
+                                <slot id="bundles" data-offer-type="bundles" style="display: none">
+                                    @include('layouts.partials.products.bundle')
+                                </slot>
+
                                 @if(strtolower($type) == 'prepaid')
                                     <slot id="voice" data-offer-type="voice" style="display: none">
                                         @include('layouts.partials.products.voice')
                                     </slot>
-                                    <slot id="bundles" data-offer-type="bundles" style="display: none">
-                                        @include('layouts.partials.products.bundle')
-                                    </slot>
-
                                     <slot id="call_rate" data-offer-type="call_rate" style="display: none">
                                         @include('layouts.partials.products.call_rate')
                                     </slot>
@@ -124,12 +124,19 @@
 
                                 <slot id="packages" data-offer-type="packages" style="display: none">
                                     @include('layouts.partials.products.packages')
+                                    @include('layouts.partials.products.common-field.price_vat_mrp')
+                                    @include('layouts.partials.products.common-field.call_rate')
+                                    @include('layouts.partials.products.common-field.call_rate_unit')
+                                    @include('layouts.partials.products.common-field.minute_volume')
+                                    @include('layouts.partials.products.common-field.internet_volume')
+                                    @include('layouts.partials.products.common-field.sms_volume')
                                 </slot>
 
                                 <slot id="others" data-offer-type="others" style="display: none">
                                     @include('layouts.partials.products.other')
                                 </slot>
 
+                                @include('layouts.partials.products.common-field.search-related-field')
 
                                 <div class="col-md-6">
                                     <label></label>

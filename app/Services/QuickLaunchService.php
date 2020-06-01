@@ -79,6 +79,7 @@ class QuickLaunchService
             $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/quick-launch-items');
             $this->deleteFile($quickLaunch->image_url);
         }
+        $data['is_external_link'] = isset($data['is_external_link']) ? 1 : 0;
         $quickLaunch->update($data);
         return Response('Quick launch updated successfully');
     }

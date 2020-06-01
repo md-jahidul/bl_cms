@@ -13,11 +13,12 @@ class SearchDataRepository extends BaseRepository {
 
     public $modelName = SearchData::class;
 
-    public function saveData($productId, $name, $url, $type, $tag) {
+    public function saveData($productId, $keywordType, $name, $url, $type, $tag) {
         $previous = $this->model->where('keyword_id', $productId);
         if ($previous->count() > 0) {
            $save = $previous->update(
                     array(
+                        'keyword_type' => $keywordType,
                         'keyword' => $name,
                         'url' => $url,
                         'type' => $type,
@@ -28,7 +29,7 @@ class SearchDataRepository extends BaseRepository {
            $save = $this->model->insert(
                     array(
                         'keyword_id' => $productId,
-                        'keyword_type' => 'offer-product',
+                        'keyword_type' => $keywordType,
                         'keyword' => $name,
                         'url' => $url,
                         'type' => $type,
@@ -37,6 +38,16 @@ class SearchDataRepository extends BaseRepository {
             );
         }
         return $save;
+    }
+    
+    public function updateByCategory($keywordType, $categoryUrl){
+        $keywords = $this->model->where('keyword_type', $keywordType)->get();
+        foreach($keywords as $val){
+            $kwUrl = $val->url;
+            $urlArray = explode('/', $kwUrl);
+            $newUrl = $urlArray[0] . '/' . $categoryUrl . '/'. $urlArray[2] . '/' . $urlArray[3];
+            $this->model->where('id', $val->id)->update(['url' => $newUrl]);
+        }
     }
 
 }

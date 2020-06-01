@@ -48,31 +48,6 @@ class RoamingBundleController extends Controller
 
 
     /**
-     * @return Factory|View
-     */
-    public function bundleCreate()
-    {
-        return view('admin.roaming.bundle_create');
-    }
-
-
-    /**
-     * @param Request $request
-     * @return RedirectResponse|Redirector
-     */
-    public function bundleStore(Request $request)
-    {
-        $response = $this->roamingBundleService->saveBundle($request);
-        if ($response['success'] == 1) {
-            Session::flash('sussess', 'Bundle is saved!');
-        } else {
-            Session::flash('error', 'Bundle saving process failed!');
-        }
-        return redirect('/roaming/bundle');
-    }
-
-
-    /**
      * @param $bundleId
      * @return Factory|View
      */
@@ -91,9 +66,9 @@ class RoamingBundleController extends Controller
         $response = $this->roamingBundleService->updateBundle($request, $id);
 
         if ($response['success'] == 1) {
-            Session::flash('sussess', 'Package is updated!');
+            Session::flash('sussess', 'Bundle is updated!');
         } else {
-            Session::flash('error', 'Package updating process failed!');
+            Session::flash('error', 'Bundle updating process failed!');
         }
         return redirect('/roaming/bundle');
     }

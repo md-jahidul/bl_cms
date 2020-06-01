@@ -59,6 +59,100 @@ class BusinessHomeService {
     }
 
     /**
+     * Get business product category by id
+     * @return Response
+     */
+    public function getCategoryById($catId) {
+        $response = $this->businessCatRepo->getCategoryById($catId);
+        return $response;
+    }
+
+    /**
+     * Change category name
+     * @return Response
+     */
+    public function updateCategory($request) {
+        
+        try {
+            $status = true;
+        $update = [];
+        
+        $catId = $request->cat_id;
+
+        $update['name'] = $request->name_en;
+        $update['name_bn'] = $request->name_bn;
+        $update['alt_text'] = $request->alt_text;
+        $update['banner_name'] = $request->banner_name;
+        $update['url_slug'] = $request->url_slug;
+        $update['schema_markup'] = $request->schema_markup;
+        $update['page_header'] = $request->page_header;
+
+        if (!empty($request['banner_web'])) {
+            //delete old web photo
+            if ($request['old_web_img'] != "") {
+                $this->deleteFile($request['old_web_img']);
+            }
+
+            $photoName = $request['banner_name'] . '-web';
+            $update['banner_photo'] = $this->upload($request['banner_web'], 'assetlite/images/business-images', $photoName);
+            $status = $update['banner_photo'];
+        }
+
+        if (!empty($request['banner_mobile'])) {
+            //delete old web photo
+            if ($request['old_mob_img'] != "") {
+                $this->deleteFile($request['old_mob_img']);
+            }
+
+            $photoName = $request['banner_name'] . '-mobile';
+            $update['banner_image_mobile'] = $this->upload($request['banner_mobile'], 'assetlite/images/business-images', $photoName);
+            $status = $update['banner_image_mobile'];
+        }
+
+        //only rename
+        if ($request['old_banner_name'] != $request['banner_name']) {
+
+            if (empty($request['banner_web']) && $request['old_web_img'] != "") {
+                $fileName = $request['banner_name'] . '-web';
+                $directoryPath = 'assetlite/images/business-images';
+                $update['banner_photo'] = $this->rename($request['old_web_img'], $fileName, $directoryPath);
+                $status = $update['banner_photo'];
+            }
+
+            if (empty($request['banner_mobile']) && $request['old_mob_img'] != "") {
+                $fileName = $request['banner_name'] . '-mobile';
+                $directoryPath = 'assetlite/images/business-images';
+                $update['banner_image_mobile'] = $this->rename($request['old_mob_img'], $fileName, $directoryPath);
+                $status = $update['banner_image_mobile'];
+            }
+        }
+
+        if ($status != false) {
+            $this->businessCatRepo->updateCategory($update, $catId);
+
+            $response = [
+                'success' => 1,
+            ];
+        } else {
+            $response = [
+                'success' => 2,
+            ];
+        }
+        
+        
+
+            return $response;
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return $response;
+        }
+
+    }
+
+    /**
      * Change category name
      * @return Response
      */
@@ -103,7 +197,7 @@ class BusinessHomeService {
 
             //save data in database 
             $newPhoto = $this->businessCatRepo->saveBannerPhoto($filePath, $request['alt_text'], $request['cat_id']);
-            
+
             $photo = $newPhoto == "" ? $request['old_photo'] : $newPhoto;
 
             $response = [
@@ -122,6 +216,7 @@ class BusinessHomeService {
             return response()->json($response, 500);
         }
     }
+
     /**
      * save business landing page top banner
      * @return Response
@@ -143,15 +238,27 @@ class BusinessHomeService {
                     $this->deleteFile($request['old_photo']);
                 }
             }
+            
+            $filePathMob = "";
+            if ($request['banner_photo_mobile'] != "") {
+                $filePathMob = $this->upload($request['banner_photo_mobile'], 'assetlite/images/business-images');
+
+                //delete old photo
+                if ($request['old_photo_mobile']) {
+                    $this->deleteFile($request['old_photo_mobile']);
+                }
+            }
 
             //save data in database 
-            $newPhoto = $this->businessBannerRepo->saveBannerPhoto($filePath, $request['alt_text'], $request['home_sort']);
-            
+            $newPhoto = $this->businessBannerRepo->saveBannerPhoto($filePath, $filePathMob, $request['alt_text'], $request['home_sort']);
+
             $photo = $newPhoto == "" ? $request['old_photo'] : $newPhoto;
+            $photoMob = $filePathMob == "" ? $request['old_photo_mobile'] : $filePathMob;
 
             $response = [
                 'success' => 1,
                 'photo' => $photo,
+                'photo_mob' => $photoMob,
                 'sort' => $request['home_sort'],
                 'message' => "Banner photo is uploaded successfully!"
             ];
@@ -166,7 +273,6 @@ class BusinessHomeService {
             return response()->json($response, 500);
         }
     }
-   
 
     /**
      * Change category sorting
@@ -185,8 +291,6 @@ class BusinessHomeService {
         $response = $this->businessCatRepo->changeHomeShowStatus($catId);
         return $response;
     }
-    
-    
 
     /**
      * Get business sliding speed
@@ -196,8 +300,8 @@ class BusinessHomeService {
         $response = $this->slidingRepo->getSlidingSpeed();
         return $response;
     }
-    
-     /**
+
+    /**
      * save business sliding speed
      * @return Response
      */
@@ -209,11 +313,11 @@ class BusinessHomeService {
                 'newsSpeed' => 'required'
             ]);
 
-        
+
 
             //save data in database 
             $this->slidingRepo->saveSpeed($request['enSpeed'], $request['newsSpeed']);
-            
+
 
             $response = [
                 'success' => 1,
@@ -293,8 +397,8 @@ class BusinessHomeService {
         $response = $this->businessNewsRepo->getSingleNews($newsId);
         return $response;
     }
-    
-     /**
+
+    /**
      * Change features sorting
      * @return Response
      */

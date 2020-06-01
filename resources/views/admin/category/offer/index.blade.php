@@ -1,63 +1,142 @@
 @extends('layouts.admin')
-@section('title', 'Offer Category List')
-@section('card_name', 'Offer Category List')
-@section('breadcrumb')
-    <li class="breadcrumb-item "><a href="{{ url('offer-categories') }}"> Offer Categories List</a></li>
-@endsection
+@section('title', 'SIM & Offers')
+@section('card_name', 'SIM & Offers')
 @section('action')
-{{--    <a href="{{ route("offer-categories.create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
-{{--        Add Offer--}}
-{{--    </a>--}}
+
 @endsection
 @section('content')
-    <section>
-        <div class="card">
-            <div class="card-content collapse show">
-                <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>{{ (isset($type)) ? ucfirst($type) : 'Offer' }} Categories</strong></h4>
-                    <table class="table table-striped table-bordered zero-configuration">
-                        <thead>
-                        <tr>
-                            <td width="3%">#</td>
-                            <th width="25%">Name</th>
-{{--                            <th width="25%"></th>--}}
-                            <th class="">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($offerCategories as $offerCategory)
-                                <tr data-index="{{ $offerCategory->id }}" data-position="{{ $offerCategory->display_order }}">
-                                    <td width="3%">{{ $loop->iteration }}</td>
-                                    <td>{{ $offerCategory->name_en }}
-                                        {!!  (strtolower($offerCategory->alias) == 'packages' || strtolower($offerCategory->alias) == 'others') ? "<a href='".route('child_menu', [$offerCategory->id, $offerCategory->alias])."' class='btn btn-outline-primary float-md-right'> Child Menu</a>" : '' !!}
-                                    </td>
+<section> 
+   
 
-                                    <td width="6%" class="text-center">
-                                        <a href="{{ url("offer-categories/$offerCategory->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        {{--<a href="#" remove="{{ url("offer-category/destroy/$offerCategory->id") }}" onclick="return false;" class="border-0 btn-sm btn-outline-danger --}}{{--delete_btn--}}{{--" data-id="{{ $offerCategory->id }}" title="Delete">--}}
-                                            {{--<i class="la la-trash"></i>--}}
-                                        {{--</a>--}}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div class="row">
+
+
+                    <div id="recent-sales" class="col-12 col-md-5">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Sim Categories</h4>
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+
+                            </div>
+                            <div class="card-content mt-1">
+                                <div class="table-responsive">
+                                    <table id="recent-orders" class="table table-hover table-xl mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-top-0">Sim Type</th>
+                                                <th class="border-top-0">Status</th>
+                                                <th class="border-top-0">Products</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach($simCategories as $simCategory)
+                                            @php 
+
+                                            $path = 'partner-offers-home';
+
+                                            if($simCategory->name == "Prepaid"){
+                                            $url = URL::to('offers/prepaid');
+                                            }
+                                            else{
+                                            $url = URL::to('offers/postpaid');
+                                            }
+
+
+                                            @endphp
+                                            <tr>
+                                                <td class="text-truncate">{{ $simCategory->name }}</td>
+                                                <td>
+                                                    <div class="badge badge-info badge-square">
+                                                        <span>Fixed</span>
+                                                        <i class="la la-lock font-medium-2"></i>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <a href="{{ $url }}" class="btn btn-sm btn-outline-success round">View Products</button>
+                                                </td>
+
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="recent-sales" class="col-12 col-md-7">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Sim Categories</h4>
+                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+
+                            </div>
+                            <div class="card-content mt-1">
+                                <div class="table-responsive">
+                                    <table id="recent-orders" class="table table-hover table-xl mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-top-0">Name</th>
+                                                <th class="border-top-0">Childes</th>
+                                                <th class="border-top-0">Status</th>
+                                                <th class="border-top-0">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($offerCategories as $offerCategory)
+                                            @if($offerCategory->alias != "call_rate")
+                                            <tr>
+                                                <td class="text-truncate">{{ $offerCategory->name_en }}</td>
+                                                <td>
+                                                    {!!  (strtolower($offerCategory->alias) == 'packages' || strtolower($offerCategory->alias) == 'others') ? "<a href='".route('child_menu', [$offerCategory->id, $offerCategory->alias])."' class='btn btn-sm btn-outline-success round'> Childs</a>" : '<div class="badge badge-pill badge-danger">No</div>' !!}
+                                                </td>
+                                                <td>
+                                                    <div class="badge badge-info badge-square">
+                                                        <span>Fixed</span>
+                                                        <i class="la la-lock font-medium-2"></i>
+                                                    </div>
+                                                </td>
+
+                                                <td width="6%" class="text-center">
+                                                    <a href="{{ url("offer-categories/$offerCategory->id/edit") }}"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                                </td>
+
+                                            </tr>
+
+                                            @endif
+                                            @endforeach
+
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
                 </div>
-            </div>
-        </div>
 
-    </section>
+        
+    
+
+</section>
 
 @stop
 
 @push('page-css')
-    {{--    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">--}}
-    <style>
-        #sortable tr td{
-            padding-top: 5px !important;
-            padding-bottom: 5px !important;
-        }
-    </style>
+<style>
+    #sortable tr td{
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+    }
+</style>
 @endpush
 
 @push('page-js')

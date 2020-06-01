@@ -214,6 +214,37 @@ class EcareerItemService
         $item->update();
         return Response('Item deleted successfully !');
     }
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @throws \Exception
+     */
+    public function deleteItemPhoto($id)
+    {
+        try {
+        $item = $this->findOne($id);
+        $photoName = $item->image;
+        $item['image'] = "";
+        $item->update();
+        
+         
+        $this->deleteFile($photoName);
+        
+         $response = [
+                'success' => 1,
+                'message' => "Photo is deleted!"
+            ];
+
+
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return response()->json($response, 500);
+        }
+    }
 
     /**
      * [getParentSlug description]

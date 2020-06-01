@@ -255,18 +255,17 @@
         var auto_save_url = "{{ url('shortcuts-sortable') }}";
 
         $(function () {
-            var content = "";
+           var content = "";
             var url_html;
             var parse_data;
             let dial_html, other_info = '';
-            var js_data = '<?php echo isset($short_cut_info) ? json_encode($short_cut_info) : null; ?>';
+            var js_data = `<?php echo isset($short_cut_info) ? $short_cut_info->other_info : null; ?>`;
+
+            //console.log(js_data);
 
             if (js_data) {
                 parse_data = JSON.parse(js_data);
-                other_info = parse_data.other_info;
-                if (other_info) {
-                    content = other_info.content;
-                }
+                content = parse_data.content;
             }
 
             $('.delete').click(function () {

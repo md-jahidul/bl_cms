@@ -12,51 +12,71 @@ use App\Models\BusinessOthers;
 class BusinessOthersRepository extends BaseRepository {
 
     public $modelName = BusinessOthers::class;
-    
-     public function getOtherService($type, $serviceId) {
+
+    public function getOtherService($type, $serviceId) {
         $servces = $this->model->orderBy('sort');
-        
-        if($serviceId > 0){
+
+        if ($serviceId > 0) {
             $servces->where('id', '!=', $serviceId);
             $servces->where('status', 1);
         }
-        if($type != ""){
+        if ($type != "") {
             $servces->where('type', $type);
+        }else{
+            $servces->whereRaw("type NOT IN ('business-solution', 'iot', 'others')");
         }
-        
+
         $data = $servces->get();
-        
+
         return $data;
     }
 
-    public function saveService($bannerPath, $iconPath, $request) {
+    public function saveService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request) {
         $service = $this->model;
 
-        if ($bannerPath != "") {
-            $service->banner_photo = $bannerPath;
-        }
         if ($iconPath != "") {
             $service->icon = $iconPath;
         }
 
+        if ($photoWeb != "") {
+            $service->banner_photo = $photoWeb;
+        }
+        if ($photoMob != "") {
+            $service->banner_image_mobile = $photoMob;
+        }
+
+        if ($bannerWeb != "") {
+            $service->details_banner_web = $bannerWeb;
+        }
+        if ($bannerMob != "") {
+            $service->details_banner_mobile = $bannerMob;
+        }
+        $service->details_banner_name = $request->details_banner_name;
+        $service->details_alt_text = $request->banner_alt_text;
+
+
         $service->alt_text = $request->alt_text;
-        
+        $service->banner_name = $request->banner_name;
+        $service->url_slug = $request->url_slug;
+        $service->schema_markup = $request->schema_markup;
+        $service->page_header = $request->page_header;
+
         $service->name = $request->name_en;
         $service->name_bn = $request->name_bn;
         $service->home_short_details_en = $request->home_short_details_en;
         $service->home_short_details_bn = $request->home_short_details_bn;
-        
+
         $service->short_details = $request->short_details_en;
         $service->short_details_bn = $request->short_details_bn;
-        
+
         $service->offer_details_en = $request->offer_details_en;
         $service->offer_details_bn = $request->offer_details_bn;
-        
+
         $service->type = $request->type;
         $service->save();
         return $service->id;
     }
-    
+
     public function changeHomeShowStatus($serviceId) {
         try {
 
@@ -79,7 +99,7 @@ class BusinessOthersRepository extends BaseRepository {
             return response()->json($response, 500);
         }
     }
-    
+
     public function assignHomeSlider($serviceId) {
         try {
 
@@ -102,9 +122,7 @@ class BusinessOthersRepository extends BaseRepository {
             return response()->json($response, 500);
         }
     }
-    
-     
-    
+
     public function changeStatus($serviceId) {
         try {
 
@@ -127,8 +145,7 @@ class BusinessOthersRepository extends BaseRepository {
             return response()->json($response, 500);
         }
     }
-    
-    
+
     public function changeServiceSorting($request) {
         try {
 
@@ -155,38 +172,60 @@ class BusinessOthersRepository extends BaseRepository {
         }
     }
 
-    public function getServiceById($serviceId) {
-        $service = $this->model->findOrFail($serviceId);
+    public function getServiceById($serviceId, $type) {
+        if ($type == 'corona') {
+            $service = $this->model->where('type', $serviceId)->first();
+        } else {
+            $service = $this->model->findOrFail($serviceId);
+        }
+
         return $service;
     }
 
-    public function updateService($bannerPath, $iconPath, $request) {
+    public function updateService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request) {
         $serviceId = $request->service_id;
         $service = $this->model->findOrFail($serviceId);
 
-        
-        
+
+
         $service->name = $request->name;
-        if ($bannerPath != "") {
-            $service->banner_photo = $bannerPath;
+        if ($photoWeb != "") {
+            $service->banner_photo = $photoWeb;
+        }
+        if ($photoMob != "") {
+            $service->banner_image_mobile = $photoMob;
         }
         if ($iconPath != "") {
             $service->icon = $iconPath;
         }
-          $service->alt_text = $request->alt_text;
-        
+
+        if ($bannerWeb != "") {
+            $service->details_banner_web = $bannerWeb;
+        }
+        if ($bannerMob != "") {
+            $service->details_banner_mobile = $bannerMob;
+        }
+        $service->details_banner_name = $request->details_banner_name;
+        $service->details_alt_text = $request->banner_alt_text;
+
+        $service->alt_text = $request->alt_text;
+        $service->banner_name = $request->banner_name;
+        $service->url_slug = $request->url_slug;
+        $service->schema_markup = $request->schema_markup;
+        $service->page_header = $request->page_header;
+
         $service->name = $request->name_en;
         $service->name_bn = $request->name_bn;
-        
+
         $service->home_short_details_en = $request->home_short_details_en;
         $service->home_short_details_bn = $request->home_short_details_bn;
-        
+
         $service->short_details = $request->short_details_en;
         $service->short_details_bn = $request->short_details_bn;
-        
+
         $service->offer_details_en = $request->offer_details_en;
         $service->offer_details_bn = $request->offer_details_bn;
-        
+
         $service->type = $request->type;
         return $service->save();
     }

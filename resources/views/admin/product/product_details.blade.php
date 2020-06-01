@@ -1,24 +1,24 @@
 @php
-function match($id,$relatedProducts){
-foreach ($relatedProducts as $relatedProduct)
-{
-if($relatedProduct->related_product_id == $id){
-return true;
-}
-}
-return false;
-}
+    function match($id,$relatedProducts){
+        foreach ($relatedProducts as $relatedProduct)
+        {
+            if($relatedProduct->related_product_id == $id){
+            return true;
+            }
+        }
+        return false;
+    }
 
-function specialProductMatch($id,$relatedProducts){
-if ($relatedProducts) {
-foreach ($relatedProducts as $relatedProduct) {
-if ((int)$relatedProduct == $id) {
-return true;
-}
-}
-}
-return false;
-}
+    function specialProductMatch($id,$relatedProducts){
+        if ($relatedProducts) {
+            foreach ($relatedProducts as $relatedProduct) {
+                if ((int)$relatedProduct == $id) {
+                return true;
+                }
+            }
+        }
+        return false;
+    }
 @endphp
 
 @extends('layouts.admin')
@@ -115,27 +115,18 @@ return false;
                             @include('layouts.partials.product-details.other-details.4g_offer')
                             @endif
 
-                             
 
                             <div class="form-group col-md-4 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                <label> URL (url slug) <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{optional($productDetail->product_details)->url_slug}}" required name="url_slug" placeholder="URL">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
-                                </small>
-                            </div>
-                            
-                            <div class="form-group col-md-4 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                 <span>Banner image (Web)</span>
-                                
+
                                 <div class="custom-file">
-                                    
+
                                     <input type="hidden" name="old_web_img" value="{{ optional($productDetail->product_details)->banner_image_url }}">
-                                    
+
                                     <input type="file" name="banner_image_url" class="custom-file-input" id="image">
                                     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                 </div>
-                                
+
                                 <span class="text-primary">Please given file type (.png, .jpg)</span>
 
                                 @if( !empty($productDetail->product_details->banner_image_url) )
@@ -145,21 +136,21 @@ return false;
 
                             <div class="form-group col-md-4 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
                                 <span>Banner image (Mobile)</span>
-                                
+
                                 <div class="custom-file">
                                     <input type="hidden" name="old_mob_img" value="{{ optional($productDetail->product_details)->banner_image_mobile }}">
-                                    
+
                                     <input type="file" name="banner_image_mobile" class="custom-file-input">
                                     <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                 </div>
                                 <span class="text-primary">Please given file type (.png, .jpg)</span>
-                                
+
                                 @if( !empty($productDetail->product_details->banner_image_url) )
                                 <img src="{{ config('filesystems.file_base_url') . optional($productDetail->product_details)->banner_image_mobile }}" style="width:100%;margin-top:10px;">
                                 @endif
-                                
+
                             </div>
-                            
+
                             <div class="form-group col-md-4 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
                                 <label for="banner_alt_text">Alt Text</label>
                                 <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
@@ -169,7 +160,7 @@ return false;
                                 <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
                                 @endif
                             </div>
-                            
+
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Banner Photo Name</label>
                                 <input type="hidden" name="old_banner_name" value="{{optional($productDetail->product_details)->banner_name}}">
@@ -179,24 +170,6 @@ return false;
                                     <strong>Note: </strong> Don't need MIME type like jpg,png
                                 </small>
 
-                            </div>
-
-
-
-                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Page Header (HTML)</label>
-                                <textarea class="form-control" rows="7" name="page_header">{{optional($productDetail->product_details)->page_header}}</textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> Title, meta, canonical and other tags
-                                </small>
-                            </div>
-
-                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Schema Markup</label>
-                                <textarea class="form-control" rows="7" name="schema_markup">{{optional($productDetail->product_details)->schema_markup}}</textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
-                                </small>
                             </div>
 
                             <div class="form-actions col-md-12">
@@ -224,6 +197,9 @@ return false;
         box-shadow: unset;
         border-width: 0;
         color : unset;
+    }
+    form #special_product_field .select2-container {
+         width: 100% !important;
     }
 </style>
 
@@ -287,7 +263,6 @@ $("textarea#details").summernote({
 })
             </script>
             @endpush
-
 
 
 

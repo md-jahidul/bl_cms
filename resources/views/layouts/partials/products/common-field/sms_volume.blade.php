@@ -9,3 +9,22 @@
     @endif
 </div>
 
+<div class="form-group col-md-6 {{ $errors->has('sms_short_text_en') ? ' error' : '' }}">
+    <label for="sms_short_text_en">SMS Short Text (EN)</label>
+    <input type="text" name="offer_info[sms_short_text_en]"  class="form-control" placeholder="Enter call rate short text in English"
+           value="{{ (!empty($product->offer_info['sms_short_text_en'])) ? $product->offer_info['sms_short_text_en'] : old("offer_info.sms_short_text_en") ?? '' }}">
+    <div class="help-block"></div>
+    @if ($errors->has('sms_short_text_en'))
+        <div class="help-block">  {{ $errors->first('sms_short_text_en') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-6 {{ $errors->has('sms_short_text_bn') ? ' error' : '' }}">
+    <label for="sms_short_text_bn">SMS Short Text (BN)</label>
+    <input type="text" name="offer_info[sms_short_text_bn]"  class="form-control" placeholder="Enter call rate short text in Bangla"
+           value="{{ (!empty($product->offer_info['sms_short_text_bn'])) ? $product->offer_info['sms_short_text_bn'] : old("offer_info.sms_short_text_bn") ?? '' }}">
+    <div class="help-block"></div>
+    @if ($errors->has('sms_short_text_bn'))
+        <div class="help-block">  {{ $errors->first('sms_short_text_bn') }}</div>
+    @endif
+</div>

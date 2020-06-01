@@ -54,6 +54,25 @@
 
                             </div>
 
+                            <div class="form-group">
+
+                                <label>URL Slug <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" required name="url_slug" value="{{ $package->url_slug }}">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> roaming-rates (no spaces)<br>
+                                </small>
+
+                                <hr>
+
+                                <label>Page Header (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header">{!! $package->page_header !!}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+
+
+                            </div>
+
 
                             <div class="form-group ">
                                 <h4 for="Details">Select Features</h4>
@@ -85,20 +104,88 @@
 
                         </div>
                         <div class="col-md-6 col-xs-12">
+                            
+                             <div class="form-group row">
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label for="Banner Photo">Card Photo (Web)<span class="text-danger">*</span></label>
+                                    <input type="file" class="dropify_package" name="card_banner_web" data-height="70"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    
+                                    <input type="hidden" name="old_card_banner_web" value="{{$package->card_banner_web}}">
+                                    
+                                     <p class="text-center">
+                                        @if($package->banner_photo != "")
+                                        <img src="{{ config('filesystems.file_base_url') . $package->card_banner_web }}" alt="Banner Photo" width="100%" />
+                                        @endif
+                                    </p>
+                                    
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label for="Banner Photo">Card Photo (Mobile) <span class="text-danger">*</span></label>
+                                    <input type="file" class="dropify_package" name="card_banner_mobile" data-height="70"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    
+                                    <input type="hidden" name="old_card_banner_mobile" value="{{$package->card_banner_mobile}}">
+                                    
+                                     <p class="text-center">
+                                        @if($package->banner_photo != "")
+                                        <img src="{{ config('filesystems.file_base_url') . $package->card_banner_mobile }}" alt="Banner Photo" width="100%" />
+                                        @endif
+                                    </p>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Card Photo Alt Text</label>
+                                    <input type="text" class="form-control" value="{{$package->card_banner_alt_text}}"  name="card_banner_alt_text" placeholder="Alt Text">
+                                </div>
+
+                            </div>
 
                             <div class="form-group row">
-                                <label for="Banner Photo">Banner Photo <span class="text-danger">*</span></label>
-                                <p class="text-center">
-                                    @if($package->banner_photo != "")
-                                    <img src="{{ config('filesystems.file_base_url') . $package->banner_photo }}" alt="Banner Photo" height="100px" />
-                                    @endif
-                                </p>
+
 
                                 <div class="col-md-6 col-xs-12">
 
+                                    <label for="Banner Photo">Banner Photo <span class="text-danger">*</span></label>
+
                                     <input type="hidden" name="old_banner" value="{{$package->banner_photo}}">
+                                    
                                     <input type="file" class="dropify_package" name="banner_photo" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+
+                                    <p class="text-center">
+                                        @if($package->banner_photo != "")
+                                        <img src="{{ config('filesystems.file_base_url') . $package->banner_photo }}" alt="Banner Photo" width="100%" />
+                                        @endif
+                                    </p>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label for="Banner Photo">Banner Photo (Mobile) <span class="text-danger">*</span></label>
+                                    
+                                    <input type="hidden" name="old_banner_mob" value="{{$package->banner_image_mobile}}">
+                                    
+                                    <input type="file" class="dropify_package" name="banner_mobile" data-height="70"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+                                    
+                                    <p class="text-center">
+                                        @if($package->banner_image_mobile != "")
+                                        <img src="{{ config('filesystems.file_base_url') . $package->banner_image_mobile }}" alt="Banner Photo" width="100%" />
+                                        @endif
+                                    </p>
+                                    
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Banner Photo Name<span class="text-danger">*</span></label>
+                                    <input type="hidden" name="old_banner_name" value="{{$package->banner_name}}">
+                                    
+                                    <input type="text" class="form-control banner_name" required name="banner_name" value="{{ $package->banner_name }}" placeholder="Photo Name">
+
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> package-banner (no spaces)<br>
+                                    </small>
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
@@ -134,6 +221,18 @@
 
                                 <label for="Offer Details">Offer Details (BN)</label>
                                 <textarea type="text" name="offer_details_bn" class="form-control package_details">{!! $package->offer_details_bn !!}</textarea>
+
+                            </div>
+                            
+                            <div class="form-group">
+
+                                <label>Schema Markup</label>
+                                <textarea class="form-control schema_markup" rows="7" name="schema_markup">{!! $package->schema_markup !!}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                </small>
+
+
 
                             </div>
 

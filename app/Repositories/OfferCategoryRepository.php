@@ -32,6 +32,5 @@ class OfferCategoryRepository extends BaseRepository
     public function saveCategory($data, $id)
     {
         $this->model->findOrFail($id)->update($data);
-        
     }
 }

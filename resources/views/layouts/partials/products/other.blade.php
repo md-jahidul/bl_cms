@@ -37,6 +37,18 @@
     {{--Emergency Balance--}}
     <slot class="{{ $offertype == \App\Enums\OfferType::EMERGENCY_BALANCE ? '' : 'd-none' }}" id="emergency_balance">
         @include('layouts.partials.products.other.other_detail_field')
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="show_in_home" class="display-block">Loan Type:</label>
+                <input type="radio" name="offer_info[loan_type]" id="emg_balance" value="emergency_balance"
+                    {{ (!empty($product->offer_info['loan_type'])) && $product->offer_info['loan_type'] == "emergency_balance" ? 'checked' : '' }}>
+                    <label for="emg_balance">Is Emergency Main Balance</label>
+                <br>
+                <input type="radio" name="offer_info[loan_type]" id="emg_internet" value="emergency_internet"
+                    {{ (!empty($product->offer_info['loan_type'])) && $product->offer_info['loan_type'] == "emergency_internet" ? 'checked' : '' }}>
+                    <label for="emg_internet"> Is Emergency Internet</label>
+            </div>
+        </div>
     </slot>
 
     {{-- MFS Offers --}}
@@ -63,6 +75,8 @@
 {{--Bondho SIM Offer--}}
 @if(strtolower($type) == 'prepaid')
     <slot class="{{ $offertype == \App\Enums\OfferType::BONDHO_SIM_OFFER ? '' : 'd-none' }}" id="bondho_sim_offer">
+        @include('layouts.partials.products.common-field.renew_code')
+        @include('layouts.partials.products.common-field.recharge_code')
         @include('layouts.partials.products.common-field.price_vat_mrp')
         @include('layouts.partials.products.common-field.minute_volume')
         @include('layouts.partials.products.common-field.internet_volume')

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
 use App\Models\OfferCategory;
+use App\Models\SimCategory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -32,6 +33,8 @@ class OfferCategoryController extends Controller {
     public function index($parent_id = 0, $type = null) {
         // $type = OfferCategory::find($parent_id)->name;
         $offerCategories = OfferCategory::where('parent_id', $parent_id)->with('type')->get();
+        
+        $simCategories = SimCategory::all();
 
 
         $file = 'index';
@@ -42,7 +45,7 @@ class OfferCategoryController extends Controller {
 
 
 
-        return view('admin.category.offer.' . $file, compact('offerCategories', 'type', 'parent_id'));
+        return view('admin.category.offer.' . $file, compact('offerCategories', 'simCategories', 'type', 'parent_id'));
     }
 
     /**
@@ -119,7 +122,7 @@ class OfferCategoryController extends Controller {
         # Check Image upload validation
         $validator = Validator::make($request->all(), [
                     'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
-                    'url_slug' => 'required|regex:/^\S*$/u',
+                    'url_slug' => 'required|regex:/^\S*$/u|unique:offer_categories,url_slug,' . $id,
                     'banner_image_url' => 'mimes:' . $image_upload_type . '|max:' . $image_upload_size // 2M
         ]);
         if ($validator->fails()) {
@@ -128,7 +131,7 @@ class OfferCategoryController extends Controller {
         }
 
         $response = $this->offerCategoryService->updateOfferCategory($request->all(), $id);
-        
+
 //        dd($response);
 
         if ($response['success'] == 1) {

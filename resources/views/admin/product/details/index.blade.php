@@ -86,6 +86,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                     <label for="mobileImg">Desktop View Image</label>
                                     <div class="custom-file">
+                                        <input type="hidden" name="old_web_img" value="{{ isset($bannerRelatedProduct->banner_image_url) ? $bannerRelatedProduct->banner_image_url : null }}">
                                         <input type="file" name="banner_image_url" class="dropify" data-height="80" id="image"
                                                data-default-file="{{ isset($bannerRelatedProduct->banner_image_url) ?  config('filesystems.file_base_url') . $bannerRelatedProduct->banner_image_url : null  }}">
                                     </div>
@@ -100,6 +101,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('mobile_view_img_url') ? ' error' : '' }}">
                                     <label for="mobileImg">Mobile View Image</label>
                                     <div class="custom-file">
+                                        <input type="hidden" name="old_mob_img" value="{{ isset($bannerRelatedProduct->mobile_view_img_url) ? $bannerRelatedProduct->mobile_view_img_url : null }}">
                                         <input type="file" name="mobile_view_img_url" class="dropify" data-height="80" id="image"
                                                data-default-file="{{ isset($bannerRelatedProduct->mobile_view_img_url) ?  config('filesystems.file_base_url') . $bannerRelatedProduct->mobile_view_img_url : null  }}">
                                     </div>
@@ -119,6 +121,18 @@
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">{{ $errors->first('alt_text') }}</div>
                                     @endif
+                                </div>
+
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label>Banner Photo Name</label>
+                                    <input type="hidden" name="old_banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}">
+                                    <input type="text" class="form-control" name="banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}"
+                                           placeholder="Photo Name">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> app-and-service-banner (no spaces)<br>
+                                        <strong>Note: </strong> Don't need MIME type like jpg,png
+                                    </small>
                                 </div>
 
                                 @if($productType !== \App\Enums\OfferType::OTHERS)

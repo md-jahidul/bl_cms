@@ -98,13 +98,23 @@ class BusinessPackageRepository extends BaseRepository {
         }
     }
 
-    public function savePackage($filePath, $request) {
+    public function savePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request) {
         $package = $this->model;
 
-        if ($filePath != "") {
-            $package->banner_photo = $filePath;
-        }
+
+
+        $package->card_banner_web = $cardWeb;
+        $package->card_banner_mobile = $cardMob;
+        $package->card_banner_alt_text = $request->card_banner_alt_text;
+
+        $package->banner_photo = $bannerWeb;
+        $package->banner_image_mobile = $bannerMob;
         $package->alt_text = $request->alt_text;
+
+        $package->banner_name = $request->banner_name;
+        $package->url_slug = $request->url_slug;
+        $package->schema_markup = $request->schema_markup;
+        $package->page_header = $request->page_header;
 
 
         $package->name = $request->name_en;
@@ -128,14 +138,26 @@ class BusinessPackageRepository extends BaseRepository {
         return $packages;
     }
 
-    public function updatePackage($filePath, $request) {
+    public function updatePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request) {
         $packageId = $request->package_id;
         $package = $this->model->findOrFail($packageId);
 
-        if ($filePath != "") {
-            $package->banner_photo = $filePath;
+
+        $package->card_banner_web = $cardWeb;
+        $package->card_banner_mobile = $cardMob;
+        $package->card_banner_alt_text = $request->card_banner_alt_text;
+
+        if ($bannerWeb != "") {
+            $package->banner_photo = $bannerWeb;
+        }
+        if ($bannerMob != "") {
+            $package->banner_image_mobile = $bannerMob;
         }
         $package->alt_text = $request->alt_text;
+        $package->banner_name = $request->banner_name;
+        $package->url_slug = $request->url_slug;
+        $package->schema_markup = $request->schema_markup;
+        $package->page_header = $request->page_header;
 
         $package->name = $request->name_en;
         $package->name_bn = $request->name_bn;

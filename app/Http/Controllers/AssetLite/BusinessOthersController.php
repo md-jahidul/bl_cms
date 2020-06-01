@@ -34,7 +34,8 @@ class BusinessOthersController extends Controller {
         $businessSolution = $this->othersService->getOtherService('business-solution');
         $iot = $this->othersService->getOtherService('iot');
         $others = $this->othersService->getOtherService('others');
-        return view('admin.business.other_services', compact("businessSolution", "iot", "others"));
+        $corona = $this->othersService->getOtherService('');
+        return view('admin.business.other_services', compact("businessSolution", "iot", "others", "corona"));
     }
 
    
@@ -61,9 +62,7 @@ class BusinessOthersController extends Controller {
      */
     public function saveService(Request $request) {
 
-
         $response = $this->othersService->saveService($request);
-        
         
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Service is saved!');
@@ -82,9 +81,10 @@ class BusinessOthersController extends Controller {
      * @return Factory|View
      * @Bulbul Mahmud Nito || 20/02/2020
      */
-    public function componentList($serviceId) {
-        $service = $this->othersService->getServiceById($serviceId);
+    public function componentList($serviceId, $type = '') {
+        $service = $this->othersService->getServiceById($serviceId, $type);
         $serviceName = $service->name;
+        $serviceId = $service->id;
         $components = $this->othersService->getComponents($serviceId);
         return view('admin.business.service_component_list', compact("components", "serviceId", "serviceName"));
     }
@@ -260,8 +260,8 @@ class BusinessOthersController extends Controller {
      * @return Redirect
      * @Bulbul Mahmud Nito || 20/02/2020
      */
-    public function edit($serviceId) {
-        $service = $this->othersService->getServiceById($serviceId);
+    public function edit($serviceId, $type = '') {
+        $service = $this->othersService->getServiceById($serviceId, $type);
         $serviceType = $service->type;
 
         $features = $this->packageService->getFeatures();
@@ -270,7 +270,7 @@ class BusinessOthersController extends Controller {
         $services = $this->othersService->getOtherService("", $serviceId);
         
         $relatedProducts = $this->othersService->relatedProducts($serviceId);
-        return view('admin.business.other_services_edit', compact('service', 'features', 'asgnFeatures', 'services', 'relatedProducts'));
+        return view('admin.business.other_services_edit', compact('service', 'features', 'asgnFeatures', 'services', 'relatedProducts', 'serviceId', 'type'));
     }
 
     /**

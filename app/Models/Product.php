@@ -13,6 +13,9 @@ class Product extends Model
     protected $fillable =
         [
             'product_code',
+            'url_slug',
+            'schema_markup',
+            'page_header',
             'name_en',
             'name_bn',
             'start_date',
@@ -51,7 +54,7 @@ class Product extends Model
 
     public function product_core()
     {
-        return $this->belongsTo(ProductCore::class, 'product_code', 'product_code');
+        return $this->belongsTo(AlCoreProduct::class, 'product_code', 'product_code');
     }
 
     public function scopeProductCore($query)

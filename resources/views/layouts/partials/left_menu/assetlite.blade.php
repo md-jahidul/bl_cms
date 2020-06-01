@@ -2,6 +2,7 @@
 {{---------------------------------------------------------Asset Lite-------------------------------------------------}}
 {{--------------------------------------------------------------------------------------------------------------------}}
 @if(Auth::user()->type == 'assetlite')
+
     @if( auth()->user()->can_view('User') || auth()->user()->can_view('Role') || auth()->user()->can_view('Permissions') )
         <li class="nav-item"><a href="#"><i class="la la-users"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
@@ -33,27 +34,11 @@
         </li>
     @endif
 
-    @if( auth()->user()->can_view('QuickLaunch') )
-        <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Quick launch Management</span></a>
-            <ul class="menu-content">
-                <li class="{{ is_active_url('quick-launch/panel') }} nav-item"><a href="{{ url('quick-launch/panel') }}"><i
-                            class="la la-automobile"></i>
-                        <span class="menu-title" data-i18n="nav.templates.main">Quick launch Panel</span></a>
-                </li>
-
-                <li class="{{ is_active_url('quick-launch/button') }} nav-item"><a href="{{ url('quick-launch/button') }}"><i
-                            class="la la-automobile"></i>
-                        <span class="menu-title" data-i18n="nav.templates.main">Quick launch Button</span></a>
-                </li>
-            </ul>
-        </li>
-    @endif
 
     @if( auth()->user()->can_view('Config') || auth()->user()->can_view('Menu') || auth()->user()->can_view('FooterMenu') )
         <li class="nav-item">
             <a href="#">
-                <i class="la la la-cogs"></i><span class="menu-title" data-i18n="nav.templates.main">Settings</span>
+                <i class="la la la-cogs"></i><span class="menu-title" data-i18n="nav.templates.main">General Settings</span>
             </a>
             <ul class="menu-content">
                 @if( auth()->user()->can_view('Config') )
@@ -77,9 +62,31 @@
                     </li>
                 @endif
 
+                @if( auth()->user()->can_view('QuickLaunch') )
+                     <li class="{{ is_active_url('quick-launch/panel') }} nav-item"><a href="{{ url('quick-launch/panel') }}"><i
+                            class="la la-automobile"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Quick launch Panel</span></a>
+                </li>
+
+                 <li class="{{ is_active_url('quick-launch/button') }} nav-item"><a href="{{ url('quick-launch/button') }}"><i
+                            class="la la-automobile"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Quick launch Button</span></a>
+                </li>
+                 @endif
+
+                 <li class="{{ is_active_url('tag-category') }}">
+                    <a class="menu-item" href="{{ url('tag-category') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-tags"></i> Tag</a>
+                </li>
+
                 <li class="{{ is_active_url('/priyojon') }} nav-item"><a href="{{ url('priyojon') }}"><i
                             class="la la-futbol-o"></i>
                         <span class="menu-title" data-i18n="nav.templates.main">Priyojon Landing</span></a>
+                </li>
+
+                <li class="{{ is_active_url('/dynamic-pages') }} nav-item"><a href="{{ url('/dynamic-pages') }}"><i
+                            class="la la-futbol-o"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Other Pages</span></a>
                 </li>
 
             </ul>
@@ -88,7 +95,7 @@
 
     @if( auth()->user()->can_view('Slider', 'singleSlider') || auth()->user()->can_view('Slider', 'multiSlider') )
         <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Slider Management</span></a>
+                <span class="menu-title" data-i18n="nav.templates.main">Home Page</span></a>
             <ul class="menu-content">
                 @if( auth()->user()->can_view('Slider', 'singleSlider') )
                     <li class="{{ is_active_url('single-sliders') . is_active_url('sliders/create')}}">
@@ -105,61 +112,49 @@
                     </li>
                 @endif
 
-            </ul>
-        </li>
-    @endif
-
-    @if( auth()->user()->can_view('FixedPage') )
-        <li class="nav-item"><a href="#"><i class="la la-file"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Page Management</span></a>
-            <ul class="menu-content">
-
+                @if( auth()->user()->can_view('FixedPage') )
                 <li class="{{ is_active_url('fixed-pages') }}">
                     <a class="menu-item" href="{{ url('fixed-pages') }}" data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-file-image-o"></i> Fixed pages
+                        <i class="la la-file-image-o"></i> Fixed Page
                     </a>
                 </li>
+                @endif
 
             </ul>
         </li>
     @endif
 
-    @if( auth()->user()->can_view('Product') )
-        <li class="nav-item"><a href="#"><i class="la la-gittip"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Offer Categories</span></a>
-            <ul class="menu-content">
 
-                <li class="{{ is_active_url('tag-category') }}">
-                    <a class="menu-item" href="{{ url('tag-category') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-tags"></i> Tag</a>
-                </li>
-                <li class="{{ is_active_url('sim-categories') }}">
-                    <a class="menu-item" href="{{ route('sim-categories.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-file"></i> Package</a>
-                </li>
 
-                <li class="{{ is_active_url('offer-categories') }}">
-                    <a class="menu-item" href="{{ route('offer-categories.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-magic"></i> Offer</a>
-                </li>
 
-                <li class="{{ is_active_url('duration-categories') }}">
-                    <a class="menu-item" href="{{ route('duration-categories.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-calendar-times-o"></i> Duration</a>
-                </li>
-
-            </ul>
-        </li>
-    @endif
 
 
     @if( auth()->user()->can_view('Product') )
         <li class="nav-item"><a href="#"><i class="la la-gift"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Product Management</span></a>
             <ul class="menu-content">
+
+<!--                <li class="{{ is_active_url('sim-categories') }}">
+                    <a class="menu-item" href="{{ route('sim-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-file"></i> Package</a>
+                </li>-->
+
+                <li class="{{ is_active_url('offer-categories') }}">
+                    <a class="menu-item" href="{{ route('offer-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-phone-square"></i>SIM & Offer
+
+                    </a>
+                </li>
+
+                <li class="{{ is_active_url('duration-categories') }}">
+                    <a class="menu-item" href="{{ route('duration-categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-calendar-times-o"></i> Duration
+
+                    </a>
+                </li>
 
                 <li class="{{ is_active_url('offers/prepaid') . is_active_url('offers/prepaid/create') }}">
                     <a class="menu-item" href="{{ route('product.list','prepaid') }}"
@@ -286,7 +281,7 @@
 
     @if( auth()->user()->can_view('Partner') )
         <li class="nav-item"><a href="#"><i class="la la-gift"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Offer Management</span></a>
+                <span class="menu-title" data-i18n="nav.templates.main">Loyalty</span></a>
             <ul class="menu-content">
                 <li class="{{ is_active_url('partners') . is_active_url('partners/create')}}">
                     <a class="menu-item" href="{{ url('partners') }}" data-i18n="nav.templates.vert.classic_menu"><i
@@ -314,7 +309,7 @@
     @endif
 
     <!-- // eCarrer portal -->
-     @if( auth()->user()->can_view('Ecareer'))
+     @if( auth()->user()->can_view('Ecareer', 'generalIndex'))
         <li class="nav-item"><a href="#"><i class="la la-bell"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">eCareer</span></a>
             <ul class="menu-content">
