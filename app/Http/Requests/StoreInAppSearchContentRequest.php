@@ -17,7 +17,7 @@ class StoreInAppSearchContentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -28,9 +28,9 @@ class StoreInAppSearchContentRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'title' => 'required|max:60|unique:my_bl_search_contents,display_title,' . $this->id,
+            'display_title' => 'required|max:60|unique:my_bl_search_contents,display_title,' . $this->id,
             'description' => 'max:100',
-            'tags' => 'required|array',
+            'tag' => 'required|array',
         ];
 
         if ($this->navigation_action == "URL") {

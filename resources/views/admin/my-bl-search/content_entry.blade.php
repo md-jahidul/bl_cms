@@ -2,6 +2,9 @@
 @section('title', 'MyBl Search Content')
 @section('card_name', 'MyBl Search Content')
 @section('action')
+    <a href="{{ route('mybl-search-content.index') }}" class="btn btn-info btn-sm btn-glow px-2">
+        Back to List
+    </a>
 @endsection
 @section('content')
     <section id="bottom-border">
@@ -20,15 +23,15 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="display_title">Display Title <span class="danger">*</span></label>
-                                                        <input type="text" id="display_title" name="display_title" class="form-control"required>
+                                                        <label for="search_content">Search Content <span class="danger">*</span></label>
+                                                        <div class="edit-on-delete form-control" id="search-content"></div>
+                                                        <small class="info">Press Enter or Comma to create a new search tag, Backspace or Delete to remove the last one.</small>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="search_content">Search Content <span class="danger">*</span></label>
-                                                        <div class="edit-on-delete form-control" id="search-content"></div>
-                                                        <small class="info">Press Enter or Comma to create a new search tag, Backspace or Delete to remove the last one.</small>
+                                                        <label for="display_title">Display Title <span class="danger">*</span></label>
+                                                        <input type="text" id="display_title" name="display_title" class="form-control"required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">

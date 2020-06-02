@@ -1,92 +1,62 @@
 @extends('layouts.admin')
-@section('title', 'MyBl Search Content')
-@section('card_name', 'MyBl Search Content')
+@section('title', 'Search Content')
+@section('card_name', 'Search Content| List')
+
 @section('action')
+    <a href="{{ route('mybl-search-content.create') }}" class="btn btn-info btn-sm btn-glow px-2">
+       Add New
+    </a>
 @endsection
+
 @section('content')
-    @include('admin.my-bl-search.partials.content_entry')
-@endsection
+    <section>
+        <div class="card">
+            <div class="card-content collapse show">
+                <div class="card-body card-dashboard">
+                    <div class="card-body card-dashboard">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Sl</th>
+                                <th>Display Title</th>
+                                <th>Search Contents</th>
+                                <th>Navigation Action</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($search_contents as $key=>$content)
+                                <tr>
+                                    <td>{{ ++$key }}</td>
+                                    <td>{{ $content->display_title }}</td>
+                                    <td>{{ implode(',', json_decode($content->search_content , true)) }}</td>
+                                    <td>{{ $content->navigation_action }}</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <form action="{{route('app-launch.delete', $content->id)}}" method="post">
+                                                {{csrf_field()}}
+                                                {{ method_field('delete') }}
+                                                <button class="btn btn-sm btn-icon btn-outline-danger delete" type="submit"><i class="la la-remove"></i></button>
+                                            </form>
+                                            <a href="{{ route('mybl-search-content.edit', $content->id) }}" class="btn btn-sm btn-icon btn-outline-success edit" title="edit"><i class="la la-eye"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+
+                        {{ $search_contents->links() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+@stop
 
 
 
 
-@push('style')
-    <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
-@endpush
-@push('page-js')
-    <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 
-
-    <script>
-        $(function () {
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Browse for an Excel File to upload',
-                    'replace': 'Click to replace',
-                    'remove': 'Remove',
-                    'error': 'Choose correct file format'
-                }
-            });
-
-            /* file handled  */
-            $('#uploadProduct').submit(function (e) {
-                e.preventDefault();
-
-                swal.fire({
-                    title: 'Data Uploading.Please Wait ...',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    onOpen: () => {
-                        swal.showLoading();
-                    }
-                });
-
-                let formData = new FormData($(this)[0]);
-
-                $.ajax({
-                    url: '{{ route('mybl.core-product.save')}}',
-                    type: 'POST',
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: formData,
-                    success: function (result) {
-                        if (result.success) {
-                            swal.fire({
-                                title: 'Product Upload Successfully!',
-                                type: 'success',
-                                timer: 2000,
-                                showConfirmButton: false
-                            });
-
-                            $('#product_list').DataTable().ajax.reload();
-
-                        } else {
-                            swal.close();
-                            swal.fire({
-                                title: result.message,
-                                type: 'error',
-                            });
-                        }
-                        $(".dropify-clear").trigger("click");
-
-                    },
-                    error: function (data) {
-                        swal.fire({
-                            title: 'Failed to upload Products',
-                            type: 'error',
-                        });
-                    }
-                });
-
-            });
-        });
-
-    </script>
-@endpush
 
 
