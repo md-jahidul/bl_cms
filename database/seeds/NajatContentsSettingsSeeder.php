@@ -22,9 +22,9 @@ class NajatContentsSettingsSeeder extends Seeder
                         'is_enable'             => false,
                         'show_in_home'          => false,
                         'show_banner'           => false,
-                        'show_download_link'    => true,
+                        'show_download_link'    => false,
                         'show_iftar_sehri_time' => false,
-                        'show_namaj_time'       => true,
+                        'show_namaj_time'       => false,
                     ]
                 ),
             ]
