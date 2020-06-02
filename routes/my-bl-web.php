@@ -333,4 +333,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
 
     Route::post('sms-pack/filter/sort/save', 'CMS\SmsPackFilterController@saveSortFilter')
         ->name('sms.filter.sort.save');
+
+
+    Route::get('mybl/settings/najat', 'CMS\NajatContentsSettingsController@index')->name('mybl.settings.najat.index');
+    Route::post('mybl/settings/najat', 'CMS\NajatContentsSettingsController@store')->name('mybl.settings.najat.store');
 });
