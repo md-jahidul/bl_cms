@@ -114,6 +114,9 @@ class AppServiceProductDetailsService
         $sections_data['product_id'] = $product_id;
         $sections_data['section_order'] = 99;
 
+        $sections_data['title_en'] = $data['component_title_en'];
+        $sections_data['title_bn'] = $data['component_title_bn'];
+
         $sections_saved_data = $this->save($sections_data);
 
         if (isset($sections_saved_data->id) && !empty($sections_saved_data->id)) {
@@ -177,8 +180,6 @@ class AppServiceProductDetailsService
                     if (isset($tableComponent)) {
                         $value['editor_en'] = $tableComponent['editor_en'];
                         $value['editor_bn'] = $tableComponent['editor_bn'];
-                        $value['title_en'] = $data['component_title_en'];
-                        $value['title_bn'] = $data['component_title_bn'];
                     }
 
                     $this->componentRepository->save($value);
@@ -277,8 +278,6 @@ class AppServiceProductDetailsService
         if (isset($tableComponent)) {
             $data['editor_en'] = $tableComponent['editor_en'];
             $data['editor_bn'] = $tableComponent['editor_bn'];
-            $data['title_en'] = request()->component_title_en;
-            $data['title_bn'] = request()->component_title_bn;
         }
         $component->update($data);
     }

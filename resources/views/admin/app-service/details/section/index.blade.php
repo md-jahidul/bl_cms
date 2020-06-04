@@ -723,19 +723,16 @@ function matchRelatedProduct($id, $relatedProductIds)
                             var tableParseEn = $.parseJSON(tableData.editor_en)
                             var tableParseBn = $.parseJSON(tableData.editor_bn)
 
-
                             var sectionId = tableData.section_details_id
                             var componentId = tableData.id
 
-                            $parentSelector.find("input[name='component_title_en']").val(tableData.title_en);
-                            $parentSelector.find("input[name='component_title_bn']").val(tableData.title_bn);
+                            $parentSelector.find("input[name='component_title_en']").val(result.data.sections.title_en);
+                            $parentSelector.find("input[name='component_title_bn']").val(result.data.sections.title_bn);
 
                             $parentSelector.find("input[name='sections[id]']").val(sectionId);
                             $parentSelector.find("input[name='component[0][id]']").val(componentId);
 
-
                             var leftTable = '';
-
                             var leftTitleEn = (tableParseEn.left_table_title_en) ? tableParseEn.left_table_title_en : '';
                             var leftTitleBn = (tableParseBn.left_table_title_bn) ? tableParseBn.left_table_title_bn : '';
 
