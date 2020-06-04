@@ -40,8 +40,8 @@ class InAppSearchContentController extends Controller
                 [
                     'display_title' => $request->display_title,
                     'description' => $request->description,
-                    'search_content' => implode(', ', $request->search_content),
-                    'navigate_action' => $request->navigation_action,
+                    'search_content' => implode(', ', $request->tag),
+                    'navigation_action' => $request->navigation_action,
                     'other_contents' => isset($request->other_info) ? json_encode(
                         [
                             'type' => strtolower($request->navigation_action),
@@ -52,7 +52,7 @@ class InAppSearchContentController extends Controller
             );
 
 
-            return redirect()->route('search-content.index')->with('success', 'New Search content added');
+            return redirect()->route('mybl-search-content.index')->with('success', 'New Search content added');
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -76,7 +76,7 @@ class InAppSearchContentController extends Controller
         }
 
         $all_items_count = $builder->count();
-        $items = $builder->skip($start)->take($length)->get();
+        $items = $builder->orderBy('display_title')->skip($start)->take($length)->get();
 
         $response = [
             'draw' => $draw,
