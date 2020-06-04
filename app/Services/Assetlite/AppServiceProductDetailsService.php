@@ -59,18 +59,22 @@ class AppServiceProductDetailsService
         $insert = [];
         $count = 0;
 
+//        dd($request->all());
+
         if ($request->component_position) {
             foreach ($request->component_position as $k => $val) {
                 if (isset($request->left_head_en[$k]) || isset($request->right_head_en[$k])) {
                     $bothTableArrayEn = array(
                         'left_head_en' => $request->left_head_en[$k],
                         'left_rows_en' => $request->left_col_en[$k],
+                        'left_table_title_en' => $request->left_table_title_en,
                     );
 
                     if ($request->right_head_en[$k]) {
                         if (!empty(array_filter($request->right_head_en[$k]))) {
                             $bothTableArrayEn['right_head_en'] = $request->right_head_en[$k];
                             $bothTableArrayEn['right_rows_en'] = $request->right_col_en[$k];
+                            $bothTableArrayEn['right_table_title_en'] = $request->right_table_title_en;
                         }
                     }
 
@@ -78,12 +82,14 @@ class AppServiceProductDetailsService
                     $bothTableArrayBn = array(
                         'left_head_bn' => $request->left_head_bn[$k],
                         'left_rows_bn' => $request->left_col_bn[$k],
+                        'left_table_title_bn' => $request->left_table_title_bn,
                     );
 
                     if ($request->right_head_bn[$k]) {
                         if (!empty(array_filter($request->right_head_bn[$k]))) {
                             $bothTableArrayBn['right_head_bn'] = $request->right_head_bn[$k];
                             $bothTableArrayBn['right_rows_bn'] = $request->right_col_bn[$k];
+                            $bothTableArrayBn['right_table_title_bn'] = $request->right_table_title_bn;
                         }
                     }
                 }
@@ -102,6 +108,8 @@ class AppServiceProductDetailsService
     {
         # Save sections data
         $sections_data = $data['sections'];
+
+//        dd($data);
 
         $sections_data['product_id'] = $product_id;
         $sections_data['section_order'] = 99;
@@ -169,6 +177,8 @@ class AppServiceProductDetailsService
                     if (isset($tableComponent)) {
                         $value['editor_en'] = $tableComponent['editor_en'];
                         $value['editor_bn'] = $tableComponent['editor_bn'];
+                        $value['title_en'] = $data['component_title_en'];
+                        $value['title_bn'] = $data['component_title_bn'];
                     }
 
                     $this->componentRepository->save($value);
@@ -261,10 +271,14 @@ class AppServiceProductDetailsService
             $data['video'] = $data['video_url'];
         }
 
+
+
         $tableComponent = $this->bindTableComponent();
         if (isset($tableComponent)) {
             $data['editor_en'] = $tableComponent['editor_en'];
             $data['editor_bn'] = $tableComponent['editor_bn'];
+            $data['title_en'] = request()->component_title_en;
+            $data['title_bn'] = request()->component_title_bn;
         }
         $component->update($data);
     }

@@ -727,17 +727,30 @@ function matchRelatedProduct($id, $relatedProductIds)
                             var sectionId = tableData.section_details_id
                             var componentId = tableData.id
 
-                            console.log(tableParseEn)
-
+                            $parentSelector.find("input[name='component_title_en']").val(tableData.title_en);
+                            $parentSelector.find("input[name='component_title_bn']").val(tableData.title_bn);
 
                             $parentSelector.find("input[name='sections[id]']").val(sectionId);
                             $parentSelector.find("input[name='component[0][id]']").val(componentId);
 
 
-                            var leftTable = "";
+                            var leftTable = '';
+
+                            var leftTitleEn = (tableParseEn.left_table_title_en) ? tableParseEn.left_table_title_en : '';
+                            var leftTitleBn = (tableParseBn.left_table_title_bn) ? tableParseBn.left_table_title_bn : '';
+
+                                leftTable += '<br><div class="row"><div class="form-group col-md-6">' +
+                                        '<label><b>Left Table Title English</b>></label>' +
+                                        '<input type="text" class="form-control" value="'+leftTitleEn+'" name="left_table_title_en">' +
+                                        '</div>';
+
+                                leftTable += "<div class='form-group col-md-6'>" +
+                                        '<label>Left Table Title Bangla</label>' +
+                                        '<input type="text" class="form-control" value="'+leftTitleBn+'" name="left_table_title_bn">' +
+                                        '</div></div>';
 
                                 // left table Heaf En
-                                leftTable += '<br><br><div class="col-md-12 col-xs-12"><h5><b>Left Table Head (EN):</b></h5>';
+                                leftTable += '<div class="col-md-12 col-xs-12"><h6><b>Left Table Head (EN):</b></h6>';
                                 $.each(tableParseEn.left_head_en, function (k, v) {
                                     leftTable += '<input type="text" placeholder="Head (EN) 1" value="'+v+'" name="left_head_en[2][]" width="33.333333333333336%">'
                                 });
@@ -782,7 +795,21 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                             if (tableParseEn.right_head_en) {
                                 var rightTable = '';
-                                rightTable += '<br><br><div class="col-md-12 col-xs-12"><h5><b>Right Table Head (EN):</b></h5>';
+
+                                var rightTitleEn = (tableParseEn.right_table_title_en) ? tableParseEn.right_table_title_en : '';
+                                var rightTitleBn = (tableParseBn.right_table_title_bn) ? tableParseBn.right_table_title_bn : '';
+
+                                rightTable += '<br><div class="row"><div class="form-group col-md-6">' +
+                                    '<label><b>Right Table Title English</b>></label>' +
+                                    '<input type="text" class="form-control" value="'+rightTitleEn+'" name="right_table_title_en">' +
+                                    '</div>';
+
+                                rightTable += "<div class='form-group col-md-6'>" +
+                                    '<label>Right Table Title Bangla</label>' +
+                                    '<input type="text" class="form-control" value="'+rightTitleBn+'" name="right_table_title_bn">' +
+                                    '</div></div>';
+
+                                rightTable += '<div class="col-md-12 col-xs-12"><h6><b>Right Table Head (EN):</b></h6>';
                                 $.each(tableParseEn.right_head_en, function (k, v) {
                                     rightTable += '<input type="text" placeholder="Head (EN) 1" value="'+v+'" name="right_head_en[2][]" width="33.333333333333336%">'
                                 });

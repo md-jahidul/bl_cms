@@ -27,30 +27,23 @@
 
 
 
-{{--                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">--}}
-{{--                    <label for="title_en" class="required1">--}}
-{{--                        Header Main Title (English)--}}
-{{--                    </label>--}}
-{{--                    <input type="text" name="sections[title_en]"  class="form-control section_name" placeholder="Enter title"--}}
-{{--                           value="{{ old("title_en") ? old("title_en") : '' }}">--}}
-{{--                    <div class="help-block"></div>--}}
-{{--                    @if ($errors->has('title_en'))--}}
-{{--                        <div class="help-block">  {{ $errors->first('title_en') }}</div>--}}
-{{--                    @endif--}}
-{{--                </div>--}}
+                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                    <label for="title_en" class="required1">
+                        Component Title (English)
+                    </label>
+                    <input type="text" name="component_title_en"  class="form-control section_name" placeholder="Enter title"
+                           value="{{ old("component_title_en") ? old("component_title_en") : '' }}">
+                    <div class="help-block"></div>
+                </div>
 
 
-{{--                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">--}}
-{{--                     <label for="title_bn" class="required1">--}}
-{{--                         Header Main Title (Bangla)--}}
-{{--                     </label>--}}
-{{--                     <input type="text" name="sections[title_bn]"  class="form-control section_name" placeholder="Enter title"--}}
-{{--                            value="{{ old("title_bn") ? old("title_bn") : '' }}">--}}
-{{--                     <div class="help-block"></div>--}}
-{{--                     @if ($errors->has('title_bn'))--}}
-{{--                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>--}}
-{{--                     @endif--}}
-{{--                 </div>--}}
+                 <div class="form-group col-md-6 {{ $errors->has('component_title_bn') ? ' error' : '' }}">
+                     <label for="title_bn" class="required1">
+                         Component Title (Bangla)
+                     </label>
+                     <input type="text" name="component_title_bn"  class="form-control section_name" placeholder="Enter title"
+                            value="{{ old("component_title_bn") ? old("component_title_bn") : '' }}">
+                 </div>
 
 
                   <!-- # Price slug is required for api integration -->
@@ -155,13 +148,13 @@
                                         <hr>
 
                                         <div class="row">
-                                            <div class="col-md-3 col-xs-12">
+                                            <div class="col-md-4 col-xs-12">
                                                 <input type="text" placeholder="Rows" class="form-control table_rows">
                                             </div>
-                                            <div class="col-md-3 col-xs-12">
+                                            <div class="col-md-4 col-xs-12">
                                                 <input type="text" placeholder="Columns" class="form-control table_columns">
                                             </div>
-                                            <div class="col-md-5 col-xs-12">
+                                            <div class="col-md-4 col-xs-12">
                                                 <button class="btn btn-sm btn-info generate_table">Generate Table</button>
                                             </div>
                                         </div>
@@ -252,7 +245,17 @@
              var pos = $(this).parents('.form-group').find('.component_position').val();
 
              //Left English table
-             var tableHeadEn = "<br><br><div class='col-md-12 col-xs-12'><h5><b>Left Table Head (EN):</b></h5>";
+             var tableHeadEn = "<br><div class='row'><div class='form-group col-md-6'>" +
+                               "<label><b>Left Table Title English</b>></label>" +
+                               "<input type='text' class='form-control' name='left_table_title_en'>" +
+                               "</div>";
+
+                 tableHeadEn += "<div class='form-group col-md-6'>" +
+                     "<label>Left Table Title Bangla</label>" +
+                     "<input type='text' class='form-control' name='left_table_title_bn'>" +
+                     "</div></div>";
+
+                 tableHeadEn += "<div class='col-md-12 col-xs-12'><h6><b>Left Table Head (EN):</b></h6>";
 
              var i;
              var width = 100 / cols;
@@ -276,8 +279,20 @@
              }
              tableRowsEn += "</div>";
 
+
              //Right English table
-             var rightTableHeadEn = "<br><br><div class='col-md-12 col-xs-12'><h5><b>Right Table Head (EN):</b></h5>";
+             var rightTableHeadEn = "<br><div class='row'><div class='form-group col-md-6'>" +
+                 "<label><b>Right Table Title English</b></label>" +
+                 "<input type='text' class='form-control' name='right_table_title_en'>" +
+                 "</div>";
+
+             rightTableHeadEn += "<div class='form-group col-md-6'>" +
+                 "<label><b>Right Table Title Bangla</b></label>" +
+                 "<input type='text' class='form-control' name='right_table_title_bn'>" +
+                 "</div></div>";
+
+
+             rightTableHeadEn += "<div class='col-md-12 col-xs-12'><h5><b>Right Table Head (EN):</b></h5>";
 
              for (i = 0; i < cols; i++) {
                  rightTableHeadEn += "<input type='text' placeholder='Head (EN) " + (i + 1) + "' name='right_head_en[" + pos + "][]' width='" + width + "%'>";
