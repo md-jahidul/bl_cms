@@ -283,17 +283,17 @@
             dropify();
 
             $("textarea#details").summernote({
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['table', ['table']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['view', ['fullscreen', 'codeview']]
-                ],
-
                 popover: {
+                    toolbar: [
+                        ['style', ['style'],['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['strikethrough', 'superscript', 'subscript']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['table', ['table']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['view', ['fullscreen', 'codeview']]
+                    ],
+
                     table: [
                         ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
                         ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
