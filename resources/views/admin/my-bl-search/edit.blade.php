@@ -28,7 +28,7 @@
                                                     <div class="form-group">
                                                         <label for="search_content">Search Content <span class="danger">*</span></label>
                                                         <div class="edit-on-delete form-control">
-                                                            {{ implode(', ', json_decode($search_content->search_content, true) ) }}
+                                                            {{ $search_content->search_content }}
                                                         </div>
                                                         <small class="info">Press Enter or Comma to create a new search tag, Backspace or Delete to remove the last one.</small>
                                                     </div>

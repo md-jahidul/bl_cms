@@ -8,7 +8,9 @@ use App\Models\MyBlProduct;
 use App\Models\MyBlSearchContent;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Input;
 
 /**
  * Class InAppSearchContentController
@@ -38,7 +40,7 @@ class InAppSearchContentController extends Controller
                 [
                     'display_title' => $request->display_title,
                     'description' => $request->description,
-                    'search_content' => json_encode($request->search_content),
+                    'search_content' => implode(', ', $request->search_content),
                     'navigate_action' => $request->navigation_action,
                     'other_contents' => isset($request->other_info) ? json_encode(
                         [
@@ -58,9 +60,42 @@ class InAppSearchContentController extends Controller
 
     public function index()
     {
-        $search_contents = MyBlSearchContent::paginate(7);
+        return view('admin.my-bl-search.index');
+    }
 
-        return view('admin.my-bl-search.index', compact('search_contents'));
+    public function getSearchContents(Request $request)
+    {
+        $draw = $request->get('draw');
+        $start = $request->get('start');
+        $length = $request->get('length');
+
+        $builder = new MyBlSearchContent();
+
+        if ($request->terms) {
+            $builder = MyBlSearchContent::search($request->terms);
+        }
+
+        $all_items_count = $builder->count();
+        $items = $builder->skip($start)->take($length)->get();
+
+        $response = [
+            'draw' => $draw,
+            'recordsTotal' => $all_items_count,
+            'recordsFiltered' => $all_items_count,
+            'data' => []
+        ];
+
+        $items->each(function ($item) use (&$response) {
+            $response['data'][] = [
+                'id'                => $item->id,
+                'display_title'     => $item->display_title,
+                'description'       => $item->display_title,
+                'search_contents'   => $item->search_content,
+                'navigation_action' => $item->navigation_action,
+            ];
+        });
+
+        return $response;
     }
 
     public function edit(MyBlSearchContent $search_content)
@@ -90,7 +125,7 @@ class InAppSearchContentController extends Controller
     public function update(UpdateInAppSearchContentRequest $request, $id)
     {
         $data ['display_title'] = $request->display_title;
-        $data['search_content'] = json_encode($request->tag);
+        $data['search_content'] = implode(', ', $request->tag);
         $data ['description'] = $request->description;
         $data ['navigation_action'] = $request->navigation_action;
         if (isset($data['other_contents'])) {
@@ -102,9 +137,9 @@ class InAppSearchContentController extends Controller
             $data['other_attributes'] = $other_attributes;
         };
 
-        $pop_up = MyBlSearchContent::find($id);
+        $search_content = MyBlSearchContent::find($id);
 
-        $pop_up->update($data);
+        $search_content->update($data);
 
         return redirect()->back()->with('success', 'Successfully Updated');
     }

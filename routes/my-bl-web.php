@@ -222,6 +222,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
         ->name('mybl-search-content.create');
     Route::get('mybl-search', 'CMS\Search\InAppSearchContentController@index')
         ->name('mybl-search-content.index');
+    Route::get('mybl-search/list', 'CMS\Search\InAppSearchContentController@getSearchContents')
+        ->name('mybl-search-content.list');
     Route::post('mybl-search/content', 'CMS\Search\InAppSearchContentController@store')
         ->name('mybl-search-content.store');
     Route::get('mybl-search/{search_content}', 'CMS\Search\InAppSearchContentController@edit')
