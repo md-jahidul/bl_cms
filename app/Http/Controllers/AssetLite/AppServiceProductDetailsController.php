@@ -59,9 +59,6 @@ class AppServiceProductDetailsController extends Controller
         $this->info["products"] = $this->appServiceProduct->appServiceRelatedProduct($tab_type, $product_id);
         $this->info["productDetail"] = $this->appServiceProduct->detailsProduct($product_id);
         $this->info["fixedSectionData"] = $this->info["section_list"]['fixed_section'];
-
-//        return $this->info;
-
         return view('admin.app-service.details.section.index', $this->info);
     }
 
@@ -82,7 +79,6 @@ class AppServiceProductDetailsController extends Controller
             return redirect(url("app-service/details/$tab_type/$product_id"));
         }
         elseif( $request->has('update') ){
-
             # Update section data
             $section_data = $data['sections'];
             if( isset($section_data['id']) && !empty($section_data['id']) ){

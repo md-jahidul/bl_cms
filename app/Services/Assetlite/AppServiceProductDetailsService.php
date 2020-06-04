@@ -296,8 +296,9 @@ class AppServiceProductDetailsService
      */
     public function updateAppServiceDetailsSection($data, $id)
     {
-//        dd($id);
         $appServiceProduct = $this->findOne($id);
+        $data['title_en'] = request()->component_title_en;
+        $data['title_bn'] = request()->component_title_bn;
         $appServiceProduct->update($data);
         return Response('App Service Section updated successfully');
     }
