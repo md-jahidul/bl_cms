@@ -33,10 +33,10 @@
                                     <td>{{ $content->navigation_action }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <form action="{{route('app-launch.delete', $content->id)}}" method="post">
+                                            <form action="{{route('mybl-search-content.delete', $content->id)}}" method="post" id="form_{{$content->id}}">
                                                 {{csrf_field()}}
                                                 {{ method_field('delete') }}
-                                                <button class="btn btn-sm btn-icon btn-outline-danger delete" type="submit"><i class="la la-remove"></i></button>
+                                                <button class="btn btn-sm btn-icon btn-outline-danger delete" type="submit" data-id="{{$content->id}}"><i class="la la-remove"></i></button>
                                             </form>
                                             <a href="{{ route('mybl-search-content.edit', $content->id) }}" class="btn btn-sm btn-icon btn-outline-success edit" title="edit"><i class="la la-eye"></i></a>
                                         </div>
@@ -53,6 +53,38 @@
         </div>
     </section>
 @stop
+
+@push('style')
+    <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
+@endpush
+
+@push('page-js')
+    <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+    <script>
+        $(function () {
+            $(".delete").on('click', function (e) {
+                e.preventDefault();
+                const id = $(this).attr('data-id');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    html: jQuery('.delete_btn').html(),
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        $("#form_" +
+
+                            id).submit();
+                    }
+                })
+            })
+        });
+    </script>
+@endpush
 
 
 

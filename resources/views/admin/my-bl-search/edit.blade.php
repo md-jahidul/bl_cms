@@ -13,8 +13,11 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
+                            @if($errors->any())
+                                {{ implode('', $errors->all('<div>:message</div>')) }}
+                            @endif
                             <form role="form"
-                                  action="{{ route('app-launch.update', $search_content->id)}}"
+                                  action="{{ route('mybl-search-content.update', $search_content->id)}}"
                                   method="POST">
                                 {{csrf_field()}}
                                 <div class="form-body">
@@ -107,11 +110,12 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <input type="hidden" name="id" value="{{$search_content->id}}">
                                     </div>
                                 </div>
                                 <div class="form-actions">
                                     <div class="col-md-2 pull-right">
-                                        <button type="submit" class="btn btn-block btn-primary mb-1">ADD
+                                        <button type="submit" class="btn btn-block btn-primary mb-1">UPDATE
                                         </button>
                                     </div>
                                 </div>
@@ -168,16 +172,10 @@
             var product_html;
             var parse_data;
             let dial_html, other_attributes = '';
-            var js_data = '<?php echo isset($search_content) ? json_encode($search_content) : null; ?>';
-
-            console.log(js_data);
-
+            var js_data = <?php echo isset($search_content) ? json_encode($search_content->other_contents) : null; ?>;
 
             if (js_data) {
-                parse_data = JSON.parse(js_data);
-                console.log(parse_data);
-                other_attributes = parse_data.other_contents;
-                console.log(other_attributes);
+                other_attributes = JSON.parse(js_data);
                 if (other_attributes) {
                     type = other_attributes.type;
                     if(type == 'dial'){
