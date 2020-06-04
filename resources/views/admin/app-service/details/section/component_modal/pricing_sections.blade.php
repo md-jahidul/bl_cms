@@ -18,124 +18,169 @@
                 		{{ Form::hidden('sections[tab_type]', $tab_type ) }}
                 		{{ Form::hidden('sections[category]', 'component_sections' ) }}
                 		{{ Form::hidden('component[0][component_type]', 'pricing_mutiple_table' ) }}
-                     {{ Form::hidden('component[1][component_type]', 'pricing_mutiple_table' ) }}
+{{--                     {{ Form::hidden('component[1][component_type]', 'pricing_mutiple_table' ) }}--}}
 
 
 
-                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                    <label for="title_en" class="required1">
-                        Header Main Title (English)
-                    </label>
-                    <input type="text" name="sections[title_en]"  class="form-control section_name" placeholder="Enter title"
-                           value="{{ old("title_en") ? old("title_en") : '' }}">
-                    <div class="help-block"></div>
-                    @if ($errors->has('title_en'))
-                        <div class="help-block">  {{ $errors->first('title_en') }}</div>
-                    @endif
-                </div>
 
 
-                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                     <label for="title_bn" class="required1">
-                         Header Main Title (Bangla)
-                     </label>
-                     <input type="text" name="sections[title_bn]"  class="form-control section_name" placeholder="Enter title"
-                            value="{{ old("title_bn") ? old("title_bn") : '' }}">
-                     <div class="help-block"></div>
-                     @if ($errors->has('title_bn'))
-                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
-                     @endif
-                 </div>
+
+
+
+{{--                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">--}}
+{{--                    <label for="title_en" class="required1">--}}
+{{--                        Header Main Title (English)--}}
+{{--                    </label>--}}
+{{--                    <input type="text" name="sections[title_en]"  class="form-control section_name" placeholder="Enter title"--}}
+{{--                           value="{{ old("title_en") ? old("title_en") : '' }}">--}}
+{{--                    <div class="help-block"></div>--}}
+{{--                    @if ($errors->has('title_en'))--}}
+{{--                        <div class="help-block">  {{ $errors->first('title_en') }}</div>--}}
+{{--                    @endif--}}
+{{--                </div>--}}
+
+
+{{--                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">--}}
+{{--                     <label for="title_bn" class="required1">--}}
+{{--                         Header Main Title (Bangla)--}}
+{{--                     </label>--}}
+{{--                     <input type="text" name="sections[title_bn]"  class="form-control section_name" placeholder="Enter title"--}}
+{{--                            value="{{ old("title_bn") ? old("title_bn") : '' }}">--}}
+{{--                     <div class="help-block"></div>--}}
+{{--                     @if ($errors->has('title_bn'))--}}
+{{--                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>--}}
+{{--                     @endif--}}
+{{--                 </div>--}}
 
 
                   <!-- # Price slug is required for api integration -->
                   {{ Form::hidden('sections[slug]', 'price' ) }}
 
-							<div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-							    <label for="title_en" class="required1">
-							        Component Title (English)
-							    </label>
-							    <input type="text" name="component[0][title_en]"  class="form-control" placeholder="Enter title"
-							           value="{{ old("title_en") ? old("title_en") : '' }}">
-							    <div class="help-block"></div>
-							    @if ($errors->has('title_en'))
-							        <div class="help-block">  {{ $errors->first('title_en') }}</div>
-							    @endif
-							</div>
+{{--                    <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">--}}
+{{--                        <label for="title_en" class="required1">--}}
+{{--                            Component Title (English)--}}
+{{--                        </label>--}}
+{{--                        <input type="text" name="component[0][title_en]"  class="form-control" placeholder="Enter title"--}}
+{{--                               value="{{ old("title_en") ? old("title_en") : '' }}">--}}
+{{--                        <div class="help-block"></div>--}}
+{{--                        @if ($errors->has('title_en'))--}}
+{{--                            <div class="help-block">  {{ $errors->first('title_en') }}</div>--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
 
 
-							 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-							     <label for="title_bn" class="required1">
-							         Component Title (Bangla)
-							     </label>
-							     <input type="text" name="component[0][title_bn]"  class="form-control" placeholder="Enter title"
-							            value="{{ old("title_bn") ? old("title_bn") : '' }}">
-							     <div class="help-block"></div>
-							     @if ($errors->has('title_bn'))
-							         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
-							     @endif
-							 </div>
+{{--                     <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">--}}
+{{--                         <label for="title_bn" class="required1">--}}
+{{--                             Component Title (Bangla)--}}
+{{--                         </label>--}}
+{{--                         <input type="text" name="component[0][title_bn]"  class="form-control" placeholder="Enter title"--}}
+{{--                                value="{{ old("title_bn") ? old("title_bn") : '' }}">--}}
+{{--                         <div class="help-block"></div>--}}
+{{--                         @if ($errors->has('title_bn'))--}}
+{{--                             <div class="help-block">  {{ $errors->first('title_bn') }}</div>--}}
+{{--                         @endif--}}
+{{--                     </div>--}}
 
-                      <div class="col-md-6">
-                           <div class="form-group">
-                               <label for="exampleInputPassword1">Description (English)</label>
-                               <textarea name="component[0][editor_en]" class="form-control js_editor_box" rows="5"
-                                         placeholder="Enter description">{{ isset($ecarrer_item->editor_en) ? $ecarrer_item->editor_en : '' }}</textarea>
-                           </div>
-                       </div>
+{{--                      <div class="col-md-6">--}}
+{{--                           <div class="form-group">--}}
+{{--                               <label for="exampleInputPassword1">Description (English)</label>--}}
+{{--                               <textarea name="component[0][editor_en]" class="form-control js_editor_box" rows="5"--}}
+{{--                                         placeholder="Enter description">{{ isset($ecarrer_item->editor_en) ? $ecarrer_item->editor_en : '' }}</textarea>--}}
+{{--                           </div>--}}
+{{--                       </div>--}}
 
-                       <div class="col-md-6">
-                           <div class="form-group">
-                               <label for="exampleInputPassword1">Description (Bangla)</label>
-                               <textarea name="component[0][editor_bn]" class="form-control js_editor_box" rows="5"
-                                         placeholder="Enter description">{{ isset($ecarrer_item->editor_bn) ? $ecarrer_item->editor_bn : '' }}</textarea>
-                           </div>
-                       </div>
-
-
+{{--                       <div class="col-md-6">--}}
+{{--                           <div class="form-group">--}}
+{{--                               <label for="exampleInputPassword1">Description (Bangla)</label>--}}
+{{--                               <textarea name="component[0][editor_bn]" class="form-control js_editor_box" rows="5"--}}
+{{--                                         placeholder="Enter description">{{ isset($ecarrer_item->editor_bn) ? $ecarrer_item->editor_bn : '' }}</textarea>--}}
+{{--                           </div>--}}
+{{--                       </div>--}}
 
 
 
-                        <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                         <label for="title_en" class="required1">
-                             Component Title (English)
-                         </label>
-                         <input type="text" name="component[1][title_en]"  class="form-control" placeholder="Enter title"
-                                value="{{ old("title_en") ? old("title_en") : '' }}">
-                         <div class="help-block"></div>
-                         @if ($errors->has('title_en'))
-                             <div class="help-block">  {{ $errors->first('title_en') }}</div>
-                         @endif
-                     </div>
 
 
-                      <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                          <label for="title_bn" class="required1">
-                              Component Title (Bangla)
-                          </label>
-                          <input type="text" name="component[1][title_bn]"  class="form-control" placeholder="Enter title"
-                                 value="{{ old("title_bn") ? old("title_bn") : '' }}">
-                          <div class="help-block"></div>
-                          @if ($errors->has('title_bn'))
-                              <div class="help-block">  {{ $errors->first('title_bn') }}</div>
-                          @endif
-                      </div>
+{{--                     <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">--}}
+{{--                         <label for="title_en" class="required1">--}}
+{{--                             Component Title (English)--}}
+{{--                         </label>--}}
+{{--                         <input type="text" name="component[1][title_en]"  class="form-control" placeholder="Enter title"--}}
+{{--                                value="{{ old("title_en") ? old("title_en") : '' }}">--}}
+{{--                         <div class="help-block"></div>--}}
+{{--                         @if ($errors->has('title_en'))--}}
+{{--                             <div class="help-block">  {{ $errors->first('title_en') }}</div>--}}
+{{--                         @endif--}}
+{{--                     </div>--}}
 
-                      <div class="col-md-6">
-                           <div class="form-group">
-                               <label for="exampleInputPassword1">Description (English)</label>
-                               <textarea name="component[1][editor_en]" class="form-control js_editor_box" rows="5"
-                                         placeholder="Enter description">{{ isset($ecarrer_item->editor_en) ? $ecarrer_item->editor_en : '' }}</textarea>
-                           </div>
-                       </div>
 
-                       <div class="col-md-6">
-                           <div class="form-group">
-                               <label for="exampleInputPassword1">Description (Bangla)</label>
-                               <textarea name="component[1][editor_bn]" class="form-control js_editor_box" rows="5"
-                                         placeholder="Enter description">{{ isset($ecarrer_item->editor_bn) ? $ecarrer_item->editor_bn : '' }}</textarea>
-                           </div>
-                       </div>
+{{--                      <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">--}}
+{{--                          <label for="title_bn" class="required1">--}}
+{{--                              Component Title (Bangla)--}}
+{{--                          </label>--}}
+{{--                          <input type="text" name="component[1][title_bn]"  class="form-control" placeholder="Enter title"--}}
+{{--                                 value="{{ old("title_bn") ? old("title_bn") : '' }}">--}}
+{{--                          <div class="help-block"></div>--}}
+{{--                          @if ($errors->has('title_bn'))--}}
+{{--                              <div class="help-block">  {{ $errors->first('title_bn') }}</div>--}}
+{{--                          @endif--}}
+{{--                      </div>--}}
+
+{{--                      <div class="col-md-6">--}}
+{{--                           <div class="form-group">--}}
+{{--                               <label for="exampleInputPassword1">Description (English)</label>--}}
+{{--                               <textarea name="component[1][editor_en]" class="form-control js_editor_box" rows="5"--}}
+{{--                                         placeholder="Enter description">{{ isset($ecarrer_item->editor_en) ? $ecarrer_item->editor_en : '' }}</textarea>--}}
+{{--                           </div>--}}
+{{--                       </div>--}}
+
+{{--                       <div class="col-md-6">--}}
+{{--                           <div class="form-group">--}}
+{{--                               <label for="exampleInputPassword1">Description (Bangla)</label>--}}
+{{--                               <textarea name="component[1][editor_bn]" class="form-control js_editor_box" rows="5"--}}
+{{--                                         placeholder="Enter description">{{ isset($ecarrer_item->editor_bn) ? $ecarrer_item->editor_bn : '' }}</textarea>--}}
+{{--                           </div>--}}
+{{--                       </div>--}}
+
+
+
+{{--                           ================ Dynamic Table HTML ===================--}}
+                            <div class="table_component_wrap ">
+
+                                <div class="form-group row bg-light ml-1 mr-1 p-2 mt-1">
+                                    <input type="hidden" name="component_position[2]" value="2" class="component_position">
+
+                                    <div class="col-md-12 col-xs-12">
+                                        <h5 class="font-weight-bold">Table Component</h5>
+                                        <hr>
+
+                                        <div class="row">
+                                            <div class="col-md-3 col-xs-12">
+                                                <input type="text" placeholder="Rows" class="form-control table_rows">
+                                            </div>
+                                            <div class="col-md-3 col-xs-12">
+                                                <input type="text" placeholder="Columns" class="form-control table_columns">
+                                            </div>
+                                            <div class="col-md-5 col-xs-12">
+                                                <button class="btn btn-sm btn-info generate_table">Generate Table</button>
+                                            </div>
+                                        </div>
+                                        <div class="row table_wrap">
+                                            <div class="col-md-12 left_table">
+
+                                            </div>
+
+                                            <div class="col-md-12 right_table">
+
+                                            </div>
+                                        </div>
+                                    </div>
+{{--                                    <div class="col-md-2 col-xs-12">--}}
+{{--                                        <h6 class="font-weight-bold">Sample/Instruction (List Component)</h6>--}}
+{{--                                        <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/offer_table_component.png')}}" width="100%">--}}
+{{--                                    </div>--}}
+                                </div>
+                            </div>
 
 
 
@@ -158,15 +203,13 @@
 									{{ Form::hidden('sections[multiple_component]', 0 ) }}
 							</div>
 
-
-
                 </div>
 
               </div>
               <div class="modal-footer">
               		{{ Form::hidden('sections[id]', null, ['class' => 'section_id'] ) }}
               		{{ Form::hidden('component[0][id]', null, ['class' => 'component_id'] ) }}
-                  {{ Form::hidden('component[1][id]', null, ['class' => 'component_id'] ) }}
+{{--                  {{ Form::hidden('component[1][id]', null, ['class' => 'component_id'] ) }}--}}
 
                 <a type="button" href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
                 <button id="form_save" type="submit" name="save" class="btn btn-primary">Save changes</button>
@@ -201,6 +244,134 @@
 
  <script>
      $(function () {
+
+         $(".generate_table").click(function () {
+
+             var rows = $(this).parents('.row').find('.table_rows').val();
+             var cols = $(this).parents('.row').find('.table_columns').val();
+             var pos = $(this).parents('.form-group').find('.component_position').val();
+
+             //Left English table
+             var tableHeadEn = "<br><br><div class='col-md-12 col-xs-12'><h5><b>Left Table Head (EN):</b></h5>";
+
+             var i;
+             var width = 100 / cols;
+             for (i = 0; i < cols; i++) {
+                 tableHeadEn += "<input type='text' placeholder='Head (EN) " + (i + 1) + "' name='left_head_en[" + pos + "][]' width='" + width + "%'>";
+             }
+
+             tableHeadEn += "<hr></div>";
+
+             var tableRowsEn = "<div class='col-md-12 col-xs-12'><h6>Table Columns (EN):</h6>";
+
+             var r;
+             for (r = 0; r < rows; r++) {
+
+                 var c;
+                 for (c = 0; c < cols; c++) {
+
+                     tableRowsEn += "<input type='text' name='left_col_en[" + pos + "][" + r + "][]' width='" + width + "%'>";
+                 }
+                 tableRowsEn += "<br>";
+             }
+             tableRowsEn += "</div>";
+
+             //Right English table
+             var rightTableHeadEn = "<br><br><div class='col-md-12 col-xs-12'><h5><b>Right Table Head (EN):</b></h5>";
+
+             for (i = 0; i < cols; i++) {
+                 rightTableHeadEn += "<input type='text' placeholder='Head (EN) " + (i + 1) + "' name='right_head_en[" + pos + "][]' width='" + width + "%'>";
+             }
+
+             rightTableHeadEn += "<hr></div>";
+             var rightTableRowsEn = "<div class='col-md-12 col-xs-12'><h6>Table Columns (EN):</h6>";
+
+             var r;
+             for (r = 0; r < rows; r++) {
+
+                 var c;
+                 for (c = 0; c < cols; c++) {
+
+                     rightTableRowsEn += "<input type='text' name='right_col_en[" + pos + "][" + r + "][]' width='" + width + "%'>";
+                 }
+                 rightTableRowsEn += "<br>";
+             }
+             rightTableRowsEn += "</div>";
+
+
+
+             //Left bangla table
+             var tableHeadBn = "<div class='col-md-12 col-xs-12'><h6><hr>Table Head (BN):</h6>";
+
+             var i;
+             var width = 100 / cols;
+             for (i = 0; i < cols; i++) {
+                 tableHeadBn += "<input type='text' placeholder='Head (BN) " + (i + 1) + "' name='left_head_bn[" + pos + "][]' width='" + width + "%'>";
+             }
+
+             tableHeadBn += "<hr></div>";
+
+             var tableRowsBn = "<div class='col-md-12 col-xs-12'><h6>Table Columns (BN):</h6>";
+
+             var r;
+             for (r = 0; r < rows; r++) {
+
+                 var c;
+                 for (c = 0; c < cols; c++) {
+
+                     tableRowsBn += "<input type='text' name='left_col_bn[" + pos + "][" + r + "][]' width='" + width + "%'>";
+                 }
+                 tableRowsBn += "<br>";
+             }
+             tableRowsBn += "</div>";
+
+
+             //Right Bangla table
+             var rightTableHeadBn = "<div class='col-md-12 col-xs-12'><h6><hr>Table Head (BN):</h6>";
+
+             var i;
+             var width = 100 / cols;
+             for (i = 0; i < cols; i++) {
+                 rightTableHeadBn += "<input type='text' placeholder='Head (BN) " + (i + 1) + "' name='right_head_bn[" + pos + "][]' width='" + width + "%'>";
+             }
+
+             rightTableHeadBn += "<hr></div>";
+
+             var rightTableRowsBn = "<div class='col-md-12 col-xs-12'><h6>Table Columns (BN):</h6>";
+
+             var r;
+             for (r = 0; r < rows; r++) {
+
+                 var c;
+                 for (c = 0; c < cols; c++) {
+
+                     rightTableRowsBn += "<input type='text' name='right_col_bn[" + pos + "][" + r + "][]' width='" + width + "%'>";
+                 }
+                 rightTableRowsBn += "<br>";
+             }
+             rightTableRowsBn += "</div>";
+
+
+
+             var tableData = tableHeadEn + tableRowsEn + tableHeadBn + tableRowsBn;
+
+             var rightTableData = rightTableHeadEn + rightTableRowsEn + rightTableHeadBn + rightTableRowsBn;
+
+
+
+             $(this).parents(".form-group").find(".table_wrap .left_table").html(tableData);
+
+             $(this).parents(".form-group").find(".table_wrap .right_table").html(rightTableData);
+
+             return false;
+         });
+         $(".element_wrap").on("keypress keyup blur", '.table_rows, .table_columns', function (event) {
+             $(this).val($(this).val().replace(/[^0-9]/g, ''));
+             if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                 event.preventDefault();
+             }
+         });
+
 
          $('.js_editor_box').each(function(k, v){
             $(this).summernote({

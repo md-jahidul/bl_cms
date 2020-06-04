@@ -281,7 +281,6 @@ function matchRelatedProduct($id, $relatedProductIds)
         </div>
     </section>
 
-
     @yield('component_modal_toadd')
 
 
@@ -347,8 +346,6 @@ function matchRelatedProduct($id, $relatedProductIds)
                 cache: false,
                 type: "GET",
                 success: function (result) {
-
-                    console.log(result)
 
                     if (result.status == 'SUCCESS') {
                         var $parentSelector = $('#' + modalComponent);
@@ -566,49 +563,32 @@ function matchRelatedProduct($id, $relatedProductIds)
                         }
                         // Check component is Accordion?
                         else if (result.data.sections.section_type == 'accordion_section') {
-
                             var $parentSelectorEdit = $('#' + modalComponent);
-
                             $parentSelectorEdit.find('#accordion').empty();
-
                             $parentSelectorEdit.modal('show');
-
                             // Add section id
                             $parentSelectorEdit.find('.section_id').val(result.data.sections.id);
-
                             $("input[name='sections[status]']").each(function (sk, sv) {
                                 // console.log($(sv).val());
                                 if ($(sv).val() == result.data.sections.status) {
                                     $(sv).attr('checked', true);
                                 }
-
                             });
-
-                            // console.log(result.data.component);
-
                             // Compoent foreach
                             $.each(result.data.component, function (cpk, cpv) {
-
                                 $.each(cpv, function (ck, cv) {
-
                                     if (ck == 'id') {
                                         $parentSelectorEdit.find("input[name='component[" + cpk + "][id]']").val(cv);
                                         $('.accordion_compoent_' + cpk).attr('data-component_id', cv);
                                     }
-
                                     // Multiple attribute parse
                                     if (ck == 'multiple_attributes') {
                                         // console.log(cv);
-
                                         if (typeof cv !== 'undefined') {
                                             var multiData = eval(JSON.parse(cv));
                                             // $parentSelectorEdit.find('#slider_sortable').empty();
-                                            console.log();
-
                                             var lastItemId = multiData[multiData.length - 1].id;
-
                                             $parentSelectorEdit.find("input[name='component[" + cpk + "][multi_item_count]']").val(lastItemId);
-
                                             var component_id = $('.accordion_compoent_' + cpk).attr('data-component_id');
 
                                             $.each(multiData, function (mck, mcv) {
@@ -730,7 +710,118 @@ function matchRelatedProduct($id, $relatedProductIds)
                             });
 
 
-                        } else {
+                        }
+
+                        // Check component is Table?
+                        else if (result.data.sections.section_type == "pricing_sections") {
+                            $('#' + modalComponent).modal('show');
+                            var tableData = result.data.sections.section_component[0];
+                            var tableParseEn = $.parseJSON(tableData.editor_en)
+                            var tableParseBn = $.parseJSON(tableData.editor_bn)
+
+
+                            var sectionId = tableData.section_details_id
+                            var componentId = tableData.id
+
+
+                            $parentSelector.find("input[name='sections[id]']").val(sectionId);
+                            $parentSelector.find("input[name='component[0][id]']").val(componentId);
+
+
+                            var leftTable = "";
+
+                                // left table Heaf En
+                                leftTable += '<br><br><div class="col-md-12 col-xs-12"><h5><b>Left Table Head (EN):</b></h5>';
+                                $.each(tableParseEn.left_head_en, function (k, v) {
+                                    leftTable += '<input type="text" placeholder="Head (EN) 1" value="'+v+'" name="left_head_en[2][]" width="33.333333333333336%">'
+                                });
+                                leftTable += '<hr></div>';
+
+                                // left table Row En
+                                leftTable += '<div class="col-md-12 col-xs-12">' +
+                                                '<h6>Table Columns (EN):</h6>';
+
+                                $.each(tableParseEn.left_rows_en, function (k, v) {
+                                    $.each(v, function (ckey, childData) {
+
+                                        console.log(k)
+
+                                        leftTable += '<input type="text" name="left_col_en[2]['+k+'][]" value="'+childData+'" width="33.333333333333336%" aria-invalid="false">';
+                                    });
+                                    leftTable += '<br>';
+                                });
+                                leftTable += '</div>';
+
+                                //========= left table BN head ===============
+                                leftTable += '<div class="col-md-12 col-xs-12">' +
+                                    '<h6><hr>Table Head (BN):</h6>';
+                                $.each(tableParseBn.left_head_bn, function (k, v) {
+                                    leftTable += '<input type="text" placeholder="Head (BN) 1" value="'+v+'" name="left_head_bn[2][]" width="33.333333333333336%" aria-invalid="false">';
+                                });
+                                leftTable += '</div>'
+                                // left table BN head
+
+                                // left table BN Row
+                                leftTable += '<div class="col-md-12 col-xs-12">' +
+                                    '<hr><h6>Table Columns (BN):</h6>';
+                                $.each(tableParseBn.left_rows_bn, function (k, v) {
+                                    $.each(v, function (ckey, childData) {
+                                        leftTable += '<input type="text" name="left_col_bn[2]['+k+'][]" value="'+childData+'" width="50%" aria-invalid="false">'
+                                    });
+                                    leftTable += '<br>';
+                                });
+                                leftTable += '</div>'
+                                // left table BN Row
+                            $(".generate_table").parents(".form-group").find(".table_wrap .left_table").html(leftTable);
+
+
+                            // Right table Heaf En
+                            var rightTable = '';
+                            rightTable += '<br><br><div class="col-md-12 col-xs-12"><h5><b>Right Table Head (EN):</b></h5>';
+                            $.each(tableParseEn.right_head_en, function (k, v) {
+                                rightTable += '<input type="text" placeholder="Head (EN) 1" value="'+v+'" name="right_head_en[2][]" width="33.333333333333336%">'
+                            });
+                            rightTable += '<hr></div>';
+
+                            // ======== Right Table Row En ===========
+                            rightTable += '<div class="col-md-12 col-xs-12">' +
+                                '<h6>Table Columns (EN):</h6>';
+
+                            $.each(tableParseEn.right_rows_en, function (k, v) {
+                                $.each(v, function (ckey, childData) {
+                                    rightTable += '<input type="text" name="right_col_en[2]['+k+'][]" value="'+childData+'" width="33.333333333333336%" aria-invalid="false">';
+                                });
+                                rightTable += '<br>';
+                            });
+                            rightTable += '</div>';
+
+
+                            //========= Right table BN head ===============
+                            rightTable += '<div class="col-md-12 col-xs-12">' +
+                                '<h6><hr>Table Head (BN):</h6>';
+                            $.each(tableParseBn.right_head_bn, function (k, v) {
+                                rightTable += '<input type="text" placeholder="Head (BN) 1" value="'+v+'" name="right_head_bn[2][]" width="33.333333333333336%" aria-invalid="false">';
+                            });
+                            rightTable += '</div>'
+                            // Right table BN head
+
+                            // ============== Right table BN Row ===================
+                            rightTable += '<div class="col-md-12 col-xs-12">' +
+                                '<hr><h6>Table Columns (BN):</h6>';
+                            $.each(tableParseBn.right_rows_bn, function (k, v) {
+                                $.each(v, function (ckey, childData) {
+                                    rightTable += '<input type="text" name="right_col_bn[2]['+k+'][]" value="'+childData+'" width="50%" aria-invalid="false">'
+                                });
+                                rightTable += '<br>';
+                            });
+                            rightTable += '</div>'
+                            // Right table BN Row
+
+                            $(".generate_table").parents(".form-group").find(".table_wrap .right_table").html(rightTable);
+
+                        }
+
+                        else {
                             $('#' + modalComponent).modal('show');
 
                             // Set all sections
@@ -847,8 +938,6 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                             });
                         }
-
-
                     }
 
 

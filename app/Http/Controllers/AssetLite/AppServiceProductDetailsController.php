@@ -70,15 +70,11 @@ class AppServiceProductDetailsController extends Controller
      */
     public function store(Request $request, $tab_type, $product_id)
     {
-
         $data = $request->all();
-
-        // dd($data);
 
         // Create new sections
         if( $request->has('save') ){
             $response = $this->appServiceProductDetailsService->storeAppServiceProductDetails($request->all(), $tab_type, $product_id);
-
             Session::flash('message', $response->getContent());
             return redirect(url("app-service/details/$tab_type/$product_id"));
         }
@@ -86,12 +82,19 @@ class AppServiceProductDetailsController extends Controller
 
             # Update section data
             $section_data = $data['sections'];
+
+//            dd($request->all());
+
             if( isset($section_data['id']) && !empty($section_data['id']) ){
+
+//                dd($request->all());
 
                 $this->appServiceProductDetailsService->updateAppServiceDetailsSection($section_data, $section_data['id']);
 
                 # Update component data
                 $component_data = $data['component'];
+
+//                dd($request->all());
 
                 if( isset($component_data) && count($component_data) > 0 ){
                     foreach ($component_data as $component_value) {
@@ -153,11 +156,7 @@ class AppServiceProductDetailsController extends Controller
 
         // return view('admin.app-service.details.section.edit', compact('tab_type', 'product_id', 'section'));
 
-
-
         $section = $this->appServiceProductDetailsService->getJsonSectionComponentList($section_id);
-
-
 
         if( !empty($section) && count($section) > 0 ){
             return response()->json([

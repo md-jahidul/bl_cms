@@ -53,6 +53,42 @@ class AppServiceProductDetailsService
         return $data;
     }
 
+    public function bindTableComponent()
+    {
+        $request = request();
+        $insert = [];
+        $count = 0;
+
+        if ($request->component_position) {
+            foreach ($request->component_position as $k => $val) {
+                if (isset($request->left_head_en[$k]) || isset($request->right_head_en[$k])) {
+                    $bothTableArrayEn = array(
+                        'left_head_en' => $request->left_head_en[$k],
+                        'left_rows_en' => $request->left_col_en[$k],
+                    );
+
+                    if (!empty(array_filter($request->right_head_en[$k]))) {
+                        $bothTableArrayEn['right_head_en'] = $request->right_head_en[$k];
+                        $bothTableArrayEn['right_rows_en'] = $request->right_col_en[$k];
+                    }
+
+                    $bothTableArrayBn = array(
+                        'left_head_bn' => $request->left_head_bn[$k],
+                        'left_rows_bn' => $request->left_col_bn[$k],
+                    );
+
+                    if (!empty(array_filter($request->right_head_bn[$k]))) {
+                        $bothTableArrayBn['right_head_bn'] = $request->right_head_bn[$k];
+                        $bothTableArrayBn['right_rows_bn'] = $request->right_col_bn[$k];
+                    }
+                }
+                $insert[$count]['editor_en'] = json_encode($bothTableArrayEn);
+                $insert[$count]['editor_bn'] = json_encode($bothTableArrayBn);
+            }
+            return $insert[$count];
+        }
+    }
+
     /**
      * @param $data
      * @return Response
@@ -61,7 +97,6 @@ class AppServiceProductDetailsService
     {
         # Save sections data
         $sections_data = $data['sections'];
-
 
         $sections_data['product_id'] = $product_id;
         $sections_data['section_order'] = 99;
@@ -125,6 +160,12 @@ class AppServiceProductDetailsService
                         $value['other_attributes'] = json_encode($value['other_attr']);
                     }
 
+                    $tableComponent = $this->bindTableComponent();
+                    if (isset($tableComponent)) {
+                        $value['editor_en'] = $tableComponent['editor_en'];
+                        $value['editor_bn'] = $tableComponent['editor_bn'];
+                    }
+
                     $this->componentRepository->save($value);
                 }
             }
@@ -134,21 +175,17 @@ class AppServiceProductDetailsService
         } else {
             return new Response('Something went wrong! App Service details section component not added');
         }
-
-
     }
 
     /**
      * [updateAppServiceDetailsComponent description]
-     * @param  [type] $data        [description]
-     * @param  [type] $compoent_id [description]
-     * @return [type]              [description]
+     * @param $data
+     * @param $compoent_id
+     * @param null $key
+     * @return void [type]              [description]
      */
     public function updateAppServiceDetailsComponent($data, $compoent_id, $key = null)
     {
-
-        // dd(request()->input('update'));
-
         $component = $this->componentRepository->findOne($compoent_id);
 
         if (isset($data['image_url']) && !empty($data['image_url'])) {
@@ -219,6 +256,14 @@ class AppServiceProductDetailsService
             $data['video'] = $data['video_url'];
         }
 
+        $tableComponent = $this->bindTableComponent();
+        if (isset($tableComponent)) {
+            $data['editor_en'] = $tableComponent['editor_en'];
+            $data['editor_bn'] = $tableComponent['editor_bn'];
+        }
+
+
+//        dd($data);
 
         $component->update($data);
 
@@ -238,6 +283,7 @@ class AppServiceProductDetailsService
      */
     public function updateAppServiceDetailsSection($data, $id)
     {
+//        dd($id);
         $appServiceProduct = $this->findOne($id);
         $appServiceProduct->update($data);
         return Response('App Service Section updated successfully');

@@ -64,11 +64,6 @@
 @include('admin.app-service.details.section.component_modal.video_with_text_right')
 @include('admin.app-service.details.section.component_modal.pricing_sections')
 
-<!-- Bullet Text -->
-@include('admin.app-service.details.section.component_modal.title_text_editor')
-
-<!-- Accordion content -->
-{{--@include('admin.app-service.details.section.component_modal.accordion.accordion')--}}
 
 <!-- multi image slider -->
 @include('admin.app-service.details.section.component_modal.slider.slider_text_with_image_right')

@@ -21,7 +21,7 @@ class RoamingOfferController extends Controller {
 
     /**
      * Display Categories, about page, bill payment page
-     * 
+     *
      * @param No
      * @return Factory|View
      * @Bulbul Mahmud Nito || 24/03/2020
@@ -35,7 +35,7 @@ class RoamingOfferController extends Controller {
 
     /**
      * Get category by ID
-     * 
+     *
      * @param cat ID $catId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 24/03/2020
@@ -48,7 +48,7 @@ class RoamingOfferController extends Controller {
 
     /**
      * Update category
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 24/03/2020
@@ -68,7 +68,7 @@ class RoamingOfferController extends Controller {
 
     /**
      * Category Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 24/03/2020
@@ -80,7 +80,7 @@ class RoamingOfferController extends Controller {
 
     /**
      * Add other offer
-     * 
+     *
      * @param No
      * @return Factory|View
      * @Bulbul Mahmud Nito || 24/03/2020
@@ -94,7 +94,7 @@ class RoamingOfferController extends Controller {
 
     /**
      * edit other offer
-     * 
+     *
      * @param No
      * @return Factory|View
      * @Bulbul Mahmud Nito || 25/03/2020
@@ -104,11 +104,11 @@ class RoamingOfferController extends Controller {
         $offer = $this->offerService->getOfferById($offerId);
         return view('admin.roaming.edit_other_offer', compact('categories', 'offer'));
     }
-  
+
 
     /**
      * Save other offer
-     * 
+     *
      * @param Request $request
      * @return Factory|View
      * @Bulbul Mahmud Nito || 24/03/2020
@@ -133,7 +133,7 @@ class RoamingOfferController extends Controller {
 
     /**
      * Delete other offer
-     * 
+     *
      * @param $offerId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 25/03/2020
@@ -148,11 +148,11 @@ class RoamingOfferController extends Controller {
 
         return redirect('roaming-offers');
     }
-    
-    
+
+
       /**
      * edit other offer components
-     * 
+     *
      * @param $offerId
      * @return Factory|View
      * @Bulbul Mahmud Nito || 25/03/2020
@@ -161,19 +161,19 @@ class RoamingOfferController extends Controller {
         $components = $this->offerService->getOfferComponents($offerId);
         return view('admin.roaming.offer_components', compact('components', 'offerId'));
     }
-    
+
       /**
      * Update other offer components
-     * 
+     *
      * @param Request $request
      * @return Factory|View
      * @Bulbul Mahmud Nito || 26/03/2020
      */
     public function updateComponent(Request $request) {
-//        print_r($request->all());die();
+//        dd($request->all());
 
             $response = $this->offerService->updateComponents($request);
-      
+
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Offer is saved!');
         } else {
@@ -182,10 +182,10 @@ class RoamingOfferController extends Controller {
 
         return redirect('roaming/edit-other-offer-component/'.$request->parent_id);
     }
-    
+
      /**
      * Component Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 26/03/2020
@@ -194,17 +194,17 @@ class RoamingOfferController extends Controller {
         $sortChange = $this->offerService->changeComponentSort($request);
         return $sortChange;
     }
-    
-    
+
+
     /**
      * Component delete.
-     * 
+     *
      * @param $infoId, $comId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 27/03/2020
      */
     public function componentDelete($offerId, $comId) {
-        
+
         $response = $this->offerService->componentDelete($comId);
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Component is deleted!');
