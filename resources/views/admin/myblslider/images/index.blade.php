@@ -24,6 +24,7 @@
                         <thead>
                         <tr>
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
+                            <th width="5%">ID</th>
                             <th>Image</th>
                             <th width="15%">Title</th>
                             <th width="10%">Type</th>
@@ -37,6 +38,7 @@
                         @foreach($slider_information->sliderImages as $index=>$slider_image)
                             <tr data-index="{{ $slider_image->id }}" data-position="{{ $slider_image->sequence }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
+                                <td>{{ $slider_image->id }}</td>
                                 <td><img class="" src="{{ asset($slider_image->image_url) }}" alt="Slider Image"
                                          height="100" width="200"/></td>
                                 <td>{{ $slider_image->title }}</td>
