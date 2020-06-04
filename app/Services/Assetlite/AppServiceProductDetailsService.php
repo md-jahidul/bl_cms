@@ -67,19 +67,24 @@ class AppServiceProductDetailsService
                         'left_rows_en' => $request->left_col_en[$k],
                     );
 
-                    if (!empty(array_filter($request->right_head_en[$k]))) {
-                        $bothTableArrayEn['right_head_en'] = $request->right_head_en[$k];
-                        $bothTableArrayEn['right_rows_en'] = $request->right_col_en[$k];
+                    if ($request->right_head_en[$k]) {
+                        if (!empty(array_filter($request->right_head_en[$k]))) {
+                            $bothTableArrayEn['right_head_en'] = $request->right_head_en[$k];
+                            $bothTableArrayEn['right_rows_en'] = $request->right_col_en[$k];
+                        }
                     }
+
 
                     $bothTableArrayBn = array(
                         'left_head_bn' => $request->left_head_bn[$k],
                         'left_rows_bn' => $request->left_col_bn[$k],
                     );
 
-                    if (!empty(array_filter($request->right_head_bn[$k]))) {
-                        $bothTableArrayBn['right_head_bn'] = $request->right_head_bn[$k];
-                        $bothTableArrayBn['right_rows_bn'] = $request->right_col_bn[$k];
+                    if ($request->right_head_bn[$k]) {
+                        if (!empty(array_filter($request->right_head_bn[$k]))) {
+                            $bothTableArrayBn['right_head_bn'] = $request->right_head_bn[$k];
+                            $bothTableArrayBn['right_rows_bn'] = $request->right_col_bn[$k];
+                        }
                     }
                 }
                 $insert[$count]['editor_en'] = json_encode($bothTableArrayEn);
@@ -261,12 +266,7 @@ class AppServiceProductDetailsService
             $data['editor_en'] = $tableComponent['editor_en'];
             $data['editor_bn'] = $tableComponent['editor_bn'];
         }
-
-
-//        dd($data);
-
         $component->update($data);
-
     }
 
 

@@ -59,6 +59,9 @@ class AppServiceProductDetailsController extends Controller
         $this->info["products"] = $this->appServiceProduct->appServiceRelatedProduct($tab_type, $product_id);
         $this->info["productDetail"] = $this->appServiceProduct->detailsProduct($product_id);
         $this->info["fixedSectionData"] = $this->info["section_list"]['fixed_section'];
+
+//        return $this->info;
+
         return view('admin.app-service.details.section.index', $this->info);
     }
 
@@ -82,20 +85,10 @@ class AppServiceProductDetailsController extends Controller
 
             # Update section data
             $section_data = $data['sections'];
-
-//            dd($request->all());
-
             if( isset($section_data['id']) && !empty($section_data['id']) ){
-
-//                dd($request->all());
-
                 $this->appServiceProductDetailsService->updateAppServiceDetailsSection($section_data, $section_data['id']);
-
                 # Update component data
                 $component_data = $data['component'];
-
-//                dd($request->all());
-
                 if( isset($component_data) && count($component_data) > 0 ){
                     foreach ($component_data as $component_value) {
                         $this->appServiceProductDetailsService->updateAppServiceDetailsComponent($component_value, $component_value['id']);
@@ -203,6 +196,8 @@ class AppServiceProductDetailsController extends Controller
      */
     public function destroy($tab_type, $product_id, $id)
     {
+//        dd($product_id);
+
         $response = $this->appServiceProductDetailsService->sectionDelete($id);
         // Session::flash('message', $response->getContent());
         if ($response) {

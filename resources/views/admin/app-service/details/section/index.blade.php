@@ -330,6 +330,10 @@ function matchRelatedProduct($id, $relatedProductIds)
 
             });
 
+            $('#add_component_btn').click(function () {
+                $('#pricing_sections').find('.table_wrap .left_table').empty()
+                $('#pricing_sections').find('.table_wrap .right_table').empty()
+            })
 
         }); // Doc ready
 
@@ -723,6 +727,8 @@ function matchRelatedProduct($id, $relatedProductIds)
                             var sectionId = tableData.section_details_id
                             var componentId = tableData.id
 
+                            console.log(tableParseEn)
+
 
                             $parentSelector.find("input[name='sections[id]']").val(sectionId);
                             $parentSelector.find("input[name='component[0][id]']").val(componentId);
@@ -743,9 +749,6 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                                 $.each(tableParseEn.left_rows_en, function (k, v) {
                                     $.each(v, function (ckey, childData) {
-
-                                        console.log(k)
-
                                         leftTable += '<input type="text" name="left_col_en[2]['+k+'][]" value="'+childData+'" width="33.333333333333336%" aria-invalid="false">';
                                     });
                                     leftTable += '<br>';
@@ -776,48 +779,53 @@ function matchRelatedProduct($id, $relatedProductIds)
 
 
                             // Right table Heaf En
-                            var rightTable = '';
-                            rightTable += '<br><br><div class="col-md-12 col-xs-12"><h5><b>Right Table Head (EN):</b></h5>';
-                            $.each(tableParseEn.right_head_en, function (k, v) {
-                                rightTable += '<input type="text" placeholder="Head (EN) 1" value="'+v+'" name="right_head_en[2][]" width="33.333333333333336%">'
-                            });
-                            rightTable += '<hr></div>';
 
-                            // ======== Right Table Row En ===========
-                            rightTable += '<div class="col-md-12 col-xs-12">' +
-                                '<h6>Table Columns (EN):</h6>';
-
-                            $.each(tableParseEn.right_rows_en, function (k, v) {
-                                $.each(v, function (ckey, childData) {
-                                    rightTable += '<input type="text" name="right_col_en[2]['+k+'][]" value="'+childData+'" width="33.333333333333336%" aria-invalid="false">';
+                            if (tableParseEn.right_head_en) {
+                                var rightTable = '';
+                                rightTable += '<br><br><div class="col-md-12 col-xs-12"><h5><b>Right Table Head (EN):</b></h5>';
+                                $.each(tableParseEn.right_head_en, function (k, v) {
+                                    rightTable += '<input type="text" placeholder="Head (EN) 1" value="'+v+'" name="right_head_en[2][]" width="33.333333333333336%">'
                                 });
-                                rightTable += '<br>';
-                            });
-                            rightTable += '</div>';
+                                rightTable += '<hr></div>';
 
+                                // ======== Right Table Row En ===========
+                                rightTable += '<div class="col-md-12 col-xs-12">' +
+                                    '<h6>Table Columns (EN):</h6>';
 
-                            //========= Right table BN head ===============
-                            rightTable += '<div class="col-md-12 col-xs-12">' +
-                                '<h6><hr>Table Head (BN):</h6>';
-                            $.each(tableParseBn.right_head_bn, function (k, v) {
-                                rightTable += '<input type="text" placeholder="Head (BN) 1" value="'+v+'" name="right_head_bn[2][]" width="33.333333333333336%" aria-invalid="false">';
-                            });
-                            rightTable += '</div>'
-                            // Right table BN head
-
-                            // ============== Right table BN Row ===================
-                            rightTable += '<div class="col-md-12 col-xs-12">' +
-                                '<hr><h6>Table Columns (BN):</h6>';
-                            $.each(tableParseBn.right_rows_bn, function (k, v) {
-                                $.each(v, function (ckey, childData) {
-                                    rightTable += '<input type="text" name="right_col_bn[2]['+k+'][]" value="'+childData+'" width="50%" aria-invalid="false">'
+                                $.each(tableParseEn.right_rows_en, function (k, v) {
+                                    $.each(v, function (ckey, childData) {
+                                        rightTable += '<input type="text" name="right_col_en[2]['+k+'][]" value="'+childData+'" width="33.333333333333336%" aria-invalid="false">';
+                                    });
+                                    rightTable += '<br>';
                                 });
-                                rightTable += '<br>';
-                            });
-                            rightTable += '</div>'
-                            // Right table BN Row
+                                rightTable += '</div>';
 
-                            $(".generate_table").parents(".form-group").find(".table_wrap .right_table").html(rightTable);
+
+                                //========= Right table BN head ===============
+                                rightTable += '<div class="col-md-12 col-xs-12">' +
+                                    '<h6><hr>Table Head (BN):</h6>';
+                                $.each(tableParseBn.right_head_bn, function (k, v) {
+                                    rightTable += '<input type="text" placeholder="Head (BN) 1" value="'+v+'" name="right_head_bn[2][]" width="33.333333333333336%" aria-invalid="false">';
+                                });
+                                rightTable += '</div>'
+                                // Right table BN head
+
+                                // ============== Right table BN Row ===================
+                                rightTable += '<div class="col-md-12 col-xs-12">' +
+                                    '<hr><h6>Table Columns (BN):</h6>';
+                                $.each(tableParseBn.right_rows_bn, function (k, v) {
+                                    $.each(v, function (ckey, childData) {
+                                        rightTable += '<input type="text" name="right_col_bn[2]['+k+'][]" value="'+childData+'" width="50%" aria-invalid="false">'
+                                    });
+                                    rightTable += '<br>';
+                                });
+                                rightTable += '</div>'
+                                // Right table BN Row
+
+                                $(".generate_table").parents(".form-group").find(".table_wrap .right_table").html(rightTable);
+                            }
+
+
 
                         }
 
