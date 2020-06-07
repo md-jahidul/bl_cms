@@ -75,6 +75,7 @@ class SyncOffersForSearchContents extends Command
         $bar->start();
 
         foreach ($products as $product) {
+            dd($product);
             if (isset($this->tags[strtolower($product->details->content_type)])) {
                 $data [] = $this->createSearchContents($product);
             }
