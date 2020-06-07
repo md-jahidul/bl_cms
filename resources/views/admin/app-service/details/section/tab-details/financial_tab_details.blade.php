@@ -1,5 +1,4 @@
 @section('component_type_selector')
-	
 	<!-- # Section add component -->
 	<div class="card">
 		<div class="card-content collapse show">
@@ -14,7 +13,6 @@
 								<option value="title_text_editor">Title with text editor</option>
 								<option value="accordion_section">Accordion</option>
 								<option value="static_easy_payment_card">Static Component - Easy payment card</option>
-
 							</select>
 						</div>
 						<div class="form-group">
@@ -23,6 +21,8 @@
 							</a>
 						</div>
 					</div>
+
+
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<div class="form-group">
@@ -36,7 +36,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 
 @endsection
 

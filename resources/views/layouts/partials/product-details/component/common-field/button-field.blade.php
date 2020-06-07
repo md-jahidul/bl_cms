@@ -1,4 +1,4 @@
-<div class="form-group col-md-6 {{ $errors->has('button_en') ? ' error' : '' }}">
+<div class="form-group col-md-4 {{ $errors->has('button_en') ? ' error' : '' }}">
     <label for="button_en">Button Title (English)</label>
     <input type="text" name="button_en"  class="form-control" placeholder="Enter company name bangla"
            value="{{ isset($component->button_en) ? $component->button_en : '' }}">
@@ -8,7 +8,7 @@
     @endif
 </div>
 
-<div class="form-group col-md-6 {{ $errors->has('button_bn') ? ' error' : '' }}">
+<div class="form-group col-md-4 {{ $errors->has('button_bn') ? ' error' : '' }}">
     <label for="button_bn" >Button Title (Bangla)</label>
     <input type="text" name="button_bn"  class="form-control" placeholder="Enter company name bangla"
            value="{{ isset($component->button_bn) ? $component->button_bn : '' }}">
@@ -18,7 +18,7 @@
     @endif
 </div>
 
-<div class="form-group col-md-6 {{ $errors->has('button_link') ? ' error' : '' }}">
+<div class="form-group col-md-4 {{ $errors->has('button_link') ? ' error' : '' }}">
     <label for="button_link" >Button URL</label>
     <input type="text" name="button_link"  class="form-control" placeholder="Enter company name bangla"
            value="{{ isset($component->button_link) ? $component->button_link : '' }}">
