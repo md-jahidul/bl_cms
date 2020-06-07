@@ -359,7 +359,7 @@ class ProductCoreService
                     }
                 }
             }
-        );
+        )->with('details');
 
         if ($request->content_type == 'recharge_offer') {
             $builder->where('show_recharge_offer', 1);

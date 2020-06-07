@@ -106,7 +106,7 @@ class InAppSearchContentController extends Controller
         $product_list = $builder->whereHas(
             'details',
             function ($q) {
-                $q->whereIn('content_type', ['data', 'voice', 'sms']);
+                $q->whereIn('content_type', ['data', 'voice', 'sms', 'mix']);
             }
         )->get();
 
