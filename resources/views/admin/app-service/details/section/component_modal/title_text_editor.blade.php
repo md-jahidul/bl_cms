@@ -123,7 +123,7 @@
 
 <script src="https://rawgit.com/tylerecouture/summernote-table-headers/master/summernote-table-headers.js" type="text/javascript"></script>
 <script>
-     $(function () {
+/*     $(function () {
 
          $('.js_editor_box').each(function(k, v){
             $(this).summernote({
@@ -141,6 +141,6 @@
             });
          });
 
-     })
+     })*/
  </script>
  @endpush
