@@ -188,7 +188,7 @@
                                                 <input type="text" name="other_attributes" class="form-control" required
                                                        value="@if($info) {{$info->content}} @endif">
                                             @endif
-                                            @if($imageInfo->redirect_url == "DIAL")
+                                            @if($imageInfo->redirect_url == "URL")
                                                 <label>Redirect URL</label>
                                                 <input type="text" name="other_attributes" class="form-control" required
                                                        value="@if($info) {{$info->content}} @endif">

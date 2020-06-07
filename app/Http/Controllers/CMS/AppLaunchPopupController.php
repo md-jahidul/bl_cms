@@ -36,7 +36,7 @@ class AppLaunchPopupController extends Controller
             $file = $request->content_data;
             $path = $file->storeAs(
                 'app-launch-popup/images',
-                strtotime(now()).'.'.$file->getClientOriginalExtension(),
+                strtotime(now()) . '.' . $file->getClientOriginalExtension(),
                 'public'
             );
 
@@ -82,7 +82,7 @@ class AppLaunchPopupController extends Controller
                 $file = $request->content_data;
                 $path = $file->storeAs(
                     'app-launch-popup/images',
-                    strtotime(now()).'.'.$file->getClientOriginalExtension(),
+                    strtotime(now()) . '.' . $file->getClientOriginalExtension(),
                     'public'
                 );
 

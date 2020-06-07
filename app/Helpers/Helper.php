@@ -61,6 +61,7 @@ class Helper
             "BALANCE_TRANSFER"        => "Balance Transfer",
             "CONTACT_BACKUP"          => "Contact Backup",
             "DIAL"                    => "Dial",
+            "EMERGENCY_BALANCE"       => "Emergency Balance",
             "INTERNET_DETAILS"        => "Balance details > Internet",
             "MINTUES_DETAILS"         => "Balance details > Minutes",
             "SMS_DETAILS"             => "Balance details > SMS",
