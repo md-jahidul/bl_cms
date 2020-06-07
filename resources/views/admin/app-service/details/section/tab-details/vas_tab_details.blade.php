@@ -1,5 +1,5 @@
 @section('component_type_selector')
-	
+
 	<!-- # Section add component -->
 	<div class="card">
 		<div class="card-content collapse show">
@@ -19,7 +19,7 @@
 								<option value="slider_text_with_image_right">APPS - Slider text with image right</option>
 								<option value="video_with_text_right">APPS - Video with text right</option>
 								<option value="multiple_image_banner">APPS - Multiple image banner</option>
-								<option value="pricing_sections">APPS - Pricing Multiple table</option>
+								<option value="pricing_sections">Pricing Multiple table</option>
 							</select>
 						</div>
 						<div class="form-group">

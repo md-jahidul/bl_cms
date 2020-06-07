@@ -13,7 +13,8 @@
 								<option value="title_text_editor">Title with text editor</option>
 								<option value="accordion_section">Accordion</option>
 								<option value="static_easy_payment_card">Static Component - Easy payment card</option>
-							</select>
+                                <option value="pricing_sections">Pricing Multiple table</option>
+                            </select>
 						</div>
 						<div class="form-group">
 							<a id="add_component_btn" href="{{ route("app-service-product.create") }}" class="btn btn-primary  round btn-glow px-1" data-toggle="modal" data-target="#title_text_editor"><i class="la la-plus"></i>
@@ -48,6 +49,9 @@
 <!-- # VAS Component modal -->
 @include('admin.app-service.details.section.component_modal.title_text_editor')
 @include('admin.app-service.details.section.component_modal.editor_only_section')
+
+<!-- # Table Component modal -->
+@include('admin.app-service.details.section.component_modal.pricing_sections')
 
 <!-- Accordion content -->
 @include('admin.app-service.details.section.component_modal.accordion.accordion')

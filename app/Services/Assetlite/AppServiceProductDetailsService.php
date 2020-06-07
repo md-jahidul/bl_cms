@@ -114,8 +114,10 @@ class AppServiceProductDetailsService
         $sections_data['product_id'] = $product_id;
         $sections_data['section_order'] = 99;
 
-        $sections_data['title_en'] = $data['component_title_en'];
-        $sections_data['title_bn'] = $data['component_title_bn'];
+        if ($data['component_title_en'] && $data['component_title_bn']) {
+            $sections_data['title_en'] = $data['component_title_en'];
+            $sections_data['title_bn'] = $data['component_title_bn'];
+        }
 
         $sections_saved_data = $this->save($sections_data);
 

@@ -25,9 +25,7 @@ function matchRelatedProduct($id, $relatedProductIds)
 @endsection
 @section('content')
     <section>
-
-
-        <!-- include tab wise product details -->
+    <!-- include tab wise product details -->
     @if($tab_type == "app")
         @include('admin.app-service.details.section.tab-details.app_tab_details')
     @elseif($tab_type == "vas")
@@ -38,9 +36,7 @@ function matchRelatedProduct($id, $relatedProductIds)
         @include('admin.app-service.details.section.tab-details.others_tab_details')
     @endif
 
-
     @yield('component_type_selector')
-
 
     <!-- # Section list with component card -->
         <div class="card">
@@ -289,6 +285,7 @@ function matchRelatedProduct($id, $relatedProductIds)
 
 @push('page-css')
     {{-- <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet"> --}}
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
     <style>
         #sortable tr td {
@@ -316,8 +313,31 @@ function matchRelatedProduct($id, $relatedProductIds)
 @endpush
 
 @push('page-js')
-
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-lite.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-table-headers.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
+
+        $("textarea.js_editor_box").summernote({
+            popover: {
+                toolbar: [
+                    ['style', ['style'],['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['table', ['table']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['view', ['fullscreen', 'codeview']]
+                ],
+
+                table: [
+                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+                    ['custom', ['tableHeaders']]
+                ],
+            },
+
+            height:150
+        })
 
         jQuery(document).ready(function ($) {
             // Preview changes on component selection
