@@ -76,7 +76,7 @@ class InsertSearchContentDummyData extends Command
                         $insertdata[] = [
                             'display_title'     => $cells[0]->getValue(),
                             'description'       => $cells[1]->getValue(),
-                            'search_content'   => json_encode($search_content),
+                            'search_content'   => implode(', ', $search_content),
                             'navigation_action' => $cells[3]->getValue(),
                             'other_contents'    => (!empty($other_contents)) ? json_encode($other_contents) : null
                         ];

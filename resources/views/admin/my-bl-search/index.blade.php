@@ -1,126 +1,168 @@
 @extends('layouts.admin')
-@section('title', 'MyBl Product Entry')
-@section('card_name', 'MyBl Product Entry')
-@section('breadcrumb')
-    <li class="breadcrumb-item active">MyBl Product Entry Panel</li>
-@endsection
+@section('title', 'Search Content')
+@section('card_name', 'Search Content| List')
+
 @section('action')
+    <a href="{{ route('mybl-search-content.create') }}" class="btn btn-info btn-sm btn-glow px-2">
+        Add New
+    </a>
 @endsection
+
 @section('content')
     <section>
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form class="form" method="POST"  id="uploadProduct" enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="message">Upload Product List</label>
-                                    <p class="text-left">
-                                        <small class="warning text-muted">
-                                            Please download the format and upload in a specific format.
-                                        </small>
-                                    </p>
-                                    <input type="file" class="dropify" name="product_file" data-height="80"
-                                           data-allowed-file-extensions="xlsx" required/>
-                                </div>
-                                <div class="col-md-12" >
-                                    <div class="form-group float-right" style="margin-top:15px;">
-                                        <button class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
+                    <div class="card-body card-dashboard">
+                        <div class="row">
+                            <div class="col-md-6 mb-2 pull-right">
+                                <div class="project-search">
+                                    <div class="project-search-content">
+                                        <div class="position-relative">
+                                            <input type="text" class="form-control" name="seach" id="search_input"
+                                                   placeholder="Search contents by title,search content and action ">
+                                            <div class="form-control-position">
+                                                    <i class="la la-search text-size-base text-muted mb-1"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                            <div class="col-md-12">
+                                <table class="table table-bordered" id="search_content_table">
+                                    <thead>
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th>Display Title</th>
+                                        <th>Search Contents</th>
+                                        <th>Navigation Action</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                                <form method="post" id="del_search_content_form">
+                                    {{csrf_field()}}
+                                    {{ method_field('delete') }}
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    @include('admin.my-bl-products.partials.product_list')
                 </div>
             </div>
         </div>
     </section>
-
-@endsection
-
-
-
+@stop
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
 @endpush
+
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
-
-
     <script>
         $(function () {
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Browse for an Excel File to upload',
-                    'replace': 'Click to replace',
-                    'remove': 'Remove',
-                    'error': 'Choose correct file format'
-                }
-            });
-
-            /* file handled  */
-            $('#uploadProduct').submit(function (e) {
-                e.preventDefault();
-
-                swal.fire({
-                    title: 'Data Uploading.Please Wait ...',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    onOpen: () => {
-                        swal.showLoading();
-                    }
-                });
-
-                let formData = new FormData($(this)[0]);
-
-                $.ajax({
-                    url: '{{ route('mybl.core-product.save')}}',
-                    type: 'POST',
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: formData,
-                    success: function (result) {
-                        if (result.success) {
-                            swal.fire({
-                                title: 'Product Upload Successfully!',
-                                type: 'success',
-                                timer: 2000,
-                                showConfirmButton: false
-                            });
-
-                            $('#product_list').DataTable().ajax.reload();
-
-                        } else {
-                            swal.close();
-                            swal.fire({
-                                title: result.message,
-                                type: 'error',
-                            });
+            $("#search_content_table").dataTable({
+                scrollX: true,
+                processing: true,
+                searching: false,
+                serverSide: true,
+                ordering: false,
+                autoWidth: false,
+                pageLength: 10,
+                lengthChange: false,
+                ajax: {
+                    url: '{{ route('mybl-search-content.list') }}',
+                    data: {
+                        terms: function () {
+                            return $("#search_input").val();
                         }
-                        $(".dropify-clear").trigger("click");
-
-                    },
-                    error: function (data) {
-                        swal.fire({
-                            title: 'Failed to upload Products',
-                            type: 'error',
-                        });
                     }
-                });
+                },
+                columns: [
+                    {
+                        name: 'sl',
+                        width: '30px',
+                        render: function () {
+                            return null;
+                        }
+                    },
+
+                    {
+                        name: 'display_title',
+                        render: function (data, type, row) {
+                            return row.display_title;
+                        }
+                    },
+
+                    {
+                        name: 'search_contents',
+                        render: function (data, type, row) {
+                            return row.search_contents;
+                        }
+                    },
+
+                    {
+                        name: 'navigation_action',
+                        render: function (data, type, row) {
+                            return row.navigation_action;
+                        }
+                    },
+                    {
+                        name: 'actions',
+                        className: 'filter_data',
+                        render: function (data, type, row) {
+                            let details_url = "{{ URL('mybl-search/') }}" + "/" + row.id;
+                            return `<div class="btn-group" role="group" aria-label="Basic example">
+                            <a href="#" class="btn btn-sm btn-icon btn-outline-danger delete" data-id="` + row.id + `"><i class="la la-remove"></i></a>
+                            <a href=" ` + details_url + ` "class="btn btn-sm btn-icon btn-outline-success edit"><i class="la la-eye"></i></a>
+                          </div>`
+                        }
+                    }
+                ],
+                "fnCreatedRow": function (row, data, index) {
+                    $('td', row).eq(0).html(index + 1);
+                }
 
             });
-        });
 
+            $(document).on('input', '#search_input', function (e) {
+                e.preventDefault();
+                $('#search_content_table').DataTable().ajax.reload();
+/*                let search_item = $("#search_input").val();
+                if(search_item !=""){
+                    $('#search_content_table').DataTable().ajax.reload();
+                }*/
+            });
+
+            $(document).on('click', '.delete', function (e) {
+                var action_url;
+                var id;
+                e.preventDefault();
+                id = $(this).attr('data-id');
+                action_url = "{{ URL('mybl-search/') }}" + "/" + id;
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    html: jQuery('.delete_btn').html(),
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        $('#del_search_content_form').attr('action', action_url).submit();
+                    }
+                })
+            })
+
+        });
     </script>
 @endpush
+
+
+
+
+
 
 
