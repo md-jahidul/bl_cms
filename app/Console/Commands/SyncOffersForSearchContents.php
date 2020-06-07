@@ -7,6 +7,10 @@ use App\Models\MyBlSearchContent;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
+/**
+ * Class SyncOffersForSearchContents
+ * @package App\Console\Commands
+ */
 class SyncOffersForSearchContents extends Command
 {
     /**
