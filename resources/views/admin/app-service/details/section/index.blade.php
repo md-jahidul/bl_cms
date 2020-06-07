@@ -285,7 +285,7 @@ function matchRelatedProduct($id, $relatedProductIds)
 
 @push('page-css')
     {{-- <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet"> --}}
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+{{--    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">--}}
     <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
     <style>
         #sortable tr td {
@@ -313,41 +313,38 @@ function matchRelatedProduct($id, $relatedProductIds)
 @endpush
 
 @push('page-js')
-    <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-lite.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-table-headers.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-lite.min.js') }}" type="text/javascript"></script>--}}
+{{--    <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-table-headers.js') }}" type="text/javascript"></script>--}}
     <script type="text/javascript">
 
-        $("textarea.js_editor_box").summernote({
-            popover: {
-                toolbar: [
-                    ['style', ['style'],['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['table', ['table']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['view', ['fullscreen', 'codeview']]
-                ],
-
-                table: [
-                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
-                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
-                    ['custom', ['tableHeaders']]
-                ],
-            },
-
-            height:150
-        })
+        // $("textarea.js_editor_box").summernote({
+        //     popover: {
+        //         toolbar: [
+        //             ['style', ['style'],['bold', 'italic', 'underline', 'clear']],
+        //             ['font', ['strikethrough', 'superscript', 'subscript']],
+        //             ['fontsize', ['fontsize']],
+        //             ['color', ['color']],
+        //             ['table', ['table']],
+        //             ['para', ['ul', 'ol', 'paragraph']],
+        //             ['view', ['fullscreen', 'codeview']]
+        //         ],
+        //
+        //         table: [
+        //             ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+        //             ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+        //             ['custom', ['tableHeaders']]
+        //         ],
+        //     },
+        //
+        //     height:150
+        // })
 
         jQuery(document).ready(function ($) {
             // Preview changes on component selection
             $('#component_type').on('change', function () {
-
                 var assetUrl = "{{asset('app-assets/images/app_services/')}}"
                 $('#component_preview_img').attr('src', assetUrl + '/' + $(this).val() + '.png');
-
                 $('#add_component_btn').attr('data-target', '#' + $(this).val());
-
             });
 
             $('#add_component_btn').click(function () {
@@ -370,6 +367,8 @@ function matchRelatedProduct($id, $relatedProductIds)
                 cache: false,
                 type: "GET",
                 success: function (result) {
+
+                    // console.log(result)
 
                     if (result.status == 'SUCCESS') {
                         var $parentSelector = $('#' + modalComponent);
@@ -488,6 +487,42 @@ function matchRelatedProduct($id, $relatedProductIds)
 
 
                         }
+                        // // Check component is multiple banner image?
+                        // else if (result.data.sections.section_type == "title_text_editor") {
+                        //     $('#' + modalComponent).modal('show');
+                        //
+                        //     $.each(result.data.sections.section_component[0], function (k, v) {
+                        //
+                        //         if (k == 'title_en') {
+                        //             $parentSelector.find("input[name='component[0][title_en]']").val(v);
+                        //         }
+                        //
+                        //         if (k == 'title_bn') {
+                        //             $parentSelector.find("input[name='component[0][title_bn]']").val(v);
+                        //         }
+                        //
+                        //         if (k == 'editor_en') {
+                        //             console.log(v)
+                        //             $parentSelector.find("textarea[name='component[0][editor_en]']").text(v);
+                        //         }
+                        //         if (k == 'editor_bn') {
+                        //             $parentSelector.find("textarea[name='component[0][editor_bn]']").text(v);
+                        //         }
+                        //
+                        //     });
+                        //
+                        //     // if (k == 'title_en') {
+                        //     //     $parentSelector.find("input[name='sections[title_en]']").val(v);
+                        //     // }
+                        //     //
+                        //     // if (k == 'title_bn') {
+                        //     //     $parentSelector.find("input[name='sections[title_bn]']").val(v);
+                        //     // }
+                        //     //
+                        //     // $parentSelectorEdit.find("input[name='component[" + cpk + "][id]']").val(cv);
+                        // }
+
+
                         // Check component is multiple banner image?
                         else if (result.data.sections.section_type == 'multiple_image_banner') {
 
