@@ -37,12 +37,7 @@
 			</div>
 		</div>
 	</div>
-
-
 @endsection
-
-
-
 
 @section('component_modal_toadd')
 
