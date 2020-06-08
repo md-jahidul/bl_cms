@@ -11,7 +11,7 @@
 							<label for="category_type">Select Component Type</label>
 							<select id="component_type" class="form-control" name="component_type" aria-invalid="false">
 								<option value="title_text_editor">VAS - Title with text editor</option>
-								<option value="editor_only_section">VAS - Editor Only</option>
+{{--								<option value="editor_only_section">VAS - Editor Only</option>--}}
 								<option value="accordion_section">VAS - Accordion</option>
 
 								<option value="text_with_image_right">APPS - Text with image right</option>
@@ -51,7 +51,7 @@
 
 <!-- # VAS Component modal -->
 @include('admin.app-service.details.section.component_modal.title_text_editor')
-@include('admin.app-service.details.section.component_modal.editor_only_section')
+{{--@include('admin.app-service.details.section.component_modal.editor_only_section')--}}
 
 <!-- Accordion content -->
 @include('admin.app-service.details.section.component_modal.accordion.accordion')

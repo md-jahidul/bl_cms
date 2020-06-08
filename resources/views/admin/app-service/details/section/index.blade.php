@@ -484,45 +484,7 @@ function matchRelatedProduct($id, $relatedProductIds)
                                 });
 
                             });
-
-
                         }
-                        // // Check component is multiple banner image?
-                        // else if (result.data.sections.section_type == "title_text_editor") {
-                        //     $('#' + modalComponent).modal('show');
-                        //
-                        //     $.each(result.data.sections.section_component[0], function (k, v) {
-                        //
-                        //         if (k == 'title_en') {
-                        //             $parentSelector.find("input[name='component[0][title_en]']").val(v);
-                        //         }
-                        //
-                        //         if (k == 'title_bn') {
-                        //             $parentSelector.find("input[name='component[0][title_bn]']").val(v);
-                        //         }
-                        //
-                        //         if (k == 'editor_en') {
-                        //             console.log(v)
-                        //             $parentSelector.find("textarea[name='component[0][editor_en]']").text(v);
-                        //         }
-                        //         if (k == 'editor_bn') {
-                        //             $parentSelector.find("textarea[name='component[0][editor_bn]']").text(v);
-                        //         }
-                        //
-                        //     });
-                        //
-                        //     // if (k == 'title_en') {
-                        //     //     $parentSelector.find("input[name='sections[title_en]']").val(v);
-                        //     // }
-                        //     //
-                        //     // if (k == 'title_bn') {
-                        //     //     $parentSelector.find("input[name='sections[title_bn]']").val(v);
-                        //     // }
-                        //     //
-                        //     // $parentSelectorEdit.find("input[name='component[" + cpk + "][id]']").val(cv);
-                        // }
-
-
                         // Check component is multiple banner image?
                         else if (result.data.sections.section_type == 'multiple_image_banner') {
 
@@ -792,7 +754,7 @@ function matchRelatedProduct($id, $relatedProductIds)
                             var leftTitleBn = (tableParseBn.left_table_title_bn) ? tableParseBn.left_table_title_bn : '';
 
                                 leftTable += '<br><div class="row"><div class="form-group col-md-6">' +
-                                        '<label><b>Left Table Title English</b>></label>' +
+                                        '<label><b>Left Table Title English</b></label>' +
                                         '<input type="text" class="form-control" value="'+leftTitleEn+'" name="left_table_title_en">' +
                                         '</div>';
 
@@ -804,7 +766,8 @@ function matchRelatedProduct($id, $relatedProductIds)
                                 // left table Heaf En
                                 leftTable += '<div class="col-md-12 col-xs-12"><h6><b>Left Table Head (EN):</b></h6>';
                                 $.each(tableParseEn.left_head_en, function (k, v) {
-                                    leftTable += '<input type="text" placeholder="Head (EN) 1" value="'+v+'" name="left_head_en[2][]" width="33.333333333333336%">'
+                                    var value = (v !== null) ? v : "";
+                                    leftTable += '<input type="text" placeholder="Head (EN) 1" value="'+value+'" name="left_head_en[2][]" width="33.333333333333336%">'
                                 });
                                 leftTable += '<hr></div>';
 
@@ -814,7 +777,8 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                                 $.each(tableParseEn.left_rows_en, function (k, v) {
                                     $.each(v, function (ckey, childData) {
-                                        leftTable += '<input type="text" name="left_col_en[2]['+k+'][]" value="'+childData+'" width="33.333333333333336%" aria-invalid="false">';
+                                        var value = (childData !== null) ? childData : "";
+                                        leftTable += '<input type="text" name="left_col_en[2]['+k+'][]" value="'+value+'" width="33.333333333333336%" aria-invalid="false">';
                                     });
                                     leftTable += '<br>';
                                 });
@@ -824,7 +788,8 @@ function matchRelatedProduct($id, $relatedProductIds)
                                 leftTable += '<div class="col-md-12 col-xs-12">' +
                                     '<h6><hr>Table Head (BN):</h6>';
                                 $.each(tableParseBn.left_head_bn, function (k, v) {
-                                    leftTable += '<input type="text" placeholder="Head (BN) 1" value="'+v+'" name="left_head_bn[2][]" width="33.333333333333336%" aria-invalid="false">';
+                                    var value = (v !== null) ? v : "";
+                                    leftTable += '<input type="text" placeholder="Head (BN) 1" value="'+value+'" name="left_head_bn[2][]" width="33.333333333333336%" aria-invalid="false">';
                                 });
                                 leftTable += '</div>'
                                 // left table BN head
@@ -834,7 +799,8 @@ function matchRelatedProduct($id, $relatedProductIds)
                                     '<hr><h6>Table Columns (BN):</h6>';
                                 $.each(tableParseBn.left_rows_bn, function (k, v) {
                                     $.each(v, function (ckey, childData) {
-                                        leftTable += '<input type="text" name="left_col_bn[2]['+k+'][]" value="'+childData+'" width="50%" aria-invalid="false">'
+                                        var value = (childData !== null) ? childData : "";
+                                        leftTable += '<input type="text" name="left_col_bn[2]['+k+'][]" value="'+value+'" width="50%" aria-invalid="false">'
                                     });
                                     leftTable += '<br>';
                                 });
@@ -852,7 +818,7 @@ function matchRelatedProduct($id, $relatedProductIds)
                                 var rightTitleBn = (tableParseBn.right_table_title_bn) ? tableParseBn.right_table_title_bn : '';
 
                                 rightTable += '<br><div class="row"><div class="form-group col-md-6">' +
-                                    '<label><b>Right Table Title English</b>></label>' +
+                                    '<label><b>Right Table Title English</b></label>' +
                                     '<input type="text" class="form-control" value="'+rightTitleEn+'" name="right_table_title_en">' +
                                     '</div>';
 
@@ -863,7 +829,8 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                                 rightTable += '<div class="col-md-12 col-xs-12"><h6><b>Right Table Head (EN):</b></h6>';
                                 $.each(tableParseEn.right_head_en, function (k, v) {
-                                    rightTable += '<input type="text" placeholder="Head (EN) 1" value="'+v+'" name="right_head_en[2][]" width="33.333333333333336%">'
+                                    var value = (v !== null) ? v : "";
+                                    rightTable += '<input type="text" placeholder="Head (EN) 1" value="'+value+'" name="right_head_en[2][]" width="33.333333333333336%">'
                                 });
                                 rightTable += '<hr></div>';
 
@@ -873,7 +840,8 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                                 $.each(tableParseEn.right_rows_en, function (k, v) {
                                     $.each(v, function (ckey, childData) {
-                                        rightTable += '<input type="text" name="right_col_en[2]['+k+'][]" value="'+childData+'" width="33.333333333333336%" aria-invalid="false">';
+                                        var value = (childData !== null) ? childData : "";
+                                        rightTable += '<input type="text" name="right_col_en[2]['+k+'][]" value="'+value+'" width="33.333333333333336%" aria-invalid="false">';
                                     });
                                     rightTable += '<br>';
                                 });
@@ -884,7 +852,8 @@ function matchRelatedProduct($id, $relatedProductIds)
                                 rightTable += '<div class="col-md-12 col-xs-12">' +
                                     '<h6><hr>Table Head (BN):</h6>';
                                 $.each(tableParseBn.right_head_bn, function (k, v) {
-                                    rightTable += '<input type="text" placeholder="Head (BN) 1" value="'+v+'" name="right_head_bn[2][]" width="33.333333333333336%" aria-invalid="false">';
+                                    var value = (v !== null) ? v : "";
+                                    rightTable += '<input type="text" placeholder="Head (BN) 1" value="'+value+'" name="right_head_bn[2][]" width="33.333333333333336%" aria-invalid="false">';
                                 });
                                 rightTable += '</div>'
                                 // Right table BN head
@@ -894,7 +863,8 @@ function matchRelatedProduct($id, $relatedProductIds)
                                     '<hr><h6>Table Columns (BN):</h6>';
                                 $.each(tableParseBn.right_rows_bn, function (k, v) {
                                     $.each(v, function (ckey, childData) {
-                                        rightTable += '<input type="text" name="right_col_bn[2]['+k+'][]" value="'+childData+'" width="50%" aria-invalid="false">'
+                                        var value = (childData !== null) ? childData : "";
+                                        rightTable += '<input type="text" name="right_col_bn[2]['+k+'][]" value="'+value+'" width="50%" aria-invalid="false">'
                                     });
                                     rightTable += '<br>';
                                 });
