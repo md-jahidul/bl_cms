@@ -123,7 +123,6 @@
                                     @endif
                                 </div>
 
-
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label>Banner Photo Name</label>
                                     <input type="hidden" name="old_banner_name" value="{{ isset($bannerRelatedProduct->banner_name) ? $bannerRelatedProduct->banner_name : null }}">

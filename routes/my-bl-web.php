@@ -217,6 +217,23 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
 
     Route::get('recharge/prefill-amounts/order', 'CMS\PrefillRechargeController@updatePosition');
 
+    // search content
+    Route::get('mybl-search/content', 'CMS\Search\InAppSearchContentController@create')
+        ->name('mybl-search-content.create');
+    Route::get('mybl-search', 'CMS\Search\InAppSearchContentController@index')
+        ->name('mybl-search-content.index');
+    Route::get('mybl-search/list', 'CMS\Search\InAppSearchContentController@getSearchContents')
+        ->name('mybl-search-content.list');
+    Route::post('mybl-search/content', 'CMS\Search\InAppSearchContentController@store')
+        ->name('mybl-search-content.store');
+    Route::get('mybl-search/{search_content}', 'CMS\Search\InAppSearchContentController@edit')
+        ->name('mybl-search-content.edit');
+    Route::post('mybl-search/{search_content}', 'CMS\Search\InAppSearchContentController@update')
+        ->name('mybl-search-content.update');
+    Route::delete('mybl-search/{search_content}', 'CMS\Search\InAppSearchContentController@destroy')
+        ->name('mybl-search-content.delete');
+
+
 
     Route::get('app-launch/create', 'CMS\AppLaunchPopupController@create')->name('app-launch.new');
     Route::post('app-launch/store', 'CMS\AppLaunchPopupController@store')->name('app-launch.store');
@@ -333,4 +350,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
 
     Route::post('sms-pack/filter/sort/save', 'CMS\SmsPackFilterController@saveSortFilter')
         ->name('sms.filter.sort.save');
+
+
+    Route::get('mybl/settings/najat', 'CMS\NajatContentsSettingsController@index')->name('mybl.settings.najat.index');
+    Route::post('mybl/settings/najat', 'CMS\NajatContentsSettingsController@store')->name('mybl.settings.najat.store');
 });

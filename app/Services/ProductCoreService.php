@@ -22,6 +22,7 @@ use Box\Spout\Writer\Common\Creator\WriterFactory;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -359,7 +360,7 @@ class ProductCoreService
                     }
                 }
             }
-        );
+        )->with('details');
 
         if ($request->content_type == 'recharge_offer') {
             $builder->where('show_recharge_offer', 1);
@@ -613,10 +614,9 @@ class ProductCoreService
 
 
                             if ($assetLiteProduct['offer_category_id']) {
-
                                 //make url_slug
                                 $assetLiteProduct['url_slug'] = "";
-                                if(!empty($assetLiteProduct['name_en'])){
+                                if (!empty($assetLiteProduct['name_en'])) {
                                     $urlSlug = str_replace(" ", "-", $assetLiteProduct['name_en']);
                                     $assetLiteProduct['url_slug']  = $urlSlug;
                                 }
@@ -650,7 +650,8 @@ class ProductCoreService
     }
 
      //save Search Data
-    private function _saveSearchData($product) {
+    private function _saveSearchData($product)
+    {
         $productId = $product->id;
         $name = $product->name_en;
 
@@ -665,7 +666,7 @@ class ProductCoreService
         //category url
         $url .= $product->offer_category->url_slug;
 
-        $keywordType = "offer-".$product->offer_category->alias;
+        $keywordType = "offer-" . $product->offer_category->alias;
 
 
         $type = "";
@@ -921,6 +922,12 @@ class ProductCoreService
         //Log::info(json_encode($values));
         if (!empty($values)) {
             Redis::del($values);
+        }
+
+        try {
+            Artisan::call('sync:search:offers');
+        } catch (Exception $exception) {
+            Log::error('Product Search Content Generation Error');
         }
     }
 }

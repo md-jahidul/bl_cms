@@ -70,29 +70,21 @@ class AppServiceProductDetailsController extends Controller
      */
     public function store(Request $request, $tab_type, $product_id)
     {
-
         $data = $request->all();
-
-        // dd($data);
 
         // Create new sections
         if( $request->has('save') ){
             $response = $this->appServiceProductDetailsService->storeAppServiceProductDetails($request->all(), $tab_type, $product_id);
-
             Session::flash('message', $response->getContent());
             return redirect(url("app-service/details/$tab_type/$product_id"));
         }
         elseif( $request->has('update') ){
-
             # Update section data
             $section_data = $data['sections'];
             if( isset($section_data['id']) && !empty($section_data['id']) ){
-
                 $this->appServiceProductDetailsService->updateAppServiceDetailsSection($section_data, $section_data['id']);
-
                 # Update component data
                 $component_data = $data['component'];
-
                 if( isset($component_data) && count($component_data) > 0 ){
                     foreach ($component_data as $component_value) {
                         $this->appServiceProductDetailsService->updateAppServiceDetailsComponent($component_value, $component_value['id']);
@@ -153,11 +145,7 @@ class AppServiceProductDetailsController extends Controller
 
         // return view('admin.app-service.details.section.edit', compact('tab_type', 'product_id', 'section'));
 
-
-
         $section = $this->appServiceProductDetailsService->getJsonSectionComponentList($section_id);
-
-
 
         if( !empty($section) && count($section) > 0 ){
             return response()->json([
@@ -204,6 +192,8 @@ class AppServiceProductDetailsController extends Controller
      */
     public function destroy($tab_type, $product_id, $id)
     {
+//        dd($product_id);
+
         $response = $this->appServiceProductDetailsService->sectionDelete($id);
         // Session::flash('message', $response->getContent());
         if ($response) {

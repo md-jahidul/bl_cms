@@ -106,12 +106,14 @@ class ComponentService
 
     public function componentStore($data, $sectionId)
     {
-//        dd($data);
+        if ($data['component_type'] == 'table_component') {
+            $data['editor_en'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_en']);
+            $data['editor_bn'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_bn']);
+        }
 
         if (request()->hasFile('image')) {
             $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
         }
-
 
         $results = [];
         if (isset($data['multi_item']) && !empty($data['multi_item'])) {

@@ -20,7 +20,7 @@
                             <div class="content-body">
                                 <div class="row">
 
-                                    <div class="form-group col-md-6 {{ $errors->has('component_type') ? ' error' : '' }}">
+                                    <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
                                         <label for="editor_en" class="required">Component Type</label>
                                         <select name="component_type" class="form-control required" id="component_type"
                                                 required data-validation-required-message="Please select component type">
@@ -35,8 +35,9 @@
                                         @endif
                                     </div>
 
-                                    <div class="col-md-6">
-{{--                                        <img src="{{ asset('sample-images/accordion-text.png') }}" width="100%">--}}
+                                    <div class="col-md-8 pb-2">
+                                        <label>Component Sample Picture</label>
+                                        <img class="img-thumbnail" id="componentImg" width="100%">
                                     </div>
 
 
@@ -176,12 +177,8 @@
                                         @include('layouts.partials.product-details.component.common-field.related-product')
                                     </slot>
 
+                                    {{--Drop Down--}}
                                     <slot id="drop_down" data-offer-type="drop_down" class="d-none">
-                                        <div class="form-group col-md-6">
-                                            <label for="editor_bn" class="text-success">Drop Down Sample Picture</label>
-                                            <img class=" img-fluid" src="{{ asset('sample-images/drop_down.png') }}" alt="Image description">
-                                        </div>
-
                                         <div class="form-group col-md-6 {{ $errors->has('editor_en') ? ' error' : '' }}">
                                             <label for="editor_en" class="required" >Drop Down Data</label>
                                             <select name="other_attributes[dropdown_data_type]" class="form-control required">
@@ -236,7 +233,10 @@
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/tinymce/tinymce.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
+{{--    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">--}}
+{{--    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote-lite.min.css') }}">--}}
+
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
@@ -245,10 +245,15 @@
 
 @endpush
 @push('page-js')
-{{--    <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>--}}
+    <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
 {{--    <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>--}}
-    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-lite.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-table-headers.js') }}" type="text/javascript"></script>
+
+
+
 
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
 
@@ -256,10 +261,14 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 
 
-
-
     <script>
         $(function () {
+
+            $('#component_type').on('change', function () {
+                var componentType = this.value + ".png"
+                var fullUrl = "{{ asset('component-images') }}/" + componentType;
+                $("#componentImg").attr('src', fullUrl)
+            })
 
             function dropify(){
                 $('.dropify').dropify({
@@ -274,15 +283,24 @@
             dropify();
 
             $("textarea#details").summernote({
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['table', ['table']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['view', ['fullscreen', 'codeview']]
-                ],
+                popover: {
+                    toolbar: [
+                        ['style', ['style'],['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['strikethrough', 'superscript', 'subscript']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['table', ['table']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['view', ['fullscreen', 'codeview']]
+                    ],
+
+                    table: [
+                        ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                        ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+                        ['custom', ['tableHeaders']]
+                    ],
+                },
+
                 height:150
             })
 

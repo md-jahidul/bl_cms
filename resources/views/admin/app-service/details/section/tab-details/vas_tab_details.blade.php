@@ -1,5 +1,5 @@
 @section('component_type_selector')
-	
+
 	<!-- # Section add component -->
 	<div class="card">
 		<div class="card-content collapse show">
@@ -11,7 +11,7 @@
 							<label for="category_type">Select Component Type</label>
 							<select id="component_type" class="form-control" name="component_type" aria-invalid="false">
 								<option value="title_text_editor">VAS - Title with text editor</option>
-								<option value="editor_only_section">VAS - Editor Only</option>
+{{--								<option value="editor_only_section">VAS - Editor Only</option>--}}
 								<option value="accordion_section">VAS - Accordion</option>
 
 								<option value="text_with_image_right">APPS - Text with image right</option>
@@ -19,7 +19,7 @@
 								<option value="slider_text_with_image_right">APPS - Slider text with image right</option>
 								<option value="video_with_text_right">APPS - Video with text right</option>
 								<option value="multiple_image_banner">APPS - Multiple image banner</option>
-								<option value="pricing_sections">APPS - Pricing Multiple table</option>
+								<option value="pricing_sections">Pricing Multiple table</option>
 							</select>
 						</div>
 						<div class="form-group">
@@ -51,7 +51,7 @@
 
 <!-- # VAS Component modal -->
 @include('admin.app-service.details.section.component_modal.title_text_editor')
-@include('admin.app-service.details.section.component_modal.editor_only_section')
+{{--@include('admin.app-service.details.section.component_modal.editor_only_section')--}}
 
 <!-- Accordion content -->
 @include('admin.app-service.details.section.component_modal.accordion.accordion')

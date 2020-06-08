@@ -78,7 +78,7 @@
                                 <div class='input-group'>
                                     <input type='text' class="form-control" name="start_date" id="start_date"
                                            placeholder="Please select start date"
-                                           value="{{old('start_date') ? old('start_date'): $imageInfo->start_date}}">
+                                           value="{{$imageInfo->start_date}}">
                                 </div>
                                 <div class="help-block"></div>
                                 @if ($errors->has('start_date'))
@@ -188,7 +188,7 @@
                                                 <input type="text" name="other_attributes" class="form-control" required
                                                        value="@if($info) {{$info->content}} @endif">
                                             @endif
-                                            @if($imageInfo->redirect_url == "DIAL")
+                                            @if($imageInfo->redirect_url == "URL")
                                                 <label>Redirect URL</label>
                                                 <input type="text" name="other_attributes" class="form-control" required
                                                        value="@if($info) {{$info->content}} @endif">
@@ -265,7 +265,7 @@
 @push('page-js')
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
-    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>
+
     <script src="{{ asset('js/custom-js/image-show.js')}}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
@@ -275,6 +275,21 @@
     <script>
 
         $(function () {
+
+            var date = new Date();
+            date.setDate(date.getDate());
+            $('#start_date').datetimepicker({
+                format : 'YYYY-MM-DD HH:mm:ss',
+                showClose: true,
+            });
+            $('#end_date').datetimepicker({
+                format : 'YYYY-MM-DD HH:mm:ss',
+                useCurrent: false, //Important! See issue #1075
+                showClose: true,
+
+            });
+
+
             $('.dropify').dropify({
                 messages: {
                     'default': 'Browse for an Image File to upload',

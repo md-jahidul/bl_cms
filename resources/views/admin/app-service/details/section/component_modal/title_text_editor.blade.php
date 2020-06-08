@@ -46,7 +46,7 @@
                     </div>
 
 
-                    
+
                     <div class="col-md-6">
                        <div class="form-group">
                            <label for="exampleInputPassword1">Description (English)</label>
@@ -63,7 +63,7 @@
                        </div>
                      </div>
 
-							
+
       							<div class="col-md-6">
       							    <div class="form-group">
       							        <label for="title" class="mr-1">Status:</label>
@@ -80,7 +80,7 @@
       									{{ Form::hidden('sections[multiple_component]', 0 ) }}
       							</div>
 
-                    
+
 
                 </div>
 
@@ -102,7 +102,7 @@
 
 @push('page-css')
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
+{{--<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">--}}
  <style>
      .modal-xl.modal_xl_custom {
          max-width: 80%;
@@ -115,21 +115,27 @@
 
 
 @push('page-js')
-<script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+{{--<script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>--}}
 
- <script>
-     $(function () {
+<!-- include summernote css/js-->
+{{--<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.css" rel="stylesheet">--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.js"></script>
+
+<script src="https://rawgit.com/tylerecouture/summernote-table-headers/master/summernote-table-headers.js" type="text/javascript"></script>
+<script>
+    $(function () {
 
          $('.js_editor_box').each(function(k, v){
             $(this).summernote({
                 toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['style', ['style'], ['bold', 'italic', 'underline', 'clear']],
                     ['font', ['strikethrough', 'superscript', 'subscript']],
                     ['fontsize', ['fontsize']],
                     ['color', ['color']],
-                    // ['table', ['table']],
+                    ['table', ['table']],
                     ['para', ['ul', 'ol', 'paragraph']],
-                    ['view', ['fullscreen', 'codeview']]
+                    ['view', ['fullscreen', 'codeview']],
+                    ['insert', ['link', 'picture', 'hr']]
                 ],
                 height:200
             });

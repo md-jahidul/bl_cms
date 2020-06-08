@@ -53,6 +53,53 @@ class AppServiceProductDetailsService
         return $data;
     }
 
+    public function bindTableComponent()
+    {
+        $request = request();
+        $insert = [];
+        $count = 0;
+
+//        dd($request->all());
+
+        if ($request->component_position) {
+            foreach ($request->component_position as $k => $val) {
+                if (isset($request->left_head_en[$k]) || isset($request->right_head_en[$k])) {
+                    $bothTableArrayEn = array(
+                        'left_head_en' => $request->left_head_en[$k],
+                        'left_rows_en' => $request->left_col_en[$k],
+                        'left_table_title_en' => $request->left_table_title_en,
+                    );
+
+                    if ($request->right_head_en[$k]) {
+                        if (!empty(array_filter($request->right_head_en[$k]))) {
+                            $bothTableArrayEn['right_head_en'] = $request->right_head_en[$k];
+                            $bothTableArrayEn['right_rows_en'] = $request->right_col_en[$k];
+                            $bothTableArrayEn['right_table_title_en'] = $request->right_table_title_en;
+                        }
+                    }
+
+
+                    $bothTableArrayBn = array(
+                        'left_head_bn' => $request->left_head_bn[$k],
+                        'left_rows_bn' => $request->left_col_bn[$k],
+                        'left_table_title_bn' => $request->left_table_title_bn,
+                    );
+
+                    if ($request->right_head_bn[$k]) {
+                        if (!empty(array_filter($request->right_head_bn[$k]))) {
+                            $bothTableArrayBn['right_head_bn'] = $request->right_head_bn[$k];
+                            $bothTableArrayBn['right_rows_bn'] = $request->right_col_bn[$k];
+                            $bothTableArrayBn['right_table_title_bn'] = $request->right_table_title_bn;
+                        }
+                    }
+                }
+                $insert[$count]['editor_en'] = json_encode($bothTableArrayEn);
+                $insert[$count]['editor_bn'] = json_encode($bothTableArrayBn);
+            }
+            return $insert[$count];
+        }
+    }
+
     /**
      * @param $data
      * @return Response
@@ -62,9 +109,15 @@ class AppServiceProductDetailsService
         # Save sections data
         $sections_data = $data['sections'];
 
+//        dd($data);
 
         $sections_data['product_id'] = $product_id;
         $sections_data['section_order'] = 99;
+
+        if (isset($data['component_title_en']) && isset($data['component_title_bn'])) {
+            $sections_data['title_en'] = $data['component_title_en'];
+            $sections_data['title_bn'] = $data['component_title_bn'];
+        }
 
         $sections_saved_data = $this->save($sections_data);
 
@@ -125,6 +178,12 @@ class AppServiceProductDetailsService
                         $value['other_attributes'] = json_encode($value['other_attr']);
                     }
 
+                    $tableComponent = $this->bindTableComponent();
+                    if (isset($tableComponent)) {
+                        $value['editor_en'] = $tableComponent['editor_en'];
+                        $value['editor_bn'] = $tableComponent['editor_bn'];
+                    }
+
                     $this->componentRepository->save($value);
                 }
             }
@@ -134,21 +193,17 @@ class AppServiceProductDetailsService
         } else {
             return new Response('Something went wrong! App Service details section component not added');
         }
-
-
     }
 
     /**
      * [updateAppServiceDetailsComponent description]
-     * @param  [type] $data        [description]
-     * @param  [type] $compoent_id [description]
-     * @return [type]              [description]
+     * @param $data
+     * @param $compoent_id
+     * @param null $key
+     * @return void [type]              [description]
      */
     public function updateAppServiceDetailsComponent($data, $compoent_id, $key = null)
     {
-
-        // dd(request()->input('update'));
-
         $component = $this->componentRepository->findOne($compoent_id);
 
         if (isset($data['image_url']) && !empty($data['image_url'])) {
@@ -220,8 +275,13 @@ class AppServiceProductDetailsService
         }
 
 
-        $component->update($data);
 
+        $tableComponent = $this->bindTableComponent();
+        if (isset($tableComponent)) {
+            $data['editor_en'] = $tableComponent['editor_en'];
+            $data['editor_bn'] = $tableComponent['editor_bn'];
+        }
+        $component->update($data);
     }
 
 
@@ -239,6 +299,8 @@ class AppServiceProductDetailsService
     public function updateAppServiceDetailsSection($data, $id)
     {
         $appServiceProduct = $this->findOne($id);
+        $data['title_en'] = request()->component_title_en;
+        $data['title_bn'] = request()->component_title_bn;
         $appServiceProduct->update($data);
         return Response('App Service Section updated successfully');
     }

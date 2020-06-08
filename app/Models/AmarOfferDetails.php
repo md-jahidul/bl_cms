@@ -5,5 +5,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class AmarOfferDetails extends Model
 {
-
+    protected $guarded = ['id'];
 }

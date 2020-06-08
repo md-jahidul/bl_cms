@@ -57,10 +57,7 @@ trait Authorizable
             if (!count($this->roles)) {
                 return false;
             }
-
             foreach ($this->roles as $role) {
-
-
                 $permission = $role->permissions
 //                    ->where('controller', "LeadManagement" . 'Controller')
                     ->where('controller', $feature . 'Controller')
