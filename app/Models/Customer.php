@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
+use App\Services\BlApiHub\CustomerConnectionTypeService;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Customer
+ * @package App\Models
+ */
 class Customer extends Model
 {
     /**
@@ -12,4 +17,10 @@ class Customer extends Model
      * @var array
      */
     protected $guarded = ['id'];
+
+    public static function connectionType(Customer $customer)
+    {
+        $customer_service = new CustomerConnectionTypeService();
+        return $customer_service->getConnectionTypeInfo($customer->msisdn);
+    }
 }
