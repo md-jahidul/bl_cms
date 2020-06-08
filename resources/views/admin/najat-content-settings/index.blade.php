@@ -59,7 +59,7 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group ">
                                                                 <input type="checkbox"
-                                                                       class="dependent_checkbox"
+                                                                       class="dependent_checkbox najat_content"
                                                                        name="show_banner"
                                                                        id="show_banner"
                                                                        value="true"
@@ -71,7 +71,7 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <input type="checkbox"
-                                                                       class="dependent_checkbox"
+                                                                       class="dependent_checkbox najat_content"
                                                                        name="show_namaj_time"
                                                                        id="show_namaj_time"
                                                                        value="true"
@@ -82,7 +82,7 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <input type="checkbox"
-                                                                       class="dependent_checkbox"
+                                                                       class="dependent_checkbox najat_content"
                                                                        id="show_iftar_sehri_time"
                                                                        name="show_iftar_sehri_time"
                                                                        value="true"
@@ -94,7 +94,7 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group ">
                                                                 <input type="checkbox"
-                                                                       class="dependent_checkbox"
+                                                                       class="dependent_checkbox najat_content"
                                                                        name="show_download_link"
                                                                        id="show_download_link"
                                                                        value="true"
@@ -148,7 +148,7 @@
                 e.preventDefault();
 
                 if($('#is_enable').is(":checked")){
-                    $checked = $('.dependent_checkbox:checked');
+                    $checked = $('.najat_content:checked');
                     if($checked.length < 1){
                         Swal.fire(
                             'Error!',
