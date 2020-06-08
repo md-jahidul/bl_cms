@@ -170,6 +170,7 @@ class PushNotificationController extends Controller
                 'body' => $request->input('message'),
                 'category_slug' => $request->input('category_slug'),
                 'category_name' => $request->input('category_name'),
+                "sending_from" => "cms",
                 "send_to_type" => "INDIVIDUALS" ,
                 "recipients" => $user_phone,
                 "is_interactive" => "Yes",
@@ -220,18 +221,13 @@ class PushNotificationController extends Controller
              {
                  $this->notificationService->attachNotificationToUser($notification_id, $user_phone);
              }
-
-            // session()->flash('success',"Notification has been sent successfully");
-
-            // return redirect(route('notification.index'));
+             
 
              return [
                  'success' => true,
                  'message' => 'Notification Sent'
              ];
          }
-
-        // session()->flash('success',"Notification send Failed");
 
         } catch (\Exception $e) {
             return [
