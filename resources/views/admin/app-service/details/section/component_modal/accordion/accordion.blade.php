@@ -30,7 +30,7 @@
                            <div class="col-sm-12">
 
                               <input id="multi_item_count" type="hidden" name="component[0][multi_item_count]" value="1">
-                              
+
                               <div id="accordion" class="accordion_compoent_0 accordion_header_custom" data-component_id="">
 
                                  <!-- accordion item start -->
@@ -70,19 +70,19 @@
                                        </div>
 
                                     </div>
-                                    
+
                                   </div>
                                   <div id="collapse_1" class="collapse show1 border-info" data-parent="#accordion">
                                     <div class="card-body">
 
                                        <div class="row">
-                                          
+
 
                                           <div class="col-md-6">
                                              <div class="form-group">
-                                                 <label for="exampleInputPassword1">Accordion content (English)</label>
+                                                 <label for="exampleInputPassword1">Accordion content (English) GGG</label>
                                                  <textarea name="component[0][multi_item][editor_en-1]" class="form-control js_editor_box" rows="5"
-                                                           placeholder="Enter description">{{ isset($ecarrer_item->editor_en) ? $ecarrer_item->editor_en : '' }}</textarea>
+                                                           placeholder="Enter description"></textarea>
                                              </div>
                                           </div>
 
@@ -124,9 +124,9 @@
 
                                   </div>
                                 </div> <!-- .card.accordion -->
-                                 
-                                 
-                                
+
+
+
 
                               </div> <!-- #accordion -->
 
@@ -139,7 +139,7 @@
 
                            </div>
 
-                           
+
                            <div class="multi_attr_update_hide col-md-6">
                               <div class="form-group">
                                  <label for="title" class="mr-1">Status:</label>
@@ -156,7 +156,7 @@
                                  {{ Form::hidden('sections[multiple_component]', 0 ) }}
                            </div>
 
-                              
+
 
                         </div>
 
@@ -199,7 +199,7 @@
       }
 
       #accordion.accordion_header_custom .card-header.bg-info.info{
-         
+
       }
 
       #accordion.accordion_header_custom .card-header.bg-info.info .card-link{
@@ -219,18 +219,18 @@
 
 <script type="text/javascript">
    jQuery(document).ready(function ($) {
-      
+
       // Add multiple item
       $('.add_accordion_item_more').on('click', function(){
 
          $parentSelector = $('#accordion_section');
 
         var i = parseInt($parentSelector.find('#multi_item_count').val(), 10);
-        
+
         i = i+1;
 
         var html = '';
-        
+
         html += '<div class="card accordion collapse-icon accordion-icon-rotate" data-index="'+i+'" data-position="'+i+'"><input type="hidden" name="component[0][multi_item][id-'+i+']" value="'+i+'"><input type="hidden" name="component[0][multi_item][display_order-'+i+']" value="'+i+'"><div class="card-header bg-info info"> <div class="row"> <div class="col-sm-12 m_bottom_6"> <a class="card-link collapsed" data-toggle="collapse" href="#collapse_'+i+'" aria-expanded="false"> <strong><i class="la la-sort"></i> Accordion Title #'+i+'</strong> </a> </div></div><div class="row card_header_extra"> <div class="form-group col-md-6 "> <label for="title_en" class="required">Title (English)</label> <input type="text" name="component[0][multi_item][title_en-'+i+']" class="form-control" value="" required="true" aria-invalid="false"> <div class="help-block"></div></div><div class="form-group col-md-6 "> <label for="title_bn" class="required">Title (Bangla)</label> <input type="text" name="component[0][multi_item][title_bn-'+i+']" class="form-control" value="" required="true"> <div class="help-block"></div></div></div></div><div id="collapse_'+i+'" class="collapse show1 border-info" data-parent="#accordion"> <div class="card-body"> <div class="row"><div class="col-md-6"> <div class="form-group"> <label for="exampleInputPassword1">Accordion content (English)</label> <textarea name="component[0][multi_item][editor_en-'+i+']" class="form-control js_editor_box" rows="5" placeholder="Enter description"></textarea> </div></div><div class="col-md-6"> <div class="form-group"> <label for="exampleInputPassword1">Accordion content (Bangla)</label> <textarea name="component[0][multi_item][editor_bn-'+i+']" class="form-control js_editor_box" rows="5" placeholder="Enter description"></textarea> </div></div></div></div><div class="card-footer"> <div class="row"> <div class="col-md-6"> <div class="form-group1"> <label for="title" class="mr-1">Status:</label> <input type="radio" name="component[0][multi_item][status-'+i+']" value="1" checked> <label for="active" class="mr-1">Active</label> <input type="radio" name="component[0][multi_item][status-'+i+']" value="0"> <label for="inactive">Inactive</label> </div></div><div class="col-md-6"> <div class="float-right"> <a href="#" class="border-0 btn-sm btn-outline-danger delete_accordion_item" data-item_id="'+i+'" title="Delete"> <i class="la la-trash"></i> </a> </div></div></div></div></div></div>';
 
         $parentSelector.find('#accordion').append(html);
@@ -266,7 +266,7 @@
          $(this).parents('.card.accordion').remove();
         }
 
-        
+
 
       });
 

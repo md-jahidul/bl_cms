@@ -1,5 +1,5 @@
 @section('component_type_selector')
-	
+
 	<!-- # Section add component -->
 	<div class="card">
 		<div class="card-content collapse show">
@@ -13,6 +13,7 @@
 								<option value="editor_only_section">Editor Only</option>
 								<option value="title_text_editor">Title with text editor</option>
 								<option value="accordion_section">Accordion</option>
+                                <option value="pricing_sections">Pricing Multiple table</option>
 
 							</select>
 						</div>
@@ -35,7 +36,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 
 @endsection
 
@@ -47,6 +48,9 @@
 <!-- # VAS Component modal -->
 @include('admin.app-service.details.section.component_modal.title_text_editor')
 @include('admin.app-service.details.section.component_modal.editor_only_section')
+
+<!-- # Table Component modal -->
+@include('admin.app-service.details.section.component_modal.pricing_sections')
 
 <!-- Accordion content -->
 @include('admin.app-service.details.section.component_modal.accordion.accordion')
