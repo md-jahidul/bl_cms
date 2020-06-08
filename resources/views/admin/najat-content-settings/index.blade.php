@@ -51,6 +51,7 @@
                                                                        id="show_in_home"
                                                                        name="show_in_home"
                                                                        value="true"
+                                                                       @if(isset($settings->is_enable)) @if(!$settings->is_enable) disabled @endif @endif
                                                                        @if(isset($settings->show_in_home)) @if($settings->show_in_home) checked @endif @endif
                                                                        />
                                                                 <label for="show_in_home">Show in Home</label>
@@ -63,6 +64,7 @@
                                                                        name="show_banner"
                                                                        id="show_banner"
                                                                        value="true"
+                                                                       @if(isset($settings->is_enable)) @if(!$settings->is_enable) disabled @endif @endif
                                                                        @if(isset($settings->show_banner)) @if($settings->show_banner) checked @endif @endif
                                                                        />
                                                                 <label for="show_banner" >Show Banner</label>
@@ -75,6 +77,7 @@
                                                                        name="show_namaj_time"
                                                                        id="show_namaj_time"
                                                                        value="true"
+                                                                       @if(isset($settings->is_enable)) @if(!$settings->is_enable) disabled @endif @endif
                                                                        @if(isset($settings->show_namaj_time)) @if($settings->show_namaj_time) checked @endif @endif/>
                                                                 <label for="show_namaj_time" >Show Namaj Time</label>
                                                             </div>
@@ -86,6 +89,7 @@
                                                                        id="show_iftar_sehri_time"
                                                                        name="show_iftar_sehri_time"
                                                                        value="true"
+                                                                       @if(isset($settings->is_enable)) @if(!$settings->is_enable) disabled @endif @endif
                                                                        @if(isset($settings->show_iftar_sehri_time)) @if($settings->show_iftar_sehri_time) checked @endif @endif
                                                                        />
                                                                 <label for="show_iftar_sehri_time" >Show Iftar/sehri Time</label>
@@ -98,6 +102,7 @@
                                                                        name="show_download_link"
                                                                        id="show_download_link"
                                                                        value="true"
+                                                                       @if(isset($settings->is_enable)) @if(!$settings->is_enable) disabled @endif @endif
                                                                        @if(isset($settings->show_download_link)) @if($settings->show_download_link) checked @endif @endif/>
                                                                 <label for="show_download_link" >Show App Download Link</label>
                                                             </div>
