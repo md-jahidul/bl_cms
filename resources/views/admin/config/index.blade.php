@@ -96,6 +96,30 @@
                                                 @endif
                                             </div>
                                         </div>
+                                    @elseif($config->key == "header_script_en")
+                                    <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                            <label class="col-md-3 label-control" for="row{{$key}}">Header Script (EN)</label>
+                                            <div class="col-md-9">
+                                                <textarea id="row{{$key}}" rows="8" class="form-control" placeholder="Enter {{ $title }}" name="{{ $config->key }}">{{ old($config->key) ?? $config->value }}</textarea>
+                                                <div class="help-block"><small>Google and other analytics and social media head scripts.</small></div>
+                                                @if ($errors->has($config->key))
+                                                    <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    
+                                    @elseif($config->key == "header_script_bn")
+                                    <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
+                                            <label class="col-md-3 label-control" for="row{{$key}}">Header Script (BN)</label>
+                                            <div class="col-md-9">
+                                                <textarea id="row{{$key}}" rows="8" class="form-control" placeholder="Enter {{ $title }}" name="{{ $config->key }}">{{ old($config->key) ?? $config->value }}</textarea>
+                                                <div class="help-block"><small>Google and other analytics and social media head scripts.</small></div>
+                                                @if ($errors->has($config->key))
+                                                    <div class="help-block">  {{ $errors->first($config->key) }}</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    
                                     @else
                                         <div class="form-group row {{ $errors->has($config->key) ? ' error' : '' }}">
                                             <label class="col-md-3 label-control" for="row{{$key}}">{{ $title }}</label>
@@ -110,6 +134,8 @@
                                     @endif
 
                                 @endforeach
+                                
+                                 
 
                             </div>
                             <hr>
