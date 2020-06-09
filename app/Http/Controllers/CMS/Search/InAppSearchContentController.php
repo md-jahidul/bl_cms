@@ -48,6 +48,7 @@ class InAppSearchContentController extends Controller
                             'content' => $request->other_info
                         ]
                     ) : null,
+                    'connection_type' => $request->connection_type
                 ]
             );
 
@@ -92,6 +93,7 @@ class InAppSearchContentController extends Controller
                 'description'       => $item->display_title,
                 'search_contents'   => $item->search_content,
                 'navigation_action' => $item->navigation_action,
+                'connection_type'    => $item->connection_type,
             ];
         });
 
@@ -135,7 +137,9 @@ class InAppSearchContentController extends Controller
             ];
 
             $data['other_attributes'] = $other_attributes;
-        };
+        }
+
+        $data['connection_type'] = $request->connection_type;
 
         $search_content = MyBlSearchContent::find($id);
 

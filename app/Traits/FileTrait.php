@@ -25,6 +25,9 @@ trait FileTrait {
         $path = $file->store(
                 $directoryPath, $this->disk
         );
+//        $path = $file->storeAs(
+//                $directoryPath, $fileName, $this->disk
+//        );
 
 //        if ($fileName != "") {
 //            $renamedPath = $this->rename($path, $fileName, $directoryPath);
