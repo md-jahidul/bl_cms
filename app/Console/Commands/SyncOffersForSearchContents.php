@@ -129,6 +129,7 @@ class SyncOffersForSearchContents extends Command
                     'content' => $product->product_code
                 ]
             ),
+            'connection_type' => $product->details->sim_type == 1 ? 'prepaid' :  'postpaid',
             'created_at'   => Carbon::now()->toDateTimeString(),
             'updated_at'   => Carbon::now()->toDateTimeString(),
         ];

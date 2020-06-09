@@ -78,7 +78,8 @@ class InsertSearchContentDummyData extends Command
                             'description'       => $cells[1]->getValue(),
                             'search_content'   => implode(', ', $search_content),
                             'navigation_action' => $cells[3]->getValue(),
-                            'other_contents'    => (!empty($other_contents)) ? json_encode($other_contents) : null
+                            'other_contents'    => (!empty($other_contents)) ? json_encode($other_contents) : null,
+                            'connection_type'   =>  $cells[5]->getValue(),
                         ];
 
                         //dd($insertdata);
