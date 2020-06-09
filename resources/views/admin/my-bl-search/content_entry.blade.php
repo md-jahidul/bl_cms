@@ -35,6 +35,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="connection_type">Connection Type <span class="danger">*</span></label>
+                                                        <select name="connection_type" class="browser-default custom-select"
+                                                                id="connection_type" required >
+                                                            <option value="all">ALL</option>
+                                                            <option value="prepaid">PREPAID</option>
+                                                            <option value="postpaid">POSTPAID</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
                                                     @php
                                                         $actionList = Helper::navigationActionList();
                                                     @endphp

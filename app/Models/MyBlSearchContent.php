@@ -19,7 +19,8 @@ class MyBlSearchContent extends Model
         'search_content',
         'navigation_action',
         'other_contents',
-        'is_default'
+        'is_default',
+        'connection_type'
     ];
 
     protected $searchable = [

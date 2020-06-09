@@ -870,7 +870,7 @@ class ProductCoreService
 
         foreach ($products as $product) {
             if ($product->details) {
-                $insert_data[0] = ($product->sim_type == 2) ? 'Postpaid' : 'Prepaid';
+                $insert_data[0] = ($product->details->sim_type == 2) ? 'Postpaid' : 'Prepaid';
                 $insert_data[1] = $product->details->content_type;
                 $insert_data[2] = $product->details->product_code;
                 $insert_data[3] = $product->details->renew_product_code;

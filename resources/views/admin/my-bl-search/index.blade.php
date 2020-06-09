@@ -36,6 +36,7 @@
                                         <th>Display Title</th>
                                         <th>Search Contents</th>
                                         <th>Navigation Action</th>
+                                        <th>Connection Type</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -105,6 +106,12 @@
                         name: 'navigation_action',
                         render: function (data, type, row) {
                             return row.navigation_action;
+                        }
+                    },
+                    {
+                        name: 'connection_type',
+                        render: function (data, type, row) {
+                            return row.connection_type.toUpperCase();
                         }
                     },
                     {

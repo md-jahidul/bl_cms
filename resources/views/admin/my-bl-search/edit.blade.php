@@ -45,6 +45,29 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="connection_type">Connection Type <span class="danger">*</span></label>
+                                                        <select name="connection_type" class="browser-default custom-select"
+                                                                id="connection_type" required >
+                                                            <option
+                                                                    @if(strtolower($search_content->connection_type) == 'all')
+                                                                    selected
+                                                                    @endif
+                                                                    value="all" >ALL</option>
+                                                            <option
+                                                                    @if(strtolower($search_content->connection_type) == 'prepaid')
+                                                                    selected
+                                                                    @endif
+                                                                    value="prepaid">PREPAID</option>
+                                                            <option
+                                                                    @if(strtolower($search_content->connection_type) == 'postpaid')
+                                                                    selected
+                                                                    @endif
+                                                                    value="postpaid">POSTPAID</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
                                                     @php
                                                         $actionList = Helper::navigationActionList();
                                                     @endphp
