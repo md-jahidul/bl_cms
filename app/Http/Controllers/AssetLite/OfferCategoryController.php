@@ -33,18 +33,12 @@ class OfferCategoryController extends Controller {
     public function index($parent_id = 0, $type = null) {
         // $type = OfferCategory::find($parent_id)->name;
         $offerCategories = OfferCategory::where('parent_id', $parent_id)->with('type')->get();
-        
         $simCategories = SimCategory::all();
-
-
         $file = 'index';
         if ($parent_id != 0) {
             $file = 'child';
             $type = OfferCategory::find($parent_id)->name_en;
         }
-
-
-
         return view('admin.category.offer.' . $file, compact('offerCategories', 'simCategories', 'type', 'parent_id'));
     }
 

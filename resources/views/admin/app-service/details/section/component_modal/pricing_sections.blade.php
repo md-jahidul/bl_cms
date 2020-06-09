@@ -148,6 +148,10 @@
                                         <hr>
 
                                         <div class="row">
+                                            <div class="col-md-12 col-xs-12">
+                                                <b>Left Table Generator</b>
+                                                <hr>
+                                            </div>
                                             <div class="col-md-4 col-xs-12">
                                                 <input type="text" placeholder="Rows" class="form-control table_rows">
                                             </div>
@@ -157,16 +161,49 @@
                                             <div class="col-md-4 col-xs-12">
                                                 <button class="btn btn-sm btn-info generate_table">Generate Table</button>
                                             </div>
-                                        </div>
-                                        <div class="row table_wrap">
-                                            <div class="col-md-12 left_table">
 
+                                            <div class="row table_wrap">
+                                                <div class="col-md-12 left_table">
+                                                    <table>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Head 1</th>
+                                                                <th>Head 2</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Tbody 1</td>
+                                                                <td>Tbody 2</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
 
-                                            <div class="col-md-12 right_table">
+                                            <div class="row table_wrap">
+                                                <div class="col-md-12 right_table">
 
+                                                </div>
                                             </div>
+
+
+{{--                                            <div class="col-md-12 col-xs-12">--}}
+{{--                                                <hr>--}}
+{{--                                                <b class="mt-1">Right Table Generator</b>--}}
+{{--                                                <hr>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="col-md-4 col-xs-12">--}}
+{{--                                                <input type="text" placeholder="Rows" class="form-control table_rows">--}}
+{{--                                            </div>--}}
+{{--                                            <div class="col-md-4 col-xs-12">--}}
+{{--                                                <input type="text" placeholder="Columns" class="form-control table_columns">--}}
+{{--                                            </div>--}}
+{{--                                            <div class="col-md-4 col-xs-12">--}}
+{{--                                                <button class="btn btn-sm btn-info generate_table">Generate Table</button>--}}
+{{--                                            </div>--}}
                                         </div>
+
                                     </div>
 {{--                                    <div class="col-md-2 col-xs-12">--}}
 {{--                                        <h6 class="font-weight-bold">Sample/Instruction (List Component)</h6>--}}
@@ -376,7 +413,7 @@
 
              $(this).parents(".form-group").find(".table_wrap .left_table").html(tableData);
 
-             $(this).parents(".form-group").find(".table_wrap .right_table").html(rightTableData);
+             // $(this).parents(".form-group").find(".table_wrap .right_table").html(rightTableData);
 
              return false;
          });
