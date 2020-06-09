@@ -35,17 +35,19 @@ class ConfigTableSeeder extends Seeder
         $adminImageUploadSize = 5;
         $adminImageUploadType = 'jpeg,png';
         $advanceMinimumBalance = 10;
+        $headerScriptEn = "";
+        $headerScriptBn = "";
 
         $configKeys = ['site_logo', 'logo_alt_text', 'email', 'query_email',
             'mobile_number', 'address', 'copy_right_en', 'copy_right_bn',
             'facebook_url', 'twitter_url', 'linkedin_url', 'youtube_url', 'instagram_url', 'google_play_link',
             'apple_app_store_link', 'image_upload_size', 'image_upload_type', 'admin_image_upload_size',
-            'admin_image_upload_type', 'advance_minimum_balance'];
+            'admin_image_upload_type', 'advance_minimum_balance', 'header_script_en', 'header_script_bn'];
 
         $configValue = [$siteLogo, $logoAltText, $email, $query_email, $mobileNumber, $address, $copyRight,
             $copyRightBangla, $facebook, $twitter, $linkedin, $youTube, $instagram,
             $googlePlayLink, $appleAppStoreLink, $imageUploadSize, $imageUploadType, $adminImageUploadSize,
-            $adminImageUploadType, $advanceMinimumBalance];
+            $adminImageUploadType, $advanceMinimumBalance, $headerScriptEn, $headerScriptBn];
 
         foreach ($configKeys as $index => $keyItem) {
             Config::create([
