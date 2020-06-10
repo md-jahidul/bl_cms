@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Services\Assetlite\ComponentService;
 use App\Services\DynamicPageService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 
 class DynamicPageController extends Controller
@@ -14,13 +18,23 @@ class DynamicPageController extends Controller
      * @var DynamicPageService
      */
     private $pageService;
+
+    /**
+     * @var ComponentService
+     */
+    private $componentService;
+
+    protected const PAGE_TYPE = "other_dynamic_page";
+
     /**
      * DynamicPageController constructor.
      * @param DynamicPageService $pageService
+     * @param ComponentService $componentService
      */
-    public function __construct(DynamicPageService $pageService)
+    public function __construct(DynamicPageService $pageService, ComponentService $componentService)
     {
         $this->pageService = $pageService;
+        $this->componentService = $componentService;
     }
 
     protected $componentTypes = [
@@ -87,17 +101,61 @@ class DynamicPageController extends Controller
         return view('admin.dynamic-pages.components.create', compact('componentTypes', 'pageId'));
     }
 
+    public function componentStore(Request $request, $pageId)
+    {
+        $response = $this->componentService->componentStore($request->all(), $pageId, self::PAGE_TYPE);
+        Session::flash('success', $response->content());
+        return redirect(route('other-components', [$pageId]));
+    }
+
+    public function componentEditForm($pageId, $id)
+    {
+        $componentTypes = $this->componentTypes;
+        $component = $this->componentService->findOne($id);
+        $multipleImage = $component['multiple_attributes'];
+        return view('admin.dynamic-pages.components.edit', compact('component', 'multipleImage', 'componentTypes', 'pageId'));
+    }
+
+    /**
+     * @param Request $request
+     * @param $pageId
+     * @param $id
+     * @return Application|RedirectResponse|Redirector
+     */
+    public function componentUpdate(Request $request, $pageId, $id)
+    {
+        $response = $this->componentService->componentUpdate($request->all(), $id);
+        Session::flash('success', $response->content());
+        return redirect(route('other-components', [$pageId]));
+    }
+
+    public function componentSortable(Request $request)
+    {
+        $this->componentService->tableSortable($request);
+    }
+
     public function deletePage($id)
     {
         $response = $this->pageService->deletePage($id);
-
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Page is delete!');
         } else {
             Session::flash('error', 'Page deleting process failed!');
         }
-
         return redirect('/dynamic-pages');
+    }
+
+
+    /**
+     * @param $pageId
+     * @param $id
+     * @return string
+     * @throws \Exception
+     */
+    public function componentDestroy($pageId, $id)
+    {
+        $this->componentService->deleteComponent($id);
+        return url(route('other-components', [$pageId]));
     }
 
 

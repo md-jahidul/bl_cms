@@ -104,7 +104,7 @@ class ComponentService
 //    }
 
 
-    public function componentStore($data, $sectionId)
+    public function componentStore($data, $sectionId, $pageType)
     {
         if ($data['component_type'] == 'table_component') {
             $data['editor_en'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_en']);
@@ -139,7 +139,7 @@ class ComponentService
 
         $data['component_order'] = count($countComponents) + 1;
 
-        $data['page_type'] = self::PAGE_TYPE['product_details'];
+        $data['page_type'] = $pageType;
         $data['section_details_id'] = $sectionId;
         $this->save($data);
         return response('Component create successfully!');
@@ -184,6 +184,11 @@ class ComponentService
         }
 
         $data['multiple_attributes'] = $new_multiple_attributes;
+
+        if ($data['component_type'] == 'table_component') {
+            $data['editor_en'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_en']);
+            $data['editor_bn'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_bn']);
+        }
 
         $component->update($data);
         return response("Component update successfully!!");
@@ -327,9 +332,8 @@ class ComponentService
      */
     public function deleteComponent($id)
     {
-        $appServiceCat = $this->findOne($id);
-        $this->deleteFile($appServiceCat->product_img_url);
-        $appServiceCat->delete();
+        $component = $this->findOne($id);
+        $component->delete();
         return Response('Component deleted successfully !');
     }
 
