@@ -309,6 +309,12 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('dynamic-pages/save', 'AssetLite\DynamicPageController@savePage');
     Route::get('dynamic-pages/delete/{id}', 'AssetLite\DynamicPageController@deletePage');
 
+    Route::get('dynamic-pages/{pageId}/components', 'AssetLite\DynamicPageController@componentList')
+        ->name('other-components');
+    Route::get('dynamic-pages/{pageId}/component/create', 'AssetLite\DynamicPageController@componentCreateForm')
+        ->name('other_components_create');
+
+
 
 
 //    Route::get('about-reward', 'AssetLite\PriyojonController@aboutRewardPoint')->name('about-reward');

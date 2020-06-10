@@ -8,11 +8,9 @@ class DynamicPageRepository extends BaseRepository {
 
     public $modelName = OtherDynamicPage::class;
 
-    public function savePage($data) {
+    public function savePage($data)
+    {
         if ($data['page_id'] != "") {
-            
-            
-            
             $page = $this->model->where('id', $data['page_id']);
             unset($data['page_id']);
             return $page->update($data);
@@ -21,5 +19,4 @@ class DynamicPageRepository extends BaseRepository {
             return $this->model->insert($data);
         }
     }
-
 }

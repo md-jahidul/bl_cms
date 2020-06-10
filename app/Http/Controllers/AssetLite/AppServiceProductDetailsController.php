@@ -72,6 +72,8 @@ class AppServiceProductDetailsController extends Controller
     {
         $data = $request->all();
 
+//        dd($data);
+
         // Create new sections
         if( $request->has('save') ){
             $response = $this->appServiceProductDetailsService->storeAppServiceProductDetails($request->all(), $tab_type, $product_id);

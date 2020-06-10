@@ -23,6 +23,7 @@
                                     <tr>
                                         <th width="20%">Name</th>
                                         <th width="20%">Url Slug</th>
+                                        <th width="3%"></th>
                                         <th class="text-center" width="8%">Action</th>
                                     </tr>
                                 </thead>
@@ -30,28 +31,27 @@
 
                                     @foreach($pages as $p)
                                     <tr>
-
                                         <td>
                                             <p class="text-bold-500 text-info">
                                                 {{ $p->page_name_en }}
-                                            </p> 
+                                            </p>
                                         </td>
                                         <td>
                                             {{ $p->url_slug }}
                                         </td>
-
-
+                                        <td align="center">
+                                            <a href="{{ route('other-components', $p->id) }}" class="btn btn-secondary">
+                                                <span class="text-white">Components</span>
+                                            </a>
+                                        </td>
                                         <td class="text-center">
-
                                             <a class="text-info" href="{{url('dynamic-pages/edit/'.$p->id)}}">
                                                 <i class="la la-pencil-square"></i>
                                             </a>
                                             <a class="text-danger delete_package" href="{{url('dynamic-pages/delete/'.$p->id)}}">
                                                 <i class="la la-trash"></i>
                                             </a>
-
                                         </td>
-
                                     </tr>
                                     @endforeach
 
@@ -77,7 +77,7 @@
 <script>
 $(function () {
     $('.delete_package').on("click", function(e){
-      
+
        var confrm = confirm("Do you want to delete this page?");
        if(confrm){
            return true;
