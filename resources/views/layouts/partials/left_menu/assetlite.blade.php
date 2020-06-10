@@ -53,65 +53,10 @@
     @endif
                 
                 
-    @if( auth()->user()->can_view('Slider', 'singleSlider') || auth()->user()->can_view('Slider', 'multiSlider') )
-        <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Home Page</span></a>
-            <ul class="menu-content">
-                @if( auth()->user()->can_view('Slider', 'singleSlider') )
-                    <li class="{{ is_active_url('single-sliders') . is_active_url('sliders/create')}}">
-                        <a class="menu-item" href="{{ url('single-sliders') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i class="la la-file-image-o"></i> Single slider</a>
-                    </li>
-                @endif
-
-                @if(  auth()->user()->can_view('Slider', 'multiSlider') )
-                    <li class="{{ is_active_url('multiple-sliders') . is_active_url('sliders/create')}}">
-                        <a class="menu-item" href="{{ url('multiple-sliders/') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i class="la la-file-image-o"></i> Multiple
-                            slider</a>
-                    </li>
-                @endif
-
-                @if( auth()->user()->can_view('FixedPage') )
-                <li class="{{ is_active_url('fixed-pages') }}">
-                    <a class="menu-item" href="{{ url('fixed-pages') }}" data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-file-image-o"></i> Fixed Page
-                    </a>
-                </li>
-            @endif
-
-            </ul>
-        </li>
-    @endif
     
-    @if( auth()->user()->can_view('AboutUs') )
-        <li class="nav-item"><a href="#"><i class="la la-align-justify"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">About Us</span></a>
-            <ul class="menu-content">
-                <li class="{{ is_active_url('about-us') . is_active_url('about-us/create') }}">
-                    <a class="menu-item" href="{{ url('about-us') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Banglalink</a>
-                </li>
-
-                <li class="{{ is_active_url('management') . is_active_url('management/create') }}">
-                    <a class="menu-item" href="{{ url('management') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Management</a>
-                </li>
-
-                <li class="{{ is_active_url('about/career') }}">
-                    <a class="menu-item" href="{{ route('about-career.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> About Career</a>
-                </li>
-
-                <li class="{{ is_active_url('about-slider') }}">
-                    <a class="menu-item" href="{{ url('about-slider') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Slider</a>
-                </li>
-            </ul>
-        </li>
-    @endif
     
-    <li class="nav-item"><a href="#"><i class="la la-align-justify"></i>
+    <li class="nav-item">
+        <a href="#"><i class="la la-align-justify"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Menu & Quick-launch</span></a>
             <ul class="menu-content">
                  @if( auth()->user()->can_view('Menu') )
@@ -150,17 +95,7 @@
                 </li>
                 
 
-                <li class="{{ is_active_url('/dynamic-pages') }} nav-item"><a href="{{ url('/dynamic-pages') }}"><i
-                            class="la la-futbol-o"></i>
-                        <span class="menu-title" data-i18n="nav.templates.main">Other Pages</span></a>
-                </li>
-                
-                <li class="{{ is_active_url('/popular-search') }} nav-item">
-            <a href="{{ url('popular-search') }}">
-                <i class="la la-search"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Search</span>
-            </a>
-        </li>
+               
 
             </ul>
         </li>
@@ -270,12 +205,7 @@
                             class="la la-magic"></i> Amar Offer Details</a>
                 </li>
                 
-                <li class="{{ is_active_url('/easy-payment-card') }} nav-item">
-            <a href="{{ url('easy-payment-card') }}">
-                <i class="la la-credit-card"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Easy Payment Card</span>
-            </a>
-        </li>
+               
         <li class="{{ is_active_url('/device-offer') }} nav-item">
             <a href="{{ url('device-offer') }}">
                 <i class="la la-credit-card"></i>
@@ -319,7 +249,8 @@
         </li>
     
 
-       <li class="nav-item"><a href="#"><i class="la la-apple"></i>
+       <li class="nav-item">
+           <a href="#"><i class="la la-apple"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">App & Service</span></a>
             <ul class="menu-content">
 
@@ -346,6 +277,13 @@
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-caret-right"></i> App Service Products</a>
                 </li>
+                
+                 <li class="{{ is_active_url('/easy-payment-card') }} nav-item">
+            <a href="{{ url('easy-payment-card') }}">
+                <i class="la la-credit-card"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Easy Payment Card</span>
+            </a>
+        </li>
             </ul>
         </li>
 
@@ -507,6 +445,71 @@
 
    
 
+    
+
+
+        <li class="nav-item">
+            <a href="#"><i class="la la-lemon-o"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Other Modules</span></a>
+            <ul class="menu-content">
+                @if( auth()->user()->can_view('Slider', 'singleSlider') || auth()->user()->can_view('Slider', 'multiSlider') )
+        <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Home Page</span></a>
+            <ul class="menu-content">
+                @if( auth()->user()->can_view('Slider', 'singleSlider') )
+                    <li class="{{ is_active_url('single-sliders') . is_active_url('sliders/create')}}">
+                        <a class="menu-item" href="{{ url('single-sliders') }}"
+                           data-i18n="nav.templates.vert.classic_menu"><i class="la la-file-image-o"></i> Single slider</a>
+                    </li>
+                @endif
+
+                @if(  auth()->user()->can_view('Slider', 'multiSlider') )
+                    <li class="{{ is_active_url('multiple-sliders') . is_active_url('sliders/create')}}">
+                        <a class="menu-item" href="{{ url('multiple-sliders/') }}"
+                           data-i18n="nav.templates.vert.classic_menu"><i class="la la-file-image-o"></i> Multiple
+                            slider</a>
+                    </li>
+                @endif
+
+                @if( auth()->user()->can_view('FixedPage') )
+                <li class="{{ is_active_url('fixed-pages') }}">
+                    <a class="menu-item" href="{{ url('fixed-pages') }}" data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-file-image-o"></i> Fixed Page
+                    </a>
+                </li>
+            @endif
+
+            </ul>
+        </li>
+    @endif
+    
+    @if( auth()->user()->can_view('AboutUs') )
+        <li class="nav-item"><a href="#"><i class="la la-align-justify"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">About Us</span></a>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('about-us') . is_active_url('about-us/create') }}">
+                    <a class="menu-item" href="{{ url('about-us') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Banglalink</a>
+                </li>
+
+                <li class="{{ is_active_url('management') . is_active_url('management/create') }}">
+                    <a class="menu-item" href="{{ url('management') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Management</a>
+                </li>
+
+                <li class="{{ is_active_url('about/career') }}">
+                    <a class="menu-item" href="{{ route('about-career.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> About Career</a>
+                </li>
+
+                <li class="{{ is_active_url('about-slider') }}">
+                    <a class="menu-item" href="{{ url('about-slider') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Slider</a>
+                </li>
+            </ul>
+        </li>
+    @endif
+    
     @if( auth()->user()->can_view('LeadManagement', 'leadRequestedList') )
         <li class="nav-item"><a href="#"><i class="la la-lemon-o"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Lead-management</span></a>
@@ -519,6 +522,21 @@
             </ul>
         </li>
     @endif
+    
+     <li class="{{ is_active_url('/dynamic-pages') }} nav-item"><a href="{{ url('/dynamic-pages') }}"><i
+                            class="la la-futbol-o"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Other Pages</span></a>
+                </li>
+                
+                <li class="{{ is_active_url('/popular-search') }} nav-item">
+            <a href="{{ url('popular-search') }}">
+                <i class="la la-search"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Search</span>
+            </a>
+        </li>
+            </ul>
+        </li>
+ 
 
 
         
