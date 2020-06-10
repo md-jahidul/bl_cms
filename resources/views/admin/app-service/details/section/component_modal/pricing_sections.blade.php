@@ -150,7 +150,6 @@
                                         </label>
                                         <input type="text" name="component_title_en"  class="form-control section_name" placeholder="Enter title"
                                                value="{{ old("component_title_en") ? old("component_title_en") : '' }}">
-                                        <div class="help-block"></div>
                                     </div>
 
 
@@ -179,10 +178,11 @@
                                                 <input type="text" placeholder="Rows" class="form-control table_rows">
                                             </div>
                                             <div class="col-md-4 col-xs-12">
-                                                <input type="text" placeholder="Columns" class="form-control table_columns">
+                                                <input type="text" placeholder="Columns" class="form-control table_columns" max="15">
+                                                <div class="help-block"></div>
                                             </div>
                                             <div class="col-md-4 col-xs-12">
-                                                <button class="btn btn-sm btn-info generate_table">Generate Table</button>
+                                                <button type="button" class="btn btn-sm btn-info generate_table">Generate Table</button>
                                             </div>
 
                                             <slot class="table_wrap left_table">

@@ -30,6 +30,8 @@ class ProductDetailsController extends Controller
      */
     protected $componentService;
 
+    protected const PAGE_TYPE = "product_details";
+
     /**
      * @var ComponentService
      */
@@ -158,7 +160,7 @@ class ProductDetailsController extends Controller
 
     public function componentStore(Request $request, $simType, $productDetailsId, $sectionID)
     {
-        $response = $this->componentService->componentStore($request->all(), $sectionID);
+        $response = $this->componentService->componentStore($request->all(), $sectionID, self::PAGE_TYPE);
         Session::flash('success', $response->content());
         return redirect(route('component-list', [$simType, $productDetailsId, $sectionID]));
     }
