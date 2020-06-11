@@ -5,7 +5,10 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Permission;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
@@ -34,7 +37,6 @@ class PermissionsController extends Controller
      */
     public function index()
     {
-
         $type = Auth::user()->type;
         $featureType = Auth::user()->feature_type;
         if ($featureType == self::LEAD_USER) {
@@ -46,14 +48,7 @@ class PermissionsController extends Controller
                 ->where('alias', '!=', 'assetlite_super_admin')
                 ->pluck('name', 'id');
         }
-
         $actions = $this->getRoutes();
-
-        foreach ($actions as $key => $action){
-//            dd($actions);
-        }
-
-//        dd($actions);
 
         return view('vendor.authorize.permissions.index', compact('roles', 'actions'));
     }
@@ -95,7 +90,7 @@ class PermissionsController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function getSelectedRoutes(Request $request)
     {
@@ -118,10 +113,9 @@ class PermissionsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
      * $request
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param Request $request
+     * @return RedirectResponse|Redirector
      */
     public function update(Request $request)
     {
@@ -129,12 +123,7 @@ class PermissionsController extends Controller
         $actions = $request->input('actions');
         $data = [];
 
-        if (empty($actions)) {
-            Session::flash('message', 'You should select at least one permission!');
-            return redirect(Config("authorization.route-prefix") . '/permissions');
-        }
-
-        if (count($actions) > 0) {
+        if (isset($actions) && count($actions) > 0) {
             foreach ($actions as $action) {
                 $parts = explode('-', $action);
                 $data[] = new Permission(
@@ -154,7 +143,6 @@ class PermissionsController extends Controller
         $role->permissions()->saveMany($data);
 
         Session::flash('message', 'Permission updated!');
-
         return redirect(Config("authorization.route-prefix") . '/permissions');
     }
 }
