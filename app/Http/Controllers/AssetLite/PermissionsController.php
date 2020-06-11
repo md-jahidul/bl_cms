@@ -73,14 +73,16 @@ class PermissionsController extends Controller
         }
         ksort($actions);
 
+        // My BL Permission List
         if (Auth::user()->type == 'mybl') {
             if ($actions['App\Http\Controllers\AssetLite'] && $actions['App\Http\Controllers']) {
                 unset($actions['App\Http\Controllers\AssetLite']);
                 unset($actions['App\Http\Controllers']);
             }
-        } else {
+        } else { // AssetLite Permission List
             if ($actions['App\Http\Controllers\CMS'] && $actions['App\Http\Controllers']) {
                 unset($actions['App\Http\Controllers\CMS']);
+                unset($actions['App\Http\Controllers\CMS\Search']);
                 unset($actions['App\Http\Controllers']);
             }
         }
