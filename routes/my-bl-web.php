@@ -360,6 +360,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
      *  API Debug For Developer
      */
 
-    Route::get('developer/api/debug', 'CMS\Debug\ApiDebugController@userBalancePanel')->name('mybl.api.debug.balance');
-    Route::get('developer/api/debug/balance-summary/{number}', 'CMS\Debug\ApiDebugController@getPrepaidSummary');
+    Route::get('developer/api/debug', 'CMS\ApiDebugController@userBalancePanel')->name('mybl.api.debug');
+    Route::get('developer/api/debug/balance-summary/{number}', 'CMS\ApiDebugController@getBalanceSummary')
+            ->name('mybl.api.debug.balance-summary');
+    Route::get('developer/api/debug/balance-details/{number}/{type}', 'CMS\ApiDebugController@getBalanceDetails')
+        ->name('mybl.api.debug.balance-details');
 });

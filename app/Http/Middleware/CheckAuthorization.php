@@ -25,6 +25,7 @@ class CheckAuthorization
         if ($request->user()->isAdmin() || $request->user()->isAuthorize($namespace, $controller, $method, $action)) {
             return $next($request);
         }
+        dd('I am here');
         return response(view('vendor.authorize.errors.401'), 401);
     }
 }

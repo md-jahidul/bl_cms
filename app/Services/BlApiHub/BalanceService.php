@@ -195,7 +195,9 @@ class BalanceService extends BaseService
     {
 
         if (!$user) {
-            return $this->responseFormatter->sendErrorResponse("User not found", [], 404);
+            return $this->responseFormatter->sendErrorResponse("User not found", [
+                'message' => "MSISDN NOT FOUND!"
+            ], 404);
         }
 
         $customer_id = $user->customer_account_id;
@@ -219,7 +221,7 @@ class BalanceService extends BaseService
     private function getPrepaidSummary($customer_id)
     {
         $response = $this->get($this->getPrepaidBalanceUrl($customer_id));
-        dd($response);
+
         $response = json_decode($response['response']);
 
         if (isset($response->error)) {
@@ -523,7 +525,9 @@ class BalanceService extends BaseService
         } else {
             return $this->responseFormatter->sendErrorResponse(
                 "Type Not Supported",
-                [],
+                [
+                    'Type Not Supported'
+                ],
                 404
             );
         }
@@ -566,7 +570,7 @@ class BalanceService extends BaseService
      * @param  Customer  $user
      * @return mixed
      */
-    public function getBalanceDetails($type, Customer $user)
+    public function getBalanceDetails($type, $user)
     {
 
         if (!$user) {

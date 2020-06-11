@@ -16,7 +16,8 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <button type="button" class="btn btn-sm btn-icon btn-info" id="search_btn" ><i class="la la-search"></i></button>
+                <button type="button" class="btn btn-sm btn-icon btn-info" id="search_btn"><i class="la la-search"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -41,59 +42,7 @@
                 </div>
             </div>
             <div class="col-md-12" id="balance-summary-div" style="display: none;">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="media d-flex">
-                                        <div class="media-body text-left">
-                                            <h3 class="info">100</h3>
-                                            <span>MINUTES</span>
-                                        </div>
-                                        <div class="align-self-center">
-                                            <i class="la la-phone success font-large-2 float-right"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="media d-flex">
-                                        <div class="media-body text-left">
-                                            <h3 class="info">250</h3>
-                                            <span>SMS</span>
-                                        </div>
-                                        <div class="align-self-center">
-                                            <i class="icon-speech info font-large-2 float-right"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="media d-flex">
-                                        <div class="media-body text-left">
-                                            <h3 class="info">423</h3>
-                                            <span>MB</span>
-                                        </div>
-                                        <div class="align-self-center">
-                                            <i class="icon-globe primary font-large-2 float-right"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
         <div class="row">
@@ -101,22 +50,103 @@
                 <h5 class="mb-1">Balance Details</h5>
                 <hr>
             </div>
-            <div class="col-md-12" id="balance-details-loader">
-                <div class="loader-wrapper">
+            {{--    <div class="col-md-12" id="balance-details-loader">
                     <div class="loader-wrapper">
-                        <div class="loader-container">
-                            <div class="ball-clip-rotate-multiple loader-success">
-                                <div></div>
-                                <div></div>
+                        <div class="loader-wrapper">
+                            <div class="loader-container">
+                                <div class="ball-clip-rotate-multiple loader-success">
+                                    <div></div>
+                                    <div></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-12" id="balance-details-div" style="display: none;">
+                </div>--}}
+            <div class="col-md-12" id="balance-details-div">
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <ul class="nav nav-tabs nav-linetriangle no-hover-bg">
+                                            <li class="nav-item">
+                                                <a class="nav-link active"
+                                                   data-toggle="tab"
+                                                   aria-controls="minutes"
+                                                   href="#minutes"
+                                                   aria-expanded="true">Minutes</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link"
+                                                   data-toggle="tab"
+                                                   aria-controls="sms"
+                                                   href="#sms"
+                                                   aria-expanded="false">SMS</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link"
+                                                   data-toggle="tab"
+                                                   aria-controls="internet"
+                                                   href="#internet"
+                                                   aria-expanded="false">Internet</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content px-1 pt-1">
+                                            <div role="tabpanel"
+                                                 class="tab-pane active"
+                                                 id="minutes"
+                                                 aria-expanded="true"
+                                                 aria-labelledby="minutes">
+                                                <div class="col-md-12" id="minutes-details-loader">
+                                                    <div class="loader-wrapper">
+                                                        <div class="loader-wrapper">
+                                                            <div class="loader-container">
+                                                                <div class="ball-clip-rotate-multiple loader-success">
+                                                                    <div></div>
+                                                                    <div></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane"
+                                                 id="sms"
+                                                 aria-labelledby="base-tab42">
+                                                <div class="col-md-12" id="sms-details-loader">
+                                                    <div class="loader-wrapper">
+                                                        <div class="loader-wrapper">
+                                                            <div class="loader-container">
+                                                                <div class="ball-clip-rotate-multiple loader-success">
+                                                                    <div></div>
+                                                                    <div></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane"
+                                                 id="internet"
+                                                 aria-labelledby="base-tab43">
+                                                <div class="col-md-12" id="internet-details-loader">
+                                                    <div class="loader-wrapper">
+                                                        <div class="loader-wrapper">
+                                                            <div class="loader-container">
+                                                                <div class="ball-clip-rotate-multiple loader-success">
+                                                                    <div></div>
+                                                                    <div></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -131,55 +161,87 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-loader.css') }}">
 @endpush
 @push('page-js')
-    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
     <script>
         $(function () {
-            var fetchData;
+            let fetchData;
             $(document).on('click', '#search_btn', function (e) {
-                var pattern;
-                var number;
+                let number;
+                let pattern;
                 e.preventDefault();
                 number = $('#search_input').val();
 
                 pattern = new RegExp('^01[3456789][0-9]{8}\\b');
 
-                if(!pattern.test(number)){
+                if (!pattern.test(number)) {
                     alert('Please enter a valid number');
                     return;
                 }
 
                 $('#report-div').show();
 
-                getBalanceData();
+                getBalanceData(number);
 
             });
 
-            fetchData = function(query, dataURL) {
+            fetchData = function (query, dataURL) {
                 return $.ajax({
                     data: query,
-                    dataType: 'json',
                     url: dataURL
                 });
             }
 
-            function getBalanceData(number)
-            {
+            function getBalanceData(number) {
                 let getSummary = fetchData(
                     {
                         'number': number
-                    }, '/path/to/url/1');
+                    }, '/developer/api/debug/balance-summary/' + number);
 
-                let getDetails = fetchData(
+                let getInternetDetails = fetchData(
                     {
                         'number': number
-                    }, '/path/to/url/1');
+                    }, '/developer/api/debug/balance-details/' + number + '/internet');
 
-                $.when(getSummary, getDetails).then(function(summary, details) {
-                    // set summary data first
+                let getMinutesDetails = fetchData(
+                    {
+                        'number': number
+                    }, '/developer/api/debug/balance-details/' + number + '/minutes');
 
-                    // set details data
-                });
+                let getSmsDetails = fetchData(
+                    {
+                        'number': number
+                    }, '/developer/api/debug/balance-details/' + number + '/sms');
 
+                $("#balance-summary-loader").show();
+                $("#balance-summary-div").hide();
+
+                $("#internet-details-loader").show();
+                $("#minutes-details-loader").show();
+                $("#sms-details-loader").show();
+
+                getSummary.done(function (data) {
+                    $("#balance-summary-div").html(data);
+
+                    $("#balance-summary-loader").hide();
+                    $("#balance-summary-div").show();
+                })
+
+                getInternetDetails.done(function (data) {
+                    $("#internet").html(data);
+
+                    $("#internet-details-loader").hide();
+                })
+
+                getMinutesDetails.done(function (data) {
+                    $("#minutes").html(data);
+
+                    $("#minutes-details-loader").hide();
+                })
+
+                getSmsDetails.done(function (data) {
+                    $("#sms").html(data);
+
+                    $("#sms-details-loader").hide();
+                })
             }
         })
     </script>

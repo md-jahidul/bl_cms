@@ -139,24 +139,12 @@ class BaseService
 
 
         if ($result != '' && !$result) {
-            return response()->json([
-                                        'status' => 'FAIL',
-                                        'status_code' => 500,
-                                        'error' => [
-                                            'message' => "Getting HTTP Error from Banglalink Service"
-                                        ],
-                                    ], 500);
+            throw new BLServiceException($result);
         }
         $httpCode = $curl_info['http_code'];
 
         if ($httpCode >= 500 && !$skip_service_exception) {
-            return response()->json([
-                                        'status' => 'FAIL',
-                                        'status_code' => 500,
-                                        'error' => [
-                                            'message' => "Getting HTTP Error from Banglalink Service"
-                                        ],
-                                    ], 500);
+            throw new BLServiceException($result);
         }
 
         return ['response' => $result, 'status_code' => $httpCode];
@@ -184,8 +172,4 @@ class BaseService
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($body));
     }
 
-    protected function logToApiPerformance($payload)
-    {
-        Log::channel('blServicePerformanceLog')->info($payload);
-    }
 }
