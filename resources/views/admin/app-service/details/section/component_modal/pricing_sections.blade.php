@@ -206,28 +206,6 @@
                                             <slot class="table_wrap right_table">
 
                                             </slot>
-
-{{--                                            <div class="row table_wrap">--}}
-{{--                                                <div class="col-md-12 right_table">--}}
-
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-
-
-{{--                                            <div class="col-md-12 col-xs-12">--}}
-{{--                                                <hr>--}}
-{{--                                                <b class="mt-1">Right Table Generator</b>--}}
-{{--                                                <hr>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-md-4 col-xs-12">--}}
-{{--                                                <input type="text" placeholder="Rows" class="form-control table_rows">--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-md-4 col-xs-12">--}}
-{{--                                                <input type="text" placeholder="Columns" class="form-control table_columns">--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-md-4 col-xs-12">--}}
-{{--                                                <button class="btn btn-sm btn-info generate_table">Generate Table</button>--}}
-{{--                                            </div>--}}
                                         </div>
 
                                     </div>
@@ -326,7 +304,7 @@
                  tableHeadEn += "<th><input type='text' class='form-control' placeholder='Table head English' name='left_head_en[" + pos + "][]'></th>";
              }
 
-             tableHeadEn += "</tr>\n" +
+             tableHeadEn += "<th width='1%'></th></tr>\n" +
                             "</thead>";
              var tableRowsEn = "<tbody>";
 
@@ -335,7 +313,8 @@
                      for (var c = 0; c < cols; c++) {
                          tableRowsEn += "<td><input type='text' class='form-control' name='left_col_en[" + pos + "][" + r + "][]'></td>";
                      }
-                 tableRowsEn += "<tr>";
+                 // tableRowsEn += "<td><button class='btn-sm btn-danger'><i class='la la-trash'></i></button></td>";
+                 tableRowsEn += "</tr>";
              }
              tableRowsEn += "</tbody><table><div>";
 
@@ -359,7 +338,7 @@
                  for (var c = 0; c < cols; c++) {
                      tableRowsBn += "<td><input type='text' class='form-control' name='left_col_bn[" + pos + "][" + r + "][]'></td>";
                  }
-                 tableRowsBn += "<tr>";
+                 tableRowsBn += "</tr>";
              }
              tableRowsBn += "</tbody><table><div>";
 
@@ -406,7 +385,7 @@
                  for (var c = 0; c < cols; c++) {
                      rightTableRowsEn += "<td><input type='text' class='form-control' name='right_col_en[" + pos + "][" + r + "][]'></td>";
                  }
-                 rightTableRowsEn += "<tr>";
+                 rightTableRowsEn += "</tr>";
              }
              rightTableRowsEn += "</tbody><table><div>";
              //============Right Table English End=================
@@ -429,7 +408,7 @@
                  for (var c = 0; c < cols; c++) {
                      rightTableRowsBn += "<td><input type='text' class='form-control' name='right_col_bn[" + pos + "][" + r + "][]'></td>";
                  }
-                 rightTableRowsBn += "<tr>";
+                 rightTableRowsBn += "</tr>";
              }
              rightTableRowsBn += "</tbody><table><div>";
              // ===============Right Table Bangla End=========================

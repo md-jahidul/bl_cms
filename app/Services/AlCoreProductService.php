@@ -161,6 +161,8 @@ class AlCoreProductService
             $data['sim_type'] = (strtolower($data['type']) == 'prepaid') ? 1 : 2;
             $this->save($data);
         } else {
+            $data['recharge_product_code'] = isset($data['recharge_product_code']) ? str_replace(' ', '', strtoupper($data['recharge_product_code'])) : null;
+            $data['renew_product_code'] = isset($data['renew_product_code']) ? str_replace(' ', '', strtoupper($data['renew_product_code'])) : null;
             $product->update($data);
         }
     }

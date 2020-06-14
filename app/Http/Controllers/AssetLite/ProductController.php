@@ -232,8 +232,6 @@ class ProductController extends Controller {
             Session::flash('error', $validator->messages()->first());
             return redirect()->back();
         }
-
-//        return $request->all();
         $this->alCoreProductService->updateProductCore($request->all(), $id);
         $this->strToint($request);
         $response = $this->productService->updateProduct($request->all(), $type, $id);

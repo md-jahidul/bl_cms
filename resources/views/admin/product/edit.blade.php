@@ -146,6 +146,13 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="rate_cutter" class="mr-1">Is Rate Cutter Offer:</label>
+                                        <input type="checkbox" name="rate_cutter_offer" value="1" id="rate_cutter" {{ ($product->rate_cutter_offer == 1) ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="title" class="mr-1">Status:</label>
 
                                         <input type="radio" name="status" value="1" id="active" {{ ($product->status == 1) ? 'checked' : '' }}>

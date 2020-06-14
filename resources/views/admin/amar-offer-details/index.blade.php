@@ -50,7 +50,7 @@
     <div class="card">
         <div class="card-content collapse show">
             <div class="card-body card-dashboard">
-                <h4 class="menu-title"><strong>Banner And Related Product</strong></h4><hr>
+                <h4 class="menu-title"><strong>Banner Image</strong></h4><hr>
                 <div class="card-body card-dashboard">
                     <form role="form" action="{{ route('banner-image-upload') }}" method="POST" novalidate enctype="multipart/form-data">
                         @csrf
