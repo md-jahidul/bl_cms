@@ -39,9 +39,12 @@ class ProductService
      * @param TagCategoryRepository $tagRepository
      */
     public function __construct(
-        ProductRepository $productRepository, ProductDetailRepository $productDetailRepository, ProductCoreRepository $productCoreRepository, SearchDataRepository $searchRepository, TagCategoryRepository $tagRepository
-    )
-    {
+        ProductRepository $productRepository,
+        ProductDetailRepository $productDetailRepository,
+        ProductCoreRepository $productCoreRepository,
+        SearchDataRepository $searchRepository,
+        TagCategoryRepository $tagRepository
+    ) {
         $this->productRepository = $productRepository;
         $this->productCoreRepository = $productCoreRepository;
         $this->productDetailRepository = $productDetailRepository;
@@ -155,8 +158,8 @@ class ProductService
         $product = $this->productRepository->findByCode($type, $id);
 //        $this->productDetailRepository->saveOrUpdateProductDetail($product->id, $data);
         $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0);
-
-//        dd($data);
+        $data['special_product'] = (isset($data['special_product']) ? 1 : 0);
+        $data['rate_cutter_offer'] = (isset($data['rate_cutter_offer']) ? 1 : 0);
 
         $product->update($data);
 

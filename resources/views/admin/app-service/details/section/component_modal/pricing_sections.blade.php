@@ -27,25 +27,6 @@
 
 
 
-                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                    <label for="title_en" class="required1">
-                        Component Title (English)
-                    </label>
-                    <input type="text" name="component_title_en"  class="form-control section_name" placeholder="Enter title"
-                           value="{{ old("component_title_en") ? old("component_title_en") : '' }}">
-                    <div class="help-block"></div>
-                </div>
-
-
-                 <div class="form-group col-md-6 {{ $errors->has('component_title_bn') ? ' error' : '' }}">
-                     <label for="title_bn" class="required1">
-                         Component Title (Bangla)
-                     </label>
-                     <input type="text" name="component_title_bn"  class="form-control section_name" placeholder="Enter title"
-                            value="{{ old("component_title_bn") ? old("component_title_bn") : '' }}">
-                 </div>
-
-
                   <!-- # Price slug is required for api integration -->
                   {{ Form::hidden('sections[slug]', 'price' ) }}
 
@@ -138,9 +119,50 @@
 
 
 {{--                           ================ Dynamic Table HTML ===================--}}
-                            <div class="table_component_wrap ">
+                            <div class="table_component_wrap">
 
-                                <div class="form-group row bg-light ml-1 mr-1 p-2 mt-1">
+{{--                                <div class="col-md-12">--}}
+{{--                                    <table class="table table-bordered" id="myTable">--}}
+{{--                                        <thead>--}}
+{{--                                        <tr>--}}
+{{--                                            <th><input type="text" class="form-control" name="th_row[]"></th>--}}
+{{--                                            <th><input type="text" class="form-control" name="th_row[]"></th>--}}
+{{--                                        </tr>--}}
+{{--                                        </thead>--}}
+{{--                                        <tbody>--}}
+{{--                                        <tr class="row_1">--}}
+{{--                                            <td><input type="text" class="form-control" name="tbody[row_1][]"></td>--}}
+{{--                                            <td><input type="text" class="form-control" name="tbody[row_1][]"></td>--}}
+{{--                                        </tr>--}}
+{{--                                        <tr>--}}
+{{--                                            <td><input type="text" class="form-control" name="tbody[row_2][]"></td>--}}
+{{--                                            <td><input type="text" class="form-control" name="tbody[row_2][]"></td>--}}
+{{--                                        </tr>--}}
+{{--                                        </tbody>--}}
+
+{{--                                    </table>--}}
+{{--                                </div>--}}
+
+                                <div class="form-group row bg-light ml-1 mr-1 p-2">
+                                    <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                        <label for="title_en" class="required1">
+                                            Component Title (English)
+                                        </label>
+                                        <input type="text" name="component_title_en"  class="form-control section_name" placeholder="Enter title"
+                                               value="{{ old("component_title_en") ? old("component_title_en") : '' }}">
+                                    </div>
+
+
+                                    <div class="form-group col-md-6 {{ $errors->has('component_title_bn') ? ' error' : '' }}">
+                                        <label for="title_bn" class="required1">
+                                            Component Title (Bangla)
+                                        </label>
+                                        <input type="text" name="component_title_bn"  class="form-control section_name" placeholder="Enter title"
+                                               value="{{ old("component_title_bn") ? old("component_title_bn") : '' }}">
+                                    </div>
+
+
+
                                     <input type="hidden" name="component_position[2]" value="2" class="component_position">
 
                                     <div class="col-md-12 col-xs-12">
@@ -148,25 +170,44 @@
                                         <hr>
 
                                         <div class="row">
+                                            <div class="col-md-12 col-xs-12">
+                                                <b>Left Table Generator</b>
+                                                <hr>
+                                            </div>
                                             <div class="col-md-4 col-xs-12">
                                                 <input type="text" placeholder="Rows" class="form-control table_rows">
                                             </div>
                                             <div class="col-md-4 col-xs-12">
-                                                <input type="text" placeholder="Columns" class="form-control table_columns">
+                                                <input type="text" placeholder="Columns" class="form-control table_columns" max="15">
+                                                <div class="help-block"></div>
                                             </div>
                                             <div class="col-md-4 col-xs-12">
-                                                <button class="btn btn-sm btn-info generate_table">Generate Table</button>
+                                                <button type="button" class="btn btn-sm btn-info generate_table">Generate Table</button>
                                             </div>
+
+                                            <slot class="table_wrap left_table">
+
+                                            </slot>
+
+
+                                            <div class="col-md-12 col-xs-12 mt-1">
+                                                <b>Right Table Generator</b>
+                                                <hr>
+                                            </div>
+                                            <div class="col-md-4 col-xs-12">
+                                                <input type="text" placeholder="Rows" class="form-control right_table_rows">
+                                            </div>
+                                            <div class="col-md-4 col-xs-12">
+                                                <input type="text" placeholder="Columns" class="form-control right_table_columns">
+                                            </div>
+                                            <div class="col-md-4 col-xs-12">
+                                                <button class="btn btn-sm btn-info generate_right_table">Generate Table</button>
+                                            </div>
+                                            <slot class="table_wrap right_table">
+
+                                            </slot>
                                         </div>
-                                        <div class="row table_wrap">
-                                            <div class="col-md-12 left_table">
 
-                                            </div>
-
-                                            <div class="col-md-12 right_table">
-
-                                            </div>
-                                        </div>
                                     </div>
 {{--                                    <div class="col-md-2 col-xs-12">--}}
 {{--                                        <h6 class="font-weight-bold">Sample/Instruction (List Component)</h6>--}}
@@ -237,149 +278,147 @@
 
  <script>
      $(function () {
-
          $(".generate_table").click(function () {
 
              var rows = $(this).parents('.row').find('.table_rows').val();
              var cols = $(this).parents('.row').find('.table_columns').val();
              var pos = $(this).parents('.form-group').find('.component_position').val();
-
              //Left English table
-             var tableHeadEn = "<br><div class='row'><div class='form-group col-md-6'>" +
-                               "<label><b>Left Table Title English</b>></label>" +
+             var tableHeadEn = '<div class="col-md-6 mt-1">' +
+                               "<label><b>Left Table Title English</b></label>" +
                                "<input type='text' class='form-control' name='left_table_title_en'>" +
                                "</div>";
 
-                 tableHeadEn += "<div class='form-group col-md-6'>" +
-                     "<label>Left Table Title Bangla</label>" +
-                     "<input type='text' class='form-control' name='left_table_title_bn'>" +
-                     "</div></div>";
+                 tableHeadEn += '<div class="col-md-6 mt-1">' +
+                               "<label><b>Left Table Title Bangla</b></label>" +
+                               "<input type='text' class='form-control' name='left_table_title_bn'>" +
+                               "</div>";
 
-                 tableHeadEn += "<div class='col-md-12 col-xs-12'><h6><b>Left Table Head (EN):</b></h6>";
+                 tableHeadEn += ' <div class="col-md-12">\n' +
+                                '<label class="label pt-2"><b>Left Table (English)</b></label>\n' +
+                                '<table class="table table-bordered">\n' +
+                                '<thead>\n' +
+                                '<tr>';
 
-             var i;
-             var width = 100 / cols;
-             for (i = 0; i < cols; i++) {
-                 tableHeadEn += "<input type='text' placeholder='Head (EN) " + (i + 1) + "' name='left_head_en[" + pos + "][]' width='" + width + "%'>";
+             for (var i = 0; i < cols; i++) {
+                 tableHeadEn += "<th><input type='text' class='form-control' placeholder='Table head English' name='left_head_en[" + pos + "][]'></th>";
              }
 
-             tableHeadEn += "<hr></div>";
+             tableHeadEn += "<th width='1%'></th></tr>\n" +
+                            "</thead>";
+             var tableRowsEn = "<tbody>";
 
-             var tableRowsEn = "<div class='col-md-12 col-xs-12'><h6>Table Columns (EN):</h6>";
+             for (var r = 0; r < rows; r++) {
+                 tableRowsEn += "<tr>";
+                     for (var c = 0; c < cols; c++) {
+                         tableRowsEn += "<td><input type='text' class='form-control' name='left_col_en[" + pos + "][" + r + "][]'></td>";
+                     }
+                 // tableRowsEn += "<td><button class='btn-sm btn-danger'><i class='la la-trash'></i></button></td>";
+                 tableRowsEn += "</tr>";
+             }
+             tableRowsEn += "</tbody><table><div>";
 
-             var r;
-             for (r = 0; r < rows; r++) {
+             //Left bangla table
+             var tableHeadBn = '<div class="col-md-12 pl-0">\n' +
+                 '<label class="label"><b>Left Table (Bangla)</b></label>\n' +
+                 '<table class="table table-bordered">\n' +
+                 '<thead>\n' +
+                 '<tr>';
 
-                 var c;
-                 for (c = 0; c < cols; c++) {
+             for (var i = 0; i < cols; i++) {
+                 tableHeadBn += "<th><input type='text' class='form-control' placeholder='Table head Bangla' name='left_head_bn[" + pos + "][]'></th>";
+             }
 
-                     tableRowsEn += "<input type='text' name='left_col_en[" + pos + "][" + r + "][]' width='" + width + "%'>";
+             tableHeadBn += "</tr>\n" +
+                 "</thead>";
+             var tableRowsBn = "<tbody>";
+
+             for (var r = 0; r < rows; r++) {
+                 tableRowsBn += "<tr>";
+                 for (var c = 0; c < cols; c++) {
+                     tableRowsBn += "<td><input type='text' class='form-control' name='left_col_bn[" + pos + "][" + r + "][]'></td>";
                  }
-                 tableRowsEn += "<br>";
+                 tableRowsBn += "</tr>";
              }
-             tableRowsEn += "</div>";
+             tableRowsBn += "</tbody><table><div>";
+
+             var tableData = tableHeadEn + tableRowsEn + tableHeadBn + tableRowsBn;
+
+             $(this).parents(".form-group").find(".left_table").html(tableData);
+
+             return false;
+         });
 
 
-             //Right English table
-             var rightTableHeadEn = "<br><div class='row'><div class='form-group col-md-6'>" +
+         $(".generate_right_table").click(function () {
+
+             var rows = $('.right_table_rows').val();
+             var cols = $('.right_table_columns').val();
+             var pos = $(this).parents('.form-group').find('.component_position').val();
+
+             //============Right Table English Start=================
+             var rightTableHeadEn = '<div class="col-md-6 mt-1">' +
                  "<label><b>Right Table Title English</b></label>" +
                  "<input type='text' class='form-control' name='right_table_title_en'>" +
                  "</div>";
 
-             rightTableHeadEn += "<div class='form-group col-md-6'>" +
+             rightTableHeadEn += '<div class="col-md-6 mt-1">' +
                  "<label><b>Right Table Title Bangla</b></label>" +
                  "<input type='text' class='form-control' name='right_table_title_bn'>" +
-                 "</div></div>";
+                 "</div>";
 
+             rightTableHeadEn += ' <div class="col-md-12">\n' +
+                 '<label class="label pt-2"><b>Right Table (English)</b></label>\n' +
+                 '<table class="table table-bordered">\n' +
+                 '<thead>\n' +
+                 '<tr>';
 
-             rightTableHeadEn += "<div class='col-md-12 col-xs-12'><h5><b>Right Table Head (EN):</b></h5>";
-
-             for (i = 0; i < cols; i++) {
-                 rightTableHeadEn += "<input type='text' placeholder='Head (EN) " + (i + 1) + "' name='right_head_en[" + pos + "][]' width='" + width + "%'>";
+             for (var i = 0; i < cols; i++) {
+                 rightTableHeadEn += "<th><input type='text' class='form-control' placeholder='Table head English' name='right_head_en[" + pos + "][]'></th>";
              }
+             rightTableHeadEn += "</tr></thead>";
 
-             rightTableHeadEn += "<hr></div>";
-             var rightTableRowsEn = "<div class='col-md-12 col-xs-12'><h6>Table Columns (EN):</h6>";
+             var rightTableRowsEn = "<tbody>";
 
-             var r;
-             for (r = 0; r < rows; r++) {
-
-                 var c;
-                 for (c = 0; c < cols; c++) {
-
-                     rightTableRowsEn += "<input type='text' name='right_col_en[" + pos + "][" + r + "][]' width='" + width + "%'>";
+             for (var r = 0; r < rows; r++) {
+                 rightTableRowsEn += "<tr>";
+                 for (var c = 0; c < cols; c++) {
+                     rightTableRowsEn += "<td><input type='text' class='form-control' name='right_col_en[" + pos + "][" + r + "][]'></td>";
                  }
-                 rightTableRowsEn += "<br>";
+                 rightTableRowsEn += "</tr>";
              }
-             rightTableRowsEn += "</div>";
+             rightTableRowsEn += "</tbody><table><div>";
+             //============Right Table English End=================
 
-
-
-             //Left bangla table
-             var tableHeadBn = "<div class='col-md-12 col-xs-12'><h6><hr>Table Head (BN):</h6>";
-
-             var i;
-             var width = 100 / cols;
-             for (i = 0; i < cols; i++) {
-                 tableHeadBn += "<input type='text' placeholder='Head (BN) " + (i + 1) + "' name='left_head_bn[" + pos + "][]' width='" + width + "%'>";
+             // ===============Right Table Bangla Start=========================
+             var rightTableHeadBn = '<div class="col-md-12 pl-0">\n' +
+                 '<label class="label"><b>Right Table (Bangla)</b></label>\n' +
+                 '<table class="table table-bordered">\n' +
+                 '<thead>\n' +
+                 '<tr>';
+             for (var i = 0; i < cols; i++) {
+                 rightTableHeadBn += "<th><input type='text' class='form-control' placeholder='Table head Bangla' name='right_head_bn[" + pos + "][]'></th>";
              }
 
-             tableHeadBn += "<hr></div>";
+             rightTableHeadBn += "</tr></thead>";
+             var rightTableRowsBn = "<tbody>";
 
-             var tableRowsBn = "<div class='col-md-12 col-xs-12'><h6>Table Columns (BN):</h6>";
-
-             var r;
-             for (r = 0; r < rows; r++) {
-
-                 var c;
-                 for (c = 0; c < cols; c++) {
-
-                     tableRowsBn += "<input type='text' name='left_col_bn[" + pos + "][" + r + "][]' width='" + width + "%'>";
+             for (var r = 0; r < rows; r++) {
+                 rightTableRowsBn += "<tr>";
+                 for (var c = 0; c < cols; c++) {
+                     rightTableRowsBn += "<td><input type='text' class='form-control' name='right_col_bn[" + pos + "][" + r + "][]'></td>";
                  }
-                 tableRowsBn += "<br>";
+                 rightTableRowsBn += "</tr>";
              }
-             tableRowsBn += "</div>";
-
-
-             //Right Bangla table
-             var rightTableHeadBn = "<div class='col-md-12 col-xs-12'><h6><hr>Table Head (BN):</h6>";
-
-             var i;
-             var width = 100 / cols;
-             for (i = 0; i < cols; i++) {
-                 rightTableHeadBn += "<input type='text' placeholder='Head (BN) " + (i + 1) + "' name='right_head_bn[" + pos + "][]' width='" + width + "%'>";
-             }
-
-             rightTableHeadBn += "<hr></div>";
-
-             var rightTableRowsBn = "<div class='col-md-12 col-xs-12'><h6>Table Columns (BN):</h6>";
-
-             var r;
-             for (r = 0; r < rows; r++) {
-
-                 var c;
-                 for (c = 0; c < cols; c++) {
-
-                     rightTableRowsBn += "<input type='text' name='right_col_bn[" + pos + "][" + r + "][]' width='" + width + "%'>";
-                 }
-                 rightTableRowsBn += "<br>";
-             }
-             rightTableRowsBn += "</div>";
-
-
-
-             var tableData = tableHeadEn + tableRowsEn + tableHeadBn + tableRowsBn;
+             rightTableRowsBn += "</tbody><table><div>";
+             // ===============Right Table Bangla End=========================
 
              var rightTableData = rightTableHeadEn + rightTableRowsEn + rightTableHeadBn + rightTableRowsBn;
-
-
-
-             $(this).parents(".form-group").find(".table_wrap .left_table").html(tableData);
-
-             $(this).parents(".form-group").find(".table_wrap .right_table").html(rightTableData);
+             $(".right_table").html(rightTableData);
 
              return false;
          });
+
          $(".element_wrap").on("keypress keyup blur", '.table_rows, .table_columns', function (event) {
              $(this).val($(this).val().replace(/[^0-9]/g, ''));
              if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {

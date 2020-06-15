@@ -57,8 +57,6 @@
 @include('admin.app-service.details.section.component_modal.accordion.accordion')
 
 
-
-
 <!-- # Apps Component modal -->
 @include('admin.app-service.details.section.component_modal.text_with_image_right')
 @include('admin.app-service.details.section.component_modal.text_with_image_bottom')

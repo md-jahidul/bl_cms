@@ -34,10 +34,6 @@ class AmarOfferController extends Controller
     {
         $offerDetails = $this->amarOfferDetailsService->amarOfferDetailsList();
         $bannerImage = $this->amarOfferDetailsService->findBannerImage();
-
-
-//        dd($bannerImage);
-
         return view('admin.amar-offer-details.index', compact('offerDetails', 'bannerImage'));
     }
 

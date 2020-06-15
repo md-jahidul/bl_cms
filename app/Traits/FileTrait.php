@@ -22,9 +22,12 @@ trait FileTrait {
      * @return file path
      */
     protected function upload($file, $directoryPath, $fileName = "") {
-        $path = $file->storeAs(
-                $directoryPath, $fileName, $this->disk
+        $path = $file->store(
+                $directoryPath, $this->disk
         );
+//        $path = $file->storeAs(
+//                $directoryPath, $fileName, $this->disk
+//        );
 
 //        if ($fileName != "") {
 //            $renamedPath = $this->rename($path, $fileName, $directoryPath);
