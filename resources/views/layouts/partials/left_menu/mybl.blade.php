@@ -282,7 +282,7 @@
 
 
     @if (Auth::user()->hasRole('developer'))
-        <li class="{{ is_active_url('developer/api/debug') . is_active_url('developer/api/debug')}}">
+        <li class="{{ is_active_url('developer/api/debug') }}">
             <a class="menu-item" href="{{ route('mybl.api.debug') }}">
                 <i class="la la-code-fork"></i>Debug Panel</a>
         </li>
