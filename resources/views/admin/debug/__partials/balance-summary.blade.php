@@ -101,11 +101,11 @@
                         <div class="media d-flex">
                             <div class="media-body text-left">
                                 <h3 class="info" id="summary_data">
-                                    @if($data = $summary->data->internet->total >= 1024)
-                                        @if(floor($data) == $data)
-                                            {{ $data }}
+                                    @if($summary->data->internet->total >= 1024)
+                                        @if(floor($summary->data->internet->total/1024 ) == $summary->data->internet->total/1024 )
+                                            {{ $summary->data->internet->total/1024  }}
                                         @else
-                                            {{ round($data, 1) }}
+                                            {{ round($summary->data->internet->total/1024 , 1) }}
                                         @endif
                                     @else
                                         {{ round($summary->data->internet->total, 1) }}

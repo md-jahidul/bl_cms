@@ -48,8 +48,13 @@ class ApiDebugController extends Controller
 
         return view('admin.debug.__partials.balance-summary', compact('summary'))->render();
     }
-    //public function  getP
 
+    /**
+     * @param $number
+     * @param $type
+     * @return array|string
+     * @throws \Throwable
+     */
     public function getBalanceDetails($number, $type)
     {
         $customer = Customer::where('phone', $number)->first();
@@ -61,8 +66,15 @@ class ApiDebugController extends Controller
             'sms'      => 'admin.debug.__partials.sms-details',
             'internet' => 'admin.debug.__partials.internet-details',
         ];
-        //dd($details);
 
         return view($views [$type], compact('details'))->render();
+    }
+
+    /**
+     * @param $number
+     */
+    public function getBrowseHistory($number)
+    {
+
     }
 }

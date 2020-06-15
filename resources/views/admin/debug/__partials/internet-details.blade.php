@@ -10,11 +10,11 @@
                         <hr/>
                         <div>
                             <small class="text-muted pull-left"><strong class="info">
-                                    @if($data = $item->remaining >= 1024)
-                                        @if(floor($data) == $data)
-                                            {{ $data }} GB
+                                    @if($item->remaining >= 1024)
+                                        @if(floor($item->remaining) == $item->remaining)
+                                            {{ $item->remaining/1024 }} GB
                                         @else
-                                            {{ round($data, 1) }} GB
+                                            {{ round($item->remaining/1024, 1) }} GB
                                         @endif
                                     @else
                                         {{ round($item->remaining , 1) }} MB

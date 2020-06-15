@@ -47,7 +47,7 @@ class PermissionsController extends Controller
                 ->pluck('name', 'id');
         }
 
-        $actions = $this->getRoutes();
+        $actions = $this->getRoutes(
 
         foreach ($actions as $key => $action){
 //            dd($actions);
