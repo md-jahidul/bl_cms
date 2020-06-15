@@ -24,7 +24,7 @@ class ApiDebugController extends Controller
     public function __construct(BalanceService $balanceService)
     {
         $this->balanceService = $balanceService;
-        //$this->middleware(['auth', 'debugEntryCheck']);
+        $this->middleware(['auth', 'debugEntryCheck']);
     }
 
     /**
