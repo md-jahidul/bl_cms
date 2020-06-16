@@ -5,25 +5,18 @@
                 <table class="table table-bordered" id="audit_log_table">
                     <thead>
                     <tr>
-                        <th>Number</th>
-                        <th>Type</th>
-                        <th>Count & Time</th>
+                        <th>Service Name</th>
+                        <th>Activation Date</th>
                         <th>Cost</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($details->data as $item)
                         <tr>
-                            <td>{{ $item->number }}</td>
-                            <td>{{ $item->is_outgoing? 'Outgoing' : 'Incoming' }}</td>
-                            <td class="text-center">
-                                <div class="badge badge-pill badge-info">
-                                    {{ number_format($item->usage) }}
-                                </div><br/>
-                                <span>   {{ \Carbon\Carbon::parse($item->date, 'UTC')->setTimezone('Asia/Dhaka')->toDateTimeString() }} </span>
-                            </td>
+                            <td> {{ $item->service_name }}  @if($item->is_active)<i class="la la-check-circle success font-medium-1 mr-1"></i> @endif </td>
+                            <td>{{ \Carbon\Carbon::parse($item->activated_date, 'UTC')->setTimezone('Asia/Dhaka')->format('d M, Y')  }}</td>
                             <td>
-                                {{ number_format($item->cost) }} Tk.
+                                {{ number_format($item->fee) }} Tk.
                             </td>
                         </tr>
                     @endforeach

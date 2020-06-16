@@ -241,8 +241,10 @@
 
         <div class="row">
             <div class="col-md-12">
-                <h5 class="mb-1 mt-2 text-bold-600">Summary Usage History</h5>
-                <hr>
+                <div>
+                    <h5 class="mb-1 mt-2 text-bold-600 pull-left">Summary Usage History</h5>
+                    <h5 class="mb-1 mt-2 text-bold-600 pull-right">{{ $last_date }} - {{ $current_date }}</h5>
+                </div>
             </div>
         </div>
 
@@ -259,8 +261,153 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-12"> <hr/></div>
             <div class="col-md-12" id="usage-summary-div" style="display: none;">
+            </div>
+        </div>
 
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div>
+                    <h5 class="mb-1 mt-2 text-bold-600 pull-left">Usage Details</h5>
+                    <h5 class="mb-1 mt-2 text-bold-600 pull-right">{{ $last_date }} - {{ $current_date }}</h5>
+                </div>
+            </div>
+            <div class="col-md-12"> <hr/></div>
+            <div class="col-md-12" id="usage-details-div">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <ul class="nav nav-tabs nav-linetriangle no-hover-bg">
+                                            <li class="nav-item">
+                                                <a class="nav-link active"
+                                                   data-toggle="tab"
+                                                   aria-controls="minutes"
+                                                   href="#minutes-usage"
+                                                   aria-expanded="true">Minutes</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link"
+                                                   data-toggle="tab"
+                                                   aria-controls="sms"
+                                                   href="#sms-usage"
+                                                   aria-expanded="false">SMS</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link"
+                                                   data-toggle="tab"
+                                                   aria-controls="internet"
+                                                   href="#internet-usage"
+                                                   aria-expanded="false">Internet</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link"
+                                                   data-toggle="tab"
+                                                   aria-controls="internet"
+                                                   href="#subscription-usage"
+                                                   aria-expanded="false">Subscription</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link"
+                                                   data-toggle="tab"
+                                                   aria-controls="internet"
+                                                   href="#recharge-usage"
+                                                   aria-expanded="false">Recharge</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content px-1 pt-1">
+                                            <div role="tabpanel"
+                                                 class="tab-pane active"
+                                                 id="minutes-usage"
+                                                 aria-expanded="true"
+                                                 aria-labelledby="minutes">
+                                                <div class="col-md-12" id="minutes-usage-loader">
+                                                    <div class="loader-wrapper">
+                                                        <div class="loader-wrapper">
+                                                            <div class="loader-container">
+                                                                <div class="ball-clip-rotate-multiple loader-success">
+                                                                    <div></div>
+                                                                    <div></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane"
+                                                 id="sms-usage"
+                                                 aria-labelledby="base-tab42">
+                                                <div class="col-md-12" id="sms-usage-loader">
+                                                    <div class="loader-wrapper">
+                                                        <div class="loader-wrapper">
+                                                            <div class="loader-container">
+                                                                <div class="ball-clip-rotate-multiple loader-success">
+                                                                    <div></div>
+                                                                    <div></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane"
+                                                 id="internet-usage"
+                                                 aria-labelledby="base-tab43">
+                                                <div class="col-md-12" id="internet-usage-loader">
+                                                    <div class="loader-wrapper">
+                                                        <div class="loader-wrapper">
+                                                            <div class="loader-container">
+                                                                <div class="ball-clip-rotate-multiple loader-success">
+                                                                    <div></div>
+                                                                    <div></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane"
+                                                 id="subscription-usage"
+                                                 aria-labelledby="base-tab43">
+                                                <div class="col-md-12" id="subscription-usage-loader">
+                                                    <div class="loader-wrapper">
+                                                        <div class="loader-wrapper">
+                                                            <div class="loader-container">
+                                                                <div class="ball-clip-rotate-multiple loader-success">
+                                                                    <div></div>
+                                                                    <div></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane"
+                                                 id="recharge-usage"
+                                                 aria-labelledby="base-tab43">
+                                                <div class="col-md-12" id="recharge-usage-loader">
+                                                    <div class="loader-wrapper">
+                                                        <div class="loader-wrapper">
+                                                            <div class="loader-container">
+                                                                <div class="ball-clip-rotate-multiple loader-success">
+                                                                    <div></div>
+                                                                    <div></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -296,8 +443,8 @@
                 getBalanceData(number);
                 getAuditData(number);
                 getBonusData(number);
-
                 getLastLogin(number);
+                getUsageDetails(number)
 
             });
 
@@ -390,6 +537,57 @@
                     $("#usage-summary-loader").hide();
 
                     $("#usage-summary-div").show();
+                })
+            }
+
+            function getUsageDetails(number) {
+                let minutes = fetchData(
+                    {
+                        'number': number
+                    }, '/developer/api/debug/usage-details/' + number + '/minutes');
+
+                let sms = fetchData(
+                    {
+                        'number': number
+                    }, '/developer/api/debug/usage-details/' + number + '/sms');
+
+                let internet = fetchData(
+                    {
+                        'number': number
+                    }, '/developer/api/debug/usage-details/' + number + '/internet');
+
+                let subscription = fetchData(
+                    {
+                        'number': number
+                    }, '/developer/api/debug/usage-details/' + number + '/subscription');
+
+                let recharge = fetchData(
+                    {
+                        'number': number
+                    }, '/developer/api/debug/usage-details/' + number + '/recharge');
+
+                minutes.done(function (data) {
+                    $("#minutes-usage").html(data);
+                })
+
+                sms.done(function (data) {
+                    $("#sms-usage").html(data);
+                })
+
+                internet.done(function (data) {
+                    $("#internet-usage").html(data);
+                })
+
+                internet.fail(function (data) {
+                    $("#internet-usage").html(data);
+                })
+
+                recharge.done(function (data) {
+                    $("#recharge-usage").html(data);
+                })
+
+                subscription.done(function (data) {
+                    $("#subscription-usage").html(data);
                 })
             }
 

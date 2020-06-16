@@ -11,6 +11,7 @@ use App\Services\BlApiHub\History\CustomerInternetUsageService;
 use App\Services\BlApiHub\History\CustomerRechargeHistoryService;
 use App\Services\BlApiHub\History\CustomerRoamingUsageService;
 use App\Services\BlApiHub\History\CustomerSmsUsageService;
+use App\Services\BlApiHub\History\CustomerSubscriptionUsageService;
 use App\Services\BlApiHub\History\CustomerSummaryUsageService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
@@ -30,12 +31,14 @@ class ApiDebugController extends Controller
      * ApiDebugController constructor.
      * @param  BalanceService  $balanceService
      * @param  AuditLogsService  $auditLogsService
+     * @param  BonusLogsService  $bonusLogsService
      * @param  CustomerSummaryUsageService  $customerSummaryUsageService
      * @param  CustomerCallUsageService  $callUsageService
      * @param  CustomerInternetUsageService  $internetUsageService
      * @param  CustomerSmsUsageService  $smsUsageService
      * @param  CustomerRechargeHistoryService  $rechargeHistoryService
      * @param  CustomerRoamingUsageService  $roamingUsageService
+     * @param  CustomerSubscriptionUsageService  $subscriptionUsageService
      */
     public function __construct(
         BalanceService $balanceService,
@@ -46,7 +49,8 @@ class ApiDebugController extends Controller
         CustomerInternetUsageService $internetUsageService,
         CustomerSmsUsageService $smsUsageService,
         CustomerRechargeHistoryService $rechargeHistoryService,
-        CustomerRoamingUsageService $roamingUsageService
+        CustomerRoamingUsageService $roamingUsageService,
+        CustomerSubscriptionUsageService $subscriptionUsageService
     ) {
         $this->balanceService = $balanceService;
         $this->auditLogsService = $auditLogsService;
@@ -57,6 +61,7 @@ class ApiDebugController extends Controller
         $this->rechargeHistoryService = $rechargeHistoryService;
         $this->roamingUsageService = $roamingUsageService;
         $this->bonusLogsService = $bonusLogsService;
+        $this->subscriptionUsageService = $subscriptionUsageService;
         $this->middleware(['auth', 'debugEntryCheck']);
     }
 
@@ -66,7 +71,7 @@ class ApiDebugController extends Controller
     public function userBalancePanel()
     {
         $current_date = Carbon::now()->toDateString();
-        $last_date = Carbon::now()->subDays(7)->toDateString();
+        $last_date = Carbon::now()->subDays(9)->toDateString();
         return view('admin.debug.index', compact('current_date', 'last_date'));
     }
 
@@ -146,7 +151,6 @@ class ApiDebugController extends Controller
     public function getUsageDetails($number, $type)
     {
         $customer = Customer::where('phone', $number)->first();
-        $customer = Customer::where('phone', $number)->first();
         $from = Carbon::now()->subDays(9)->toDateString();
         $to = Carbon::now()->toDateString();
 
@@ -169,6 +173,11 @@ class ApiDebugController extends Controller
         }
         if ($type == "recharge") {
             $details = ($this->rechargeHistoryService->getRechargeHistory($customer, $from, $to))->getData();
+        }
+
+        if ($type == "subscription") {
+            $details = ($this->subscriptionUsageService->getSubscriptionUsageHistory($customer, $from, $to))->getData();
+            //dd($details);
         }
 
         return view($views [$type], compact('details'))->render();

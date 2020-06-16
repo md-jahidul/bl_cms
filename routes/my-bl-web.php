@@ -372,4 +372,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     Route::get('developer/api/debug/last-login/{number}', 'CMS\ApiDebugController@getLastLogin');
 
     Route::get('developer/api/debug/usage-summary/{number}', 'CMS\ApiDebugController@getUsageSummary');
+
+    Route::get('developer/api/debug/usage-details/{number}/{type}', 'CMS\ApiDebugController@getUsageDetails');
 });

@@ -5,25 +5,16 @@
                 <table class="table table-bordered" id="audit_log_table">
                     <thead>
                     <tr>
-                        <th>Number</th>
-                        <th>Type</th>
-                        <th>Count & Time</th>
-                        <th>Cost</th>
+                        <th>Date</th>
+                        <th>Amount</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($details->data as $item)
                         <tr>
-                            <td>{{ $item->number }}</td>
-                            <td>{{ $item->is_outgoing? 'Outgoing' : 'Incoming' }}</td>
-                            <td class="text-center">
-                                <div class="badge badge-pill badge-info">
-                                    {{ number_format($item->usage) }}
-                                </div><br/>
-                                <span>   {{ \Carbon\Carbon::parse($item->date, 'UTC')->setTimezone('Asia/Dhaka')->toDateTimeString() }} </span>
-                            </td>
+                            <td>{{ \Carbon\Carbon::parse($item->date, 'UTC')->setTimezone('Asia/Dhaka')->toDateTimeString()  }}</td>
                             <td>
-                                {{ number_format($item->cost) }} Tk.
+                                {{ number_format($item->amount) }} Tk.
                             </td>
                         </tr>
                     @endforeach
