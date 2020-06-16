@@ -15,17 +15,15 @@
                     @foreach($details->data as $item)
                         <tr>
                             <td>{{ $item->number }}</td>
-                            <td>{{ $item->is_outgoing? 'Outgoing' : 'Incoming' }}</td>
                             <td>
-                                @if($item->duration >= 60)
-                                    @if(floor($item->duration) == $item->duration)
-                                        {{ $item->duration/60 }} Minutes
-                                    @else
-                                        {{ round($item->duration/60, 1) }} Minutes
-                                    @endif
+                                @if($item->is_outgoing)
+                                    <span class="badge badge-default badge-info">Outgoing</span>
                                 @else
-                                    {{ round($item->duration , 1) }} Seconds
+                                    <span class="badge badge-default badge-success">Incoming</span>
                                 @endif
+                            </td>
+                            <td>
+                                {{  gmdate("H:i:s", $item->duration ) }}
                             </td>
                             <td>
                                 {{ number_format($item->cost) }} Tk.
