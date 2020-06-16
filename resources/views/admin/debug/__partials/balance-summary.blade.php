@@ -10,7 +10,7 @@
                             </div>
                             <div class="media-body p-2">
                                 <h4>Current Balance</h4>
-                                <h6 class="warning">valid Till {{ \Carbon\Carbon::parse($summary->data->balance->expires_in, 'UTC')->format('d M, Y') }} </h6>
+                                <h6 class="warning">valid Till {{ \Carbon\Carbon::parse($summary->data->balance->expires_in, 'UTC')->setTimezone("Asia/Dhaka")->format('d M, Y') }} </h6>
                             </div>
                             <div class="media-right bg-success p-2 media-middle rounded-right">
                                 <i class="icon-wallet font-large-2 text-white"></i>

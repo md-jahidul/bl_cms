@@ -24,7 +24,7 @@
     <section id="report-div" style="display: none;">
         <div class="row">
             <div class="col-md-12">
-                <h5 class="mb-1">Balance Summary</h5>
+                <h5 class="mb-1 mt-2 text-bold-600">Balance Summary</h5>
                 <hr>
             </div>
         </div>
@@ -47,7 +47,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h5 class="mb-1">Balance Details</h5>
+                <h5 class="mb-1 mt-2 text-bold-600">Balance Details</h5>
                 <hr>
             </div>
             {{--    <div class="col-md-12" id="balance-details-loader">
@@ -152,6 +152,117 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <h5 class="mb-1 mt-2 text-bold-600">Recent Browse History</h5>
+            </div>
+            <div class="col-md-4">
+                <input type='date'
+                       class="form-control datetime"
+                       id="date"
+                       value="{{ $current_date }}"
+                       min="{{ $last_date }}"
+                       max="{{ $current_date }}"
+                       name="date" >
+            </div>
+            <hr>
+            <div class="col-md-12">
+                <table class="table table-bordered" id="audit_log_table">
+                    <thead>
+                    <tr>
+                        <th>Browse Time</th>
+                        <th>URL</th>
+                        <th>Source</th>
+                        <th>Request Data</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mt-2">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="loader-wrapper" id="last-login-loader">
+                                <div class="loader-wrapper">
+                                    <div class="loader-container">
+                                        <div class="ball-clip-rotate-multiple loader-success">
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="media d-flex" id="last-login-div" style="display: none;">
+                                <div class="align-self-center">
+                                    <i class="icon-login success font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-right">
+                                    <h3 id="last-login-data"></h3>
+                                    <span class="success">Last login</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5 class="mb-1 mt-2 text-bold-600">Recent Login Bonus Status</h5>
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <input type='date'
+                               class="form-control datetime"
+                               id="date_bonus"
+                               value="{{ $current_date }}"
+                               min="{{ $last_date }}"
+                               max="{{ $current_date }}"
+                               name="date" >
+                    </div>
+                </div>
+                <hr>
+                <div class="col-md-12">
+                    <table class="table table-bordered" id="bonus_log_table">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Bonus type</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h5 class="mb-1 mt-2 text-bold-600">Summary Usage History</h5>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" id="usage-summary-loader">
+                <div class="loader-wrapper">
+                    <div class="loader-wrapper">
+                        <div class="loader-container">
+                            <div class="ball-clip-rotate-multiple loader-success">
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" id="usage-summary-div" style="display: none;">
+
+            </div>
+        </div>
     </section>
 @stop
 
@@ -161,9 +272,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-loader.css') }}">
 @endpush
 @push('page-js')
+
     <script>
         $(function () {
-            let fetchData;
             $(document).on('click', '#search_btn', function (e) {
                 let number;
                 let pattern;
@@ -179,7 +290,14 @@
 
                 $('#report-div').show();
 
+                $("#last-login-loader").show();
+                $("#last-login-div").hide();
+
                 getBalanceData(number);
+                getAuditData(number);
+                getBonusData(number);
+
+                getLastLogin(number);
 
             });
 
@@ -188,6 +306,21 @@
                     data: query,
                     url: dataURL
                 });
+            }
+
+            function getLastLogin(number)
+            {
+                let getLastLogin = fetchData(
+                    {
+                        'number': number
+                    }, '/developer/api/debug/last-login/' + number);
+
+                getLastLogin.done(function (data) {
+                    $("#last-login-data").html(data);
+
+                    $("#last-login-loader").hide();
+                    $("#last-login-div").show();
+                })
             }
 
             function getBalanceData(number) {
@@ -211,12 +344,20 @@
                         'number': number
                     }, '/developer/api/debug/balance-details/' + number + '/sms');
 
+                //developer/api/debug/usage-summary/{number}
+
+                let getUsageSummary = fetchData(
+                    {
+                        'number': number
+                    }, '/developer/api/debug/usage-summary/' + number);
+
                 $("#balance-summary-loader").show();
                 $("#balance-summary-div").hide();
 
                 $("#internet-details-loader").show();
                 $("#minutes-details-loader").show();
                 $("#sms-details-loader").show();
+                $("#usage-summary-loader").hide();
 
                 getSummary.done(function (data) {
                     $("#balance-summary-div").html(data);
@@ -242,7 +383,123 @@
 
                     $("#sms-details-loader").hide();
                 })
+
+                getUsageSummary.done(function (data) {
+                    $("#usage-summary-div").html(data);
+
+                    $("#usage-summary-loader").hide();
+
+                    $("#usage-summary-div").show();
+                })
             }
+
+            function getAuditData(number) {
+
+                $('#audit_log_table').DataTable().destroy();
+
+                $("#audit_log_table").dataTable({
+                    scrollX: true,
+                    processing: true,
+                    searching: false,
+                    serverSide: true,
+                    ordering: false,
+                    autoWidth: false,
+                    pageLength: 10,
+                    lengthChange: false,
+                    ajax: {
+                        url: "/developer/api/debug/audit_logs/" + number,
+                        data: {
+                            date: function () {
+                                return $("#date").val();
+                            }
+                        }
+                    },
+                    columns: [
+                        {
+                            name: 'browse_date',
+                            render: function (data, type, row) {
+                                return row.browse_date;
+                            }
+                        },
+
+                        {
+                            name: 'browse_url',
+                            render: function (data, type, row) {
+                                return row.browse_url;
+                            }
+                        },
+
+                        {
+                            name: 'source',
+                            render: function (data, type, row) {
+                                return row.source;
+                            }
+                        },
+                        {
+                            name: 'request_data',
+                            render: function (data, type, row) {
+                                return row.request_data;
+                            }
+                        }
+                    ]
+                });
+            }
+
+            function getBonusData(number) {
+
+                $('#bonus_log_table').DataTable().destroy();
+
+                $("#bonus_log_table").dataTable({
+                    scrollX: true,
+                    processing: true,
+                    searching: false,
+                    serverSide: true,
+                    ordering: false,
+                    autoWidth: false,
+                    pageLength: 10,
+                    lengthChange: false,
+                    ajax: {
+                        url: "/developer/api/debug/bonus_logs/" + number,
+                        data: {
+                            date: function () {
+                                return $("#date_bonus").val();
+                            }
+                        }
+                    },
+                    columns: [
+                        {
+                            name: 'date',
+                            render: function (data, type, row) {
+                                return row.date;
+                            }
+                        },
+
+                        {
+                            name: 'bonus_type',
+                            render: function (data, type, row) {
+                                return row.bonus_type;
+                            }
+                        },
+
+                        {
+                            name: 'status',
+                            render: function (data, type, row) {
+                                return row.status;
+                            }
+                        }
+                    ]
+                });
+            }
+
+            $(document).on('input', '#date', function (e) {
+                e.preventDefault();
+                $('#audit_log_table').DataTable().ajax.reload();
+            });
+
+            $(document).on('input', '#date_bonus', function (e) {
+                e.preventDefault();
+                $('#bonus_log_table').DataTable().ajax.reload();
+            });
         })
     </script>
 @endpush

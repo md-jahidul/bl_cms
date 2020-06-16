@@ -365,4 +365,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
             ->name('mybl.api.debug.balance-summary');
     Route::get('developer/api/debug/balance-details/{number}/{type}', 'CMS\ApiDebugController@getBalanceDetails')
         ->name('mybl.api.debug.balance-details');
+
+    Route::get('developer/api/debug/audit_logs/{number}', 'CMS\ApiDebugController@getBrowseHistory');
+    Route::get('developer/api/debug/bonus_logs/{number}', 'CMS\ApiDebugController@getLoginBonusHistory');
+
+    Route::get('developer/api/debug/last-login/{number}', 'CMS\ApiDebugController@getLastLogin');
+
+    Route::get('developer/api/debug/usage-summary/{number}', 'CMS\ApiDebugController@getUsageSummary');
 });

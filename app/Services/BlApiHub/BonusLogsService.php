@@ -3,6 +3,7 @@
 namespace App\Services\BlApiHub;
 
 use App\Models\AuditLog;
+use App\Models\SignInBonusLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ use Illuminate\Http\Request;
  * Class AuditLogsService
  * @package App\Services\BlApiHub
  */
-class AuditLogsService
+class BonusLogsService
 {
     public function getLogs(Request $request, $number)
     {
@@ -20,13 +21,13 @@ class AuditLogsService
 
         $date = $request->date ? $request->date : Carbon::now()->toDateString();
 
-        $builder = AuditLog::where('msisdn', '88' . $number);
+        $builder = SignInBonusLog::where('msisdn', substr($number, 1));
 
-        $builder = $builder->whereBetween('created_at', [$date . '  00:00:00', $date . '  23:59:59']);
+        $builder = $builder->where('date', $date);
         $all_items_count = $builder->count();
 
 
-        $items = $builder->orderBy('created_at', 'desc')->skip($start)->take($length)->get();
+        $items = $builder->orderBy('date', 'desc')->skip($start)->take($length)->get();
 
         $response = [
             'draw' => $draw,
@@ -37,10 +38,9 @@ class AuditLogsService
 
         $items->each(function ($item) use (&$response) {
             $response['data'][] = [
-                'browse_date'       => Carbon::parse($item->created_at)->toDateTimeString(),
-                'source'            => $item->source,
-                'browse_url'        => $item->browse_url,
-                'request_data'      => $item->request_data
+                'date'              => $item->date,
+                'bonus_type'        => $item->bonus_type,
+                'status'            => $item->status
             ];
         });
 
