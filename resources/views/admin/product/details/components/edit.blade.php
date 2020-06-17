@@ -282,6 +282,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+    <style>
+        .note-editor.note-frame.fullscreen .note-editable {
+            background-color: white;
+        }
+    </style>
 @endpush
 @push('page-js')
     <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>

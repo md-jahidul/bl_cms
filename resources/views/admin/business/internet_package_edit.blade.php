@@ -190,24 +190,24 @@
                             <div class="form-group">
 
                                 <label for="Details">Package Details (EN)</label>
-                                <textarea type="text" name="package_details_en" class="form-control package_details">{{$internet->package_details_en}}</textarea>
+                                <textarea type="text" name="package_details_en" id="summernote_editor" class="form-control">{{$internet->package_details_en}}</textarea>
 
 
                             </div>
 
-                            
+
                         </div>
-                        
+
                         <div class="col-md-6 col-xs-12">
                             <div class="form-group">
 
                                 <label for="Details">Package Details (BN)</label>
-                                <textarea type="text" name="package_details_bn" class="form-control package_details">{{$internet->package_details_bn}}</textarea>
+                                <textarea type="text" name="package_details_bn" id="summernote_editor" class="form-control">{{$internet->package_details_bn}}</textarea>
 
                             </div>
 
                         </div>
-                        
+
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
@@ -238,32 +238,32 @@
                                 <label>Banner Photo (Web)</label>
                                 <input type="file" class="dropify" name="banner_photo" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                
+
                                 <input type="hidden" name="old_banner" value="{{$internet->banner_photo}}">
-                                
+
                                 @if($internet->banner_photo != "")
                                 <img src="{{ config('filesystems.file_base_url') . $internet->banner_photo }}" alt="Banner Photo" width="100%" />
                                 @endif
                             </div>
 
                         </div>
-                        
+
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
                                 <label>Banner Photo (Mobile)</label>
                                 <input type="file" class="dropify" name="banner_mobile" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                
+
                                 <input type="hidden" name="old_banner_mob" value="{{$internet->banner_image_mobile}}">
-                                
+
                                 @if($internet->banner_image_mobile != "")
                                 <img src="{{ config('filesystems.file_base_url') . $internet->banner_image_mobile }}" alt="Banner Photo" width="100%" />
                                 @endif
                             </div>
 
                         </div>
-                        
+
                         <div class="col-md-4 col-xs-12">
 
                            <div class="form-group">
@@ -276,7 +276,7 @@
 
                             <label>Banner Photo Name<span class="text-danger">*</span></label>
                             <input type="hidden" name="old_banner_name" value="{{$internet->banner_name}}">
-                            
+
                             <input type="text" class="form-control banner_name" value="{{$internet->banner_name}}" required name="banner_name" placeholder="Photo Name">
 
                             <small class="text-info">
@@ -284,8 +284,8 @@
                             </small>
 
                         </div>
-                        
-                        
+
+
                          <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
@@ -299,7 +299,7 @@
                             </div>
 
                         </div>
-                        
+
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
@@ -313,7 +313,7 @@
                             </div>
 
                         </div>
-                       
+
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
@@ -400,18 +400,18 @@ if (Session::has('error')) {
 
 
     //text editor for package details
-    $("textarea.package_details").summernote({
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            // ['table', ['table']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['view', ['codeview']]
-        ],
-        height: 200
-    });
+    // $("textarea.package_details").summernote({
+    //     toolbar: [
+    //         ['style', ['bold', 'italic', 'underline', 'clear']],
+    //         ['font', ['strikethrough', 'superscript', 'subscript']],
+    //         ['fontsize', ['fontsize']],
+    //         ['color', ['color']],
+    //         // ['table', ['table']],
+    //         ['para', ['ul', 'ol', 'paragraph']],
+    //         ['view', ['codeview']]
+    //     ],
+    //     height: 200
+    // });
 
     $(".mrp, .tax, .price, .validity").on("keypress keyup blur", function (event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));

@@ -63,6 +63,16 @@
     {{--SummerNote Editor CSS--}}
     <link href="{{ asset('app-assets/vendors/js/editors/summernote/summernote-lite.min.css') }}" rel="stylesheet">
 
+    {{--Summernote Table Colore Modify--}}
+    <style>
+        .table-primary th {
+            background-color: #b1e2e7; /* #d9eef0 This front-end default table colour */
+        }
+        .table-primary, .table-primary > th, .table-primary > td {
+            background-color: white;
+        }
+    </style>
+
     @stack('page-css')
     @yield('page-css')
     @stack('style')
@@ -142,20 +152,20 @@
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-table-headers.js') }}" type="text/javascript"></script>
 <script>
-
     $(function () {
         $("textarea#summernote_editor").summernote({
+            tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
+            toolbar: [
+                ['style', ['style'],['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['table', ['table']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture', 'video', 'hr']],
+                ['view', ['fullscreen', 'codeview']]
+            ],
             popover: {
-                toolbar: [
-                    ['style', ['style'],['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['table', ['table']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['view', ['fullscreen', 'codeview']]
-                ],
-
                 table: [
                     ['custom', ['tableHeaders']],
                     ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
