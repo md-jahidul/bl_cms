@@ -199,41 +199,28 @@ class PushNotificationController extends Controller
             ];
         } else {
 
-            return [
-                'success' => false,
-                'message' => 'Input is wrong'
-            ];
-
+            return ['success' => false, 'message' => 'Input is wrong'];
         }
 
-        /*NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+         /*NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
             ->onQueue('notification');
 
-        session()->flash('success', "Notification has been sent successfully");
+         session()->flash('success', "Notification has been sent successfully");
 
-        return redirect(route('notification.index'));*/
+         return redirect(route('notification.index'));*/
 
          $response = PushNotificationService::sendNotification($notification);
 
-         if(json_decode($response)->status == "SUCCESS"){
-
-             if($request->filled('user_phone'))
-             {
-                 $this->notificationService->attachNotificationToUser($notification_id, $user_phone);
+         Log::info($response);
+         $notify = json_decode($response);
+         if($notify->status == "SUCCESS"){
+             if($request->filled('user_phone')) {
+                 $this->notificationService->attachNotificationToUser($notify->notification_id, $user_phone);
              }
-             
-
-             return [
-                 'success' => true,
-                 'message' => 'Notification Sent'
-             ];
+             return [ 'success' => true, 'message' => 'Notification Sent'];
          }
-
         } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => $e->getMessage()
-            ];
+            return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 }
