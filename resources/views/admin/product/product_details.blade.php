@@ -231,18 +231,18 @@
 
 <script>
 $(function () {
-$("textarea#details").summernote({
-    toolbar: [
-        ['style', ['bold', 'italic', 'underline', 'clear']],
-        ['font', ['strikethrough', 'superscript', 'subscript']],
-        ['fontsize', ['fontsize']],
-        ['color', ['color']],
-        // ['table', ['table']],
-        ['para', ['ul', 'ol', 'paragraph']],
-        ['view', ['fullscreen', 'codeview']]
-    ],
-    height: 200
-})
+// $("textarea#details").summernote({
+//     toolbar: [
+//         ['style', ['bold', 'italic', 'underline', 'clear']],
+//         ['font', ['strikethrough', 'superscript', 'subscript']],
+//         ['fontsize', ['fontsize']],
+//         ['color', ['color']],
+//         // ['table', ['table']],
+//         ['para', ['ul', 'ol', 'paragraph']],
+//         ['view', ['fullscreen', 'codeview']]
+//     ],
+//     height: 200
+// })
 
 // $('#design_structure').change(function () {
 //     if($(this).val() === 'structure_1') {

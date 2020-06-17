@@ -60,6 +60,9 @@
         window.Laravel = {!! json_encode(['csrfToken' => csrf_token(),]) !!};
     </script>
 
+    {{--SummerNote Editor CSS--}}
+    <link href="{{ asset('app-assets/vendors/js/editors/summernote/summernote-lite.min.css') }}" rel="stylesheet">
+
     @stack('page-css')
     @yield('page-css')
     @stack('style')
@@ -135,9 +138,34 @@
 
 <script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
 
-
 @stack('page-js')
+<script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-table-headers.js') }}" type="text/javascript"></script>
 <script>
+
+    $(function () {
+        $("textarea#summernote_editor").summernote({
+            popover: {
+                toolbar: [
+                    ['style', ['style'],['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['table', ['table']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['view', ['fullscreen', 'codeview']]
+                ],
+
+                table: [
+                    ['custom', ['tableHeaders']],
+                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                ],
+            },
+
+            height:200
+        })
+    })
 
         function readURL(input) {
         if (input.files && input.files[0]) {

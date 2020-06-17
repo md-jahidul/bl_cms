@@ -1,6 +1,6 @@
 <div class="form-group col-md-6 {{ $errors->has('details_en') ? ' error' : '' }}">
     <label for="details_en" >Details (English)</label>
-    <textarea type="text" name="details_en"  class="form-control" placeholder="Enter details in English" id="details">{{ $productDetail->product_details->details_en }}</textarea>
+    <textarea type="text" name="details_en"  class="form-control" placeholder="Enter details in English" id="summernote_editor">{{ $productDetail->product_details->details_en }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('details_en'))
         <div class="help-block">{{ $errors->first('details_en') }}</div>
@@ -10,7 +10,7 @@
 <div class="form-group col-md-6 {{ $errors->has('details_bn') ? ' error' : '' }}">
     <label for="details_bn">Details (Bangla)</label>
     <textarea type="text" name="details_bn"  class="form-control" placeholder="Enter details in Bangla" id="details"
-              id="details">{{ $productDetail->product_details->details_bn }}</textarea>
+              id="summernote_editor">{{ $productDetail->product_details->details_bn }}</textarea>
     <div class="help-block"></div>
     @if ($errors->has('details_bn'))
         <div class="help-block">{{ $errors->first('details_bn') }}</div>
