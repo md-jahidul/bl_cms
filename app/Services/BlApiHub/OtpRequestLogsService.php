@@ -21,7 +21,7 @@ class OtpRequestLogsService
 
         $date = $request->date ? $request->date : Carbon::now()->toDateString();
 
-        $builder = BlOtpVerifyLog::where('msisdn', '88' . $number);
+        $builder = BlOtpVerifyLog::where('msisdn', $number);
 
 
         $builder = $builder->where('date', $date);
