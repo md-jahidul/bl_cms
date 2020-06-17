@@ -11,11 +11,7 @@
                         <div>
                             <small class="text-muted pull-left"><strong class="info">
                                     @if($item->remaining >= 1024)
-                                        @if(floor($item->remaining) == $item->remaining)
-                                            {{ $item->remaining/1024 }} GB
-                                        @else
-                                            {{ round($item->remaining/1024, 1) }} GB
-                                        @endif
+                                        {{ round($item->remaining/1024, 1) }} GB
                                     @else
                                         {{ round($item->remaining , 1) }} MB
                                     @endif

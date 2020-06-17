@@ -22,7 +22,7 @@
                                         $hours      = $now->copy()->addDays($days)->diffInHours($expires_in);
                                         $minutes    = $now->copy()->addDays($days)->addHours($hours)->diffInMinutes($expires_in);
                                     @endphp
-                                </strong> SMS Left </small>
+                                </strong> Minutes Left </small>
                             <small class="text-muted pull-right mr-5">Valid for <strong class="warning">{{ $days }}
                                     days {{ $hours }} hours {{ $minutes }} minutes
                                 </strong></small>
