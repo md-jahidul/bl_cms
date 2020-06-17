@@ -241,6 +241,39 @@
 
         <div class="row">
             <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5 class="mb-1 mt-2 text-bold-600">Recent OTP Request Logs</h5>
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <input type='date'
+                               class="form-control datetime"
+                               id="date_otp"
+                               value="{{ $current_date }}"
+                               min="{{ $last_date }}"
+                               max="{{ $current_date }}"
+                               name="date" >
+                    </div>
+                </div>
+                <hr>
+                <div class="col-md-12">
+                    <table class="table table-bordered" id="otp_log_table">
+                        <thead>
+                        <tr>
+                            <th>Request Time</th>
+                            <th>OTP</th>
+                            <th>Source</th>
+                            <th>Version</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
                 <div>
                     <h5 class="mb-1 mt-2 text-bold-600 pull-left">Summary Usage History</h5>
                     <h5 class="mb-1 mt-2 text-bold-600 pull-right">{{ $last_date }} - {{ $current_date }}</h5>
@@ -444,7 +477,8 @@
                 getAuditData(number);
                 getBonusData(number);
                 getLastLogin(number);
-                getUsageDetails(number)
+                getUsageDetails(number);
+                getOtpData(number);
 
             });
 
@@ -683,6 +717,76 @@
                             name: 'status',
                             render: function (data, type, row) {
                                 return row.status;
+                            }
+                        }
+                    ]
+                });
+            }
+
+            function getOtpData(number) {
+
+                $('#otp_log_table').DataTable().destroy();
+
+                $("#otp_log_table").dataTable({
+                    scrollX: true,
+                    processing: true,
+                    searching: false,
+                    serverSide: true,
+                    ordering: false,
+                    autoWidth: false,
+                    pageLength: 10,
+                    lengthChange: false,
+                    ajax: {
+                        url: "/developer/api/debug/otp-logs/" + number,
+                        data: {
+                            date: function () {
+                                return $("#date_otp").val();
+                            }
+                        }
+                    },
+                    columns: [
+                        {
+                            name: 'request_time',
+                            render: function (data, type, row) {
+                                return row.date;
+                            }
+                        },
+
+                        {
+                            name: 'otp',
+                            render: function (data, type, row) {
+                                return row.otp;
+                            }
+                        },
+
+                        {
+                            name: 'source',
+                            render: function (data, type, row) {
+                                return row.source;
+                            }
+                        },
+
+                        {
+                            name: 'otp',
+                            render: function (data, type, row) {
+                                return row.version;
+                            }
+                        },
+
+                        {
+                            name: 'status',
+                            render: function (data, type, row) {
+                                if(row.status == 200){
+                                    return `<div class="badge badge-success">
+                                                  <span>`+ row.status +`</span>
+                                                  <i class="la la-check-circle-o font-medium-2"></i>
+                                                </div>`;
+                                }
+
+                                return `<div class="badge badge-danger">
+                                                  <span>`+ row.status +`</span>
+                                                  <i class="la la-bell-o font-medium-2"></i>
+                                                </div>`;
                             }
                         }
                     ]

@@ -13,6 +13,7 @@ use App\Services\BlApiHub\History\CustomerRoamingUsageService;
 use App\Services\BlApiHub\History\CustomerSmsUsageService;
 use App\Services\BlApiHub\History\CustomerSubscriptionUsageService;
 use App\Services\BlApiHub\History\CustomerSummaryUsageService;
+use App\Services\BlApiHub\OtpRequestLogsService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -50,7 +51,8 @@ class ApiDebugController extends Controller
         CustomerSmsUsageService $smsUsageService,
         CustomerRechargeHistoryService $rechargeHistoryService,
         CustomerRoamingUsageService $roamingUsageService,
-        CustomerSubscriptionUsageService $subscriptionUsageService
+        CustomerSubscriptionUsageService $subscriptionUsageService,
+        OtpRequestLogsService $otpRequestLogsService
     ) {
         $this->balanceService = $balanceService;
         $this->auditLogsService = $auditLogsService;
@@ -62,6 +64,7 @@ class ApiDebugController extends Controller
         $this->roamingUsageService = $roamingUsageService;
         $this->bonusLogsService = $bonusLogsService;
         $this->subscriptionUsageService = $subscriptionUsageService;
+        $this->otpRequestLogsService = $otpRequestLogsService;
         $this->middleware(['auth', 'debugEntryCheck']);
     }
 
@@ -181,5 +184,15 @@ class ApiDebugController extends Controller
         }
 
         return view($views [$type], compact('details'))->render();
+    }
+
+    /**
+     * @param  Request  $request
+     * @param $number
+     * @return array
+     */
+    public function getOtpRequestLogs(Request $request, $number)
+    {
+        return $this->otpRequestLogsService->getLogs($request, $number);
     }
 }
