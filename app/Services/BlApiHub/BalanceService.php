@@ -574,7 +574,9 @@ class BalanceService extends BaseService
     {
 
         if (!$user) {
-            return $this->responseFormatter->sendErrorResponse("User not found", [], 404);
+            return $this->responseFormatter->sendErrorResponse("User not found", [
+                'message' => "MSISDN NOT FOUND!"
+            ], 404);
         }
 
         $customer_id = $user->customer_account_id;
