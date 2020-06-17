@@ -802,6 +802,11 @@
                 e.preventDefault();
                 $('#bonus_log_table').DataTable().ajax.reload();
             });
+
+            $(document).on('input', '#date_otp', function (e) {
+                e.preventDefault();
+                $('#otp_log_table').DataTable().ajax.reload();
+            });
         })
     </script>
 @endpush
