@@ -481,6 +481,13 @@
                             </li>
                         @endif
 
+                        <li class="{{ is_active_url('store-locations/entry') }}">
+                            <a class="menu-item" href="{{ url('store-locations/entry') }}"
+                               data-i18n="nav.templates.vert.classic_menu">
+                                <i class="la la-file-image-o"></i> Store Locations
+                            </a>
+                        </li>
+
                     </ul>
                 </li>
             @endif

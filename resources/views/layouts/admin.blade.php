@@ -65,6 +65,9 @@
 
     {{--Summernote Table Colore Modify--}}
     <style>
+        .note-editor.note-frame.fullscreen .note-editable {
+            background-color: white;
+        }
         .table-primary th {
             background-color: #b1e2e7; /* #d9eef0 This front-end default table colour */
         }
