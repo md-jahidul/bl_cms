@@ -10,15 +10,14 @@
 						<div class="form-group">
 							<label for="category_type">Select Component Type</label>
 							<select id="component_type" class="form-control" name="component_type" aria-invalid="false">
-								<option value="title_text_editor">VAS - Title with text editor</option>
+								<option value="title_text_editor">Title with text editor</option>
 {{--								<option value="editor_only_section">VAS - Editor Only</option>--}}
-								<option value="accordion_section">VAS - Accordion</option>
-
-								<option value="text_with_image_right">APPS - Text with image right</option>
-								<option value="text_with_image_bottom">APPS - Text with image bottom</option>
-								<option value="slider_text_with_image_right">APPS - Slider text with image right</option>
-								<option value="video_with_text_right">APPS - Video with text right</option>
-								<option value="multiple_image_banner">APPS - Multiple image banner</option>
+								<option value="accordion_section">Accordion</option>
+								<option value="text_with_image_right">Text with image right</option>
+								<option value="text_with_image_bottom">Text with image bottom</option>
+								<option value="slider_text_with_image_right">Slider text with image right</option>
+								<option value="video_with_text_right">Video with text right</option>
+								<option value="multiple_image_banner">Multiple image banner</option>
 								<option value="pricing_sections">Pricing Multiple table</option>
 							</select>
 						</div>

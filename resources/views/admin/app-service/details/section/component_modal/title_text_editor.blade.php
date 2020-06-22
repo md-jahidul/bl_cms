@@ -12,7 +12,6 @@
                 @csrf
               <div class="modal-body">
                 <div class="row">
-
                 		{{ Form::hidden('sections[section_name]', 'Title with Text Editor' ) }}
                 		{{ Form::hidden('sections[section_type]', 'title_text_editor' ) }}
                 		{{ Form::hidden('sections[tab_type]', $tab_type ) }}
@@ -50,7 +49,7 @@
                     <div class="col-md-6">
                        <div class="form-group">
                            <label for="exampleInputPassword1">Description (English)</label>
-                           <textarea name="component[0][editor_en]" class="form-control js_editor_box" rows="5"
+                           <textarea name="component[0][editor_en]" class="form-control" id="summernote_editor" rows="5"
                                      placeholder="Enter description">{{ isset($ecarrer_item->editor_en) ? $ecarrer_item->editor_en : '' }}</textarea>
                        </div>
                      </div>
@@ -58,7 +57,7 @@
                      <div class="col-md-6">
                        <div class="form-group">
                            <label for="exampleInputPassword1">Description (Bangla)</label>
-                           <textarea name="component[0][editor_bn]" class="form-control js_editor_box" rows="5"
+                           <textarea name="component[0][editor_bn]" class="form-control {{--<!--&lt;!&ndash;js_editor_box&ndash;&gt;-->--}}" id="summernote_editor" rows="5"
                                      placeholder="Enter description">{{ isset($ecarrer_item->editor_bn) ? $ecarrer_item->editor_bn : '' }}</textarea>
                        </div>
                      </div>
@@ -102,7 +101,7 @@
 
 @push('page-css')
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
-{{--<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">--}}
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
  <style>
      .modal-xl.modal_xl_custom {
          max-width: 80%;
@@ -115,31 +114,33 @@
 
 
 @push('page-js')
-{{--<script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>--}}
+<script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
 <!-- include summernote css/js-->
 {{--<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.css" rel="stylesheet">--}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.js"></script>
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.js"></script>--}}
 
-<script src="https://rawgit.com/tylerecouture/summernote-table-headers/master/summernote-table-headers.js" type="text/javascript"></script>
+{{--<script src="https://rawgit.com/tylerecouture/summernote-table-headers/master/summernote-table-headers.js" type="text/javascript"></script>--}}
 <script>
     $(function () {
 
-         $('.js_editor_box').each(function(k, v){
-            $(this).summernote({
-                toolbar: [
-                    ['style', ['style'], ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['table', ['table']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['view', ['fullscreen', 'codeview']],
-                    ['insert', ['link', 'picture', 'hr']]
-                ],
-                height:200
-            });
-         });
+        // $('.js_editor_box').text("Summernote Data");
+
+         // $('.js_editor_box').each(function(k, v){
+         //    $(this).summernote({
+         //        toolbar: [
+         //            ['style', ['style'], ['bold', 'italic', 'underline', 'clear']],
+         //            ['font', ['strikethrough', 'superscript', 'subscript']],
+         //            ['fontsize', ['fontsize']],
+         //            ['color', ['color']],
+         //            ['table', ['table']],
+         //            ['para', ['ul', 'ol', 'paragraph']],
+         //            ['view', ['fullscreen', 'codeview']],
+         //            ['insert', ['link', 'picture', 'hr']]
+         //        ],
+         //        height:200
+         //    });
+         // });
 
      })
  </script>

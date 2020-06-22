@@ -893,6 +893,27 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                         }
 
+                        // Check component is title_text_editor?
+                        // else if (result.data.sections.section_type == 'title_text_editor') {
+                        //     alert('hi')
+                        //     var $parentSelectorEdit = $('#' + modalComponent);
+                        //     // $parentSelectorEdit.find('#accordion').empty();
+                        //     $parentSelectorEdit.modal('show');
+                        //     // Add section id
+                        //     // $parentSelectorEdit.find('.section_id').val(result.data.sections.id);
+                        //
+                        //     // $parentSelector.find("textarea[name='component[0][editor_en]']").val("TTTTTTTTTTTT");
+                        //
+                        //     console.log($parentSelector.find("textarea[name='component[0][editor_en]']").siblings('.note-editor').children('.note-editing-area').find('.note-editable').append("<b>Hello</b>"))
+                        //
+                        //     $parentSelector.find("textarea[name='component[0][editor_en]']").siblings('.note-editor').find('note-editing-area').append("<b>Hello</b>");
+                        //
+                        //     // $parentSelector.find("textarea[name='component[0][editor_en]']").siblings('.note-editor note-frame panel panel-default').find('.note-editing-area').append("<b>Hello</b>");
+                        //
+                        //     // $parentSelectorEdit.find("textarea[name='component[0][editor_en]']").text("Hello World");
+                        //     // $parentSelectorEdit.find(".note-codable").text('Test Test Test ');
+                        // }
+
                         else {
                             $('#' + modalComponent).modal('show');
 
@@ -961,14 +982,12 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                                     if (ck == 'editor_en') {
                                         $parentSelector.find("textarea[name='component[" + cpk + "][editor_en]']").val(cv);
-
-                                        $parentSelector.find("textarea[name='component[" + cpk + "][editor_en]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
+                                        $parentSelector.find("textarea[name='component[" + cpk + "][editor_en]']").siblings('.note-editor').children('.note-editing-area').find('.note-editable').html(cv);
                                     }
 
                                     if (ck == 'editor_bn') {
                                         $parentSelector.find("textarea[name='component[" + cpk + "][editor_bn]']").val(cv);
-
-                                        $parentSelector.find("textarea[name='component[" + cpk + "][editor_bn]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
+                                        $parentSelector.find("textarea[name='component[" + cpk + "][editor_bn]']").siblings('.note-editor').children('.note-editing-area').find('.note-editable').html(cv);
                                     }
 
 
