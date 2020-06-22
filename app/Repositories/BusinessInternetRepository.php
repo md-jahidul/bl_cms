@@ -9,11 +9,14 @@ namespace App\Repositories;
 
 use App\Models\BusinessInternet;
 use Box\Spout\Common\Type;
+use App\Traits\FileTrait;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
 
 class BusinessInternetRepository extends BaseRepository {
 
     public $modelName = BusinessInternet::class;
+    
+    use FileTrait;
 
     public function getInternetPackageList($request) {
         $draw = $request->get('draw');
@@ -55,6 +58,7 @@ class BusinessInternetRepository extends BaseRepository {
 
             $response['data'][] = [
                 'id' => $item->id,
+                'type' => $item->type,
                 'data_volume' => $item->data_volume . " " . $item->volume_data_unit,
                 'validity' => $item->validity . " " . $item->validity_unit,
                 'activation_ussd_code' => $item->activation_ussd_code,
@@ -88,6 +92,7 @@ class BusinessInternetRepository extends BaseRepository {
 
 
         $insertdata = array(
+            'type' => $request->type,
             'product_code' => $request->product_code,
             'product_code_ev' => $request->product_code_ev,
             'product_code_with_renew' => $request->product_code_with_renew,
@@ -155,31 +160,32 @@ class BusinessInternetRepository extends BaseRepository {
                     $cells = $row->getCells();
                     $totalCell = count($cells);
 
-                    $urlSlug = str_replace(' ', '-', $cells[3]->getValue());
+                    $urlSlug = str_replace(' ', '-', $cells[4]->getValue());
                     if ($rowNumber > 1) {
                         $insertdata[] = array(
-                            'product_code' => $cells[0]->getValue(),
-                            'product_code_ev' => $cells[1]->getValue(),
-                            'product_code_with_renew' => $cells[2]->getValue(),
-                            'product_name' => $cells[3]->getValue(),
-                            'product_commercial_name_en' => $cells[4]->getValue(),
-                            'product_commercial_name_bn' => $cells[5]->getValue(),
-                            'product_short_description' => $cells[6]->getValue(),
-                            'activation_ussd_code' => $cells[7]->getValue(),
-                            'balance_check_ussd_code' => $cells[8]->getValue(),
-                            'data_volume' => $cells[9]->getValue(),
-                            'volume_data_unit' => $cells[10]->getValue(),
-                            'validity' => $cells[11]->getValue(),
-                            'validity_unit' => $cells[12]->getValue(),
-                            'mrp' => $cells[13]->getValue(),
-                            'price' => $cells[14]->getValue(),
-                            'Tax' => $cells[15]->getValue(),
-                            'is_amar_offer' => $cells[16]->getValue(),
-                            'rate_cutter_offer_rate' => $cells[17]->getValue(),
-                            'rate_cutter_offer_unit' => $cells[18]->getValue(),
-                            'offer_type' => $cells[19]->getValue(),
-                            'short_text' => $cells[20]->getValue(),
-                            'sms_rate_unit' => $cells[21]->getValue(),
+                            'type' => $cells[0]->getValue(),
+                            'product_code' => $cells[1]->getValue(),
+                            'product_code_ev' => $cells[2]->getValue(),
+                            'product_code_with_renew' => $cells[3]->getValue(),
+                            'product_name' => $cells[4]->getValue(),
+                            'product_commercial_name_en' => $cells[5]->getValue(),
+                            'product_commercial_name_bn' => $cells[6]->getValue(),
+                            'product_short_description' => $cells[7]->getValue(),
+                            'activation_ussd_code' => $cells[8]->getValue(),
+                            'balance_check_ussd_code' => $cells[9]->getValue(),
+                            'data_volume' => $cells[10]->getValue(),
+                            'volume_data_unit' => $cells[11]->getValue(),
+                            'validity' => $cells[12]->getValue(),
+                            'validity_unit' => $cells[13]->getValue(),
+                            'mrp' => $cells[14]->getValue(),
+                            'price' => $cells[15]->getValue(),
+                            'Tax' => $cells[16]->getValue(),
+                            'is_amar_offer' => $cells[17]->getValue(),
+                            'rate_cutter_offer_rate' => $cells[18]->getValue(),
+                            'rate_cutter_offer_unit' => $cells[19]->getValue(),
+                            'offer_type' => $cells[20]->getValue(),
+                            'short_text' => $cells[21]->getValue(),
+                            'sms_rate_unit' => $cells[22]->getValue(),
                             'url_slug' => $urlSlug,
                         );
                     }
@@ -260,8 +266,14 @@ class BusinessInternetRepository extends BaseRepository {
         try {
             if ($packageId > 0) {
                 $package = $this->model->findOrFail($packageId);
+                $this->deleteFile($package->banner_photo);
                 $package->delete();
             } else {
+                
+                $allPack = $this->model->get();
+                foreach($allPack as $int){
+                    $this->deleteFile($int->banner_photo);
+                }
                 $this->model->truncate();
             }
 

@@ -80,9 +80,7 @@ class BusinessInternetService {
         try {
 
             $request->validate([
-                'product_code' => 'required',
-                'product_code_ev' => 'required',
-                'product_code_with_renew' => 'required',
+                'type' => 'required',
                 'product_commercial_name_en' => 'required',
                 'product_commercial_name_bn' => 'required',
                 'product_short_description' => 'required',
@@ -138,9 +136,7 @@ class BusinessInternetService {
         try {
 
             $data->validate([
-                'product_code' => 'required',
-                'product_code_ev' => 'required',
-                'product_code_with_renew' => 'required',
+                'type' => 'required',
                 'product_commercial_name_en' => 'required',
                 'product_commercial_name_bn' => 'required',
                 'product_short_description' => 'required',
@@ -237,8 +233,6 @@ class BusinessInternetService {
      * @return Response
      */
     public function deletePackage($packageId) {
-        $package = $this->internetRepo->getInternetById($packageId);
-        $this->deleteFile($package->banner_photo);
         $response = $this->internetRepo->deletePackage($packageId);
         return $response;
     }
