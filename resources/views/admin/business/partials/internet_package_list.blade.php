@@ -16,6 +16,7 @@
             <thead>
                 <tr>
                     <th>SL.</th>
+                    <th>Type</th>
                     <th>Data Volume</th>
                     <th>Validity</th>
                     <th>Activation USSD</th>
@@ -65,6 +66,12 @@
                     name: 'sl',
                     render: function () {
                         return null;
+                    }
+                },
+                {
+                    name: 'type',
+                    render: function (data, type, row) {
+                        return row.type;
                     }
                 },
                 {
@@ -128,48 +135,6 @@
 
         });
 
-
-
-
-
-        //change show/hide status of device offer
-        $("#internet_package_list").on('click', '.package_change_status', function (e) {
-            var packageId = $(this).attr('href');
-
-            $.ajax({
-                url: '{{ url("business-internet-status-change")}}/' + packageId,
-                cache: false,
-                type: "GET",
-                success: function (result) {
-                    if (result.success == 1) {
-                        swal.fire({
-                            title: 'Internet Package status is changed!',
-                            type: 'success',
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-
-                        $('#internet_package_list').DataTable().ajax.reload();
-
-                    } else {
-                        swal.close();
-                        swal.fire({
-                            title: result.message,
-                            timer: 3000,
-                            type: 'error',
-                        });
-                    }
-
-                },
-                error: function (data) {
-                    swal.fire({
-                        title: 'Status change process failed!',
-                        type: 'error',
-                    });
-                }
-            });
-            e.preventDefault();
-        });
 
 
         //change home show status of internet

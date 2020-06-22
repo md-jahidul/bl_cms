@@ -20,21 +20,38 @@
                         @csrf
 
                         <div class="col-md-4 col-xs-12">
+                            
+                             <div class="form-group">
+                                <label>Type<span class="text-danger">*</span></label>
+                                <div class="form-check">
+
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="type" value="Prepaid">
+                                               Prepaid
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="type" value="Postpaid">
+                                               Postpaid
+                                    </label>
+                                </div>
+                            </div>
 
 
                             <div class="form-group">
-                                <label>Code<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required name="product_code" placeholder="Product Code">
+                                <label>Code</label>
+                                <input type="text" class="form-control" name="product_code" placeholder="Product Code">
                             </div>
 
                             <div class="form-group">
-                                <label>Code EV<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required name="product_code_ev" placeholder="Product Code EV">
+                                <label>Code EV</label>
+                                <input type="text" class="form-control"  name="product_code_ev" placeholder="Product Code EV">
                             </div>
 
                             <div class="form-group">
-                                <label>Code With Renew<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required name="product_code_with_renew" placeholder="Product Code With Renew">
+                                <label>Code With Renew</label>
+                                <input type="text" class="form-control" name="product_code_with_renew" placeholder="Product Code With Renew">
                             </div>
 
                             <div class="form-group">
