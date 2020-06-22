@@ -93,7 +93,7 @@ class PushNotificationController extends Controller
             $reader->close();
 
             $collection = collect($customer_array);
-            $chunks = $collection->chunk(100);
+            $chunks = $collection->chunk(1000);
             $chunks->toArray();
 
 
