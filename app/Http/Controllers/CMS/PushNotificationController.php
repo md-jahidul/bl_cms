@@ -63,20 +63,14 @@ class PushNotificationController extends Controller
 
         try {
 
-            /**
-             *  save the excel file
-             */
-
-            $file_path = $this->saveCustomerListFile($request);
-
-            /**
-             *  read the excel file
-             */
-
+           /* $file_path = $this->saveCustomerListFile($request);
             $fileLoc = Storage::disk('public')->path($file_path);
+            $reader = ReaderFactory::createFromType(Type::XLSX);
+            $reader->open($fileLoc);*/
 
             $reader = ReaderFactory::createFromType(Type::XLSX);
-            $reader->open($fileLoc);
+            $path = $request->file('customer_file')->getRealPath();
+            $reader->open($path);
 
             $customer_array = [];
             foreach ($reader->getSheetIterator() as $sheet) {
@@ -96,10 +90,10 @@ class PushNotificationController extends Controller
             $chunks = $collection->chunk(1000);
             $chunks->toArray();
 
-
             foreach ($chunks as $key => $chunk) {
                 //$user_phone = $this->notificationService->checkMuteOfferForUser($category_id, $chunk->toArray());
                 $user_phone = $chunk->toArray();
+                dd($user_phone);
                 $notification = [
                     'title' => $request->input('title'),
                     'body' => $request->input('message'),
