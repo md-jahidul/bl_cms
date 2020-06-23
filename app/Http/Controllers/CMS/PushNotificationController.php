@@ -63,16 +63,10 @@ class PushNotificationController extends Controller
 
         try {
 
-            /*$file_path = $this->saveCustomerListFile($request);
-            $fileLoc = Storage::disk('public')->path($file_path);
-            $reader = ReaderFactory::createFromType(Type::XLSX);
-            $reader->open($fileLoc);*/
-
             $reader = ReaderFactory::createFromType(Type::XLSX);
             $path = $request->file('customer_file')->getRealPath();
             $reader->open($path);
 
-            $customer_array = [];
             foreach ($reader->getSheetIterator() as $sheet) {
                 if ($sheet->getIndex() > 0) {
                     break;
@@ -81,47 +75,22 @@ class PushNotificationController extends Controller
                 foreach ($sheet->getRowIterator() as $row) {
                     $cells = $row->getCells();
                     $number = $cells[0]->getValue();
-                    $customer_array [] = $number;
+                    $user_phone [] = $number;
+
+                    if(count($user_phone) == 1000){
+                        $notification = $this->getNotificationArray($request, $user_phone);
+                        NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+                            ->onQueue('notification');
+                        $user_phone = [];
+                    }
                 }
             }
             $reader->close();
 
-            $collection = collect($customer_array);
-            $chunks = $collection->chunk(1000);
-            $chunks->toArray();
-
-            foreach ($chunks as $key => $chunk) {
-                //$user_phone = $this->notificationService->checkMuteOfferForUser($category_id, $chunk->toArray());
-                $user_phone = $chunk->toArray();
-                $notification = [
-                    'title' => $request->input('title'),
-                    'body' => $request->input('message'),
-                    'category_slug' => $request->input('category_slug'),
-                    'category_name' => $request->input('category_name'),
-                    "sending_from" => "cms",
-                    "send_to_type" => "INDIVIDUALS",
-                    "recipients" => $user_phone,
-                    "is_interactive" => "NO",
-                    "data" => [
-                        "cid" => "1",
-                        "url" => "test.com",
-                        "component" => "offer",
-                    ]
-                ];
-
+            if(!empty($user_phone)){
+                $notification = $this->getNotificationArray($request, $user_phone);
                 NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
                     ->onQueue('notification');
-
-                /*$response = PushNotificationService::sendNotification($notification);
-                $formatted_response = json_decode($response);
-
-                Log::info($response);
-
-                if ($formatted_response->status == "SUCCESS") {
-                    if (isset($user_phone)) {
-                        $this->notificationService->attachNotificationToUser($formatted_response->notification_id, $user_phone);
-                    }
-                }*/
             }
 
             return [
@@ -136,12 +105,35 @@ class PushNotificationController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @param array $user_phone
+     * @return array
+     */
+    public function getNotificationArray(Request $request, array $user_phone): array
+    {
+        return [
+            'title' => $request->input('title'),
+            'body' => $request->input('message'),
+            'category_slug' => $request->input('category_slug'),
+            'category_name' => $request->input('category_name'),
+            "sending_from" => "cms",
+            "send_to_type" => "INDIVIDUALS",
+            "recipients" => $user_phone,
+            "is_interactive" => "NO",
+            "data" => [
+                "cid" => "1",
+                "url" => "test.com",
+                "component" => "offer",
+            ]
+        ];
+    }
 
     /**
      * Send Notification to All customers
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return array
      */
     public function sendNotificationToALL(Request $request)
     {
@@ -190,7 +182,6 @@ class PushNotificationController extends Controller
 
             ];
         } else {
-
             return ['success' => false, 'message' => 'Input is wrong'];
         }
 
@@ -215,4 +206,5 @@ class PushNotificationController extends Controller
             return ['success' => false, 'message' => $e->getMessage()];
         }
     }
+
 }
