@@ -45,12 +45,12 @@
                             <div class="form-group">
 
                                 <label for="Details">Package Details (EN)</label>
-                                <textarea type="text" name="package_details_en" class="form-control package_details">{!! $package->main_details !!}</textarea>
+                                <textarea type="text" name="package_details_en" id="summernote_editor" class="form-control">{!! $package->main_details !!}</textarea>
 
                                 <hr>
 
                                 <label for="Details">Package Details (BN)</label>
-                                <textarea type="text" name="package_details_bn" class="form-control package_details">{!! $package->main_details_bn !!}</textarea>
+                                <textarea type="text" name="package_details_bn" id="summernote_editor" class="form-control">{!! $package->main_details_bn !!}</textarea>
 
                             </div>
 
@@ -104,30 +104,30 @@
 
                         </div>
                         <div class="col-md-6 col-xs-12">
-                            
+
                              <div class="form-group row">
 
                                 <div class="col-md-6 col-xs-12">
                                     <label for="Banner Photo">Card Photo (Web)<span class="text-danger">*</span></label>
                                     <input type="file" class="dropify_package" name="card_banner_web" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                    
+
                                     <input type="hidden" name="old_card_banner_web" value="{{$package->card_banner_web}}">
-                                    
+
                                      <p class="text-center">
                                         @if($package->banner_photo != "")
                                         <img src="{{ config('filesystems.file_base_url') . $package->card_banner_web }}" alt="Banner Photo" width="100%" />
                                         @endif
                                     </p>
-                                    
+
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <label for="Banner Photo">Card Photo (Mobile) <span class="text-danger">*</span></label>
                                     <input type="file" class="dropify_package" name="card_banner_mobile" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                    
+
                                     <input type="hidden" name="old_card_banner_mobile" value="{{$package->card_banner_mobile}}">
-                                    
+
                                      <p class="text-center">
                                         @if($package->banner_photo != "")
                                         <img src="{{ config('filesystems.file_base_url') . $package->card_banner_mobile }}" alt="Banner Photo" width="100%" />
@@ -150,7 +150,7 @@
                                     <label for="Banner Photo">Banner Photo <span class="text-danger">*</span></label>
 
                                     <input type="hidden" name="old_banner" value="{{$package->banner_photo}}">
-                                    
+
                                     <input type="file" class="dropify_package" name="banner_photo" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
@@ -163,24 +163,24 @@
 
                                 <div class="col-md-6 col-xs-12">
                                     <label for="Banner Photo">Banner Photo (Mobile) <span class="text-danger">*</span></label>
-                                    
+
                                     <input type="hidden" name="old_banner_mob" value="{{$package->banner_image_mobile}}">
-                                    
+
                                     <input type="file" class="dropify_package" name="banner_mobile" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                    
+
                                     <p class="text-center">
                                         @if($package->banner_image_mobile != "")
                                         <img src="{{ config('filesystems.file_base_url') . $package->banner_image_mobile }}" alt="Banner Photo" width="100%" />
                                         @endif
                                     </p>
-                                    
+
                                 </div>
 
                                 <div class="col-md-6 col-xs-12">
                                     <label>Banner Photo Name<span class="text-danger">*</span></label>
                                     <input type="hidden" name="old_banner_name" value="{{$package->banner_name}}">
-                                    
+
                                     <input type="text" class="form-control banner_name" required name="banner_name" value="{{ $package->banner_name }}" placeholder="Photo Name">
 
                                     <small class="text-info">
@@ -215,15 +215,15 @@
                             <div class="form-group">
 
                                 <label for="Offer Details">Offer Details (EN)</label>
-                                <textarea type="text" name="offer_details_en" class="form-control package_details">{!! $package->offer_details !!}</textarea>
+                                <textarea type="text" name="offer_details_en" id="summernote_editor" class="form-control">{!! $package->offer_details !!}</textarea>
 
                                 <hr>
 
                                 <label for="Offer Details">Offer Details (BN)</label>
-                                <textarea type="text" name="offer_details_bn" class="form-control package_details">{!! $package->offer_details_bn !!}</textarea>
+                                <textarea type="text" name="offer_details_bn" id="summernote_editor" class="form-control">{!! $package->offer_details_bn !!}</textarea>
 
                             </div>
-                            
+
                             <div class="form-group">
 
                                 <label>Schema Markup</label>
@@ -341,18 +341,18 @@ if (Session::has('error')) {
 
 
     //text editor for package details
-    $("textarea.package_details").summernote({
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            // ['table', ['table']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['view', ['codeview']]
-        ],
-        height: 200
-    });
+    // $("textarea.package_details").summernote({
+    //     toolbar: [
+    //         ['style', ['bold', 'italic', 'underline', 'clear']],
+    //         ['font', ['strikethrough', 'superscript', 'subscript']],
+    //         ['fontsize', ['fontsize']],
+    //         ['color', ['color']],
+    //         // ['table', ['table']],
+    //         ['para', ['ul', 'ol', 'paragraph']],
+    //         ['view', ['codeview']]
+    //     ],
+    //     height: 200
+    // });
 
 });
 

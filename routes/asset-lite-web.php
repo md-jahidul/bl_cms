@@ -812,4 +812,20 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::post('lead-requested/send-mail', 'AssetLite\LeadManagementController@sendMail')
         ->name('lead.send_mail');
+
+    // Product Price Slab
+    Route::get('product-price/slabs', 'AssetLite\ProductPriceSlabController@index');
+    Route::get('product-price/slab/create', 'AssetLite\ProductPriceSlabController@priceSlabCreate');
+    Route::post('product-price/slab/store', 'AssetLite\ProductPriceSlabController@priceSlabStore')
+        ->name('priceSlab.store');
+    Route::get('product-price/slab/details/{id}', 'AssetLite\ProductPriceSlabController@priceSlabEdit');
+    Route::put('product-price/slab/update/{priceSlabId}', 'AssetLite\ProductPriceSlabController@updatePriceSlab')
+        ->name('priceSlab.update');
+    Route::post('product-price-slab-list', 'AssetLite\ProductPriceSlabController@priceSlabList')
+        ->name('priceSlab.list.ajax');
+    Route::post('product-price/slab-excel', 'AssetLite\ProductPriceSlabController@uploadPriceSlabExcel')
+        ->name('priceSlab-excel.save');
+    Route::get('product-price-slab-status-change/{rateId}', 'AssetLite\ProductPriceSlabController@priceSlabStatusChange');
+    Route::get('product-price-slab/destroy/{rateId?}', 'AssetLite\ProductPriceSlabController@deletePriceSlab');
+
 });

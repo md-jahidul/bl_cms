@@ -24,8 +24,8 @@
                         <div class="col-md-4 col-xs-12">
 
                             <input type="hidden" name="service_id" value="{{$service->id}}">
-                           
-                            
+
+
                             @if($type == '')
                             <div class="form-group">
                                 <label> Select Category <span class="text-danger">*</span></label>
@@ -164,7 +164,7 @@
 
                             <div class="form-group">
                                 <label for="Details">Offer Details (EN)</label>
-                                <textarea type="text" name="offer_details_en" class="form-control textarea_details">{{$service->offer_details_en}}</textarea>
+                                <textarea type="text" name="offer_details_en" id="summernote_editor" class="form-control">{{$service->offer_details_en}}</textarea>
 
                             </div>
 
@@ -183,7 +183,7 @@
                             <div class="form-group">
 
                                 <label for="Details">Offer Details (BN)</label>
-                                <textarea type="text" name="offer_details_bn" class="form-control textarea_details">{{$service->offer_details_bn}}</textarea>
+                                <textarea type="text" name="offer_details_bn" id="summernote_editor" class="form-control">{{$service->offer_details_bn}}</textarea>
 
                             </div>
 
@@ -423,18 +423,18 @@ if (Session::has('error')) {
 
 
     //text editor for package details
-    $("textarea.textarea_details").summernote({
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            // ['table', ['table']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['view', ['codeview']]
-        ],
-        height: 170
-    });
+    // $("textarea.textarea_details").summernote({
+    //     toolbar: [
+    //         ['style', ['bold', 'italic', 'underline', 'clear']],
+    //         ['font', ['strikethrough', 'superscript', 'subscript']],
+    //         ['fontsize', ['fontsize']],
+    //         ['color', ['color']],
+    //         // ['table', ['table']],
+    //         ['para', ['ul', 'ol', 'paragraph']],
+    //         ['view', ['codeview']]
+    //     ],
+    //     height: 170
+    // });
 
 });
 

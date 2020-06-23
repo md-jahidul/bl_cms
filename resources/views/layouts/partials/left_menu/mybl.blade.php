@@ -88,8 +88,14 @@
                         <i class="la la-comment-o"></i>Notification List</a>
                 </li>
 
-                <li class="{{ is_active_url('notification') }}{{ is_active_url('notification-report') }}">
+               {{-- <li class="{{ is_active_url('notification') }}{{ is_active_url('notification-report') }}">
                     <a class="menu-item" href="{{ route('notification.report') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Notification Report</a>
+                </li>--}}
+
+                <li class="{{ is_active_url('notification-report')}}">
+                    <a class="menu-item" href="{{ url('notification-report') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Notification Report</a>
                 </li>
@@ -256,6 +262,21 @@
         <li class="{{ is_active_url('app-launch')}}">
             <a class="menu-item" href="{{ route('app-launch.index') }}">
                 <i class="ft-alert-triangle"></i>App Launch Popup</a>
+        </li>
+    @endif
+
+    @if( auth()->user()->can_view('LearnPriyojon') )
+        <li class=" nav-item"><a href="#"><i class="la la-gift"></i>
+                <span class="menu-title">Priyojon</span></a>
+            <ul class="menu-content">
+                {{--page--}}
+                <li class="{{ is_active_url('mybl/learn-priyojon') }}">
+                    <a class="menu-item" href="{{ route('learn-priyojon.show') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-file"></i>Learn Priyojon
+                    </a>
+                </li>
+            </ul>
         </li>
     @endif
 

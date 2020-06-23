@@ -22,21 +22,38 @@
                         <div class="col-md-4 col-xs-12">
 
                             <input type="hidden" value="{{$internet->id}}" name="internet_id">
+                            
+                            <div class="form-group">
+                                <label>Type<span class="text-danger">*</span></label>
+                                <div class="form-check">
+
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="type" value="Prepaid" @if($internet->type == 'Prepaid')  checked @endif>
+                                               Prepaid
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="type" value="Postpaid" @if($internet->type == 'Postpaid')  checked @endif>
+                                               Postpaid
+                                    </label>
+                                </div>
+                            </div>
 
                             <div class="form-group">
-                                <label>Code<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{$internet->product_code}}" required name="product_code" placeholder="Product Code">
+                                <label>Code</label>
+                                <input type="text" class="form-control" value="{{$internet->product_code}}" name="product_code" placeholder="Product Code">
 
                             </div>
 
                             <div class="form-group">
-                                <label>Code EV<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{$internet->product_code_ev}}" required name="product_code_ev" placeholder="Product Code EV">
+                                <label>Code EV</label>
+                                <input type="text" class="form-control" value="{{$internet->product_code_ev}}"  name="product_code_ev" placeholder="Product Code EV">
                             </div>
 
                             <div class="form-group">
-                                <label>Code With Renew<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{$internet->product_code_with_renew}}" required name="product_code_with_renew" placeholder="Product Code With Renew">
+                                <label>Code With Renew</label>
+                                <input type="text" class="form-control" value="{{$internet->product_code_with_renew}}"  name="product_code_with_renew" placeholder="Product Code With Renew">
                             </div>
 
                             <div class="form-group">
@@ -190,24 +207,24 @@
                             <div class="form-group">
 
                                 <label for="Details">Package Details (EN)</label>
-                                <textarea type="text" name="package_details_en" class="form-control package_details">{{$internet->package_details_en}}</textarea>
+                                <textarea type="text" name="package_details_en" id="summernote_editor" class="form-control">{{$internet->package_details_en}}</textarea>
 
 
                             </div>
 
-                            
+
                         </div>
-                        
+
                         <div class="col-md-6 col-xs-12">
                             <div class="form-group">
 
                                 <label for="Details">Package Details (BN)</label>
-                                <textarea type="text" name="package_details_bn" class="form-control package_details">{{$internet->package_details_bn}}</textarea>
+                                <textarea type="text" name="package_details_bn" id="summernote_editor" class="form-control">{{$internet->package_details_bn}}</textarea>
 
                             </div>
 
                         </div>
-                        
+
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
@@ -238,32 +255,32 @@
                                 <label>Banner Photo (Web)</label>
                                 <input type="file" class="dropify" name="banner_photo" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                
+
                                 <input type="hidden" name="old_banner" value="{{$internet->banner_photo}}">
-                                
+
                                 @if($internet->banner_photo != "")
                                 <img src="{{ config('filesystems.file_base_url') . $internet->banner_photo }}" alt="Banner Photo" width="100%" />
                                 @endif
                             </div>
 
                         </div>
-                        
+
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
                                 <label>Banner Photo (Mobile)</label>
                                 <input type="file" class="dropify" name="banner_mobile" data-height="70"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                
+
                                 <input type="hidden" name="old_banner_mob" value="{{$internet->banner_image_mobile}}">
-                                
+
                                 @if($internet->banner_image_mobile != "")
                                 <img src="{{ config('filesystems.file_base_url') . $internet->banner_image_mobile }}" alt="Banner Photo" width="100%" />
                                 @endif
                             </div>
 
                         </div>
-                        
+
                         <div class="col-md-4 col-xs-12">
 
                            <div class="form-group">
@@ -276,7 +293,7 @@
 
                             <label>Banner Photo Name<span class="text-danger">*</span></label>
                             <input type="hidden" name="old_banner_name" value="{{$internet->banner_name}}">
-                            
+
                             <input type="text" class="form-control banner_name" value="{{$internet->banner_name}}" required name="banner_name" placeholder="Photo Name">
 
                             <small class="text-info">
@@ -284,8 +301,8 @@
                             </small>
 
                         </div>
-                        
-                        
+
+
                          <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
@@ -299,7 +316,7 @@
                             </div>
 
                         </div>
-                        
+
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
@@ -313,7 +330,7 @@
                             </div>
 
                         </div>
-                       
+
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
@@ -400,18 +417,18 @@ if (Session::has('error')) {
 
 
     //text editor for package details
-    $("textarea.package_details").summernote({
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            // ['table', ['table']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['view', ['codeview']]
-        ],
-        height: 200
-    });
+    // $("textarea.package_details").summernote({
+    //     toolbar: [
+    //         ['style', ['bold', 'italic', 'underline', 'clear']],
+    //         ['font', ['strikethrough', 'superscript', 'subscript']],
+    //         ['fontsize', ['fontsize']],
+    //         ['color', ['color']],
+    //         // ['table', ['table']],
+    //         ['para', ['ul', 'ol', 'paragraph']],
+    //         ['view', ['codeview']]
+    //     ],
+    //     height: 200
+    // });
 
     $(".mrp, .tax, .price, .validity").on("keypress keyup blur", function (event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));

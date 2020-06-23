@@ -17,7 +17,7 @@
                                     <input type="hidden" class="com_pc1_position">
 
                                     <div class="form-group">
-                                        <label class="display-block">Package Name (EN) <span class="text-danger">*</span> 
+                                        <label class="display-block">Package Name (EN) <span class="text-danger">*</span>
 
                                             <a href="javascript:;" class="add_package_one pull-right">
                                                 <i class="la la-plus-square"></i>
@@ -49,7 +49,7 @@
                                 <div class="container-fluid  bg-light p-2 mr-1 mt-1">
 
                                     <div class="form-group">
-                                        <label class="display-block">Package Name (EN) <span class="text-danger">*</span> 
+                                        <label class="display-block">Package Name (EN) <span class="text-danger">*</span>
 
                                             <a href="javascript:;" class="remove_package_one pull-right text-danger">
                                                 <i class="la la-minus-square"></i>
@@ -78,7 +78,7 @@
                                         <label>Price <span class="text-danger">*</span></label>
                                         <input type="text" required class="form-control com_pc1_price_en price_input" name="">
                                     </div>
-                                    
+
                                 </div>
                             </div>
 
@@ -86,7 +86,7 @@
                                 <div class="container-fluid  bg-light p-2 mr-1 mt-1">
 
                                     <div class="form-group">
-                                        <label class="display-block">Package Name (EN) <span class="text-danger">*</span> 
+                                        <label class="display-block">Package Name (EN) <span class="text-danger">*</span>
 
                                             <a href="javascript:;" class="remove_package_one pull-right text-danger">
                                                 <i class="la la-minus-square"></i>
@@ -147,7 +147,7 @@
         <div class="container-fluid  bg-light p-2 mr-1 mt-1">
 
             <div class="form-group">
-                <label class="display-block">Package Name (EN) <span class="text-danger">*</span> 
+                <label class="display-block">Package Name (EN) <span class="text-danger">*</span>
 
                     <a href="javascript:;" class="remove_package_one pull-right text-danger">
                         <i class="la la-minus-square"></i>
@@ -176,7 +176,7 @@
                 <label>Price <span class="text-danger">*</span></label>
                 <input type="text" required class="form-control com_pc1_price_en price_input" name="">
             </div>
-            
+
         </div>
     </div>
 

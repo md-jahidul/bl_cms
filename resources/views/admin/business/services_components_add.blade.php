@@ -38,8 +38,8 @@
                 </a>
             </div>
         </div>
-        
-        
+
+
     </div>
 
 
@@ -336,16 +336,25 @@ if (Session::has('error')) {
 
         //text editor for package details
         $(".component_wrapper form textarea.textarea_details").summernote({
+            tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
             toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['style', ['style'],['bold', 'italic', 'underline', 'clear']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
-                // ['table', ['table']],
+                ['table', ['table']],
                 ['para', ['ul', 'ol', 'paragraph']],
-                ['view', ['codeview']]
+                ['insert', ['link', 'picture', 'video', 'hr']],
+                ['view', ['fullscreen', 'codeview']]
             ],
-            height: 170
+            popover: {
+                table: [
+                    ['custom', ['tableHeaders']],
+                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                ],
+            },
+            height:200
         });
 
     });
@@ -385,16 +394,25 @@ if (Session::has('error')) {
 
         //text editor for package details
         $(html).find("textarea.textarea_details").summernote({
+            tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
             toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['style', ['style'],['bold', 'italic', 'underline', 'clear']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
-                // ['table', ['table']],
+                ['table', ['table']],
                 ['para', ['ul', 'ol', 'paragraph']],
-                ['view', ['codeview']]
+                ['insert', ['link', 'picture', 'video', 'hr']],
+                ['view', ['fullscreen', 'codeview']]
             ],
-            height: 170
+            popover: {
+                table: [
+                    ['custom', ['tableHeaders']],
+                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                ],
+            },
+            height:200
         });
 
         $(this).parents('.package_one_wrap').append(html);
@@ -515,7 +533,7 @@ if (Session::has('error')) {
 //            $(this).remove();
 //        });
 //    });
-    
+
      //remove package comparison table two element
         $('.component_wrapper').on('click', '.remove_price_table_clmn', function () {
             var sl = $(this).attr('column');

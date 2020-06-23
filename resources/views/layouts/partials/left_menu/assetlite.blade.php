@@ -2,118 +2,101 @@
 {{---------------------------------------------------------Asset Lite-------------------------------------------------}}
 {{--------------------------------------------------------------------------------------------------------------------}}
 @if(Auth::user()->type == 'assetlite')
+    <li class="nav-item">
+        <a href="#">
+            <i class="la la la-cogs"></i><span class="menu-title"
+                                               data-i18n="nav.templates.main">Settings & Others</span>
+        </a>
+        <ul class="menu-content">
 
-    
+            @if( auth()->user()->can_view('Config') )
+                <li class="{{ is_active_url('/config') }} nav-item"><a href="{{ url('config')}}"><i
+                            class="la la-cogs"></i>
+                        <span class="menu-title" data-i18n="nav.dash.main">General Setup</span></a>
+                </li>
+            @endif
 
-
-  
-        <li class="nav-item">
-            <a href="#">
-                <i class="la la la-cogs"></i><span class="menu-title" data-i18n="nav.templates.main">Settings & Others</span>
-            </a>
-            <ul class="menu-content">
-                
-                @if( auth()->user()->can_view('Config') )
-                    <li class="{{ is_active_url('/config') }} nav-item"><a href="{{ url('config')}}"><i
-                                class="la la-cogs"></i>
-                            <span class="menu-title" data-i18n="nav.dash.main">General Setup</span></a>
-                    </li>
-                @endif
-                
-                 @if( auth()->user()->can_view('User') || auth()->user()->can_view('Role') || auth()->user()->can_view('Permissions') )
+            @if( auth()->user()->can_view('User') || auth()->user()->can_view('Role') || auth()->user()->can_view('Permissions') )
                 <li class="nav-item">
                     <a href="#"><i class="la la-users"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
-            <ul class="menu-content">
-                @if( auth()->user()->can_view('User') )
-                    <li class="{{ is_active_url('authorize/users')}}">
-                        <a class="menu-item" href="{{ url('authorize/users') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i
-                                class="la la-user"></i> User</a>
-                    </li>
-                @endif
+                        <span class="menu-title" data-i18n="nav.templates.main">User Management</span></a>
+                    <ul class="menu-content">
+                        @if( auth()->user()->can_view('User') )
+                            <li class="{{ is_active_url('authorize/users')}}">
+                                <a class="menu-item" href="{{ url('authorize/users') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-user"></i> User</a>
+                            </li>
+                        @endif
 
 
-                @if( auth()->user()->can_view('Roles') )
-                    <li class="{{ is_active_url('authorize/roles')}}">
-                        <a class="menu-item" href="{{ url('authorize/roles') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i
-                                class="la la-cubes"></i> Role</a>
-                    </li>
-                @endif
-                @if( auth()->user()->can_view('Permissions') )
-                    <li class="{{ is_active_url('authorize/permissions')}}">
-                        <a class="menu-item" href="{{ url('authorize/permissions') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i
-                                class="la la-check-square"></i> Permission</a>
-                    </li>
-                @endif
-            </ul>
-        </li>
-    @endif
-                
-                
-    
-    
-    <li class="nav-item">
-        <a href="#"><i class="la la-align-justify"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Menu & Quick-launch</span></a>
-            <ul class="menu-content">
-                 @if( auth()->user()->can_view('Menu') )
-                    <li class="{{ is_active_url('/menu') }} nav-item"><a href="{{ url('menu') }}"><i
-                                class="la la-medium"></i>
-                            <span class="menu-title" data-i18n="nav.templates.main">Header menu</span></a>
-                    </li>
-                @endif
-
-                @if( auth()->user()->can_view('FooterMenu') )
-                    <li class="{{ is_active_url('/footer-menu') }} nav-item"><a href="{{ url('footer-menu') }}"><i
-                                class="la la-futbol-o"></i>
-                            <span class="menu-title" data-i18n="nav.templates.main">Footer menu</span></a>
-                    </li>
-                @endif
-
-                @if( auth()->user()->can_view('QuickLaunch') )
-                     <li class="{{ is_active_url('quick-launch/panel') }} nav-item"><a href="{{ url('quick-launch/panel') }}"><i
-                            class="la la-automobile"></i>
-                        <span class="menu-title" data-i18n="nav.templates.main">Quick launch Panel</span></a>
+                        @if( auth()->user()->can_view('Roles') )
+                            <li class="{{ is_active_url('authorize/roles')}}">
+                                <a class="menu-item" href="{{ url('authorize/roles') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-cubes"></i> Role</a>
+                            </li>
+                        @endif
+                        @if( auth()->user()->can_view('Permissions') )
+                            <li class="{{ is_active_url('authorize/permissions')}}">
+                                <a class="menu-item" href="{{ url('authorize/permissions') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-check-square"></i> Permission</a>
+                            </li>
+                        @endif
+                    </ul>
                 </li>
+            @endif
 
-                 <li class="{{ is_active_url('quick-launch/button') }} nav-item"><a href="{{ url('quick-launch/button') }}"><i
-                            class="la la-automobile"></i>
-                        <span class="menu-title" data-i18n="nav.templates.main">Quick launch Button</span></a>
-                </li>
-                 @endif
+
+            <li class="nav-item">
+                <a href="#"><i class="la la-align-justify"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Menu & Quick-launch</span></a>
+                <ul class="menu-content">
+                    @if( auth()->user()->can_view('Menu') )
+                        <li class="{{ is_active_url('/menu') }} nav-item"><a href="{{ url('menu') }}"><i
+                                    class="la la-medium"></i>
+                                <span class="menu-title" data-i18n="nav.templates.main">Header menu</span></a>
+                        </li>
+                    @endif
+
+                    @if( auth()->user()->can_view('FooterMenu') )
+                        <li class="{{ is_active_url('/footer-menu') }} nav-item"><a href="{{ url('footer-menu') }}"><i
+                                    class="la la-futbol-o"></i>
+                                <span class="menu-title" data-i18n="nav.templates.main">Footer menu</span></a>
+                        </li>
+                    @endif
+
+                    @if( auth()->user()->can_view('QuickLaunch') )
+                        <li class="{{ is_active_url('quick-launch/panel') }} nav-item"><a
+                                href="{{ url('quick-launch/panel') }}"><i
+                                    class="la la-automobile"></i>
+                                <span class="menu-title" data-i18n="nav.templates.main">Quick launch Panel</span></a>
+                        </li>
+
+                        <li class="{{ is_active_url('quick-launch/button') }} nav-item"><a
+                                href="{{ url('quick-launch/button') }}"><i
+                                    class="la la-automobile"></i>
+                                <span class="menu-title" data-i18n="nav.templates.main">Quick launch Button</span></a>
+                        </li>
+                    @endif
                 </ul>
-        </li>
-                
-               
-
-                 <li class="{{ is_active_url('tag-category') }}">
-                    <a class="menu-item" href="{{ url('tag-category') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-tags"></i> Tag</a>
-                </li>
-                
-
-               
-
-            </ul>
-        </li>
-
-    
+            </li>
+            <li class="{{ is_active_url('tag-category') }}">
+                <a class="menu-item" href="{{ url('tag-category') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                        class="la la-tags"></i> Tag</a>
+            </li>
+        </ul>
+    </li>
 
 
-
-
-
-
-    @if( auth()->user()->can_view('Product') ||  auth()->user()->can_view('Product-core'))
+    @if( auth()->user()->can_view('Product') || auth()->user()->can_view('Product-core'))
         <li class="nav-item">
             <a href="#"><i class="la la-gift"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Product Management</span></a>
             <ul class="menu-content">
 
-<!--                <li class="{{ is_active_url('sim-categories') }}">
+            <!--                <li class="{{ is_active_url('sim-categories') }}">
                     <a class="menu-item" href="{{ route('sim-categories.index') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-file"></i> Package</a>
@@ -145,86 +128,94 @@
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Postpaid</a>
                 </li>
-                
+
+                <li class="{{ is_active_url('product-price/slabs') }}">
+                    <a class="menu-item" href="{{ url('product-price/slabs') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-magic"></i> Product Price Slab</a>
+                </li>
+
                 <li class="nav-item"><a href="#"><i class="la la-briefcase"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Roaming</span></a>
-            <ul class="menu-content">
+                        <span class="menu-title" data-i18n="nav.templates.main">Roaming</span></a>
+                    <ul class="menu-content">
 
-                <li class="{{ is_active_url('roaming-general') }}">
-                    <a class="menu-item" href="{{ url('roaming-general') }}" data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-caret-right"></i>Category & Pages</a>
+                        <li class="{{ is_active_url('roaming-general') }}">
+                            <a class="menu-item" href="{{ url('roaming-general') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-caret-right"></i>Category & Pages</a>
+                        </li>
+                        <li class="{{ is_active_url('roaming-offers') }}">
+                            <a class="menu-item" href="{{ url('roaming-offers') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-caret-right"></i> Offers</a>
+                        </li>
+
+
+                        <li class="{{ is_active_url('roaming-info-tips') }}">
+                            <a class="menu-item" href="{{ url('roaming-info-tips') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-caret-right"></i> Info & Tips</a>
+                        </li>
+
+
+                        <li class="{{ is_active_url('roaming/operators') }}">
+                            <a class="menu-item" href="{{ url('roaming/operators') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-caret-right"></i> Roaming Operators</a>
+                        </li>
+
+                        <li class="{{ is_active_url('roaming/bundle') }}">
+                            <a class="menu-item" href="{{ url('roaming/bundle') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-caret-right"></i> Roaming Bundle</a>
+                        </li>
+
+                        <li class="{{ is_active_url('roaming/rates') }}">
+                            <a class="menu-item" href="{{ url('roaming/rates') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-caret-right"></i> Roaming Rates</a>
+                        </li>
+
+                    </ul>
                 </li>
-                <li class="{{ is_active_url('roaming-offers') }}">
-                    <a class="menu-item" href="{{ url('roaming-offers') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-caret-right"></i> Offers</a>
-                </li>
 
+                @if( auth()->user()->can_view('Product-core') )
+                    <li class="{{ is_active_url('product-core') . is_active_url('product-core') }}">
+                        <a class="menu-item" href="{{ route('product.core.list') }}"
+                           data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-magic"></i> Core Products</a>
+                    </li>
+                @endif
 
-                <li class="{{ is_active_url('roaming-info-tips') }}">
-                    <a class="menu-item" href="{{ url('roaming-info-tips') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-caret-right"></i> Info & Tips</a>
-                </li>
-
-
-                <li class="{{ is_active_url('roaming/operators') }}">
-                    <a class="menu-item" href="{{ url('roaming/operators') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-caret-right"></i> Roaming Operators</a>
-                </li>
-
-                <li class="{{ is_active_url('roaming/bundle') }}">
-                    <a class="menu-item" href="{{ url('roaming/bundle') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-caret-right"></i> Roaming Bundle</a>
-                </li>
-
-                <li class="{{ is_active_url('roaming/rates') }}">
-                    <a class="menu-item" href="{{ url('roaming/rates') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-caret-right"></i> Roaming Rates</a>
-                </li>
-
-            </ul>
-        </li>
-        
-         @if( auth()->user()->can_view('Product-core') )
-
-                <li class="{{ is_active_url('product-core') . is_active_url('product-core') }}">
-                    <a class="menu-item" href="{{ route('product.core.list') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-magic"></i> Core Products</a>
-                </li>
-                
-        @endif
-                
                 <li class="{{ is_active_url('amaroffer/details') . is_active_url('amaroffer/create') }}">
                     <a class="menu-item" href="{{ route('amaroffer.list') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Amar Offer Details</a>
                 </li>
-                
-               
-        <li class="{{ is_active_url('/device-offer') }} nav-item">
-            <a href="{{ url('device-offer') }}">
-                <i class="la la-credit-card"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Device Offers</span>
-            </a>
-        </li>
+
+                <li class="{{ is_active_url('/device-offer') }} nav-item">
+                    <a href="{{ url('device-offer') }}">
+                        <i class="la la-credit-card"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Device Offers</span>
+                    </a>
+                </li>
 
             </ul>
         </li>
     @endif
 
-
+    @if( auth()->user()->can_view('BusinessGeneral') ||
+         auth()->user()->can_view('BusinessPackage') ||
+         auth()->user()->can_view('BusinessInternet') ||
+         auth()->user()->can_view('BusinessOthers')
+        )
         <li class="nav-item">
             <a href="#"><i class="la la-briefcase"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Business</span></a>
             <ul class="menu-content">
-
                 <li class="{{ is_active_url('business-general') }}">
-                    <a class="menu-item" href="{{ url('business-general') }}" data-i18n="nav.templates.vert.classic_menu"><i
+                    <a class="menu-item" href="{{ url('business-general') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-caret-right"></i>Home & General Setup</a>
                 </li>
                 <li class="{{ is_active_url('business-package') }}">
@@ -247,10 +238,16 @@
 
             </ul>
         </li>
-    
+    @endif
 
-       <li class="nav-item">
-           <a href="#"><i class="la la-apple"></i>
+    @if( auth()->user()->can_view('AppServiceTab') ||
+         auth()->user()->can_view('AppServiceCategory') ||
+         auth()->user()->can_view('AppServiceVendorApi') ||
+         auth()->user()->can_view('AppServiceProduct') ||
+         auth()->user()->can_view('EasyPaymentCard')
+       )
+        <li class="nav-item">
+            <a href="#"><i class="la la-apple"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">App & Service</span></a>
             <ul class="menu-content">
 
@@ -277,17 +274,18 @@
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-caret-right"></i> App Service Products</a>
                 </li>
-                
-                 <li class="{{ is_active_url('/easy-payment-card') }} nav-item">
-            <a href="{{ url('easy-payment-card') }}">
-                <i class="la la-credit-card"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Easy Payment Card</span>
-            </a>
-        </li>
+
+                <li class="{{ is_active_url('/easy-payment-card') }} nav-item">
+                    <a href="{{ url('easy-payment-card') }}">
+                        <i class="la la-credit-card"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Easy Payment Card</span>
+                    </a>
+                </li>
             </ul>
         </li>
+    @endif
 
-    
+
 
     @if( auth()->user()->can_view('Partner') )
         <li class="nav-item">
@@ -298,13 +296,13 @@
                     <a class="menu-item" href="{{ url('partners') }}" data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-magic"></i> Partner and Offers</a>
                 </li>
-                
+
                 <li class="{{ is_active_url('/priyojon') }} nav-item"><a href="{{ url('priyojon') }}"><i
                             class="la la-futbol-o"></i>
                         <span class="menu-title" data-i18n="nav.templates.main">Priyojon Landing</span></a>
                 </li>
-                
-                 <li class="{{ is_active_url('about-page/priyojon') }}">
+
+                <li class="{{ is_active_url('about-page/priyojon') }}">
                     <a class="menu-item" href="{{ url('about-page/priyojon') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-exclamation-circle"></i>About Priyojon
@@ -315,14 +313,14 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-exclamation-circle"></i> About Reward Point</a>
                 </li>
-                
+
             </ul>
         </li>
-        
+
     @endif
 
     <!-- // eCarrer portal -->
-     @if( auth()->user()->can_view('Ecareer', 'generalIndex'))
+    @if( auth()->user()->can_view('Ecareer', 'generalIndex'))
         <li class="nav-item">
             <a href="#"><i class="la la-bell"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">eCareer</span></a>
@@ -336,7 +334,8 @@
 
                 <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('product.core.list') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-motorcycle"></i> Life at Banglalink</a>
+                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-motorcycle"></i> Life at
+                        Banglalink</a>
                     <ul class="menu-content">
                         <li class="{{ request()->is('life-at-banglalink/general*') ? 'active' : '' }}">
                             <a class="menu-item" href="{{ route('life.at.banglalink.general') }}"
@@ -365,73 +364,73 @@
                     <a class="menu-item" href="#"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-car"></i> Programs</a>
-                            <ul class="menu-content">
-                                <li class="{{ request()->is('programs/tab-title*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('programs.tab.title') }}"
-                                       data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> Tab Title</a>
-                                </li>
-                                <li class="{{ request()->is('programs/progeneral/news_section*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'news_section']) }}"
-                                       data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> News section</a>
-                                </li>
-                                <li class="{{ request()->is('programs/progeneral/steps*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'steps']) }}"
-                                       data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> Steps section</a>
-                                </li>
-                                <li class="{{ request()->is('programs/progeneral/events*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'events']) }}"
-                                       data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> Events section</a>
-                                </li>
-                                <li class="{{ request()->is('programs/progeneral/testimonial*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'testimonial']) }}"
-                                       data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> Testimonial section</a>
-                                </li>
+                    <ul class="menu-content">
+                        <li class="{{ request()->is('programs/tab-title*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('programs.tab.title') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> Tab Title</a>
+                        </li>
+                        <li class="{{ request()->is('programs/progeneral/news_section*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'news_section']) }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> News section</a>
+                        </li>
+                        <li class="{{ request()->is('programs/progeneral/steps*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'steps']) }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> Steps section</a>
+                        </li>
+                        <li class="{{ request()->is('programs/progeneral/events*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'events']) }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> Events section</a>
+                        </li>
+                        <li class="{{ request()->is('programs/progeneral/testimonial*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('programs.progeneral', ['type' => 'testimonial']) }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> Testimonial section</a>
+                        </li>
 
-                                <li class="{{ request()->is('programs/proiconbox*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('programs.proiconbox') }}"
-                                       data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> Box Icon Section</a>
-                                </li>
-                                <li class="{{ request()->is('programs/photogallery*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('programs.photogallery') }}"
-                                       data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> Photo Gallery</a>
-                                </li>
-                                <li class="{{ request()->is('programs/sapbatches*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('programs.sapbatches') }}"
-                                       data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> SAP Previous Batches</a>
-                                </li>
-                                <li class="{{ request()->is('programs/ennovatorbatches*') ? 'active' : '' }}">
-                                    <a class="menu-item" href="{{ route('programs.ennovatorbatches') }}"
-                                       data-i18n="nav.templates.vert.classic_menu"><i
-                                            class="la la-safari"></i> Ennovators Previous Batches</a>
-                                </li>
-                            </ul>
+                        <li class="{{ request()->is('programs/proiconbox*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('programs.proiconbox') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> Box Icon Section</a>
+                        </li>
+                        <li class="{{ request()->is('programs/photogallery*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('programs.photogallery') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> Photo Gallery</a>
+                        </li>
+                        <li class="{{ request()->is('programs/sapbatches*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('programs.sapbatches') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> SAP Previous Batches</a>
+                        </li>
+                        <li class="{{ request()->is('programs/ennovatorbatches*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('programs.ennovatorbatches') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> Ennovators Previous Batches</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="{{ is_active_url('vacancy/pioneer') .' '. is_active_url('vacancy/pioneer') }}">
                     <a class="menu-item" href="#"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-beer"></i> Vacancy</a>
 
-                        <ul class="menu-content">
-                            <li class="{{ request()->is('vacancy/pioneer*') ? 'active' : '' }}">
-                                <a class="menu-item" href="{{ route('vacancy.pioneer') }}"
-                                   data-i18n="nav.templates.vert.classic_menu"><i
-                                        class="la la-safari"></i> General</a>
-                            </li>
-                            <li class="{{ request()->is('vacancy/viconbox*') ? 'active' : '' }}">
-                                <a class="menu-item" href="{{ route('vacancy.viconbox') }}"
-                                   data-i18n="nav.templates.vert.classic_menu"><i
-                                        class="la la-safari"></i> Box Icon Section</a>
-                            </li>
+                    <ul class="menu-content">
+                        <li class="{{ request()->is('vacancy/pioneer*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('vacancy.pioneer') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> General</a>
+                        </li>
+                        <li class="{{ request()->is('vacancy/viconbox*') ? 'active' : '' }}">
+                            <a class="menu-item" href="{{ route('vacancy.viconbox') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-safari"></i> Box Icon Section</a>
+                        </li>
 
-                        </ul>
+                    </ul>
                 </li>
                 <li class="{{ request()->is('life-at-banglalink/contact*') ? 'active' : '' }}">
                     <a class="menu-item" href="{{ route('life.at.banglalink.contact') }}"
@@ -441,106 +440,118 @@
 
             </ul>
         </li>
-     @endif
-
-   
-
-    
+    @endif
 
 
-        <li class="nav-item">
-            <a href="#"><i class="la la-lemon-o"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Other Modules</span></a>
-            <ul class="menu-content">
-                @if( auth()->user()->can_view('Slider', 'singleSlider') || auth()->user()->can_view('Slider', 'multiSlider') )
-        <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Home Page</span></a>
-            <ul class="menu-content">
-                @if( auth()->user()->can_view('Slider', 'singleSlider') )
-                    <li class="{{ is_active_url('single-sliders') . is_active_url('sliders/create')}}">
-                        <a class="menu-item" href="{{ url('single-sliders') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i class="la la-file-image-o"></i> Single slider</a>
-                    </li>
-                @endif
 
-                @if(  auth()->user()->can_view('Slider', 'multiSlider') )
-                    <li class="{{ is_active_url('multiple-sliders') . is_active_url('sliders/create')}}">
-                        <a class="menu-item" href="{{ url('multiple-sliders/') }}"
-                           data-i18n="nav.templates.vert.classic_menu"><i class="la la-file-image-o"></i> Multiple
-                            slider</a>
-                    </li>
-                @endif
 
-                @if( auth()->user()->can_view('FixedPage') )
-                <li class="{{ is_active_url('fixed-pages') }}">
-                    <a class="menu-item" href="{{ url('fixed-pages') }}" data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-file-image-o"></i> Fixed Page
-                    </a>
+
+
+    <li class="nav-item">
+        <a href="#"><i class="la la-lemon-o"></i>
+            <span class="menu-title" data-i18n="nav.templates.main">Other Modules</span></a>
+        <ul class="menu-content">
+            @if( auth()->user()->can_view('Slider', 'singleSlider') || auth()->user()->can_view('Slider', 'multiSlider') )
+                <li class="nav-item"><a href="#"><i class="la la-sliders"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Home Page</span></a>
+                    <ul class="menu-content">
+                        @if( auth()->user()->can_view('Slider', 'singleSlider') )
+                            <li class="{{ is_active_url('single-sliders') . is_active_url('sliders/create')}}">
+                                <a class="menu-item" href="{{ url('single-sliders') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i class="la la-file-image-o"></i> Single
+                                    slider</a>
+                            </li>
+                        @endif
+
+                        @if(  auth()->user()->can_view('Slider', 'multiSlider') )
+                            <li class="{{ is_active_url('multiple-sliders') . is_active_url('sliders/create')}}">
+                                <a class="menu-item" href="{{ url('multiple-sliders/') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i class="la la-file-image-o"></i>
+                                    Multiple
+                                    slider</a>
+                            </li>
+                        @endif
+
+                        @if( auth()->user()->can_view('FixedPage') )
+                            <li class="{{ is_active_url('fixed-pages') }}">
+                                <a class="menu-item" href="{{ url('fixed-pages') }}"
+                                   data-i18n="nav.templates.vert.classic_menu">
+                                    <i class="la la-file-image-o"></i> Fixed Page
+                                </a>
+                            </li>
+                        @endif
+
+                        <li class="{{ is_active_url('store-locations/entry') }}">
+                            <a class="menu-item" href="{{ url('store-locations/entry') }}"
+                               data-i18n="nav.templates.vert.classic_menu">
+                                <i class="la la-file-image-o"></i> Store Locations
+                            </a>
+                        </li>
+
+                    </ul>
                 </li>
             @endif
 
-            </ul>
-        </li>
-    @endif
-    
-    @if( auth()->user()->can_view('AboutUs') )
-        <li class="nav-item"><a href="#"><i class="la la-align-justify"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">About Us</span></a>
-            <ul class="menu-content">
-                <li class="{{ is_active_url('about-us') . is_active_url('about-us/create') }}">
-                    <a class="menu-item" href="{{ url('about-us') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Banglalink</a>
-                </li>
+            @if( auth()->user()->can_view('AboutUs') )
+                <li class="nav-item"><a href="#"><i class="la la-align-justify"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">About Us</span></a>
+                    <ul class="menu-content">
+                        <li class="{{ is_active_url('about-us') . is_active_url('about-us/create') }}">
+                            <a class="menu-item" href="{{ url('about-us') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About
+                                Banglalink</a>
+                        </li>
 
-                <li class="{{ is_active_url('management') . is_active_url('management/create') }}">
-                    <a class="menu-item" href="{{ url('management') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Management</a>
-                </li>
+                        <li class="{{ is_active_url('management') . is_active_url('management/create') }}">
+                            <a class="menu-item" href="{{ url('management') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> Management</a>
+                        </li>
 
-                <li class="{{ is_active_url('about/career') }}">
-                    <a class="menu-item" href="{{ route('about-career.index') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> About Career</a>
-                </li>
+                        <li class="{{ is_active_url('about/career') }}">
+                            <a class="menu-item" href="{{ route('about-career.index') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i> About
+                                Career</a>
+                        </li>
 
-                <li class="{{ is_active_url('about-slider') }}">
-                    <a class="menu-item" href="{{ url('about-slider') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Slider</a>
+                        <li class="{{ is_active_url('about-slider') }}">
+                            <a class="menu-item" href="{{ url('about-slider') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i class="la la-align-right"></i>About Slider</a>
+                        </li>
+                    </ul>
                 </li>
-            </ul>
-        </li>
-    @endif
-    
-    @if( auth()->user()->can_view('LeadManagement', 'leadRequestedList') )
-        <li class="nav-item"><a href="#"><i class="la la-lemon-o"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Lead-management</span></a>
-            <ul class="menu-content">
-                <li class="{{ is_active_url('lead-requested-list') }}">
-                    <a class="menu-item" href="{{ route('lead-list') }}"
-                       data-i18n="nav.templates.vert.classic_menu"><i
-                            class="la la-list"></i> Request List</a>
+            @endif
+
+            @if( auth()->user()->can_view('LeadManagement', 'leadRequestedList') )
+                <li class="nav-item"><a href="#"><i class="la la-lemon-o"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Lead-management</span></a>
+                    <ul class="menu-content">
+                        <li class="{{ is_active_url('lead-requested-list') }}">
+                            <a class="menu-item" href="{{ route('lead-list') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-list"></i> Request List</a>
+                        </li>
+                    </ul>
                 </li>
-            </ul>
-        </li>
-    @endif
-    
-     <li class="{{ is_active_url('/dynamic-pages') }} nav-item"><a href="{{ url('/dynamic-pages') }}"><i
-                            class="la la-futbol-o"></i>
-                        <span class="menu-title" data-i18n="nav.templates.main">Other Pages</span></a>
-                </li>
-                
-                <li class="{{ is_active_url('/popular-search') }} nav-item">
-            <a href="{{ url('popular-search') }}">
-                <i class="la la-search"></i>
-                <span class="menu-title" data-i18n="nav.templates.main">Search</span>
-            </a>
-        </li>
-            </ul>
-        </li>
- 
+            @endif
+
+            <li class="{{ is_active_url('/dynamic-pages') }} nav-item"><a href="{{ url('/dynamic-pages') }}"><i
+                        class="la la-futbol-o"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Other Pages</span></a>
+            </li>
+
+            <li class="{{ is_active_url('/popular-search') }} nav-item">
+                <a href="{{ url('popular-search') }}">
+                    <i class="la la-search"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Search</span>
+                </a>
+            </li>
+        </ul>
+    </li>
 
 
-        
-  
+
+
+
 
 
 

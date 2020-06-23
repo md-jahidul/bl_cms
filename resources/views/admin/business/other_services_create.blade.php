@@ -134,7 +134,7 @@
 
                             <div class="form-group">
                                 <label for="Details">Offer Details (EN)</label>
-                                <textarea type="text" name="offer_details_en" class="form-control textarea_details"></textarea>
+                                <textarea type="text" name="offer_details_en" id="summernote_editor" class="form-control"></textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Show in bottom accordion
                                 </small>
@@ -162,7 +162,7 @@
                             <div class="form-group">
 
                                 <label for="Details">Offer Details (BN)</label>
-                                <textarea type="text" name="offer_details_bn" class="form-control textarea_details"></textarea>
+                                <textarea type="text" name="offer_details_bn" id="summernote_editor" class="form-control"></textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Show in bottom accordion
                                 </small>
@@ -170,23 +170,23 @@
                             </div>
 
                         </div>
-                        
+
                         <div class="col-md-4 col-xs-12">
-                            
+
                             <div class="form-group">
                                 <label for="Banner Photo">Details Banner (Web) <span class="text-danger">*</span></label>
                                 <input type="file" required class="dropify_package" name="details_banner_web" data-height="60"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="Banner Photo">Details Banner (Mobile)</label>
                                 <input type="file" class="dropify_package" name="details_banner_mob" data-height="60"
                                        data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
                             </div>
-                            
+
                              <div class="form-group">
 
                                 <label>Banner Name<span class="text-danger">*</span></label>
@@ -202,7 +202,7 @@
                                 <input type="text" class="form-control"  name="banner_alt_text" placeholder="Alt Text">
 
                             </div>
-                            
+
                         </div>
 
                     </div>
@@ -374,19 +374,19 @@ if (Session::has('error')) {
     });
 
 
-    //text editor for package details
-    $("textarea.textarea_details").summernote({
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            // ['table', ['table']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['view', ['codeview']]
-        ],
-        height: 170
-    });
+    // text editor for package details
+    // $("textarea.textarea_details").summernote({
+    //     toolbar: [
+    //         ['style', ['bold', 'italic', 'underline', 'clear']],
+    //         ['font', ['strikethrough', 'superscript', 'subscript']],
+    //         ['fontsize', ['fontsize']],
+    //         ['color', ['color']],
+    //         // ['table', ['table']],
+    //         ['para', ['ul', 'ol', 'paragraph']],
+    //         ['view', ['codeview']]
+    //     ],
+    //     height: 170
+    // });
 
 });
 
