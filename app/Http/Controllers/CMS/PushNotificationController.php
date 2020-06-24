@@ -93,11 +93,13 @@ class PushNotificationController extends Controller
                     ->onQueue('notification');
             }
 
+            Log::info('Success: Notification sending from excel');
             return [
                 'success' => true,
                 'message' => 'Notification Sent'
             ];
         } catch (\Exception $e) {
+            Log::info('Error:'.$e->getMessage());
             return [
                 'success' => false,
                 'message' => $e->getMessage()
