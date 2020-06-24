@@ -153,7 +153,7 @@
                                         <a href="{{$f->id}}" class="file_edit">
                                             <i class="la la-edit"></i>
                                         </a>
-                                        <a href="{{ url('roaming/general-page-component/page/')}}" class="file_delete text-danger">
+                                        <a href="{{ url('ethics/file-delete/'. $f->id)}}" class="file_delete text-danger">
                                             <i class="la la-trash"></i>
                                         </a>
 
@@ -383,6 +383,14 @@ if (Session::has('error')) {
                 });
             }
         });
+    });
+    
+    $('.file_delete').on('click', function(){
+        var confrm = confirm("Are you sure? Do you wnat to delete this file?");
+        if(confrm){
+            return true;
+        }
+        return false;
     });
 
 //show dropify for  photo

@@ -836,5 +836,6 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('ethics/sort-ethics-file', 'AssetLite\EthicsController@sortFiles');
     Route::get('ethics/status-change/{id}', 'AssetLite\EthicsController@chanbgeStatus');
     Route::get('ethics/get-file-data/{id}', 'AssetLite\EthicsController@getFileData');
+    Route::get('ethics/file-delete/{id}', 'AssetLite\EthicsController@fileDelete');
 
 });

@@ -117,22 +117,23 @@ class EthicsController extends Controller {
 
 
     /**
-     * Feature delete.
+     * file delete.
      * 
-     * @param $featureId
+     * @param $fileId
      * @return JsonResponse
-     * @Dev Bulbul Mahmud Nito || 13/02/2020
+     * @Dev Bulbul Mahmud Nito || 24/06/2020
      */
-    public function featureDelete($featureId) {
+    public function fileDelete($fileId) {
+        
 
-        $response = $this->businessHomeService->deleteFeature($featureId);
+        $response = $this->service->deleteEthicsFile($fileId);
+        
         if ($response['success'] == 1) {
-            Session::flash('sussess', 'News is deleted!');
+            Session::flash('sussess', 'File is deleted!');
         } else {
-            Session::flash('error', 'News deleting process failed!');
+            Session::flash('error', 'File deleting process failed!');
         }
-
-        return redirect('/business-general');
+        return redirect('/ethics-compliance');
     }
 
 }

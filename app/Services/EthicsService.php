@@ -30,8 +30,7 @@ class EthicsService {
      * @param EthicsRepository $pageRepo
      */
     public function __construct(
-    EthicsRepository $pageRepo,
-    EthicsFilesRepository $fileRepo
+    EthicsRepository $pageRepo, EthicsFilesRepository $fileRepo
     ) {
         $this->pageRepo = $pageRepo;
         $this->fileRepo = $fileRepo;
@@ -46,8 +45,6 @@ class EthicsService {
         return $response;
     }
 
-  
-
     /**
      * update ethics page info
      * @return Response
@@ -61,9 +58,9 @@ class EthicsService {
             ]);
 
             //file upload in storege
-            
+
             $fileDir = 'assetlite/images/ethics';
-            
+
             $webPath = $request['old_web'];
             if ($request['banner_web'] != "") {
                 $webPath = $this->upload($request['banner_web'], $fileDir);
@@ -103,9 +100,8 @@ class EthicsService {
             return $response;
         }
     }
-    
-    
-     /**
+
+    /**
      * Get ethics files
      * @return Response
      */
@@ -113,9 +109,8 @@ class EthicsService {
         $response = $this->fileRepo->getFiles();
         return $response;
     }
-    
-    
-      /**
+
+    /**
      * update ethics page info
      * @return Response
      */
@@ -128,9 +123,9 @@ class EthicsService {
             ]);
 
             //file upload in storege
-            
+
             $fileDir = 'assetlite/images/ethics/files';
-            
+
             $filePath = $request['old_path'];
             if ($request['file_path'] != "") {
                 $filePath = $this->upload($request['file_path'], $fileDir);
@@ -140,7 +135,7 @@ class EthicsService {
                     $this->deleteFile($request['old_path']);
                 }
             }
-          
+
 
             //save data in database 
             $this->fileRepo->saveFileData($filePath, $request);
@@ -162,8 +157,6 @@ class EthicsService {
             return $response;
         }
     }
-    
-    
 
     /**
      * Change file sorting
@@ -182,6 +175,7 @@ class EthicsService {
         $response = $this->fileRepo->changeFileStatus($fileId);
         return $response;
     }
+
     /**
      * Change file sorting
      * @return Response
@@ -189,6 +183,35 @@ class EthicsService {
     public function getFileData($fileId) {
         $response = $this->fileRepo->getFileData($fileId);
         return $response;
+    }
+
+    /**
+     * Delete file
+     * @return Response
+     */
+    public function deleteEthicsFile($fileId) {
+        try {
+            $file = $this->fileRepo->getFileData($fileId);
+            $filePath = $file->file_path;
+
+            $this->fileRepo->deleteFile($fileId);
+
+            if ($filePath != "") {
+               
+                return $this->deleteFile($filePath);
+            }
+
+            $response = [
+                'success' => 1
+            ];
+            return $response;
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'errors' => $e
+            ];
+            return $response;
+        }
     }
 
 }
