@@ -6,6 +6,8 @@ use App\Models\MyBlProduct;
 use App\Models\MyBlSearchContent;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
+use PHPUnit\Exception;
 
 /**
  * Class SyncOffersForSearchContents
@@ -31,7 +33,7 @@ class SyncOffersForSearchContents extends Command
             'sms','minutes','smsoffers','smsbundles'
         ],
         'mix' => [
-            'mixbundles','combooffers','minutes','sms','gb','mb','internet'
+            'mixbundles','combooffers'
         ],
         'gift' => [
             'gifts' ,'giftbundles','giftdatabundles','giftinternetbundles'
@@ -71,12 +73,11 @@ class SyncOffersForSearchContents extends Command
 
         $products = $builder->whereHas('details')->with('details')->get();
 
-        $bar = $this->output->createProgressBar(count($products) + 3);
+        //dd($products->toArray());
 
         $data = [];
 
         $this->info('.......Starting......' . PHP_EOL);
-        $bar->start();
 
         foreach ($products as $product) {
             if ($product->details) {
@@ -88,25 +89,22 @@ class SyncOffersForSearchContents extends Command
             }
         }
 
-        $bar->advance(3);
-
         $this->info(PHP_EOL . '.......Inserting......' . PHP_EOL);
 
-        foreach ($data as $val) {
-            $display_title = $val['display_title'];
-            unset($val[$display_title]);
-            MyBlSearchContent::updateOrCreate(
-                [
-                  'display_title' => $display_title
-                ],
-                $val
-            );
-            $bar->advance();
-        }
-        $bar->finish();
+        DB::transaction(function () use ($data) {
+            DB::table('my_bl_search_contents')
+                              ->where('navigation_action', 'PURCHASE')->delete();
+
+            MyBlSearchContent::insert($data);
+        }, 3);
+
         $this->info(PHP_EOL . '.......Completed......');
     }
 
+    /**
+     * @param  MyBlProduct  $product
+     * @return array
+     */
     public function createSearchContents(MyBlProduct $product)
     {
         $search_contents = $this->tags[$product->details->content_type];
