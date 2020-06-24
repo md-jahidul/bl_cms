@@ -27,13 +27,13 @@
                             <input type="hidden" name="product_details_id" value="{{ $detailsData->id }}">
                             <div class="form-group col-md-6 ">
                                 <label for="details_en">Offer Details (English)</label>
-                                <textarea type="text" name="details_en"  class="form-control details">{{ $detailsData->details_en }}</textarea>
+                                <textarea type="text" name="details_en"  class="form-control summernote_editor">{{ $detailsData->details_en }}</textarea>
                                 <div class="help-block"></div>
                             </div>
 
                             <div class="form-group col-md-6 ">
                                 <label for="details_bn">Offer Details (Bangla)</label>
-                                <textarea type="text" name="details_bn"  class="form-control details">{{ $detailsData->details_bn }}</textarea>
+                                <textarea type="text" name="details_bn"  class="form-control summernote_editor">{{ $detailsData->details_bn }}</textarea>
                                 <div class="help-block"></div>
                             </div>
 
