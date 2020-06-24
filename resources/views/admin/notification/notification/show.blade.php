@@ -141,7 +141,8 @@
                         }
 
                     },
-                    error: function (data) { console.log(data);
+                    error: function (data) {
+                        console.log(data);
                         swal.fire({
                             title: 'Failed to send Notifications',
                             type: 'error',
