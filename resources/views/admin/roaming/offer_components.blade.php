@@ -583,16 +583,24 @@ if (Session::has('error')) {
         $('.element_wrap').append(html);
 
         $(".element_wrap textarea.details_editor").summernote({
+            tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
             toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['style',['style', 'bold', 'italic', 'underline', 'clear']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
-                // ['table', ['table']],
+                ['table', ['table']],
                 ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture', 'video', 'hr']],
                 ['view', ['fullscreen', 'codeview']]
             ],
-            height: 200
+            popover: {
+                table: [
+                    ['custom', ['tableHeaders']],
+                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                ],
+            },
         });
 
         position++;
@@ -710,16 +718,24 @@ if (Session::has('error')) {
         $('.element_wrap').append(html);
 
         $(".element_wrap textarea.details_editor").summernote({
+            tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
             toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['style',['style', 'bold', 'italic', 'underline', 'clear']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
-                // ['table', ['table']],
+                ['table', ['table']],
                 ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture', 'video', 'hr']],
                 ['view', ['fullscreen', 'codeview']]
             ],
-            height: 200
+            popover: {
+                table: [
+                    ['custom', ['tableHeaders']],
+                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                ],
+            },
         });
 
         position++;
@@ -749,16 +765,24 @@ if (Session::has('error')) {
 
 
     $(".element_wrap textarea.details_editor_edit").summernote({
+        tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
         toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['style',['style', 'bold', 'italic', 'underline', 'clear']],
             ['font', ['strikethrough', 'superscript', 'subscript']],
             ['fontsize', ['fontsize']],
             ['color', ['color']],
-            // ['table', ['table']],
+            ['table', ['table']],
             ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'picture', 'video', 'hr']],
             ['view', ['fullscreen', 'codeview']]
         ],
-        height: 200
+        popover: {
+            table: [
+                ['custom', ['tableHeaders']],
+                ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+            ],
+        },
     });
 
 

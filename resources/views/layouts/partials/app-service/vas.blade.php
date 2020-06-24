@@ -80,7 +80,12 @@
 <div class="col-md-6">
     <div class="form-group">
         <label for="show_in_vas" class="mr-1">Show In VAS Tab:</label>
-        <input type="checkbox" name="show_in_vas" value="1" id="show_in_vas" {{ (isset($appServiceProduct) && ($appServiceProduct->show_in_vas == 1)) ? 'checked' : '' }} >
+        @if(isset($appServiceProduct))
+            <input type="checkbox" name="show_in_vas" value="1" id="show_in_vas"
+                {{ (isset($appServiceProduct) && ($appServiceProduct->show_in_vas == 1) ? 'checked' : '')  }}>
+        @else
+            <input type="checkbox" name="show_in_vas" value="1" id="show_in_vas" checked>
+        @endif
     </div>
 </div>
 

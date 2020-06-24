@@ -22,7 +22,7 @@
                         <div class="col-md-4 col-xs-12">
 
                             <input type="hidden" value="{{$internet->id}}" name="internet_id">
-                            
+
                             <div class="form-group">
                                 <label>Type<span class="text-danger">*</span></label>
                                 <div class="form-check">
@@ -207,7 +207,7 @@
                             <div class="form-group">
 
                                 <label for="Details">Package Details (EN)</label>
-                                <textarea type="text" name="package_details_en" id="summernote_editor" class="form-control">{{$internet->package_details_en}}</textarea>
+                                <textarea type="text" name="package_details_en" class="form-control summernote_editor">{{$internet->package_details_en}}</textarea>
 
 
                             </div>
@@ -219,7 +219,7 @@
                             <div class="form-group">
 
                                 <label for="Details">Package Details (BN)</label>
-                                <textarea type="text" name="package_details_bn" id="summernote_editor" class="form-control">{{$internet->package_details_bn}}</textarea>
+                                <textarea type="text" name="package_details_bn" class="form-control summernote_editor">{{$internet->package_details_bn}}</textarea>
 
                             </div>
 

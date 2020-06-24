@@ -156,10 +156,10 @@
 <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-table-headers.js') }}" type="text/javascript"></script>
 <script>
     $(function () {
-        $("textarea#summernote_editor").summernote({
+        $("textarea.summernote_editor").summernote({
             tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
             toolbar: [
-                ['style', ['style'],['bold', 'italic', 'underline', 'clear']],
+                ['style',['style', 'bold', 'italic', 'underline', 'clear']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
