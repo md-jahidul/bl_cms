@@ -23,30 +23,30 @@
                             @csrf
                             @if(isset($about))
                                 @method('put')
-                                
-                                 @php 
-                                 
+
+                                 @php
+
                                  $banglalink_info = $about->banglalink_info;
-                                 $banglalink_info_bn = $about->banglalink_info_bn; 
+                                 $banglalink_info_bn = $about->banglalink_info_bn;
                                  $details_en = $about->details_en;
                                  $details_bn = $about->details_bn;
-                                 
+
                                  @endphp
                             @else
                                 @method('post')
-                                
-                                @php 
-                                
+
+                                @php
+
                                 $banglalink_info = '';
                                 $banglalink_info_bn = '';
                                 $details_en = '';
                                 $details_bn = '';
-                                
+
                                 @endphp
                             @endif
-                            
-                            
-         
+
+
+
 
                             <div class="row">
 
@@ -100,19 +100,17 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('banglalink_info_bn') ? ' error' : '' }}">
                                     <label for="Details">Details (EN)</label>
-                                    <textarea
-                                        class="form-control textarea_details" name="details_en">{{ old("details_en") ? old("details_en") : $details_en }}</textarea>
-
+                                    <textarea class="form-control summernote_editor" name="details_en">{{ old("details_en") ? old("details_en") : $details_en }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_en'))
                                         <div class="help-block">  {{ $errors->first('details_en') }}</div>
                                     @endif
                                 </div>
-                                
+
                                 <div class="form-group col-md-6 {{ $errors->has('details_bn') ? ' error' : '' }}">
                                     <label for="Details">Details (BN)</label>
-                                    <textarea
-                                        class="form-control textarea_details" name="details_bn">{{ old("details_bn") ? old("details_bn") : $details_bn }}</textarea>
+                                    <textarea class="form-control summernote_editor"
+                                          name="details_bn">{{ old("details_bn") ? old("details_bn") : $details_bn }}</textarea>
 
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_bn'))
@@ -274,18 +272,18 @@
 $(function () {
 
     //text editor for package details
-    $("textarea.textarea_details").summernote({
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            // ['table', ['table']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['view', ['codeview']]
-        ],
-        height: 220
-    });
+    // $("textarea.textarea_details").summernote({
+    //     toolbar: [
+    //         ['style', ['bold', 'italic', 'underline', 'clear']],
+    //         ['font', ['strikethrough', 'superscript', 'subscript']],
+    //         ['fontsize', ['fontsize']],
+    //         ['color', ['color']],
+    //         // ['table', ['table']],
+    //         ['para', ['ul', 'ol', 'paragraph']],
+    //         ['view', ['codeview']]
+    //     ],
+    //     height: 220
+    // });
 
 });
 

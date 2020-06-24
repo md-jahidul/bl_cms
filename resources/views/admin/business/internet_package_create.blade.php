@@ -20,7 +20,7 @@
                         @csrf
 
                         <div class="col-md-4 col-xs-12">
-                            
+
                              <div class="form-group">
                                 <label>Type<span class="text-danger">*</span></label>
                                 <div class="form-check">
@@ -201,27 +201,18 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-
                     <div class="row">
                         <div class="col-md-6 col-xs-12">
                             <div class="form-group">
-
                                 <label for="Details">Package Details (EN)</label>
-                                <textarea type="text" name="package_details_en" id="summernote_editor" class="form-control"></textarea>
-
-
+                                <textarea type="text" name="package_details_en" class="form-control summernote_editor"></textarea>
                             </div>
-
-
                         </div>
                         <div class="col-md-6 col-xs-12">
                             <div class="form-group">
-
                                 <label for="Details">Package Details (BN)</label>
-                                <textarea type="text" name="package_details_bn" id="summernote_editor" class="form-control"></textarea>
-
+                                <textarea type="text" name="package_details_bn" class="form-control summernote_editor"></textarea>
                             </div>
-
                         </div>
 
                         <div class="col-md-4 col-xs-12">

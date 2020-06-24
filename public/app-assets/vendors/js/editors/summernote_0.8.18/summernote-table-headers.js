@@ -50,7 +50,7 @@
                         // exists and user tries to add a new row below
                         // the header, Summernote actually adds another tr within the
                         // thead so need to capture all and move them into tbody
-                        self.observer.disconnect(); // see below
+                        // self.observer.disconnect(); // see below
                         self.replaceTags($thead.find('th'), 'td')
                         var $theadRows = $thead.find('tr');
                         $table.prepend($theadRows);

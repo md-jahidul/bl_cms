@@ -95,10 +95,8 @@
 
                                    <div class="form-group col-md-6 {{ $errors->has('personal_details') ? ' error' : '' }}">
                                     <label for="personal_details" class="required">Personal Details (English)</label>
-                                    <textarea
-                                        required
-                                        data-validation-required-message="Personal Details (English) is required"
-                                        class="form-control details" name="personal_details" placeholder="Enter Personal Details in English" id="personal_details"
+                                    <textarea required data-validation-required-message="Personal Details (English) is required"
+                                        class="form-control summernote_editor details" name="personal_details" placeholder="Enter Personal Details in English" id="personal_details"
                                         rows="4">{{ old("personal_details") ? old("personal_details") : $personal_details  }}</textarea>
 
                                     <div class="help-block"></div>
@@ -113,7 +111,7 @@
                                     <textarea
                                         required
                                         data-validation-required-message="Personal Details (Bangla) is required"
-                                        class="form-control details" name="personal_details_bn" placeholder="Enter Personal Details in Bangla" id="personal_details_bn"
+                                        class="form-control summernote_editor details" name="personal_details_bn" placeholder="Enter Personal Details in Bangla" id="personal_details_bn"
                                         rows="4">{{ old("personal_details_bn") ? old("personal_details_bn") : $personal_details_bn }}</textarea>
 
                                     <div class="help-block"></div>
@@ -267,23 +265,23 @@
 
 
 
-    <script>
-        $(function () {
-            $("textarea.details").summernote({
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    // ['table', ['table']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['view', ['fullscreen', 'codeview']]
-                ],
-                height: 200
-            })
+{{--    <script>--}}
+{{--        $(function () {--}}
+{{--            $("textarea.details").summernote({--}}
+{{--                toolbar: [--}}
+{{--                    ['style', ['bold', 'italic', 'underline', 'clear']],--}}
+{{--                    ['font', ['strikethrough', 'superscript', 'subscript']],--}}
+{{--                    ['fontsize', ['fontsize']],--}}
+{{--                    ['color', ['color']],--}}
+{{--                    // ['table', ['table']],--}}
+{{--                    ['para', ['ul', 'ol', 'paragraph']],--}}
+{{--                    ['view', ['fullscreen', 'codeview']]--}}
+{{--                ],--}}
+{{--                height: 200--}}
+{{--            })--}}
 
-        })
-    </script>
+{{--        })--}}
+{{--    </script>--}}
 @endpush
 
 

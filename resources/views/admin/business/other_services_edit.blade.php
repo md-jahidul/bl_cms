@@ -164,7 +164,7 @@
 
                             <div class="form-group">
                                 <label for="Details">Offer Details (EN)</label>
-                                <textarea type="text" name="offer_details_en" id="summernote_editor" class="form-control">{{$service->offer_details_en}}</textarea>
+                                <textarea type="text" name="offer_details_en" class="form-control summernote_editor">{{$service->offer_details_en}}</textarea>
 
                             </div>
 
@@ -183,7 +183,7 @@
                             <div class="form-group">
 
                                 <label for="Details">Offer Details (BN)</label>
-                                <textarea type="text" name="offer_details_bn" id="summernote_editor" class="form-control">{{$service->offer_details_bn}}</textarea>
+                                <textarea type="text" name="offer_details_bn" class="form-control summernote_editor">{{$service->offer_details_bn}}</textarea>
 
                             </div>
 
