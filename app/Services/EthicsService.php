@@ -198,7 +198,7 @@ class EthicsService {
 
             if ($filePath != "") {
                
-                return $this->deleteFile($filePath);
+                $this->deleteFile($filePath);
             }
 
             $response = [

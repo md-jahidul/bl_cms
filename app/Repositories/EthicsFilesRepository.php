@@ -105,8 +105,8 @@ class EthicsFilesRepository extends BaseRepository {
 
     public function deleteFile($fileId) {
 
-//            $file = $this->model->findOrFail($fileId);
-//            $file->delete();
+            $file = $this->model->findOrFail($fileId);
+            $file->delete();
     }
 
 }
