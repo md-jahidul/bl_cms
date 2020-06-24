@@ -27,7 +27,8 @@ class StoreWelcomeInfoRequest extends FormRequest
             'image' => 'required|image|mimes:jpeg,jpg,png|dimensions:ratio=8/3',
             'message_en' => 'required|max:150',
             'message_bn' => 'required|max:150',
-            'login_button_title' => 'required|max:30'
+            'login_button_title' => 'required|max:30',
+            'login_button_title_bn' => 'required|max:30',
         ];
     }
 
