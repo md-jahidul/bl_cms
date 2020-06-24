@@ -126,7 +126,7 @@
                             swal.fire({
                                 title: 'Notification sent Successfully!',
                                 type: 'success',
-                                timer: 2000,
+                                timer: 900000,
                                 showConfirmButton: false
                             });
 
