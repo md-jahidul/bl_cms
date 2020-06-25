@@ -51,11 +51,11 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="title" class="required">Title :</label>
+                            <label for="title" class="required">Title English:</label>
                             <input required
                                    value="@if(isset($short_cut_info)){{$short_cut_info->title}} @elseif(old("title")) {{old("title")}} @endif"
                                    type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                                   id="title" placeholder="Enter Shorcut Name..">
+                                   id="title" placeholder="Enter Shorcut Name in English..">
                             <div class="help-block">
                                 <small class="text-info"> Title can not be more then 50 Characters</small>
                             </div>
@@ -67,6 +67,21 @@
                             <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                         </div>
                     </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="title" class="required">Title Bangla :</label>
+                            <input required
+                                   value="@if(isset($short_cut_info)){{$short_cut_info->title_bn}} @elseif(old("title_bn")) {{old("title_bn")}} @endif"
+                                   type="text" name="title_bn" class="form-control @error('title_bn') is-invalid @enderror"
+                                   id="title_bn" placeholder="Enter Shorcut Name in Bangla..">
+                            <div class="help-block">
+                                <small class="text-info"> Title can not be more then 50 Characters</small>
+                            </div>
+                            <small class="text-danger"> @error('title_bn') {{ $message }} @enderror </small>
+                        </div>
+                    </div>
+
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="default">Default :</label>
@@ -134,6 +149,22 @@
                         </div>
                     </div>
 
+                    <div class="col-md-4">
+
+                    </div>
+
+                    <div class="col-md-4">
+                        <small class="text-danger"> @error('other_info') {{ $message }} @enderror </small>
+                        @if(isset($short_cut_info))
+                            <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Update
+                                Shortcut
+                            </button>
+                        @else
+                            <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Add Shortcut
+                            </button>
+                        @endif
+                    </div>
+
                     <div id="append_div" class="col-md-4">
                         @if(isset($short_cut_info))
                             @if($info = json_decode($short_cut_info->other_info))
@@ -150,17 +181,7 @@
                         @endif
                     </div>
 
-                    <div class="col-md-4">
-                        <small class="text-danger"> @error('other_info') {{ $message }} @enderror </small>
-                        @if(isset($short_cut_info))
-                            <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Update
-                                Shortcut
-                            </button>
-                        @else
-                            <button type="submit" id="submitForm" style="width:100%" class="btn btn-info">Add Shortcut
-                            </button>
-                        @endif
-                    </div>
+
                 </div>
             </div>
         </form>

@@ -16,7 +16,7 @@
                                 <input type="hidden" name="com_id[]" value="{{$val->id}}">
                                 <div class="form-group">
 
-                                    <label class="display-block">Package Name (EN) <span class="text-danger">*</span> 
+                                    <label class="display-block">Package Name (EN) <span class="text-danger">*</span>
 
                                         @if($k > 0)
                                         <a href="javascript:;" com_id="{{$val->id}}" class="remove_package_one pull-right text-danger">
@@ -86,16 +86,25 @@
 
         //text editor for package details
         $("textarea.textarea_details").summernote({
+            tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
             toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['style', ['style'],['bold', 'italic', 'underline', 'clear']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
-                // ['table', ['table']],
+                ['table', ['table']],
                 ['para', ['ul', 'ol', 'paragraph']],
-                ['view', ['codeview']]
+                ['insert', ['link', 'picture', 'video', 'hr']],
+                ['view', ['fullscreen', 'codeview']]
             ],
-            height: 170
+            popover: {
+                table: [
+                    ['custom', ['tableHeaders']],
+                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                ],
+            },
+            height:200
         });
 
 
@@ -105,16 +114,25 @@
 
             //text editor for package details
             $(html).find("textarea.textarea_details_new").summernote({
+                tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
                 toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['style', ['style'],['bold', 'italic', 'underline', 'clear']],
                     ['font', ['strikethrough', 'superscript', 'subscript']],
                     ['fontsize', ['fontsize']],
                     ['color', ['color']],
-                    // ['table', ['table']],
+                    ['table', ['table']],
                     ['para', ['ul', 'ol', 'paragraph']],
-                    ['view', ['codeview']]
+                    ['insert', ['link', 'picture', 'video', 'hr']],
+                    ['view', ['fullscreen', 'codeview']]
                 ],
-                height: 170
+                popover: {
+                    table: [
+                        ['custom', ['tableHeaders']],
+                        ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                        ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                    ],
+                },
+                height:200
             });
 
             $(this).parents('.package_one_wrap').append(html);

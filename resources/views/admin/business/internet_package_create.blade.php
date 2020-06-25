@@ -21,20 +21,37 @@
 
                         <div class="col-md-4 col-xs-12">
 
+                             <div class="form-group">
+                                <label>Type<span class="text-danger">*</span></label>
+                                <div class="form-check">
+
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="type" value="Prepaid">
+                                               Prepaid
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="type" value="Postpaid">
+                                               Postpaid
+                                    </label>
+                                </div>
+                            </div>
+
 
                             <div class="form-group">
-                                <label>Code<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required name="product_code" placeholder="Product Code">
+                                <label>Code</label>
+                                <input type="text" class="form-control" name="product_code" placeholder="Product Code">
                             </div>
 
                             <div class="form-group">
-                                <label>Code EV<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required name="product_code_ev" placeholder="Product Code EV">
+                                <label>Code EV</label>
+                                <input type="text" class="form-control"  name="product_code_ev" placeholder="Product Code EV">
                             </div>
 
                             <div class="form-group">
-                                <label>Code With Renew<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required name="product_code_with_renew" placeholder="Product Code With Renew">
+                                <label>Code With Renew</label>
+                                <input type="text" class="form-control" name="product_code_with_renew" placeholder="Product Code With Renew">
                             </div>
 
                             <div class="form-group">
@@ -184,27 +201,18 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-
                     <div class="row">
                         <div class="col-md-6 col-xs-12">
                             <div class="form-group">
-
                                 <label for="Details">Package Details (EN)</label>
-                                <textarea type="text" name="package_details_en" class="form-control package_details"></textarea>
-
-
+                                <textarea type="text" name="package_details_en" class="form-control summernote_editor"></textarea>
                             </div>
-
-
                         </div>
                         <div class="col-md-6 col-xs-12">
                             <div class="form-group">
-
                                 <label for="Details">Package Details (BN)</label>
-                                <textarea type="text" name="package_details_bn" class="form-control package_details"></textarea>
-
+                                <textarea type="text" name="package_details_bn" class="form-control summernote_editor"></textarea>
                             </div>
-
                         </div>
 
                         <div class="col-md-4 col-xs-12">
@@ -262,8 +270,8 @@
 
 
                         </div>
-                        
-                        
+
+
                          <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
@@ -278,7 +286,7 @@
 
 
                         </div>
-                        
+
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
@@ -294,7 +302,7 @@
 
 
                         </div>
-                       
+
                         <div class="col-md-4 col-xs-12">
 
                             <div class="form-group">
@@ -384,18 +392,18 @@ if (Session::has('error')) {
 
 
     //text editor for package details
-    $("textarea.package_details").summernote({
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            // ['table', ['table']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['view', ['codeview']]
-        ],
-        height: 200
-    });
+    // $("textarea.package_details").summernote({
+    //     toolbar: [
+    //         ['style', ['bold', 'italic', 'underline', 'clear']],
+    //         ['font', ['strikethrough', 'superscript', 'subscript']],
+    //         ['fontsize', ['fontsize']],
+    //         ['color', ['color']],
+    //         // ['table', ['table']],
+    //         ['para', ['ul', 'ol', 'paragraph']],
+    //         ['view', ['codeview']]
+    //     ],
+    //     height: 200
+    // });
 
     $(".mrp, .tax, .price, .validity").on("keypress keyup blur", function (event) {
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));

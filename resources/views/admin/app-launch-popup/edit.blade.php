@@ -21,12 +21,12 @@
                             @csrf
                             <div class="row">
                                 <div class="col-md-4">
-                                    <div class="form-group">
+                                    <div class="form-group @if($errors->has('title')) error @endif">
                                         <label for="title" class="required">Title</label>
                                         <input class="form-control"
                                                name="title"
                                                id="title"
-                                               value="{{$pop_up->title}}"
+                                               value="{{old('title')? old('title') : $pop_up->title}}"
                                                required>
                                         @if($errors->has('title'))
                                             <p class="text-left">
@@ -125,16 +125,18 @@
     {{--    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
     <script>
         $(function () {
+            var new_start_date;
             var date;
             // Date & Time
             date = new Date();
             date.setDate(date.getDate());
 
-            console.log(date);
+            new_start_date = new Date('{{$pop_up->start_date}}');
+
             $('.datetime').daterangepicker({
                 timePicker: true,
                 timePickerIncrement: 1,
-                minDate: '{{$pop_up->start_date}}',
+                minDate: (new_start_date < date) ? new_start_date : date,
                 locale: {
                     format: 'YYYY/MM/DD h:mm A'
                 }

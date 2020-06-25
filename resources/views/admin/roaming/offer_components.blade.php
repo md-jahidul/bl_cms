@@ -30,7 +30,7 @@
                                 <tr data-index="{{ $c->id }}" data-position="{{ $c->position }}">
 
                                     <td class="cursor-move">
-                                        <i class="icon-cursor-move icons"></i> 
+                                        <i class="icon-cursor-move icons"></i>
                                         <strong class="text-info">{{ ucwords($c->component_type) }} </strong>
                                     </td>
 
@@ -125,7 +125,7 @@
                                     <div class="row">
 
                                         <div class="col-md-6 col-xs-12">
-                                            <label>Headline (EN) 
+                                            <label>Headline (EN)
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" required class="form-control" value="{{$textEn->headline_en}}" name="headline_en[{{$com->position}}]">
@@ -241,8 +241,6 @@
                                     <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/offer_table_component.png')}}" width="100%">
 
                                 </div>
-
-
                             </div>
 
                             @endif
@@ -265,7 +263,7 @@
                                     <div class="row">
 
                                         <div class="col-md-6 col-xs-12">
-                                            <label>Accordion Head (EN) 
+                                            <label>Accordion Head (EN)
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" required class="form-control" value="{{$textEn->accordion_headline_en}}" name="accordion_headline_en[{{$com->position}}]">
@@ -334,7 +332,7 @@
                 <div class="row">
 
                     <div class="col-md-6 col-xs-12">
-                        <label>Headline (EN) 
+                        <label>Headline (EN)
                             <span class="text-danger">*</span>
                         </label>
                         <input type="text" required class="form-control headline_en"  placeholder="Headline EN">
@@ -418,7 +416,7 @@
                 <div class="row">
 
                     <div class="col-md-6 col-xs-12">
-                        <label>Accordion Head (EN) 
+                        <label>Accordion Head (EN)
                             <span class="text-danger">*</span>
                         </label>
                         <input type="text" required class="form-control accordion_headline_en"  placeholder="Headline EN">
@@ -585,16 +583,24 @@ if (Session::has('error')) {
         $('.element_wrap').append(html);
 
         $(".element_wrap textarea.details_editor").summernote({
+            tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
             toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['style',['style', 'bold', 'italic', 'underline', 'clear']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
-                // ['table', ['table']],
+                ['table', ['table']],
                 ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture', 'video', 'hr']],
                 ['view', ['fullscreen', 'codeview']]
             ],
-            height: 200
+            popover: {
+                table: [
+                    ['custom', ['tableHeaders']],
+                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                ],
+            },
         });
 
         position++;
@@ -712,16 +718,24 @@ if (Session::has('error')) {
         $('.element_wrap').append(html);
 
         $(".element_wrap textarea.details_editor").summernote({
+            tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
             toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['style',['style', 'bold', 'italic', 'underline', 'clear']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
-                // ['table', ['table']],
+                ['table', ['table']],
                 ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture', 'video', 'hr']],
                 ['view', ['fullscreen', 'codeview']]
             ],
-            height: 200
+            popover: {
+                table: [
+                    ['custom', ['tableHeaders']],
+                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                ],
+            },
         });
 
         position++;
@@ -751,16 +765,24 @@ if (Session::has('error')) {
 
 
     $(".element_wrap textarea.details_editor_edit").summernote({
+        tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
         toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['style',['style', 'bold', 'italic', 'underline', 'clear']],
             ['font', ['strikethrough', 'superscript', 'subscript']],
             ['fontsize', ['fontsize']],
             ['color', ['color']],
-            // ['table', ['table']],
+            ['table', ['table']],
             ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'picture', 'video', 'hr']],
             ['view', ['fullscreen', 'codeview']]
         ],
-        height: 200
+        popover: {
+            table: [
+                ['custom', ['tableHeaders']],
+                ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+            ],
+        },
     });
 
 

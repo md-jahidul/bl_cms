@@ -19,8 +19,7 @@
 
                             <div class="content-body">
                                 <div class="row">
-
-                                    <div class="form-group col-md-6 {{ $errors->has('component_type') ? ' error' : '' }}">
+                                    <div class="form-group col-md-4 {{ $errors->has('component_type') ? ' error' : '' }}">
                                         <label for="editor_en" class="required">Component Type</label>
                                         <select name="component_type" class="form-control required" id="component_type"
                                                 required data-validation-required-message="Please select component type">
@@ -35,11 +34,10 @@
                                         @endif
                                     </div>
 
-                                    <div class="col-md-6">
-{{--                                        <img src="{{ asset('sample-images/accordion-text.png') }}" width="100%">--}}
+                                    <div class="col-md-8 pb-2">
+                                        <label>Component Sample Picture</label>
+                                        <img class="img-thumbnail" id="componentImg" width="100%">
                                     </div>
-
-
 
 
                                     {{--Large Title With Text--}}
@@ -178,12 +176,8 @@
                                         @include('layouts.partials.product-details.component.common-field.related-product')
                                     </slot>
 
+                                    {{--Drop Down--}}
                                     <slot id="drop_down" data-offer-type="drop_down" class="d-none">
-                                        <div class="form-group col-md-6">
-                                            <label for="editor_bn" class="text-success">Drop Down Sample Picture</label>
-                                            <img class=" img-fluid" src="{{ asset('sample-images/drop_down.png') }}" alt="Image description">
-                                        </div>
-
                                         <div class="form-group col-md-6 {{ $errors->has('editor_en') ? ' error' : '' }}">
                                             <label for="editor_en" class="required" >Drop Down Data</label>
                                             <select name="other_attributes[dropdown_data_type]" class="form-control required">
@@ -197,35 +191,6 @@
                                             @endif
                                         </div>
                                     </slot>
-
-
-{{--                                    Table component TEST:--}}
-                                    <div class="col-md-12">
-                                        <table class="table table-bordered" id="myTable">
-                                            <thead>
-                                                <tr>
-                                                    <th><input type="text" class="form-control" name="th_row[]"></th>
-                                                    <th><input type="text" class="form-control" name="th_row[]"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="row_1">
-                                                    <td><input type="text" class="form-control" name="tbody[row_1][]"></td>
-                                                    <td><input type="text" class="form-control" name="tbody[row_1][]"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" name="tbody[row_2][]"></td>
-                                                    <td><input type="text" class="form-control" name="tbody[row_2][]"></td>
-                                                </tr>
-                                            </tbody>
-
-                                        </table>
-                                        <button type="button" id="add_row">Add Row</button>
-                                        <button type="button" id="add_column">Add Column</button>
-                                    </div>
-
-
-
 
                                     <div class="col-md-12 mt-2">
                                         <div class="form-group">
@@ -266,20 +231,16 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/tinymce/tinymce.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
-
+    <style>
+        .note-editor.note-frame.fullscreen .note-editable {
+            background-color: white;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
-
-
-
 @endpush
 @push('page-js')
-{{--    <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>--}}
-    <script src="{{ asset('app-assets/vendors/js/editors/tinymce/tinymce.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('app-assets/js/scripts/editors/editor-tinymce.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/custom-js/component.js') }}" type="text/javascript"></script>
 
     <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
 
@@ -287,61 +248,14 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 
 
-
-
     <script>
         $(function () {
 
-
-
-            $('#add_column').click(function () {
-                addColumn()
+            $('#component_type').on('change', function () {
+                var componentType = this.value + ".png"
+                var fullUrl = "{{ asset('component-images') }}/" + componentType;
+                $("#componentImg").attr('src', fullUrl)
             })
-
-            function addColumn() {
-                var tdTrCount = $('#myTable tbody').find('tr').length
-
-
-                // var rowFind = $('#myTable body').find('tr .row_1');
-
-                // console.log(rowFind)
-
-                $('#myTable thead').find('tr').append('<th><input type="text" name="th_row[]" class="form-control"></th>')
-
-                $('.row_1').append('<td><input type="text" name="tbody[row_][]" class="form-control"></td>')
-
-
-                // tdTrCount++
-
-                // var tbody = '<tr>';
-                // for (var i = 1; i<=tdTrCount; i++){
-                //     $('#myTable tbody').find('tr').append('<td><input type="text" name="tbody[row_'+i+'][]" class="form-control"></td>')
-                //     // tbody +='<td><input type="text" name="tbody[row_'+i+'][]" class="form-control"></td>';
-                // }
-                // tbody +='</tr>'
-                // $('#myTable tbody').append(tbody)
-
-                // $('#myTable tbody').find('tr').append('<td><input type="text" name="tbody[row_'+tdTrCount+'][]" class="form-control"></td>')
-            }
-
-            $('#add_row').click(function () {
-                addRow()
-            })
-            function addRow() {
-                var thCount = $('#myTable thead').find('th').length
-                var tdTrCount = $('#myTable tbody').find('tr').length
-
-                // console.log(tdTrCount)
-                tdTrCount++
-
-                var tbody = '<tr>';
-                    for (var i = 1; i<=thCount; i++){
-
-                        tbody +='<td><input type="text" name="tbody[row_'+tdTrCount+'][]" class="form-control"></td>';
-                    }
-                    tbody +='</tr>'
-                $('#myTable tbody').append(tbody)
-            }
 
             function dropify(){
                 $('.dropify').dropify({
@@ -354,20 +268,6 @@
                 });
             }
             dropify();
-
-            $("textarea#details").summernote({
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    // ['table', ['table']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['view', ['fullscreen', 'codeview']]
-                ],
-                height:150
-            })
-
 
             // Multi Image Component
             $(document).on('click', '#plus-image', function () {
@@ -469,10 +369,3 @@
     </script>
 
 @endpush
-
-
-
-
-
-
-

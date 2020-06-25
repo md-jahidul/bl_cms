@@ -45,14 +45,14 @@
 
                                 <div class="col-md-6 col-xs-12">
                                     <label> Instructions To Setup (EN)</label>
-                                    <textarea class="form-control text_editor" name="details_en">{{$operator->details_en}}</textarea>
+                                    <textarea class="form-control summernote_editor" name="details_en">{{$operator->details_en}}</textarea>
                                     <small class="text-info">
                                         <strong>Note:</strong> It'll show in offer page pop-up
                                     </small>
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <label>Instructions To Setup (BN)</label>
-                                    <textarea class="form-control text_editor" name="details_bn">{{$operator->details_en}}</textarea>
+                                    <textarea class="form-control summernote_editor" name="details_bn">{{$operator->details_en}}</textarea>
                                     <small class="text-info">
                                         <strong>Note:</strong> It'll show in offer page pop-up
                                     </small>
@@ -64,7 +64,7 @@
                                 <input type="text" class="form-control" value="{{$operator->tap_code}}"
                                        name="tap_code" placeholder="Enter tap code">
                             </div>
-                           
+
 
                             <div class="form-actions col-md-12">
                                 <div class="pull-right">
@@ -87,29 +87,29 @@
 
 @push('style')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
+{{--<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">--}}
 @endpush
 @push('page-js')
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-<script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+{{--<script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>--}}
 
 <script>
 $(function () {
 
 
-    $(".text_editor").summernote({
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-// ['table', ['table']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['view', ['fullscreen', 'codeview']]
-        ],
-        height: 170
-    });
+//     $(".text_editor").summernote({
+//         toolbar: [
+//             ['style', ['bold', 'italic', 'underline', 'clear']],
+//             ['font', ['strikethrough', 'superscript', 'subscript']],
+//             ['fontsize', ['fontsize']],
+//             ['color', ['color']],
+// // ['table', ['table']],
+//             ['para', ['ul', 'ol', 'paragraph']],
+//             ['view', ['fullscreen', 'codeview']]
+//         ],
+//         height: 170
+//     });
 
 
 

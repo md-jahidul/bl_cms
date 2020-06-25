@@ -36,7 +36,7 @@ class AppLaunchPopupController extends Controller
             $file = $request->content_data;
             $path = $file->storeAs(
                 'app-launch-popup/images',
-                strtotime(now()).'.'.$file->getClientOriginalExtension(),
+                strtotime(now()) . '.' . $file->getClientOriginalExtension(),
                 'public'
             );
 
@@ -47,10 +47,10 @@ class AppLaunchPopupController extends Controller
 
         // start date end date
         $date_range_array = explode('-', $request->input('display_period'));
-        $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]), 'Asia/Dhaka')
-            ->setTimezone('UTC')->toDateTimeString();
-        $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]), 'Asia/Dhaka')
-            ->setTimezone('UTC')->toDateTimeString();
+        $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
+                               ->toDateTimeString();
+        $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
+                             ->toDateTimeString();
 
         $data['type'] = $type;
         $data['title'] = $request->title;
@@ -82,7 +82,7 @@ class AppLaunchPopupController extends Controller
                 $file = $request->content_data;
                 $path = $file->storeAs(
                     'app-launch-popup/images',
-                    strtotime(now()).'.'.$file->getClientOriginalExtension(),
+                    strtotime(now()) . '.' . $file->getClientOriginalExtension(),
                     'public'
                 );
 
@@ -93,10 +93,10 @@ class AppLaunchPopupController extends Controller
         }
 
         $date_range_array = explode('-', $request->input('display_period'));
-        $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]), 'Asia/Dhaka')
-            ->setTimezone('UTC')->toDateTimeString();
-        $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]), 'Asia/Dhaka')
-            ->setTimezone('UTC')->toDateTimeString();
+        $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
+                                  ->toDateTimeString();
+        $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
+                                 ->toDateTimeString();
 
         $data['type'] = $type;
         $data['title'] = $request->title;

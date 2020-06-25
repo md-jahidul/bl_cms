@@ -29,7 +29,7 @@
                             @foreach($components as $list)
                                 <tr data-index="{{ $list->id }}" data-position="{{ $list->component_order }}">
                                     <td><i class="icon-cursor-move icons"></i></td>
-                                    <td>{{ ucwords(str_replace('_', ' ', $list->component_type)) }}</td>
+                                    <td>{{ ucwords(str_replace('_', ' ', $list->component_type)) }} {!! $list->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                     <td>{{ $list->title_en  }}</td>
                                     <td class="text-right">
                                         <a href="{{ route("component-edit", [$simType, $productDetailsId, $sectionId, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

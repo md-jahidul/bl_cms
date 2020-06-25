@@ -25,9 +25,7 @@ function matchRelatedProduct($id, $relatedProductIds)
 @endsection
 @section('content')
     <section>
-
-
-        <!-- include tab wise product details -->
+    <!-- include tab wise product details -->
     @if($tab_type == "app")
         @include('admin.app-service.details.section.tab-details.app_tab_details')
     @elseif($tab_type == "vas")
@@ -38,9 +36,7 @@ function matchRelatedProduct($id, $relatedProductIds)
         @include('admin.app-service.details.section.tab-details.others_tab_details')
     @endif
 
-
     @yield('component_type_selector')
-
 
     <!-- # Section list with component card -->
         <div class="card">
@@ -281,7 +277,6 @@ function matchRelatedProduct($id, $relatedProductIds)
         </div>
     </section>
 
-
     @yield('component_modal_toadd')
 
 
@@ -290,6 +285,7 @@ function matchRelatedProduct($id, $relatedProductIds)
 
 @push('page-css')
     {{-- <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet"> --}}
+{{--    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">--}}
     <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
     <style>
         #sortable tr td {
@@ -317,20 +313,46 @@ function matchRelatedProduct($id, $relatedProductIds)
 @endpush
 
 @push('page-js')
-
+{{--    <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-lite.min.js') }}" type="text/javascript"></script>--}}
+{{--    <script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-table-headers.js') }}" type="text/javascript"></script>--}}
     <script type="text/javascript">
+
+        // $("textarea.js_editor_box").summernote({
+        //     popover: {
+        //         toolbar: [
+        //             ['style', ['style'],['bold', 'italic', 'underline', 'clear']],
+        //             ['font', ['strikethrough', 'superscript', 'subscript']],
+        //             ['fontsize', ['fontsize']],
+        //             ['color', ['color']],
+        //             ['table', ['table']],
+        //             ['para', ['ul', 'ol', 'paragraph']],
+        //             ['view', ['fullscreen', 'codeview']]
+        //         ],
+        //
+        //         table: [
+        //             ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+        //             ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+        //             ['custom', ['tableHeaders']]
+        //         ],
+        //     },
+        //
+        //     height:150
+        // })
 
         jQuery(document).ready(function ($) {
             // Preview changes on component selection
             $('#component_type').on('change', function () {
-
                 var assetUrl = "{{asset('app-assets/images/app_services/')}}"
                 $('#component_preview_img').attr('src', assetUrl + '/' + $(this).val() + '.png');
-
                 $('#add_component_btn').attr('data-target', '#' + $(this).val());
-
             });
 
+            $('#add_component_btn').click(function () {
+                $('.table_component_wrap').find("input[name='component_title_en']").val('');
+                $('.table_component_wrap').find("input[name='component_title_bn']").val('');
+                $('#pricing_sections').find('.left_table').empty()
+                $('#pricing_sections').find('.right_table').empty()
+            })
 
         }); // Doc ready
 
@@ -348,14 +370,14 @@ function matchRelatedProduct($id, $relatedProductIds)
                 type: "GET",
                 success: function (result) {
 
+                    // console.log(result)
+
                     if (result.status == 'SUCCESS') {
                         var $parentSelector = $('#' + modalComponent);
                         var baseUrl = "{{ config('filesystems.file_base_url') }}";
 
                         $parentSelector.find('#form_save').hide();
                         $parentSelector.find('#form_update').show();
-
-                        // console.log(result.data);
 
                         // Check component is slider?
                         if (result.data.sections.section_type == 'slider_text_with_image_right') {
@@ -462,8 +484,6 @@ function matchRelatedProduct($id, $relatedProductIds)
                                 });
 
                             });
-
-
                         }
                         // Check component is multiple banner image?
                         else if (result.data.sections.section_type == 'multiple_image_banner') {
@@ -564,58 +584,80 @@ function matchRelatedProduct($id, $relatedProductIds)
                         }
                         // Check component is Accordion?
                         else if (result.data.sections.section_type == 'accordion_section') {
-
                             var $parentSelectorEdit = $('#' + modalComponent);
-
                             $parentSelectorEdit.find('#accordion').empty();
-
                             $parentSelectorEdit.modal('show');
-
                             // Add section id
                             $parentSelectorEdit.find('.section_id').val(result.data.sections.id);
-
                             $("input[name='sections[status]']").each(function (sk, sv) {
                                 // console.log($(sv).val());
                                 if ($(sv).val() == result.data.sections.status) {
                                     $(sv).attr('checked', true);
                                 }
-
                             });
-
-                            // console.log(result.data.component);
-
                             // Compoent foreach
                             $.each(result.data.component, function (cpk, cpv) {
-
                                 $.each(cpv, function (ck, cv) {
-
                                     if (ck == 'id') {
                                         $parentSelectorEdit.find("input[name='component[" + cpk + "][id]']").val(cv);
                                         $('.accordion_compoent_' + cpk).attr('data-component_id', cv);
                                     }
-
                                     // Multiple attribute parse
                                     if (ck == 'multiple_attributes') {
                                         // console.log(cv);
-
                                         if (typeof cv !== 'undefined') {
                                             var multiData = eval(JSON.parse(cv));
                                             // $parentSelectorEdit.find('#slider_sortable').empty();
-                                            console.log();
-
                                             var lastItemId = multiData[multiData.length - 1].id;
-
                                             $parentSelectorEdit.find("input[name='component[" + cpk + "][multi_item_count]']").val(lastItemId);
-
                                             var component_id = $('.accordion_compoent_' + cpk).attr('data-component_id');
 
                                             $.each(multiData, function (mck, mcv) {
+
+                                                console.log(mcv.editor_en)
 
                                                 var html = '';
 
                                                 mck++;
 
-                                                html += '<div class="card accordion collapse-icon accordion-icon-rotate" data-index="' + mcv.id + '" data-position="' + mcv.display_order + '"><input type="hidden" name="component[0][multi_item][id-' + mck + ']" value="' + mcv.id + '"><input type="hidden" name="component[0][multi_item][display_order-' + mck + ']" value="' + mcv.display_order + '"><div class="card-header bg-info info"> <div class="row"> <div class="col-sm-12 m_bottom_6"> <a class="card-link collapsed" data-toggle="collapse" href="#collapse_' + mck + '" aria-expanded="false"> <strong><i class="la la-sort"></i> Accordion Title #' + mck + '</strong> </a> </div></div><div class="row card_header_extra"> <div class="form-group col-md-6 "> <label for="title_en" class="required">Title (English)</label> <input type="text" name="component[0][multi_item][title_en-' + mck + ']" class="form-control" value="' + mcv.title_en + '" required> <div class="help-block"></div></div><div class="form-group col-md-6 "> <label for="title_bn" class="required">Title (Bangla)</label> <input type="text" name="component[0][multi_item][title_bn-' + mck + ']" class="form-control" value="' + mcv.title_bn + '" required> <div class="help-block"></div></div></div></div><div id="collapse_' + mck + '" class="collapse show1 border-info" data-parent="#accordion"> <div class="card-body"> <div class="row"> <div class="col-md-6"> <div class="form-group"> <label for="exampleInputPassword1">Accordion content (English)</label> <textarea name="component[0][multi_item][editor_en-' + mck + ']" class="form-control js_editor_box" rows="5" placeholder="Enter description">' + mcv.editor_en + '</textarea> </div></div><div class="col-md-6"> <div class="form-group"> <label for="exampleInputPassword1">Accordion content (Bangla)</label> <textarea name="component[0][multi_item][editor_bn-' + mck + ']" class="form-control js_editor_box" rows="5" placeholder="Enter description">' + mcv.editor_bn + '</textarea> </div></div></div></div><div class="card-footer"> <div class="row"> <div class="col-md-6"> <div class="form-group1">';
+                                                html += '<div class="card accordion collapse-icon accordion-icon-rotate" data-index="' + mcv.id + '" data-position="' + mcv.display_order + '">' +
+                                                    '<input type="hidden" name="component[0][multi_item][id-' + mck + ']" value="' + mcv.id + '">' +
+                                                    '<input type="hidden" name="component[0][multi_item][display_order-' + mck + ']" value="' + mcv.display_order + '">' +
+                                                    '<div class="card-header bg-info info"> ' +
+                                                    '<div class="row"> ' +
+                                                    '<div class="col-sm-12 m_bottom_6">' +
+                                                    ' <a class="card-link collapsed" data-toggle="collapse" href="#collapse_' + mck + '" aria-expanded="false"> ' +
+                                                    '<strong><i class="la la-sort"></i> Accordion Title #' + mck + '</strong> ' +
+                                                    '</a> ' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '<div class="row card_header_extra"> ' +
+                                                    '<div class="form-group col-md-6 "> ' +
+                                                    '<label for="title_en" class="required">Title (English)</label>' +
+                                                    ' <input type="text" name="component[0][multi_item][title_en-' + mck + ']" class="form-control" value="' + mcv.title_en + '" required> ' +
+                                                    '<div class="help-block">' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '<div class="form-group col-md-6 ">' +
+                                                    ' <label for="title_bn" class="required">Title (Bangla)</label> ' +
+                                                    '<input type="text" name="component[0][multi_item][title_bn-' + mck + ']" class="form-control" value="' + mcv.title_bn + '" required>' +
+                                                    ' <div class="help-block">' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '<div id="collapse_' + mck + '" class="collapse show1 border-info" data-parent="#accordion"> ' +
+                                                    '<div class="card-body"> ' +
+                                                    '<div class="row">' +
+                                                    ' <div class="col-md-6">' +
+                                                    ' <div class="form-group"> ' +
+                                                    '<label for="exampleInputPassword1">Accordion content (English)</label> ' +
+                                                    '<textarea name="component[0][multi_item][editor_en-' + mck + ']" class="form-control js_editor_box" rows="5" placeholder="Enter description">' + mcv.editor_en + '</textarea> ' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '<div class="col-md-6">' +
+                                                    ' <div class="form-group">' +
+                                                    ' <label for="exampleInputPassword1">Accordion content (Bangla)</label> <textarea name="component[0][multi_item][editor_bn-' + mck + ']" class="form-control js_editor_box" rows="5" placeholder="Enter description">' + mcv.editor_bn + '</textarea> </div></div></div></div><div class="card-footer"> <div class="row"> <div class="col-md-6"> <div class="form-group1">';
 
                                                 if (mcv.status == "1") {
                                                     html += '<label for="title" class="mr-1">Status:</label> <input type="radio" name="component[0][multi_item][status-' + mck + ']" value="1" checked> <label for="active" class="mr-1">Active</label> <input type="radio" name="component[0][multi_item][status-' + mck + ']" value="0"> <label for="inactive">Inactive</label>';
@@ -689,7 +731,169 @@ function matchRelatedProduct($id, $relatedProductIds)
                             });
 
 
-                        } else {
+                        }
+
+                        // Check component is Table?
+                        else if (result.data.sections.section_type == "pricing_sections") {
+                            $('#' + modalComponent).modal('show');
+                            var tableData = result.data.sections.section_component[0];
+                            var tableParseEn = $.parseJSON(tableData.editor_en)
+                            var tableParseBn = $.parseJSON(tableData.editor_bn)
+
+                            var sectionId = tableData.section_details_id
+                            var componentId = tableData.id
+
+                            $parentSelector.find("input[name='component_title_en']").val(result.data.sections.title_en);
+                            $parentSelector.find("input[name='component_title_bn']").val(result.data.sections.title_bn);
+
+                            $parentSelector.find("input[name='sections[id]']").val(sectionId);
+                            $parentSelector.find("input[name='component[0][id]']").val(componentId);
+
+                            var leftTable = '';
+                            var leftTitleEn = (tableParseEn.left_table_title_en) ? tableParseEn.left_table_title_en : '';
+                            var leftTitleBn = (tableParseBn.left_table_title_bn) ? tableParseBn.left_table_title_bn : '';
+
+                                leftTable += '<div class="col-md-6 mt-1">' +
+                                             '<label><b>Left Table Title English</b></label>' +
+                                             '<input type="text" class="form-control" value="'+leftTitleEn+'" name="left_table_title_en">' +
+                                             '</div>';
+
+
+                                leftTable += '<div class="col-md-6 mt-1">' +
+                                             '<label><b>Left Table Title Bangla</b></label>' +
+                                             '<input type="text" class="form-control" value="'+leftTitleBn+'" name="left_table_title_bn">' +
+                                             '</div>';
+
+                                // left table Head En
+                                leftTable += '<div class="col-md-12">\n' +
+                                             '<label class="label pt-2"><b>Left Table (English)</b></label>\n' +
+                                             '<table class="table table-bordered">\n' +
+                                             '<thead>\n' +
+                                             '<tr>';
+                                $.each(tableParseEn.left_head_en, function (k, v) {
+                                    var value = (v !== null) ? v : "";
+                                    // leftTable += '<input type="text" placeholder="Head (EN) 1" value="'+value+'" name="left_head_en[2][]" width="33.333333333333336%">'
+                                    leftTable += '<th><input type="text" class="form-control" value="'+value+'" placeholder="Table head English" name="left_head_en[2][]"></th>';
+                                });
+                                leftTable += "</tr>\n" +
+                                            "</thead>";
+
+                                // left table Row En
+                                leftTable += "<tbody>";
+
+                                $.each(tableParseEn.left_rows_en, function (k, v) {
+                                    leftTable += "<tr>";
+                                    $.each(v, function (ckey, childData) {
+                                        var value = (childData !== null) ? childData : "";
+                                        leftTable += '<td><input type="text" class="form-control" name="left_col_en[2]['+k+'][]" value="'+value+'"></td>';
+                                    });
+                                    leftTable += "<tr>";
+                                });
+                                leftTable += "</tbody><table><div>";
+
+                                //========= left table BN head ===============
+                                leftTable += '<div class="col-md-12 pl-0">\n' +
+                                             '<label class="label"><b>Left Table (Bangla)</b></label>\n' +
+                                             '<table class="table table-bordered">\n' +
+                                             '<thead>\n' +
+                                             '<tr>';
+
+                                $.each(tableParseBn.left_head_bn, function (k, v) {
+                                    var value = (v !== null) ? v : "";
+                                    leftTable += '<th><input type="text" class="form-control" placeholder="Table head Bangla" value="'+value+'" name="left_head_bn[2][]"></th>';
+                                });
+                                leftTable += "</tr>\n" +
+                                             "</thead>";
+                                // left table BN head
+
+                                // left table BN Row
+                                leftTable += "<tbody>";
+                                $.each(tableParseBn.left_rows_bn, function (k, v) {
+                                    leftTable += '<tr>';
+                                    $.each(v, function (ckey, childData) {
+                                        var value = (childData !== null) ? childData : "";
+                                        leftTable += '<td><input type="text" class="form-control" name="left_col_bn[2]['+k+'][]" value="'+value+'"></td>'
+                                    });
+                                    leftTable += '</tr>';
+                                });
+                                leftTable += "</tbody><table><div>"
+                                // left table BN Row
+                            $(".left_table").html(leftTable);
+
+
+                            // Right table Heaf En
+
+                            if (tableParseEn.right_head_en) {
+                                var rightTable = '';
+                                var rightTitleEn = (tableParseEn.right_table_title_en) ? tableParseEn.right_table_title_en : '';
+                                var rightTitleBn = (tableParseBn.right_table_title_bn) ? tableParseBn.right_table_title_bn : '';
+
+                                rightTable += '<div class="col-md-6 mt-1">' +
+                                              '<label><b>Right Table Title English</b></label>' +
+                                              '<input type="text" class="form-control" value="'+rightTitleEn+'" name="right_table_title_en">' +
+                                              '</div>';
+
+                                rightTable += "<div class='col-md-6 mt-1'>" +
+                                              '<label>Right Table Title Bangla</label>' +
+                                              '<input type="text" class="form-control" value="'+rightTitleBn+'" name="right_table_title_bn">' +
+                                              '</div>';
+
+                                rightTable += '<div class="col-md-12">\n' +
+                                              '<label class="label pt-2"><b>Right Table (English)</b></label>\n' +
+                                              '<table class="table table-bordered">\n' +
+                                              '<thead>\n' +
+                                              '<tr>';
+                                $.each(tableParseEn.right_head_en, function (k, v) {
+                                    var value = (v !== null) ? v : "";
+                                    rightTable += '<th><input type="text" class="form-control" placeholder="Table head English" value="'+value+'" name="right_head_en[2][]"></th>'
+                                });
+                                rightTable += "</tr></thead>";
+
+                                // ======== Right Table Row En ===========
+                                rightTable += "<tbody>";
+                                $.each(tableParseEn.right_rows_en, function (k, v) {
+                                    rightTable += '<tr>';
+                                    $.each(v, function (ckey, childData) {
+                                        var value = (childData !== null) ? childData : "";
+                                        rightTable += '<td><input type="text" class="form-control" name="right_col_en[2]['+k+'][]" value="'+value+'"></td>';
+                                    });
+                                    rightTable += '</tr>';
+                                });
+                                rightTable += "</tbody><table><div>";
+
+
+                                //========= Right table BN head ===============
+                                rightTable += '<div class="col-md-12 pl-0">\n' +
+                                              '<label class="label"><b>Right Table (Bangla)</b></label>\n' +
+                                              '<table class="table table-bordered">\n' +
+                                              '<thead>\n' +
+                                              '<tr>';
+                                $.each(tableParseBn.right_head_bn, function (k, v) {
+                                    var value = (v !== null) ? v : "";
+                                    rightTable += '<th><input type="text" class="form-control" placeholder="Table head English" value="'+value+'" name="right_head_bn[2][]"></th>';
+                                });
+                                rightTable += "</tr></thead>";
+                                // Right table BN head
+
+                                // ============== Right table BN Row ===================
+                                rightTable += "<tbody>";
+                                $.each(tableParseBn.right_rows_bn, function (k, v) {
+                                    rightTable += '<tr>';
+                                    $.each(v, function (ckey, childData) {
+                                        var value = (childData !== null) ? childData : "";
+                                        rightTable += '<td><input type="text" class="form-control" name="right_col_bn[2]['+k+'][]" value="'+value+'"></td>'
+                                    });
+                                    rightTable += '</tr>';
+                                });
+                                rightTable += "</tbody><table><div>";
+                                // Right table BN Row
+
+                                $(".right_table").html(rightTable);
+                            }
+
+                        }
+
+                        else {
                             $('#' + modalComponent).modal('show');
 
                             // Set all sections
@@ -757,14 +961,12 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                                     if (ck == 'editor_en') {
                                         $parentSelector.find("textarea[name='component[" + cpk + "][editor_en]']").val(cv);
-
-                                        $parentSelector.find("textarea[name='component[" + cpk + "][editor_en]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
+                                        $parentSelector.find("textarea[name='component[" + cpk + "][editor_en]']").siblings('.note-editor').children('.note-editing-area').find('.note-editable').html(cv);
                                     }
 
                                     if (ck == 'editor_bn') {
                                         $parentSelector.find("textarea[name='component[" + cpk + "][editor_bn]']").val(cv);
-
-                                        $parentSelector.find("textarea[name='component[" + cpk + "][editor_bn]']").siblings('.note-editor').find('.note-editable.panel-body').html(cv);
+                                        $parentSelector.find("textarea[name='component[" + cpk + "][editor_bn]']").siblings('.note-editor').children('.note-editing-area').find('.note-editable').html(cv);
                                     }
 
 
@@ -806,8 +1008,6 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                             });
                         }
-
-
                     }
 
 

@@ -1,5 +1,5 @@
 @section('component_type_selector')
-	
+
 	<!-- # Section add component -->
 	<div class="card">
 		<div class="card-content collapse show">
@@ -10,12 +10,15 @@
 						<div class="form-group">
 							<label for="category_type">Select Component Type</label>
 							<select id="component_type" class="form-control" name="component_type" aria-invalid="false">
-								<option value="text_with_image_right">APPS - Text with image right</option>
-								<option value="text_with_image_bottom">APPS - Text with image bottom</option>
-								<option value="slider_text_with_image_right">APPS - Slider text with image right</option>
-								<option value="video_with_text_right">APPS - Video with text right</option>
-								<option value="multiple_image_banner">APPS - Multiple image banner</option>
-								<option value="pricing_sections">APPS - Pricing Multiple table</option>
+                                <option value="text_with_image_right">Text with image right</option>
+                                <option value="title_text_editor">Title with text editor</option>
+{{--                                <option value="editor_only_section">VAS - Editor Only</option>--}}
+                                <option value="accordion_section">Accordion</option>
+								<option value="text_with_image_bottom">Text with image bottom</option>
+								<option value="slider_text_with_image_right">Slider text with image right</option>
+								<option value="video_with_text_right">Video with text right</option>
+								<option value="multiple_image_banner">Multiple image banner</option>
+								<option value="pricing_sections">Pricing Multiple table</option>
 							</select>
 						</div>
 						<div class="form-group">
@@ -45,11 +48,19 @@
 
 @section('component_modal_toadd')
 
+<!-- # VAS Component modal -->
+@include('admin.app-service.details.section.component_modal.title_text_editor')
+{{--@include('admin.app-service.details.section.component_modal.editor_only_section')--}}
+
+<!-- Accordion content -->
+@include('admin.app-service.details.section.component_modal.accordion.accordion')
+
 <!-- # Apps Component modal -->
 @include('admin.app-service.details.section.component_modal.text_with_image_right')
 @include('admin.app-service.details.section.component_modal.text_with_image_bottom')
 @include('admin.app-service.details.section.component_modal.video_with_text_right')
 @include('admin.app-service.details.section.component_modal.pricing_sections')
+
 
 <!-- multi image slider -->
 @include('admin.app-service.details.section.component_modal.slider.slider_text_with_image_right')

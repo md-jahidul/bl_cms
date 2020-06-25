@@ -162,13 +162,13 @@ class RoamingOfferRepository extends BaseRepository {
                 $insert[$count]['parent_id'] = $request->parent_id;
 
                 if (isset($request->head_en[$k])) {
-                    
+
                      $tableArrayEn = array(
                         'head_en' => $request->head_en[$k],
                         'rows_en' => $request->col_en[$k]
                     );
                     $tableJsonEn = json_encode($tableArrayEn);
-                    
+
                      $tableArrayBn = array(
                         'head_bn' => $request->head_bn[$k],
                         'rows_bn' => $request->col_bn[$k]
@@ -177,7 +177,7 @@ class RoamingOfferRepository extends BaseRepository {
 
                     $insert[$count]['body_text_en'] = $tableJsonEn;
                     $insert[$count]['body_text_bn'] = $tableJsonBn;
-                    
+
                     $insert[$count]['position'] = $k;
                     $insert[$count]['component_type'] = 'table';
                 }
@@ -201,8 +201,8 @@ class RoamingOfferRepository extends BaseRepository {
                     $insert[$count]['position'] = $k;
                     $insert[$count]['component_type'] = 'text';
                 }
-                
-                
+
+
                   //accordion component
                 if (isset($request->accordion_headline_en[$k])) {
 
@@ -229,7 +229,9 @@ class RoamingOfferRepository extends BaseRepository {
 
                 $count++;
             }
-            
+
+            dd($insert);
+
 
             RoamingOtherOfferComponents::insert($insert);
 
@@ -245,8 +247,8 @@ class RoamingOfferRepository extends BaseRepository {
         }
         return $response;
     }
-    
-    
+
+
     public function changeComponentSorting($request) {
         try {
 
@@ -272,7 +274,7 @@ class RoamingOfferRepository extends BaseRepository {
             return response()->json($response, 500);
         }
     }
-    
+
       public function componentDelete($comId) {
 
         try {

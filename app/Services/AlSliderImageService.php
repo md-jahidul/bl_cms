@@ -59,7 +59,7 @@ class AlSliderImageService
         $this->saveInBusiness($data, $imgId);
         return new Response('Slider Image added successfully');
     }
-    
+
     public function saveInBusiness($data, $imgId){
         $bsOthers = new BusinessOthers();
         $bsOthers->name = $data['title_en'];
@@ -94,7 +94,6 @@ class AlSliderImageService
             $this->deleteFile($sliderImage['mobile_view_img']);
         }
         $sliderImage->update($data);
-        
         return Response('Slider Image update successfully !');
     }
 

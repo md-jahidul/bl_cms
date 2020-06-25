@@ -1,0 +1,47 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>without bootstrap</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <!--<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">-->
+	
+	 <link href="summernote-lite.min.css" rel="stylesheet">
+	
+    <script src="summernote-lite.min.js"></script>
+	
+	<script src="https://rawgit.com/tylerecouture/summernote-table-headers/master/summernote-table-headers.js" type="text/javascript"></script>
+	
+  </head>
+  <body>
+    <div id="summernote"></div>
+    <script>
+      $('#summernote').summernote({
+        tabsize: 2,
+		
+		 toolbar: [
+                    ['style', ['style'], ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['table', ['table']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['view', ['fullscreen', 'codeview']],
+                    ['insert', ['link', 'picture', 'hr']]
+                ],
+      
+		//popover: {
+		  //table: [
+			//['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+			//['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+			//['custom', ['tableHeaders']]
+		  //],
+		//},
+		
+		
+		
+		 height: 320,
+      });
+    </script>
+  </body>
+</html>
+Basic A

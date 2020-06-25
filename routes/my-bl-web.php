@@ -217,6 +217,23 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
 
     Route::get('recharge/prefill-amounts/order', 'CMS\PrefillRechargeController@updatePosition');
 
+    // search content
+    Route::get('mybl-search/content', 'CMS\Search\InAppSearchContentController@create')
+        ->name('mybl-search-content.create');
+    Route::get('mybl-search', 'CMS\Search\InAppSearchContentController@index')
+        ->name('mybl-search-content.index');
+    Route::get('mybl-search/list', 'CMS\Search\InAppSearchContentController@getSearchContents')
+        ->name('mybl-search-content.list');
+    Route::post('mybl-search/content', 'CMS\Search\InAppSearchContentController@store')
+        ->name('mybl-search-content.store');
+    Route::get('mybl-search/{search_content}', 'CMS\Search\InAppSearchContentController@edit')
+        ->name('mybl-search-content.edit');
+    Route::post('mybl-search/{search_content}', 'CMS\Search\InAppSearchContentController@update')
+        ->name('mybl-search-content.update');
+    Route::delete('mybl-search/{search_content}', 'CMS\Search\InAppSearchContentController@destroy')
+        ->name('mybl-search-content.delete');
+
+
 
     Route::get('app-launch/create', 'CMS\AppLaunchPopupController@create')->name('app-launch.new');
     Route::post('app-launch/store', 'CMS\AppLaunchPopupController@store')->name('app-launch.store');
@@ -224,4 +241,117 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     Route::get('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@edit')->name('app-launch.edit');
     Route::post('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@update')->name('app-launch.update');
     Route::delete('app-launch/{pop_up}', 'CMS\AppLaunchPopupController@destroy')->name('app-launch.delete');
+
+    /*
+     *  Filters
+     */
+
+    Route::get('mixed-bundle-offer/filter/create', 'CMS\MixedBundleFilterController@create')
+        ->name('mixed-bundle-offer.filter.create');
+    Route::post('mixed-bundle-offer/filter/price/save', 'CMS\MixedBundleFilterController@savePriceFilter')
+        ->name('mixed-bundle-offer.filter.price.save');
+    Route::get('mixed-bundle-offer/filter/price', 'CMS\MixedBundleFilterController@getPriceFilter')
+        ->name('mixed-bundle-offer.filter.price.list');
+
+    Route::post('mixed-bundle-offer/filter/delete', 'CMS\MixedBundleFilterController@deleteFilter')
+        ->name('mixed-bundle-offer.filter.delete');
+
+    Route::post('mixed-bundle-offer/filter/internet/save', 'CMS\MixedBundleFilterController@saveInternetFilter')
+        ->name('mixed-bundle-offer.filter.internet.save');
+    Route::get('mixed-bundle-offer/filter/internet', 'CMS\MixedBundleFilterController@getInternetFilter')
+        ->name('mixed-bundle-offer.filter.internet.list');
+
+    Route::post('mixed-bundle-offer/filter/minutes/save', 'CMS\MixedBundleFilterController@saveMinutesFilter')
+        ->name('mixed-bundle-offer.filter.minutes.save');
+    Route::get('mixed-bundle-offer/filter/minutes', 'CMS\MixedBundleFilterController@getMinutesFilter')
+        ->name('mixed-bundle-offer.filter.minutes.list');
+
+    Route::post('mixed-bundle-offer/filter/sms/save', 'CMS\MixedBundleFilterController@saveSmsFilter')
+        ->name('mixed-bundle-offer.filter.sms.save');
+    Route::get('mixed-bundle-offer/filter/sms', 'CMS\MixedBundleFilterController@getSmsFilter')
+        ->name('mixed-bundle-offer.filter.sms.list');
+
+    Route::post('mixed-bundle-offer/filter/validity/save', 'CMS\MixedBundleFilterController@saveValidityFilter')
+        ->name('mixed-bundle-offer.filter.validity.save');
+    Route::get('mixed-bundle-offer/filter/validity', 'CMS\MixedBundleFilterController@getValidityFilter')
+        ->name('mixed-bundle-offer.filter.validity.list');
+
+    Route::post('mixed-bundle-offer/filter/sort/save', 'CMS\MixedBundleFilterController@saveSortFilter')
+        ->name('mixed-bundle-offer.filter.sort.save');
+
+    Route::get('/test/test', 'CMS\MixedBundleFilterController@getPriceFilter');
+
+
+    Route::get('internet-pack/filter/create', 'CMS\InternetPackFilterController@create')
+        ->name('internet-pack.filter.create');
+    Route::post('internet-pack/price/save', 'CMS\InternetPackFilterController@savePriceFilter')
+        ->name('internet-pack.filter.price.save');
+    Route::get('internet-pack/filter/price', 'CMS\InternetPackFilterController@getPriceFilter')
+        ->name('internet-pack.filter.price.list');
+
+    Route::post('internet-pack/filter/delete', 'CMS\InternetPackFilterController@deleteFilter')
+        ->name('internet-pack.filter.delete');
+
+    Route::post('internet-pack/filter/internet/save', 'CMS\InternetPackFilterController@saveInternetFilter')
+        ->name('internet-pack.filter.internet.save');
+    Route::get('internet-pack/filter/internet', 'CMS\InternetPackFilterController@getInternetFilter')
+        ->name('internet-pack.filter.internet.list');
+
+    Route::post('internet-pack/filter/validity/save', 'CMS\InternetPackFilterController@saveValidityFilter')
+        ->name('internet-pack.filter.validity.save');
+    Route::get('internet-pack/filter/validity', 'CMS\InternetPackFilterController@getValidityFilter')
+        ->name('internet-pack.filter.validity.list');
+
+    // MINUTES
+    Route::get('minute-pack/filter/create', 'CMS\MinutePackFilterController@create')
+        ->name('minute-pack.filter.create');
+    Route::post('minute-pack/price/save', 'CMS\MinutePackFilterController@savePriceFilter')
+        ->name('minute-pack.filter.price.save');
+    Route::get('minute-pack/filter/price', 'CMS\MinutePackFilterController@getPriceFilter')
+        ->name('minute-pack.filter.price.list');
+
+    Route::post('minute-pack/filter/delete', 'CMS\MinutePackFilterController@deleteFilter')
+        ->name('minute-pack.filter.delete');
+
+    Route::post('minute-pack/filter/minute/save', 'CMS\MinutePackFilterController@saveMinuteFilter')
+        ->name('minute-pack.filter.minute.save');
+    Route::get('minute-pack/filter/minute', 'CMS\MinutePackFilterController@getMinuteFilter')
+        ->name('minute-pack.filter.minute.list');
+
+    Route::post('minute-pack/filter/validity/save', 'CMS\MinutePackFilterController@saveValidityFilter')
+        ->name('minute-pack.filter.validity.save');
+    Route::get('minute-pack/filter/validity', 'CMS\MinutePackFilterController@getValidityFilter')
+        ->name('minute-pack.filter.validity.list');
+
+    Route::post('minute-pack/filter/sort/save', 'CMS\MinutePackFilterController@saveSortFilter')
+        ->name('minute.filter.sort.save');
+
+    // SMS
+
+    Route::get('sms-pack/filter/create', 'CMS\SmsPackFilterController@create')
+        ->name('sms-pack.filter.create');
+    Route::post('sms-pack/price/save', 'CMS\SmsPackFilterController@savePriceFilter')
+        ->name('sms-pack.filter.price.save');
+    Route::get('sms-pack/filter/price', 'CMS\SmsPackFilterController@getPriceFilter')
+        ->name('sms-pack.filter.price.list');
+
+    Route::post('sms-pack/filter/delete', 'CMS\SmsPackFilterController@deleteFilter')
+        ->name('sms-pack.filter.delete');
+
+    Route::post('sms-pack/filter/sms/save', 'CMS\SmsPackFilterController@saveSmsFilter')
+        ->name('sms-pack.filter.sms.save');
+    Route::get('sms-pack/filter/sms', 'CMS\SmsPackFilterController@getSmsFilter')
+        ->name('sms-pack.filter.sms.list');
+
+    Route::post('sms-pack/filter/validity/save', 'CMS\SmsPackFilterController@saveValidityFilter')
+        ->name('sms-pack.filter.validity.save');
+    Route::get('sms-pack/filter/validity', 'CMS\SmsPackFilterController@getValidityFilter')
+        ->name('sms-pack.filter.validity.list');
+
+    Route::post('sms-pack/filter/sort/save', 'CMS\SmsPackFilterController@saveSortFilter')
+        ->name('sms.filter.sort.save');
+
+
+    Route::get('mybl/settings/najat', 'CMS\NajatContentsSettingsController@index')->name('mybl.settings.najat.index');
+    Route::post('mybl/settings/najat', 'CMS\NajatContentsSettingsController@store')->name('mybl.settings.najat.store');
 });

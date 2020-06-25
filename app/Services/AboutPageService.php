@@ -62,6 +62,16 @@ class AboutPageService
                 $data['right_side_ing'] = $this->upload($data['right_side_ing'], $fileLocation);
                 $this->deleteFile($aboutDetail['right_side_ing']);
             }
+
+            if (isset($data['remove_img_left'])) {
+                $data['left_side_img'] = null;
+                $this->deleteFile($aboutDetail['left_side_img']);
+            }
+            if (isset($data['remove_img_right'])) {
+                $data['right_side_ing'] = null;
+                $this->deleteFile($aboutDetail['right_side_ing']);
+            }
+
             $aboutDetail->update($data);
         } else {
             return Response('About page not found');
@@ -74,6 +84,13 @@ class AboutPageService
      */
     public function updateAboutPage($data)
     {
+//        if (isset($data['remove_img_left'])) {
+//            $data['left_side_img'] = null;
+//        }
+//        if (isset($data['right_side_ing'])) {
+//            $data['right_side_ing'] = null;
+//        }
+
         if ($data['slug'] == "priyojon") {
             $this->aboutPageUpdate($data, 'assetlite/images/about-priyojon');
         } elseif ($data['slug'] == "reward_points") {

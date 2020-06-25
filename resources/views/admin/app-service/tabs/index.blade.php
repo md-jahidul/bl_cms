@@ -37,7 +37,7 @@
                         @foreach($tabList as $item)
                             <tr>
                                 <td width="3%">{{ $loop->iteration }}</td>
-                                <td>{{ $item->name_en }}</td>
+                                <td>{{ $item->name_en }} {!! $item->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                 <td>{{ $item->name_bn }}</td>
                                 <td>
                                     @if($item->banner_image_url)

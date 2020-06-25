@@ -24,7 +24,7 @@
                                 <input type="hidden" name="slug" value="{{ $slug }}">
                                 <div class="form-group col-md-6 {{ $errors->has('details_en') ? ' error' : '' }}">
                                     <label for="details_en" class="required">Details (English)</label>
-                                    <textarea type="text" name="details_en"  class="form-control tinymce" placeholder="Enter offer details in english"
+                                    <textarea type="text" name="details_en" class="form-control summernote_editor" placeholder="Enter offer details in english"
                                               required data-validation-required-message="Enter offer details in english">{{ $details->details_en }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_en'))
@@ -34,7 +34,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('details_bn') ? ' error' : '' }}">
                                     <label for="details_bn" class="required">Details (Bangla)</label>
-                                    <textarea type="text" name="details_bn"  class="form-control tinymce" placeholder="Enter offer details in english"
+                                    <textarea type="text" name="details_bn" class="form-control summernote_editor" placeholder="Enter offer details in english"
                                               required data-validation-required-message="Enter offer details in english">{{ $details->details_bn }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_bn'))
@@ -112,14 +112,23 @@
                                     @endif
                                 </div>
 
+
                                 <div class="form-group col-md-6">
-                                    <img src="{{ ($details->left_side_img != '') ? config('filesystems.file_base_url') . $details->left_side_img : config('filesystems.file_base_url') . "assetlite/images/about-priyojon/about-placeholder.png" }}"
-                                         id="leftImg" height="300" width="490">
+                                    @if($details->left_side_img)
+                                        <img src="{{ ($details->left_side_img != '') ? config('filesystems.file_base_url') . $details->left_side_img : config('filesystems.file_base_url') . "assetlite/images/about-priyojon/about-placeholder.png" }}"
+                                             id="leftImg" height="300" width="490">
+                                        <input type="checkbox" name="remove_img_left" class="mt-2" value="1">
+                                        <label>Remove Image</label>
+                                    @endif
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('right_side_ing') ? ' error' : '' }}">
-                                    <img src="{{ ($details->left_side_img != '') ? config('filesystems.file_base_url') . $details->right_side_ing : config('filesystems.file_base_url') . "assetlite/images/about-priyojon/about-placeholder.png" }}"
-                                         id="rightImg" height="300" width="490">
+                                    @if($details->right_side_ing)
+                                        <img src="{{ ($details->right_side_ing != '') ? config('filesystems.file_base_url') . $details->right_side_ing : config('filesystems.file_base_url') . "assetlite/images/about-priyojon/about-placeholder.png" }}"
+                                             id="rightImg" height="300" width="490">
+                                        <input type="checkbox" name="remove_img_right" class="mt-2" value="1">
+                                        <label>Remove Image</label>
+                                    @endif
                                 </div>
 
 

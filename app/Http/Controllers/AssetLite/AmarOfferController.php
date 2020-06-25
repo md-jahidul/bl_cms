@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class AmarOfferController extends Controller
@@ -32,7 +33,16 @@ class AmarOfferController extends Controller
     public function amarOfferDetails()
     {
         $offerDetails = $this->amarOfferDetailsService->amarOfferDetailsList();
-        return view('admin.amar-offer-details.index', compact('offerDetails'));
+        $bannerImage = $this->amarOfferDetailsService->findBannerImage();
+        return view('admin.amar-offer-details.index', compact('offerDetails', 'bannerImage'));
+    }
+
+
+    public function bannerImageUpload(Request $request)
+    {
+        $response = $this->amarOfferDetailsService->bannerImageUpload($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect(route('amaroffer.list'));
     }
 
 

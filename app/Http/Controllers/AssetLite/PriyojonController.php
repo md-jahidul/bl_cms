@@ -100,6 +100,8 @@ class PriyojonController extends Controller
     public function aboutPageView($slug)
     {
         $details = $this->aboutPageService->findAboutDetail($slug);
+
+//        dd($details);
         return view('admin.about-pages.about_page', compact('slug', 'details'));
     }
 

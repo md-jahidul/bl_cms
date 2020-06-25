@@ -251,6 +251,8 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     //amar offer details......
     Route::get('amaroffer/details', 'AssetLite\AmarOfferController@amarOfferDetails')->name('amaroffer.list');
+    Route::post('amaroffer/banner-image/upload', 'AssetLite\AmarOfferController@bannerImageUpload')
+        ->name('banner-image-upload');
     Route::get('amaroffer/edit/{type}', 'AssetLite\AmarOfferController@edit')->name('amaroffer.edit');
     Route::put('amaroffer/update/{type}', 'AssetLite\AmarOfferController@update')->name('amaroffer.update');
 
@@ -296,9 +298,9 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('about-page/{slug}', 'AssetLite\PriyojonController@aboutPageView')->name('about-page');
     Route::put('about-page/update', 'AssetLite\PriyojonController@aboutPageUpdate')
         ->name('about-page.update');
-    
-    
-    
+
+
+
 
     // Dynamic Pages ================================
     Route::get('dynamic-pages/', 'AssetLite\DynamicPageController@index');
@@ -306,8 +308,21 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('dynamic-pages/edit/{id}', 'AssetLite\DynamicPageController@edit');
     Route::post('dynamic-pages/save', 'AssetLite\DynamicPageController@savePage');
     Route::get('dynamic-pages/delete/{id}', 'AssetLite\DynamicPageController@deletePage');
-    
-    
+    Route::get('dynamic-pages/{pageId}/components', 'AssetLite\DynamicPageController@componentList')
+        ->name('other-components');
+    Route::get('dynamic-pages/{pageId}/component/create', 'AssetLite\DynamicPageController@componentCreateForm')
+        ->name('other_component_create');
+    Route::post('dynamic-pages/{pageId}/component/store', 'AssetLite\DynamicPageController@componentStore')
+        ->name('other_component_store');
+    Route::get('dynamic-pages/{pageId}/component/{id}/edit', 'AssetLite\DynamicPageController@componentEditForm')
+        ->name('other_component_edit');
+    Route::put('dynamic-pages/{pageId}/component/{id}/update', 'AssetLite\DynamicPageController@componentUpdate')
+        ->name('other_component_update');
+    Route::get('dynamic-pages/{pageId}/component/{id}/delete', 'AssetLite\DynamicPageController@componentDestroy')
+        ->name('other_component_delete');
+    Route::get('dynamic-pages/component-sortable', 'AssetLite\DynamicPageController@componentSortable');
+
+
 
 //    Route::get('about-reward', 'AssetLite\PriyojonController@aboutRewardPoint')->name('about-reward');
 //    Route::put('about-reward/update', 'AssetLite\PriyojonController@aboutRewardPointUpdate')
@@ -470,7 +485,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('business-others-active/{serviceId}', 'AssetLite\BusinessOthersController@activationStatus');
     Route::get('business-others-sort-change', 'AssetLite\BusinessOthersController@sortChange');
     Route::get('business-others-service-delete/{serviceId}', 'AssetLite\BusinessOthersController@deleteService');
-    Route::get('business-others-service-edit/{serviceId}', 'AssetLite\BusinessOthersController@edit');
+    Route::get('business-others-service-edit/{serviceId}/{type?}', 'AssetLite\BusinessOthersController@edit');
     Route::post('business-others-update', 'AssetLite\BusinessOthersController@update')->name("business.other.update");
 
     Route::get('business-others-components/{serviceId}', 'AssetLite\BusinessOthersController@addComponent');
@@ -797,4 +812,20 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::post('lead-requested/send-mail', 'AssetLite\LeadManagementController@sendMail')
         ->name('lead.send_mail');
+
+    // Product Price Slab
+    Route::get('product-price/slabs', 'AssetLite\ProductPriceSlabController@index');
+    Route::get('product-price/slab/create', 'AssetLite\ProductPriceSlabController@priceSlabCreate');
+    Route::post('product-price/slab/store', 'AssetLite\ProductPriceSlabController@priceSlabStore')
+        ->name('priceSlab.store');
+    Route::get('product-price/slab/details/{id}', 'AssetLite\ProductPriceSlabController@priceSlabEdit');
+    Route::put('product-price/slab/update/{priceSlabId}', 'AssetLite\ProductPriceSlabController@updatePriceSlab')
+        ->name('priceSlab.update');
+    Route::post('product-price-slab-list', 'AssetLite\ProductPriceSlabController@priceSlabList')
+        ->name('priceSlab.list.ajax');
+    Route::post('product-price/slab-excel', 'AssetLite\ProductPriceSlabController@uploadPriceSlabExcel')
+        ->name('priceSlab-excel.save');
+    Route::get('product-price-slab-status-change/{rateId}', 'AssetLite\ProductPriceSlabController@priceSlabStatusChange');
+    Route::get('product-price-slab/destroy/{rateId?}', 'AssetLite\ProductPriceSlabController@deletePriceSlab');
+
 });

@@ -58,7 +58,6 @@ class PushNotificationController extends Controller
     public function sendNotification(Request $request)
     {
         $user_phone = [];
-
         $notification_id = $request->input('id');
         $category_id = $request->input('category_id');
 
@@ -94,13 +93,13 @@ class PushNotificationController extends Controller
             $reader->close();
 
             $collection = collect($customer_array);
-            $chunks = $collection->chunk(100);
+            $chunks = $collection->chunk(1000);
             $chunks->toArray();
 
 
             foreach ($chunks as $key => $chunk) {
-                $user_phone = $this->notificationService->checkMuteOfferForUser($category_id, $chunk->toArray());
-
+                //$user_phone = $this->notificationService->checkMuteOfferForUser($category_id, $chunk->toArray());
+                $user_phone = $chunk->toArray();
                 $notification = [
                     'title' => $request->input('title'),
                     'body' => $request->input('message'),
@@ -117,10 +116,10 @@ class PushNotificationController extends Controller
                     ]
                 ];
 
-/*                NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
-                    ->onQueue('notification');*/
+                NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+                    ->onQueue('notification');
 
-                $response = PushNotificationService::sendNotification($notification);
+                /*$response = PushNotificationService::sendNotification($notification);
                 $formatted_response = json_decode($response);
 
                 Log::info($response);
@@ -129,7 +128,7 @@ class PushNotificationController extends Controller
                     if (isset($user_phone)) {
                         $this->notificationService->attachNotificationToUser($formatted_response->notification_id, $user_phone);
                     }
-                }
+                }*/
             }
 
             return [
@@ -170,6 +169,7 @@ class PushNotificationController extends Controller
                 'body' => $request->input('message'),
                 'category_slug' => $request->input('category_slug'),
                 'category_name' => $request->input('category_name'),
+                "sending_from" => "cms",
                 "send_to_type" => "INDIVIDUALS" ,
                 "recipients" => $user_phone,
                 "is_interactive" => "Yes",
@@ -198,46 +198,28 @@ class PushNotificationController extends Controller
             ];
         } else {
 
-            return [
-                'success' => false,
-                'message' => 'Input is wrong'
-            ];
-
+            return ['success' => false, 'message' => 'Input is wrong'];
         }
 
-        /*NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+         /*NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
             ->onQueue('notification');
 
-        session()->flash('success', "Notification has been sent successfully");
+         session()->flash('success', "Notification has been sent successfully");
 
-        return redirect(route('notification.index'));*/
+         return redirect(route('notification.index'));*/
 
          $response = PushNotificationService::sendNotification($notification);
 
-         if(json_decode($response)->status == "SUCCESS"){
-
-             if($request->filled('user_phone'))
-             {
-                 $this->notificationService->attachNotificationToUser($notification_id, $user_phone);
+         Log::info($response);
+         $notify = json_decode($response);
+         if($notify->status == "SUCCESS"){
+             if($request->filled('user_phone')) {
+                 $this->notificationService->attachNotificationToUser($notify->notification_id, $user_phone);
              }
-
-            // session()->flash('success',"Notification has been sent successfully");
-
-            // return redirect(route('notification.index'));
-
-             return [
-                 'success' => true,
-                 'message' => 'Notification Sent'
-             ];
+             return [ 'success' => true, 'message' => 'Notification Sent'];
          }
-
-        // session()->flash('success',"Notification send Failed");
-
         } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => $e->getMessage()
-            ];
+            return ['success' => false, 'message' => $e->getMessage()];
         }
     }
 }

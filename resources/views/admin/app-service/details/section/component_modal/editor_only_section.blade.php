@@ -36,7 +36,7 @@
                        </div>
                      </div>
 
-							
+
       							<div class="col-md-6">
       							    <div class="form-group">
       							        <label for="title" class="mr-1">Status:</label>
@@ -53,7 +53,7 @@
       									{{ Form::hidden('sections[multiple_component]', 0 ) }}
       							</div>
 
-                    
+
 
                 </div>
 

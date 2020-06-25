@@ -57,6 +57,16 @@ class SliderImageController extends Controller
         return view('admin.slider-image.create', compact("sliderId", 'type'));
     }
 
+    public function strToint($request, $jsonKey = "other_attributes")
+    {
+        if (!empty($request->other_attributes)) {
+            foreach ($request->other_attributes as $key => $info) {
+                $data[$jsonKey][$key] = is_numeric($info) ? (int)$info : $info;
+                $request->merge($data);
+            }
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -65,6 +75,7 @@ class SliderImageController extends Controller
      */
     public function store(StoreSliderImageRequest $request, $sliderId, $type)
     {
+        $this->strToint($request);
         $response = $this->alSliderImageService->storeSliderImage($request->all(), $sliderId);
         Session::flash('message', $response->getContent());
         return redirect("slider/$sliderId/$type");
@@ -94,7 +105,6 @@ class SliderImageController extends Controller
         return view('admin.slider-image.edit', compact('sliderImage', 'type', 'other_attributes'));
     }
 
-
     /**
      * @param StoreSliderImageRequest $request
      * @param $parentId
@@ -105,6 +115,7 @@ class SliderImageController extends Controller
     public function update(StoreSliderImageRequest $request, $parentId, $type, $id)
     {
         // TODO: Done:check file size validation
+        $this->strToint($request);
         $response = $this->alSliderImageService->updateSliderImage($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect("slider/$parentId/$type");

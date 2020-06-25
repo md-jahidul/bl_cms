@@ -129,6 +129,7 @@
                                     @include('layouts.partials.products.common-field.call_rate_unit')
                                     @include('layouts.partials.products.common-field.minute_volume')
                                     @include('layouts.partials.products.common-field.internet_volume')
+                                    @include('layouts.partials.products.common-field.sms_volume')
                                 </slot>
 
                                 <slot id="others" data-offer-type="others" style="display: none">
@@ -150,6 +151,13 @@
                                     <div class="form-group">
                                         <label for="special_product" class="mr-1">Is Special Product:</label>
                                         <input type="checkbox" name="special_product" value="1" id="special_product">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="rate_cutter" class="mr-1">Is Rate Cutter Offer:</label>
+                                        <input type="checkbox" name="rate_cutter_offer" value="1" id="rate_cutter">
                                     </div>
                                 </div>
 

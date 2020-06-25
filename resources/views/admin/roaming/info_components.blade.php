@@ -39,7 +39,7 @@
                                 <tr data-index="{{ $c->id }}" data-position="{{ $c->position }}">
 
                                     <td class="cursor-move">
-                                        <i class="icon-cursor-move icons"></i> 
+                                        <i class="icon-cursor-move icons"></i>
                                         <strong class="text-info">{{ ucwords($c->component_type) }} </strong>
                                     </td>
 
@@ -147,7 +147,7 @@
                 <div class="row">
 
                     <div class="col-md-6 col-xs-12">
-                        <label>Headline (EN) 
+                        <label>Headline (EN)
                             <span class="text-danger">*</span>
                         </label>
                         <input type="text" required class="form-control headline_en"  placeholder="Headline EN">
@@ -163,7 +163,7 @@
                     <div class="col-md-3 col-xs-12">
                         <label>Photo 1 <span class="text-danger">*</span></label>
                         <input type="hidden" class="photo_one_old" value="">
-                        
+
                         <input type="file" class="dropify photo_one" required data-height="70"
                                data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                         <label>Alt Text</label>
@@ -172,7 +172,7 @@
                     <div class="col-md-3 col-xs-12">
                         <label>Photo 2</label>
                         <input type="hidden" class="photo_two_old" value="">
-                        
+
                         <input type="file" class="dropify photo_two" data-height="70"
                                data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                         <label>Alt Text</label>
@@ -181,7 +181,7 @@
                     <div class="col-md-3 col-xs-12">
                         <label>Photo 3</label>
                         <input type="hidden" class="photo_three_old" value="">
-                        
+
                         <input type="file" class="dropify photo_three" data-height="70"
                                data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
                         <label>Alt Text</label>
@@ -258,7 +258,7 @@
                 <div class="row">
 
                     <div class="col-md-6 col-xs-12">
-                        <label>Headline (EN) 
+                        <label>Headline (EN)
                             <span class="text-danger">*</span>
                         </label>
                         <input type="text" required class="form-control headline_only_en"  placeholder="Headline EN">
@@ -297,7 +297,7 @@
                 <div class="row">
 
                     <div class="col-md-6 col-xs-12">
-                        <label>Accordion Head (EN) 
+                        <label>Accordion Head (EN)
                             <span class="text-danger">*</span>
                         </label>
                         <input type="text" required class="form-control accordion_headline_en"  placeholder="Headline EN">
@@ -346,7 +346,7 @@
                 <div class="row">
 
                     <div class="col-md-6 col-xs-12">
-                        <label>List Headline (EN) 
+                        <label>List Headline (EN)
                             <span class="text-danger">*</span>
                         </label>
                         <input type="text" required class="form-control list_headline_en"  placeholder="Headline EN">
@@ -523,16 +523,16 @@ if (Session::has('error')) {
         $(html).find('.photo_four').attr('name', photo4);
         var alt4 = 'alt_four[' + position + ']';
         $(html).find('.alt_four').attr('name', alt4);
-        
+
         var photo1Old = 'photo_one_old[' + position + ']';
         $(html).find('.photo_one_old').attr('name', photo1Old);
-        
+
         var photo2Old = 'photo_two_old[' + position + ']';
         $(html).find('.photo_two_old').attr('name', photo2Old);
-        
+
         var photo3Old = 'photo_three_old[' + position + ']';
         $(html).find('.photo_three_old').attr('name', photo3Old);
-        
+
         var photo4Old = 'photo_four_old[' + position + ']';
         $(html).find('.photo_four_old').attr('name', photo4Old);
 
@@ -602,16 +602,38 @@ if (Session::has('error')) {
         $('.element_wrap').append(html);
 
         $(".element_wrap textarea.details_editor").summernote({
+
+            tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
             toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['style',['style', 'bold', 'italic', 'underline', 'clear']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
-                // ['table', ['table']],
+                ['table', ['table']],
                 ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture', 'video', 'hr']],
                 ['view', ['fullscreen', 'codeview']]
             ],
-            height: 200
+            popover: {
+                table: [
+                    ['custom', ['tableHeaders']],
+                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                ],
+            },
+
+            height:200
+
+            // toolbar: [
+            //     ['style', ['bold', 'italic', 'underline', 'clear']],
+            //     ['font', ['strikethrough', 'superscript', 'subscript']],
+            //     ['fontsize', ['fontsize']],
+            //     ['color', ['color']],
+            //     // ['table', ['table']],
+            //     ['para', ['ul', 'ol', 'paragraph']],
+            //     ['view', ['fullscreen', 'codeview']]
+            // ],
+            // height: 200
         });
 
         position++;
@@ -643,16 +665,38 @@ if (Session::has('error')) {
         $('.element_wrap').append(html);
 
         $(".element_wrap textarea.details_editor").summernote({
+
+            tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
             toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['style',['style', 'bold', 'italic', 'underline', 'clear']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
-                // ['table', ['table']],
+                ['table', ['table']],
                 ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture', 'video', 'hr']],
                 ['view', ['fullscreen', 'codeview']]
             ],
-            height: 200
+            popover: {
+                table: [
+                    ['custom', ['tableHeaders']],
+                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                ],
+            },
+
+            height:200
+
+            // toolbar: [
+            //     ['style', ['bold', 'italic', 'underline', 'clear']],
+            //     ['font', ['strikethrough', 'superscript', 'subscript']],
+            //     ['fontsize', ['fontsize']],
+            //     ['color', ['color']],
+            //     // ['table', ['table']],
+            //     ['para', ['ul', 'ol', 'paragraph']],
+            //     ['view', ['fullscreen', 'codeview']]
+            // ],
+            // height: 200
         });
 
         position++;
@@ -769,16 +813,38 @@ if (Session::has('error')) {
 
 
     $(".element_wrap textarea.details_editor_edit").summernote({
+        tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
         toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['style',['style', 'bold', 'italic', 'underline', 'clear']],
             ['font', ['strikethrough', 'superscript', 'subscript']],
             ['fontsize', ['fontsize']],
             ['color', ['color']],
-            // ['table', ['table']],
+            ['table', ['table']],
             ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'picture', 'video', 'hr']],
             ['view', ['fullscreen', 'codeview']]
         ],
-        height: 200
+        popover: {
+            table: [
+                ['custom', ['tableHeaders']],
+                ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+            ],
+        },
+
+        height:200
+
+
+        // toolbar: [
+        //     ['style', ['bold', 'italic', 'underline', 'clear']],
+        //     ['font', ['strikethrough', 'superscript', 'subscript']],
+        //     ['fontsize', ['fontsize']],
+        //     ['color', ['color']],
+        //     // ['table', ['table']],
+        //     ['para', ['ul', 'ol', 'paragraph']],
+        //     ['view', ['fullscreen', 'codeview']]
+        // ],
+        // height: 200
     });
 
 
