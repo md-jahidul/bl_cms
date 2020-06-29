@@ -107,7 +107,7 @@ class SyncOffersForSearchContents extends Command
      */
     public function createSearchContents(MyBlProduct $product)
     {
-        $search_contents = $this->tags[$product->details->content_type];
+        $search_contents = $this->tags[strtolower($product->details->content_type)];
 
         array_push($search_contents, $product->details->commercial_name_en);
         if ($product->tag) {
