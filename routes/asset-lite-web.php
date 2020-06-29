@@ -827,5 +827,15 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('priceSlab-excel.save');
     Route::get('product-price-slab-status-change/{rateId}', 'AssetLite\ProductPriceSlabController@priceSlabStatusChange');
     Route::get('product-price-slab/destroy/{rateId?}', 'AssetLite\ProductPriceSlabController@deletePriceSlab');
+    
+    
+    //Module Ethicks & complains
+    Route::get('ethics-compliance', 'AssetLite\EthicsController@index');
+    Route::post('ethics/update-page-info', 'AssetLite\EthicsController@updatePageInfo');
+    Route::post('ethics/save-ethics-file', 'AssetLite\EthicsController@saveFile');
+    Route::get('ethics/sort-ethics-file', 'AssetLite\EthicsController@sortFiles');
+    Route::get('ethics/status-change/{id}', 'AssetLite\EthicsController@chanbgeStatus');
+    Route::get('ethics/get-file-data/{id}', 'AssetLite\EthicsController@getFileData');
+    Route::get('ethics/file-delete/{id}', 'AssetLite\EthicsController@fileDelete');
 
 });

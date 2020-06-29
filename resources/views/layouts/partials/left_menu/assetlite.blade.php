@@ -545,6 +545,12 @@
                     <span class="menu-title" data-i18n="nav.templates.main">Search</span>
                 </a>
             </li>
+            <li class="{{ is_active_url('/ethics-compliance') }} nav-item">
+                <a href="{{ url('ethics-compliance') }}">
+                    <i class="la la-caret-right"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Ethics & Compliance</span>
+                </a>
+            </li>
         </ul>
     </li>
 
