@@ -45,12 +45,12 @@
                             <div class="form-group">
 
                                 <label for="Details">Package Details (EN)</label>
-                                <textarea type="text" name="package_details_en" id="summernote_editor" class="form-control">{!! $package->main_details !!}</textarea>
+                                <textarea type="text" name="package_details_en" class="form-control summernote_editor">{!! $package->main_details !!}</textarea>
 
                                 <hr>
 
                                 <label for="Details">Package Details (BN)</label>
-                                <textarea type="text" name="package_details_bn" id="summernote_editor" class="form-control">{!! $package->main_details_bn !!}</textarea>
+                                <textarea type="text" name="package_details_bn" class="form-control summernote_editor">{!! $package->main_details_bn !!}</textarea>
 
                             </div>
 
@@ -215,12 +215,12 @@
                             <div class="form-group">
 
                                 <label for="Offer Details">Offer Details (EN)</label>
-                                <textarea type="text" name="offer_details_en" id="summernote_editor" class="form-control">{!! $package->offer_details !!}</textarea>
+                                <textarea type="text" name="offer_details_en" class="form-control summernote_editor">{!! $package->offer_details !!}</textarea>
 
                                 <hr>
 
                                 <label for="Offer Details">Offer Details (BN)</label>
-                                <textarea type="text" name="offer_details_bn" id="summernote_editor" class="form-control">{!! $package->offer_details_bn !!}</textarea>
+                                <textarea type="text" name="offer_details_bn" class="form-control summernote_editor">{!! $package->offer_details_bn !!}</textarea>
 
                             </div>
 

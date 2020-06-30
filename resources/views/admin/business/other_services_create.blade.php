@@ -134,7 +134,7 @@
 
                             <div class="form-group">
                                 <label for="Details">Offer Details (EN)</label>
-                                <textarea type="text" name="offer_details_en" id="summernote_editor" class="form-control"></textarea>
+                                <textarea type="text" name="offer_details_en" class="form-control summernote_editor"></textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Show in bottom accordion
                                 </small>
@@ -162,7 +162,7 @@
                             <div class="form-group">
 
                                 <label for="Details">Offer Details (BN)</label>
-                                <textarea type="text" name="offer_details_bn" id="summernote_editor" class="form-control"></textarea>
+                                <textarea type="text" name="offer_details_bn" class="form-control summernote_editor"></textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Show in bottom accordion
                                 </small>
