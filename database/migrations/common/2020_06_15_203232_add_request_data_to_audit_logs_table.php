@@ -13,12 +13,12 @@ class AddRequestDataToAuditLogsTable extends Migration
      */
     public function up()
     {
-        Schema::table('audit_logs', function (Blueprint $table) {
+/*        Schema::table('audit_logs', function (Blueprint $table) {
             $table->date('browse_date')->after('msisdn')->nullable();
             $table->json('request_data')->after('device_id')->nullable();
 
             $table->index('browse_date');
-        });
+        });*/
     }
 
     /**
@@ -28,8 +28,8 @@ class AddRequestDataToAuditLogsTable extends Migration
      */
     public function down()
     {
-        Schema::table('audit_logs', function (Blueprint $table) {
+/*        Schema::table('audit_logs', function (Blueprint $table) {
             $table->dropColumn(['browse_data', 'request_data']);
-        });
+        });*/
     }
 }
