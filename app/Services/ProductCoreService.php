@@ -835,7 +835,7 @@ class ProductCoreService
 
         $writer = WriterEntityFactory::createXLSXWriter();
 
-        $writer->openToBrowser('mybl-products-' . date('Y-m-d') . '.xlsx');
+        $writer->openToBrowser('mybl-active-products-' . date('Y-m-d') . '.xlsx');
 
         // header Style
         $header_style = (new StyleBuilder())
@@ -860,7 +860,7 @@ class ProductCoreService
             return str_replace('_', ' ', ucwords($val));
         }, array_keys($header));
 
-        array_pop($headers);
+       // array_pop($headers);
 
 
         $row = WriterEntityFactory::createRowFromArray(array_values($headers), $header_style);

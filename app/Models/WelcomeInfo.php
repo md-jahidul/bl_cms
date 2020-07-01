@@ -23,6 +23,7 @@ class WelcomeInfo extends Model
         'message_en',
         'message_bn',
         'image',
-        'login_button_title'
+        'login_button_title',
+        'login_button_title_bn',
     ];
 }

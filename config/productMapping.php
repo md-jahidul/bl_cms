@@ -30,8 +30,7 @@ return [
             'tag'                   => 23,
             'call_rate'             => 24,
             'call_rate_unit'        => 25,
-            'status'                => 26,
-            'validity_in_days'      => 27,
+            'status'                => 26
         ]
     ],
     /*'pcat' => [

@@ -50,10 +50,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="login_button_title" class="required">Login Button Title :</label>
+                                        <label for="login_button_title" class="required">Login Button Title (English):</label>
                                         <input required
                                                name="login_button_title"
-                                               placeholder="Max. 20 Character"
+                                               placeholder="Max. 30 Character"
                                                class="form-control"
                                                id="login_button_title"
                                                value="@if(isset($welcomeInfo)){{$welcomeInfo->login_button_title}} @else{{old('login_button_title')}}@endif"
@@ -62,6 +62,24 @@
                                             <p class="text-left">
                                                 <small
                                                     class="danger text-muted">{{ $errors->first('login_button_title') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="login_button_title_bn" class="required">Login Button Title (Bangla):</label>
+                                        <input required
+                                               name="login_button_title_bn"
+                                               placeholder="Max. 30 Character"
+                                               class="form-control"
+                                               id="login_button_title_bn"
+                                               value="@if(isset($welcomeInfo)){{$welcomeInfo->login_button_title_bn}} @else{{old('login_button_title_bn')}}@endif"
+                                               max="30">
+                                        @if($errors->has('login_button_title'))
+                                            <p class="text-left">
+                                                <small
+                                                        class="danger text-muted">{{ $errors->first('login_button_title_bn') }}</small>
                                             </p>
                                         @endif
                                     </div>
