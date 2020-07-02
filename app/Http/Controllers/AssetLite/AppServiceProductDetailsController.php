@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Models\AppServiceProduct;
 use App\Services\AppServiceProductService;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,6 +30,17 @@ class AppServiceProductDetailsController extends Controller
      */
     protected $info = [];
 
+    protected $componentTypes = [
+        'title_text_editor' => 'Title with text editor',
+        'accordion_section' => 'Accordion',
+        'text_with_image_right' => 'Text with image right',
+        'text_with_image_bottom' => 'Text with image bottom',
+        'slider_text_with_image_right' => 'Slider text with image right',
+        'video_with_text_right' => 'Video with text right',
+        'multiple_image_banner' => 'Multiple image banner',
+        'pricing_sections' => 'Pricing Multiple table',
+    ];
+
     /**
      *
      * @param AppServiceProductDetailsService $appServiceProductDetailsService
@@ -44,13 +56,10 @@ class AppServiceProductDetailsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
      * @param $tab_type
      * @param $product_id
-     * @return Factory|View
+     * @return Application|Factory|View
      */
-
     public function productDetails($tab_type, $product_id)
     {
         $this->info['tab_type'] = $tab_type;
@@ -60,6 +69,11 @@ class AppServiceProductDetailsController extends Controller
         $this->info["productDetail"] = $this->appServiceProduct->detailsProduct($product_id);
         $this->info["fixedSectionData"] = $this->info["section_list"]['fixed_section'];
         return view('admin.app-service.details.section.index', $this->info);
+    }
+
+    public function create($tab_type, $product_id)
+    {
+        return view('admin.app-service.details.components.create', compact('tab_type', 'product_id'));
     }
 
     /**
@@ -72,18 +86,20 @@ class AppServiceProductDetailsController extends Controller
     {
         $data = $request->all();
 
-//        dd($data);
-
         // Create new sections
-        if( $request->has('save') ){
+        if( $request->has('save') ) {
+
+//            dd($data);
+
             $response = $this->appServiceProductDetailsService->storeAppServiceProductDetails($request->all(), $tab_type, $product_id);
             Session::flash('message', $response->getContent());
             return redirect(url("app-service/details/$tab_type/$product_id"));
         }
-        elseif( $request->has('update') ){
+        elseif( $request->has('update') ) {
             # Update section data
             $section_data = $data['sections'];
             if( isset($section_data['id']) && !empty($section_data['id']) ){
+//                dd($data);
                 $this->appServiceProductDetailsService->updateAppServiceDetailsSection($section_data, $section_data['id']);
                 # Update component data
                 $component_data = $data['component'];
@@ -92,31 +108,22 @@ class AppServiceProductDetailsController extends Controller
                         $this->appServiceProductDetailsService->updateAppServiceDetailsComponent($component_value, $component_value['id']);
                     }
                 }
-
             }
 
-            Session::flash('message', 'Section component updated succesfuly');
+            Session::flash('message', 'Section component updated successfully');
             return redirect(url("app-service/details/$tab_type/$product_id"));
 
-        }
-        elseif( $request->has('compnent_muti_attr_update') ){
-
+        } elseif( $request->has('compnent_muti_attr_update') ) {
             # Update component data
             $component_data = $data['component'];
-
-            if( isset($component_data) && count($component_data) > 0 ){
+            if( isset($component_data) && count($component_data) > 0 ) {
                 foreach ($component_data as $key => $component_value) {
                     $this->appServiceProductDetailsService->updateAppServiceDetailsComponent($component_value, $component_value['id'], $key);
                 }
             }
-
         }
-
-
         Session::flash('message', 'Section component updated succesfuly');
         return redirect(url("app-service/details/$tab_type/$product_id"));
-
-
     }
 
     /**
@@ -145,24 +152,42 @@ class AppServiceProductDetailsController extends Controller
 
         // $section = $this->appServiceProductDetailsService->getSectionComponentByID($section_id);
 
-        // return view('admin.app-service.details.section.edit', compact('tab_type', 'product_id', 'section'));
-
         $section = $this->appServiceProductDetailsService->getJsonSectionComponentList($section_id);
 
-        if( !empty($section) && count($section) > 0 ){
-            return response()->json([
-                'status' => 'SUCCESS',
-                'message' => 'Data found',
-                'data' => $section
-            ], 200);
+//        dd($section['sections']->section_type);
+
+//        dd($section['sections']->section_type);
+
+
+        if ($section['sections']->section_type == 'slider_text_with_image_right' ||
+            $section['sections']->section_type == 'multiple_image_banner' ||
+            $section['sections']->section_type == 'pricing_sections'
+        ) {
+            if (!empty($section) && count($section) > 0) {
+                return response()->json([
+                    'status' => 'SUCCESS',
+                    'message' => 'Data found',
+                    'data' => $section
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => 'FAILED',
+                    'message' => 'Data not found',
+                    'data' => []
+                ], 404);
+            }
         }
-        else{
-            return response()->json([
-                'status' => 'FAILED',
-                'message' => 'Data not found',
-                'data' => []
-            ], 404);
-        }
+
+        $componentTypes = $this->componentTypes;
+        $component = $section['component'][0];
+        return view('admin.app-service.details.components.edit', compact(
+            'tab_type',
+            'product_id',
+            'section',
+            'component',
+            'componentTypes'
+        ));
+
 
     }
 

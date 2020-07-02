@@ -109,8 +109,6 @@ class AppServiceProductDetailsService
         # Save sections data
         $sections_data = $data['sections'];
 
-//        dd($data);
-
         $sections_data['product_id'] = $product_id;
         $sections_data['section_order'] = 99;
 
@@ -301,6 +299,9 @@ class AppServiceProductDetailsService
         $appServiceProduct = $this->findOne($id);
         $data['title_en'] = request()->component_title_en;
         $data['title_bn'] = request()->component_title_bn;
+
+//        dd($data);
+
         $appServiceProduct->update($data);
         return Response('App Service Section updated successfully');
     }

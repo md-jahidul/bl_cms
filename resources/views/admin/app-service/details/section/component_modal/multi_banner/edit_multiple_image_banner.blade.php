@@ -12,14 +12,14 @@
 						<form role="form" action="{{ route('app_service.details.store', [$tab_type, $product_id ]) }}" method="POST" novalidate enctype="multipart/form-data">
 								@csrf
 							<div class="modal-body">
-								<div class="row">
-									<div class="col-sm-12">
-										<h4 class="pb-1 float-left"><strong>Multi Image List</strong></h4>
-										<div class="add_button_wrap float-right">
-										  <a href="#" class="btn btn-info  btn-glow px-1 edit_multi_image_item_add">+ Add Image</a>
-										</div>
-									</div>
-								</div>
+{{--								<div class="row">--}}
+{{--									<div class="col-sm-12">--}}
+{{--										<h4 class="pb-1 float-left"><strong>Multi Image List</strong></h4>--}}
+{{--										<div class="add_button_wrap float-right">--}}
+{{--										  <a href="#" class="btn btn-info  btn-glow px-1 edit_multi_image_item_add">+ Add Image</a>--}}
+{{--										</div>--}}
+{{--									</div>--}}
+{{--								</div>--}}
 								<div class="row">
 
 										{{ Form::hidden('sections[section_name]', 'Multi image banner' ) }}
@@ -29,7 +29,7 @@
 										{{ Form::hidden('component[0][component_type]', 'multiple_image_banner' ) }}
 
 
-									
+
 									<div class="col-sm-12">
 										<table class="table table-striped table-bordered"
 											   role="grid" aria-describedby="Example1_info" style="" >
@@ -46,7 +46,7 @@
 										</table>
 									</div>
 
-									
+
 									<div class="col-md-6">
 											<div class="form-group">
 													<label for="title" class="mr-1">Status:</label>
@@ -63,7 +63,7 @@
 											{{ Form::hidden('sections[multiple_component]', 0 ) }}
 									</div>
 
-										
+
 
 								</div>
 
@@ -104,7 +104,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function () {
-	   
+
 	   //Add multiple item on edit
 	   $('.edit_multi_image_item_add').on('click', function(e){
 	   	e.preventDefault();
@@ -115,7 +115,7 @@
 	   	var getNumberOfComponent = parseInt($parentSelectorEdit.attr('data-number_of_compoent'));
 	   	var getSectionsId = $parentSelectorEdit.find('.section_id').val();
 
-	   	
+
 
 	   	// console.log(getSectionsId);
 	   	for (var i = 0; i < getNumberOfComponent; i++) {
@@ -155,7 +155,7 @@
 
 	   	var componentId = $(this).attr('data-component_id');
 	   	var itemId = $(this).attr('data-item_id');
-	   	
+
 	   	var baseUrl = "{{ config('filesystems.file_base_url') }}";
 
 	   	$.ajax({
@@ -172,7 +172,7 @@
 	   	    		$.each(result.data, function(k, v){
 
 	   	    			if( k == 'image_url' ){
-	   	    				$singleModalID.find('#imgDisplay').attr('src', baseUrl + v).show();
+	   	    				$singleModalID.find('.imgDisplay').attr('src', baseUrl + v).show();
 	   	    			}
 	   	    			else if( k == 'status' ){
 	   	    				$singleModalID.find("select[name='component_multi_attr["+k+"]']").children('option[value="'+v+'"]').attr('selected', true);
@@ -194,11 +194,11 @@
 	   	    		$singleModalID.modal('show');
 
 	   	    		return false;
-	   	    		
+
 
 
 	   	    	}
-	   	        
+
 	   	    },
 	   	    error: function () {
 	   	        // window.location.replace(auto_save_url);

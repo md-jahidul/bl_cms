@@ -19,216 +19,206 @@ use App\Services\Assetlite\AppServiceProductDetailsService;
 class ComponentController extends Controller
 {
 
-   /**
-    * [$componentService description]
-    * @var [object]
-    */
-   private $componentService;
+    /**
+     * [$componentService description]
+     * @var [object]
+     */
+    private $componentService;
 
-   /**
-    * [$appServiceProductDetailsService]
-    * @var [type]
-    */
-   private $appServiceProductDetailsService;
+    /**
+     * [$appServiceProductDetailsService]
+     * @var [type]
+     */
+    private $appServiceProductDetailsService;
 
-   /**
-    * [__construct description]
-    * @param ComponentService $componentService [description]
-    */
-	public function __construct(
-		ComponentService $componentService,
-		AppServiceProductDetailsService $appServiceProductDetailsService
-	)
-	{
-		$this->componentService = $componentService;
-		$this->appServiceProductDetailsService = $appServiceProductDetailsService;
-	}
-
-
-	/**
-	 * [conponentList description]
-	 * @param  [type] $tab_type   [description]
-	 * @param  [type] $product_id [description]
-	 * @return [type]             [description]
-	 */
-	public function conponentList($tab_type, $section_id)
-	{
-
-		$component_list = $this->componentService->componentList($section_id, 'app_services');
-
-		$section_data = $this->appServiceProductDetailsService->getSectionColumnInfoByID($section_id, ['multiple_component', 'product_id']);
-
-		$section_has_multiple_component = isset($section_data->multiple_component) ? $section_data->multiple_component : null;
+    /**
+     * [__construct description]
+     * @param ComponentService $componentService [description]
+     */
+    public function __construct(
+        ComponentService $componentService,
+        AppServiceProductDetailsService $appServiceProductDetailsService
+    )
+    {
+        $this->componentService = $componentService;
+        $this->appServiceProductDetailsService = $appServiceProductDetailsService;
+    }
 
 
-		$data['tab_type'] = $tab_type;
-		$data['section_id'] = $section_id;
-		$data['product_id'] = isset($section_data->product_id) ? $section_data->product_id : null;
+    /**
+     * [conponentList description]
+     * @param  [type] $tab_type   [description]
+     * @param  [type] $product_id [description]
+     * @return [type]             [description]
+     */
+    public function conponentList($tab_type, $section_id)
+    {
+
+        $component_list = $this->componentService->componentList($section_id, 'app_services');
+
+        $section_data = $this->appServiceProductDetailsService->getSectionColumnInfoByID($section_id, ['multiple_component', 'product_id']);
+
+        $section_has_multiple_component = isset($section_data->multiple_component) ? $section_data->multiple_component : null;
 
 
-
-		return view('admin.app-service.details.components.index', compact('data', 'component_list', 'section_has_multiple_component'));
-
-	}
-
-	/**
-	 * [conponentCreate description]
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
-	public function conponentCreate(Request $request)
-	{
-
-		$component_type = $request->input('component_type', '');
-		$data['tab_type'] = $request->input('tab_type', '');
-		$data['section_id'] = $request->input('section_id', '');
-
-		return view('admin.app-service.details.components.create', compact('data', 'component_type'));
-
-	}
+        $data['tab_type'] = $tab_type;
+        $data['section_id'] = $section_id;
+        $data['product_id'] = isset($section_data->product_id) ? $section_data->product_id : null;
 
 
-	public function conponentStore(Request $request)
-	{
+        return view('admin.app-service.details.components.index', compact('data', 'component_list', 'section_has_multiple_component'));
 
-		$response = $this->componentService->storeComponentDetails($request->all());
+    }
 
-		$section_id = $request->input('section_details_id');
-		$tab_type = $request->input('tab_type');
+    /**
+     * [conponentCreate description]
+     * @param Request $request [description]
+     * @return [type]           [description]
+     */
+    public function conponentCreate(Request $request)
+    {
 
-		Session::flash('message', 'Component added successfuly');
-		return redirect( url("app-service/component/$tab_type/$section_id") );
+        $component_type = $request->input('component_type', '');
+        $data['tab_type'] = $request->input('tab_type', '');
+        $data['section_id'] = $request->input('section_id', '');
 
-	}
+        return view('admin.app-service.details.components.create', compact('data', 'component_type'));
+
+    }
 
 
-	public function conponentEdit($type, $id)
-	{
+    public function conponentStore(Request $request)
+    {
 
-		$appServiceProduct = $this->componentService->findOne($id);
+        $response = $this->componentService->storeComponentDetails($request->all());
 
-		$component_type = $appServiceProduct->component_type;
-		$data['tab_type'] = $type;
-		$data['section_id'] = $appServiceProduct->section_details_id;
+        $section_id = $request->input('section_details_id');
+        $tab_type = $request->input('tab_type');
 
-		$options = json_decode($appServiceProduct->multiple_attributes, true);
+        Session::flash('message', 'Component added successfuly');
+        return redirect(url("app-service/component/$tab_type/$section_id"));
 
-		dd($options);
+    }
 
-		// return view('admin.app-service.details.components.edit', compact('data', 'component_type'));
-		return view('admin.app-service.details.components.edit', compact('appServiceProduct', 'data', 'component_type'));
 
-	}
+    public function conponentEdit($type, $id)
+    {
 
-	/**
-	 * [conponentItemAttr description]
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
-	public function conponentItemAttr(Request $request)
-	{
+        $appServiceProduct = $this->componentService->findOne($id);
 
-		$component_id = $request->input('component_id', null);
-		$item_id = $request->input('item_id', null);
+        $component_type = $appServiceProduct->component_type;
+        $data['tab_type'] = $type;
+        $data['section_id'] = $appServiceProduct->section_details_id;
 
-		if( !empty($component_id) && !empty($item_id) ){
-			$appServiceComponent = $this->componentService->findOne($component_id);
+        $options = json_decode($appServiceProduct->multiple_attributes, true);
 
-			$multi_attr_value = $appServiceComponent->multiple_attributes;
-			if( !empty($multi_attr_value) ){
-				$appServiceComponent = $this->componentService->processMultiAttrValue($multi_attr_value, $item_id);
+        dd($options);
 
-				return response()->json([
-				    'status' => 'SUCCESS',
-				    'message' => 'Data found',
-				    'data' => $appServiceComponent
-				], 200);
+        // return view('admin.app-service.details.components.edit', compact('data', 'component_type'));
+        return view('admin.app-service.details.components.edit', compact('appServiceProduct', 'data', 'component_type'));
 
-			}
-			else{
-				return response()->json([
+    }
+
+    /**
+     * [conponentItemAttr description]
+     * @param Request $request [description]
+     * @return [type]           [description]
+     */
+    public function conponentItemAttr(Request $request)
+    {
+
+        $component_id = $request->input('component_id', null);
+        $item_id = $request->input('item_id', null);
+
+        if (!empty($component_id) && !empty($item_id)) {
+            $appServiceComponent = $this->componentService->findOne($component_id);
+
+            $multi_attr_value = $appServiceComponent->multiple_attributes;
+            if (!empty($multi_attr_value)) {
+                $appServiceComponent = $this->componentService->processMultiAttrValue($multi_attr_value, $item_id);
+
+                return response()->json([
+                    'status' => 'SUCCESS',
+                    'message' => 'Data found',
+                    'data' => $appServiceComponent
+                ], 200);
+
+            } else {
+                return response()->json([
+                    'status' => 'FAILED',
+                    'message' => 'Data not found',
+                    'data' => []
+                ], 404);
+            }
+
+
+        } else {
+            return response()->json([
                 'status' => 'FAILED',
                 'message' => 'Data not found',
                 'data' => []
             ], 404);
-			}
+        }
+
+    }
 
 
-		}
-		else{
-			return response()->json([
-             'status' => 'FAILED',
-             'message' => 'Data not found',
-             'data' => []
-         ], 404);
-		}
+    /**
+     * Multiple attribute sortable for component
+     * @return [type] [description]
+     */
+    public function multiAttributeSortable(Request $request)
+    {
+        $this->componentService->attrTableSortable($request);
 
-	}
+        return response()->json([
+            'status' => 'SUCCESS',
+            'message' => 'Data sorted',
+            'data' => []
+        ], 200);
 
+    }
 
-	/**
-	 * Multiple attribute sortable for component
-	 * @return [type] [description]
-	 */
-	public function multiAttributeSortable(Request $request)
-	{
-		$this->componentService->attrTableSortable($request);
+    /**
+     * [conponentItemAttrStore description]
+     * @param Request $request [description]
+     * @return [type]           [description]
+     */
+    public function conponentItemAttrStore(Request $request)
+    {
+        $response = $this->componentService->storeComponentMultiItemAttr($request->all());
 
-		return response()->json([
-		    'status' => 'SUCCESS',
-		    'message' => 'Data sorted',
-		    'data' => []
-		], 200);
+        $product_id = $request->input('product_id');
+        $tab_type = $request->input('tab_type');
 
-	}
+        Session::flash('message', 'Component item updated successfuly');
+        return redirect(url("app-service/details/$tab_type/$product_id"));
+    }
 
-	/**
-	 * [conponentItemAttrStore description]
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
-	public function conponentItemAttrStore(Request $request)
-	{
-		$response = $this->componentService->storeComponentMultiItemAttr($request->all());
+    /**
+     * [conponentItemAttrDestroy description]
+     * @param Request $request [description]
+     * @return [type]           [description]
+     */
+    public function conponentItemAttrDestroy(Request $request)
+    {
 
-		$product_id = $request->input('product_id');
-		$tab_type = $request->input('tab_type');
+        $response = $this->componentService->conponentMultiAttrItemDestroy($request->all());
 
-		Session::flash('message', 'Component item updated successfuly');
-		return redirect( url("app-service/details/$tab_type/$product_id") );
-
-	}
-
-	/**
-	 * [conponentItemAttrDestroy description]
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
-	 */
-	public function conponentItemAttrDestroy(Request $request)
-	{
-
-		$response = $this->componentService->conponentMultiAttrItemDestroy($request->all());
-
-		if( $response ){
-			return response()->json([
-			    'status' => 'SUCCESS',
-			    'message' => 'Data updated',
-			    'data' => []
-			], 200);
-		}
-		else{
-			return response()->json([
-			    'status' => 'FAILED',
-			    'message' => 'Data update failed',
-			    'data' => []
-			], 404);
-		}
-
-		
-
-
-
-	}
+        if ($response) {
+            return response()->json([
+                'status' => 'SUCCESS',
+                'message' => 'Data updated',
+                'data' => []
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'FAILED',
+                'message' => 'Data update failed',
+                'data' => []
+            ], 404);
+        }
+    }
 
 
 }  // class End

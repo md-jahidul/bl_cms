@@ -21,7 +21,7 @@ function matchRelatedProduct($id, $relatedProductIds)
     <li class="breadcrumb-item ">Section List</li>
 @endsection
 @section('action')
-
+    <a href="{{ route("app_service.details.create", [$tab_type, $product_id]) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>Add Component</a>
 @endsection
 @section('content')
     <section>
@@ -99,10 +99,21 @@ function matchRelatedProduct($id, $relatedProductIds)
                                 </td>
 
                                 <td>
-                                    <a href="{{ route("app_service.details.edit", [$tab_type, $product_id, $list->id]) }}"
-                                       role="button" class="btn-sm btn-outline-info border-0 section_component_edit"
-                                       data-sections="{{$list->section_type}}">
-                                        <i class="la la-pencil" aria-hidden="true"></i></a>
+                                    @if($list->section_type == "slider_text_with_image_right" ||
+                                        $list->section_type == "multiple_image_banner" ||
+                                        $list->section_type == "pricing_sections"
+                                        )
+
+                                        <a href="{{ route("app_service.details.edit", [$tab_type, $product_id, $list->id]) }}"
+                                           role="button" class="btn-sm btn-outline-info border-0 section_component_edit"
+                                           data-sections="{{$list->section_type}}">
+                                            <i class="la la-pencil" aria-hidden="true"></i></a>
+                                    @else
+                                        <a href="{{ route("app_service.details.edit", [$tab_type, $product_id, $list->id]) }}"
+                                           class="btn-sm btn-outline-info border-0"
+                                           data-sections="{{$list->section_type}}">
+                                            <i class="la la-pencil" aria-hidden="true"></i></a>
+                                    @endif
 
                                     @if( $list->is_default == 0 )
                                         <a href="#"
@@ -361,8 +372,12 @@ function matchRelatedProduct($id, $relatedProductIds)
         $('.section_component_edit').on('click', function (e) {
             e.preventDefault();
 
+            // alert("Hii")
+
             var editUrl = $(this).attr('href');
             var modalComponent = $(this).attr('data-sections');
+
+            console.log(editUrl)
 
             $.ajax({
                 url: editUrl,
@@ -370,11 +385,13 @@ function matchRelatedProduct($id, $relatedProductIds)
                 type: "GET",
                 success: function (result) {
 
-                    // console.log(result)
+                    console.log(result)
 
                     if (result.status == 'SUCCESS') {
                         var $parentSelector = $('#' + modalComponent);
                         var baseUrl = "{{ config('filesystems.file_base_url') }}";
+
+                        console.log($parentSelector)
 
                         $parentSelector.find('#form_save').hide();
                         $parentSelector.find('#form_update').show();
@@ -735,7 +752,10 @@ function matchRelatedProduct($id, $relatedProductIds)
 
                         // Check component is Table?
                         else if (result.data.sections.section_type == "pricing_sections") {
-                            $('#' + modalComponent).modal('show');
+
+                            // alert(modalComponent)
+
+                            $('#pricing_sections' /*+ modalComponent*/).modal('show');
                             var tableData = result.data.sections.section_component[0];
                             var tableParseEn = $.parseJSON(tableData.editor_en)
                             var tableParseBn = $.parseJSON(tableData.editor_bn)

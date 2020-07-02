@@ -769,6 +769,9 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('app-service/details/{type}/{id}', 'AssetLite\AppServiceProductDetailsController@productDetails')
         ->name('app_service.details.list');
 
+    Route::get('app-service/details/{type}/{productID}/create', 'AssetLite\AppServiceProductDetailsController@create')
+        ->name('app_service.details.create');
+
     Route::post('app-service/details/{type}/{id}/store', 'AssetLite\AppServiceProductDetailsController@store')
         ->name('app_service.details.store');
 
