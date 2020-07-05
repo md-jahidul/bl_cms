@@ -63,12 +63,12 @@
 
 
 <!-- multi image slider -->
-{{--@include('admin.app-service.details.section.component_modal.slider.slider_text_with_image_right')--}}
+@include('admin.app-service.details.section.component_modal.slider.more_add_slider_text_with_image_right')
 @include('admin.app-service.details.section.component_modal.slider.edit_slider_text_with_image_right')
 @include('admin.app-service.details.section.component_modal.slider.single_item_edit_slider_text_with_image_right')
 
 <!-- multi image banner -->
-{{--@include('admin.app-service.details.section.component_modal.multi_banner.multiple_image_banner')--}}
+@include('admin.app-service.details.section.component_modal.multi_banner.more_add_multiple_image')
 @include('admin.app-service.details.section.component_modal.multi_banner.edit_multiple_image_banner')
 @include('admin.app-service.details.section.component_modal.multi_banner.single_item_edit_multiple_image_banner')
 

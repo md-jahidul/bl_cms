@@ -15,9 +15,9 @@
 								<div class="row">
 									<div class="col-sm-12">
 										<h4 class="pb-1 float-left"><strong>Slider Image List</strong></h4>
-{{--										<div class="add_button_wrap float-right">--}}
-{{--										  <a href="#" class="btn btn-info  btn-glow px-1 edit_moreslider_item_add">+ Add slide</a>--}}
-{{--										</div>--}}
+										<div class="add_button_wrap float-right">
+										  <a href="#" class="btn btn-info  btn-glow px-1 edit_moreslider_item_add">+ Add slide</a>
+										</div>
 									</div>
 								</div>
 								<div class="row">
@@ -145,6 +145,9 @@
 
 	     $parentSelectorEdit.modal('hide');
 	     $parentSelector.modal('show');
+
+         $('.modal-open .modal').css('overflow-x','hidden');
+         $('.modal-open .modal').css('overflow-y','auto');
 
 
 	     $parentSelector.on('hidden.bs.modal', function(){

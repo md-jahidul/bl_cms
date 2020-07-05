@@ -12,14 +12,14 @@
 						<form role="form" action="{{ route('app_service.details.store', [$tab_type, $product_id ]) }}" method="POST" novalidate enctype="multipart/form-data">
 								@csrf
 							<div class="modal-body">
-{{--								<div class="row">--}}
-{{--									<div class="col-sm-12">--}}
-{{--										<h4 class="pb-1 float-left"><strong>Multi Image List</strong></h4>--}}
-{{--										<div class="add_button_wrap float-right">--}}
-{{--										  <a href="#" class="btn btn-info  btn-glow px-1 edit_multi_image_item_add">+ Add Image</a>--}}
-{{--										</div>--}}
-{{--									</div>--}}
-{{--								</div>--}}
+								<div class="row">
+									<div class="col-sm-12">
+										<h4 class="pb-1 float-left"><strong>Multi Image List</strong></h4>
+										<div class="add_button_wrap float-right">
+										  <a href="#" class="btn btn-info  btn-glow px-1 edit_multi_image_item_add">+ Add Image</a>
+										</div>
+									</div>
+								</div>
 								<div class="row">
 
 										{{ Form::hidden('sections[section_name]', 'Multi image banner' ) }}
@@ -109,8 +109,8 @@
 	   $('.edit_multi_image_item_add').on('click', function(e){
 	   	e.preventDefault();
 
-	   	$parentSelector = $('#multiple_image_banner');
-	   	$parentSelectorEdit = $('#edit_multiple_image_banner');
+	    var	$parentSelector = $('#multiple_image_banner');
+	   	var $parentSelectorEdit = $('#edit_multiple_image_banner');
 
 	   	var getNumberOfComponent = parseInt($parentSelectorEdit.attr('data-number_of_compoent'));
 	   	var getSectionsId = $parentSelectorEdit.find('.section_id').val();
@@ -134,6 +134,8 @@
 	     $parentSelectorEdit.modal('hide');
 	     $parentSelector.modal('show');
 
+        $('.modal-open .modal').css('overflow-x','hidden');
+        $('.modal-open .modal').css('overflow-y','auto');
 
 	     $parentSelector.on('hidden.bs.modal', function(){
 	         // $('#multiple_image_banner').find('.multi_attr_update_hide').show();
