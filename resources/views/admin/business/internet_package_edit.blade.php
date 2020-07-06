@@ -321,7 +321,7 @@
 
                             <div class="form-group">
 
-                                <label>Page Header (HTML)</label>
+                                <label>Page Header (HTML) GGGG</label>
                                 <textarea class="form-control" rows="7" name="page_header">{{$internet->page_header}}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags

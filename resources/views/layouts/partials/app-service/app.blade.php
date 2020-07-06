@@ -35,9 +35,9 @@
 </div>
 
 <div class="form-group col-md-6 {{ $errors->has('app_rating') ? ' error' : '' }}">
-    <label for="title">Average Rating</label>
+    <label for="title" class="required">Average Rating</label>
     <input type="text" name="app_rating"  class="form-control app_rating" placeholder="Enter Average Rating"
-    value="{{ isset($appServiceProduct->app_rating) ? $appServiceProduct->app_rating : '' }}">
+    value="{{ isset($appServiceProduct->app_rating) ? $appServiceProduct->app_rating : '' }}" required>
     <div class="help-block"></div>
     @if ($errors->has('app_rating'))
         <div class="help-block">  {{ $errors->first('app_rating') }}</div>

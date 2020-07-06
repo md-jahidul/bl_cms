@@ -17,6 +17,7 @@ class AddHeaderScriptBnCreatorInBusinessInternetPackages extends Migration
             $table->text('page_header_bn')->nullable()->after('page_header');
             $table->integer('created_by')->nullable()->after('updated_at');
             $table->integer('updated_by')->nullable()->after('created_by');
+            $table->string('alt_text_bn')->nullable()->after('alt_text');
         });
     }
 
@@ -31,6 +32,7 @@ class AddHeaderScriptBnCreatorInBusinessInternetPackages extends Migration
             $table->dropColumn('page_header_bn');
             $table->dropColumn('created_by');
             $table->dropColumn('updated_by');
+            $table->dropColumn('alt_text_bn');
         });
     }
 }
