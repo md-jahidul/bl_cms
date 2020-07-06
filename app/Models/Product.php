@@ -16,6 +16,7 @@ class Product extends Model
             'url_slug',
             'schema_markup',
             'page_header',
+            'page_header_bn',
             'name_en',
             'name_bn',
             'start_date',
@@ -44,7 +45,9 @@ class Product extends Model
             'rate_cutter_unit',
             'call_rate_unit_bn',
             'sms_rate_unit_bn',
-            'special_product'
+            'special_product',
+            'created_by',
+            'updated_by',
         ];
 
     protected $casts = [

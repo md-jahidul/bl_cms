@@ -88,9 +88,6 @@ class AppServiceProductDetailsController extends Controller
 
         // Create new sections
         if( $request->has('save') ) {
-
-//            dd($data);
-
             $response = $this->appServiceProductDetailsService->storeAppServiceProductDetails($request->all(), $tab_type, $product_id);
             Session::flash('message', $response->getContent());
             return redirect(url("app-service/details/$tab_type/$product_id"));
@@ -153,11 +150,6 @@ class AppServiceProductDetailsController extends Controller
         // $section = $this->appServiceProductDetailsService->getSectionComponentByID($section_id);
 
         $section = $this->appServiceProductDetailsService->getJsonSectionComponentList($section_id);
-
-//        dd($section['sections']->section_type);
-
-//        dd($section['sections']->section_type);
-
 
         if ($section['sections']->section_type == 'slider_text_with_image_right' ||
             $section['sections']->section_type == 'multiple_image_banner' ||

@@ -16,6 +16,7 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form role="form" id="product_form" action="{{ route('app_service.details.store', [$tab_type, $product_id ]) }}" method="POST" novalidate enctype="multipart/form-data">
+                            @csrf
                             <div class="content-body">
                                 <div class="row">
                                     {{ Form::hidden('sections[section_name]', 'Title with Text Editor' ) }}
@@ -122,7 +123,6 @@
 
                                 </div>
                             </div>
-                            @csrf
                         </form>
                     </div>
                 </div>
