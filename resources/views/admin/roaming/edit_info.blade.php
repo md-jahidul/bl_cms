@@ -12,7 +12,7 @@
 
     <form method="POST" action="{{ url('roaming/save-info-tips') }}" class="form" enctype="multipart/form-data">
         @csrf
-        
+
                <input type="hidden" name="info_id" value="{{$info->id}}">
 
         <div class="card">
@@ -69,21 +69,21 @@
                                     <label>Banner (Web)</label>
                                     <input type="file" class="dropify" name="banner_web" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                    
+
                                     @if($info->banner_web != "")
                                     <img src="{{ config('filesystems.file_base_url') . $info->banner_web }}" width="100%">
                                     @endif
-                                    
+
                                 </div>
                                 <div class="col-md-3 col-xs-12">
                                     <label>Banner (Mobile)</label>
                                     <input type="file" class="dropify" name="banner_mobile" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                    
+
                                     @if($info->banner_mobile != "")
                                     <img src="{{ config('filesystems.file_base_url') . $info->banner_mobile }}" width="100%">
                                     @endif
-                                    
+
                                 </div>
 
                             </div>
@@ -96,7 +96,17 @@
                                     <small class="text-info">
                                         <strong>Note: </strong> Title, meta, canonical and other tags
                                     </small>
-                                </div>
+                              </div>
+
+                              <div class="col-md-4 col-xs-12">
+                                <label>Page Header Bangla (HTML)</label>
+                                <textarea class="form-control html_header" rows="7" name="page_header_bn">{{$info->page_header_bn}}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                              </div>
+
+
                                 <div class="col-md-4 col-xs-12">
                                     <label>Schema Markup</label>
                                     <textarea class="form-control schema_markup" rows="7" name="schema_markup">{{$info->schema_markup}}</textarea>
@@ -140,7 +150,7 @@
 
                             </div>
 
-                           
+
 
                         </div>
 

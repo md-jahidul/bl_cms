@@ -21,7 +21,7 @@ class RoamingInfoController extends Controller {
 
     /**
      * Display Categories, and info/tips list
-     * 
+     *
      * @param No
      * @return Factory|View
      * @Bulbul Mahmud Nito || 27/03/2020
@@ -32,10 +32,10 @@ class RoamingInfoController extends Controller {
         return view('admin.roaming.info_tips', compact('info'));
     }
 
-   
+
     /**
      * Add Info & Tips Form
-     * 
+     *
      * @param No
      * @return Factory|View
      * @Bulbul Mahmud Nito || 27/03/2020
@@ -48,7 +48,7 @@ class RoamingInfoController extends Controller {
 
     /**
      * edit info and tips form
-     * 
+     *
      * @param No
      * @return Factory|View
      * @Bulbul Mahmud Nito || 27/03/2020
@@ -60,7 +60,7 @@ class RoamingInfoController extends Controller {
 
     /**
      * Save info & tips
-     * 
+     *
      * @param Request $request
      * @return Factory|View
      * @Bulbul Mahmud Nito || 27/03/2020
@@ -85,7 +85,7 @@ class RoamingInfoController extends Controller {
 
     /**
      * Delete info & tips
-     * 
+     *
      * @param $infoId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 27/03/2020
@@ -103,7 +103,7 @@ class RoamingInfoController extends Controller {
 
     /**
      * edit components
-     * 
+     *
      * @param $infoId
      * @return Factory|View
      * @Bulbul Mahmud Nito || 27/03/2020
@@ -115,7 +115,7 @@ class RoamingInfoController extends Controller {
 
     /**
      * Update components
-     * 
+     *
      * @param Request $request
      * @return Factory|View
      * @Bulbul Mahmud Nito || 27/03/2020
@@ -136,7 +136,7 @@ class RoamingInfoController extends Controller {
 
     /**
      * Component Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 27/03/2020
@@ -148,13 +148,13 @@ class RoamingInfoController extends Controller {
 
     /**
      * Component delete.
-     * 
+     *
      * @param $infoId, $comId
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 27/03/2020
      */
     public function componentDelete($infoId, $comId) {
-        
+
         $response = $this->infoService->componentDelete($comId);
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Component is deleted!');

@@ -80,8 +80,8 @@
 
                             <div class="form-group row">
 
-                                
-                                
+
+
                                 <div class="col-md-4 col-xs-12">
                                     <label>Page Header (HTML)</label>
                                     <textarea class="form-control html_header" rows="7" name="html_header"></textarea>
@@ -89,6 +89,15 @@
                                         <strong>Note: </strong> Title, meta, canonical and other tags
                                     </small>
                                 </div>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <label>Page Header Bangla (HTML)</label>
+                                    <textarea class="form-control html_header" rows="7" name="page_header_bn"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
                                 <div class="col-md-4 col-xs-12">
                                     <label>Schema Markup</label>
                                     <textarea class="form-control schema_markup" rows="7" name="schema_markup"></textarea>
@@ -96,7 +105,7 @@
                                         <strong>Note: </strong> JSON-LD (Recommended by Google)
                                     </small>
                                 </div>
-                                
+
                                 <div class="col-md-4 col-xs-12">
                                     <label>Banner Photo Name<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
@@ -131,7 +140,7 @@
 
                             </div>
 
-                           
+
                         </div>
 
                     </div>

@@ -8,6 +8,7 @@
 namespace App\Repositories;
 
 use App\Models\RoamingCategory;
+use Illuminate\Support\Facades\Auth;
 
 class RoamingCategoryRepository extends BaseRepository {
 
@@ -36,8 +37,10 @@ class RoamingCategoryRepository extends BaseRepository {
             $category->url_slug = $request->page_url;
             $category->banner_name = $request->banner_name;
             $category->page_header = $request->html_header;
+            $category->page_header_bn = $request->page_header_bn;
             $category->schema_markup = $request->schema_markup;
             $category->status = $request->status;
+            $category->updated_by = Auth::id();
             $category->save();
 
             $response = [
@@ -52,7 +55,7 @@ class RoamingCategoryRepository extends BaseRepository {
         return $response;
     }
 
- 
+
     public function changeCategorySorting($request) {
         try {
 
@@ -78,6 +81,6 @@ class RoamingCategoryRepository extends BaseRepository {
             return response()->json($response, 500);
         }
     }
-    
+
 
 }

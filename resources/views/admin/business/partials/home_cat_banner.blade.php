@@ -19,7 +19,7 @@
 
                                 <td class="category_name">
                                     <i class="icon-cursor-move icons"></i>
-                                    {{ $cat->name }} 
+                                    {{ $cat->name }}
 
                                 </td>
 
@@ -120,18 +120,27 @@
                                 <input type="text" class="form-control alt_text" name="alt_text" placeholder="Alt Text">
                             </div>
 
-                            <div class="col-md-4 col-xs-12">
+                            <div class="col-md-8 col-xs-12">
+                                <label>Schema Markup</label>
+                                <textarea class="form-control schema_markup" rows="7" name="schema_markup"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                </small>
+                            </div>
+
+                            <div class="col-md-6 col-xs-12">
                                 <label>Page Header (HTML)</label>
                                 <textarea class="form-control html_header" rows="7" name="page_header"></textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>
                             </div>
-                            <div class="col-md-4 col-xs-12">
-                                <label>Schema Markup</label>
-                                <textarea class="form-control schema_markup" rows="7" name="schema_markup"></textarea>
+
+                            <div class="col-md-6 col-xs-12">
+                                <label>Page Header Bangla (HTML)</label>
+                                <textarea class="form-control html_header_bn" rows="7" name="page_header_bn"></textarea>
                                 <small class="text-info">
-                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>
                             </div>
 
@@ -304,6 +313,7 @@
                     $('.banner_name').val(result.banner_name);
                     $('.old_banner_name').val(result.banner_name);
                     $('.html_header').val(result.page_header);
+                    $('.html_header_bn').val(result.page_header_bn);
                     $('.schema_markup').val(result.schema_markup);
 
                     $('.banner_web').html("");
@@ -684,15 +694,15 @@
                         if (result.sort == 1) {
                             $(".photo_Left").attr('src', photoUrl);
                             $(".old_photo_Left").val(result.photo);
-                            
+
                             $(".photo_mobile_Left").attr('src', photoMob);
                             $(".old_photo_mobile_left").val(result.photo_mob);
-                            
-                            
+
+
                         } else {
                             $(".photo_Right").attr('src', photoUrl);
                             $(".old_photo_Right").val(result.photo);
-                            
+
                             $(".photo_mobile_Right").attr('src', photoMob);
                             $(".old_photo_mobile_Right").val(result.photo_mob);
                         }

@@ -8,6 +8,7 @@
 namespace App\Repositories;
 
 use App\Models\BusinessOthers;
+use Illuminate\Support\Facades\Auth;
 
 class BusinessOthersRepository extends BaseRepository {
 
@@ -60,6 +61,7 @@ class BusinessOthersRepository extends BaseRepository {
         $service->url_slug = $request->url_slug;
         $service->schema_markup = $request->schema_markup;
         $service->page_header = $request->page_header;
+        $service->page_header_bn = $request->page_header_bn;
 
         $service->name = $request->name_en;
         $service->name_bn = $request->name_bn;
@@ -73,6 +75,7 @@ class BusinessOthersRepository extends BaseRepository {
         $service->offer_details_bn = $request->offer_details_bn;
 
         $service->type = $request->type;
+        $service->created_by = Auth::id();
         $service->save();
         return $service->id;
     }
@@ -213,6 +216,7 @@ class BusinessOthersRepository extends BaseRepository {
         $service->url_slug = $request->url_slug;
         $service->schema_markup = $request->schema_markup;
         $service->page_header = $request->page_header;
+        $service->page_header_bn = $request->page_header_bn;
 
         $service->name = $request->name_en;
         $service->name_bn = $request->name_bn;
@@ -227,6 +231,7 @@ class BusinessOthersRepository extends BaseRepository {
         $service->offer_details_bn = $request->offer_details_bn;
 
         $service->type = $request->type;
+        $service->updated_by = Auth::id();
         return $service->save();
     }
 
