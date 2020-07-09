@@ -831,4 +831,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('product-price-slab-status-change/{rateId}', 'AssetLite\ProductPriceSlabController@priceSlabStatusChange');
     Route::get('product-price-slab/destroy/{rateId?}', 'AssetLite\ProductPriceSlabController@deletePriceSlab');
 
+    // Faq
+    Route::resource('faq', 'AssetLite\AlFaqController')->except(['show', 'destroy']);
+    Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
 });

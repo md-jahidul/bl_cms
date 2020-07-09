@@ -17,10 +17,12 @@ class CreateAlFaqsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title')->nullable();
             $table->string('slug')->nullable();
-            $table->string('question_en')->nullable();
-            $table->string('question_bn')->nullable();
-            $table->string('answer_en')->nullable();
-            $table->string('answer_bn')->nullable();
+            $table->text('question_en')->nullable();
+            $table->text('question_bn')->nullable();
+            $table->longText('answer_en')->nullable();
+            $table->longText('answer_bn')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
     }

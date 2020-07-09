@@ -9,7 +9,7 @@
 
 namespace App\Services;
 
-use App\Repositories\BannerRepository;
+use App\Repositories\AlFaqRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 
@@ -20,23 +20,23 @@ class AlFaqService
     /**
      * @var $sliderRepository
      */
-    protected $bannerRepository;
+    protected $alFaqRepository;
 
     /**
      * DigitalServicesService constructor.
-     * @param BannerRepository $sliderRepository
+     * @param AlFaqRepository $sliderRepository
      */
-    public function __construct(BannerRepository $bannerRepository)
+    public function __construct(AlFaqRepository $alFaqRepository)
     {
-        $this->bannerRepository = $bannerRepository;
-        $this->setActionRepository($bannerRepository);
+        $this->alFaqRepository = $alFaqRepository;
+        $this->setActionRepository($alFaqRepository);
     }
 
     /**
-     * Storing the banner resource
+     * Storing the alFaq resource
      * @return Response
      */
-    public function storeBanner($data)
+    public function storeAlFaq($data)
     {
         $data['image_path'] = 'storage/' . $data['image_path']->store('banner');
         $this->save($data);
@@ -48,7 +48,7 @@ class AlFaqService
      * @param $data
      * @return Response
      */
-    public function updateBanner($data, $banner)
+    public function updateFaq($data, $banner)
     {
 
         if (isset($data->image_path)) {
@@ -69,7 +69,7 @@ class AlFaqService
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      * @throws \Exception
      */
-    public function deleteBanner($id)
+    public function deleteAlFaq($id)
     {
         $banner = $this->findOne($id);
         unlink($banner->image_path);
