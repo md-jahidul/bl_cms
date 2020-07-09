@@ -12,6 +12,7 @@ namespace App\Services;
 use App\Repositories\AlFaqRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AlFaqService
 {
@@ -48,20 +49,13 @@ class AlFaqService
      * @param $data
      * @return Response
      */
-    public function updateFaq($data, $banner)
+    public function updateFaq($data, $id)
     {
-
-        if (isset($data->image_path)) {
-            $data = $data->all();
-            $data['image_path'] = 'storage/' . $data['image_path']->store('banner');
-            unlink($banner->image_path);
-            $banner->update($data);
-        } else {
-            $data->image_path = $banner->image_path;
-            $banner->update($data->all());
-        }
-
-        return Response('Banner has been successfully updated');
+        $faq = $this->findOne($id);
+        $data['updated_by'] = Auth::id();
+        unset($data['files']);
+        $faq->update($data);
+        return Response('Faq has been successfully updated');
     }
 
     /**
@@ -69,11 +63,10 @@ class AlFaqService
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      * @throws \Exception
      */
-    public function deleteAlFaq($id)
+    public function deleteFaq($id)
     {
-        $banner = $this->findOne($id);
-        unlink($banner->image_path);
-        $banner->delete();
-        return Response('banner has been successfully deleted');
+        $faq = $this->findOne($id);
+        $faq->delete();
+        return Response('Faq has been successfully deleted');
     }
 }

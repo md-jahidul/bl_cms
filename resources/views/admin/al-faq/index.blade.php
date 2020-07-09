@@ -5,9 +5,9 @@
     <li class="breadcrumb-item ">Faq List</li>
 @endsection
 @section('action')
-    <a href="{{ url("faq/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Add Faq
-    </a>
+{{--    <a href="{{ url("faq/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
+{{--        Add Faq--}}
+{{--    </a>--}}
 @endsection
 @section('content')
     <section>

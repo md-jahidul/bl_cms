@@ -5,8 +5,11 @@ namespace App\Http\Controllers\AssetLite;
 use App\Services\AlFaqService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class AlFaqController extends Controller
@@ -86,21 +89,25 @@ class AlFaqController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Application|RedirectResponse|Redirector
      */
     public function update(Request $request, $id)
     {
-        //
+//        dd($request->all());
+        $response = $this->faq->updateFaq($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect('faq');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Application|RedirectResponse|Redirector
      */
     public function destroy($id)
     {
-        //
+        $this->faq->deleteFaq($id);
+        return url('faq');
     }
 }
