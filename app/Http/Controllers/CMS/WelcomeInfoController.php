@@ -48,6 +48,7 @@ class WelcomeInfoController extends Controller
         $data['message_en']         = $request->message_en;
         $data['message_bn']         = $request->message_bn;
         $data['login_button_title'] = $request->login_button_title;
+        $data['login_button_title_bn'] = $request->login_button_title_bn;
 
         WelcomeInfo::create($data);
 
@@ -70,6 +71,7 @@ class WelcomeInfoController extends Controller
         $data['message_en']         = $request->message_en;
         $data['message_bn']         = $request->message_bn;
         $data['login_button_title'] = $request->login_button_title;
+        $data['login_button_title_bn'] = $request->login_button_title_bn;
 
         try {
             $info = WelcomeInfo::findOrFail($id);
