@@ -357,22 +357,15 @@
                 $('.'+rowId).remove();
             });
 
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Browse for an Image File to upload',
-                    'replace': 'Click to replace',
-                    'remove': 'Remove',
-                    'error': 'Choose correct file format'
-                }
-            });
+            // $('.dropify').dropify({
+            //     messages: {
+            //         'default': 'Browse for an Image File to upload',
+            //         'replace': 'Click to replace',
+            //         'remove': 'Remove',
+            //         'error': 'Choose correct file format'
+            //     }
+            // });
         })
     </script>
 
 @endpush
-
-
-
-
-
-
-

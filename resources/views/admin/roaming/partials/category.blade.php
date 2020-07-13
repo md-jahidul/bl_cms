@@ -21,7 +21,7 @@
                             <tr data-index="{{ $cat->id }}" data-position="{{ $cat->sort }}">
 
                                 <td class="category_name cursor-move">
-                                    <i class="icon-cursor-move icons"></i> 
+                                    <i class="icon-cursor-move icons"></i>
 
                                     @if($cat->status == 1)
                                     <strong class="text-info">{{ $cat->name_en }} </strong>
@@ -32,7 +32,7 @@
 
                                 </td>
                                 <td class="category_name">
-                                    {{ $cat->name_bn }} 
+                                    {{ $cat->name_bn }}
                                 </td>
                                 <td class="banner_photo_web">
                                     <img src="{{ config('filesystems.file_base_url') . $cat->banner_web }}" height="40px">
@@ -131,14 +131,23 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-md-6 col-xs-12">
+                            <div class="col-md-4 col-xs-12">
                                 <label>Page Header (HTML)</label>
                                 <textarea class="form-control html_header" rows="7" name="html_header"></textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>
                             </div>
-                            <div class="col-md-6 col-xs-12">
+
+                            <div class="col-md-4 col-xs-12">
+                                <label>Page Header Bangla (HTML)</label>
+                                <textarea class="form-control page_header_bn" rows="7" name="page_header_bn"></textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+
+                            <div class="col-md-4 col-xs-12">
                                 <label>Schema Markup</label>
                                 <textarea class="form-control schema_markup" rows="7" name="schema_markup"></textarea>
                                 <small class="text-info">
@@ -231,6 +240,7 @@
                     $('.page_url').val(result.url_slug);
                     $('.banner_name').val(result.banner_name);
                     $('.html_header').val(result.page_header);
+                    $('.page_header_bn').val(result.page_header_bn);
                     $('.schema_markup').val(result.schema_markup);
 
                     $('.banner_web').html("");

@@ -29,7 +29,7 @@
 										{{ Form::hidden('component[0][component_type]', 'multiple_image_banner' ) }}
 
 
-									
+
 									<div class="col-sm-12">
 										<table class="table table-striped table-bordered"
 											   role="grid" aria-describedby="Example1_info" style="" >
@@ -46,7 +46,7 @@
 										</table>
 									</div>
 
-									
+
 									<div class="col-md-6">
 											<div class="form-group">
 													<label for="title" class="mr-1">Status:</label>
@@ -63,7 +63,7 @@
 											{{ Form::hidden('sections[multiple_component]', 0 ) }}
 									</div>
 
-										
+
 
 								</div>
 
@@ -104,18 +104,18 @@
 
 <script type="text/javascript">
 	$(document).ready(function () {
-	   
+
 	   //Add multiple item on edit
 	   $('.edit_multi_image_item_add').on('click', function(e){
 	   	e.preventDefault();
 
-	   	$parentSelector = $('#multiple_image_banner');
-	   	$parentSelectorEdit = $('#edit_multiple_image_banner');
+	    var	$parentSelector = $('#multiple_image_banner');
+	   	var $parentSelectorEdit = $('#edit_multiple_image_banner');
 
 	   	var getNumberOfComponent = parseInt($parentSelectorEdit.attr('data-number_of_compoent'));
 	   	var getSectionsId = $parentSelectorEdit.find('.section_id').val();
 
-	   	
+
 
 	   	// console.log(getSectionsId);
 	   	for (var i = 0; i < getNumberOfComponent; i++) {
@@ -134,6 +134,8 @@
 	     $parentSelectorEdit.modal('hide');
 	     $parentSelector.modal('show');
 
+        $('.modal-open .modal').css('overflow-x','hidden');
+        $('.modal-open .modal').css('overflow-y','auto');
 
 	     $parentSelector.on('hidden.bs.modal', function(){
 	         // $('#multiple_image_banner').find('.multi_attr_update_hide').show();
@@ -155,7 +157,7 @@
 
 	   	var componentId = $(this).attr('data-component_id');
 	   	var itemId = $(this).attr('data-item_id');
-	   	
+
 	   	var baseUrl = "{{ config('filesystems.file_base_url') }}";
 
 	   	$.ajax({
@@ -172,7 +174,7 @@
 	   	    		$.each(result.data, function(k, v){
 
 	   	    			if( k == 'image_url' ){
-	   	    				$singleModalID.find('#imgDisplay').attr('src', baseUrl + v).show();
+	   	    				$singleModalID.find('.imgDisplay').attr('src', baseUrl + v).show();
 	   	    			}
 	   	    			else if( k == 'status' ){
 	   	    				$singleModalID.find("select[name='component_multi_attr["+k+"]']").children('option[value="'+v+'"]').attr('selected', true);
@@ -194,11 +196,11 @@
 	   	    		$singleModalID.modal('show');
 
 	   	    		return false;
-	   	    		
+
 
 
 	   	    	}
-	   	        
+
 	   	    },
 	   	    error: function () {
 	   	        // window.location.replace(auto_save_url);

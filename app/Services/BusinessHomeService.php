@@ -15,6 +15,7 @@ use App\Repositories\BusinessFeaturesRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class BusinessHomeService {
 
@@ -72,11 +73,11 @@ class BusinessHomeService {
      * @return Response
      */
     public function updateCategory($request) {
-        
+
         try {
             $status = true;
         $update = [];
-        
+
         $catId = $request->cat_id;
 
         $update['name'] = $request->name_en;
@@ -86,6 +87,8 @@ class BusinessHomeService {
         $update['url_slug'] = $request->url_slug;
         $update['schema_markup'] = $request->schema_markup;
         $update['page_header'] = $request->page_header;
+        $update['page_header_bn'] = $request->page_header_bn;
+        $update['updated_by'] = Auth::id();
 
         if (!empty($request['banner_web'])) {
             //delete old web photo
@@ -138,8 +141,8 @@ class BusinessHomeService {
                 'success' => 2,
             ];
         }
-        
-        
+
+
 
             return $response;
         } catch (\Exception $e) {
@@ -195,7 +198,7 @@ class BusinessHomeService {
                 }
             }
 
-            //save data in database 
+            //save data in database
             $newPhoto = $this->businessCatRepo->saveBannerPhoto($filePath, $request['alt_text'], $request['cat_id']);
 
             $photo = $newPhoto == "" ? $request['old_photo'] : $newPhoto;
@@ -238,7 +241,7 @@ class BusinessHomeService {
                     $this->deleteFile($request['old_photo']);
                 }
             }
-            
+
             $filePathMob = "";
             if ($request['banner_photo_mobile'] != "") {
                 $filePathMob = $this->upload($request['banner_photo_mobile'], 'assetlite/images/business-images');
@@ -249,7 +252,7 @@ class BusinessHomeService {
                 }
             }
 
-            //save data in database 
+            //save data in database
             $newPhoto = $this->businessBannerRepo->saveBannerPhoto($filePath, $filePathMob, $request['alt_text'], $request['home_sort']);
 
             $photo = $newPhoto == "" ? $request['old_photo'] : $newPhoto;
@@ -315,7 +318,7 @@ class BusinessHomeService {
 
 
 
-            //save data in database 
+            //save data in database
             $this->slidingRepo->saveSpeed($request['enSpeed'], $request['newsSpeed']);
 
 
@@ -368,7 +371,7 @@ class BusinessHomeService {
                 }
             }
 
-            //save data in database 
+            //save data in database
             $saveNews = $this->businessNewsRepo->saveNews($filePath, $request);
 
 
@@ -478,7 +481,7 @@ class BusinessHomeService {
                 }
             }
 
-            //save data in database 
+            //save data in database
             $this->businessFeaturesRepo->saveFeature($filePath, $request);
 
 

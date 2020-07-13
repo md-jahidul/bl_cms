@@ -12,16 +12,16 @@
 						<form id="product_details_form" role="form" action="{{ route('appservice.component.itemattr.store') }}" method="POST" novalidate enctype="multipart/form-data">
 								@csrf
 							<div class="modal-body">
-								
+
 								<div class="row">
 
-									
+
 									{{ Form::hidden('item_id', '', ['class' => 'item_id']) }}
 									{{ Form::hidden('component_id', '', ['class' => 'component_id'] ) }}
 									{{ Form::hidden('product_id', $product_id) }}
 									{{ Form::hidden('tab_type', $tab_type) }}
 
-									
+
 									<div class="form-group col-md-4 {{ $errors->has('image_url') ? ' error' : '' }}">
 									    <label for="alt_text" class="">Image (optional)</label>
 									    <div class="custom-file">
@@ -57,24 +57,8 @@
 									            <option value="1">Active</option>
 									            <option value="0">Inactive</option>
 									    </select>
-									    
 									</div>
-
-
-
-
-
-
-
-
-
-
-
-
-										
-
 								</div>
-
 							</div>
 							<div class="modal-footer">
 								<a type="button" href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
@@ -108,8 +92,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function () {
-	   
-	   
+
+
 
 
 

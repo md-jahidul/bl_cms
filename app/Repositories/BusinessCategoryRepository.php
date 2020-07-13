@@ -17,12 +17,12 @@ class BusinessCategoryRepository extends BaseRepository {
         $categories = $this->model->orderBy('home_sort')->get();
         return $categories;
     }
-    
+
     public function getCategoryById($catId) {
         $cat = $this->model->findOrFail($catId);
         return $cat;
     }
-    
+
     public function updateCategory($data, $catId){
         return $this->model::where('id', $catId)->update($data);
     }
@@ -34,7 +34,7 @@ class BusinessCategoryRepository extends BaseRepository {
         if ($filePath != "") {
             $update['banner_photo'] = $filePath;
         }
-        
+
 
         $this->model->where('id', $catId)->update($update);
         return $filePath;

@@ -16,6 +16,7 @@ use App\Traits\FileTrait;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class OfferCategoryService
 {
@@ -75,7 +76,6 @@ class OfferCategoryService
     {
         try {
 
-
             $status = true;
             $update = [];
 
@@ -84,8 +84,10 @@ class OfferCategoryService
             $update['url_slug'] = $data['url_slug'];
             $update['schema_markup'] = $data['schema_markup'];
             $update['page_header'] = $data['page_header'];
+            $update['page_header_bn'] = $data['page_header_bn'];
             $update['banner_name'] = $data['banner_name'];
             $update['banner_alt_text'] = $data['banner_alt_text'];
+            $update['updated_by'] = Auth::id();
 
             $offerCategory = $this->findOne($id);
 
@@ -168,7 +170,7 @@ class OfferCategoryService
             return $response;
         }
     }
-    
+
     private function _updateSearchCategorySlug($catId){
         $category = $this->findOrFail($catId);
         $keywordType = "offer-".$category->alias;

@@ -10,6 +10,7 @@ namespace App\Repositories;
 use App\Models\RoamingOfferCategory;
 use App\Models\RoamingOtherOffer;
 use App\Models\RoamingOtherOfferComponents;
+use Illuminate\Support\Facades\Auth;
 
 class RoamingOfferRepository extends BaseRepository {
 
@@ -94,8 +95,10 @@ class RoamingOfferRepository extends BaseRepository {
 
             if ($request->offer_id == "") {
                 $offer = $this->model;
+                $offer->created_by = Auth::id();
             } else {
                 $offer = $this->model->findOrFail($request->offer_id);
+                $offer->updated_by = Auth::id();
             }
 
             $offer->category_id = $request->category_id;
@@ -111,6 +114,7 @@ class RoamingOfferRepository extends BaseRepository {
             $offer->alt_text = $request->alt_text;
             $offer->url_slug = $request->url_slug;
             $offer->page_header = $request->html_header;
+            $offer->page_header_bn = $request->page_header_bn;
             $offer->schema_markup = $request->schema_markup;
             $offer->status = $request->status;
             $offer->save();

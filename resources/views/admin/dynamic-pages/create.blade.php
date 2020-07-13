@@ -30,6 +30,7 @@
                             $altText = "";
                             $photoName = "";
                             $pageHeader = "";
+                            $pageHeaderBn = "";
                             $schemaMarkup = "";
                             if (!empty($page)) {
                                 $pageId = $page->id;
@@ -41,6 +42,7 @@
                                 $altText = $page->alt_text;
                                 $photoName = $page->banner_name;
                                 $pageHeader = $page->page_header;
+                                $pageHeaderBn = $page->page_header_bn;
                                 $schemaMarkup = $page->schema_markup;
                             }
                             ?>
@@ -117,6 +119,14 @@
                             <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Page Header (HTML)</label>
                                 <textarea class="form-control" rows="7" name="page_header">{{ $pageHeader }}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
+                                <label>Page Header Bangla (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header_bn">{{ $pageHeaderBn }}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>

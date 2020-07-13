@@ -25,7 +25,7 @@ class BusinessOthersController extends Controller {
 
     /**
      * List of business other services.
-     * 
+     *
      * @param No
      * @return Factory|View
      * @Bulbul Mahmud Nito || 18/02/2020
@@ -38,11 +38,11 @@ class BusinessOthersController extends Controller {
         return view('admin.business.other_services', compact("businessSolution", "iot", "others", "corona"));
     }
 
-   
+
 
     /**
      * create business packages [form].
-     * 
+     *
      * @param No
      * @return Redirect
      * @Bulbul Mahmud Nito || 18/02/2020
@@ -55,7 +55,7 @@ class BusinessOthersController extends Controller {
 
     /**
      * save business other service/packages.
-     * 
+     *
      * @param Request $request
      * @return Redirect
      * @Bulbul Mahmud Nito || 19/02/2020
@@ -63,7 +63,7 @@ class BusinessOthersController extends Controller {
     public function saveService(Request $request) {
 
         $response = $this->othersService->saveService($request);
-        
+
         if ($response['success'] == 1) {
             Session::flash('sussess', 'Service is saved!');
         } else {
@@ -72,11 +72,11 @@ class BusinessOthersController extends Controller {
 
         return redirect('/business-other-services');
     }
-       
-    
+
+
      /**
      * List of business other services component list by serviceID.
-     * 
+     *
      * @param No
      * @return Factory|View
      * @Bulbul Mahmud Nito || 20/02/2020
@@ -88,11 +88,11 @@ class BusinessOthersController extends Controller {
         $components = $this->othersService->getComponents($serviceId);
         return view('admin.business.service_component_list', compact("components", "serviceId", "serviceName"));
     }
-    
+
 
     /**
      * create business packages add components [form].
-     * 
+     *
      * @param $serviceId
      * @return Redirect
      * @Bulbul Mahmud Nito || 18/02/2020
@@ -105,20 +105,20 @@ class BusinessOthersController extends Controller {
 
     /**
      * save business other service/packages component.
-     * 
+     *
      * @param Request $request
      * @return Redirect
      * @Bulbul Mahmud Nito || 19/02/2020
      */
     public function saveComponents(Request $request) {
-        
+
 //        print_r($request->all());die();
 
 
         $components = $this->othersService->getComponents($request->service_id);
         $oldComponents = count($components);
         $response = $this->othersService->saveComponents($request, $oldComponents);
-        
+
 //        dd($response);die();
 
         if ($response['success'] == 1) {
@@ -132,7 +132,7 @@ class BusinessOthersController extends Controller {
 
     /**
      * delete business service component.
-     * 
+     *
      * @param $serviceId, $position
      * @return Redirect
      * @Bulbul Mahmud Nito || 19/02/2020
@@ -152,7 +152,7 @@ class BusinessOthersController extends Controller {
 
     /**
      * Service component Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 20/02/2020
@@ -164,7 +164,7 @@ class BusinessOthersController extends Controller {
 
     /**
      * Service component edit.
-     * 
+     *
      * @param $serviceId, $position, $type
      * @return Factory|View
      * @Dev Bulbul Mahmud Nito || 26/02/2020
@@ -173,14 +173,14 @@ class BusinessOthersController extends Controller {
         $component = $this->othersService->getSingleComponent($serviceId, $position, $type);
          $service = $this->othersService->getServiceById($serviceId);
         $serviceName = $service->name;
-        
+
 //        print_r($component);die();
         return view('admin.business.services_components_edit', compact("component", "type", "serviceId", "serviceName"));
     }
-    
+
       /**
      * update business other service/packages component.
-     * 
+     *
      * @param Request $request
      * @return Redirect
      * @Bulbul Mahmud Nito || 27/02/2020
@@ -191,7 +191,7 @@ class BusinessOthersController extends Controller {
 
 
         $response = $this->othersService->updateComponents($request);
-        
+
 //        dd($response);
 
         if ($response['success'] == 1) {
@@ -205,7 +205,7 @@ class BusinessOthersController extends Controller {
 
     /**
      * home show status of business packages .
-     * 
+     *
      * @param $serviceId
      * @return Response
      * @Bulbul Mahmud Nito || 19/02/2020
@@ -217,7 +217,7 @@ class BusinessOthersController extends Controller {
     }
     /**
      * home show status of business packages .
-     * 
+     *
      * @param $serviceId
      * @return Response
      * @Bulbul Mahmud Nito || 19/02/2020
@@ -230,7 +230,7 @@ class BusinessOthersController extends Controller {
 
     /**
      * home show status of business active/inactive .
-     * 
+     *
      * @param $serviceId
      * @return Response
      * @Bulbul Mahmud Nito || 19/02/2020
@@ -243,7 +243,7 @@ class BusinessOthersController extends Controller {
 
     /**
      * Service Sorting Change.
-     * 
+     *
      * @param Request $request
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 19/02/2020
@@ -255,7 +255,7 @@ class BusinessOthersController extends Controller {
 
     /**
      * edit business other service [form].
-     * 
+     *
      * @param $serviceId
      * @return Redirect
      * @Bulbul Mahmud Nito || 20/02/2020
@@ -266,22 +266,22 @@ class BusinessOthersController extends Controller {
 
         $features = $this->packageService->getFeatures();
         $asgnFeatures = $this->othersService->getFeaturesByService($serviceType, $serviceId);
-        
+
         $services = $this->othersService->getOtherService("", $serviceId);
-        
+
         $relatedProducts = $this->othersService->relatedProducts($serviceId);
         return view('admin.business.other_services_edit', compact('service', 'features', 'asgnFeatures', 'services', 'relatedProducts', 'serviceId', 'type'));
     }
 
     /**
      * update business other service.
-     * 
+     *
      * @param Request $request
      * @return Redirect
      * @Bulbul Mahmud Nito || 20/02/2020
      */
     public function update(Request $request) {
-        
+
 //        print_r($request->all()); die();
 
         $response = $this->othersService->updateService($request);
@@ -297,7 +297,7 @@ class BusinessOthersController extends Controller {
 
     /**
      * delete business service .
-     * 
+     *
      * @param $serviceId
      * @return Redirect
      * @Bulbul Mahmud Nito || 19/02/2020

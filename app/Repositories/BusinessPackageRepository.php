@@ -8,6 +8,7 @@
 namespace App\Repositories;
 
 use App\Models\BusinessPackages;
+use Illuminate\Support\Facades\Auth;
 
 class BusinessPackageRepository extends BaseRepository {
 
@@ -115,7 +116,7 @@ class BusinessPackageRepository extends BaseRepository {
         $package->url_slug = $request->url_slug;
         $package->schema_markup = $request->schema_markup;
         $package->page_header = $request->page_header;
-
+        $package->page_header_bn = $request->page_header_bn;
 
         $package->name = $request->name_en;
         $package->name_bn = $request->name_bn;
@@ -129,6 +130,8 @@ class BusinessPackageRepository extends BaseRepository {
         $package->offer_details = $request->offer_details_en;
         $package->offer_details_bn = $request->offer_details_bn;
 
+        $package->created_by = Auth::id();
+
         $package->save();
         return $package->id;
     }
@@ -138,13 +141,17 @@ class BusinessPackageRepository extends BaseRepository {
         return $packages;
     }
 
-    public function updatePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request) {
+    public function updatePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request)
+    {
         $packageId = $request->package_id;
         $package = $this->model->findOrFail($packageId);
 
-
-        $package->card_banner_web = $cardWeb;
-        $package->card_banner_mobile = $cardMob;
+        if ($cardWeb != "") {
+            $package->card_banner_web = $cardWeb;
+        }
+        if ($cardMob != "") {
+            $package->card_banner_mobile = $cardMob;
+        }
         $package->card_banner_alt_text = $request->card_banner_alt_text;
 
         if ($bannerWeb != "") {
@@ -158,6 +165,7 @@ class BusinessPackageRepository extends BaseRepository {
         $package->url_slug = $request->url_slug;
         $package->schema_markup = $request->schema_markup;
         $package->page_header = $request->page_header;
+        $package->page_header_bn = $request->page_header_bn;
 
         $package->name = $request->name_en;
         $package->name_bn = $request->name_bn;
@@ -170,6 +178,7 @@ class BusinessPackageRepository extends BaseRepository {
 
         $package->offer_details = $request->offer_details_en;
         $package->offer_details_bn = $request->offer_details_bn;
+        $package->updated_by = Auth::id();
 
         return $package->save();
     }

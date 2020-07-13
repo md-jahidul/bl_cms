@@ -32,7 +32,7 @@ class RoamingInfoService {
         $this->infoRepo = $infoRepo;
     }
 
-    
+
     /**
      * Get Roaming offers
      * @return Response
@@ -42,7 +42,7 @@ class RoamingInfoService {
         return $response;
     }
 
-   
+
     /**
      * Get Roaming info
      * @return Response
@@ -110,8 +110,7 @@ class RoamingInfoService {
                 rename($encodeImgWeb, $seoImgMob);
             }
 
-
-            //save data in database 
+            //save data in database
             $this->infoRepo->saveInfo($seoNameWeb, $seoNameMob, $request);
 
 
@@ -228,7 +227,7 @@ class RoamingInfoService {
                 }
             }
 
-            //save data in database 
+            //save data in database
             $this->infoRepo->saveInfo($seoNameWeb, $seoNameMob, $request);
 
 
@@ -265,7 +264,7 @@ class RoamingInfoService {
                 $this->deleteFile($info->banner_mobile);
             }
 
-            //delete data 
+            //delete data
             $this->infoRepo->deleteInfo($infoId);
 
 
@@ -293,7 +292,7 @@ class RoamingInfoService {
         $response = $this->infoRepo->getInfoComponents($infoId);
         return $response;
     }
-    
+
        /**
      * update components
      * @return Response
@@ -302,7 +301,7 @@ class RoamingInfoService {
         try {
 
 
-            //save data in database 
+            //save data in database
             $this->infoRepo->saveComponents($request);
 
             $response = [
@@ -319,7 +318,7 @@ class RoamingInfoService {
             return $response;
         }
     }
-    
+
      /**
      * Change component sorting
      * @return Response
@@ -328,9 +327,9 @@ class RoamingInfoService {
         $response = $this->infoRepo->changeComponentSorting($request);
         return $response;
     }
-    
+
      /**
-     * delete component 
+     * delete component
      * @return Response
      */
     public function componentDelete($comId) {
@@ -340,8 +339,8 @@ class RoamingInfoService {
 
     /* ###################################### DONE  ################################################# */
 
- 
 
-   
+
+
 
 }

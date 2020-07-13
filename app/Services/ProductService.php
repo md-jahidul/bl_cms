@@ -13,6 +13,7 @@ use App\Repositories\TagCategoryRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -65,15 +66,14 @@ class ProductService
      */
     public function storeProduct($data, $simId)
     {
-
         foreach ($data['offer_info'] as $key => $offerInfo) {
             if ($offerInfo) {
                 $otherInfo[$key] = $offerInfo;
             }
         }
         $data['offer_info'] = isset($otherInfo) ? $otherInfo : null;
-
         $data['sim_category_id'] = $simId;
+        $data['created_by'] = Auth::id();
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
         $product = $this->save($data);
         //save Search Data
@@ -160,6 +160,7 @@ class ProductService
         $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0);
         $data['special_product'] = (isset($data['special_product']) ? 1 : 0);
         $data['rate_cutter_offer'] = (isset($data['rate_cutter_offer']) ? 1 : 0);
+        $data['updated_by'] = Auth::id();
 
         $product->update($data);
 
