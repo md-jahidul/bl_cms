@@ -18,8 +18,6 @@ class CreateMyBlStoreSubCategoriesTable extends Migration
             $table->bigInteger('category_id')->unsigned();
             $table->string('name');
             $table->string('slug')->nullable();
-            $table->foreign('category_id')->references('id')
-                ->on('my_bl_store_categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -26,8 +26,6 @@ class CreateMyBlStoresTable extends Migration
             $table->text('btn_action')->nullable();
             $table->text('image_url')->nullable();
             $table->text('video_link')->nullable();
-            $table->foreign('category_id')->references('id')
-                ->on('my_bl_store_categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
