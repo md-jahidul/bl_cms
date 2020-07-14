@@ -7,6 +7,7 @@ use App\Models\OfferCategory;
 use App\Models\SimCategory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Services\OfferCategoryService;
 use Illuminate\View\View;
@@ -96,7 +97,13 @@ class OfferCategoryController extends Controller {
     public function childUpdate(Request $request, $parent_id, $id) {
         $type = $request->type;
         $offer = OfferCategory::findOrFail($id);
-        $offer->update($request->all());
+
+        $data['type'] = $request->type;
+        $data['name_en'] = $request->name_en;
+        $data['name_bn'] = $request->name_bn;
+        $data['updated_by'] = Auth::id();
+
+        $offer->update($data);
         return redirect("offer-categories/$parent_id/$type");
     }
 

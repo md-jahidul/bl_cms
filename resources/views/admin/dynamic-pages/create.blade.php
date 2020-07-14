@@ -24,23 +24,29 @@
                             $pageId = "";
                             $nameEn = "";
                             $nameBn = "";
+                            $pageContentEn = "";
+                            $pageContentBn = "";
                             $urlSlug = "";
                             $desktopImg = null;
                             $mobileImg = null;
                             $altText = "";
                             $photoName = "";
                             $pageHeader = "";
+                            $pageHeaderBn = "";
                             $schemaMarkup = "";
                             if (!empty($page)) {
                                 $pageId = $page->id;
                                 $nameEn = $page->page_name_en;
                                 $nameBn = $page->page_name_bn;
+                                $pageContentEn = $page->page_content_en;
+                                $pageContentBn = $page->page_content_bn;
                                 $urlSlug = $page->url_slug;
                                 $desktopImg = $page->banner_image_url;
                                 $mobileImg = $page->banner_mobile_view;
                                 $altText = $page->alt_text;
                                 $photoName = $page->banner_name;
                                 $pageHeader = $page->page_header;
+                                $pageHeaderBn = $page->page_header_bn;
                                 $schemaMarkup = $page->schema_markup;
                             }
                             ?>
@@ -114,9 +120,39 @@
                                 </small>
                             </div>
 
+                            <div class="form-group col-md-6 {{ $errors->has('page_content_en') ? ' error' : '' }}">
+                                <label for="page_content_en">Description (English)</label>
+                                <textarea type="text" name="page_content_en" id="page_content_en" rows="5" class="form-control"
+                                          placeholder="Enter page description in English"
+                                >{{ $pageContentEn }}</textarea>
+                                <div class="help-block"></div>
+                                @if ($errors->has('page_content_en'))
+                                    <div class="help-block">{{ $errors->first('page_content_en') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('page_content_bn') ? ' error' : '' }}">
+                                <label for="page_content_bn">Description (Bangla)</label>
+                                <textarea type="text" name="page_content_bn" rows="5" id="page_content_bn" class="form-control"
+                                          placeholder="Enter page description in Bangla"
+                                >{{ $pageContentBn }}</textarea>
+                                <div class="help-block"></div>
+                                @if ($errors->has('page_content_bn'))
+                                    <div class="help-block">{{ $errors->first('page_content_bn') }}</div>
+                                @endif
+                            </div>
+
                             <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Page Header (HTML)</label>
                                 <textarea class="form-control" rows="7" name="page_header">{{ $pageHeader }}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
+                                <label>Page Header Bangla (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header_bn">{{ $pageHeaderBn }}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>

@@ -106,11 +106,6 @@ class ComponentService
 
     public function componentStore($data, $sectionId, $pageType)
     {
-        if ($data['component_type'] == 'table_component') {
-            $data['editor_en'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_en']);
-            $data['editor_bn'] = str_replace('class="table table-bordered"', 'class="table table-primary offer_table"', $data['editor_bn']);
-        }
-
         if (request()->hasFile('image')) {
             $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
         }
@@ -149,6 +144,11 @@ class ComponentService
     public function componentUpdate($data, $id)
     {
         $component = $this->findOne($id);
+
+        if (request()->hasFile('image')) {
+            $data['image'] = $this->upload($data['image'], 'assetlite/images/product_details');
+            $this->deleteFile($component->image);
+        }
 
         if (isset($data['multi_item']) && !empty($data['multi_item'])) {
             $request_multi = $data['multi_item'];

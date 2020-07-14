@@ -769,6 +769,9 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('app-service/details/{type}/{id}', 'AssetLite\AppServiceProductDetailsController@productDetails')
         ->name('app_service.details.list');
 
+    Route::get('app-service/details/{type}/{productID}/create', 'AssetLite\AppServiceProductDetailsController@create')
+        ->name('app_service.details.create');
+
     Route::post('app-service/details/{type}/{id}/store', 'AssetLite\AppServiceProductDetailsController@store')
         ->name('app_service.details.store');
 
@@ -838,4 +841,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('ethics/get-file-data/{id}', 'AssetLite\EthicsController@getFileData');
     Route::get('ethics/file-delete/{id}', 'AssetLite\EthicsController@fileDelete');
 
+    // Faq
+    Route::resource('faq', 'AssetLite\AlFaqController')->except(['show', 'destroy']);
+    Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
+
+    // Media Press News Event
+    Route::resource('press-news-event', 'AssetLite\MediaPressNewsEventController')->except(['show', 'destroy']);
+    Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
 });

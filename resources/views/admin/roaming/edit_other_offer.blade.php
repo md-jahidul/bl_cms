@@ -12,7 +12,7 @@
 
     <form method="POST" action="{{ url('roaming/save-other-offer') }}" class="form" enctype="multipart/form-data">
         @csrf
-        
+
                <input type="hidden" name="offer_id" value="{{$offer->id}}">
 
         <div class="card">
@@ -85,7 +85,7 @@
                                     <label>Banner (Mobile)</label>
                                     <input type="file" class="dropify" name="banner_mobile" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-                                    
+
                                     @if($offer->banner_mobile != "")
                                     <img src="{{ config('filesystems.file_base_url') . $offer->banner_mobile }}" width="100%">
                                     @endif
@@ -94,7 +94,6 @@
                             </div>
 
                             <div class="form-group row">
-
                                <div class="col-md-4 col-xs-12">
                                     <label>Page Header (HTML)</label>
                                     <textarea class="form-control html_header" rows="7" name="html_header">{{$offer->page_header}}</textarea>
@@ -102,6 +101,15 @@
                                         <strong>Note: </strong> Title, meta, canonical and other tags
                                     </small>
                                 </div>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <label>Page Header Bangla (HTML)</label>
+                                    <textarea class="form-control html_header" rows="7" name="page_header_bn">{{$offer->page_header_bn}}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
                                 <div class="col-md-4 col-xs-12">
                                     <label>Schema Markup</label>
                                     <textarea class="form-control schema_markup" rows="7" name="schema_markup">{{$offer->schema_markup}}</textarea>
@@ -145,7 +153,7 @@
 
                             </div>
 
-                           
+
                         </div>
 
 

@@ -112,7 +112,7 @@ class BusinessPackageService {
                 $bannerMob = $this->upload($request['banner_mobile'], $directoryPath, $photoName);
             }
 
-            //save data in database 
+            //save data in database
             $packageId = $this->packageRepo->savePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request);
             $parentType = 1;
             $this->asgnFeatureRepo->assignFeature($packageId, $parentType, $request->feature);
@@ -245,7 +245,7 @@ class BusinessPackageService {
                 }
             }
 
-            //save data in database 
+            //save data in database
             $this->packageRepo->updatePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $data);
             $parentType = 1;
             $this->asgnFeatureRepo->assignFeature($data->package_id, $parentType, $data->feature);

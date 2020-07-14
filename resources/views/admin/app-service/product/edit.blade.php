@@ -118,7 +118,7 @@
                             <slot id="financial" data-offer-type="financial" class="{{ $appServiceProduct->appServiceTab->alias == 'financial' ? '' : 'd-none' }}">
                                 @include('layouts.partials.app-service.financial')
                             </slot>
-                            
+
                               <div class="col-md-6">
                                 <label></label>
                                 <div class="form-group">
@@ -147,6 +147,14 @@
                                 </small>
                             </div>
 
+                            <div class="form-group col-md-6 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
+                                <label>Page Header (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header_bn">{{$appServiceProduct->page_header_bn}}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+
                             <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Schema Markup</label>
                                 <textarea class="form-control" rows="7" name="schema_markup">{{$appServiceProduct->schema_markup}}</textarea>
@@ -155,7 +163,7 @@
                                 </small>
                             </div>
 
-                          
+
 
                             <div class="form-actions col-md-12">
                                 <div class="pull-right">
@@ -219,13 +227,13 @@ $(function () {
             },
         });
     });
-    
+
     $(".app_review, .app_rating").on("keypress keyup blur", function (event) {
         var max_chars = 10;
         if($(this).val().length > max_chars){
-           $(this).val($(this).val().substr(0, max_chars)); 
+           $(this).val($(this).val().substr(0, max_chars));
         }
-        
+
         $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
             event.preventDefault();

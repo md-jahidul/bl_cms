@@ -109,6 +109,14 @@
                                     </small>
                                 </div>
 
+                                <div class="form-group col-md-4 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
+                                    <label>Page Header Bangla (HTML)</label>
+                                    <textarea class="form-control" rows="7" name="page_header_bn">{{$appServiceTab->page_header_bn}}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
                                 <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label>Schema Markup</label>
                                     <textarea class="form-control" rows="7" name="schema_markup">{{$appServiceTab->schema_markup}}</textarea>

@@ -69,6 +69,13 @@
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>
+                                <br>
+                                <br>
+                                <label>Page Header Bangla (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header_bn">{!! $package->page_header_bn !!}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
 
 
                             </div>
@@ -115,7 +122,7 @@
                                     <input type="hidden" name="old_card_banner_web" value="{{$package->card_banner_web}}">
 
                                      <p class="text-center">
-                                        @if($package->banner_photo != "")
+                                        @if($package->card_banner_web != "")
                                         <img src="{{ config('filesystems.file_base_url') . $package->card_banner_web }}" alt="Banner Photo" width="100%" />
                                         @endif
                                     </p>
@@ -125,11 +132,10 @@
                                     <label for="Banner Photo">Card Photo (Mobile) <span class="text-danger">*</span></label>
                                     <input type="file" class="dropify_package" name="card_banner_mobile" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-
                                     <input type="hidden" name="old_card_banner_mobile" value="{{$package->card_banner_mobile}}">
 
                                      <p class="text-center">
-                                        @if($package->banner_photo != "")
+                                        @if($package->card_banner_mobile != "")
                                         <img src="{{ config('filesystems.file_base_url') . $package->card_banner_mobile }}" alt="Banner Photo" width="100%" />
                                         @endif
                                     </p>

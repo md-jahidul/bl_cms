@@ -10,6 +10,7 @@ use App\Traits\FileTrait;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AppServiceProductService
 {
@@ -55,6 +56,7 @@ class AppServiceProductService
         if (request()->hasFile('product_img_url')) {
             $data['product_img_url'] = $this->upload($data['product_img_url'], 'assetlite/images/app-service/product');
         }
+        $data['created_by'] = Auth::id();
         $this->save($data);
         return new Response('App Service Category added successfully');
     }
@@ -84,6 +86,7 @@ class AppServiceProductService
         $data['show_in_vas'] = (isset($data['show_in_vas']) ? 1 : 0);
         $data['show_ussd'] = (isset($data['show_ussd']) ? 1 : 0);
         $data['show_subscribe'] = (isset($data['show_subscribe']) ? 1 : 0);
+        $data['updated_by'] = Auth::id();
 
         $appServiceProduct->update($data);
         return Response('App Service Category updated successfully');

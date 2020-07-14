@@ -11,6 +11,7 @@ use App\Models\RoamingInfo;
 use App\Models\RoamingInfoCategory;
 use App\Models\RoamingInfoComponents;
 use App\Traits\FileTrait;
+use Illuminate\Support\Facades\Auth;
 
 class RoamingInfoRepository extends BaseRepository {
 
@@ -37,8 +38,10 @@ class RoamingInfoRepository extends BaseRepository {
 
             if ($request->info_id == "") {
                 $info = $this->model;
+                $info->created_by = Auth::id();
             } else {
                 $info = $this->model->findOrFail($request->info_id);
+                $info->updated_by = Auth::id();
             }
 
             $info->name_en = $request->name_en;
@@ -53,6 +56,7 @@ class RoamingInfoRepository extends BaseRepository {
             $info->alt_text = $request->alt_text;
             $info->url_slug = $request->url_slug;
             $info->page_header = $request->html_header;
+            $info->page_header_bn = $request->page_header_bn;
             $info->schema_markup = $request->schema_markup;
             $info->status = $request->status;
             $info->save();
@@ -280,7 +284,7 @@ class RoamingInfoRepository extends BaseRepository {
                 $bodyEn = json_decode($component->body_text_en);
                 foreach ($bodyEn->photos as $val) {
                     if ($val != "") {
-                        
+
                         $this->deleteFile($val);
                     }
                 }

@@ -15,6 +15,7 @@ use App\Traits\FileTrait;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AppServiceTabService
 {
@@ -80,6 +81,8 @@ class AppServiceTabService
                 $status = $data['banner_image_mobile'];
             }
         }
+
+        $data['updated_by'] = Auth::id();
 
         $appServiceTabs->update($data);
         return Response('App Service Tab updated successfully');

@@ -11,11 +11,12 @@ use App\Models\BusinessInternet;
 use Box\Spout\Common\Type;
 use App\Traits\FileTrait;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
+use Illuminate\Support\Facades\Auth;
 
 class BusinessInternetRepository extends BaseRepository {
 
     public $modelName = BusinessInternet::class;
-    
+
     use FileTrait;
 
     public function getInternetPackageList($request) {
@@ -121,6 +122,7 @@ class BusinessInternetRepository extends BaseRepository {
             'url_slug' => $request->url_slug,
             'schema_markup' => $request->schema_markup,
             'page_header' => $request->page_header,
+            'page_header_bn' => $request->page_header_bn,
             'tag_id' => $request->tag,
             'related_product' => $request->related_product_id!= "" ? implode(',', $request->related_product_id) : "",
         );
@@ -133,9 +135,10 @@ class BusinessInternetRepository extends BaseRepository {
         }
 
         if($request->internet_id){
-//          dd($insertdata);
+             $insertdata['updated_by'] = Auth::id();
              $this->model->where('id', $request->internet_id)->update($insertdata);
         }else{
+            $insertdata['created_by'] = Auth::id();
             return $this->model->insert($insertdata);
         }
 
@@ -269,7 +272,7 @@ class BusinessInternetRepository extends BaseRepository {
                 $this->deleteFile($package->banner_photo);
                 $package->delete();
             } else {
-                
+
                 $allPack = $this->model->get();
                 foreach($allPack as $int){
                     $this->deleteFile($int->banner_photo);
