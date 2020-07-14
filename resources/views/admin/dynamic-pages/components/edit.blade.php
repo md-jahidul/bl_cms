@@ -17,121 +17,153 @@
                         <form role="form" id="product_form" action="{{ route('other_component_update',[$pageId, $component->id]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
-                            <div class="app-content">
-                                <h3>Component Fields</h3><hr>
-                                <div class="sidebar-right">
-                                    <div class="sidebar">
-                                        <div class="sidebar-content card d-none d-lg-block">
-                                            <div class="card-body">
-                                                <div class="category-title">
-                                                    <h6><strong>Component Example Picture</strong></h6>
-                                                </div>
-                                                <hr>
-                                                <div class="row">
+                            <div class="content-body">
+                                <div class="row">
 
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="form-group col-md-4 {{ $errors->has('editor_en') ? ' error' : '' }}">
+                                        <label for="editor_en" class="required">Component Type</label>
+
+                                        <select name="component_type" class="form-control" id="component_type"
+                                                required data-validation-required-message="Please select component type">
+                                            <option value="">--Select Data Type--</option>
+                                            @foreach($componentTypes as $key => $type)
+                                                <option data-alias="{{ $key }}" value="{{ $key }}" {{ ($component->component_type == $key) ? 'selected' : '' }}>{{ $type }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('editor_en'))
+                                            <div class="help-block">{{ $errors->first('editor_en') }}</div>
+                                        @endif
                                     </div>
-                                </div>
-                                <div class="content-left">
-                                    <div class="content-wrapper">
 
-                                        <div class="content-body">
-                                            <div class="row">
+                                    <div class="col-md-8 pb-2">
+                                        <label>Component Sample Picture</label>
+                                        <img src="{{ asset("component-images/$component->component_type.png") }}"
+                                             class="img-thumbnail" id="componentImg" width="100%">
+                                    </div>
 
-                                                <div class="form-group col-md-12 {{ $errors->has('editor_en') ? ' error' : '' }}">
-                                                    <label for="editor_en" class="required">Component Type</label>
+                                    {{--Title Text and Image Component--}}
+                                    <slot id="title_with_text_and_right_image" data-offer-type="title_with_text_and_right_image"
+                                          class="{{ ($component->component_type ==  "title_with_text_and_right_image"  ) ? '' : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.title')
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                        @include('layouts.partials.product-details.component.common-field.single-image')
+                                    </slot>
 
-                                                    <select name="component_type" class="form-control" id="component_type"
-                                                            required data-validation-required-message="Please select component type">
-                                                        <option value="">--Select Data Type--</option>
-                                                        @foreach($componentTypes as $key => $type)
-                                                            <option data-alias="{{ $key }}" value="{{ $key }}" {{ ($component->component_type == $key) ? 'selected' : '' }}>{{ $type }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    <div class="help-block"></div>
-                                                    @if ($errors->has('editor_en'))
-                                                        <div class="help-block">{{ $errors->first('editor_en') }}</div>
-                                                    @endif
-                                                </div>
+                                    {{--Video Component--}}
+                                    <slot id="title_with_video_and_text" data-offer-type="title_with_video_and_text"
+                                          class="{{ ($component->component_type ==  "title_with_video_and_text"  ) ? '' : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.extra-title',
+                                                [
+                                                    'title_en' => "Video Title EN",
+                                                    'title_bn' => "Video Title BN",
+                                                ])
+                                        @include('layouts.partials.product-details.component.common-field.title')
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                        @include('layouts.partials.product-details.component.common-field.video')
+                                    </slot>
 
+                                    {{--Table Component--}}
+                                    <slot id="table_component" data-offer-type="table_component" class="{{ ($component->component_type ==  "table_component"  ) ? '' : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                    </slot>
 
+                                    {{--Bullet Text--}}
+                                    <slot id="bullet_text" data-offer-type="large_title_with_text" class="{{ ($component->component_type ==  "bullet_text"  ) ? '' : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.title')
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                    </slot>
 
-                                                {{--Bullet Text--}}
-                                                <slot id="bullet_text" data-offer-type="large_title_with_text" class="{{ ($component->component_type ==  "bullet_text"  ) ? '' : "d-none" }}">
-                                                    @include('layouts.partials.product-details.component.common-field.title')
-                                                    @include('layouts.partials.product-details.component.common-field.text-editor')
-                                                </slot>
+                                    {{--Accordion Text--}}
+                                    <slot id="accordion_text" data-offer-type="accordion_text" class="{{ ($component->component_type ==  "accordion_text"  ) ? '' : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.title')
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                    </slot>
 
-                                                {{--Accordion Text--}}
-                                                <slot id="accordion_text" data-offer-type="accordion_text" class="{{ ($component->component_type ==  "accordion_text"  ) ? '' : "d-none" }}">
-                                                    @include('layouts.partials.product-details.component.common-field.title')
-                                                    @include('layouts.partials.product-details.component.common-field.text-editor')
-                                                </slot>
-
-                                                {{--Multiple Image--}}
-                                                <slot id="multiple_image" data-offer-type="multiple_image" class="{{ ($component->component_type ==  "multiple_image"  ) ? '' : "d-none" }}">
-                                                    @include('layouts.partials.product-details.component.common-field.extra-title')
-                                                    @include('layouts.partials.product-details.component.common-field.title')
-                                                    @php( $i = 0 )
-                                                    @if(isset($multipleImage))
-                                                            @foreach($multipleImage as $key => $image)
-                                                                @php($i++)
-                                                            <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$i}}">
-                                                            <div class="col-md-6 col-xs-6 option-{{ $i }} options-count">
-                                                                <div class="form-group">
-                                                                    <label for="message">Multiple Image</label>
-                                                                    <input type="file" class="dropify" name="multi_item[image_url-{{ $i }}]"
-                                                                           data-default-file="{{ isset($image['image_url']) ? config('filesystems.file_base_url') . $image['image_url'] : '' }}"
-                                                                           data-height="80"/>
-                                                                    <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group col-md-5 option-{{ $i }}">
-                                                                <label for="alt_text">Alt Text</label>
-                                                                <input type="text" name="multi_item[alt_text-{{ $i }}]" value="{{ $image['alt_text'] }}" class="form-control">
-                                                            </div>
-
-                                                            @if($i == 1)
-                                                                <div class="form-group col-md-1">
-                                                                    <label for="alt_text"></label>
-                                                                    <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>
-                                                                </div>
-{{--                                                            @else--}}
-{{--                                                                <div class="form-group col-md-1 option-{{ $i }}">--}}
-{{--                                                                    <label for="alt_text"></label>--}}
-{{--                                                                    <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-{{ $i }}" ><i data-id="option-{{ $i }}" class="la la-trash"></i></button>--}}
-{{--                                                                </div>--}}
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-                                                </slot>
-
-                                                <div class="col-md-12 mt-2">
+                                    {{--Multiple Image--}}
+                                    <slot id="multiple_image" data-offer-type="multiple_image" class="{{ ($component->component_type ==  "multiple_image"  ) ? '' : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.extra-title')
+                                        @include('layouts.partials.product-details.component.common-field.title')
+                                        @php( $i = 0 )
+                                        @if(isset($multipleImage))
+                                            @foreach($multipleImage as $key => $image)
+                                                @php($i++)
+                                                <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$i}}">
+                                                <div class="col-md-6 col-xs-6 option-{{ $i }} options-count">
                                                     <div class="form-group">
-                                                        <label for="title" class="mr-1">Status:</label>
-                                                        <input type="radio" name="status" value="1" id="active" {{ $component->status == 1 ? 'checked' : '' }}>
-                                                        <label for="active" class="mr-1">Active</label>
-
-                                                        <input type="radio" name="status" value="0" id="inactive" {{ $component->status == 0 ? 'checked' : '' }}>
-                                                        <label for="inactive">Inactive</label>
+                                                        <label for="message">Multiple Image</label>
+                                                        <input type="file" class="dropify" name="multi_item[image_url-{{ $i }}]"
+                                                               data-default-file="{{ isset($image['image_url']) ? config('filesystems.file_base_url') . $image['image_url'] : '' }}"
+                                                               data-height="80"/>
+                                                        <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                     </div>
                                                 </div>
-
-                                                <div class="form-actions col-md-12">
-                                                    <div class="pull-right">
-                                                        <button type="submit" id="save" class="btn btn-primary"><i
-                                                                class="la la-check-square-o"></i> Update
-                                                        </button>
-                                                    </div>
+                                                <div class="form-group col-md-5 option-{{ $i }}">
+                                                    <label for="alt_text">Alt Text</label>
+                                                    <input type="text" name="multi_item[alt_text-{{ $i }}]" value="{{ $image['alt_text'] }}" class="form-control">
                                                 </div>
 
-                                            </div>
+                                                @if($i == 1)
+                                                    <div class="form-group col-md-1">
+                                                        <label for="alt_text"></label>
+                                                        <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>
+                                                    </div>
+                                                    {{--                                                            @else--}}
+                                                    {{--                                                                <div class="form-group col-md-1 option-{{ $i }}">--}}
+                                                    {{--                                                                    <label for="alt_text"></label>--}}
+                                                    {{--                                                                    <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-{{ $i }}" ><i data-id="option-{{ $i }}" class="la la-trash"></i></button>--}}
+                                                    {{--                                                                </div>--}}
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </slot>
+
+                                    <div class="col-md-12 mt-2">
+                                        <div class="form-group">
+                                            <label for="title" class="mr-1">Status:</label>
+                                            <input type="radio" name="status" value="1" id="active" {{ $component->status == 1 ? 'checked' : '' }}>
+                                            <label for="active" class="mr-1">Active</label>
+
+                                            <input type="radio" name="status" value="0" id="inactive" {{ $component->status == 0 ? 'checked' : '' }}>
+                                            <label for="inactive">Inactive</label>
                                         </div>
                                     </div>
+
+                                    <div class="form-actions col-md-12">
+                                        <div class="pull-right">
+                                            <button type="submit" id="save" class="btn btn-primary"><i
+                                                    class="la la-check-square-o"></i> Update
+                                            </button>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
+
+{{--                            <div class="app-content">--}}
+{{--                                <h3>Component Fields</h3><hr>--}}
+{{--                                <div class="sidebar-right">--}}
+{{--                                    <div class="sidebar">--}}
+{{--                                        <div class="sidebar-content card d-none d-lg-block">--}}
+{{--                                            <div class="card-body">--}}
+{{--                                                <div class="category-title">--}}
+{{--                                                    <h6><strong>Component Example Picture</strong></h6>--}}
+{{--                                                </div>--}}
+{{--                                                <hr>--}}
+{{--                                                <div class="row">--}}
+
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="content-left">--}}
+{{--                                    <div class="content-wrapper">--}}
+
+
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </form>
                     </div>
                 </div>
@@ -171,6 +203,11 @@
 
     <script>
         $(function () {
+            $('#component_type').on('change', function () {
+                var componentType = this.value + ".png"
+                var fullUrl = "{{ asset('component-images') }}/" + componentType;
+                $("#componentImg").attr('src', fullUrl)
+            })
 
             function dropify(){
                 $('.dropify').dropify({
