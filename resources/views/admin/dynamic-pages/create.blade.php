@@ -24,6 +24,8 @@
                             $pageId = "";
                             $nameEn = "";
                             $nameBn = "";
+                            $pageContentEn = "";
+                            $pageContentBn = "";
                             $urlSlug = "";
                             $desktopImg = null;
                             $mobileImg = null;
@@ -36,6 +38,8 @@
                                 $pageId = $page->id;
                                 $nameEn = $page->page_name_en;
                                 $nameBn = $page->page_name_bn;
+                                $pageContentEn = $page->page_content_en;
+                                $pageContentBn = $page->page_content_bn;
                                 $urlSlug = $page->url_slug;
                                 $desktopImg = $page->banner_image_url;
                                 $mobileImg = $page->banner_mobile_view;
@@ -114,6 +118,28 @@
                                     <strong>i.e:</strong> app-and-service-banner (no spaces)<br>
                                     <strong>Note: </strong> Don't need MIME type like jpg,png
                                 </small>
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('page_content_en') ? ' error' : '' }}">
+                                <label for="page_content_en">Description (English)</label>
+                                <textarea type="text" name="page_content_en" id="page_content_en" rows="5" class="form-control"
+                                          placeholder="Enter page description in English"
+                                >{{ $pageContentEn }}</textarea>
+                                <div class="help-block"></div>
+                                @if ($errors->has('page_content_en'))
+                                    <div class="help-block">{{ $errors->first('page_content_en') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6 {{ $errors->has('page_content_bn') ? ' error' : '' }}">
+                                <label for="page_content_bn">Description (Bangla)</label>
+                                <textarea type="text" name="page_content_bn" rows="5" id="page_content_bn" class="form-control"
+                                          placeholder="Enter page description in Bangla"
+                                >{{ $pageContentBn }}</textarea>
+                                <div class="help-block"></div>
+                                @if ($errors->has('page_content_bn'))
+                                    <div class="help-block">{{ $errors->first('page_content_bn') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
