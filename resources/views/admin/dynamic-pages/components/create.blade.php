@@ -14,9 +14,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <div class="card-body card-dashboard">
-                        <form role="form" id="product_form" action="{{ route('other_component_store', [$pageId]) }}" method="POST" novalidate enctype="multipart/form-data">
-
+                    <form role="form" id="product_form" action="{{ route('other_component_store', [$pageId]) }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="content-body">
                                 <div class="row">
 
@@ -45,10 +43,24 @@
                                         @include('layouts.partials.product-details.component.common-field.text-editor')
                                     </slot>
 
-                                    {{--Text Component--}}
-{{--                                    <slot id="text_component" data-offer-type="text_component" class="d-none">--}}
-{{--                                        @include('layouts.partials.product-details.component.common-field.text-area')--}}
-{{--                                    </slot>--}}
+                                    {{--Title Text and Image Component--}}
+                                    <slot id="title_with_text_and_right_image" data-offer-type="title_with_text_and_right_image" class="d-none">
+                                        @include('layouts.partials.product-details.component.common-field.title')
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                        @include('layouts.partials.product-details.component.common-field.single-image')
+                                    </slot>
+
+                                    {{--Video Component--}}
+                                    <slot id="title_with_video_and_text" data-offer-type="title_with_video_and_text" class="d-none">
+                                        @include('layouts.partials.product-details.component.common-field.extra-title',
+                                                [
+                                                    'title_en' => "Video Title EN",
+                                                    'title_bn' => "Video Title BN",
+                                                ])
+                                        @include('layouts.partials.product-details.component.common-field.title')
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                        @include('layouts.partials.product-details.component.common-field.video')
+                                    </slot>
 
                                     {{--Bullet Text--}}
                                     <slot id="bullet_text" data-offer-type="large_title_with_text" class="d-none">
@@ -92,7 +104,6 @@
                             </div>
                             @csrf
                         </form>
-                    </div>
                 </div>
             </div>
         </div>
