@@ -1,13 +1,14 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
+use App\Http\Controllers\Controller;
 use App\Services\StoreSubCategoryService;
 use Illuminate\Http\Request;
 
 class StoreSubCategoryController extends Controller
 {
     /**
-     * @var NotificationCategoryService
+     * @var StoreSubCategoryService
      */
     private $storeSubCategoryService;
 

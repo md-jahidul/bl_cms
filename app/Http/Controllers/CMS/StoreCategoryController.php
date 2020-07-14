@@ -1,7 +1,7 @@
 <?php
+namespace App\Http\Controllers\CMS;
 
-namespace App\Http\Controllers;
-
+use App\Http\Controllers\Controller;
 use App\Services\StoreCategoryService;
 use Illuminate\Http\Request;
 

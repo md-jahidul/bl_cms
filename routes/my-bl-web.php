@@ -160,6 +160,22 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
         'CMS\PushNotificationController@sendNotificationToAll'
     )->name('notification.send-all');
 
+
+
+    // Store category
+    route::resource('store-category', 'CMS\StoreCategoryController');
+    Route::get('store-category/destroy/{id}', 'CMS\StoreCategoryController@destroy');
+
+    // Store sub-category
+    route::resource('store-sub-category', 'CMS\StoreSubCategoryController');
+    Route::get('store-sub-category/destroy/{id}', 'CMS\StoreSubCategoryController@destroy');
+
+    // Store
+    route::resource('store', 'CMS\StoreController');
+    Route::get('store/destroy/{id}', 'CMS\StoreController@destroy');
+
+
+
     // terms and conditions
 
     Route::get('terms-conditions', 'CMS\TermsAndConditionsController@show')->name('terms-conditions.show');
@@ -380,4 +396,5 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
 
     Route::get('mybl/learn-priyojon', 'CMS\LearnPriyojonContentController@show')->name('learn-priyojon.show');
     Route::post('mybl/learn-priyojon', 'CMS\LearnPriyojonContentController@store')->name('learn-priyojon.store');
+
 });
