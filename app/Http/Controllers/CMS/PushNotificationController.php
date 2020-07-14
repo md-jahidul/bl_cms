@@ -159,7 +159,7 @@ class PushNotificationController extends Controller
                 "sending_from" => "cms",
                 "send_to_type" => "INDIVIDUALS" ,
                 "recipients" => $user_phone,
-                "is_interactive" => "Yes",
+                "is_interactive" => "NO",
                 "data" => [
                     "cid" => "1",
                     "url" => "test.com",
@@ -175,7 +175,7 @@ class PushNotificationController extends Controller
                 'category_slug' => $request->input('category_slug'),
                 'category_name' => $request->input('category_name'),
                 "send_to_type" => "ALL",
-                "is_interactive" => "Yes",
+                "is_interactive" => "NO",
                 "data" => [
                     "cid" => "1",
                     "url" => "test.com",
