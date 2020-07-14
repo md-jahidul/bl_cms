@@ -1,19 +1,19 @@
 @extends('layouts.admin')
-@section('title', 'Notification Category')
-@section('card_name', 'Notification Category')
+@section('title', 'Store Category')
+@section('card_name', 'Store Category')
 @section('breadcrumb')
 
-    @if(isset($notificationCategory))
-        <li class="breadcrumb-item active">Update Notification Category</li>
+    @if(isset($storeCategory))
+        <li class="breadcrumb-item active">Update Store Category</li>
     @else
-        <li class="breadcrumb-item active">Create Notification Category</li>
+        <li class="breadcrumb-item active">Create Store Category</li>
     @endif
 
 @endsection
 
 @section('action')
-    <a href="{{route('notificationCategory.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Notification Category List
+    <a href="{{route('store-category.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Store Category List
     </a>
 @endsection
 
@@ -21,10 +21,10 @@
     <div class="card mb-0 px-1" style="box-shadow:none;">
         <div class="card-content">
             <div class="card-body">
-                <form class="form" method="POST" action="@if(isset($notificationCategory)) {{route('notificationCategory.update',$notificationCategory->id)}}
-                @else {{route('notificationCategory.store')}} @endif" novalidate >
+                <form class="form" method="POST" action="@if(isset($storeCategory)) {{route('notificationCategory.update',$storeCategory->id)}}
+                @else {{route('store-category.store')}} @endif" novalidate >
                     @csrf
-                    @if(isset($notificationCategory))
+                    @if(isset($storeCategory))
                         @method('put')
                     @else
                         @method('post')
@@ -37,9 +37,9 @@
                                 <input type="text"
                                        required
 
-                                       value="@if(isset($notificationCategory)) {{$notificationCategory->name}} @elseif(old("name")) {{old("name")}} @endif" name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Notification Category..">
-                                @if(isset($notificationCategory))
-                                    <input type="hidden" name="id" value="{{$notificationCategory->id}}">
+                                       value="@if(isset($storeCategory)) {{$storeCategory->name}} @elseif(old("name")) {{old("name")}} @endif" name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Store Category..">
+                                @if(isset($storeCategory))
+                                    <input type="hidden" name="id" value="{{$storeCategory->id}}">
                                 @endif
                                 <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
 
@@ -50,8 +50,8 @@
 
                         <div class="col-5 mb-2" >
 
-                            <button type="submit" id="submitForm" style="width:100%" class="btn @if(isset($notificationCategory)) btn-success @else btn-info @endif ">
-                                @if(isset($notificationCategory)) Update Notification Category @else Create Notification Category @endif
+                            <button type="submit" id="submitForm" style="width:100%" class="btn @if(isset($storeCategory)) btn-success @else btn-info @endif ">
+                                @if(isset($storeCategory)) Update Store Category @else Create Store Category @endif
                             </button>
                         </div>
 
