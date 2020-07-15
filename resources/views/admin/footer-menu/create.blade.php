@@ -24,15 +24,16 @@
                         <form role="form" action="{{ route('footer-menu.store') }}" method="POST" novalidate>
                             <div class="row">
                                 <input type="hidden" name="parent_id" value="{{ $parent_id }}">
-                                <div class="form-group col-md-12 {{ $errors->has('code') ? ' error' : '' }}">
-                                    <label for="code" class="required">Title</label>
-                                    <input type="text" name="code"  class="form-control" placeholder="Enter code" readonly
-                                           value="DynamicPage" required data-validation-required-message="Enter footer menu title">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('code'))
-                                        <div class="help-block">  {{ $errors->first('code') }}</div>
-                                    @endif
-                                </div>
+                                <input type="hidden" name="code" value="DynamicPage">
+{{--                                <div class="form-group col-md-12 {{ $errors->has('code') ? ' error' : '' }}">--}}
+{{--                                    <label for="code" class="required">Title</label>--}}
+{{--                                    <input type="text" name="code"  class="form-control" placeholder="Enter code" readonly--}}
+{{--                                           value="DynamicPage" required data-validation-required-message="Enter footer menu title">--}}
+{{--                                    <div class="help-block"></div>--}}
+{{--                                    @if ($errors->has('code'))--}}
+{{--                                        <div class="help-block">  {{ $errors->first('code') }}</div>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
                                 <div class="form-group col-md-6 {{ $errors->has('en_label_text') ? ' error' : '' }}">
                                     <label for="title" class="required">English Label</label>
                                     <input type="text" name="en_label_text"  class="form-control" placeholder="Enter english label"
@@ -70,7 +71,7 @@
                                     </div>
                                 </div> -->
 
-                                <div class="form-group col-md-12 {{ $errors->has('url') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">
                                     <label for="url" class="required">URL</label>
                                     <input type="text" name="url"  class="form-control" placeholder="Enter URL"
                                            value="{{ old("url") ? old("url") : '' }}" required data-validation-required-message="Enter header menu url">
@@ -81,6 +82,25 @@
                                     @endif
                                 </div>
 
+                                <div class="col-md-2 mt-1">
+                                    <label></label>
+                                    <div class="form-group">
+                                        <label for="is_dynamic_page" class="mr-1">Is Dynamic Page:</label>
+                                        <input type="checkbox" name="is_dynamic_page" value="1" id="is_dynamic_page">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 d-none" id="dynamic_page_dropdown">
+                                    <label>Page Select</label>
+                                    <div class="form-group">
+                                        <select class="form-control" name="dynamic_page_slug">
+                                            <option value="">--Select Page--</option>
+                                            @foreach($dynamicPages as $dynamicPage)
+                                                <option value="{{ $dynamicPage->url_slug }}">{{ $dynamicPage->page_name_en }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-6 float-left">
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
@@ -120,7 +140,18 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
-
+<script>
+    $(function () {
+        var dynamicPage = $('#dynamic_page_dropdown');
+        $('#is_dynamic_page').click(function () {
+            if($(this).prop("checked") == true){
+                dynamicPage.removeClass('d-none');
+            }else{
+                dynamicPage.addClass('d-none')
+            }
+        })
+    })
+</script>
 @endpush
 
 
