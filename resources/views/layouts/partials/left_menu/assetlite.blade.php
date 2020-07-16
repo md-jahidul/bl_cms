@@ -556,11 +556,22 @@
                 </a>
             </li>
 
-            <li class="{{ is_active_url('/press-news-event') }} nav-item">
-                <a href="{{ url('/press-news-event') }}"><i class="la la-futbol-o"></i>
-                    <span class="menu-title" data-i18n="nav.templates.main">Media</span>
-                </a>
+            <li class="nav-item"><a href="#"><i class="la la-lemon-o"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Media</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('/press-news-event') }} nav-item">
+                        <a href="{{ url('/press-news-event') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Press News Event</span>
+                        </a>
+                    </li>
+                    <li class="{{ is_active_url('/tvc-video') }} nav-item">
+                        <a href="{{ url('/tvc-video') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">TVC Video</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
+
         </ul>
     </li>
 

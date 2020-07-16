@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title_en', 'Faq Create')
-@section('card_name', 'Faq Create')
+@section('title_en', 'Press News Event Create')
+@section('card_name', 'Press News Event Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ url('faq') }}">Faq Categories List</a></li>
-    <li class="breadcrumb-item active"> Faq Create</li>
+    <li class="breadcrumb-item active"><a href="{{ url('press-news-event') }}">Press News Event List</a></li>
+    <li class="breadcrumb-item active"> Press News Event Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('faq') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('press-news-event') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -14,12 +14,12 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ url('faq') }}" method="POST" novalidate>
+                        <form role="form" action="{{ route('press-news-event.store') }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title English</label>
-                                    <input type="text" name="title_en"  class="form-control" placeholder="Enter faq name"
-                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Enter faq title_en">
+                                    <input type="text" name="title_en"  class="form-control" placeholder="Enter title in English"
+                                           value="{{ old("title_en") ? old("title_en") : '' }}" required data-validation-required-message="Enter title in English">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_en'))
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -28,8 +28,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                     <label for="title_bn" class="required">Title Bangla</label>
-                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter faq name"
-                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Enter faq title_bn">
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title in Bangla"
+                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Enter title in Bangla">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
@@ -38,8 +38,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('type') ? ' error' : '' }}">
                                     <label for="type" class="required">Type</label>
-                                    <select class="form-control" name="offer_category_id" id="offer_type"
-                                            required data-validation-required-message="Please select offer">
+                                    <select class="form-control" name="type" id="type"
+                                            required data-validation-required-message="Please select type">
                                         <option value="">---Select Type---</option>
                                         <option value="press_release">Press Release</option>
                                         <option value="news_events">News and Events</option>
@@ -52,19 +52,41 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('date') ? ' error' : '' }}">
                                     <label for="date" class="required">Date</label>
-                                    <input type="text" id="date" name="date" class="form-control" placeholder="DD-MM-YYYY"
+                                    <input type="text" id="date" name="date" class="form-control" placeholder="YYYY-MM-DD"
                                            value="{{ old("date") ? old("date") : '' }}"
-                                           required data-validation-required-message="Enter faq name in bangla">
+                                           required data-validation-required-message="Enter date">
                                     <div class="help-block"></div>
                                     @if ($errors->has('date'))
                                         <div class="help-block">  {{ $errors->first('date') }}</div>
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                    <label for="image_url" class="required">Image</label>
+                                    <input type="file" name="image_url" class="form-control dropify" data-height="90" placeholder="DD-MM-YYYY"
+                                           value="{{ old("image_url") ? old("image_url") : '' }}"
+                                           required data-validation-required-message="Enter image_url">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('image_url'))
+                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
+                                    <label for="alt_text_en" class="">Alt Text</label>
+                                    <input type="text" id="alt_text_en" name="alt_text_en" class="form-control" placeholder="Enter alt text"
+                                           value="{{ old("alt_text_en") ? old("alt_text_en") : '' }}"
+                                           required data-validation-required-message="Enter alt text">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('alt_text_en'))
+                                        <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('short_details_en') ? ' error' : '' }}">
                                     <label for="short_details_en" class="required">Short Description En</label>
-                                    <input type="text" name="short_details_en"  class="form-control" placeholder="Enter faq name"
-                                           value="{{ old("short_details_en") ? old("short_details_en") : '' }}" required data-validation-required-message="Enter faq short_details_en">
+                                    <textarea type="text" name="short_details_en"  class="form-control" placeholder="Enter short description in English" required rows="3"
+                                              data-validation-required-message="Enter short description in English">{{ old("short_details_en") ? old("short_details_en") : '' }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('short_details_en'))
                                         <div class="help-block">  {{ $errors->first('short_details_en') }}</div>
@@ -73,8 +95,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('short_details_bn') ? ' error' : '' }}">
                                     <label for="short_details_bn" class="required">Short Description BN</label>
-                                    <input type="text" name="short_details_bn"  class="form-control" placeholder="Enter faq name"
-                                           value="{{ old("short_details_bn") ? old("short_details_bn") : '' }}" required data-validation-required-message="Enter faq short_details_bn">
+                                    <textarea type="text" name="short_details_bn"  class="form-control" placeholder="Enter short description in Bangla" required rows="3"
+                                              data-validation-required-message="Enter short description in Bangla">{{ old("short_details_bn") ? old("short_details_bn") : '' }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('short_details_bn'))
                                         <div class="help-block">  {{ $errors->first('short_details_bn') }}</div>
@@ -83,8 +105,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('long_details_bn') ? ' error' : '' }}">
                                     <label for="long_details_bn" class="required">Long Description En</label>
-                                    <input type="text" name="long_details_bn"  class="form-control" placeholder="Enter faq name"
-                                           value="{{ old("long_details_bn") ? old("long_details_bn") : '' }}" required data-validation-required-message="Enter faq long_details_bn">
+                                    <textarea type="text" name="long_details_en" class="form-control summernote_editor" placeholder="Enter long description in English" required
+                                              data-validation-required-message="Enter long description in English">{{ old("long_details_bn") ? old("long_details_bn") : '' }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('long_details_bn'))
                                         <div class="help-block">  {{ $errors->first('long_details_bn') }}</div>
@@ -93,8 +115,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('long_details_bn') ? ' error' : '' }}">
                                     <label for="long_details_bn" class="required">Long Description BN</label>
-                                    <input type="text" name="long_details_bn"  class="form-control" placeholder="Enter faq name"
-                                           value="{{ old("long_details_bn") ? old("long_details_bn") : '' }}" required data-validation-required-message="Enter faq long_details_bn">
+                                    <textarea type="text" name="long_details_bn"  class="form-control summernote_editor" placeholder="Enter long description in Bangla" required
+                                              data-validation-required-message="Enter long description in Bangla">{{ old("long_details_bn") ? old("long_details_bn") : '' }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('long_details_bn'))
                                         <div class="help-block">  {{ $errors->first('long_details_bn') }}</div>
@@ -122,18 +144,28 @@
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" href="{{ asset('theme/vendors/js/pickers/dateTime/css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript">
         $(function () {
+            $('.dropify').dropify({
+                messages: {
+                    'default': 'Browse for an Image File to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct file format'
+                }
+            });
+
             var date = new Date();
             date.setDate(date.getDate());
             $('#date').datetimepicker({
-                format : 'DD-MM-YYYY',
+                format : 'YYYY-MM-DD',
                 showClose: true,
-
             });
         });
     </script>

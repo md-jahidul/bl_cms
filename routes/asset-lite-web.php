@@ -837,5 +837,5 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     // Media Press News Event
     Route::resource('press-news-event', 'AssetLite\MediaPressNewsEventController')->except(['show', 'destroy']);
-    Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
+    Route::get('press-news-event/destroy/{id}', 'AssetLite\MediaPressNewsEventController@destroy');
 });

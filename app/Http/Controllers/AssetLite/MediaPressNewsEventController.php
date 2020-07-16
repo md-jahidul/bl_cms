@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Services\AlFaqService;
+use App\Services\MediaPressNewsEventService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -21,11 +23,11 @@ class MediaPressNewsEventController extends Controller
 
     /**
      * RolesController constructor.
-     * @param AlFaqService $faq
+     * @param MediaPressNewsEventService $mediaPressNewsEventService
      */
-    public function __construct(AlFaqService $faq)
+    public function __construct(MediaPressNewsEventService $mediaPressNewsEventService)
     {
-        $this->faq = $faq;
+        $this->mediaPNE = $mediaPressNewsEventService;
     }
 
 
@@ -54,20 +56,20 @@ class MediaPressNewsEventController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Application|RedirectResponse|Redirector
      */
     public function store(Request $request)
     {
-        dd($request);
-        $response = $this->mediaPNE->storeAlFaq($request->all());
-        return redirect();
+        $response = $this->mediaPNE->storePNE($request->all());
+        Session::flash('success', $response->getContent());
+        return redirect('press-news-event');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -82,8 +84,8 @@ class MediaPressNewsEventController extends Controller
      */
     public function edit($id)
     {
-        $faq = $this->faq->findOne($id);
-        return view('admin.al-faq.edit', compact('faq'));
+        $pressNewsEvent = $this->mediaPNE->findOne($id);
+        return view('admin.media.edit_press_news_event', compact('pressNewsEvent'));
     }
 
     /**
@@ -95,10 +97,9 @@ class MediaPressNewsEventController extends Controller
      */
     public function update(Request $request, $id)
     {
-//        dd($request->all());
-        $response = $this->faq->updateFaq($request->all(), $id);
+        $response = $this->mediaPNE->updatePNE($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect('faq');
+        return redirect('press-news-event');
     }
 
     /**
@@ -109,7 +110,7 @@ class MediaPressNewsEventController extends Controller
      */
     public function destroy($id)
     {
-        $this->faq->deleteFaq($id);
-        return url('faq');
+        $this->mediaPNE->deletePNE($id);
+        return url('press-news-event');
     }
 }

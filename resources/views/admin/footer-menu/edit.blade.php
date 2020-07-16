@@ -53,7 +53,6 @@
                                     @endif
                                 </div>
 
-
                                 <!-- <div class="form-group col-md-12 {{ $errors->has('url') ? ' error' : '' }}">
                                     <label for="url" class="required">URL</label>
                                     <input type="text" name="url"  class="form-control" placeholder="Enter URL"
