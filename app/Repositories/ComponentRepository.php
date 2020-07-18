@@ -61,7 +61,7 @@ class ComponentRepository extends BaseRepository
     {
         return $this->model->where('section_details_id', $section_id)
             ->where('page_type', $pageType)
-            ->orderBy('component_order', 'ASC')
+//            ->orderBy('component_order', 'ASC')
             ->get();
     }
 

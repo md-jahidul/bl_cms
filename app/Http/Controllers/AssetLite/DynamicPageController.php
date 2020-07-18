@@ -39,12 +39,13 @@ class DynamicPageController extends Controller
 
     protected $componentTypes = [
 //        'large_title_with_text' => 'Large Title With Text',
-//        'large_title_text_button' => 'Large Title With Text And Button',
 //        'medium_title_with_text' => 'Medium Title With Text',
 //        'small_title_with_text' => 'Small Title With Text',
 //        'text_and_button' => 'Text And Button',
 //        'text_component' => 'Text Component',
 //        'features_component' => 'Features Component',
+        'title_with_text_and_right_image' => 'Title with text and right Image',
+        'title_with_video_and_text' => 'Title with Video and text',
         'table_component' => 'Table Component',
         'bullet_text' => 'Bullet Text',
         'accordion_text' => 'Accordion Text',

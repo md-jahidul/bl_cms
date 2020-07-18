@@ -548,6 +548,19 @@
                         class="la la-futbol-o"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Faq</span></a>
             </li>
+
+            <li class="{{ is_active_url('/ethics-compliance') }} nav-item">
+                <a href="{{ url('ethics-compliance') }}">
+                    <i class="la la-caret-right"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Ethics & Compliance</span>
+                </a>
+            </li>
+
+            <li class="{{ is_active_url('/press-news-event') }} nav-item">
+                <a href="{{ url('/press-news-event') }}"><i class="la la-futbol-o"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Media</span>
+                </a>
+            </li>
         </ul>
     </li>
 
