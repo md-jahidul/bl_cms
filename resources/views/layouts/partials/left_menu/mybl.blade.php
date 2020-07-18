@@ -116,11 +116,12 @@
                         <i class="la la-server"></i>Category List
                     </a>
                 </li>
-               {{-- <li class="{{ is_active_url('storeSubCategory') }}{{ is_active_url('storeSubCategory/create') }}">
+
+                <li class="{{ is_active_url('storeSubCategory') }}{{ is_active_url('storeSubCategory/create') }}">
                     <a class="menu-item" href="{{ route('storeSubCategory.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Subcategory List</a>
-                </li>--}}
+                </li>
 
 
                 <li class="{{ is_active_url('myblStore') }}{{ is_active_url('myblStore/create') }}">
@@ -129,11 +130,6 @@
                         <i class="la la-comment-o"></i>Store</a>
                 </li>
 
-                {{--<li class="{{ is_active_url('notification-report')}}">
-                    <a class="menu-item" href="{{ url('notification-report') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-comment-o"></i>Store</a>
-                </li>--}}
 
             </ul>
         </li>

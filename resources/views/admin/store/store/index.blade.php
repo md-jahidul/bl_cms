@@ -63,7 +63,6 @@
                                                     class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
 
-
                                     </div>
                                 </td>
                             </tr>

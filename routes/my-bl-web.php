@@ -161,28 +161,24 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     )->name('notification.send-all');
 
 
-
     // Store category
     route::resource('storeCategory', 'CMS\StoreCategoryController');
     Route::get('storeCategory/destroy/{id}', 'CMS\StoreCategoryController@destroy');
 
     // Store sub-category
-    /*route::resource('storeSubCategory', 'CMS\StoreSubCategoryController');
-    Route::get('storeSubCategory/destroy/{id}', 'CMS\StoreSubCategoryController@destroy');*/
+    route::resource('myblStoreSubCategory', 'CMS\StoreSubCategoryController');
+    Route::get('myblStoreSubCategory/destroy/{id}', 'CMS\StoreSubCategoryController@destroy');
 
     // Store
     route::resource('myblStore', 'CMS\StoreController');
     Route::get('myblStore/destroy/{id}', 'CMS\StoreController@destroy');
 
 
-
     // terms and conditions
-
     Route::get('terms-conditions', 'CMS\TermsAndConditionsController@show')->name('terms-conditions.show');
     Route::post('terms-conditions', 'CMS\TermsAndConditionsController@store')->name('terms-conditions.store');
 
     // privacy and policy
-
     Route::get('privacy-policy', 'CMS\PrivacyPolicyController@show')->name('privacy-policy.show');
     Route::post('privacy-policy', 'CMS\PrivacyPolicyController@store')->name('privacy-policy.store');
 
