@@ -1,13 +1,13 @@
 @extends('layouts.admin')
-@section('title', 'Notification Category')
-@section('card_name', 'Notification Category')
+@section('title', 'Store Sub Category')
+@section('card_name', 'Store Sub Category')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Notification Category List</li>
+    <li class="breadcrumb-item active">Store Sub Category List</li>
 @endsection
 
 @section('action')
-    <a href="{{route('notificationCategory.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Create Notification Category
+    <a href="{{route('subStore.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Create Store Sub Category
     </a>
 @endsection
 
@@ -20,25 +20,28 @@
                     <thead>
                     <tr>
                         <th width="10%">ID</th>
-                        <th width="60%">Tittle</th>
-                        <th width="30%">Action</th>
+                        <th width="30%">Tittle</th>
+                        <th width="30%">Category</th>
+                        <th width="20%">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($notificationCategories as $notificationCategory)
+                        @foreach ($storeSubCategories as $storeSubCategory)
                             <tr>
-                                <td>{{$notificationCategory->id}}</td>
-                                <td>{{$notificationCategory->name}}<span class="badge badge-default badge-pill bg-primary float-right">{{$notificationCategory->notifications->count()}}</span></td>
+                                <td>{{$storeSubCategory->id}}</td>
+                                <td>{{$storeSubCategory->name}}</td>
+                                <td>{{$storeSubCategory->StoreCategory->name}}</td>
+
                                 <td>
                                     <div class="row">
 
                                         <div class="col-md-2 m-1">
-                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notificationCategory.edit',$notificationCategory->id)}}" class="btn-pancil btn btn-outline-success" >
+                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('subStore.edit',$storeSubCategory->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
                                         <div class="col-md-2 m-1">
-                                            <button data-id="{{$notificationCategory->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                            <button data-id="{{$storeSubCategory->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
 
                                     </div>
@@ -51,11 +54,11 @@
             </div>
         </div>
     </div>
-    
+
 
 </section>
 
-   
+
 
 
 @endsection
@@ -90,7 +93,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('notificationCategory/destroy') }}/"+id,
+                            url: "{{ url('subStore/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -100,7 +103,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('notificationCategory') }}"
+                                    window.location.href = "{{ url('subStore') }}"
                                 }
                             }
                         })

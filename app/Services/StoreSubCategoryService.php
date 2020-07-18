@@ -5,22 +5,23 @@ namespace App\Services;
 
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
+use App\Repositories\StoreSubCategoryRepository;
+
 
 class StoreSubCategoryService
 {
     use CrudTrait;
 
     /**
-     * @var StoreSubCategoryService \
+     * @var StoreSubCategoryRepository
      */
     protected $storeSubCategoryRepository;
 
-
     /**
      * StoreSubCategoryService constructor.
-     * @param StoreSubCategoryService $storeSubCategoryRepository
+     * @param StoreSubCategoryRepository $storeSubCategoryRepository
      */
-    public function __construct(StoreSubCategoryService $storeSubCategoryRepository)
+    public function __construct(StoreSubCategoryRepository $storeSubCategoryRepository)
     {
         $this->storeSubCategoryRepository = $storeSubCategoryRepository;
         $this->setActionRepository($storeSubCategoryRepository);
@@ -30,10 +31,9 @@ class StoreSubCategoryService
      * Storing the NotificationCategory resource
      * @return Response
      */
-    public function storeNotificationCategory($data)
+    public function storeStoreSubCategory($data)
     {
         $data['slug'] =  str_replace(" ", "_", strtolower($data['name']));
-        //dd($data);
         $this->save($data);
         return new Response("Notification Category has been successfully created");
     }
@@ -43,7 +43,7 @@ class StoreSubCategoryService
      * @param $data
      * @return Response
      */
-    public function updateNotificationCategory($data, $id)
+    public function updateStoreSubCategory($data, $id)
     {
         $notificationCategory = $this->findOne($id);
         $data['slug'] =  str_replace(" ", "_", strtolower($data['name']));
@@ -56,7 +56,7 @@ class StoreSubCategoryService
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      * @throws \Exception
      */
-    public function deleteNotificationCategory($id)
+    public function deleteStoreSubCategory($id)
     {
         $notificationCategory = $this->findOne($id);
         $notificationCategory->delete();

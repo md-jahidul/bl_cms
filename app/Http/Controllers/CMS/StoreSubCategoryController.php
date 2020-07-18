@@ -2,11 +2,18 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Services\StoreCategoryService;
 use App\Services\StoreSubCategoryService;
 use Illuminate\Http\Request;
 
 class StoreSubCategoryController extends Controller
 {
+
+    /**
+     * @var StoreCategoryService
+     */
+    protected $storeCategoryService;
+
     /**
      * @var StoreSubCategoryService
      */
@@ -15,10 +22,15 @@ class StoreSubCategoryController extends Controller
 
     /**
      * StoreSubCategoryController constructor.
+     * @param StoreCategoryService $storeCategoryService
      * @param StoreSubCategoryService $storeSubCategoryService
      */
-    public function __construct(StoreSubCategoryService $storeSubCategoryService)
+    public function __construct(
+        StoreCategoryService $storeCategoryService,
+        StoreSubCategoryService $storeSubCategoryService
+)
     {
+        $this->storeCategoryService = $storeCategoryService;
         $this->storeSubCategoryService = $storeSubCategoryService;
         $this->middleware('auth');
     }
@@ -31,7 +43,7 @@ class StoreSubCategoryController extends Controller
     public function index()
     {
         $storeSubCategories = $this->storeSubCategoryService->findAll();
-        return view('admin.store.category.index')->with('storeSubCategories', $storeSubCategories);
+        return view('admin.store.sub-category.index')->with('storeSubCategories', $storeSubCategories);
     }
 
     /**
@@ -41,7 +53,9 @@ class StoreSubCategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.store.sub-category.create');
+        $categories =  $this->storeCategoryService->findAll();
+
+        return view('admin.store.sub-category.create')->with('categories', $categories);
     }
 
     /**
@@ -52,8 +66,9 @@ class StoreSubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        session()->flash('message', $this->storeSubCategoryService->storeSubCategory($request->all())->getContent());
-        return redirect(route('storeSubCategory.index'));
+        $response = $this->storeSubCategoryService->storeStoreSubCategory($request->all());
+        session()->flash('message', $response->getContent());
+        return redirect(route('subStore.index'));
     }
 
     /**
@@ -75,11 +90,11 @@ class StoreSubCategoryController extends Controller
      */
     public function edit($id)
     {
-        $storeSubCategories = $this->storeSubCategoryService->findAll();
-        $notificationCategory = $this->storeSubCategoryService->findOne($id);
+        $categories =  $this->storeCategoryService->findAll();
+        $storeSubCategories = $this->storeSubCategoryService->findOne($id);
 
         return view('admin.store.sub-category.create')
-            ->with('notificationCategory', $notificationCategory)
+            ->with('categories', $categories)
             ->with('storeSubCategories', $storeSubCategories);
     }
 
@@ -92,19 +107,22 @@ class StoreSubCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        session()->flash('success', $this->storeSubCategoryService->updateSubCategory($request->all(), $id)->getContent());
-        return redirect(route('storeSubCategory.index'));
+        $response = $this->storeSubCategoryService->updateStoreSubCategory($request->all(), $id);
+        session()->flash('success', $response->getContent());
+        return redirect(route('subStore.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        session()->flash('error', $this->storeSubCategoryService->deleteSubCategory($id)->getContent());
-        return url('storeSubCategory');
+        $response = $this->storeSubCategoryService->deleteStoreSubCategory($id);
+        session()->flash('error', $response->getContent());
+        return url('subStore');
     }
 }

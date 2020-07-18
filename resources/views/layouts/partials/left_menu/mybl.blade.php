@@ -117,8 +117,8 @@
                     </a>
                 </li>
 
-                <li class="{{ is_active_url('storeSubCategory') }}{{ is_active_url('storeSubCategory/create') }}">
-                    <a class="menu-item" href="{{ route('storeSubCategory.index') }}"
+                <li class="{{ is_active_url('subStore') }}{{ is_active_url('subStore/create') }}">
+                    <a class="menu-item" href="{{ route('subStore.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Subcategory List</a>
                 </li>

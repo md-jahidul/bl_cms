@@ -16,4 +16,9 @@ class MyBlStoreSubCategory extends Model
         'slug',
         'category_id',
     ];
+
+    public function StoreCategory()
+    {
+        return $this->belongsTo(MyBlStoreCategory::class, 'category_id');
+    }
 }
