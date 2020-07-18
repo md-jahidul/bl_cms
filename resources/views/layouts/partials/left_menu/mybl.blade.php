@@ -110,23 +110,30 @@
                 <span class="menu-title" data-i18n="nav.templates.main">Store</span></a>
             <ul class="menu-content">
                 {{--page--}}
-                <li class="{{ is_active_url('notificationCategory') }}{{ is_active_url('notificationCategory/create') }}">
-                    <a class="menu-item" href="{{ route('notificationCategory.index') }}"
+                <li class="{{ is_active_url('storeCategory') }}{{ is_active_url('storeCategory/create') }}">
+                    <a class="menu-item" href="{{ route('storeCategory.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-server"></i>Category List
                     </a>
                 </li>
-                <li class="{{ is_active_url('notification') }}{{ is_active_url('notification/create') }}">
-                    <a class="menu-item" href="{{ route('notification.index') }}"
+               {{-- <li class="{{ is_active_url('storeSubCategory') }}{{ is_active_url('storeSubCategory/create') }}">
+                    <a class="menu-item" href="{{ route('storeSubCategory.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Subcategory List</a>
-                </li>
+                </li>--}}
 
-                <li class="{{ is_active_url('notification-report')}}">
-                    <a class="menu-item" href="{{ url('notification-report') }}"
+
+                <li class="{{ is_active_url('store') }}{{ is_active_url('store/create') }}">
+                    <a class="menu-item" href="{{ route('store.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Store</a>
                 </li>
+
+                {{--<li class="{{ is_active_url('notification-report')}}">
+                    <a class="menu-item" href="{{ url('notification-report') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Store</a>
+                </li>--}}
 
             </ul>
         </li>

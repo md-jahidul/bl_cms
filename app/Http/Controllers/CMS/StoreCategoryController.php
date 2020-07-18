@@ -41,7 +41,7 @@ class StoreCategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.notification.notification-category.create');
+        return view('admin.store.category.create');
     }
 
     /**
@@ -52,7 +52,7 @@ class StoreCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        session()->flash('message', $this->storeCategoryService->storeCategory($request->all())->getContent());
+        session()->flash('message', $this->storeCategoryService->storeStoreCategory($request->all())->getContent());
         return redirect(route('storeCategory.index'));
     }
 
@@ -75,12 +75,12 @@ class StoreCategoryController extends Controller
      */
     public function edit($id)
     {
-        $storeCategories = $this->storeCategoryService->findAll();
+       // $storeCategories = $this->storeCategoryService->findAll();
         $storeCategory = $this->storeCategoryService->findOne($id);
 
         return view('admin.store.category.create')
-            ->with('storeCategory', $storeCategory)
-            ->with('storeCategories', $storeCategories);
+            ->with('storeCategory', $storeCategory);
+            //->with('storeCategories', $storeCategories);
     }
 
     /**
@@ -92,8 +92,8 @@ class StoreCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        session()->flash('success', $this->storeCategoryService->updateCategory($request->all(), $id)->getContent());
-        return redirect(route('category.index'));
+        session()->flash('success', $this->storeCategoryService->updateStoreCategory($request->all(), $id)->getContent());
+        return redirect(route('storeCategory.index'));
     }
 
     /**
@@ -104,7 +104,7 @@ class StoreCategoryController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error', $this->storeCategoryService->deleteCategory($id)->getContent());
+        session()->flash('error', $this->storeCategoryService->deleteStoreCategory($id)->getContent());
         return url('storeCategory');
     }
 }

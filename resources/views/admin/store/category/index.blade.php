@@ -6,7 +6,7 @@
 @endsection
 
 @section('action')
-    <a href="{{route('store-category.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{route('storeCategory.create')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Create Store Category
     </a>
 @endsection
@@ -28,17 +28,19 @@
                         @foreach ($storeCategories as $storeCategory)
                             <tr>
                                 <td>{{$storeCategory->id}}</td>
-                                <td>{{$storeCategory->name}}<span class="badge badge-default badge-pill bg-primary float-right">{{$storeCategory->notifications->count()}}</span></td>
+                                <td>{{$storeCategory->name}}<span class="badge badge-default badge-pill bg-primary float-right"></span></td>
                                 <td>
                                     <div class="row">
 
                                         <div class="col-md-2 m-1">
-                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notificationCategory.edit',$storeCategory->id)}}" class="btn-pancil btn btn-outline-success" >
+                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Category Information" data-placement="left"
+                                               href="{{route('storeCategory.edit',$storeCategory->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
                                         <div class="col-md-2 m-1">
-                                            <button data-id="{{$storeCategory->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                            <button data-id="{{$storeCategory->id}}" data-toggle="tooltip" data-original-title="Delete Category" data-placement="right"
+                                                    class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
 
                                     </div>
@@ -90,7 +92,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('notificationCategory/destroy') }}/"+id,
+                            url: "{{ url('storeCategory/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -100,7 +102,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('notificationCategory') }}"
+                                    window.location.href = "{{ url('storeCategory') }}"
                                 }
                             }
                         })

@@ -163,12 +163,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
 
 
     // Store category
-    route::resource('store-category', 'CMS\StoreCategoryController');
-    Route::get('store-category/destroy/{id}', 'CMS\StoreCategoryController@destroy');
+    route::resource('storeCategory', 'CMS\StoreCategoryController');
+    Route::get('storeCategory/destroy/{id}', 'CMS\StoreCategoryController@destroy');
 
     // Store sub-category
-    route::resource('store-sub-category', 'CMS\StoreSubCategoryController');
-    Route::get('store-sub-category/destroy/{id}', 'CMS\StoreSubCategoryController@destroy');
+    /*route::resource('storeSubCategory', 'CMS\StoreSubCategoryController');
+    Route::get('storeSubCategory/destroy/{id}', 'CMS\StoreSubCategoryController@destroy');*/
 
     // Store
     route::resource('store', 'CMS\StoreController');

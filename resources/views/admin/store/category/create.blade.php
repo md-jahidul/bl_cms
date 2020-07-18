@@ -12,7 +12,7 @@
 @endsection
 
 @section('action')
-    <a href="{{route('store-category.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    <a href="{{route('storeCategory.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
         Store Category List
     </a>
 @endsection
@@ -21,8 +21,8 @@
     <div class="card mb-0 px-1" style="box-shadow:none;">
         <div class="card-content">
             <div class="card-body">
-                <form class="form" method="POST" action="@if(isset($storeCategory)) {{route('notificationCategory.update',$storeCategory->id)}}
-                @else {{route('store-category.store')}} @endif" novalidate >
+                <form class="form" method="POST" action="@if(isset($storeCategory)) {{route('storeCategory.update',$storeCategory->id)}}
+                @else {{route('storeCategory.store')}} @endif" novalidate >
                     @csrf
                     @if(isset($storeCategory))
                         @method('put')
