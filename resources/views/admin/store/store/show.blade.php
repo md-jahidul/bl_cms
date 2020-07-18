@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Notification')
-@section('card_name', 'Notification')
+@section('title', 'Store')
+@section('card_name', 'Store')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Notification Send</li>
+    <li class="breadcrumb-item active">Store Send</li>
 @endsection
 @section('action')
     <a href="{{route('notification.index')}}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Notification List
+        Store List
     </a>
 @endsection
 @section('content')
@@ -25,16 +25,16 @@
                         @csrf
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$notification->title}}">
-                            <input type="hidden"  name="id" id="id" value="{{$notification->id}}">
-                            <input type="hidden"  name="category_id" id="category_id" value="{{$notification->NotificationCategory->id}}">
-                            <input type="hidden"  name="category_slug" id="category_slug" value="{{$notification->NotificationCategory->slug}}">
-                            <input type="hidden"  name="category_name" id="category_name" value="{{$notification->NotificationCategory->name}}">
+                            <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$store->title}}">
+                            <input type="hidden"  name="id" id="id" value="{{$store->id}}">
+                            <input type="hidden"  name="category_id" id="category_id" value="{{$store->StoreCategory->id}}">
+                            <input type="hidden"  name="category_slug" id="category_slug" value="{{$store->StoreCategory->slug}}">
+                            <input type="hidden"  name="category_name" id="category_name" value="{{$store->StoreCategory->name}}">
 
                         </div>
                         <div class="form-group">
                             <label for="message">Message</label>
-                            <textarea class="form-control col-md-12" name="message" id="message"> {{$notification->body}}</textarea>
+                            <textarea class="form-control col-md-12" name="message" id="message"> {{$store->description}}</textarea>
                         </div>
 
                         <div class="form-group">

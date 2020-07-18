@@ -16,7 +16,7 @@ class CreateMyBlStoresTable extends Migration
         Schema::create('my_bl_stores', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('category_id')->unsigned();
-            $table->bigInteger('sub_category_id')->unsigned();
+            $table->bigInteger('sub_category_id')->unsigned()->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->text('type')->nullable();

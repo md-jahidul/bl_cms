@@ -42,12 +42,11 @@ class StoreController extends Controller
      */
     public function index()
     {
-
-        $notifications = $this->storeService->findAll();
+        $stores = $this->storeService->findAll();
         $category =  $this->storeCategoryService->findAll();
-        return view('admin.notification.notification.index')
+        return view('admin.store.store.index')
             ->with('category', $category)
-            ->with('notifications', $notifications);
+            ->with('stores', $stores);
     }
 
     /**
@@ -57,21 +56,24 @@ class StoreController extends Controller
      */
     public function create()
     {
-        $categories = $this->storeCategoryService->findAll();
-        return view('admin.notification.notification.create')->with('categories', $categories);
+        $stores = $this->storeService->findAll();
+        $categories =  $this->storeCategoryService->findAll();
+        return view('admin.store.store.create')
+            ->with('categories', $categories)
+            ->with('stores', $stores);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param NotificationRequest $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(NotificationRequest $request)
+    public function store(Request $request)
     {
-        $content = $this->storeService->storeNotification($request->all())->getContent();
+        $content = $this->storeService->storeMyBlStore($request->all())->getContent();
         session()->flash('message', $content);
-        return redirect(route('notification.index'));
+        return redirect(route('myblStore.index'));
     }
 
     /**
@@ -82,13 +84,10 @@ class StoreController extends Controller
      */
     public function show($id)
     {
-        $notification = $this->storeService->findOne($id, 'NotificationCategory');
+        $store = $this->storeService->findOne($id, 'StoreCategory');
 
-        $users = $this->userService->getUserListForNotification();
-
-        return view('admin.notification.notification.show')
-            ->with('notification', $notification)
-            ->with('users', $users);
+        return view('admin.store.store.index')
+            ->with('store', $store);
     }
 
 
@@ -101,9 +100,9 @@ class StoreController extends Controller
     public function edit($id)
     {
         $categories = $this->storeCategoryService->findAll();
-        return view('admin.notification.notification.edit')
+        return view('admin.store.store.edit')
             ->with('categories', $categories)
-            ->with('notification', $this->storeService->findOne($id));
+            ->with('store', $this->storeService->findOne($id));
     }
 
     /**
@@ -113,11 +112,11 @@ class StoreController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(NotificationRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $content = $this->storeService->updateNotification($request->all(), $id)->getContent();
+        $content = $this->storeService->updateStore($request->all(), $id)->getContent();
         session()->flash('success', $content);
-        return redirect(route('notification.index'));
+        return redirect(route('myblStore.index'));
     }
 
 
@@ -130,21 +129,8 @@ class StoreController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error', $this->storeService->deleteNotification($id)->getContent());
-        return url('notificationCategory');
+        session()->flash('error', $this->storeService->deleteStore($id)->getContent());
+        return url('myblStore');
     }
 
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getNotificationReport()
-    {
-        $notifications = $this->storeService->getNotificationReport();
-
-        return view('admin.notification.notification.list')
-            ->with('notifications', $notifications);
-    }
 }

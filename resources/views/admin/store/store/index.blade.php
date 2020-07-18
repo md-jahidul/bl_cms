@@ -1,18 +1,18 @@
 @extends('layouts.admin')
-@section('title', 'Notification')
-@section('card_name', 'Notification')
+@section('title', 'Store')
+@section('card_name', 'Store')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Notification List</li>
+    <li class="breadcrumb-item active">Store List</li>
 @endsection
 
 @section('action')
         @if($category->count()==0)
-            <a href="{{route('notificationCategory.index')}}" class="btn btn-danger round btn-glow px-2"><i class="la la-plus"></i>
+            <a href="{{route('storeCategory.index')}}" class="btn btn-danger round btn-glow px-2"><i class="la la-plus"></i>
                 There is no category
             </a>
         @else
-            <a href="{{route('notification.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
-                Create Notification
+            <a href="{{route('myblStore.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+                Create Store
             </a>
         @endif
 
@@ -42,41 +42,27 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($notifications as $notification)
+                        @foreach ($stores as $store)
                             <tr>
-                                <td width="5%">{{$notification->id}}</td>
-                                <td width="12%">{{$notification->title}}</td>
-                                <td width="30%">{{$notification->body}}</td>
-                                <td width="10%">{{$notification->NotificationCategory->name}}</td>
+                                <td width="5%">{{$store->id}}</td>
+                                <td width="12%">{{$store->title}}</td>
+                                <td width="30%">{{$store->description}}</td>
+                                <td width="10%"> </td>
                                 <td width="15%">
                                     <div class="row">
 
                                         <div class="col-md-2 m-1">
-                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notification.edit',$notification->id)}}" class="btn-pancil btn btn-outline-success" >
+                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information"
+                                               data-placement="left" href="{{route('myblStore.edit',$store->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                       {{-- <div class="col-md-2 m-1">
-                                            <button data-id="{{$notification->id}}" data-toggle="tooltip" data-original-title="Delete Slider" data-placement="right" class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                        </div>--}}
 
                                         <div class="col-md-2 m-1">
-                                            <a  role="button"
-                                                data-id=""
-                                                href="{{route('notification.show',$notification->id)}}"
-                                                data-placement="right"
-                                                class="showButton btn btn-outline-info"
-                                                onclick=""><i class="la la-paper-plane"></i></a>
+                                            <button data-id="{{$store->id}}" data-toggle="tooltip" data-original-title="Delete Category" data-placement="right"
+                                                    class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
 
-                                        <div class="col-md-2 m-1">
-                                            <a  role="button"
-                                                data-id=""
-                                                href="{{route('notification.show-all',$notification->id)}}"
-                                                data-placement="right"
-                                                class="showButton btn btn-outline-info"
-                                                onclick=""><i class="la la-adn"></i></a>
-                                        </div>
 
                                     </div>
                                 </td>
@@ -101,25 +87,25 @@
                             </button>
                             <h4 class="form-section">
                                 <i class="la la-key"></i>
-                                 Send Notification
+                                 Send Store
                             </h4>
 
                             <div class="row">
                                 <div class="col-6">
                                     <h4>
-                                       Notification title :<span id="title"></span>
+                                       Store title :<span id="title"></span>
                                     </h4>
                                 </div>
                                 <div class="col-6">
                                     <h4>
-                                       Notification Category :<span id="category"></span>
+                                       Store Category :<span id="category"></span>
                                     </h4>
                                 </div>
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-12">
                                             <h4>
-                                               Notification Discription :
+                                               Store Description :
                                             </h4>
                                         </div>
                                         <div class="col-12">
@@ -183,17 +169,17 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('notification/destroy') }}/"+id,
+                            url: "{{ url('myblStore/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
                                     'Deleted!',
-                                    'Your file has been deleted.',
+                                    'Your store has been deleted.',
                                     'success',
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('notification') }}"
+                                    window.location.href = "{{ url('myblStore') }}"
                                 }
                             }
                         })

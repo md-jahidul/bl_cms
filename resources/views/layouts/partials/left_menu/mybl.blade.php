@@ -123,8 +123,8 @@
                 </li>--}}
 
 
-                <li class="{{ is_active_url('store') }}{{ is_active_url('store/create') }}">
-                    <a class="menu-item" href="{{ route('store.index') }}"
+                <li class="{{ is_active_url('myblStore') }}{{ is_active_url('myblStore/create') }}">
+                    <a class="menu-item" href="{{ route('myblStore.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Store</a>
                 </li>
