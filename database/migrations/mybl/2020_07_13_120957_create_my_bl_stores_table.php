@@ -17,12 +17,15 @@ class CreateMyBlStoresTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('category_id')->unsigned();
             $table->bigInteger('sub_category_id')->unsigned()->nullable();
-            $table->string('title')->nullable();
-            $table->text('description')->nullable();
+            $table->string('title_en')->nullable();
+            $table->string('title_bn')->nullable();
+            $table->text('description_en')->nullable();
+            $table->text('description_bn')->nullable();
             $table->text('type')->nullable();
             $table->text('ratings')->nullable();
             $table->text('total_ratings')->nullable();
-            $table->text('btn_text')->nullable();
+            $table->text('btn_text_en')->nullable();
+            $table->text('btn_text_bn')->nullable();
             $table->text('btn_action')->nullable();
             $table->text('image_url')->nullable();
             $table->text('video_link')->nullable();

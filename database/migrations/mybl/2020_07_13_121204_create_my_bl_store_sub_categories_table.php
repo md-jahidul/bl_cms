@@ -16,7 +16,9 @@ class CreateMyBlStoreSubCategoriesTable extends Migration
         Schema::create('my_bl_store_sub_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('category_id')->unsigned();
-            $table->string('name');
+            $table->string('name_en');
+            $table->string('name_bn');
+            $table->string('icon');
             $table->string('slug')->nullable();
             $table->timestamps();
         });

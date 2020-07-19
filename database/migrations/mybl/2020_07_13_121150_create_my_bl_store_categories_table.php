@@ -15,7 +15,8 @@ class CreateMyBlStoreCategoriesTable extends Migration
     {
         Schema::create('my_bl_store_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name_en');
+            $table->string('name_bn');
             $table->string('slug')->nullable();
             $table->timestamps();
         });
