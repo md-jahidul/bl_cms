@@ -15,6 +15,7 @@ class MyBlStoreSubCategory extends Model
         'name_en',
         'name_bn',
         'slug',
+        'icon',
         'category_id',
     ];
 

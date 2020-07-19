@@ -54,7 +54,6 @@ class StoreSubCategoryController extends Controller
     public function create()
     {
         $categories =  $this->storeCategoryService->findAll();
-
         return view('admin.store.sub-category.create')->with('categories', $categories);
     }
 
@@ -91,11 +90,10 @@ class StoreSubCategoryController extends Controller
     public function edit($id)
     {
         $categories =  $this->storeCategoryService->findAll();
-        $storeSubCategories = $this->storeSubCategoryService->findOne($id);
-
+        $storeSubCategory = $this->storeSubCategoryService->findOne($id);
         return view('admin.store.sub-category.create')
             ->with('categories', $categories)
-            ->with('storeSubCategories', $storeSubCategories);
+            ->with('storeSubCategory', $storeSubCategory);
     }
 
     /**

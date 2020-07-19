@@ -33,6 +33,8 @@ class StoreService
      */
     public function storeMyBlStore($data)
     {
+        $data['icon'] = 'storage/' . $data['icon']->store('store');
+        $data['image_url'] = 'storage/' . $data['image_url']->store('store');
         $this->save($data);
         return new Response("Store has been successfully created");
     }
@@ -46,8 +48,20 @@ class StoreService
     public function updateStore($data, $id)
     {
         $storeRepository = $this->findOne($id);
+
+        if (isset($data['icon'])) {
+            $data['icon'] = 'storage/' . $data['icon']->store('store');
+            unlink($storeRepository->icon);
+        }
+
+        if (isset($data['image_url'])) {
+            $data['image_url'] = 'storage/' . $data['image_url']->store('store');
+            unlink($storeRepository->image_url);
+        }
+
         $storeRepository->update($data);
         return Response('Store has been successfully updated');
+
     }
 
     /**

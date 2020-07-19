@@ -16,7 +16,8 @@
         <div class="card-content">
             <div class="card-body">
                 <form novalidate class="form"
-                      action="@if(isset($store)) {{route('myblStore.update',$store->id)}} @else {{route('myblStore.store')}} @endif"  method="post" enctype="multipart/form-data">
+                      action="@if(isset($store)) {{route('myblStore.update',$store->id)}} @else {{route('myblStore.store')}} @endif"
+                      method="post" enctype="multipart/form-data">
                     @csrf
                     @if(isset($store)) @method('put') @else @method('post') @endif
 
@@ -229,7 +230,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="image" class="required">Upload Icon :</label>
+                                    <label for="icon" class="required">Upload Icon :</label>
                                     @if (isset($store))
                                         <input type="file"
                                                id="icon"
@@ -251,7 +252,6 @@
                                     @endif
                                     <div class="help-block">
                                         <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
-                                        {{--<small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small>--}}
                                     </div>
                                     <small id="massage"></small>
                                 </div>

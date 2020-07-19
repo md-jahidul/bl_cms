@@ -22,7 +22,7 @@
         <div class="card-content">
             <div class="card-body">
                 <form class="form" method="POST" action="@if(isset($storeSubCategory)) {{route('subStore.update',$storeSubCategory->id)}}
-                @else {{route('subStore.store')}} @endif" novalidate >
+                @else {{route('subStore.store')}} @endif" novalidate enctype="multipart/form-data">
                     @csrf
                     @if(isset($storeSubCategory))
                         @method('put')
@@ -41,7 +41,7 @@
                                         <option value="">Select Category</option>
                                         @foreach ($categories as $category)
                                             <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}
-                                                    @elseif(isset($store) && ($category->id == $store->category_id)) selected  @endif
+                                                    @elseif(isset($storeSubCategory) && ($category->id == $storeSubCategory->category_id)) selected  @endif
                                                     value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name_en}}</option>
                                         @endforeach
                                     </select>
@@ -110,7 +110,6 @@
                             </div>
                         </div>
 
-
                         <div class="col-md-4">
                             <button type="submit" id="submitForm" style="float: right" class="btn @if(isset($storeSubCategory)) btn-success @else btn-info @endif ">
                                 @if(isset($storeSubCategory)) Update Store Sub Category @else Create Store Sub Category @endif
@@ -123,7 +122,6 @@
             </div>
         </div>
     </div>
-
 
 @endsection
 

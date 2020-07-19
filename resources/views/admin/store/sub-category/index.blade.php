@@ -19,9 +19,10 @@
                 <table class="table table-striped table-bordered  no-footer dataTable" id="notification_cat" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
-                        <th width="10%">ID</th>
-                        <th width="30%">Tittle</th>
-                        <th width="30%">Category</th>
+                        <th width="5%">ID</th>
+                        <th width="20%">Tittle</th>
+                        <th width="20%">Icon</th>
+                        <th width="20%">Category</th>
                         <th width="20%">Action</th>
                     </tr>
                     </thead>
@@ -35,6 +36,8 @@
                             <tr>
                                 <td>{{$storeSubCategory->id}}</td>
                                 <td>{{$storeSubCategory->name_en}}</td>
+                                <td><img style="height:20px;width:20px" src="{{asset($storeSubCategory->icon)}}"
+                                         alt="" srcset=""></td>
                                 <td>{{$subCat_name}}</td>
 
                                 <td>
