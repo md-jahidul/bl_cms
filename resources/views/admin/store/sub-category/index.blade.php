@@ -27,10 +27,15 @@
                     </thead>
                     <tbody>
                         @foreach ($storeSubCategories as $storeSubCategory)
+                            @php
+                             if(isset($storeSubCategory->StoreCategory))
+                               $subCat_name = $storeSubCategory->StoreCategory->name_en;
+                              else $subCat_name = "";
+                            @endphp
                             <tr>
                                 <td>{{$storeSubCategory->id}}</td>
-                                <td>{{$storeSubCategory->name}}</td>
-                                <td>{{$storeSubCategory->StoreCategory->name}}</td>
+                                <td>{{$storeSubCategory->name_en}}</td>
+                                <td>{{$subCat_name}}</td>
 
                                 <td>
                                     <div class="row">

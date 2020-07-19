@@ -12,7 +12,16 @@ class MyBlStoreCategory extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'name_en',
+        'name_bn',
         'slug'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    /*public function subCategories()
+    {
+        return $this->hasMany(MyBlStoreSubCategory::class, 'category_id');
+    }*/
 }

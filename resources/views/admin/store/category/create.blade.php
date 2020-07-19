@@ -33,15 +33,32 @@
 
                         <div class="col-5">
                             <div class="form-group">
-                                <label for="name" class="required">Enter Category Name:</label>
+                                <label for="name_en" class="required">Enter Category Name(English):</label>
                                 <input type="text"
                                        required
 
-                                       value="@if(isset($storeCategory)) {{$storeCategory->name}} @elseif(old("name")) {{old("name")}} @endif" name="name" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Store Category..">
+                                       value="@if(isset($storeCategory)) {{$storeCategory->name_en}} @elseif(old("name_en")) {{old("name_en")}} @endif"
+                                       name="name_en" class="form-control @error('name_en') is-invalid @enderror" id="name_en" placeholder="Enter Store Category..">
                                 @if(isset($storeCategory))
                                     <input type="hidden" name="id" value="{{$storeCategory->id}}">
                                 @endif
-                                <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
+                                <small class="text-danger"> @error('name_en') {{ $message }} @enderror </small>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-5">
+                            <div class="form-group">
+                                <label for="name_bn" class="required">Enter Category Name(Bangla):</label>
+                                <input type="text"
+                                       required
+                                       value="@if(isset($storeCategory)) {{$storeCategory->name_bn}} @elseif(old("name_bn")) {{old("name_bn")}} @endif"
+                                       name="name_bn" class="form-control @error('name_bn') is-invalid @enderror" id="name_bn" placeholder="Enter Store Category..">
+                                @if(isset($storeCategory))
+                                    <input type="hidden" name="id" value="{{$storeCategory->id}}">
+                                @endif
+                                <small class="text-danger"> @error('name_bn') {{ $message }} @enderror </small>
 
                             </div>
 

@@ -12,13 +12,18 @@ class MyBlStoreSubCategory extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'name_en',
+        'name_bn',
         'slug',
         'category_id',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function StoreCategory()
     {
-        return $this->belongsTo(MyBlStoreCategory::class, 'category_id');
+        return $this->belongsTo(MyBlStoreCategory::class);
     }
+
 }

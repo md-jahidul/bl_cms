@@ -5,6 +5,12 @@
     <li class="breadcrumb-item active">Store</li>
 @endsection
 
+
+{{--@php
+    dd($subCategories);
+@endphp--}}
+
+
 @section('content')
     <div class="card mb-0 px-1" style="box-shadow:none;">
         <div class="card-content">
@@ -38,13 +44,35 @@
                                            style="height:100%" type="text" value="@if(isset($store)){{$store->title}} @elseif(old("title")) {{old("title")}} @endif"
                                            class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
                                     <div class="help-block">
-                                        <small class="text-info"> Title can not be more then 100 Characters</small><br>
+                                        {{--<small class="text-info"> Title can not be more then 100 Characters</small><br>--}}
                                     </div>
                                     <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                 </div>
                             </div>
 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="title" class="required">Sub Title:</label>
+                                    <input required
+                                           value="@if(isset($store)){{$store->sub_title}} @elseif(old("sub_title")) {{old("sub_title")}} @endif"
+                                           type="text" name="sub_title" class="form-control @error('type') is-invalid @enderror"
+                                           id="type" placeholder="Enter sub_title">
+                                    <div class="help-block"></div>
+                                    <small class="text-danger"> @error('sub_title') {{ $message }} @enderror </small>
+                                </div>
+                            </div>
 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="title" class="required">High lighted Text:</label>
+                                    <input required
+                                           value="@if(isset($store)){{$store->highlight_text}} @elseif(old("highlight_text")) {{old("highlight_text")}} @endif"
+                                           type="text" name="highlight_text" class="form-control @error('type') is-invalid @enderror"
+                                           id="type" placeholder="Enter highlight_text..">
+                                    <div class="help-block"></div>
+                                    <small class="text-danger"> @error('highlight_text') {{ $message }} @enderror </small>
+                                </div>
+                            </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -57,7 +85,7 @@
                                             @foreach ($categories as $category)
                                                 <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}
                                                         @elseif(isset($store) && ($category->id == $store->category_id)) selected  @endif
-                                                value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name}}</option>
+                                                value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name_en}}</option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
@@ -65,7 +93,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
 
                             <div class="col-md-4">
@@ -74,12 +101,12 @@
                                         Sub Category :
                                     </label>
                                     <div class="controls">
-                                        <select name="category_id" id="category_id" class="form-control @error('category_id') is-invalid @enderror">
+                                        <select name="sub_category_id" id="sub_category_id" class="form-control @error('sub_category_id') is-invalid @enderror">
                                             <option value="">Select Sub Category</option>
-                                            @foreach ($categories as $category)
-                                                <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}
-                                                        @elseif(isset($store) && ($category->id == $store->category_id)) selected  @endif
-                                                value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name}}</option>
+                                            @foreach ($subCategories as $subCategory)
+                                                <option @if(old("category_id")) {{ (old("category_id") == $subCategory->id ? "selected":"") }}
+                                                        @elseif(isset($store) && ($subCategory->id == $store->category_id)) selected  @endif
+                                                value="{{$subCategory->id}}" {{ (old("category_id") == $subCategory->id ? "selected":"") }}>{{$subCategory->name_en}}</option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
@@ -88,21 +115,22 @@
                                 </div>
                             </div>
 
-
-
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Store Type:</label>
-                                    <input required
-                                           value="@if(isset($store)){{$store->type}} @elseif(old("type")) {{old("type")}} @endif"
-                                           type="text" name="type" class="form-control @error('type') is-invalid @enderror"
-                                           id="type" placeholder="Enter Shorcut Name in Bangla..">
+                                    <label for="type" class="required">Store Type:</label>
+                                    <select required class="form-control" value="" name="type" id="type">
+
+                                        <option @if(isset($store)) @if($store->type=="app") selected
+                                                @endif @endif value="app">App
+                                        </option>
+                                        <option @if(isset($store)) @if($store->type=='promotional') selected
+                                                @endif @endif value="promotional">Promotional
+                                        </option>
+                                    </select>
                                     <div class="help-block"></div>
                                     <small class="text-danger"> @error('type') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-
-
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -119,17 +147,46 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Button Action:</label>
-                                    <input required
-                                           value="@if(isset($store)){{$store->btn_action}} @elseif(old("btn_action")) {{old("btn_action")}} @endif"
-                                           type="text" name="btn_action" class="form-control @error('btn_action') is-invalid @enderror"
-                                           id="btn_action" placeholder="Enter Button Action">
+                                    <label for="title" class="required">Button Action Type:</label>
+                                    <select required class="form-control" value="" name="btn_action_type" id="btn_action_type">
+                                        <option @if(isset($store)) @if($store->is_default=='url') selected
+                                                @endif @endif value="url">URL
+                                        </option>
+                                        <option @if(isset($store)) @if($store->is_default=="navigation") selected
+                                                @endif @endif value="navigation">Navigation
+                                        </option>
+                                    </select>
                                     <div class="help-block">
                                     </div>
-                                    <small class="text-danger"> @error('btn_action') {{ $message }} @enderror </small>
+                                    <small class="text-danger"> @error('btn_action_type') {{ $message }} @enderror </small>
                                 </div>
                             </div>
 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="title" class="required">Button Action (iOS):</label>
+                                    <input required
+                                           value="@if(isset($store)){{$store->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
+                                           type="text" name="btn_action_ios" class="form-control @error('btn_action_ios') is-invalid @enderror"
+                                           id="btn_action_ios" placeholder="Enter Button Text">
+                                    <div class="help-block">
+                                    </div>
+                                    <small class="text-danger"> @error('btn_action_ios') {{ $message }} @enderror </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="title" class="required">Button Action (Android):</label>
+                                    <input required
+                                           value="@if(isset($store)){{$store->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
+                                           type="text" name="btn_action_ios" class="form-control @error('btn_action_ios') is-invalid @enderror"
+                                           id="btn_action_ios" placeholder="Enter Button Text">
+                                    <div class="help-block">
+                                    </div>
+                                    <small class="text-danger"> @error('btn_action_ios') {{ $message }} @enderror </small>
+                                </div>
+                            </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -157,36 +214,6 @@
                                 </div>
                             </div>
 
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="image" class="required">Upload Image :</label>
-                                    @if (isset($store))
-                                        <input type="file"
-                                               id="image_url"
-                                               class="dropify"
-                                               name="image_url"
-                                               data-height="70"
-                                               data-allowed-formats="square"
-                                               data-allowed-file-extensions="png"
-                                               data-default-file="{{ asset($store->image_url) }}"
-                                        />
-                                    @else
-                                        <input type="file" required
-                                               id="image_url"
-                                               name="image_url"
-                                               class="dropify"
-                                               data-allowed-formats="square"
-                                               data-allowed-file-extensions="png"
-                                               data-height="70"/>
-                                    @endif
-                                    <div class="help-block">
-                                        <small class="text-danger"> @error('image_url'){{ $message }} @enderror </small>
-                                    </div>
-                                    <small id="massage"></small>
-                                </div>
-                            </div>
-
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title" class="required">Video:</label>
@@ -199,7 +226,66 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="image" class="required">Upload Icon :</label>
+                                    @if (isset($store))
+                                        <input type="file"
+                                               id="icon"
+                                               class="dropify_icon"
+                                               name="icon"
+                                               data-height="70"
+                                               data-allowed-formats="square"
+                                               data-allowed-file-extensions="png"
+                                               data-default-file="{{ asset($store->icon) }}"
+                                        />
+                                    @else
+                                        <input type="file" required
+                                               id="icon"
+                                               name="icon"
+                                               class="dropify_icon"
+                                               data-allowed-formats="square"
+                                               data-allowed-file-extensions="png"
+                                               data-height="70"/>
+                                    @endif
+                                    <div class="help-block">
+                                        <small class="text-danger"> @error('icon') {{ $message }} @enderror </small>
+                                        {{--<small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small>--}}
+                                    </div>
+                                    <small id="massage"></small>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="image" class="required">Upload Image :</label>
+                                    @if (isset($store))
+                                        <input type="file"
+                                               id="image_url"
+                                               class="dropify_image"
+                                               name="image_url"
+                                               data-height="70"
+                                               data-default-file="{{ asset($store->image_url) }}"
+                                        />
+                                    @else
+                                        <input type="file" required
+                                               id="image_url"
+                                               name="image_url"
+                                               data-height="70"
+                                               class="dropify_image"/>
+                                    @endif
+                                    <div class="help-block">
+                                        <small class="text-danger"> @error('image_url'){{ $message }} @enderror </small>
+                                    </div>
+                                    <small id="massage"></small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="title" class="required">Description:</label>
                                     <textarea
@@ -213,7 +299,6 @@
                                     <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-
 
                             <div class="col-md-12">
 
@@ -231,7 +316,6 @@
             </div>
         </div>
     </div>
-
 
 @endsection
 
@@ -284,8 +368,6 @@
         })
 
 
-
-
         $(document).ready(function () {
             $('#Example1').DataTable({
                 dom: 'Bfrtip',
@@ -293,6 +375,30 @@
                 paging: true,
                 searching: true,
                 "bDestroy": true,
+            });
+
+            $('.dropify_icon').dropify({
+                messages: {
+                    'default': 'Browse for an Icon to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct Icon file'
+                },
+                error: {
+                    'imageFormat': 'The image ratio must be 1:1.'
+                }
+            });
+
+            $('.dropify_image').dropify({
+                messages: {
+                    'default': 'Browse for an Image to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct Image file'
+                },
+                error: {
+                    'imageFormat': 'The image must be valid format'
+                }
             });
         });
 

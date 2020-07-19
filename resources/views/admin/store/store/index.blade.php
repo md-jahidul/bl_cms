@@ -36,7 +36,7 @@
                     <tr>
                         <th width="5%">ID</th>
                         <th width="12%">Title</th>
-                        <th width="30%">Body</th>
+                        <th width="30%">Details</th>
                         <th width="10%">Category</th>
                         <th width="15%">Action</th>
                     </tr>

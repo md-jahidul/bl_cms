@@ -28,7 +28,7 @@
                         @foreach ($storeCategories as $storeCategory)
                             <tr>
                                 <td>{{$storeCategory->id}}</td>
-                                <td>{{$storeCategory->name}}<span class="badge badge-default badge-pill bg-primary float-right"></span></td>
+                                <td>{{$storeCategory->name_en}}<span class="badge badge-default badge-pill bg-primary float-right"></span></td>
                                 <td>
                                     <div class="row">
 

@@ -52,7 +52,8 @@ class StoreCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        session()->flash('message', $this->storeCategoryService->storeStoreCategory($request->all())->getContent());
+        $response = $this->storeCategoryService->storeStoreCategory($request->all());
+        session()->flash('message', $response->getContent());
         return redirect(route('storeCategory.index'));
     }
 
@@ -92,7 +93,8 @@ class StoreCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        session()->flash('success', $this->storeCategoryService->updateStoreCategory($request->all(), $id)->getContent());
+        $response = $this->storeCategoryService->updateStoreCategory($request->all(), $id);
+        session()->flash('success', $response->getContent());
         return redirect(route('storeCategory.index'));
     }
 
@@ -104,7 +106,8 @@ class StoreCategoryController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error', $this->storeCategoryService->deleteStoreCategory($id)->getContent());
+        $response = $this->storeCategoryService->deleteStoreCategory($id);
+        session()->flash('error', $response->getContent());
         return url('storeCategory');
     }
 }

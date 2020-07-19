@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use App\Services\StoreCategoryService;
 use App\Services\StoreService;
+use App\Services\StoreSubCategoryService;
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
@@ -18,18 +19,26 @@ class StoreController extends Controller
      */
     protected $storeCategoryService;
 
+    /**
+     * @var StoreSubCategoryService
+     */
+    private $storeSubCategoryService;
+
 
     /**
      * StoreController constructor.
      * @param StoreService $storeService
      * @param StoreCategoryService $storeCategoryService
+     * @param StoreSubCategoryService $storeSubCategoryService
      */
     public function __construct(
         StoreService $storeService,
-        StoreCategoryService $storeCategoryService
+        StoreCategoryService $storeCategoryService,
+        StoreSubCategoryService $storeSubCategoryService
     ) {
         $this->storeService = $storeService;
         $this->storeCategoryService = $storeCategoryService;
+        $this->storeSubCategoryService = $storeSubCategoryService;
         $this->middleware('auth');
     }
 
@@ -58,9 +67,12 @@ class StoreController extends Controller
     {
         $stores = $this->storeService->findAll();
         $categories =  $this->storeCategoryService->findAll();
+        $subCategories =  $this->storeSubCategoryService->findAll();
+
         return view('admin.store.store.create')
+            ->with('stores', $stores)
             ->with('categories', $categories)
-            ->with('stores', $stores);
+            ->with('subCategories', $subCategories);
     }
 
     /**
@@ -99,10 +111,13 @@ class StoreController extends Controller
      */
     public function edit($id)
     {
+        $store = $this->storeService->findOne($id);
         $categories = $this->storeCategoryService->findAll();
-        return view('admin.store.store.edit')
+        $subCategories =  $this->storeSubCategoryService->findAll();
+        return view('admin.store.store.create')
+            ->with('store', $store)
             ->with('categories', $categories)
-            ->with('store', $this->storeService->findOne($id));
+            ->with('subCategories', $subCategories);
     }
 
     /**

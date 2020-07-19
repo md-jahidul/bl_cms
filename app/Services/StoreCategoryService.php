@@ -32,7 +32,7 @@ class StoreCategoryService
      */
     public function storeStoreCategory($data)
     {
-        $data['slug'] =  str_replace(" ", "_", strtolower($data['name']));
+        $data['slug'] =  str_replace(" ", "_", strtolower($data['name_en']));
 
         $this->save($data);
         return new Response("Store Category has been successfully created");
@@ -46,7 +46,7 @@ class StoreCategoryService
     public function updateStoreCategory($data, $id)
     {
         $storeCategory = $this->findOne($id);
-        $data['slug'] =  str_replace(" ", "_", strtolower($data['name']));
+        $data['slug'] =  str_replace(" ", "_", strtolower($data['name_en']));
         $storeCategory->update($data);
         return Response('Store Category has been successfully updated');
     }

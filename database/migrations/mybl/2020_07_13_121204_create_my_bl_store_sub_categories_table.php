@@ -17,8 +17,8 @@ class CreateMyBlStoreSubCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('category_id')->unsigned();
             $table->string('name_en');
-            $table->string('name_bn');
-            $table->string('icon');
+            $table->string('name_bn')->nullable();;
+            $table->string('icon')->nullable();;
             $table->string('slug')->nullable();
             $table->timestamps();
         });

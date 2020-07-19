@@ -33,7 +33,7 @@ class StoreSubCategoryService
      */
     public function storeStoreSubCategory($data)
     {
-        $data['slug'] =  str_replace(" ", "_", strtolower($data['name']));
+        $data['slug'] =  str_replace(" ", "_", strtolower($data['name_en']));
         $this->save($data);
         return new Response("Notification Category has been successfully created");
     }
@@ -46,7 +46,7 @@ class StoreSubCategoryService
     public function updateStoreSubCategory($data, $id)
     {
         $notificationCategory = $this->findOne($id);
-        $data['slug'] =  str_replace(" ", "_", strtolower($data['name']));
+        $data['slug'] =  str_replace(" ", "_", strtolower($data['name_en']));
         $notificationCategory->update($data);
         return Response('Notification Category has been successfully updated');
     }
