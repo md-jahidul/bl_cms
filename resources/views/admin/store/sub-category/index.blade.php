@@ -28,8 +28,8 @@
                     <tbody>
                         @foreach ($storeSubCategories as $storeSubCategory)
                             @php
-                             if(isset($storeSubCategory->StoreCategory))
-                               $subCat_name = $storeSubCategory->StoreCategory->name_en;
+                             if(isset($storeSubCategory->categories))
+                               $subCat_name = $storeSubCategory->categories->name_en;
                               else $subCat_name = "";
                             @endphp
                             <tr>

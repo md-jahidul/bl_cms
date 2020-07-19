@@ -17,7 +17,7 @@ class MyBlStore extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function StoreCategory()
+    public function storeCategories()
     {
         return $this->belongsTo(MyBlStoreCategory::class, 'category_id');
     }

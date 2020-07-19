@@ -47,7 +47,7 @@
                                 <td width="5%">{{$store->id}}</td>
                                 <td width="12%">{{$store->title}}</td>
                                 <td width="30%">{{$store->description}}</td>
-                                <td width="10%"> </td>
+                                <td width="10%">{{$store->storeCategories->name_en}} </td>
                                 <td width="15%">
                                     <div class="row">
 
