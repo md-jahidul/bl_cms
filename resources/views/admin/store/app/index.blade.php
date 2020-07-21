@@ -1,21 +1,14 @@
 @extends('layouts.admin')
-@section('title', 'Store')
-@section('card_name', 'Store')
+@section('title', 'App')
+@section('card_name', 'App')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Store List</li>
+    <li class="breadcrumb-item active">App List</li>
 @endsection
 
 @section('action')
-        @if($category->count()==0)
-            <a href="{{route('storeCategory.index')}}" class="btn btn-danger round btn-glow px-2"><i class="la la-plus"></i>
-                There is no category
+            <a href="{{route('appStore.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
+                Create App
             </a>
-        @else
-            <a href="{{route('myblStore.create')}}" class="btn btn-primary round btn-glow px-2"><i class="la la-plus"></i>
-                Create Store
-            </a>
-        @endif
-
 @endsection
 
 @section('content')
@@ -53,7 +46,7 @@
 
                                         <div class="col-md-2 m-1">
                                             <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information"
-                                               data-placement="left" href="{{route('myblStore.edit',$store->id)}}" class="btn-pancil btn btn-outline-success" >
+                                               data-placement="left" href="{{route('appStore.edit',$store->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
@@ -73,69 +66,10 @@
             </div>
         </div>
     </div>
-    <div id="sendUser" class="modal fade bd-example-modal-lg " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content p-2">
-            <div class="card-content">
-                <div class="card-body">
-                    <form class="form" method="POST" action="">
-
-                        <div class="form-body">
-                            <button type="button" class="close mt-1" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="form-section">
-                                <i class="la la-key"></i>
-                                 Send Store
-                            </h4>
-
-                            <div class="row">
-                                <div class="col-6">
-                                    <h4>
-                                       Store title :<span id="title"></span>
-                                    </h4>
-                                </div>
-                                <div class="col-6">
-                                    <h4>
-                                       Store Category :<span id="category"></span>
-                                    </h4>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h4>
-                                               Store Description :
-                                            </h4>
-                                        </div>
-                                        <div class="col-12">
-                                            <span id="discription"></span>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12" >
-                                    <div class="form-group float-right" style="margin-top:26px;">
-                                        <button class="btn btn-primary" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-          </div>
-      </div>
-    </div>
 
 </section>
 
 @endsection
-
-
-
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
@@ -168,7 +102,7 @@
                 }).then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('myblStore/destroy') }}/"+id,
+                            url: "{{ url('appStore/destroy') }}/"+id,
                             methods: "get",
                             success: function (res) {
                                 Swal.fire(
@@ -178,7 +112,7 @@
                                 );
                                 setTimeout(redirect, 2000)
                                 function redirect() {
-                                    window.location.href = "{{ url('myblStore') }}"
+                                    window.location.href = "{{ url('appStore') }}"
                                 }
                             }
                         })

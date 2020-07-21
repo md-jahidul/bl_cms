@@ -2,8 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Customer;
-use App\Models\MyBlStore;
+use App\Models\MyBlStoreApp;
 
 /**
  * Class StoreAppRepository
@@ -11,6 +10,6 @@ use App\Models\MyBlStore;
  */
 class StoreAppRepository extends BaseRepository
 {
-    public $modelName = MyBlStore::class;
+    public $modelName = MyBlStoreApp::class;
 
 }

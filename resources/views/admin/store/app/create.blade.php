@@ -1,22 +1,16 @@
 @extends('layouts.admin')
-@section('title', 'Store')
-@section('card_name', 'Store')
+@section('title', 'App')
+@section('card_name', 'App')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Store</li>
+    <li class="breadcrumb-item active">App</li>
 @endsection
-
-
-{{--@php
-    dd($subCategories);
-@endphp--}}
-
 
 @section('content')
     <div class="card mb-0 px-1" style="box-shadow:none;">
         <div class="card-content">
             <div class="card-body">
                 <form novalidate class="form"
-                      action="@if(isset($store)) {{route('myblStore.update',$store->id)}} @else {{route('myblStore.store')}} @endif"
+                      action="@if(isset($store)) {{route('appStore.update',$store->id)}} @else {{route('appStore.store')}} @endif"
                       method="post" enctype="multipart/form-data">
                     @csrf
                     @if(isset($store)) @method('put') @else @method('post') @endif
@@ -25,9 +19,9 @@
                     <div class="form-body">
                         <h4 class="form-section col-md-12">
                             @if(isset($store))
-                                Update Store
+                                Update App
                             @else
-                                Create Store
+                                Create App
                             @endif
                         </h4>
 
@@ -175,19 +169,21 @@
                                 </div>
                             </div>
 
+
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Total Rating:</label>
-                                    <input required
-                                           value="@if(isset($store)){{$store->total_ratings}} @elseif(old("total_ratings")) {{old("total_ratings")}} @endif"
-                                           type="text" name="total_ratings" class="form-control @error('total_ratings') is-invalid @enderror"
-                                           id="total_ratings" placeholder="Enter Shorcut Name in Bangla..">
-                                    <div class="help-block">
-                                    </div>
-                                    <small class="text-danger"> @error('total_ratings') {{ $message }} @enderror </small>
+                                    <label for="title" class="required">Description:</label>
+                                    <textarea
+                                        required
+                                        data-validation-required-message="Description is required"
+                                        class="form-control @error('description') is-invalid @enderror"
+                                        placeholder="Enter body description....." id="description" name="description" rows="3">
+                                        @if(isset($store)){{$store->description}} @elseif(old("description")) {{old("description")}} @endif
+                                    </textarea>
+                                    <div class="help-block"></div>
+                                    <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -248,22 +244,17 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Description:</label>
-                                    <textarea
-                                        required
-                                        data-validation-required-message="Description is required"
-                                        class="form-control @error('description') is-invalid @enderror"
-                                        placeholder="Enter body description....." id="description" name="description" rows="3">
-                                        @if(isset($store)){{$store->description}} @elseif(old("description")) {{old("description")}} @endif
-                                    </textarea>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
+                                    <label for="title" class="required">Total Rating:</label>
+                                    <input required
+                                           value="@if(isset($store)){{$store->total_ratings}} @elseif(old("total_ratings")) {{old("total_ratings")}} @endif"
+                                           type="text" name="total_ratings" class="form-control @error('total_ratings') is-invalid @enderror"
+                                           id="total_ratings" placeholder="Enter Shorcut Name in Bangla..">
+                                    <div class="help-block">
+                                    </div>
+                                    <small class="text-danger"> @error('total_ratings') {{ $message }} @enderror </small>
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
-
-                            </div>
 
                             <div class="col-md-12">
                                 <button type="submit" style="float: right" class="btn btn-success round px-2">

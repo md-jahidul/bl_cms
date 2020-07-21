@@ -18,6 +18,7 @@ class CreateMyBlStoreAppsTable extends Migration
             $table->bigInteger('category_id')->unsigned();
             $table->bigInteger('sub_category_id')->unsigned()->nullable();
             $table->string('title')->nullable();
+            $table->string('sub_title')->nullable();
             $table->text('description')->nullable();
             $table->text('ratings')->nullable();
             $table->text('total_ratings')->nullable();

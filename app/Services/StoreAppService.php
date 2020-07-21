@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Repositories\StoreAppRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use App\Repositories\StoreRepository;
@@ -14,19 +15,20 @@ class StoreAppService
 {
     use CrudTrait;
 
+
     /**
-     * @var StoreRepository
+     * @var StoreAppRepository
      */
-    protected $storeRepository;
+    protected $storeAppRepository;
 
     /**
      * StoreService constructor.
-     * @param StoreRepository $storeRepository
+     * @param StoreAppRepository $storeAppRepository
      */
-    public function __construct(StoreRepository $storeRepository)
+    public function __construct(StoreAppRepository $storeAppRepository)
     {
-        $this->storeRepository = $storeRepository;
-        $this->setActionRepository($storeRepository);
+        $this->storeAppRepository = $storeAppRepository;
+        $this->setActionRepository($storeAppRepository);
 
     }
 
@@ -37,10 +39,10 @@ class StoreAppService
      */
     public function storeMyBlStore($data)
     {
-        $data['icon'] = 'storage/' . $data['icon']->store('store');
-        $data['image_url'] = 'storage/' . $data['image_url']->store('store');
+        $data['icon'] = 'storage/' . $data['icon']->store('app');
+        $data['image_url'] = 'storage/' . $data['image_url']->store('app');
         $this->save($data);
-        return new Response("Store has been successfully created");
+        return new Response("App has been successfully created");
     }
 
     /**
@@ -51,20 +53,20 @@ class StoreAppService
      */
     public function updateStore($data, $id)
     {
-        $storeRepository = $this->findOne($id);
+        $storeAppRepository = $this->findOne($id);
 
         if (isset($data['icon'])) {
-            $data['icon'] = 'storage/' . $data['icon']->store('store');
-            unlink($storeRepository->icon);
+            $data['icon'] = 'storage/' . $data['icon']->store('app');
+            unlink($storeAppRepository->icon);
         }
 
         if (isset($data['image_url'])) {
-            $data['image_url'] = 'storage/' . $data['image_url']->store('store');
-            unlink($storeRepository->image_url);
+            $data['image_url'] = 'storage/' . $data['image_url']->store('app');
+            unlink($storeAppRepository->image_url);
         }
 
-        $storeRepository->update($data);
-        return Response('Store has been successfully updated');
+        $storeAppRepository->update($data);
+        return Response('App has been successfully updated');
 
     }
 
@@ -75,9 +77,9 @@ class StoreAppService
      */
     public function deleteStore($id)
     {
-        $storeRepository = $this->findOne($id);
-        $storeRepository->delete();
-        return Response('Store has been successfully deleted');
+        $storeAppRepository = $this->findOne($id);
+        $storeAppRepository->delete();
+        return Response('App has been successfully deleted');
     }
 
 }

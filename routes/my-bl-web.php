@@ -92,7 +92,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     // Slider
 
     // Slider Image
-    /*    route::resource('myblsliderImage','CMS\MyblSliderImageController');*/
+    /*route::resource('myblsliderImage','CMS\MyblSliderImageController');*/
     Route::get('myblslider/{id}/images', 'CMS\MyblSliderImageController@index');
     route::get('myblsliderImage/addImage/update-position', 'CMS\MyblSliderImageController@updatePosition');
     Route::get('myblslider/addImage/{sliderId}', 'CMS\MyblSliderImageController@index')->name('myblsliderImage.index');
@@ -172,6 +172,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     // Store
     route::resource('myblStore', 'CMS\StoreController');
     Route::get('myblStore/destroy/{id}', 'CMS\StoreController@destroy');
+
+    // App
+    route::resource('appStore', 'CMS\StoreAppController');
+    Route::get('appStore/destroy/{id}', 'CMS\StoreAppController@destroy');
+
+
+
 
 
     // terms and conditions

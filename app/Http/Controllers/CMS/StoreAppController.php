@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Services\StoreAppService;
 use App\Services\StoreCategoryService;
 use App\Services\StoreService;
 use App\Services\StoreSubCategoryService;
@@ -16,7 +17,7 @@ class StoreAppController extends Controller
     /**
      * @var StoreService
      */
-    protected $storeService;
+    protected $storeAppService;
 
     /**
      * @var StoreCategoryService
@@ -31,16 +32,16 @@ class StoreAppController extends Controller
 
     /**
      * StoreController constructor.
-     * @param StoreService $storeService
+     * @param StoreAppService $storeAppService
      * @param StoreCategoryService $storeCategoryService
      * @param StoreSubCategoryService $storeSubCategoryService
      */
     public function __construct(
-        StoreService $storeService,
+        StoreAppService $storeAppService,
         StoreCategoryService $storeCategoryService,
         StoreSubCategoryService $storeSubCategoryService
     ) {
-        $this->storeService = $storeService;
+        $this->storeAppService = $storeAppService;
         $this->storeCategoryService = $storeCategoryService;
         $this->storeSubCategoryService = $storeSubCategoryService;
         $this->middleware('auth');
@@ -55,9 +56,9 @@ class StoreAppController extends Controller
      */
     public function index()
     {
-        $stores = $this->storeService->findAll();
+        $stores = $this->storeAppService->findAll();
         $category =  $this->storeCategoryService->findAll();
-        return view('admin.store.store.index')
+        return view('admin.store.app.index')
             ->with('category', $category)
             ->with('stores', $stores);
     }
@@ -69,11 +70,11 @@ class StoreAppController extends Controller
      */
     public function create()
     {
-        $stores = $this->storeService->findAll();
+        $stores = $this->storeAppService->findAll();
         $categories =  $this->storeCategoryService->findAll();
         $subCategories =  $this->storeSubCategoryService->findAll();
 
-        return view('admin.store.store.create')
+        return view('admin.store.app.create')
             ->with('stores', $stores)
             ->with('categories', $categories)
             ->with('subCategories', $subCategories);
@@ -87,9 +88,9 @@ class StoreAppController extends Controller
      */
     public function store(Request $request)
     {
-        $content = $this->storeService->storeMyBlStore($request->all())->getContent();
+        $content = $this->storeAppService->storeMyBlStore($request->all())->getContent();
         session()->flash('message', $content);
-        return redirect(route('myblStore.index'));
+        return redirect(route('appStore.index'));
     }
 
     /**
@@ -100,9 +101,9 @@ class StoreAppController extends Controller
      */
     public function show($id)
     {
-        $store = $this->storeService->findOne($id, 'StoreCategory');
+        $store = $this->storeAppService->findOne($id, 'StoreCategory');
 
-        return view('admin.store.store.index')
+        return view('admin.store.app.index')
             ->with('store', $store);
     }
 
@@ -115,10 +116,10 @@ class StoreAppController extends Controller
      */
     public function edit($id)
     {
-        $store = $this->storeService->findOne($id);
+        $store = $this->storeAppService->findOne($id);
         $categories = $this->storeCategoryService->findAll();
         $subCategories =  $this->storeSubCategoryService->findAll();
-        return view('admin.store.store.create')
+        return view('admin.store.app.create')
             ->with('store', $store)
             ->with('categories', $categories)
             ->with('subCategories', $subCategories);
@@ -133,9 +134,9 @@ class StoreAppController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $content = $this->storeService->updateStore($request->all(), $id)->getContent();
+        $content = $this->storeAppService->updateStore($request->all(), $id)->getContent();
         session()->flash('success', $content);
-        return redirect(route('myblStore.index'));
+        return redirect(route('appStore.index'));
     }
 
 
@@ -148,8 +149,9 @@ class StoreAppController extends Controller
      */
     public function destroy($id)
     {
-        session()->flash('error', $this->storeService->deleteStore($id)->getContent());
-        return url('myblStore');
+        $response = $this->storeAppService->deleteStore($id);
+        session()->flash('error', $response->getContent());
+        return url('appStore');
     }
 
 }
