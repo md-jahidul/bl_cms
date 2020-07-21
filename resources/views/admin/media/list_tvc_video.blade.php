@@ -19,7 +19,7 @@
                         <thead>
                         <tr>
                             <td width="3%">#</td>
-                            <th width="5%">Title</th>
+                            <th width="10%">Title</th>
                             <th width="8%">Video</th>
                             <th width="3%" class="">Action</th>
                         </tr>
@@ -28,7 +28,7 @@
                         @foreach($tvcVideos as $data)
                             <tr>
                                 <td width="3%">{{ $loop->iteration }}</td>
-                                <td>{{ $data->title_en }}</td>
+                                <td>{{ $data->title_en }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                 <td><iframe width="300" height="150" src="{{ $data->video_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></td>
                                 <td width="12%" class="text-center">
                                     <a href="{{ url("tvc-video/$data->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>

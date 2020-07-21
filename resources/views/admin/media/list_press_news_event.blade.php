@@ -19,7 +19,7 @@
                         <thead>
                         <tr>
                             <td width="3%">#</td>
-                            <th width="5%">Title</th>
+                            <th width="20%">Title</th>
                             <th width="8%">Image</th>
                             <th width="25%">Short Description</th>
                             <th width="25%">Long Description</th>
@@ -30,7 +30,7 @@
                         @foreach($pressNewsEvents as $data)
                             <tr>
                                 <td width="3%">{{ $loop->iteration }}</td>
-                                <td>{{ $data->title_en }}</td>
+                                <td>{{ $data->title_en }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                 <td><img src="{{ config('filesystems.file_base_url') . $data->thumbnail_image }}" height="50" width="70"></td>
                                 <td>{{ $data->short_details_en }}</td>
                                 <td>{!! $data->long_details_en !!}</td>
