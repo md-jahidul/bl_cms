@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title_en', 'Press News Event Create')
-@section('card_name', 'Press News Event Create')
+@section('title_en', 'TVC Video Create')
+@section('card_name', 'TVC Video Create')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ url('press-news-event') }}">Press News Event List</a></li>
-    <li class="breadcrumb-item active"> Press News Event Create</li>
+    <li class="breadcrumb-item active"><a href="{{ url('tvc-video') }}">TVC Video List</a></li>
+    <li class="breadcrumb-item active">TVC Video Create</li>
 @endsection
 @section('action')
-    <a href="{{ url('press-news-event') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url('tvc-video') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -14,13 +14,13 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('press-news-event.update', $pressNewsEvent->id) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route('tvc-video.update', $tvcVideo->id) }}" method="POST" novalidate enctype="multipart/form-data">
                             @method('PUT')
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title English</label>
                                     <input type="text" name="title_en"  class="form-control" placeholder="Enter title in English"
-                                           value="{{ $pressNewsEvent->title_en }}" required data-validation-required-message="Enter title in English">
+                                           value="{{ $tvcVideo->title_en }}" required data-validation-required-message="Enter title in English">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_en'))
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -29,99 +29,41 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                     <label for="title_bn" class="required">Title Bangla</label>
-                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title in Bangla"
-                                           value="{{ $pressNewsEvent->title_bn }}" required data-validation-required-message="Enter title in Bangla">
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title in English"
+                                           value="{{ $tvcVideo->title_bn }}" required data-validation-required-message="Enter title in English">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
-                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                        <div class="help-block">{{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('type') ? ' error' : '' }}">
-                                    <label for="type" class="required">Type</label>
-                                    <select class="form-control" name="type" id="type"
-                                            required data-validation-required-message="Please select type">
-                                        <option value="">---Select Type---</option>
-                                        <option value="press_release" {{ $pressNewsEvent->type == "press_release" ? 'selected' : '' }}>Press Release</option>
-                                        <option value="news_events" {{ $pressNewsEvent->type == "news_events" ? 'selected' : '' }}>News and Events</option>
-                                    </select>
+                                <div class="form-group col-md-6 {{ $errors->has('video_url') ? ' error' : '' }}">
+                                    <label for="video_url" class="required">Video Embed Code</label>
+                                    <input type="text" name="video_url" class="form-control" placeholder="Enter title in Bangla"
+                                           value="{{ $tvcVideo->video_url }}" required data-validation-required-message="Enter embed code url">
+                                    <span class="text-primary">Example: https://www.youtube.com/embed/m5r-chnFIaI</span>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('type'))
-                                        <div class="help-block">  {{ $errors->first('type') }}</div>
+                                    @if ($errors->has('video_url'))
+                                        <div class="help-block">  {{ $errors->first('video_url') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('date') ? ' error' : '' }}">
-                                    <label for="date" class="required">Date</label>
-                                    <input type="text" id="date" name="date" class="form-control" placeholder="YYYY-MM-DD"
-                                           value="{{ $pressNewsEvent->date }}"
-                                           required data-validation-required-message="Enter date">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('date'))
-                                        <div class="help-block">  {{ $errors->first('date') }}</div>
-                                    @endif
+                                <div class="form-group col-md-6 {{ $errors->has('video_url') ? ' error' : '' }}">
+                                    <label for="video_url" class="required">Video Preview</label>
+                                    <iframe width="490" height="150" src="{{ $tvcVideo->video_url }}" frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="image_url">Image</label>
-                                    <input type="file" name="image_url" class="form-control dropify" data-height="90" placeholder="DD-MM-YYYY"
-                                           data-default-file="{{ config('filesystems.file_base_url') . $pressNewsEvent->image_url }}"
-                                           value="{{ old("image_url") ? old("image_url") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('image_url'))
-                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
-                                    <label for="alt_text_en" class="">Alt Text</label>
-                                    <input type="text" id="alt_text_en" name="alt_text_en" class="form-control" placeholder="Enter alt text"
-                                           value="{{ $pressNewsEvent->alt_text_en }}"
-                                           required data-validation-required-message="Enter alt text">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('alt_text_en'))
-                                        <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('short_details_en') ? ' error' : '' }}">
-                                    <label for="short_details_en" class="required">Short Description En</label>
-                                    <textarea type="text" name="short_details_en"  class="form-control" placeholder="Enter short description in English" required rows="3"
-                                              data-validation-required-message="Enter short description in English">{{ $pressNewsEvent->short_details_en }}</textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('short_details_en'))
-                                        <div class="help-block">  {{ $errors->first('short_details_en') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('short_details_bn') ? ' error' : '' }}">
-                                    <label for="short_details_bn" class="required">Short Description BN</label>
-                                    <textarea type="text" name="short_details_bn"  class="form-control" placeholder="Enter short description in Bangla" required rows="3"
-                                              data-validation-required-message="Enter short description in Bangla">{{ $pressNewsEvent->short_details_bn }}</textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('short_details_bn'))
-                                        <div class="help-block">  {{ $errors->first('short_details_bn') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('long_details_bn') ? ' error' : '' }}">
-                                    <label for="long_details_bn" class="required">Long Description En</label>
-                                    <textarea type="text" name="long_details_en" class="form-control summernote_editor" placeholder="Enter long description in English" required
-                                              data-validation-required-message="Enter long description in English">{{ $pressNewsEvent->long_details_en }}</textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('long_details_bn'))
-                                        <div class="help-block">  {{ $errors->first('long_details_bn') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('long_details_bn') ? ' error' : '' }}">
-                                    <label for="long_details_bn" class="required">Long Description BN</label>
-                                    <textarea type="text" name="long_details_bn"  class="form-control summernote_editor" placeholder="Enter long description in Bangla" required
-                                              data-validation-required-message="Enter long description in Bangla">{{ $pressNewsEvent->long_details_bn }}</textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('long_details_bn'))
-                                        <div class="help-block">  {{ $errors->first('long_details_bn') }}</div>
-                                    @endif
+                                <div class="col-md-6 mt-1">
+                                    <label></label>
+                                    <div class="form-group">
+                                        <label for="title" class="mr-1">Status:</label>
+                                        <input type="radio" name="status" value="1" id="active" {{ $tvcVideo->status == 1 ? 'checked' : '' }}>
+                                        <label for="active" class="mr-1">Active</label>
+                                        <input type="radio" name="status" value="0" id="inactive" {{ $tvcVideo->status == 0 ? 'checked' : '' }}>
+                                        <label for="inactive">Inactive</label>
+                                    </div>
                                 </div>
 
                                 <div class="form-actions col-md-12 ">

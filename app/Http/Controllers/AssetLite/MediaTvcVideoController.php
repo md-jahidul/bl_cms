@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Services\AlFaqService;
 use App\Services\MediaBannerImageService;
 use App\Services\MediaPressNewsEventService;
+use App\Services\MediaTvcVideoService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -15,14 +16,14 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
-class MediaPressNewsEventController extends Controller
+class MediaTvcVideoController extends Controller
 {
     /**
-     * @var AlFaqService
+     * @var MediaTvcVideoService
      */
-    private $mediaPNE;
+    private $mediaTvcVideo;
 
-    protected const MODULE_TYPE = "press_news_event";
+    protected const MODULE_TYPE = "tvc_video";
     /**
      * @var MediaBannerImageService
      */
@@ -30,14 +31,14 @@ class MediaPressNewsEventController extends Controller
 
     /**
      * RolesController constructor.
-     * @param MediaPressNewsEventService $mediaPressNewsEventService
+     * @param MediaTvcVideoService $mediaTvcVideoService
      * @param MediaBannerImageService $mediaBannerImageService
      */
     public function __construct(
-        MediaPressNewsEventService $mediaPressNewsEventService,
+        MediaTvcVideoService $mediaTvcVideoService,
         MediaBannerImageService $mediaBannerImageService
     ) {
-        $this->mediaPNE = $mediaPressNewsEventService;
+        $this->mediaTvcVideo = $mediaTvcVideoService;
         $this->mediaBannerImageService = $mediaBannerImageService;
     }
 
@@ -49,9 +50,9 @@ class MediaPressNewsEventController extends Controller
      */
     public function index()
     {
-        $pressNewsEvents = $this->mediaPNE->findAll();
+        $tvcVideos = $this->mediaTvcVideo->findAll();
         $bannerImage = $this->mediaBannerImageService->getBannerImage(self::MODULE_TYPE);
-        return view('admin.media.list_press_news_event', compact('pressNewsEvents', 'bannerImage'));
+        return view('admin.media.list_tvc_video', compact('tvcVideos', 'bannerImage'));
     }
 
     /**
@@ -61,7 +62,7 @@ class MediaPressNewsEventController extends Controller
      */
     public function create()
     {
-        return view('admin.media.create_press_news_event');
+        return view('admin.media.create_tvc_video');
     }
 
     /**
@@ -72,9 +73,9 @@ class MediaPressNewsEventController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->mediaPNE->storePNE($request->all());
+        $response = $this->mediaTvcVideo->storeTvcVideo($request->all());
         Session::flash('success', $response->getContent());
-        return redirect('press-news-event');
+        return redirect('tvc-video');
     }
 
     /**
@@ -85,8 +86,8 @@ class MediaPressNewsEventController extends Controller
      */
     public function edit($id)
     {
-        $pressNewsEvent = $this->mediaPNE->findOne($id);
-        return view('admin.media.edit_press_news_event', compact('pressNewsEvent'));
+        $tvcVideo = $this->mediaTvcVideo->findOne($id);
+        return view('admin.media.edit_tvc_video', compact('tvcVideo'));
     }
 
     /**
@@ -98,16 +99,16 @@ class MediaPressNewsEventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $response = $this->mediaPNE->updatePNE($request->all(), $id);
+        $response = $this->mediaTvcVideo->updateTvcVideo($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect('press-news-event');
+        return redirect('tvc-video');
     }
 
     public function bannerUpload(Request $request)
     {
         $response = $this->mediaBannerImageService->bannerImageUpload($request->all(), self::MODULE_TYPE);
         Session::flash('message', $response->getContent());
-        return redirect('press-news-event');
+        return redirect('tvc-video');
     }
 
     /**
@@ -118,7 +119,7 @@ class MediaPressNewsEventController extends Controller
      */
     public function destroy($id)
     {
-        $this->mediaPNE->deletePNE($id);
-        return url('press-news-event');
+        $this->mediaTvcVideo->deleteTvcVideo($id);
+        return url('tvc-video');
     }
 }

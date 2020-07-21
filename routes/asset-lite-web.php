@@ -838,4 +838,22 @@ Route::middleware('authorize', 'auth')->group(function () {
     // Media Press News Event
     Route::resource('press-news-event', 'AssetLite\MediaPressNewsEventController')->except(['show', 'destroy']);
     Route::get('press-news-event/destroy/{id}', 'AssetLite\MediaPressNewsEventController@destroy');
+
+    // Media TVC Video
+    Route::resource('tvc-video', 'AssetLite\MediaTvcVideoController')->except(['show', 'destroy']);
+    Route::get('tvc-video/destroy/{id}', 'AssetLite\MediaTvcVideoController@destroy');
+
+    // Media Landing Page
+    Route::resource('landing-page-component', 'AssetLite\MediaLandingPageController')->except(['show', 'destroy']);
+    Route::get('landing-page-component/destroy/{id}', 'AssetLite\MediaLandingPageController@destroy');
+    Route::get('media-item-find/{type}', 'AssetLite\MediaLandingPageController@itemsFind');
+
+    Route::post('media-banner-image-landing/upload', 'AssetLite\MediaLandingPageController@bannerUpload')
+        ->name('banner_image_landing.upload');
+
+    Route::post('media-banner-image-tvc-video/upload', 'AssetLite\MediaTvcVideoController@bannerUpload')
+        ->name('banner_image_tvc_video.upload');
+
+    Route::post('media-banner-image-press-news/upload', 'AssetLite\MediaPressNewsEventController@bannerUpload')
+        ->name('banner_image_press_news.upload');
 });

@@ -45,11 +45,14 @@ class MediaPressNewsEventService
     public function storePNE($data)
     {
         $dirPath = 'assetlite/images/media';
-        if (request()->hasFile('image_url')) {
-            $data['image_url'] = $this->upload($data['image_url'], $dirPath);
+        if (request()->hasFile('thumbnail_image')) {
+            $data['thumbnail_image'] = $this->upload($data['thumbnail_image'], $dirPath);
+        }
+        if (request()->hasFile('details_image')) {
+            $data['details_image'] = $this->upload($data['details_image'], $dirPath);
         }
         unset($data['file']);
-//        dd($data);
+        $data['created_by'] = Auth::id();
         $this->save($data);
         return new Response("Banner has been successfully created");
     }
@@ -64,11 +67,16 @@ class MediaPressNewsEventService
         $mediaPNE = $this->findOne($id);
 
         $dirPath = 'assetlite/images/media';
-        if (request()->hasFile('image_url')) {
-            $data['image_url'] = $this->upload($data['image_url'], $dirPath);
-            $this->deleteFile($mediaPNE->image_url);
+        if (request()->hasFile('thumbnail_image')) {
+            $data['thumbnail_image'] = $this->upload($data['thumbnail_image'], $dirPath);
+            $this->deleteFile($mediaPNE->thumbnail_image);
         }
+        if (request()->hasFile('details_image')) {
+            $data['details_image'] = $this->upload($data['details_image'], $dirPath);
+        }
+
         unset($data['files']);
+        $data['updated_by'] = Auth::id();
         $mediaPNE->update($data);
         return Response('Faq has been successfully updated');
     }
@@ -81,7 +89,7 @@ class MediaPressNewsEventService
     public function deletePNE($id)
     {
         $mediaPNE = $this->findOne($id);
-        $this->deleteFile($mediaPNE->image_url);
+        $this->deleteFile($mediaPNE->thumbnail_image);
         $mediaPNE->delete();
         return Response('Item has been successfully deleted');
     }

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Repositories\MediaTvcVideoRepository;
 use App\Services\AlFaqService;
 use App\Services\MediaBannerImageService;
+use App\Services\MediaLandingPageService;
 use App\Services\MediaPressNewsEventService;
+use App\Services\MediaTvcVideoService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -12,32 +15,34 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use phpDocumentor\Reflection\Types\Self_;
 
-class MediaPressNewsEventController extends Controller
+class MediaLandingPageController extends Controller
 {
     /**
-     * @var AlFaqService
+     * @var MediaLandingPageService
      */
-    private $mediaPNE;
-
-    protected const MODULE_TYPE = "press_news_event";
+    private $mediaLandingPageService;
     /**
      * @var MediaBannerImageService
      */
     private $mediaBannerImageService;
 
+    protected const MODULE_TYPE = "landing_page";
+
     /**
      * RolesController constructor.
-     * @param MediaPressNewsEventService $mediaPressNewsEventService
+     * @param MediaLandingPageService $mediaLandingPageService
      * @param MediaBannerImageService $mediaBannerImageService
      */
     public function __construct(
-        MediaPressNewsEventService $mediaPressNewsEventService,
+        MediaLandingPageService $mediaLandingPageService,
         MediaBannerImageService $mediaBannerImageService
     ) {
-        $this->mediaPNE = $mediaPressNewsEventService;
+        $this->mediaLandingPageService = $mediaLandingPageService;
         $this->mediaBannerImageService = $mediaBannerImageService;
     }
 
@@ -49,9 +54,9 @@ class MediaPressNewsEventController extends Controller
      */
     public function index()
     {
-        $pressNewsEvents = $this->mediaPNE->findAll();
+        $componentList = $this->mediaLandingPageService->findAll();
         $bannerImage = $this->mediaBannerImageService->getBannerImage(self::MODULE_TYPE);
-        return view('admin.media.list_press_news_event', compact('pressNewsEvents', 'bannerImage'));
+        return view('admin.media.landing-page.component_list', compact('componentList', 'bannerImage'));
     }
 
     /**
@@ -61,7 +66,7 @@ class MediaPressNewsEventController extends Controller
      */
     public function create()
     {
-        return view('admin.media.create_press_news_event');
+        return view('admin.media.landing-page.component_create');
     }
 
     /**
@@ -72,9 +77,18 @@ class MediaPressNewsEventController extends Controller
      */
     public function store(Request $request)
     {
-        $response = $this->mediaPNE->storePNE($request->all());
+        $response = $this->mediaLandingPageService->storeComponent($request->all());
         Session::flash('success', $response->getContent());
-        return redirect('press-news-event');
+        return redirect('landing-page-component');
+    }
+
+    /**
+     * @param $type
+     * @return MediaTvcVideoRepository|Collection
+     */
+    public function itemsFind($type)
+    {
+        return $this->mediaLandingPageService->mediaItems($type);
     }
 
     /**
@@ -85,8 +99,9 @@ class MediaPressNewsEventController extends Controller
      */
     public function edit($id)
     {
-        $pressNewsEvent = $this->mediaPNE->findOne($id);
-        return view('admin.media.edit_press_news_event', compact('pressNewsEvent'));
+        $component = $this->mediaLandingPageService->findOne($id);
+        $multipleItems = $this->mediaLandingPageService->mediaItems($component->component_type);
+        return view('admin.media.landing-page.component_edit', compact('component', 'multipleItems'));
     }
 
     /**
@@ -98,27 +113,26 @@ class MediaPressNewsEventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $response = $this->mediaPNE->updatePNE($request->all(), $id);
+        $response = $this->mediaLandingPageService->updateComponent($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect('press-news-event');
+        return redirect('landing-page-component');
     }
 
     public function bannerUpload(Request $request)
     {
         $response = $this->mediaBannerImageService->bannerImageUpload($request->all(), self::MODULE_TYPE);
         Session::flash('message', $response->getContent());
-        return redirect('press-news-event');
+        return redirect('landing-page-component');
     }
 
     /**
      * Remove the specified resource from storage.
-     *
      * @param  int  $id
      * @return Application|RedirectResponse|Redirector
      */
     public function destroy($id)
     {
-        $this->mediaPNE->deletePNE($id);
-        return url('press-news-event');
+        $this->mediaLandingPageService->deleteComponent($id);
+        return url('landing-page-component');
     }
 }

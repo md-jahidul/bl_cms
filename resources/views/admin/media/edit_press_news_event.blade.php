@@ -14,7 +14,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('press-news-event.update', $pressNewsEvent->id) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form id="product_form" role="form" action="{{ route('press-news-event.update', $pressNewsEvent->id) }}" method="POST" novalidate enctype="multipart/form-data">
                             @method('PUT')
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
@@ -39,11 +39,11 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('type') ? ' error' : '' }}">
                                     <label for="type" class="required">Type</label>
-                                    <select class="form-control" name="type" id="type"
+                                    <select class="form-control" name="type" id="offer_type"
                                             required data-validation-required-message="Please select type">
                                         <option value="">---Select Type---</option>
-                                        <option value="press_release" {{ $pressNewsEvent->type == "press_release" ? 'selected' : '' }}>Press Release</option>
-                                        <option value="news_events" {{ $pressNewsEvent->type == "news_events" ? 'selected' : '' }}>News and Events</option>
+                                        <option data-alias="press_release" value="press_release" {{ $pressNewsEvent->type == "press_release" ? 'selected' : '' }}>Press Release</option>
+                                        <option data-alias="news_events" value="news_events" {{ $pressNewsEvent->type == "news_events" ? 'selected' : '' }}>News and Events</option>
                                     </select>
                                     <div class="help-block"></div>
                                     @if ($errors->has('type'))
@@ -62,14 +62,14 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('image_url') ? ' error' : '' }}">
-                                    <label for="image_url">Image</label>
-                                    <input type="file" name="image_url" class="form-control dropify" data-height="90" placeholder="DD-MM-YYYY"
-                                           data-default-file="{{ config('filesystems.file_base_url') . $pressNewsEvent->image_url }}"
-                                           value="{{ old("image_url") ? old("image_url") : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('thumbnail_image') ? ' error' : '' }}">
+                                    <label for="thumbnail_image">Thumbnail Image</label>
+                                    <input type="file" name="thumbnail_image" class="form-control dropify" data-height="90" placeholder="DD-MM-YYYY"
+                                           data-default-file="{{ config('filesystems.file_base_url') . $pressNewsEvent->thumbnail_image }}"
+                                           value="{{ old("thumbnail_image") ? old("thumbnail_image") : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('image_url'))
-                                        <div class="help-block">  {{ $errors->first('image_url') }}</div>
+                                    @if ($errors->has('thumbnail_image'))
+                                        <div class="help-block">  {{ $errors->first('thumbnail_image') }}</div>
                                     @endif
                                 </div>
 
@@ -104,29 +104,56 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('long_details_bn') ? ' error' : '' }}">
-                                    <label for="long_details_bn" class="required">Long Description En</label>
-                                    <textarea type="text" name="long_details_en" class="form-control summernote_editor" placeholder="Enter long description in English" required
-                                              data-validation-required-message="Enter long description in English">{{ $pressNewsEvent->long_details_en }}</textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('long_details_bn'))
-                                        <div class="help-block">  {{ $errors->first('long_details_bn') }}</div>
-                                    @endif
-                                </div>
+                                <slot id="press_release" data-offer-type="press_release" class="{{ $pressNewsEvent->type == "press_release" ? '' : 'd-none' }}">
+                                    <h5><strong>Pop Up Section</strong></h5>
+                                    <div class="form-actions col-md-12 mt-0"></div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('long_details_bn') ? ' error' : '' }}">
-                                    <label for="long_details_bn" class="required">Long Description BN</label>
-                                    <textarea type="text" name="long_details_bn"  class="form-control summernote_editor" placeholder="Enter long description in Bangla" required
-                                              data-validation-required-message="Enter long description in Bangla">{{ $pressNewsEvent->long_details_bn }}</textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('long_details_bn'))
-                                        <div class="help-block">  {{ $errors->first('long_details_bn') }}</div>
-                                    @endif
-                                </div>
+                                    <div class="form-group col-md-6 {{ $errors->has('details_image') ? ' error' : '' }}">
+                                        <label for="details_image" class="required">Pop Up Banner Image</label>
+                                        <input type="file" name="details_image" class="form-control dropify" data-height="90"
+                                               data-default-file="{{ config('filesystems.file_base_url') . $pressNewsEvent->details_image }}"
+                                               value="{{ old("details_image") ? old("details_image") : '' }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('details_image'))
+                                            <div class="help-block">  {{ $errors->first('details_image') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('details_alt_text_en') ? ' error' : '' }}">
+                                        <label for="details_alt_text_en" class="">Alt Text</label>
+                                        <input type="text" id="details_alt_text_en" name="details_alt_text_en" class="form-control" placeholder="Enter alt text"
+                                               value="{{ $pressNewsEvent->details_alt_text_en }}"
+                                               required data-validation-required-message="Enter alt text">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('details_alt_text_en'))
+                                            <div class="help-block">  {{ $errors->first('details_alt_text_en') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('long_details_bn') ? ' error' : '' }}">
+                                        <label for="long_details_bn" class="required">Long Description En</label>
+                                        <textarea type="text" name="long_details_en" class="form-control summernote_editor" placeholder="Enter long description in English" required
+                                                  data-validation-required-message="Enter long description in English">{{ $pressNewsEvent->long_details_en }}</textarea>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('long_details_bn'))
+                                            <div class="help-block">  {{ $errors->first('long_details_bn') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('long_details_bn') ? ' error' : '' }}">
+                                        <label for="long_details_bn" class="required">Long Description BN</label>
+                                        <textarea type="text" name="long_details_bn"  class="form-control summernote_editor" placeholder="Enter long description in Bangla" required
+                                                  data-validation-required-message="Enter long description in Bangla">{{ $pressNewsEvent->long_details_bn }}</textarea>
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('long_details_bn'))
+                                            <div class="help-block">  {{ $errors->first('long_details_bn') }}</div>
+                                        @endif
+                                    </div>
+                                </slot>
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" id="save" class="btn btn-primary">
                                             <i class="la la-check-square-o"></i> SAVE
                                         </button>
                                     </div>
@@ -148,6 +175,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
+    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>

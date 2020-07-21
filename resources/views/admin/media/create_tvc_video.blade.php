@@ -27,27 +27,37 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                    <label for="title_bn" class="required">Video Embed Code</label>
-                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title in Bangla"
-                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Enter embed code url">
-                                    <span class="text-primary">Example: https://www.youtube.com/embed/m5r-chnFIaI</span>
+                                    <label for="title_bn" class="required">Title Bangla</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter title in English"
+                                           value="{{ old("title_bn") ? old("title_bn") : '' }}" required data-validation-required-message="Enter title in English">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
-                                        <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                        <div class="help-block">{{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
-                                    <label for="alt_text_en" class="">Alt Text</label>
-                                    <input type="text" id="alt_text_en" name="alt_text_en" class="form-control" placeholder="Enter alt text"
-                                           value="{{ old("alt_text_en") ? old("alt_text_en") : '' }}"
-                                           required data-validation-required-message="Enter alt text">
+                                <div class="form-group col-md-6 {{ $errors->has('video_url') ? ' error' : '' }}">
+                                    <label for="video_url" class="required">Video Embed Code</label>
+                                    <input type="text" name="video_url"  class="form-control" placeholder="Enter title in Bangla"
+                                           value="{{ old("video_url") ? old("video_url") : '' }}" required data-validation-required-message="Enter embed code url">
+                                    <span class="text-primary">Example: https://www.youtube.com/embed/m5r-chnFIaI</span>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('alt_text_en'))
-                                        <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>
+                                    @if ($errors->has('video_url'))
+                                        <div class="help-block">  {{ $errors->first('video_url') }}</div>
                                     @endif
                                 </div>
 
+                                <div class="col-md-6 mt-1">
+                                    <label></label>
+                                    <div class="form-group">
+                                        <label for="title" class="mr-1">Status:</label>
+                                        <input type="radio" name="status" value="1" id="active" checked>
+                                        <label for="active" class="mr-1">Active</label>
+
+                                        <input type="radio" name="status" value="0" id="inactive">
+                                        <label for="inactive">Inactive</label>
+                                    </div>
+                                </div>
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">

@@ -569,6 +569,12 @@
                             <span class="menu-title" data-i18n="nav.templates.main">TVC Video</span>
                         </a>
                     </li>
+
+                    <li class="{{ is_active_url('/landing-page-component') }} nav-item">
+                        <a href="{{ url('/landing-page-component') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">Landing Page</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
