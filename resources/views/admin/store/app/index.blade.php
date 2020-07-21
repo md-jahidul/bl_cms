@@ -52,6 +52,12 @@
                                         </div>
 
                                         <div class="col-md-2 m-1">
+                                            <a role="button" title="View Images" href="{{route('appslider.images.index',$app->id)}}"
+                                               class=" btn btn-outline-success"> <i class="la la-picture-o"></i>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-md-2 m-1">
                                             <button data-id="{{$app->id}}" data-toggle="tooltip" data-original-title="Delete Category" data-placement="right"
                                                     class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>

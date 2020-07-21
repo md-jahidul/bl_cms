@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MyBlStoreSliderImages extends Model
+class MyBlStoreSliderImage extends Model
 {
     /**
      * The attributes that aren't mass assignable.

@@ -20,4 +20,12 @@ class MyBlStoreApp extends Model
     {
         return $this->belongsTo(MyBlStoreCategory::class, 'category_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sliderImages()
+    {
+        return $this->hasMany(MyBlStoreSliderImage::class, 'store_app_id');
+    }
 }

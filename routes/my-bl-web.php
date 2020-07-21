@@ -177,6 +177,20 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     route::resource('appStore', 'CMS\StoreAppController');
     Route::get('appStore/destroy/{id}', 'CMS\StoreAppController@destroy');
 
+    // Store App Slider Image
+    Route::get('appslider/{id}/images', 'CMS\StoreAppSliderImageController@index');
+    route::get('appsliderImage/addImage/update-position', 'CMS\StoreAppSliderImageController@updatePosition');
+    Route::get('appslider/addImage/{sliderId}', 'CMS\StoreAppSliderImageController@index')->name('appsliderImage.index');
+
+
+    Route::get('appslider/{id}/images', 'CMS\StoreAppSliderImageController@index')->name('appslider.images.index');
+    Route::get('appslider/{id}/images/create',  'CMS\StoreAppSliderImageController@create')->name('appslider.images.create');
+    Route::post('appslider/images/store', 'CMS\StoreAppSliderImageController@store')->name('appslider.images.store');
+    Route::get('appslider/images/{id}/edit', 'CMS\StoreAppSliderImageController@edit')->name('appslider.images.edit');
+    Route::put('appslider/images/{id}/update', 'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
+    Route::put('appslider/images/{id}/update', 'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
+    Route::delete('appslider/images/{id}/delete', 'CMS\StoreAppSliderImageController@destroy')->name('appslider.images.destroy');
+
 
 
 
