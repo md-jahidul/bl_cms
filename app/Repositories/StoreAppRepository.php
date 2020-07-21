@@ -6,10 +6,11 @@ use App\Models\Customer;
 use App\Models\MyBlStore;
 
 /**
- * Class StoreRepository
+ * Class StoreAppRepository
  * @package App\Repositories
  */
-class StoreRepository extends BaseRepository
+class StoreAppRepository extends BaseRepository
 {
     public $modelName = MyBlStore::class;
+
 }
