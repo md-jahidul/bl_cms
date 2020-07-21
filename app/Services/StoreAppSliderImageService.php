@@ -19,9 +19,10 @@ class StoreAppSliderImageService
      */
     protected $sliderImageRepository;
 
+
     /**
-     * AlSliderImageService constructor.
-     * @param SliderImageRepository $sliderImageRepository
+     * StoreAppSliderImageService constructor.
+     * @param StoreAppSliderImageRepository $sliderImageRepository
      */
     public function __construct(StoreAppSliderImageRepository $sliderImageRepository)
     {
@@ -30,6 +31,11 @@ class StoreAppSliderImageService
     }
 
 
+    /**
+     * @param $sliderId
+     * @param $type
+     * @return mixed
+     */
     public function itemList($sliderId, $type)
     {
         return $this->sliderImageRepository->getSliderImage($sliderId, $type);
@@ -38,11 +44,12 @@ class StoreAppSliderImageService
 
     /**
      * Storing the banner resource
+     * @param $image
      * @return Response
      */
     public function storeSliderImage($image)
     {
-        $image_data = $this->sliderImageRepository->sliderImage($image['slider_id']);
+        $image_data = $this->sliderImageRepository->sliderImage($image['store_app_id']);
         if (empty($image_data)) {
             $i = 1;
         } else {
@@ -52,14 +59,11 @@ class StoreAppSliderImageService
         $image['image_url'] = 'storage/' . $image['image_url']->store('Slider_image');
         $image['sequence'] = $i;
 
-
         if (isset($image['other_attributes'])) {
             $other_attributes = [
                 'type' => strtolower($image['redirect_url']),
                 'content' => $image['other_attributes']
             ];
-
-            // $image['other_attributes'] = json_encode($other_attributes, JSON_UNESCAPED_SLASHES);
 
             $image['other_attributes'] = $other_attributes;
         }
@@ -68,8 +72,12 @@ class StoreAppSliderImageService
 
         return new Response("Image has been successfully added");
     }
-    
 
+
+    /**
+     * @param $data
+     * @return Response
+     */
     public function tableSortable($data)
     {
         $this->sliderImageRepository->sliderImageTableSort($data);
@@ -79,6 +87,7 @@ class StoreAppSliderImageService
     /**
      * Updating the banner
      * @param $data
+     * @param $id
      * @return Response
      */
     public function updateSliderImage($data, $id)
@@ -103,14 +112,10 @@ class StoreAppSliderImageService
                 'content' => $data['other_attributes']
             ];
 
-            // $data['other_attributes'] = json_encode($other_attributes);
-
             $data['other_attributes'] = $other_attributes;
         }
 
         $sliderImage->update($data);
-
-
         return new Response("Image has has been successfully updated");
     }
 

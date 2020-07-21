@@ -75,14 +75,11 @@ class StoreAppSliderImageController extends Controller
      */
     public function store(SliderImageStoreRequest $request)
     {
-        session()->flash('message', $this->sliderImageService->storeSliderImage($request->all())->getContent());
+        $response = $this->sliderImageService->storeSliderImage($request->all());
+        session()->flash('message', $response->getContent());
         return redirect()->back();
     }
 
-    public function getMyblProducts()
-    {
-        return $this->sliderImageService->getActiveProducts();
-    }
 
     /**
      * Display the specified resource.
@@ -113,14 +110,13 @@ class StoreAppSliderImageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param $sliderImageId
      * @return Response
      */
     public function edit($sliderImageId)
     {
         $imageInfo = SliderImage::find($sliderImageId);
-        $products  = $this->sliderImageService->getActiveProducts();
-        return view('admin.store.images.edit', compact('imageInfo', 'products'));
+        return view('admin.store.images.edit', compact('imageInfo'));
     }
 
     /**
