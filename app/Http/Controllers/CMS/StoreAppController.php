@@ -56,11 +56,11 @@ class StoreAppController extends Controller
      */
     public function index()
     {
-        $stores = $this->storeAppService->findAll();
+        $apps = $this->storeAppService->findAll();
         $category =  $this->storeCategoryService->findAll();
         return view('admin.store.app.index')
             ->with('category', $category)
-            ->with('stores', $stores);
+            ->with('apps', $apps);
     }
 
     /**
@@ -70,12 +70,12 @@ class StoreAppController extends Controller
      */
     public function create()
     {
-        $stores = $this->storeAppService->findAll();
+        $apps = $this->storeAppService->findAll();
         $categories =  $this->storeCategoryService->findAll();
         $subCategories =  $this->storeSubCategoryService->findAll();
 
         return view('admin.store.app.create')
-            ->with('stores', $stores)
+            ->with('apps', $apps)
             ->with('categories', $categories)
             ->with('subCategories', $subCategories);
     }
@@ -101,10 +101,10 @@ class StoreAppController extends Controller
      */
     public function show($id)
     {
-        $store = $this->storeAppService->findOne($id, 'StoreCategory');
+        $app = $this->storeAppService->findOne($id, 'StoreCategory');
 
         return view('admin.store.app.index')
-            ->with('store', $store);
+            ->with('app', $app);
     }
 
 
@@ -116,11 +116,11 @@ class StoreAppController extends Controller
      */
     public function edit($id)
     {
-        $store = $this->storeAppService->findOne($id);
+        $app = $this->storeAppService->findOne($id);
         $categories = $this->storeCategoryService->findAll();
         $subCategories =  $this->storeSubCategoryService->findAll();
         return view('admin.store.app.create')
-            ->with('store', $store)
+            ->with('app', $app)
             ->with('categories', $categories)
             ->with('subCategories', $subCategories);
     }

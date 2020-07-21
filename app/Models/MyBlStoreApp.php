@@ -12,4 +12,12 @@ class MyBlStoreApp extends Model
      * @var array
      */
     protected $guarded = ['id'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function storeCategories()
+    {
+        return $this->belongsTo(MyBlStoreCategory::class, 'category_id');
+    }
 }
