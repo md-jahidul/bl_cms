@@ -19,7 +19,7 @@ class CreateMyBlStoreSliderImagesTable extends Migration
             $table->string('title');
             $table->mediumText('description')->nullable();
             $table->string('image_url');
-            $table->string('alt_text');
+            $table->string('alt_text')->nullable();
             $table->string('url_btn_label')->nullable();
             $table->string('redirect_url')->nullable();
             $table->integer('sequence')->nullable();

@@ -35,30 +35,30 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($apps as $app)
+                        @foreach ($appStores as $appStore)
                             <tr>
-                                <td width="5%">{{$app->id}}</td>
-                                <td width="12%">{{$app->title}}</td>
-                                <td width="30%">{{$app->description}}</td>
-                                <td width="10%">{{$app->storeCategories->name_en}} </td>
+                                <td width="5%">{{$appStore->id}}</td>
+                                <td width="12%">{{$appStore->title}}</td>
+                                <td width="30%">{{$appStore->description}}</td>
+                                <td width="10%">{{$appStore->storeCategories->name_en}} </td>
                                 <td width="15%">
                                     <div class="row">
 
                                         <div class="col-md-2 m-1">
                                             <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information"
-                                               data-placement="left" href="{{route('appStore.edit',$app->id)}}" class="btn-pancil btn btn-outline-success" >
+                                               data-placement="left" href="{{route('appStore.edit',$appStore->id)}}" class="btn-pancil btn btn-outline-success" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
 
                                         <div class="col-md-2 m-1">
-                                            <a role="button" title="View Images" href="{{route('appslider.images.index',$app->id)}}"
+                                            <a role="button" title="View Images" href="{{route('appslider.images.index',$appStore->id)}}"
                                                class=" btn btn-outline-success"> <i class="la la-picture-o"></i>
                                             </a>
                                         </div>
 
                                         <div class="col-md-2 m-1">
-                                            <button data-id="{{$app->id}}" data-toggle="tooltip" data-original-title="Delete Category" data-placement="right"
+                                            <button data-id="{{$appStore->id}}" data-toggle="tooltip" data-original-title="Delete Category" data-placement="right"
                                                     class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
                                         </div>
 

@@ -10,15 +10,15 @@
         <div class="card-content">
             <div class="card-body">
                 <form novalidate class="form"
-                      action="@if(isset($app)) {{route('appStore.update',$app->id)}} @else {{route('appStore.store')}} @endif"
+                      action="@if(isset($appStore)){{route('appStore.update',$appStore->id)}} @else {{route('appStore.store')}} @endif"
                       method="post" enctype="multipart/form-data">
                     @csrf
-                    @if(isset($app)) @method('put') @else @method('post') @endif
+                    @if(isset($appStore)) @method('put') @else @method('post') @endif
 
 
                     <div class="form-body">
                         <h4 class="form-section col-md-12">
-                            @if(isset($app))
+                            @if(isset($appStore))
                                 Update App
                             @else
                                 Create App
@@ -27,7 +27,7 @@
 
                         <div class="row">
                             <div class="col-md-4">
-                                <input type="hidden" name="id" value="@if(isset($app)){{$app->id}} @elseif(old("id")) {{old("id")}} @endif">
+                                <input type="hidden" name="id" value="@if(isset($appStore)){{$appStore->id}} @elseif(old("id")) {{old("id")}} @endif">
                                 <div class="form-group">
                                     <label for="title" class="required">Title:</label>
                                     <input name="title"
@@ -36,7 +36,7 @@
                                            data-validation-required-message="Title is required"
                                            data-validation-maxlength-message="Title can not be more then 100 Characters"
 
-                                           style="height:100%" type="text" value="@if(isset($app)){{$app->title}} @elseif(old("title")) {{old("title")}} @endif"
+                                           style="height:100%" type="text" value="@if(isset($appStore)){{$appStore->title}} @elseif(old("title")) {{old("title")}} @endif"
                                            class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Enter title..">
                                     <div class="help-block">
                                         {{--<small class="text-info"> Title can not be more then 100 Characters</small><br>--}}
@@ -49,7 +49,7 @@
                                 <div class="form-group">
                                     <label for="title" class="required">Sub Title:</label>
                                     <input required
-                                           value="@if(isset($app)){{$app->sub_title}} @elseif(old("sub_title")) {{old("sub_title")}} @endif"
+                                           value="@if(isset($appStore)){{$appStore->sub_title}} @elseif(old("sub_title")) {{old("sub_title")}} @endif"
                                            type="text" name="sub_title" class="form-control @error('type') is-invalid @enderror"
                                            id="type" placeholder="Enter sub_title">
                                     <div class="help-block"></div>
@@ -68,7 +68,7 @@
                                             <option value="">Select Category</option>
                                             @foreach ($categories as $category)
                                                 <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}
-                                                        @elseif(isset($app) && ($category->id == $app->category_id)) selected  @endif
+                                                        @elseif(isset($appStore) && ($category->id == $appStore->category_id)) selected  @endif
                                                 value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name_en}}</option>
                                             @endforeach
                                         </select>
@@ -89,7 +89,7 @@
                                             <option value="">Select Sub Category</option>
                                             @foreach ($subCategories as $subCategory)
                                                 <option @if(old("category_id")) {{ (old("category_id") == $subCategory->id ? "selected":"") }}
-                                                        @elseif(isset($app) && ($subCategory->id == $app->category_id)) selected  @endif
+                                                        @elseif(isset($appStore) && ($subCategory->id == $appStore->category_id)) selected  @endif
                                                 value="{{$subCategory->id}}" {{ (old("category_id") == $subCategory->id ? "selected":"") }}>{{$subCategory->name_en}}</option>
                                             @endforeach
                                         </select>
@@ -104,7 +104,7 @@
                                 <div class="form-group">
                                     <label for="title" class="required">Button Text:</label>
                                     <input required
-                                           value="@if(isset($app)){{$app->btn_text}} @elseif(old("btn_text")) {{old("btn_text")}} @endif"
+                                           value="@if(isset($appStore)){{$appStore->btn_text}} @elseif(old("btn_text")) {{old("btn_text")}} @endif"
                                            type="text" name="btn_text" class="form-control @error('btn_text') is-invalid @enderror"
                                            id="btn_text" placeholder="Enter Button Text">
                                     <div class="help-block">
@@ -117,10 +117,10 @@
                                 <div class="form-group">
                                     <label for="title" class="required">Button Action Type:</label>
                                     <select required class="form-control" value="" name="btn_action_type" id="btn_action_type">
-                                        <option @if(isset($app)) @if($app->is_default=='url') selected
+                                        <option @if(isset($appStore)) @if($appStore->is_default=='url') selected
                                                 @endif @endif value="url">URL
                                         </option>
-                                        <option @if(isset($app)) @if($app->is_default=="navigation") selected
+                                        <option @if(isset($appStore)) @if($appStore->is_default=="navigation") selected
                                                 @endif @endif value="navigation">Navigation
                                         </option>
                                     </select>
@@ -134,7 +134,7 @@
                                 <div class="form-group">
                                     <label for="title" class="required">Button Action (iOS):</label>
                                     <input required
-                                           value="@if(isset($app)){{$app->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
+                                           value="@if(isset($appStore)){{$appStore->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
                                            type="text" name="btn_action_ios" class="form-control @error('btn_action_ios') is-invalid @enderror"
                                            id="btn_action_ios" placeholder="Enter Button Text">
                                     <div class="help-block">
@@ -147,7 +147,7 @@
                                 <div class="form-group">
                                     <label for="title" class="required">Button Action (Android):</label>
                                     <input required
-                                           value="@if(isset($app)){{$app->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
+                                           value="@if(isset($appStore)){{$appStore->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
                                            type="text" name="btn_action_ios" class="form-control @error('btn_action_ios') is-invalid @enderror"
                                            id="btn_action_ios" placeholder="Enter Button Text">
                                     <div class="help-block">
@@ -160,7 +160,7 @@
                                 <div class="form-group">
                                     <label for="title" class="required">Rating:</label>
                                     <input required
-                                           value="@if(isset($app)){{$app->ratings}} @elseif(old("ratings")) {{old("ratings")}} @endif"
+                                           value="@if(isset($appStore)){{$appStore->ratings}} @elseif(old("ratings")) {{old("ratings")}} @endif"
                                            type="text" name="ratings" class="form-control @error('ratings') is-invalid @enderror"
                                            id="ratings" placeholder="Enter Shorcut Name in Bangla..">
                                     <div class="help-block">
@@ -178,7 +178,7 @@
                                         data-validation-required-message="Description is required"
                                         class="form-control @error('description') is-invalid @enderror"
                                         placeholder="Enter body description....." id="description" name="description" rows="3">
-                                        @if(isset($app)){{$app->description}} @elseif(old("description")) {{old("description")}} @endif
+                                        @if(isset($appStore)){{$appStore->description}} @elseif(old("description")) {{old("description")}} @endif
                                     </textarea>
                                     <div class="help-block"></div>
                                     <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
@@ -188,7 +188,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="icon" class="required">Upload Icon :</label>
-                                    @if (isset($app))
+                                    @if (isset($appStore))
                                         <input type="file"
                                                id="icon"
                                                class="dropify_icon"
@@ -196,7 +196,7 @@
                                                data-height="70"
                                                data-allowed-formats="square"
                                                data-allowed-file-extensions="png"
-                                               data-default-file="{{ asset($app->icon) }}"
+                                               data-default-file="{{ asset($appStore->icon) }}"
                                         />
                                     @else
                                         <input type="file" required
@@ -219,13 +219,13 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="image" class="required">Upload Image :</label>
-                                    @if (isset($app))
+                                    @if (isset($appStore))
                                         <input type="file"
                                                id="image_url"
                                                class="dropify_image"
                                                name="image_url"
                                                data-height="70"
-                                               data-default-file="{{ asset($app->image_url) }}"
+                                               data-default-file="{{ asset($appStore->image_url) }}"
                                         />
                                     @else
                                         <input type="file" required
@@ -246,7 +246,7 @@
                                 <div class="form-group">
                                     <label for="title" class="required">Total Rating:</label>
                                     <input required
-                                           value="@if(isset($app)){{$app->total_ratings}} @elseif(old("total_ratings")) {{old("total_ratings")}} @endif"
+                                           value="@if(isset($appStore)){{$appStore->total_ratings}} @elseif(old("total_ratings")) {{old("total_ratings")}} @endif"
                                            type="text" name="total_ratings" class="form-control @error('total_ratings') is-invalid @enderror"
                                            id="total_ratings" placeholder="Enter Shorcut Name in Bangla..">
                                     <div class="help-block">
