@@ -98,7 +98,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="category_id" class="required">
+                                    <label for="category_id">
                                         Sub Category :
                                     </label>
                                     <div class="controls">
@@ -191,7 +191,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Rating:</label>
+                                    <label for="title" >Rating:</label>
                                     <input required
                                            value="@if(isset($store)){{$store->ratings}} @elseif(old("ratings")) {{old("ratings")}} @endif"
                                            type="text" name="ratings" class="form-control @error('ratings') is-invalid @enderror"
@@ -204,7 +204,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Total Rating:</label>
+                                    <label for="title">Total Rating:</label>
                                     <input required
                                            value="@if(isset($store)){{$store->total_ratings}} @elseif(old("total_ratings")) {{old("total_ratings")}} @endif"
                                            type="text" name="total_ratings" class="form-control @error('total_ratings') is-invalid @enderror"
@@ -217,7 +217,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Video:</label>
+                                    <label for="title">Video:</label>
                                     <input required
                                            value="@if(isset($store)){{$store->video_link}} @elseif(old("video_link")) {{old("video_link")}} @endif"
                                            type="text" name="video_link" class="form-control @error('video_link') is-invalid @enderror"
@@ -230,7 +230,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="icon" class="required">Upload Icon :</label>
+                                    <label for="icon">Upload Icon :</label>
                                     @if (isset($store))
                                         <input type="file"
                                                id="icon"
@@ -261,7 +261,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="image" class="required">Upload Image :</label>
+                                    <label for="image">Upload Image :</label>
                                     @if (isset($store))
                                         <input type="file"
                                                id="image_url"
@@ -287,10 +287,8 @@
 
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label for="title" class="required">Description:</label>
+                                    <label for="title">Description:</label>
                                     <textarea
-                                        required
-                                        data-validation-required-message="body is required"
                                         class="form-control @error('description') is-invalid @enderror"
                                         placeholder="Enter body description....." id="description" name="description" rows="3">
                                         @if(isset($store)){{$store->description}} @elseif(old("description")) {{old("description")}} @endif
