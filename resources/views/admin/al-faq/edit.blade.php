@@ -2,11 +2,12 @@
 @section('', 'Faq|Edit')
 @section('card_name', 'Faq')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"><a href="{{ url('faq') }}">Faq List</a></li>
+    <li class="breadcrumb-item active"><a href="{{ url('faq-categories') }}">Faq Categories</a></li>
+    <li class="breadcrumb-item active"><a href="{{ url("faq/$slug") }}">Faq List</a></li>
     <li class="breadcrumb-item active"> Faq Edit</li>
 @endsection
 @section('action')
-    <a href="{{ url('faq') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url("faq/$slug") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -14,7 +15,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route("faq.update", $faq->id) }}" method="POST" novalidate>
+                        <form role="form" action="{{ route("faq.update", [$slug, $faq->id]) }}" method="POST" novalidate>
                             @csrf
                             {{method_field('PUT')}}
                             <div class="row">

@@ -77,10 +77,10 @@ class MediaLandingPageService
     {
         if ($type == "press_slider") {
             $data = $this->mediaPressNewsEventRepository
-                ->findByProperties(['type' => "news_events"], ['id','title_en']);
+                ->findByProperties(['type' => "press_release"], ['id','title_en']);
         } elseif ($type == "news_carousel_slider") {
             $data = $this->mediaPressNewsEventRepository
-                ->findByProperties(['type' => "press_release"], ['id','title_en']);
+                ->findByProperties(['type' => "news_events"], ['id','title_en']);
         } else {
             $data = $this->mediaTvcVideoRepository->findAll();
         }

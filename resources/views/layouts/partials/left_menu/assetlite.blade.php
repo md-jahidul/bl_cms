@@ -544,7 +544,7 @@
                     <span class="menu-title" data-i18n="nav.templates.main">Search</span>
                 </a>
             </li>
-            <li class="{{ is_active_url('/faq') }} nav-item"><a href="{{ url('/faq') }}"><i
+            <li class="{{ is_active_url('/faq-categories') }} nav-item"><a href="{{ url('/faq-categories') }}"><i
                         class="la la-futbol-o"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Faq</span></a>
             </li>

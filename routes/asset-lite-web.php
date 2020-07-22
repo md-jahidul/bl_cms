@@ -832,8 +832,14 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('product-price-slab/destroy/{rateId?}', 'AssetLite\ProductPriceSlabController@deletePriceSlab');
 
     // Faq
-    Route::resource('faq', 'AssetLite\AlFaqController')->except(['show', 'destroy']);
-    Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
+    Route::get('faq-categories', 'AssetLite\AlFaqController@categoryList');
+    Route::get('faq/{cat_slug}', 'AssetLite\AlFaqController@index');
+    Route::get('faq/{cat_slug}/create', 'AssetLite\AlFaqController@create');
+    Route::post('faq/{cat_slug}/store', 'AssetLite\AlFaqController@store');
+    Route::get('faq/{cat_slug}/{id}/edit', 'AssetLite\AlFaqController@edit');
+    Route::put('faq/{cat_slug}/{id}/update', 'AssetLite\AlFaqController@update')
+        ->name('faq.update');
+    Route::get('faq/{cat_slug}/destroy/{id}', 'AssetLite\AlFaqController@destroy');
 
     // Media Press News Event
     Route::resource('press-news-event', 'AssetLite\MediaPressNewsEventController')->except(['show', 'destroy']);
