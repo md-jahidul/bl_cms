@@ -101,7 +101,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="category_id" class="required">
+                                    <label for="category_id">
                                         Sub Category :
                                     </label>
                                     <div class="controls">
@@ -179,10 +179,8 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Description:</label>
+                                    <label for="title">Description:</label>
                                     <textarea
-                                        required
-                                        data-validation-required-message="Description is required"
                                         class="form-control @error('description') is-invalid @enderror"
                                         placeholder="Enter body description....." id="description" name="description" rows="3">
                                         @if(isset($appStore)){{$appStore->description}} @elseif(old("description")) {{old("description")}} @endif
@@ -194,7 +192,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="icon" class="required">Upload Icon :</label>
+                                    <label for="icon">Upload Icon :</label>
                                     @if (isset($appStore))
                                         <input type="file"
                                                id="icon"
@@ -250,7 +248,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Rating:</label>
+                                    <label for="ratings">Rating:</label>
                                     <input required
                                            value="@if(isset($appStore)){{$appStore->ratings}} @elseif(old("ratings")) {{old("ratings")}} @endif"
                                            type="text" name="ratings" class="form-control @error('ratings') is-invalid @enderror"
@@ -263,7 +261,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Total Rating:</label>
+                                    <label for="total_ratings">Total Rating:</label>
                                     <input required
                                            value="@if(isset($appStore)){{$appStore->total_ratings}} @elseif(old("total_ratings")) {{old("total_ratings")}} @endif"
                                            type="text" name="total_ratings" class="form-control @error('total_ratings') is-invalid @enderror"
