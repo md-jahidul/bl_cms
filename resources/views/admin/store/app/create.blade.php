@@ -57,6 +57,26 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="category_id" class="required">
+                                        Store :
+                                    </label>
+                                    <div class="controls">
+                                        <select name="store_id" id="store_id"  class="form-control @error('store_id') is-invalid @enderror">
+                                            <option value="">Select Store</option>
+                                            @foreach ($stores as $store)
+                                                <option @if(old("store_id")) {{ (old("store_id") == $store->id ? "selected":"") }}
+                                                        @elseif(isset($appStore) && ($store->id == $appStore->store_id)) selected  @endif
+                                                        value="{{$store->id}}" {{ (old("store_id") == $store->id ? "selected":"") }}>{{$store->title}}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('store_id') {{ $message }} @enderror </small>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -156,19 +176,6 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="title" class="required">Rating:</label>
-                                    <input required
-                                           value="@if(isset($appStore)){{$appStore->ratings}} @elseif(old("ratings")) {{old("ratings")}} @endif"
-                                           type="text" name="ratings" class="form-control @error('ratings') is-invalid @enderror"
-                                           id="ratings" placeholder="Enter Shorcut Name in Bangla..">
-                                    <div class="help-block">
-                                    </div>
-                                    <small class="text-danger"> @error('ratings') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
-
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -241,6 +248,18 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="title" class="required">Rating:</label>
+                                    <input required
+                                           value="@if(isset($appStore)){{$appStore->ratings}} @elseif(old("ratings")) {{old("ratings")}} @endif"
+                                           type="text" name="ratings" class="form-control @error('ratings') is-invalid @enderror"
+                                           id="ratings" placeholder="Enter Shorcut Name in Bangla..">
+                                    <div class="help-block">
+                                    </div>
+                                    <small class="text-danger"> @error('ratings') {{ $message }} @enderror </small>
+                                </div>
+                            </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">

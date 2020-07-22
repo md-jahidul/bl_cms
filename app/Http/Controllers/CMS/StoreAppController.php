@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NotificationRequest;
 use App\Services\StoreAppService;
 use App\Services\StoreCategoryService;
 use App\Services\StoreService;
@@ -14,6 +15,12 @@ use Illuminate\Http\Request;
  */
 class StoreAppController extends Controller
 {
+
+    /**
+     * @var StoreService
+     */
+    protected $storeService;
+
     /**
      * @var StoreService
      */
@@ -32,15 +39,18 @@ class StoreAppController extends Controller
 
     /**
      * StoreController constructor.
+     * @param StoreService $storeService
      * @param StoreAppService $storeAppService
      * @param StoreCategoryService $storeCategoryService
      * @param StoreSubCategoryService $storeSubCategoryService
      */
     public function __construct(
+        StoreService $storeService,
         StoreAppService $storeAppService,
         StoreCategoryService $storeCategoryService,
         StoreSubCategoryService $storeSubCategoryService
     ) {
+        $this->storeService = $storeService;
         $this->storeAppService = $storeAppService;
         $this->storeCategoryService = $storeCategoryService;
         $this->storeSubCategoryService = $storeSubCategoryService;
@@ -70,11 +80,13 @@ class StoreAppController extends Controller
      */
     public function create()
     {
+        $stores = $this->storeService->findAll();
         $appStores = $this->storeAppService->findAll();
         $categories =  $this->storeCategoryService->findAll();
         $subCategories =  $this->storeSubCategoryService->findAll();
 
         return view('admin.store.app.create')
+            ->with('stores', $stores)
             ->with('appStores', $appStores)
             ->with('categories', $categories)
             ->with('subCategories', $subCategories);
@@ -117,10 +129,12 @@ class StoreAppController extends Controller
     public function edit($id)
     {
         $appStore = $this->storeAppService->findOne($id);
+        $stores = $this->storeService->findAll();
         $categories = $this->storeCategoryService->findAll();
         $subCategories =  $this->storeSubCategoryService->findAll();
         return view('admin.store.app.create')
             ->with('appStore', $appStore)
+            ->with('stores', $stores)
             ->with('categories', $categories)
             ->with('subCategories', $subCategories);
     }
@@ -128,8 +142,8 @@ class StoreAppController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param NotificationRequest $request
-     * @param  int $id
+     * @param Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
