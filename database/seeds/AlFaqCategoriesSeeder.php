@@ -26,7 +26,7 @@ class AlFaqCategoriesSeeder extends Seeder
         foreach ($items as $title) {
             AlFaqCategory::updateOrCreate([
                 "title" => $title,
-                "slug" => str_replace(" ", "_", strtolower($title))
+                "slug" => str_replace([' ','-'], "_", strtolower($title))
             ]);
         }
     }

@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Faq')
-@section('card_name', 'Faq')
+@section('title', 'Faq Categories')
+@section('card_name', 'Faq Categories')
 @section('breadcrumb')
-    <li class="breadcrumb-item ">Faq List</li>
+    <li class="breadcrumb-item ">Faq Category List</li>
 @endsection
 @section('action')
 {{--    <a href="{{ url("faq/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>Faq List</strong></h4>
+                    <h4 class="pb-1"><strong>Faq Category List</strong></h4>
                     <table class="table table-striped table-bordered zero-configuration">
                         <thead>
                         <tr>
