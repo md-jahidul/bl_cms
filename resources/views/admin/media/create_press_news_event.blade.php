@@ -75,8 +75,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text_en') ? ' error' : '' }}">
                                     <label for="alt_text_en" class="">Alt Text</label>
                                     <input type="text" id="alt_text_en" name="alt_text_en" class="form-control" placeholder="Enter alt text"
-                                           value="{{ old("alt_text_en") ? old("alt_text_en") : '' }}"
-                                           required data-validation-required-message="Enter alt text">
+                                           value="{{ old("alt_text_en") ? old("alt_text_en") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text_en'))
                                         <div class="help-block">  {{ $errors->first('alt_text_en') }}</div>

@@ -34,8 +34,8 @@
                                 <div class="form-group col-md-6 {{ $errors->has('sliding_speed') ? ' error' : '' }}">
                                     <label for="sliding_speed" class="">Sliding Speed</label>
                                     <input type="number" id="sliding_speed" name="sliding_speed" class="form-control" placeholder="Enter alt text"
-                                           value="{{ old("sliding_speed") ? old("sliding_speed") : '' }}"
-                                           required data-validation-required-message="Enter sliding speed">
+                                           value="{{ old("sliding_speed") ? old("sliding_speed") : '' }}">
+                                    <span>Default 10 second</span>
                                     <div class="help-block"></div>
                                     @if ($errors->has('sliding_speed'))
                                         <div class="help-block">  {{ $errors->first('sliding_speed') }}</div>
