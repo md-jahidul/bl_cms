@@ -545,7 +545,7 @@
                 </a>
             </li>
             <li class="{{ is_active_url('/faq-categories') }} nav-item"><a href="{{ url('/faq-categories') }}"><i
-                        class="la la-futbol-o"></i>
+                        class="la la-question"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Faq</span></a>
             </li>
 

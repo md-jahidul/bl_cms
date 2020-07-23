@@ -88,51 +88,20 @@ class MediaLandingPageService
         return $data;
     }
 
-    public function getBannerImage()
+    public function tableSortable($request)
     {
-        return $this->mediaLandingPageRepository
-            ->findOneByProperties(['component_type' => 'banner_image'], ['id', 'component_type', 'items']);
+        $positions = $request->position;
+        foreach ($positions as $position) {
+            $menu_id = $position[0];
+            $new_position = $position[1];
+            $update_menu = $this->findOne($menu_id);
+            $update_menu['display_order'] = $new_position;
+            $update_menu->update();
+        }
+        return "success";
     }
 
-//    protected function fileUploader($data)
-//    {
-//        $dirPath = 'assetlite/images/banner/media';
-//        if (isset($data['items']['banner_image_url'])) {
-//            $data['items']['banner_image_url'] = $this->upload($data['items']['banner_image_url'], $dirPath);
-//        }
-//        if (isset($data['items']['banner_mobile_view'])) {
-//            $data['items']['banner_mobile_view'] = $this->upload($data['items']['banner_mobile_view'], $dirPath);
-//        }
-//        return $data;
-//    }
 
-//    public function bannerUpdate($data)
-//    {
-//        $bannerImage = $this->getBannerImage();
-//
-//        if (!$bannerImage) {
-//            $data = $this->fileUploader($data);
-//            $this->save($data);
-//        } else {
-//            // Get original data
-//            $existJson = $bannerImage->items;
-//            $data = $this->fileUploader($data);
-//
-//            // Contains all the inputs from the form as an array
-//            $inputs = isset($data['items']) ? $data['items'] : null;
-//
-//            // loop over the items array
-//            if ($inputs) {
-//                foreach ($inputs as $field_key => $inputValue) {
-//                    $existJson[$field_key] = $inputValue;
-//                }
-//            }
-//            $data['items'] = $existJson;
-//            $bannerImage->update($data);
-//        }
-//
-//        return Response('Banner Image has been successfully updated');
-//    }
 
     /**
      * @param $id

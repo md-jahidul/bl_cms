@@ -38,8 +38,8 @@
                                 </div>
                                 <div class="form-group col-md-6 {{ $errors->has('question_en') ? ' error' : '' }}">
                                     <label for="question_en" class="">Question (English)</label>
-                                    <textarea type="text" name="question_en" class="form-control" placeholder="Enter duration name in English" required rows="5"
-                                              data-validation-required-message="Enter duration name in bangla">{{ old("title") ? old("title") : '' }}</textarea>
+                                    <textarea type="text" name="question_en" class="form-control" placeholder="Enter question in English" required rows="5"
+                                              data-validation-required-message="Enter question in English">{{ old("question_en") ? old("question_en") : '' }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('question_en'))
                                         <div class="help-block">  {{ $errors->first('question_en') }}</div>
@@ -47,8 +47,8 @@
                                 </div>
                                 <div class="form-group col-md-6 {{ $errors->has('question_bn') ? ' error' : '' }}">
                                     <label for="question_bn" class="">Question (Bangla)</label>
-                                    <textarea type="text" name="question_bn" class="form-control" placeholder="Enter duration name in Bangla" required rows="5"
-                                              data-validation-required-message="Enter duration name in bangla">{{ old("title") ? old("title") : '' }}</textarea>
+                                    <textarea type="text" name="question_bn" class="form-control" placeholder="Enter question in Bangla" required rows="5"
+                                              data-validation-required-message="Enter question in Bangla">{{ old("question_bn") ? old("question_bn") : '' }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('question_bn'))
                                         <div class="help-block">  {{ $errors->first('question_bn') }}</div>
@@ -56,8 +56,8 @@
                                 </div>
                                 <div class="form-group col-md-6 {{ $errors->has('answer_en') ? ' error' : '' }}">
                                     <label for="answer_en" class="">Answer (English)</label>
-                                    <textarea type="text" name="answer_en" class="form-control summernote_editor" placeholder="Enter duration name in English" required rows="5"
-                                              data-validation-required-message="Enter duration name in bangla">{{ old("title") ? old("title") : '' }}</textarea>
+                                    <textarea type="text" name="answer_en" class="form-control summernote_editor" placeholder="Enter answer in English" required rows="5"
+                                              data-validation-required-message="Enter answer in English">{{ old("answer_en") ? old("answer_en") : '' }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('answer_en'))
                                         <div class="help-block">  {{ $errors->first('answer_en') }}</div>
@@ -65,8 +65,8 @@
                                 </div>
                                 <div class="form-group col-md-6 {{ $errors->has('answer_bn') ? ' error' : '' }}">
                                     <label for="answer_bn" class="">Answer (Bangla)</label>
-                                    <textarea type="text" name="answer_bn" class="form-control summernote_editor" placeholder="Enter duration name in Bangla" required rows="5"
-                                              data-validation-required-message="Enter duration name in bangla">{{ old("title") ? old("title") : '' }}</textarea>
+                                    <textarea type="text" name="answer_bn" class="form-control summernote_editor" placeholder="Enter answer in Bangla" required rows="5"
+                                              data-validation-required-message="Enter answer in Bangla">{{ old("answer_bn") ? old("answer_bn") : '' }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('answer_bn'))
                                         <div class="help-block">  {{ $errors->first('answer_bn') }}</div>

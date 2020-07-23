@@ -15,22 +15,22 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <h4 class="pb-1"><strong>Components List</strong></h4>
-                    <table class="table table-striped table-bordered zero-configuration">
+                    <table class="table table-striped table-bordered"> <!--Datatable class: zero-configuration-->
                         <thead>
                         <tr>
-                            <td width="3%">#</td>
-                            <th width="5%">Title</th>
+                            <td width="3%"><i class="icon-cursor-move icons"></i></td>
+                            <th width="10%">Title</th>
                             <th width="8%">Component Type</th>
-                            <th width="3%" class="">Action</th>
+                            <th width="3%" class="text-right">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sortable">
                         @foreach($componentList as $data)
-                            <tr>
-                                <td width="3%">{{ $loop->iteration }}</td>
+                            <tr data-index="{{ $data->id }}" data-position="{{ $data->display_order }}">
+                                <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{ $data->title_en }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                 <td>{{ str_replace('_', ' ', ucwords($data->component_type)) }}</td>
-                                <td width="12%" class="text-center">
+                                <td width="12%" class="text-right">
                                     <a href="{{ url("landing-page-component/$data->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                     <a href="#" remove="{{ url("landing-page-component/destroy/$data->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $data->id }}" title="Delete">
                                         <i class="la la-trash"></i>
@@ -117,6 +117,7 @@
 @stop
 
 @push('page-css')
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
     <style>
         #sortable tr td{
             padding-top: 5px !important;
@@ -129,6 +130,10 @@
 @push('page-js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript">
+        // Sortable URL
+        var auto_save_url = "{{ url('landing-page-sortable') }}";
+
+        // Image Dropify
         $(function () {
             $('.dropify').dropify({
                 messages: {

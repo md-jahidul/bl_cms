@@ -853,6 +853,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::resource('landing-page-component', 'AssetLite\MediaLandingPageController')->except(['show', 'destroy']);
     Route::get('landing-page-component/destroy/{id}', 'AssetLite\MediaLandingPageController@destroy');
     Route::get('media-item-find/{type}', 'AssetLite\MediaLandingPageController@itemsFind');
+    Route::get('/landing-page-sortable', 'AssetLite\MediaLandingPageController@landingPageSortable');
+
 
     Route::post('media-banner-image-landing/upload', 'AssetLite\MediaLandingPageController@bannerUpload')
         ->name('banner_image_landing.upload');

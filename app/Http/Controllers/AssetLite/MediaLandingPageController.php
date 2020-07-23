@@ -48,13 +48,12 @@ class MediaLandingPageController extends Controller
 
 
     /**
-     * Display a listing of the resource.
-     *
      * @return Application|Factory|View
      */
     public function index()
     {
-        $componentList = $this->mediaLandingPageService->findAll();
+        $orderBy = ['column' => "display_order", 'direction' => 'ASC'];
+        $componentList = $this->mediaLandingPageService->findAll('', '', $orderBy);
         $bannerImage = $this->mediaBannerImageService->getBannerImage(self::MODULE_TYPE);
         return view('admin.media.landing-page.component_list', compact('componentList', 'bannerImage'));
     }
@@ -123,6 +122,11 @@ class MediaLandingPageController extends Controller
         $response = $this->mediaBannerImageService->bannerImageUpload($request->all(), self::MODULE_TYPE);
         Session::flash('message', $response->getContent());
         return redirect('landing-page-component');
+    }
+
+    public function landingPageSortable(Request $request)
+    {
+        $this->mediaLandingPageService->tableSortable($request);
     }
 
     /**
