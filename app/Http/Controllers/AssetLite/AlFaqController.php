@@ -44,6 +44,19 @@ class AlFaqController extends Controller
         return view('admin.al-faq.category-list', compact('categories'));
     }
 
+    public function catEdit($id)
+    {
+        $category = $this->alFaqCategoryService->findOne($id);
+        return view('admin.al-faq.category-edit', compact('category'));
+    }
+
+    public function catUpdate(Request $request, $id)
+    {
+        $response = $this->alFaqCategoryService->catUpdate($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect("faq-categories");
+    }
+
     /**
      * Display a listing of the resource.
      *

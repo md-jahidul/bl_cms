@@ -10,9 +10,8 @@
 namespace App\Services;
 
 use App\Repositories\AlFaqCategoryRepository;
-use App\Repositories\AlFaqRepository;
 use App\Traits\CrudTrait;
-use Illuminate\Http\Response;
+use http\Env\Response;
 use Illuminate\Support\Facades\Auth;
 
 class AlFaqCategoryService
@@ -31,5 +30,13 @@ class AlFaqCategoryService
     {
         $this->alFaqCategoryRepository = $alFaqCategoryRepository;
         $this->setActionRepository($alFaqCategoryRepository);
+    }
+
+    public function catUpdate($data, $id)
+    {
+        $category = $this->findOne($id);
+        $data['updated_by'] = Auth::id();
+        $category->update($data);
+        return Response('Category update successfully');
     }
 }

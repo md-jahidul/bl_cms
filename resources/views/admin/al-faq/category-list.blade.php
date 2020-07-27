@@ -19,7 +19,8 @@
                         <thead>
                         <tr>
                             <td width="3%">#</td>
-                            <th width="25%">Title</th>
+                            <th width="15%">Title</th>
+                            <th width="25%">Description</th>
                             <th class="">Action</th>
                         </tr>
                         </thead>
@@ -28,7 +29,9 @@
                                 <tr>
                                     <td width="3%">{{ $loop->iteration }}</td>
                                     <td>{{ $category->title }}</td>
-                                    <td width="12%" class="text-center">
+                                    <td>{{ $category->description_en }}</td>
+                                    <td width="20%" class="text-center">
+                                        <a href="{{ url("faq-category/$category->id/edit") }}" role="button" class="btn-sm btn-outline-cyan border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         <a href="{{ url("faq/$category->slug") }}" role="button" class="btn-sm btn-info"><i class="la la-question" aria-hidden="true"></i> Questions</a>
                                     </td>
                                 </tr>

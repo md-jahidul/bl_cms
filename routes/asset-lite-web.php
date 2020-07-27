@@ -833,6 +833,9 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     // Faq
     Route::get('faq-categories', 'AssetLite\AlFaqController@categoryList');
+    Route::get('faq-category/{id}/edit', 'AssetLite\AlFaqController@catEdit');
+    Route::put('faq-category/{id}/update', 'AssetLite\AlFaqController@catUpdate')
+        ->name('category.update');
     Route::get('faq/{cat_slug}', 'AssetLite\AlFaqController@index');
     Route::get('faq/{cat_slug}/create', 'AssetLite\AlFaqController@create');
     Route::post('faq/{cat_slug}/store', 'AssetLite\AlFaqController@store');
