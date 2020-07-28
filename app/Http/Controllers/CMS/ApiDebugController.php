@@ -75,7 +75,10 @@ class ApiDebugController extends Controller
     {
         $current_date = Carbon::now()->toDateString();
         $last_date = Carbon::now()->subDays(9)->toDateString();
-        return view('admin.debug.index', compact('current_date', 'last_date'));
+
+        $date_limit = Carbon::now()->subDays(59)->toDateString();
+
+        return view('admin.debug.index', compact('current_date', 'last_date', 'date_limit'));
     }
 
     /**

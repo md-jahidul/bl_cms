@@ -2,6 +2,8 @@
 @section('title', 'Developer Panel')
 @section('card_name', 'Debug Panel')
 
+{{--@php(dd($date_limit,  $last_date));--}}
+
 @section('content')
     <section>
         <div class="row">
@@ -162,7 +164,7 @@
                        class="form-control datetime"
                        id="date"
                        value="{{ $current_date }}"
-                       min="{{ $last_date }}"
+                       min="{{ $date_limit }}"
                        max="{{ $current_date }}"
                        name="date" >
             </div>
@@ -219,7 +221,7 @@
                                class="form-control datetime"
                                id="date_bonus"
                                value="{{ $current_date }}"
-                               min="{{ $last_date }}"
+                               min="{{ $date_limit }}"
                                max="{{ $current_date }}"
                                name="date" >
                     </div>
@@ -250,7 +252,7 @@
                                class="form-control datetime"
                                id="date_otp"
                                value="{{ $current_date }}"
-                               min="{{ $last_date }}"
+                               min="{{ $date_limit }}"
                                max="{{ $current_date }}"
                                name="date" >
                     </div>
