@@ -130,29 +130,88 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label>Page Header (HTML)</label>
+                                    <textarea class="form-control" rows="7" name="page_header">{{ isset($partnerOfferDetail->partner_offer_details->page_header) ?
+                                                $partnerOfferDetail->partner_offer_details->page_header : null }}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label>Page Header Bangla (HTML)</label>
+                                    <textarea class="form-control" rows="7" name="page_header_bn">{{ isset($partnerOfferDetail->partner_offer_details->page_header_bn) ?
+                                                        $partnerOfferDetail->partner_offer_details->page_header_bn : null }}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                    <label>Schema Markup</label>
+                                    <textarea class="form-control" rows="7" name="schema_markup">{{ isset($partnerOfferDetail->partner_offer_details->schema_markup) ?
+                                                $partnerOfferDetail->partner_offer_details->schema_markup : null }}</textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                    </small>
+                                </div>
 
 
-                                <div class="form-group col-md-6 mt-1 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                    @php $webBannerImg = $partnerOfferDetail->partner_offer_details->banner_image_url @endphp
+                                    <label for="mobileImg">Desktop View Image</label>
                                     <div class="custom-file">
-                                        <input type="file" name="banner_image_url" class="custom-file-input" id="image">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                        <input type="file" name="banner_image_url" class="dropify" data-height="90"
+                                               data-default-file="{{ isset($webBannerImg) ? config('filesystems.file_base_url') . $webBannerImg : '' }}">
                                     </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_image_url'))
+                                        <div class="help-block">{{ $errors->first('banner_image_url') }}</div>
+                                    @endif
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    @if( !empty($partnerOfferDetail->partner_offer_details->banner_image_url) )
-                                    <img src="{{ config('filesystems.file_base_url') . $partnerOfferDetail->partner_offer_details->banner_image_url }}" style="height:70px;width:70px;" id="imgDisplay">
+                                <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
+                                    @php $mobileBannerImg = $partnerOfferDetail->partner_offer_details->banner_mobile_view @endphp
+                                    <label for="mobileImg">Mobile View Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="banner_mobile_view" class="dropify" data-height="90"
+                                        data-default-file="{{ isset($mobileBannerImg) ? config('filesystems.file_base_url') . $mobileBannerImg : '' }}">
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_mobile_view'))
+                                        <div class="help-block">{{ $errors->first('banner_mobile_view') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
+{{--                                <div class="form-group col-md-6">--}}
+{{--                                    @if( !empty($partnerOfferDetail->partner_offer_details->banner_image_url) )--}}
+{{--                                    <img src="{{ config('filesystems.file_base_url') . $partnerOfferDetail->partner_offer_details->banner_image_url }}" style="height:70px;width:70px;" id="imgDisplay">--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+
+                                <div class="form-group col-md-6 mt-4 {{ $errors->has('url_slug') ? ' error' : '' }}">
+                                    <label> URL (url slug) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" value="{{ $partnerOfferDetail->partner_offer_details->url_slug }}"
+                                           name="url_slug" placeholder="URL">
+                                    <div class="help-block"></div>
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
+                                    </small>
+                                    @if ($errors->has('url_slug'))
+                                        <div class="help-block">  {{ $errors->first('url_slug') }} "{{  old("url_slug") ? old("url_slug") : '' }}"</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6 mt-4 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
                                     <label for="banner_alt_text" class="required">Alt Text</label>
                                     <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
                                            value="{{ $partnerOfferDetail->partner_offer_details->banner_alt_text }}" required data-validation-required-message="Enter image alter text">
                                     <div class="help-block"></div>
                                     @if ($errors->has('banner_alt_text'))
-                                        <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
+                                        <div class="help-block">{{ $errors->first('banner_alt_text') }}</div>
                                     @endif
                                 </div>
 
@@ -189,24 +248,21 @@
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
-    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
-        $(function () {
-            $("textarea#details").summernote({
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['table', ['table']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['view', ['fullscreen']]
-                ],
-                height:300
-            })
-        })
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Browse for an Image File to upload',
+                'replace': 'Click to replace',
+                'remove': 'Remove',
+                'error': 'Choose correct file format'
+            }
+        });
+
+        var auto_save_url = "{{ url('product-details/section-sortable') }}";
     </script>
 @endpush
 

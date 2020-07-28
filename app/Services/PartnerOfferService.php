@@ -13,6 +13,7 @@ use App\Traits\FileTrait;
 use Exception;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class PartnerOfferService
 {
@@ -70,9 +71,9 @@ class PartnerOfferService
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
         $data['phone'] = json_encode($data['phone']);
         $data['location'] = json_encode($data['location']);
-        
+        $data['created_by'] = Auth::id();
         $offerId = $this->save($data);
-        
+
         $this->partnerOfferDetailRepository->insertOfferDetail($offerId->id);
         return new Response('Partner offer added successfully');
     }
@@ -108,27 +109,28 @@ class PartnerOfferService
             $this->deleteFile($partnerOffer->campaign_img);
             $data['campaign_img'] = null;
         }
-        
+
         $data['phone'] = json_encode($data['phone']);
         $data['location'] = json_encode($data['location']);
-        
-        
-        if(isset($data['silver'])){
-        $data['silver'] == 1;
-        }else{
-           $data['silver'] = 0; 
+
+
+        if (isset($data['silver'])) {
+            $data['silver'] == 1;
+        } else {
+            $data['silver'] = 0;
         }
-        if(isset($data['gold'])){
-        $data['gold'] == 1;
-        }else{
-           $data['gold'] = 0; 
+        if (isset($data['gold'])) {
+            $data['gold'] == 1;
+        } else {
+            $data['gold'] = 0;
         }
-        if(isset($data['platium'])){
-        $data['platium'] == 1;
-        }else{
-           $data['platium'] = 0; 
+        if (isset($data['platium'])) {
+            $data['platium'] == 1;
+        } else {
+            $data['platium'] = 0;
         }
-        
+
+        $data['updated_by'] = Auth::id();
         $partnerOffer->update($data);
         return Response('Partner offer update successfully !');
     }

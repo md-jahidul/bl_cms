@@ -155,7 +155,7 @@
                                 <input type="text" name="phone[en]"  class="form-control" placeholder="Enter Phone EN"
                                        value="{{ old("phone[en]") ? old("phone[en]") : '' }}">
                             </div>
-                            
+
                             <div class="form-group col-md-4 col-xs-12">
                                 <label>Phone (BN)</label>
                                 <input type="text" name="phone[bn]"  class="form-control" placeholder="Enter Phone BN"
@@ -167,13 +167,13 @@
                                 <input type="text" name="location[en]"  class="form-control" placeholder="Enter Location EN"
                                        value="{{ old("location[en]") ? old("location[en]") : '' }}">
                             </div>
-                            
+
                             <div class="form-group col-md-4 col-xs-12">
                                 <label>Location (BN)</label>
                                 <input type="text" name="location[bn]"  class="form-control" placeholder="Enter Location BN"
                                        value="{{ old("location[bn]") ? old("location[bn]") : '' }}">
                             </div>
-                            
+
                             <div class="form-group col-md-4 col-xs-12">
                                 <label>Map Link</label>
                                 <input type="text" name="map_link"  class="form-control" placeholder="Enter Map Link"
@@ -200,28 +200,62 @@
                                 @endif
                             </div>
 
+
+
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Page Header (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header">{{ isset($product->page_header) ? $product->page_header : null }}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Page Header Bangla (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header_bn">{{ isset($product->page_header_bn) ? $product->page_header_bn : null }}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Schema Markup</label>
+                                <textarea class="form-control" rows="7" name="schema_markup">{{ isset($product->schema_markup) ? $product->schema_markup : null }}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('url_slug') ? ' error' : '' }}">
+                                <label> URL (url slug) <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{ old("url_slug") ? old("url_slug") : '' }}" required
+                                       name="url_slug" placeholder="URL">
+                                <div class="help-block"></div>
+                                <small class="text-info">
+                                    <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
+                                </small>
+                                @if ($errors->has('url_slug'))
+                                    <div class="help-block">  {{ $errors->first('url_slug') }}</div>
+                                @endif
+                            </div>
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="show_in_home" class="display-block">For:</label>
                                     <input type="checkbox" name="silver" value="1"> Silver <br>
                                     <input type="checkbox" name="gold" value="1"> Gold <br>
-                                    <input type="checkbox" name="platium" value="1"> Platinum 
+                                    <input type="checkbox" name="platium" value="1"> Platinum
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-4 pr-0 pt-1">
                                 <div class="form-group">
                                     <label for="" class="mr-1">Home Show:</label>
                                     <input type="checkbox" name="show_in_home" value="1">
                                 </div>
                             </div>
-                            
-                            <div class="col-md-4 pr-0 pt-1">
-                                <div class="form-group">
-                                    <label for="is_campaign" class="mr-1">Is Campaign:</label>
-                                    <input type="checkbox" name="is_campaign" value="1" id="is_campaign">
-                                </div>
-                            </div>
+
+
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -235,9 +269,14 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-2 pr-0">
+                                <div class="form-group">
+                                    <label for="is_campaign" class="mr-1">Is Campaign:</label>
+                                    <input type="checkbox" name="is_campaign" value="1" id="is_campaign">
+                                </div>
+                            </div>
 
-
-                            <div class="form-group col-md-4 mb-0">
+                            <div class="form-group col-md-4">
                                 <label for="campaign_img"></label>
                                 <div class="custom-file d-none">
                                     <input type="file" name="campaign_img" class="custom-file-input" id="image">
