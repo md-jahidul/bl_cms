@@ -64,9 +64,9 @@ class FooterMenuService
      * @param $id
      * @return ResponseFactory|Response
      */
-    public function updateFooterMenu($data, $id)
+    public function updateFooterMenu($data)
     {
-        $footerMenu = $this->findOne($id);
+        $footerMenu = $this->findOne($data['id']);
         $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
         $data['is_dynamic_page'] = isset($data['is_dynamic_page']) ? 1 : 0;
         $footerMenu->update($data);

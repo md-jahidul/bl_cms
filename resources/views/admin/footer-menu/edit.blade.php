@@ -23,6 +23,7 @@
                         <form role="form" action="{{ url("footer-menu/$footerMenu->id") }}" method="POST" novalidate>
                             <div class="row">
                                 <input type="hidden" name="parent_id" value="{{ $footerMenu->parent_id }}">
+                                <input type="hidden" name="id" value="{{ $footerMenu->id }}">
                                 <div class="form-group col-md-12 {{ $errors->has('title') ? ' error' : '' }}">
                                     <label for="title" class="required">Page name</label>
                                     <input type="text" name="code"  class="form-control" placeholder="Enter title" readonly

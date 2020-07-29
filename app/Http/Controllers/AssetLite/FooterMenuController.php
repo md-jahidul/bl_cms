@@ -137,10 +137,10 @@ class FooterMenuController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreFooterMenuRequest $request)
     {
         $parentId =  $request->parent_id;
-        $response = $this->footerMenuService->updateFooterMenu($request->all(), $id);
+        $response = $this->footerMenuService->updateFooterMenu($request->all());
         Session::flash('message', $response->getContent());
         return redirect(($parentId != 0) ? "footer-menu/$parentId/child-footer" : 'footer-menu');
     }
