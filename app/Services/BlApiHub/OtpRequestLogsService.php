@@ -29,6 +29,7 @@ class OtpRequestLogsService
 
         $date = $request->date ? $request->date : Carbon::now()->toDateString();
 
+
         $builder = BlOtpVerifyLog::where('msisdn', $number);
 
 
@@ -75,12 +76,13 @@ class OtpRequestLogsService
         $start = $request->get('start');
         $length = $request->get('length');
 
-        $date = $request->date ? $request->date : Carbon::now()->toDateString();
+        $date = $request->date_otp_login ? $request->date_otp_login : Carbon::now()->toDateString();
+
 
         $builder = BlOtpLoginLogs::where('msisdn', $number);
 
 
-        $builder = $builder->where('created_at', $date);
+       // $builder = $builder->where('created_at', $date);
 
 
         $all_items_count = $builder->count();
@@ -99,7 +101,7 @@ class OtpRequestLogsService
             function ($item) use (&$response) {
                 $response['data'][] = [
                     'date' => Carbon::parse($item->created_at)->toDateTimeString(),
-                    'msisdn' => $item->msisdn,
+                    'number' => $item->msisdn,
                     'message' => $item->message,
                     'response' => $item->data,
                     'status' => $item->status

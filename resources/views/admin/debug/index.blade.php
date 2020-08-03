@@ -251,11 +251,11 @@
                     <div class="col-md-4 mt-2">
                         <input type='date'
                                class="form-control datetime"
-                               id="date_otp"
+                               id="date_otp_login"
                                value="{{ $current_date }}"
                                min="{{ $date_limit }}"
                                max="{{ $current_date }}"
-                               name="date" >
+                               name="date_otp_login" >
                     </div>
                 </div>
                 <hr>
@@ -515,6 +515,7 @@
                 getLastLogin(number);
                 getUsageDetails(number);
                 getOtpData(number);
+                getOtpLoginData(number);
 
             });
 
@@ -780,6 +781,7 @@
                             }
                         }
                     },
+
                     columns: [
                         {
                             name: 'request_time',
@@ -867,13 +869,6 @@
                         },
 
                         {
-                            name: 'message',
-                            render: function (data, type, row) {
-                                return row.message;
-                            }
-                        },
-
-                        {
                             name: 'response',
                             render: function (data, type, row) {
                                 return row.response;
@@ -881,19 +876,18 @@
                         },
 
                         {
+                            name: 'message',
+                            render: function (data, type, row) {
+                                return row.message;
+                            }
+                        },
+
+
+
+                        {
                             name: 'status',
                             render: function (data, type, row) {
-                                if(row.status == 200){
-                                    return `<div class="badge badge-success">
-                                                  <span>`+ row.status +`</span>
-                                                  <i class="la la-check-circle-o font-medium-2"></i>
-                                                </div>`;
-                                }
-
-                                return `<div class="badge badge-danger">
-                                                  <span>`+ row.status +`</span>
-                                                  <i class="la la-bell-o font-medium-2"></i>
-                                                </div>`;
+                                return row.status;
                             }
                         }
                     ]

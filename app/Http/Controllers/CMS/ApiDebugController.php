@@ -30,16 +30,17 @@ class ApiDebugController extends Controller
 {
     /**
      * ApiDebugController constructor.
-     * @param  BalanceService  $balanceService
-     * @param  AuditLogsService  $auditLogsService
-     * @param  BonusLogsService  $bonusLogsService
-     * @param  CustomerSummaryUsageService  $customerSummaryUsageService
-     * @param  CustomerCallUsageService  $callUsageService
-     * @param  CustomerInternetUsageService  $internetUsageService
-     * @param  CustomerSmsUsageService  $smsUsageService
-     * @param  CustomerRechargeHistoryService  $rechargeHistoryService
-     * @param  CustomerRoamingUsageService  $roamingUsageService
-     * @param  CustomerSubscriptionUsageService  $subscriptionUsageService
+     * @param BalanceService $balanceService
+     * @param AuditLogsService $auditLogsService
+     * @param BonusLogsService $bonusLogsService
+     * @param CustomerSummaryUsageService $customerSummaryUsageService
+     * @param CustomerCallUsageService $callUsageService
+     * @param CustomerInternetUsageService $internetUsageService
+     * @param CustomerSmsUsageService $smsUsageService
+     * @param CustomerRechargeHistoryService $rechargeHistoryService
+     * @param CustomerRoamingUsageService $roamingUsageService
+     * @param CustomerSubscriptionUsageService $subscriptionUsageService
+     * @param OtpRequestLogsService $otpRequestLogsService
      */
     public function __construct(
         BalanceService $balanceService,
@@ -82,14 +83,14 @@ class ApiDebugController extends Controller
     }
 
     /**
-     * @param $numbner
+     * @param $number
      * @return mixed
+     * @throws \Throwable
      */
     public function getBalanceSummary($number)
     {
         $customer = Customer::where('phone', $number)->first();
         $summary = ($this->balanceService->getBalanceSummary($customer))->getData();
-        //dd($summary);
 
         return view('admin.debug.__partials.balance-summary', compact('summary'))->render();
     }
@@ -124,11 +125,21 @@ class ApiDebugController extends Controller
         return $this->auditLogsService->getLogs($request, $number);
     }
 
+    /**
+     * @param Request $request
+     * @param $number
+     * @return array
+     */
     public function getLoginBonusHistory(Request $request, $number)
     {
         return $this->bonusLogsService->getLogs($request, $number);
     }
 
+
+    /**
+     * @param $number
+     * @return string
+     */
     public function getLastLogin($number)
     {
         $user = Customer::where('msisdn', '88' . $number)->first();
@@ -154,6 +165,12 @@ class ApiDebugController extends Controller
         return view('admin.debug.__partials.usage-summary', compact('summary_usage'))->render();
     }
 
+    /**
+     * @param $number
+     * @param $type
+     * @return array|string
+     * @throws \Throwable
+     */
     public function getUsageDetails($number, $type)
     {
         $customer = Customer::where('phone', $number)->first();
