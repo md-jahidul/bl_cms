@@ -198,4 +198,17 @@ class ApiDebugController extends Controller
     {
         return $this->otpRequestLogsService->getLogs($request, $number);
     }
+
+    /**
+     * @param  Request  $request
+     * @param $number
+     * @return array
+     */
+    public function getOtpLoginRequestLogs(Request $request, $number)
+    {
+        return $this->otpRequestLogsService->getOtpLoginLogs($request, $number);
+    }
+
+
+
 }
