@@ -81,12 +81,9 @@ class OtpRequestLogsService
 
         $builder = BlOtpLoginLogs::where('msisdn', $number);
 
-
-       // $builder = $builder->where('created_at', $date);
-
+        $builder = $builder->where('date', $date);
 
         $all_items_count = $builder->count();
-
 
         $items = $builder->orderBy('created_at', 'desc')->skip($start)->take($length)->get();
 

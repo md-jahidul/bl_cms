@@ -16,6 +16,7 @@ class CreateBlOtpLoginLogsTable extends Migration
         Schema::create('bl_otp_login_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('msisdn')->nullable();
+            $table->date('date')->nullable();
             $table->string('message')->nullable();
             $table->string('status')->nullable();
             $table->json('data')->nullable();
