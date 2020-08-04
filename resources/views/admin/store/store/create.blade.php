@@ -53,21 +53,21 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Sub Title:</label>
-                                    <input required
-                                           value="@if(isset($store)){{$store->sub_title}} @elseif(old("sub_title")) {{old("sub_title")}} @endif"
+                                    <label for="title">Sub Title:</label>
+                                    <input value="@if(isset($store)){{$store->sub_title}} @elseif(old("sub_title")) {{old("sub_title")}} @endif"
                                            type="text" name="sub_title" class="form-control @error('type') is-invalid @enderror"
                                            id="type" placeholder="Enter sub_title">
-                                    <div class="help-block"></div>
+                                    <div class="help-block">
+                                        {{--<small class="text-info"> Sub Title can not be more then 100 Characters</small><br>--}}
+                                    </div>
                                     <small class="text-danger"> @error('sub_title') {{ $message }} @enderror </small>
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">High lighted Text:</label>
-                                    <input required
-                                           value="@if(isset($store)){{$store->highlight_text}} @elseif(old("highlight_text")) {{old("highlight_text")}} @endif"
+                                    <label for="title" >High lighted Text:</label>
+                                    <input value="@if(isset($store)){{$store->highlight_text}} @elseif(old("highlight_text")) {{old("highlight_text")}} @endif"
                                            type="text" name="highlight_text" class="form-control @error('type') is-invalid @enderror"
                                            id="type" placeholder="Enter highlight_text..">
                                     <div class="help-block"></div>
@@ -81,7 +81,7 @@
                                         Category :
                                     </label>
                                     <div class="controls">
-                                        <select name="category_id" id="category_id"  class="form-control @error('category_id') is-invalid @enderror">
+                                        <select required name="category_id" id="category_id"  class="form-control @error('category_id') is-invalid @enderror">
                                             <option value="">Select Category</option>
                                             @foreach ($categories as $category)
                                                 <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}
@@ -127,6 +127,12 @@
                                         <option @if(isset($store)) @if($store->type=='promotional') selected
                                                 @endif @endif value="promotional">Promotional
                                         </option>
+
+                                        <option @if(isset($store)) @if($store->type=='sub_category') selected
+                                                @endif @endif value="sub_category">Sub Category
+                                        </option>
+
+
                                     </select>
                                     <div class="help-block"></div>
                                     <small class="text-danger"> @error('type') {{ $message }} @enderror </small>
@@ -165,9 +171,8 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Button Action (iOS):</label>
-                                    <input required
-                                           value="@if(isset($store)){{$store->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
+                                    <label for="title">Button Action (iOS):</label>
+                                    <input value="@if(isset($store)){{$store->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
                                            type="text" name="btn_action_ios" class="form-control @error('btn_action_ios') is-invalid @enderror"
                                            id="btn_action_ios" placeholder="Enter Button Text">
                                     <div class="help-block">
@@ -178,9 +183,8 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Button Action (Android):</label>
-                                    <input required
-                                           value="@if(isset($store)){{$store->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
+                                    <label for="title">Button Action (Android):</label>
+                                    <input value="@if(isset($store)){{$store->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
                                            type="text" name="btn_action_ios" class="form-control @error('btn_action_ios') is-invalid @enderror"
                                            id="btn_action_ios" placeholder="Enter Button Text">
                                     <div class="help-block">
@@ -214,19 +218,6 @@
                                     <small class="text-danger"> @error('total_ratings') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="title">Video:</label>
-                                    <input required
-                                           value="@if(isset($store)){{$store->video_link}} @elseif(old("video_link")) {{old("video_link")}} @endif"
-                                           type="text" name="video_link" class="form-control @error('video_link') is-invalid @enderror"
-                                           id="video_link" placeholder="Enter video link">
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('video_link') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
-
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -284,8 +275,20 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="title">Video:</label>
+                                    <input required
+                                           value="@if(isset($store)){{$store->video_link}} @elseif(old("video_link")) {{old("video_link")}} @endif"
+                                           type="text" name="video_link" class="form-control @error('video_link') is-invalid @enderror"
+                                           id="video_link" placeholder="Enter video link">
+                                    <div class="help-block"></div>
+                                    <small class="text-danger"> @error('video_link') {{ $message }} @enderror </small>
+                                </div>
+                            </div>
 
-                            <div class="col-md-8">
+
+                           {{-- <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="title">Description:</label>
                                     <textarea
@@ -296,11 +299,8 @@
                                     <div class="help-block"></div>
                                     <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
                                 </div>
-                            </div>
+                            </div>--}}
 
-                            <div class="col-md-12">
-
-                            </div>
 
                             <div class="col-md-12">
                                 <button type="submit" style="float: right" class="btn btn-success round px-2">
