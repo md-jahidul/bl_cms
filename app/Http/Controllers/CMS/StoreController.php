@@ -51,7 +51,7 @@ class StoreController extends Controller
      */
     public function index()
     {
-        $stores = $this->storeService->findAll();
+        $stores = $this->storeService->getMyBlStorList();
         $category =  $this->storeCategoryService->findAll();
         return view('admin.store.store.index')
             ->with('category', $category)
@@ -146,6 +146,14 @@ class StoreController extends Controller
     {
         session()->flash('error', $this->storeService->deleteStore($id)->getContent());
         return url('myblStore');
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function myblStoreSortable(Request $request)
+    {
+        $this->storeService->tableSortable($request);
     }
 
 }

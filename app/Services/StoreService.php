@@ -26,6 +26,17 @@ class StoreService
 
     }
 
+
+    /**
+     * Retrieve store list
+     *
+     * @return mixed
+     */
+    public function getMyBlStorList()
+    {
+        return $this->storeRepository->getMyBlStoreList();
+    }
+
     /**
      * Storing the Store resource
      * @param $data
@@ -74,6 +85,16 @@ class StoreService
         $storeRepository = $this->findOne($id);
         $storeRepository->delete();
         return Response('Store has been successfully deleted');
+    }
+
+    /**
+     * @param $request
+     * @return Response
+     */
+    public function tableSortable($request)
+    {
+        $this->storeRepository->sortMyBlStoreList($request);
+        return new Response('update successfully');
     }
 
 

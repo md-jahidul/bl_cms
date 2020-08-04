@@ -165,6 +165,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     route::resource('storeCategory', 'CMS\StoreCategoryController');
     Route::get('storeCategory/destroy/{id}', 'CMS\StoreCategoryController@destroy');
 
+
     // Store sub-category
     route::resource('subStore', 'CMS\StoreSubCategoryController');
     Route::get('subStore/destroy/{id}', 'CMS\StoreSubCategoryController@destroy');
@@ -172,10 +173,12 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     // Store
     route::resource('myblStore', 'CMS\StoreController');
     Route::get('myblStore/destroy/{id}', 'CMS\StoreController@destroy');
+    Route::get('myblStore-sortable', 'CMS\StoreController@myblStoreSortable')->name('myblStore.sort');
 
     // App
     route::resource('appStore', 'CMS\StoreAppController');
     Route::get('appStore/destroy/{id}', 'CMS\StoreAppController@destroy');
+    Route::get('appStore-sortable', 'CMS\StoreAppController@appStoreSortable')->name('appStore.sort');
 
     // Store App Slider Image
     Route::get('appslider/{id}/images', 'CMS\StoreAppSliderImageController@index');

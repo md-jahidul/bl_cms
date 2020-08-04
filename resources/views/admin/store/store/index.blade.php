@@ -34,6 +34,7 @@
                 <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
+                        <th width='5%'><i class="icon-cursor-move icons"></i></th>
                         <th width="5%">ID</th>
                         <th width="12%">Title</th>
                         <th width="30%">Details</th>
@@ -41,9 +42,10 @@
                         <th width="15%">Action</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="sortable">
                         @foreach ($stores as $store)
-                            <tr>
+                            <tr data-index="{{ $store->id }}" data-position="{{$store->display_order }}">
+                                <td width="5%"><i class="icon-cursor-move icons"></i></td>
                                 <td width="5%">{{$store->id}}</td>
                                 <td width="12%">{{$store->title}}</td>
                                 <td width="30%">{{$store->description}}</td>
@@ -152,6 +154,9 @@
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
+
+        var auto_save_url = "{{ url('myblStore-sortable') }}";
+
       $(function () {
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
