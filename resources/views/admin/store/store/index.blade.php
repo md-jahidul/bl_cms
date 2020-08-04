@@ -37,7 +37,8 @@
                         <th width='5%'><i class="icon-cursor-move icons"></i></th>
                         <th width="5%">ID</th>
                         <th width="12%">Title</th>
-                        <th width="30%">Details</th>
+                        <th width="20%">Details</th>
+                        <th width="10%">Type</th>
                         <th width="10%">Category</th>
                         <th width="15%">Action</th>
                     </tr>
@@ -49,6 +50,7 @@
                                 <td width="5%">{{$store->id}}</td>
                                 <td width="12%">{{$store->title}}</td>
                                 <td width="30%">{{$store->description}}</td>
+                                <td width="30%">{{$store->type}}</td>
                                 <td width="10%">{{$store->storeCategories->name_en}} </td>
                                 <td width="15%">
                                     <div class="row">
@@ -74,62 +76,6 @@
 
             </div>
         </div>
-    </div>
-    <div id="sendUser" class="modal fade bd-example-modal-lg " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content p-2">
-            <div class="card-content">
-                <div class="card-body">
-                    <form class="form" method="POST" action="">
-
-                        <div class="form-body">
-                            <button type="button" class="close mt-1" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="form-section">
-                                <i class="la la-key"></i>
-                                 Send Store
-                            </h4>
-
-                            <div class="row">
-                                <div class="col-6">
-                                    <h4>
-                                       Store title :<span id="title"></span>
-                                    </h4>
-                                </div>
-                                <div class="col-6">
-                                    <h4>
-                                       Store Category :<span id="category"></span>
-                                    </h4>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h4>
-                                               Store Description :
-                                            </h4>
-                                        </div>
-                                        <div class="col-12">
-                                            <span id="discription"></span>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12" >
-                                    <div class="form-group float-right" style="margin-top:26px;">
-                                        <button class="btn btn-primary" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-          </div>
-      </div>
     </div>
 
 </section>
