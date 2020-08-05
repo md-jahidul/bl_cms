@@ -578,6 +578,29 @@
                 </ul>
             </li>
 
+
+                <li class="nav-item"><a href="#"><i class="la la-signal"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Banglalink 4G</span></a>
+                    <ul class="menu-content">
+                        <li class="{{ is_active_url('/bl-4g-campaign') }} nav-item">
+                            <a href="{{ url('/bl-4g-campaign') }}"><i class="la la-bullhorn"></i>
+                                <span class="menu-title" data-i18n="nav.templates.main">4G Campaign</span>
+                            </a>
+                        </li>
+
+                        <li class="{{ is_active_url('/bl-4g-devices') }} nav-item">
+                            <a href="{{ url('bl-4g-devices') }}"><i class="la la-mobile-phone"></i>
+                                <span class="menu-title" data-i18n="nav.templates.main">4G Devices</span>
+                            </a>
+                        </li>
+
+                        <li class="{{ is_active_url('/bl-4g-landing-page') }} nav-item">
+                            <a href="{{ url('/bl-4g-landing-page') }}"><i class="la la-futbol-o"></i>
+                                <span class="menu-title" data-i18n="nav.templates.main">4G Landing Page</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
         </ul>
     </li>
 

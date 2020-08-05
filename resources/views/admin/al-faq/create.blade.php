@@ -18,24 +18,6 @@
                         <form role="form" action="{{ url("faq/$slug/store") }}" method="POST" novalidate>
                             @csrf
                             <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('title') ? ' error' : '' }}">
-                                    <label for="title">Title</label>
-                                    <input type="text" name="title" class="form-control" placeholder="Enter title"
-                                           value="{{ old("title") ? old("title") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('title'))
-                                        <div class="help-block">  {{ $errors->first('title') }}</div>
-                                    @endif
-                                </div>
-                                <div class="form-group col-md-6 {{ $errors->has('slug') ? ' error' : '' }}">
-                                    <label for="slug" class="">Slug</label>
-                                    <input type="text" class="form-control" readonly
-                                           value="{{ $slug }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('slug'))
-                                        <div class="help-block">  {{ $errors->first('slug') }}</div>
-                                    @endif
-                                </div>
                                 <div class="form-group col-md-6 {{ $errors->has('question_en') ? ' error' : '' }}">
                                     <label for="question_en" class="">Question (English)</label>
                                     <textarea type="text" name="question_en" class="form-control" placeholder="Enter question in English" required rows="5"
@@ -72,6 +54,17 @@
                                         <div class="help-block">  {{ $errors->first('answer_bn') }}</div>
                                     @endif
                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="title" class="mr-1">Status:</label>
+                                        <input type="radio" name="status" value="1" id="active" checked>
+                                        <label for="active" class="mr-1">Active</label>
+                                        <input type="radio" name="status" value="0" id="inactive">
+                                        <label for="inactive">Inactive</label>
+                                    </div>
+                                </div>
+
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i

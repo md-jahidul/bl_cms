@@ -20,7 +20,6 @@
                         <thead>
                         <tr>
                             <td width="3%">#</td>
-                            <th width="25%">Title</th>
                             <th width="25%">Question En</th>
                             <th width="25%">Answer Bn</th>
                             <th class="">Action</th>
@@ -30,8 +29,7 @@
                             @foreach($faqs as $faq)
                                 <tr>
                                     <td width="3%">{{ $loop->iteration }}</td>
-                                    <td>{{ $faq->title }}</td>
-                                    <td>{{ $faq->question_en }}</td>
+                                    <td>{{ $faq->question_en }} {!! $faq->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                     <td>{{ $faq->answer_en }}</td>
                                     <td width="12%" class="text-center">
                                         <a href="{{ url("faq/$slug/$faq->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
