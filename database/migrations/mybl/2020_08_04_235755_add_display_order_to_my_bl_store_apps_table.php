@@ -15,6 +15,7 @@ class AddDisplayOrderToMyBlStoreAppsTable extends Migration
     {
         Schema::table('my_bl_store_apps', function (Blueprint $table) {
             $table->integer('display_order')->nullable()->after('image_url');
+            $table->tinyInteger('is_active')->default(1)->after('image_url');
         });
     }
 
@@ -27,6 +28,7 @@ class AddDisplayOrderToMyBlStoreAppsTable extends Migration
     {
         Schema::table('my_bl_store_apps', function (Blueprint $table) {
             $table->dropColumn('display_order');
+            $table->dropColumn('is_active');
         });
     }
 }
