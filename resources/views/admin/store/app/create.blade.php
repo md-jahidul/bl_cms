@@ -176,20 +176,6 @@
                                 </div>
                             </div>
 
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="title">Description:</label>
-                                    <textarea
-                                        class="form-control @error('description') is-invalid @enderror"
-                                        placeholder="Enter body description....." id="description" name="description" rows="3">
-                                        @if(isset($appStore)){{$appStore->description}} @elseif(old("description")) {{old("description")}} @endif
-                                    </textarea>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
-
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="icon">Upload Icon :</label>
@@ -274,6 +260,19 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
+                                    <label for="title">Description:</label>
+                                    <textarea
+                                        class="form-control @error('description') is-invalid @enderror"
+                                        placeholder="Enter body description....." id="description" name="description" rows="3">
+                                        @if(isset($appStore)){{$appStore->description}} @elseif(old("description")) {{old("description")}} @endif
+                                    </textarea>
+                                    <div class="help-block"></div>
+                                    <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
                                     <label for="is_active">Active Status:</label>
                                     <select value=""
                                             class="form-control" id="is_active"
@@ -309,6 +308,7 @@
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css"
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
 @endpush
 
@@ -316,6 +316,7 @@
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
     <script>
 
@@ -354,6 +355,20 @@
             })
         })
 
+        $(function () {
+            $("textarea#description").summernote({
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['table', ['table']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['view', ['fullscreen']]
+                ],
+                height:100
+            })
+        })
 
         $(document).ready(function () {
             $('#Example1').DataTable({
