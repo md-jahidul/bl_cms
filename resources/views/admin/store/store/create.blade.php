@@ -128,8 +128,8 @@
                                                 @endif @endif value="promotional">Promotional
                                         </option>
 
-                                        <option @if(isset($store)) @if($store->type=='sub category') selected
-                                                @endif @endif value="sub category">Sub Category
+                                        <option @if(isset($store)) @if($store->type=='subcategory') selected
+                                                @endif @endif value="subcategory">SubCategory
                                         </option>
 
 
