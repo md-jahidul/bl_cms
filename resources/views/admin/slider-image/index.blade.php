@@ -40,7 +40,7 @@
                             <td>{{ $slider_image->title_en }} {!! $slider_image->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                             <td>{{ (isset($slider_image->other_attributes['redirect_url'])) ? $slider_image->other_attributes['redirect_url'] : '' }}</td>
                             <td class="action">
-                                @if($sliderItem->other_attributes['type'] == 'component_slider')
+                                @if(isset($sliderItem->other_attributes['type']) == 'component_slider')
                                     <a href="{{ url('business-others-service-edit/'.$slider_image->id . '/corona') }}" target="_blank" class="btn btn-sm btn-outline-info">
                                         Banner
                                     </a>
