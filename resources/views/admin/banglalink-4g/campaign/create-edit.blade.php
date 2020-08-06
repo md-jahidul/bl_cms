@@ -22,7 +22,9 @@
                               action="{{ !empty($campaign) ? route('bl-4g-campaign.update', $campaign->id) : route('bl-4g-campaign.store') }}"
                               method="POST" novalidate enctype="multipart/form-data">
                             @csrf
-                            @method('PUT')
+                            @if(!empty($campaign))
+                                @method('PUT')
+                            @endif
                             <div class="row">
                                 <?php
                                 $title = "";

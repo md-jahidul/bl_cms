@@ -30,7 +30,7 @@
                                 <tr>
                                     <td width="3%">{{ $loop->iteration }}</td>
                                     <td>{{ $faq->question_en }} {!! $faq->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
-                                    <td>{{ $faq->answer_en }}</td>
+                                    <td>{!! $faq->answer_en !!}</td>
                                     <td width="12%" class="text-center">
                                         <a href="{{ url("faq/$slug/$faq->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         <a href="#" remove="{{ url("faq/$slug/destroy/$faq->id") }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $faq->id }}" title="Delete">
