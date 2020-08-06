@@ -522,8 +522,8 @@
             @endif
 
             @if( auth()->user()->can_view('LeadManagement', 'leadRequestedList') )
-                <li class="nav-item"><a href="#"><i class="la la-lemon-o"></i>
-                        <span class="menu-title" data-i18n="nav.templates.main">Lead-management</span></a>
+                <li class="nav-item"><a href="#"><i class="la la-briefcase"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">B2B Leads</span></a>
                     <ul class="menu-content">
                         <li class="{{ is_active_url('lead-requested-list') }}">
                             <a class="menu-item" href="{{ route('lead-list') }}"
@@ -561,8 +561,24 @@
                     <span class="menu-title" data-i18n="nav.templates.main">Media</span>
                 </a>
             </li>
+            
+            
+           
+                <li class="nav-item"><a href="#"><i class="la la-star-half-full"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Customer Feedback</span></a>
+                    <ul class="menu-content">
+                        <li class="{{ is_active_url('customer-feedback/questions') }}">
+                            <a class="menu-item" href="{{ url('customer-feedback/questions') }}"
+                               data-i18n="nav.templates.vert.classic_menu"><i
+                                    class="la la-list"></i> Questions</a>
+                        </li>
+                    </ul>
+                </li>
         </ul>
     </li>
+    <hr>
+    <hr>
+    <hr>
 
 
 

@@ -848,4 +848,10 @@ Route::middleware('authorize', 'auth')->group(function () {
     // Media Press News Event
     Route::resource('press-news-event', 'AssetLite\MediaPressNewsEventController')->except(['show', 'destroy']);
     Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
+    
+    //Customer Feedback
+    Route::get('customer-feedback/questions', 'AssetLite\CustomerFeedbackController@questions');
+    Route::get('customer-feedback/add-question', 'AssetLite\CustomerFeedbackController@addQuestion');
+    Route::get('customer-feedback/edit-question/{id}', 'AssetLite\CustomerFeedbackController@editQuestion');
+    Route::post('customer-feedback/save-question', 'AssetLite\CustomerFeedbackController@saveQuestion');
 });
