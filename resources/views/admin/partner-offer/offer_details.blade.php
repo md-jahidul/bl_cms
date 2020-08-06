@@ -19,14 +19,15 @@
                     <div class="card-body card-dashboard">
                         <form role="form" id="product_form" action="{{ route('offer.details-update', [strtolower($partner)] ) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
-                            @method('put')
+                            @method('post')
+                            {{-- {{ dd($partnerOfferDetail) }} --}}
                             <div class="row">
                                 <input type="hidden" name="partner_id" value="{{ $partnerOfferDetail->partner_id }}">
                                 <input type="hidden" name="offer_details_id" value="{{ $partnerOfferDetail->partner_offer_details->id }}">
                                 <div class="form-group col-md-6 {{ $errors->has('offer_en') ? ' error' : '' }}">
-                                    <label for="offer_en" class="">Offer Name</label>
+                                    <label for="offer_en" class="">Partner Offer</label>
                                     <input type="text" class="form-control" placeholder="Enter offer name english" readonly
-                                           value="{{ $partnerOfferDetail->offer_en }}" required data-validation-required-message="Enter offer name english">
+                                           value="{{ $partnerOfferDetail->offer_scale .' '. $partnerOfferDetail->offer_value .' '. $partnerOfferDetail->offer_unit }}" required data-validation-required-message="Enter offer name english">
                                     <div class="help-block"></div>
                                     @if ($errors->has('offer_en'))
                                         <div class="help-block">{{ $errors->first('offer_en') }}</div>
@@ -111,8 +112,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_details_en') ? ' error' : '' }}">
                                     <label for="offer_details_en" class="required">Offer Details (English)</label>
-                                    <textarea type="text" name="offer_details_en"  class="form-control" placeholder="Enter offer details in english"
-                                           required data-validation-required-message="Enter offer details in english" id="details">{{ $partnerOfferDetail->partner_offer_details->offer_details_en }}</textarea>
+                                    <textarea type="text" name="offer_details_en" class="form-control summernote_editor" placeholder="Enter offer details in english"
+                                           required data-validation-required-message="Enter offer details in english">{{ $partnerOfferDetail->partner_offer_details->offer_details_en }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('offer_details_en'))
                                         <div class="help-block">{{ $errors->first('offer_details_en') }}</div>
@@ -121,13 +122,41 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_details_bn') ? ' error' : '' }}">
                                     <label for="offer_details_bn" class="required">Offer Details (Bangla)</label>
-                                    <textarea type="text" name="offer_details_bn"  class="form-control" placeholder="Enter offer details in english"
-                                              required data-validation-required-message="Enter offer details in english" id="details">{{ $partnerOfferDetail->partner_offer_details->offer_details_bn }}</textarea>
+                                    <textarea type="text" name="offer_details_bn" class="form-control summernote_editor" placeholder="Enter offer details in english"
+                                              required data-validation-required-message="Enter offer details in english">{{ $partnerOfferDetail->partner_offer_details->offer_details_bn }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('offer_details_bn'))
                                         <div class="help-block">{{ $errors->first('offer_details_bn') }}</div>
                                     @endif
                                 </div>
+
+
+
+                                <div class="form-group col-md-6 mt-1 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                    <div class="custom-file">
+                                        <input type="file" name="banner_image_url" class="custom-file-input" id="image">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    @if( !empty($partnerOfferDetail->partner_offer_details->banner_image_url) )
+                                    <img src="{{ config('filesystems.file_base_url') . $partnerOfferDetail->partner_offer_details->banner_image_url }}" style="height:70px;width:70px;" id="imgDisplay">
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
+                                    <label for="banner_alt_text" class="required">Alt Text</label>
+                                    <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
+                                           value="{{ $partnerOfferDetail->partner_offer_details->banner_alt_text }}" required data-validation-required-message="Enter image alter text">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_alt_text'))
+                                        <div class="help-block">  {{ $errors->first('banner_alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6"></div>
 
                                 <div class="form-actions col-md-12">
                                     <div class="pull-right">

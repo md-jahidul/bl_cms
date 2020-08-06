@@ -8,6 +8,8 @@ class ProductCore extends Model
 {
     protected $fillable = [
         'product_code',
+        'renew_product_code',
+        'recharge_product_code',
         'name',
         'commercial_name_en',
         'commercial_name_bn',
@@ -28,19 +30,21 @@ class ProductCore extends Model
         'sms_volume',
         'minute_volume',
         'call_rate',
+        'call_rate_unit',
         'sms_rate',
+        'sms_rate_unit',
         'is_bundle',
         'is_auto_renewable',
         'is_recharge_offer',
         'is_gift_offer',
         'show_in_app',
         'offer_id',
-        'is_amar_offer',
-        'purchase_option',
+        'is_social_pack',
         'other_info',
         'status',
-        'segment',
-        'validity_in_days'
+        'validity_in_days',
+        'platform'
+
     ];
 
     protected $guarded = ['id'];

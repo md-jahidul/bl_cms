@@ -12,6 +12,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
+use App\Http\Controllers\AssetLite\ConfigController;
+use Illuminate\Support\Facades\Validator;
 
 class PartnerController extends Controller
 {
@@ -60,6 +62,18 @@ class PartnerController extends Controller
      */
     public function store(StorePartnerRequest $request)
     {
+        $image_upload_size = ConfigController::adminImageUploadSize();
+        $image_upload_type = ConfigController::adminImageUploadType();
+        
+        # Check Image upload validation
+        $validator = Validator::make($request->all(), [
+            'company_logo' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+        ]);
+        if ($validator->fails()) {
+            Session::flash('error', $validator->messages()->first());
+            return redirect('partners');
+        }
+        
         $response = $this->partnerService->storePartner($request->all());
         Session::flash('message', $response->getContent());
         return redirect('partners');
@@ -98,6 +112,19 @@ class PartnerController extends Controller
      */
     public function update(StorePartnerRequest $request, $id)
     {
+
+        $image_upload_size = ConfigController::adminImageUploadSize();
+        $image_upload_type = ConfigController::adminImageUploadType();
+        
+        # Check Image upload validation
+        $validator = Validator::make($request->all(), [
+            'company_logo' => 'nullable|mimes:'.$image_upload_type.'|max:'.$image_upload_size // 2M
+        ]);
+        if ($validator->fails()) {
+            Session::flash('error', $validator->messages()->first());
+            return redirect('partners');
+        }
+
         $response = $this->partnerService->updatePartner($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect('partners');

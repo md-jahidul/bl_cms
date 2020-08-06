@@ -12,7 +12,22 @@ class SliderComponentTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        $slider_types = ['Hero','Trending', 'Digital Services', 'Partner Offer', 'Testimonial', 'Home', 'Dashboard'];
+        DB::statement("SET FOREIGN_KEY_CHECKS =0;");
+        DB::table('al_slider_component_types')->truncate();
+
+        $slider_types =
+            [
+                'Hero',
+                'Trending',
+                'Digital Services',
+                'Partner Offer',
+                'Testimonial',
+                'About-Media',
+                'Explore Devices',
+                'Corona',
+                'Home',
+                'Dashboard',
+            ];
 
         $slider_component_types = [];
 
@@ -22,7 +37,7 @@ class SliderComponentTypesTableSeeder extends Seeder
                 'slug' => str_replace(" ", "", $slider)
             ];
         }
-
         DB::table('al_slider_component_types')->insert($slider_component_types);
+        DB::statement("SET FOREIGN_KEY_CHECKS =1;");
     }
 }

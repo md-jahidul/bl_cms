@@ -24,19 +24,34 @@
     @endif
 </div>
 
-<slot id="{{ strtolower($type) == 'prepaid' ? 'prepaid_plans' : 'postpaid_plans' }}" class="{{ ($offertype == 5 || $offertype == 7) ? '' : 'd-none' }}">
-    @include('layouts.partials.products.common-field.call_rate')
+<slot id="{{ strtolower($type) == 'prepaid' ? 'prepaid_plans' : 'postpaid_plans' }}"
+      class="{{ ($offertype == \App\Enums\OfferType::PREPAID_PLANS || $offertype == \App\Enums\OfferType::POSTPAID_PLANS) ? '' : 'd-none' }}">
+{{--    @include('layouts.partials.products.common-field.price_vat_mrp')--}}
     @include('layouts.partials.products.common-field.sms_rate')
+    @include('layouts.partials.products.common-field.sms_rate_unit')
 </slot>
 
 
 @if(strtolower($type) == 'prepaid')
-    <slot id="start_up_offers" class="{{ $offertype == 6 ? '' : 'd-none' }}">
+    <slot id="start_up_offers" class="{{ $offertype == \App\Enums\OfferType::START_UP_OFFERS ? '' : 'd-none' }}">
         @include('layouts.partials.products.package.startup')
     </slot>
 @else
-    <slot id="icon_plans" class="{{ $offertype == 8 ? '' : 'd-none' }}">
+    <slot id="icon_plans" class="{{ $offertype == \App\Enums\OfferType::ICON_PLANS ? '' : 'd-none' }}">
         @include('layouts.partials.products.package.icon_plan')
+    </slot>
+    <slot id="propaid_plans" class="{{ $offertype == \App\Enums\OfferType::PROPAID_PLANS ? '' : 'd-none' }}">
+{{--        @include('layouts.partials.products.common-field.price_vat_mrp')--}}
+{{--        @include('layouts.partials.products.common-field.minute_volume')--}}
+{{--        @include('layouts.partials.products.common-field.internet_volume')--}}
+{{--        @include('layouts.partials.products.common-field.call_rate')--}}
+{{--        @include('layouts.partials.products.common-field.call_rate_unit')--}}
+        @include('layouts.partials.products.common-field.sms_rate')
+        @include('layouts.partials.products.common-field.sms_rate_unit')
+        @include('layouts.partials.products.common-field.validity_unit')
+        @include('layouts.partials.products.common-field.validity')
+        @include('layouts.partials.products.common-field.balance_check')
+        @include('layouts.partials.products.common-field.tag')
     </slot>
 @endif
 

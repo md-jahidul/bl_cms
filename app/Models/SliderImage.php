@@ -18,6 +18,11 @@ class SliderImage extends Model
             'image_url',
             'sequence',
             'other_attributes',
+            'user_type',
+            'start_date',
+            'end_date',
+            'display_type',
+            'web_deep_link'
     ];
 
     protected $casts = [

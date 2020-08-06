@@ -23,9 +23,15 @@ var product = (function () {
                 $(otherElements).hide();
                 $(selectBy + selectedItemName).removeClass('d-none')
                     .show()
-                    .find('input').each(function () {
+                    .find('input[type=text], input[type=number], select, textarea').each(function () {
                         $(this).val('');
                     });
+
+                // Remove product details editor data
+                $('.note-editable').each(function () {
+                    $(this).children().remove();
+                });
+
             } else {
                 $(otherElements).remove();
             }
@@ -55,10 +61,14 @@ var product = (function () {
     let $offerType = $('#offer_type');
     let $packageType = $('#package_type');
     let $otherOfferType = $('#other_offer_type');
+    let $startupOfferDetails = $('#design_structure');
 
-    $removeDomSelect = [$offerType, $packageType, $otherOfferType];
+    let $productDetailsComponent = $('#component_type');
+
+    $removeDomSelect = [$offerType, $packageType, $otherOfferType, $startupOfferDetails, $productDetailsComponent];
     $removeDomSelect.forEach(function ($ele) {
         $ele.on('change', function () {
+            console.log($ele);
             product.select_change($ele);
         });
     })
@@ -76,7 +86,6 @@ var product = (function () {
         let activationUssd = $('#activation_ussd');
         let price = $('#price');
         let vat = $('#vat');
-
         return [
             nameEn.val(data.commercial_name_en),
             nameBn.val(data.commercial_name_bn),
@@ -100,7 +109,9 @@ var product = (function () {
         let smsRate = $(".sms_rate");
         let smsVolume = $(".sms_volume");
         let validity = $(".validity");
+        let validityUnit = $("#validity_unit");
         let $offerType = $("#offer_type");
+
         switch (type) {
             case 'data':
                 $offerType.val('1');
@@ -109,6 +120,7 @@ var product = (function () {
                 internetVolumeMb.val(data.internet_volume_mb);
                 balanceCheckUSSD.val(data.balance_check_ussd);
                 validity.val(data.validity);
+                validityUnit.val(data.validity_unit);
                 break;
             case 'voice':
                 $offerType.val('2');
@@ -116,6 +128,7 @@ var product = (function () {
                 productBasicInfo(data);
                 minuteVolume.val(data.minute_volume);
                 validity.val(data.validity);
+                validityUnit.val(data.validity_unit);
                 balanceCheckUSSD.val(data.balance_check_ussd);
                 break;
             case 'mix':
@@ -126,6 +139,7 @@ var product = (function () {
                 internetVolumeMb.val(data.internet_volume_mb);
                 smsVolume.val(data.sms_volume);
                 validity.val(data.validity);
+                validityUnit.val(data.validity_unit);
                 balanceCheckUSSD.val(data.balance_check_ussd);
                 break;
             default:
@@ -137,11 +151,13 @@ var product = (function () {
         var selectedProductCode = $(this).children("option:selected").val();
         var requestUrl = $(this).attr('data-url');
 
-        console.log(requestUrl);
+        // console.log(requestUrl);
         $.ajax({
             method: "GET",
             url: requestUrl + '/' + selectedProductCode,
         }).done(function (data) {
+            // console.log(data.validity_unit);
+            // console.log(data);
             checkType(data.content_type, data)
         });
     })

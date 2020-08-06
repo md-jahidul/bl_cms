@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repositories\AlSliderImageRepository;
 use App\Repositories\SliderImageRepository;
 use App\Repositories\SliderRepository;
+use App\Models\BusinessOthers;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Exception;
@@ -47,10 +48,25 @@ class AlSliderImageService
         if (request()->hasFile('image_url')) {
             $data['image_url'] = $this->upload($data['image_url'], 'assetlite/images/slider-images');
         }
+
+        if (request()->hasFile('mobile_view_img')) {
+            $data['mobile_view_img'] = $this->upload($data['mobile_view_img'], 'assetlite/images/slider-images');
+        }
         $data['slider_id'] = $sliderId;
         $data['display_order'] = ++$count;
-        $this->save($data);
+        $image = $this->save($data);
+        $imgId = $image->id;
+        $this->saveInBusiness($data, $imgId);
         return new Response('Slider Image added successfully');
+    }
+
+    public function saveInBusiness($data, $imgId){
+        $bsOthers = new BusinessOthers();
+        $bsOthers->name = $data['title_en'];
+        $bsOthers->name_bn = $data['title_bn'];
+        $bsOthers->type = $imgId;
+        $bsOthers->status = 1;
+        $bsOthers->save();
     }
 
     public function tableSortable($data)
@@ -71,6 +87,11 @@ class AlSliderImageService
             $imageUrl = $this->upload($data['image_url'], 'assetlite/images/slider-images');
             $data['image_url'] = $imageUrl;
             $this->deleteFile($sliderImage['image_url']);
+        }
+        if (request()->hasFile('mobile_view_img')) {
+            $imageUrl = $this->upload($data['mobile_view_img'], 'assetlite/images/slider-images');
+            $data['mobile_view_img'] = $imageUrl;
+            $this->deleteFile($sliderImage['mobile_view_img']);
         }
         $sliderImage->update($data);
         return Response('Slider Image update successfully !');

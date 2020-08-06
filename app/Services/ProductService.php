@@ -8,17 +8,19 @@ use App\Models\ProductDetail;
 use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDetailRepository;
 use App\Repositories\ProductRepository;
+use App\Repositories\SearchDataRepository;
+use App\Repositories\TagCategoryRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-
 class ProductService
 {
-    use CrudTrait;
 
+    use CrudTrait;
 
     /**
      * @var $partnerOfferRepository
@@ -26,22 +28,35 @@ class ProductService
     protected $productRepository;
     protected $productCoreRepository;
     protected $productDetailRepository;
+    protected $searchRepository;
+    protected $tagRepository;
 
     /**
      * ProductService constructor.
      * @param ProductRepository $productRepository
      * @param ProductDetailRepository $productDetailRepository
      * @param ProductCoreRepository $productCoreRepository
+     * @param SearchDataRepository $searchRepository
+     * @param TagCategoryRepository $tagRepository
      */
     public function __construct(
         ProductRepository $productRepository,
         ProductDetailRepository $productDetailRepository,
-        ProductCoreRepository $productCoreRepository
+        ProductCoreRepository $productCoreRepository,
+        SearchDataRepository $searchRepository,
+        TagCategoryRepository $tagRepository
     ) {
         $this->productRepository = $productRepository;
         $this->productCoreRepository = $productCoreRepository;
         $this->productDetailRepository = $productDetailRepository;
+        $this->searchRepository = $searchRepository;
+        $this->tagRepository = $tagRepository;
         $this->setActionRepository($productRepository);
+    }
+
+    public function produtcs()
+    {
+        return $this->productRepository->findByProperties([], ['id', 'product_code', 'name_en']);
     }
 
     /**
@@ -51,11 +66,70 @@ class ProductService
      */
     public function storeProduct($data, $simId)
     {
+        foreach ($data['offer_info'] as $key => $offerInfo) {
+            if ($offerInfo) {
+                $otherInfo[$key] = $offerInfo;
+            }
+        }
+        $data['offer_info'] = isset($otherInfo) ? $otherInfo : null;
         $data['sim_category_id'] = $simId;
+        $data['created_by'] = Auth::id();
         $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
-        $productId = $this->save($data);
-        $this->productDetailRepository->insertProductDetail($productId->id);
+        $product = $this->save($data);
+        //save Search Data
+        $this->_saveSearchData($product);
+        $this->productDetailRepository->saveOrUpdateProductDetail($product->id);
         return new Response('Product added successfully');
+    }
+
+    //save Search Data
+    private function _saveSearchData($product)
+    {
+        $productId = $product->id;
+        $name = $product->name_en;
+
+        $url = "";
+        if ($product->sim_category_id == 1) {
+            $url .= "prepaid/";
+        }
+        if ($product->sim_category_id == 2) {
+            $url .= "postpaid/";
+        }
+
+        //category url
+        $url .= $product->offer_category->url_slug;
+
+        $keywordType = "offer-" . $product->offer_category->alias;
+
+
+        $type = "";
+        if ($product->sim_category_id == 1 && $product->offer_category_id == 1) {
+            $url .= '/' . $product->url_slug . '/' . $productId;
+            $type = 'prepaid-internet';
+        }
+        if ($product->sim_category_id == 1 && $product->offer_category_id == 2) {
+            $url .= '/' . $product->url_slug . '/' . $productId;
+            $type = 'prepaid-voice';
+        }
+        if ($product->sim_category_id == 1 && $product->offer_category_id == 3) {
+            $url .= '/' . $product->url_slug . '/' . $productId;
+            $type = 'prepaid-bundle';
+        }
+        if ($product->sim_category_id == 2 && $product->offer_category_id == 1) {
+            $url .= '/' . $product->url_slug . '/' . $productId;
+            $type = 'postpaid-internet';
+        }
+        if ($product->offer_category_id > 3) {
+            $url .= '/' . $product->url_slug . '/' . $productId;
+            $type = 'others';
+        }
+
+        $tag = "";
+        if ($product->tag_category_id) {
+            $tag = $this->tagRepository->getTagById($product->tag_category_id);
+        }
+
+        return $this->searchRepository->saveData($productId, $keywordType, $name, $url, $type, $tag);
     }
 
     public function tableSortable($data)
@@ -82,8 +156,16 @@ class ProductService
     public function updateProduct($data, $type, $id)
     {
         $product = $this->productRepository->findByCode($type, $id);
+//        $this->productDetailRepository->saveOrUpdateProductDetail($product->id, $data);
         $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0);
+        $data['special_product'] = (isset($data['special_product']) ? 1 : 0);
+        $data['rate_cutter_offer'] = (isset($data['rate_cutter_offer']) ? 1 : 0);
+        $data['updated_by'] = Auth::id();
+
         $product->update($data);
+
+        //save Search Data
+        $this->_saveSearchData($product);
         return Response('Product update successfully !');
     }
 
@@ -114,9 +196,10 @@ class ProductService
         return Response('Product delete successfully');
     }
 
-    public function unusedProductCore()
+    public function unusedProductCore($type)
     {
-        $productCoreCode = $this->productCoreRepository->findByProperties([], ['product_code'])->toArray();
+        $simType = $type == "prepaid" ? 1 : 2;
+        $productCoreCode = $this->productCoreRepository->findByProperties(['sim_type' => $simType], ['product_code'])->toArray();
         $productCode = $this->productRepository->findByProperties([], ['product_code'])->toArray();
         $unusedProductCode = [];
         foreach ($productCoreCode as $key => $product) {
@@ -131,24 +214,28 @@ class ProductService
      * @param $data
      * @param $offerId
      * Mapping Product Core Data to Product and insert
+     * @param null $offerInfo
      */
-    public function insertProduct($data, $offerId)
+    public function insertProduct($data, $offerId, $offerInfo = null)
     {
-        $product = $this->save([
-            'product_code' => $data['product_code'] ?? null,
-            'name_en' => $data['commercial_name_en'] ?? "N/A",
-            'name_bn' => $data['commercial_name_bn'] ?? "N/A",
-            'ussd_bn' => $data['activation_ussd'] ?? null,
-            'start_date' => "2019-12-10 20:12:10" ?? null,
-            'sim_category_id' => $data['sim_type'] ?? null,
-            'offer_category_id' => $offerId ?? null,
-            'is_recharge' => $data['is_recharge_offer'] ?? 0,
-            'status' => $data['status'],
-        ]);
+        $product = Product::updateOrCreate(
+            ['product_code' => $data['product_code'] ?? null,], [
+                'name_en' => $data['commercial_name_en'] ?? "",
+                'name_bn' => $data['commercial_name_bn'] ?? "",
+                'ussd_bn' => $data['activation_ussd'] ?? null,
+                'start_date' => "2019-12-10 20:12:10" ?? null,
+                'sim_category_id' => $data['sim_type'] ?? null,
+                'offer_category_id' => $offerId ?? null,
+                'is_recharge' => $data['is_recharge_offer'] ?? 0,
+                'status' => $data['status'],
+                'purchase_option' => $data['purchase_option'],
+                'offer_info' => $offerInfo
+            ]
+        );
 
-        ProductDetail::create([
-            'product_id' => $product->id
-        ]);
+        ProductDetail::updateOrCreate(
+            ['product_id' => $product->id]
+        );
     }
 
     /**
@@ -165,9 +252,9 @@ class ProductService
      */
     public function getOfferInfo($coreProduct)
     {
-        $type = $coreProduct->content_type;
-        switch ($type) {
-            case 'data':
+        $type = $coreProduct->assetlite_offer_type;
+        switch (strtolower($type)) {
+            case 'internet':
                 $offerId = 1; // Internet Offer
                 $this->insertProduct($coreProduct, $offerId);
                 break;
@@ -175,19 +262,22 @@ class ProductService
                 $offerId = 2; // Voice Offer
                 $this->insertProduct($coreProduct, $offerId);
                 break;
-            case 'mix':
+            case 'bundle':
                 $offerId = 3; // Bundle Offer
                 $this->insertProduct($coreProduct, $offerId);
                 break;
+            case 'startup':
+                $offerId = 4; // Startup Offer
+                $this->insertProduct($coreProduct, $offerId, ['package_offer_type_id' => 6]);
+                break;
+//            default:
+//                $offerId = null; // Bundle Offer
+//                $this->insertProduct($coreProduct, $offerId);
         }
     }
 
-
     public function coreData()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        Product::truncate();
-        ProductDetail::truncate();
         $coreData = $this->productCoreRepository->findAll();
         foreach ($coreData as $coreProduct) {
             $this->getOfferInfo($coreProduct);

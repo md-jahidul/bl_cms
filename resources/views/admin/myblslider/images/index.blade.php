@@ -24,10 +24,13 @@
                         <thead>
                         <tr>
                             <td width="3%"><i class="icon-cursor-move icons"></i></td>
+                            <th width="5%">ID</th>
                             <th>Image</th>
-                            <th width="25%">Title</th>
-                            <th width="25%">Alt Text</th>
-                            <th width="25%">Status</th>
+                            <th width="15%">Title</th>
+                            <th width="10%">Type</th>
+                            <th width="15%">Start Date</th>
+                            <th width="15%">End Date</th>
+                            <th width="10%">Status</th>
                             <th class="text-right">Action</th>
                         </tr>
                         </thead>
@@ -35,10 +38,13 @@
                         @foreach($slider_information->sliderImages as $index=>$slider_image)
                             <tr data-index="{{ $slider_image->id }}" data-position="{{ $slider_image->sequence }}">
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
+                                <td>{{ $slider_image->id }}</td>
                                 <td><img class="" src="{{ asset($slider_image->image_url) }}" alt="Slider Image"
                                          height="100" width="200"/></td>
                                 <td>{{ $slider_image->title }}</td>
-                                <td>{{ $slider_image->alt_text }}</td>
+                                <td>{{ $slider_image->user_type }}</td>
+                                <td>{{ $slider_image->start_date }}</td>
+                                <td>{{ $slider_image->end_date }}</td>
                                 <td>
                                     @if($slider_image->is_active == "1")
                                         <span class="badge badge-success">Active</span>

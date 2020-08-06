@@ -2,11 +2,11 @@
 @section('title', 'Slider Edit')
 @section('card_name', 'Slider Edit')
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ url($slider->slider_type.'-sliders') }}">Slider List</a></li>
+    <li class="breadcrumb-item"><a href="{{ strpos(url()->previous(), 'about-slider') !== false ? url(url()->previous()) : url($slider->slider_type.'-sliders') }}">Slider List</a></li>
     <li class="breadcrumb-item active"> {{$slider->title_en}}</li>
 @endsection
 @section('action')
-    <a href="{{ url("$slider->slider_type-sliders") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
+    <a href="{{ strpos(url()->previous(), 'about-slider') !== false ? url(url()->previous()) : url($slider->slider_type.'-sliders') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel</a>
 @endsection
 @section('content')
     <section>
@@ -21,6 +21,7 @@
                             {{method_field('PUT')}}
                             <div class="row">
                                 <input type="hidden" name="slider_type" value="{{ $slider->slider_type }}">
+                                <input type="hidden" name="previous_url" value="{{ $previousUrl }}">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">Title (English)</label>
                                     <input type="text" name="title_en"  class="form-control" placeholder="Enter title (english)"

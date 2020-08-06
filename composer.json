@@ -20,6 +20,8 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.8.0",
         "laravelista/ekko": "^1.5",
+        "orangehill/iseed": "^2.6",
+        "predis/predis": "^1.1",
         "symfony/finder": "^4.3"
     },
     "require-dev": {

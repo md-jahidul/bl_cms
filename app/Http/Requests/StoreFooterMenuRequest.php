@@ -27,7 +27,7 @@ class StoreFooterMenuRequest extends FormRequest
             'code' => 'required',
             'en_label_text' => 'required',
             'bn_label_text' => 'required',
-            'url' => 'required|unique:footer_menus',
+            'url' => 'required',
             'status' => 'required',
         ];
     }

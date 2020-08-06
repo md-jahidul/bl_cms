@@ -15,6 +15,8 @@
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
                         <form role="form" action="{{ url("partners/$partner->id") }}" method="POST" novalidate enctype="multipart/form-data">
+                            @csrf
+                            @method('POST')
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('company_name_en') ? ' error' : '' }}">
                                     <label for="company_name_en" class="required">Company Name (English)</label>
@@ -37,44 +39,15 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('company_website') ? ' error' : '' }}">
-                                    <label for="company_website" class="required">Company Website</label>
+                                    <label for="company_website">Company Website</label>
                                     <input type="url" name="company_website"  class="form-control" placeholder="Enter company website"
-                                           value="{{ old('company_website') ??  $partner->company_website }}" required data-validation-required-message="Enter company website">
+                                           value="{{ old('company_website') ??  $partner->company_website }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('company_website'))
                                         <div class="help-block">  {{ $errors->first('company_website') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('contact_person_name') ? ' error' : '' }}">
-                                    <label for="contact_person_name" class="required">Contact Person Name</label>
-                                    <input type="text" name="contact_person_name"  class="form-control" placeholder="Enter contact person name"
-                                           value="{{ $partner->contact_person_name }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('contact_person_name'))
-                                        <div class="help-block">  {{ $errors->first('contact_person_name') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('contact_person_email') ? ' error' : '' }}">
-                                    <label for="contact_person_email">Contact Person Email</label>
-                                    <input type="text" name="contact_person_email"  class="form-control" placeholder="Enter contact person name"
-                                           value="{{ old('contact_person_email') ?? $partner->contact_person_email }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('contact_person_email'))
-                                        <div class="help-block">  {{ $errors->first('contact_person_email') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('contact_person_mobile') ? ' error' : '' }}">
-                                    <label for="contact_person_mobile">Contact Person Mobile Number</label>
-                                    <input type="text" name="contact_person_mobile"  class="form-control" placeholder="Enter contact person name"
-                                           value="{{ $partner->contact_person_mobile }}" required data-validation-required-message="Enter contact person mobile number">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('contact_person_mobile'))
-                                        <div class="help-block">  {{ $errors->first('contact_person_mobile') }}</div>
-                                    @endif
-                                </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('partner_category_id') ? ' error' : '' }}">
                                     <label for="partner_category_id" class="required">Company Category</label>
@@ -106,13 +79,13 @@
                                     @endif
                                 </div>
                                 <div class="form-group col-md-1 pt-1">
-                                    <img class="" src="{{ config('filesystems.file_base_url') . $partner->company_logo }}" height="60" width="105" id="imgDisplay">
+                                    <img class="" src="{{ config('filesystems.file_base_url') . $partner->company_logo }}" height="60" width="70" id="imgDisplay">
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('google_play_link') ? ' error' : '' }}">
-                                    <label for="google_play_link" class="required">Google Play Store Link</label>
+                                    <label for="google_play_link" >Google Play Store Link</label>
                                     <input type="url" name="google_play_link"  class="form-control" placeholder="Enter google play store link"
-                                           value="{{ $partner->google_play_link }}" required data-validation-required-message="Enter google play store link"/>
+                                           value="{{ $partner->google_play_link }}"/>
                                     <div class="help-block"></div>
                                     @if ($errors->has('google_play_link'))
                                         <div class="help-block">  {{ $errors->first('google_play_link') }}</div>
@@ -120,28 +93,14 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('apple_app_store_link') ? ' error' : '' }}">
-                                    <label for="apple_app_store_link" class="required">Apple App Store Link</label>
+                                    <label for="apple_app_store_link" >Apple App Store Link</label>
                                     <input type="url" name="apple_app_store_link" class="form-control" placeholder="Enter apple app store link"
-                                           value="{{ $partner->apple_app_store_link }}" required data-validation-required-message="Enter apple app store link">
+                                           value="{{ $partner->apple_app_store_link }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('apple_app_store_link'))
                                         <div class="help-block">  {{ $errors->first('apple_app_store_link') }}</div>
                                     @endif
                                 </div>
-
-
-
-                                <div class="form-group col-md-12 {{ $errors->has('company_address') ? ' error' : '' }}">
-                                    <label for="company_address" class="required">Company Address</label>
-                                    <textarea name="company_address" rows="4" class="form-control" placeholder="Enter company address"
-                                              required data-validation-required-message="Enter company address">{{ $partner->company_address }}</textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('company_address'))
-                                        <div class="help-block">  {{ $errors->first('company_address') }}</div>
-                                    @endif
-                                </div>
-
-
 
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
@@ -151,8 +110,6 @@
                                     </div>
                                 </div>
                             </div>
-                            @csrf
-                            @method('PUT')
                         </form>
                     </div>
                 </div>

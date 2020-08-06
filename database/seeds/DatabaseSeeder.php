@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call(AmarOfferSeeder::class);
+        $this->call(AmarOfferDetailsSeeder::class);
 
         // ====Common Seeder====
         $this->call(RolesTableSeeder::class);
@@ -43,6 +44,7 @@ class DatabaseSeeder extends Seeder
 //        $this->call(ProductsTableSeeder::class);
 
         $this->call(PriyojonTableSeeder::class);
+        $this->call(ProductSlabsTableSeeder::class);
 
 
 
@@ -72,8 +74,17 @@ class DatabaseSeeder extends Seeder
         $this->call(ShortcutSeeder::class);
         $this->call(PrivacyPolicySeeder::class);
 
-        $this->call(MyBlInternetOfferCategorySeeder::class);
+       // $this->call(MyBlInternetOfferCategorySeeder::class);
         $this->call(TelescopepanelUserSeeder::class);
+
+        $this->call(RechargePrefillAmountSeeder::class);
 /*        $this->call(MyBlProductCategorySeeder::class);*/
+        $this->call(AppServiceProductDetailsTableSeeder::class);
+        $this->call(EcarrerEcarrerPortalsTableSeeder::class);
+        $this->call(EcarrerEcarrerPortalItemsTableSeeder::class);
+        $this->call(AppServiceAppServiceVendorApisTableSeeder::class);
+        $this->call(AppServiceAppServiceProductsTableSeeder::class);
+        $this->call(AppServiceAppServiceProductDetailsTableSeeder::class);
+        $this->call(AppServiceComponentsTableSeeder::class);
     }
 }

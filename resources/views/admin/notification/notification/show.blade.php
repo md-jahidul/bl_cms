@@ -10,7 +10,6 @@
     </a>
 @endsection
 @section('content')
-
     <section>
         <div class="card">
             <div class="card-header">
@@ -22,7 +21,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
 
-                    <form class="form" method="POST" {{--action="{{route('notification.send')}}"--}} id="sendNotificationForm" enctype="multipart/form-data">
+                    <form class="form" method="POST" id="sendNotificationForm" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="title">Title</label>
@@ -40,22 +39,11 @@
 
                         <div class="form-group">
 
-{{--                            <label for="message">Select User</label> </br>
-
-                            <select id="user-multiple-selected" name="user_phone[]" multiple="multiple" style="width: auto">
-
-                                @foreach ($users as $user)
-                                    <option value="{{$user->phone}}">{{$user->phone}}({{$user->name}})</option>
-                                @endforeach
-
-                            </select>--}}
                             <label for="message">Upload Customer List</label> <a href="{{ asset('sample-format/customers.xlsx')}}" class="text-info ml-2">Download Sample Format</a></br>
                             <input type="file" class="dropify" name="customer_file" data-height="80"
                                    data-allowed-file-extensions="xlsx" required/>
 
                         </div>
-
-
 
                         <div class="col-md-12" >
                             <div class="form-group float-right" style="margin-top:15px;">
@@ -72,11 +60,9 @@
 @endsection
 
 
-
-
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css"
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
     <style>
 
@@ -88,6 +74,8 @@
         }
     </style>
 @endpush
+
+
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
@@ -138,7 +126,7 @@
                             swal.fire({
                                 title: 'Notification sent Successfully!',
                                 type: 'success',
-                                timer: 2000,
+                                timer: 900000,
                                 showConfirmButton: false
                             });
 
@@ -154,6 +142,7 @@
 
                     },
                     error: function (data) {
+                        console.log(data);
                         swal.fire({
                             title: 'Failed to send Notifications',
                             type: 'error',

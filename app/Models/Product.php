@@ -13,12 +13,16 @@ class Product extends Model
     protected $fillable =
         [
             'product_code',
+            'url_slug',
+            'schema_markup',
+            'page_header',
+            'page_header_bn',
             'name_en',
             'name_bn',
             'start_date',
             'end_date',
-            'ussd_en',
             'ussd_bn',
+            'balance_check_ussd_bn',
             'bonus',
             'point',
             'is_recharge',
@@ -28,19 +32,55 @@ class Product extends Model
             'offer_category_id',
             'contextual_message',
             'like',
+            'validity_postpaid',
             'status',
             'display_order',
             'purchase_option',
             'offer_info',
+            'is_gift_offer',
+            'is_amar_offer',
+            'is_social_pack',
+            'is_auto_renewable',
+            'rate_cutter_offer',
+            'rate_cutter_unit',
+            'call_rate_unit_bn',
+            'sms_rate_unit_bn',
+            'special_product',
+            'created_by',
+            'updated_by',
         ];
 
     protected $casts = [
         'offer_info' => 'array',
     ];
 
+
     public function product_core()
     {
-        return $this->belongsTo(ProductCore::class, 'product_code', 'product_code');
+        return $this->belongsTo(AlCoreProduct::class, 'product_code', 'product_code');
+    }
+
+    public function scopeProductCore($query)
+    {
+        return $query->with(['product_core' => function ($q) {
+            $q->select(
+                'product_code',
+                'activation_ussd as ussd_en',
+                'balance_check_ussd',
+                'price',
+                'vat',
+                'mrp_price as price_tk',
+                'validity as validity_days',
+                'validity_unit',
+                'internet_volume_mb',
+                'sms_volume',
+                'minute_volume',
+                'call_rate as callrate_offer',
+                'sms_rate as sms_rate_offer',
+                'renew_product_code',
+                'recharge_product_code'
+            );
+        }]);
     }
 
     public function sim_category()

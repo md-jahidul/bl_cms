@@ -25,6 +25,8 @@ class ProductStoreRequest extends FormRequest
     {
         return [
             'product_code' => 'required|unique:products',
+//            'renew_product_code' => 'unique:product_cores',
+//            'recharge_product_code' => 'unique:product_cores',
         ];
     }
 }

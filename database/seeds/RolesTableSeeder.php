@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Role;
 use Carbon\Carbon;
 
 class RolesTableSeeder extends Seeder
@@ -12,6 +13,8 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement("SET FOREIGN_KEY_CHECKS =0;");
+        DB::table('roles')->truncate();
         $roles = [
             [
                 'name' => 'My Bl Admin',
@@ -47,8 +50,43 @@ class RolesTableSeeder extends Seeder
                 'user_type' => 'assetlite',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
+            ],
+            [
+                'name' => 'Lead Super Admin',
+                'alias' => 'lead_super_admin',
+                'user_type' => 'assetlite',
+                'feature_type' => 'lead_user_role',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ],
+            [
+                'name' => 'Lead Admin',
+                'alias' => 'lead_admin',
+                'user_type' => 'assetlite',
+                'feature_type' => 'lead_user_role',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ],
+            [
+                'name' => 'Lead POC',
+                'alias' => 'lead_poc',
+                'user_type' => 'assetlite',
+                'feature_type' => 'lead_user_role',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ],
+            [
+                'name' => 'Lead User',
+                'alias' => 'lead_user',
+                'user_type' => 'assetlite',
+                'feature_type' => 'lead_user_role',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ]
         ];
-        DB::table('roles')->insert($roles);
+
+        foreach ($roles as $role) {
+            Role::create($role);
+        }
     }
 }

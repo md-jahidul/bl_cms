@@ -52,13 +52,17 @@ class SliderController extends Controller
      */
     public function singleSlider()
     {
-        $sliders = $this->alSliderService->allSingleSlider();
+        $sliders = $this->alSliderService->sliders('single');
+//        return $sliders;
         return view('admin.slider.index', compact('sliders'));
     }
 
+    /**
+     * @return Factory|View
+     */
     public function multiSlider()
     {
-        $sliders = $this->alSliderService->allMultiSlider();
+        $sliders = $this->alSliderService->sliders('multiple');
         return view('admin.slider.multi-slider', compact('sliders'));
     }
 
@@ -90,8 +94,9 @@ class SliderController extends Controller
     public function edit($id, $type)
     {
         $slider = $this->alSliderService->findOne($id);
+        $previousUrl = url()->previous();
         $other_attributes = $slider->other_attributes;
-        return view('admin.slider.edit', compact('slider', 'type', 'other_attributes'));
+        return view('admin.slider.edit', compact('slider', 'type', 'other_attributes', 'previousUrl'));
     }
 
     /**
@@ -104,7 +109,7 @@ class SliderController extends Controller
         $sliderType = $request->slider_type;
         $response = $this->alSliderService->updateSlider($request->all(), $request->id);
         Session::flash('message', $response->getContent());
-        return redirect("/$sliderType-sliders");
+        return redirect((strpos($request->previous_url, 'about-slider') !== false) ? $request->previous_url : url("/$sliderType-sliders"));
     }
 
     /**

@@ -17,6 +17,7 @@ class AlSliderImage extends Model
         'redirect_url',
         'is_active',
         'image_url',
+        'mobile_view_img',
         'display_order',
         'other_attributes',
     ];

@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 @section('title', 'Quick Launch List')
-@section('card_name', 'Quick Launch List')
+@section('card_name', "Quick Launch $type List")
 @section('breadcrumb')
 @endsection
 @section('action')
-    <a href="{{ url('quick-launch/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Add Quick Launch
+    <a href="{{ url("quick-launch/$type/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+        Add Quick Launch {{ ucfirst($type) }}
     </a>
 @endsection
 @section('content')
@@ -31,10 +31,14 @@
                                 <td width="20%">{{$quickLaunchItem->title_en}} {!! $quickLaunchItem->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                 <td>{{$quickLaunchItem->link}}</td>
                                 <td class="action" width="8%">
-                                    <a href="{{ url("quick-launch/$quickLaunchItem->id/edit") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                    <a href="#" remove="{{ url("quick-launch/destroy/$quickLaunchItem->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $quickLaunchItem->id }}" title="Delete the user">
-                                        <i class="la la-trash"></i>
-                                    </a>
+                                    <a href="{{ url("quick-launch/$type/$quickLaunchItem->id/edit") }}" role="button" class="btn btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                    @if($quickLaunchItem->slug != "customer_care")
+                                        <a href="#" remove="{{ url("quick-launch/$type/destroy/$quickLaunchItem->id") }}" class="border-0 btn btn-outline-danger delete_btn" data-id="{{ $quickLaunchItem->id }}" title="Delete the user">
+                                            <i class="la la-trash"></i>
+                                        </a>
+                                    @else
+                                        <a href="#" class="border-0 btn btn-outline-danger delete_btn disabled"><i class="la la-trash"></i></a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -59,44 +63,6 @@
 @endpush
 
 @push('page-js')
-    <script>
-        $(document).ready(function () {
-            $('#Example1').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy', className: 'copyButton',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'excel', className: 'excel',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'pdf', className: 'pdf', "charset": "utf-8",
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'print', className: 'print',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                ],
-                paging: true,
-                searching: true,
-                "bDestroy": true,
-            });
-        });
-
-    </script>
-
     <script>
         var auto_save_url = "{{ url('quick-launch-sortable') }}";
     </script>

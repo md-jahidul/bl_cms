@@ -60,6 +60,22 @@
         window.Laravel = {!! json_encode(['csrfToken' => csrf_token(),]) !!};
     </script>
 
+    {{--SummerNote Editor CSS--}}
+    <link href="{{ asset('app-assets/vendors/js/editors/summernote/summernote-lite.min.css') }}" rel="stylesheet">
+
+    {{--Summernote Table Colore Modify--}}
+    <style>
+        .note-editor.note-frame.fullscreen .note-editable {
+            background-color: white;
+        }
+        .table-primary th {
+            background-color: #b1e2e7; /* #d9eef0 This front-end default table colour */
+        }
+        .table-primary, .table-primary > th, .table-primary > td {
+            background-color: white;
+        }
+    </style>
+
     @stack('page-css')
     @yield('page-css')
     @stack('style')
@@ -112,6 +128,7 @@
 <script src="{{ asset('theme/js/scripts/tables/datatables/datatable-advanced.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/core/libraries/jquery_ui/jquery-ui.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/js/scripts/ui/jquery-ui/date-pickers.js') }}" type="text/javascript"></script>
+<script src="{{asset('app-assets/vendors/js/forms/toggle/switchery.min.js')}}"></script>
 
 <script src="{{ asset('theme/vendors/js/ui/jquery.sticky.js') }}" type="text/javascript"></script>
 <script src="{{ asset('theme/vendors/js/forms/toggle/bootstrap-switch.min.js') }}" type="text/javascript"></script>
@@ -134,9 +151,34 @@
 
 <script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
 
-
 @stack('page-js')
+<script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('app-assets/vendors/js/editors/summernote_0.8.18/summernote-table-headers.js') }}" type="text/javascript"></script>
 <script>
+    $(function () {
+        $("textarea.summernote_editor").summernote({
+            tableClassName: 'table table-primary table_large offer_table', /* This Table class is front-end table class */
+            toolbar: [
+                ['style',['style', 'bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['table', ['table']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture', 'video', 'hr']],
+                ['view', ['fullscreen', 'codeview']]
+            ],
+            popover: {
+                table: [
+                    ['custom', ['tableHeaders']],
+                    ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                ],
+            },
+
+            height:200
+        })
+    })
 
         function readURL(input) {
         if (input.files && input.files[0]) {
@@ -153,6 +195,25 @@
         $("#image").change(function() {
             readURL(this);
         });
+
+
+        function readImageURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#profile_image_Display').css('display', 'block');
+                    $('#profile_image_Display').attr('src', e.target.result);
+
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#profile_image").change(function() {
+            readImageURL(this);
+        });
+
+
 
         /**
          * On number type input ignore plus, minus operators. only allow digits

@@ -1,176 +1,144 @@
 @extends('layouts.admin')
 @section('title', 'Welcome Information')
-@section('card_name', 'Welcome-Information')
-@section('breadcrumb')
-    <li class="breadcrumb-item active">Welcome-Information</li>
-@endsection
-
 @section('content')
     <section>
         <div class="card card-info mb-0" style="padding-left:10px">
-           
-            
-                <div class="card-content">
-                    <div class="card-body">
-                        <form novalidate class="form" action="@if(isset($welcomeInfo)) {{route('welcomeInfo.update',$welcomeInfo->id)}} @else {{route('welcomeInfo.store')}} @endif" enctype="multipart/form-data" method="POST">
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form"
+                          action="@if(isset($welcomeInfo)) {{route('welcomeInfo.update',$welcomeInfo->id)}} @else {{route('welcomeInfo.store')}} @endif"
+                          enctype="multipart/form-data" method="POST">
                         @csrf
-                        @if(isset($welcomeInfo)) @method('put') @else @method('post') @endif
-                        <input type="hidden" value="@if(isset($welcomeInfo)) yes @else no @endif" name="value_exist">
                         <div class="form-body">
-                            <h4 class="form-section"><i class="la la-paperclip"></i>Welcome Information</h4>
+                            <h4 class="form-section"><i class="la la-home"></i>Welcome Message</h4>
                             <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    
-                                    <label for="guest_salutation" class="required">Guest Salutation:</label>
-                                    <input required maxlength="200" type="text" @if(isset($welcomeInfo)) value="{{$welcomeInfo->guest_salutation}}" @elseif(old('guest_salutation')) value="{{old('guest_salutation')}}"  @else value=""  @endif  id="guest_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Enter guest salutation." name="guest_salutation">
-                                    <div class="help-block"></div>
-                                    @error('guest_salutation')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="message_en" class="required">Welcome Message (English):</label>
+                                        <textarea
+                                            required
+                                            name="message_en"
+                                            class="form-control"
+                                            id="message_en"
+                                            placeholder="Max 150 Characters"
+                                            rows="3">@if(isset($welcomeInfo)){{$welcomeInfo->message_en}}@else{{old('message_en')}}@endif</textarea>
+                                        @if($errors->has('message_en'))
+                                            <p class="text-left">
+                                                <small
+                                                    class="danger text-muted">{{ $errors->first('message_en') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="user_salutation" class="required">User Salutation:</label>
-                                    <input required maxlength="200" type="text" @if(isset($welcomeInfo))  value="{{$welcomeInfo->user_salutation}}"  @elseif(old("user_salutation")) value="{{old("user_salutation")}}"  @endif id="user_salutation" class="form-control @error('title') is-invalid @enderror" placeholder="Enter user salutation." name="user_salutation">
-                                    <div class="help-block"></div>
-                                    @error('user_salutation')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="message_bn" class="required">Welcome Message (Bangla) :</label>
+                                        <textarea
+                                            required
+                                            name="message_bn"
+                                            class="form-control"
+                                            placeholder="Max 150 Characters"
+                                            id="message_bn"
+                                            rows="3">@if(isset($welcomeInfo)){{$welcomeInfo->message_bn}}@else{{old('message_bn')}}@endif</textarea>
+                                        @if($errors->has('message_bn'))
+                                            <p class="text-left">
+                                                <small
+                                                    class="danger text-muted">{{ $errors->first('message_bn') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="guest_message" class="required">Guest Message :</label>
-                                    <textarea required name="guest_message" class="form-control" id="guest_message" rows="3">@if(isset($welcomeInfo)){{$welcomeInfo->guest_message}}@elseif(old("guest_message")){{old("guest_message")}}@endif</textarea>
-                                    <div class="help-block"></div>
-                                    @error('guest_message')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="login_button_title" class="required">Login Button Title (English):</label>
+                                        <input required
+                                               name="login_button_title"
+                                               placeholder="Max. 30 Character"
+                                               class="form-control"
+                                               id="login_button_title"
+                                               value="@if(isset($welcomeInfo)){{$welcomeInfo->login_button_title}} @else{{old('login_button_title')}}@endif"
+                                               max="30">
+                                        @if($errors->has('login_button_title'))
+                                            <p class="text-left">
+                                                <small
+                                                    class="danger text-muted">{{ $errors->first('login_button_title') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="user_message" class="required">User Message :</label>
-                                    <textarea required name="user_message" class="form-control" id="user_message" rows="3">@if(isset($welcomeInfo)){{$welcomeInfo->user_message}}@elseif(old("user_message")){{old("user_message")}} @endif</textarea>
-                                    <div class="help-block"></div>
-                                    @error('user_message')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="login_button_title_bn" class="required">Login Button Title (Bangla):</label>
+                                        <input required
+                                               name="login_button_title_bn"
+                                               placeholder="Max. 30 Character"
+                                               class="form-control"
+                                               id="login_button_title_bn"
+                                               value="@if(isset($welcomeInfo)){{$welcomeInfo->login_button_title_bn}} @else{{old('login_button_title_bn')}}@endif"
+                                               max="30">
+                                        @if($errors->has('login_button_title'))
+                                            <p class="text-left">
+                                                <small
+                                                        class="danger text-muted">{{ $errors->first('login_button_title_bn') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                            @if(isset($welcomeInfo))
-                                <div class="col-6">
-                                    <p class="text-dark">
-                                        <small class="">
-                                            <img style="height:100px;width:200px" id="imgDisplay" src="{{ asset($welcomeInfo->icon)}}" alt="" srcset="">
-                                        </small>
+                                <div class="col-md-6">
+                                    <p class="text-left">
+                                        <small class="warning text-muted"> * Image must be in ratio <code>
+                                                8:3 </code></small>
                                     </p>
+                                    @if ($welcomeInfo)
+                                        <input type="file"
+                                               id="input-file-now-custom-1"
+                                               class="dropify"
+                                               name="image"
+                                               data-default-file="{{ url('storage/' .$welcomeInfo->image) }}"
+                                        />
+                                    @else
+                                        <input type="file" id="input-file-now" name="image" class="dropify" required/>
+                                    @endif
+                                    @if($errors->has('image'))
+                                        <p class="text-left">
+                                            <small
+                                                class="danger text-muted">{{ $errors->first('image') }}</small>
+                                        </p>
+                                    @endif
                                 </div>
-                                @else
-                                <div class="col-6">
-                                    <p class="text-dark">
-                                        <small class="">
-                                            <img style="height:100px;width:200px;display:none" id="imgDisplay" src="" alt="" srcset="">
-                                        </small>
-                                    </p>
-                                </div>
-                            @endif
-                            <div class="col-md-12">
-                                <div class="custom-file">
-                                    <input accept="image/*" @if(!isset($welcomeInfo)) required @endif @if(!isset($welcomeInfo)) @endif name="icon" type="file" class="custom-file-input @error('icon') is-invalid @enderror" id="image">
-                                    <label class="custom-file-label @error('title') is-invalid @enderror" for="validatedCustomFile">Upload Icon...</label>
-                                    <input type="hidden" name="update" value="@if(!isset($welcomeInfo)) yes @else no  @endif">
-                                    <div class="help-block"></div>
-                                    @error('icon')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                
                             </div>
-                           
-                            
+                            <div class="row justify-content-lg-end mt-2">
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-block btn-success px-2">
+                                        <i class="la la-check-square-o"></i> @if ($welcomeInfo) Update @else Save @endif
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-success round px-2">
-                            <i class="la la-check-square-o"></i> Save
-                            </button>
-                        </div>
-                        </form>
-                    </div>
+                    </form>
                 </div>
-            
+            </div>
+
         </div>
-        
+
     </section>
-
-   
-
-
 @endsection
 
-
-
-
 @push('style')
-    <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
-    <style></style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
-    <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
-    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script>
-     
-
-       
-        $(document).ready(function () {
-            $('#Example1').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'copy', className: 'copyButton',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'excel', className: 'excel',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'pdf', className: 'pdf', "charset": "utf-8",
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                    {
-                        extend: 'print', className: 'print',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3]
-                        }
-                    },
-                ],
-                paging: true,
-                searching: true,
-                "bDestroy": true,
-            });
+        // Translated
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Browse for an Image to upload',
+                'replace': 'Click to replace',
+                'remove': 'Remove',
+                'error': 'Choose correct Image file'
+            }
         });
-
     </script>
 @endpush
+

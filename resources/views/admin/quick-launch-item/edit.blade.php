@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 @section('title', 'Quick Launch Create')
-@section('card_name', 'Quick Launch Edit')
+@section('card_name', "Quick Launch $type Edit")
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('quick-launch') }}"> Quick Launch List</a></li>
-    <li class="breadcrumb-item active"> Quick Launch Edit</li>
+    <li class="breadcrumb-item active"> <a href="{{ url("quick-launch/$type") }}"> Quick Launch {{ $type }} List</a></li>
+    <li class="breadcrumb-item active"> Quick Launch {{ $type }} Edit</li>
 @endsection
 @section('action')
-    <a href="{{ url('quick-launch') }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ url("quick-launch/$type") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -14,7 +14,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ url("quick-launch/$quickLaunch->id") }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route("quick-launch.update", [$type, $quickLaunch->id]) }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                     <label for="title_en" class="required">English Title</label>
@@ -36,16 +36,6 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('link') ? ' error' : '' }}">
-                                    <label for="link" class="required">Link</label>
-                                    <input type="text" name="link"  class="form-control" placeholder="Enter english title"
-                                           value="{{ $quickLaunch->link }}" required data-validation-required-message="Enter link">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('link'))
-                                        <div class="help-block">  {{ $errors->first('link') }}</div>
-                                    @endif
-                                </div>
-
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text" class="required">Alt Text</label>
                                     <input type="text" name="alt_text"  class="form-control" placeholder="Enter alt text"
@@ -56,16 +46,34 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">
+                                <div class="form-group col-md-5 mt-1 {{ $errors->has('image_url') ? ' error' : '' }}">
                                     <div class="custom-file">
                                         <input type="file" name="image_url" class="custom-file-input" id="image">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <span class="text-primary">Please given file type (.png, .jpg, .svg)</span>
                                 </div>
 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-1">
                                     <img src="{{ config('filesystems.file_base_url') . $quickLaunch->image_url }}" style="height:70px;width:70px;" id="imgDisplay">
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('link') ? ' error' : '' }}">
+                                    <label for="link" class="required">Link</label>
+                                    <input type="text" name="link"  class="form-control" placeholder="Enter english title"
+                                           value="{{ $quickLaunch->link }}" required data-validation-required-message="Enter link">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('link'))
+                                        <div class="help-block">  {{ $errors->first('link') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label></label>
+                                    <div class="form-group mt-1">
+                                        <label for="is_external_link" class="mr-1">Is External Link:</label>
+                                        <input type="checkbox" name="is_external_link" value="1" id="is_external_link" {{ $quickLaunch->is_external_link == 1 ? 'checked' : '' }}>
+                                    </div>
                                 </div>
 
                                 <div class="col-md-12 mt-1">
@@ -92,9 +100,6 @@
                             {{method_field('PUT')}}
                         </form>
                     </div>
-
-
-                    </form>
                 </div>
             </div>
         </div>

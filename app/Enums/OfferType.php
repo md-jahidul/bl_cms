@@ -30,4 +30,5 @@ final class OfferType extends Enum
     const AMAR_OFFER_POSTPAID = 17;
     const MFS_OFFERS = 18;
     const CALL_RATE = 19;
+    const PROPAID_PLANS = 20;
 }

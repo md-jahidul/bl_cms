@@ -3,102 +3,83 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreWelcomeInfoRequest;
+use App\Http\Requests\UpdateWelcomeInfoRequest;
 use App\Models\WelcomeInfo;
 use App\Services\WelcomeInfoService;
 use App\Http\Requests\WelcomeInfoRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
+/**
+ * Class WelcomeInfoController
+ * @package App\Http\Controllers\CMS
+ */
 class WelcomeInfoController extends Controller
 {
 
 
-    /**
-     * @var WelcomeInfoService
-     */
-    private $welcomeInfoService;
-
-
-    /**
-     * WelcomeInfoController constructor.
-     * @param WelcomeInfoService $welcomeInfoService
-     */
-    public function __construct(WelcomeInfoService $welcomeInfoService)
+    public function __construct()
     {
-        $this->welcomeInfoService = $welcomeInfoService;
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return view('admin.welcomeInfo.index')->with('welcomeInfo', $this->welcomeInfoService->findAll()->first());
+        $welcomeInfo = WelcomeInfo::first();
+
+        return view('admin.welcomeInfo.create', compact('welcomeInfo'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(StoreWelcomeInfoRequest $request)
     {
-        return view('admin.welcomeInfo.create')->with('welcomeInfo', $this->welcomeInfoService->findAll()->first());
+        $data['image'] = null;
+        if ($request->file('image')) {
+            $file = $request->image;
+            $path = $file->storeAs(
+                'welcomeinfo/images',
+                strtotime(now()) . '_welcome_image.' . $file->getClientOriginalExtension(),
+                'public'
+            );
+
+            $data['image'] = $path;
+        }
+
+        $data['message_en']         = $request->message_en;
+        $data['message_bn']         = $request->message_bn;
+        $data['login_button_title'] = $request->login_button_title;
+        $data['login_button_title_bn'] = $request->login_button_title_bn;
+
+        WelcomeInfo::create($data);
+
+        return Redirect::back()->with('success', 'Welcome Info added');
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param WelcomeInfoRequest $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function store(WelcomeInfoRequest $request)
+    public function update(UpdateWelcomeInfoRequest $request, $id)
     {
-        session()->flash('message', $this->welcomeInfoService->storeWelcomeInfo($request->all())->getContent());
-        return redirect(route('welcomeInfo.index'));
-    }
+        if ($request->file('image')) {
+            $file = $request->image;
+            $path = $file->storeAs(
+                'welcomeinfo/images',
+                strtotime(now()) . '_welcome_image.' . $file->getClientOriginalExtension(),
+                'public'
+            );
 
+            $data['image'] = $path;
+        }
 
-    public function show($id)
-    {
-        dd($id);
-    }
+        $data['message_en']         = $request->message_en;
+        $data['message_bn']         = $request->message_bn;
+        $data['login_button_title'] = $request->login_button_title;
+        $data['login_button_title_bn'] = $request->login_button_title_bn;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return view('admin.welcomeInfo.create')
-                ->with('welcomeInfo', $this->welcomeInfoService->findOne($id));
-    }
+        try {
+            $info = WelcomeInfo::findOrFail($id);
+            $info->update($data);
+        } catch (\Exception $e) {
+            return Redirect::back()->with('error', $e->getMessage());
+        }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param WelcomeInfoRequest $request
-     * @param WelcomeInfo $welcomeInfo
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function update(WelcomeInfoRequest $request, WelcomeInfo $welcomeInfo)
-    {
-        session()->flash('status', $this->welcomeInfoService->updateWelcomeInfo($request, $welcomeInfo)->getContent());
-        return redirect(route('welcomeInfo.index'));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param $id
-     */
-    public function destroy($id)
-    {
-        dd($id);
+        return Redirect::back()->with('success', 'Welcome Info updated');
     }
 }
