@@ -50,7 +50,6 @@
         @include('layouts.partials.products.common-field.sms_rate_unit')
         @include('layouts.partials.products.common-field.validity_unit')
         @include('layouts.partials.products.common-field.validity')
-        @include('layouts.partials.products.common-field.ussd_code')
         @include('layouts.partials.products.common-field.balance_check')
         @include('layouts.partials.products.common-field.tag')
     </slot>
