@@ -380,4 +380,13 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
 
     Route::get('mybl/learn-priyojon', 'CMS\LearnPriyojonContentController@show')->name('learn-priyojon.show');
     Route::post('mybl/learn-priyojon', 'CMS\LearnPriyojonContentController@store')->name('learn-priyojon.store');
+
+    /*
+     *  Feed routes
+     */
+    Route::namespace('CMS')->prefix('feeds')->name('feeds.')->group(function () {
+        // Category resource
+        Route::resource('categories', 'FeedCategoryController');
+    });
+
 });

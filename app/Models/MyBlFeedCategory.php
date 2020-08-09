@@ -14,15 +14,25 @@ class MyBlFeedCategory extends Model
     use Sluggable;
 
     protected $fillable = [
-        'title', 'slug' , 'ordering'
+        'parent_id', 'name', 'slug' , 'order' , 'status'
     ];
 
     public function sluggable()
     {
         return [
             'slug' => [
-                'source' => 'title'
+                'source' => 'name'
             ]
         ];
+    }
+
+    public function feeds()
+    {
+        return '';
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(self::class);
     }
 }
