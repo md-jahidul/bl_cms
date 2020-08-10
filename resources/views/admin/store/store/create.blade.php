@@ -121,21 +121,41 @@
                                     <label for="type" class="required">Store Type:</label>
                                     <select required class="form-control" value="" name="type" id="type">
 
+                                        <option value="">Select Type</option>
                                         <option @if(isset($store)) @if($store->type=="app") selected
                                                 @endif @endif value="app">App
                                         </option>
                                         <option @if(isset($store)) @if($store->type=='promotional') selected
                                                 @endif @endif value="promotional">Promotional
                                         </option>
-
                                         <option @if(isset($store)) @if($store->type=='subcategory') selected
                                                 @endif @endif value="subcategory">SubCategory
                                         </option>
 
-
                                     </select>
                                     <div class="help-block"></div>
                                     <small class="text-danger"> @error('type') {{ $message }} @enderror </small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="app_id" class="required">
+                                        App :
+                                    </label>
+                                    <div class="controls">
+                                        <select required name="app_id[]" id="app_id[]" multiple="multiple" class="app_select form-control @error('app_id') is-invalid @enderror">
+                                            <option value="">Select App</option>
+                                            @foreach ($apps as $app)
+                                                <option @if(old("app_id")) {{ (old("app_id") == $app->id ? "selected":"") }}
+                                                        @elseif(isset($store) && ($app->id == $store->app_id)) selected  @endif
+                                                        value="{{$app->id}}" {{ (old("app_id") == $app->id ? "selected":"") }}>{{$app->title}}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('app_id') {{ $message }} @enderror </small>
+                                    </div>
                                 </div>
                             </div>
 
@@ -195,27 +215,13 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" >Rating:</label>
+                                    <label for="title">Video:</label>
                                     <input required
-                                           value="@if(isset($store)){{$store->ratings}} @elseif(old("ratings")) {{old("ratings")}} @endif"
-                                           type="text" name="ratings" class="form-control @error('ratings') is-invalid @enderror"
-                                           id="ratings" placeholder="Enter Shorcut Name in Bangla..">
-                                    <div class="help-block">
-                                    </div>
-                                    <small class="text-danger"> @error('ratings') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="title">Total Rating:</label>
-                                    <input required
-                                           value="@if(isset($store)){{$store->total_ratings}} @elseif(old("total_ratings")) {{old("total_ratings")}} @endif"
-                                           type="text" name="total_ratings" class="form-control @error('total_ratings') is-invalid @enderror"
-                                           id="total_ratings" placeholder="Enter Shorcut Name in Bangla..">
-                                    <div class="help-block">
-                                    </div>
-                                    <small class="text-danger"> @error('total_ratings') {{ $message }} @enderror </small>
+                                           value="@if(isset($store)){{$store->video_link}} @elseif(old("video_link")) {{old("video_link")}} @endif"
+                                           type="text" name="video_link" class="form-control @error('video_link') is-invalid @enderror"
+                                           id="video_link" placeholder="Enter video link">
+                                    <div class="help-block"></div>
+                                    <small class="text-danger"> @error('video_link') {{ $message }} @enderror </small>
                                 </div>
                             </div>
 
@@ -248,8 +254,6 @@
                                 </div>
                             </div>
 
-
-
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="image">Upload Image :</label>
@@ -275,17 +279,6 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="title">Video:</label>
-                                    <input required
-                                           value="@if(isset($store)){{$store->video_link}} @elseif(old("video_link")) {{old("video_link")}} @endif"
-                                           type="text" name="video_link" class="form-control @error('video_link') is-invalid @enderror"
-                                           id="video_link" placeholder="Enter video link">
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('video_link') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -300,6 +293,32 @@
                                             InActive
                                         </option>
                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="title" >Rating:</label>
+                                    <input required
+                                           value="@if(isset($store)){{$store->ratings}} @elseif(old("ratings")) {{old("ratings")}} @endif"
+                                           type="text" name="ratings" class="form-control @error('ratings') is-invalid @enderror"
+                                           id="ratings" placeholder="Enter Shorcut Name in Bangla..">
+                                    <div class="help-block">
+                                    </div>
+                                    <small class="text-danger"> @error('ratings') {{ $message }} @enderror </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="title">Total Rating:</label>
+                                    <input required
+                                           value="@if(isset($store)){{$store->total_ratings}} @elseif(old("total_ratings")) {{old("total_ratings")}} @endif"
+                                           type="text" name="total_ratings" class="form-control @error('total_ratings') is-invalid @enderror"
+                                           id="total_ratings" placeholder="Enter Shorcut Name in Bangla..">
+                                    <div class="help-block">
+                                    </div>
+                                    <small class="text-danger"> @error('total_ratings') {{ $message }} @enderror </small>
                                 </div>
                             </div>
 
@@ -337,6 +356,12 @@
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css"
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+
+    <style>
+      
+
+    </style>
+
 @endpush
 
 
@@ -380,6 +405,23 @@
                 })
             })
         })
+
+
+        $(document).ready(function() {
+            $('.app_select').select2({
+                placeholder: 'Select App',
+                width: '100%',
+                border: '1px solid #e4e5e7',
+            });
+        });
+
+        $('.app_select').on("select2:select", function (e) {
+            var data = e.params.data.text;
+            if(data=='all'){
+                $(".app_select > option").prop("selected","selected");
+                $(".app_select").trigger("change");
+            }
+        });
 
 
         $(document).ready(function () {

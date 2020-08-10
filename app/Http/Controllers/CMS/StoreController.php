@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
+use App\Services\StoreAppService;
 use App\Services\StoreCategoryService;
 use App\Services\StoreService;
 use App\Services\StoreSubCategoryService;
@@ -13,6 +14,11 @@ class StoreController extends Controller
      * @var StoreService
      */
     protected $storeService;
+
+    /**
+     * @var StoreAppService
+     */
+    protected $storeAppService;
 
     /**
      * @var StoreCategoryService
@@ -28,20 +34,22 @@ class StoreController extends Controller
     /**
      * StoreController constructor.
      * @param StoreService $storeService
+     * @param StoreAppService $storeAppService
      * @param StoreCategoryService $storeCategoryService
      * @param StoreSubCategoryService $storeSubCategoryService
      */
     public function __construct(
         StoreService $storeService,
+        StoreAppService $storeAppService,
         StoreCategoryService $storeCategoryService,
         StoreSubCategoryService $storeSubCategoryService
     ) {
         $this->storeService = $storeService;
+        $this->storeAppService = $storeAppService;
         $this->storeCategoryService = $storeCategoryService;
         $this->storeSubCategoryService = $storeSubCategoryService;
         $this->middleware('auth');
     }
-
 
 
     /**
@@ -66,11 +74,13 @@ class StoreController extends Controller
     public function create()
     {
         $stores = $this->storeService->findAll();
+        $apps = $this->storeAppService->findAll();
         $categories =  $this->storeCategoryService->findAll();
         $subCategories =  $this->storeSubCategoryService->findAll();
 
         return view('admin.store.store.create')
             ->with('stores', $stores)
+            ->with('apps', $apps)
             ->with('categories', $categories)
             ->with('subCategories', $subCategories);
     }

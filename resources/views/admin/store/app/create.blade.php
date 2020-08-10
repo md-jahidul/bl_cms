@@ -59,11 +59,11 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="category_id" class="required">
+                                    <label for="store_id" class="required">
                                         Store :
                                     </label>
                                     <div class="controls">
-                                        <select name="store_id" id="store_id"  class="form-control @error('store_id') is-invalid @enderror">
+                                        <select name="store_id" id="store_id" class="store_select form-control @error('store_id') is-invalid @enderror">
                                             <option value="">Select Store</option>
                                             @foreach ($stores as $store)
                                                 <option @if(old("store_id")) {{ (old("store_id") == $store->id ? "selected":"") }}
@@ -310,6 +310,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css"
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+
+
+
+
+
 @endpush
 
 
@@ -369,6 +374,25 @@
                 height:100
             })
         })
+
+
+        $(document).ready(function() {
+            $('.store_select').select2({
+                placeholder: 'Select Store',
+                width: '100%',
+                border: '1px solid #e4e5e7',
+            });
+        });
+
+        $('.store_select').on("select2:select", function (e) {
+            var data = e.params.data.text;
+            if(data=='all'){
+                $(".store_select > option").prop("selected","selected");
+                $(".store_select").trigger("change");
+            }
+        });
+
+
 
         $(document).ready(function () {
             $('#Example1').DataTable({
