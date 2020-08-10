@@ -15,8 +15,8 @@ class CreateMyBlStoreAppTable extends Migration
     {
         Schema::table('my_bl_store_app', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('store_id')->unsigned();
-            $table->bigInteger('app_id')->unsigned();
+            $table->bigInteger('store_id');
+            $table->bigInteger('app_id');
         });
     }
 
