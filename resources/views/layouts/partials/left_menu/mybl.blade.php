@@ -104,6 +104,47 @@
         </li>
     @endif
 
+
+    @if( auth()->user()->can_view('Store') || auth()->user()->can_view('StoreCategory') )
+        <li class=" nav-item"><a href="#"><i class="la la-cubes"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Store</span></a>
+            <ul class="menu-content">
+                {{--page--}}
+                <li class="{{ is_active_url('storeCategory') }}{{ is_active_url('storeCategory/create') }}">
+                    <a class="menu-item" href="{{ route('storeCategory.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-server"></i>Category List
+                    </a>
+                </li>
+
+                <li class="{{ is_active_url('subStore') }}{{ is_active_url('subStore/create') }}">
+                    <a class="menu-item" href="{{ route('subStore.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Subcategory List</a>
+                </li>
+
+
+                <li class="{{ is_active_url('myblStore') }}{{ is_active_url('myblStore/create') }}">
+                    <a class="menu-item" href="{{ route('myblStore.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Store List</a>
+                </li>
+
+
+                <li class="{{ is_active_url('appStore') }}{{ is_active_url('appStore/create') }}">
+                    <a class="menu-item" href="{{ route('appStore.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>App List</a>
+                </li>
+
+
+
+
+            </ul>
+        </li>
+    @endif
+
+
     @if( auth()->user()->can_view('Banner') || auth()->user()->can_view('WelcomeInfo') || auth()->user()->can_view('MyblSlider')
          || auth()->user()->can_view('MyblSliderImage')  || auth()->user()->can_view('ContextualCard')    )
         <li class=" nav-item"><a href="#"><i class="la la-puzzle-piece"></i>
