@@ -27,6 +27,6 @@ class CreateMyBlStoreAppTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('my_bl_store_apps');
+        Schema::dropIfExists('my_bl_store_app');
     }
 }
