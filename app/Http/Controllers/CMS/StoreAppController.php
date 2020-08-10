@@ -100,7 +100,7 @@ class StoreAppController extends Controller
      */
     public function store(Request $request)
     {
-        $content = $this->storeAppService->storeMyBlStore($request->all())->getContent();
+        $content = $this->storeAppService->storeMyBlAppStore($request->all())->getContent();
         session()->flash('message', $content);
         return redirect(route('appStore.index'));
     }

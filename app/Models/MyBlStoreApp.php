@@ -28,4 +28,14 @@ class MyBlStoreApp extends Model
     {
         return $this->hasMany(MyBlStoreSliderImage::class, 'store_app_id');
     }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function stores()
+    {
+        return $this->belongsToMany(MyBlStore::class, 'my_bl_store_app',
+            'app_id', 'store_id');
+    }
 }

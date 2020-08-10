@@ -63,12 +63,30 @@
                                         Store :
                                     </label>
                                     <div class="controls">
-                                        <select name="store_id" id="store_id" class="store_select form-control @error('store_id') is-invalid @enderror">
+                                        {{--<select name="store_id" id="store_id" class="store_select form-control @error('store_id') is-invalid @enderror">
                                             <option value="">Select Store</option>
                                             @foreach ($stores as $store)
                                                 <option @if(old("store_id")) {{ (old("store_id") == $store->id ? "selected":"") }}
                                                         @elseif(isset($appStore) && ($store->id == $appStore->store_id)) selected  @endif
                                                         value="{{$store->id}}" {{ (old("store_id") == $store->id ? "selected":"") }}>{{$store->title}}</option>
+                                            @endforeach
+                                        </select>--}}
+
+                                        <select required name="store_id[]" id="store_id[]" multiple="multiple" class="store_select form-control @error('store_id') is-invalid @enderror">
+                                            <option value="">Select App</option>
+                                            @foreach ($stores as $store)
+
+                                                <option @if(isset($appStore->stores[$loop->index]->id) && ($store->id == $appStore->stores[$loop->index]->id)) selected
+                                                        value="{{$store->id}}">{{$store->title}}
+                                                </option>
+
+                                                <option @elseif(isset($store) && isset($appStore->stores[$loop->index-1]->id) && ($store->id == $appStore->stores[$loop->index-1]->id)) selected  @endif
+                                                value="{{$store->id}}" {{ (old("store_id") == $store->id ? "selected":"") }}>{{$store->title}}</option>
+
+                                                {{-- <option @if(old("store_id[]")) {{ (old("store_id[]") == $app->id ? "selected":"") }}
+                                                         @elseif(isset($store) && isset($store->apps[$loop->index-1]->id) && ($app->id == $store->apps[$loop->index-1]->id)) selected  @endif
+                                                         value="{{$app->id}}" {{ (old("store_id") == $app->id ? "selected":"") }}>{{$app->title}}</option>--}}
+
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
@@ -84,7 +102,7 @@
                                         Category :
                                     </label>
                                     <div class="controls">
-                                        <select name="category_id" id="category_id"  class="form-control @error('category_id') is-invalid @enderror">
+                                        <select name="category_id" id="category_id"  class="category_select form-control @error('category_id') is-invalid @enderror">
                                             <option value="">Select Category</option>
                                             @foreach ($categories as $category)
                                                 <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}
@@ -105,7 +123,7 @@
                                         Sub Category :
                                     </label>
                                     <div class="controls">
-                                        <select name="sub_category_id" id="sub_category_id" class="form-control @error('sub_category_id') is-invalid @enderror">
+                                        <select name="sub_category_id" id="sub_category_id" class="sub_category_select form-control @error('sub_category_id') is-invalid @enderror">
                                             <option value="">Select Sub Category</option>
                                             @foreach ($subCategories as $subCategory)
                                                 <option @if(old("category_id")) {{ (old("category_id") == $subCategory->id ? "selected":"") }}
@@ -311,10 +329,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
 
-
-
-
-
 @endpush
 
 
@@ -374,6 +388,42 @@
                 height:100
             })
         })
+
+
+
+        $(document).ready(function() {
+            $('.category_select').select2({
+                placeholder: 'Select Category',
+                width: '100%',
+                border: '1px solid #e4e5e7',
+            });
+        });
+
+        $('.category_select').on("select2:select", function (e) {
+            var data = e.params.data.text;
+            if(data=='all'){
+                $(".category_select > option").prop("selected","selected");
+                $(".category_select").trigger("change");
+            }
+        });
+
+
+
+        $(document).ready(function() {
+            $('.sub_category_select').select2({
+                placeholder: 'Select SubCategory',
+                width: '100%',
+                border: '1px solid #e4e5e7',
+            });
+        });
+
+        $('.sub_category_select').on("select2:select", function (e) {
+            var data = e.params.data.text;
+            if(data=='all'){
+                $(".sub_category_select > option").prop("selected","selected");
+                $(".sub_category_select").trigger("change");
+            }
+        });
 
 
         $(document).ready(function() {
