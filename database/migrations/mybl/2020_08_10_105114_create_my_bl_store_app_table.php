@@ -13,7 +13,7 @@ class CreateMyBlStoreAppTable extends Migration
      */
     public function up()
     {
-        Schema::table('my_bl_store_app', function (Blueprint $table) {
+        Schema::create('my_bl_store_app', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('store_id');
             $table->bigInteger('app_id');

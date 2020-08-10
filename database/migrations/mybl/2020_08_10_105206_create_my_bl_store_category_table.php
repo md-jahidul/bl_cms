@@ -13,7 +13,7 @@ class CreateMyBlStoreCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::table('my_bl_store_category', function (Blueprint $table) {
+        Schema::create('my_bl_store_category', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('store_id');
             $table->bigInteger('category_id');
