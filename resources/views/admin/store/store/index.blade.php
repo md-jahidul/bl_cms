@@ -37,7 +37,7 @@
                         <th width='5%'><i class="icon-cursor-move icons"></i></th>
                         <th width="5%">ID</th>
                         <th width="12%">Title</th>
-                        <th width="20%">Details</th>
+                       {{-- <th width="20%">Details</th>--}}
                         <th width="10%">Type</th>
                         <th width="10%">Category</th>
                         <th width="15%">Action</th>
@@ -49,7 +49,7 @@
                                 <td width="5%"><i class="icon-cursor-move icons"></i></td>
                                 <td width="5%">{{$store->id}}</td>
                                 <td width="12%">{{$store->title}}</td>
-                                <td width="30%">{{$store->description}}</td>
+                               {{-- <td width="30%">{{$store->description}}</td>--}}
                                 <td width="30%">{{$store->type}}</td>
                                 <td width="10%">{{$store->storeCategories->name_en}} </td>
                                 <td width="15%">

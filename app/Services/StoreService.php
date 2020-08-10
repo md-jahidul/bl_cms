@@ -44,9 +44,16 @@ class StoreService
      */
     public function storeMyBlStore($data)
     {
+        $app_ids = $data['app_id'];
+        unset($data['app_id']);
+
         $data['icon'] = 'storage/' . $data['icon']->store('store');
         $data['image_url'] = 'storage/' . $data['image_url']->store('store');
-        $this->save($data);
+
+       $store =  $this->save($data);
+
+       $store->apps()->attach($app_ids);
+
         return new Response("Store has been successfully created");
     }
 
@@ -58,6 +65,10 @@ class StoreService
      */
     public function updateStore($data, $id)
     {
+
+        $app_ids = $data['app_id'];
+        unset($data['app_id']);
+
         $storeRepository = $this->findOne($id);
 
         if (isset($data['icon'])) {
@@ -71,6 +82,9 @@ class StoreService
         }
 
         $storeRepository->update($data);
+
+        $storeRepository->apps()->sync($app_ids);
+
         return Response('Store has been successfully updated');
 
     }

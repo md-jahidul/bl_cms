@@ -122,10 +122,12 @@ class StoreController extends Controller
     public function edit($id)
     {
         $store = $this->storeService->findOne($id);
+        $apps = $this->storeAppService->findAll();
         $categories = $this->storeCategoryService->findAll();
         $subCategories =  $this->storeSubCategoryService->findAll();
         return view('admin.store.store.create')
             ->with('store', $store)
+            ->with('apps', $apps)
             ->with('categories', $categories)
             ->with('subCategories', $subCategories);
     }

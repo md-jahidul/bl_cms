@@ -21,4 +21,14 @@ class MyBlStore extends Model
     {
         return $this->belongsTo(MyBlStoreCategory::class, 'category_id');
     }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function apps()
+    {
+        return $this->belongsToMany(MyBlStoreApp::class, 'my_bl_store_app',
+            'store_id', 'app_id');
+    }
 }
