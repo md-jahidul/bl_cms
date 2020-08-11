@@ -232,8 +232,8 @@ class BaseRepository implements BaseRepositoryContract
      * Update resource
      *
      * @param $resource
-     * @param $data
-     * @return \Illuminate\Support\Collection|null|static
+     * @param array $data
+     * @return Model
      */
     public function update($resource, $data = [])
     {
@@ -241,8 +241,7 @@ class BaseRepository implements BaseRepositoryContract
             $resource->fill($data)->save();
             return $resource;
         }
-        $this->save($data);
-        return $resource;
+        return $this->save($data);
     }
 
     /**
