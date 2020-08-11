@@ -238,9 +238,10 @@ class BaseRepository implements BaseRepositoryContract
     public function update($resource, $data = [])
     {
         if (is_array($data) && count($data) > 0) {
-            $resource->fill($data);
+            $resource->fill($data)->save();
+            return $resource;
         }
-        $this->save($resource);
+        $this->save($data);
         return $resource;
     }
 
