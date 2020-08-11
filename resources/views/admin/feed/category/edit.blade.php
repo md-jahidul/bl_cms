@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Create Feed Category')
+@section('title', 'Edit Feed Category')
 @section('card_name',"Feed Category" )
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Create Feed Category</li>
+    <li class="breadcrumb-item active">Edit Feed Category</li>
 @endsection
 @section('action')
     <a href="{{route('feeds.categories.index')}}" class="btn btn-primary btn-glow px-2">
@@ -21,9 +21,9 @@
                 <div class="card-body">
 
                     <div class="card-body">
-                        <form novalidate class="form row" action="{{route('feeds.categories.store')}}" method="POST">
+                        <form novalidate class="form row" action="{{route('feeds.categories.update', $category->id)}}" method="POST">
                             @csrf
-                            @method('post')
+                            @method('PUT')
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
                                     <div class="form-group col-md-6 mb-2">
@@ -31,9 +31,11 @@
                                         <select id="parent" name="parent_id"
                                                 class="browser-default custom-select">
                                             <option value="">--None--</option>
-                                            @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">
-                                                    {{ $category->name }}
+                                            @foreach ($categories as $item)
+                                                <option value="{{ $item->id }}"
+                                                    {{ (isset($category->parent) && $item->id == $category->parent->id) ? 'selected' : ''}}
+                                                >
+                                                    {{ $item->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -41,7 +43,7 @@
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="name" class="required">Name:</label>
-                                        <input                                            value="@if(old('name')) {{old('name')}} @endif" required id="name"
+                                        <input value="{{ $category->name }}" required id="name"
                                             type="text" class="form-control @error('name') is-invalid @enderror"
                                             placeholder="Name" name="name">
                                         <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
@@ -50,7 +52,7 @@
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="order">Order: </label>
                                         <input required min="1"
-                                            value="@if(old('order')) {{old('order')}} @else{{1}}@endif" id="order"
+                                            value="{{ $category->order }}" id="order"
                                             type="number" class="form-control @error('order') is-invalid @enderror"
                                             placeholder="Order" name="order">
                                         <small class="text-danger"> @error('order') {{ $message }} @enderror </small>
@@ -59,10 +61,9 @@
                                     <div class="col-6">
                                         <div style="margin-top: 25px" class="form-group {{ $errors->has('status') ? ' error' : '' }}">
 
-                                            <input type="radio" name="status" value="1" id="input-radio-15"
-                                                   checked>
+                                            <input type="radio" name="status" value="1" id="input-radio-15" {{ $category->status == 1 ? 'checked' : '' }}>
                                             <label for="input-radio-15" class="mr-3">Active</label>
-                                            <input type="radio" name="status" value="0" id="input-radio-16">
+                                            <input type="radio" name="status" value="0" id="input-radio-16"  {{ $category->status == 0 ? 'checked' : '' }}>
                                             <label for="input-radio-16" class="mr-3">Inactive</label>
 
                                             @if ($errors->has('status'))
