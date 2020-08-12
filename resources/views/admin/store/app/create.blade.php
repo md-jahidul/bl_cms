@@ -59,20 +59,11 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="store_id" class="required">
+                                    <label for="store_id" >
                                         Store :
                                     </label>
                                     <div class="controls">
-                                        {{--<select name="store_id" id="store_id" class="store_select form-control @error('store_id') is-invalid @enderror">
-                                            <option value="">Select Store</option>
-                                            @foreach ($stores as $store)
-                                                <option @if(old("store_id")) {{ (old("store_id") == $store->id ? "selected":"") }}
-                                                        @elseif(isset($appStore) && ($store->id == $appStore->store_id)) selected  @endif
-                                                        value="{{$store->id}}" {{ (old("store_id") == $store->id ? "selected":"") }}>{{$store->title}}</option>
-                                            @endforeach
-                                        </select>--}}
-
-                                        <select required name="store_id[]" id="store_id[]" multiple="multiple" class="store_select form-control @error('store_id') is-invalid @enderror">
+                                        <select  name="store_id[]" id="store_id[]" multiple="multiple" class="store_select form-control @error('store_id') is-invalid @enderror">
                                             <option value="">Select App</option>
                                             @foreach ($stores as $store)
 
@@ -82,10 +73,6 @@
 
                                                 <option @elseif(isset($store) && isset($appStore->stores[$loop->index-1]->id) && ($store->id == $appStore->stores[$loop->index-1]->id)) selected  @endif
                                                 value="{{$store->id}}" {{ (old("store_id") == $store->id ? "selected":"") }}>{{$store->title}}</option>
-
-                                                {{-- <option @if(old("store_id[]")) {{ (old("store_id[]") == $app->id ? "selected":"") }}
-                                                         @elseif(isset($store) && isset($store->apps[$loop->index-1]->id) && ($app->id == $store->apps[$loop->index-1]->id)) selected  @endif
-                                                         value="{{$app->id}}" {{ (old("store_id") == $app->id ? "selected":"") }}>{{$app->title}}</option>--}}
 
                                             @endforeach
                                         </select>
