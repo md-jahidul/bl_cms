@@ -39,7 +39,7 @@
                             <tr>
                                 <td width="5%">{{$appStore->id}}</td>
                                 <td width="12%">{{$appStore->title}}</td>
-                                <td width="30%">{{strip_tags($appStore->description)}}</td>
+                                <td width="30%">{!! $appStore->description !!} </td>
                                 <td width="10%">{{$appStore->storeCategories->name_en}} </td>
                                 <td width="15%">
                                     <div class="row">
