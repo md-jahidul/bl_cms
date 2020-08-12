@@ -44,15 +44,21 @@ class StoreService
      */
     public function storeMyBlStore($data)
     {
-        $app_ids = $data['app_id'];
-        unset($data['app_id']);
+        if(isset($data['app_id'])){
+            $app_ids = $data['app_id'];
+            unset($data['app_id']);
+        }
+
 
         $data['icon'] = 'storage/' . $data['icon']->store('store');
         $data['image_url'] = 'storage/' . $data['image_url']->store('store');
 
        $store =  $this->save($data);
 
-       $store->apps()->attach($app_ids);
+        if(isset($data['app_id'])){
+            $store->apps()->attach($app_ids);
+        }
+
 
         return new Response("Store has been successfully created");
     }
