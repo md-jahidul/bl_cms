@@ -406,6 +406,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     Route::get('developer/api/debug/bonus_logs/{number}', 'CMS\ApiDebugController@getLoginBonusHistory');
     Route::get('developer/api/debug/otp-logs/{number}', 'CMS\ApiDebugController@getOtpRequestLogs');
 
+    Route::get('developer/api/debug/otp-login-logs/{number}', 'CMS\ApiDebugController@getOtpLoginRequestLogs');
+
     Route::get('developer/api/debug/last-login/{number}', 'CMS\ApiDebugController@getLastLogin');
 
     Route::get('developer/api/debug/usage-summary/{number}', 'CMS\ApiDebugController@getUsageSummary');

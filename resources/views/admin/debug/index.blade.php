@@ -2,6 +2,8 @@
 @section('title', 'Developer Panel')
 @section('card_name', 'Debug Panel')
 
+{{--@php(dd($date_limit,  $last_date));--}}
+
 @section('content')
     <section>
         <div class="row">
@@ -162,7 +164,7 @@
                        class="form-control datetime"
                        id="date"
                        value="{{ $current_date }}"
-                       min="{{ $last_date }}"
+                       min="{{ $date_limit }}"
                        max="{{ $current_date }}"
                        name="date" >
             </div>
@@ -219,7 +221,7 @@
                                class="form-control datetime"
                                id="date_bonus"
                                value="{{ $current_date }}"
-                               min="{{ $last_date }}"
+                               min="{{ $date_limit }}"
                                max="{{ $current_date }}"
                                name="date" >
                     </div>
@@ -239,18 +241,52 @@
             </div>
         </div>
 
+
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-8">
-                        <h5 class="mb-1 mt-2 text-bold-600">Recent OTP Request Logs</h5>
+                        <h5 class="mb-1 mt-2 text-bold-600">Recent OTP and Login Logs</h5>
+                    </div>
+                    <div class="col-md-4 mt-2">
+                        <input type='date'
+                               class="form-control datetime"
+                               id="date_otp_login"
+                               value="{{ $current_date }}"
+                               min="{{ $date_limit }}"
+                               max="{{ $current_date }}"
+                               name="date_otp_login" >
+                    </div>
+                </div>
+                <hr>
+                <div class="col-md-12">
+                    <table class="table table-bordered" id="otp_login_table">
+                        <thead>
+                        <tr>
+                            <th>Request Time</th>
+                            <th>number</th>
+                            <th>response</th>
+                            <th>message</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5 class="mb-1 mt-2 text-bold-600">Recent OTP Verify Logs</h5>
                     </div>
                     <div class="col-md-4 mt-2">
                         <input type='date'
                                class="form-control datetime"
                                id="date_otp"
                                value="{{ $current_date }}"
-                               min="{{ $last_date }}"
+                               min="{{ $date_limit }}"
                                max="{{ $current_date }}"
                                name="date" >
                     </div>
@@ -479,6 +515,7 @@
                 getLastLogin(number);
                 getUsageDetails(number);
                 getOtpData(number);
+                getOtpLoginData(number);
 
             });
 
@@ -744,6 +781,7 @@
                             }
                         }
                     },
+
                     columns: [
                         {
                             name: 'request_time',
@@ -793,6 +831,70 @@
                 });
             }
 
+
+            function getOtpLoginData(number) {
+
+                $('#otp_login_table').DataTable().destroy();
+
+                $("#otp_login_table").dataTable({
+                    scrollX: true,
+                    processing: true,
+                    searching: false,
+                    serverSide: true,
+                    ordering: false,
+                    autoWidth: false,
+                    pageLength: 10,
+                    lengthChange: false,
+                    ajax: {
+                        url: "/developer/api/debug/otp-login-logs/" + number,
+                        data: {
+                            date: function () {
+                                return $("#date_otp_login").val();
+                            }
+                        }
+                    },
+                    columns: [
+                        {
+                            name: 'request_time',
+                            render: function (data, type, row) {
+                                return row.date;
+                            }
+                        },
+
+                        {
+                            name: 'number',
+                            render: function (data, type, row) {
+                                return row.number;
+                            }
+                        },
+
+                        {
+                            name: 'response',
+                            render: function (data, type, row) {
+                                return row.response;
+                            }
+                        },
+
+                        {
+                            name: 'message',
+                            render: function (data, type, row) {
+                                return row.message;
+                            }
+                        },
+
+
+
+                        {
+                            name: 'status',
+                            render: function (data, type, row) {
+                                return row.status;
+                            }
+                        }
+                    ]
+                });
+            }
+
+
             $(document).on('input', '#date', function (e) {
                 e.preventDefault();
                 $('#audit_log_table').DataTable().ajax.reload();
@@ -806,6 +908,11 @@
             $(document).on('input', '#date_otp', function (e) {
                 e.preventDefault();
                 $('#otp_log_table').DataTable().ajax.reload();
+            });
+
+            $(document).on('input', '#date_otp_login', function (e) {
+                e.preventDefault();
+                $('#otp_login_table').DataTable().ajax.reload();
             });
         })
     </script>

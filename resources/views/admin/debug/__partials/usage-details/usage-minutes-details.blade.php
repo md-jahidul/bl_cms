@@ -7,6 +7,7 @@
                     <tr>
                         <th>Number</th>
                         <th>Type</th>
+                        <th>Date</th>
                         <th>Duration</th>
                         <th>Cost</th>
                     </tr>
@@ -21,6 +22,9 @@
                                 @else
                                     <span class="badge badge-default badge-success">Incoming</span>
                                 @endif
+                            </td>
+                            <td>
+                                {{ $item->date }}
                             </td>
                             <td>
                                 {{  gmdate("H:i:s", $item->duration ) }}
