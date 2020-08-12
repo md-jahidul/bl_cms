@@ -27,7 +27,7 @@
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="parent">Parent</label>
+                                        <label for="parent">Parent:</label>
                                         <select id="parent" name="parent_id"
                                                 class="browser-default custom-select">
                                             <option value="">--None--</option>
@@ -111,86 +111,4 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
-    <script>
-
-        $(function () {
-            var content = "";
-            var url_html;
-            var product_html;
-            var parse_data;
-            let dial_html, other_attributes = '';
-            var js_data = '<?php echo isset($imageInfo) ? json_encode($imageInfo) : null; ?>';
-
-            if (js_data) {
-                parse_data = JSON.parse(js_data);
-                other_attributes = parse_data.other_attributes;
-                if (other_attributes) {
-                    content = other_attributes.content;
-                }
-            }
-
-
-            // add dial number
-            dial_html = ` <div class="form-group other-info-div">
-                                        <label>Dial Number</label>
-                                        <input type="text" name="other_attributes" class="form-control" value="${content}" placeholder="Enter Valid Number" required>
-                                        <div class="help-block"></div>
-                                    </div>`;
-
-            url_html = ` <div class="form-group other-info-div">
-                                        <label>Redirect External URL</label>
-                                        <input type="text" name="other_attributes" class="form-control" value="${content}" placeholder="Enter Valid URL" required>
-                                        <div class="help-block"></div>
-                                    </div>`;
-            product_html = ` <div class="form-group other-info-div">
-                                        <label>Select a product</label>
-                                        <select class="product-list form-control"  name="other_attributes" required></select>
-                                        <div class="help-block"></div>
-                                    </div>`;
-
-
-            $('#navigate_action').on('change', function () {
-                let action = $(this).val();
-                console.log(action);
-                if (action == 'DIAL') {
-                    $("#append_div").html(dial_html);
-                } else if (action == 'URL') {
-                    $("#append_div").html(url_html);
-                } else if (action == 'PURCHASE') {
-                    $("#append_div").html(product_html);
-                    $(".product-list").select2({
-                        placeholder: "Select a product",
-                        ajax: {
-                            url: "{{ route('myblslider.active-products') }}",
-                            processResults: function (data) {
-                                // Transforms the top-level key of the response object from 'items' to 'results'
-                                return {
-                                    results: data
-                                };
-                            }
-                        }
-                    });
-                } else {
-                    $(".other-info-div").remove();
-                }
-            })
-
-        });
-
-        $(function () {
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Browse for an Image File to upload',
-                    'replace': 'Click to replace',
-                    'remove': 'Remove',
-                    'error': 'Choose correct file format'
-                }
-            });
-
-            $("#navigate_action").select2();
-
-
-        })
-    </script>
-
 @endpush
