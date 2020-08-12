@@ -83,7 +83,7 @@
                     </a>
                 </li>
                 <li class="{{ is_active_url('feeds') }}{{ is_active_url('feeds/create') }}">
-                    <a class="menu-item" href="{{--{{ route('feeds.index') }}--}}"
+                    <a class="menu-item" href="{{ route('feeds.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-feed"></i>Feed List</a>
                 </li>

@@ -24,7 +24,7 @@ class MyBlFeedCategory extends Model
 
     public function feeds()
     {
-        return '';
+        return $this->hasMany(MyBlFeed::class, 'category_id', 'id');
     }
 
     public function parent()

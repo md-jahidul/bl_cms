@@ -385,8 +385,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
      *  Feed routes
      */
     Route::namespace('CMS')->prefix('feeds')->name('feeds.')->group(function () {
+        Route::resource('/', 'FeedController')->parameters(['' => 'feed'])->except('show');
         // Category resource
-        Route::resource('categories', 'FeedCategoryController');
+        Route::resource('categories', 'FeedCategoryController')->except('show');
     });
 
 });
