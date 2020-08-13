@@ -213,7 +213,7 @@
     @endif
 
     @if( auth()->user()->can_view('MigratePlan'))
-        <li class=" nav-item"><a href="#"><i class="la la-bell"></i>
+        <li class=" nav-item"><a href="#"><i class="la la-comment"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Migrate PLan</span></a>
             <ul class="menu-content">
                 <li class="{{ is_active_url('migrate-plan') }}{{ is_active_url('migrate-plan/create') }}">
