@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\FeedRepository;
 use App\Traits\CrudTrait;
+use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 
@@ -78,6 +79,13 @@ class FeedService
         return new Response("Feed has been successfully updated");
     }
 
+    /**
+     * Delete feed in the db
+     *
+     * @param $id
+     * @return Response
+     * @throws Exception
+     */
     public function destroy($id)
     {
         $this->delete($id);
