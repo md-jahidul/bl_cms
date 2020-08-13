@@ -119,7 +119,7 @@
 
                                     <div id="image-input" class="form-group col-md-6 mb-2">
                                         <div class="form-group">
-                                            <label for="image" class="required">Upload Image :</label>
+                                            <label for="image">Upload Image :</label>
                                             <div class="input-group">
                                                 <div class="custom-file">
                                                     <input accept="image/*"
