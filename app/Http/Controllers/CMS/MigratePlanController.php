@@ -59,7 +59,7 @@ class MigratePlanController extends Controller
         $plan = $this->migratePlanService->storeMigratePlan($request->all());
         $content = $plan->getContent();
         session()->flash('message', $content);
-        return redirect(route('myblStore.index'));
+        return redirect(route('migrate-plan.index'));
     }
 
     /**
@@ -102,7 +102,7 @@ class MigratePlanController extends Controller
         $plan = $this->migratePlanService->updateMigratePlan($request->all(), $id);
         $content = $plan->getContent();
         session()->flash('success', $content);
-        return redirect(route('myblStore.index'));
+        return redirect(route('migrate-plan.index'));
     }
 
 
@@ -117,7 +117,7 @@ class MigratePlanController extends Controller
     {
         $plan =$this->migratePlanService->deleteMigratePlan($id);
         session()->flash('error', $plan->getContent());
-        return url('myblStore');
+        return url('migrate-plan');
     }
 
     /**

@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Repositories\MigratePlanRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
-use App\Repositories\StoreRepository;
+use App\Repositories\MigratePlanRepository;
+
 
 class MigratePlanService
 {
@@ -48,13 +48,12 @@ class MigratePlanService
     public function storeMigratePlan($data)
     {
 
-        $data['icon'] = 'storage/' . $data['icon']->store('store');
-        $data['image_url'] = 'storage/' . $data['image_url']->store('store');
+        $data['image_url'] = 'storage/' . $data['image_url']->store('plan');
 
         $store =  $this->save($data);
 
 
-        return new Response("Store has been successfully created");
+        return new Response("Migrate Plan has been successfully created");
     }
 
     /**
@@ -67,19 +66,14 @@ class MigratePlanService
     {
         $migratePlanRepository = $this->findOne($id);
 
-        if (isset($data['icon'])) {
-            $data['icon'] = 'storage/' . $data['icon']->store('store');
-            unlink($migratePlanRepository->icon);
-        }
-
         if (isset($data['image_url'])) {
-            $data['image_url'] = 'storage/' . $data['image_url']->store('store');
+            $data['image_url'] = 'storage/' . $data['image_url']->store('plan');
             unlink($migratePlanRepository->image_url);
         }
 
         $migratePlanRepository->update($data);
 
-        return Response('Store has been successfully updated');
+        return Response('Migrate Plan has been successfully updated');
 
     }
 
@@ -92,7 +86,7 @@ class MigratePlanService
     {
         $migratePlanRepository = $this->findOne($id);
         $migratePlanRepository->delete();
-        return Response('Store has been successfully deleted');
+        return Response('Migrate Plan has been successfully deleted');
     }
 
     /**
