@@ -26,7 +26,7 @@
                             <th>Type</th>
                             <th>Category</th>
                             <th>Title</th>
-                            <th>Description</th>
+                            <th>Order</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Status</th>
@@ -40,21 +40,21 @@
                                 <td>{{$feed->type}}</td>
                                 <td>{{$feed->category->name}}</td>
                                 <td>{{$feed->title}}</td>
-                                <td>{{$feed->description}}</td>
+                                <td>{{$feed->order}}</td>
                                 <td>{{$feed->start_date->format('l jS \\of F Y h:i:s A')}}</td>
                                 <td>{{ $feed->end_date ? $feed->end_date->format('l jS \\of F Y h:i:s A') : ''}}</td>
                                 <td>{{$feed->status == 1 ? 'Active' : 'Inactive'}}</td>
                                 <td>
                                     <div class="row">
                                         <div class="col-md-2 m-1">
-                                            <a role="button" title="Edit Feed Category"
+                                            <a role="button" title="Edit Feed"
                                                href="{{route('feeds.edit',$feed->id)}}"
                                                class="btn-pancil btn btn-outline-success">
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
                                         <div class="col-md-2 m-1">
-                                            <button data-id="{{$feed->id}}" title="Delete Feed Category"
+                                            <button data-id="{{$feed->id}}" title="Delete Feed"
                                                     class="btn btn-outline-danger delete" onclick=""><i
                                                     class="la la-trash"></i></button>
                                             <form id="delete-form-{{$feed->id}}"

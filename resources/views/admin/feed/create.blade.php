@@ -25,7 +25,7 @@
             </div>
             <div class="card-content collapse show">
                 <div class="card-body">
-                    <div class="row mb-1">
+                    <div class="mb-1">
                         <div class="form-group col-md-12">
                             <div class="form-group">
                                 <input type="radio" name="feed_type" value="general" id="general" {{ old('feed_type') === 'general' ? 'checked' : 'checked' }}>
