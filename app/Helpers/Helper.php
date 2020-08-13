@@ -125,6 +125,27 @@ class Helper
             "SEVEN"  =>  7,
             "EIGHT"  =>  8
         ];
+
+    }
+
+
+
+    /**
+     * OTP Token length list
+     *
+     * @return array
+     */
+    public static function migratePlanList()
+    {
+
+        return [
+            "DeshEkRateDarun"         => "Desh Ek Rate Darun",
+            "Inspire9Postpaid"        => "Inspire9 Postpaid",
+            "Retail2Postpaid"         => "PROpaid Package",
+            "B2BPost60p10s"           => "Business Package 1",
+            "B2BPreBusinessCnC4"      => "Business Prepaid Package 169",
+        ];
+
     }
 
 

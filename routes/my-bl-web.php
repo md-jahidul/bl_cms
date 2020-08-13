@@ -419,4 +419,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     Route::get('mybl/learn-priyojon', 'CMS\LearnPriyojonContentController@show')->name('learn-priyojon.show');
     Route::post('mybl/learn-priyojon', 'CMS\LearnPriyojonContentController@store')->name('learn-priyojon.store');
 
+    // Migrate Plan
+    route::resource('migrate-plan', 'CMS\MigratePlanController');
+    Route::get('migrate-plan/destroy/{id}', 'CMS\MigratePlanController@destroy');
+
 });
