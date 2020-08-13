@@ -8,6 +8,10 @@ class PartnerOfferDetail extends Model
 {
     protected $fillable = [
         'partner_offer_id',
+        'page_header',
+        'page_header_bn',
+        'schema_markup',
+        'url_slug',
         'details_en',
         'details_bn',
         'offer_details_en',
@@ -17,7 +21,11 @@ class PartnerOfferDetail extends Model
         'avail_en',
         'avail_bn',
         'banner_image_url',
-        'banner_alt_text'
+        'banner_mobile_view',
+        'banner_alt_text',
+        'banner_alt_text_bn',
+        'created_by',
+        'updated_by'
     ];
 }
 

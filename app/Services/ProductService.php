@@ -160,6 +160,7 @@ class ProductService
         $data['show_in_home'] = (isset($data['show_in_home']) ? 1 : 0);
         $data['special_product'] = (isset($data['special_product']) ? 1 : 0);
         $data['rate_cutter_offer'] = (isset($data['rate_cutter_offer']) ? 1 : 0);
+        $data['is_four_g_offer'] = (isset($data['is_four_g_offer']) ? 1 : 0);
         $data['updated_by'] = Auth::id();
 
         $product->update($data);

@@ -5,11 +5,16 @@ namespace App\Http\Controllers\AssetLite;
 use App\Http\Requests\StoreFooterMenuRequest;
 use App\Models\FooterMenu;
 use App\Models\Menu;
+use App\Services\DynamicPageService;
 use App\Services\FooterMenuService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 
 class FooterMenuController extends Controller
 {
@@ -19,6 +24,11 @@ class FooterMenuController extends Controller
     private $footerMenuService;
 
     /**
+     * @var DynamicPageService
+     */
+    private $dynamicPageService;
+
+    /**
      * @var array $menuItems
      */
     protected $footerMenuItems = [];
@@ -26,10 +36,12 @@ class FooterMenuController extends Controller
     /**
      * FooterMenuController constructor.
      * @param FooterMenuService $footerMenuService
+     * @param DynamicPageService $dynamicPageService
      */
-    public function __construct(FooterMenuService $footerMenuService)
+    public function __construct(FooterMenuService $footerMenuService, DynamicPageService $dynamicPageService)
     {
         $this->footerMenuService = $footerMenuService;
+        $this->dynamicPageService = $dynamicPageService;
         $this->middleware('auth');
     }
 
@@ -48,7 +60,9 @@ class FooterMenuController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param int $parent_id
+     * @param bool $chield_menu
+     * @return Response
      */
     public function index($parent_id = 0, $chield_menu = false)
     {
@@ -65,18 +79,19 @@ class FooterMenuController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param int $parent_id
+     * @return Application|Factory|View
      */
     public function create($parent_id = 0)
     {
+        $dynamicPages = $this->dynamicPageService->findAll();
         $this->footerMenuItems[] = ['en_label_text' => 'Create'];
         $footer_menu_id = $parent_id;
         while ($footer_menu_id != 0) {
             $footer_menu_id = $this->getBreadcrumbInfo($footer_menu_id);
         }
         $footer_menu_items = $this->footerMenuItems;
-
-        return view('admin.footer-menu.create', compact('parent_id', 'footer_menu_items'));
+        return view('admin.footer-menu.create', compact('parent_id', 'footer_menu_items', 'dynamicPages'));
     }
 
 
@@ -84,7 +99,7 @@ class FooterMenuController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(StoreFooterMenuRequest $request)
     {
@@ -99,12 +114,12 @@ class FooterMenuController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function edit($id)
     {
         $footerMenu = $this->footerMenuService->findOrFail($id);
-
+        $dynamicPages = $this->dynamicPageService->findAll();
         $this->footerMenuItems[] = ['en_label_text' => $footerMenu->en_label_text];
 
         $footer_menu_id = $footerMenu->parent_id;
@@ -112,7 +127,7 @@ class FooterMenuController extends Controller
             $footer_menu_id = $this->getBreadcrumbInfo($footer_menu_id);
         }
         $footer_menu_items = $this->footerMenuItems;
-        return view('admin.footer-menu.edit', compact('footerMenu', 'footer_menu_items'));
+        return view('admin.footer-menu.edit', compact('footerMenu', 'footer_menu_items', 'dynamicPages'));
     }
 
     /**
@@ -120,19 +135,19 @@ class FooterMenuController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreFooterMenuRequest $request)
     {
         $parentId =  $request->parent_id;
-        $response = $this->footerMenuService->updateFooterMenu($request->all(), $id);
+        $response = $this->footerMenuService->updateFooterMenu($request->all());
         Session::flash('message', $response->getContent());
         return redirect(($parentId != 0) ? "footer-menu/$parentId/child-footer" : 'footer-menu');
     }
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function FooterMenuSortable(Request $request)
     {

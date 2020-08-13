@@ -17,6 +17,7 @@ class AppServiceProductDetailsService
 {
     use CrudTrait;
     use FileTrait;
+
     const PAGE_TYPE = 'app_services';
 
 
@@ -143,31 +144,27 @@ class AppServiceProductDetailsService
 
                     # Multiple item to save
                     if (request()->filled('component.' . $key . '.multi_item')) {
-
                         $request_multi = $value['multi_item'];
+                        if (!isset($request_multi['status-1'])) {
+                            $request_multi['status-1'] = "1";
+                        }
                         $item_count = isset($value['multi_item_count']) ? $value['multi_item_count'] : 0;
                         $results = [];
                         for ($i = 1; $i <= $item_count; $i++) {
                             foreach ($request_multi as $m_key => $m_value) {
                                 $sub_data = [];
                                 $check_index = explode('-', $m_key);
-
                                 if ($check_index[1] == $i) {
                                     if (request()->hasFile('component.' . $key . '.multi_item.' . $m_key)) {
-
                                         // dd( request()->hasFile('component.'.$key.'.multi_item.'.$m_key) );
                                         $m_value = $this->upload($data['component'][$key]['multi_item'][$m_key], 'assetlite/images/app-service/product/details');
-
                                     }
-
                                     $results[$i][$check_index[0]] = ($m_value != null) ? $m_value : '';
 
                                 }
                             }
                         }
-
                         $value['multiple_attributes'] = !empty($results) ? json_encode($results) : null;
-
                     }
 
 
@@ -273,7 +270,6 @@ class AppServiceProductDetailsService
         }
 
 
-
         $tableComponent = $this->bindTableComponent();
         if (isset($tableComponent)) {
             $data['editor_en'] = $tableComponent['editor_en'];
@@ -367,12 +363,10 @@ class AppServiceProductDetailsService
 //        }
 
 
-
         $data['tab_type'] = $tab_type;
         $data['product_id'] = $product_id;
 
         $findFixedSection = $this->appServiceProductDetailsRepository->checkFixedSection($product_id);
-
 
 
         if (!$findFixedSection) {

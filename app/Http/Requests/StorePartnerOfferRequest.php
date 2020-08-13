@@ -23,8 +23,6 @@ class StorePartnerOfferRequest extends FormRequest
      */
     public function rules()
     {
-//        dd($this->partner_offer);
-
         return [
             // TODO: Product Code Unique check on Edit
 //            'product_code' => 'required|unique:partner_offers,product_code,' . $this->user,
@@ -38,6 +36,7 @@ class StorePartnerOfferRequest extends FormRequest
             'btn_text_en' => 'required',
             'btn_text_bn' => 'required',
             'is_active' => 'required',
+            'url_slug' => 'required|regex:/^\S*$/u|unique:partner_offers,url_slug,' . $this->id,
         ];
     }
 
