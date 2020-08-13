@@ -63,12 +63,19 @@
                                 <input type="text" name="page_name_bn" required value="{{$nameBn}}"  class="form-control">
                                 <div class="help-block"></div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label class="required">URL Slug</label>
-                                <input type="text" name="url_slug" required value="{{$urlSlug}}"  class="form-control">
-                                <div class="help-block"></div>
-                            </div>
 
+                            <div class="form-group col-md-4 {{ $errors->has('url_slug') ? ' error' : '' }}">
+                                <label> URL (url slug) <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{ $urlSlug }}" name="url_slug"
+                                       required placeholder="URL">
+                                <div class="help-block"></div>
+                                <small class="text-info">
+                                    <strong>i.e:</strong> page-name (no spaces)<br>
+                                </small>
+                                @if ($errors->has('url_slug'))
+                                    <div class="help-block">  {{ $errors->first('url_slug') }}</div>
+                                @endif
+                            </div>
 
                             <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
                                 <label for="mobileImg">Desktop View Image</label>

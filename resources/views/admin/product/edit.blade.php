@@ -129,26 +129,19 @@
 
                                 @include('layouts.partials.products.common-field.search-related-field')
 
-                                <div class="col-md-6">
-                                    <label></label>
-                                    <div class="form-group" id="show_in_home">
-                                        <label for="trending" class="mr-1">Trending Offer:</label>
-                                        <input type="checkbox" name="show_in_home" value="1" {{ ($product->show_in_home == 1) ? 'checked' : '' }} id="trending">
-                                    </div>
-                                </div>
 
                                 <div class="col-md-6">
-                                    <label></label>
+                                    <label>For:</label>
                                     <div class="form-group" id="show_in_home">
-                                        <label for="special_product" class="mr-1">Is Special Product:</label>
+                                        <label for="trending"></label><br>
+                                        <input type="checkbox" name="show_in_home" value="1" id="trending" {{ ($product->show_in_home == 1) ? 'checked' : '' }}>
+                                        <label for="trending" class="ml-1"> <strong>Show In Home</strong></label><br>
                                         <input type="checkbox" name="special_product" value="1" id="special_product" {{ ($product->special_product == 1) ? 'checked' : '' }}>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="rate_cutter" class="mr-1">Is Rate Cutter Offer:</label>
+                                        <label for="special_product" class="ml-1"><strong>Special Product</strong></label><br>
                                         <input type="checkbox" name="rate_cutter_offer" value="1" id="rate_cutter" {{ ($product->rate_cutter_offer == 1) ? 'checked' : '' }}>
+                                        <label for="rate_cutter" class="ml-1"><strong>Is Rate Cutter Offer</strong></label> <br>
+                                        <input type="checkbox" name="is_four_g_offer" value="1" id="is_four_g_offer" {{ ($product->is_four_g_offer == 1) ? 'checked' : '' }}>
+                                        <label for="is_four_g_offer" class="ml-1"><strong>Is 4G Offer</strong></label> <br>
                                     </div>
                                 </div>
 

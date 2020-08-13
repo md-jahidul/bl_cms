@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Repositories\AlFaqRepository;
 use App\Traits\CrudTrait;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,13 +34,22 @@ class AlFaqService
         $this->setActionRepository($alFaqRepository);
     }
 
+    public function getFaqs($slug)
+    {
+        return $this->alFaqRepository->findByProperties(['slug' => $slug]);
+    }
+
     /**
      * Storing the alFaq resource
+     * @param $data
+     * @param $slug
      * @return Response
      */
-    public function storeAlFaq($data)
+    public function storeAlFaq($data, $slug)
     {
-        $data['image_path'] = 'storage/' . $data['image_path']->store('banner');
+        $data['created_by'] = Auth::id();
+        $data['slug'] = $slug;
+        unset($data['files']);
         $this->save($data);
         return new Response("Banner has been successfully created");
     }
@@ -60,7 +70,7 @@ class AlFaqService
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @return ResponseFactory|Response
      * @throws \Exception
      */
     public function deleteFaq($id)

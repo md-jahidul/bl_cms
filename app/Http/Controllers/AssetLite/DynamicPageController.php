@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\DynamicPageStoreRequest;
 use App\Services\Assetlite\ComponentService;
 use App\Services\DynamicPageService;
 use Illuminate\Contracts\Foundation\Application;
@@ -70,14 +71,8 @@ class DynamicPageController extends Controller
         return view('admin.dynamic-pages.create', compact('page'));
     }
 
-    public function savePage(Request $request)
+    public function savePage(DynamicPageStoreRequest $request)
     {
-        $request->validate([
-            'page_name_en' => 'required',
-            'page_name_bn' => 'required',
-            'url_slug' => 'required',
-        ]);
-
         $response = $this->pageService->savePage($request->all());
 
         if ($response['success'] == 1) {

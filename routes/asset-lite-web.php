@@ -1,4 +1,3 @@
-
 <?php
 
 /*
@@ -42,7 +41,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     // Priyojon Landing Page ====================================
     Route::get('priyojon/{id}/child-menu/create', 'AssetLite\PriyojonController@create');
-    Route::resource('priyojon', 'AssetLite\PriyojonController')->only(['update','edit']);
+    Route::resource('priyojon', 'AssetLite\PriyojonController')->only(['update', 'edit']);
     Route::get('priyojon/{id?}/{child_menu?}', 'AssetLite\PriyojonController@index');
 //    Route::get('/menu-auto-save', 'AssetLite\MenuController@parentMenuSortable');
 //    Route::get('menu/{parentId}/destroy/{id}', 'AssetLite\MenuController@destroy');
@@ -50,14 +49,14 @@ Route::middleware('authorize', 'auth')->group(function () {
     // MENU  ====================================
     Route::get('menu/create', 'AssetLite\MenuController@create');
     Route::get('menu/{id}/child-menu/create', 'AssetLite\MenuController@create');
-    Route::resource('menu', 'AssetLite\MenuController')->only(['update','edit','store']);
+    Route::resource('menu', 'AssetLite\MenuController')->only(['update', 'edit', 'store']);
     Route::get('menu/{id?}/{child_menu?}', 'AssetLite\MenuController@index');
     Route::get('/menu-auto-save', 'AssetLite\MenuController@parentMenuSortable');
     Route::get('menu/{parentId}/destroy/{id}', 'AssetLite\MenuController@destroy');
 
     // FOOTER MENU  ====================================
     Route::get('footer-menu/{id}/child-footer/create', 'AssetLite\FooterMenuController@create');
-    Route::resource('footer-menu', 'AssetLite\FooterMenuController')->only(['update','edit','store']);
+    Route::resource('footer-menu', 'AssetLite\FooterMenuController')->only(['update', 'edit', 'store']);
     Route::get('footer-menu/{parentId}/destroy/{id}', 'AssetLite\FooterMenuController@destroy');
     Route::get('footer-menu/{parent_id?}/{child_footer?}', 'AssetLite\FooterMenuController@index');  // always put it last
     Route::get('sort-autosave/parent-footer-sort', 'AssetLite\FooterMenuController@FooterMenuSortable');
@@ -130,8 +129,6 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('about-us-career-sortable', 'AssetLite\AboutEcareerItemController@aboutUsCareerSortable');
 
 
-
-
     // META TAG  ====================================
     Route::resource('meta-tag', 'AssetLite\MetaTagController');
     //Route::get('quick-launch/destroy/{id}', 'AssetLite\QuickLaunchController@destroy');
@@ -157,7 +154,6 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('/slider-image-sortable', 'AssetLite\SliderImageController@sliderImageSortable');
 
 
-
     // OFFER CATEGORY  ===============================
     Route::resource('tag-category', 'AssetLite\TagCategoryController')->except(['show', 'destroy']);
     Route::get('tag-category/destroy/{id}', 'AssetLite\TagCategoryController@destroy');
@@ -175,7 +171,6 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     // OFFER SUB MENU =====================================
     Route::get('offer-categories/{id}/{type}', 'AssetLite\OfferCategoryController@index')->name('child_menu');
-
 
 
     // Product Offers  ======================================
@@ -269,7 +264,6 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('delete-device-offer/{id?}', 'AssetLite\DeviceOfferController@deleteDeviceOffer');
 
 
-
     // PARTNERS ====================================
     Route::resource('partners', 'AssetLite\PartnerController')->except(['show', 'destroy', 'update']);
     Route::post('partners/{id}', 'AssetLite\PartnerController@update');
@@ -300,8 +294,6 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('about-page.update');
 
 
-
-
     // Dynamic Pages ================================
     Route::get('dynamic-pages/', 'AssetLite\DynamicPageController@index');
     Route::get('dynamic-pages/create', 'AssetLite\DynamicPageController@create');
@@ -321,7 +313,6 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('dynamic-pages/{pageId}/component/{id}/delete', 'AssetLite\DynamicPageController@componentDestroy')
         ->name('other_component_delete');
     Route::get('dynamic-pages/component-sortable', 'AssetLite\DynamicPageController@componentSortable');
-
 
 
 //    Route::get('about-reward', 'AssetLite\PriyojonController@aboutRewardPoint')->name('about-reward');
@@ -695,7 +686,6 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('programs/progeneral/{type}', 'AssetLite\EcareerController@progeneralIndex')->name('programs.progeneral');
 
 
-
     // eCarrer Programs icon box =========================================================
     Route::get('programs/proiconbox', 'AssetLite\EcareerController@proiconboxIndex')->name('programs.proiconbox');
     Route::get('programs/proiconbox/create', 'AssetLite\EcareerController@proiconboxCreate')->name('programs.proiconbox.create');
@@ -784,7 +774,6 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('app-service/sections/{type}/{id}/destroy/{sectionID}', 'AssetLite\AppServiceProductDetailsController@destroy')->name('app_service.sections.destroy');
 
 
-
     Route::post('app-service/details/{type}/{id}/fixed-section/', 'AssetLite\AppServiceProductDetailsController@fixedSectionUpdate')
         ->name('app_service.details.fixed-section');
 
@@ -830,8 +819,8 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('priceSlab-excel.save');
     Route::get('product-price-slab-status-change/{rateId}', 'AssetLite\ProductPriceSlabController@priceSlabStatusChange');
     Route::get('product-price-slab/destroy/{rateId?}', 'AssetLite\ProductPriceSlabController@deletePriceSlab');
-    
-    
+
+
     //Module Ethicks & complains
     Route::get('ethics-compliance', 'AssetLite\EthicsController@index');
     Route::post('ethics/update-page-info', 'AssetLite\EthicsController@updatePageInfo');
@@ -842,16 +831,61 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('ethics/file-delete/{id}', 'AssetLite\EthicsController@fileDelete');
 
     // Faq
-    Route::resource('faq', 'AssetLite\AlFaqController')->except(['show', 'destroy']);
-    Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
+    Route::get('faq-categories', 'AssetLite\AlFaqController@categoryList');
+    Route::get('faq-category/{id}/edit', 'AssetLite\AlFaqController@catEdit');
+    Route::put('faq-category/{id}/update', 'AssetLite\AlFaqController@catUpdate')
+        ->name('category.update');
+    Route::get('faq/{cat_slug}', 'AssetLite\AlFaqController@index');
+    Route::get('faq/{cat_slug}/create', 'AssetLite\AlFaqController@create');
+    Route::post('faq/{cat_slug}/store', 'AssetLite\AlFaqController@store');
+    Route::get('faq/{cat_slug}/{id}/edit', 'AssetLite\AlFaqController@edit');
+    Route::put('faq/{cat_slug}/{id}/update', 'AssetLite\AlFaqController@update')
+        ->name('faq.update');
+    Route::get('faq/{cat_slug}/destroy/{id}', 'AssetLite\AlFaqController@destroy');
 
     // Media Press News Event
     Route::resource('press-news-event', 'AssetLite\MediaPressNewsEventController')->except(['show', 'destroy']);
     Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
-    
+
     //Customer Feedback
     Route::get('customer-feedback/questions', 'AssetLite\CustomerFeedbackController@questions');
     Route::get('customer-feedback/add-question', 'AssetLite\CustomerFeedbackController@addQuestion');
     Route::get('customer-feedback/edit-question/{id}', 'AssetLite\CustomerFeedbackController@editQuestion');
     Route::post('customer-feedback/save-question', 'AssetLite\CustomerFeedbackController@saveQuestion');
+
+    Route::get('press-news-event/destroy/{id}', 'AssetLite\MediaPressNewsEventController@destroy');
+
+    // Media TVC Video
+    Route::resource('tvc-video', 'AssetLite\MediaTvcVideoController')->except(['show', 'destroy']);
+    Route::get('tvc-video/destroy/{id}', 'AssetLite\MediaTvcVideoController@destroy');
+
+    // Media Landing Page
+    Route::resource('landing-page-component', 'AssetLite\MediaLandingPageController')->except(['show', 'destroy']);
+    Route::get('landing-page-component/destroy/{id}', 'AssetLite\MediaLandingPageController@destroy');
+    Route::get('media-item-find/{type}', 'AssetLite\MediaLandingPageController@itemsFind');
+    Route::get('/landing-page-sortable', 'AssetLite\MediaLandingPageController@landingPageSortable');
+
+    Route::post('media-banner-image-landing/upload', 'AssetLite\MediaLandingPageController@bannerUpload')
+        ->name('banner_image_landing.upload');
+    Route::post('media-banner-image-tvc-video/upload', 'AssetLite\MediaTvcVideoController@bannerUpload')
+        ->name('banner_image_tvc_video.upload');
+    Route::post('media-banner-image-press-news/upload', 'AssetLite\MediaPressNewsEventController@bannerUpload')
+        ->name('banner_image_press_news.upload');
+
+    // 4g Campaign
+    Route::resource('bl-4g-campaign', 'AssetLite\FourGCampaignController')->except(['show', 'destroy']);
+    Route::get('bl-4g-campaign/destroy/{id}', 'AssetLite\FourGCampaignController@destroy');
+
+    // 4G Landing Page
+    Route::resource('bl-4g-landing-page', 'AssetLite\FourGLandingPageController')->except(['store', 'show', 'destroy']);
+    Route::post('bl-4g-banner-image', 'AssetLite\FourGLandingPageController@bannerUpload')
+        ->name('four_g_banner_image.upload');
+
+    // 4G Devices
+    Route::resource('bl-4g-devices', 'AssetLite\FourGDevicesController')->except(['show', 'destroy']);
+    Route::get('bl-4g-devices/destroy/{id}', 'AssetLite\FourGDevicesController@destroy');
+
+    // 4G Devices Tags
+    Route::resource('bl-4g-device-tag', 'AssetLite\FourGDeviceTagController')->except(['show', 'destroy']);
+    Route::get('bl-4g-device-tag/destroy/{id}', 'AssetLite\FourGDeviceTagController@destroy');
 });

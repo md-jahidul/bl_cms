@@ -34,7 +34,7 @@
                                 <div class="help-block">{{ $errors->first('product_code') }}</div>
                                 @endif
                             </div>
-                            
+
                              <div class="form-group col-md-4 col-xs-12 {{ $errors->has('area') ? ' error' : '' }}">
                                 <label for="offer_unit" class="required">Area</label>
                                 <select class="form-control required" name="area_id"
@@ -80,7 +80,7 @@
                                 <div class='input-group'>
                                     <input type='text' class="form-control" name="start_date" id="start_date"
                                            value="{{ $partnerOffer->start_date }}"
-                                         
+
                                            placeholder="Please select start date"/>
                                 </div>
                                 <div class="help-block"></div>
@@ -165,7 +165,7 @@
                                 @endif
                             </div>
 
-                            
+
                             <?php
                             $phone = json_decode($partnerOffer->phone);
                             $location = json_decode($partnerOffer->location);
@@ -224,12 +224,50 @@
                                 @endif
                             </div>
 
-                               <div class="col-md-4">
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Page Header (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header">{{ isset($partnerOffer->page_header) ? $partnerOffer->page_header : null }}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Page Header Bangla (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header_bn">{{ isset($partnerOffer->page_header_bn) ? $partnerOffer->page_header_bn : null }}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Schema Markup</label>
+                                <textarea class="form-control" rows="7" name="schema_markup">{{ isset($partnerOffer->schema_markup) ? $partnerOffer->schema_markup : null }}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('url_slug') ? ' error' : '' }}">
+                                <label> URL (url slug) <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{ $partnerOffer->url_slug }}" required
+                                       name="url_slug" placeholder="URL">
+                                <div class="help-block"></div>
+                                <small class="text-info">
+                                    <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
+                                </small>
+                                @if ($errors->has('url_slug'))
+                                    <div class="help-block">  {{ $errors->first('url_slug') }}</div>
+                                @endif
+                            </div>
+
+
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="show_in_home" class="display-block">For:</label>
                                     <input type="checkbox" name="silver" {{ $partnerOffer->silver == 1 ? 'checked' : '' }} value="1"> Silver <br>
                                     <input type="checkbox" name="gold" {{ $partnerOffer->gold == 1 ? 'checked' : '' }} value="1"> Gold <br>
-                                    <input type="checkbox" name="platium" {{ $partnerOffer->platium == 1 ? 'checked' : '' }} value="1"> Platinum 
+                                    <input type="checkbox" name="platium" {{ $partnerOffer->platium == 1 ? 'checked' : '' }} value="1"> Platinum
                                 </div>
                             </div>
 
@@ -244,7 +282,7 @@
                                     <label for="inactive">Inactive</label>
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-4 pr-0 pt-1">
                                 <div class="form-group">
                                     <label for="" class="mr-1">Home Show:</label>
@@ -252,7 +290,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6 pt-1">
+                            <div class="col-md-2 pt-1">
                                 <div class="form-group">
                                     <label for="is_campaign" class="mr-1">Is Campaign:</label>
                                     <input type="checkbox" name="is_campaign" value="1"
@@ -260,7 +298,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-4 mb-0">
+                            <div class="form-group col-md-4">
                                 <label for="campaign_img"></label>
                                 <div class="custom-file {{ ($partnerOffer->is_campaign == 1) ? '' : "d-none" }}">
                                     <input type="file" name="campaign_img" class="custom-file-input" id="image">

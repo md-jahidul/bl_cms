@@ -24,10 +24,9 @@ class StoreFooterMenuRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required',
             'en_label_text' => 'required',
             'bn_label_text' => 'required',
-            'url' => 'required',
+            'url' => 'required|regex:/^\S*$/u|unique:footer_menus,url,' . $this->id,
             'status' => 'required',
         ];
     }
