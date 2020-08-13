@@ -9,13 +9,11 @@
 
 namespace App\Services;
 
+use App\Models\FourGDeviceTag;
 use App\Repositories\FourGDevicesRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Exception;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
 class FourGDevicesService
 {
@@ -51,7 +49,12 @@ class FourGDevicesService
             if (!empty($data['thumbnail_image'])) {
                 $data['thumbnail_image'] = $this->upload($data['thumbnail_image'], $directoryPath);
             }
-            $this->save($data);
+            $device = $this->save($data);
+
+            foreach ($data['device_tags'] as $role) {
+                $device->deviceTags()->attach(FourGDeviceTag::find($role));
+            }
+
             $response = [
                 'success' => 1,
                 'message' => 'Devices added successfully'
@@ -84,6 +87,15 @@ class FourGDevicesService
                 $this->deleteFile($device->thumbnail_image);
             }
             $device->update($data);
+
+            foreach ($device->deviceTags as $tag) {
+                $device->deviceTags()->detach($tag->id);
+            }
+
+            foreach ($data['device_tags'] as $role) {
+                $device->deviceTags()->attach(FourGDeviceTag::find($role));
+            }
+
             $response = [
                 'success' => 1,
                 'message' => 'Devices update successfully'

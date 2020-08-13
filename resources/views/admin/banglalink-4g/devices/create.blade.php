@@ -38,33 +38,32 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('header_tag_id') ? ' error' : '' }}">
-                                    <label for="header_tag_id" class="required">Head Tag</label>
-                                    <select class="form-control" name="header_tag_id" id="header_tag_id"
-                                            required data-validation-required-message="Please select header_tag_id">
+                                <div class="form-group col-md-6 {{ $errors->has('offer_tag_id') ? ' error' : '' }}">
+                                    <label for="offer_tag_id" class="required">Offer Tag</label>
+                                    <select class="form-control" name="offer_tag_id" id="offer_tag_id">
                                         <option value="">---Select Tag---</option>
                                         @foreach($tags as $tag)
                                             <option value="{{ $tag->id }}">{{ $tag->name_en }}</option>
                                         @endforeach
                                     </select>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('header_tag_id'))
-                                        <div class="help-block">  {{ $errors->first('header_tag_id') }}</div>
+                                    @if ($errors->has('offer_tag_id'))
+                                        <div class="help-block">  {{ $errors->first('offer_tag_id') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group select-role col-md-6 {{ $errors->has('body_tag_id') ? ' error' : '' }}">
-                                    <label for="body_tag_id">Body Tag</label>
+                                <div class="form-group select-role col-md-6 {{ $errors->has('device_tags') ? ' error' : '' }}">
+                                    <label for="device_tags">Device Tags</label>
                                     <div class="role-select">
-                                        <select class="select2 form-control" multiple="multiple" id="body_tag_id" name="body_tag_id[]">
-                                            @foreach($tags as $tag)
+                                        <select class="select2 form-control" multiple="multiple" id="device_tags" name="device_tags[]">
+                                            @foreach($deviceTags as $tag)
                                                 <option value="{{ $tag->id }}">{{ $tag->name_en }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('body_tag_id'))
-                                        <div class="help-block">  {{ $errors->first('body_tag_id') }}</div>
+                                    @if ($errors->has('device_tags'))
+                                        <div class="help-block">  {{ $errors->first('device_tags') }}</div>
                                     @endif
                                 </div>
 
@@ -94,23 +93,23 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('logo_alt_text_en') ? ' error' : '' }}">
-                                    <label for="logo_alt_text_en">Logo Alt Text</label>
-                                    <input type="text" name="logo_alt_text_en" class="form-control" placeholder="Enter logo alt text"
-                                           value="{{ old("logo_alt_text_en") ? old("logo_alt_text_en") : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('logo_alt_en') ? ' error' : '' }}">
+                                    <label for="logo_alt_en">Logo Alt Text</label>
+                                    <input type="text" name="logo_alt_en" class="form-control" placeholder="Enter logo alt text"
+                                           value="{{ old("logo_alt_en") ? old("logo_alt_en") : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('logo_alt_text_en'))
-                                        <div class="help-block">  {{ $errors->first('logo_alt_text_en') }}</div>
+                                    @if ($errors->has('logo_alt_en'))
+                                        <div class="help-block">  {{ $errors->first('logo_alt_en') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('thumbnail_alt_text_en') ? ' error' : '' }}">
-                                    <label for="thumbnail_alt_text_en">Thumbnail Alt Text</label>
-                                    <input type="text" name="thumbnail_alt_text_en" class="form-control" placeholder="Enter thumbnail_alt_text_en"
-                                           value="{{ old("thumbnail_alt_text_en") ? old("thumbnail_alt_text_en") : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('thumbnail_alt_en') ? ' error' : '' }}">
+                                    <label for="thumbnail_alt_en">Thumbnail Alt Text</label>
+                                    <input type="text" name="thumbnail_alt_en" class="form-control" placeholder="Enter thumbnail alt text"
+                                           value="{{ old("thumbnail_alt_en") ? old("thumbnail_alt_en") : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('thumbnail_alt_text_en'))
-                                        <div class="help-block">  {{ $errors->first('thumbnail_alt_text_en') }}</div>
+                                    @if ($errors->has('thumbnail_alt_en'))
+                                        <div class="help-block">  {{ $errors->first('thumbnail_alt_en') }}</div>
                                     @endif
                                 </div>
 

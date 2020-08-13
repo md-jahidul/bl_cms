@@ -15,14 +15,13 @@ class CreateFourGDevicesTable extends Migration
     {
         Schema::create('four_g_devices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('header_tag_id')->nullable();
-            $table->json('body_tag_id')->nullable();
+            $table->integer('offer_tag_id')->nullable();
             $table->string('card_logo')->nullable();
-            $table->string('logo_alt_text_en')->nullable();
-            $table->string('logo_alt_text_bn')->nullable();
+            $table->string('logo_alt_en')->nullable();
+            $table->string('logo_alt_bn')->nullable();
             $table->string('thumbnail_image')->nullable();
-            $table->string('thumbnail_alt_text_en')->nullable();
-            $table->string('thumbnail_alt_text_bn')->nullable();
+            $table->string('thumbnail_alt_en')->nullable();
+            $table->string('thumbnail_alt_bn')->nullable();
             $table->string('title_en')->nullable();
             $table->string('title_bn')->nullable();
             $table->integer('current_price')->nullable();

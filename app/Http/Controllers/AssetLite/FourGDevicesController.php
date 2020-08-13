@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers\AssetLite;
 
-use App\Http\Requests\DynamicPageStoreRequest;
-use App\Services\Assetlite\ComponentService;
-use App\Services\DynamicPageService;
-use App\Services\FourGCampaignService;
 use App\Services\FourGDevicesService;
+use App\Services\FourGDeviceTagService;
 use App\Services\TagCategoryService;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
 
 class FourGDevicesController extends Controller
@@ -25,18 +19,25 @@ class FourGDevicesController extends Controller
      * @var TagCategoryService
      */
     private $tagCategoryService;
+    /**
+     * @var FourGDeviceTagService
+     */
+    private $fourGDeviceTagService;
 
     /**
      * DynamicPageController constructor.
      * @param FourGDevicesService $fourGDevicesService
      * @param TagCategoryService $tagCategoryService
+     * @param FourGDeviceTagService $fourGDeviceTagService
      */
     public function __construct(
         FourGDevicesService $fourGDevicesService,
-        TagCategoryService $tagCategoryService
+        TagCategoryService $tagCategoryService,
+        FourGDeviceTagService $fourGDeviceTagService
     ) {
         $this->fourGDevicesService = $fourGDevicesService;
         $this->tagCategoryService = $tagCategoryService;
+        $this->fourGDeviceTagService = $fourGDeviceTagService;
     }
 
     public function index()
@@ -48,14 +49,16 @@ class FourGDevicesController extends Controller
     public function create()
     {
         $tags = $this->tagCategoryService->findAll();
-        return view('admin.banglalink-4g.devices.create', compact('tags'));
+        $deviceTags = $this->fourGDeviceTagService->findAll();
+        return view('admin.banglalink-4g.devices.create', compact('tags', 'deviceTags'));
     }
 
     public function edit($id)
     {
-        $device = $this->fourGDevicesService->findOne($id);
+        $deviceTags = $this->fourGDeviceTagService->findAll();
         $tags = $this->tagCategoryService->findAll();
-        return view('admin.banglalink-4g.devices.edit', compact('device', 'tags'));
+        $device = $this->fourGDevicesService->findOne($id);
+        return view('admin.banglalink-4g.devices.edit', compact('device','deviceTags', 'tags'));
     }
 
     public function store(Request $request)

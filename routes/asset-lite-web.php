@@ -866,4 +866,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     // 4G Devices
     Route::resource('bl-4g-devices', 'AssetLite\FourGDevicesController')->except(['show', 'destroy']);
     Route::get('bl-4g-devices/destroy/{id}', 'AssetLite\FourGDevicesController@destroy');
+
+    // 4G Devices Tags
+    Route::resource('bl-4g-device-tag', 'AssetLite\FourGDeviceTagController')->except(['show', 'destroy']);
+    Route::get('bl-4g-device-tag/destroy/{id}', 'AssetLite\FourGDeviceTagController@destroy');
 });
