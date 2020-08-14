@@ -252,7 +252,7 @@
                                                data-default-file="{{ asset($store->icon) }}"
                                         />
                                     @else
-                                        <input type="file" required
+                                        <input type="file"
                                                id="icon"
                                                name="icon"
                                                class="dropify_icon"
@@ -279,7 +279,7 @@
                                                data-default-file="{{ asset($store->image_url) }}"
                                         />
                                     @else
-                                        <input type="file" required
+                                        <input type="file"
                                                id="image_url"
                                                name="image_url"
                                                data-height="70"
@@ -436,8 +436,6 @@
                 $(".category_select").trigger("change");
             }
         });
-
-
 
         $(document).ready(function() {
             $('.sub_category_select').select2({
