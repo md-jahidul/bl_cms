@@ -5,16 +5,12 @@
     <li class="breadcrumb-item active">Store</li>
 @endsection
 
-
-
 {{--@foreach ($store->apps as $app)
     {{ $app->id}}
-
+    {{ $loop->index}}
 @endforeach
 
-@php(dd($store->apps[0]->id))--}}
-
-
+@php(dd($store->apps[0]->pivot->app_id))--}}
 
 @section('content')
     <div class="card mb-0 px-1" style="box-shadow:none;">
@@ -154,15 +150,14 @@
                                         <select required name="app_id[]" id="app_id[]" multiple="multiple" class="app_select form-control @error('app_id') is-invalid @enderror">
                                             <option value="">Select App</option>
                                             @foreach ($apps as $app)
-
-                                                <option @if(isset($store->apps[$loop->index]->id) && ($app->id == $store->apps[$loop->index]->id)) selected
+                                                <option @if(isset($store->apps[$loop->index]->pivot->app_id) && ($app->id == $store->apps[$loop->index]->pivot->app_id)) selected
                                                            value="{{$app->id}}">{{$app->title}}
                                                 </option>
 
-                                                <option @elseif(isset($store) && isset($store->apps[$loop->index-1]->id) && ($app->id == $store->apps[$loop->index-1]->id)) selected  @endif
+                                                <option @elseif(isset($store) && isset($store->apps[$loop->index]->pivot->app_id) && ($app->id == $store->apps[$loop->index]->pivot->app_id)) selected  @endif
                                                         value="{{$app->id}}" {{ (old("app_id") == $app->id ? "selected":"") }}>{{$app->title}}</option>
 
-                                               {{-- <option @if(old("app_id[]")) {{ (old("app_id[]") == $app->id ? "selected":"") }}
+                                              {{-- <option @if(old("app_id[]")) {{ (old("app_id[]") == $app->id ? "selected":"") }}
                                                         @elseif(isset($store) && isset($store->apps[$loop->index-1]->id) && ($app->id == $store->apps[$loop->index-1]->id)) selected  @endif
                                                         value="{{$app->id}}" {{ (old("app_id") == $app->id ? "selected":"") }}>{{$app->title}}</option>--}}
 
