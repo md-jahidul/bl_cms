@@ -195,7 +195,7 @@
                                                data-default-file="{{ asset($appStore->icon) }}"
                                         />
                                     @else
-                                        <input type="file" required
+                                        <input type="file"
                                                id="icon"
                                                name="icon"
                                                class="dropify_icon"
@@ -240,7 +240,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="ratings">Rating:</label>
-                                    <input required
+                                    <input
                                            value="@if(isset($appStore)){{$appStore->ratings}} @elseif(old("ratings")) {{old("ratings")}} @endif"
                                            type="text" name="ratings" class="form-control @error('ratings') is-invalid @enderror"
                                            id="ratings" placeholder="Enter Shorcut Name in Bangla..">
@@ -253,7 +253,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="total_ratings">Total Rating:</label>
-                                    <input required
+                                    <input
                                            value="@if(isset($appStore)){{$appStore->total_ratings}} @elseif(old("total_ratings")) {{old("total_ratings")}} @endif"
                                            type="text" name="total_ratings" class="form-control @error('total_ratings') is-invalid @enderror"
                                            id="total_ratings" placeholder="Enter Shorcut Name in Bangla..">
