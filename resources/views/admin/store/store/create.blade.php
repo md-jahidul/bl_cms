@@ -6,14 +6,14 @@
 @endsection
 
 
-{{--
-@foreach ($store->apps as $app)
+
+{{--@foreach ($store->apps as $app)
     {{ $app->id}}
 
 @endforeach
 
-@php(dd($store->apps[0]->id))
---}}
+@php(dd($store->apps[0]->id))--}}
+
 
 
 @section('content')
@@ -88,11 +88,13 @@
                                     <div class="controls">
                                         <select required name="category_id" id="category_id"  class="category_select form-control @error('category_id') is-invalid @enderror">
                                             <option value="">Select Category</option>
+
                                             @foreach ($categories as $category)
                                                 <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}
                                                         @elseif(isset($store) && ($category->id == $store->category_id)) selected  @endif
                                                 value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name_en}}</option>
                                             @endforeach
+
                                         </select>
                                         <div class="help-block"></div>
                                         <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
@@ -107,11 +109,11 @@
                                     </label>
                                     <div class="controls">
                                         <select name="sub_category_id" id="sub_category_id" class=" sub_category_select form-control @error('sub_category_id') is-invalid @enderror">
-                                            <option value="">Select Sub Category</option>
+                                            <option value="0">Select SubCategory</option>
                                             @foreach ($subCategories as $subCategory)
-                                                <option @if(old("category_id")) {{ (old("category_id") == $subCategory->id ? "selected":"") }}
-                                                        @elseif(isset($store) && ($subCategory->id == $store->category_id)) selected  @endif
-                                                value="{{$subCategory->id}}" {{ (old("category_id") == $subCategory->id ? "selected":"") }}>{{$subCategory->name_en}}</option>
+                                                <option @if(old("category_id")) {{ (old("category_id") == $subCategory->id ? "selected":"0") }}
+                                                        @elseif(isset($store) && ($subCategory->id == $store->sub_category_id)) selected  @endif
+                                                value="{{$subCategory->id}}" {{ (old("category_id") == $subCategory->id ? "selected":"0") }}>{{$subCategory->name_en}}</option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
@@ -229,7 +231,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title">Video:</label>
-                                    <input required
+                                    <input
                                            value="@if(isset($store)){{$store->video_link}} @elseif(old("video_link")) {{old("video_link")}} @endif"
                                            type="text" name="video_link" class="form-control @error('video_link') is-invalid @enderror"
                                            id="video_link" placeholder="Enter video link">
@@ -312,7 +314,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title" >Rating:</label>
-                                    <input required
+                                    <input
                                            value="@if(isset($store)){{$store->ratings}} @elseif(old("ratings")) {{old("ratings")}} @endif"
                                            type="text" name="ratings" class="form-control @error('ratings') is-invalid @enderror"
                                            id="ratings" placeholder="Enter Shorcut Name in Bangla..">
@@ -325,7 +327,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title">Total Rating:</label>
-                                    <input required
+                                    <input
                                            value="@if(isset($store)){{$store->total_ratings}} @elseif(old("total_ratings")) {{old("total_ratings")}} @endif"
                                            type="text" name="total_ratings" class="form-control @error('total_ratings') is-invalid @enderror"
                                            id="total_ratings" placeholder="Enter Shorcut Name in Bangla..">
@@ -421,7 +423,7 @@
 
 
 
-        $(document).ready(function() {
+      /*  $(document).ready(function() {
             $('.category_select').select2({
                 placeholder: 'Select Category',
                 width: '100%',
@@ -435,9 +437,9 @@
                 $(".category_select > option").prop("selected","selected");
                 $(".category_select").trigger("change");
             }
-        });
+        });*/
 
-        $(document).ready(function() {
+      /*  $(document).ready(function() {
             $('.sub_category_select').select2({
                 placeholder: 'Select SubCategory',
                 width: '100%',
@@ -451,7 +453,7 @@
                 $(".sub_category_select > option").prop("selected","selected");
                 $(".sub_category_select").trigger("change");
             }
-        });
+        });*/
 
 
         $(document).ready(function() {

@@ -90,11 +90,11 @@
                                     </label>
                                     <div class="controls">
                                         <select name="category_id" id="category_id"  class="category_select form-control @error('category_id') is-invalid @enderror">
-                                            <option value="">Select Category</option>
+                                            <option value="0">Select Category</option>
                                             @foreach ($categories as $category)
-                                                <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}
+                                                <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"0") }}
                                                         @elseif(isset($appStore) && ($category->id == $appStore->category_id)) selected  @endif
-                                                value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name_en}}</option>
+                                                value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"0") }}>{{$category->name_en}}</option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
@@ -111,11 +111,11 @@
                                     </label>
                                     <div class="controls">
                                         <select name="sub_category_id" id="sub_category_id" class="sub_category_select form-control @error('sub_category_id') is-invalid @enderror">
-                                            <option value="">Select Sub Category</option>
+                                            <option value="0">Select Sub Category</option>
                                             @foreach ($subCategories as $subCategory)
-                                                <option @if(old("category_id")) {{ (old("category_id") == $subCategory->id ? "selected":"") }}
-                                                        @elseif(isset($appStore) && ($subCategory->id == $appStore->category_id)) selected  @endif
-                                                value="{{$subCategory->id}}" {{ (old("category_id") == $subCategory->id ? "selected":"") }}>{{$subCategory->name_en}}</option>
+                                                <option @if(old("category_id")) {{ (old("category_id") == $subCategory->id ? "selected":"0") }}
+                                                        @elseif(isset($appStore) && ($subCategory->id == $appStore->sub_category_id)) selected  @endif
+                                                value="{{$subCategory->id}}" {{ (old("category_id") == $subCategory->id ? "selected":"0") }}>{{$subCategory->name_en}}</option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
@@ -378,7 +378,7 @@
 
 
 
-        $(document).ready(function() {
+      /*  $(document).ready(function() {
             $('.category_select').select2({
                 placeholder: 'Select Category',
                 width: '100%',
@@ -392,11 +392,11 @@
                 $(".category_select > option").prop("selected","selected");
                 $(".category_select").trigger("change");
             }
-        });
+        });*/
 
 
 
-        $(document).ready(function() {
+       /* $(document).ready(function() {
             $('.sub_category_select').select2({
                 placeholder: 'Select SubCategory',
                 width: '100%',
@@ -410,7 +410,7 @@
                 $(".sub_category_select > option").prop("selected","selected");
                 $(".sub_category_select").trigger("change");
             }
-        });
+        });*/
 
 
         $(document).ready(function() {

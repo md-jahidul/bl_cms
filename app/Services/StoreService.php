@@ -49,16 +49,19 @@ class StoreService
             unset($data['app_id']);
         }
 
+        if (isset($data['icon'])) {
+            $data['icon'] = 'storage/' . $data['icon']->store('store');
+        }
 
-        $data['icon'] = 'storage/' . $data['icon']->store('store');
-        $data['image_url'] = 'storage/' . $data['image_url']->store('store');
+        if (isset($data['image_url'])) {
+            $data['image_url'] = 'storage/' . $data['image_url']->store('store');
+        }
 
        $store =  $this->save($data);
 
         if(isset($data['app_id'])){
             $store->apps()->attach($app_ids);
         }
-
 
         return new Response("Store has been successfully created");
     }
