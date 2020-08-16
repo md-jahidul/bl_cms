@@ -600,7 +600,7 @@
 
                     <li class="{{ is_active_url('/bl-4g-device-tag') }} nav-item">
                         <a href="{{ url('bl-4g-device-tag') }}"><i class="la la-mobile-phone"></i>
-                            <span class="menu-title" data-i18n="nav.templates.main">4G Devices</span>
+                            <span class="menu-title" data-i18n="nav.templates.main">4G Devices Tags</span>
                         </a>
                     </li>
 
