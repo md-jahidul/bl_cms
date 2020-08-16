@@ -110,11 +110,12 @@
 
                                             @if(isset($store))
                                                 <option value="0">Select Sub Category</option>
-                                            @endif
 
-                                            @foreach($subCategories as $subCategory)
-                                                <option  value="{{ $subCategory->id }}" {{ ($subCategory->id == $store->sub_category_id ) ? 'selected' : '' }}>{{ $subCategory->name_en }}</option>
-                                            @endforeach
+                                                @foreach($subCategories as $subCategory)
+                                                    <option  value="{{ $subCategory->id }}" {{ ($subCategory->id == $store->sub_category_id ) ? 'selected' : '' }}>{{ $subCategory->name_en }}</option>
+                                                @endforeach
+
+                                            @endif
 
                                         </select>
                                         <div class="help-block"></div>

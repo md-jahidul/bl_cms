@@ -117,11 +117,14 @@
 
                                             @if(isset($appStore))
                                                 <option value="0">Select Sub Category</option>
+
+                                                @foreach($subCategories as $subCategory)
+                                                    <option  value="{{ $subCategory->id }}" {{ ($subCategory->id == $appStore->sub_category_id ) ? 'selected' : '' }}>{{ $subCategory->name_en }}</option>
+                                                @endforeach
+                                                
                                             @endif
 
-                                            @foreach($subCategories as $subCategory)
-                                                <option  value="{{ $subCategory->id }}" {{ ($subCategory->id == $appStore->sub_category_id ) ? 'selected' : '' }}>{{ $subCategory->name_en }}</option>
-                                            @endforeach
+
                                         </select>
                                         <div class="help-block"></div>
                                         <small class="text-danger"> @error('sub_category_id') {{ $message }} @enderror </small>
