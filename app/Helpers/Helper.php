@@ -139,6 +139,7 @@ class Helper
     {
 
         return [
+            "PlayPrepaid"             => "Banglalink Play",
             "DeshEkRateDarun"         => "Desh Ek Rate Darun",
             "Inspire9Postpaid"        => "Inspire9 Postpaid",
             "Retail2Postpaid"         => "PROpaid Package",
