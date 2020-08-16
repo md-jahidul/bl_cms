@@ -18,7 +18,7 @@
         <div class="card card-info mt-0" style="box-shadow: 0px 0px">
             <div class="card-content">
                 <div class="card-body card-dashboard">
-                    <table class="table table-responsive table-striped table-bordered alt-pagination no-footer dataTable" id="Example1"
+                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1"
                            role="grid" aria-describedby="Example1_info" style="">
                         <thead>
                         <tr>
@@ -26,7 +26,6 @@
                             <th>Type</th>
                             <th>Category</th>
                             <th>Title</th>
-                            <th>Order</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Status</th>
@@ -40,9 +39,8 @@
                                 <td>{{$feed->type}}</td>
                                 <td>{{$feed->category->name}}</td>
                                 <td>{{$feed->title}}</td>
-                                <td>{{$feed->order}}</td>
-                                <td>{{$feed->start_date->format('l jS \\of F Y h:i:s A')}}</td>
-                                <td>{{ $feed->end_date ? $feed->end_date->format('l jS \\of F Y h:i:s A') : ''}}</td>
+                                <td>{{$feed->start_date}}</td>
+                                <td>{{$feed->end_date}}</td>
                                 <td>{{$feed->status == 1 ? 'Active' : 'Inactive'}}</td>
                                 <td>
                                     <div class="row">

@@ -52,7 +52,7 @@
                                                 class="browser-default custom-select">
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}">
-                                                    {{ $category->name }}
+                                                    {{ $category->title }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -161,19 +161,6 @@
                                             class="text-danger"> @error('post_url') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
-
-                                    <div class="form-group col-md-6 mb-2">
-                                            <label for="order">Order: </label>
-                                            <input required min="1"
-                                                   value="{{ old('order') ? old('order') : 1 }}"
-                                                   id="order"
-                                                   type="number"
-                                                   class="form-control @error('order') is-invalid @enderror"
-                                                   placeholder="Order" name="order">
-                                            <small
-                                                class="text-danger"> @error('order') {{ $message }} @enderror </small>
-                                            <div class="help-block"></div>
-                                        </div>
 
                                     <div class="form-group col-md-6 mb-2">
                                         <label for="status_input">Status: </label>
