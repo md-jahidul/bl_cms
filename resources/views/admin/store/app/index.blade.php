@@ -42,7 +42,16 @@
                                 <td width="12%">{{$appStore->title}}</td>
                                 <td width="20%">{!! $appStore->description !!}</td>
 
-                                <td width="10%">{{$appStore->storeCategories->name_en}} </td>
+                                <td width="10%">
+
+                                    @if(isset($appStore->storeCategories->name_en))
+                                        {{$appStore->storeCategories->name_en}}
+                                    @else {{"N/A"}}
+                                    @endif
+
+                                    
+
+                                </td>
 
                                 <td width="10%">
                                     @if($appStore->is_active == "1")
