@@ -18,7 +18,7 @@ class CreateMyBlFeedsTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->string('type');
             $table->string('title');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->dateTime('start_date')->default(now());
             $table->dateTime('end_date')->nullable();
             $table->string('video_url')->nullable();
