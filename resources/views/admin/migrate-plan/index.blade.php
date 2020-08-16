@@ -40,7 +40,7 @@
                             <tr>
                                 <td width="5%">{{$plan->id}}</td>
                                 <td width="12%">{{$plan->title}}</td>
-                                <td width="30%">{{$plan->description}}</td>
+                                <td width="30%">{!! $plan->description !!}</td>
                                 <td width="30%">{{$plan->code}}</td>
                                 <td width="15%">
                                     <div class="row">
