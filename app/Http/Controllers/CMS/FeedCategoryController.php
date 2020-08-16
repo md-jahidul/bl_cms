@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
 
@@ -98,5 +99,11 @@ class FeedCategoryController extends Controller
     {
         session()->flash('error', $this->feedCategoryService->destroy($id)->getContent());
         return redirect(route('feeds.categories.index'));
+    }
+
+
+    public function updatePosition(Request $request)
+    {
+        dd($request->all());
     }
 }

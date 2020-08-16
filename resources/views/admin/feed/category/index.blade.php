@@ -18,10 +18,10 @@
         <div class="card card-info mt-0" style="box-shadow: 0px 0px">
             <div class="card-content">
                 <div class="card-body card-dashboard">
-                    <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1"
-                           role="grid" aria-describedby="Example1_info" style="">
+                    <table class="table table-striped table-bordered">
                         <thead>
                         <tr>
+                            <th><i class="icon-cursor-move icons"></i></th>
                             <th>ID</th>
                             <th>Parent</th>
                             <th>Title</th>
@@ -30,9 +30,10 @@
                             <th>Action</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        @foreach ($categories as $category)
-                            <tr>
+                        <tbody id="sortable">
+                        @foreach ($categories as $index => $category)
+                            <tr data-index="{{ $category->id }}" data-position="{{ $category->ordering }}">
+                                <td><i class="icon-cursor-move icons"></i></td>
                                 <td>{{$category->id}}</td>
                                 <td>{{ $category->parent ? $category->parent->title : ''}}</td>
                                 <td>{{$category->title}}</td>
@@ -74,29 +75,20 @@
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link rel="stylesheet" type="text/css"
-          href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
+    <link href="{{ asset('css/sortable-list.css') }}" rel="stylesheet">
     <style>
-        table.dataTable tbody td {
-            max-height: 40px;
+        #sortable tr td {
+            padding-top: 5px !important;
+            padding-bottom: 5px !important;
         }
     </style>
 @endpush
 @push('page-js')
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
-    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js"
-            type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js"
-            type="text/javascript"></script>
     <script>
+        let auto_save_url = "{{ route('feeds.categories.update_position') }}";
+
         $(document).ready(function () {
-            $('#Example1').DataTable({
-                buttons: [],
-                paging: true,
-                searching: true,
-                "bDestroy": true,
-            });
 
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');

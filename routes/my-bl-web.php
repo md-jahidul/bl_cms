@@ -388,6 +388,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
         Route::resource('/', 'FeedController')->parameters(['' => 'feed'])->except('show');
         // Category resource
         Route::resource('categories', 'FeedCategoryController')->except('show');
+        Route::get('categories/update-position', 'FeedCategoryController@updatePosition')->name('categories.update_position');
     });
 
 });
