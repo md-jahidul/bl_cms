@@ -34,7 +34,7 @@
                         @foreach ($categories as $category)
                             <tr>
                                 <td>{{$category->id}}</td>
-                                <td>{{ $category->parent ? $category->parent->name : ''}}</td>
+                                <td>{{ $category->parent ? $category->parent->title : ''}}</td>
                                 <td>{{$category->title}}</td>
                                 <td>{{$category->slug}}</td>
                                 <td>{{$category->status == 1 ? 'Active' : 'Inactive'}}</td>
