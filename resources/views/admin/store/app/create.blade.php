@@ -90,11 +90,16 @@
                                     </label>
                                     <div class="controls">
                                         <select name="category_id" id="category_id"  class="category_select form-control @error('category_id') is-invalid @enderror">
-                                            <option value="">Select Category</option>
+                                            <option value="0">Select Category</option>
                                             @foreach ($categories as $category)
-                                                <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}
+
+                                                @if(strtolower($category->name_en) == "all")
+                                                    @continue
+                                                @endif
+
+                                                <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"0") }}
                                                         @elseif(isset($appStore) && ($category->id == $appStore->category_id)) selected  @endif
-                                                value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name_en}}</option>
+                                                value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"0") }}>{{$category->name_en}}</option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
@@ -106,23 +111,41 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="category_id">
-                                        Sub Category :
-                                    </label>
+                                    <label for="category_id"> Sub Category :</label>
+                                    <div class="controls">
+                                        <select name="sub_category_id" id="sub_category_id" class="sub_category_select form-control">
+
+                                            @if(isset($appStore))
+                                                <option value="0">Select Sub Category</option>
+                                            @endif
+
+                                            @foreach($subCategories as $subCategory)
+                                                <option  value="{{ $subCategory->id }}" {{ ($subCategory->id == $appStore->sub_category_id ) ? 'selected' : '' }}>{{ $subCategory->name_en }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('sub_category_id') {{ $message }} @enderror </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{--<div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="category_id">Sub Category :</label>
                                     <div class="controls">
                                         <select name="sub_category_id" id="sub_category_id" class="sub_category_select form-control @error('sub_category_id') is-invalid @enderror">
-                                            <option value="">Select Sub Category</option>
+                                            <option value="0">Select Sub Category</option>
                                             @foreach ($subCategories as $subCategory)
-                                                <option @if(old("category_id")) {{ (old("category_id") == $subCategory->id ? "selected":"") }}
-                                                        @elseif(isset($appStore) && ($subCategory->id == $appStore->category_id)) selected  @endif
-                                                value="{{$subCategory->id}}" {{ (old("category_id") == $subCategory->id ? "selected":"") }}>{{$subCategory->name_en}}</option>
+                                                <option @if(old("category_id")) {{ (old("category_id") == $subCategory->id ? "selected":"0") }}
+                                                        @elseif(isset($appStore) && ($subCategory->id == $appStore->sub_category_id)) selected  @endif
+                                                value="{{$subCategory->id}}" {{ (old("category_id") == $subCategory->id ? "selected":"0") }}>{{$subCategory->name_en}}</option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
                                         <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
 
 
                             <div class="col-md-4">
@@ -195,7 +218,7 @@
                                                data-default-file="{{ asset($appStore->icon) }}"
                                         />
                                     @else
-                                        <input type="file" required
+                                        <input type="file"
                                                id="icon"
                                                name="icon"
                                                class="dropify_icon"
@@ -240,7 +263,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="ratings">Rating:</label>
-                                    <input required
+                                    <input
                                            value="@if(isset($appStore)){{$appStore->ratings}} @elseif(old("ratings")) {{old("ratings")}} @endif"
                                            type="text" name="ratings" class="form-control @error('ratings') is-invalid @enderror"
                                            id="ratings" placeholder="Enter Shorcut Name in Bangla..">
@@ -253,7 +276,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="total_ratings">Total Rating:</label>
-                                    <input required
+                                    <input
                                            value="@if(isset($appStore)){{$appStore->total_ratings}} @elseif(old("total_ratings")) {{old("total_ratings")}} @endif"
                                            type="text" name="total_ratings" class="form-control @error('total_ratings') is-invalid @enderror"
                                            id="total_ratings" placeholder="Enter Shorcut Name in Bangla..">
@@ -327,6 +350,24 @@
     <script>
 
         $(function () {
+
+            $('#category_id').change(function () {
+                var categoryId = $(this).find('option:selected').val()
+                var subCategory = $('#sub_category_id');
+                $.ajax({
+                    url: "{{ url('subStore/subcategory-find') }}" + '/' + categoryId,
+                    success: function (data) {
+                        subCategory.empty();
+                        var option = '<option value="">---Select SubCategory---</option>';
+                        $.map(data, function (item) {
+                            option += '<option value="' + item.id + '">' + item.name_en + '</option>'
+                        })
+                        subCategory.append(option)
+                    },
+                });
+            });
+
+
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
 
@@ -378,7 +419,7 @@
 
 
 
-        $(document).ready(function() {
+      /*  $(document).ready(function() {
             $('.category_select').select2({
                 placeholder: 'Select Category',
                 width: '100%',
@@ -392,11 +433,11 @@
                 $(".category_select > option").prop("selected","selected");
                 $(".category_select").trigger("change");
             }
-        });
+        });*/
 
 
 
-        $(document).ready(function() {
+       /* $(document).ready(function() {
             $('.sub_category_select').select2({
                 placeholder: 'Select SubCategory',
                 width: '100%',
@@ -410,7 +451,7 @@
                 $(".sub_category_select > option").prop("selected","selected");
                 $(".sub_category_select").trigger("change");
             }
-        });
+        });*/
 
 
         $(document).ready(function() {

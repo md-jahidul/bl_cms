@@ -169,6 +169,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     // Store sub-category
     route::resource('subStore', 'CMS\StoreSubCategoryController');
     Route::get('subStore/destroy/{id}', 'CMS\StoreSubCategoryController@destroy');
+    Route::get('subStore/subcategory-find/{id}', 'CMS\StoreSubCategoryController@getSubCategoryByCatId');
 
     // Store
     route::resource('myblStore', 'CMS\StoreController');

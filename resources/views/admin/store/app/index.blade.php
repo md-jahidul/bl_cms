@@ -29,8 +29,9 @@
                     <tr>
                         <th width="5%">ID</th>
                         <th width="12%">Title</th>
-                        <th width="30%">Details</th>
+                        <th width="20%">Details</th>
                         <th width="10%">Category</th>
+                        <th width="10%">status</th>
                         <th width="15%">Action</th>
                     </tr>
                     </thead>
@@ -39,8 +40,17 @@
                             <tr>
                                 <td width="5%">{{$appStore->id}}</td>
                                 <td width="12%">{{$appStore->title}}</td>
-                                <td width="30%">{!! $appStore->description !!} </td>
+                                <td width="20%">{!! $appStore->description !!}</td>
+
                                 <td width="10%">{{$appStore->storeCategories->name_en}} </td>
+
+                                <td width="10%">
+                                    @if($appStore->is_active == "1")
+                                        <span class="badge badge-success">Active</span>
+                                    @else
+                                        <span class="badge badge-danger">InActive</span>
+                                    @endif
+                                </td>
                                 <td width="15%">
                                     <div class="row">
 

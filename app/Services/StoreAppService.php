@@ -39,14 +39,18 @@ class StoreAppService
      */
     public function storeMyBlAppStore($data)
     {
-
         if(isset($data['store_id'])){
             $store_ids = $data['store_id'];
             unset($data['store_id']);
         }
 
-        $data['icon'] = 'storage/' . $data['icon']->store('app');
-        $data['image_url'] = 'storage/' . $data['image_url']->store('app');
+        if (isset($data['icon'])) {
+            $data['icon'] = 'storage/' . $data['icon']->store('app');
+        }
+
+        if (isset($data['image_url'])) {
+            $data['image_url'] = 'storage/' . $data['image_url']->store('app');
+        }
 
         $store_apps = $this->save($data);
 
