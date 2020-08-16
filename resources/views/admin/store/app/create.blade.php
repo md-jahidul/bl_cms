@@ -121,7 +121,7 @@
                                                 @foreach($subCategories as $subCategory)
                                                     <option  value="{{ $subCategory->id }}" {{ ($subCategory->id == $appStore->sub_category_id ) ? 'selected' : '' }}>{{ $subCategory->name_en }}</option>
                                                 @endforeach
-                                                
+
                                             @endif
 
 
