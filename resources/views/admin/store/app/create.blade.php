@@ -92,6 +92,11 @@
                                         <select name="category_id" id="category_id"  class="category_select form-control @error('category_id') is-invalid @enderror">
                                             <option value="0">Select Category</option>
                                             @foreach ($categories as $category)
+                                                
+                                                @if(strtolower($category->name_en) == "all")
+                                                    @continue
+                                                @endif
+
                                                 <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"0") }}
                                                         @elseif(isset($appStore) && ($category->id == $appStore->category_id)) selected  @endif
                                                 value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"0") }}>{{$category->name_en}}</option>
