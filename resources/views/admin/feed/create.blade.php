@@ -325,6 +325,7 @@
             if (type === 'youtube') {
                 let mainType = "{{ $youtube }}";
                 $("#type").val(mainType);
+                $("#video-input").show();
                 $("#image-input").hide();
                 $("#file-input").hide();
                 $("#audio-input").hide();

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\CMS;
 
-use App\Enums\FeedAvailability;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FeedRequest;
 use App\Services\FeedCategoryService;
 use App\Services\FeedService;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
 
@@ -60,10 +60,10 @@ class FeedController extends Controller
     /**
      * Store feed
      *
-     * @param Request $request
+     * @param FeedRequest $request
      * @return Application|RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(FeedRequest $request)
     {
         session()->flash('message', $this->feedService->store($request->all())->getContent());
         return redirect(route('feeds.index'));
@@ -85,11 +85,11 @@ class FeedController extends Controller
     /**
      * Update feed
      *
-     * @param Request $request
+     * @param FeedRequest $request
      * @param $id
      * @return Application|RedirectResponse|Redirector
      */
-    public function update(Request $request, $id)
+    public function update(FeedRequest $request, $id)
     {
         session()->flash('message', $this->feedService->feedUpdate($request->all(), $id)->getContent());
         return redirect(route('feeds.index'));
@@ -100,6 +100,7 @@ class FeedController extends Controller
      *
      * @param $id
      * @return Application|RedirectResponse|Redirector
+     * @throws Exception
      */
     public function destroy($id)
     {
