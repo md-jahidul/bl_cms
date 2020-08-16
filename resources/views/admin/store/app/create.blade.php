@@ -111,9 +111,27 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="category_id">
-                                        Sub Category :
-                                    </label>
+                                    <label for="category_id"> Sub Category :</label>
+                                    <div class="controls">
+                                        <select name="sub_category_id" id="sub_category_id" class="sub_category_select form-control">
+
+                                            @if(isset($appStore))
+                                                <option value="0">Select Sub Category</option>
+                                            @endif
+
+                                            @foreach($subCategories as $subCategory)
+                                                <option  value="{{ $subCategory->id }}" {{ ($subCategory->id == $appStore->sub_category_id ) ? 'selected' : '' }}>{{ $subCategory->name_en }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('sub_category_id') {{ $message }} @enderror </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{--<div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="category_id">Sub Category :</label>
                                     <div class="controls">
                                         <select name="sub_category_id" id="sub_category_id" class="sub_category_select form-control @error('sub_category_id') is-invalid @enderror">
                                             <option value="0">Select Sub Category</option>
@@ -127,7 +145,7 @@
                                         <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
 
 
                             <div class="col-md-4">
@@ -332,6 +350,24 @@
     <script>
 
         $(function () {
+
+            $('#category_id').change(function () {
+                var categoryId = $(this).find('option:selected').val()
+                var subCategory = $('#sub_category_id');
+                $.ajax({
+                    url: "{{ url('subStore/subcategory-find') }}" + '/' + categoryId,
+                    success: function (data) {
+                        subCategory.empty();
+                        var option = '<option value="">---Select SubCategory---</option>';
+                        $.map(data, function (item) {
+                            option += '<option value="' + item.id + '">' + item.name_en + '</option>'
+                        })
+                        subCategory.append(option)
+                    },
+                });
+            });
+
+
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
 

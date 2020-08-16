@@ -101,22 +101,21 @@
                                 </div>
                             </div>
 
-                          {{--  <div class="form-group col-md-6">
-                                <label for="tag_category_id" class="required">Category</label>
-                                <select class="form-control" name="app_service_cat_id" id="appServiceCat"
-                                        required data-validation-required-message="Please select category">
-                                </select>
-                                <div class="help-block"></div>
-                                @if ($errors->has('app_service_cat_id'))
-                                    <div class="help-block">{{ $errors->first('app_service_cat_id') }}</div>
-                                @endif
-                            </div>--}}
 
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="category_id"> Sub Category :</label>
                                     <div class="controls">
                                         <select name="sub_category_id" id="sub_category_id" class="sub_category_select form-control">
+
+                                            @if(isset($store))
+                                                <option value="0">Select Sub Category</option>
+                                            @endif
+
+                                            @foreach($subCategories as $subCategory)
+                                                <option  value="{{ $subCategory->id }}" {{ ($subCategory->id == $store->sub_category_id ) ? 'selected' : '' }}>{{ $subCategory->name_en }}</option>
+                                            @endforeach
+
                                         </select>
                                         <div class="help-block"></div>
                                         <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
