@@ -24,8 +24,8 @@ class FeedCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:200',
-            'order' => 'required',
+            'title' => 'required|max:200',
+            //'ordering' => 'required',
             'status' => 'required',
         ];
     }
@@ -33,9 +33,9 @@ class FeedCategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => "Enter feed category name",
-            'order.required' => 'Enter feed category ordering',
-            'order.status' => 'Select status active/inactive',
+            'title.required' => "Enter feed category name",
+            //'ordering.required' => 'Enter feed category ordering',
+            'status.required' => 'Select status active/inactive',
         ];
     }
 }

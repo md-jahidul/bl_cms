@@ -14,8 +14,6 @@ class ModifyMyBlFeedCategoriesTable extends Migration
     public function up()
     {
         Schema::table('my_bl_feed_categories', function (Blueprint $table) {
-            $table->renameColumn('title', 'name');
-            $table->renameColumn('ordering', 'order');
             $table->unsignedBigInteger('parent_id')->after('id')->nullable()->default(null);
             //$table->foreign('parent_id')->references('id')->on('my_bl_feed_categories')->onUpdate('cascade')->onDelete('set null');
         });
@@ -29,8 +27,6 @@ class ModifyMyBlFeedCategoriesTable extends Migration
     public function down()
     {
         Schema::table('my_bl_feed_categories', function (Blueprint $table) {
-            $table->renameColumn('name', 'title');
-            $table->renameColumn('order', 'ordering');
             $table->dropColumn('parent_id');
         });
     }

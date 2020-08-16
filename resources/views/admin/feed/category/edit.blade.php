@@ -35,26 +35,26 @@
                                                 <option value="{{ $item->id }}"
                                                     {{ (isset($category->parent) && $item->id == $category->parent->id) ? 'selected' : ''}}
                                                 >
-                                                    {{ $item->name }}
+                                                    {{ $item->title }}
                                                 </option>
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
                                     </div>
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="name" class="required">Name:</label>
-                                        <input value="{{ $category->name }}" required id="name"
-                                            type="text" class="form-control @error('name') is-invalid @enderror"
-                                            placeholder="Name" name="name">
-                                        <small class="text-danger"> @error('name') {{ $message }} @enderror </small>
+                                        <label for="title" class="required">Title:</label>
+                                        <input value="{{ $category->title }}" required id="title"
+                                            type="text" class="form-control @error('title') is-invalid @enderror"
+                                            placeholder="Title" name="title">
+                                        <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
-                                    <div class="form-group col-md-6 mb-2">
+                                    <div class="hidden form-group col-md-6 mb-2">
                                         <label for="order">Order: </label>
-                                        <input required min="1"
-                                            value="{{ $category->order }}" id="order"
+                                        <input min="1"
+                                            value="{{ $category->ordering }}" id="order"
                                             type="number" class="form-control @error('order') is-invalid @enderror"
-                                            placeholder="Order" name="order">
+                                            placeholder="Order" name="ordering">
                                         <small class="text-danger"> @error('order') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>

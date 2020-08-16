@@ -24,8 +24,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Parent</th>
-                            <th>Order</th>
-                            <th>Name</th>
+                            <th>Title</th>
                             <th>Slug</th>
                             <th>status</th>
                             <th>Action</th>
@@ -36,8 +35,7 @@
                             <tr>
                                 <td>{{$category->id}}</td>
                                 <td>{{ $category->parent ? $category->parent->name : ''}}</td>
-                                <td>{{$category->order}}</td>
-                                <td>{{$category->name}}</td>
+                                <td>{{$category->title}}</td>
                                 <td>{{$category->slug}}</td>
                                 <td>{{$category->status == 1 ? 'Active' : 'Inactive'}}</td>
                                 <td>

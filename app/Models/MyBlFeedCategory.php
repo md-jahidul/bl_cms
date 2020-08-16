@@ -9,12 +9,12 @@ class MyBlFeedCategory extends Model
 {
 
     protected $fillable = [
-        'parent_id', 'name', 'slug' , 'order' , 'status'
+        'parent_id', 'title', 'slug' , 'ordering' , 'status'
     ];
 
-    public function setNameAttribute($value)
+    public function setTitleAttribute($value)
     {
-        $this->attributes['name'] = $value;
+        $this->attributes['title'] = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
 
