@@ -158,20 +158,14 @@
                                     </div>
 
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="status_input">Status: </label>
-                                        <div
-                                            class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-
-                                            <input type="radio" name="status" value="1" id="input-radio-15" {{ $feed->status == 1 ? 'checked' : '' }}>
-                                            <label for="input-radio-15" class="mr-3">Active</label>
-                                            <input type="radio" name="status" value="0" id="input-radio-16" {{ $feed->status == 0 ? 'checked' : '' }}>
-                                            <label for="input-radio-16" class="mr-3">Inactive</label>
-
-                                            @if ($errors->has('status'))
-                                                <div
-                                                    class="help-block">  {{ $errors->first('status') }}</div>
-                                            @endif
-                                        </div>
+                                        <label for="description">Description: </label>
+                                        <textarea required rows="10" id="description" name="description"
+                                                  class="form-control js_editor_box @error('description') is-invalid @enderror"
+                                                  placeholder="Description"
+                                                  name="order">{{ old('description') ? old('description') : $feed->description }}</textarea>
+                                        <small
+                                            class="text-danger"> @error('description') {{ $message }} @enderror </small>
+                                        <div class="help-block"></div>
                                     </div>
 
                                     {{--<div class="form-group col-md-6 mb-2">
@@ -204,14 +198,20 @@
                                     </div>--}}
 
                                     <div class="form-group col-md-6 mb-2">
-                                        <label for="description">Description: </label>
-                                        <textarea required rows="10" id="description" name="description"
-                                                  class="form-control @error('description') is-invalid @enderror"
-                                                  placeholder="Description"
-                                                  name="order">{{ old('description') ? old('description') : $feed->description }}</textarea>
-                                        <small
-                                            class="text-danger"> @error('description') {{ $message }} @enderror </small>
-                                        <div class="help-block"></div>
+                                        <label for="status_input">Status: </label>
+                                        <div
+                                            class="form-group {{ $errors->has('status') ? ' error' : '' }}">
+
+                                            <input type="radio" name="status" value="1" id="input-radio-15" {{ $feed->status == 1 ? 'checked' : '' }}>
+                                            <label for="input-radio-15" class="mr-3">Active</label>
+                                            <input type="radio" name="status" value="0" id="input-radio-16" {{ $feed->status == 0 ? 'checked' : '' }}>
+                                            <label for="input-radio-16" class="mr-3">Inactive</label>
+
+                                            @if ($errors->has('status'))
+                                                <div
+                                                    class="help-block">  {{ $errors->first('status') }}</div>
+                                            @endif
+                                        </div>
                                     </div>
 
                                     <div class="form-group col-md-12">
@@ -245,6 +245,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
 @endpush
 
 @push('page-js')
@@ -258,6 +259,8 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
     <script>
         $(function () {
@@ -301,6 +304,21 @@
                     'imageFormat': 'The file must be valid format'
                 }
             });
+
+            $('.js_editor_box').each(function(k, v){
+                $(this).summernote({
+                    toolbar: [
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['strikethrough', 'superscript', 'subscript']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        // ['table', ['table']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['view', ['fullscreen', 'codeview']]
+                    ],
+                    height:200
+                });
+            });
         });
         function formHandler() {
             let type = $("input[name='feed_type']:checked").val();
@@ -310,6 +328,7 @@
                 $("#type").val(mainType);
                 $("#image-input").show();
                 $("#file-input").show();
+                $("#video-input").show();
                 $("#audio-input").show();
                 $("#post-input").hide();
             }
