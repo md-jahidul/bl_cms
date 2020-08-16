@@ -120,19 +120,13 @@
 
                                     <div id="image-input" class="form-group col-md-6 mb-2">
                                         <div class="form-group">
-                                            <label for="image">Upload Image :</label>
-                                            <div class="input-group">
-                                                <div class="custom-file">
-                                                    <input accept="image/*"
-                                                           id="image_url" name="image_url" type="file"
-                                                           class="custom-file-input">
-                                                    <label class="custom-file-label" for="image_url">Upload
-                                                        Image...</label>
-                                                </div>
-                                            </div>
-                                            <div style="margin-top: 10px">
-                                                <img style="height:100px;width:200px" src="{{ asset($feed->image_url) }}" alt="">
-                                            </div>
+                                            <label for="image_url">Upload Image :</label>
+                                            <input type="file"
+                                                   id="image_url"
+                                                   name="image_url"
+                                                   class="dropify_image"
+                                                   data-allowed-file-extensions="png jpg gif"
+                                                   data-default-file="{{ asset($feed->image_url) }}"/>
                                             <div class="help-block"></div>
                                             <small
                                                 class="text-danger"> @error('image_url') {{ $message }} @enderror </small>
@@ -142,19 +136,11 @@
                                     <div id="file-input" class="form-group col-md-6 mb-2">
                                         <div class="form-group">
                                             <label for="file">Upload File :</label>
-                                            <div class="input-group">
-                                                <div class="custom-file">
-                                                    <input id="file_input" name="file" type="file"
-                                                           class="custom-file-input">
-                                                    <label class="custom-file-label" for="file_input">Upload
-                                                        File...</label>
-                                                </div>
-                                            </div>
-                                            @if($feed->file)
-                                            <div style="margin-top: 10px">
-                                                <a href="{{ asset($feed->file) }}">File url</a>
-                                            </div>
-                                            @endif
+                                            <input type="file"
+                                                   id="file"
+                                                   name="file"
+                                                   data-allowed-file-extensions="pdf doc docx xlx"
+                                                   class="dropify_file" data-default-file="{{ asset($feed->file) }}"/>
                                             <div class="help-block"></div>
                                             <small class="text-danger"> @error('file') {{ $message }} @enderror </small>
                                             <small id="massage"></small>
@@ -291,6 +277,30 @@
         $("#post-input").hide();
         $(document).ready(function(){
             formHandler();
+
+            $('.dropify_image').dropify({
+                messages: {
+                    'default': 'Browse for an Image to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct Image file'
+                },
+                error: {
+                    'imageFormat': 'The image must be valid format'
+                }
+            });
+
+            $('.dropify_file').dropify({
+                messages: {
+                    'default': 'Browse for an File to upload',
+                    'replace': 'Click to replace',
+                    'remove': 'Remove',
+                    'error': 'Choose correct File'
+                },
+                error: {
+                    'imageFormat': 'The file must be valid format'
+                }
+            });
         });
         function formHandler() {
             let type = $("input[name='feed_type']:checked").val();
