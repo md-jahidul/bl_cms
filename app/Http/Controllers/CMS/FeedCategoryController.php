@@ -10,6 +10,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
 
@@ -101,9 +102,14 @@ class FeedCategoryController extends Controller
         return redirect(route('feeds.categories.index'));
     }
 
-
+    /**
+     * Update ordering position
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function updatePosition(Request $request)
     {
-        dd($request->all());
+        return $this->feedCategoryService->updateOrdering($request);
     }
 }

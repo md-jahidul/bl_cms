@@ -33,7 +33,7 @@ class FeedCategoryService
      */
     public function getAll()
     {
-        return $this->feedCategoryRepository->getAll();
+        return $this->feedCategoryRepository->getAllCategory();
     }
 
     /**
@@ -72,5 +72,17 @@ class FeedCategoryService
     {
         $this->delete($id);
         return new Response("Feed category has been successfully deleted");
+    }
+
+    /**
+     * Update ordering position
+     *
+     * @param $request
+     * @return Response
+     */
+    public function updateOrdering($request)
+    {
+        $this->feedCategoryRepository->updateOrderingPosition($request);
+        return new Response('Ordering has been successfully update');
     }
 }
