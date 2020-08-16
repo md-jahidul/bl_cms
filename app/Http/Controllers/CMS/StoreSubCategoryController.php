@@ -96,6 +96,18 @@ class StoreSubCategoryController extends Controller
             ->with('storeSubCategory', $storeSubCategory);
     }
 
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getSubCategoryByCatId($id)
+    {
+        return $this->storeSubCategoryService->getSubCategoryByCatId($id);
+
+    }
+
+
     /**
      * Update the specified resource in storage.
      *

@@ -70,4 +70,14 @@ class StoreSubCategoryService
         $notificationCategory->delete();
         return Response('Notification Category has been successfully deleted');
     }
+
+
+    /**
+     * @param $id
+     * @return StoreSubCategoryRepository|\Illuminate\Support\Collection|null
+     */
+    public function getSubCategoryByCatId($id)
+    {
+        return $this->storeSubCategoryRepository->findByProperties(['category_id' => $id], ['id', 'name_en']);
+    }
 }

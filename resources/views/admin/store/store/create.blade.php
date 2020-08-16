@@ -82,7 +82,7 @@
                                         Category :
                                     </label>
                                     <div class="controls">
-                                        <select required name="category_id" id="category_id"  class="category_select form-control @error('category_id') is-invalid @enderror">
+                                        <select required name="category_id" id="category_id"  class="category_select form-control">
                                             <option value="">Select Category</option>
 
                                             @foreach ($categories as $category)
@@ -101,7 +101,30 @@
                                 </div>
                             </div>
 
+                          {{--  <div class="form-group col-md-6">
+                                <label for="tag_category_id" class="required">Category</label>
+                                <select class="form-control" name="app_service_cat_id" id="appServiceCat"
+                                        required data-validation-required-message="Please select category">
+                                </select>
+                                <div class="help-block"></div>
+                                @if ($errors->has('app_service_cat_id'))
+                                    <div class="help-block">{{ $errors->first('app_service_cat_id') }}</div>
+                                @endif
+                            </div>--}}
+
                             <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="category_id"> Sub Category :</label>
+                                    <div class="controls">
+                                        <select name="sub_category_id" id="sub_category_id" class="sub_category_select form-control">
+                                        </select>
+                                        <div class="help-block"></div>
+                                        <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                           {{-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="category_id">
                                         Sub Category :
@@ -119,7 +142,7 @@
                                         <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -385,6 +408,24 @@
     <script>
 
         $(function () {
+
+            $('#category_id').change(function () {
+                var categoryId = $(this).find('option:selected').val()
+                var subCategory = $('#sub_category_id');
+                $.ajax({
+                    url: "{{ url('subStore/subcategory-find') }}" + '/' + categoryId,
+                    success: function (data) {
+                        subCategory.empty();
+                        var option = '<option value="">---Select SubCategory---</option>';
+                        $.map(data, function (item) {
+                            option += '<option value="' + item.id + '">' + item.name_en + '</option>'
+                        })
+                        subCategory.append(option)
+                    },
+                });
+            });
+
+
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
 

@@ -40,6 +40,11 @@
                                     <select name="category_id" id="category_id"  class="form-control @error('category_id') is-invalid @enderror">
                                         <option value="">Select Category</option>
                                         @foreach ($categories as $category)
+
+                                            @if(strtolower($category->name_en) == "all")
+                                                @continue
+                                            @endif
+
                                             <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}
                                                     @elseif(isset($storeSubCategory) && ($category->id == $storeSubCategory->category_id)) selected  @endif
                                                     value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name_en}}</option>
