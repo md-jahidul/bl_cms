@@ -130,7 +130,7 @@ class BalanceService extends BaseService
     private function preparePrepaidBalanceSummary($response, $customer_id)
     {
         $balance_data = collect($response->money);
-
+        dd($balance_data);
         $main_balance = $balance_data->first(function ($item) {
             return $item->type == 'MAIN';
         });
