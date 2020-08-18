@@ -2,27 +2,29 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
-/**
- * Class MyBlFeedCategory
- * @package App\Models
- */
 class MyBlFeedCategory extends Model
 {
-    use Sluggable;
 
     protected $fillable = [
-        'title', 'slug' , 'ordering'
+        'parent_id', 'title', 'slug' , 'ordering' , 'status'
     ];
 
-    public function sluggable()
+    public function setTitleAttribute($value)
     {
-        return [
-            'slug' => [
-                'source' => 'title'
-            ]
-        ];
+        $this->attributes['title'] = $value;
+        $this->attributes['slug'] = Str::slug($value);
+    }
+
+    public function feeds()
+    {
+        return $this->hasMany(MyBlFeed::class, 'category_id', 'id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(self::class);
     }
 }

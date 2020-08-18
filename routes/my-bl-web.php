@@ -424,4 +424,15 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     route::resource('migrate-plan', 'CMS\MigratePlanController');
     Route::get('migrate-plan/destroy/{id}', 'CMS\MigratePlanController@destroy');
 
+    /*
+     *  Feed routes
+     */
+    Route::namespace('CMS')->prefix('feeds')->name('feeds.')->group(function () {
+        Route::resource('/', 'FeedController')->parameters(['' => 'feed'])->except('show');
+        // Category resource
+        Route::resource('categories', 'FeedCategoryController')->except('show');
+        Route::get('categories/update-position', 'FeedCategoryController@updatePosition')->name('categories.update_position');
+    });
+
+
 });

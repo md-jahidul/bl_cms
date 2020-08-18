@@ -49,6 +49,26 @@
     @endif
 
 
+    @if( auth()->user()->can_view('Feed') || auth()->user()->can_view('FeedCategory') )
+        <li class=" nav-item"><a href="#"><i class="la la-feed"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Feed</span></a>
+            <ul class="menu-content">
+                {{--page--}}
+                <li class="{{ is_active_url('feeds/categories') }}{{ is_active_url('feeds/categories/create') }}">
+                    <a class="menu-item" href="{{ route('feeds.categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-server"></i>Category List
+                    </a>
+                </li>
+                <li class="{{ is_active_url('feeds') }}{{ is_active_url('feeds/create') }}">
+                    <a class="menu-item" href="{{ route('feeds.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-feed"></i>Feed List</a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
     @if( auth()->user()->can_view('Notification') || auth()->user()->can_view('NotificationCategory') )
         <li class=" nav-item"><a href="#"><i class="la la-bell"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">Notification</span></a>
