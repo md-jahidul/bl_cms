@@ -59,8 +59,13 @@ class FeedCategoryController extends Controller
      */
     public function store(FeedCategoryRequest $request)
     {
-        session()->flash('message', $this->feedCategoryService->store($request->all())->getContent());
-        return redirect(route('feeds.categories.index'));
+        try {
+            session()->flash('message', $this->feedCategoryService->store($request->all())->getContent());
+            return redirect(route('feeds.categories.index'));
+        } catch (Exception $exception) {
+            session()->flash('error', $exception->getPrevious()->getMessage());
+            return back();
+        }
     }
 
     /**
