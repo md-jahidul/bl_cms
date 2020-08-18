@@ -8,6 +8,15 @@ use Illuminate\Support\Str;
 class MyBlFeedCategory extends Model
 {
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::creating(function ($model) {
+            $model->ordering = optional(self::latest('ordering')->first())->ordering+1;
+        });
+    }
+
     protected $fillable = [
         'parent_id', 'title', 'slug' , 'ordering' , 'status'
     ];

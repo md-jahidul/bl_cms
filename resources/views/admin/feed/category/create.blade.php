@@ -47,15 +47,6 @@
                                         <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
-                                    <div class="hidden form-group col-md-6 mb-2">
-                                        <label for="order">Order: </label>
-                                        <input min="1"
-                                            value="1" id="order"
-                                            type="number" class="form-control @error('order') is-invalid @enderror"
-                                            placeholder="Order" name="ordering">
-                                        <small class="text-danger"> @error('order') {{ $message }} @enderror </small>
-                                        <div class="help-block"></div>
-                                    </div>
                                     <div class="col-6">
                                         <div style="margin-top: 25px" class="form-group {{ $errors->has('status') ? ' error' : '' }}">
 
