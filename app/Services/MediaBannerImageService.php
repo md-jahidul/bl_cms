@@ -49,17 +49,18 @@ class MediaBannerImageService
             $moduleWiseData['press_release']['banner_image_url'] = $this->upload($data['banner_image_url'], $dirPath);
         }
         if (request()->has('banner_mobile_view')) {
-            $data['press_release']['banner_mobile_view'] = $this->upload($data['banner_mobile_view'], $dirPath);
+            $moduleWiseData['press_release']['banner_mobile_view'] = $this->upload($data['banner_mobile_view'], $dirPath);
         }
 
         if (request()->has('news_news_banner_image_url')) {
-            $data['news_event']['banner_image_url'] = $this->upload($data['news_news_banner_image_url'], $dirPath);
+            $moduleWiseData['news_event']['banner_image_url'] = $this->upload($data['news_news_banner_image_url'], $dirPath);
         }
         if (request()->has('news_banner_mobile_view')) {
-            $data['news_event']['news_banner_mobile_view'] = $this->upload($data['news_banner_mobile_view'], $dirPath);
+            $moduleWiseData['news_event']['news_banner_mobile_view'] = $this->upload($data['news_banner_mobile_view'], $dirPath);
         }
+//        $moduleWiseData['news_event'] = $data['news_alt_text_en']
 
-        dd($data);
+        dd($moduleWiseData);
 
         if (!$bannerImage) {
             $data['module_type'] = $type;
