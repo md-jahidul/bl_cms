@@ -46,7 +46,7 @@
                                         <td>{{ (!empty($user->role)) ? $user->role : 'N/A' }}</td>
                                         <td><a href="#" onclick="showEdit('{{$user->id}}','{{$user->name}}','{{$user->email}}','{{$user->role}}')" class="mr-3">
                                                 <i class="fas fa-edit text-primary"></i>
-                                            </a> 
+                                            </a>
                                             <a href="#" onclick="showDelete('{{$user->id}}','{{$user->name}}')">
                                                 <i class="fas fa-trash text-danger"></i>
                                             </a>
@@ -127,7 +127,7 @@
                 <h1><i class="glyphicon glyphicon-thumbs-up"></i>Update </h1>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            
+
             <form id="updateForm" role="form" action="" method="POST">
                 <div class="modal-body">
                     <!-- general form elements -->
@@ -185,7 +185,7 @@
                 <h1><i class="glyphicon glyphicon-thumbs-up"></i>Delete</h1>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            
+
             <form id="deleteForm" action="" method="post">
                 @csrf
                 @method('delete')
@@ -215,13 +215,13 @@
 
         function showEdit(id,name,email,role){
 
-            //to clear the url if its not given delete query will show bug when url is in edit 
+            //to clear the url if its not given delete query will show bug when url is in edit
             var uri = window.location.toString();
             if (uri.indexOf("users/")) {
                 var clean_uri = uri.substring(0, uri.indexOf("users/"));
                 window.history.replaceState({}, document.title, clean_uri);
             }
-            //to clear the url if its not given delete query will show bug when url is in edit 
+            //to clear the url if its not given delete query will show bug when url is in edit
 
             $('#update').modal("show");
             $("#username").val(name);
@@ -233,13 +233,13 @@
 
         function showDelete(id,name){
 
-        //to clear the url if its not given delete query will show bug when url is in edit 
+        //to clear the url if its not given delete query will show bug when url is in edit
         var uri = window.location.toString();
         if (uri.indexOf("users/")) {
             var clean_uri = uri.substring(0, uri.indexOf("users/"));
             window.history.replaceState({}, document.title, clean_uri);
         }
-        //to clear the url if its not given delete query will show bug when url is in edit 
+        //to clear the url if its not given delete query will show bug when url is in edit
 
         $('#danger').modal("show");
         $("#modal-text").html("Are you sure you want to Move this Tag <srtong class='text-danger'>( "+ name +" )</srtong> to the trash ?");

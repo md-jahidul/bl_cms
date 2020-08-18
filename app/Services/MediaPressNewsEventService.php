@@ -44,6 +44,11 @@ class MediaPressNewsEventService
      */
     public function storePNE($data)
     {
+        // $originalDate = "2010-03-21";
+        // $newDate = date("d-m-Y", strtotime($originalDate));
+        // $from = "2020-05-21";
+        // $to = "2020-07-30";
+
         $dirPath = 'assetlite/images/media';
         if (request()->hasFile('thumbnail_image')) {
             $data['thumbnail_image'] = $this->upload($data['thumbnail_image'], $dirPath);
