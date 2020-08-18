@@ -46,11 +46,20 @@ class MediaBannerImageService
 
         $dirPath = 'assetlite/images/banner/media';
         if (request()->has('banner_image_url')) {
-            $data['banner_image_url'] = $this->upload($data['banner_image_url'], $dirPath);
+            $moduleWiseData['press_release']['banner_image_url'] = $this->upload($data['banner_image_url'], $dirPath);
         }
         if (request()->has('banner_mobile_view')) {
-            $data['banner_mobile_view'] = $this->upload($data['banner_mobile_view'], $dirPath);
+            $data['press_release']['banner_mobile_view'] = $this->upload($data['banner_mobile_view'], $dirPath);
         }
+
+        if (request()->has('news_news_banner_image_url')) {
+            $data['news_event']['banner_image_url'] = $this->upload($data['news_news_banner_image_url'], $dirPath);
+        }
+        if (request()->has('news_banner_mobile_view')) {
+            $data['news_event']['news_banner_mobile_view'] = $this->upload($data['news_banner_mobile_view'], $dirPath);
+        }
+
+        dd($data);
 
         if (!$bannerImage) {
             $data['module_type'] = $type;

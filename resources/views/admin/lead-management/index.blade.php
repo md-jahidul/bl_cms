@@ -17,9 +17,8 @@
                         <thead>
                             <tr>
                                 <td width="3%">#</td>
-                                <th width="7%">Name</th>
-                                <th width="7%">Mobile</th>
-                                <th width="7%">Email</th>
+                                <th width="7%">Category</th>
+                                <th width="7%">Product</th>
                                 <th width="4%">Status</th>
                                 <th width="10%">Action</th>
                             </tr>
