@@ -24,6 +24,7 @@
                         <form novalidate class="form row" action="{{route('feeds.categories.update', $category->id)}}" method="POST">
                             @csrf
                             @method('PUT')
+                            <input value="{{ $category->ordering }}" type="hidden" name="ordering">
                             <div class="form-group col-12 mb-2 file-repeater">
                                 <div class="row mb-1">
                                     <div class="form-group col-md-6 mb-2">
@@ -47,15 +48,6 @@
                                             type="text" class="form-control @error('title') is-invalid @enderror"
                                             placeholder="Title" name="title">
                                         <small class="text-danger"> @error('title') {{ $message }} @enderror </small>
-                                        <div class="help-block"></div>
-                                    </div>
-                                    <div class="hidden form-group col-md-6 mb-2">
-                                        <label for="order">Order: </label>
-                                        <input min="1"
-                                            value="{{ $category->ordering }}" id="order"
-                                            type="number" class="form-control @error('order') is-invalid @enderror"
-                                            placeholder="Order" name="ordering">
-                                        <small class="text-danger"> @error('order') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
                                     </div>
                                     <div class="col-6">

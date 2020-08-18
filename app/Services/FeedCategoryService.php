@@ -37,6 +37,15 @@ class FeedCategoryService
     }
 
     /**
+     * Get all active category
+     * @return FeedCategoryRepository|Collection|null
+     */
+    public function getActiveAll()
+    {
+        return $this->feedCategoryRepository->getAllActiveCategory();
+    }
+
+    /**
      * Store feed category in db
      *
      * @param array $data

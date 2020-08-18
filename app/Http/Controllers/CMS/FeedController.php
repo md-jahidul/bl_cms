@@ -53,7 +53,7 @@ class FeedController extends Controller
      */
     public function create()
     {
-        $categories = $this->feedCategoryService->getAll();
+        $categories = $this->feedCategoryService->getActiveAll();
         return view('admin.feed.create', compact('categories'));
     }
 
@@ -77,7 +77,7 @@ class FeedController extends Controller
      */
     public function edit($id)
     {
-        $categories = $this->feedCategoryService->getAll();
+        $categories = $this->feedCategoryService->getActiveAll();
         $feed = $this->feedService->findOne($id);
         return view('admin.feed.edit', compact('categories', 'feed'));
     }
