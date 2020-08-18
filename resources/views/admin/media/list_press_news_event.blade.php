@@ -2,7 +2,7 @@
 @section('title', 'Press News Event')
 @section('card_name', 'Press News Event')
 @section('breadcrumb')
-    <li class="breadcrumb-item ">Press News Event List</li>
+    <li class="breadcrumb-item ">Press Release And News Event List</li>
 @endsection
 @section('action')
     <a href="{{ url("press-news-event/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
@@ -20,6 +20,7 @@
                         <tr>
                             <td width="3%">#</td>
                             <th width="20%">Title</th>
+                            <th width="20%">Type</th>
                             <th width="8%">Image</th>
                             <th width="25%">Short Description</th>
                             <th width="25%">Long Description</th>
@@ -31,6 +32,7 @@
                             <tr>
                                 <td width="3%">{{ $loop->iteration }}</td>
                                 <td>{{ $data->title_en }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
+                                <td>{{ str_replace('_', ' ', ucfirst($data->type)) }}</td>
                                 <td><img src="{{ config('filesystems.file_base_url') . $data->thumbnail_image }}" height="50" width="70"></td>
                                 <td>{{ $data->short_details_en }}</td>
                                 <td>{!! $data->long_details_en !!}</td>
@@ -55,7 +57,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="menu-title"><strong>Banner Image</strong></h4>
+                    <h4 class="menu-title"><strong>Press Release Banner Image</strong></h4>
                     <hr>
                     <div class="card-body card-dashboard">
                         <form role="form"
@@ -101,6 +103,50 @@
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">{{ $errors->first('alt_text') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-12 mt-1"></div>
+                                <h4><strong>News Event Banner Image</strong></h4>
+                                <div class="form-actions col-md-12 mt-0"></div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('news_banner_image_url') ? ' error' : '' }}">
+                                    <label for="mobileImg">Banner Image (Desktop)</label>
+                                    <div class="custom-file">
+                                        {{--{{ dd($bannerImage->items['news_banner_image_url']) }}--}}
+                                        {{--<input type="hidden" name="old_web_img" value="--}}{{--{{ isset($fixedSectionData['image']) ? $fixedSectionData['image'] : '' }}--}}{{--">--}}
+                                        <input type="file" name="news_news_banner_image_url" data-height="90" class="dropify"
+                                               data-default-file="{{ isset($bannerImage->banner_image_url) ? config('filesystems.file_base_url') . $bannerImage->banner_image_url : '' }}">
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('news_banner_image_url'))
+                                        <div class="help-block">  {{ $errors->first('news_banner_image_url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('news_banner_mobile_view') ? ' error' : '' }}">
+                                    <label for="mobileImg">Banner Image (Mobile)</label>
+                                    <div class="custom-file">
+                                        {{--                                        <input type="hidden" name="old_mob_img" value="--}}{{--{{ isset($fixedSectionData['banner_image_mobile']) ? $fixedSectionData['banner_image_mobile'] : '' }}--}}{{--">--}}
+                                        <input type="file" name="news_banner_mobile_view" class="dropify" data-height="90"
+                                               data-default-file="{{ isset($bannerImage->banner_mobile_view) ? config('filesystems.file_base_url') . $bannerImage->banner_mobile_view : '' }}">
+                                    </div>
+                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
+
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('news_banner_mobile_view'))
+                                        <div class="help-block">  {{ $errors->first('news_banner_mobile_view') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('news_alt_text_en') ? ' error' : '' }}">
+                                    <label for="news_alt_text_en">Alt Text</label>
+                                    <input type="text" name="news_alt_text_en" id="news_alt_text_en" class="form-control"
+                                           placeholder="Enter alt text" value="{{ isset($bannerImage->alt_text_en) ? $bannerImage->alt_text_en : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('news_alt_text_en'))
+                                        <div class="help-block">{{ $errors->first('news_alt_text_en') }}</div>
                                     @endif
                                 </div>
 
