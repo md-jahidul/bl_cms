@@ -131,7 +131,7 @@
                                             <small id="massage"></small>
                                         </div>
                                     </div>
-                                    <div id="file-input" class="form-group col-md-6 mb-2">
+                                    {{--<div id="file-input" class="form-group col-md-6 mb-2">
                                         <div class="form-group">
                                             <label for="file">Upload File :</label>
                                             <input type="file"
@@ -143,13 +143,13 @@
                                             <small class="text-danger"> @error('file') {{ $message }} @enderror </small>
                                             <small id="massage"></small>
                                         </div>
-                                    </div>
+                                    </div>--}}
 
                                     <div id="post-input" class="form-group col-md-6 mb-2">
-                                        <label for="post_url" class="required">Post Url: </label>
+                                        <label for="post_url">Video Url: </label>
                                         <input data-validation-regex-regex="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$" data-validation-regex-message="Please insert valid url" value="{{ old("post_url") ? old("post_url") : '' }}" id="post_url"
                                                type="text" class="form-control @error('post_url') is-invalid @enderror"
-                                               placeholder="Post Url" name="post_url">
+                                               placeholder="Video Url" name="post_url">
                                         <small
                                             class="text-danger"> @error('post_url') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
@@ -159,8 +159,7 @@
                                         <label for="description">Description: </label>
                                         <textarea rows="10" id="description" name="description"
                                                   class="form-control js_editor_box @error('description') is-invalid @enderror"
-                                                  placeholder="Description"
-                                                  name="order">{{ old('description') ? old('description') : '' }}</textarea>
+                                                  placeholder="Description">{{ old('description') ? old('description') : '' }}</textarea>
                                         <small
                                             class="text-danger"> @error('description') {{ $message }} @enderror </small>
                                         <div class="help-block"></div>
