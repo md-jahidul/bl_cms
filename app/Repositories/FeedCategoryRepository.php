@@ -8,10 +8,22 @@ class FeedCategoryRepository extends BaseRepository
 {
     protected $modelName = FeedCategory::class;
 
-
+    /**
+     * All category
+     * @return mixed
+     */
     public function getAllCategory()
     {
         return $this->model->orderBy('ordering')->get();
+    }
+
+    /**
+     * Get all active category
+     * @return mixed
+     */
+    public function getAllActiveCategory()
+    {
+        return $this->model->where('status', 1)->orderBy('ordering')->get();
     }
 
 
