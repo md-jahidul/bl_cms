@@ -120,6 +120,7 @@
                                     @include('layouts.partials.products.common-field.sms_volume')
                                     @include('layouts.partials.products.common-field.call_rate')
                                     @include('layouts.partials.products.common-field.call_rate_unit')
+                                    @include('layouts.partials.products.common-field.ussd_code')
                                 </slot>
 
                                 <slot class="{{ $product->offer_category_id == OfferType::OTHERS ? '' : 'd-none' }}" id="others" data-offer-type="others">

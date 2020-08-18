@@ -823,6 +823,16 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('product-price-slab-status-change/{rateId}', 'AssetLite\ProductPriceSlabController@priceSlabStatusChange');
     Route::get('product-price-slab/destroy/{rateId?}', 'AssetLite\ProductPriceSlabController@deletePriceSlab');
 
+
+    //Module Ethicks & complains
+    Route::get('ethics-compliance', 'AssetLite\EthicsController@index');
+    Route::post('ethics/update-page-info', 'AssetLite\EthicsController@updatePageInfo');
+    Route::post('ethics/save-ethics-file', 'AssetLite\EthicsController@saveFile');
+    Route::get('ethics/sort-ethics-file', 'AssetLite\EthicsController@sortFiles');
+    Route::get('ethics/status-change/{id}', 'AssetLite\EthicsController@chanbgeStatus');
+    Route::get('ethics/get-file-data/{id}', 'AssetLite\EthicsController@getFileData');
+    Route::get('ethics/file-delete/{id}', 'AssetLite\EthicsController@fileDelete');
+
     // Faq
     Route::get('faq-categories', 'AssetLite\AlFaqController@categoryList');
     Route::get('faq-category/{id}/edit', 'AssetLite\AlFaqController@catEdit');
@@ -838,6 +848,14 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     // Media Press News Event
     Route::resource('press-news-event', 'AssetLite\MediaPressNewsEventController')->except(['show', 'destroy']);
+    Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
+
+    //Customer Feedback
+    Route::get('customer-feedback/questions', 'AssetLite\CustomerFeedbackController@questions');
+    Route::get('customer-feedback/add-question', 'AssetLite\CustomerFeedbackController@addQuestion');
+    Route::get('customer-feedback/edit-question/{id}', 'AssetLite\CustomerFeedbackController@editQuestion');
+    Route::post('customer-feedback/save-question', 'AssetLite\CustomerFeedbackController@saveQuestion');
+
     Route::get('press-news-event/destroy/{id}', 'AssetLite\MediaPressNewsEventController@destroy');
 
     // Media TVC Video

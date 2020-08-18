@@ -265,6 +265,21 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('LearnPriyojon') )
+        <li class=" nav-item"><a href="#"><i class="la la-gift"></i>
+                <span class="menu-title">Priyojon</span></a>
+            <ul class="menu-content">
+                {{--page--}}
+                <li class="{{ is_active_url('mybl/learn-priyojon') }}">
+                    <a class="menu-item" href="{{ route('learn-priyojon.show') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-file"></i>Learn Priyojon
+                    </a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
 
     @if( auth()->user()->can_view('FaqCategory') || auth()->user()->can_view('FaqQuestions') )
         <li class=" nav-item"><a href="#"><i class="la la-question"></i>
@@ -283,6 +298,14 @@
                     </a>
                 </li>
             </ul>
+        </li>
+    @endif
+
+
+    @if (Auth::user()->hasRole('developer'))
+        <li class="{{ is_active_url('developer/api/debug') }}">
+            <a class="menu-item" href="{{ route('mybl.api.debug') }}">
+                <i class="la la-code-fork"></i>Debug Panel</a>
         </li>
     @endif
 

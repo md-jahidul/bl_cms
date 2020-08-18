@@ -38,10 +38,10 @@ trait Authorizable
 
         foreach ($this->roles as $role) {
             $permission = $role->permissions
-                                ->where('namespace', $namespace)
-                                ->where('controller', $controller)
-                                ->where('method', $method)
-                                ->where('action', $action);
+                ->where('namespace', $namespace)
+                ->where('controller', $controller)
+                ->where('method', $method)
+                ->where('action', $action);
 
             if (count($permission) > 0) {
                 return true;
@@ -60,7 +60,7 @@ trait Authorizable
             foreach ($this->roles as $role) {
                 $permission = $role->permissions
 //                    ->where('controller', "LeadManagement" . 'Controller')
-                    ->where('controller', $feature . 'Controller')
+                    ->where('controller', $feature.'Controller')
                     ->where('action', $action);
 
 //                dd($permission);
@@ -99,12 +99,12 @@ trait Authorizable
     //             );
     // }
 
-    // public function hasRole($role)
-    // {
-    //     if(is_string($role)){
-    //         return $this->roles->contains('name',$role);
-    //     }
+    public function hasRole($role)
+    {
+        if (is_string($role)) {
+            return $this->roles->contains('alias', strtolower($role));
+        }
 
-    //     return !! $role->intersect($this->roles)->count();
-    // }
+        return !!$role->intersect($this->roles)->count();
+    }
 }

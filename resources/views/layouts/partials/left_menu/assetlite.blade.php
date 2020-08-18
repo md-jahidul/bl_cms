@@ -522,8 +522,8 @@
             @endif
 
             @if( auth()->user()->can_view('LeadManagement', 'leadRequestedList') )
-                <li class="nav-item"><a href="#"><i class="la la-lemon-o"></i>
-                        <span class="menu-title" data-i18n="nav.templates.main">Lead-management</span></a>
+                <li class="nav-item"><a href="#"><i class="la la-briefcase"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">B2B Leads</span></a>
                     <ul class="menu-content">
                         <li class="{{ is_active_url('lead-product-permission') }}">
                             <a class="menu-item" href="{{ url('lead-product-permission') }}"
@@ -583,31 +583,50 @@
                 </ul>
             </li>
 
+            <li class="nav-item"><a href="#"><i class="la la-star-half-full"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Customer Feedback</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('customer-feedback/questions') }}">
+                        <a class="menu-item" href="{{ url('customer-feedback/questions') }}"
+                           data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-list"></i> Questions</a>
+                    </li>
+                </ul>
+            </li>
 
-                <li class="nav-item"><a href="#"><i class="la la-signal"></i>
-                        <span class="menu-title" data-i18n="nav.templates.main">Banglalink 4G</span></a>
-                    <ul class="menu-content">
-                        <li class="{{ is_active_url('/bl-4g-campaign') }} nav-item">
-                            <a href="{{ url('/bl-4g-campaign') }}"><i class="la la-bullhorn"></i>
-                                <span class="menu-title" data-i18n="nav.templates.main">4G Campaign</span>
-                            </a>
-                        </li>
+            <li class="nav-item"><a href="#"><i class="la la-signal"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Banglalink 4G</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('/bl-4g-campaign') }} nav-item">
+                        <a href="{{ url('/bl-4g-campaign') }}"><i class="la la-bullhorn"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">4G Campaign</span>
+                        </a>
+                    </li>
 
-                        <li class="{{ is_active_url('/bl-4g-devices') }} nav-item">
-                            <a href="{{ url('bl-4g-devices') }}"><i class="la la-mobile-phone"></i>
-                                <span class="menu-title" data-i18n="nav.templates.main">4G Devices</span>
-                            </a>
-                        </li>
+                    <li class="{{ is_active_url('/bl-4g-device-tag') }} nav-item">
+                        <a href="{{ url('bl-4g-device-tag') }}"><i class="la la-mobile-phone"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">4G Devices Tags</span>
+                        </a>
+                    </li>
 
-                        <li class="{{ is_active_url('/bl-4g-landing-page') }} nav-item">
-                            <a href="{{ url('/bl-4g-landing-page') }}"><i class="la la-futbol-o"></i>
-                                <span class="menu-title" data-i18n="nav.templates.main">4G Landing Page</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class="{{ is_active_url('/bl-4g-devices') }} nav-item">
+                        <a href="{{ url('bl-4g-devices') }}"><i class="la la-mobile-phone"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">4G Devices</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ is_active_url('/bl-4g-landing-page') }} nav-item">
+                        <a href="{{ url('/bl-4g-landing-page') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">4G Landing Page</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </li>
+    <hr>
+    <hr>
+    <hr>
 
 
 
