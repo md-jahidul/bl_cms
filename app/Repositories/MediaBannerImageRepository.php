@@ -22,4 +22,9 @@ class MediaBannerImageRepository extends BaseRepository
         return $this->model->whereIn('module_type', ['press_release', 'news_event'])
             ->get();
     }
+
+    public function bannerUpload($data)
+    {
+        return $this->model->updateOrCreate(['module_type' => $data['module_type']], $data);
+    }
 }

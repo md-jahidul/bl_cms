@@ -92,16 +92,8 @@ class MediaBannerImageService
         $moduleWiseData['news_event']['alt_text_en'] = $data['news_alt_text_en'];
         $moduleWiseData['news_event']['module_type'] = 'news_event';
 
-        if (!$bannerImage) {
-            foreach ($moduleWiseData as $data) {
-                $data['created_by'] = Auth::id();
-                $this->save($data);
-            }
-        } else {
-            foreach ($bannerImage as $module) {
-                $data['updated_by'] = Auth::id();
-                $module->update($moduleWiseData[$module->module_type]);
-            }
+        foreach ($moduleWiseData as $data) {
+            $this->mediaBannerImageRepository->bannerUpload($data);
         }
         return Response('Banner Image has been successfully updated');
     }
