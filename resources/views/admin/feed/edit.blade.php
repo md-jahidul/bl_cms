@@ -323,7 +323,6 @@
             if (type === 'general') {
                 let mainType = "{{ $general }}";
                 $("#type").val(mainType);
-                $("#image-input").show();
                 $("#file-input").show();
                 $("#video-input").show();
                 $("#audio-input").show();
@@ -333,7 +332,6 @@
                 let mainType = "{{ $youtube }}";
                 $("#type").val(mainType);
                 $("#video-input").show();
-                $("#image-input").hide();
                 $("#file-input").hide();
                 $("#audio-input").hide();
                 $("#post-input").hide();
@@ -341,7 +339,6 @@
             if (type === 'facebook') {
                 let mainType = "{{ $facebook }}";
                 $("#type").val(mainType);
-                $("#image-input").show();
                 $("#file-input").hide();
                 $("#video-input").hide();
                 $("#audio-input").hide();
