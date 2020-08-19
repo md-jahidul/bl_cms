@@ -106,7 +106,7 @@ class MediaTvcVideoController extends Controller
 
     public function bannerUpload(Request $request)
     {
-        $response = $this->mediaBannerImageService->bannerImageUpload($request->all(), self::MODULE_TYPE);
+        $response = $this->mediaBannerImageService->tvcBannerUpload($request->all(), self::MODULE_TYPE);
         Session::flash('message', $response->getContent());
         return redirect('tvc-video');
     }

@@ -16,4 +16,10 @@ use App\Models\Prize;
 class MediaBannerImageRepository extends BaseRepository
 {
     public $modelName = MediaBannerImage::class;
+
+    public function getBannerImage()
+    {
+        return $this->model->whereIn('module_type', ['press_release', 'news_event'])
+            ->get();
+    }
 }

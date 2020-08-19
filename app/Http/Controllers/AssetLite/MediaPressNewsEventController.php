@@ -22,7 +22,8 @@ class MediaPressNewsEventController extends Controller
      */
     private $mediaPNE;
 
-    protected const MODULE_TYPE = "press_news_event";
+    protected const PRESS_RELEASE = "press_release";
+    protected const NEWS_EVENT = "news_event";
     /**
      * @var MediaBannerImageService
      */
@@ -41,17 +42,15 @@ class MediaPressNewsEventController extends Controller
         $this->mediaBannerImageService = $mediaBannerImageService;
     }
 
-
     /**
-     * Display a listing of the resource.
-     *
      * @return Application|Factory|View
      */
     public function index()
     {
         $pressNewsEvents = $this->mediaPNE->findAll();
-        $bannerImage = $this->mediaBannerImageService->getBannerImage(self::MODULE_TYPE);
-        return view('admin.media.list_press_news_event', compact('pressNewsEvents', 'bannerImage'));
+        $pressBannerImage = $this->mediaBannerImageService->getBannerImage(self::PRESS_RELEASE);
+        $newsBannerImage = $this->mediaBannerImageService->getBannerImage(self::NEWS_EVENT);
+        return view('admin.media.list_press_news_event', compact('pressNewsEvents', 'pressBannerImage', 'newsBannerImage'));
     }
 
     /**
@@ -105,7 +104,7 @@ class MediaPressNewsEventController extends Controller
 
     public function bannerUpload(Request $request)
     {
-        $response = $this->mediaBannerImageService->bannerImageUpload($request->all(), self::MODULE_TYPE);
+        $response = $this->mediaBannerImageService->bannerImageUpload($request->all());
         Session::flash('message', $response->getContent());
         return redirect('press-news-event');
     }
