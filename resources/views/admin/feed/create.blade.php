@@ -62,10 +62,7 @@
                                         <label for="title" class="required">Title:</label>
                                         <input required
                                                maxlength="200"
-                                               data-validation-regex-regex="(([aA-zZ' '])([0-9+!-=@#$%/(){}\._])*)*"
-                                               data-validation-required-message="Title is required"
-                                               data-validation-regex-message="Title must start with alphabets"
-                                               data-validation-maxlength-message="Title can not be more then 200 Characters"
+                                               data-validation-required-message="Title is required" data-validation-maxlength-message="Title can not be more then 200 Characters"
 
                                                value="@if(old('title')) {{old('title')}} @endif" id="title"
                                                type="text" class="form-control @error('title') is-invalid @enderror"
@@ -315,7 +312,6 @@
             if (type === 'general') {
                 let mainType = "{{ $general }}";
                 $("#type").val(mainType);
-                $("#image-input").show();
                 $("#file-input").show();
                 $("#video-input").show();
                 $("#audio-input").show();
@@ -325,7 +321,6 @@
                 let mainType = "{{ $youtube }}";
                 $("#type").val(mainType);
                 $("#video-input").show();
-                $("#image-input").hide();
                 $("#file-input").hide();
                 $("#audio-input").hide();
                 $("#post-input").hide();
@@ -333,7 +328,6 @@
             if (type === 'facebook') {
                 let mainType = "{{ $facebook }}";
                 $("#type").val(mainType);
-                $("#image-input").show();
                 $("#file-input").hide();
                 $("#video-input").hide();
                 $("#audio-input").hide();
