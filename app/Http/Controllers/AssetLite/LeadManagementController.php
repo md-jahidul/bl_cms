@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\AssetLite    ;
+namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
 use App\Services\Banglalink\LeadRequestService;
@@ -31,7 +31,8 @@ class LeadManagementController extends Controller
     public function __construct(
         LeadRequestService $leadRequestService,
         UserService $userService
-    ) {
+    )
+    {
         $this->leadRequestService = $leadRequestService;
         $this->userService = $userService;
     }
@@ -42,8 +43,14 @@ class LeadManagementController extends Controller
     public function leadRequestedList()
     {
         $allRequest = $this->leadRequestService->leadRequestedData();
-        return $allRequest;
+        $allRequest = $allRequest['data'];
+        if (empty($allRequest)) {
+            Session::flash('error', "No products found or you do not have permission!");
+            $allRequest = [];
+        }
+//        dd($allRequest);
         return view('admin.lead-management.index', compact('allRequest'));
+
     }
 
     public function leadProductPermission()

@@ -102,7 +102,7 @@
                                     @endif
                                 </div>
 
-                                <slot id="press_release" data-offer-type="press_release" style="display: none">
+{{--                                <slot id="press_release" data-offer-type="press_release" style="display: none">--}}
                                     <h5><strong>Pop Up Section</strong></h5>
                                     <div class="form-actions col-md-12 mt-0"></div>
 
@@ -147,7 +147,7 @@
                                             <div class="help-block">  {{ $errors->first('long_details_bn') }}</div>
                                         @endif
                                     </div>
-                                </slot>
+{{--                                </slot>--}}
 
                                 <div class="col-md-6">
                                     <label></label>
@@ -185,7 +185,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
-    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>

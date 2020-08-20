@@ -38,46 +38,51 @@ class LeadRequestService
     }
 
     /**
-     * @return Collection|LengthAwarePaginator|Builder[]|\Illuminate\Database\Eloquent\Collection|Model[]
+     * @return Collection|\Illuminate\Contracts\Foundation\Application|LengthAwarePaginator|\Illuminate\Contracts\Routing\ResponseFactory|Builder[]|\Illuminate\Database\Eloquent\Collection|Model[]|\Illuminate\Http\Response
      */
     public function leadRequestedData()
     {
-//        $data = LeadProductPermission::where('user_id', Auth::id())
-//            ->with('leadRequest')
-//            ->get();
-//        return $data;
-        $permissions = DB::table('lead_product_permissions')->where('user_id', Auth::id())
+        try {
+            $permissions = DB::table('lead_product_permissions')->where('user_id', Auth::id())
+                ->get();
+
+            if (count($permissions) != 0) {
+                foreach ($permissions as $permission) {
+                    $cat[] = $permission->lead_category_id;
+                    $productId[] = $permission->lead_product_id;
+                }
+                $categoryId = array_unique($cat);
+                $data = LeadRequest::whereIn('lead_product_id', $productId)
+                    ->whereIn('lead_category_id', $categoryId)
+                    ->with(['leadCategory', 'leadProduct'])
                     ->get();
-
-        foreach ($permissions as $permission){
-            $cat[] = $permission->lead_category_id;
-            $productId[] = $permission->lead_product_id;
+                return [
+                    'data' => $data,
+                ];
+            } else {
+                $response = [
+                    'data' => [],
+                    'response' => "No products found or you do not have permission!"
+                ];
+                return $response;
+            }
+        } catch (\Exception $e) {
+            $response = [
+                'success' => 0,
+                'message' => $e->getMessage()
+            ];
+            return $response;
         }
 
-        $categoryId = array_unique($cat);
 
-
-        $data = LeadRequest::whereIn('lead_product_id', $productId)
-            ->whereIn('lead_category_id', $categoryId)
-            ->with(['leadCategory', 'leadProduct'])
-            ->get();
-
-        return $data;
-
-//            array_values($productId);
-        dd(array_values($productId));
-
-
-        foreach ($permissions as $item){
-            $data[] = LeadRequest::where('lead_product_id', $item->lead_product_id)
-                ->where('lead_category_id', $item->lead_category_id)
-                ->with('leadCategory')
-                ->with('leadProduct')
-                ->first();
-        }
-        return $data;
-
-
+//        foreach ($permissions as $item){
+//            $data[] = LeadRequest::where('lead_product_id', $item->lead_product_id)
+//                ->where('lead_category_id', $item->lead_category_id)
+//                ->with('leadCategory')
+//                ->with('leadProduct')
+//                ->first();
+//        }
+//        return $data;
         return $this->findAll();
     }
 

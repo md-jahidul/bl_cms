@@ -14,7 +14,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form id="product_form" role="form" action="{{ route('press-news-event.update', $pressNewsEvent->id) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route('press-news-event.update', $pressNewsEvent->id) }}" method="POST" novalidate enctype="multipart/form-data">
                             @method('PUT')
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
@@ -104,7 +104,7 @@
                                     @endif
                                 </div>
 
-                                <slot id="press_release" data-offer-type="press_release" class="{{ $pressNewsEvent->type == "press_release" ? '' : 'd-none' }}">
+{{--                                <slot id="press_release" data-offer-type="press_release" class="{{ $pressNewsEvent->type == "press_release" ? '' : 'd-none' }}">--}}
                                     <h5><strong>Pop Up Section</strong></h5>
                                     <div class="form-actions col-md-12 mt-0"></div>
 
@@ -148,7 +148,7 @@
                                             <div class="help-block">  {{ $errors->first('long_details_bn') }}</div>
                                         @endif
                                     </div>
-                                </slot>
+{{--                                </slot>--}}
 
                                 <div class="col-md-6 mt-1">
                                     <label></label>
@@ -185,7 +185,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
 @push('page-js')
-    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ asset('js/product.js') }}" type="text/javascript"></script>--}}
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
