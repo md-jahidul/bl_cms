@@ -42,7 +42,7 @@
                                             required data-validation-required-message="Please select type">
                                         <option value="">---Select Type---</option>
                                         <option data-alias="press_release" value="press_release">Press Release</option>
-                                        <option data-alias="news_event" value="news_events">News and Events</option>
+                                        <option data-alias="news_events" value="news_events">News and Events</option>
                                     </select>
                                     <div class="help-block"></div>
                                     @if ($errors->has('type'))
