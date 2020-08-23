@@ -31,7 +31,7 @@
                             {{method_field('PUT')}}
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                    <label for="title_en">Title English</label>
+                                    <label for="title_en">Model Title English</label>
                                     <input type="text" name="title_en" class="form-control" placeholder="Enter title_en"
                                            value="{{ $device->title_en }}">
                                     <div class="help-block"></div>
@@ -41,7 +41,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                    <label for="title_bn">Title Bangla</label>
+                                    <label for="title_bn">Model Title Bangla</label>
                                     <input type="text" name="title_bn" class="form-control" placeholder="Enter title_bn"
                                            value="{{ $device->title_bn }}">
                                     <div class="help-block"></div>
@@ -51,9 +51,8 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('offer_tag_id') ? ' error' : '' }}">
-                                    <label for="offer_tag_id" class="required">Offer Tag</label>
-                                    <select class="form-control" name="offer_tag_id" id="offer_tag_id"
-                                            required data-validation-required-message="Please select offer_tag_id">
+                                    <label for="offer_tag_id">Offer Tag</label>
+                                    <select class="form-control" name="offer_tag_id" id="offer_tag_id">
                                         <option value="">---Select Tag---</option>
                                         @foreach($tags as $tag)
                                             <option value="{{ $tag->id }}" {{ $device->offer_tag_id == $tag->id ? 'selected' : '' }}>{{ $tag->name_en }}</option>
@@ -81,7 +80,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('card_logo') ? ' error' : '' }}">
-                                    <label for="mobileImg">Card Logo Image</label>
+                                    <label for="mobileImg">Brand Logo</label>
                                     <div class="custom-file">
                                         <input type="file" name="card_logo" class="dropify" data-height="80" id="image"
                                                data-default-file="{{ isset($device->card_logo) ?  config('filesystems.file_base_url') . $device->card_logo : null  }}">
@@ -94,7 +93,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('thumbnail_image') ? ' error' : '' }}">
-                                    <label for="mobileImg">Thumbnail Image</label>
+                                    <label for="mobileImg">Device Image</label>
                                     <div class="custom-file">
                                         <input type="file" name="thumbnail_image" class="dropify" data-height="80" id="image"
                                                data-default-file="{{ isset($device->thumbnail_image) ?  config('filesystems.file_base_url') . $device->thumbnail_image : null  }}">
@@ -117,7 +116,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('thumbnail_alt_en') ? ' error' : '' }}">
-                                    <label for="thumbnail_alt_en">Thumbnail Alt Text</label>
+                                    <label for="thumbnail_alt_en">Device Alt Text</label>
                                     <input type="text" name="thumbnail_alt_en" class="form-control" placeholder="Enter thumbnail alt text"
                                            value="{{ $device->thumbnail_alt_en }}">
                                     <div class="help-block"></div>

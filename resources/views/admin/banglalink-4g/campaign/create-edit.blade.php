@@ -76,7 +76,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('details_en') ? ' error' : '' }}">
                                     <label for="details_en">Details English</label>
                                     <textarea type="text" name="details_en" id="details_en" rows="5"
-                                              class="form-control"
+                                              class="form-control summernote_editor"
                                               placeholder="Enter details in English">{{ $details_en }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_en'))
@@ -87,7 +87,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('details_bn') ? ' error' : '' }}">
                                     <label for="details_bn">Details Bangla</label>
                                     <textarea type="text" name="details_bn" id="details_bn" rows="5"
-                                              class="form-control"
+                                              class="form-control summernote_editor"
                                               placeholder="Enter details in English">{{ $details_bn }}</textarea>
                                     <div class="help-block"></div>
                                     @if ($errors->has('details_bn'))

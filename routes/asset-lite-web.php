@@ -794,6 +794,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     // Lead Management ======================================================
     Route::get('lead-requested-list', 'AssetLite\LeadManagementController@leadRequestedList')
         ->name('lead-list');
+    Route::get('lead-product-permission-form', 'AssetLite\LeadManagementController@productPermissionForm')
+        ->name("permission.form");
     Route::get('lead-product-permission', 'AssetLite\LeadManagementController@leadProductPermission');
 //        ->name('lead-list');
 
@@ -891,4 +893,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     // 4G Devices Tags
     Route::resource('bl-4g-device-tag', 'AssetLite\FourGDeviceTagController')->except(['show', 'destroy']);
     Route::get('bl-4g-device-tag/destroy/{id}', 'AssetLite\FourGDeviceTagController@destroy');
+
+    // Be A Partner
+    Route::get('be-a-partner', 'AssetLite\BeAPartnerController@getBeAPartner');
+    Route::get('be-a-partner/save', 'AssetLite\BeAPartnerController@beAPartnerSave');
 });
