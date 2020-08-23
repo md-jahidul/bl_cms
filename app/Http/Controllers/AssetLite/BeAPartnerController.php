@@ -28,30 +28,30 @@ class BeAPartnerController extends Controller
      */
     public function __construct(
         BeAPartnerService $beAPartnerService
-    ) {
+    )
+    {
         $this->beAPartnerService = $beAPartnerService;
     }
 
     public function getBeAPartner()
     {
         $beAPartner = $this->beAPartnerService->beAPartnerData();
-//        return $beAPartner;
-//        dd($beAPartner);
         return view('admin.be-a-partner.landing-page', compact('beAPartner'));
     }
 
-    public function beAPartnerSave()
+    public function beAPartnerEdit($id)
     {
-        $category = $this->alFaqCategoryService->findOne();
-        return view('admin.al-faq.category-edit', compact('category'));
+        $beAPartner = $this->beAPartnerService->findOrFail($id);
+        return view('admin.be-a-partner.landing-page-edit', compact('beAPartner'));
     }
 
-    public function catUpdate(Request $request, $id)
+    public function beAPartnerSave(Request $request, $id)
     {
-        $response = $this->alFaqCategoryService->catUpdate($request->all(), $id);
+        $response = $this->beAPartnerService->beAPartnerUpdate($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect("faq-categories");
+        return redirect('be-a-partner');
     }
+
 
     /**
      * Display a listing of the resource.

@@ -10,131 +10,31 @@
 {{--    </a>--}}
 @endsection
 @section('content')
-    <!-- Fixed sections -->
     <section>
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="menu-title"><strong>Be A Partner Fixed Section</strong></h4>
-                    <hr>
-                    <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('four_g_banner_image.upload') }}"
-                              method="POST" novalidate enctype="multipart/form-data">
-                            @csrf
-                            {{method_field('POST')}}
-                            <input type="hidden" value="banner_image" name="component_type">
-                            <div class="row">
-                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                    <label for="title_en">Title En</label>
-                                    <input type="text" name="title_en" id="title_en" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($beAPartner->title_en) ? $beAPartner->title_en : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('title_en'))
-                                        <div class="help-block">{{ $errors->first('title_en') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                    <label for="title_bn">Title Bn</label>
-                                    <input type="text" name="title_bn" id="title_bn" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($beAPartner->title_bn) ? $beAPartner->title_bn : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('title_bn'))
-                                        <div class="help-block">{{ $errors->first('title_bn') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('description_en') ? ' error' : '' }}">
-                                    <label for="description_en">Description En</label>
-                                    <textarea type="text" name="description_en" id="description_en" class="form-control summernote_editor"
-                                              placeholder="Enter description In English">{{ isset($beAPartner->description_en) ? $beAPartner->description_en : '' }}</textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('description_en'))
-                                        <div class="help-block">{{ $errors->first('description_en') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('description_bn') ? ' error' : '' }}">
-                                    <label for="description_bn">Description Bn</label>
-                                    <textarea type="text" name="description_bn" id="description_bn" class="form-control summernote_editor"
-                                              placeholder="Enter description In Bangla">{{ isset($beAPartner->description_bn) ? $beAPartner->description_bn : '' }}</textarea>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('description_bn'))
-                                        <div class="help-block">{{ $errors->first('description_bn') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('vendor_portal_url') ? ' error' : '' }}">
-                                    <label for="vendor_portal_url">Vendor Portal Url</label>
-                                    <input type="text" name="vendor_portal_url" id="vendor_portal_url" class="form-control"
-                                           placeholder="Enter vendor portal URL" value="{{ isset($beAPartner->vendor_portal_url) ? $beAPartner->vendor_portal_url : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('vendor_portal_url'))
-                                        <div class="help-block">{{ $errors->first('vendor_portal_url') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('interested_url') ? ' error' : '' }}">
-                                    <label for="interested_url">Interested Button Url</label>
-                                    <input type="text" name="interested_url" id="interested_url" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($beAPartner->interested_url) ? $beAPartner->interested_url : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('interested_url'))
-                                        <div class="help-block">{{ $errors->first('interested_url') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                    <label for="mobileImg">Banner Image (Desktop)</label>
-                                    <div class="custom-file">
-{{--                                        {{ dd($bannerImage->items['banner_image_url']) }}--}}
-{{--                                        <input type="hidden" name="old_web_img" value="--}}{{--{{ isset($fixedSectionData['image']) ? $fixedSectionData['image'] : '' }}--}}{{--">--}}
-                                        <input type="file" name="items[banner_image_url]" data-height="90" class="dropify"
-                                               data-default-file="{{ isset($bannerImage->items['banner_image_url']) ? config('filesystems.file_base_url') . $bannerImage->items['banner_image_url'] : '' }}">
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('banner_image_url'))
-                                        <div class="help-block">  {{ $errors->first('banner_image_url') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('banner_mobile_view') ? ' error' : '' }}">
-                                    <label for="mobileImg">Banner Image (Mobile)</label>
-                                    <div class="custom-file">
-{{--                                        <input type="hidden" name="old_mob_img" value="--}}{{--{{ isset($fixedSectionData['banner_image_mobile']) ? $fixedSectionData['banner_image_mobile'] : '' }}--}}{{--">--}}
-                                        <input type="file" name="items[banner_mobile_view]" class="dropify" data-height="90"
-                                               data-default-file="{{ isset($bannerImage->items['banner_mobile_view']) ? config('filesystems.file_base_url') . $bannerImage->items['banner_mobile_view'] : '' }}">
-                                    </div>
-                                    <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('banner_mobile_view'))
-                                        <div class="help-block">  {{ $errors->first('banner_mobile_view') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                    <label for="alt_text">Alt Text</label>
-                                    <input type="text" name="items[alt_text_en]" id="alt_text" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($bannerImage->items['alt_text_en']) ? $bannerImage->items['alt_text_en'] : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('alt_text'))
-                                        <div class="help-block">{{ $errors->first('alt_text') }}</div>
-                                    @endif
-                                </div>
-
-                                <div class="form-actions col-md-12">
-                                    <div class="pull-right">
-                                        <button type="submit" class="btn btn-primary"><i
-                                                class="la la-check-square-o"></i> Save
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </form>
-                    </div>
+                    <h4 class="pb-1"><strong>Be a Partner Fixed Section</strong></h4>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <td width="3%">#</td>
+                            <th width="5%">Title</th>
+                            <th width="8%">Description</th>
+                            <th width="12%" class="text-right">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>{{ $beAPartner->title_en }}</td>
+                                <td>{{ $beAPartner->description_en  }}</td>
+                                <td class="text-right">
+                                    <a href="{{ route("be-a-partner.edit", $beAPartner->id) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

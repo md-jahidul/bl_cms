@@ -622,6 +622,11 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="{{ is_active_url('/be-a-partner') }} nav-item"><a href="{{ url('/be-a-partner') }}">
+                    <i class="la la-paragraph"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Be A Partner</span></a>
+            </li>
         </ul>
     </li>
     <hr>

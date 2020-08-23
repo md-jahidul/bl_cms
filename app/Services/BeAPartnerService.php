@@ -48,6 +48,37 @@ class BeAPartnerService
         return $this->beAPartnerRepository->getOneData();
     }
 
+    public function beAPartnerUpdate($data, $id)
+    {
+        $beAPartner = $this->findOne($id);
+
+        $dirPath = 'assetlite/images/banner/be-a-partner';
+        if (!empty($data['banner_image']['banner_image_url'])) {
+            $data['banner_image']['banner_image_url'] = $this->upload($data['banner_image']['banner_image_url'], $dirPath);
+        }
+        if (!empty($data['banner_image']['banner_mobile_view'])) {
+            $data['banner_image']['banner_mobile_view'] = $this->upload($data['banner_image']['banner_mobile_view'], $dirPath);
+        }
+
+        if (!$beAPartner) {
+            $this->save($data);
+        } else {
+            // get original data
+            $new_multiple_attributes = $beAPartner->banner_image;
+            // contains all the inputs from the form as an array
+            $input_multiple_attributes = isset($data['banner_image']) ? $data['banner_image'] : null;
+            // loop over the product array
+            if ($input_multiple_attributes) {
+                foreach ($input_multiple_attributes as $field => $inputData) {
+                    $new_multiple_attributes[$field] = $inputData;
+                }
+            }
+            $data['banner_image'] = $new_multiple_attributes;
+            $beAPartner->update($data);
+        }
+        return response('Be A Partner Data updated!!');
+    }
+
     /**
      * Updating the banner
      * @param $data
@@ -66,42 +97,42 @@ class BeAPartnerService
         return $this->fourGLandingPageRepository->findOneByProperties(['component_type' => 'banner_image']);
     }
 
-    public function bannerImageUpload($data)
-    {
-        $comType = $data['component_type'];
-        $bannerImage = $this->fourGLandingPageRepository->findOneByProperties(['component_type' => $comType]);
-
-        $dirPath = 'assetlite/images/banner/four-g';
-        if (!empty($data['items']['banner_image_url'])) {
-            $data['items']['banner_image_url'] = $this->upload($data['items']['banner_image_url'], $dirPath);
-        }
-        if (!empty($data['items']['banner_mobile_view'])) {
-            $data['items']['banner_mobile_view'] = $this->upload($data['items']['banner_mobile_view'], $dirPath);
-        }
-
-        if (!$bannerImage) {
-            $data['component_type'] = $comType;
-            $data['created_by'] = Auth::id();
-            $this->save($data);
-        } else {
-            // get original data
-            $new_multiple_attributes = $bannerImage->items;
-
-            // contains all the inputs from the form as an array
-            $input_multiple_attributes = isset($data['items']) ? $data['items'] : null;
-
-            // loop over the product array
-            if ($input_multiple_attributes) {
-                foreach ($input_multiple_attributes as $field => $inputData) {
-                    $new_multiple_attributes[$field] = $inputData;
-                }
-            }
-            $data['items'] = $new_multiple_attributes;
-            $data['updated_by'] = Auth::id();
-            $bannerImage->update($data);
-        }
-        return Response('Banner Image update successfully!!');
-    }
+//    public function bannerImageUpload($data)
+//    {
+//        $comType = $data['component_type'];
+//        $bannerImage = $this->fourGLandingPageRepository->findOneByProperties(['component_type' => $comType]);
+//
+//        $dirPath = 'assetlite/images/banner/four-g';
+//        if (!empty($data['items']['banner_image_url'])) {
+//            $data['items']['banner_image_url'] = $this->upload($data['items']['banner_image_url'], $dirPath);
+//        }
+//        if (!empty($data['items']['banner_mobile_view'])) {
+//            $data['items']['banner_mobile_view'] = $this->upload($data['items']['banner_mobile_view'], $dirPath);
+//        }
+//
+//        if (!$bannerImage) {
+//            $data['component_type'] = $comType;
+//            $data['created_by'] = Auth::id();
+//            $this->save($data);
+//        } else {
+//            // get original data
+//            $new_multiple_attributes = $bannerImage->items;
+//
+//            // contains all the inputs from the form as an array
+//            $input_multiple_attributes = isset($data['items']) ? $data['items'] : null;
+//
+//            // loop over the product array
+//            if ($input_multiple_attributes) {
+//                foreach ($input_multiple_attributes as $field => $inputData) {
+//                    $new_multiple_attributes[$field] = $inputData;
+//                }
+//            }
+//            $data['items'] = $new_multiple_attributes;
+//            $data['updated_by'] = Auth::id();
+//            $bannerImage->update($data);
+//        }
+//        return Response('Banner Image update successfully!!');
+//    }
 
 
 }

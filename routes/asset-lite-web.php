@@ -896,5 +896,7 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     // Be A Partner
     Route::get('be-a-partner', 'AssetLite\BeAPartnerController@getBeAPartner');
-    Route::get('be-a-partner/save', 'AssetLite\BeAPartnerController@beAPartnerSave');
+    Route::get('be-a-partner/edit/{id}', 'AssetLite\BeAPartnerController@beAPartnerEdit')
+        ->name('be-a-partner.edit');
+    Route::post('be-a-partner/save/{id}', 'AssetLite\BeAPartnerController@beAPartnerSave');
 });
