@@ -62,7 +62,27 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('vendor_portal_url') ? ' error' : '' }}">
+                                <div class="form-group col-md-4 {{ $errors->has('vendor_button_en') ? ' error' : '' }}">
+                                    <label for="vendor_button_en">Vendor Button En</label>
+                                    <input type="text" name="vendor_button_en" id="vendor_button_en" class="form-control"
+                                           placeholder="Enter vendor portal button" value="{{ isset($beAPartner->vendor_button_en) ? $beAPartner->vendor_button_en : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('vendor_button_en'))
+                                        <div class="help-block">{{ $errors->first('vendor_button_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('vendor_button_bn') ? ' error' : '' }}">
+                                    <label for="vendor_button_bn">Vendor Button Bn</label>
+                                    <input type="text" name="vendor_button_bn" id="vendor_button_bn" class="form-control"
+                                           placeholder="Enter vendor portal button" value="{{ isset($beAPartner->vendor_button_bn) ? $beAPartner->vendor_button_bn : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('vendor_button_bn'))
+                                        <div class="help-block">{{ $errors->first('vendor_button_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('vendor_portal_url') ? ' error' : '' }}">
                                     <label for="vendor_portal_url">Vendor Portal Url</label>
                                     <input type="text" name="vendor_portal_url" id="vendor_portal_url" class="form-control"
                                            placeholder="Enter vendor portal URL" value="{{ isset($beAPartner->vendor_portal_url) ? $beAPartner->vendor_portal_url : '' }}">
@@ -72,10 +92,30 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('interested_url') ? ' error' : '' }}">
+                                <div class="form-group col-md-4 {{ $errors->has('interested_button_en') ? ' error' : '' }}">
+                                    <label for="interested_button_en">Interested Button En</label>
+                                    <input type="text" name="interested_button_en" id="interested_button_en" class="form-control"
+                                          value="{{ isset($beAPartner->interested_button_en) ? $beAPartner->interested_button_en : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('interested_button_en'))
+                                        <div class="help-block">{{ $errors->first('interested_button_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('interested_button_bn') ? ' error' : '' }}">
+                                    <label for="interested_button_bn">Interested Button Bn</label>
+                                    <input type="text" name="interested_button_bn" id="interested_button_bn" class="form-control"
+                                           value="{{ isset($beAPartner->interested_button_bn) ? $beAPartner->interested_button_bn : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('interested_button_bn'))
+                                        <div class="help-block">{{ $errors->first('interested_button_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('interested_url') ? ' error' : '' }}">
                                     <label for="interested_url">Interested Button Url</label>
                                     <input type="text" name="interested_url" id="interested_url" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($beAPartner->interested_url) ? $beAPartner->interested_url : '' }}">
+                                           value="{{ isset($beAPartner->interested_url) ? $beAPartner->interested_url : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('interested_url'))
                                         <div class="help-block">{{ $errors->first('interested_url') }}</div>
