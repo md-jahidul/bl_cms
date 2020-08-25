@@ -899,4 +899,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('be-a-partner/edit/{id}', 'AssetLite\BeAPartnerController@beAPartnerEdit')
         ->name('be-a-partner.edit');
     Route::post('be-a-partner/save/{id}', 'AssetLite\BeAPartnerController@beAPartnerSave');
+    Route::get('be-a-partner/component-create', 'AssetLite\BeAPartnerController@componentCreateForm');
+    Route::post('be-a-partner/component-store', 'AssetLite\BeAPartnerController@componentStore');
+    Route::get('be-a-partner/component-edit/{id}', 'AssetLite\BeAPartnerController@componentEditForm');
+    Route::put('be-a-partner/component-update/{id}', 'AssetLite\BeAPartnerController@componentUpdate')
+        ->name('be_a_partner.component.update');
+    Route::get('be-a-partner/component-delete/{id}', 'AssetLite\BeAPartnerController@componentDelete')
+        ->name('be_a_partner.component.delete');
 });

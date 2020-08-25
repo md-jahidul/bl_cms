@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Services\AlFaqCategoryService;
 use App\Services\AlFaqService;
+use App\Services\Assetlite\ComponentService;
 use App\Services\BeAPartnerService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -22,21 +23,44 @@ class BeAPartnerController extends Controller
      */
     private $beAPartnerService;
 
+    protected const PAGE_TYPE = 'be_a_partner';
+    protected const BE_A_PARTNER_ID = 1;
+
+    protected $componentTypes = [
+//        'large_title_with_text' => 'Large Title With Text',
+//        'medium_title_with_text' => 'Medium Title With Text',
+//        'small_title_with_text' => 'Small Title With Text',
+//        'text_and_button' => 'Text And Button',
+//        'text_component' => 'Text Component',
+//        'table_component' => 'Table Component',
+//        'bullet_text' => 'Bullet Text',
+//        'multiple_image' => 'Multiple Image',
+        'accordion_text' => 'Accordion Text'
+    ];
+    /**
+     * @var ComponentService
+     */
+    private $componentService;
+
     /**
      * RolesController constructor.
      * @param BeAPartnerService $beAPartnerService
+     * @param ComponentService $componentService
      */
     public function __construct(
-        BeAPartnerService $beAPartnerService
+        BeAPartnerService $beAPartnerService,
+        ComponentService $componentService
     )
     {
         $this->beAPartnerService = $beAPartnerService;
+        $this->componentService = $componentService;
     }
 
     public function getBeAPartner()
     {
         $beAPartner = $this->beAPartnerService->beAPartnerData();
-        return view('admin.be-a-partner.landing-page', compact('beAPartner'));
+        $components = $this->componentService->componentList(self::BE_A_PARTNER_ID, self::PAGE_TYPE);
+        return view('admin.be-a-partner.landing-page', compact('beAPartner', 'components'));
     }
 
     public function beAPartnerEdit($id)
@@ -52,71 +76,43 @@ class BeAPartnerController extends Controller
         return redirect('be-a-partner');
     }
 
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @param $slug
-     * @return Application|Factory|View
-     */
-    public function index($slug)
-    {
-        $faqs = $this->faq->getFaqs($slug);
-        return view('admin.al-faq.index', compact('faqs', 'slug'));
-    }
-
     /**
      * Show the form for creating a new resource.
      *
      * @param $slug
      * @return Application|Factory|View
      */
-    public function create($slug)
+    public function componentCreateForm()
     {
-        return view('admin.al-faq.create', compact('slug'));
+        $componentTypes = $this->componentTypes;
+        return view('admin.be-a-partner.components.create', compact('componentTypes'));
+    }
+
+    public function componentStore(Request $request)
+    {
+        $response = $this->componentService->componentStore($request->all(), self::BE_A_PARTNER_ID, self::PAGE_TYPE);
+        Session::flash('message', $response->getContent());
+        return redirect('be-a-partner');
+    }
+
+    public function componentEditForm($id)
+    {
+        $componentTypes = $this->componentTypes;
+        $component = $this->componentService->findOne($id);
+        return view('admin.be-a-partner.components.edit', compact('component', 'componentTypes'));
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
      * @param Request $request
-     * @param $slug
+     * @param $pageId
+     * @param $id
      * @return Application|RedirectResponse|Redirector
      */
-    public function store(Request $request, $slug)
+    public function componentUpdate(Request $request, $id)
     {
-        $response = $this->faq->storeAlFaq($request->all(), $slug);
-        Session::flash('message', $response->getContent());
-        return redirect("faq/$slug");
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @param $slug
-     * @return Application|Factory|View
-     */
-    public function edit($slug, $id)
-    {
-        $faq = $this->faq->findOne($id);
-        return view('admin.al-faq.edit', compact('faq', 'slug'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int $id
-     * @param $slug
-     * @return Application|RedirectResponse|Redirector
-     */
-    public function update(Request $request, $slug, $id)
-    {
-        $response = $this->faq->updateFaq($request->all(), $id);
-        Session::flash('message', $response->getContent());
-        return redirect("faq/$slug");
+        $response = $this->componentService->componentUpdate($request->all(), $id);
+        Session::flash('success', $response->content());
+        return redirect('be-a-partner');
     }
 
     /**
@@ -127,9 +123,9 @@ class BeAPartnerController extends Controller
      * @return Application|RedirectResponse|Redirector
      * @throws Exception
      */
-    public function destroy($slug, $id)
+    public function componentDelete($id)
     {
-        $this->faq->deleteFaq($id);
-        return url("faq/$slug");
+        $this->componentService->deleteComponent($id);
+        return url("be-a-partner");
     }
 }
