@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\AssetLite    ;
+namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
 use App\Services\Banglalink\LeadRequestService;
+use App\Services\LeadProductPermissionService;
+use App\Services\UserService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -15,15 +17,32 @@ class LeadManagementController extends Controller
      * @var $leadRequestService
      */
     protected $leadRequestService;
+    /**
+     * @var UserService
+     */
+    private $userService;
 
+    const lead_super_Admin = 9;
+    /**
+     * @var LeadProductPermissionService
+     */
+    private $productPermissionService;
 
     /**
      * LeadManagementController constructor.
      * @param LeadRequestService $leadRequestService
+     * @param LeadProductPermissionService $productPermissionService
+     * @param UserService $userService
      */
-    public function __construct(LeadRequestService $leadRequestService)
+    public function __construct(
+        LeadRequestService $leadRequestService,
+        LeadProductPermissionService $productPermissionService,
+        UserService $userService
+    )
     {
         $this->leadRequestService = $leadRequestService;
+        $this->productPermissionService = $productPermissionService;
+        $this->userService = $userService;
     }
 
     /**
@@ -32,7 +51,26 @@ class LeadManagementController extends Controller
     public function leadRequestedList()
     {
         $allRequest = $this->leadRequestService->leadRequestedData();
+        $allRequest = $allRequest['data'];
+        if (empty($allRequest)) {
+            Session::flash('error', "No products found or you do not have permission!");
+            $allRequest = [];
+        }
+//        dd($allRequest);
         return view('admin.lead-management.index', compact('allRequest'));
+    }
+
+    public function productPermissionForm()
+    {
+        $users = $this->productPermissionService->getCatAndProducts();
+        return view('admin.lead-management.product-permission.permission-form', compact('users', 'leadSuperAdmin'));
+    }
+
+    public function leadProductPermission()
+    {
+        $users = $this->userService->getLeadUsers();
+        $leadSuperAdmin = self::lead_super_Admin;
+        return view('admin.lead-management.product-permission.user-list', compact('users', 'leadSuperAdmin'));
     }
 
     public function viewDetails($id)

@@ -41,7 +41,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
-                                    <td>{!!  $roles_dom !!}</td>
+                                    <td>{!! $roles_dom !!}</td>
                                     <td>
 {{--                                        @if($item->id !=  5 && $item->id != Auth::user()->id)--}}
 {{--                                            <a href="{{ url('/' . Config("authorization.route-prefix") . '/users/' . $item->id . '/edit') }}" role="button"--}}

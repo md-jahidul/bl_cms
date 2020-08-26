@@ -12,6 +12,7 @@ namespace App\Services;
 use App\Repositories\AlFaqRepository;
 use App\Repositories\MediaPressNewsEventRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 class MediaPressNewsEventService
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var $sliderRepository
@@ -42,7 +44,20 @@ class MediaPressNewsEventService
      */
     public function storePNE($data)
     {
-        $data['image_path'] = 'storage/' . $data['image_path']->store('banner');
+        // $originalDate = "2010-03-21";
+        // $newDate = date("d-m-Y", strtotime($originalDate));
+        // $from = "2020-05-21";
+        // $to = "2020-07-30";
+
+        $dirPath = 'assetlite/images/media';
+        if (request()->hasFile('thumbnail_image')) {
+            $data['thumbnail_image'] = $this->upload($data['thumbnail_image'], $dirPath);
+        }
+        if (request()->hasFile('details_image')) {
+            $data['details_image'] = $this->upload($data['details_image'], $dirPath);
+        }
+        unset($data['file']);
+        $data['created_by'] = Auth::id();
         $this->save($data);
         return new Response("Banner has been successfully created");
     }
@@ -54,10 +69,20 @@ class MediaPressNewsEventService
      */
     public function updatePNE($data, $id)
     {
-        $faq = $this->findOne($id);
-        $data['updated_by'] = Auth::id();
+        $mediaPNE = $this->findOne($id);
+
+        $dirPath = 'assetlite/images/media';
+        if (request()->hasFile('thumbnail_image')) {
+            $data['thumbnail_image'] = $this->upload($data['thumbnail_image'], $dirPath);
+            $this->deleteFile($mediaPNE->thumbnail_image);
+        }
+        if (request()->hasFile('details_image')) {
+            $data['details_image'] = $this->upload($data['details_image'], $dirPath);
+        }
+
         unset($data['files']);
-        $faq->update($data);
+        $data['updated_by'] = Auth::id();
+        $mediaPNE->update($data);
         return Response('Faq has been successfully updated');
     }
 
@@ -68,8 +93,9 @@ class MediaPressNewsEventService
      */
     public function deletePNE($id)
     {
-        $faq = $this->findOne($id);
-        $faq->delete();
-        return Response('Faq has been successfully deleted');
+        $mediaPNE = $this->findOne($id);
+        $this->deleteFile($mediaPNE->thumbnail_image);
+        $mediaPNE->delete();
+        return Response('Item has been successfully deleted');
     }
 }

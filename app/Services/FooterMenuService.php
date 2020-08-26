@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Repositories\FooterMenuRepository;
 use App\Traits\CrudTrait;
+use Exception;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 
 class FooterMenuService
@@ -60,29 +62,29 @@ class FooterMenuService
     /**
      * @param $data
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @return ResponseFactory|Response
      */
-    public function updateFooterMenu($data, $id)
+    public function updateFooterMenu($data)
     {
-        $footerMenu = $this->findOne($id);
+        $footerMenu = $this->findOne($data['id']);
         $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
+        $data['is_dynamic_page'] = isset($data['is_dynamic_page']) ? 1 : 0;
         $footerMenu->update($data);
         return Response('Footer menu updated successfully');
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
-     * @throws \Exception
+     * @return array
+     * @throws Exception
      */
     public function deleteFooterMenu($id)
     {
         $footerMenu = $this->findOne($id);
         $footerMenu->delete();
-        $response = [
+        return [
             'message' => 'Footer menu delete successfully',
             'parent_id' => $footerMenu->parent_id
         ];
-        return $response;
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Services\AlFaqCategoryService;
 use App\Services\AlFaqService;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -18,96 +20,120 @@ class AlFaqController extends Controller
      * @var AlFaqService
      */
     private $faq;
+    /**
+     * @var AlFaqCategoryService
+     */
+    private $alFaqCategoryService;
 
     /**
      * RolesController constructor.
+     * @param AlFaqCategoryService $alFaqCategoryService
      * @param AlFaqService $faq
      */
-    public function __construct(AlFaqService $faq)
-    {
+    public function __construct(
+        AlFaqCategoryService $alFaqCategoryService,
+        AlFaqService $faq
+    ) {
+        $this->alFaqCategoryService = $alFaqCategoryService;
         $this->faq = $faq;
     }
 
+    public function categoryList()
+    {
+        $categories = $this->alFaqCategoryService->findAll();
+        return view('admin.al-faq.category-list', compact('categories'));
+    }
+
+    public function catEdit($id)
+    {
+        $category = $this->alFaqCategoryService->findOne($id);
+        return view('admin.al-faq.category-edit', compact('category'));
+    }
+
+    public function catUpdate(Request $request, $id)
+    {
+        $response = $this->alFaqCategoryService->catUpdate($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect("faq-categories");
+    }
 
     /**
      * Display a listing of the resource.
      *
+     * @param $slug
      * @return Application|Factory|View
      */
-    public function index()
+    public function index($slug)
     {
-        $faqs = $this->faq->findAll();
-        return view('admin.al-faq.index', compact('faqs'));
+        $faqs = $this->faq->getFaqs($slug);
+        return view('admin.al-faq.index', compact('faqs', 'slug'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param $slug
      * @return Application|Factory|View
      */
-    public function create()
+    public function create($slug)
     {
-        return view('admin.al-faq.create');
+        return view('admin.al-faq.create', compact('slug'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $slug
+     * @return Application|RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(Request $request, $slug)
     {
-        //
+        $response = $this->faq->storeAlFaq($request->all(), $slug);
+        Session::flash('message', $response->getContent());
+        return redirect("faq/$slug");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     * @param $slug
      * @return Application|Factory|View
      */
-    public function edit($id)
+    public function edit($slug, $id)
     {
         $faq = $this->faq->findOne($id);
-        return view('admin.al-faq.edit', compact('faq'));
+        return view('admin.al-faq.edit', compact('faq', 'slug'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param int $id
+     * @param $slug
      * @return Application|RedirectResponse|Redirector
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug, $id)
     {
-//        dd($request->all());
         $response = $this->faq->updateFaq($request->all(), $id);
         Session::flash('message', $response->getContent());
-        return redirect('faq');
+        return redirect("faq/$slug");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     * @param $slug
      * @return Application|RedirectResponse|Redirector
+     * @throws Exception
      */
-    public function destroy($id)
+    public function destroy($slug, $id)
     {
         $this->faq->deleteFaq($id);
-        return url('faq');
+        return url("faq/$slug");
     }
 }

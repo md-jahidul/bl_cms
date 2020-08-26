@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class MediaPressNewsEvent extends Model
 {
-    //
+    protected $guarded = ['id'];
 }
