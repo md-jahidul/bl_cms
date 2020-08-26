@@ -72,7 +72,7 @@
                                         {{--                                        {{ dd($bannerImage->items['banner_image_url']) }}--}}
                                         {{--                                        <input type="hidden" name="old_web_img" value="--}}{{--{{ isset($fixedSectionData['image']) ? $fixedSectionData['image'] : '' }}--}}{{--">--}}
                                         <input type="file" name="banner_image_url" data-height="90" class="dropify"
-                                               data-default-file="{{ isset($bannerImage->banner_image_url) ? config('filesystems.file_base_url') . $bannerImage->banner_image_url : '' }}">
+                                               data-default-file="{{ isset($pressBannerImage->banner_image_url) ? config('filesystems.file_base_url') . $pressBannerImage->banner_image_url : '' }}">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
                                     <div class="help-block"></div>
@@ -86,7 +86,7 @@
                                     <div class="custom-file">
                                         {{--                                        <input type="hidden" name="old_mob_img" value="--}}{{--{{ isset($fixedSectionData['banner_image_mobile']) ? $fixedSectionData['banner_image_mobile'] : '' }}--}}{{--">--}}
                                         <input type="file" name="banner_mobile_view" class="dropify" data-height="90"
-                                               data-default-file="{{ isset($bannerImage->banner_mobile_view) ? config('filesystems.file_base_url') . $bannerImage->banner_mobile_view : '' }}">
+                                               data-default-file="{{ isset($pressBannerImage->banner_mobile_view) ? config('filesystems.file_base_url') . $pressBannerImage->banner_mobile_view : '' }}">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
 
@@ -99,7 +99,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text">Alt Text</label>
                                     <input type="text" name="alt_text_en" id="alt_text" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($bannerImage->alt_text_en) ? $bannerImage->alt_text_en : '' }}">
+                                           placeholder="Enter alt text" value="{{ isset($pressBannerImage->alt_text_en) ? $pressBannerImage->alt_text_en : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('alt_text'))
                                         <div class="help-block">{{ $errors->first('alt_text') }}</div>
@@ -116,7 +116,7 @@
                                         {{--{{ dd($bannerImage->items['news_banner_image_url']) }}--}}
                                         {{--<input type="hidden" name="old_web_img" value="--}}{{--{{ isset($fixedSectionData['image']) ? $fixedSectionData['image'] : '' }}--}}{{--">--}}
                                         <input type="file" name="news_news_banner_image_url" data-height="90" class="dropify"
-                                               data-default-file="{{ isset($bannerImage->banner_image_url) ? config('filesystems.file_base_url') . $bannerImage->banner_image_url : '' }}">
+                                               data-default-file="{{ isset($newsBannerImage->banner_image_url) ? config('filesystems.file_base_url') . $newsBannerImage->banner_image_url : '' }}">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
                                     <div class="help-block"></div>
@@ -130,7 +130,7 @@
                                     <div class="custom-file">
                                         {{--                                        <input type="hidden" name="old_mob_img" value="--}}{{--{{ isset($fixedSectionData['banner_image_mobile']) ? $fixedSectionData['banner_image_mobile'] : '' }}--}}{{--">--}}
                                         <input type="file" name="news_banner_mobile_view" class="dropify" data-height="90"
-                                               data-default-file="{{ isset($bannerImage->banner_mobile_view) ? config('filesystems.file_base_url') . $bannerImage->banner_mobile_view : '' }}">
+                                               data-default-file="{{ isset($newsBannerImage->banner_mobile_view) ? config('filesystems.file_base_url') . $newsBannerImage->banner_mobile_view : '' }}">
                                     </div>
                                     <span class="text-primary">Please given file type (.png, .jpg)</span>
 
@@ -143,7 +143,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('news_alt_text_en') ? ' error' : '' }}">
                                     <label for="news_alt_text_en">Alt Text</label>
                                     <input type="text" name="news_alt_text_en" id="news_alt_text_en" class="form-control"
-                                           placeholder="Enter alt text" value="{{ isset($bannerImage->alt_text_en) ? $bannerImage->alt_text_en : '' }}">
+                                           placeholder="Enter alt text" value="{{ isset($newsBannerImage->alt_text_en) ? $newsBannerImage->alt_text_en : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('news_alt_text_en'))
                                         <div class="help-block">{{ $errors->first('news_alt_text_en') }}</div>
