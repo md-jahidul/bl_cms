@@ -38,9 +38,15 @@ $zoom = request()->has('zoom') ? request()->input('zoom') : 6;
 <script>
     var map;
     var src = 'https://4g.banglalink.net/map_kmz/END_June_4G_Coverage_2020/END_June_4G_Coverage_2020.kml';
-    var mapLat = "{{$latitude}}";
+    /*var mapLat = "{{$latitude}}";
     var mapLng = "{{$longitude}}";
-    var mapZoom = "{{$zoom}}";
+    var mapZoom = "{{$zoom}}";*/
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    var mapLat = urlParams.get('latitude') ? urlParams.get('latitude') : 23.8103;
+    var mapLng = urlParams.get('longitude') ? urlParams.get('latitude')  : 90.4125;
+    var mapZoom = urlParams.get('zoom') ? urlParams.get('zoom') : 6;
 
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
