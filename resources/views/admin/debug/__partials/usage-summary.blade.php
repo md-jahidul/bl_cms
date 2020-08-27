@@ -2,7 +2,7 @@
     <div class="col-md-12 border-right-blue-grey border-right-lighten-5">
         <div class="p-1 text-center">
             <div>
-                <h4 class="display-4 blue-grey darken-1">TK. {{ number_format($summary_usage->data->total, 2, '.') }}</h4>
+                <h4 class="display-4 blue-grey darken-1">TK. {{ number_format($summary_usage->data->total, 2, '.', '') }}</h4>
                 <span class="blue-grey darken-1">Total Usage</span>
             </div>
             <div class="card-content">
@@ -37,7 +37,7 @@
                                             </p>
                                         </div>
                                         <div class="col-md-6 col-12 text-center">
-                                            <h6 class="info text-bold-600">{{ number_format($summary_usage->data->internet->cost, 2, '.') }}</h6>
+                                            <h6 class="info text-bold-600">{{ number_format($summary_usage->data->internet->cost, 2, '.', '') }}</h6>
                                             <p class="blue-grey lighten-2 mb-0">Tk.</p>
                                         </div>
                                     </div>
@@ -59,7 +59,7 @@
                                             <p class="blue-grey lighten-2 mb-0">Minutes</p>
                                         </div>
                                         <div class="col-md-6 col-12 text-center">
-                                            <h6 class="info text-bold-600">{{ number_format($summary_usage->data->minutes->cost, 2, '.') }}</h6>
+                                            <h6 class="info text-bold-600">{{ number_format($summary_usage->data->minutes->cost, 2, '.', '') }}</h6>
                                             <p class="blue-grey lighten-2 mb-0">Tk.</p>
                                         </div>
                                     </div>
@@ -81,7 +81,7 @@
                                             <p class="blue-grey lighten-2 mb-0">SMS</p>
                                         </div>
                                         <div class="col-md-6 col-12 text-center">
-                                            <h6 class="info text-bold-600">{{ number_format($summary_usage->data->sms->cost, 2, '.') }}</h6>
+                                            <h6 class="info text-bold-600">{{ number_format($summary_usage->data->sms->cost, 2, '.', '') }}</h6>
                                             <p class="blue-grey lighten-2 mb-0">Tk.</p>
                                         </div>
                                     </div>
@@ -103,7 +103,7 @@
                                             <p class="blue-grey lighten-2 mb-0">Active Subscriptions</p>
                                         </div>
                                         <div class="col-md-6 col-12 text-center">
-                                            <h6 class="info text-bold-600">{{ number_format($summary_usage->data->vas->cost, 2, '.') }}</h6>
+                                            <h6 class="info text-bold-600">{{ number_format($summary_usage->data->vas->cost, 2, '.', '') }}</h6>
                                             <p class="blue-grey lighten-2 mb-0">Tk.</p>
                                         </div>
                                     </div>
@@ -121,7 +121,7 @@
                                 <div class="card-body pt-0">
                                     <div class="row">
                                         <div class="col-md-12 text-center">
-                                            <h6 class="info text-bold-600">{{ number_format($summary_usage->data->recharge->total, 2, '.') }}</h6>
+                                            <h6 class="info text-bold-600">{{ number_format($summary_usage->data->recharge->total, 2, '.', '') }}</h6>
                                             <p class="blue-grey lighten-2 mb-0">TK.</p>
                                         </div>
                                     </div>
