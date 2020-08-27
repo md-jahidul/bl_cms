@@ -794,8 +794,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     // Lead Management ======================================================
     Route::get('lead-requested-list', 'AssetLite\LeadManagementController@leadRequestedList')
         ->name('lead-list');
-    Route::get('lead-product-permission-form', 'AssetLite\LeadManagementController@productPermissionForm')
+    Route::get('lead-product-permission-form/{user_id}', 'AssetLite\LeadManagementController@productPermissionForm')
         ->name("permission.form");
+    Route::post('lead-product-permission-save', 'AssetLite\LeadManagementController@productPermissionSave')
+        ->name("permission.save");
+
     Route::get('lead-product-permission', 'AssetLite\LeadManagementController@leadProductPermission');
 //        ->name('lead-list');
 
