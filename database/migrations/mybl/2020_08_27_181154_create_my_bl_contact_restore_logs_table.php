@@ -22,8 +22,8 @@ class CreateMyBlContactRestoreLogsTable extends Migration
             $table->string('device_os')->nullable();
             $table->string('device_model')->nullable();
             $table->string('mobile_number')->nullable();
-            $table->string('total_number_to_be_restore')->nullable();
-            $table->string('total_restore')->nullable();
+            $table->integer('total_number_to_be_restore')->nullable();
+            $table->integer('total_restore')->nullable();
             $table->timestamps();
         });
     }
