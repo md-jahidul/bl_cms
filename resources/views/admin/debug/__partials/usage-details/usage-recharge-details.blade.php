@@ -14,7 +14,7 @@
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($item->date, 'UTC')->setTimezone('Asia/Dhaka')->toDateTimeString()  }}</td>
                             <td>
-                                {{ number_format($item->amount) }} Tk.
+                                {{ number_format($item->amount, 2, '.') }} Tk.
                             </td>
                         </tr>
                     @endforeach

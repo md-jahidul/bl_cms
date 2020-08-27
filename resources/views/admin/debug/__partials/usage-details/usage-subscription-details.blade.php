@@ -16,7 +16,7 @@
                             <td> {{ $item->service_name }}  @if($item->is_active)<i class="la la-check-circle success font-medium-1 mr-1"></i> @endif </td>
                             <td>{{ \Carbon\Carbon::parse($item->activated_date, 'UTC')->setTimezone('Asia/Dhaka')->format('d M, Y')  }}</td>
                             <td>
-                                {{ number_format($item->fee) }} Tk.
+                                {{ number_format($item->fee, 2, '.') }} Tk.
                             </td>
                         </tr>
                     @endforeach
