@@ -14,6 +14,7 @@ use App\Services\BlApiHub\History\CustomerSmsUsageService;
 use App\Services\BlApiHub\History\CustomerSubscriptionUsageService;
 use App\Services\BlApiHub\History\CustomerSummaryUsageService;
 use App\Services\BlApiHub\OtpRequestLogsService;
+use App\Services\ContactRestoreLogService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -29,6 +30,11 @@ use Illuminate\View\View;
 class ApiDebugController extends Controller
 {
     /**
+     * @var ContactRestoreLogService
+     */
+    protected $contactRestoreLogService;
+
+    /**
      * ApiDebugController constructor.
      * @param BalanceService $balanceService
      * @param AuditLogsService $auditLogsService
@@ -41,6 +47,7 @@ class ApiDebugController extends Controller
      * @param CustomerRoamingUsageService $roamingUsageService
      * @param CustomerSubscriptionUsageService $subscriptionUsageService
      * @param OtpRequestLogsService $otpRequestLogsService
+     * @param ContactRestoreLogService $contactRestoreLogService
      */
     public function __construct(
         BalanceService $balanceService,
@@ -53,7 +60,8 @@ class ApiDebugController extends Controller
         CustomerRechargeHistoryService $rechargeHistoryService,
         CustomerRoamingUsageService $roamingUsageService,
         CustomerSubscriptionUsageService $subscriptionUsageService,
-        OtpRequestLogsService $otpRequestLogsService
+        OtpRequestLogsService $otpRequestLogsService,
+    ContactRestoreLogService $contactRestoreLogService
     ) {
         $this->balanceService = $balanceService;
         $this->auditLogsService = $auditLogsService;
@@ -67,6 +75,7 @@ class ApiDebugController extends Controller
         $this->subscriptionUsageService = $subscriptionUsageService;
         $this->otpRequestLogsService = $otpRequestLogsService;
         $this->middleware(['auth', 'debugEntryCheck']);
+        $this->contactRestoreLogService = $contactRestoreLogService;
     }
 
     /**
@@ -227,5 +236,13 @@ class ApiDebugController extends Controller
     }
 
 
-
+     /**
+     * @param Request $request
+     * @param $number
+     * @return array
+     */
+    public function getContactRestoreLogs(Request $request, $number)
+    {
+        return $this->contactRestoreLogService->getLogs($request, $number);
+    }
 }
