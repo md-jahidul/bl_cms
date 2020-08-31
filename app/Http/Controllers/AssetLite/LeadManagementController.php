@@ -62,8 +62,17 @@ class LeadManagementController extends Controller
 
     public function productPermissionForm()
     {
-        $users = $this->productPermissionService->getCatAndProducts();
-        return view('admin.lead-management.product-permission.permission-form', compact('users', 'leadSuperAdmin'));
+        $categories = $this->productPermissionService->getCatAndProducts();
+//        dd($categories);
+        return view('admin.lead-management.product-permission.permission-form', compact('categories'));
+    }
+
+    public function productPermissionSave(Request $request)
+    {
+        $response = $this->productPermissionService->userWisePermissionSave();
+        dd($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect(route('lead-list'));
     }
 
     public function leadProductPermission()

@@ -30,7 +30,7 @@
                                         <td>{{ $info->name }}</td>
                                         <td>{{ $info->email }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route("permission.form") }}" role="button" class="btn-sm btn-info border-0"><i class="la la-shield" aria-hidden="true"></i> Product Permission</a>
+                                            <a href="{{ route("permission.form", $info->id) }}" role="button" class="btn-sm btn-info border-0"><i class="la la-shield" aria-hidden="true"></i> Product Permission</a>
                                         </td>
                                     </tr>
                                 @endif
