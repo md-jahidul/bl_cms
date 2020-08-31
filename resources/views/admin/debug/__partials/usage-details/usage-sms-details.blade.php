@@ -23,7 +23,7 @@
                                 <span>   {{ \Carbon\Carbon::parse($item->date, 'UTC')->setTimezone('Asia/Dhaka')->toDateTimeString() }} </span>
                             </td>
                             <td>
-                                {{ number_format($item->cost) }} Tk.
+                                {{ number_format($item->cost, 2, '.', '') }} Tk.
                             </td>
                         </tr>
                     @endforeach

@@ -6,7 +6,7 @@
                     <div class="card-content">
                         <div class="media align-items-stretch">
                             <div class="p-2 media-middle">
-                                <h1 class="success">{{ number_format($summary->data->balance->amount) }} TK</h1>
+                                <h1 class="success">{{ number_format($summary->data->balance->amount, 2, '.', '') }} TK</h1>
                             </div>
                             <div class="media-body p-2">
                                 <h4>Current Balance</h4>
@@ -27,7 +27,7 @@
                     <div class="card-content">
                         <div class="media align-items-stretch">
                             <div class="p-2 media-middle">
-                                <h1 class="success">{{ number_format($summary->data->balance-> total_outstanding) }} TK</h1>
+                                <h1 class="success">{{ number_format($summary->data->balance-> total_outstanding, 2, '.', '') }} TK</h1>
                             </div>
                             <div class="media-body p-2">
                                 <h4>Outstanding Balance</h4>
