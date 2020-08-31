@@ -10,11 +10,13 @@ namespace App\Repositories;
 use App\Models\BusinessPackages;
 use Illuminate\Support\Facades\Auth;
 
-class BusinessPackageRepository extends BaseRepository {
+class BusinessPackageRepository extends BaseRepository
+{
 
     public $modelName = BusinessPackages::class;
 
-    public function getPackageList($packageId = 0) {
+    public function getPackageList($packageId = 0)
+    {
 
         $packages = $this->model->orderBy('sort');
 
@@ -27,7 +29,8 @@ class BusinessPackageRepository extends BaseRepository {
         return $data;
     }
 
-    public function changePackageSorting($request) {
+    public function changePackageSorting($request)
+    {
         try {
 
             $positions = $request->position;
@@ -53,7 +56,8 @@ class BusinessPackageRepository extends BaseRepository {
         }
     }
 
-    public function changeHomeShowStatus($packageId) {
+    public function changeHomeShowStatus($packageId)
+    {
         try {
 
             $package = $this->model->findOrFail($packageId);
@@ -76,7 +80,8 @@ class BusinessPackageRepository extends BaseRepository {
         }
     }
 
-    public function changeStatus($packageId) {
+    public function changeStatus($packageId)
+    {
         try {
 
             $package = $this->model->findOrFail($packageId);
@@ -99,9 +104,9 @@ class BusinessPackageRepository extends BaseRepository {
         }
     }
 
-    public function savePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request) {
+    public function savePackage($cardWeb, $cardMob, $bannerWeb, $bannerMob, $request)
+    {
         $package = $this->model;
-
 
 
         $package->card_banner_web = $cardWeb;
@@ -136,7 +141,8 @@ class BusinessPackageRepository extends BaseRepository {
         return $package->id;
     }
 
-    public function getPackageById($packageId) {
+    public function getPackageById($packageId)
+    {
         $packages = $this->model->findOrFail($packageId);
         return $packages;
     }
@@ -181,6 +187,13 @@ class BusinessPackageRepository extends BaseRepository {
         $package->updated_by = Auth::id();
 
         return $package->save();
+    }
+
+    public function getBusinessPack()
+    {
+        return $this->model
+            ->select('id', 'name')
+            ->get();
     }
 
 }

@@ -19,7 +19,11 @@ class CreateBeAPartnersTable extends Migration
             $table->string('title_bn')->nullable();
             $table->longText('description_en')->nullable();
             $table->longText('description_bn')->nullable();
+            $table->string('vendor_button_en')->nullable();
+            $table->string('vendor_button_bn')->nullable();
             $table->string('vendor_portal_url')->nullable();
+            $table->string('interested_button_en')->nullable();
+            $table->string('interested_button_bn')->nullable();
             $table->string('interested_url')->nullable();
             $table->json('banner_image');
             $table->timestamps();
