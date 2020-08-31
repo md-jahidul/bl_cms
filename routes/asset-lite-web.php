@@ -589,6 +589,16 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('life-at-banglalink/general/{id}/update', 'AssetLite\EcareerController@generalUpdate')->name('life.at.banglalink.general.update');
     Route::get('life-at-banglalink/general/destroy/{id}', 'AssetLite\EcareerController@generalDestroy')->name('life.at.banglalink.general.destroy');
 
+    // University
+    Route::get('university', 'AssetLite\UniversityController@index')
+        ->name('university.index');
+    Route::post('university-list', 'AssetLite\UniversityController@universityList')
+        ->name('university.list.ajax');
+    Route::post('university-excel/uploader', 'AssetLite\UniversityController@uploadUniversityExcel')
+        ->name('university.uploader');
+
+    Route::get('university/destroy/{university_id?}', 'AssetLite\UniversityController@deleteUniversity');
+
 
     // eCarrer Items ============================================
     Route::get('ecarrer-items/{parent_id}/list', 'AssetLite\EcareerItemController@index')->name('ecarrer.items.list');

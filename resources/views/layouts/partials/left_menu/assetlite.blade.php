@@ -438,6 +438,12 @@
                             class="la la-magic"></i> Contact & Connect us</a>
                 </li>
 
+                <li class="{{ request()->is('university') ? 'active' : '' }}">
+                    <a class="menu-item" href="{{ route('university.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-university"></i> University Uploader</a>
+                </li>
+
             </ul>
         </li>
     @endif
