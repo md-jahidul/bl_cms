@@ -52,11 +52,11 @@ class LeadManagementController extends Controller
     {
         $allRequest = $this->leadRequestService->leadRequestedData();
         $allRequest = $allRequest['data'];
+//        return $allRequest;
         if (empty($allRequest)) {
             Session::flash('error', "No products found or you do not have permission!");
             $allRequest = [];
         }
-//        dd($allRequest);
         return view('admin.lead-management.index', compact('allRequest'));
     }
 
@@ -85,6 +85,7 @@ class LeadManagementController extends Controller
     public function viewDetails($id)
     {
         $requestInfo = $this->leadRequestService->findOne($id);
+//        return $requestInfo;
         return view('admin.lead-management.view_details', compact('requestInfo'));
     }
 
@@ -111,4 +112,8 @@ class LeadManagementController extends Controller
         return redirect(route('lead-list'));
     }
 
+    public function downloadFile(Request $request)
+    {
+        return response()->download("uploads/$request->file_path");
+    }
 }

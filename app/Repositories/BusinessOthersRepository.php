@@ -235,4 +235,15 @@ class BusinessOthersRepository extends BaseRepository {
         return $service->save();
     }
 
+    public function getEnterEnterpriseSol($id = null)
+    {
+        $data = $this->model->where('type', 'business-solution')
+            ->select('id', 'name');
+        if ($id) {
+            $data->where('id', $id);
+            return $data->first();
+        }
+        return $data->get();
+    }
+
 }

@@ -823,6 +823,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('lead-requested/send-mail', 'AssetLite\LeadManagementController@sendMail')
         ->name('lead.send_mail');
 
+    Route::post('download/file', 'AssetLite\LeadManagementController@downloadFile');
+
     // Product Price Slab
     Route::get('product-price/slabs', 'AssetLite\ProductPriceSlabController@index');
     Route::get('product-price/slab/create', 'AssetLite\ProductPriceSlabController@priceSlabCreate');

@@ -189,11 +189,15 @@ class BusinessPackageRepository extends BaseRepository
         return $package->save();
     }
 
-    public function getBusinessPack()
+    public function getBusinessPack($packageId = null)
     {
-        return $this->model
-            ->select('id', 'name')
-            ->get();
+        $data = $this->model
+            ->select('id', 'name');
+        if ($packageId) {
+            $data->where('id', $packageId);
+            return $data->first();
+        }
+        return $data->get();
     }
 
 }

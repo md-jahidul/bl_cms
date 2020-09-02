@@ -88,11 +88,15 @@ class ProductRepository extends BaseRepository
         return $data;
     }
 
-    public function getOfferCatWise($offerCatId, $type)
+    public function getOfferCatWise($offerCatId, $type, $productId = null)
     {
-        return $this->model->where('offer_category_id', $offerCatId)
+        $data = $this->model->where('offer_category_id', $offerCatId)
             ->select('id', 'name_en as name')
-            ->category($type)
-            ->get();
+            ->category($type);
+        if ($productId) {
+            $data->where('id', $productId);
+            return $data->first();
+        }
+        return $data->get();
     }
 }
