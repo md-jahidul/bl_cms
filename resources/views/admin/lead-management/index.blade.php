@@ -20,7 +20,7 @@
                                 <th width="7%">Category</th>
                                 <th width="7%">Product</th>
                                 <th width="4%">Status</th>
-                                <th width="10%">Action</th>
+                                <th width="5%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,7 +43,7 @@
                                             </strong>
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route("lead.send_mail_form") }}" role="button" class="btn-sm btn-info border-0"><i class="la la-paper-plane" aria-hidden="true"></i> Send</a>
+                                            <a href="{{ route("download.pdf", $info['id']) }}" role="button" class="btn-sm btn-info border-0"><i class="la la-download" aria-hidden="true"></i></a>
                                             <a href="{{ route('lead.details', $info['id']) }}" role="button" class="btn-sm btn-success border-0"><i class="la la-refresh" aria-hidden="true"></i> Details</a>
                                         </td>
                                     </tr>

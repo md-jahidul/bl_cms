@@ -1,12 +1,12 @@
-@component('mail::message')
+{{--@component('mail::message')--}}
     Dear X
 
-    {{ $data['message'] }}
+{{--    {{ $data['message'] }}--}}
 
 
 {{--@component('mail::button', ['url' => ''])--}}
 
-@endcomponent
+{{--@endcomponent--}}
 {{--Thanks,<br>--}}
 {{--{{ config('app.name') }}--}}
 {{--@endcomponent--}}

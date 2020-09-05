@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -68,7 +69,8 @@ class LeadRequestService
         BusinessPackageRepository $businessPackageRepository,
         BusinessOthersRepository $businessOthersRepository,
         ProductRepository $productRepository
-    ) {
+    )
+    {
         $this->leadRequestRepository = $leadRequestRepository;
         $this->leadCategoryRepository = $leadCategoryRepository;
         $this->leadProductRepository = $leadProductRepository;
@@ -84,7 +86,7 @@ class LeadRequestService
 
         $leadData = [];
 
-        switch ($leadCat->slug){
+        switch ($leadCat->slug) {
             case "ecareer_programs";
                 $leadProduct = $this->leadProductRepository->findOne($item->lead_product_id);
                 $leadData['id'] = $item->id;
@@ -105,7 +107,7 @@ class LeadRequestService
                 $leadProduct = $this->businessPackageRepository->getBusinessPack($item->lead_product_id);
                 $leadData['id'] = $item->id;
                 $leadData['lead_cat'] = $leadCat->title;
-                $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name :null;
+                $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
                 $leadData['form_data'] = $item->form_data;
                 $leadData['status'] = $item->status;
                 break;
@@ -140,7 +142,7 @@ class LeadRequestService
 //                $data = $this->dataBind($leadRequest);
                 $data = [];
                 foreach ($leadRequest as $item) {
-                   $data[] = $this->catWiseProduct($item);
+                    $data[] = $this->catWiseProduct($item);
                 }
 
 //                dd($data);
@@ -199,9 +201,46 @@ class LeadRequestService
         return response('Status update successfully!');
     }
 
-    public function sendMail($data)
+    public static function sendMail($data)
     {
         Mail::to($data['email'])->send(new LeadInfoMail($data));
         return response('Mail send successfully');
+    }
+
+    public function downloadPDF($leadId)
+    {
+        $leadData = $this->findOne($leadId);
+        $formData = $this->makeLeadInfoTable($leadData->form_data);
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($formData);
+        return $pdf->stream();
+    }
+
+    public function makeLeadInfoTable($data)
+    {
+        $table = "<style>
+                  @font-face {
+                    font-family: 'Helvetica';
+                    font-weight: normal;
+                    font-style: normal;
+                    font-variant: normal;
+                  }
+                  body {
+                    font-family: Helvetica, sans-serif;
+                  }
+                  </style>";
+
+        $table .= '<h3 align="center">Applicant Data</h3>
+                  <table width="100%" style="border-collapse: collapse; border: 0px;"><tbody>';
+        foreach ($data as $field => $value) {
+            if ($field != "applicant_cv") {
+                $table .= "<tr>";
+                $table .= '<th style="border: 1px solid; padding:12px;" width="30%">' . str_replace('_', ' ', strtoupper($field)) . '</th>';
+                $table .= '<td style="border: 1px solid; padding:12px;">' . $value . '</td>';
+                $table .= "</tr>";
+            }
+        }
+        $table .= "</tbody></table>";
+        return $table;
     }
 }

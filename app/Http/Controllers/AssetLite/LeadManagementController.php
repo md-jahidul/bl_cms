@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\LeadDataSend;
 use App\Services\Banglalink\LeadRequestService;
 use App\Services\LeadProductPermissionService;
 use App\Services\UserService;
@@ -107,13 +108,22 @@ class LeadManagementController extends Controller
             'email' => 'required|email',
             'message' => 'required'
         ]);
-        $response = $this->leadRequestService->sendMail($request->all());
-        Session::flash('message', $response->getContent());
+
+        LeadDataSend::dispatch($request->all())
+            ->onQueue('lead_data_send');
+
+//        $response = $this->leadRequestService->sendMail($request->all());
+        Session::flash('message', 'Mail send successfully');
         return redirect(route('lead-list'));
     }
 
     public function downloadFile(Request $request)
     {
         return response()->download("uploads/$request->file_path");
+    }
+
+    public function downloadPDF($leadId)
+    {
+        return $this->leadRequestService->downloadPDF($leadId);
     }
 }
