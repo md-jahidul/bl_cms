@@ -139,10 +139,11 @@ class LeadRequestService
             if (Auth::id() == self::ASSETLITE_SUPER_ADMIN) {
                 $leadRequest = LeadRequest::all();
 
-//                $data = $this->dataBind($leadRequest);
                 $data = [];
                 foreach ($leadRequest as $item) {
-                    $data[] = $this->catWiseProduct($item);
+                    if ($item->lead_category_id || $item->lead_product_id) {
+                        $data[] = $this->catWiseProduct($item);
+                    }
                 }
 
 //                dd($data);
