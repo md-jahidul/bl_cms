@@ -95,7 +95,7 @@ class LeadProductPermissionService
 
     public function businessEnterpriseSolution()
     {
-        return $this->businessOthersRepo->findByProperties(['type' => "business-solution"], ['id', 'name']);
+        return $this->businessOthersRepo->getEnterEnterpriseSol();
     }
 
     public function categoryWiseProduct($leadCategory)

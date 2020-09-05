@@ -820,8 +820,16 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('lead-requested/send-mail-form', 'AssetLite\LeadManagementController@sendMailForm')
         ->name('lead.send_mail_form');
 
+    //TODO:: Not use delete later
     Route::post('lead-requested/send-mail', 'AssetLite\LeadManagementController@sendMail')
         ->name('lead.send_mail');
+
+    Route::get('download-pdf/{lead_id}', 'AssetLite\LeadManagementController@downloadPDF')
+        ->name('download.pdf');
+
+
+
+    Route::post('download/file', 'AssetLite\LeadManagementController@downloadFile');
 
     // Product Price Slab
     Route::get('product-price/slabs', 'AssetLite\ProductPriceSlabController@index');

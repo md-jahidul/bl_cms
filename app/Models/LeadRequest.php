@@ -8,6 +8,12 @@ class LeadRequest extends Model
 {
     protected $fillable = ['status'];
 
+    protected $casts = [
+        'form_data' => 'array'
+    ];
+
+    protected $hidden = ['updated_at'];
+
     public function leadCategory()
     {
         return $this->belongsTo(LeadCategory::class, 'lead_category_id', 'id');
