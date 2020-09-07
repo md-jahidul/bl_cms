@@ -46,20 +46,27 @@ class LeadManagementController extends Controller
         $this->userService = $userService;
     }
 
+    public function index()
+    {
+        return view('admin.lead-management.index');
+    }
+
     /**
+     * @param Request $request
      * @return Factory|View
      */
-    public function leadRequestedList()
+    public function leadRequestedList(Request $request)
     {
-        $allRequest = $this->leadRequestService->leadRequestedData();
-        $allRequest = $allRequest['data'];
-//        return $allRequest;
-        if (empty($allRequest)) {
-            Session::flash('error', "No products found or you do not have permission!");
-            $allRequest = [];
-        }
+        $allRequest = $this->leadRequestService->leadRequestedData($request);
+        return $allRequest;
+//        $allRequest = $allRequest['data'];
+//        if (empty($allRequest)) {
+//            Session::flash('error', "No products found or you do not have permission!");
+//            $allRequest = [];
+//        }
         return view('admin.lead-management.index', compact('allRequest'));
     }
+
 
     public function productPermissionForm()
     {
