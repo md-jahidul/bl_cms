@@ -8,6 +8,8 @@ use App\Services\Banglalink\LeadRequestService;
 use App\Services\LeadProductPermissionService;
 use App\Services\UserService;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -53,20 +55,24 @@ class LeadManagementController extends Controller
 
     /**
      * @param Request $request
-     * @return Factory|View
+     * @return array[]|Builder[]|Model[]
      */
     public function leadRequestedList(Request $request)
     {
-        $allRequest = $this->leadRequestService->leadRequestedData($request);
-        return $allRequest;
-//        $allRequest = $allRequest['data'];
-//        if (empty($allRequest)) {
-//            Session::flash('error', "No products found or you do not have permission!");
-//            $allRequest = [];
-//        }
-        return view('admin.lead-management.index', compact('allRequest'));
+        return $this->leadRequestService->leadRequestedData($request);
     }
 
+    public function excelExport(Request $request)
+    {
+        $request->validate([
+            'lead_category' => 'required',
+        ]);
+        $response = $this->leadRequestService->excelGenerator($request);
+        if ($response) {
+            Session::flash('error', $response->getContent());
+            return redirect(route('lead-list'));
+        }
+    }
 
     public function productPermissionForm()
     {
@@ -93,7 +99,6 @@ class LeadManagementController extends Controller
     public function viewDetails($id)
     {
         $requestInfo = $this->leadRequestService->findOne($id);
-//        return $requestInfo;
         return view('admin.lead-management.view_details', compact('requestInfo'));
     }
 
@@ -104,25 +109,25 @@ class LeadManagementController extends Controller
         return redirect(route('lead-list'));
     }
 
-    public function sendMailForm()
-    {
-        return view('admin.lead-management.send_mail_form');
-    }
+//    public function sendMailForm()
+//    {
+//        return view('admin.lead-management.send_mail_form');
+//    }
 
-    public function sendMail(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'message' => 'required'
-        ]);
-
-        LeadDataSend::dispatch($request->all())
-            ->onQueue('lead_data_send');
-
-//        $response = $this->leadRequestService->sendMail($request->all());
-        Session::flash('message', 'Mail send successfully');
-        return redirect(route('lead-list'));
-    }
+//    public function sendMail(Request $request)
+//    {
+//        $request->validate([
+//            'email' => 'required|email',
+//            'message' => 'required'
+//        ]);
+//
+//        LeadDataSend::dispatch($request->all())
+//            ->onQueue('lead_data_send');
+//
+////        $response = $this->leadRequestService->sendMail($request->all());
+//        Session::flash('message', 'Mail send successfully');
+//        return redirect(route('lead-list'));
+//    }
 
     public function downloadFile(Request $request)
     {

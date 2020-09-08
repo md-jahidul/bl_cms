@@ -5,32 +5,57 @@
     <li class="breadcrumb-item ">Lead Request List</li>
 @endsection
 @section('action')
-{{--    <a href="--}}{{--{{ route('slider_images', [$sliderId, $type]) }}--}}{{--" class="btn btn-primary  btn-glow px-2"><i class="la la-download"></i> Excel Export</a>--}}
+{{--    <div class="row">--}}
+{{--        <div class="col-md-6 pull-left">--}}
+{{--            <input type="text" name="date_range" class="form-control showdropdowns filter"--}}
+{{--                   autocomplete="off" id="date_range" placeholder="Date">--}}
+{{--        </div>--}}
+{{--        <div class="col-md-4">--}}
+{{--            --}}
+{{--        </div>--}}
+{{--    </div>--}}
+
+{{--    <button class="btn btn-primary  btn-glow px-2" name="excel_export" id="excel_export">--}}
+{{--        <i class="la la-download"></i> Excel Export</button>--}}
+
+
+{{--    <a href="{{ route('lead_data.excel_export') }}" class="btn btn-primary  btn-glow px-2"><i class="la la-download"></i> Excel Export</a>--}}
 @endsection
 @section('content')
     <section>
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                            <input type="text" name="applicant_name" class="form-control filter"
-                                   autocomplete="off" id="applicant_name" placeholder="Name">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <input type="text" name="date_range" class="form-control showdropdowns filter"
-                                   autocomplete="off" id="date_range" placeholder="Date">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <select class="form-control filter" name="lead_category" id="lead_category">
-                                <option value="">---Category---</option>
-                                <option value="1">Postpaid package</option>
-                                <option value="2">Business package</option>
-                                <option value="3">Business enterprise solution</option>
-                                <option value="4">eCareer programs</option>
-                                <option value="5">Corporate responsibility</option>
-                            </select>
-                        </div>
+                    <form id="filter_form" action="{{ route('lead_data.excel_export') }}" method="POST" novalidate>
+                        @csrf
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <input type="text" name="applicant_name" class="form-control filter"
+                                       autocomplete="off" id="applicant_name" placeholder="Name">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="text" name="date_range" class="form-control showdropdowns filter"
+                                       autocomplete="off" id="date_range" placeholder="Date">
+                            </div>
+                            <div class="form-group col-md-3 {{ $errors->has('lead_category') ? ' error' : '' }}">
+                                <select class="form-control filter" name="lead_category" id="lead_category" required>
+                                    <option value="">---Category---</option>
+                                    <option value="1">Postpaid package</option>
+                                    <option value="2">Business package</option>
+                                    <option value="3">Business enterprise solution</option>
+                                    <option value="4">eCareer programs</option>
+                                    <option value="5">Corporate responsibility</option>
+                                </select>
+                                <div class="help-block"></div>
+                                @if ($errors->has('lead_category'))
+                                    <div class="help-block">{{ $errors->first('lead_category') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <button type="submit" class="btn btn-primary  btn-glow px-2" value="excel_export" name="excel_export" id="excel_export">
+                                    <i class="la la-download"></i> Excel Export</button>
+                            </div>
 
                         <table class="table table-striped table-bordered" id="lead_list"> <!--zero-configuration-->
                             <thead>
@@ -46,6 +71,7 @@
                             <tbody></tbody>
                         </table>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -103,6 +129,10 @@
                         lead_category: function () {
                             return $('#lead_category').val();
                         },
+
+                        // excel_export: function () {
+                        //     return $('#excel_export').val();
+                        // },
                     }
                 },
                 columns: [
@@ -132,10 +162,10 @@
                     },
 
                     {
-                        name: 'lead_cat',
+                        name: 'lead_category',
                         width: "10%",
                         render: function (data, type, row) {
-                            return row.lead_cat;
+                            return row.lead_category;
                         }
                     },
                     {
@@ -182,6 +212,30 @@
                 $('#lead_list').DataTable().ajax.reload();
             });
 
+
+            $('#excel_export').click(function() {
+                $("#filter_form").submit();
+                {{--$.ajax({--}}
+                {{--    url: "{{ route('lead_data.excel_export') }}",--}}
+                {{--    data: {--}}
+                {{--        applicant_name: function () {--}}
+                {{--            return $('input[name="applicant_name"]').val();--}}
+                {{--        },--}}
+                {{--        date_range: function () {--}}
+                {{--            return $('input[name="date_range"]').val();--}}
+                {{--        },--}}
+                {{--        lead_category: function () {--}}
+                {{--            return $('#lead_category').val();--}}
+                {{--        },--}}
+                {{--    },--}}
+                {{--    success: function (data,status,xhr) {   // success callback function--}}
+                {{--        //--}}
+                {{--    },--}}
+                {{--    error: function (jqXhr, textStatus, errorMessage) { // error callback--}}
+                {{--        //--}}
+                {{--    }--}}
+                {{--});--}}
+            });
         });
     </script>
 @endpush

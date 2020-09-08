@@ -829,7 +829,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('download-pdf/{lead_id}', 'AssetLite\LeadManagementController@downloadPDF')
         ->name('download.pdf');
 
-
+    Route::post('lead-data/excel-export', 'AssetLite\LeadManagementController@excelExport')
+        ->name('lead_data.excel_export');
 
     Route::post('download/file', 'AssetLite\LeadManagementController@downloadFile');
 

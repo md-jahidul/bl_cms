@@ -6,6 +6,8 @@ use App\Mail\LeadInfoMail;
 use App\Models\LeadCategory;
 use App\Models\LeadProductPermission;
 use App\Models\LeadRequest;
+use App\Models\MyBlProduct;
+use App\Models\User;
 use App\Repositories\BusinessOthersRepository;
 use App\Repositories\BusinessPackageRepository;
 use App\Repositories\Contracts\Collection;
@@ -15,6 +17,9 @@ use App\Repositories\LeadRequestRepository;
 use App\Repositories\ProductRepository;
 use App\Services\ApiBaseService;
 use App\Traits\CrudTrait;
+use Box\Spout\Common\Entity\Style\Color;
+use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
+use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -26,7 +31,10 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+//use Excel;
+use Maatwebsite\Excel\Facades\Excel;
 
 /**
  * Class FnfService
@@ -88,6 +96,7 @@ class LeadRequestService
 
         $leadData = [];
         $leadData['id'] = $item->id;
+        $leadData['lead_category'] = $leadCat->title;
         $leadData['form_data'] = $item->form_data;
         $leadData['status'] = $item->status;
         $leadData['created_at'] = explode(" ", $item->created_at)[0];
@@ -95,22 +104,18 @@ class LeadRequestService
         switch ($leadCat->slug) {
             case "ecareer_programs";
                 $leadProduct = $this->leadProductRepository->findOne($item->lead_product_id);
-                $leadData['lead_cat'] = $leadCat->title;
                 $leadData['lead_product'] = ($leadProduct->title) ? $leadProduct->title : null;
                 break;
             case "postpaid_package";
                 $leadProduct = $this->productRepository->getOfferCatWise(4, 'postpaid', $item->lead_product_id);
-                $leadData['lead_cat'] = $leadCat->title;
                 $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
                 break;
             case "business_package";
                 $leadProduct = $this->businessPackageRepository->getBusinessPack($item->lead_product_id);
-                $leadData['lead_cat'] = $leadCat->title;
                 $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
                 break;
             case "business_enterprise_solution";
                 $leadProduct = $this->businessOthersRepository->getEnterEnterpriseSol($item->lead_product_id);
-                $leadData['lead_cat'] = $leadCat->title;
                 $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
                 break;
             default:
@@ -143,7 +148,12 @@ class LeadRequestService
         }
 
         $all_items_count = $builder->count();
-        $items = $builder->skip($start)->take($length)->get();
+
+        if ($request->excel_export) {
+            $items = $builder->get();
+        } else {
+            $items = $builder->skip($start)->take($length)->get();
+        }
 
         return [
             'count' => $all_items_count,
@@ -172,6 +182,7 @@ class LeadRequestService
                         $data[] = $this->catWiseProduct($item);
                     }
                 }
+
                 return [
                     'data' => $data,
                     'draw' => $draw,
@@ -211,6 +222,72 @@ class LeadRequestService
         }
     }
 
+    public function bindDynamicValues($obj, $json_data = 'other_attributes')
+    {
+        if (!empty($obj[$json_data])) {
+            foreach ($obj[$json_data] as $key => $value) {
+                $obj[$key] = $value;
+            }
+        }
+        return $obj;
+    }
+
+    public function excelGenerator($request)
+    {
+        $leadRequest = $this->getLeads($request);
+        if ($leadRequest['count'] > 0) {
+            // Find Category Wise Product
+            $products = [];
+            foreach ($leadRequest['items'] as $item) {
+                if ($item->lead_category_id || $item->lead_product_id) {
+                    $products[] = $this->catWiseProduct($item);
+                }
+            }
+
+            // Excel Header Create
+            foreach ($products as $key => $items) {
+                $bindData = $this->bindDynamicValues($items, 'form_data');
+                unset($bindData['form_data']);
+                foreach ($bindData as $field => $val) {
+                    $header[] = $field;
+                }
+            }
+            $header = array_unique($header);
+
+            $writer = WriterEntityFactory::createXLSXWriter();
+
+            // File Name Generate
+            $fileName = str_replace(' ', '-', $products[0]['lead_category']);
+            $writer->openToBrowser($fileName . date('Y-m-d') . '.xlsx');
+
+            // header Style
+            $header_style = (new StyleBuilder())
+                ->setFontBold()
+                ->setFontSize(10)
+                ->setBackgroundColor(Color::rgb(245, 245, 240))
+                ->build();
+
+            $data_style = (new StyleBuilder())
+                ->setFontSize(9)
+                ->build();
+
+
+            $row = WriterEntityFactory::createRowFromArray(array_values($header), $header_style);
+            $writer->addRow($row);
+            $problem = [];
+            foreach ($products as $product) {
+                $bindData = $this->bindDynamicValues($product, 'form_data');
+                unset($bindData['form_data']);
+                $row = WriterEntityFactory::createRowFromArray($bindData, $data_style);
+                $writer->addRow($row);
+            }
+            Log::info(json_encode($problem));
+            $writer->close();
+        } else {
+            return  response('No data available in table!');
+        }
+    }
+
     public function updateStatus($data, $id)
     {
         $leadData = $this->findOne($id);
@@ -218,11 +295,11 @@ class LeadRequestService
         return response('Status update successfully!');
     }
 
-    public static function sendMail($data)
-    {
-        Mail::to($data['email'])->send(new LeadInfoMail($data));
-        return response('Mail send successfully');
-    }
+//    public static function sendMail($data)
+//    {
+//        Mail::to($data['email'])->send(new LeadInfoMail($data));
+//        return response('Mail send successfully');
+//    }
 
     public function downloadPDF($leadId)
     {
