@@ -819,12 +819,12 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::put('lead-requested/change-status/{id}', 'AssetLite\LeadManagementController@changeStatus')
         ->name('lead.change_status');
 
-    Route::get('lead-requested/send-mail-form', 'AssetLite\LeadManagementController@sendMailForm')
-        ->name('lead.send_mail_form');
+//    Route::get('lead-requested/send-mail-form', 'AssetLite\LeadManagementController@sendMailForm')
+//        ->name('lead.send_mail_form');
 
     //TODO:: Not use delete later
-    Route::post('lead-requested/send-mail', 'AssetLite\LeadManagementController@sendMail')
-        ->name('lead.send_mail');
+//    Route::post('lead-requested/send-mail', 'AssetLite\LeadManagementController@sendMail')
+//        ->name('lead.send_mail');
 
     Route::get('download-pdf/{lead_id}', 'AssetLite\LeadManagementController@downloadPDF')
         ->name('download.pdf');
@@ -876,7 +876,12 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::resource('press-news-event', 'AssetLite\MediaPressNewsEventController')->except(['show', 'destroy']);
     Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
 
-    //Customer Feedback
+    //Customer Feedback List
+    Route::get('customer-feedback/list', 'AssetLite\CustomerFeedbackQuesController@index');
+    Route::get('customer-feedback/get-data', 'AssetLite\CustomerFeedbackQuesController@getFeedbacks');
+
+
+    //Customer Feedback Question
     Route::get('customer-feedback/questions', 'AssetLite\CustomerFeedbackQuesController@questions');
     Route::get('customer-feedback/add-question', 'AssetLite\CustomerFeedbackQuesController@addQuestion');
     Route::get('customer-feedback/edit-question/{id}', 'AssetLite\CustomerFeedbackQuesController@editQuestion');

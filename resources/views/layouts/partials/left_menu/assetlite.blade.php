@@ -597,6 +597,11 @@
                            data-i18n="nav.templates.vert.classic_menu"><i
                                 class="la la-list"></i> Questions</a>
                     </li>
+                    <li class="{{ is_active_url('customer-feedbacks/list') }}">
+                        <a class="menu-item" href="{{ url('customer-feedback/list') }}"
+                           data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-feed"></i> Feedbacks List</a>
+                    </li>
                 </ul>
             </li>
 
