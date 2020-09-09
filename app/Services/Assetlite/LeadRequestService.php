@@ -6,6 +6,8 @@ use App\Mail\LeadInfoMail;
 use App\Models\LeadCategory;
 use App\Models\LeadProductPermission;
 use App\Models\LeadRequest;
+use App\Models\MyBlProduct;
+use App\Models\User;
 use App\Repositories\BusinessOthersRepository;
 use App\Repositories\BusinessPackageRepository;
 use App\Repositories\Contracts\Collection;
@@ -15,6 +17,10 @@ use App\Repositories\LeadRequestRepository;
 use App\Repositories\ProductRepository;
 use App\Services\ApiBaseService;
 use App\Traits\CrudTrait;
+use Box\Spout\Common\Entity\Style\Color;
+use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
+use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -25,7 +31,10 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+//use Excel;
+use Maatwebsite\Excel\Facades\Excel;
 
 /**
  * Class FnfService
@@ -86,39 +95,28 @@ class LeadRequestService
         $leadCat = $this->leadCategoryRepository->findOne($item->lead_category_id);
 
         $leadData = [];
+        $leadData['id'] = $item->id;
+        $leadData['lead_category'] = $leadCat->title;
+        $leadData['form_data'] = $item->form_data;
+        $leadData['status'] = $item->status;
+        $leadData['created_at'] = explode(" ", $item->created_at)[0];
 
         switch ($leadCat->slug) {
             case "ecareer_programs";
                 $leadProduct = $this->leadProductRepository->findOne($item->lead_product_id);
-                $leadData['id'] = $item->id;
-                $leadData['lead_cat'] = $leadCat->title;
                 $leadData['lead_product'] = ($leadProduct->title) ? $leadProduct->title : null;
-                $leadData['form_data'] = $item->form_data;
-                $leadData['status'] = $item->status;
                 break;
             case "postpaid_package";
                 $leadProduct = $this->productRepository->getOfferCatWise(4, 'postpaid', $item->lead_product_id);
-                $leadData['id'] = $item->id;
-                $leadData['lead_cat'] = $leadCat->title;
                 $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
-                $leadData['form_data'] = $item->form_data;
-                $leadData['status'] = $item->status;
                 break;
             case "business_package";
                 $leadProduct = $this->businessPackageRepository->getBusinessPack($item->lead_product_id);
-                $leadData['id'] = $item->id;
-                $leadData['lead_cat'] = $leadCat->title;
                 $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
-                $leadData['form_data'] = $item->form_data;
-                $leadData['status'] = $item->status;
                 break;
             case "business_enterprise_solution";
                 $leadProduct = $this->businessOthersRepository->getEnterEnterpriseSol($item->lead_product_id);
-                $leadData['id'] = $item->id;
-                $leadData['lead_cat'] = $leadCat->title;
                 $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
-                $leadData['form_data'] = $item->form_data;
-                $leadData['status'] = $item->status;
                 break;
             default:
                 $leadData = array();
@@ -127,30 +125,69 @@ class LeadRequestService
         return $leadData;
     }
 
+    public function getLeads($request)
+    {
+        $start = $request->get('start');
+        $length = $request->get('length');
+
+        $builder = new LeadRequest();
+
+        if ($request->lead_category) {
+            $builder = $builder->where('lead_category_id', $request->lead_category);
+        }
+
+        if ($request->applicant_name) {
+            $builder = $builder->where('form_data->name', 'LIKE', "%$request->applicant_name%");
+        }
+
+        if ($request->date_range != null) {
+            $date = explode('-', $request->date_range);
+            $from = str_replace('/', '-', $date[0]) . " " . "00:00:00";
+            $to = str_replace('/', '-', $date[1]) . " " . "23:59:00";
+            $builder = $builder->whereBetween('created_at', [$from, $to]);
+        }
+
+        $all_items_count = $builder->count();
+
+        if ($request->excel_export) {
+            $items = $builder->get();
+        } else {
+            $items = $builder->skip($start)->take($length)->get();
+        }
+
+        return [
+            'count' => $all_items_count,
+            'items' => $items
+        ];
+    }
+
 
     /**
-     * @return Collection|Application|LengthAwarePaginator|ResponseFactory|Builder[]|\Illuminate\Database\Eloquent\Collection|Model[]|Response
+     * @return Builder[]|Model[]|array[]
      */
-    public function leadRequestedData()
+    public function leadRequestedData($request)
     {
         try {
             $permissions = DB::table('lead_product_permissions')->where('user_id', Auth::id())
                 ->get();
 
-            if (Auth::id() == self::ASSETLITE_SUPER_ADMIN || Auth::id() == self::LEAD_SUPER_ADMIN) {
-                $leadRequest = LeadRequest::all();
+            $draw = $request->get('draw');
 
+            if (Auth::id() == self::ASSETLITE_SUPER_ADMIN || Auth::id() == self::LEAD_SUPER_ADMIN) {
+
+                $leadRequest = $this->getLeads($request);
                 $data = [];
-                foreach ($leadRequest as $item) {
+                foreach ($leadRequest['items'] as $item) {
                     if ($item->lead_category_id || $item->lead_product_id) {
                         $data[] = $this->catWiseProduct($item);
                     }
                 }
 
-//                dd($data);
-
                 return [
                     'data' => $data,
+                    'draw' => $draw,
+                    'recordsTotal' => $leadRequest['count'],
+                    'recordsFiltered' => $leadRequest['count']
                 ];
             } else {
                 if (count($permissions) != 0) {
@@ -183,17 +220,72 @@ class LeadRequestService
             ];
             return $response;
         }
+    }
+
+    public function bindDynamicValues($obj, $json_data = 'other_attributes')
+    {
+        if (!empty($obj[$json_data])) {
+            foreach ($obj[$json_data] as $key => $value) {
+                $obj[$key] = $value;
+            }
+        }
+        return $obj;
+    }
+
+    public function excelGenerator($request)
+    {
+        $leadRequest = $this->getLeads($request);
+        if ($leadRequest['count'] > 0) {
+            // Find Category Wise Product
+            $products = [];
+            foreach ($leadRequest['items'] as $item) {
+                if ($item->lead_category_id || $item->lead_product_id) {
+                    $products[] = $this->catWiseProduct($item);
+                }
+            }
+
+            // Excel Header Create
+            foreach ($products as $key => $items) {
+                $bindData = $this->bindDynamicValues($items, 'form_data');
+                unset($bindData['form_data']);
+                foreach ($bindData as $field => $val) {
+                    $header[] = $field;
+                }
+            }
+            $header = array_unique($header);
+
+            $writer = WriterEntityFactory::createXLSXWriter();
+
+            // File Name Generate
+            $fileName = str_replace(' ', '-', $products[0]['lead_category']);
+            $writer->openToBrowser($fileName . date('Y-m-d') . '.xlsx');
+
+            // header Style
+            $header_style = (new StyleBuilder())
+                ->setFontBold()
+                ->setFontSize(10)
+                ->setBackgroundColor(Color::rgb(245, 245, 240))
+                ->build();
+
+            $data_style = (new StyleBuilder())
+                ->setFontSize(9)
+                ->build();
 
 
-//        foreach ($permissions as $item){
-//            $data[] = LeadRequest::where('lead_product_id', $item->lead_product_id)
-//                ->where('lead_category_id', $item->lead_category_id)
-//                ->with('leadCategory')
-//                ->with('leadProduct')
-//                ->first();
-//        }
-//        return $data;
-        return $this->findAll();
+            $row = WriterEntityFactory::createRowFromArray(array_values($header), $header_style);
+            $writer->addRow($row);
+            $problem = [];
+            foreach ($products as $product) {
+                $bindData = $this->bindDynamicValues($product, 'form_data');
+                unset($bindData['form_data']);
+                $row = WriterEntityFactory::createRowFromArray($bindData, $data_style);
+                $writer->addRow($row);
+            }
+            Log::info(json_encode($problem));
+            $writer->close();
+        } else {
+            return  response('No data available in table!');
+        }
     }
 
     public function updateStatus($data, $id)
@@ -203,11 +295,11 @@ class LeadRequestService
         return response('Status update successfully!');
     }
 
-    public static function sendMail($data)
-    {
-        Mail::to($data['email'])->send(new LeadInfoMail($data));
-        return response('Mail send successfully');
-    }
+//    public static function sendMail($data)
+//    {
+//        Mail::to($data['email'])->send(new LeadInfoMail($data));
+//        return response('Mail send successfully');
+//    }
 
     public function downloadPDF($leadId)
     {

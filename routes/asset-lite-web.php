@@ -802,8 +802,10 @@ Route::middleware('authorize', 'auth')->group(function () {
 
 
     // Lead Management ======================================================
-    Route::get('lead-requested-list', 'AssetLite\LeadManagementController@leadRequestedList')
-        ->name('lead-list');
+    Route::get('lead-requested-list', 'AssetLite\LeadManagementController@index')->name('lead-list');
+
+    Route::get('lead-requested-list-ajax', 'AssetLite\LeadManagementController@leadRequestedList')
+        ->name('lead-list.ajex');
     Route::get('lead-product-permission-form/{user_id}', 'AssetLite\LeadManagementController@productPermissionForm')
         ->name("permission.form");
     Route::post('lead-product-permission-save', 'AssetLite\LeadManagementController@productPermissionSave')
@@ -827,7 +829,8 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('download-pdf/{lead_id}', 'AssetLite\LeadManagementController@downloadPDF')
         ->name('download.pdf');
 
-
+    Route::post('lead-data/excel-export', 'AssetLite\LeadManagementController@excelExport')
+        ->name('lead_data.excel_export');
 
     Route::post('download/file', 'AssetLite\LeadManagementController@downloadFile');
 
@@ -874,10 +877,12 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
 
     //Customer Feedback
-    Route::get('customer-feedback/questions', 'AssetLite\CustomerFeedbackController@questions');
-    Route::get('customer-feedback/add-question', 'AssetLite\CustomerFeedbackController@addQuestion');
-    Route::get('customer-feedback/edit-question/{id}', 'AssetLite\CustomerFeedbackController@editQuestion');
-    Route::post('customer-feedback/save-question', 'AssetLite\CustomerFeedbackController@saveQuestion');
+    Route::get('customer-feedback/questions', 'AssetLite\CustomerFeedbackQuesController@questions');
+    Route::get('customer-feedback/add-question', 'AssetLite\CustomerFeedbackQuesController@addQuestion');
+    Route::get('customer-feedback/edit-question/{id}', 'AssetLite\CustomerFeedbackQuesController@editQuestion');
+    Route::post('customer-feedback/save-question', 'AssetLite\CustomerFeedbackQuesController@saveQuestion');
+    Route::get('customer-feedback/question-delete/{id}', 'AssetLite\CustomerFeedbackQuesController@destroy');
+    Route::get('customer-feedback/question-sortable', 'AssetLite\CustomerFeedbackQuesController@questionSortable');
 
     Route::get('press-news-event/destroy/{id}', 'AssetLite\MediaPressNewsEventController@destroy');
 
