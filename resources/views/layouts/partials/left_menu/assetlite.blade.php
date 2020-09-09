@@ -527,24 +527,6 @@
                 </li>
             @endif
 
-            @if( auth()->user()->can_view('LeadManagement', 'leadRequestedList') )
-                <li class="nav-item"><a href="#"><i class="la la-briefcase"></i>
-                        <span class="menu-title" data-i18n="nav.templates.main">B2B Leads</span></a>
-                    <ul class="menu-content">
-                        <li class="{{ is_active_url('lead-product-permission') }}">
-                            <a class="menu-item" href="{{ url('lead-product-permission') }}"
-                               data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-list"></i> Product Permission</a>
-                        </li>
-                        <li class="{{ is_active_url('lead-requested-list') }}">
-                            <a class="menu-item" href="{{ route('lead-list') }}"
-                               data-i18n="nav.templates.vert.classic_menu"><i
-                                    class="la la-list"></i> Request List</a>
-                        </li>
-                    </ul>
-                </li>
-            @endif
-
             <li class="{{ is_active_url('/dynamic-pages') }} nav-item"><a href="{{ url('/dynamic-pages') }}"><i
                         class="la la-futbol-o"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Other Pages</span></a>
@@ -635,6 +617,26 @@
             </li>
         </ul>
     </li>
+
+    @if( auth()->user()->can_view('LeadManagement', 'leadRequestedList') )
+        <li class="nav-item"><a href="#"><i class="la la-briefcase"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">B2B Leads</span></a>
+            <ul class="menu-content">
+{{--                <li class="{{ is_active_url('lead-product-permission') }}">--}}
+{{--                    <a class="menu-item" href="{{ url('lead-product-permission') }}"--}}
+{{--                       data-i18n="nav.templates.vert.classic_menu"><i--}}
+{{--                            class="la la-list"></i> Product Permission</a>--}}
+{{--                </li>--}}
+                <li class="{{ is_active_url('lead-requested-list') }}">
+                    <a class="menu-item" href="{{ route('lead-list') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-list"></i> Lead Data List</a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
+
     <hr>
     <hr>
     <hr>
