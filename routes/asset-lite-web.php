@@ -877,10 +877,12 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
 
     //Customer Feedback
-    Route::get('customer-feedback/questions', 'AssetLite\CustomerFeedbackController@questions');
-    Route::get('customer-feedback/add-question', 'AssetLite\CustomerFeedbackController@addQuestion');
-    Route::get('customer-feedback/edit-question/{id}', 'AssetLite\CustomerFeedbackController@editQuestion');
-    Route::post('customer-feedback/save-question', 'AssetLite\CustomerFeedbackController@saveQuestion');
+    Route::get('customer-feedback/questions', 'AssetLite\CustomerFeedbackQuesController@questions');
+    Route::get('customer-feedback/add-question', 'AssetLite\CustomerFeedbackQuesController@addQuestion');
+    Route::get('customer-feedback/edit-question/{id}', 'AssetLite\CustomerFeedbackQuesController@editQuestion');
+    Route::post('customer-feedback/save-question', 'AssetLite\CustomerFeedbackQuesController@saveQuestion');
+    Route::get('customer-feedback/question-delete/{id}', 'AssetLite\CustomerFeedbackQuesController@destroy');
+    Route::get('customer-feedback/question-sortable', 'AssetLite\CustomerFeedbackQuesController@questionSortable');
 
     Route::get('press-news-event/destroy/{id}', 'AssetLite\MediaPressNewsEventController@destroy');
 
