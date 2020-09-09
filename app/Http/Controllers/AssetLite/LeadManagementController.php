@@ -77,7 +77,6 @@ class LeadManagementController extends Controller
     public function productPermissionForm()
     {
         $categories = $this->productPermissionService->getCatAndProducts();
-//        dd($categories);
         return view('admin.lead-management.product-permission.permission-form', compact('categories'));
     }
 
