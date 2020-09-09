@@ -1,25 +1,11 @@
 @extends('layouts.admin')
-@section('title', 'Lead Request List')
-@section('card_name', 'Lead Request List')
+@section('title', 'Customer Feedback List')
+@section('card_name', 'Customer Feedback List')
 @section('breadcrumb')
-    <li class="breadcrumb-item ">Lead Request List</li>
+    <li class="breadcrumb-item ">Customer Feedback List</li>
 @endsection
 @section('action')
-{{--    <div class="row">--}}
-{{--        <div class="col-md-6 pull-left">--}}
-{{--            <input type="text" name="date_range" class="form-control showdropdowns filter"--}}
-{{--                   autocomplete="off" id="date_range" placeholder="Date">--}}
-{{--        </div>--}}
-{{--        <div class="col-md-4">--}}
-{{--            --}}
-{{--        </div>--}}
-{{--    </div>--}}
 
-{{--    <button class="btn btn-primary  btn-glow px-2" name="excel_export" id="excel_export">--}}
-{{--        <i class="la la-download"></i> Excel Export</button>--}}
-
-
-{{--    <a href="{{ route('lead_data.excel_export') }}" class="btn btn-primary  btn-glow px-2"><i class="la la-download"></i> Excel Export</a>--}}
 @endsection
 @section('content')
     <section>
@@ -30,26 +16,22 @@
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-3">
-                                <input type="text" name="page_name" class="form-control filter"
+                                <input type="text" name="page_name" class="form-control"
                                        autocomplete="off" id="page_name" placeholder="Name">
                             </div>
                             <div class="form-group col-md-3">
                                 <input type="text" name="date_range" class="form-control showdropdowns filter"
                                        autocomplete="off" placeholder="Date">
                             </div>
-                            <div class="form-group col-md-3 {{ $errors->has('lead_category') ? ' error' : '' }}">
-                                <select class="form-control filter" name="lead_category" id="lead_category" required>
-                                    <option value="">---Category---</option>
-                                    <option value="1">Postpaid package</option>
-                                    <option value="2">Business package</option>
-                                    <option value="3">Business enterprise solution</option>
-                                    <option value="4">eCareer programs</option>
-                                    <option value="5">Corporate responsibility</option>
+                            <div class="form-group col-md-3">
+                                <select class="form-control filter" name="star_count" id="star_count">
+                                    <option value="">All Star</option>
+                                    <option value="1">1 Star</option>
+                                    <option value="2">2 Star</option>
+                                    <option value="3">3 Star</option>
+                                    <option value="4">4 Star</option>
+                                    <option value="5">5 Star</option>
                                 </select>
-                                <div class="help-block"></div>
-                                @if ($errors->has('lead_category'))
-                                    <div class="help-block">{{ $errors->first('lead_category') }}</div>
-                                @endif
                             </div>
 
 {{--                            <div class="form-group col-md-3">--}}
@@ -57,7 +39,7 @@
 {{--                                    <i class="la la-download"></i> Excel Export</button>--}}
 {{--                            </div>--}}
 
-                        <table class="table table-striped table-bordered" id="lead_list"> <!--zero-configuration-->
+                        <table class="table table-striped table-bordered" id="feedback_list"> <!--zero-configuration-->
                             <thead>
                             <tr>
                                 <td>#</td>
@@ -107,7 +89,7 @@
             });
 
 
-            $("#lead_list").dataTable({
+            $("#feedback_list").dataTable({
                 scrollX: true,
                 processing: true,
                 searching: false,
@@ -117,21 +99,17 @@
                 pageLength: 10,
                 lengthChange: false,
                 ajax: {
-                    url: '{{ route('lead-list.ajex') }}',
+                    url: '{{ route('feedback.list') }}',
                     data: {
-                        applicant_name: function () {
-                            return $('input[name="applicant_name"]').val();
+                        page_name: function () {
+                            return $('input[name="page_name"]').val();
                         },
                         date_range: function () {
                             return $('input[name="date_range"]').val();
                         },
-                        lead_category: function () {
-                            return $('#lead_category').val();
+                        star_count: function () {
+                            return $('#star_count').val();
                         },
-
-                        // excel_export: function () {
-                        //     return $('#excel_export').val();
-                        // },
                     }
                 },
                 columns: [
@@ -144,19 +122,23 @@
                     },
 
                     {
-                        name: 'name',
+                        name: 'page_name',
                         width: "15%",
                         render: function (data, type, row) {
                             // console.log(row)
-                            return row.form_data.name;
+                            return row.page.page_name;
                         }
                     },
 
                     {
-                        name: 'page_name',
+                        name: 'rating',
                         width: "6%",
                         render: function (data, type, row) {
-                            return row.page.page_name;
+                            var star = '';
+                            for (var i = 0; i < row.rating; i++){
+                                star += '<i class="la la-star text-warning"></i> '
+                            }
+                            return star;
                         }
                     },
 
@@ -164,22 +146,22 @@
                         name: 'created_at',
                         width: "10%",
                         render: function (data, type, row) {
-                            return row.created_at;
+                            return row.created_at.split(" ")[0];
                         }
                     },
-                    {{--{--}}
-                    {{--    name: 'actions',--}}
-                    {{--    width: "5%",--}}
-                    {{--    className: 'filter_data',--}}
-                    {{--    render: function (data, type, row) {--}}
-                    {{--        let downloadPDFurl = "{{ URL('download-pdf') }}" + "/" + row.id;--}}
-                    {{--        let detailsURL = "{{ URL('lead-requested/details') }}" + "/" + row.id;--}}
-                    {{--        return `<td class="text-center">--}}
-                    {{--                    <a href="`+downloadPDFurl+`" role="button" class="btn-sm btn-info border-0"><i class="la la-download" aria-hidden="true"></i></a>--}}
-                    {{--                    <a href="`+detailsURL+`" role="button" class="btn-sm btn-success border-0"><i class="la la-eye" aria-hidden="true"></i></a>--}}
-                    {{--                </td>`--}}
-                    {{--    }--}}
-                    {{--}--}}
+                    {
+                        name: 'actions',
+                        width: "5%",
+                        className: 'filter_data',
+                        render: function (data, type, row) {
+                            let downloadPDFurl = "{{ URL('download-pdf') }}" + "/" + row.id;
+                            let detailsURL = "{{ URL('lead-requested/details') }}" + "/" + row.id;
+                            return `<td class="text-center">
+                                        <a href="`+downloadPDFurl+`" role="button" class="btn-sm btn-info border-0"><i class="la la-download" aria-hidden="true"></i></a>
+                                        <a href="`+detailsURL+`" role="button" class="btn-sm btn-success border-0"><i class="la la-eye" aria-hidden="true"></i></a>
+                                    </td>`
+                        }
+                    }
                 ],
                 "fnCreatedRow": function (row, data, index) {
                     $('td', row).eq(0).html(index + 1);
@@ -188,45 +170,20 @@
             });
 
             $(document).on('change', '.filter', function (e) {
-                $('#lead_list').DataTable().ajax.reload();
+                $('#feedback_list').DataTable().ajax.reload();
             });
 
-            $('input[name="applicant_name"]').keyup(function() {
-                $('#lead_list').DataTable().ajax.reload();
+            $('input[name="page_name"]').keyup(function() {
+                $('#feedback_list').DataTable().ajax.reload();
             });
 
             $('input[name="date_range"]').on('apply.daterangepicker', function(ev, picker) {
-                $('#lead_list').DataTable().ajax.reload();
+                $('#feedback_list').DataTable().ajax.reload();
             });
 
             $('input[name="date_range"]').on('cancel.daterangepicker', function(ev, picker) {
                 $(this).val('');
                 $('#lead_list').DataTable().ajax.reload();
-            });
-
-
-            $('#excel_export').click(function() {
-                $("#filter_form").submit();
-                {{--$.ajax({--}}
-                {{--    url: "{{ route('lead_data.excel_export') }}",--}}
-                {{--    data: {--}}
-                {{--        applicant_name: function () {--}}
-                {{--            return $('input[name="applicant_name"]').val();--}}
-                {{--        },--}}
-                {{--        date_range: function () {--}}
-                {{--            return $('input[name="date_range"]').val();--}}
-                {{--        },--}}
-                {{--        lead_category: function () {--}}
-                {{--            return $('#lead_category').val();--}}
-                {{--        },--}}
-                {{--    },--}}
-                {{--    success: function (data,status,xhr) {   // success callback function--}}
-                {{--        //--}}
-                {{--    },--}}
-                {{--    error: function (jqXhr, textStatus, errorMessage) { // error callback--}}
-                {{--        //--}}
-                {{--    }--}}
-                {{--});--}}
             });
         });
     </script>

@@ -24,7 +24,7 @@ class CustomerFeedbackController extends Controller
      * CustomerFeedbackController constructor.
      * @param CustomerFeedbackQuesService $feedback
      */
-    public function __construct(CustomerFeedbackQuesService $feedback)
+    public function __construct(CustomerFeedbackService $feedback)
     {
         $this->feedback = $feedback;
     }
@@ -36,12 +36,12 @@ class CustomerFeedbackController extends Controller
      */
     public function index()
     {
-        return view('admin.customer_feedback.question.index');
+        return view('admin.customer_feedback.feedback-list');
     }
 
-    public function getFeedbacks()
+    public function getFeedbacks(Request $request)
     {
-
+        return $this->feedback->feedBackData($request);
     }
 
 }

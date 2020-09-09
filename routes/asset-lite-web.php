@@ -877,8 +877,9 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
 
     //Customer Feedback List
-    Route::get('customer-feedback/list', 'AssetLite\CustomerFeedbackQuesController@index');
-    Route::get('customer-feedback/get-data', 'AssetLite\CustomerFeedbackQuesController@getFeedbacks');
+    Route::get('customer-feedback/list', 'AssetLite\CustomerFeedbackController@index');
+    Route::get('customer-feedback/get-data', 'AssetLite\CustomerFeedbackController@getFeedbacks')
+            ->name('feedback.list');
 
 
     //Customer Feedback Question

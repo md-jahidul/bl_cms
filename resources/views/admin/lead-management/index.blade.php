@@ -30,7 +30,7 @@
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-3">
-                                <input type="text" name="applicant_name" class="form-control filter"
+                                <input type="text" name="applicant_name" class="form-control"
                                        autocomplete="off" id="applicant_name" placeholder="Name">
                             </div>
                             <div class="form-group col-md-3">
