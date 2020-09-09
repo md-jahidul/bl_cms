@@ -173,7 +173,7 @@ class LeadRequestService
 
             $draw = $request->get('draw');
 
-            if (Auth::id() == self::ASSETLITE_SUPER_ADMIN || Auth::id() == self::LEAD_SUPER_ADMIN) {
+//            if (Auth::id() == self::ASSETLITE_SUPER_ADMIN || Auth::id() == self::LEAD_SUPER_ADMIN) {
 
                 $leadRequest = $this->getLeads($request);
                 $data = [];
@@ -189,28 +189,29 @@ class LeadRequestService
                     'recordsTotal' => $leadRequest['count'],
                     'recordsFiltered' => $leadRequest['count']
                 ];
-            } else {
-                if (count($permissions) != 0) {
-                    foreach ($permissions as $permission) {
-                        $cat[] = $permission->lead_category_id;
-                        $productId[] = $permission->lead_product_id;
-                    }
-                    $categoryId = array_unique($cat);
-                    $data = LeadRequest::whereIn('lead_product_id', $productId)
-                        ->whereIn('lead_category_id', $categoryId)
-                        ->with(['leadCategory', 'leadProduct'])
-                        ->get();
-                    return [
-                        'data' => $data,
-                    ];
-                } else {
-                    $response = [
-                        'data' => [],
-                        'response' => "No products found or you do not have permission!"
-                    ];
-                    return $response;
-                }
-            }
+
+//            } else {
+//                if (count($permissions) != 0) {
+//                    foreach ($permissions as $permission) {
+//                        $cat[] = $permission->lead_category_id;
+//                        $productId[] = $permission->lead_product_id;
+//                    }
+//                    $categoryId = array_unique($cat);
+//                    $data = LeadRequest::whereIn('lead_product_id', $productId)
+//                        ->whereIn('lead_category_id', $categoryId)
+//                        ->with(['leadCategory', 'leadProduct'])
+//                        ->get();
+//                    return [
+//                        'data' => $data,
+//                    ];
+//                } else {
+//                    $response = [
+//                        'data' => [],
+//                        'response' => "No products found or you do not have permission!"
+//                    ];
+//                    return $response;
+//                }
+//            }
 
 
         } catch (\Exception $e) {
