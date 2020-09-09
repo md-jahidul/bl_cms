@@ -36,6 +36,7 @@ class LeadRequestService
     use CrudTrait;
 
     protected const ASSETLITE_SUPER_ADMIN = 5;
+    protected const LEAD_SUPER_ADMIN = 9;
 
     /***
      * @var LeadRequestRepository
@@ -136,7 +137,7 @@ class LeadRequestService
             $permissions = DB::table('lead_product_permissions')->where('user_id', Auth::id())
                 ->get();
 
-            if (Auth::id() == self::ASSETLITE_SUPER_ADMIN) {
+            if (Auth::id() == self::ASSETLITE_SUPER_ADMIN || Auth::id() == self::LEAD_SUPER_ADMIN) {
                 $leadRequest = LeadRequest::all();
 
                 $data = [];
