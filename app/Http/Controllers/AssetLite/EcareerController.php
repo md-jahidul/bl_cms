@@ -579,7 +579,7 @@ class EcareerController extends Controller {
         }
 
         $response = $this->ecarrerService->updateMainSection($request->except(['slug']), $id);
-        
+
         if ($response['success'] == 1) {
             Session::flash('message', 'Section updated successfully!');
         } else if($response['success'] == 2){
@@ -1641,7 +1641,7 @@ class EcareerController extends Controller {
         $this->ecarrerService->updateSubSection($request->except(['slug']), $id);
 
         Session::flash('message', 'Banner updated successfully!');
-//		return redirect('programs/tab-title');
+		return redirect('programs/tab-title');
     }
 
 }

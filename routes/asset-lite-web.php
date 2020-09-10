@@ -589,6 +589,16 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('life-at-banglalink/general/{id}/update', 'AssetLite\EcareerController@generalUpdate')->name('life.at.banglalink.general.update');
     Route::get('life-at-banglalink/general/destroy/{id}', 'AssetLite\EcareerController@generalDestroy')->name('life.at.banglalink.general.destroy');
 
+    // University
+    Route::get('university', 'AssetLite\UniversityController@index')
+        ->name('university.index');
+    Route::post('university-list', 'AssetLite\UniversityController@universityList')
+        ->name('university.list.ajax');
+    Route::post('university-excel/uploader', 'AssetLite\UniversityController@uploadUniversityExcel')
+        ->name('university.uploader');
+
+    Route::get('university/destroy/{university_id?}', 'AssetLite\UniversityController@deleteUniversity');
+
 
     // eCarrer Items ============================================
     Route::get('ecarrer-items/{parent_id}/list', 'AssetLite\EcareerItemController@index')->name('ecarrer.items.list');
@@ -792,10 +802,15 @@ Route::middleware('authorize', 'auth')->group(function () {
 
 
     // Lead Management ======================================================
-    Route::get('lead-requested-list', 'AssetLite\LeadManagementController@leadRequestedList')
-        ->name('lead-list');
-    Route::get('lead-product-permission-form', 'AssetLite\LeadManagementController@productPermissionForm')
+    Route::get('lead-requested-list', 'AssetLite\LeadManagementController@index')->name('lead-list');
+
+    Route::get('lead-requested-list-ajax', 'AssetLite\LeadManagementController@leadRequestedList')
+        ->name('lead-list.ajex');
+    Route::get('lead-product-permission-form/{user_id}', 'AssetLite\LeadManagementController@productPermissionForm')
         ->name("permission.form");
+    Route::post('lead-product-permission-save', 'AssetLite\LeadManagementController@productPermissionSave')
+        ->name("permission.save");
+
     Route::get('lead-product-permission', 'AssetLite\LeadManagementController@leadProductPermission');
 //        ->name('lead-list');
 
@@ -807,8 +822,17 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('lead-requested/send-mail-form', 'AssetLite\LeadManagementController@sendMailForm')
         ->name('lead.send_mail_form');
 
+    //TODO:: Not use delete later
     Route::post('lead-requested/send-mail', 'AssetLite\LeadManagementController@sendMail')
         ->name('lead.send_mail');
+
+    Route::get('download-pdf/{lead_id}', 'AssetLite\LeadManagementController@downloadPDF')
+        ->name('download.pdf');
+
+    Route::post('lead-data/excel-export', 'AssetLite\LeadManagementController@excelExport')
+        ->name('lead_data.excel_export');
+
+    Route::post('download/file', 'AssetLite\LeadManagementController@downloadFile');
 
     // Product Price Slab
     Route::get('product-price/slabs', 'AssetLite\ProductPriceSlabController@index');
@@ -853,10 +877,12 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
 
     //Customer Feedback
-    Route::get('customer-feedback/questions', 'AssetLite\CustomerFeedbackController@questions');
-    Route::get('customer-feedback/add-question', 'AssetLite\CustomerFeedbackController@addQuestion');
-    Route::get('customer-feedback/edit-question/{id}', 'AssetLite\CustomerFeedbackController@editQuestion');
-    Route::post('customer-feedback/save-question', 'AssetLite\CustomerFeedbackController@saveQuestion');
+    Route::get('customer-feedback/questions', 'AssetLite\CustomerFeedbackQuesController@questions');
+    Route::get('customer-feedback/add-question', 'AssetLite\CustomerFeedbackQuesController@addQuestion');
+    Route::get('customer-feedback/edit-question/{id}', 'AssetLite\CustomerFeedbackQuesController@editQuestion');
+    Route::post('customer-feedback/save-question', 'AssetLite\CustomerFeedbackQuesController@saveQuestion');
+    Route::get('customer-feedback/question-delete/{id}', 'AssetLite\CustomerFeedbackQuesController@destroy');
+    Route::get('customer-feedback/question-sortable', 'AssetLite\CustomerFeedbackQuesController@questionSortable');
 
     Route::get('press-news-event/destroy/{id}', 'AssetLite\MediaPressNewsEventController@destroy');
 
@@ -896,5 +922,14 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     // Be A Partner
     Route::get('be-a-partner', 'AssetLite\BeAPartnerController@getBeAPartner');
-    Route::get('be-a-partner/save', 'AssetLite\BeAPartnerController@beAPartnerSave');
+    Route::get('be-a-partner/edit/{id}', 'AssetLite\BeAPartnerController@beAPartnerEdit')
+        ->name('be-a-partner.edit');
+    Route::post('be-a-partner/save/{id}', 'AssetLite\BeAPartnerController@beAPartnerSave');
+    Route::get('be-a-partner/component-create', 'AssetLite\BeAPartnerController@componentCreateForm');
+    Route::post('be-a-partner/component-store', 'AssetLite\BeAPartnerController@componentStore');
+    Route::get('be-a-partner/component-edit/{id}', 'AssetLite\BeAPartnerController@componentEditForm');
+    Route::put('be-a-partner/component-update/{id}', 'AssetLite\BeAPartnerController@componentUpdate')
+        ->name('be_a_partner.component.update');
+    Route::get('be-a-partner/component-delete/{id}', 'AssetLite\BeAPartnerController@componentDelete')
+        ->name('be_a_partner.component.delete');
 });

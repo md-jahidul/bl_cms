@@ -29,7 +29,7 @@
                             <th>Image</th>
                             <th width="30%">Title</th>
                             <th>Redirect URL</th>
-                        <th width="30%" class="text-right">Action</th>
+                            <th width="10%" class="text-right">Action</th>
                         </tr>
                     </thead>
                     <tbody id="sortable">
@@ -39,7 +39,7 @@
                             <td><img class="" src="{{ config('filesystems.file_base_url') . $slider_image->image_url }}" alt="Slider Image" height="70" width="200" /></td>
                             <td>{{ $slider_image->title_en }} {!! $slider_image->is_active == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                             <td>{{ (isset($slider_image->other_attributes['redirect_url'])) ? $slider_image->other_attributes['redirect_url'] : '' }}</td>
-                            <td class="action">
+                            <td class="action text-right">
                                 @if(isset($sliderItem->other_attributes['type']) == 'component_slider')
                                     <a href="{{ url('business-others-service-edit/'.$slider_image->id . '/corona') }}" target="_blank" class="btn btn-sm btn-outline-info">
                                         Banner

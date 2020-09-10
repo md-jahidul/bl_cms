@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\LeadDataSend;
 use App\Services\Banglalink\LeadRequestService;
 use App\Services\LeadProductPermissionService;
 use App\Services\UserService;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -45,25 +48,45 @@ class LeadManagementController extends Controller
         $this->userService = $userService;
     }
 
-    /**
-     * @return Factory|View
-     */
-    public function leadRequestedList()
+    public function index()
     {
-        $allRequest = $this->leadRequestService->leadRequestedData();
-        $allRequest = $allRequest['data'];
-        if (empty($allRequest)) {
-            Session::flash('error', "No products found or you do not have permission!");
-            $allRequest = [];
+        return view('admin.lead-management.index');
+    }
+
+    /**
+     * @param Request $request
+     * @return array[]|Builder[]|Model[]
+     */
+    public function leadRequestedList(Request $request)
+    {
+        return $this->leadRequestService->leadRequestedData($request);
+    }
+
+    public function excelExport(Request $request)
+    {
+        $request->validate([
+            'lead_category' => 'required',
+        ]);
+        $response = $this->leadRequestService->excelGenerator($request);
+        if ($response) {
+            Session::flash('error', $response->getContent());
+            return redirect(route('lead-list'));
         }
-//        dd($allRequest);
-        return view('admin.lead-management.index', compact('allRequest'));
     }
 
     public function productPermissionForm()
     {
-        $users = $this->productPermissionService->getCatAndProducts();
-        return view('admin.lead-management.product-permission.permission-form', compact('users', 'leadSuperAdmin'));
+        $categories = $this->productPermissionService->getCatAndProducts();
+//        dd($categories);
+        return view('admin.lead-management.product-permission.permission-form', compact('categories'));
+    }
+
+    public function productPermissionSave(Request $request)
+    {
+        $response = $this->productPermissionService->userWisePermissionSave();
+        dd($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect(route('lead-list'));
     }
 
     public function leadProductPermission()
@@ -86,20 +109,33 @@ class LeadManagementController extends Controller
         return redirect(route('lead-list'));
     }
 
-    public function sendMailForm()
+//    public function sendMailForm()
+//    {
+//        return view('admin.lead-management.send_mail_form');
+//    }
+
+//    public function sendMail(Request $request)
+//    {
+//        $request->validate([
+//            'email' => 'required|email',
+//            'message' => 'required'
+//        ]);
+//
+//        LeadDataSend::dispatch($request->all())
+//            ->onQueue('lead_data_send');
+//
+////        $response = $this->leadRequestService->sendMail($request->all());
+//        Session::flash('message', 'Mail send successfully');
+//        return redirect(route('lead-list'));
+//    }
+
+    public function downloadFile(Request $request)
     {
-        return view('admin.lead-management.send_mail_form');
+        return response()->download("uploads/$request->file_path");
     }
 
-    public function sendMail(Request $request)
+    public function downloadPDF($leadId)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'message' => 'required'
-        ]);
-        $response = $this->leadRequestService->sendMail($request->all());
-        Session::flash('message', $response->getContent());
-        return redirect(route('lead-list'));
+        return $this->leadRequestService->downloadPDF($leadId);
     }
-
 }

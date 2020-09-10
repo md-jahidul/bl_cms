@@ -2,7 +2,7 @@
 @section('title', 'Create Business Packages')
 @section('card_name', 'Create Packages')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ url('business-package') }}"> Package List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ url('lead-product-permission') }}"> User List</a></li>
     <li class="breadcrumb-item active"> Package Create</li>
 @endsection
 @section('action')
@@ -13,30 +13,30 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-
-                    <form method="POST" action="{{ route('business.package.save')}}" class="form home_news_form" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('permission.save')}}" class="form home_news_form" enctype="multipart/form-data">
+                        @csrf
                         <div class="row">
                             <div class="col-md-12 col-xs-12">
-                                <div class="form-group ">
-                                    <h4>Select Related Package (You may also like)</h4>
-                                    <hr>
-                                    <div class="row">
+                                @foreach($categories as $category)
+                                    <div class="form-group mb-3">
+{{--                                        {{ dd($category) }}--}}
+                                        <h4><strong class="text-primary">{{ $category['category']['title'] }}</strong></h4>
+                                        <hr class="mt-0">
+                                        <div class="row">
+                                            @foreach($category['products'] as $product)
+                                                <div class="col-md-3 col-xs-12">
+                                                    <label class="text-bold-600 cursor-pointer">
+                                                        <input type="checkbox" value="{{ $product->id }}" name="{{ $category['category']['slug'] }}[]">
+                                                        {{$product->name}}
+                                                    </label>
 
-{{--                                        @foreach($packages as $pac)--}}
-                                            <div class="col-md-3 col-xs-12">
-                                                <label class="text-bold-600 cursor-pointer">
-                                                    <input type="checkbox" name="{{--realated[{{$pac->id}}]--}}">
-{{--                                                    {{$pac->name}}--}}
-                                                </label>
-
-                                            </div>
-{{--                                        @endforeach--}}
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
-
-
+                                @endforeach
                                 <div class="form-group text-right">
-                                    <button class="btn btn-sm btn-info news_submit" type="submit">Save Package</button>
+                                    <button class="btn btn-info news_submit" type="submit">Save</button>
                                 </div>
 
                             </div>
