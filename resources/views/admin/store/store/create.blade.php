@@ -177,13 +177,13 @@
                                             <option value="">Select App</option>
                                             @foreach ($apps as $app)
                                                 <option @if(isset($store->apps[$loop->index]->id) && ($app->id == $store->apps[$loop->index]->id)) selected
-                                                           value="{{$app->id}}">{{$app->title}}
+                                                        value="{{$app->id}}">{{$app->title}}
                                                 </option>
 
                                                 <option @elseif(isset($store) && isset($store->apps[$loop->index-1]->id) && ($app->id == $store->apps[$loop->index-1]->id)) selected  @endif
                                                         value="{{$app->id}}" {{ (old("app_id") == $app->id ? "selected":"") }}>{{$app->title}}</option>
 
-                                              {{-- <option @if(old("app_id[]")) {{ (old("app_id[]") == $app->id ? "selected":"") }}
+                                               {{-- <option @if(old("app_id[]")) {{ (old("app_id[]") == $app->id ? "selected":"") }}
                                                         @elseif(isset($store) && isset($store->apps[$loop->index-1]->id) && ($app->id == $store->apps[$loop->index-1]->id)) selected  @endif
                                                         value="{{$app->id}}" {{ (old("app_id") == $app->id ? "selected":"") }}>{{$app->title}}</option>--}}
 
