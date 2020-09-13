@@ -57,7 +57,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                           {{-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="store_id" >
                                         Store :
@@ -80,7 +80,7 @@
                                         <small class="text-danger"> @error('store_id') {{ $message }} @enderror </small>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
 
 
                             <div class="col-md-4">
