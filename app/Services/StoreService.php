@@ -63,7 +63,7 @@ class StoreService
         if(count($app_ids) != 0){
             $store->apps()->attach($app_ids);
         }
-        
+
         return new Response("Store has been successfully created");
     }
 

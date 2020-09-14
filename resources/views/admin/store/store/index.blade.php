@@ -153,7 +153,7 @@
                 paging: true,
                 searching: true,
                 "bDestroy": true,
-                "pageLength": 10
+                "pageLength": 50
             });
         });
 
