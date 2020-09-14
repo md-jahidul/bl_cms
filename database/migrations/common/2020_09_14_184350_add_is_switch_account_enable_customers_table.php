@@ -14,7 +14,7 @@ class AddIsSwitchAccountEnableCustomersTable extends Migration
     public function up()
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->boolean("is_switch_account_enable")->default(true);
+            $table->boolean("is_switch_account_allow")->default(true);
         });
     }
 
@@ -26,7 +26,7 @@ class AddIsSwitchAccountEnableCustomersTable extends Migration
     public function down()
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->dropColumn('is_switch_account_enable');
+            $table->dropColumn('is_switch_account_allow');
         });
     }
 }
