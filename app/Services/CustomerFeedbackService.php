@@ -10,8 +10,11 @@
 namespace App\Services;
 
 use App\Models\CustomerFeedback;
+use App\Models\CustomerFeedbackPage;
+use App\Repositories\CustomerFeedbackPageRepository;
 use App\Repositories\CustomerFeedbackRepository;
 use App\Traits\CrudTrait;
+use Illuminate\Support\Facades\DB;
 
 class CustomerFeedbackService
 {
@@ -22,14 +25,23 @@ class CustomerFeedbackService
      * @var $feedRepo
      */
     protected $feedRepo;
+    /**
+     * @var CustomerFeedbackPage
+     */
+    private $customerFeedbackPage;
 
     /**
      * CustomerFeedbackService constructor.
      * @param CustomerFeedbackRepository $feedRepo
+     * @param CustomerFeedbackPageRepository $customerFeedbackPageRepository
      */
-    public function __construct(CustomerFeedbackRepository $feedRepo)
+    public function __construct(
+        CustomerFeedbackRepository $feedRepo,
+        CustomerFeedbackPageRepository $customerFeedbackPageRepository
+    )
     {
         $this->feedRepo = $feedRepo;
+        $this->customerFeedbackPage = $customerFeedbackPageRepository;
         $this->setActionRepository($feedRepo);
     }
 
@@ -41,7 +53,6 @@ class CustomerFeedbackService
     public function feedBackData($request)
     {
         try {
-
             $draw = $request->get('draw');
             $start = $request->get('start');
             $length = $request->get('length');
@@ -50,6 +61,11 @@ class CustomerFeedbackService
 
             if ($request->star_count) {
                 $builder = $builder->where('rating', $request->star_count);
+            }
+
+            if ($request->order[0]['column'] == 2) {
+//                dd($request->order);
+                $builder = $builder->orderBy('rating', $request->order[0]['dir']);
             }
 
             $builder = $builder->whereHas('page', function ($q) use ($request) {
@@ -68,9 +84,7 @@ class CustomerFeedbackService
 
             $all_items_count = $builder->count();
 
-            $data = $builder->skip($start)->take($length)->get();
-
-//            dd($data);
+            $data = $builder->skip($start)->take($length)->orderBy('created_at', 'DESC')->get();
 
             return [
                 'data' => $data,
@@ -85,5 +99,43 @@ class CustomerFeedbackService
                 'message' => $e->getMessage()
             ];
         }
+    }
+
+    public function pageRatingInfo()
+    {
+        $results = DB::select(DB::raw("
+              SELECT
+                    AA.id, AA.page_name,
+                    sum(feedback_count) total_feedbacks,
+                    sum(case when rating = 1 then feedback_count else 0 end) as one_star,
+                    sum(case when rating = 2 then feedback_count else 0 end) as two_star,
+                    sum(case when rating = 3 then feedback_count else 0 end) as three_star,
+                    sum(case when rating = 4 then feedback_count else 0 end) as four_star,
+                    sum(case when rating = 5 then feedback_count else 0 end) as five_star
+              FROM (
+                     SELECT f.rating, p.id, p.page_name, count(1) feedback_count
+                     from customer_feedback f
+                              Inner join customer_feedback_pages p on f.page_id = p.id -- where page_id = {parameter}
+                     group by f.rating, f.page_id, p.page_name
+                ) AA
+                group by AA.id, AA.page_name
+                Order by AA.id, AA.page_name
+            ")
+        );
+
+
+        return $results;
+
+
+//        for ($i = 1; $i < 20; $i++){
+//            CustomerFeedback::create([
+//                'rating' => rand(1,5),
+//                'answers' => json_encode([]),
+//                'page_id' => rand(1,3),
+//            ]);
+//        }
+
+//        CustomerFeedback::truncate();
+
     }
 }

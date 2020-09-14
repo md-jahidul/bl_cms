@@ -38,7 +38,7 @@
                                 <td class="text-center" width="22%">
                                     <a href="{{ url("programs/tab-title/$section->id/edit") }}" role="button" class="btn btn-sm btn-outline-info"><i class="la la-edit" aria-hidden="true"></i></a>
                                     {{-- <a href="{{ url("programs/tab-title/destroy/$section->id") }}" role="button" class="btn btn-outline-success border-0" onclick="return confirm('Are you sure?');"><i class="la la-trash" aria-hidden="true"></i></a> --}}
-                                    
+
                                     @if( $section->has_items == 1 )
                                         <a href="{{ url("ecarrer-items/$section->id/list") }}" class="btn btn-outline-warning"><i class="la la-edit"></i> Section Items <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{--{{ $childNumber }}--}}</span></a>
                                     @endif
@@ -51,9 +51,7 @@
                 </div>
             </div>
         </div>
-
     </section>
-
 @stop
 
 

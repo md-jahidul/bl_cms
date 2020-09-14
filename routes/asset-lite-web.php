@@ -881,6 +881,12 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::get('customer-feedback/get-data', 'AssetLite\CustomerFeedbackController@getFeedbacks')
             ->name('feedback.list');
 
+    Route::get('customer-feedback/details/{feedbackId}', 'AssetLite\CustomerFeedbackController@feedbacksDetails')
+        ->name('feedback.details');
+
+    Route::get('customer-feedback/page-groping', 'AssetLite\CustomerFeedbackController@pageWiseRating')
+        ->name('feedback.page-groping');
+
 
     //Customer Feedback Question
     Route::get('customer-feedback/questions', 'AssetLite\CustomerFeedbackQuesController@questions');

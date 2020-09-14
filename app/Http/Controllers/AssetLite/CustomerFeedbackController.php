@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AssetLite;
 use App\Services\CustomerFeedbackQuesService;
 use App\Services\CustomerFeedbackService;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -44,4 +45,21 @@ class CustomerFeedbackController extends Controller
         return $this->feedback->feedBackData($request);
     }
 
+    /**
+     * @param $feedbackId
+     * @return Application|Factory|View
+     */
+    public function feedbacksDetails($feedbackId)
+    {
+        $feedback = $this->feedback->findOne($feedbackId);
+        $feedbackDetails = json_decode($feedback->answers, true);
+        return view('admin.customer_feedback.feedback-details', compact('feedbackDetails'));
+    }
+
+    public function pageWiseRating()
+    {
+        $pagesInfo = $this->feedback->pageRatingInfo();
+//        return $pagesInfo;
+        return view('admin.customer_feedback.feedback-page-details', compact('pagesInfo'));
+    }
 }

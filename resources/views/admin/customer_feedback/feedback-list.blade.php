@@ -17,11 +17,11 @@
                         <div class="row">
                             <div class="form-group col-md-3">
                                 <input type="text" name="page_name" class="form-control"
-                                       autocomplete="off" id="page_name" placeholder="Name">
+                                       autocomplete="off" id="page_name" placeholder="Page Name">
                             </div>
                             <div class="form-group col-md-3">
                                 <input type="text" name="date_range" class="form-control showdropdowns filter"
-                                       autocomplete="off" placeholder="Date">
+                                       autocomplete="off" placeholder="Date Range">
                             </div>
                             <div class="form-group col-md-3">
                                 <select class="form-control filter" name="star_count" id="star_count">
@@ -34,10 +34,10 @@
                                 </select>
                             </div>
 
-{{--                            <div class="form-group col-md-3">--}}
-{{--                                <button type="submit" class="btn btn-primary  btn-glow px-2" value="excel_export" name="excel_export" id="excel_export">--}}
-{{--                                    <i class="la la-download"></i> Excel Export</button>--}}
-{{--                            </div>--}}
+                            <div class="form-group col-md-3">
+                                <a href="{{ route('feedback.page-groping') }}" class="btn btn-outline-info  btn-glow px-2" id="page_group">
+                                    <i class="la la-pagelines"></i> Page Group</a>
+                            </div>
 
                         <table class="table table-striped table-bordered" id="feedback_list"> <!--zero-configuration-->
                             <thead>
@@ -94,7 +94,7 @@
                 processing: true,
                 searching: false,
                 serverSide: true,
-                ordering: false,
+                ordering: ['star'],
                 autoWidth: false,
                 pageLength: 10,
                 lengthChange: false,
@@ -154,12 +154,14 @@
                         width: "5%",
                         className: 'filter_data',
                         render: function (data, type, row) {
-                            let downloadPDFurl = "{{ URL('download-pdf') }}" + "/" + row.id;
-                            let detailsURL = "{{ URL('lead-requested/details') }}" + "/" + row.id;
-                            return `<td class="text-center">
-                                        <a href="`+downloadPDFurl+`" role="button" class="btn-sm btn-info border-0"><i class="la la-download" aria-hidden="true"></i></a>
-                                        <a href="`+detailsURL+`" role="button" class="btn-sm btn-success border-0"><i class="la la-eye" aria-hidden="true"></i></a>
+                            let detailsURL = "{{ URL('customer-feedback/details') }}" + "/" + row.id;
+                            let answers = JSON.parse(row.answers)
+                            if (answers && Array.isArray(answers) && answers.length > 0){
+                                return  `<td class="text-center">
+                                        <a href="`+detailsURL+`" role="button" class="btn-sm btn-outline-warning"><i class="la la-feed" aria-hidden="true"></i> User Feedback</a>
                                     </td>`
+                            }
+                            return null;
                         }
                     }
                 ],
@@ -183,7 +185,7 @@
 
             $('input[name="date_range"]').on('cancel.daterangepicker', function(ev, picker) {
                 $(this).val('');
-                $('#lead_list').DataTable().ajax.reload();
+                $('#feedback_list').DataTable().ajax.reload();
             });
         });
     </script>
