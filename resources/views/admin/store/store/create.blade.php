@@ -185,7 +185,7 @@
                                     <label for="app_id" class="required">
                                         App :
                                     </label>
-                                    
+
                                     <div class="controls">
 
                                         <select required name="app_id[]" id="app_id[]" multiple="multiple" class="app_select form-control @error('app_id') is-invalid @enderror">
@@ -193,9 +193,15 @@
 
                                             @foreach ($apps as $app)
 
-                                                <option {{ match($app->id, $store->apps) ? 'selected' : '' }}
-                                                        value="{{$app->id}}">  {{$app->title}}
-                                                </option>
+                                                @if(isset($store))
+                                                    <option  {{ match($app->id, $store->apps) ? 'selected' : '' }}
+                                                             value="{{$app->id}}">  {{$app->title}}
+                                                    </option>
+                                                @else
+                                                    <option value="{{$app->id}}">  {{$app->title}} </option>
+                                                @endif
+
+
 
                                             @endforeach
                                         </select>
