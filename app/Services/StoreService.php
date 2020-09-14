@@ -57,12 +57,13 @@ class StoreService
             $data['image_url'] = 'storage/' . $data['image_url']->store('store');
         }
 
-       $store =  $this->save($data);
+        $store =  $this->save($data);
 
-        if(isset($data['app_id'])){
+
+        if(count($app_ids) != 0){
             $store->apps()->attach($app_ids);
         }
-
+        
         return new Response("Store has been successfully created");
     }
 
