@@ -51,7 +51,7 @@
                                 <td width="12%">{{$store->title}}</td>
                                {{-- <td width="30%">{{$store->description}}</td>--}}
                                 <td width="30%">{{$store->type}}</td>
-                                <td width="10%">{{$store->storeCategories->name_en}} </td>
+                                <td width="10%">@if(isset($store->storeCategories->name_en)){{$store->storeCategories->name_en}} @else {{"N/A"}} @endif </td>
                                 <td width="15%">
                                     <div class="row">
 
