@@ -932,6 +932,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::resource('bl-4g-device-tag', 'AssetLite\FourGDeviceTagController')->except(['show', 'destroy']);
     Route::get('bl-4g-device-tag/destroy/{id}', 'AssetLite\FourGDeviceTagController@destroy');
 
+    // Banglalink 3G
+    Route::resource('bl-3g-landing-page', 'AssetLite\BanglalinkThreeGController')->except(['store', 'show', 'destroy']);
+    Route::post('bl-3g-banner-image', 'AssetLite\BanglalinkThreeGController@bannerUpload')
+        ->name('three_g_banner_image.upload');
+
     // Be A Partner
     Route::get('be-a-partner', 'AssetLite\BeAPartnerController@getBeAPartner');
     Route::get('be-a-partner/edit/{id}', 'AssetLite\BeAPartnerController@beAPartnerEdit')

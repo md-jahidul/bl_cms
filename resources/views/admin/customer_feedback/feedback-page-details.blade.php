@@ -34,20 +34,20 @@
                                             <ul class="pl-1">
                                                 <li class=" d-flex justify-content-between pt-1 pb-0">
                                                     <div class="col-md-12">
-                                                        <i class="la la-star text-warning"></i>
+                                                       1. <i class="la la-star text-warning"></i>
                                                     </div>
                                                     <span class="badge badge-primary badge-pill">{{ $page->one_star }}</span>
                                                 </li>
                                                 <li class=" d-flex justify-content-between pt-1 pb-0">
                                                     <div class="col-md-12">
-                                                        <i class="la la-star text-warning"></i>
+                                                       2. <i class="la la-star text-warning"></i>
                                                         <i class="la la-star text-warning"></i>
                                                     </div>
                                                     <span class="badge badge-primary badge-pill">{{ $page->two_star }}</span>
                                                 </li>
                                                 <li class=" d-flex justify-content-between pt-1 pb-0">
                                                     <div class="col-md-12">
-                                                        <i class="la la-star text-warning"></i>
+                                                        3. <i class="la la-star text-warning"></i>
                                                         <i class="la la-star text-warning"></i>
                                                         <i class="la la-star text-warning"></i>
                                                     </div>
@@ -55,7 +55,7 @@
                                                 </li>
                                                 <li class=" d-flex justify-content-between pt-1 pb-0">
                                                     <div class="col-md-12">
-                                                        <i class="la la-star text-warning"></i>
+                                                        4. <i class="la la-star text-warning"></i>
                                                         <i class="la la-star text-warning"></i>
                                                         <i class="la la-star text-warning"></i>
                                                         <i class="la la-star text-warning"></i>
@@ -64,7 +64,7 @@
                                                 </li>
                                                 <li class=" d-flex justify-content-between pt-1 pb-0">
                                                     <div class="col-md-12">
-                                                        <i class="la la-star text-warning"></i>
+                                                        5. <i class="la la-star text-warning"></i>
                                                         <i class="la la-star text-warning"></i>
                                                         <i class="la la-star text-warning"></i>
                                                         <i class="la la-star text-warning"></i>

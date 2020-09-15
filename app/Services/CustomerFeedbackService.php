@@ -119,23 +119,8 @@ class CustomerFeedbackService
                      group by f.rating, f.page_id, p.page_name
                 ) AA
                 group by AA.id, AA.page_name
-                Order by AA.id, AA.page_name
             ")
         );
-
-
         return $results;
-
-
-//        for ($i = 1; $i < 20; $i++){
-//            CustomerFeedback::create([
-//                'rating' => rand(1,5),
-//                'answers' => json_encode([]),
-//                'page_id' => rand(1,3),
-//            ]);
-//        }
-
-//        CustomerFeedback::truncate();
-
     }
 }

@@ -616,6 +616,17 @@
                 </ul>
             </li>
 
+            <li class="nav-item"><a href="#"><i class="la la-signal"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Banglalink 3G</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('/bl-3g-landing-page') }} nav-item">
+                        <a href="{{ url('/bl-3g-landing-page') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">3G Landing Page</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             <li class="{{ is_active_url('/be-a-partner') }} nav-item"><a href="{{ url('/be-a-partner') }}">
                     <i class="la la-paragraph"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Be A Partner</span></a>
