@@ -18,8 +18,10 @@ use App\Repositories\ProductRepository;
 use App\Services\ApiBaseService;
 use App\Traits\CrudTrait;
 use Box\Spout\Common\Entity\Style\Color;
+use Box\Spout\Common\Exception\IOException;
 use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
+use Box\Spout\Writer\Exception\WriterNotOpenedException;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -33,6 +35,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+
 //use Excel;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -125,12 +128,24 @@ class LeadRequestService
         return $leadData;
     }
 
-    public function getLeads($request)
+    public function getLeads($request, $permissions = null)
     {
         $start = $request->get('start');
         $length = $request->get('length');
 
-        $builder = new LeadRequest();
+        if ($permissions) {
+            $cat = [];
+            $productId = [];
+            foreach ($permissions as $permission) {
+                $cat[] = $permission->lead_category_id;
+                $productId[] = $permission->lead_product_id;
+            }
+            $categoryId = array_unique($cat);
+            $builder = LeadRequest::whereIn('lead_product_id', $productId)
+                ->whereIn('lead_category_id', $categoryId);
+        } else {
+            $builder = new LeadRequest();
+        }
 
         if ($request->lead_category) {
             $builder = $builder->where('lead_category_id', $request->lead_category);
@@ -155,9 +170,16 @@ class LeadRequestService
             $items = $builder->skip($start)->take($length)->get();
         }
 
+        $data = [];
+        foreach ($items as $item) {
+            if ($item->lead_category_id || $item->lead_product_id) {
+                $data[] = $this->catWiseProduct($item);
+            }
+        }
+
         return [
             'count' => $all_items_count,
-            'items' => $items
+            'items' => $data
         ];
     }
 
@@ -173,53 +195,35 @@ class LeadRequestService
 
             $draw = $request->get('draw');
 
-//            if (Auth::id() == self::ASSETLITE_SUPER_ADMIN || Auth::id() == self::LEAD_SUPER_ADMIN) {
-
+            if (Auth::id() == self::ASSETLITE_SUPER_ADMIN || Auth::id() == self::LEAD_SUPER_ADMIN) {
                 $leadRequest = $this->getLeads($request);
-                $data = [];
-                foreach ($leadRequest['items'] as $item) {
-                    if ($item->lead_category_id || $item->lead_product_id) {
-                        $data[] = $this->catWiseProduct($item);
-                    }
+            } else {
+                if (count($permissions) != 0) {
+                    $leadRequest = $this->getLeads($request, $permissions);
+                } else {
+                    return [
+                        'data' => [],
+                        'permission' => false,
+                        'draw' => $draw,
+                        'recordsTotal' => 0,
+                        'recordsFiltered' => 0
+                    ];
                 }
+            }
 
-                return [
-                    'data' => $data,
-                    'draw' => $draw,
-                    'recordsTotal' => $leadRequest['count'],
-                    'recordsFiltered' => $leadRequest['count']
-                ];
-
-//            } else {
-//                if (count($permissions) != 0) {
-//                    foreach ($permissions as $permission) {
-//                        $cat[] = $permission->lead_category_id;
-//                        $productId[] = $permission->lead_product_id;
-//                    }
-//                    $categoryId = array_unique($cat);
-//                    $data = LeadRequest::whereIn('lead_product_id', $productId)
-//                        ->whereIn('lead_category_id', $categoryId)
-//                        ->with(['leadCategory', 'leadProduct'])
-//                        ->get();
-//                    return [
-//                        'data' => $data,
-//                    ];
-//                } else {
-//                    $response = [
-//                        'data' => [],
-//                        'response' => "No products found or you do not have permission!"
-//                    ];
-//                    return $response;
-//                }
-//            }
-
+            return [
+                'data' => $leadRequest['items'],
+                'permission' => true,
+                'draw' => $draw,
+                'recordsTotal' => $leadRequest['count'],
+                'recordsFiltered' => $leadRequest['count']
+            ];
 
         } catch (\Exception $e) {
-            $response = [
+            return [
                 'success' => 0,
                 'message' => $e->getMessage()
             ];
-            return $response;
         }
     }
 
@@ -233,17 +237,19 @@ class LeadRequestService
         return $obj;
     }
 
+    /**
+     * @param $request
+     * @return Application|ResponseFactory|Response
+     * @throws IOException
+     * @throws WriterNotOpenedException
+     */
     public function excelGenerator($request)
     {
         $leadRequest = $this->getLeads($request);
+
         if ($leadRequest['count'] > 0) {
-            // Find Category Wise Product
-            $products = [];
-            foreach ($leadRequest['items'] as $item) {
-                if ($item->lead_category_id || $item->lead_product_id) {
-                    $products[] = $this->catWiseProduct($item);
-                }
-            }
+            // Find Category Wise Product With Form data
+            $products = $leadRequest['items'];
 
             // Excel Header Create
             foreach ($products as $key => $items) {
@@ -285,7 +291,7 @@ class LeadRequestService
             Log::info(json_encode($problem));
             $writer->close();
         } else {
-            return  response('No data available in table!');
+            return response('No data available in table!');
         }
     }
 
@@ -305,7 +311,7 @@ class LeadRequestService
     public function downloadPDF($leadId)
     {
         $leadData = $this->findOne($leadId);
-        $formData = $this->makeLeadInfoTable($leadData->form_data);
+        $formData = $this->makeLeadInfoTable($leadData);
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadHTML($formData);
         return $pdf->stream();
@@ -327,7 +333,7 @@ class LeadRequestService
 
         $table .= '<h3 align="center">Applicant Data</h3>
                   <table width="100%" style="border-collapse: collapse; border: 0px;"><tbody>';
-        foreach ($data as $field => $value) {
+        foreach ($data->form_data as $field => $value) {
             if ($field != "applicant_cv") {
                 $table .= "<tr>";
                 $table .= '<th style="border: 1px solid; padding:12px;" width="30%">' . str_replace('_', ' ', strtoupper($field)) . '</th>';

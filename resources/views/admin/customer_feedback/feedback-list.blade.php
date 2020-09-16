@@ -46,7 +46,7 @@
                                 <th>Page Name</th>
                                 <th>Star</th>
                                 <th>Date</th>
-                                <th>Action</th>
+                                <th>Survey Info</th>
                             </tr>
                             </thead>
                             <tbody></tbody>

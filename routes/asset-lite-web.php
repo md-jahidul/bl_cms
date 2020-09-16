@@ -804,14 +804,23 @@ Route::middleware('authorize', 'auth')->group(function () {
     // Lead Management ======================================================
     Route::get('lead-requested-list', 'AssetLite\LeadManagementController@index')->name('lead-list');
 
-    Route::get('lead-requested-list-ajax', 'AssetLite\LeadManagementController@leadRequestedList')
-        ->name('lead-list.ajex');
-    Route::get('lead-product-permission-form/{user_id}', 'AssetLite\LeadManagementController@productPermissionForm')
+//    Route::get('lead-requested-list-ajax', 'AssetLite\LeadManagementController@leadRequestedList')
+//        ->name('lead-list.ajex');
+
+    Route::get('lead-product-permission-form', 'AssetLite\LeadManagementController@productPermissionForm')
         ->name("permission.form");
     Route::post('lead-product-permission-save', 'AssetLite\LeadManagementController@productPermissionSave')
         ->name("permission.save");
 
-    Route::get('lead-product-permission', 'AssetLite\LeadManagementController@leadProductPermission');
+    Route::get('lead-product-permission-edit/{user_id}', 'AssetLite\LeadManagementController@productPermissionEditForm')
+        ->name("permission.edit");
+
+    Route::post('lead-product-permission-update/{user_id}', 'AssetLite\LeadManagementController@productPermissionUpdate')
+        ->name("permission.update");
+
+    Route::get('lead-product-permission/destroy/{id}', 'AssetLite\LeadManagementController@permissionDelete');
+
+    Route::get('lead-product-permission', 'AssetLite\LeadManagementController@permittedUsersList');
 //        ->name('lead-list');
 
     Route::get('lead-requested/details/{id}', 'AssetLite\LeadManagementController@viewDetails')
