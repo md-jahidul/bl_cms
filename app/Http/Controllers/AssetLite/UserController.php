@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\PasswordChangeRequest;
 use App\Models\RoleUser;
 use App\Models\User;
 use App\Services\UserService;
@@ -15,15 +16,18 @@ use App\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Validator;
+use App\Models\PasswordHistory;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
     const LEAD_USER = "lead_user";
     const LEAD_USER_ROLE = "lead_user_role";
     const SUPER_ADMIN = [
-            'assetlite_super_Admin' => 5,
-            'lead_super_Admin' => 9
-        ];
+        'assetlite_super_Admin' => 5,
+        'lead_super_Admin' => 9
+    ];
 
     /***
      * @var UserService
@@ -61,6 +65,9 @@ class UserController extends Controller
         return view('vendor.authorize.users.index', compact('users', 'superAdmin'));
     }
 
+    /**
+     * @return mixed
+     */
     private function roleFilter()
     {
         $type = Auth::user()->type;
@@ -110,6 +117,12 @@ class UserController extends Controller
         $user->password = Hash::make(request()->password);
         $user->save();
 
+        //entry into password history
+        $passwordHistory = PasswordHistory::create([
+            'user_id' => $user->id,
+            'password' => bcrypt($request->get('password'))
+        ]);
+
         foreach (request()->role_id as $role) {
             $user->roles()->save(Role::find($role));
         }
@@ -120,7 +133,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function edit($id)
@@ -137,7 +150,7 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function update(Request $request, $id)
@@ -156,45 +169,94 @@ class UserController extends Controller
         return redirect('authorize/users');
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|Factory|View
+     */
+
     public function changePasswordForm()
     {
         return view('vendor.authorize.users.change-password');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @author ahsan habib <ahabib@bs-23.net>
+     */
     public function changePassword(Request $request)
     {
+        $input = $request->all();
+//        echo $request->get('password');
+//        echo bcrypt($request->get('password'));
+//        dd();
+        $rules = [
 
-        $request->validate([
             'old_password' => 'required',
-            'password' => 'required|confirmed|min:6',
-        ]);
+//            'password' => 'required|regex:/^[a-zA-Z0-9]{8,}.+$/|confirmed|min:6',
+        ];
+
+        $messages = [
+            'password.required' => 'The :attribute field is required.',
+            'password.regex' => 'The :attribute must be more than 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character.',
+        ];
+        $validator = Validator::make($input, $rules, $messages);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        if (!(Hash::check($request->get('old_password'), Auth::user()->password))) {
+            // The passwords matches
+            return redirect()->back()->with(
+                "error",
+                "Your current password does not matches with the password you provided. Please try again."
+            )->withInput();
+        }
 
         if (!(Hash::check($request->get('old_password'), Auth::user()->password))) {
             // The passwords matches
             return redirect()->back()->with(
-                "message",
+                "error",
                 "Your current password does not matches with the password you provided. Please try again."
             );
         }
         if (strcmp($request->get('old_password'), $request->get('password')) == 0) {
             //Current password and new password are same
             return redirect()->back()->with(
-                "message",
+                "error",
                 "New Password cannot be same as your current password. Please choose a different password."
             );
         }
 
-        //Change Password
+        //Check Password History
         $user = Auth::user();
+        $passwordHistories = $user->passwordHistories()->take(env('PASSWORD_HISTORY_NUM'))->get();
+        foreach ($passwordHistories as $passwordHistory) {
+            echo $passwordHistory->password;
+            if (Hash::check($request->get('password'), $passwordHistory->password)) {
+                // The passwords matches
+                return redirect()->back()->with("error", "Your new password can not be same as any of your recent passwords. Please choose a new password.");
+            }
+        }
+
+        //Change Password
         $user->password = bcrypt($request->get('password'));
+        $user->password_changed_at =Carbon::today();;
         $user->save();
-        return redirect()->back()->with("message", "Password changed successfully !");
+
+        //entry into password history
+        $passwordHistory = PasswordHistory::create([
+            'user_id' => $user->id,
+            'password' => bcrypt($request->get('password'))
+        ]);
+
+        return redirect()->back()->with("success", "Password changed successfully !");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function destroy($id)
