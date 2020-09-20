@@ -130,7 +130,7 @@
                     old_password: {
                         required: true,
                         minlength: 6,
-                        maxlength: 14
+                        maxlength: 20
                     },
                     password: {
                         required: true,
