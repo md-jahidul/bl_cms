@@ -22,8 +22,8 @@ Auth::routes();
 
 Route::get('/users/change-password', 'AssetLite\UserController@changePasswordForm');
 Route::post('/users/password-update', 'AssetLite\UserController@changePassword')->name('password.update');
-
-Route::middleware('authorize', 'auth')->group(function () {
+//Route::group(['middleware' => ['auth','CheckFistLogin']], function () {
+Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     //Place all your routes here
     Route::resource('authorize/users', 'AssetLite\UserController')->except(['show']);
 
@@ -787,22 +787,6 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('app-service/details/{type}/{id}/fixed-section/', 'AssetLite\AppServiceProductDetailsController@fixedSectionUpdate')
         ->name('app_service.details.fixed-section');
 
-    Route::get('/app-service-sections-sortable', 'AssetLite\AppServiceProductDetailsController@sectionsSortable');
-    Route::get('/app-service-component-attribute-sortable', 'AssetLite\ComponentController@multiAttributeSortable');
-
-    # App & Service component
-    Route::get('app-service/{type}/component/{id}/edit', 'AssetLite\ComponentController@conponentEdit')->name('appservice.component.edit');
-    Route::get('app-service/component/{type}/{id}', 'AssetLite\ComponentController@conponentList')->name('appservice.component.list');
-    Route::get('app-service/component/create', 'AssetLite\ComponentController@conponentCreate')->name('appservice.component.create');
-    Route::post('app-service/component/store', 'AssetLite\ComponentController@conponentStore')->name('appservice.component.store');
-    // Get component multi attr
-    Route::get('app-service/component/itemattr', 'AssetLite\ComponentController@conponentItemAttr')->name('appservice.component.itemattr');
-    Route::post('app-service/component/itemattr/store', 'AssetLite\ComponentController@conponentItemAttrStore')->name('appservice.component.itemattr.store');
-    Route::post('app-service/component/itemattr/destory', 'AssetLite\ComponentController@conponentItemAttrDestroy')->name('appservice.component.itemattr.destory');
-
-
-    // Lead Management ======================================================
-    Route::get('lead-requested-list', 'AssetLite\LeadManagementController@index')->name('lead-list');
 
 //    Route::get('lead-requested-list-ajax', 'AssetLite\LeadManagementController@leadRequestedList')
 //        ->name('lead-list.ajex');
@@ -820,8 +804,8 @@ Route::middleware('authorize', 'auth')->group(function () {
 
     Route::get('lead-product-permission/destroy/{id}', 'AssetLite\LeadManagementController@permissionDelete');
 
-    Route::get('lead-product-permission', 'AssetLite\LeadManagementController@permittedUsersList');
-//        ->name('lead-list');
+    Route::get('lead-product-permission', 'AssetLite\LeadManagementController@permittedUsersList')
+        ->name('lead-list');
 
     Route::get('lead-requested/details/{id}', 'AssetLite\LeadManagementController@viewDetails')
         ->name('lead.details');
@@ -888,7 +872,7 @@ Route::middleware('authorize', 'auth')->group(function () {
     //Customer Feedback List
     Route::get('customer-feedback/list', 'AssetLite\CustomerFeedbackController@index');
     Route::get('customer-feedback/get-data', 'AssetLite\CustomerFeedbackController@getFeedbacks')
-            ->name('feedback.list');
+        ->name('feedback.list');
 
     Route::get('customer-feedback/details/{feedbackId}', 'AssetLite\CustomerFeedbackController@feedbacksDetails')
         ->name('feedback.details');
@@ -958,4 +942,8 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('be_a_partner.component.update');
     Route::get('be-a-partner/component-delete/{id}', 'AssetLite\BeAPartnerController@componentDelete')
         ->name('be_a_partner.component.delete');
+
+    //Access Logs
+    Route::get('access-logs', 'AccessLogController@index');
+
 });
