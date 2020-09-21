@@ -192,12 +192,12 @@ class UserController extends Controller
         $rules = [
 
             'old_password' => 'required',
-//            'password' => 'required|regex:/^[a-zA-Z0-9]{8,}.+$/|confirmed|min:6',
+            'password' => 'required|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/|confirmed|min:8',
         ];
 
         $messages = [
             'password.required' => 'The :attribute field is required.',
-            'password.regex' => 'The :attribute must be more than 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character.',
+            'password.regex' => 'The :attribute must be minimum 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character.',
         ];
         $validator = Validator::make($input, $rules, $messages);
         if ($validator->fails()) {
