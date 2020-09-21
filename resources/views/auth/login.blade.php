@@ -51,12 +51,20 @@
                                     <span><strong>Banglalink CMS Login Panel</strong></span>
                                 </p>
                                 <div class="card-body">
+                                    @if (session('error'))
+                                        <div class="alert bg-danger alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button><i class="la la-lock"></i>
+                                            {!! session('error') !!}
+                                        </div>
+                                    @endif
                                     {{--                                    <form class="form-horizontal" action="index.html" novalidate>--}}
                                     <form class="form-horizontal" action="{{ route('login') }}" method="post" novalidate>
                                         @csrf
                                         <fieldset class="form-group position-relative has-icon-left">
-                                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="user-name" placeholder="Your email address"
-                                                   required>
+                                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="user-name"
+                                                  value="{{ old("email") ? old("email") : '' }}" placeholder="Your email address" required>
                                             <div class="form-control-position">
                                                 <i class="ft-user"></i>
                                             </div>
