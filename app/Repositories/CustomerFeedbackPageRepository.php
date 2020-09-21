@@ -11,9 +11,10 @@ namespace App\Repositories;
 
 use App\Models\AboutPage;
 use App\Models\CustomerFeedback;
+use App\Models\CustomerFeedbackPage;
 use App\Models\Prize;
 
-class CustomerFeedbackRepository extends BaseRepository
+class CustomerFeedbackPageRepository extends BaseRepository
 {
-    public $modelName = CustomerFeedback::class;
+    public $modelName = CustomerFeedbackPage::class;
 }

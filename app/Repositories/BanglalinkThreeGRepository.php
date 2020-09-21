@@ -9,12 +9,13 @@
 
 namespace App\Repositories;
 
+use App\Models\BanglalinkThreeG;
 use App\Models\FourGLandingPage;
 use App\Models\MediaLandingPage;
 
-class FourGLandingPageRepository extends BaseRepository
+class BanglalinkThreeGRepository extends BaseRepository
 {
-    public $modelName = FourGLandingPage::class;
+    public $modelName = BanglalinkThreeG::class;
 
     public function findWithoutBanner()
     {
