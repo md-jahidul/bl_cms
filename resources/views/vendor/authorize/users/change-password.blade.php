@@ -125,7 +125,7 @@
                 rules: {
                     old_password: {
                         required: true,
-                        minlength: 8,
+                        minlength: 6,
                         maxlength: 20
                     },
                     password: {
