@@ -22,8 +22,8 @@ Auth::routes();
 
 Route::get('/users/change-password', 'AssetLite\UserController@changePasswordForm');
 Route::post('/users/password-update', 'AssetLite\UserController@changePassword')->name('password.update');
-
-Route::middleware('authorize', 'auth')->group(function () {
+//Route::group(['middleware' => ['auth','CheckFistLogin']], function () {
+Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     //Place all your routes here
     Route::resource('authorize/users', 'AssetLite\UserController')->except(['show']);
 
@@ -787,44 +787,37 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::post('app-service/details/{type}/{id}/fixed-section/', 'AssetLite\AppServiceProductDetailsController@fixedSectionUpdate')
         ->name('app_service.details.fixed-section');
 
-    Route::get('/app-service-sections-sortable', 'AssetLite\AppServiceProductDetailsController@sectionsSortable');
-    Route::get('/app-service-component-attribute-sortable', 'AssetLite\ComponentController@multiAttributeSortable');
 
-    # App & Service component
-    Route::get('app-service/{type}/component/{id}/edit', 'AssetLite\ComponentController@conponentEdit')->name('appservice.component.edit');
-    Route::get('app-service/component/{type}/{id}', 'AssetLite\ComponentController@conponentList')->name('appservice.component.list');
-    Route::get('app-service/component/create', 'AssetLite\ComponentController@conponentCreate')->name('appservice.component.create');
-    Route::post('app-service/component/store', 'AssetLite\ComponentController@conponentStore')->name('appservice.component.store');
-    // Get component multi attr
-    Route::get('app-service/component/itemattr', 'AssetLite\ComponentController@conponentItemAttr')->name('appservice.component.itemattr');
-    Route::post('app-service/component/itemattr/store', 'AssetLite\ComponentController@conponentItemAttrStore')->name('appservice.component.itemattr.store');
-    Route::post('app-service/component/itemattr/destory', 'AssetLite\ComponentController@conponentItemAttrDestroy')->name('appservice.component.itemattr.destory');
+//    Route::get('lead-requested-list-ajax', 'AssetLite\LeadManagementController@leadRequestedList')
+//        ->name('lead-list.ajex');
 
-
-    // Lead Management ======================================================
-    Route::get('lead-requested-list', 'AssetLite\LeadManagementController@index')->name('lead-list');
-
-    Route::get('lead-requested-list-ajax', 'AssetLite\LeadManagementController@leadRequestedList')
-        ->name('lead-list.ajex');
-    Route::get('lead-product-permission-form/{user_id}', 'AssetLite\LeadManagementController@productPermissionForm')
+    Route::get('lead-product-permission-form', 'AssetLite\LeadManagementController@productPermissionForm')
         ->name("permission.form");
     Route::post('lead-product-permission-save', 'AssetLite\LeadManagementController@productPermissionSave')
         ->name("permission.save");
 
-    Route::get('lead-product-permission', 'AssetLite\LeadManagementController@leadProductPermission');
-//        ->name('lead-list');
+    Route::get('lead-product-permission-edit/{user_id}', 'AssetLite\LeadManagementController@productPermissionEditForm')
+        ->name("permission.edit");
+
+    Route::post('lead-product-permission-update/{user_id}', 'AssetLite\LeadManagementController@productPermissionUpdate')
+        ->name("permission.update");
+
+    Route::get('lead-product-permission/destroy/{id}', 'AssetLite\LeadManagementController@permissionDelete');
+
+    Route::get('lead-product-permission', 'AssetLite\LeadManagementController@permittedUsersList')
+        ->name('lead-list');
 
     Route::get('lead-requested/details/{id}', 'AssetLite\LeadManagementController@viewDetails')
         ->name('lead.details');
     Route::put('lead-requested/change-status/{id}', 'AssetLite\LeadManagementController@changeStatus')
         ->name('lead.change_status');
 
-    Route::get('lead-requested/send-mail-form', 'AssetLite\LeadManagementController@sendMailForm')
-        ->name('lead.send_mail_form');
+//    Route::get('lead-requested/send-mail-form', 'AssetLite\LeadManagementController@sendMailForm')
+//        ->name('lead.send_mail_form');
 
     //TODO:: Not use delete later
-    Route::post('lead-requested/send-mail', 'AssetLite\LeadManagementController@sendMail')
-        ->name('lead.send_mail');
+//    Route::post('lead-requested/send-mail', 'AssetLite\LeadManagementController@sendMail')
+//        ->name('lead.send_mail');
 
     Route::get('download-pdf/{lead_id}', 'AssetLite\LeadManagementController@downloadPDF')
         ->name('download.pdf');
@@ -876,7 +869,19 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::resource('press-news-event', 'AssetLite\MediaPressNewsEventController')->except(['show', 'destroy']);
     Route::get('faq/destroy/{id}', 'AssetLite\AlFaqController@destroy');
 
-    //Customer Feedback
+    //Customer Feedback List
+    Route::get('customer-feedback/list', 'AssetLite\CustomerFeedbackController@index');
+    Route::get('customer-feedback/get-data', 'AssetLite\CustomerFeedbackController@getFeedbacks')
+        ->name('feedback.list');
+
+    Route::get('customer-feedback/details/{feedbackId}', 'AssetLite\CustomerFeedbackController@feedbacksDetails')
+        ->name('feedback.details');
+
+    Route::get('customer-feedback/page-groping', 'AssetLite\CustomerFeedbackController@pageWiseRating')
+        ->name('feedback.page-groping');
+
+
+    //Customer Feedback Question
     Route::get('customer-feedback/questions', 'AssetLite\CustomerFeedbackQuesController@questions');
     Route::get('customer-feedback/add-question', 'AssetLite\CustomerFeedbackQuesController@addQuestion');
     Route::get('customer-feedback/edit-question/{id}', 'AssetLite\CustomerFeedbackQuesController@editQuestion');
@@ -920,6 +925,11 @@ Route::middleware('authorize', 'auth')->group(function () {
     Route::resource('bl-4g-device-tag', 'AssetLite\FourGDeviceTagController')->except(['show', 'destroy']);
     Route::get('bl-4g-device-tag/destroy/{id}', 'AssetLite\FourGDeviceTagController@destroy');
 
+    // Banglalink 3G
+    Route::resource('bl-3g-landing-page', 'AssetLite\BanglalinkThreeGController')->except(['store', 'show', 'destroy']);
+    Route::post('bl-3g-banner-image', 'AssetLite\BanglalinkThreeGController@bannerUpload')
+        ->name('three_g_banner_image.upload');
+
     // Be A Partner
     Route::get('be-a-partner', 'AssetLite\BeAPartnerController@getBeAPartner');
     Route::get('be-a-partner/edit/{id}', 'AssetLite\BeAPartnerController@beAPartnerEdit')
@@ -932,4 +942,8 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('be_a_partner.component.update');
     Route::get('be-a-partner/component-delete/{id}', 'AssetLite\BeAPartnerController@componentDelete')
         ->name('be_a_partner.component.delete');
+
+    //Access Logs
+    Route::get('access-logs', 'AccessLogController@index');
+
 });

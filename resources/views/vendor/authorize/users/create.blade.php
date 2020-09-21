@@ -14,7 +14,7 @@
             <div class="card-content">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route('users.store') }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ route('users.store') }}" method="POST" novalidate enctype="multipart/form-data" id="createUser">
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('name') ? ' error' : '' }}">
                                     <label for="name" class="required">Name</label>
@@ -111,8 +111,50 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
+    <script type="text/javascript" src="{{ asset('theme/js/scripts/forms/validation/form-validation.min.js') }}"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script>
+        $.validator.addMethod("loginRegex", function (value, element) {
+            return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{8,}/.test(value);
+            // return this.optional(element) || /^[a-zA-Z0-9]{8,}$/i.test(value);
+        }, "The password must be minimum 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character");
+        $(document).ready(function() {
 
+            $("#createUser").validate({
+                rules: {
+                    old_password: {
+                        required: true,
+                        minlength:8,
+                        maxlength: 20
+                    },
+                    password: {
+                        required: true,
+                        minlength:8,
+                        maxlength: 20,
+                        loginRegex:true
+
+                    },
+                    password_confirmation: {
+                        equalTo: "#password",
+                        minlength: 8,
+                        maxlength: 20,
+                        loginRegex:true
+                    }
+                },
+                messages: {
+                    password: {
+                        required: "Password field is required",
+                        loginRegex: 'The password must be minimum 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character',
+
+                    }
+                }
+
+            });
+
+        });
+    </script>
 @endpush
+
 
 
 

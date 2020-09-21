@@ -22,6 +22,14 @@
 {{--    <a href="{{ route('lead_data.excel_export') }}" class="btn btn-primary  btn-glow px-2"><i class="la la-download"></i> Excel Export</a>--}}
 @endsection
 @section('content')
+
+    <div class="alert bg-danger alert-dismissible mb-2" id="permission_error" role="alert" style="display: none">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        Permission denied!
+    </div>
+
     <section>
         <div class="card">
             <div class="card-content collapse show">
@@ -30,7 +38,7 @@
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-3">
-                                <input type="text" name="applicant_name" class="form-control filter"
+                                <input type="text" name="applicant_name" class="form-control"
                                        autocomplete="off" id="applicant_name" placeholder="Name">
                             </div>
                             <div class="form-group col-md-3">
@@ -40,11 +48,9 @@
                             <div class="form-group col-md-3 {{ $errors->has('lead_category') ? ' error' : '' }}">
                                 <select class="form-control filter" name="lead_category" id="lead_category" required>
                                     <option value="">---Category---</option>
-                                    <option value="1">Postpaid package</option>
-                                    <option value="2">Business package</option>
-                                    <option value="3">Business enterprise solution</option>
-                                    <option value="4">eCareer programs</option>
-                                    <option value="5">Corporate responsibility</option>
+                                    @foreach($leadCategories as $data)
+                                        <option value="{{ $data->id }}">{{ $data->title }}</option>
+                                    @endforeach
                                 </select>
                                 <div class="help-block"></div>
                                 @if ($errors->has('lead_category'))
@@ -118,7 +124,8 @@
                 pageLength: 10,
                 lengthChange: false,
                 ajax: {
-                    url: '{{ route('lead-list.ajex') }}',
+                    url: '{{ url('lead-requested-list') }}',
+                    {{--url: '{{ route('lead-list.ajex') }}',--}}
                     data: {
                         applicant_name: function () {
                             return $('input[name="applicant_name"]').val();
@@ -135,6 +142,17 @@
                         // },
                     }
                 },
+
+                "drawCallback": function (settings) {
+                    // Here the response
+                    var response = settings.json;
+                    if (response.permission == false){
+                        $('#permission_error').show()
+                    }else {
+                        $('#permission_error').hide()
+                    }
+                },
+
                 columns: [
                     {
                         name: 'sl',
@@ -143,16 +161,13 @@
                             return null;
                         }
                     },
-
                     {
                         name: 'name',
                         width: "15%",
                         render: function (data, type, row) {
-                            // console.log(row)
                             return row.form_data.name;
                         }
                     },
-
                     {
                         name: 'created_at',
                         width: "6%",
@@ -160,7 +175,6 @@
                             return row.created_at;
                         }
                     },
-
                     {
                         name: 'lead_category',
                         width: "10%",
@@ -212,29 +226,8 @@
                 $('#lead_list').DataTable().ajax.reload();
             });
 
-
             $('#excel_export').click(function() {
                 $("#filter_form").submit();
-                {{--$.ajax({--}}
-                {{--    url: "{{ route('lead_data.excel_export') }}",--}}
-                {{--    data: {--}}
-                {{--        applicant_name: function () {--}}
-                {{--            return $('input[name="applicant_name"]').val();--}}
-                {{--        },--}}
-                {{--        date_range: function () {--}}
-                {{--            return $('input[name="date_range"]').val();--}}
-                {{--        },--}}
-                {{--        lead_category: function () {--}}
-                {{--            return $('#lead_category').val();--}}
-                {{--        },--}}
-                {{--    },--}}
-                {{--    success: function (data,status,xhr) {   // success callback function--}}
-                {{--        //--}}
-                {{--    },--}}
-                {{--    error: function (jqXhr, textStatus, errorMessage) { // error callback--}}
-                {{--        //--}}
-                {{--    }--}}
-                {{--});--}}
             });
         });
     </script>

@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AuthLock;
 use App\Http\Middleware\RequestLoggerMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -65,7 +66,9 @@ class Kernel extends HttpKernel
         'appAdmin' => Middleware\AppAdmin::class,
         'webAdmin' => Middleware\WebAdmin::class,
         'authorize' => Middleware\CheckAuthorization::class,
+        'CheckFistLogin' => Middleware\CheckFistLogin::class,
         'debugEntryCheck' => Middleware\ApiDebugEntryCheck::class,
+        'auth.lock' => AuthLock::class,
     ];
 
     /**
@@ -82,5 +85,6 @@ class Kernel extends HttpKernel
         \Illuminate\Session\Middleware\AuthenticateSession::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Illuminate\Auth\Middleware\Authorize::class,
+        \App\Http\Middleware\CheckFistLogin::class,
     ];
 }

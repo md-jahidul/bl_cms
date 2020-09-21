@@ -44,6 +44,14 @@
                                         class="la la-check-square"></i> Permission</a>
                             </li>
                         @endif
+
+                        @if( auth()->user()->can_view('AccessLog') )
+                            <li class="{{ is_active_url('access-logs')}}">
+                                <a class="menu-item" href="{{ url('access-logs') }}"
+                                   data-i18n="nav.templates.vert.classic_menu"><i
+                                        class="la la-lock"></i> Access Logs</a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
             @endif
@@ -579,6 +587,11 @@
                            data-i18n="nav.templates.vert.classic_menu"><i
                                 class="la la-list"></i> Questions</a>
                     </li>
+                    <li class="{{ is_active_url('customer-feedbacks/list') }}">
+                        <a class="menu-item" href="{{ url('customer-feedback/list') }}"
+                           data-i18n="nav.templates.vert.classic_menu"><i
+                                class="la la-feed"></i> Feedbacks List</a>
+                    </li>
                 </ul>
             </li>
 
@@ -611,6 +624,17 @@
                 </ul>
             </li>
 
+            <li class="nav-item"><a href="#"><i class="la la-signal"></i>
+                    <span class="menu-title" data-i18n="nav.templates.main">Banglalink 3G</span></a>
+                <ul class="menu-content">
+                    <li class="{{ is_active_url('/bl-3g-landing-page') }} nav-item">
+                        <a href="{{ url('/bl-3g-landing-page') }}"><i class="la la-futbol-o"></i>
+                            <span class="menu-title" data-i18n="nav.templates.main">3G Landing Page</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             <li class="{{ is_active_url('/be-a-partner') }} nav-item"><a href="{{ url('/be-a-partner') }}">
                     <i class="la la-paragraph"></i>
                     <span class="menu-title" data-i18n="nav.templates.main">Be A Partner</span></a>
@@ -618,15 +642,15 @@
         </ul>
     </li>
 
-    @if( auth()->user()->can_view('LeadManagement', 'leadRequestedList') )
+    @if( auth()->user()->can_view('LeadManagement') )
         <li class="nav-item"><a href="#"><i class="la la-briefcase"></i>
                 <span class="menu-title" data-i18n="nav.templates.main">B2B Leads</span></a>
             <ul class="menu-content">
-{{--                <li class="{{ is_active_url('lead-product-permission') }}">--}}
-{{--                    <a class="menu-item" href="{{ url('lead-product-permission') }}"--}}
-{{--                       data-i18n="nav.templates.vert.classic_menu"><i--}}
-{{--                            class="la la-list"></i> Product Permission</a>--}}
-{{--                </li>--}}
+                <li class="{{ is_active_url('lead-product-permission') }}">
+                    <a class="menu-item" href="{{ url('lead-product-permission') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-list"></i> Product Permission</a>
+                </li>
                 <li class="{{ is_active_url('lead-requested-list') }}">
                     <a class="menu-item" href="{{ route('lead-list') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
