@@ -958,4 +958,7 @@ Route::middleware('authorize', 'auth')->group(function () {
         ->name('be_a_partner.component.update');
     Route::get('be-a-partner/component-delete/{id}', 'AssetLite\BeAPartnerController@componentDelete')
         ->name('be_a_partner.component.delete');
+
+    //Access Logs
+    Route::get('access-logs', 'AccessLogController@index');
 });
