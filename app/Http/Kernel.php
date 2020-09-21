@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AuthLock;
 use App\Http\Middleware\RequestLoggerMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -67,6 +68,7 @@ class Kernel extends HttpKernel
         'authorize' => Middleware\CheckAuthorization::class,
         'CheckFistLogin' => Middleware\CheckFistLogin::class,
         'debugEntryCheck' => Middleware\ApiDebugEntryCheck::class,
+        'auth.lock' => AuthLock::class,
     ];
 
     /**

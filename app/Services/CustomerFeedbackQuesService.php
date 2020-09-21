@@ -9,6 +9,7 @@
 
 namespace App\Services;
 
+use App\Repositories\CustomerFeedbackQuesRepository;
 use App\Repositories\CustomerFeedbackRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
@@ -28,7 +29,7 @@ class CustomerFeedbackQuesService
      * CustomerFeedbackService constructor.
      * @param CustomerFeedbackRepository $feedRepo
      */
-    public function __construct(CustomerFeedbackRepository $feedRepo)
+    public function __construct(CustomerFeedbackQuesRepository $feedRepo)
     {
         $this->feedRepo = $feedRepo;
         $this->setActionRepository($feedRepo);

@@ -17,7 +17,7 @@ class CheckFistLogin
     public function handle($request, Closure $next)
     {
 
-        if (Auth::user()->password_change_at == null) {
+        if (Auth::user()->password_changed_at == null) {
             return redirect('/users/change-password');
         }
         return $next($request);
