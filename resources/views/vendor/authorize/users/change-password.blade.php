@@ -103,21 +103,17 @@
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
     <script>
         $.validator.addMethod("loginRegex", function (value, element) {
-            return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{6,}/.test(value);
+            return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{8,}/.test(value);
             // return this.optional(element) || /^[a-zA-Z0-9]{8,}$/i.test(value);
-        }, "The password must be more than 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character");
+        }, "The password must be minimum 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character");
         $.validator.addMethod("username", function (value, element) {
             let Username = '<?php echo $username; ?>';
             let lengthAfterCheck = Username.length;
             if (value.length >= lengthAfterCheck) {
                 let index = value.search(Username);
                 if (index !== -1) {
-                    console.log('Substring found!');
-                    // alert("Substring found!");
                     return false;
                 } else {
-                    console.log('Substring not found!');
-                    // alert("Substring not found!");
                     return true;
                 }
             }
@@ -134,7 +130,7 @@
                     },
                     password: {
                         required: true,
-                        minlength: 6,
+                        minlength: 8,
                         maxlength: 20,
                         loginRegex: true,
                         username: true,
@@ -144,7 +140,7 @@
                     },
                     password_confirmation: {
                         equalTo: "#password",
-                        minlength: 6,
+                        minlength: 8,
                         maxlength: 20,
                         loginRegex: true
                     }
@@ -153,7 +149,7 @@
                     password: {
                         required: "Password field is required",
                         username: 'Username can not use in password',
-                        loginRegex: 'The password must be more than 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character',
+                        loginRegex: 'The password must be minimum 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character',
 
 
                     }
