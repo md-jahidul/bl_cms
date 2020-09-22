@@ -198,12 +198,12 @@
                                 <div class="form-group">
                                     <label for="title" class="required">Button Action (Android):</label>
                                     <input required
-                                           value="@if(isset($appStore)){{$appStore->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
-                                           type="text" name="btn_action_ios" class="form-control @error('btn_action_ios') is-invalid @enderror"
-                                           id="btn_action_ios" placeholder="Enter Button Text">
+                                           value="@if(isset($appStore)){{$appStore->btn_action_android}} @elseif(old("btn_action_android")) {{old("btn_action_android")}} @endif"
+                                           type="text" name="btn_action_android" class="form-control @error('btn_action_android') is-invalid @enderror"
+                                           id="btn_action_android" placeholder="Enter Button Text">
                                     <div class="help-block">
                                     </div>
-                                    <small class="text-danger"> @error('btn_action_ios') {{ $message }} @enderror </small>
+                                    <small class="text-danger"> @error('btn_action_android') {{ $message }} @enderror </small>
                                 </div>
                             </div>
 
