@@ -67,6 +67,20 @@
                                     </div>
                                 @endif
 
+                                <div class="form-group select-role col-md-6 mb-0 {{ $errors->has('status') ? ' error' : '' }}">
+                                    <label for="status" class="required">Status</label>
+                                    <div class="role-select">
+                                        <select class="form-control" name="status">
+                                            <option value="unlocked" {{ $user->status == "unlock" || $user->status == "active" ? 'selected' : ""}}>Unlock</option>
+                                            <option value="locked" {{ $user->status == "locked" ? 'selected' : ""}}>Lock</option>
+                                        </select>
+                                    </div>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('status'))
+                                        <div class="help-block">  {{ $errors->first('status') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i

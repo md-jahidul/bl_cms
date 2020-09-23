@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','email', 'phone', 'password', 'type', 'uid',
+        'name', 'email', 'phone', 'password', 'type', 'uid', 'password_changed_at', 'status'
     ];
 
     /**
@@ -50,5 +50,10 @@ class User extends Authenticatable
             'user_id',
             'shortcut_id'
         );
+    }
+
+    public function passwordHistories()
+    {
+        return $this->hasMany('App\Models\PasswordHistory');
     }
 }
