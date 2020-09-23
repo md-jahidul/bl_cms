@@ -11,8 +11,8 @@
 |
 */
 
+Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin']], function () {
 
-Route::group(['middleware' => ['appAdmin', 'authorize', 'auth']], function () {
     //------ shortcuts -----------//
 
     // route::resource('short_cuts','CMS\ShortCutController');

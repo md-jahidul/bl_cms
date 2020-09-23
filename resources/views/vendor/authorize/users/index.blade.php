@@ -25,6 +25,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -33,7 +34,7 @@
                                 @php
                                     $roles_dom = '';
                                      foreach($item->roles as $r){
-                                        $roles_dom .=   '<span class="badge badge-success badge-pill mr-1">' . $r->name . '</span>';
+                                        $roles_dom .=   '<span class="badge badge-warning badge-pill mr-1">' . $r->name . '</span>';
                                      }
                                 @endphp
 
@@ -42,6 +43,13 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>{!! $roles_dom !!}</td>
+                                    <td>
+                                        @if($item->status == "active" || $item->status == "unlocked")
+                                            <span class="badge badge-success badge-pill mr-1">Active</span>
+                                        @else
+                                            <span class="badge badge-danger badge-pill mr-1">Locked</span>
+                                        @endif
+                                    </td>
                                     <td>
 {{--                                        @if($item->id !=  5 && $item->id != Auth::user()->id)--}}
 {{--                                            <a href="{{ url('/' . Config("authorization.route-prefix") . '/users/' . $item->id . '/edit') }}" role="button"--}}

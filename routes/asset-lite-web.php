@@ -14,7 +14,9 @@
 use App\Repositories\ProductCoreRepository;
 use Illuminate\Support\Facades\Route;
 
+
 Auth::routes();
+
 
 //Route::resource('sliders', 'AssetLite\SliderController');
 //Route::get('slider/{parent_id}/images', 'AssetLite\SliderImageController@index');

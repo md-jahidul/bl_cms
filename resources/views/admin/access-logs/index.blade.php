@@ -21,7 +21,7 @@
                             <th width="15%">IP Address</th>
                             <th width="15%">Message</th>
                             <th width="8%">Status</th>
-                            <th width="10%">Created At</th>
+                            <th width="14%">Created At</th>
                         </tr>
                         </thead>
                         <tbody>
