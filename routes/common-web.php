@@ -16,9 +16,10 @@ use App\Models\Shortcut;
 
 Route::get('/', function () {
     return view('home');
-})->middleware('auth');
+})->middleware('auth', 'CheckFistLogin');
 
 Auth::routes();
+
 Route::get('/home', 'CMS\HomeController@index')->name('home');
 Route::group(['middleware' => ['webAdmin']], function () {
 
