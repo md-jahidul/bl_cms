@@ -47,7 +47,7 @@ class ConfigTableSeeder extends Seeder
         $bodyScript = "";
 
         $configKeys = ['site_logo', 'logo_alt_text', 'email', 'query_label_en', 'query_label_bn', 'query_email',
-            'mobile_number_EN', 'mobile_number_BN', 'address_EN', 'address_BN', 'copy_right_EN', 'copy_right_BN',
+            'mobile_number_en', 'mobile_number_bn', 'address_en', 'address_bn', 'copy_right_en', 'copy_right_bn',
             'facebook_url', 'twitter_url', 'linkedin_url', 'youtube_url', 'instagram_url', 'app_download_title_en',
             'app_download_title_bn', 'google_play_link', 'apple_app_store_link', 'image_upload_size', 'image_upload_type', 'admin_image_upload_size',
             'admin_image_upload_type', 'advance_minimum_balance', 'header_script',  'body_script'];
