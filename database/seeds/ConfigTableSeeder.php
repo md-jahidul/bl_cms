@@ -33,8 +33,8 @@ class ConfigTableSeeder extends Seeder
         $youTube     = "https://www.youtube.com/user/banglalinkmela";
         $instagram     = "https://www.instagram.com/banglalink.digital/";
 
-        $appDownloadTitleEn = "MyBL App download";
-        $appDownloadTitleBn = "মাইবিএল অ্যাপ ডাউনলোড করুন";
+        $appDownloadTitleEn = "Download MyBL App";
+        $appDownloadTitleBn = "ডাউনলোড MyBL অ্যাপ";
 
         $googlePlayLink = 'https://play.google.com/store/apps/details?id=com.arena.banglalinkmela.app';
         $appleAppStoreLink = 'https://apps.apple.com/us/app/my-banglalink/id934133022';

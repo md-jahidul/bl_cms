@@ -34,9 +34,6 @@ class UpdateConfigRequest extends FormRequest
             'address_BN' => 'required',
             'copy_right_EN' => 'required',
             'copy_right_BN' => 'required',
-            'facebook_url' => 'required|url',
-            'twitter_url' => 'required|url',
-            'linkedin_url' => 'required|url',
             'google_play_link' => 'required|url',
             'apple_app_store_link' => 'required|url',
         ];
