@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Models\Customer;
+use App\Models\MasterLog;
 use App\Services\BlApiHub\AuditLogsService;
 use App\Services\BlApiHub\BalanceService;
 use App\Services\BlApiHub\BonusLogsService;
@@ -30,16 +31,16 @@ class ApiDebugController extends Controller
 {
     /**
      * ApiDebugController constructor.
-     * @param  BalanceService  $balanceService
-     * @param  AuditLogsService  $auditLogsService
-     * @param  BonusLogsService  $bonusLogsService
-     * @param  CustomerSummaryUsageService  $customerSummaryUsageService
-     * @param  CustomerCallUsageService  $callUsageService
-     * @param  CustomerInternetUsageService  $internetUsageService
-     * @param  CustomerSmsUsageService  $smsUsageService
-     * @param  CustomerRechargeHistoryService  $rechargeHistoryService
-     * @param  CustomerRoamingUsageService  $roamingUsageService
-     * @param  CustomerSubscriptionUsageService  $subscriptionUsageService
+     * @param BalanceService $balanceService
+     * @param AuditLogsService $auditLogsService
+     * @param BonusLogsService $bonusLogsService
+     * @param CustomerSummaryUsageService $customerSummaryUsageService
+     * @param CustomerCallUsageService $callUsageService
+     * @param CustomerInternetUsageService $internetUsageService
+     * @param CustomerSmsUsageService $smsUsageService
+     * @param CustomerRechargeHistoryService $rechargeHistoryService
+     * @param CustomerRoamingUsageService $roamingUsageService
+     * @param CustomerSubscriptionUsageService $subscriptionUsageService
      */
     public function __construct(
         BalanceService $balanceService,
@@ -53,7 +54,8 @@ class ApiDebugController extends Controller
         CustomerRoamingUsageService $roamingUsageService,
         CustomerSubscriptionUsageService $subscriptionUsageService,
         OtpRequestLogsService $otpRequestLogsService
-    ) {
+    )
+    {
         $this->balanceService = $balanceService;
         $this->auditLogsService = $auditLogsService;
         $this->customerSummaryUsageService = $customerSummaryUsageService;
@@ -113,7 +115,7 @@ class ApiDebugController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      * @param $number
      */
     public function getBrowseHistory(Request $request, $number)
@@ -132,7 +134,7 @@ class ApiDebugController extends Controller
         if ($user) {
             return Carbon::parse($user->last_login_at)->format('Y-m-d g:i A');
         }
-       // return $this->bonusLogsService->getLogs($request, $number);
+        // return $this->bonusLogsService->getLogs($request, $number);
     }
 
     /**
@@ -187,12 +189,44 @@ class ApiDebugController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      * @param $number
      * @return array
      */
     public function getOtpRequestLogs(Request $request, $number)
     {
         return $this->otpRequestLogsService->getLogs($request, $number);
+    }
+
+    public function getProductLogs(Request $request, $number)
+    {
+        $draw = $request->get('draw');
+        $start = $request->get('start');
+        $length = $request->get('length');
+
+        $items = MasterLog::where('msisdn', $number)->where('log_type', 'PRODUCT-PURCHASE')->orderBy('created_at', 'DESC')->get();;
+        $all_items_count = count($items);
+        $items = MasterLog::where('msisdn', $number)->where('log_type', 'PRODUCT-PURCHASE')->orderBy('created_at', 'DESC')->skip($start)->take($length)->get();;
+
+
+        $response = [
+            'draw' => $draw,
+            'recordsTotal' => $all_items_count,
+            'recordsFiltered' => $all_items_count,
+            'data' => []
+        ];
+
+        $items->each(function ($item) use (&$response) {
+            $response['data'][] = [
+                'date' => Carbon::parse($item->created_at)->toDateTimeString(),
+                'msisdn' => $item->msisdn,
+                'message' => $item->message,
+                'others' => $item->others,
+                'status' => $item->status,
+            ];
+        });
+
+        return $response;
+
     }
 }
