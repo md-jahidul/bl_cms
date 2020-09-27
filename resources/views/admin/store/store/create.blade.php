@@ -348,31 +348,31 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="title" >Rating:</label>
-                                    <input
-                                           value="@if(isset($store)){{$store->ratings}} @elseif(old("ratings")) {{old("ratings")}} @endif"
-                                           type="text" name="ratings" class="form-control @error('ratings') is-invalid @enderror"
-                                           id="ratings" placeholder="Enter Shorcut Name in Bangla..">
-                                    <div class="help-block">
-                                    </div>
-                                    <small class="text-danger"> @error('ratings') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
+{{--                            <div class="col-md-4">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="title" >Rating:</label>--}}
+{{--                                    <input--}}
+{{--                                           value="@if(isset($store)){{$store->ratings}} @elseif(old("ratings")) {{old("ratings")}} @endif"--}}
+{{--                                           type="text" name="ratings" class="form-control @error('ratings') is-invalid @enderror"--}}
+{{--                                           id="ratings" placeholder="Enter Shorcut Name in Bangla..">--}}
+{{--                                    <div class="help-block">--}}
+{{--                                    </div>--}}
+{{--                                    <small class="text-danger"> @error('ratings') {{ $message }} @enderror </small>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="title">Total Rating:</label>
-                                    <input
-                                           value="@if(isset($store)){{$store->total_ratings}} @elseif(old("total_ratings")) {{old("total_ratings")}} @endif"
-                                           type="text" name="total_ratings" class="form-control @error('total_ratings') is-invalid @enderror"
-                                           id="total_ratings" placeholder="Enter Shorcut Name in Bangla..">
-                                    <div class="help-block">
-                                    </div>
-                                    <small class="text-danger"> @error('total_ratings') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
+{{--                            <div class="col-md-4">--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="title">Total Rating:</label>--}}
+{{--                                    <input--}}
+{{--                                           value="@if(isset($store)){{$store->total_ratings}} @elseif(old("total_ratings")) {{old("total_ratings")}} @endif"--}}
+{{--                                           type="text" name="total_ratings" class="form-control @error('total_ratings') is-invalid @enderror"--}}
+{{--                                           id="total_ratings" placeholder="Enter Shorcut Name in Bangla..">--}}
+{{--                                    <div class="help-block">--}}
+{{--                                    </div>--}}
+{{--                                    <small class="text-danger"> @error('total_ratings') {{ $message }} @enderror </small>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
 
                            {{-- <div class="col-md-8">
