@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\FourGLandingPage;
+use App\Models\CorporateRespSection;
 use Illuminate\Database\Seeder;
 
-class FourGLandingSeeder extends Seeder
+class CorporateRespSectionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,16 +12,23 @@ class FourGLandingSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('four_g_landing_pages')->truncate();
-        $titleEn = ['4G Campaign','Internet Offers','4G Devices', '4G Coverage', null];
-        $titleBn = ['4G ক্যাম্পেইন','ইন্টারনেট অফার','4G ডিভাইস','4G কভারেজ', null];
-        $componentTypes = ['four_g_campaign','internet_offers','four_g_devices','four_g_coverage', 'banner_image'];
+        DB::table('corporate_resp_sections')->truncate();
+        $titleEn = ['CR Strategy Copy','Initiative', 'Case Study & Report'];
+        $titleBn = ['সিআর কৌশল কপি', 'উদ্যোগ', 'কেস স্টাডি এবং রিপোর্ট'];
 
-        foreach ($componentTypes as $key => $item) {
-            FourGLandingPage::create([
-                'title_en' => $titleEn[$key],
+        foreach ($titleEn as $key => $item) {
+            CorporateRespSection::create([
+                'title_en' => $item,
                 'title_bn' => $titleBn[$key],
-                'component_type' => $item,
+                'banner_image_url' => null,
+                'banner_mobile_view' => null,
+                'alt_text_en' => null,
+                'alt_text_bn' => null,
+                'banner_image_name' => null,
+                'url_slug' => null,
+                'slug' => str_replace(' ', '_', strtolower($item)),
+                'page_header' => null,
+                'schema_markup' => null,
                 'status' => 1,
             ]);
         }

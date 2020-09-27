@@ -948,4 +948,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     //Access Logs
     Route::get('access-logs', 'AccessLogController@index');
 
+    // Corporate Responsibility
+    Route::resource('corporate-resp-section', 'AssetLite\CorporateRespSectionController')
+        ->except('show', 'destroy', 'store');
+
 });

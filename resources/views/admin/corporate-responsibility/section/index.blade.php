@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'E-Career Sections')
-@section('card_name', 'E-Career Sections')
+@section('title', 'Corporate Responsibility Sections')
+@section('card_name', 'Corporate Responsibility Sections')
 @section('breadcrumb')
-    <li class="breadcrumb-item active">E-Career Sections</li>
+    <li class="breadcrumb-item active">Sections List</li>
 @endsection
 @section('action')
     {{-- <a href="{{ url('life-at-banglalink/topbanner/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
@@ -20,32 +20,24 @@
                         <thead>
                         <tr>
                             <th width="3%">SL</th>
-                            <th>Title</th>
-                            <th width="30%">URL Slug</th>
-                            <th width="15%">Status</th>
-                            <th width="22%">Action</th>
+                            <th width="20%">Title</th>
+                            <th width="30%">Banner Image</th>
+{{--                            <th width="20%">URL Slug</th>--}}
+                            <th width="10%">Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @if( !empty($sections) )
                         @foreach($sections as $key=> $section)
-                            {{-- @php( $sectionType = str_replace(" ", "-", strtolower( $section->type->name ) )) --}}
                             <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $section->title_en }}</td>
-                                <td>{{ $section->route_slug }}</td>
-                                <td>{{ ($section->is_active == 1) ? 'Acive' : 'Inactive' }}</td>
-                                <td class="text-center" width="22%">
-                                    <a href="{{ url("life-at-banglalink/topbanner/$section->id/edit") }}" role="button" class="btn btn-sm btn-outline-info "><i class="la la-edit" aria-hidden="true"></i></a>
-                                    {{-- <a href="{{ url("life-at-banglalink/topbanner/destroy/$section->id") }}" role="button" class="btn btn-outline-success border-0" onclick="return confirm('Are you sure?');"><i class="la la-trash" aria-hidden="true"></i></a> --}}
-                                    
-                                    @if( $section->has_items == 1 )
-                                        <a href="{{ url("ecarrer-items/$section->id/list") }}" class="btn btn-outline-warning"><i class="la la-edit"></i> Section Items <span class="ml-1 badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">{{--{{ $childNumber }}--}}</span></a>
-                                    @endif
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $section->title_en }} {!! $section->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
+                                <td><img src="{{ config('filesystems.file_base_url') . $section->banner_image_url }}" height="100" width="270"></td>
+{{--                                <td>{{ $section->url_slug }}</td>--}}
+                                <td class="text-center">
+                                    <a href="{{ url("corporate-resp-section/$section->id/edit") }}" role="button" class="btn btn-sm btn-outline-info border-0"><i class="la la-edit" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                         @endforeach
-                        @endif
                         </tbody>
                     </table>
                 </div>

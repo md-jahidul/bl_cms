@@ -3,77 +3,56 @@
 namespace App\Services;
 
 use App\Repositories\AlSliderRepository;
+use App\Repositories\CorporateRespSectionRepository;
 use App\Repositories\SliderRepository;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 
-class AlSliderService
+class CorporateRespSectionService
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
-     * @var $alSliderRepository
+     * @var CorporateRespSectionRepository
      */
-    protected $alSliderRepository;
+    private $corpRespSection;
 
     /**
      * AlSliderService constructor.
-     * @param AlSliderRepository $alSliderRepository
+     * @param CorporateRespSectionRepository $corporateRespSectionRepository
      */
-    public function __construct(AlSliderRepository $alSliderRepository)
+    public function __construct(CorporateRespSectionRepository $corporateRespSectionRepository)
     {
-        $this->alSliderRepository = $alSliderRepository;
-        $this->setActionRepository($alSliderRepository);
-    }
-
-    /**
-     * @param $type
-     * @return AlSliderRepository|Collection|null
-     */
-    public function sliders($type)
-    {
-        return $this->alSliderRepository->findByProperties(['slider_type' => $type]);
-    }
-
-    public function shortCodeSliders($shortCode)
-    {
-        return $this->alSliderRepository->findByProperties(['short_code' => $shortCode]);
-    }
-
-    /**
-     * Storing the slider resource
-     * @return Response
-     */
-    public function storeSlider($data)
-    {
-        //Todo:: Make the short code dynamic
-        $data['short_code'] = uniqid();
-        $this->save($data);
-        return new Response('Slider added successfully');
+        $this->corpRespSection = $corporateRespSectionRepository;
+        $this->setActionRepository($corporateRespSectionRepository);
     }
 
     /**
      * @param $data
      * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     * @return ResponseFactory|Response
      */
-    public function updateSlider($data, $id)
+    public function updateCorpRespSection($data, $id)
     {
-        $slider = $this->findOne($id);
-        $slider->update($data);
-        return Response('Slider updated successfully !');
+        $section = $this->findOne($id);
+        $directory = 'assetlite/images/corporate-responsibility';
+
+        if (request()->hasFile('banner_image_url')) {
+            $data['banner_image_url'] = $this->upload($data['banner_image_url'], $directory);
+            $this->deleteFile($section->banner_image_url);
+        }
+
+        if (request()->hasFile('banner_mobile_view')) {
+            $data['banner_mobile_view'] = $this->upload($data['banner_mobile_view'], $directory);
+            $this->deleteFile($section->banner_mobile_view);
+        }
+
+        $section->update($data);
+        return Response('Section update successfully !');
     }
 
-    /**
-     * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
-     * @throws \Exception
-     */
-    public function deleteSlider($id)
-    {
-        $slider = $this->findOne($id);
-        $slider->delete();
-        return Response('Slider deleted successfully !');
-    }
 }
