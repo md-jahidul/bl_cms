@@ -669,11 +669,11 @@
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-list"></i>Section</a>
                 </li>
-{{--                <li class="{{ is_active_url('lead-requested-list') }}">--}}
-{{--                    <a class="menu-item" href="{{ route('lead-list') }}"--}}
-{{--                       data-i18n="nav.templates.vert.classic_menu"><i--}}
-{{--                            class="la la-list"></i> Lead Data List</a>--}}
-{{--                </li>--}}
+                <li class="{{ is_active_url('corporate-cr-strategy/section') }}">
+                    <a class="menu-item" href="{{ route('cr-strategy-section.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-list"></i> CR Strategy</a>
+                </li>
             </ul>
         </li>
     @endif
