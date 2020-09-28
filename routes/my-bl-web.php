@@ -403,6 +403,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('developer/api/debug/balance-details/{number}/{type}', 'CMS\ApiDebugController@getBalanceDetails')
         ->name('mybl.api.debug.balance-details');
 
+    Route::get('developer/api/debug/product/log/{number}', 'CMS\ApiDebugController@getProductLogs')->name('product.api.log');
+
     Route::get('developer/api/debug/audit_logs/{number}', 'CMS\ApiDebugController@getBrowseHistory');
     Route::get('developer/api/debug/bonus_logs/{number}', 'CMS\ApiDebugController@getLoginBonusHistory');
     Route::get('developer/api/debug/otp-logs/{number}', 'CMS\ApiDebugController@getOtpRequestLogs');

@@ -2,8 +2,6 @@
 @section('title', 'Developer Panel')
 @section('card_name', 'Debug Panel')
 
-{{--@php(dd($date_limit,  $last_date));--}}
-
 @section('content')
     <section>
         <div class="row">
@@ -43,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12" id="balance-summary-div" style="display: none;">
+            <div class="col-md-12" id="balance-summary-div" style="display: none; padding: 10px">
 
             </div>
         </div>
@@ -154,147 +152,120 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-8">
-                <h5 class="mb-1 mt-2 text-bold-600">Recent Browse History</h5>
-            </div>
-            <div class="col-md-4">
-                <input type='date'
-                       class="form-control datetime"
-                       id="date"
-                       value="{{ $current_date }}"
-                       min="{{ $date_limit }}"
-                       max="{{ $current_date }}"
-                       name="date" >
-            </div>
-            <hr>
-            <div class="col-md-12">
-                <table class="table table-bordered" id="audit_log_table">
-                    <thead>
-                    <tr>
-                        <th>Browse Time</th>
-                        <th>URL</th>
-                        <th>Source</th>
-                        <th>Request Data</th>
-                    </tr>
-                    </thead>
-                </table>
+        <div class="col-md-12">
+            <div class="row" style="background-color: white">
+                <div class="col-md-12">
+                    <div class="row" style="padding: 10px">
+                        <div class="col-md-8">
+                            <h5 class="mb-1 mt-2 text-bold-600">Recent Browse History</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <input type='date'
+                                   class="form-control datetime"
+                                   id="date"
+                                   value="{{ $current_date }}"
+                                   min="{{ $last_date }}"
+                                   max="{{ $current_date }}"
+                                   name="date">
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="col-md-12">
+                    <table class="table table-bordered" id="audit_log_table">
+                        <thead class="alert-warning">
+                        <tr>
+                            <th>Browse Time</th>
+                            <th>URL</th>
+                            <th>Source</th>
+                            <th>Request Data</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-4 mt-2">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="card-body">
-                            <div class="loader-wrapper" id="last-login-loader">
-                                <div class="loader-wrapper">
-                                    <div class="loader-container">
-                                        <div class="ball-clip-rotate-multiple loader-success">
-                                            <div></div>
-                                            <div></div>
+        <div class="col-md-12 mt-2 mb-2" style="background-color: white">
+            <div class="row">
+                <div class="col-md-4 mt-2">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="loader-wrapper" id="last-login-loader">
+                                    <div class="loader-wrapper">
+                                        <div class="loader-container">
+                                            <div class="ball-clip-rotate-multiple loader-success">
+                                                <div></div>
+                                                <div></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="media d-flex" id="last-login-div" style="display: none;">
-                                <div class="align-self-center">
-                                    <i class="icon-login success font-large-2 float-left"></i>
-                                </div>
-                                <div class="media-body text-right">
-                                    <h3 id="last-login-data"></h3>
-                                    <span class="success">Last login</span>
+                                <div class="media d-flex" id="last-login-div" style="display: none;">
+                                    <div class="align-self-center">
+                                        <i class="icon-login success font-large-2 float-left"></i>
+                                    </div>
+                                    <div class="media-body text-right">
+                                        <h3 id="last-login-data"></h3>
+                                        <span class="success">Last login</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h5 class="mb-1 mt-2 text-bold-600">Recent Login Bonus Status</h5>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="mb-1 mt-2 text-bold-600">Recent Login Bonus Status</h5>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <input type='date'
+                                   class="form-control datetime"
+                                   id="date_bonus"
+                                   value="{{ $current_date }}"
+                                   min="{{ $last_date }}"
+                                   max="{{ $current_date }}"
+                                   name="date">
+                        </div>
                     </div>
-                    <div class="col-md-4 mt-2">
-                        <input type='date'
-                               class="form-control datetime"
-                               id="date_bonus"
-                               value="{{ $current_date }}"
-                               min="{{ $date_limit }}"
-                               max="{{ $current_date }}"
-                               name="date" >
+                    <hr>
+                    <div class="col-md-12">
+                        <table class="table table-bordered" id="bonus_log_table">
+                            <thead class="alert-warning">
+                            <tr>
+                                <th>Date</th>
+                                <th>Bonus type</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                        </table>
                     </div>
-                </div>
-                <hr>
-                <div class="col-md-12">
-                    <table class="table table-bordered" id="bonus_log_table">
-                        <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Bonus type</th>
-                            <th>Status</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h5 class="mb-1 mt-2 text-bold-600">Recent OTP and Login Logs</h5>
-                    </div>
-                    <div class="col-md-4 mt-2">
-                        <input type='date'
-                               class="form-control datetime"
-                               id="date_otp_login"
-                               value="{{ $current_date }}"
-                               min="{{ $date_limit }}"
-                               max="{{ $current_date }}"
-                               name="date_otp_login" >
-                    </div>
-                </div>
-                <hr>
-                <div class="col-md-12">
-                    <table class="table table-bordered" id="otp_login_table">
-                        <thead>
-                        <tr>
-                            <th>Request Time</th>
-                            <th>number</th>
-                            <th>response</th>
-                            <th>message</th>
-                            <th>Status</th>
-                        </tr>
-                        </thead>
-                    </table>
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h5 class="mb-1 mt-2 text-bold-600">Recent OTP Verify Logs</h5>
-                    </div>
-                    <div class="col-md-4 mt-2">
-                        <input type='date'
-                               class="form-control datetime"
-                               id="date_otp"
-                               value="{{ $current_date }}"
-                               min="{{ $date_limit }}"
-                               max="{{ $current_date }}"
-                               name="date" >
+                <div class="col-md-12" style="background-color: white; padding: 10px">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="mb-1 mt-2 text-bold-600">Recent OTP Request Logs</h5>
+                        </div>
+                        <div class="col-md-4 mt-2">
+                            <input type='date'
+                                   class="form-control datetime"
+                                   id="date_otp"
+                                   value="{{ $current_date }}"
+                                   min="{{ $last_date }}"
+                                   max="{{ $current_date }}"
+                                   name="date">
+                        </div>
                     </div>
                 </div>
                 <hr>
-                <div class="col-md-12">
+                <div class="col-md-12" style="background-color: white; padding: 10px;">
                     <table class="table table-bordered" id="otp_log_table">
-                        <thead>
+                        <thead class="alert-warning text-white">
                         <tr>
                             <th>Request Time</th>
                             <th>OTP</th>
@@ -330,7 +301,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12"> <hr/></div>
+            <div class="col-md-12">
+                <hr/>
+            </div>
             <div class="col-md-12" id="usage-summary-div" style="display: none;">
             </div>
         </div>
@@ -342,7 +315,9 @@
                     <h5 class="mb-1 mt-2 text-bold-600 pull-right">{{ $last_date }} - {{ $current_date }}</h5>
                 </div>
             </div>
-            <div class="col-md-12"> <hr/></div>
+            <div class="col-md-12">
+                <hr/>
+            </div>
             <div class="col-md-12" id="usage-details-div">
                 <div class="card">
                     <div class="card-content">
@@ -479,40 +454,46 @@
                 </div>
             </div>
         </div>
+        {{--================================================================================--}}
 
-        {{--Contact restore logs--}}
-        <div class="row">
-            <div class="col-md-8">
-                <h5 class="mb-1 mt-2 text-bold-600">Contact Restore Logs</h5>
-            </div>
-            <div class="col-md-4">
-                <input type='date'
-                       class="form-control datetime"
-                       id="search-contact-restore-log"
-                       value="{{ $current_date }}"
-                       min="{{ $last_date }}"
-                       max="{{ $current_date }}"
-                       name="search_contact_log" >
-            </div>
-            <hr>
+        <div class="row mt-3">
             <div class="col-md-12">
-                <table class="table table-bordered" id="contact_restore_logs_table">
-                    <thead>
-                    <tr>
-                        <th>Contact backup id</th>
-                        <th>Message</th>
-                        <th>Date time</th>
-                        <th>Platform</th>
-                        <th>Device os</th>
-                        <th>Device model</th>
-                        <th>Mobile number</th>
-                        <th>Total number to be restore</th>
-                        <th>Total restore</th>
-                    </tr>
-                    </thead>
-                </table>
+                <div>
+                    <h5 class="mb-1 mt-2 text-bold-600 pull-left">Product Logs</h5>
+                    {{--                    <h5 class="mb-1 mt-2 text-bold-600 pull-right">{{ $last_date }} - {{ $current_date }}</h5>--}}
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr/>
+            </div>
+            <div class="col-md-12" id="usage-details-div">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <table id="productLog" class="table table-bordered table-striped">
+                                            <thead class="text-center alert-warning text-white">
+                                            <th>Date</th>
+                                            <th>Msisdn</th>
+                                            <th>Product Code</th>
+                                            <th>Message</th>
+                                            <th>Status</th>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
     </section>
 @stop
 
@@ -549,8 +530,8 @@
                 getLastLogin(number);
                 getUsageDetails(number);
                 getOtpData(number);
-                getOtpLoginData(number);
-                getContactRestoreLogsData(number);
+                getProductLog(number);
+
             });
 
             fetchData = function (query, dataURL) {
@@ -560,8 +541,7 @@
                 });
             }
 
-            function getLastLogin(number)
-            {
+            function getLastLogin(number) {
                 let getLastLogin = fetchData(
                     {
                         'number': number
@@ -574,6 +554,7 @@
                     $("#last-login-div").show();
                 })
             }
+
 
             function getBalanceData(number) {
                 let getSummary = fetchData(
@@ -595,8 +576,6 @@
                     {
                         'number': number
                     }, '/developer/api/debug/balance-details/' + number + '/sms');
-
-                //developer/api/debug/usage-summary/{number}
 
                 let getUsageSummary = fetchData(
                     {
@@ -643,6 +622,55 @@
 
                     $("#usage-summary-div").show();
                 })
+            }
+
+            function getProductLog(number) {
+
+                $('#productLog').DataTable().destroy();
+
+                $("#productLog").dataTable({
+                    scrollX: true,
+                    processing: true,
+                    searching: false,
+                    serverSide: true,
+                    ordering: false,
+                    autoWidth: false,
+                    pageLength: 10,
+                    lengthChange: false,
+                    ajax: {
+                        url: "/developer/api/debug/product/log/" + number
+                    },
+                    columns: [
+                        {
+                            name: 'date',
+                            render: function (data, type, row) {
+                                return row.date;
+                            }
+                        },
+                        {
+                            name: 'msisdn',
+                            render: function (data, type, row) {
+                                return row.msisdn;
+                            }
+                        },
+                        {
+                            name: 'others',
+                            render: function (data, type, row) {
+                                return row.others;
+                            }
+                        }, {
+                            name: 'message',
+                            render: function (data, type, row) {
+                                return row.message;
+                            }
+                        }, {
+                            name: 'status',
+                            render: function (data, type, row) {
+                                return row.status;
+                            }
+                        }
+                    ]
+                });
             }
 
             function getUsageDetails(number) {
@@ -815,7 +843,6 @@
                             }
                         }
                     },
-
                     columns: [
                         {
                             name: 'request_time',
@@ -848,15 +875,15 @@
                         {
                             name: 'status',
                             render: function (data, type, row) {
-                                if(row.status == 200){
+                                if (row.status == 200) {
                                     return `<div class="badge badge-success">
-                                                  <span>`+ row.status +`</span>
+                                                  <span>` + row.status + `</span>
                                                   <i class="la la-check-circle-o font-medium-2"></i>
                                                 </div>`;
                                 }
 
                                 return `<div class="badge badge-danger">
-                                                  <span>`+ row.status +`</span>
+                                                  <span>` + row.status + `</span>
                                                   <i class="la la-bell-o font-medium-2"></i>
                                                 </div>`;
                             }
@@ -864,70 +891,6 @@
                     ]
                 });
             }
-
-
-            function getOtpLoginData(number) {
-
-                $('#otp_login_table').DataTable().destroy();
-
-                $("#otp_login_table").dataTable({
-                    scrollX: true,
-                    processing: true,
-                    searching: false,
-                    serverSide: true,
-                    ordering: false,
-                    autoWidth: false,
-                    pageLength: 10,
-                    lengthChange: false,
-                    ajax: {
-                        url: "/developer/api/debug/otp-login-logs/" + number,
-                        data: {
-                            date: function () {
-                                return $("#date_otp_login").val();
-                            }
-                        }
-                    },
-                    columns: [
-                        {
-                            name: 'request_time',
-                            render: function (data, type, row) {
-                                return row.date;
-                            }
-                        },
-
-                        {
-                            name: 'number',
-                            render: function (data, type, row) {
-                                return row.number;
-                            }
-                        },
-
-                        {
-                            name: 'response',
-                            render: function (data, type, row) {
-                                return row.response;
-                            }
-                        },
-
-                        {
-                            name: 'message',
-                            render: function (data, type, row) {
-                                return row.message;
-                            }
-                        },
-
-
-
-                        {
-                            name: 'status',
-                            render: function (data, type, row) {
-                                return row.status;
-                            }
-                        }
-                    ]
-                });
-            }
-
 
             $(document).on('input', '#date', function (e) {
                 e.preventDefault();
@@ -943,102 +906,6 @@
                 e.preventDefault();
                 $('#otp_log_table').DataTable().ajax.reload();
             });
-
-            $(document).on('input', '#date_otp_login', function (e) {
-                e.preventDefault();
-                $('#otp_login_table').DataTable().ajax.reload();
-            });
-            $(document).on('input', '#search-contact-restore-log', function (e) {
-                e.preventDefault();
-                $('#contact_restore_logs_table').DataTable().ajax.reload();
-            });
-
-            function getContactRestoreLogsData(number) {
-
-                $('#contact_restore_logs_table').DataTable().destroy();
-
-                $("#contact_restore_logs_table").dataTable({
-                    scrollX: true,
-                    processing: true,
-                    searching: false,
-                    serverSide: true,
-                    ordering: false,
-                    autoWidth: false,
-                    pageLength: 10,
-                    lengthChange: false,
-                    ajax: {
-                        url: "/developer/api/debug/contact-restore-logs/" + number,
-                        data: {
-                            date: function () {
-                                return $("#search-contact-restore-log").val();
-                            }
-                        }
-                    },
-                    columns: [
-                        {
-                            name: 'contact_backup_id',
-                            render: function (data, type, row) {
-                                return row.contact_backup_id;
-                            }
-                        },
-                        {
-                            name: 'message',
-                            render: function (data, type, row) {
-                                return row.message;
-                            }
-                        },
-                        {
-                            name: 'date_time',
-                            render: function (data, type, row) {
-                                return row.date_time;
-                            }
-                        },
-                        {
-                            name: 'platform',
-                            render: function (data, type, row) {
-                                return row.platform;
-                            }
-                        },
-                        {
-                            name: 'device_os',
-                            render: function (data, type, row) {
-                                return row.device_os;
-                            }
-                        },
-                        {
-                            name: 'device_model',
-                            render: function (data, type, row) {
-                                return row.device_model;
-                            }
-                        },
-                        {
-                            name: 'mobile_number',
-                            render: function (data, type, row) {
-                                return row.mobile_number;
-                            }
-                        },
-                        {
-                            name: 'total_number_to_be_restore',
-                            render: function (data, type, row) {
-                                return row.total_number_to_be_restore;
-                            }
-                        },
-                        {
-                            name: 'total_restore',
-                            render: function (data, type, row) {
-                                return row.total_restore;
-                            }
-                        },
-                    ]
-                });
-            }
         })
     </script>
 @endpush
-
-
-
-
-
-
-
