@@ -31,6 +31,8 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
 
+//    protected $decayMinutes = 5;
+
     /**
      * Create a new controller instance.
      *
@@ -40,6 +42,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
 
     public function login(Request $request)
     {
@@ -76,11 +79,17 @@ class LoginController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
+    public function decayMinutes()
+    {
+        return env("DECAY_MINUTES", 2);
+    }
+
     protected function hasTooManyLoginAttempts(Request $request)
     {
-        $maxAttempts = 3;
+        $maxAttempts = env("LOGIN_ATTEMPT", 3);
+        $decayMinutes = 2;
         return $this->limiter()->tooManyAttempts(
-            $this->throttleKey($request), $maxAttempts, 1
+            $this->throttleKey($request), $maxAttempts, $decayMinutes
         );
     }
 

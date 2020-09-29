@@ -132,8 +132,8 @@
                         required: true,
                         minlength: 8,
                         maxlength: 20,
-                        loginRegex: true,
                         username: true,
+                        loginRegex: true,
                         // loginRegexSpecial:true,
 
 
@@ -142,6 +142,7 @@
                         equalTo: "#password",
                         minlength: 8,
                         maxlength: 20,
+                        username: true,
                         loginRegex: true
                     }
                 },
