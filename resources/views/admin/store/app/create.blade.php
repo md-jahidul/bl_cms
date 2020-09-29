@@ -207,6 +207,26 @@
                                 </div>
                             </div>
 
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="is_active">Active Status:</label>
+                                    <select value=""
+                                            class="form-control" id="is_active"
+                                            name="is_active">
+                                        <option value="1"
+                                                @if(isset($appStore)) @if($appStore->is_active == "1") selected @endif @endif>
+                                            Active
+                                        </option>
+                                        <option value="0"
+                                                @if(isset($appStore)) @if($appStore->is_active == "0") selected @endif @endif>
+                                            InActive
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="icon">Upload Icon :</label>
@@ -301,25 +321,6 @@
                                     <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="is_active">Active Status:</label>
-                                    <select value=""
-                                            class="form-control" id="is_active"
-                                            name="is_active">
-                                        <option value="1"
-                                                @if(isset($appStore)) @if($appStore->is_active == "1") selected @endif @endif>
-                                            Active
-                                        </option>
-                                        <option value="0"
-                                                @if(isset($appStore)) @if($appStore->is_active == "0") selected @endif @endif>
-                                            InActive
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
 
                             <div class="col-md-12">
                                 <button type="submit" style="float: right" class="btn btn-success round px-2">
