@@ -9,11 +9,4 @@ use App\Models\CorporateCrStrategySection;
 class CorpCrStrategyComponentRepository extends BaseRepository
 {
     public $modelName = CorpCrStrategyComponent::class;
-
-    public function getComponentBySection($pageType, $sectionId)
-    {
-        return $this->model->where('page_type', $pageType)
-            ->where('page_id', $sectionId)
-            ->get();
-    }
 }

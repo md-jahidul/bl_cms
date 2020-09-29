@@ -15,14 +15,18 @@ class CreateCorpCrStrategyComponentsTable extends Migration
     {
         Schema::create('corp_cr_strategy_components', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('page_type')->nullable();
-            $table->integer('page_id')->nullable();
-            $table->string('component_type')->nullable();
+            $table->integer('section_id')->nullable();
             $table->string('title_en')->nullable();
             $table->string('title_bn')->nullable();
             $table->string('details_en')->nullable();
             $table->string('details_bn')->nullable();
             $table->json('other_attributes')->nullable();
+            $table->json('banner')->nullable();
+            $table->text('url_slug_en')->nullable();
+            $table->text('url_slug_bn')->nullable();
+            $table->longText('page_header')->nullable();
+            $table->longText('page_header_bn')->nullable();
+            $table->longText('schema_markup')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->integer('display_order')->default(0);
             $table->timestamps();

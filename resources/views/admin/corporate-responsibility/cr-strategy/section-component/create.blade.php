@@ -78,6 +78,8 @@
                                     @endif
                                 </div>
 
+                                @include('admin.seo-fields.seo-fields')
+
                                 <div class="col-md-6 mt-1">
                                     <label></label>
                                     <div class="form-group">

@@ -39,11 +39,6 @@ class CorpCrStrategyComponentService
         $this->setActionRepository($corpCrStrategyComponentRepository);
     }
 
-    public function sectionWiseComponent($pageType, $sectionId)
-    {
-        return $this->corpCrStrategyComponentRepo->getComponentBySection($pageType, $sectionId);
-    }
-
     /**
      * Storing the alFaq resource
      * @param $data
@@ -54,12 +49,10 @@ class CorpCrStrategyComponentService
     public function storeComponent($data, $pageType, $sectionId)
     {
         $directory = 'assetlite/images/corporate-responsibility';
-        $file = $data['other_attributes']['thumbnail_image'];
-        if (!empty($file)) {
-            $data['other_attributes']['thumbnail_image'] = $this->upload($file, $directory);
+        if (isset($data['other_attributes']['thumbnail_image'])) {
+            $data['other_attributes']['thumbnail_image'] = $this->upload($data['other_attributes']['thumbnail_image'], $directory);
         }
-        $data['page_type'] = $pageType;
-        $data['page_id'] = $sectionId;
+        $data['section_id'] = $sectionId;
         $this->save($data);
         return new Response("Component has been successfully created");
     }
@@ -125,7 +118,8 @@ class CorpCrStrategyComponentService
     public function deleteComponent($id)
     {
         $component = $this->findOne($id);
-        $this->deleteFile($component->other_attributes['thumbnail_image']);
+        $filePath = isset($component->other_attributes['thumbnail_image']) ? $component->other_attributes['thumbnail_image'] : null;
+        $this->deleteFile($filePath);
         $component->delete();
         return Response('Component has been successfully deleted');
     }

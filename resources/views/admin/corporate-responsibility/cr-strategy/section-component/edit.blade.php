@@ -80,6 +80,9 @@
                                     @endif
                                 </div>
 
+                                @php $data = $component; @endphp
+                                @include('admin.seo-fields.seo-fields', $data)
+
                                 <div class="col-md-6">
                                     <label></label>
                                     <div class="form-group">

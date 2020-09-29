@@ -32,10 +32,10 @@
                                 <tr data-index="{{ $data->id }}" data-position="{{ $data->display_order }}">
                                     <td width="3%">{{ $loop->iteration }}</td>
                                     <td>{{ $data->title_en }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
-                                    <td><img src="{{ config('filesystems.file_base_url') . $data->other_attributes['thumbnail_image'] }}" height="100" width="270"></td>
+                                    <td><img src="{{ isset($data->other_attributes['thumbnail_image']) ? config('filesystems.file_base_url') . $data->other_attributes['thumbnail_image'] : '' }}" height="100" width="270"></td>
                                     <td>{{ $data->details_en }}</td>
                                     <td>
-                                        <a href="{{ url("corporate/cr-strategy-component/$data->id/edit") }}" role="button" class="btn btn-warning">Details</a>
+                                        <a href="{{ route("cr-strategy-details.index", $data->id) }}" role="button" class="btn btn-warning">Details</a>
                                     </td>
                                     <td width="12%" class="text-center">
                                         <a href="{{ route("cr-strategy-component.edit", [$section->id, $data->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
