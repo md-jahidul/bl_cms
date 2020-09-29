@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
 use App\Repositories\StoreRepository;
+use Illuminate\Support\Facades\File;
 
 class StoreService
 {
@@ -83,12 +84,20 @@ class StoreService
 
         if (isset($data['icon'])) {
             $data['icon'] = 'storage/' . $data['icon']->store('store');
-            unlink($storeRepository->icon);
+
+            if (File::exists($storeRepository->icon)) {
+                unlink($storeRepository->icon);
+            }
+
         }
 
         if (isset($data['image_url'])) {
             $data['image_url'] = 'storage/' . $data['image_url']->store('store');
-            unlink($storeRepository->image_url);
+
+            if (File::exists($storeRepository->image_url)) {
+                unlink($storeRepository->image_url);
+            }
+
         }
 
         $storeRepository->update($data);
