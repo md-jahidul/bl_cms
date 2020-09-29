@@ -18,7 +18,7 @@ class FourGLandingPageRepository extends BaseRepository
 
     public function findWithoutBanner()
     {
-        return $this->model->where('component_type', '!=', 'banner_image')
+        return $this->model->where('type', '!=', 'banner_image')
             ->get();
     }
 }

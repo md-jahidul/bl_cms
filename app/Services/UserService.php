@@ -28,8 +28,8 @@ class UserService
 
     public function getLeadUsers()
     {
-        $featureType = Auth::user()->feature_type;
-        return $this->userRepository->findByProperties(['feature_type' => $featureType]);
+//        $featureType = Auth::user()->feature_type;
+        return $this->userRepository->findByProperties(['type' => "assetlite"]);
     }
 
     /**
