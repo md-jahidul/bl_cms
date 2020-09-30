@@ -987,7 +987,8 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         'AssetLite\CorpCrStrategyComponentDetailsController@componentUpdate')
         ->name('cr-strategy-details.update');
     Route::get('corporate/cr-strategy/component/{com_id}/details/destroy/{id}',
-        'AssetLite\CorpCrStrategyComponentDetailsController@componentDestroy');
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentDestroy')
+        ->name('cr-strategy-details.destroy');
     Route::get('corporate/cr-strategy-details-sort',
         'AssetLite\CorpCrStrategyComponentDetailsController@componentSortable');
 

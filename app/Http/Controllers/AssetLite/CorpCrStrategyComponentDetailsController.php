@@ -71,6 +71,7 @@ class CorpCrStrategyComponentDetailsController extends Controller
     {
         $response = $this->componentService->componentStore($request->all(), $sectionComId, self::PAGE_TYPE);
         Session::flash('success', $response->content());
+
         return redirect(route('cr-strategy-details.index', [$sectionComId]));
     }
 

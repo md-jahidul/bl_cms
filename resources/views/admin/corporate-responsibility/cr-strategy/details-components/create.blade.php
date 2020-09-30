@@ -3,18 +3,18 @@
 @section('card_name', 'Component Create')
 @section('breadcrumb')
     <li class="breadcrumb-item active"> <a href="{{ url('dynamic-pages') }}"> Page List</a></li>
-    <li class="breadcrumb-item active"> <a href="{{ route('other-components', [$pageId]) }}"> Component List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ route('cr-strategy-details.index', [$sectionComId]) }}"> Component List</a></li>
     <li class="breadcrumb-item active"> Component Create</li>
 @endsection
 @section('action')
-{{--    <a href="{{  route('component-list', [$simType, $productDetailsId, $sectionId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>--}}
+    <a href="{{  route('cr-strategy-details.index', [$sectionComId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <form role="form" id="product_form" action="{{ route('other_component_store', [$pageId]) }}" method="POST" novalidate enctype="multipart/form-data">
+                    <form role="form" id="product_form" action="{{ route('cr-strategy-details.store', [$sectionComId]) }}" method="POST" novalidate enctype="multipart/form-data">
                             <div class="content-body">
                                 <div class="row">
 

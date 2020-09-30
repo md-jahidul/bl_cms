@@ -2,11 +2,11 @@
 @section('title', 'Component')
 @section('card_name', 'Component')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ route('other-components', [$pageId]) }}"> Component List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ route('cr-strategy-details.index', $sectionComId) }}"> Component List</a></li>
     <li class="breadcrumb-item active"> Component Edit</li>
 @endsection
 @section('action')
-    <a href="{{ route('other-components', [$pageId]) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ route('cr-strategy-details.index', $sectionComId) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -14,7 +14,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" id="product_form" action="{{ route('other_component_update',[$pageId, $component->id]) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" id="product_form" action="{{ route('cr-strategy-details.update',[$sectionComId, $component->id]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="content-body">

@@ -32,8 +32,8 @@
                                     <td>{{ ucwords(str_replace('_', ' ', $list->component_type)) }} {!! $list->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                     <td>{{ $list->title_en  }}</td>
                                     <td class="text-right">
-                                        <a href="{{ route("other_component_edit", [$sectionComponent->id, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ route('other_component_delete', [$sectionComponent->id, $list->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
+                                        <a href="{{ route("cr-strategy-details.edit", [$sectionComponent->id, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <a href="#" remove="{{ route('cr-strategy-details.destroy', [$sectionComponent->id, $list->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
                                             <i class="la la-trash"></i>
                                         </a>
                                     </td>
@@ -60,7 +60,7 @@
 
 @push('page-js')
     <script>
-        var auto_save_url = "{{ url('dynamic-pages/component-sortable') }}";
+        var auto_save_url = "{{ url('corporate/cr-strategy-details-sort') }}";
     </script>
 @endpush
 
