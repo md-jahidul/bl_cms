@@ -948,4 +948,48 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     //Access Logs
     Route::get('access-logs', 'AccessLogController@index');
 
+    // Corporate Responsibility
+    Route::resource('corporate-resp-section', 'AssetLite\CorporateRespSectionController')
+        ->except('show', 'destroy', 'store');
+
+    // Corporate Responsibility CR Strategy
+    Route::resource('corporate/cr-strategy-section', 'AssetLite\CorporateCrStrategySectionController')
+        ->except('show', 'destroy');
+    Route::get('corporate/cr-strategy-section/destroy/{id}', 'AssetLite\CorporateCrStrategySectionController@destroy');
+    Route::get('corporate/cr-strategy-section-sort', 'AssetLite\CorporateCrStrategySectionController@sectionSortable');
+
+    Route::get('corporate/cr-strategy-component/{section_id}/list', 'AssetLite\CorpCrStrategyComponentController@index')
+        ->name('cr-strategy-component.index');
+    Route::get('corporate/cr-strategy-component/{section_id}/create', 'AssetLite\CorpCrStrategyComponentController@create')
+        ->name('cr-strategy-component.create');
+    Route::post('corporate/cr-strategy-component/{section_id}/store', 'AssetLite\CorpCrStrategyComponentController@store')
+        ->name('cr-strategy-component.store');
+    Route::get('corporate/cr-strategy-component/{section_id}/edit/{id}', 'AssetLite\CorpCrStrategyComponentController@edit')
+        ->name('cr-strategy-component.edit');
+    Route::put('corporate/cr-strategy-component/{section_id}/update/{id}', 'AssetLite\CorpCrStrategyComponentController@update')
+        ->name('cr-strategy-component.update');
+    Route::get('corporate/cr-strategy-component/{section_id}/destroy/{id}', 'AssetLite\CorpCrStrategyComponentController@destroy');
+    Route::get('corporate/cr-strategy-component-sort', 'AssetLite\CorpCrStrategyComponentController@sectionSortable');
+
+    Route::get('corporate/cr-strategy/component/{com_id}/details/list',
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentList')
+        ->name('cr-strategy-details.index');
+    Route::get('corporate/cr-strategy/component/{com_id}/details/create',
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentCreateForm')
+        ->name('cr-strategy-details.create');
+    Route::post('corporate/cr-strategy/component/{com_id}/details/store',
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentStore')
+        ->name('cr-strategy-details.store');
+    Route::get('corporate/cr-strategy/component/{com_id}/details/edit/{id}',
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentEditForm')
+        ->name('cr-strategy-details.edit');
+    Route::put('corporate/cr-strategy/component/{com_id}/details/update/{id}',
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentUpdate')
+        ->name('cr-strategy-details.update');
+    Route::get('corporate/cr-strategy/component/{com_id}/details/destroy/{id}',
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentDestroy')
+        ->name('cr-strategy-details.destroy');
+    Route::get('corporate/cr-strategy-details-sort',
+        'AssetLite\CorpCrStrategyComponentDetailsController@componentSortable');
+
 });
