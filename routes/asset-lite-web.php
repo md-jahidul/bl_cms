@@ -958,6 +958,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('corporate/cr-strategy-section/destroy/{id}', 'AssetLite\CorporateCrStrategySectionController@destroy');
     Route::get('corporate/cr-strategy-section-sort', 'AssetLite\CorporateCrStrategySectionController@sectionSortable');
 
+    //Section Component Corporate Responsibility
     Route::get('corporate/cr-strategy-component/{section_id}/list', 'AssetLite\CorpCrStrategyComponentController@index')
         ->name('cr-strategy-component.index');
     Route::get('corporate/cr-strategy-component/{section_id}/create', 'AssetLite\CorpCrStrategyComponentController@create')
@@ -971,6 +972,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('corporate/cr-strategy-component/{section_id}/destroy/{id}', 'AssetLite\CorpCrStrategyComponentController@destroy');
     Route::get('corporate/cr-strategy-component-sort', 'AssetLite\CorpCrStrategyComponentController@sectionSortable');
 
+    //Details Component Corporate Responsibility
     Route::get('corporate/cr-strategy/component/{com_id}/details/list',
         'AssetLite\CorpCrStrategyComponentDetailsController@componentList')
         ->name('cr-strategy-details.index');
@@ -991,5 +993,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('cr-strategy-details.destroy');
     Route::get('corporate/cr-strategy-details-sort',
         'AssetLite\CorpCrStrategyComponentDetailsController@componentSortable');
+
+    Route::post('corporate/cr-strategy/component/details/banner-upload',
+        'AssetLite\CorpCrStrategyComponentDetailsController@detailsBannerUpload')
+        ->name('cr-strategy-details-banner-image.upload');
 
 });
