@@ -669,10 +669,16 @@
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-list"></i>Section</a>
                 </li>
-                <li class="{{ is_active_url('corporate-cr-strategy/section') }}">
+                <li class="{{ is_active_url(route('cr-strategy-section.index')) }}">
                     <a class="menu-item" href="{{ route('cr-strategy-section.index') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-list"></i> CR Strategy</a>
+                </li>
+
+                <li class="{{ is_active_url(route('case-study-section.index')) }}">
+                    <a class="menu-item" href="{{ route('case-study-section.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-list"></i> Case Study and Report</a>
                 </li>
             </ul>
         </li>
