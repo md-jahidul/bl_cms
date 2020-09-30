@@ -39,6 +39,11 @@ class CorpCrStrategyComponentService
         $this->setActionRepository($corpCrStrategyComponentRepository);
     }
 
+    public function getSectionWiseComponent($sectionId)
+    {
+        return $this->corpCrStrategyComponentRepo->findByProperties(['section_id' => $sectionId]);
+    }
+
     /**
      * Storing the alFaq resource
      * @param $data

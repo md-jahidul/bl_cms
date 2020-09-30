@@ -50,7 +50,8 @@ class CorpCrStrategyComponentController extends Controller
     public function index($sectionId)
     {
         $section = $this->corporateCrStrategySection->findOrFail($sectionId);
-        $components = $this->corpCrStrategyComponentService->findAll();
+        $components = $this->corpCrStrategyComponentService->getSectionWiseComponent($sectionId);
+
         return view('admin.corporate-responsibility.cr-strategy.section-component.index',
             compact('components', 'section'));
     }
