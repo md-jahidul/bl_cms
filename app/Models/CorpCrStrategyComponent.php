@@ -9,6 +9,7 @@ class CorpCrStrategyComponent extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'other_attributes' => 'array'
+        'other_attributes' => 'array',
+        'banner' => 'array'
     ];
 }

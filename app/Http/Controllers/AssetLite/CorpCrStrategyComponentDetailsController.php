@@ -101,6 +101,13 @@ class CorpCrStrategyComponentDetailsController extends Controller
         $this->componentService->tableSortable($request);
     }
 
+    public function detailsBannerUpload(Request $request)
+    {
+        $response = $this->corpCrStrategyComponentService->bannerImageUpload($request->all());
+        Session::flash('success', $response->content());
+        return redirect(route('cr-strategy-details.index', [$request->section_component_id]));
+    }
+
     /**
      * @param $sectionComId
      * @param $id

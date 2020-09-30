@@ -76,9 +76,6 @@ class CorpCrStrategyComponentService
         if (!empty($data['other_attributes']['thumbnail_image'])) {
             $result['other_attributes']['thumbnail_image'] = $this->upload($data['other_attributes']['thumbnail_image'], $directory);
         }
-
-
-
         // get original data
         $new_multiple_attributes = $component->other_attributes;
 //         contains all the inputs from the form as an array
@@ -113,6 +110,40 @@ class CorpCrStrategyComponentService
             $update_menu->update();
         }
         return "success";
+    }
+
+    public function bannerImageUpload($data)
+    {
+        $sectionComponent = $this->findOne($data['section_component_id']);
+
+        $directory = 'assetlite/images/banner/corporate-responsibility';
+        if (!empty($data['banner']['banner_image_url'])) {
+            $data['banner']['banner_image_url'] = $this->upload($data['banner']['banner_image_url'], $directory);
+            $filePath = isset($sectionComponent->banner['banner_image_url']) ? $sectionComponent->banner['banner_image_url'] : null;
+            $this->deleteFile($filePath);
+        }
+
+        if (!empty($data['banner']['banner_mobile_view'])) {
+            $data['banner']['banner_mobile_view'] = $this->upload($data['banner']['banner_mobile_view'], $directory);
+            $filePath = isset($sectionComponent->banner['banner_mobile_view']) ? $sectionComponent->banner['banner_mobile_view'] : null;
+            $this->deleteFile($filePath);
+        }
+
+        // get original data
+        $new_multiple_attributes = $sectionComponent->banner;
+//         contains all the inputs from the form as an array
+        $input_multiple_attributes = isset($data['banner']) ? $data['banner'] : null;
+//         loop over the product array
+
+        if ($input_multiple_attributes) {
+            foreach ($input_multiple_attributes as $key => $inputData) {
+                $new_multiple_attributes[$key] = $inputData;
+            }
+        }
+        unset($data['section_component_id']);
+        $data['banner'] = $new_multiple_attributes;
+        $sectionComponent->update($data);
+        return Response('Details Banner image has been successfully updated');
     }
 
     /**
