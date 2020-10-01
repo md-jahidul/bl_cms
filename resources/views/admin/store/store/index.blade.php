@@ -108,7 +108,10 @@
       $(function () {
 
             $('.delete').click(function () {    console.log('start');
-                var id = $(this).attr('data-id');
+                //var id = $(this).attr('data-id');
+
+                let id = $(this).data('id');
+                console.log(id);
 
                 console.log(id);
 
