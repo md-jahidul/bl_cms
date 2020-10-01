@@ -45,6 +45,9 @@ class CorporateCrStrategySectionService
      */
     public function storeSection($data)
     {
+        $sections = $this->findAll();
+        $sectionCount = count($sections);
+        $data['display_order'] = $sectionCount;
         $this->save($data);
         return new Response("Section has been successfully created");
     }
