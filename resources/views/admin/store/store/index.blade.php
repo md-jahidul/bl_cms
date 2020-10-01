@@ -106,8 +106,11 @@
         var auto_save_url = "{{ url('myblStore-sortable') }}";
 
       $(function () {
-            $('.delete').click(function () {
+
+            $('.delete').click(function () {    console.log('start');
                 var id = $(this).attr('data-id');
+
+                console.log(id);
 
                 Swal.fire({
                     title: 'Are you sure?',
@@ -118,7 +121,7 @@
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
+                }).then((result) => {  console.log(result.value);
                     if (result.value) {
                         $.ajax({
                             url: "{{ url('myblStore/destroy') }}/"+id,
