@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="card-body card-dashboard">
-                <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
+                <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="store_list_mybl" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
                         <th width='5%'><i class="icon-cursor-move icons"></i></th>
@@ -63,8 +63,7 @@
                                         </div>
 
                                         <div class="col-md-2 m-1">
-                                            <button data-id="{{$store->id}}" data-toggle="tooltip" data-original-title="Delete Category" data-placement="right"
-                                                    class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                            <button data-id="{{$store->id}}"  data-placement="right"  class="btn btn-outline-danger deleteBtn"><i class="la la-trash"></i></button>
                                         </div>
 
                                     </div>
@@ -107,13 +106,17 @@
 
       $(function () {
 
-            $('.delete').click(function () {    console.log('start');
-                //var id = $(this).attr('data-id');
+            $('#store_list_mybl').DataTable({
+                  dom: 'Bfrtip',
+                  buttons: [],
+                  paging: false,
+                  searching: true,
+                  "bDestroy": true,
+                  "pageLength": 50
+            });
 
-                let id = $(this).data('id');
-                console.log(id);
-
-                console.log(id);
+            $('.deleteBtn').click(function () {
+                let id = $(this).attr('data-id');
 
                 Swal.fire({
                     title: 'Are you sure?',
@@ -124,7 +127,7 @@
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {  console.log(result.value);
+                }).then((result) => {
                     if (result.value) {
                         $.ajax({
                             url: "{{ url('myblStore/destroy') }}/"+id,
@@ -144,25 +147,7 @@
                     }
                 })
             })
-        })
 
-
-        // $(".showButton").click(function(){
-        //     $('#sendUser').modal()
-        //     $('#title').html($(this).attr('data-original-title'))
-        //     $('#category').html($(this).attr('data-original-category'))
-        //     $('#discription').html($(this).attr('data-original-discription'))
-        // })
-
-        $(document).ready(function () {
-            $('#Example1').DataTable({
-                dom: 'Bfrtip',
-                buttons: [],
-                paging: true,
-                searching: true,
-                "bDestroy": true,
-                "pageLength": 50
-            });
         });
 
     </script>
