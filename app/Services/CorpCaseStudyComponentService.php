@@ -47,8 +47,14 @@ class CorpCaseStudyComponentService
      * @param $sectionId
      * @return Response
      */
-    public function storeComponent($data, $pageType, $sectionId)
+    public function storeComponent($data, $sectionId)
     {
+        $components = $this->getSectionWiseComponent($sectionId);
+
+        if (count($components) != 0) {
+            return new Response("Component already exists. This is a single component section");
+        }
+
         $directory = 'assetlite/images/corporate-responsibility';
         if (isset($data['other_attributes']['thumbnail_image'])) {
             $data['other_attributes']['thumbnail_image'] = $this->upload($data['other_attributes']['thumbnail_image'], $directory);
