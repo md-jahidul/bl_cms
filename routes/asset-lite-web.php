@@ -789,9 +789,9 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('app-service/details/{type}/{id}/fixed-section/', 'AssetLite\AppServiceProductDetailsController@fixedSectionUpdate')
         ->name('app_service.details.fixed-section');
 
-
-//    Route::get('lead-requested-list-ajax', 'AssetLite\LeadManagementController@leadRequestedList')
-//        ->name('lead-list.ajex');
+    // Lead Management
+    Route::get('lead-requested-list', 'AssetLite\LeadManagementController@index')
+        ->name('lead-list');
 
     Route::get('lead-product-permission-form', 'AssetLite\LeadManagementController@productPermissionForm')
         ->name("permission.form");
@@ -806,8 +806,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     Route::get('lead-product-permission/destroy/{id}', 'AssetLite\LeadManagementController@permissionDelete');
 
-    Route::get('lead-product-permission', 'AssetLite\LeadManagementController@permittedUsersList')
-        ->name('lead-list');
+    Route::get('lead-product-permission', 'AssetLite\LeadManagementController@permittedUsersList');
 
     Route::get('lead-requested/details/{id}', 'AssetLite\LeadManagementController@viewDetails')
         ->name('lead.details');
