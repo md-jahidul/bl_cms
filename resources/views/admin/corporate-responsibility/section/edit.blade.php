@@ -90,21 +90,10 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Page Header (HTML)</label>
-                                <textarea class="form-control" rows="7" name="page_header">{{$section->page_header}}</textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> Title, meta, canonical and other tags
-                                </small>
-                            </div>
+                            @php $data = $section; @endphp
+                            @include('admin.seo-fields.seo-fields', $data)
 
-                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Schema Markup</label>
-                                <textarea class="form-control" rows="7" name="schema_markup">{{$section->schema_markup}}</textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
-                                </small>
-                            </div>
+
 
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
 {{--                                <label>Banner Photo Name</label>--}}

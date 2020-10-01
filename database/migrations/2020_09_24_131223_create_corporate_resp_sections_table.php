@@ -22,9 +22,11 @@ class CreateCorporateRespSectionsTable extends Migration
             $table->string('alt_text_en')->nullable();
             $table->string('alt_text_bn')->nullable();
             $table->string('banner_image_name')->nullable();
-            $table->text('url_slug')->nullable();
             $table->string('slug')->nullable();
+            $table->text('url_slug_en')->nullable();
+            $table->text('url_slug_bn')->nullable();
             $table->longText('page_header')->nullable();
+            $table->longText('page_header_bn')->nullable();
             $table->longText('schema_markup')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
