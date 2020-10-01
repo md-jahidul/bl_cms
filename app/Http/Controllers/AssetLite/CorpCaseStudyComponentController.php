@@ -21,8 +21,6 @@ class CorpCaseStudyComponentController extends Controller
      * @var CorpCaseStudyComponentService
      */
     private $corpCaseStudyComponentService;
-
-    protected $pageType = "cr_strategy_section";
     /**
      * @var CorpCaseStudyReportSection
      */
@@ -50,8 +48,9 @@ class CorpCaseStudyComponentController extends Controller
     {
         $section = $this->corporateCaseStudySection->findOrFail($sectionId);
         $components = $this->corpCaseStudyComponentService->getSectionWiseComponent($sectionId);
+        $count  = count($components);
         return view('admin.corporate-responsibility.case-study-and-report.section-component.index',
-            compact('components', 'section'));
+            compact('components', 'section', 'count'));
     }
 
     /**
@@ -73,7 +72,7 @@ class CorpCaseStudyComponentController extends Controller
      */
     public function store(Request $request, $sectionId)
     {
-        $response = $this->corpCaseStudyComponentService->storeComponent($request->all(), $this->pageType, $sectionId);
+        $response = $this->corpCaseStudyComponentService->storeComponent($request->all(), $sectionId);
         Session::flash('success', $response->getContent());
         return redirect(route('case-study-component.index', $sectionId));
     }
