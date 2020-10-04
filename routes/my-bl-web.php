@@ -399,9 +399,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('developer/api/debug', 'CMS\ApiDebugController@userBalancePanel')->name('mybl.api.debug');
     Route::get('developer/api/debug/balance-summary/{number}', 'CMS\ApiDebugController@getBalanceSummary')
-            ->name('mybl.api.debug.balance-summary');
+        ->name('mybl.api.debug.balance-summary');
     Route::get('developer/api/debug/balance-details/{number}/{type}', 'CMS\ApiDebugController@getBalanceDetails')
         ->name('mybl.api.debug.balance-details');
+
+    Route::get('developer/api/debug/product/log/{number}', 'CMS\ApiDebugController@getProductLogs')->name('product.api.log');
 
     Route::get('developer/api/debug/audit_logs/{number}', 'CMS\ApiDebugController@getBrowseHistory');
     Route::get('developer/api/debug/bonus_logs/{number}', 'CMS\ApiDebugController@getLoginBonusHistory');
@@ -414,10 +416,29 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('developer/api/debug/usage-summary/{number}', 'CMS\ApiDebugController@getUsageSummary');
 
     Route::get('developer/api/debug/usage-details/{number}/{type}', 'CMS\ApiDebugController@getUsageDetails');
+    Route::get('developer/api/debug/contact-restore-logs/{number}', 'CMS\ApiDebugController@getContactRestoreLogs');
 
     // Learn Priyojon Sections
 
     Route::get('mybl/learn-priyojon', 'CMS\LearnPriyojonContentController@show')->name('learn-priyojon.show');
     Route::post('mybl/learn-priyojon', 'CMS\LearnPriyojonContentController@store')->name('learn-priyojon.store');
 
+    // Migrate Plan
+    route::resource('migrate-plan', 'CMS\MigratePlanController');
+    Route::get('migrate-plan/destroy/{id}', 'CMS\MigratePlanController@destroy');
+
+    /*
+     *  Feed routes
+     */
+    Route::namespace('CMS')->prefix('feeds')->name('feeds.')->group(function () {
+        Route::resource('/', 'FeedController')->parameters(['' => 'feed'])->except('show');
+        // Category resource
+        Route::resource('categories', 'FeedCategoryController')->except('show');
+        Route::get('categories/update-position', 'FeedCategoryController@updatePosition')->name('categories.update_position');
+    });
+
+
 });
+
+// 4G Map View Route
+Route::view('/4g-map', '4g-map.view');
