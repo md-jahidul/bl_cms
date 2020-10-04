@@ -49,6 +49,7 @@ class MediaBannerImageService
         }
 
         if (!$bannerImage) {
+            $data['module_type'] = $type;
             $data['created_by'] = Auth::id();
             $this->save($data);
         } else {

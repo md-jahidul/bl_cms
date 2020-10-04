@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="card-body card-dashboard">
-                <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
+                <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="store_list_mybl" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
                         <th width='5%'><i class="icon-cursor-move icons"></i></th>
@@ -63,8 +63,7 @@
                                         </div>
 
                                         <div class="col-md-2 m-1">
-                                            <button data-id="{{$store->id}}" data-toggle="tooltip" data-original-title="Delete Category" data-placement="right"
-                                                    class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
+                                            <button data-id="{{$store->id}}"  data-placement="right"  class="btn btn-outline-danger deleteBtn"><i class="la la-trash"></i></button>
                                         </div>
 
                                     </div>
@@ -86,8 +85,8 @@
 
 
 @push('style')
-    <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
+   {{-- <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">--}}
     <style>
         table.dataTable tbody td {
             max-height: 40px;
@@ -95,17 +94,29 @@
     </style>
 @endpush
 @push('page-js')
-    <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+    {{--<script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
+    <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>--}}
+
+
     <script>
 
         var auto_save_url = "{{ url('myblStore-sortable') }}";
 
       $(function () {
-            $('.delete').click(function () {
-                var id = $(this).attr('data-id');
+
+            $('#store_list_mybl').DataTable({
+                  dom: 'Bfrtip',
+                  buttons: [],
+                  paging: false,
+                  searching: true,
+                  "bDestroy": true,
+                  "pageLength": 50
+            });
+
+            $('.deleteBtn').click(function () {
+                let id = $(this).attr('data-id');
 
                 Swal.fire({
                     title: 'Are you sure?',
@@ -136,25 +147,7 @@
                     }
                 })
             })
-        })
 
-
-        // $(".showButton").click(function(){
-        //     $('#sendUser').modal()
-        //     $('#title').html($(this).attr('data-original-title'))
-        //     $('#category').html($(this).attr('data-original-category'))
-        //     $('#discription').html($(this).attr('data-original-discription'))
-        // })
-
-        $(document).ready(function () {
-            $('#Example1').DataTable({
-                dom: 'Bfrtip',
-                buttons: [],
-                paging: true,
-                searching: true,
-                "bDestroy": true,
-                "pageLength": 50
-            });
         });
 
     </script>
