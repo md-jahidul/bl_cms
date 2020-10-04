@@ -14,7 +14,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route("category.update", $appServiceCat->id) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" action="{{ url("app-service/category/$appServiceCat->id") }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             {{method_field('PUT')}}
                             <div class="row">
