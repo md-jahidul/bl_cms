@@ -92,7 +92,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // Slider
 
     // Slider Image
-    /*    route::resource('myblsliderImage','CMS\MyblSliderImageController');*/
+    /*route::resource('myblsliderImage','CMS\MyblSliderImageController');*/
     Route::get('myblslider/{id}/images', 'CMS\MyblSliderImageController@index');
     route::get('myblsliderImage/addImage/update-position', 'CMS\MyblSliderImageController@updatePosition');
     Route::get('myblslider/addImage/{sliderId}', 'CMS\MyblSliderImageController@index')->name('myblsliderImage.index');
@@ -160,13 +160,50 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         'CMS\PushNotificationController@sendNotificationToAll'
     )->name('notification.send-all');
 
-    // terms and conditions
 
+    // Store category
+    route::resource('storeCategory', 'CMS\StoreCategoryController');
+    Route::get('storeCategory/destroy/{id}', 'CMS\StoreCategoryController@destroy');
+
+
+    // Store sub-category
+    route::resource('subStore', 'CMS\StoreSubCategoryController');
+    Route::get('subStore/destroy/{id}', 'CMS\StoreSubCategoryController@destroy');
+    Route::get('subStore/subcategory-find/{id}', 'CMS\StoreSubCategoryController@getSubCategoryByCatId');
+
+    // Store
+    route::resource('myblStore', 'CMS\StoreController');
+    Route::get('myblStore/destroy/{id}', 'CMS\StoreController@destroy');
+    Route::get('myblStore-sortable', 'CMS\StoreController@myblStoreSortable')->name('myblStore.sort');
+
+    // App
+    route::resource('appStore', 'CMS\StoreAppController');
+    Route::get('appStore/destroy/{id}', 'CMS\StoreAppController@destroy');
+    Route::get('appStore-sortable', 'CMS\StoreAppController@appStoreSortable')->name('appStore.sort');
+
+    // Store App Slider Image
+    Route::get('appslider/{id}/images', 'CMS\StoreAppSliderImageController@index');
+    route::get('appsliderImage/addImage/update-position', 'CMS\StoreAppSliderImageController@updatePosition');
+    Route::get('appslider/addImage/{sliderId}', 'CMS\StoreAppSliderImageController@index')->name('appsliderImage.index');
+
+
+    Route::get('appslider/{id}/images', 'CMS\StoreAppSliderImageController@index')->name('appslider.images.index');
+    Route::get('appslider/{id}/images/create',  'CMS\StoreAppSliderImageController@create')->name('appslider.images.create');
+    Route::post('appslider/images/store', 'CMS\StoreAppSliderImageController@store')->name('appslider.images.store');
+    Route::get('appslider/images/{id}/edit', 'CMS\StoreAppSliderImageController@edit')->name('appslider.images.edit');
+    Route::put('appslider/images/{id}/update', 'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
+    Route::put('appslider/images/{id}/update', 'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
+    Route::delete('appslider/images/{id}/delete', 'CMS\StoreAppSliderImageController@destroy')->name('appslider.images.destroy');
+
+
+
+
+
+    // terms and conditions
     Route::get('terms-conditions', 'CMS\TermsAndConditionsController@show')->name('terms-conditions.show');
     Route::post('terms-conditions', 'CMS\TermsAndConditionsController@store')->name('terms-conditions.store');
 
     // privacy and policy
-
     Route::get('privacy-policy', 'CMS\PrivacyPolicyController@show')->name('privacy-policy.show');
     Route::post('privacy-policy', 'CMS\PrivacyPolicyController@store')->name('privacy-policy.store');
 
@@ -382,4 +419,5 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('mybl/learn-priyojon', 'CMS\LearnPriyojonContentController@show')->name('learn-priyojon.show');
     Route::post('mybl/learn-priyojon', 'CMS\LearnPriyojonContentController@store')->name('learn-priyojon.store');
+
 });
