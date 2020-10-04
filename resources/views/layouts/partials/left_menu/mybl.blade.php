@@ -42,28 +42,6 @@
         </li>
     @endif
 
-
-
-    @if( auth()->user()->can_view('HelpCenter') )
-        <li class="{{ is_active_url('/helpCenter') }} {{ is_active_url('helpCenter/create') }} nav-item"><a
-                href="{{route('helpCenter.index')}}"><i class="la la-ambulance"></i>
-                <span class="menu-title" data-i18n="nav.dash.main">Help Center</span></a>
-        </li>
-    @endif
-
-    @if( auth()->user()->can_view('Setting') )
-        <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{route('setting.index')}}"><i class="la la-cogs"></i>
-                <span class="menu-title" data-i18n="nav.dash.main">Settings</span></a>
-        </li>
-    @endif
-
-
-    @if( auth()->user()->can_view('Ussd') )
-        <li class="{{ is_active_url('ussd') }} nav-item"><a href="{{route('ussd.index')}}">
-                <i class="la la-qrcode"></i>USSD Code</a>
-        </li>
-    @endif
-
     @if( auth()->user()->can_view('ShortCut') )
         <li class="{{ is_active_url('shortcuts') }} nav-item"><a href="{{route('short_cuts.index')}}"><i
                     class="la la-fighter-jet"></i>
@@ -78,6 +56,26 @@
         </li>
     @endif
 
+
+    @if( auth()->user()->can_view('Feed') || auth()->user()->can_view('FeedCategory') )
+        <li class=" nav-item"><a href="#"><i class="la la-feed"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Feed</span></a>
+            <ul class="menu-content">
+                {{--page--}}
+                <li class="{{ is_active_url('feeds/categories') }}{{ is_active_url('feeds/categories/create') }}">
+                    <a class="menu-item" href="{{ route('feeds.categories.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-server"></i>Category List
+                    </a>
+                </li>
+                <li class="{{ is_active_url('feeds') }}{{ is_active_url('feeds/create') }}">
+                    <a class="menu-item" href="{{ route('feeds.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-feed"></i>Feed List</a>
+                </li>
+            </ul>
+        </li>
+    @endif
 
     @if( auth()->user()->can_view('Notification') || auth()->user()->can_view('NotificationCategory') )
         <li class=" nav-item"><a href="#"><i class="la la-bell"></i>
@@ -111,6 +109,47 @@
             </ul>
         </li>
     @endif
+
+
+    @if( auth()->user()->can_view('Store') || auth()->user()->can_view('StoreCategory') )
+        <li class=" nav-item"><a href="#"><i class="la la-cubes"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Store</span></a>
+            <ul class="menu-content">
+                {{--page--}}
+                <li class="{{ is_active_url('storeCategory') }}{{ is_active_url('storeCategory/create') }}">
+                    <a class="menu-item" href="{{ route('storeCategory.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-server"></i>Category List
+                    </a>
+                </li>
+
+                <li class="{{ is_active_url('subStore') }}{{ is_active_url('subStore/create') }}">
+                    <a class="menu-item" href="{{ route('subStore.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Subcategory List</a>
+                </li>
+
+
+                <li class="{{ is_active_url('myblStore') }}{{ is_active_url('myblStore/create') }}">
+                    <a class="menu-item" href="{{ route('myblStore.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Store List</a>
+                </li>
+
+
+                <li class="{{ is_active_url('appStore') }}{{ is_active_url('appStore/create') }}">
+                    <a class="menu-item" href="{{ route('appStore.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>App List</a>
+                </li>
+
+
+
+
+            </ul>
+        </li>
+    @endif
+
 
     @if( auth()->user()->can_view('Banner') || auth()->user()->can_view('WelcomeInfo') || auth()->user()->can_view('MyblSlider')
          || auth()->user()->can_view('MyblSliderImage')  || auth()->user()->can_view('ContextualCard')    )
@@ -242,6 +281,21 @@
         </li>
     @endif
 
+    @if( auth()->user()->can_view('MigratePlan'))
+        <li class=" nav-item"><a href="#"><i class="la la-comment"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Migrate PLan</span></a>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('migrate-plan') }}{{ is_active_url('migrate-plan/create') }}">
+                    <a class="menu-item" href="{{ route('migrate-plan.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-comment-o"></i>Migrate Plan List</a>
+                </li>
+
+
+            </ul>
+        </li>
+    @endif
+
 
     @if( auth()->user()->can_view('TermsAndConditions') )
         <li class="{{ is_active_url('/terms-conditions') }} nav-item"><a href="{{route('terms-conditions.show')}}"><i
@@ -308,6 +362,29 @@
             </ul>
         </li>
     @endif
+
+    @if( auth()->user()->can_view('Ussd') )
+        <li class="{{ is_active_url('ussd') }} nav-item"><a href="{{route('ussd.index')}}">
+                <i class="la la-qrcode"></i>USSD Code</a>
+        </li>
+    @endif
+
+    @if( auth()->user()->can_view('HelpCenter') )
+        <li class="{{ is_active_url('/helpCenter') }} {{ is_active_url('helpCenter/create') }} nav-item"><a
+                href="{{route('helpCenter.index')}}"><i class="la la-ambulance"></i>
+                <span class="menu-title" data-i18n="nav.dash.main">Help Center</span></a>
+        </li>
+    @endif
+
+    @if( auth()->user()->can_view('Setting') )
+        <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{route('setting.index')}}"><i class="la la-cogs"></i>
+                <span class="menu-title" data-i18n="nav.dash.main">Settings</span></a>
+        </li>
+    @endif
+
+
+
+
 
 
     @if (Auth::user()->hasRole('developer'))
