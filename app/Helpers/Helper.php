@@ -97,7 +97,7 @@ class Helper
             "RECHARGE"                => "Recharge",
             "RECHARGE_HISTORY"        => "Recharge History",
             "RECHARGE_OFFERS"         => "Recharge Offers",
-            "REPORT_PROBLEM"          => "REPORT PROBLEM",
+            "REPORT_PROBLEM"          => "Report Problem",
             "SIM_INFORMATION"         => "Sim Information",
             "SMS_PACKS"               => "SMS Packs",
             "SPECIAL_RATE_PACKS"      => "Special Call Rate Offers",
