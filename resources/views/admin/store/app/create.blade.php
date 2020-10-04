@@ -283,7 +283,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                         <!--    <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="ratings">Rating:</label>
                                     <input
@@ -294,9 +294,9 @@
                                     </div>
                                     <small class="text-danger"> @error('ratings') {{ $message }} @enderror </small>
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="col-md-4">
+                        <!--     <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="total_ratings">Total Rating:</label>
                                     <input
@@ -307,7 +307,7 @@
                                     </div>
                                     <small class="text-danger"> @error('total_ratings') {{ $message }} @enderror </small>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="col-md-4">
                                 <div class="form-group">

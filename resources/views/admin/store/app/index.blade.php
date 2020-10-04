@@ -32,6 +32,8 @@
                         <th width="20%">Details</th>
                         <th width="10%">Category</th>
                         <th width="10%">status</th>
+                        <th width="10%">Rating</th>
+                        <th width="10%">Total Rating</th>
                         <th width="15%">Action</th>
                     </tr>
                     </thead>
@@ -59,6 +61,12 @@
                                     @else
                                         <span class="badge badge-danger">InActive</span>
                                     @endif
+                                </td>
+                                <td>
+                                    {{$appStore->ratings}}
+                                </td>
+                                 <td>
+                                    {{$appStore->total_ratings}}
                                 </td>
                                 <td width="15%">
                                     <div class="row">

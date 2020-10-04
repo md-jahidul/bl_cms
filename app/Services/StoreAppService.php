@@ -70,10 +70,9 @@ class StoreAppService
     public function updateStore($data, $id)
     {
         if(isset($data['store_id'])){
-            $store_ids = $data['store_id'];
-            unset($data['store_id']);
-        }
-
+        $store_ids = $data['store_id'];
+        unset($data['store_id']);
+            }
         $storeAppRepository = $this->findOne($id);
 
         if (isset($data['icon'])) {
@@ -87,10 +86,9 @@ class StoreAppService
         }
 
         $storeAppRepository->update($data);
-
         if(isset($data['store_id'])){
-            $storeAppRepository->stores()->sync($store_ids);
-        }
+        $storeAppRepository->stores()->sync($store_ids);
+            }
         return Response('App has been successfully updated');
 
     }
