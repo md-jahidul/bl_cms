@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: BS23
- * Date: 27-Aug-19
- * Time: 3:56 PM
- */
-
 namespace App\Services;
 
 use App\Repositories\MediaBannerImageRepository;
