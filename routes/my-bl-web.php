@@ -166,6 +166,14 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('storeCategory/destroy/{id}', 'CMS\StoreCategoryController@destroy');
 
 
+
+    // Support Messages
+    Route::get('support-massage', 'CMS\SupportMessageRatingController@index')->name('support-massage');
+    Route::post('support-massage', 'CMS\SupportMessageRatingController@index')->name('support.massage.list');
+
+
+
+
     // Store sub-category
     route::resource('subStore', 'CMS\StoreSubCategoryController');
     Route::get('subStore/destroy/{id}', 'CMS\StoreSubCategoryController@destroy');
