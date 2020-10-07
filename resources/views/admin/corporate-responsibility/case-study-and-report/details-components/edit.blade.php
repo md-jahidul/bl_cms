@@ -1,12 +1,12 @@
 @extends('layouts.admin')
-@section('title', 'Component')
-@section('card_name', 'Component')
+@section('title', 'Case Study Detail Component')
+@section('card_name', 'Case Study Detail Component')
 @section('breadcrumb')
-    <li class="breadcrumb-item active"> <a href="{{ route('cr-strategy-details.index', $sectionComId) }}"> Component List</a></li>
+    <li class="breadcrumb-item active"> <a href="{{ route('case-study-details.index', $sectionComId) }}"> Component List</a></li>
     <li class="breadcrumb-item active"> Component Edit</li>
 @endsection
 @section('action')
-    <a href="{{ route('cr-strategy-details.index', $sectionComId) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
+    <a href="{{ route('case-study-details.index', $sectionComId) }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
     <section>
@@ -14,7 +14,7 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" id="product_form" action="{{ route('cr-strategy-details.update',[$sectionComId, $component->id]) }}" method="POST" novalidate enctype="multipart/form-data">
+                        <form role="form" id="product_form" action="{{ route('case-study-details.update',[$sectionComId, $component->id]) }}" method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="content-body">
@@ -42,65 +42,28 @@
                                              class="img-thumbnail" id="componentImg" width="100%">
                                     </div>
 
-                                    {{--Title Text and Image Component--}}
-                                    <slot id="title_with_text_and_right_image" data-offer-type="title_with_text_and_right_image"
-                                          class="{{ ($component->component_type ==  "title_with_text_and_right_image"  ) ? '' : "d-none" }}">
-                                        @include('layouts.partials.product-details.component.common-field.title')
-                                        @include('layouts.partials.product-details.component.common-field.text-editor')
-                                        @include('layouts.partials.product-details.component.common-field.single-image')
-                                    </slot>
-
-                                    {{--Video Component--}}
-                                    <slot id="title_with_video_and_text" data-offer-type="title_with_video_and_text"
-                                          class="{{ ($component->component_type ==  "title_with_video_and_text"  ) ? '' : "d-none" }}">
-                                        @include('layouts.partials.product-details.component.common-field.extra-title',
-                                                [
-                                                    'title_en' => "Video Title EN",
-                                                    'title_bn' => "Video Title BN",
-                                                ])
-                                        @include('layouts.partials.product-details.component.common-field.title')
-                                        @include('layouts.partials.product-details.component.common-field.text-editor')
-                                        @include('layouts.partials.product-details.component.common-field.video')
-                                    </slot>
-
-                                    {{--Table Component--}}
-                                    <slot id="table_component" data-offer-type="table_component" class="{{ ($component->component_type ==  "table_component"  ) ? '' : "d-none" }}">
-                                        @include('layouts.partials.product-details.component.common-field.text-editor')
-                                    </slot>
-
-                                    {{--Bullet Text--}}
-                                    <slot id="bullet_text" data-offer-type="large_title_with_text" class="{{ ($component->component_type ==  "bullet_text"  ) ? '' : "d-none" }}">
-                                        @include('layouts.partials.product-details.component.common-field.title')
-                                        @include('layouts.partials.product-details.component.common-field.text-editor')
-                                    </slot>
-
-                                    {{--Accordion Text--}}
-                                    <slot id="accordion_text" data-offer-type="accordion_text" class="{{ ($component->component_type ==  "accordion_text"  ) ? '' : "d-none" }}">
-                                        @include('layouts.partials.product-details.component.common-field.title')
-                                        @include('layouts.partials.product-details.component.common-field.text-editor')
-                                    </slot>
-
-                                    {{--Multiple Image--}}
-                                    <slot id="multiple_image" data-offer-type="multiple_image" class="{{ ($component->component_type ==  "multiple_image"  ) ? '' : "d-none" }}">
-                                        @include('layouts.partials.product-details.component.common-field.extra-title')
-                                        @include('layouts.partials.product-details.component.common-field.title')
+                                    {{--Card Component--}}
+                                    <slot id="card_component" data-offer-type="card_component" class="{{ ($component->component_type ==  "card_component"  ) ? '' : "d-none" }}">
                                         @php( $i = 0 )
-                                        @if(isset($multipleImage))
-                                            @foreach($multipleImage as $key => $image)
+                                        @if(isset($multipleItems))
+                                            @foreach($multipleItems as $key => $item)
                                                 @php($i++)
+
                                                 <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$i}}">
-                                                <div class="col-md-6 col-xs-6 option-{{ $i }} options-count">
-                                                    <div class="form-group">
-                                                        <label for="message">Multiple Image</label>
-                                                        <input type="file" class="dropify" name="multi_item[image_url-{{ $i }}]"
-                                                               data-default-file="{{ isset($image['image_url']) ? config('filesystems.file_base_url') . $image['image_url'] : '' }}"
-                                                               data-height="80"/>
-                                                        <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
-                                                    </div>
+                                                <div class="form-group col-md-12 mb-0 option-{{ $i }} options-count">
+                                                    <h3 class="text-primary"><strong>Card {{$i}}</strong></h3>
+                                                    <hr class="mt-0">
                                                 </div>
-                                                <div class="form-group col-md-5 option-{{ $i }}">
-                                                    <label for="alt_text">Alt Text</label>
-                                                    <input type="text" name="multi_item[alt_text-{{ $i }}]" value="{{ $image['alt_text'] }}" class="form-control">
+                                                <div class="form-group col-md-6">
+                                                    <label for="top_text">Top Text En</label>
+                                                    <input type="text" name="multi_item[top_text_en-{{ $i }}]" value="{{ isset($item['top_text_en']) ? $item['top_text_en'] : '' }}"
+                                                           class="form-control">
+                                                </div>
+
+                                                <div class="form-group col-md-5">
+                                                    <label for="top_text">Top Text Bn</label>
+                                                    <input type="text" name="multi_item[top_text_bn-{{ $i }}]" class="form-control"
+                                                           value="{{ isset($item['top_text_bn']) ? $item['top_text_bn'] : '' }}">
                                                 </div>
 
                                                 @if($i == 1)
@@ -108,14 +71,78 @@
                                                         <label for="alt_text"></label>
                                                         <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>
                                                     </div>
-                                                    {{--                                                            @else--}}
-                                                    {{--                                                                <div class="form-group col-md-1 option-{{ $i }}">--}}
-                                                    {{--                                                                    <label for="alt_text"></label>--}}
-                                                    {{--                                                                    <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-{{ $i }}" ><i data-id="option-{{ $i }}" class="la la-trash"></i></button>--}}
-                                                    {{--                                                                </div>--}}
+                                                    {{-- @else--}}
+                                                    {{--     <div class="form-group col-md-1 option-{{ $i }}">--}}
+                                                    {{--         <label for="alt_text"></label>--}}
+                                                    {{--         <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-{{ $i }}" ><i data-id="option-{{ $i }}" class="la la-trash"></i></button>--}}
+                                                    {{-- </div>--}}
                                                 @endif
+
+                                                <div class="form-group col-md-6">
+                                                    <label for="middle_text">Middle Text En</label>
+                                                    <input type="text" name="multi_item[middle_text_en-{{ $i }}]" class="form-control"
+                                                           value="{{ isset($item['middle_text_en']) ? $item['middle_text_en'] : '' }}">
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label for="middle_text">Middle Text Bn</label>
+                                                    <input type="text" name="multi_item[middle_text_bn-{{ $i }}]" class="form-control"
+                                                           value="{{ isset($item['middle_text_bn']) ? $item['middle_text_bn'] : '' }}">
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label for="bottom_text">Bottom Text En</label>
+                                                    <input type="text" name="multi_item[bottom_text_en-{{ $i }}]" class="form-control"
+                                                           value="{{ isset($item['bottom_text_en']) ? $item['bottom_text_en'] : '' }}">
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label for="bottom_text">Bottom Text Bn</label>
+                                                    <input type="text" name="multi_item[bottom_text_bn-{{ $i }}]" class="form-control"
+                                                           value="{{ isset($item['bottom_text_bn']) ? $item['bottom_text_bn'] : '' }}">
+                                                </div>
+
+                                                <div class="form-group col-md-12">
+                                                    <label for="bottom_text">Card Color</label>
+                                                    <input type="color" name="multi_item[card_color-{{ $i }}]" class="form-control"
+                                                           value="{{ isset($item['card_color']) ? $item['card_color'] : '' }}">
+                                                </div>
                                             @endforeach
                                         @endif
+                                    </slot>
+
+                                    {{--Order List--}}
+                                    <slot id="order_list" data-offer-type="order_list"
+                                          class="{{ ($component->component_type ==  "order_list"  ) ? '' : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                    </slot>
+
+                                    {{--Text Component--}}
+                                    <slot id="text_component" data-offer-type="text_component"
+                                          class="{{ ($component->component_type ==  "text_component"  ) ? '' : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                    </slot>
+
+                                    {{--Large Title And Image With Text Button--}}
+                                    <slot id="large_title_and_image_with_text" data-offer-type="large_title_and_image_with_text"
+                                          class="{{ ($component->component_type ==  "large_title_and_image_with_text"  ) ? '' : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.title')
+                                        @include('layouts.partials.product-details.component.common-field.single-image')
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                    </slot>
+
+                                    {{--Medium Title With Text--}}
+                                    <slot id="medium_title_with_text" data-offer-type="medium_title_with_text"
+                                          class="{{ ($component->component_type == "medium_title_with_text"  ) ? '' : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.title')
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
+                                    </slot>
+
+                                    {{--Small Title With Text--}}
+                                    <slot id="small_title_with_text" data-offer-type="small_title_with_text"
+                                          class="{{ ($component->component_type ==  "small_title_with_text"  ) ? '' : "d-none" }}">
+                                        @include('layouts.partials.product-details.component.common-field.title')
+                                        @include('layouts.partials.product-details.component.common-field.text-editor')
                                     </slot>
 
                                     <div class="col-md-12 mt-2">
@@ -234,34 +261,57 @@
                 height:200
             })
 
+            // Multi Card Component
             $(document).on('click', '#plus-image', function () {
                 var option_count = $('.options-count');
                 var total_option = option_count.length + 1;
 
-                var input = '<div class="col-md-6 col-xs-6 options-count option-'+total_option+'">\n' +
+                var input =
+                    '<div class="form-group options-count col-md-12 mb-0 option-'+total_option+'">\n' +
                     '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+total_option+'">\n' +
-                    '<div class="form-group">\n' +
-                    '      <label for="message">Multiple Image</label>\n' +
-                    '      <input type="file" class="dropify" name="multi_item[image_url-'+total_option+']" data-height="80"/>\n' +
-                    '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
-                    '  </div>\n' +
-                    ' </div>\n'+
+                    ' <h3 class="text-primary"><strong>Card '+total_option+'</strong></h3>\n' +
+                    '  <hr class="mt-0">\n' +
+                    '</div>\n'+
+
+
+                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '    <label for="top_text">Top Text En</label>\n' +
+                    '    <input type="text" name="multi_item[top_text_en-'+total_option+']" class="form-control">\n' +
+                    '</div>\n' +
                     '<div class="form-group col-md-5 option-'+total_option+'">\n' +
-                    '    <label for="alt_text">Alt Text</label>\n' +
-                    '    <input type="text" name="multi_item[alt_text-'+total_option+']"  class="form-control">\n' +
+                    '    <label for="top_text">Top Text Bn</label>\n' +
+                    '    <input type="text" name="multi_item[top_text_bn-'+total_option+']" class="form-control">\n' +
                     '</div>\n' +
                     '<div class="form-group col-md-1 option-'+total_option+'">\n' +
-                    '   <label for="alt_text"></label>\n' +
+                    '   <label></label>\n' +
                     '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
-                    '</div>';
-                $('#multiple-image-field').append(input);
-                //Call dropify Function
-                dropify();
-            });
+                    '</div>\n' +
 
-            $(document).on('click', '.remove-image', function (event) {
-                var rowId = $(event.target).attr('data-id');
-                $('.'+rowId).remove();
+                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '    <label for="middle_text">Middle Text En</label>\n' +
+                    '    <input type="text" name="multi_item[middle_text_en-'+total_option+']" class="form-control">\n' +
+                    '</div>\n' +
+                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '    <label for="middle_text">Middle Text Bn</label>\n' +
+                    '    <input type="text" name="multi_item[middle_text_bn-'+total_option+']" class="form-control">\n' +
+                    '</div>\n' +
+
+                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '    <label for="bottom_text">Bottom Text En</label>\n' +
+                    '    <input type="text" name="multi_item[bottom_text_en-'+total_option+']" class="form-control">\n' +
+                    '</div>\n' +
+                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '    <label for="bottom_text">Bottom Text Bn</label>\n' +
+                    '    <input type="text" name="multi_item[bottom_text_bn-'+total_option+']" class="form-control">\n' +
+                    '</div>\n'+
+
+                    '<div class="form-group col-md-12 option-'+total_option+'">\n' +
+                    '    <label for="bottom_text">Card Color</label>\n' +
+                    '    <input type="color" name="multi_item[card_color-'+total_option+']" class="form-control">\n' +
+                    '</div>\n'
+                ;
+                $('#card_component').append(input);
+                dropify();
             });
 
             $(document).on('click', '.remove-image', function (event) {

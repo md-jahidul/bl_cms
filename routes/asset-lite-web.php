@@ -1019,4 +1019,30 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('corporate/case-study-component/{section_id}/destroy/{id}', 'AssetLite\CorpCaseStudyComponentController@destroy');
     Route::get('corporate/case-study-component-sort', 'AssetLite\CorpCaseStudyComponentController@sectionSortable');
 
+    //Case Study Details Corporate Responsibility
+    Route::get('corporate/case-study/component/{com_id}/details/list',
+        'AssetLite\CorpCaseStudyComponentDetailsController@componentList')
+        ->name('case-study-details.index');
+    Route::get('corporate/case-study/component/{com_id}/details/create',
+        'AssetLite\CorpCaseStudyComponentDetailsController@componentCreateForm')
+        ->name('case-study-details.create');
+    Route::post('corporate/case-study/component/{com_id}/details/store',
+        'AssetLite\CorpCaseStudyComponentDetailsController@componentStore')
+        ->name('case-study-details.store');
+    Route::get('corporate/case-study/component/{com_id}/details/edit/{id}',
+        'AssetLite\CorpCaseStudyComponentDetailsController@componentEditForm')
+        ->name('case-study-details.edit');
+    Route::put('corporate/case-study/component/{com_id}/details/update/{id}',
+        'AssetLite\CorpCaseStudyComponentDetailsController@componentUpdate')
+        ->name('case-study-details.update');
+    Route::get('corporate/case-study/component/{com_id}/details/destroy/{id}',
+        'AssetLite\CorpCaseStudyComponentDetailsController@componentDestroy')
+        ->name('case-study-details.destroy');
+    Route::get('corporate/case-study-details-sort',
+        'AssetLite\CorpCaseStudyComponentDetailsController@componentSortable');
+
+    Route::post('corporate/cr-strategy/component/details/banner-upload',
+        'AssetLite\CorpCaseStudyComponentDetailsController@detailsBannerUpload')
+        ->name('case-study-details-banner-image.upload');
+
 });

@@ -2,12 +2,12 @@
 @section('title', 'Details Component List')
 @section('card_name', 'Details Component List')
 @section('breadcrumb')
-    <li class="breadcrumb-item "><a href="{{ route('cr-strategy-component.index', $sectionComponent->section_id) }}">Section Component List</a></li>
+    <li class="breadcrumb-item "><a href="{{ route('case-study-component.index', $sectionComponent->section_id) }}">Section Component List</a></li>
     <li class="breadcrumb-item ">Details Component List</li>
 @endsection
 @section('action')
 
-<a href="{{ route("cr-strategy-details.create", [$sectionComponent->id]) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>Add Component</a>
+<a href="{{ route("case-study-details.create", [$sectionComponent->id]) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>Add Component</a>
 
 @endsection
 @section('content')
@@ -32,8 +32,8 @@
                                     <td>{{ ucwords(str_replace('_', ' ', $list->component_type)) }} {!! $list->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
                                     <td>{{ $list->title_en  }}</td>
                                     <td class="text-right">
-                                        <a href="{{ route("cr-strategy-details.edit", [$sectionComponent->id, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
-                                        <a href="#" remove="{{ route('cr-strategy-details.destroy', [$sectionComponent->id, $list->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
+                                        <a href="{{ route("case-study-details.edit", [$sectionComponent->id, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
+                                        <a href="#" remove="{{ route('case-study-details.destroy', [$sectionComponent->id, $list->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">
                                             <i class="la la-trash"></i>
                                         </a>
                                     </td>
@@ -55,7 +55,7 @@
                     <hr>
                     <div class="card-body card-dashboard">
                         <form role="form"
-                              action="{{ route('cr-strategy-details-banner-image.upload') }}"
+                              action="{{ route('case-study-details-banner-image.upload') }}"
                               method="POST" novalidate enctype="multipart/form-data">
                             @csrf
                             {{method_field('POST')}}
@@ -132,7 +132,7 @@
 @push('page-js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript">
-        var auto_save_url = "{{ url('corporate/cr-strategy-details-sort') }}";
+        var auto_save_url = "{{ url('corporate/case-study-details-sort') }}";
         $(function () {
             $('.dropify').dropify({
                 messages: {
