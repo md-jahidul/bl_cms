@@ -1045,4 +1045,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         'AssetLite\CorpCaseStudyComponentDetailsController@detailsBannerUpload')
         ->name('case-study-details-banner-image.upload');
 
+    // Initiative Corporate Responsibility
+    Route::resource('corporate/initiative-tab', 'AssetLite\CorpInitiativeTabController')
+        ->except('show', 'destroy');
+    Route::get('corporate/initiative-tab/destroy/{id}', 'AssetLite\CorpInitiativeTabController@destroy');
+    Route::get('corporate/initiative-tab-sort', 'AssetLite\CorpInitiativeTabController@tabSortable');
+
 });

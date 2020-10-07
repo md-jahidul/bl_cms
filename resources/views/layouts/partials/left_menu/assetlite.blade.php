@@ -674,11 +674,15 @@
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-list"></i> CR Strategy</a>
                 </li>
-
                 <li class="{{ is_active_url(route('case-study-section.index')) }}">
                     <a class="menu-item" href="{{ route('case-study-section.index') }}"
                        data-i18n="nav.templates.vert.classic_menu"><i
                             class="la la-list"></i> Case Study and Report</a>
+                </li>
+                <li class="{{ is_active_url(route('initiative-tab.index')) }}">
+                    <a class="menu-item" href="{{ route('initiative-tab.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-list"></i> Initiative</a>
                 </li>
             </ul>
         </li>
