@@ -67,7 +67,6 @@ class StoreAppController extends Controller
     public function index()
     {
         $appStores = $this->storeAppService->findAll();
-        // dd($appStores);
         $category =  $this->storeCategoryService->findAll();
         return view('admin.store.app.index')
             ->with('category', $category)
