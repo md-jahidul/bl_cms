@@ -165,9 +165,9 @@
                         }
                     },
                     {
-                        name: 'ticketId',
+                        name: 'ticket_id',
                         render: function (data, type, row) {
-                            return row.ticketId;
+                            return row.ticket_id;
                         }
                     },
                     {

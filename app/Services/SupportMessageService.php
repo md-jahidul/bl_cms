@@ -80,7 +80,7 @@ class SupportMessageService
             $response['data'][] = [
                 'id' => $item->id,
                 'msisdn' => $item->msisdn,
-                'ticketId' => $item->ticketId,
+                'ticket_id' => $item->ticket_id,
                 'ratings' => $item->ratings,
                 'category_name' => $item->category_name,
                 'complaint_location' => $item->complaint_location,
