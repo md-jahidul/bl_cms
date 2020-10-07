@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers\CMS;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\SupportMessageService;
+use Illuminate\Http\Request;
+use App\Services\FaqCategoryService;
 
 class SupportMessageRatingController extends Controller
 {
-     /**
+    /**
      * @var SupportMessageService
      */
     protected $supportMessageService;
 
-     /**
+    /**
      * StoreController constructor.
      * @param SupportMessageService $storeService
      */
 
-    public function __construct(SupportMessageService $supportMessageService) {
+    public function __construct(SupportMessageService $supportMessageService)
+    {
         $this->supportMessageService = $supportMessageService;
 
     }
@@ -26,80 +28,17 @@ class SupportMessageRatingController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @author Ahsan Habib <ahabib@bs-23.net>
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        $category=[];
-        $faqs=$this->supportMessageService->getSupportMessageList();
-        dd($faqs);
-        return view('admin.support-massage.index', compact('faqs','category'));
+        if ($request->ajax()) {
+                $builder =  $this->supportMessageService->getAll()->latest();
+                return $this->supportMessageService->prepareDataForDatatable($builder, $request);
+            }
+        return view('admin.support-massage.index');
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\SupportMessagRating  $supportMessagRating
-     * @return \Illuminate\Http\Response
-     */
-    public function show(SupportMessagRating $supportMessagRating)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\SupportMessagRating  $supportMessagRating
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(SupportMessagRating $supportMessagRating)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\SupportMessagRating  $supportMessagRating
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, SupportMessagRating $supportMessagRating)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\SupportMessagRating  $supportMessagRating
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(SupportMessagRating $supportMessagRating)
-    {
-        //
-    }
 }

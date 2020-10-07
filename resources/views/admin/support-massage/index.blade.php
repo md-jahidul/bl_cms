@@ -20,36 +20,38 @@
         <div class="card card-info mb-0" style="padding-left:10px">
             <div class="card-content">
                 <div class="row">
-
-                    <div class="col-md-12">
-
-                            {{-- <div class="col-md-3 mt-1 ml-1 "> --}}
-                                {{-- <select class="form-control pull-right" name="filter_category" id="filter_category">
-                                    <option value=""> Select Category To Filter</option>
-                                    @foreach($category as $id => $category)
-                                        <option value="{{ $id }}"> {{ $category }}</option>
-                                    @endforeach
-                                </select> --}}
-                            {{-- </div> --}}
-
+                    <div class="col-md-12" style="padding-bottom: 20px; margin-top: 10px;">
+                        <div class="row">
+                            <div class="col-md-8 form-inline col-md-offset-2" style="margin:0px auto">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="email">Date :  &nbsp;</label>
+                                    <input type="text" class="form-control"name="date_range" id="date_range" autocomplete="off" placeholder="Select date">
+                                  </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="email">Ratings :  &nbsp;</label>
+                                    <input type="text" class="form-control" id="ratings" placeholder="Enter Rating">
+                                  </div>
+                            </div>
+                            </div>
+                          </div>
                         <table class="table table-striped table-bordered dataTable"
-                               id="question_list_table" role="grid">
+                               id="support_message_list_table" role="grid">
                             <thead>
-                            <tr>
+                            <tr class="bg-warning text-dark">
                                 <th>Sl.</th>
+                                <th>Msisdn</th>
+                                <th>Ticket Id</th>
+                                <th>Ratings</th>
                                 <th>Category</th>
-                                <th>Question</th>
-                                <th class="filter_data">Actions</th>
+                                <th>Location</th>
+                                <th class="filter_data">Status</th>
                             </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>1</td>
 
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -67,7 +69,6 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-
                         <div class="modal-body">
                             <h5><i class="la la-question"></i><span id="faq_question"></span></h5>
                             <p id="faq_answer"></p>
@@ -87,44 +88,64 @@
         .add-button {
             margin-top: 1.9rem !important;
         }
-
         .filter_data {
             text-align: right;
         }
-
         .dataTable {
             width: 100% !important;
         }
     </style>
 @endpush
-
+@push('page-css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
+@endpush
 @push('page-js')
+<script src="{{ asset('app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js') }}" type="text/javascript"></script>
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
-
+    <script src="{{ asset('app-assets') }}/vendors/js/pickers/daterange/daterangepicker.js"></script>
     <script>
         $(function () {
-            $("#question_list_table").dataTable({
-                // scrollX: true,
+            $('input[name="date_range"]').daterangepicker({
+                autoUpdateInput: false,
+                showDropdowns: true,
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: 'YYYY-MM-DD'
+                },
+            });
+
+            $('input[name="date_range"]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD') + '=' + picker.endDate.format('YYYY-MM-DD'));
+            });
+
+            $('input[name="date_range"]').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
+
+            $("#support_message_list_table").dataTable({
+                scrollX: true,
                 processing: true,
-                searching: true,
+                searching: false,
                 serverSide: true,
                 bPaginate:true,
                 ordering: true,
                 autoWidth: false,
-                // pageLength: 6,
-                // lengthChange: false,
+                pageLength: 10,
+                lengthChange: false,
                 dom: 'Bfrtip',
                 buttons: [
                     { extend: 'excelHtml5', className: 'btn-primary pull-right btn-sm' },
                     { extend: 'csvHtml5', className: 'btn-primary btn-sm' },
                 ],
                 ajax: {
-                    url: '{{ route('support.massage.list') }}',
+                    url: '{{ route('support.message.list') }}',
                     data: {
                         date: function () {
-                            return 1;
-                            // $("#filter_category").val();
+                            return $('input[name="date_range"]').val();
+                        },
+                        ratings: function () {
+                            return $("#ratings").val();
                         }
                     }
                 },
@@ -137,30 +158,43 @@
                         }
                     },
                     {
-                        name: 'category',
+                        name: 'msisdn',
                         width: '150px',
                         render: function (data, type, row) {
-                            return '<span class="badge badge-default badge-pill bg-primary">' + row.category + '</span>'
+                            return '<span class="badge badge-default badge-pill bg-primary">' + row.msisdn + '</span>'
                         }
                     },
-
                     {
-                        name: 'question',
+                        name: 'ticketId',
                         render: function (data, type, row) {
-                            return row.question
+                            return row.ticketId;
                         }
                     },
-
                     {
-                        name: 'actions',
-                        className: 'filter_data',
+                        name: 'ratings',
+                        render: function (data, type, row) {
+                            return row.ratings;
+                        }
+                    },
+                    {
+                        name: 'category_name',
                         width: '150px',
                         render: function (data, type, row) {
-                            let detail_question_url = "{{ URL('faq/questions/') }}" +"/" + row.id;
-                            return `<div class="btn-group" role="group" aria-label="Basic example">
-                            <a href=" ` + detail_question_url + ` "class="btn btn-sm btn-icon btn-outline-success edit"><i class="la la-eye"></i></a>
-                            <button type="button" data-id ="` + row.id + ` " class="btn btn-sm btn-icon btn-outline-danger del" ><i class="la la-remove"></i></button>
-                          </div>`
+                           return row.category_name;
+                        }
+                    },
+                    {
+                        name: 'complaint_location',
+                        width: '150px',
+                        render: function (data, type, row) {
+                           return row.complaint_location;
+                        }
+                    },
+                    {
+                        name: 'status',
+                        width: '150px',
+                        render: function (data, type, row) {
+                           return '<span class="badge badge-default badge-pill bg-primary">' + row.status + '</span>';
                         }
                     }
                 ],
@@ -168,55 +202,17 @@
                     $('td', row).eq(0).html(index + 1);
                 }
             });
-
-            $(document).on('click', '.del', function (e) {
-                e.preventDefault();
-
-                let id = $(this).data('id');
-
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "Related Questions will also be deleted",
-                    type: 'warning',
-                    html: jQuery('.delete_btn').html(),
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.value) {
-                        let call = $.ajax({
-                            url: '{{route('faq.questions.delete')}}',
-                            method: 'delete',
-                            data: {
-                                _token: '{{csrf_token()}}',
-                                id: id
-                            }
-                        });
-
-                        call.done(function () {
-                            $('#question_list_table').DataTable().ajax.reload();
-                            Swal.fire(
-                                'Success!',
-                                'Successfully Deleted',
-                                'success',
-                            );
-                        }).fail(function (jqXHR, textStatus, errorThrown) {
-                            let errorResponse = jqXHR.responseJSON;
-                            Swal.fire(
-                                'Error!',
-                                errorResponse.errors,
-                                'error',
-                            );
-                        });
-                    }
-                });
-            })
-
-            $(document).on('change', '#filter_category', function (e) {
-                console.log('change');
-                $('#question_list_table').DataTable().ajax.reload();
+            $('input[name="date_range"]').on('apply.daterangepicker', function(ev, picker) {
+                $('#support_message_list_table').DataTable().ajax.reload();
             });
+            $('input[name="date_range"]').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+                $('#support_message_list_table').DataTable().ajax.reload();
+            });
+            $(document).on('change', '#ratings', function (e) {
+                $('#support_message_list_table').DataTable().ajax.reload();
+            });
+
         });
     </script>
 @endpush
