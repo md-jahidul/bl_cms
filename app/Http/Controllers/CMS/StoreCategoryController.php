@@ -110,4 +110,15 @@ class StoreCategoryController extends Controller
         session()->flash('error', $response->getContent());
         return url('storeCategory');
     }
+
+
+    /**
+     * @param Request $request
+     */
+    public function myblCategorySortable(Request $request)
+    {
+        $this->storeCategoryService->tableSortable($request);
+    }
+
+
 }

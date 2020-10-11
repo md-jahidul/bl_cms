@@ -58,4 +58,16 @@ class StoreCategoryService
         $storeCategory->delete();
         return Response('Store Category has been successfully deleted');
     }
+
+
+    /**
+     * @param $request
+     * @return Response
+     */
+    public function tableSortable($request)
+    {
+        $this->storeCategoryRepository->sortMyBlCategoryList($request);
+        return new Response('update successfully');
+    }
+
 }
