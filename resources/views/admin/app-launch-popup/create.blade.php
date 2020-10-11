@@ -86,7 +86,7 @@
                                 @endif
 
                                 <div class="col-md-4 hidden" id="productCode">
-                                    <div class="form-group " >
+                                    {{-- <div class="form-group " >
                                         <label for="type" class="required col-md-12" style="padding:0px">Product Code</label>
                                         {!!Form::select('product_code',$productList, null, ['class' => 'form-control select2 col-md-12'])!!}
                                         @if($errors->has('product_code'))
@@ -94,7 +94,7 @@
                                                 <small class="danger text-muted">{{ $errors->first('product_code') }}</small>
                                             </p>
                                         @endif
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                                 <div class="col-md-4">
@@ -197,6 +197,12 @@
 
             initiateDropify('.dropify');
 
+            product_html = ` <div class="form-group other-info-div">
+                                        <label>Select a product</label>
+                                        <select class="product-list form-control"  name="product_code" required></select>
+                                        <div class="help-block"></div>
+                                    </div>`;
+
             $('#type').on('change', function () {
                 let action = $(this).val();
                 if (action == 'image') {
@@ -205,7 +211,19 @@
                 }else if(action == 'purchase'){
                     $(".select2").css({"min-width": "250px","max-width": "300px"});
                   $('#productCode').removeClass('hidden').addClass('show');
-
+                  $("#productCode").html(product_html);
+                    $(".product-list").select2({
+                        placeholder: "Select a product",
+                        ajax: {
+                            url: "{{ route('myblslider.active-products') }}",
+                            processResults: function (data) {
+                                // Transforms the top-level key of the response object from 'items' to 'results'
+                                return {
+                                    results: data
+                                };
+                            }
+                        }
+                    });
                 } else {
                     initiateTextEditor();
                     $('#productCode').removeClass('show').addClass('hidden');

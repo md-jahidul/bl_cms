@@ -86,8 +86,7 @@ class AppLaunchPopupController extends Controller
     public function edit(MyBlAppLaunchPopup $pop_up)
     {
         $empty=[''=>'Please Select'];
-        $produc=ProductCore::where('status', 1)->pluck('name','product_code')->toArray();
-        $productList=array_merge($empty,$produc);
+        $productList= $this->getActiveProducts();//ProductCore::where('status', 1)->pluck('name','product_code')->toArray();
         return view('admin.app-launch-popup.edit', compact('pop_up','productList'));
     }
 
@@ -156,12 +155,15 @@ class AppLaunchPopupController extends Controller
             }
         )->get();
 
-        $data = [''=>'Please Select'];
+        $data =[]; //[''=>'Please Select'];
 
         foreach ($products as $product) {
-            $data[$product->details->product_code] ='(' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en;
+            $data[] =[
+                'id'    => $product->details->product_code,
+                'text' =>  '(' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
+            ];
         }
-// dd($data);
+
         return $data;
     }
 }
