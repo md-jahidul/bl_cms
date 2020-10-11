@@ -96,7 +96,7 @@
 
                                 <div class="col-md-4 @if($pop_up->product_code==null) hidden @endif" id="productCode">
                                     <label>Linked Product</label>
-                                    <select name="product_code" class="form-control" required>
+                                    <select name="product_code" class="form-control select2" required>
                                         <option value="">Select a Product</option>
                                         @foreach ($productList as $value)
                                             <option value="{{ $value['id'] }}" {{ ( $value['id']  == $pop_up->product_code) ? 'selected' : '' }}>
