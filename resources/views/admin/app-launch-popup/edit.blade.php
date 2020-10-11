@@ -44,6 +44,7 @@
                                             <option value="html" @if($pop_up->type == 'html') selected @endif > HTML
                                                 Content
                                             </option>
+                                            <option value="purchase" @if($pop_up->product_code !==null)  selected @endif> Purchase </option>
                                         </select>
                                     </div>
                                 </div>
@@ -92,6 +93,19 @@
                                     </p>
                                 @endif
                                 <input type="hidden" name="id" value="{{$pop_up->id}}">
+
+                                <div class="col-md-4 @if($pop_up->product_code==null) hidden @endif" id="productCode">
+                                    <div class="form-group " >
+                                        <label for="type" class="required col-md-12" style="padding:0px">Product Code</label>
+                                        {!!Form::select('product_code',$productList, $pop_up->product_code, ['class' => 'form-control select2 col-md-12'])!!}
+                                        @if($errors->has('type'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('product_code') }}</small>
+                                            </p>
+                                        @endif
+                                    </div>
+                                </div>
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-info btn-block mt-2">
@@ -200,8 +214,14 @@
                 let action = $(this).val();
                 if (action == 'image') {
                     initiateImage();
+                    $('#productCode').removeClass('show').addClass('hidden');
+                }else if(action == 'purchase'){
+                    $(".select2").css({"min-width": "250px","max-width": "300px"});
+                  $('#productCode').removeClass('hidden').addClass('show');
+
                 } else {
                     initiateTextEditor();
+                    $('#productCode').removeClass('show').addClass('hidden');
                 }
             });
         })

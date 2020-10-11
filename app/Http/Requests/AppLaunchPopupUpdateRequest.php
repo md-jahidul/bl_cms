@@ -26,7 +26,7 @@ class AppLaunchPopupUpdateRequest extends FormRequest
     {
         return [
             'title'          => 'required|max:20|unique:my_bl_app_launch_popups,title,' . $this->id,
-            'type'           => 'required|in:image,html',
+            'type'           => 'required|in:image,html,purchase',
             'display_period' => new ValidDateRange(),
 /*            'content_data'   => 'required'*/
         ];
