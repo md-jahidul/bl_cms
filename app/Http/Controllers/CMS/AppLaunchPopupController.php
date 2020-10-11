@@ -109,8 +109,8 @@ class AppLaunchPopupController extends Controller
                 $data['type'] = 'image';
             }
         } elseif($type=='purchase'){
-            $data['content'] = $request->input('content_data');
-            $data['type'] = 'html';
+            // $data['content'] = $request->input('content_data');
+            // $data['type'] = 'html';
         } else {
             $data['content'] = $request->input('content_data');
             $data['type'] = 'html';
