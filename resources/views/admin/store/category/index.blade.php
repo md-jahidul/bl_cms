@@ -16,7 +16,7 @@
     <div class="card card-info mt-0" style="box-shadow: 0px 0px">
         <div class="card-content">
             <div class="card-body card-dashboard">
-                <table class="table table-striped table-bordered  no-footer dataTable" id="notification_cat" role="grid" aria-describedby="Example1_info" style="">
+                <table class="table table-striped table-bordered  no-footer dataTable" id="store_category" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
                         <th width='5%'><i class="icon-cursor-move icons"></i></th>
@@ -25,7 +25,7 @@
                         <th width="30%">Action</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="sortable">
                         @foreach ($storeCategories as $storeCategory)
                             <tr data-index="{{ $storeCategory->id }}" data-position="{{$storeCategory->display_order }}">
                                 <td width="5%"><i class="icon-cursor-move icons"></i></td>
@@ -119,13 +119,13 @@
         })
 
         $(document).ready(function () {
-            $('#notification_cat').DataTable({
+            $('#store_category').DataTable({
                 dom: 'Bfrtip',
                 buttons: [],
-                paging: true,
-                searching: true,
+                paging: false,
+                searching: false,
                 "bDestroy": true,
-                "pageLength": 10
+                "pageLength": 15
             });
         });
 

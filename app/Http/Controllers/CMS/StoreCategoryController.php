@@ -30,7 +30,7 @@ class StoreCategoryController extends Controller
      */
     public function index()
     {
-        $storeCategories = $this->storeCategoryService->findAll();
+        $storeCategories = $this->storeCategoryService->getStoreCategoryList();
         return view('admin.store.category.index')->with('storeCategories', $storeCategories);
     }
 

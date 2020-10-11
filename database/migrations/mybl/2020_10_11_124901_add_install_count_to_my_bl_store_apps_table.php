@@ -14,7 +14,7 @@ class AddInstallCountToMyBlStoreAppsTable extends Migration
     public function up()
     {
         Schema::table('my_bl_store_apps', function (Blueprint $table) {
-            $table->integer('install_count')->nullable()->after('display_order');
+            $table->integer('install_count')->default(0)->after('display_order');
         });
     }
 

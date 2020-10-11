@@ -8,6 +8,13 @@ class StoreCategoryRepository extends BaseRepository
     public $modelName = MyBlStoreCategory::class;
 
 
+    /**
+     * @return mixed
+     */
+    public function getMyBlCategoryList()
+    {
+        return $this->model->orderBy('display_order', 'ASC')->get();
+    }
 
     /**
      * @param $request

@@ -25,6 +25,16 @@ class StoreCategoryService
         $this->setActionRepository($storeCategoryRepository);
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getStoreCategoryList()
+    {
+        return $this->storeCategoryRepository->getMyBlCategoryList();
+    }
+
+
     /**
      * Storing the StoreCategory resource
      * @param $data
