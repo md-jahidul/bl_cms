@@ -28,9 +28,10 @@ class AppLaunchPopupController extends Controller
 
     public function create()
     {
-        $empty=[''=>'Please Select'];
-        $produc=ProductCore::where('status', 1)->pluck('name','product_code')->toArray();
-        $productList=array_merge($empty,$produc);
+
+        $produc=$this->getActiveProducts();//ProductCore::where('status', 1)->pluck('name','product_code')->toArray();
+        $productList=$produc;
+        // dd($productList);
         return view('admin.app-launch-popup.create', compact('productList'));
     }
 
@@ -141,5 +142,26 @@ class AppLaunchPopupController extends Controller
         $pop_up->delete();
 
         return redirect()->back()->with('success', 'Successfully Deleted');
+    }
+
+    public function getActiveProducts()
+    {
+        $builder = new MyBlProduct();
+        $builder = $builder->where('status', 1);
+
+        $products = $builder->whereHas(
+            'details',
+            function ($q) {
+                $q->whereIn('content_type', ['data','voice','sms']);
+            }
+        )->get();
+
+        $data = [''=>'Please Select'];
+
+        foreach ($products as $product) {
+            $data[$product->details->product_code] ='(' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en;
+        }
+// dd($data);
+        return $data;
     }
 }
