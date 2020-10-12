@@ -19,8 +19,6 @@ class CreateCorpInitiativeTabComponentsTable extends Migration
             $table->string('component_type')->nullable();
             $table->string('component_title_en')->nullable();
             $table->string('component_title_bn')->nullable();
-            $table->string('title_en')->nullable();
-            $table->string('title_bn')->nullable();
             $table->longText('editor_en')->nullable();
             $table->longText('editor_bn')->nullable();
             $table->json('multiple_attributes')->nullable();
