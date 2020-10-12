@@ -38,7 +38,7 @@ class AppLaunchPopupController extends Controller
     public function store(AppLaunchPopupStoreRequest $request)
     {
         $type = $request->type;
-        if ($request->hasFile('content_data')) {
+        if ($type=='image') {
             if (!$request->hasFile('content_data')) {
                 return redirect()->back()->with('error', 'Image is required');
             }
@@ -51,10 +51,22 @@ class AppLaunchPopupController extends Controller
             );
 
             $data['content'] = $path;
-            $data['type'] = 'image';
+        }elseif($type=='purchase'){
+            if (!$request->hasFile('content_data')) {
+                return redirect()->back()->with('error', 'Image is required');
+            }
+            // upload the image
+            $file = $request->content_data;
+            $path = $file->storeAs(
+                'app-launch-popup/images',
+                strtotime(now()) . '.' . $file->getClientOriginalExtension(),
+                'public'
+            );
+
+            $data['content'] = $path;
         } else {
             $data['content'] = $request->input('content_data');
-            $data['type'] = 'html';
+
         }
 
         // start date end date
@@ -64,7 +76,7 @@ class AppLaunchPopupController extends Controller
         $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
                              ->toDateTimeString();
 
-        // $data['type'] = $type;
+        $data['type'] = $type;
         $data['title'] = $request->title;
         if(isset($request->product_code)){
             $data['product_code']=$request->product_code;
@@ -92,10 +104,9 @@ class AppLaunchPopupController extends Controller
 
     public function update(AppLaunchPopupUpdateRequest $request, $id)
     {
-            $all=$request->all();
-        // dd($all);
+        $all=$request->all();
         $type = $request->type;
-        if ($request->hasFile('content_data')) {
+        if ($type=='image') {
             if ($request->hasFile('content_data')) {
                 // upload the image
                 $file = $request->content_data;
@@ -106,14 +117,21 @@ class AppLaunchPopupController extends Controller
                 );
 
                 $data['content'] = $path;
-                $data['type'] = 'image';
             }
         } elseif($type=='purchase'){
-            // $data['content'] = $request->input('content_data');
-            // $data['type'] = 'html';
+            if ($request->hasFile('content_data')) {
+                // upload the image
+                $file = $request->content_data;
+                $path = $file->storeAs(
+                    'app-launch-popup/images',
+                    strtotime(now()) . '.' . $file->getClientOriginalExtension(),
+                    'public'
+                );
+
+                $data['content'] = $path;
+            }
         } else {
             $data['content'] = $request->input('content_data');
-            $data['type'] = 'html';
         }
 
         $date_range_array = explode('-', $request->input('display_period'));
@@ -122,7 +140,7 @@ class AppLaunchPopupController extends Controller
         $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
                                  ->toDateTimeString();
 
-        // $data['type'] = $type;
+        $data['type'] = $type;
         $data['title'] = $request->title;
         if(isset($request->product_code)){
             $data['product_code']=$request->product_code;

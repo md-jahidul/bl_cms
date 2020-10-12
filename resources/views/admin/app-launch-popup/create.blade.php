@@ -185,6 +185,20 @@
                 initiateDropify('.dropify');
             }
 
+            function initiatePurchaseImage() {
+                let html = `<div class="form-group">
+                                 <label class="required">Image</label>
+                                 <input type="file"
+                                               required
+                                               name="content_data"
+                                               data-max-file-size="2M"
+                                               data-allowed-file-extensions="jpeg png jpg"
+                                               class="dropify"/>
+                              </div>`;
+                $("#content_div").html(html);
+                initiateDropify('.dropify');
+            }
+
             function initiateTextEditor() {
                 let html = `<div class="form-group">
                                     <label for="html_content" class="required">Content</label>
@@ -209,6 +223,7 @@
                     initiateImage();
                     $('#productCode').removeClass('show').addClass('hidden');
                 }else if(action == 'purchase'){
+                    initiatePurchaseImage();
                     $(".select2").css({"min-width": "250px","max-width": "300px"});
                   $('#productCode').removeClass('hidden').addClass('show');
                   $("#productCode").html(product_html);
