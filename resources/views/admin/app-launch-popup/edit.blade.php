@@ -195,14 +195,16 @@
                 initiateDropify('.dropify');
             }
 
-            initiatePurchaseImage() {
+            function initiatePurchaseImage() {
                 let html = `<div class="form-group">
-                        <label class="required">Image</label>
-                        <input type="file"required
-                         name="content_data" data-max-file-size="2M"
-                         data-allowed-file-extensions="jpeg png jpg"
-                         class="dropify"/>
-                            </div>`;
+                                 <label class="required">Image</label>
+                                 <input type="file"
+                                               required
+                                               name="content_data"
+                                               data-max-file-size="2M"
+                                               data-allowed-file-extensions="jpeg png jpg"
+                                               class="dropify"/>
+                              </div>`;
                 $("#content_div").html(html);
                 initiateDropify('.dropify');
             }
