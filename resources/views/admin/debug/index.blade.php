@@ -506,6 +506,7 @@
 
     <script>
         $(function () {
+            $.fn.dataTable.ext.errMode = 'none';
             $(document).on('click', '#search_btn', function (e) {
                 let number;
                 let pattern;
