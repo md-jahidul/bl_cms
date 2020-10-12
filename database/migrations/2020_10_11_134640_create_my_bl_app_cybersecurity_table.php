@@ -13,7 +13,7 @@ class CreateMyBlAppCybersecurityTable extends Migration
      */
     public function up()
     {
-        Schema::create('my_bl_app_cybersecurity', function (Blueprint $table) {
+        Schema::create('my_bl_app_cybersecurities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('msisdn')->nullable(false);
             $table->json('body')->nullable(false);
@@ -28,6 +28,6 @@ class CreateMyBlAppCybersecurityTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('my_bl_app_cybersecurity');
+        Schema::dropIfExists('my_bl_app_cybersecurities');
     }
 }
