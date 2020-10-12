@@ -21,7 +21,7 @@
                             <tr>
                                 <td width="3%"><i class="icon-cursor-move icons"></i></td>
                                 <th width="5%">Component Type</th>
-                                <th width="8%">Title</th>
+                                <th width="8%">Component Title</th>
                                 <th width="12%" class="text-right">Action</th>
                             </tr>
                         </thead>
@@ -30,7 +30,7 @@
                                 <tr data-index="{{ $list->id }}" data-position="{{ $list->component_order }}">
                                     <td><i class="icon-cursor-move icons"></i></td>
                                     <td>{{ ucwords(str_replace('_', ' ', $list->component_type)) }} {!! $list->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
-                                    <td>{{ $list->title_en  }}</td>
+                                    <td>{{ $list->component_title_en  }}</td>
                                     <td class="text-right">
                                         <a href="{{ route("initiative_component.edit", [$tab->id, $list->id]) }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
                                         <a href="#" remove="{{ route('initiative_component.destroy', [$tab->id, $list->id]) }}" class="border-0 btn-sm btn-outline-danger delete_btn" data-id="{{ $list->id }}" title="Delete">

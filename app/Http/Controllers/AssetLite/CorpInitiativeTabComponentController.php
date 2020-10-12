@@ -33,22 +33,16 @@ class CorpInitiativeTabComponentController extends Controller
     }
 
     protected $componentTypes = [
-//        'large_title_with_text' => 'Large Title With Text',
-//        'medium_title_with_text' => 'Medium Title With Text',
-//        'small_title_with_text' => 'Small Title With Text',
-//        'text_and_button' => 'Text And Button',
-//        'text_component' => 'Text Component',
-
         'batch_component' => 'Batch Component',
         'events_activities' => 'Events Activities',
-        'icon_box' => 'icon_box',
-        'mentors_component' => 'mentors_component',
-        'news_component' => 'news_component',
-        'news_event' => 'news_event',
-        'partner' => 'partner',
-        'tutorial_step' => 'tutorial_step',
-        'winners' => 'winners',
-        'young_future' => 'young_future',
+        'icon_box' => 'Icon Box',
+        'mentors_component' => 'Mentors Component',
+        'news_component' => 'News Component',
+        'news_event' => 'News and Event',
+        'partner' => 'Partner',
+        'tutorial_step' => 'Tutorial Step',
+        'winners' => 'Winners',
+        'young_future' => 'Young Future',
     ];
 
     public function componentList($tabId)

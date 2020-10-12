@@ -41,25 +41,6 @@
                                              class="img-thumbnail" id="componentImg" width="100%">
                                     </div>
 
-                                    {{--Events Activities--}}
-                                    <slot id="events_activities" data-offer-type="events_activities" class="d-none">
-                                        @include('admin.corporate-responsibility.initiative.partials.component-title')
-                                        @include('admin.corporate-responsibility.initiative.partials.multiple-image')
-                                    </slot>
-
-                                    {{--Icon Box--}}
-                                    <slot id="icon_box" data-offer-type="icon_box" class="{{ ($component->component_type ==  "icon_box"  ) ? '' : "d-none" }}">
-                                        @include('admin.corporate-responsibility.initiative.partials.component-title')
-                                    </slot>
-
-                                    {{--Mentors_component--}}
-                                    <slot id="mentors_component" data-offer-type="mentors_component" class="d-none">
-                                        @include('admin.corporate-responsibility.initiative.partials.component-title')
-                                        @include('admin.corporate-responsibility.initiative.partials.multiple-image')
-                                        @include('admin.corporate-responsibility.initiative.partials.multiple-title')
-                                        @include('admin.corporate-responsibility.initiative.partials.multiple-text-editor')
-                                    </slot>
-
                                     {{--news_component--}}
                                     <slot id="news_component" data-offer-type="news_component" class="{{ ($component->component_type ==  "news_component"  ) ? '' : "d-none" }}">
                                         @include('admin.corporate-responsibility.initiative.partials.component-title')
@@ -68,79 +49,55 @@
                                         @include('admin.corporate-responsibility.initiative.partials.single-image')
                                     </slot>
 
-                                    {{--news_event--}}
-                                    <slot id="news_event" data-offer-type="news_event" class="d-none">
-                                        @include('admin.corporate-responsibility.initiative.partials.component-title')
-                                        @include('admin.corporate-responsibility.initiative.partials.multiple-image')
-                                        @include('admin.corporate-responsibility.initiative.partials.multiple-title')
-                                        @include('admin.corporate-responsibility.initiative.partials.multiple-text-editor')
-                                    </slot>
-
-                                    {{--partner--}}
-                                    <slot id="partner" data-offer-type="partner" class="d-none">
-                                        @include('admin.corporate-responsibility.initiative.partials.component-title')
-                                        @include('admin.corporate-responsibility.initiative.partials.multiple-image')
-                                        @include('admin.corporate-responsibility.initiative.partials.multiple-title')
-                                    </slot>
-
-                                    {{--tutorial_step--}}
-                                    <slot id="tutorial_step" data-offer-type="tutorial_step" class="d-none">
-                                        @include('admin.corporate-responsibility.initiative.partials.component-title')
-                                        @include('admin.corporate-responsibility.initiative.partials.multiple-image')
-                                    </slot>
-
-                                    {{--winners--}}
-                                    <slot id="winners" data-offer-type="winners" class="d-none">
-                                        @include('admin.corporate-responsibility.initiative.partials.component-title')
-                                        @include('admin.corporate-responsibility.initiative.partials.multiple-image')
-                                        @include('admin.corporate-responsibility.initiative.partials.multiple-title')
-                                        @include('admin.corporate-responsibility.initiative.partials.multiple-text-editor')
-                                    </slot>
 
                                     {{--young_future--}}
-                                    <slot id="young_future" data-offer-type="young_future" class="d-none">
+                                    <slot id="young_future" data-offer-type="young_future" class="{{ ($component->component_type ==  "young_future"  ) ? '' : "d-none" }}">
                                         @include('admin.corporate-responsibility.initiative.partials.text-editor')
                                         @include('admin.corporate-responsibility.initiative.partials.single-image')
                                     </slot>
 
                                     {{--Multiple Items--}}
-                                    <slot id="multiple_items" data-offer-type="multiple_image" class="{{--{{ ($component->component_type ==  "multiple_image"  ) ? '' : "d-none" }}--}}">
-                                        @php( $i = 0 )
-                                        @if(array_key_exists(0,$multipleItem)))
-                                            @foreach($multipleItem as $key => $item)
-                                                @php($i++)
-                                                <div class="col-md-12 col-xs-6">
-                                                    <h3><strong>Item {{$i}}</strong></h3>
-                                                    <hr class="item-line">
-                                                </div>
+                                    @php( $i = 0 )
+                                    @if(array_key_exists(0,$multipleItem))
+                                        @include('admin.corporate-responsibility.initiative.partials.component-title')
+                                        @foreach($multipleItem as $key => $item)
+                                            @php($i++)
+                                            <div class="col-md-12 col-xs-6">
+                                                <h3><strong>Item {{$i}}</strong></h3>
+                                                <hr class="item-line">
+                                            </div>
 
-                                                <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$i}}">
-                                                <div class="col-md-6 col-xs-6 option-{{ $i }} options-count">
-                                                    <div class="form-group">
-                                                        <label for="message">Multiple Image</label>
-                                                        <input type="file" class="dropify" name="multi_item[image_url-{{ $i }}]"
-                                                               data-default-file="{{ isset($item['image_url']) ? config('filesystems.file_base_url') . $item['image_url'] : '' }}"
-                                                               data-height="80"/>
-                                                        <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
-                                                    </div>
+                                            <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$i}}">
+                                            <div class="col-md-6 col-xs-6 option-{{ $i }} options-count">
+                                                <div class="form-group">
+                                                    <label for="message">Multiple Image</label>
+                                                    <input type="file" class="dropify" name="multi_item[image_url-{{ $i }}]"
+                                                           data-default-file="{{ isset($item['image_url']) ? config('filesystems.file_base_url') . $item['image_url'] : '' }}"
+                                                           data-height="80"/>
+                                                    <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
                                                 </div>
-                                                <div class="form-group col-md-5 option-{{ $i }}">
-                                                    <label for="alt_text">Alt Text</label>
-                                                    <input type="text" name="multi_item[alt_text-{{ $i }}]" value="{{ $item['alt_text'] }}" class="form-control">
-                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-5 option-{{ $i }}">
+                                                <label for="alt_text">Alt Text</label>
+                                                <input type="text" name="multi_item[alt_text-{{ $i }}]" value="{{ $item['alt_text'] }}" class="form-control">
+                                            </div>
 
-                                                @if($i == 1)
-                                                    <div class="form-group col-md-1">
-                                                        <label for="alt_text"></label>
-                                                        <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>
-                                                    </div>
-                                                    {{--  @else--}}
-                                                    {{--      <div class="form-group col-md-1 option-{{ $i }}">--}}
-                                                    {{--          <label for="alt_text"></label>--}}
-                                                    {{--          <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-{{ $i }}" ><i data-id="option-{{ $i }}" class="la la-trash"></i></button>--}}
-                                                    {{--      </div>--}}
-                                                @endif
-                                            @if(!empty($item['title_en']) || !empty($item['title_bn']))
+                                            @if($i == 1)
+                                                <div class="form-group col-md-1">
+                                                    <label for="alt_text"></label>
+                                                    <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>
+                                                </div>
+                                                {{--  @else--}}
+                                                {{--      <div class="form-group col-md-1 option-{{ $i }}">--}}
+                                                {{--          <label for="alt_text"></label>--}}
+                                                {{--          <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-{{ $i }}" ><i data-id="option-{{ $i }}" class="la la-trash"></i></button>--}}
+                                                {{--      </div>--}}
+                                            @endif
+
+                                            @if (
+                                                $component->component_type == "icon_box" || $component->component_type == "winners" ||
+                                                $component->component_type == "news_event" || $component->component_type == "mentors_component" ||
+                                                $component->component_type == "partner")
                                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                                     <label for="title_en">{{ (isset($title_en)) ? $title_en : 'Title Field (English)' }}</label>
                                                     <input type="text" name="multi_item[title_en-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla"
@@ -152,23 +109,23 @@
                                                     <input type="text" name="multi_item[title_bn-{{ $i }}]"  class="form-control" placeholder="Enter company name bangla"
                                                            value="{{ isset($item['title_bn']) ? $item['title_bn'] : '' }}">
                                                 </div>
-                                            @endif
-                                            @if(!empty($item['editor_en']) || !empty($item['editor_bn']))
-                                                <div class="form-group col-md-6 {{ $errors->has('editor_en') ? ' error' : '' }}">
-                                                    <label for="editor_en">Text Editor (English)</label>
-                                                    <textarea type="text" name="multi_item[editor_en-{{ $i }}]"  class="form-control summernote_editor" placeholder="Enter offer details in english"
-                                                    >{{ isset($item['editor_en']) ? $item['editor_en'] : '' }}</textarea>
-                                                </div>
+                                                @if($component->component_type != "partner")
+                                                    <div class="form-group col-md-6 {{ $errors->has('editor_en') ? ' error' : '' }}">
+                                                        <label for="editor_en">Text Editor (English)</label>
+                                                        <textarea type="text" name="multi_item[editor_en-{{ $i }}]"  class="form-control summernote_editor" placeholder="Enter offer details in english"
+                                                        >{{ isset($item['editor_en']) ? $item['editor_en'] : '' }}</textarea>
+                                                    </div>
 
-                                                <div class="form-group col-md-6 {{ $errors->has('editor_bn') ? ' error' : '' }}">
-                                                    <label for="editor_bn">Text Editor (Bangla)</label>
-                                                    <textarea type="text" name="multi_item[editor_bn-{{ $i }}]"  class="form-control summernote_editor" placeholder="Enter offer details in english"
-                                                    >{{ isset($item['editor_bn']) ? $item['editor_bn'] : '' }}</textarea>
-                                                </div>
+                                                    <div class="form-group col-md-6 {{ $errors->has('editor_bn') ? ' error' : '' }}">
+                                                        <label for="editor_bn">Text Editor (Bangla)</label>
+                                                        <textarea type="text" name="multi_item[editor_bn-{{ $i }}]"  class="form-control summernote_editor" placeholder="Enter offer details in english"
+                                                        >{{ isset($item['editor_bn']) ? $item['editor_bn'] : '' }}</textarea>
+                                                    </div>
+                                                @endif
                                             @endif
-                                            @endforeach
-                                        @endif
-                                    </slot>
+                                        @endforeach
+                                    @endif
+
 
                                     <div class="col-md-12 mt-2">
                                         <div class="form-group">
@@ -202,6 +159,11 @@
     form #related_product_field .select2-container {
         width: 100% !important;
     }
+     /* Hr rounded  border */
+     hr.item-line {
+         border: 1px solid rgba(255,166,87,0.88);
+         border-radius: 5px;
+     }
 </style>
 
 @stop
