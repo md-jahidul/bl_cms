@@ -32,7 +32,7 @@
                                     <td>{{ $data->title_en }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                     <td>{{ $data->url_slug_en }}</td>
                                     <td>
-                                        <a href="{{ url("corporate/cr-strategy-component/$data->id/list") }}" role="button" class="btn btn-info">Components</a>
+                                        <a href="{{ route("initiative_component.index", $data->id) }}" role="button" class="btn btn-info">Components</a>
                                     </td>
                                     <td width="12%" class="text-center">
                                         <a href="{{ url("corporate/initiative-tab/$data->id/edit") }}" role="button" class="btn-sm btn-outline-info border-0"><i class="la la-pencil" aria-hidden="true"></i></a>
