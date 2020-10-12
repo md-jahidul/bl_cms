@@ -975,7 +975,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('corporate/cr-strategy-component/{section_id}/destroy/{id}', 'AssetLite\CorpCrStrategyComponentController@destroy');
     Route::get('corporate/cr-strategy-component-sort', 'AssetLite\CorpCrStrategyComponentController@sectionSortable');
 
-    //Details Component Corporate Responsibility
+    //CR-Strategy Details Component Corporate Responsibility
     Route::get('corporate/cr-strategy/component/{com_id}/details/list',
         'AssetLite\CorpCrStrategyComponentDetailsController@componentList')
         ->name('cr-strategy-details.index');
@@ -1044,14 +1044,35 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('corporate/case-study-details-sort',
         'AssetLite\CorpCaseStudyComponentDetailsController@componentSortable');
 
-    Route::post('corporate/cr-strategy/component/details/banner-upload',
+    Route::post('corporate/case-study/component/details/banner-upload',
         'AssetLite\CorpCaseStudyComponentDetailsController@detailsBannerUpload')
         ->name('case-study-details-banner-image.upload');
 
-    // Initiative Corporate Responsibility
+    // Initiative Tab Corporate Responsibility
     Route::resource('corporate/initiative-tab', 'AssetLite\CorpInitiativeTabController')
         ->except('show', 'destroy');
     Route::get('corporate/initiative-tab/destroy/{id}', 'AssetLite\CorpInitiativeTabController@destroy');
     Route::get('corporate/initiative-tab-sort', 'AssetLite\CorpInitiativeTabController@tabSortable');
 
+    // Initiative Tab Component Corporate Responsibility
+    Route::get('corporate/initiative-tab/{tab_id}/component/list',
+        'AssetLite\CorpInitiativeTabComponentController@componentList')
+        ->name('initiative_component.index');
+    Route::get('corporate/initiative-tab/{tab_id}/component/create',
+        'AssetLite\CorpInitiativeTabComponentController@componentCreateForm')
+        ->name('initiative_component.create');
+    Route::post('corporate/initiative-tab/{tab_id}/component/store',
+        'AssetLite\CorpInitiativeTabComponentController@componentStore')
+        ->name('initiative_component.store');
+    Route::get('corporate/initiative-tab/{tab_id}/component/edit/{id}',
+        'AssetLite\CorpInitiativeTabComponentController@componentEditForm')
+        ->name('initiative_component.edit');
+    Route::put('corporate/initiative-tab/{tab_id}/component/update/{id}',
+        'AssetLite\CorpInitiativeTabComponentController@componentUpdate')
+        ->name('initiative_component.update');
+    Route::get('corporate/initiative-tab/{tab_id}/component/destroy/{id}',
+        'AssetLite\CorpInitiativeTabComponentController@componentDestroy')
+        ->name('initiative_component.destroy');
+    Route::get('corporate/initiative-tab-component-sort',
+        'AssetLite\CorpInitiativeTabComponentController@componentSortable');
 });
