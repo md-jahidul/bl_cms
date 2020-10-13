@@ -40,10 +40,10 @@
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-2 m-1">
+                                       {{-- <div class="col-md-2 m-1">
                                             <button data-id="{{$storeCategory->id}}" data-toggle="tooltip" data-original-title="Delete Category" data-placement="right"
                                                     class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                        </div>
+                                        </div>--}}
 
                                     </div>
                                 </td>
