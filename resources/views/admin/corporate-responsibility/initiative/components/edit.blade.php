@@ -58,7 +58,7 @@
 
                                     {{--Multiple Items--}}
                                     @php( $i = 0 )
-                                    @if(array_key_exists(0,$multipleItem))
+                                    @if(array_key_exists(0,$multipleItem) && $component->component_type != "batch_component")
                                         @include('admin.corporate-responsibility.initiative.partials.component-title')
                                         @foreach($multipleItem as $key => $item)
                                             @php($i++)
@@ -126,6 +126,92 @@
                                         @endforeach
                                     @endif
 
+                                    {{--Batch Component--}}
+                                    <slot id="batch_component" data-offer-type="batch_component" class="{{ ($component->component_type ==  "batch_component"  ) ? '' : "d-none" }}">
+                                    @include('admin.corporate-responsibility.initiative.partials.component-title')
+                                    <!--Tab-1 -->
+                                        @foreach($multipleItem as $key => $value)
+                                            @php($key++)
+                                            <div class="form-group col-md-12 col-xs-6 tab">
+                                                <div class="pull-left mt-2">
+                                                    <h3><strong>Tab {{ $key }}</strong></h3>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <label for="alt_text"></label>
+                                                    <button type="button" class="btn btn-bitbucket multi_item_remove mt-2" id="plus-tab"><i class="la la-plus"></i> Add More Tab</button>
+                                                </div>
+                                                <hr class="item-tab">
+                                            </div>
+
+                                            <input id="multi_item_count" type="hidden" name="multi_item_count" value="{{$key}}">
+
+                                            <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                                <label for="title_en">Tab Title (English)</label>
+                                                <input type="text" name="multi_item[tab_title_en-{{$key}}]"  class="form-control" placeholder="Enter company name bangla"
+                                                       value="{{ isset($value['tab_title_en']) ? $value['tab_title_en'] : '' }}">
+                                                <div class="help-block"></div>
+                                                @if ($errors->has('title_en'))
+                                                    <div class="help-block">  {{ $errors->first('title_en') }}</div>
+                                                @endif
+                                            </div>
+                                            <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                                <label for="title_bn" >Tab Title (Bangla)</label>
+                                                <input type="text" name="multi_item[tab_title_bn-{{$key}}]"  class="form-control" placeholder="Enter company name bangla"
+                                                       value="{{ isset($value['tab_title_bn']) ? $value['tab_title_bn'] : '' }}">
+                                                <div class="help-block"></div>
+                                                @if ($errors->has('title_bn'))
+                                                    <div class="help-block">  {{ $errors->first('title_bn') }}</div>
+                                                @endif
+                                            </div>
+
+
+                                            {{-- Sub Item--}}
+                                        @foreach($value['data'] as $subKey => $subValue)
+                                            @php($subKey++)
+                                            <slot id="tab_component_{{$key}}">
+                                                <div class="col-md-12 col-xs-6 tab_component_{{ $key }}">
+                                                    <h3><strong>Item {{ $subKey }}</strong></h3>
+                                                    <hr class="item-line">
+                                                </div>
+
+                                                <div class="col-md-6 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label for="message">Image</label>
+                                                        <input type="file" class="dropify" name="multi_item[data-{{ $key }}][{{ $subKey }}][image_url]" data-height="80"
+                                                               data-default-file="{{ isset($subValue['image_url']) ? config('filesystems.file_base_url') . $subValue['image_url'] : '' }}"/>
+                                                        <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <label for="alt_text">Alt Text</label>
+                                                    <input type="text" name="multi_item[data-{{ $key }}][{{ $subKey }}][alt_text]" class="form-control"
+                                                           value="{{ isset($subValue['alt_text']) ? $subValue['alt_text'] : '' }}">
+                                                </div>
+
+                                                <div class="form-group col-md-2">
+                                                    <label for="alt_text"></label>
+                                                    <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2 tab-multi-item" data-id="tab_component_1">
+                                                        Add More Item
+                                                    </button>
+                                                </div>
+
+                                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                                    <label for="title_en">{{ (isset($title_en)) ? $title_en : 'Title Field (English)' }}</label>
+                                                    <input type="text" name="multi_item[data-{{ $key }}][{{ $subKey }}][title_en]"  class="form-control" placeholder="Enter company name bangla"
+                                                           value="{{ isset($subValue['title_en']) ? $subValue['title_en'] : '' }}">
+                                                </div>
+
+                                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                                    <label for="title_bn" >{{ (isset($title_bn)) ? $title_bn : 'Title Field (Bangla)' }}</label>
+                                                    <input type="text" name="multi_item[data-{{ $key }}][{{$subKey}}][title_bn]"  class="form-control" placeholder="Enter company name bangla"
+                                                           value="{{ isset($subValue['title_bn']) ? $subValue['title_bn'] : '' }}">
+                                                </div>
+                                            </slot>
+                                        @endforeach
+                                        @endforeach
+                                    </slot>
+
 
                                     <div class="col-md-12 mt-2">
                                         <div class="form-group">
@@ -163,6 +249,10 @@
      hr.item-line {
          border: 1px solid rgba(255,166,87,0.88);
          border-radius: 5px;
+     }
+     hr.item-tab {
+        border: 1px solid rgb(87, 202, 255);
+        border-radius: 5px;
      }
 </style>
 
@@ -237,7 +327,7 @@
             }
 
 
-            // Multi Image Component
+            // Multi Items Component
             $(document).on('click', '#plus-image', function () {
                 var componentVal = $('#component_type').val();
                 var option_count = $('.options-count');
@@ -299,6 +389,120 @@
                 $("#multiple_items").append(input);
                 dropify();
                 summerNoteEditor();
+            });
+
+            //Batches Component Dynamic Field Tab
+            $(document).on('click', '#plus-tab', function () {
+                var tab_count = $('.tab').length+1;
+                var option_count = $('.options-count');
+                var total_option = option_count.length + 2;
+
+                var tabField =
+                    '<!--Tab '+total_option+'-->\n' +
+                    '<div class="form-group col-md-12 col-xs-6 tab">\n' +
+                    '     <div class="pull-left mt-2">\n' +
+                    '         <h3><strong>Tab '+tab_count+'</strong></h3>\n' +
+                    '     </div>\n' +
+                    '     <div class="pull-right">\n' +
+                    '         <label for="alt_text"></label>\n' +
+                    '         <button type="button" class="btn btn-bitbucket multi_item_remove mt-2" id="plus-tab"><i class="la la-plus"></i> Add More Tab</button>\n' +
+                    '     </div>\n' +
+                    '     <hr class="item-tab">\n' +
+                    ' </div>\n' +
+                    ' <div class="form-group col-md-6">\n' +
+                    '     <label for="title_en">Tab Title (English)</label>\n' +
+                    '     <input type="text" name="multi_item[tab_title_en-'+tab_count+']"  class="form-control" placeholder="Enter company name bangla">\n' +
+                    ' </div>\n' +
+                    ' <div class="form-group col-md-6">\n' +
+                    '     <label for="title_bn" >Tab Title (Bangla)</label>\n' +
+                    '     <input type="text" name="multi_item[tab_title_bn-'+tab_count+']"  class="form-control" placeholder="Enter company name bangla">\n' +
+                    ' </div>';
+
+                tabField +=
+                    '<slot class="tab_component_'+tab_count+'" id="tab_component_'+tab_count+'">\n' +
+                    '<div class="col-md-12 col-xs-6 ">\n' +
+                    '    <h3><strong>Item 1</strong></h3>\n' +
+                    '    <hr class="item-line">\n' +
+                    '</div>\n' +
+
+                    '<div class="col-md-6 col-xs-6">\n' +
+                    '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+tab_count+'">\n' +
+                    '<div class="form-group">\n' +
+                    '      <label for="message">Multiple Image</label>\n' +
+                    '      <input type="file" class="dropify" name="multi_item[data-'+tab_count+'][1][image_url]" data-height="80"/>\n' +
+                    '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
+                    '  </div>\n' +
+                    ' </div>\n'+
+
+                    '<div class="form-group col-md-4 option-'+total_option+'">\n' +
+                    '    <label for="alt_text">Alt Text</label>\n' +
+                    '    <input type="text" name="multi_item[data-'+tab_count+'][1][alt_text]"  class="form-control">\n' +
+                    '</div>\n' +
+
+                    '<div class="form-group col-md-2">\n' +
+                    '  <label for="alt_text"></label>\n' +
+                    '  <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2 tab-multi-item" data-id="tab_component_'+tab_count+'">\n' +
+                    '      Add More Item\n' +
+                    '  </button>\n' +
+                    '</div>\n' +
+
+                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '    <label for="title_en">Title En</label>\n' +
+                    '    <input type="text" name="multi_item[data-'+tab_count+'][1][title_en]"  class="form-control">\n' +
+                    '</div>\n' +
+                    '<div class="form-group col-md-6 option-'+total_option+'">\n' +
+                    '    <label for="title_bn">Title En</label>\n' +
+                    '    <input type="text" name="multi_item[data-'+tab_count+'][1][title_bn]"  class="form-control">\n' +
+                    '</div>\n' +
+                    '<slot';
+
+                $("#batch_component").append(tabField);
+                dropify();
+                summerNoteEditor();
+            });
+            //Batches Component Dynamic Field Component
+            $(document).on('click', '.tab-multi-item', function (event) {
+                var itemPlusBtn = $(event.target).attr('data-id');
+                var option_count = $('.options-count');
+                var total_option = option_count.length + 2;
+
+                var tabComCount = $('.'+itemPlusBtn).length + 1
+                var tabCount = itemPlusBtn.split("_")[2]
+
+                var subItemInput =
+                    '<div class="col-md-12 col-xs-6 '+itemPlusBtn+' '+itemPlusBtn+'_item_'+tabComCount+'">\n' +
+                    '    <h3><strong>Item '+tabComCount+'</strong></h3>\n' +
+                    '    <hr class="item-line">\n' +
+                    '</div>\n' +
+
+                    '<div class="col-md-6 col-xs-6 '+itemPlusBtn+'_item_'+tabComCount+'">\n' +
+                    '<input id="multi_item_count" type="hidden" name="multi_item_count" value="'+tabCount+'">\n' +
+                    '<div class="form-group">\n' +
+                    '      <label for="message">Multiple Image</label>\n' +
+                    '      <input type="file" class="dropify" name="multi_item[data-'+tabCount+']['+tabComCount+'][image_url]" data-height="80"/>\n' +
+                    '      <span class="text-primary">Please given file type (.png, .jpg, svg)</span>\n' +
+                    '  </div>\n' +
+                    ' </div>\n'+
+                    '<div class="form-group col-md-4 '+itemPlusBtn+'_item_'+tabComCount+'">\n' +
+                    '    <label for="alt_text">Alt Text</label>\n' +
+                    '    <input type="text" name="multi_item[data-'+tabCount+']['+tabComCount+'][alt_text]"  class="form-control">\n' +
+                    '</div>\n' +
+
+                    '<div class="form-group col-md-1 '+itemPlusBtn+'_item_'+tabComCount+'">\n' +
+                    '   <label for="alt_text"></label>\n' +
+                    '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="'+itemPlusBtn+'_item_'+tabComCount+'" ><i data-id="'+itemPlusBtn+'_item_'+tabComCount+'" class="la la-trash"></i></button>\n' +
+                    '</div>'+
+
+                    '<div class="form-group col-md-6 '+itemPlusBtn+'_item_'+tabComCount+'">\n' +
+                    '    <label for="title_en">Title Bn</label>\n' +
+                    '    <input type="text" name="multi_item[data-'+tabCount+']['+tabComCount+'][title_en]" class="form-control">\n' +
+                    '</div>\n' +
+                    '<div class="form-group col-md-6 '+itemPlusBtn+'_item_'+tabComCount+'">\n' +
+                    '    <label for="title_bn">Title En</label>\n' +
+                    '    <input type="text" name="multi_item[data-'+tabCount+']['+tabComCount+'][title_bn]" class="form-control">\n' +
+                    '</div>';
+                $("#"+itemPlusBtn).append(subItemInput);
+                dropify();
             });
 
             $(document).on('click', '.remove-image', function (event) {
