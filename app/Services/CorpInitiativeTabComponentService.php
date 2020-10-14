@@ -41,7 +41,7 @@ class CorpInitiativeTabComponentService
 
     public function componentStore($data, $tabId)
     {
-        $directory = 'assetlite/images/corporate-responsibility';
+        $directory = 'assetlite/images/corporate-responsibility/initiative';
         if (!empty($data['multiple_attributes']['image'])) {
             $data['multiple_attributes']['image'] = $this->upload($data['multiple_attributes']['image'], $directory);
         }
@@ -52,12 +52,25 @@ class CorpInitiativeTabComponentService
             $item_count = isset($data['multi_item_count']) ? $data['multi_item_count'] : 0;
             for ($i = 1; $i <= $item_count; $i++) {
                 foreach ($data['multi_item'] as $key => $value) {
-                    $sub_data = [];
+//                    $sub_data = [];
                     $check_index = explode('-', $key);
                     if ($check_index[1] == $i) {
                         if (request()->hasFile('multi_item.' . $key)) {
                             $value = $this->upload($value, $directory);
                         }
+                        // This section For Batch Component
+                        if ($check_index[0] == "data") {
+                            foreach ($value as $dataKey => $dataValue) {
+                                foreach ($dataValue as $itemKey => $dataItem) {
+                                    if (request()->hasFile("multi_item.$key.$dataKey.$itemKey")) {
+                                        $dataItem = $this->upload($dataItem, $directory);
+                                    }
+                                    $value[$dataKey][$itemKey] = $dataItem;
+                                }
+                            }
+                            $value = array_values($value);
+                        }
+
                         $results[$i][$check_index[0]] = $value;
                     }
                 }
@@ -71,7 +84,6 @@ class CorpInitiativeTabComponentService
         $countComponents = $this->tabComponentRepository->list($tabId);
         $data['component_order'] = count($countComponents) + 1;
         $data['initiative_tab_id'] = $tabId;
-
         $this->save($data);
         return response('Component create successfully!');
     }
@@ -80,8 +92,7 @@ class CorpInitiativeTabComponentService
     public function componentUpdate($data, $id)
     {
         $component = $this->findOne($id);
-
-        $directory = 'assetlite/images/corporate-responsibility';
+        $directory = 'assetlite/images/corporate-responsibility/initiative';
         if (!empty($data['multiple_attributes']['image'])) {
             $data['multiple_attributes']['image'] = $this->upload($data['multiple_attributes']['image'], $directory);
             $filePath = isset($component->multiple_attributes['image']) ? $component->multiple_attributes['image'] : null;
@@ -99,6 +110,18 @@ class CorpInitiativeTabComponentService
                         if (request()->hasFile('multi_item.' . $key)) {
                             $value = $this->upload($value, $directory);
                         }
+                        // This section For Batch Component
+                        if ($check_index[0] == "data") {
+                            foreach ($value as $dataKey => $dataValue) {
+                                foreach ($dataValue as $itemKey => $dataItem) {
+                                    if (request()->hasFile("multi_item.$key.$dataKey.$itemKey")) {
+                                        $dataItem = $this->upload($dataItem, $directory);
+                                    }
+                                    $value[$dataKey][$itemKey] = $dataItem;
+                                }
+                            }
+                            $value = array_values($value);
+                        }
                         $results[$i][$check_index[0]] = $value;
                     }
                 }
@@ -114,16 +137,28 @@ class CorpInitiativeTabComponentService
         //loop over the product array
         if ($input_multiple_attributes) {
             foreach ($input_multiple_attributes as $parentKey => $inputData) {
+                // For Multiple Object
                 if (is_array($inputData)) {
                     foreach ($inputData as $key => $value) {
-                        // set the new value
-                        $new_multiple_attributes[$parentKey][$key] = $value;
+                        // For Batch Component
+                        if ($key == "data") {
+                            foreach ($value as $dataKey => $dataItem) {
+                                foreach ($dataItem as $dataSubKey => $dataSub) {
+                                    $new_multiple_attributes[$parentKey][$key][$dataKey][$dataSubKey] = $dataSub;
+                                }
+                            }
+                        } else {
+                            // set the new value
+                            $new_multiple_attributes[$parentKey][$key] = $value;
+                        }
                     }
                 } else {
+                    // For Single Object
                     $new_multiple_attributes[$parentKey] = $inputData;
                 }
             }
         }
+
         $data['multiple_attributes'] = $new_multiple_attributes;
         $component->update($data);
         return response("Component update successfully!!");

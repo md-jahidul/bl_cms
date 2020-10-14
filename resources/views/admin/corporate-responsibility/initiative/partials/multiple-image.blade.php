@@ -22,12 +22,3 @@
     <label for="alt_text"></label>
     <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2" id="plus-image"><i class="la la-plus"></i></button>
 </div>
-
-
-<style>
-    /* Hr rounded  border */
-    hr.item-line {
-        border: 1px solid rgba(255,166,87,0.88);
-        border-radius: 5px;
-    }
-</style>
