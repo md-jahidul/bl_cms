@@ -42,8 +42,8 @@ class CorpInitiativeTabComponentService
     public function componentStore($data, $tabId)
     {
         $directory = 'assetlite/images/corporate-responsibility/initiative';
-        if (!empty($data['multiple_attributes']['image'])) {
-            $data['multiple_attributes']['image'] = $this->upload($data['multiple_attributes']['image'], $directory);
+        if (!empty($data['multiple_attributes']['image_url'])) {
+            $data['multiple_attributes']['image_url'] = $this->upload($data['multiple_attributes']['image_url'], $directory);
         }
 
         $results = [];

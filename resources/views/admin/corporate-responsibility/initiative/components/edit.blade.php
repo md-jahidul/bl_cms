@@ -130,6 +130,7 @@
                                     <slot id="batch_component" data-offer-type="batch_component" class="{{ ($component->component_type ==  "batch_component"  ) ? '' : "d-none" }}">
                                     @include('admin.corporate-responsibility.initiative.partials.component-title')
                                     <!--Tab-1 -->
+
                                         @foreach($multipleItem as $key => $value)
                                             @php($key++)
                                             <div class="form-group col-md-12 col-xs-6 tab">
@@ -166,52 +167,54 @@
 
 
                                             {{-- Sub Item--}}
-                                        @foreach($value['data'] as $subKey => $subValue)
-                                            @php($subKey++)
-                                            <slot id="tab_component_{{$key}}">
-                                                <div class="col-md-12 col-xs-6 tab_component_{{ $key }}">
-                                                    <h3><strong>Item {{ $subKey }}</strong></h3>
-                                                    <hr class="item-line">
-                                                </div>
-
-                                                <div class="col-md-6 col-xs-6">
-                                                    <div class="form-group">
-                                                        <label for="message">Image</label>
-                                                        <input type="file" class="dropify" name="multi_item[data-{{ $key }}][{{ $subKey }}][image_url]" data-height="80"
-                                                               data-default-file="{{ isset($subValue['image_url']) ? config('filesystems.file_base_url') . $subValue['image_url'] : '' }}"/>
-                                                        <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+                                            @if(isset($value['data']))
+                                                @foreach($value['data'] as $subKey => $subValue)
+                                                @php($subKey++)
+                                                <slot id="tab_component_{{$key}}">
+                                                    <div class="col-md-12 col-xs-6 tab_component_{{ $key }}">
+                                                        <h3><strong>Item {{ $subKey }}</strong></h3>
+                                                        <hr class="item-line">
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group col-md-4">
-                                                    <label for="alt_text">Alt Text</label>
-                                                    <input type="text" name="multi_item[data-{{ $key }}][{{ $subKey }}][alt_text]" class="form-control"
-                                                           value="{{ isset($subValue['alt_text']) ? $subValue['alt_text'] : '' }}">
-                                                </div>
-
-                                                @if($subKey == 1)
-                                                    <div class="form-group col-md-2">
-                                                        <label for="alt_text"></label>
-                                                        <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2 tab-multi-item" data-id="tab_component_{{ $key }}">
-                                                            Add More Item
-                                                        </button>
+                                                    <div class="col-md-6 col-xs-6">
+                                                        <div class="form-group">
+                                                            <label for="message">Image</label>
+                                                            <input type="file" class="dropify" name="multi_item[data-{{ $key }}][{{ $subKey }}][image_url]" data-height="80"
+                                                                   data-default-file="{{ isset($subValue['image_url']) ? config('filesystems.file_base_url') . $subValue['image_url'] : '' }}"/>
+                                                            <span class="text-primary">Please given file type (.png, .jpg, svg)</span>
+                                                        </div>
                                                     </div>
-                                                @endif
+
+                                                    <div class="form-group col-md-4">
+                                                        <label for="alt_text">Alt Text</label>
+                                                        <input type="text" name="multi_item[data-{{ $key }}][{{ $subKey }}][alt_text]" class="form-control"
+                                                               value="{{ isset($subValue['alt_text']) ? $subValue['alt_text'] : '' }}">
+                                                    </div>
+
+                                                    @if($subKey == 1)
+                                                        <div class="form-group col-md-2">
+                                                            <label for="alt_text"></label>
+                                                            <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2 tab-multi-item" data-id="tab_component_{{ $key }}">
+                                                                Add More Item
+                                                            </button>
+                                                        </div>
+                                                    @endif
 
 
-                                                <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                                    <label for="title_en">{{ (isset($title_en)) ? $title_en : 'Title Field (English)' }}</label>
-                                                    <input type="text" name="multi_item[data-{{ $key }}][{{ $subKey }}][title_en]"  class="form-control" placeholder="Enter company name bangla"
-                                                           value="{{ isset($subValue['title_en']) ? $subValue['title_en'] : '' }}">
-                                                </div>
+                                                    <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+                                                        <label for="title_en">{{ (isset($title_en)) ? $title_en : 'Title Field (English)' }}</label>
+                                                        <input type="text" name="multi_item[data-{{ $key }}][{{ $subKey }}][title_en]"  class="form-control" placeholder="Enter company name bangla"
+                                                               value="{{ isset($subValue['title_en']) ? $subValue['title_en'] : '' }}">
+                                                    </div>
 
-                                                <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                                    <label for="title_bn" >{{ (isset($title_bn)) ? $title_bn : 'Title Field (Bangla)' }}</label>
-                                                    <input type="text" name="multi_item[data-{{ $key }}][{{$subKey}}][title_bn]"  class="form-control" placeholder="Enter company name bangla"
-                                                           value="{{ isset($subValue['title_bn']) ? $subValue['title_bn'] : '' }}">
-                                                </div>
-                                            </slot>
-                                        @endforeach
+                                                    <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+                                                        <label for="title_bn" >{{ (isset($title_bn)) ? $title_bn : 'Title Field (Bangla)' }}</label>
+                                                        <input type="text" name="multi_item[data-{{ $key }}][{{$subKey}}][title_bn]"  class="form-control" placeholder="Enter company name bangla"
+                                                               value="{{ isset($subValue['title_bn']) ? $subValue['title_bn'] : '' }}">
+                                                    </div>
+                                                </slot>
+                                            @endforeach
+                                            @endif
                                         @endforeach
                                     </slot>
 
