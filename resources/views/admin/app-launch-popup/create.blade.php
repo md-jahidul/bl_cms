@@ -191,6 +191,7 @@
                                  <input type="file"
                                                required
                                                name="content_data"
+                                               data-allowed-formats="portrait square landscape"
                                                data-max-file-size="2M"
                                                data-allowed-file-extensions="jpeg png jpg"
                                                class="dropify"/>
