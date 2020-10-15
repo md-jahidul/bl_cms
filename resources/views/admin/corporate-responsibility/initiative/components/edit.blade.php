@@ -189,12 +189,15 @@
                                                            value="{{ isset($subValue['alt_text']) ? $subValue['alt_text'] : '' }}">
                                                 </div>
 
-                                                <div class="form-group col-md-2">
-                                                    <label for="alt_text"></label>
-                                                    <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2 tab-multi-item" data-id="tab_component_1">
-                                                        Add More Item
-                                                    </button>
-                                                </div>
+                                                @if($subKey == 1)
+                                                    <div class="form-group col-md-2">
+                                                        <label for="alt_text"></label>
+                                                        <button type="button" class="btn-sm btn-outline-success multi_item_remove mt-2 tab-multi-item" data-id="tab_component_{{ $key }}">
+                                                            Add More Item
+                                                        </button>
+                                                    </div>
+                                                @endif
+
 
                                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
                                                     <label for="title_en">{{ (isset($title_en)) ? $title_en : 'Title Field (English)' }}</label>

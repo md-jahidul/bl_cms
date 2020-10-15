@@ -1075,4 +1075,22 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('initiative_component.destroy');
     Route::get('corporate/initiative-tab-component-sort',
         'AssetLite\CorpInitiativeTabComponentController@componentSortable');
+
+    // Corporate Responsibility Contact Us page
+    Route::resource('corporate-resp/contact-us-page-info', 'AssetLite\CorporateRespContactUsController')
+        ->except('show', 'destroy', 'store');
+
+    // Corporate Responsibility Contact Us Field
+    Route::get('corporate/contact-us-field/{section_id}/list', 'AssetLite\CorpContactUsFieldController@index')
+        ->name('contact-us-field.index');
+    Route::get('corporate/contact-us-field/{section_id}/create', 'AssetLite\CorpContactUsFieldController@create')
+        ->name('contact-us-field.create');
+    Route::post('corporate/contact-us-field/{section_id}/store', 'AssetLite\CorpContactUsFieldController@store')
+        ->name('contact-us-field.store');
+    Route::get('corporate/contact-us-field/{section_id}/edit/{id}', 'AssetLite\CorpContactUsFieldController@edit')
+        ->name('contact-us-field.edit');
+    Route::put('corporate/contact-us-field/{section_id}/update/{id}', 'AssetLite\CorpContactUsFieldController@update')
+        ->name('contact-us-field.update');
+    Route::get('corporate/contact-us-field/{section_id}/destroy/{id}', 'AssetLite\CorpContactUsFieldController@destroy');
+//    Route::get('corporate/case-study-component-sort', 'AssetLite\CorpContactUsFieldController@sectionSortable');
 });

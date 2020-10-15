@@ -74,8 +74,6 @@ class CorpInitiativeTabComponentController extends Controller
         $componentTypes = $this->componentTypes;
         $component = $this->initiativeTabComponentService->findOne($id);
         $multipleItem = $component['multiple_attributes'];
-
-//        dd($multipleItem);
         return view('admin.corporate-responsibility.initiative.components.edit', compact('component', 'multipleItem', 'componentTypes', 'tabId'));
     }
 
