@@ -12,7 +12,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <table class="table table-striped table-bordered" id="feedback_list"> <!--zero-configuration-->
+                    <table class="table table-striped table-bordered zero-configuration" id="feedback_list"> <!--zero-configuration-->
                         <thead>
                         <tr>
                             <td>#</td>
