@@ -18,6 +18,8 @@ class CreateCorpResContactUsPagesTable extends Migration
             $table->string('page_type')->nullable();
             $table->string('component_title_en')->nullable();
             $table->string('component_title_bn')->nullable();
+            $table->longText('address_en')->nullable();
+            $table->longText('address_bn')->nullable();
             $table->string('send_button_en')->nullable();
             $table->string('send_button_bn')->nullable();
             $table->tinyInteger('status')->nullable();

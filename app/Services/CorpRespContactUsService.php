@@ -40,6 +40,7 @@ class CorpRespContactUsService
     public function updatePage($data, $id)
     {
         $page = $this->findOne($id);
+        unset($data['files']);
         $page->update($data);
         return Response('Contact Component Info update successfully !');
     }
