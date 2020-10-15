@@ -13,10 +13,12 @@ class CreateCorpResContactUsInfosTable extends Migration
      */
     public function up()
     {
-//        Schema::create('corp_res_contact_us_infos', function (Blueprint $table) {
-//            $table->bigIncrements('id');
-//            $table->timestamps();
-//        });
+        Schema::create('corp_res_contact_us_infos', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('page_slug')->nullable();
+            $table->json('contact_field')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
