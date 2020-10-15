@@ -63,6 +63,7 @@ class CorpContactUsFieldService
     public function updateField($data, $sectionId, $id)
     {
         $field = $this->findOne($id);
+        $data['data_type'] = isset($data['data_type']) ? $data['data_type'] : null;
         $field->update($data);
         return Response('Field has been successfully updated');
     }

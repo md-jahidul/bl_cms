@@ -37,7 +37,7 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label></label>
                                     <div class="form-group">
                                         <label for="title" class="mr-1">Field Type:</label>
@@ -45,6 +45,15 @@
                                         <label for="input" class="mr-1">Input</label>
                                         <input type="radio" name="type" value="textarea" id="textarea" {{ $field->type == "textarea" ? 'checked' : '' }}>
                                         <label for="textarea">Textarea</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label></label>
+                                    <div class="form-group">
+                                        <input type="checkbox" class="mr-1" name="data_type"
+                                               value="email" id="email" {{ $field->data_type == "email" ? 'checked' : '' }}>
+                                        <label for="email" class="">Is Email</label>
                                     </div>
                                 </div>
 

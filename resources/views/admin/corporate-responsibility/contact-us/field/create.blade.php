@@ -36,7 +36,7 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label></label>
                                     <div class="form-group">
                                         <label for="title" class="mr-1">Field Type:</label>
@@ -45,6 +45,14 @@
 
                                         <input type="radio" name="type" value="textarea" id="textarea">
                                         <label for="textarea">Textarea</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label></label>
+                                    <div class="form-group">
+                                        <input type="checkbox" class="mr-1" name="data_type" value="email" id="email">
+                                        <label for="email" class="">Is Email</label>
                                     </div>
                                 </div>
 
