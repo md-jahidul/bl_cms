@@ -100,7 +100,7 @@
 @push('page-js')
     <script type="text/javascript"
             src="{{ asset('theme/js/scripts/forms/validation/form-validation.min.js') }}"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script src="{{ asset('theme/js/scripts/forms/validation/1_11_1_jquery.validate.min.js') }}"></script>
     <script>
         $.validator.addMethod("loginRegex", function (value, element) {
             return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{8,}/.test(value);
