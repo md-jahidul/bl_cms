@@ -37,6 +37,26 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('address_en') ? ' error' : '' }}">
+                                    <label for="title" class="required">Address (EN)</label>
+                                    <textarea type="text" name="address_en"  class="form-control summernote_editor" placeholder="Enter question (EN)"
+                                              required data-validation-required-message="Enter address (EN)">{{ $contactPage->address_en }}</textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('address_en'))
+                                        <div class="help-block">  {{ $errors->first('address_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('address_bn') ? ' error' : '' }}">
+                                    <label for="title" class="required">Address (BN)</label>
+                                    <textarea type="text" name="address_bn"  class="form-control summernote_editor" placeholder="Enter question (EN)"
+                                              required data-validation-required-message="Enter address (EN)">{{ $contactPage->address_bn }}</textarea>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('address_bn'))
+                                        <div class="help-block">  {{ $errors->first('address_bn') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('send_button_en') ? ' error' : '' }}">
                                     <label for="title" class="required">Send Button (EN)</label>
                                     <input type="text" name="send_button_en"  class="form-control" placeholder="Enter question (EN)"

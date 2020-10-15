@@ -15,7 +15,7 @@ class CorpResContactUsPageSeeder extends Seeder
         DB::table('corp_res_contact_us_pages')->truncate();
 
         $pages = [
-            'cr_strategy', 'cr_strategy_details','initiative','case_study_and_report', 'case_study_and_report_details'
+            'initiative','case_study_and_report', 'case_study_and_report_details'
         ];
 
         foreach ($pages as $key => $item) {
