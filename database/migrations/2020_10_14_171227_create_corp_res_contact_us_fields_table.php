@@ -19,6 +19,7 @@ class CreateCorpResContactUsFieldsTable extends Migration
             $table->string('input_label_en')->nullable();
             $table->string('input_label_bn')->nullable();
             $table->string('field_name')->nullable();
+            $table->string('data_type')->nullable();
             $table->string('type')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
