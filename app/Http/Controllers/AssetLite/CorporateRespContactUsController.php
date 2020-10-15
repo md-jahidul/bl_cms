@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Services\CorpContactInfoService;
 use App\Services\CorpRespContactUsService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -19,10 +20,17 @@ class CorporateRespContactUsController extends Controller
      * @var CorpRespContactUsService
      */
     private $contactUsService;
+    /**
+     * @var CorpContactInfoService
+     */
+    private $corpContactInfoService;
 
-    public function __construct(CorpRespContactUsService $contactUsService)
-    {
+    public function __construct(
+        CorpRespContactUsService $contactUsService,
+        CorpContactInfoService $corpContactInfoService
+    ) {
         $this->contactUsService = $contactUsService;
+        $this->corpContactInfoService = $corpContactInfoService;
     }
 
     /**
@@ -58,5 +66,17 @@ class CorporateRespContactUsController extends Controller
         $response = $this->contactUsService->updatePage($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect(route('contact-us-page-info.index'));
+    }
+
+    public function customerContactInfoList()
+    {
+        $infoList = $this->corpContactInfoService->findAll();
+        return view('admin.corporate-responsibility.contact-us.info-list.contact-list', compact('infoList'));
+    }
+
+    public function showCustomerDetails($id)
+    {
+        $details = $this->corpContactInfoService->findOne($id);
+        return view('admin.corporate-responsibility.contact-us.info-list.customer-details', compact('details'));
     }
 }

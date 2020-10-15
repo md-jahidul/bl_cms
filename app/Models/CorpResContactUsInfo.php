@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CorpResContactUsInfo extends Model
 {
-    //
+    protected $casts = [
+        'contact_field' => 'array'
+    ];
 }

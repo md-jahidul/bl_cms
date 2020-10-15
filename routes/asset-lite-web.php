@@ -1090,4 +1090,11 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
         ->name('contact-us-field.update');
     Route::get('corporate/contact-us-field/{section_id}/destroy/{id}', 'AssetLite\CorpContactUsFieldController@destroy');
 //    Route::get('corporate/case-study-component-sort', 'AssetLite\CorpContactUsFieldController@sectionSortable');
+
+    // Corporate Responsibility Contact Us Info List
+    Route::get('corporate/contact-us-info', 'AssetLite\CorporateRespContactUsController@customerContactInfoList')
+        ->name('contact-us-info.list');
+    Route::get('corporate/contact-us/more-details/{id}', 'AssetLite\CorporateRespContactUsController@showCustomerDetails')
+        ->name('contact-us.more_details');
+
 });

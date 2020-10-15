@@ -694,9 +694,9 @@
                                 <span class="menu-title" data-i18n="nav.templates.main">Page Content</span>
                             </a>
                         </li>
-                        <li class="{{ is_active_url('/bl-4g-campaign') }} nav-item">
-                            <a href="{{ url('/bl-4g-campaign') }}"><i class="la la-bullhorn"></i>
-                                <span class="menu-title" data-i18n="nav.templates.main">Customer Request</span>
+                        <li class="{{ is_active_url(route('contact-us-info.list')) }} nav-item">
+                            <a href="{{ route('contact-us-info.list') }}"><i class="la la-book"></i>
+                                <span class="menu-title" data-i18n="nav.templates.main">Customer Contact Info</span>
                             </a>
                         </li>
                     </ul>
