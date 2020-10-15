@@ -3,7 +3,7 @@
 @section('card_name', 'Customer Information')
 @section('breadcrumb')
 <li class="breadcrumb-item ">
-    <a href="{{ url('contact-us-info.list') }}">Contact List</a>
+    <a href="{{ route('contact-us-info.list') }}">Contact List</a>
 </li>
 @endsection
 @section('action')
@@ -21,12 +21,16 @@
                 </div>
                 <div class="card-content collapse show">
                     <div class="card-body">
-                        @foreach($details->contact_field as $data)
-                            <div class="bs-callout-primary callout-border-left callout-square p-1">
-                                <strong>{{ $data['field_name'] }}</strong>
-                                <p class="pt-1">{{ $data['field_value'] }}</p>
-                            </div> <br>
-                        @endforeach
+                        @if(isset($details->contact_field))
+                            @foreach($details->contact_field as $data)
+                                @if(isset($data['field_name']) && isset($data['field_name']))
+                                    <div class="bs-callout-primary callout-border-left callout-square p-1">
+                                        <strong>{{ $data['field_name'] }}</strong>
+                                        <p class="pt-1">{{ $data['field_value'] }}</p>
+                                    </div> <br>
+                                @endif
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

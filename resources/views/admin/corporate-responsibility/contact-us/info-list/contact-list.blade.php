@@ -12,7 +12,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <table class="table table-striped table-bordered" id="feedback_list"> <!--zero-configuration-->
+                    <table class="table table-striped table-bordered zero-configuration" id="feedback_list"> <!--zero-configuration-->
                         <thead>
                         <tr>
                             <td>#</td>
@@ -25,7 +25,7 @@
                         @foreach($infoList as $data)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $data->page_slug }}</td>
+                                <td>{{ str_replace('_', ' ', ucfirst($data->page_slug)) }}</td>
                                 <td>{{ $data->created_at }}</td>
                                 <td class="text-center">
                                     <a href="{{ route('contact-us.more_details', $data->id) }}" role="button" class="btn-sm btn-cyan"><i class="la la-feed" aria-hidden="true"></i> More Details</a>
