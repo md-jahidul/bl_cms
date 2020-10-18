@@ -97,6 +97,7 @@ class Helper
             "RECHARGE"                => "Recharge",
             "RECHARGE_HISTORY"        => "Recharge History",
             "RECHARGE_OFFERS"         => "Recharge Offers",
+            "REPORT_PROBLEM"          => "Report Problem",
             "SIM_INFORMATION"         => "Sim Information",
             "SMS_PACKS"               => "SMS Packs",
             "SPECIAL_RATE_PACKS"      => "Special Call Rate Offers",
@@ -125,6 +126,28 @@ class Helper
             "SEVEN"  =>  7,
             "EIGHT"  =>  8
         ];
+
+    }
+
+
+
+    /**
+     * OTP Token length list
+     *
+     * @return array
+     */
+    public static function migratePlanList()
+    {
+
+        return [
+            "PlayPrepaid"             => "Banglalink Play",
+            "DeshEkRateDarun"         => "Desh Ek Rate Darun",
+            "Inspire9Postpaid"        => "Inspire9 Postpaid",
+            "Retail2Postpaid"         => "PROpaid Package",
+            "B2BPost60p10s"           => "Business Package 1",
+            "B2BPreBusinessCnC4"      => "Business Prepaid Package 169",
+        ];
+
     }
 
 

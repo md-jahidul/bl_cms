@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Repositories\BusinessOthersRepository;
 use App\Repositories\BusinessPackageRepository;
 use App\Repositories\Contracts\Collection;
+use App\Repositories\CorporateInitiativeTabRepository;
 use App\Repositories\LeadCategoryRepository;
 use App\Repositories\LeadProductRepository;
 use App\Repositories\LeadRequestRepository;
@@ -74,6 +75,10 @@ class LeadRequestService
      * @var ProductRepository
      */
     private $productRepository;
+    /**
+     * @var CorporateInitiativeTabRepository
+     */
+    private $corpInitiativeTabRepository;
 
     public function __construct(
         LeadRequestRepository $leadRequestRepository,
@@ -81,15 +86,16 @@ class LeadRequestService
         LeadProductRepository $leadProductRepository,
         BusinessPackageRepository $businessPackageRepository,
         BusinessOthersRepository $businessOthersRepository,
-        ProductRepository $productRepository
-    )
-    {
+        ProductRepository $productRepository,
+        CorporateInitiativeTabRepository $corporateInitiativeTabRepository
+    ) {
         $this->leadRequestRepository = $leadRequestRepository;
         $this->leadCategoryRepository = $leadCategoryRepository;
         $this->leadProductRepository = $leadProductRepository;
         $this->businessPackageRepository = $businessPackageRepository;
         $this->businessOthersRepository = $businessOthersRepository;
         $this->productRepository = $productRepository;
+        $this->corpInitiativeTabRepository = $corporateInitiativeTabRepository;
         $this->setActionRepository($leadRequestRepository);
     }
 
@@ -105,26 +111,25 @@ class LeadRequestService
         $leadData['created_at'] = explode(" ", $item->created_at)[0];
 
         switch ($leadCat->slug) {
-            case "ecareer_programs";
+            case "ecareer_programs":
                 $leadProduct = $this->leadProductRepository->findOne($item->lead_product_id);
-                $leadData['lead_product'] = ($leadProduct->title) ? $leadProduct->title : null;
                 break;
-            case "postpaid_package";
+            case "postpaid_package":
                 $leadProduct = $this->productRepository->getOfferCatWise(4, 'postpaid', $item->lead_product_id);
-                $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
                 break;
-            case "business_package";
+            case "business_package":
                 $leadProduct = $this->businessPackageRepository->getBusinessPack($item->lead_product_id);
-                $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
                 break;
-            case "business_enterprise_solution";
+            case "business_enterprise_solution":
                 $leadProduct = $this->businessOthersRepository->getEnterEnterpriseSol($item->lead_product_id);
-                $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
+                break;
+            case "corporate_responsibility":
+                $leadProduct = $this->corpInitiativeTabRepository->getInitiativeTab($item->lead_product_id);
                 break;
             default:
                 $leadData = array();
         }
-
+        $leadData['lead_product'] = isset($leadProduct->name) ? $leadProduct->name : null;
         return $leadData;
     }
 

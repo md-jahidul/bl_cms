@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Models\Customer;
+use App\Models\MasterLog;
 use App\Services\BlApiHub\AuditLogsService;
 use App\Services\BlApiHub\BalanceService;
 use App\Services\BlApiHub\BonusLogsService;
@@ -14,6 +15,7 @@ use App\Services\BlApiHub\History\CustomerSmsUsageService;
 use App\Services\BlApiHub\History\CustomerSubscriptionUsageService;
 use App\Services\BlApiHub\History\CustomerSummaryUsageService;
 use App\Services\BlApiHub\OtpRequestLogsService;
+use App\Services\ContactRestoreLogService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -29,17 +31,24 @@ use Illuminate\View\View;
 class ApiDebugController extends Controller
 {
     /**
+     * @var ContactRestoreLogService
+     */
+    protected $contactRestoreLogService;
+
+    /**
      * ApiDebugController constructor.
-     * @param  BalanceService  $balanceService
-     * @param  AuditLogsService  $auditLogsService
-     * @param  BonusLogsService  $bonusLogsService
-     * @param  CustomerSummaryUsageService  $customerSummaryUsageService
-     * @param  CustomerCallUsageService  $callUsageService
-     * @param  CustomerInternetUsageService  $internetUsageService
-     * @param  CustomerSmsUsageService  $smsUsageService
-     * @param  CustomerRechargeHistoryService  $rechargeHistoryService
-     * @param  CustomerRoamingUsageService  $roamingUsageService
-     * @param  CustomerSubscriptionUsageService  $subscriptionUsageService
+     * @param BalanceService $balanceService
+     * @param AuditLogsService $auditLogsService
+     * @param BonusLogsService $bonusLogsService
+     * @param CustomerSummaryUsageService $customerSummaryUsageService
+     * @param CustomerCallUsageService $callUsageService
+     * @param CustomerInternetUsageService $internetUsageService
+     * @param CustomerSmsUsageService $smsUsageService
+     * @param CustomerRechargeHistoryService $rechargeHistoryService
+     * @param CustomerRoamingUsageService $roamingUsageService
+     * @param CustomerSubscriptionUsageService $subscriptionUsageService
+     * @param OtpRequestLogsService $otpRequestLogsService
+     * @param ContactRestoreLogService $contactRestoreLogService
      */
     public function __construct(
         BalanceService $balanceService,
@@ -52,8 +61,10 @@ class ApiDebugController extends Controller
         CustomerRechargeHistoryService $rechargeHistoryService,
         CustomerRoamingUsageService $roamingUsageService,
         CustomerSubscriptionUsageService $subscriptionUsageService,
-        OtpRequestLogsService $otpRequestLogsService
+        OtpRequestLogsService $otpRequestLogsService,
+        ContactRestoreLogService $contactRestoreLogService
     ) {
+     
         $this->balanceService = $balanceService;
         $this->auditLogsService = $auditLogsService;
         $this->customerSummaryUsageService = $customerSummaryUsageService;
@@ -66,6 +77,7 @@ class ApiDebugController extends Controller
         $this->subscriptionUsageService = $subscriptionUsageService;
         $this->otpRequestLogsService = $otpRequestLogsService;
         $this->middleware(['auth', 'debugEntryCheck']);
+        $this->contactRestoreLogService = $contactRestoreLogService;
     }
 
     /**
@@ -75,18 +87,21 @@ class ApiDebugController extends Controller
     {
         $current_date = Carbon::now()->toDateString();
         $last_date = Carbon::now()->subDays(9)->toDateString();
-        return view('admin.debug.index', compact('current_date', 'last_date'));
+
+        $date_limit = Carbon::now()->subDays(59)->toDateString();
+
+        return view('admin.debug.index', compact('current_date', 'last_date', 'date_limit'));
     }
 
     /**
-     * @param $numbner
+     * @param $number
      * @return mixed
+     * @throws \Throwable
      */
     public function getBalanceSummary($number)
     {
         $customer = Customer::where('phone', $number)->first();
         $summary = ($this->balanceService->getBalanceSummary($customer))->getData();
-        //dd($summary);
 
         return view('admin.debug.__partials.balance-summary', compact('summary'))->render();
     }
@@ -113,7 +128,7 @@ class ApiDebugController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      * @param $number
      */
     public function getBrowseHistory(Request $request, $number)
@@ -121,18 +136,28 @@ class ApiDebugController extends Controller
         return $this->auditLogsService->getLogs($request, $number);
     }
 
+    /**
+     * @param Request $request
+     * @param $number
+     * @return array
+     */
     public function getLoginBonusHistory(Request $request, $number)
     {
         return $this->bonusLogsService->getLogs($request, $number);
     }
 
+
+    /**
+     * @param $number
+     * @return string
+     */
     public function getLastLogin($number)
     {
         $user = Customer::where('msisdn', '88' . $number)->first();
         if ($user) {
             return Carbon::parse($user->last_login_at)->format('Y-m-d g:i A');
         }
-       // return $this->bonusLogsService->getLogs($request, $number);
+        // return $this->bonusLogsService->getLogs($request, $number);
     }
 
     /**
@@ -151,6 +176,12 @@ class ApiDebugController extends Controller
         return view('admin.debug.__partials.usage-summary', compact('summary_usage'))->render();
     }
 
+    /**
+     * @param $number
+     * @param $type
+     * @return array|string
+     * @throws \Throwable
+     */
     public function getUsageDetails($number, $type)
     {
         $customer = Customer::where('phone', $number)->first();
@@ -187,12 +218,66 @@ class ApiDebugController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      * @param $number
      * @return array
      */
     public function getOtpRequestLogs(Request $request, $number)
     {
         return $this->otpRequestLogsService->getLogs($request, $number);
+    }
+
+    /**
+     * @param  Request  $request
+     * @param $number
+     * @return array
+     */
+    public function getOtpLoginRequestLogs(Request $request, $number)
+    {
+        return $this->otpRequestLogsService->getOtpLoginLogs($request, $number);
+    }
+
+
+     /**
+     * @param Request $request
+     * @param $number
+     * @return array
+     */
+    public function getContactRestoreLogs(Request $request, $number)
+    {
+        return $this->contactRestoreLogService->getLogs($request, $number);
+    }
+
+
+    public function getProductLogs(Request $request, $number)
+    {
+        $draw = $request->get('draw');
+        $start = $request->get('start');
+        $length = $request->get('length');
+
+        $items = MasterLog::where('msisdn', $number)->where('log_type', 'PRODUCT-PURCHASE')->orderBy('created_at', 'DESC')->get();;
+        $all_items_count = count($items);
+        $items = MasterLog::where('msisdn', $number)->where('log_type', 'PRODUCT-PURCHASE')->orderBy('created_at', 'DESC')->skip($start)->take($length)->get();;
+
+
+        $response = [
+            'draw' => $draw,
+            'recordsTotal' => $all_items_count,
+            'recordsFiltered' => $all_items_count,
+            'data' => []
+        ];
+
+        $items->each(function ($item) use (&$response) {
+            $response['data'][] = [
+                'date' => Carbon::parse($item->created_at)->toDateTimeString(),
+                'msisdn' => $item->msisdn,
+                'message' => $item->message,
+                'others' => $item->others,
+                'status' => $item->status,
+            ];
+        });
+
+        return $response;
+
     }
 }

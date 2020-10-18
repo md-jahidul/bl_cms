@@ -232,16 +232,16 @@ class BaseRepository implements BaseRepositoryContract
      * Update resource
      *
      * @param $resource
-     * @param $data
-     * @return \Illuminate\Support\Collection|null|static
+     * @param array $data
+     * @return Model
      */
     public function update($resource, $data = [])
     {
         if (is_array($data) && count($data) > 0) {
-            $resource->fill($data);
+            $resource->fill($data)->save();
+            return $resource;
         }
-        $this->save($resource);
-        return $resource;
+        return $this->save($data);
     }
 
     /**

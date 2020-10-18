@@ -25,20 +25,17 @@ class UpdateConfigRequest extends FormRequest
     {
         return [
 //            "site_logo" => 'required',
-            "logo_alt_text" => 'required',
-            'email' => 'required|email',
-            'query_email' => 'required|email',
-            'mobile_number_EN' => 'required|numeric',
-            'mobile_number_BN' => 'required',
-            'address_EN' => 'required',
-            'address_BN' => 'required',
-            'copy_right_EN' => 'required',
-            'copy_right_BN' => 'required',
-            'facebook_url' => 'required|url',
-            'twitter_url' => 'required|url',
-            'linkedin_url' => 'required|url',
-            'google_play_link' => 'required|url',
-            'apple_app_store_link' => 'required|url',
+//            "logo_alt_text" => 'required',
+//            'email' => 'required|email',
+//            'query_email' => 'required|email',
+//            'mobile_number_EN' => 'required|numeric',
+//            'mobile_number_BN' => 'required',
+//            'address_eN' => 'required',
+//            'address_bn' => 'required',
+//            'copy_right_EN' => 'required',
+//            'copy_right_BN' => 'required',
+//            'google_play_link' => 'required|url',
+//            'apple_app_store_link' => 'required|url',
         ];
     }
 

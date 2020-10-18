@@ -7,6 +7,7 @@
                     <tr>
                         <th>Number</th>
                         <th>Type</th>
+                        <th>Date</th>
                         <th>Duration</th>
                         <th>Cost</th>
                     </tr>
@@ -23,10 +24,13 @@
                                 @endif
                             </td>
                             <td>
+                                {{ $item->date }}
+                            </td>
+                            <td>
                                 {{  gmdate("H:i:s", $item->duration ) }}
                             </td>
                             <td>
-                                {{ number_format($item->cost) }} Tk.
+                                {{ number_format($item->cost, 2, '.', '') }} Tk.
                             </td>
                         </tr>
                     @endforeach
