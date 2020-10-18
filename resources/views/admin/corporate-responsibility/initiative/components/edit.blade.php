@@ -133,14 +133,17 @@
 
                                         @foreach($multipleItem as $key => $value)
                                             @php($key++)
+
                                             <div class="form-group col-md-12 col-xs-6 tab">
                                                 <div class="pull-left mt-2">
                                                     <h3><strong>Tab {{ $key }}</strong></h3>
                                                 </div>
-                                                <div class="pull-right">
-                                                    <label for="alt_text"></label>
-                                                    <button type="button" class="btn btn-bitbucket multi_item_remove mt-2" id="plus-tab"><i class="la la-plus"></i> Add More Tab</button>
-                                                </div>
+                                                @if($key == 1)
+                                                    <div class="pull-right">
+                                                        <label for="alt_text"></label>
+                                                        <button type="button" class="btn btn-bitbucket multi_item_remove mt-2" id="plus-tab"><i class="la la-plus"></i> Add More Tab</button>
+                                                    </div>
+                                                @endif
                                                 <hr class="item-tab">
                                             </div>
 
@@ -405,21 +408,22 @@
 
                 var tabField =
                     '<!--Tab '+total_option+'-->\n' +
-                    '<div class="form-group col-md-12 col-xs-6 tab">\n' +
+                    '<div class="form-group col-md-12 col-xs-6 tab tab_component_'+tab_count+'">\n' +
                     '     <div class="pull-left mt-2">\n' +
                     '         <h3><strong>Tab '+tab_count+'</strong></h3>\n' +
                     '     </div>\n' +
                     '     <div class="pull-right">\n' +
                     '         <label for="alt_text"></label>\n' +
-                    '         <button type="button" class="btn btn-bitbucket multi_item_remove mt-2" id="plus-tab"><i class="la la-plus"></i> Add More Tab</button>\n' +
+                    '         <button type="button" class="btn btn-danger mt-2 remove-image" data-id="tab_component_'+tab_count+'">' +
+                    '       <i data-id="tab_component_'+tab_count+'" class="la la-trash"></i></button>\n' +
                     '     </div>\n' +
                     '     <hr class="item-tab">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6">\n' +
+                    ' <div class="form-group col-md-6 tab_component_'+tab_count+'"">\n' +
                     '     <label for="title_en">Tab Title (English)</label>\n' +
                     '     <input type="text" name="multi_item[tab_title_en-'+tab_count+']"  class="form-control" placeholder="Enter company name bangla">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6">\n' +
+                    ' <div class="form-group col-md-6 tab_component_'+tab_count+'"">\n' +
                     '     <label for="title_bn" >Tab Title (Bangla)</label>\n' +
                     '     <input type="text" name="multi_item[tab_title_bn-'+tab_count+']"  class="form-control" placeholder="Enter company name bangla">\n' +
                     ' </div>';
