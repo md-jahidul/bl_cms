@@ -13,9 +13,11 @@ class AddIsSwitchAccountEnableCustomersTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasColumn('customers', 'is_switch_account_allow')) {
         Schema::table('customers', function (Blueprint $table) {
             $table->boolean("is_switch_account_allow")->default(true);
         });
+    }
     }
 
     /**
