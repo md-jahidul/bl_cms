@@ -75,7 +75,9 @@ class PushNotificationController extends Controller
                 foreach ($sheet->getRowIterator() as $row) {
                     $cells = $row->getCells();
                     $number = $cells[0]->getValue();
-                    $user_phone [] = $number;
+                    //$user_phone [] = $number;
+
+                    $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $number);
 
                     if(count($user_phone) == 300){
                         $notification = $this->getNotificationArray($request, $user_phone);
