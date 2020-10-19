@@ -296,7 +296,7 @@ class LeadRequestService
             Log::info(json_encode($problem));
             $writer->close();
         } else {
-            return response('No data available in table!');
+            return response('No data available in this category!');
         }
     }
 
