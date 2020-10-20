@@ -16,6 +16,7 @@ class AddNewColumnBlOtpLoginLogsTable extends Migration
         Schema::table('bl_otp_login_logs', function (Blueprint $table) {
             $table->string('status_code_header')->nullable()->after('status');
             $table->string('response_message')->nullable()->after('status_code_header');
+            $table->string('otp_token')->nullable()->after('status_code_header');
         });
     }
 
@@ -29,6 +30,7 @@ class AddNewColumnBlOtpLoginLogsTable extends Migration
         Schema::table('bl_otp_login_logs', function (Blueprint $table) {
             $table->dropColumn('status_code_header');
             $table->dropColumn('response_message');
+            $table->dropColumn('otp_token');
         });
     }
 }
