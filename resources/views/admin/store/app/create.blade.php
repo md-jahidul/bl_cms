@@ -183,8 +183,8 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Button Action (iOS):</label>
-                                    <input required
+                                    <label for="title" class="">Button Action (iOS):</label>
+                                    <input
                                            value="@if(isset($appStore)){{$appStore->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
                                            type="text" name="btn_action_ios" class="form-control @error('btn_action_ios') is-invalid @enderror"
                                            id="btn_action_ios" placeholder="Enter Button Text">
@@ -196,8 +196,8 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Button Action (Android):</label>
-                                    <input required
+                                    <label for="title" class="">Button Action (Android):</label>
+                                    <input
                                            value="@if(isset($appStore)){{$appStore->btn_action_android}} @elseif(old("btn_action_android")) {{old("btn_action_android")}} @endif"
                                            type="text" name="btn_action_android" class="form-control @error('btn_action_android') is-invalid @enderror"
                                            id="btn_action_android" placeholder="Enter Button Text">

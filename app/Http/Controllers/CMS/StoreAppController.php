@@ -2,7 +2,6 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\NotificationRequest;
 use App\Services\StoreAppService;
 use App\Services\StoreCategoryService;
 use App\Services\StoreService;
