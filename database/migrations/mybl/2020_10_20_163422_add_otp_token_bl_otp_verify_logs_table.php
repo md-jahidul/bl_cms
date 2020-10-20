@@ -15,6 +15,7 @@ class AddOtpTokenBlOtpVerifyLogsTable extends Migration
     {
         Schema::table('bl_otp_verify_logs', function (Blueprint $table) {
             $table->string('otp_token')->nullable()->after('otp');
+            $table->string('response_message')->nullable()->after('otp_token');
         });
     }
 
@@ -27,6 +28,7 @@ class AddOtpTokenBlOtpVerifyLogsTable extends Migration
     {
         Schema::table('bl_otp_verify_logs', function (Blueprint $table) {
             $table->dropColumn('otp_token');
+            $table->dropColumn('response_message');
         });
     }
 }
