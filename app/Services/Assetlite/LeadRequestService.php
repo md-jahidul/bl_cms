@@ -250,92 +250,86 @@ class LeadRequestService
      */
     public function excelGenerator($request)
     {
-        $leadRequest = $this->getLeads($request);
-        $products = $leadRequest['items'];
 
-        // Excel Header Create
-        foreach ($products as $key => $items) {
-            foreach ($items as $field => $val) {
-                if ($field == "form_data") {
-                    foreach ($val as $dataKey => $data) {
-                        foreach ($data as $fieldKey => $fieldVal) {
-                            $header[$dataKey][] = str_replace('_', ' ', ucwords($fieldKey));
-                            $rowValue[$key][$dataKey][] = $fieldVal;
+        $leadRequest = $this->getLeads($request);
+        if ($leadRequest['count'] > 0) {
+            // Find Category Wise Product With Form data
+            $products = $leadRequest['items'];
+
+            //  Corporate responsibility
+            if ($request->lead_category == 5) {
+                // Excel Header and Row Value Format
+                foreach ($products as $key => $items) {
+                    foreach ($items as $field => $val) {
+                        if ($field == "form_data") {
+                            foreach ($val as $dataKey => $data) {
+                                foreach ($data as $fieldKey => $fieldVal) {
+                                    $header[$dataKey][] = str_replace('_', ' ', ucwords($fieldKey));
+                                    $rowValue[$key][$dataKey][] = $fieldVal;
+                                }
+                                $sheetName[] = $dataKey;
+                            }
                         }
-                        $sheetName[] = $dataKey;
                     }
                 }
-            }
-        }
 
-        $sheetName = array_unique($sheetName);
-
-        Excel::create("MyFile", function ($excel) use ($sheetName, $header, $rowValue) {
-            foreach ($sheetName as $key => $data) {
-                $excel->sheet($data, function ($sheet) use ($header, $data, $rowValue) {
-                    $headerRow = array_unique($header[$data]);
-                    $sheet->row(1, $headerRow);
-                    $sheet->row(1, function ($row) {
-                        $row->setBackground('#CCCCCC');
-                    });
-                    foreach ($rowValue as $rowKey => $rowVal) {
-                        $sheet->row($rowKey + 2, $rowVal[$data]);
+                $sheetName = array_unique($sheetName);
+                $exFileName = "Corporate responsibility-" . date('Y-m-d');
+                Excel::create($exFileName, function ($excel) use ($sheetName, $header, $rowValue) {
+                    foreach ($sheetName as $key => $data) {
+                        $excel->sheet($data, function ($sheet) use ($header, $data, $rowValue) {
+                            $headerRow = array_unique($header[$data]);
+                            $sheet->row(1, $headerRow);
+                            $sheet->row(1, function ($row) {
+                                $row->setBackground('#CCCCCC');
+                            });
+                            foreach ($rowValue as $rowKey => $rowVal) {
+                                $sheet->row($rowKey + 2, $rowVal[$data]);
+                            }
+                        });
                     }
-                });
+                })->export('xlsx');
+            } else {
+                // Excel Header Create
+                foreach ($products as $key => $items) {
+                    $bindData = $this->bindDynamicValues($items, 'form_data');
+                    unset($bindData['form_data']);
+                    foreach ($bindData as $field => $val) {
+                        $header[] = $field;
+                    }
+                }
+                $header = array_unique($header);
+                $writer = WriterEntityFactory::createXLSXWriter();
+
+                // File Name Generate
+                $fileName = str_replace(' ', '-', $products[0]['lead_category']);
+                $writer->openToBrowser($fileName . date('Y-m-d') . '.xlsx');
+
+                // header Style
+                $header_style = (new StyleBuilder())
+                    ->setFontBold()
+                    ->setFontSize(10)
+                    ->setBackgroundColor(Color::rgb(245, 245, 240))
+                    ->build();
+
+                $data_style = (new StyleBuilder())
+                    ->setFontSize(9)
+                    ->build();
+
+
+                $row = WriterEntityFactory::createRowFromArray(array_values($header), $header_style);
+                $writer->addRow($row);
+                foreach ($products as $product) {
+                    $bindData = $this->bindDynamicValues($product, 'form_data');
+                    unset($bindData['form_data']);
+                    $row = WriterEntityFactory::createRowFromArray($bindData, $data_style);
+                    $writer->addRow($row);
+                }
+                $writer->close();
             }
-        })->export('xlsx');
-
-
-
-
-
-//        $leadRequest = $this->getLeads($request);
-//        if ($leadRequest['count'] > 0) {
-//            // Find Category Wise Product With Form data
-//            $products = $leadRequest['items'];
-//
-//            // Excel Header Create
-//            foreach ($products as $key => $items) {
-//                $bindData = $this->bindDynamicValues($items, 'form_data');
-//                unset($bindData['form_data']);
-//                foreach ($bindData as $field => $val) {
-//                    $header[] = $field;
-//                }
-//            }
-//            $header = array_unique($header);
-//
-//            $writer = WriterEntityFactory::createXLSXWriter();
-//
-//            // File Name Generate
-//            $fileName = str_replace(' ', '-', $products[0]['lead_category']);
-//            $writer->openToBrowser($fileName . date('Y-m-d') . '.xlsx');
-//
-//            // header Style
-//            $header_style = (new StyleBuilder())
-//                ->setFontBold()
-//                ->setFontSize(10)
-//                ->setBackgroundColor(Color::rgb(245, 245, 240))
-//                ->build();
-//
-//            $data_style = (new StyleBuilder())
-//                ->setFontSize(9)
-//                ->build();
-//
-//
-//            $row = WriterEntityFactory::createRowFromArray(array_values($header), $header_style);
-//            $writer->addRow($row);
-//            $problem = [];
-//            foreach ($products as $product) {
-//                $bindData = $this->bindDynamicValues($product, 'form_data');
-//                unset($bindData['form_data']);
-//                $row = WriterEntityFactory::createRowFromArray($bindData, $data_style);
-//                $writer->addRow($row);
-//            }
-//            Log::info(json_encode($problem));
-//            $writer->close();
-//        } else {
-//            return response('No data available in table!');
-//        }
+        } else {
+            return response('No data available in this category!');
+        }
     }
 
     public function updateStatus($data, $id)

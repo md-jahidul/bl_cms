@@ -62,12 +62,26 @@
                                             <th colspan="3">{{ $fieldToUpper }}</th>
                                         </tr>
                                         @foreach($value as $subField => $subValue)
-                                            <tr>
-                                                <th class="text-right" width="30%">{{ str_replace('_', ' ', ucwords($subField)) }}</th>
-                                                <td>
-                                                    {{ $subValue }}
-                                                </td>
-                                            </tr>
+                                            @if($subField == "company_files")
+                                                <tr>
+                                                    <th class="text-right" width="30%">{{ str_replace('_', ' ', ucwords($subField)) }}</th>
+                                                    @if($subValue)
+                                                        <td>
+                                                            <a href="{{ url("download/file") }}" class="text-warning">
+                                                                <input type="hidden" name="file_path" value="{{ $subValue }}">
+                                                                <button type="submit" class="btn btn-sm btn-outline-warning"><i class="la la-download"></i> Download File</button>
+                                                            </a>
+                                                        </td>
+                                                    @endif
+                                                </tr>
+                                            @else
+                                                <tr>
+                                                    <th class="text-right" width="30%">{{ str_replace('_', ' ', ucwords($subField)) }}</th>
+                                                    <td>
+                                                        {{ $subValue }}
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     {{--Other Module Section--}}
                                     @else
