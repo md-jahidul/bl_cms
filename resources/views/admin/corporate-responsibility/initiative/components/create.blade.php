@@ -102,7 +102,7 @@
                                     </slot>
 
                                     {{--Batch Component--}}
-                                    <slot id="batch_component" data-offer-type="batch_component" class="d-none">
+                                    <slot id="batch_component" data-offer-type="batch_component" {{--class="d-none"--}}>
                                         @include('admin.corporate-responsibility.initiative.partials.component-title')
                                         <!--Tab-1 -->
                                         <div class="form-group col-md-12 col-xs-6 tab">
@@ -353,11 +353,6 @@
                 summerNoteEditor();
             });
 
-            $(document).on('click', '.remove-image', function (event) {
-                var rowId = $(event.target).attr('data-id');
-                $('.'+rowId).remove();
-            });
-
             //Batches Component Dynamic Field Tab
             $(document).on('click', '#plus-tab', function () {
                 var tab_count = $('.tab').length+1;
@@ -366,21 +361,22 @@
 
                 var tabField =
                     '<!--Tab '+total_option+'-->\n' +
-                    '<div class="form-group col-md-12 col-xs-6 tab">\n' +
+                    '<div class="form-group col-md-12 col-xs-6 tab tab_component_'+tab_count+'">\n' +
                     '     <div class="pull-left mt-2">\n' +
                     '         <h3><strong>Tab '+tab_count+'</strong></h3>\n' +
                     '     </div>\n' +
                     '     <div class="pull-right">\n' +
                     '         <label for="alt_text"></label>\n' +
-                    '         <button type="button" class="btn btn-bitbucket multi_item_remove mt-2" id="plus-tab"><i class="la la-plus"></i> Add More Tab</button>\n' +
+                    '         <button type="button" class="btn btn-danger mt-2 remove-image" data-id="tab_component_'+tab_count+'">' +
+                    '       <i data-id="tab_component_'+tab_count+'" class="la la-trash"></i></button>\n' +
                     '     </div>\n' +
                     '     <hr class="item-tab">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6">\n' +
+                    ' <div class="form-group col-md-6 tab_component_'+tab_count+'">\n' +
                     '     <label for="title_en">Tab Title (English)</label>\n' +
                     '     <input type="text" name="multi_item[tab_title_en-'+tab_count+']"  class="form-control" placeholder="Enter company name bangla">\n' +
                     ' </div>\n' +
-                    ' <div class="form-group col-md-6">\n' +
+                    ' <div class="form-group col-md-6 tab_component_'+tab_count+'">\n' +
                     '     <label for="title_bn" >Tab Title (Bangla)</label>\n' +
                     '     <input type="text" name="multi_item[tab_title_bn-'+tab_count+']"  class="form-control" placeholder="Enter company name bangla">\n' +
                     ' </div>';
@@ -474,6 +470,7 @@
 
             $(document).on('click', '.remove-image', function (event) {
                 var rowId = $(event.target).attr('data-id');
+                alert(rowId)
                 $('.'+rowId).remove();
             });
         })

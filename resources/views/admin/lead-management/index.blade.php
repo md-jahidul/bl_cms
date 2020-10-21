@@ -5,21 +5,7 @@
     <li class="breadcrumb-item ">Lead Request List</li>
 @endsection
 @section('action')
-{{--    <div class="row">--}}
-{{--        <div class="col-md-6 pull-left">--}}
-{{--            <input type="text" name="date_range" class="form-control showdropdowns filter"--}}
-{{--                   autocomplete="off" id="date_range" placeholder="Date">--}}
-{{--        </div>--}}
-{{--        <div class="col-md-4">--}}
-{{--            --}}
-{{--        </div>--}}
-{{--    </div>--}}
 
-{{--    <button class="btn btn-primary  btn-glow px-2" name="excel_export" id="excel_export">--}}
-{{--        <i class="la la-download"></i> Excel Export</button>--}}
-
-
-{{--    <a href="{{ route('lead_data.excel_export') }}" class="btn btn-primary  btn-glow px-2"><i class="la la-download"></i> Excel Export</a>--}}
 @endsection
 @section('content')
 
@@ -165,7 +151,10 @@
                         name: 'name',
                         width: "15%",
                         render: function (data, type, row) {
-                            return row.form_data.name;
+                            if (row.form_data.name){
+                                return row.form_data.name;
+                            }
+                            return row.form_data.contact_person.name;
                         }
                     },
                     {

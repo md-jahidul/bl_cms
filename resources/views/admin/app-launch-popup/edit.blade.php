@@ -70,12 +70,17 @@
                                 </div>
                                 <div class="col-md-8" id="content_div">
                                     <div class="form-group">
+                                        @if($pop_up->type == 'image' || $pop_up->type == 'purchase')
                                         @if($pop_up->type == 'image')
+                                        @php $typeSize='portrait square'; @endphp
+                                        @else
+                                        @php $typeSize='portrait square landscape'; @endphp
+                                        @endif
                                             <label class="required">Image</label>
                                             <input type="file"
                                                    name="content_data"
                                                    data-max-file-size="2M"
-                                                   data-allowed-formats="portrait square"
+                                                   data-allowed-formats="{{$typeSize}}"
                                                    data-allowed-file-extensions="jpeg png jpg"
                                                    data-default-file="{{ url('storage/' .$pop_up->content) }}"
                                                    class="dropify"/>
@@ -196,11 +201,13 @@
             }
 
             function initiatePurchaseImage() {
+
                 let html = `<div class="form-group">
                                  <label class="required">Image</label>
                                  <input type="file"
                                                required
                                                name="content_data"
+                                               data-allowed-formats="portrait square landscape"
                                                data-max-file-size="2M"
                                                data-allowed-file-extensions="jpeg png jpg"
                                                class="dropify"/>
