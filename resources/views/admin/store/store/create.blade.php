@@ -216,7 +216,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title" class="required">Button Text:</label>
                                     <input required
@@ -227,9 +227,9 @@
                                     </div>
                                     <small class="text-danger"> @error('btn_text') {{ $message }} @enderror </small>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title" class="required">Button Action Type:</label>
                                     <select required class="form-control" value="" name="btn_action_type" id="btn_action_type">
@@ -244,9 +244,9 @@
                                     </div>
                                     <small class="text-danger"> @error('btn_action_type') {{ $message }} @enderror </small>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title">Button Action (iOS):</label>
                                     <input value="@if(isset($store)){{$store->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
@@ -256,9 +256,9 @@
                                     </div>
                                     <small class="text-danger"> @error('btn_action_ios') {{ $message }} @enderror </small>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title">Button Action (Android):</label>
                                     <input value="@if(isset($store)){{$store->btn_action_android}} @elseif(old("btn_action_android")) {{old("btn_action_android")}} @endif"
@@ -268,8 +268,7 @@
                                     </div>
                                     <small class="text-danger"> @error('btn_action_android') {{ $message }} @enderror </small>
                                 </div>
-                            </div>
-
+                            </div> --}}
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title">Video:</label>
@@ -280,6 +279,10 @@
                                     <div class="help-block"></div>
                                     <small class="text-danger"> @error('video_link') {{ $message }} @enderror </small>
                                 </div>
+                            </div>
+
+                            <div class="col-md-4">
+
                             </div>
 
                             <div class="col-md-4">

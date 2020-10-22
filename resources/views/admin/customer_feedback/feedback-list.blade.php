@@ -5,7 +5,6 @@
     <li class="breadcrumb-item ">Customer Feedback List</li>
 @endsection
 @section('action')
-
 @endsection
 @section('content')
     <section>
