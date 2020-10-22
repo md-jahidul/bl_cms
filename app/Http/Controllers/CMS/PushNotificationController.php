@@ -77,7 +77,7 @@ class PushNotificationController extends Controller
                     $number = $cells[0]->getValue();
                     $user_phone [] = $number;
 
-                    if(count($user_phone) == 500){
+                    if(count($user_phone) == 300){
                         $notification = $this->getNotificationArray($request, $user_phone);
                         NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
                             ->onQueue('notification');
