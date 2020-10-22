@@ -39,9 +39,9 @@
                                     <div class="form-group">
                                         <label for="type" class="required">Popup Type</label>
                                         <select id="type" name="type" class="form-control" required>
-                                            <option value="image"> Image
-                                            </option>
+                                            <option value="image"> Image </option>
                                             <option value="html"> HTML Content</option>
+                                            <option value="purchase"> Purchase </option>
                                         </select>
                                         @if($errors->has('type'))
                                             <p class="text-left">
@@ -84,6 +84,19 @@
                                         <small class="danger text-muted">{{ $errors->first('content_div') }}</small>
                                     </p>
                                 @endif
+
+                                <div class="col-md-4 hidden" id="productCode">
+                                    {{-- <div class="form-group " >
+                                        <label for="type" class="required col-md-12" style="padding:0px">Product Code</label>
+                                        {!!Form::select('product_code',$productList, null, ['class' => 'form-control select2 col-md-12'])!!}
+                                        @if($errors->has('product_code'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('product_code') }}</small>
+                                            </p>
+                                        @endif
+                                    </div> --}}
+                                </div>
+
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-info btn-block mt-2">
@@ -116,6 +129,7 @@
     {{--    <script src="{{ asset('app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js')}}"></script>--}}
     {{--    <script src="{{ asset('js/custom-js/start-end.js')}}"></script>--}}
     <script>
+
         $(function () {
             var date;
             // Date & Time
@@ -171,6 +185,21 @@
                 initiateDropify('.dropify');
             }
 
+            function initiatePurchaseImage() {
+                let html = `<div class="form-group">
+                                 <label class="required">Image</label>
+                                 <input type="file"
+                                               required
+                                               name="content_data"
+                                               data-allowed-formats="portrait square landscape"
+                                               data-max-file-size="2M"
+                                               data-allowed-file-extensions="jpeg png jpg"
+                                               class="dropify"/>
+                              </div>`;
+                $("#content_div").html(html);
+                initiateDropify('.dropify');
+            }
+
             function initiateTextEditor() {
                 let html = `<div class="form-group">
                                     <label for="html_content" class="required">Content</label>
@@ -183,14 +212,44 @@
 
             initiateDropify('.dropify');
 
+            product_html = ` <div class="form-group other-info-div">
+                                        <label>Select a product</label>
+                                        <select class="product-list form-control"  name="product_code" required></select>
+                                        <div class="help-block"></div>
+                                    </div>`;
+
             $('#type').on('change', function () {
                 let action = $(this).val();
                 if (action == 'image') {
                     initiateImage();
+                    $('#productCode').removeClass('show').addClass('hidden');
+                }else if(action == 'purchase'){
+                    initiatePurchaseImage();
+                    $(".select2").css({"min-width": "250px","max-width": "300px"});
+                  $('#productCode').removeClass('hidden').addClass('show');
+                  $("#productCode").html(product_html);
+                    $(".product-list").select2({
+                        placeholder: "Select a product",
+                        ajax: {
+                            url: "{{ route('myblslider.active-products') }}",
+                            processResults: function (data) {
+                                // Transforms the top-level key of the response object from 'items' to 'results'
+                                return {
+                                    results: data
+                                };
+                            }
+                        }
+                    });
                 } else {
                     initiateTextEditor();
+                    $('#productCode').removeClass('show').addClass('hidden');
                 }
             });
+
+            $('#select2').select2({
+            placeholder: "Please select a product code"
+             });
+
         })
     </script>
 @endpush

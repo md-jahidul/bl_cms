@@ -25,6 +25,16 @@ class StoreCategoryService
         $this->setActionRepository($storeCategoryRepository);
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getStoreCategoryList()
+    {
+        return $this->storeCategoryRepository->getMyBlCategoryList();
+    }
+
+
     /**
      * Storing the StoreCategory resource
      * @param $data
@@ -58,4 +68,16 @@ class StoreCategoryService
         $storeCategory->delete();
         return Response('Store Category has been successfully deleted');
     }
+
+
+    /**
+     * @param $request
+     * @return Response
+     */
+    public function tableSortable($request)
+    {
+        $this->storeCategoryRepository->sortMyBlCategoryList($request);
+        return new Response('update successfully');
+    }
+
 }

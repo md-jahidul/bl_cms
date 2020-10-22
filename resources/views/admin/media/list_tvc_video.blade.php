@@ -1,8 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Press News Event')
-@section('card_name', 'Press News Event')
+@section('title', 'TVC Video List')
+@section('card_name', 'TVC Video List')
 @section('breadcrumb')
-    <li class="breadcrumb-item ">Press News Event List</li>
+    <li class="breadcrumb-item ">TVC Video List</li>
 @endsection
 @section('action')
     <a href="{{ url("tvc-video/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="pb-1"><strong>Press News Event List</strong></h4>
+                    <h4 class="pb-1"><strong>TVC Video List</strong></h4>
                     <table class="table table-striped table-bordered zero-configuration">
                         <thead>
                         <tr>

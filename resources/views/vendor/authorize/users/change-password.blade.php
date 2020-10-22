@@ -95,12 +95,18 @@
 @endphp
 
 @push('page-css')
+<style>
+    .error{
+        color: red;
+
+    }
+</style>
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
     <script type="text/javascript"
             src="{{ asset('theme/js/scripts/forms/validation/form-validation.min.js') }}"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script src="{{ asset('theme/js/scripts/forms/validation/1_11_1_jquery.validate.min.js') }}"></script>
     <script>
         $.validator.addMethod("loginRegex", function (value, element) {
             return this.optional(element) || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&.])[A-Za-z\d$@$!%*?&.]{8,}/.test(value);
@@ -108,9 +114,11 @@
         }, "The password must be minimum 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character");
         $.validator.addMethod("username", function (value, element) {
             let Username = '<?php echo $username; ?>';
+                Username= Username.toUpperCase();
             let lengthAfterCheck = Username.length;
+            let inputUsername= value.toUpperCase();
             if (value.length >= lengthAfterCheck) {
-                let index = value.search(Username);
+                let index = inputUsername.search(Username);
                 if (index !== -1) {
                     return false;
                 } else {
@@ -154,6 +162,12 @@
 
 
                     }
+                },
+                submitHandler: function(form) {
+                if ($(form).valid()) {
+                    form.submit();
+                }
+                return false; // prevent normal form posting
                 }
 
             });
