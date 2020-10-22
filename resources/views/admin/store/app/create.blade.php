@@ -96,6 +96,10 @@
                                                 @if(strtolower($category->name_en) == "all")
                                                     @continue
                                                 @endif
+                                                {{--id = 2 most popular--}}
+                                                @if($category->id == 2)
+                                                    @continue
+                                                @endif
 
                                                 <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"0") }}
                                                         @elseif(isset($appStore) && ($category->id == $appStore->category_id)) selected  @endif

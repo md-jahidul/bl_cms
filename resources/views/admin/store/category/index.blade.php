@@ -16,17 +16,19 @@
     <div class="card card-info mt-0" style="box-shadow: 0px 0px">
         <div class="card-content">
             <div class="card-body card-dashboard">
-                <table class="table table-striped table-bordered  no-footer dataTable" id="notification_cat" role="grid" aria-describedby="Example1_info" style="">
+                <table class="table table-striped table-bordered  no-footer dataTable" id="store_category" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
+                        <th width='5%'><i class="icon-cursor-move icons"></i></th>
                         <th width="10%">ID</th>
                         <th width="60%">Tittle</th>
                         <th width="30%">Action</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="sortable">
                         @foreach ($storeCategories as $storeCategory)
-                            <tr>
+                            <tr data-index="{{ $storeCategory->id }}" data-position="{{$storeCategory->display_order }}">
+                                <td width="5%"><i class="icon-cursor-move icons"></i></td>
                                 <td>{{$storeCategory->id}}</td>
                                 <td>{{$storeCategory->name_en}}<span class="badge badge-default badge-pill bg-primary float-right"></span></td>
                                 <td>
@@ -38,10 +40,10 @@
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
-                                        <div class="col-md-2 m-1">
+                                       {{-- <div class="col-md-2 m-1">
                                             <button data-id="{{$storeCategory->id}}" data-toggle="tooltip" data-original-title="Delete Category" data-placement="right"
                                                     class="btn btn-outline-danger delete" onclick=""><i class="la la-trash"></i></button>
-                                        </div>
+                                        </div>--}}
 
                                     </div>
                                 </td>
@@ -58,25 +60,30 @@
 </section>
 
 
-
-
 @endsection
 
 
-
-
 @push('style')
-    <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">
-    <style></style>
+   {{-- <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets')}}/vendors/css/tables/datatable/datatables.min.css">--}}
+
+    <style>
+        table.dataTable tbody td {
+            max-height: 40px;
+        }
+    </style>
 @endpush
 @push('page-js')
-    <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
+   {{-- <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript"></script>
     <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
-    <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
+    <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>--}}
     <script>
-      $(function () {
+
+        var auto_save_url = "{{ url('myblCategory-sortable') }}";
+
+        $(function () {
+
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');
 
@@ -112,13 +119,13 @@
         })
 
         $(document).ready(function () {
-            $('#notification_cat').DataTable({
+            $('#store_category').DataTable({
                 dom: 'Bfrtip',
                 buttons: [],
-                paging: true,
-                searching: true,
+                paging: false,
+                searching: false,
                 "bDestroy": true,
-                "pageLength": 10
+                "pageLength": 15
             });
         });
 

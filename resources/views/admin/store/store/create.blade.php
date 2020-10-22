@@ -102,6 +102,11 @@
                                                 @if(strtolower($category->name_en) == "all")
                                                     @continue
                                                 @endif
+
+                                                @if($category->id == 2)
+                                                    @continue
+                                                @endif
+
                                                 <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}
                                                         @elseif(isset($store) && ($category->id == $store->category_id)) selected  @endif
                                                 value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name_en}}</option>

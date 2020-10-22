@@ -65,9 +65,27 @@
                         </div>
 
 
-                        <div class="col-5 mb-2" >
+                        <div class="col-5">
+                            <div class="form-group">
+                                <label for="is_active">Active Status:</label>
+                                <select value="@if(isset($storeCategory)) {{$storeCategory->is_active}} @elseif(old("is_active")) {{old("is_active")}} @endif"
+                                        class="form-control" id="is_active"
+                                        name="is_active">
+                                    <option value="1"
+                                            @if($storeCategory->is_active == "1") selected @endif>
+                                        Active
+                                    </option>
+                                    <option value="0"
+                                            @if($storeCategory->is_active == "0") selected @endif>
+                                        InActive
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
 
-                            <button type="submit" id="submitForm" style="width:100%" class="btn @if(isset($storeCategory)) btn-success @else btn-info @endif ">
+
+                        <div class="col-5 mb-2" >
+                            <button type="submit" id="submitForm" style="float:right;" class="btn @if(isset($storeCategory)) btn-success @else btn-info @endif ">
                                 @if(isset($storeCategory)) Update Store Category @else Create Store Category @endif
                             </button>
                         </div>
