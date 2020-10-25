@@ -51,7 +51,7 @@
                                     @else {{"N/A"}}
                                     @endif
 
-                                    
+
 
                                 </td>
 

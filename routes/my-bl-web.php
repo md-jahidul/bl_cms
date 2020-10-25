@@ -156,6 +156,9 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     // Store category
     Route::resource('storeCategory', 'CMS\StoreCategoryController');
     Route::get('storeCategory/destroy/{id}', 'CMS\StoreCategoryController@destroy');
+    Route::get('myblCategory-sortable', 'CMS\StoreCategoryController@myblCategorySortable')->name('myblCategory.sort');
+
+
 
     // Support Messages
     Route::get('support-message', 'CMS\SupportMessageRatingController@index')->name('support-message');
