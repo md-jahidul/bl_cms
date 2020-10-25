@@ -46,6 +46,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('setting_limit/store', 'CMS\SettingController@Addlimit');
     Route::get('setting/destroy/{id}', 'CMS\SettingController@destroy')->name('setting.destroy');
 
+    // Logde a Complain
+    Route::get('mybl/settings/lodge/complaints', 'CMS\SettingController@lodgeComplain')->name('lodge_complaints');
+    Route::Post('mybl/settings/lodge/complain/store', 'CMS\SettingController@sotreLodgeComplain')->name('store_lodge_complaints');
+
+
     //App Version
     Route::resource('app-version', 'CMS\AppVersionController');
     Route::get('app-version/destroy/{id}', 'CMS\AppVersionController@destroy');
