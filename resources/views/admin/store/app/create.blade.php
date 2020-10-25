@@ -233,6 +233,20 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
+                                    <label for="title">Description:</label>
+                                    <textarea
+                                        class="form-control @error('description') is-invalid @enderror"
+                                        placeholder="Enter body description....." id="description" name="description" rows="3">
+                                        @if(isset($appStore)){{$appStore->description}} @elseif(old("description")) {{old("description")}} @endif
+                                    </textarea>
+                                    <div class="help-block"></div>
+                                    <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
                                     <label for="icon">Upload Icon :</label>
                                     @if (isset($appStore))
                                         <input type="file"
@@ -313,18 +327,7 @@
                                 </div>
                             </div> -->
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="title">Description:</label>
-                                    <textarea
-                                        class="form-control @error('description') is-invalid @enderror"
-                                        placeholder="Enter body description....." id="description" name="description" rows="3">
-                                        @if(isset($appStore)){{$appStore->description}} @elseif(old("description")) {{old("description")}} @endif
-                                    </textarea>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
+
 
                             <div class="col-md-12">
                                 <button type="submit" style="float: right" class="btn btn-success round px-2">
