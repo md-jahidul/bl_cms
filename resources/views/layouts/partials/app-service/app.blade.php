@@ -43,3 +43,44 @@
         <div class="help-block">  {{ $errors->first('app_rating') }}</div>
     @endif
 </div>
+
+<h4>
+    <strong>Referral Engine Part</strong>
+</h4>
+<div class="form-actions col-md-12 mt-0"></div>
+
+<div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
+    <label for="title_en">Title (English)</label>
+    <input type="text" name="referral[title_en]" id="title_en" class="form-control" placeholder="Enter offer name in English"
+           value="{{ isset($referralInfo->title_en) ? $referralInfo->title_en : '' }}">
+    <div class="help-block"></div>
+    @if ($errors->has('title_en'))
+        <div class="help-block">{{ $errors->first('title_en') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
+    <label for="title_bn">Title (Bangla)</label>
+    <input type="text" name="referral[title_bn]" id="title_bn" class="form-control" placeholder="Enter offer name in Bangla"
+           value="{{ isset($referralInfo->title_bn) ? $referralInfo->title_bn : '' }}">
+    <div class="help-block"></div>
+    @if ($errors->has('title_bn'))
+        <div class="help-block">{{ $errors->first('title_bn') }}</div>
+    @endif
+</div>
+
+<div class="form-group col-md-6 ">
+    <label for="rf_details_en">Description (English)</label>
+    <textarea type="text" name="referral[details_en]" id="rf_details_en" class="form-control summernote_editor" placeholder="Enter description in English"
+    >{{ isset($referralInfo->details_en) ? $referralInfo->details_en : '' }}</textarea>
+    <div class="help-block"></div>
+</div>
+
+<div class="form-group col-md-6 ">
+    <label for="rf_details_bn">Description (Bangla)</label>
+    <textarea type="text" name="referral[details_bn]" id="rf_details_bn" class="form-control summernote_editor" placeholder="Enter description in Bangla"
+    >{{ isset($referralInfo->details_bn) ? $referralInfo->details_bn : '' }}</textarea>
+    <div class="help-block"></div>
+</div>
+
+<div class="form-actions col-md-12 mt-0"></div>

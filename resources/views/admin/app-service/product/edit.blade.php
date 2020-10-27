@@ -21,8 +21,8 @@
                         <div class="row">
                             <div class="form-group col-md-6 {{ $errors->has('app_service_tab_id') ? ' error' : '' }}">
                                 <label for="app_service_tab_id" class="required">App & Service Type</label>
-                                <select class="form-control required" name="app_service_tab_id" id="offer_type"
-                                        required data-validation-required-message="Please select type">
+                                <select class="form-control required" id="offer_type"
+                                        required data-validation-required-message="Please select type" readonly disabled>
                                     <option data-alias="" value="">---Select Type---</option>
                                     @foreach($appServiceTabs as $tab)
                                     <option data-alias="{{ $tab->alias }}" value="{{ $tab->id }}" {{ ($tab->id == $appServiceProduct->app_service_tab_id ) ? 'selected' : '' }}>{{ $tab->name_en }}</option>
