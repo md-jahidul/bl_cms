@@ -83,4 +83,17 @@
     <div class="help-block"></div>
 </div>
 
+<div class="col-md-6">
+    <label></label>
+    <div class="form-group">
+        <label for="title" class="mr-1">Referral Engine Status:</label>
+        <input type="radio" name="referral[status]" value="1" id="active" {{ isset($referralInfo->status) ? ($referralInfo->status == 1) ? 'checked' : '' : 'checked' }}>
+        <label for="active" class="mr-1">Active</label>
+
+        <input type="radio" name="referral[status]" value="0" id="inactive" {{ isset($referralInfo->status) ? ($referralInfo->status == 0) ? 'checked' : '' : '' }}>
+        <label for="inactive">Inactive</label>
+    </div>
+</div>
+
+
 <div class="form-actions col-md-12 mt-0"></div>

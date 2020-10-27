@@ -20,6 +20,7 @@ class CreateAlReferralInfosTable extends Migration
             $table->string('title_bn')->nullable();
             $table->longText('details_en')->nullable();
             $table->longText('details_bn')->nullable();
+            $table->tinyInteger('status')->default(1);
             $table->foreign('app_id')
                 ->references('id')
                 ->on('app_service_products')
