@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\NotificationCategoryService;
 use App\Services\NotificationService;
 use App\Http\Requests\NotificationRequest;
+use Carbon\Carbon;
 
 class NotificationController extends Controller
 {
@@ -37,13 +38,13 @@ class NotificationController extends Controller
         NotificationService $notificationService,
         NotificationCategoryService $notificationCategoryService,
         UserService $userService
-    ) {
+    )
+    {
         $this->notificationService = $notificationService;
         $this->notificationCategoryService = $notificationCategoryService;
         $this->userService = $userService;
         $this->middleware('auth');
     }
-
 
 
     /**
@@ -55,16 +56,14 @@ class NotificationController extends Controller
     {
 
         $notifications = $this->notificationService->findAll();
-        $category =  $this->notificationCategoryService->findAll();
+        $category = $this->notificationCategoryService->findAll();
         return view('admin.notification.notification.index')
-                ->with('category', $category)
-                ->with('notifications', $notifications);
+            ->with('category', $category)
+            ->with('notifications', $notifications);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -72,15 +71,15 @@ class NotificationController extends Controller
         return view('admin.notification.notification.create')->with('categories', $categories);
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
      * @param NotificationRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(NotificationRequest $request)
     {
-        $content = $this->notificationService->storeNotification($request->all())->getContent();
+
+        $content = $this->notificationService->storeNotification($request)->getContent();
         session()->flash('message', $content);
         return redirect(route('notification.index'));
     }
@@ -88,13 +87,12 @@ class NotificationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         $notification = $this->notificationService->findOne($id, 'NotificationCategory');
-
         $users = $this->userService->getUserListForNotification();
 
         return view('admin.notification.notification.show')
@@ -106,7 +104,7 @@ class NotificationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function showAll($id)
@@ -123,27 +121,25 @@ class NotificationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $categories = $this->notificationCategoryService->findAll();
         return view('admin.notification.notification.edit')
-                ->with('categories', $categories)
-                ->with('notification', $this->notificationService->findOne($id));
+            ->with('categories', $categories)
+            ->with('notification', $this->notificationService->findOne($id));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
      * @param NotificationRequest $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(NotificationRequest $request, $id)
     {
-        $content = $this->notificationService->updateNotification($request->all(), $id)->getContent();
+        $content = $this->notificationService->updateNotification($request, $id)->getContent();
         session()->flash('success', $content);
         return redirect(route('notification.index'));
     }

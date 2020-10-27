@@ -23,7 +23,17 @@ class NotificationDraft extends Model
     protected $fillable = [
         'category_id',
         'title',
-        'body'
+        'body',
+        'cta_name',
+        'cta_action',
+        'notification_type',
+        'device_type',
+        'customer_type',
+        'navigate_action',
+        'external_url',
+        'image',
+        'starts_at',
+        'expires_at'
     ];
 
 
