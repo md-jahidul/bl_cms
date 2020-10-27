@@ -101,7 +101,12 @@ class AppServiceProductService
 
         if ($referralData) {
             $referralInfo = $this->alReferralInfoRepository->findOneByProperties(['app_id' => $id]);
-            $referralInfo->update($referralData);
+            if ($referralInfo) {
+                $referralInfo->update($referralData);
+            } else {
+                $referralData['app_id'] = $id;
+                $this->alReferralInfoRepository->save($referralData);
+            }
         }
 
         return Response('App Service Category updated successfully');
