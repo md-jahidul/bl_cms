@@ -951,4 +951,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     //Access Logs
     Route::get('access-logs', 'AccessLogController@index');
 
+    // Referral List
+    Route::get('referral-list', 'AssetLite\ReferralListController@index');
+
 });
