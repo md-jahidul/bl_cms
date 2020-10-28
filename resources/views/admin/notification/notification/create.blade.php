@@ -129,11 +129,11 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="category_id" class="required">
+                                <label for="device_type">
                                     Target Device :
                                 </label>
                                 <div class="controls">
-                                    <select name="device_type" id="device_type" required class="form-control">
+                                    <select name="device_type" id="device_type"  class="form-control">
                                     <option value="">Select Devices</option>
                                     <option value="ios">IOS</option>
                                     <option value="android">Android</option>
@@ -145,7 +145,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="category_id" class="required">
+                                <label for="customer_type" class="required">
                                     Customer type :
                                 </label>
                                 <div class="controls">
@@ -155,7 +155,7 @@
                                     <option value="postpaid">Postpaid</option>
                                     </select>
                                     <div class="help-block"></div>
-                                    <small class="text-danger"> @error('device_type') {{ $message }} @enderror </small>
+                                    <small class="text-danger"> @error('customer_type') {{ $message }} @enderror </small>
                                 </div>
                             </div>
                         </div>
@@ -163,19 +163,8 @@
 {{-- ================================================= --}}
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="image" class="required">Upload image :</label>
-                                @if (isset($short_cut_info))
+                                <label for="image">Upload image :</label>
                                     <input type="file"
-                                        id="icon"
-                                        class="dropify"
-                                        name="image"
-                                        {{-- data-height="70" --}}
-                                        {{-- data-allowed-formats="square" --}}
-                                        {{-- data-allowed-file-extensions="png" --}}
-                                        data-default-file="{{ asset($short_cut_info->image) }}"
-                                    />
-                                @else
-                                    <input type="file" required
                                         id="icon"
                                         name="image"
                                         class="dropify"
@@ -183,7 +172,6 @@
                                         data-allowed-file-extensions="jpeg png jpg"
                                         {{-- data-height="70" --}}
                                         />
-                                @endif
                                 <div class="help-block">
                                     <small class="text-danger"> @error('image') {{ $message }} @enderror </small>
                                     {{-- <small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small> --}}
@@ -198,7 +186,7 @@
                             @endphp
 
                             <div class="form-group">
-                                <label>Navigate Action </label>
+                                <label class="required">Navigate Action : </label>
                                 <select name="navigate_action" class="browser-default custom-select"
                                         id="navigate_action" required>
                                     <option value="">Select Action</option>
@@ -295,14 +283,7 @@
             var url_html;
             var parse_data;
             let dial_html, other_info = '';
-            // var js_data = `<?php echo isset($short_cut_info) ? $short_cut_info->other_info : null; ?>`;
 
-            // //console.log(js_data);
-
-            // if (js_data) {
-            //     parse_data = JSON.parse(js_data);
-            //     content = parse_data.content;
-            // }
 
             $('.delete').click(function () {
                 var id = $(this).attr('data-id');

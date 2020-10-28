@@ -51,11 +51,12 @@ class NotificationController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @author ahasan habib <habib.cst@gmail.com>
      */
     public function index()
     {
-
-        $notifications = $this->notificationService->findAll();
+        $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
+        $notifications = $this->notificationService->findAll('', '', $orderBy);
         $category = $this->notificationCategoryService->findAll();
         return view('admin.notification.notification.index')
             ->with('category', $category)
@@ -64,6 +65,7 @@ class NotificationController extends Controller
 
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @author ahasan habib <habib.cst@gmail.com>
      */
     public function create()
     {
@@ -75,6 +77,7 @@ class NotificationController extends Controller
     /**
      * @param NotificationRequest $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+    * @author ahasan habib <habib.cst@gmail.com>
      */
     public function store(NotificationRequest $request)
     {
@@ -136,6 +139,7 @@ class NotificationController extends Controller
      * @param NotificationRequest $request
      * @param $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @author ahasan habib <habib.cst@gmail.com>
      */
     public function update(NotificationRequest $request, $id)
     {

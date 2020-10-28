@@ -86,7 +86,7 @@
                                     <option value="buy_now" @if($notification->cta_name=='buy_now') selected @endif>Buy Now</option>
                                     </select>
                                     <div class="help-block"></div>
-                                    <small class="text-danger"> @error('cta_action') {{ $message }} @enderror </small>
+                                    <small class="text-danger"> @error('cta_name') {{ $message }} @enderror </small>
                                 </div>
                             </div>
                         </div>
@@ -127,11 +127,11 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="category_id" class="required">
+                                <label for="device_type">
                                     Target Device :
                                 </label>
                                 <div class="controls">
-                                    <select name="device_type" id="device_type" required class="form-control">
+                                    <select name="device_type" id="device_type" class="form-control">
                                     <option value="">Select Devices</option>
                                     <option value="ios" @if($notification->device_type=='ios') selected @endif>IOS</option>
                                     <option value="android" @if($notification->device_type=='android') selected @endif>Android</option>
@@ -143,7 +143,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="category_id" class="required">
+                                <label for="customer_type" class="required">
                                     Customer type :
                                 </label>
                                 <div class="controls">
@@ -153,7 +153,7 @@
                                     <option value="postpaid" @if($notification->customer_type=='postpaid') selected @endif>Postpaid</option>
                                     </select>
                                     <div class="help-block"></div>
-                                    <small class="text-danger"> @error('device_type') {{ $message }} @enderror </small>
+                                    <small class="text-danger"> @error('customer_type') {{ $message }} @enderror </small>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +172,7 @@
                                         data-default-file="{{ url('storage/' .$notification->image) }}"
                                         class="dropify"/>
                                 @else
-                                    <input type="file" required
+                                    <input type="file"
                                         id="icon"
                                         name="image"
                                         class="dropify"
@@ -195,7 +195,7 @@
                             @endphp
 
                             <div class="form-group">
-                                <label>Navigate Action </label>
+                                <label class="required">Navigate Action :</label>
                                 <select name="navigate_action" class="browser-default custom-select"
                                         id="navigate_action" required>
                                     <option value="">Select Action</option>
