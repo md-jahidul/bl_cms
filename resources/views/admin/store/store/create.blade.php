@@ -142,26 +142,6 @@
                                 </div>
                             </div>
 
-                           {{-- <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="category_id">
-                                        Sub Category :
-                                    </label>
-                                    <div class="controls">
-                                        <select name="sub_category_id" id="sub_category_id" class=" sub_category_select form-control @error('sub_category_id') is-invalid @enderror">
-                                            <option value="0">Select SubCategory</option>
-                                            @foreach ($subCategories as $subCategory)
-                                                <option @if(old("category_id")) {{ (old("category_id") == $subCategory->id ? "selected":"0") }}
-                                                        @elseif(isset($store) && ($subCategory->id == $store->sub_category_id)) selected  @endif
-                                                value="{{$subCategory->id}}" {{ (old("category_id") == $subCategory->id ? "selected":"0") }}>{{$subCategory->name_en}}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="help-block"></div>
-                                        <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
-                                    </div>
-                                </div>
-                            </div>--}}
-
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="type" class="required">Store Type:</label>
@@ -206,8 +186,6 @@
                                                     <option value="{{$app->id}}">  {{$app->title}} </option>
                                                 @endif
 
-
-
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
@@ -216,7 +194,7 @@
                                 </div>
                             </div>
 
-                             <div class="col-md-4">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title" class="required">Button Text:</label>
                                     <input required
@@ -280,7 +258,9 @@
                                     <small class="text-danger"> @error('video_link') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-                            
+
+
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="icon">Upload Icon :</label>
@@ -351,6 +331,7 @@
                                     </select>
                                 </div>
                             </div>
+
 
 {{--                            <div class="col-md-4">--}}
 {{--                                <div class="form-group">--}}
