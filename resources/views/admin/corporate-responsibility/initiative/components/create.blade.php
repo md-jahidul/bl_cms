@@ -102,7 +102,7 @@
                                     </slot>
 
                                     {{--Batch Component--}}
-                                    <slot id="batch_component" data-offer-type="batch_component" {{--class="d-none"--}}>
+                                    <slot id="batch_component" data-offer-type="batch_component" class="d-none">
                                         @include('admin.corporate-responsibility.initiative.partials.component-title')
                                         <!--Tab-1 -->
                                         <div class="form-group col-md-12 col-xs-6 tab">
