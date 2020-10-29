@@ -20,8 +20,9 @@
 
 <div class="form-group col-md-4 {{ $errors->has('apply_btn_url') ? ' error' : '' }}">
     <label for="apply_btn_url" >URL</label>
-    <input type="text" name="multiple_attributes[apply_btn_url]"  class="form-control" placeholder="Enter company name bangla"
+    <input type="text" name="multiple_attributes[apply_btn_url]"  class="form-control" placeholder="Enter url"
            value="{{ isset($multipleItem['apply_btn_url']) ? $multipleItem['apply_btn_url'] : '' }}">
+    <small class="text-info">Ex: corporate-responsibility/application/{tab name}</small>
     <div class="help-block"></div>
     @if ($errors->has('apply_btn_url'))
         <div class="help-block">  {{ $errors->first('apply_btn_url') }}</div>
