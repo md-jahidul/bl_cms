@@ -160,7 +160,6 @@ class CorpInitiativeTabComponentService
         }
 
         $data['multiple_attributes'] = $new_multiple_attributes;
-        dd($data);
         $component->update($data);
         return response("Component update successfully!!");
     }
