@@ -88,7 +88,8 @@ class LeadRequestService
         BusinessOthersRepository $businessOthersRepository,
         ProductRepository $productRepository,
         CorporateInitiativeTabRepository $corporateInitiativeTabRepository
-    ) {
+    )
+    {
         $this->leadRequestRepository = $leadRequestRepository;
         $this->leadCategoryRepository = $leadCategoryRepository;
         $this->leadProductRepository = $leadProductRepository;
@@ -340,6 +341,8 @@ class LeadRequestService
 
     public function makeLeadInfoTable($data)
     {
+        $leadCat = $this->leadCategoryRepository->findOne($data->lead_category_id);
+
         $table = "<style>
                   @font-face {
                     font-family: 'Helvetica';
@@ -353,15 +356,34 @@ class LeadRequestService
                   </style>";
 
         $table .= '<h3 align="center">Applicant Data</h3>
-                  <table width="100%" style="border-collapse: collapse; border: 0px;"><tbody>';
+                    <span align="left"><strong>' . $leadCat->title . '</strong></span>
+                    <span style="float: right"><strong>Date: </strong>' . date('d/m/yy') . '</span>
+                  <table width="100%" style="border-collapse: collapse; border: 0px; margin-top: 20px;"><tbody>';
+
         foreach ($data->form_data as $field => $value) {
-            if ($field != "applicant_cv") {
-                $table .= "<tr>";
-                $table .= '<th style="border: 1px solid; padding:12px;" width="30%">' . str_replace('_', ' ', strtoupper($field)) . '</th>';
-                $table .= '<td style="border: 1px solid; padding:12px;">' . $value . '</td>';
-                $table .= "</tr>";
+            // Corporate Responsibility
+            if ($data->lead_category_id == 5) {
+                $table .= '<tr style="background: rgba(225,233,221,0.88);">
+                                <th colspan="2" style="border: 1px solid; padding:12px; text-align: left">' . str_replace('_', ' ', strtoupper($field)) . '</th>
+                           </tr>';
+//                $table .= '<tr><th></th></tr>';
+                foreach ($value as $subField => $subValue) {
+                    $table .= '<tr>
+                                 <th style="border: 1px solid; padding:12px; text-align: left">' . str_replace('_', ' ', ucwords($subField)) . '</th>
+                                 <td style="border: 1px solid; padding:12px;">' . $subValue . '</td>
+                               </tr>';
+                }
+            } // Other Categories
+            else {
+                if ($field != "applicant_cv") {
+                    $table .= "<tr>";
+                    $table .= '<th style="border: 1px solid; padding:12px;" width="30%; text-align: left">' . str_replace('_', ' ', ucwords($field)) . '</th>';
+                    $table .= '<td style="border: 1px solid; padding:12px;">' . $value . '</td>';
+                    $table .= "</tr>";
+                }
             }
         }
+
         $table .= "</tbody></table>";
         return $table;
     }
