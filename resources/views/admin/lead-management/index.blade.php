@@ -154,7 +154,7 @@
                             if (row.form_data.name){
                                 return row.form_data.name;
                             }
-                            return row.form_data.contact_person.name;
+                            return row.form_data.basic.company_name;
                         }
                     },
                     {
