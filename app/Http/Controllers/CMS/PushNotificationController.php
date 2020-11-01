@@ -77,10 +77,10 @@ class PushNotificationController extends Controller
                     $number = $cells[0]->getValue();
                     $user_phone_num [] = $number;
 
-                    $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
+                   // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
 
                     if(count($user_phone) == 300){
-                        $notification = $this->getNotificationArray($request, $user_phone);
+                        $notification = $this->getNotificationArray($request, $user_phone_num);
                         NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
                             ->onQueue('notification');
                         $user_phone = [];

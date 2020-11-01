@@ -519,27 +519,27 @@
                             <div class="card">
                                 <div class="card-content  table-responsive">
                                     <div class="card-body">
-                                    <table class="table table-bordered table-striped" id="contact_restore_logs_table">
-                                    <thead class="text-center alert-warning text-white">
-                                        <tr>
-                                            <th>Contact backup id</th>
-                                            <th>Message</th>
-                                            <th>Date time</th>
-                                            <th>Platform</th>
-                                            <th>Device os</th>
-                                            <th>Device model</th>
-                                            <th>Mobile number</th>
-                                            <th>Total number to be restore</th>
-                                            <th>Total restore</th>
-                                        </tr>
-                                        </thead>
-                                    </table>
+                                        <table class="table table-bordered table-striped" id="contact_restore_logs_table">
+                                            <thead class="text-center alert-warning text-white">
+                                            <tr>
+                                                <th>Contact backup id</th>
+                                                <th>Message</th>
+                                                <th>Date time</th>
+                                                <th>Platform</th>
+                                                <th>Device os</th>
+                                                <th>Device model</th>
+                                                <th>Mobile number</th>
+                                                <th>Total number to be restore</th>
+                                                <th>Total restore</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
     </section>
