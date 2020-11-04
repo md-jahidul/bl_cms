@@ -457,11 +457,21 @@
         {{--================================================================================--}}
 
         <div class="row mt-3">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div>
                     <h5 class="mb-1 mt-2 text-bold-600 pull-left">Product Logs</h5>
                     {{--                    <h5 class="mb-1 mt-2 text-bold-600 pull-right">{{ $last_date }} - {{ $current_date }}</h5>--}}
                 </div>
+
+            </div>
+            <div class="col-md-6">
+                <input type='text'
+                       class="form-control date_range"
+                       id="logDate"
+                       {{-- value="{{ $current_date }}" --}}
+                       {{-- min="{{ $last_date }}" --}}
+                       {{-- max="{{ $current_date }}" --}}
+                       name="log_date"  autocomplete="off" placeholder="Select date">
             </div>
             <div class="col-md-12">
                 <hr/>
@@ -549,11 +559,34 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-gradient.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/loaders/loaders.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/colors/palette-loader.css') }}">
-@endpush
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
+    @endpush
 @push('page-js')
+<script src="{{ asset('app-assets/vendors/js/pickers/dateTime/moment-with-locales.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('app-assets') }}/vendors/js/pickers/daterange/daterangepicker.js"></script>
 
     <script>
         $(function () {
+
+            $('.date_range').daterangepicker({
+                autoUpdateInput: false,
+                showDropdowns: true,
+                startDate: moment().add(9, 'day'),
+                // minDate: moment(),
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: 'YYYY-MM-DD'
+                },
+            });
+
+            $('input[name="log_date"]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD') + '=' + picker.endDate.format('YYYY-MM-DD'));
+            });
+
+            $('input[name="log_date"]').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
+
             $.fn.dataTable.ext.errMode = 'none';
             $(document).on('click', '#search_btn', function (e) {
                 let number;
@@ -688,7 +721,12 @@
                     pageLength: 10,
                     lengthChange: false,
                     ajax: {
-                        url: "/developer/api/debug/product/log/" + number
+                        url: "/developer/api/debug/product/log/" + number,
+                        data: {
+                            date: function () {
+                                return $("#logDate").val();
+                            }
+                        }
                     },
                     columns: [
                         {
@@ -942,6 +980,10 @@
                 });
             }
 
+            // $(document).on('input', '#logDate', function (e) {
+            //     e.preventDefault();
+            //     $('#productLog').DataTable().ajax.reload();
+            // });
             $(document).on('input', '#date', function (e) {
                 e.preventDefault();
                 $('#audit_log_table').DataTable().ajax.reload();
@@ -1042,5 +1084,14 @@
                 });
             }
         })
+
+
+        $('#logDate').on('apply.daterangepicker', function(ev, picker) {
+                $('#productLog').DataTable().ajax.reload();
+            });
+            $('#logDate').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+                $('#productLog').DataTable().ajax.reload();
+            });
     </script>
 @endpush
