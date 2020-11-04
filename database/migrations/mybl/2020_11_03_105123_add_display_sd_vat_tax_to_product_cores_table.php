@@ -14,7 +14,7 @@ class AddDisplaySdVatTaxToProductCoresTable extends Migration
     public function up()
     {
         Schema::table('product_cores', function (Blueprint $table) {
-            $table->integer('display_sd_vat_tax')->nullable()->after('status');
+            $table->string('display_sd_vat_tax')->nullable()->after('status');
         });
     }
 
