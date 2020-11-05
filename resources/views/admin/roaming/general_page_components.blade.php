@@ -46,22 +46,40 @@
                                     <textarea class="form-control" name="short_description_bn">{{$page->short_description_bn}}</textarea>
                                 </div>
 
+
                                 <div class="col-md-4 col-xs-12">
                                     <h4>Sample/Instruction</h4>
                                     <img style="border: 1px solid #ddd;" src="{{asset('app-assets/images/roaming/general_page_short_text.png')}}" width="100%">
 
                                 </div>
-
                             </div>
-
-
-
+                            <div class="form-group row">
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Url Slug (EN) </label>
+                                    <input type="text" class="form-control" name="url_slug_en" value="{{ $page->url_slug_en }}">
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Url Slug (BN) </label>
+                                    <input type="text" class="form-control" name="url_slug_bn"
+                                    value="{{ $page->url_slug_bn }}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 col-xs-12">
+                                    <label>Page Header (EN) </label>
+                                   <textarea name="page_header_en" class="form-control" cols="30" rows="2">{{ $page->page_header_en }}</textarea>
+                                </div>
+                                <div class="col-md-4 col-xs-12">
+                                    <label>Page Header (BN) </label>
+                                   <textarea name="page_header_bn" class="form-control" cols="30" rows="2">{{ $page->page_header_bn }}</textarea>
+                                </div>
+                                <div class="col-md-4 col-xs-12">
+                                    <label>Schema Markup </label>
+                                   <textarea name="schema_markup" class="form-control" cols="30" rows="2">{{ $page->schema_markup }}</textarea>
+                                </div>
+                            </div>
                         </div>
-
-
-
                     </div>
-
                 </div>
             </div>
         </div>
