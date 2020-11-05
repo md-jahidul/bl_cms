@@ -14,13 +14,14 @@ class AddAdditionalFieldInPriyojonsTable extends Migration
     public function up()
     {
         Schema::table('priyojons', function (Blueprint $table) {
-            $table->string('banner_image_url')->nullable();
+            $table->string('banner_image_url')->after('title_bn')->nullable();
             $table->string('banner_mobile_view')->nullable();
             $table->string('alt_text_en')->nullable();
             $table->string('alt_text_bn')->nullable();
             $table->string('banner_name')->nullable();
             $table->string('url')->nullable();
             $table->string('title_bn')->nullable()->change();
+            $table->tinyInteger('status')->default(1)->after('url');
         });
     }
 
@@ -38,6 +39,7 @@ class AddAdditionalFieldInPriyojonsTable extends Migration
             $table->dropColumn('alt_text_bn');
             $table->dropColumn('banner_name');
             $table->dropColumn('url');
+            $table->dropColumn('status');
         });
     }
 }

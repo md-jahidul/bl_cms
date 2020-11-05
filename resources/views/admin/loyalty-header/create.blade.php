@@ -12,7 +12,7 @@
     {!! $liHtml !!}
 @endsection
 @section('action')
-    <a href="{{ $priyojonLanding->parent_id == 0 ? url('priyojon') : url("priyojon/$priyojonLanding->parent_id/child-menu") }}"
+    <a href="{{ $parent_id == 0 ? url('priyojon') : url("priyojon/$parent_id/child-menu") }}"
        class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
 @endsection
 @section('content')
@@ -21,15 +21,14 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ url("priyojon/ $priyojonLanding->id") }}" method="POST" novalidate>
+                        <form role="form" action="{{ url("priyojon") }}" method="POST" novalidate>
                             @csrf
-                            {{method_field('PUT')}}
+{{--                            {{method_field('PUT')}}--}}
                             <div class="row">
-                                <input type="hidden" name="parent_id" value="{{ $priyojonLanding->parent_id }}">
+                                <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                                 <div class="form-group col-md-6 {{ $errors->has('title_en') ? ' error' : '' }}">
-                                    <label for="title_en" class="required">Title (English)</label>
-                                    <input type="text" name="title_en"  class="form-control" placeholder="Enter duration name in english"
-                                           value="{{ $priyojonLanding->title_en }}" required data-validation-required-message="Enter duration name in english">
+                                    <label for="title_en">Title (English)</label>
+                                    <input type="text" name="title_en"  class="form-control" placeholder="Enter duration name in english">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_en'))
                                         <div class="help-block">  {{ $errors->first('title_en') }}</div>
@@ -37,20 +36,17 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('title_bn') ? ' error' : '' }}">
-                                    <label for="title_bn" class="required">Title (Bangla)</label>
-                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter duration name in english"
-                                           value="{{ $priyojonLanding->title_bn }}" required data-validation-required-message="Enter duration name in english">
+                                    <label for="title_bn">Title (Bangla)</label>
+                                    <input type="text" name="title_bn"  class="form-control" placeholder="Enter duration name in english">
                                     <div class="help-block"></div>
                                     @if ($errors->has('title_bn'))
                                         <div class="help-block">  {{ $errors->first('title_bn') }}</div>
                                     @endif
                                 </div>
-
-                                @if($priyojonLanding->parent_id != 0)
+                                @if($parent_id != 0)
                                     <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">
                                         <label for="url">Redirect Url</label>
-                                        <input type="text" name="url"  class="form-control" placeholder="Enter redirect url"
-                                               value="{{ $priyojonLanding->url }}">
+                                        <input type="text" name="url"  class="form-control" placeholder="Enter redirect url">
                                         <div class="help-block"></div>
                                         @if ($errors->has('url'))
                                             <div class="help-block">  {{ $errors->first('url') }}</div>
@@ -61,13 +57,14 @@
                                         <label></label>
                                         <div class="form-group">
                                             <label for="title" class="mr-1">Status:</label>
-                                            <input type="radio" name="status" value="1" id="active" {{ $priyojonLanding->status == 1 ? "checked" : '' }}>
+                                            <input type="radio" name="status" value="1" id="active" checked>
                                             <label for="active" class="mr-1">Active</label>
 
-                                            <input type="radio" name="status" value="0" id="inactive" {{ $priyojonLanding->status == 0 ? "checked" : '' }}>
+                                            <input type="radio" name="status" value="0" id="inactive">
                                             <label for="inactive">Inactive</label>
                                         </div>
                                     </div>
+
                                 @endif
 
                                 <div class="form-actions col-md-12 ">
@@ -85,7 +82,7 @@
             </div>
         </div>
     </section>
-    @if($priyojonLanding->parent_id == 0)
+    @if($parent_id == 0)
         <section>
         <div class="card">
             <div class="card-content collapse show">
