@@ -76,8 +76,7 @@ class OtpRequestLogsService
         $start = $request->get('start');
         $length = $request->get('length');
 
-        $date = $request->date_otp_login ? $request->date_otp_login : Carbon::now()->toDateString();
-
+        $date = $request->date ? $request->date : Carbon::now()->toDateString();
 
         $builder = BlOtpLoginLogs::where('msisdn', $number);
 
