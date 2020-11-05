@@ -30,8 +30,9 @@ return [
             'tag'                   => 23,
             'call_rate'             => 24,
             'call_rate_unit'        => 25,
-            'status'                => 26,
-            'display_sd_vat_tax'    => 27
+            'display_sd_vat_tax'    => 26,
+            'status'                => 27,
+
         ]
     ],
     /*'pcat' => [
