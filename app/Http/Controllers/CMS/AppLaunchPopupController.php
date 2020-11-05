@@ -29,9 +29,7 @@ class AppLaunchPopupController extends Controller
     public function create()
     {
 
-        $produc=$this->getActiveProducts();//ProductCore::where('status', 1)->pluck('name','product_code')->toArray();
-        $productList=$produc;
-        // dd($productList);
+        $productList=$this->getActiveProducts();//ProductCore::where('status', 1)->pluck('name','product_code')->toArray();
         return view('admin.app-launch-popup.create', compact('productList'));
     }
 
@@ -169,7 +167,7 @@ class AppLaunchPopupController extends Controller
         $products = $builder->whereHas(
             'details',
             function ($q) {
-                $q->whereIn('content_type', ['data','voice','sms']);
+                $q->whereIn('content_type', ['data','voice','sms','mix']);
             }
         )->get();
 
