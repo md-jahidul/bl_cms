@@ -60,9 +60,31 @@ class PriyojonController extends Controller
             $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
         $menu_items = $this->priyojonItems;
-        return view('admin.config.priyojon.index', compact('priyojons', 'parent_id', 'menu_items'));
+        return view('admin.loyalty-header.index', compact('priyojons', 'parent_id', 'menu_items'));
     }
 
+    public function create($parent_id = 0)
+    {
+        $menu_id = $parent_id;
+        while ($menu_id != 0) {
+            $menu_id = $this->getBreadcrumbInfo($menu_id);
+        }
+        $menu_items = $this->priyojonItems;
+        return view('admin.loyalty-header.create', compact('menu_items', 'parent_id'));
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse|Redirector
+     */
+    public function store(Request $request)
+    {
+        $parentId =  $request->parent_id;
+        $response = $this->priyojonService->storePriyojon($request->all());
+        Session::flash('message', $response->getContent());
+        return redirect(($parentId != 0) ? "priyojon/$parentId/child-menu" : 'priyojon');
+    }
 
     /**
      * @param $id
@@ -77,7 +99,7 @@ class PriyojonController extends Controller
             $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
         $menu_items = $this->priyojonItems;
-        return view('admin.config.priyojon.edit', compact('priyojonLanding', 'menu_items'));
+        return view('admin.loyalty-header.edit', compact('priyojonLanding', 'menu_items'));
     }
 
     /**
@@ -91,6 +113,20 @@ class PriyojonController extends Controller
         $response = $this->priyojonService->updatePriyojon($request->all(), $id);
         Session::flash('message', $response->getContent());
         return redirect(($parentId != 0) ? "priyojon/$parentId/child-menu" : 'priyojon');
+    }
+
+    public function landingPageBanner(Request $request, $id)
+    {
+        $parentId =  $request->parent_id;
+        $response = $this->priyojonService->bannerUpload($request->all(), $id);
+        Session::flash('message', $response->getContent());
+        return redirect(($parentId != 0) ? "priyojon/$parentId/child-menu" : 'priyojon');
+    }
+
+    public function destroyMenu($parentId, $id)
+    {
+        $this->priyojonService->deleteMenu($id);
+        return url("priyojon/$parentId/child-menu");
     }
 
     /**

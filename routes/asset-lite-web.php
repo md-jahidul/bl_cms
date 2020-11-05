@@ -43,10 +43,13 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     // Priyojon Landing Page ====================================
     Route::get('priyojon/{id}/child-menu/create', 'AssetLite\PriyojonController@create');
-    Route::resource('priyojon', 'AssetLite\PriyojonController')->only(['update', 'edit']);
+    Route::resource('priyojon', 'AssetLite\PriyojonController')->only(['create', 'store', 'update', 'edit']);
     Route::get('priyojon/{id?}/{child_menu?}', 'AssetLite\PriyojonController@index');
+//    Route::get('priyojon/{id?}/create', 'AssetLite\PriyojonController@create');
+    Route::post('priyojon-landing-page-banner/{id}', 'AssetLite\PriyojonController@landingPageBanner')
+        ->name('priyojon.banner');
 //    Route::get('/menu-auto-save', 'AssetLite\MenuController@parentMenuSortable');
-//    Route::get('menu/{parentId}/destroy/{id}', 'AssetLite\MenuController@destroy');
+    Route::get('priyojon/{parentId}/destroy/{id}', 'AssetLite\PriyojonController@destroyMenu');
 
     // MENU  ====================================
     Route::get('menu/create', 'AssetLite\MenuController@create');
