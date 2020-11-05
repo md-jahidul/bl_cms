@@ -304,7 +304,7 @@
                                value="{{ $current_date }}"
                                min="{{ $date_limit }}"
                                max="{{ $current_date }}"
-                               name="date_otp_login" >
+                               name="date" >
                     </div>
                   </div>
                 </div>
