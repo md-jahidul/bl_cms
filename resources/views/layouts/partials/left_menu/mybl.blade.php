@@ -52,7 +52,7 @@
     @if( auth()->user()->can_view('MyblProductEntry') )
         <li class="{{ is_active_url('mybl/core-product') }} nav-item"><a href="{{route('mybl.product.index')}}"><i
                     class="la la-list"></i>
-                <span class="menu-title" >Products</span></a>
+                <span class="menu-title">Products</span></a>
         </li>
     @endif
 
@@ -94,11 +94,11 @@
                         <i class="la la-comment-o"></i>Notification List</a>
                 </li>
 
-               {{-- <li class="{{ is_active_url('notification') }}{{ is_active_url('notification-report') }}">
-                    <a class="menu-item" href="{{ route('notification.report') }}"
-                       data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-comment-o"></i>Notification Report</a>
-                </li>--}}
+                {{-- <li class="{{ is_active_url('notification') }}{{ is_active_url('notification-report') }}">
+                     <a class="menu-item" href="{{ route('notification.report') }}"
+                        data-i18n="nav.templates.vert.classic_menu">
+                         <i class="la la-comment-o"></i>Notification Report</a>
+                 </li>--}}
 
                 <li class="{{ is_active_url('notification-report')}}">
                     <a class="menu-item" href="{{ url('notification-report') }}"
@@ -143,9 +143,6 @@
                         <i class="la la-comment-o"></i>App List</a>
                 </li>
 
-
-
-
             </ul>
         </li>
     @endif
@@ -158,7 +155,8 @@
             <ul class="menu-content">
                 {{--page--}}
                 <li class="{{ is_active_url('myblslider') . is_active_url('myblslider/addImage/') . is_active_url('myblslider/create') . is_active_url('myblslider/edit') }}">
-                    <a class="menu-item" href="{{ route('myblslider.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                    <a class="menu-item" href="{{ route('myblslider.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-sliders"></i>My-BL Slider</a>
                 </li>
                 <li class="{{ is_active_url('banner') . is_active_url('banner/create')}}">
@@ -196,7 +194,8 @@
                         <i class="la la-phone-square"></i> Minute Offer</a>
                 </li>
                 <li class="{{is_active_url('smsOffer')}} {{is_active_url('smsOffer/create')}}">
-                    <a class="menu-item" href="{{ route('smsOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                    <a class="menu-item" href="{{ route('smsOffer.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comments-o"></i> SMS Offer</a>
                 </li>
                 <li class="{{is_active_url('mixedBundleOffer')}} {{is_active_url('mixedBundleOffer/create')}}">
@@ -210,7 +209,8 @@
                         <i class="la la-gift"></i> Near by Offer</a>
                 </li>
                 <li class="{{is_active_url('amarOffer')}} {{is_active_url('amarOffer/create')}}">
-                    <a class="menu-item" href="{{ route('amarOffer.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                    <a class="menu-item" href="{{ route('amarOffer.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-cart-arrow-down"></i> Amar Offer</a>
                 </li>
 
@@ -261,13 +261,20 @@
                 <span class="menu-title">Config</span></a>
             <ul class="menu-content">
                 <li class="{{ is_active_url('otp-config') . is_active_url('otp-config/create')}}">
-                    <a class="menu-item" href="{{ route('otp-config.index') }}" data-i18n="nav.templates.vert.classic_menu">
+                    <a class="menu-item" href="{{ route('otp-config.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-cog"></i>OTP Config</a>
                 </li>
 
                 <li class="{{ is_active_url('recharge/prefill-amounts')}}">
                     <a class="menu-item" href="{{ route('recharge.prefill-amounts.index') }}">
                         <i class="la la-money"></i>Recharge Prefill Amount</a>
+
+                </li>
+
+                <li class="{{ is_active_url('balance-transfer/prefill-amounts')}}">
+                    <a class="menu-item" href="{{ route('balance-transfer.prefill-amounts.create') }}">
+                        <i class="la la-money"></i>Balance Transfer Prefill Amount</a>
 
                 </li>
 
@@ -294,17 +301,26 @@
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Migrate Plan List</a>
                 </li>
-
-
             </ul>
         </li>
     @endif
 
 
     @if( auth()->user()->can_view('TermsAndConditions') )
-        <li class="{{ is_active_url('/terms-conditions') }} nav-item"><a href="{{route('terms-conditions.show')}}"><i
-                    class="la la-legal"></i>
-                <span class="menu-title">Terms and Conditions</span></a>
+        <li class=" nav-item"><a href="#"><i class="la la-comment"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Terms and Conditions</span></a>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('/terms-conditions/general') }} nav-item">
+                    <a href="{{route('terms-conditions.show', ['feature_name' => 'general'])}}">
+                        <i class="la la-legal"></i>
+                        <span class="menu-title">T&C For App</span></a>
+                </li>
+                <li class="{{ is_active_url('/terms-conditions/balance_transfer') }} nav-item">
+                    <a href="{{route('terms-conditions.show', ['feature_name' => 'balance_transfer'])}}">
+                        <i class="la la-legal"></i><span class="menu-title">T&C For Balance Transfer</span>
+                    </a>
+                </li>
+            </ul>
         </li>
     @endif
 
@@ -381,7 +397,8 @@
     @endif
 
     @if( auth()->user()->can_view('Setting') )
-        <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{route('setting.index')}}"><i class="la la-cogs"></i>
+        <li class="{{ is_active_url('/setting') }} nav-item"><a href="{{route('setting.index')}}"><i
+                    class="la la-cogs"></i>
                 <span class="menu-title" data-i18n="nav.dash.main">Settings</span></a>
         </li>
     @endif
@@ -398,12 +415,12 @@
         </li>
     @endif
 
-    @endif
+@endif
 
-    <li class="{{ is_active_url('developer/api/debug') }}">
-        <a class="menu-item" href="{{ route('support-message') }}">
-            <i class="la la-code-fork"></i>Support Messages</a>
-    </li>
-    {{--------------------------------------------------------------------------------------------------------------------}}
-    {{---------------------------------------------------------My-BL App End----------------------------------------------}}
-    {{--------------------------------------------------------------------------------------------------------------------}}
+<li class="{{ is_active_url('developer/api/debug') }}">
+    <a class="menu-item" href="{{ route('support-message') }}">
+        <i class="la la-code-fork"></i>Support Messages</a>
+</li>
+{{--------------------------------------------------------------------------------------------------------------------}}
+{{---------------------------------------------------------My-BL App End----------------------------------------------}}
+{{--------------------------------------------------------------------------------------------------------------------}}
