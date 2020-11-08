@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Terms and Conditions')
-@section('card_name', 'Terms and Conditions')
+@section('card_name', ucwords(str_replace('_', ' ', $featureName)) . ' Terms and Conditions')
 
 @section('content')
     <section>
@@ -31,7 +31,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <label for="title_en" class="required">Terms and Conditions</label>
+                                    <label for="title_en" class="required">
+                                        {{ucwords(str_replace('_', ' ', $featureName))}} Terms and Conditions
+                                    </label>
+                                    <input type="hidden" name="feature_name" value="{{$featureName}}">
                                     <textarea id="terms-conditions" name="terms_conditions" required>
                                         @if($terms_conditions)
                                             {{ $terms_conditions->terms_conditions }}

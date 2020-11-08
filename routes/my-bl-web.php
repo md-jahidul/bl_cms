@@ -198,8 +198,11 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::put('appslider/images/{id}/update', 'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
     Route::delete('appslider/images/{id}/delete', 'CMS\StoreAppSliderImageController@destroy')->name('appslider.images.destroy');
 
-    // terms and conditions
-    Route::get('terms-conditions', 'CMS\TermsAndConditionsController@show')->name('terms-conditions.show');
+
+    /*
+     * terms and conditions
+     */
+    Route::get('terms-conditions/{featureName}', 'CMS\TermsAndConditionsController@show')->name('terms-conditions.show');
     Route::post('terms-conditions', 'CMS\TermsAndConditionsController@store')->name('terms-conditions.store');
 
     // privacy and policy
@@ -251,6 +254,17 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('recharge.prefill-amounts.update');
 
     Route::get('recharge/prefill-amounts/order', 'CMS\PrefillRechargeController@updatePosition');
+
+    /*
+    *  Balance Transfer
+    */
+
+    Route::get('balance-transfer/prefill-amounts', 'BalanceTransferController@createPrefillAmounts')
+        ->name('balance-transfer.prefill-amounts.create');
+    Route::post('balance-transfer/prefill-amounts', 'BalanceTransferController@storePrefillAmounts')
+        ->name('balance-transfer.prefill-amounts.store');
+
+    Route::get('balance-transfer/prefill-amounts/order', 'CMS\PrefillRechargeController@updatePosition');
 
     // search content
     Route::get('mybl-search/content', 'CMS\Search\InAppSearchContentController@create')
