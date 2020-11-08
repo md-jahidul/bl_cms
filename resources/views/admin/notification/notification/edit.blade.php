@@ -159,35 +159,7 @@
                         </div>
 
 {{-- ================================================= --}}
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="image" class="required">Upload image :</label>
-                                @if (isset($notification))
-                                    <input type="file"
-                                        id="icon"
-                                        name="image"
-                                        {{-- data-height="70" --}}
-                                        {{-- data-allowed-formats="square" --}}
-                                        data-allowed-file-extensions="jpeg png jpg"
-                                        data-default-file="{{ url('storage/' .$notification->image) }}"
-                                        class="dropify"/>
-                                @else
-                                    <input type="file"
-                                        id="icon"
-                                        name="image"
-                                        class="dropify"
-                                        {{-- data-allowed-formats="square" --}}
-                                        data-allowed-file-extensions="jpeg png jpg"
-                                        {{-- data-height="70" --}}
-                                        />
-                                @endif
-                                <div class="help-block">
-                                    <small class="text-danger"> @error('image') {{ $message }} @enderror </small>
-                                    {{-- <small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small> --}}
-                                </div>
-                                <small id="massage"></small>
-                            </div>
-                        </div>
+
 
                         <div class="col-md-4" id="action_div">
                             @php
@@ -226,9 +198,38 @@
                         </div>
 
 {{-- ========================================================= --}}
-
-
-                        <div class="col-md-12">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="image" class="required">Upload image :</label>
+                                @if (isset($notification))
+                                    <input type="file"
+                                        id="icon"
+                                        name="image"
+                                        {{-- data-height="70" --}}
+                                        {{-- data-allowed-formats="square" --}}
+                                        data-allowed-file-extensions="jpeg png jpg"
+                                        data-default-file="{{ url('storage/' .$notification->image) }}"
+                                        class="dropify"/>
+                                @else
+                                    <input type="file"
+                                        id="icon"
+                                        name="image"
+                                        class="dropify"
+                                        {{-- data-allowed-formats="square" --}}
+                                        data-allowed-file-extensions="jpeg png jpg"
+                                        {{-- data-height="70" --}}
+                                        />
+                                @endif
+                                <div class="help-block">
+                                    <small class="text-danger"> @error('image') {{ $message }} @enderror </small>
+                                    {{-- <small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small> --}}
+                                </div>
+                                <small id="massage"></small>
+                            </div>
+                        </div>
+                            <div class="col-md-7">
                             <div class="form-group">
                                 <label for="body" class="required">Body :</label>
                                 <textarea
@@ -238,7 +239,9 @@
                                 <div class="help-block"></div>
                                 <small class="text-danger"> @error('body') {{ $message }} @enderror </small>
                             </div>
-                        </div>
+                            </div>
+
+
 
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-success round px-2">
