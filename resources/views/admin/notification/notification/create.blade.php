@@ -135,6 +135,7 @@
                                 <div class="controls">
                                     <select name="device_type" id="device_type"  class="form-control">
                                     <option value="">Select Devices</option>
+                                    <option value="all">All</option>
                                     <option value="ios">IOS</option>
                                     <option value="android">Android</option>
                                     </select>
@@ -151,6 +152,7 @@
                                 <div class="controls">
                                     <select name="customer_type" id="customer_type" required class="form-control">
                                     <option value="">Select Customer Type</option>
+                                    <option value="all">All</option>
                                     <option value="prepaid">Prepaid</option>
                                     <option value="postpaid">Postpaid</option>
                                     </select>
@@ -236,8 +238,6 @@
                                 <small class="text-danger"> @error('body') {{ $message }} @enderror </small>
                             </div>
                             </div>
-
-
 
                         {{-- </div> --}}
 

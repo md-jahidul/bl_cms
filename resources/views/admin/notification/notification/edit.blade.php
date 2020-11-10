@@ -133,6 +133,7 @@
                                 <div class="controls">
                                     <select name="device_type" id="device_type" class="form-control">
                                     <option value="">Select Devices</option>
+                                    <option value="all" @if($notification->device_type=='all') selected @endif>All</option>
                                     <option value="ios" @if($notification->device_type=='ios') selected @endif>IOS</option>
                                     <option value="android" @if($notification->device_type=='android') selected @endif>Android</option>
                                     </select>
@@ -149,6 +150,7 @@
                                 <div class="controls">
                                     <select name="customer_type" id="customer_type" required class="form-control">
                                     <option value="">Select Customer Type</option>
+                                    <option value="all" @if($notification->customer_type=='all') selected @endif>All</option>
                                     <option value="prepaid" @if($notification->customer_type=='prepaid') selected @endif>Prepaid</option>
                                     <option value="postpaid" @if($notification->customer_type=='postpaid') selected @endif>Postpaid</option>
                                     </select>

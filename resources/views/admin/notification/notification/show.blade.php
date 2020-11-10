@@ -114,58 +114,57 @@
             /* file handled  */
             $('#sendNotificationForm').submit(function (e) {
                 e.preventDefault();
-                // swal.fire({
-                //     title: 'Data Uploading.Please Wait ...',
-                //     allowEscapeKey: false,
-                //     allowOutsideClick: false,
-                //     onOpen: () => {
-                //         swal.showLoading();
-                //     }
-                // });
-                let URL="{{ route('notification.send')}}}";
+                swal.fire({
+                    title: 'Data Uploading.Please Wait ...',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    onOpen: () => {
+                        swal.showLoading();
+                    }
+                });
+                let URL="{{ route('notification.send')}}";
                 let formData = new FormData($(this)[0]);
                 let clickBtn = $(".e-clicked").val();
                 if(clickBtn === "Submit Device" )
                 {
                  URL="{{ route('target_wise_notification.send')}}";
                 }
+                $.ajax({
+                    url: URL,
+                    type: 'POST',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (result) {
 
-                // $.ajax({
-                //     url: '{{ route('notification.send')}}',
-                //     type: 'POST',
-                //     cache: false,
-                //     contentType: false,
-                //     processData: false,
-                //     data: formData,
-                //     success: function (result) {
+                        if (result.success) {
+                            swal.fire({
+                                title: 'Notification sent Successfully!',
+                                type: 'success',
+                                timer: 900000,
+                                showConfirmButton: false
+                            });
 
-                //         if (result.success) {
-                //             swal.fire({
-                //                 title: 'Notification sent Successfully!',
-                //                 type: 'success',
-                //                 timer: 900000,
-                //                 showConfirmButton: false
-                //             });
+                            window.location.href = '{{route("notification.index")}}';
 
-                //             window.location.href = '{{route("notification.index")}}';
+                        } else {
+                            swal.close();
+                            swal.fire({
+                                title: result.message,
+                                type: 'error',
+                            });
+                        }
 
-                //         } else {
-                //             swal.close();
-                //             swal.fire({
-                //                 title: result.message,
-                //                 type: 'error',
-                //             });
-                //         }
-
-                //     },
-                //     error: function (data) {
-                //         console.log(data);
-                //         swal.fire({
-                //             title: 'Failed to send Notifications',
-                //             type: 'error',
-                //         });
-                //     }
-                // });
+                    },
+                    error: function (data) {
+                        console.log(data);
+                        swal.fire({
+                            title: 'Failed to send Notifications',
+                            type: 'error',
+                        });
+                    }
+                });
 
             });
         });
