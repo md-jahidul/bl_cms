@@ -46,8 +46,11 @@
                         </div>
 
                         <div class="col-md-12" >
+                            <div class="form-group float-right" style="margin-top:15px; margin-left: 10px;">
+                                <input class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit" name="submit" value="Submit Device" id="submitDevice" onclick="return selectMethord('submitDevice');">
+                            </div>
                             <div class="form-group float-right" style="margin-top:15px;">
-                                <button class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
+                                <input class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit" name="submit" value="Submit" id="submit"  onclick="return selectMethord('submit');">
                             </div>
                         </div>
                     </form>
@@ -62,7 +65,7 @@
 
 @push('style')
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css"
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
     <style>
 
@@ -83,6 +86,16 @@
 
 
     <script>
+        function selectMethord(buttonId){
+            if(buttonId == 'submitDevice'){
+                $('#'+buttonId).addClass('e-clicked')
+                $("#submit").removeClass('e-clicked');
+            }else{
+                $('#'+buttonId).addClass('e-clicked')
+                $("#submitDevice").removeClass('e-clicked');
+            }
+            return true;
+        }
         $(function () {
             $('#user-multiple-selected').multiselect({
                     includeSelectAllOption: true
@@ -101,54 +114,58 @@
             /* file handled  */
             $('#sendNotificationForm').submit(function (e) {
                 e.preventDefault();
-
-                swal.fire({
-                    title: 'Data Uploading.Please Wait ...',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    onOpen: () => {
-                        swal.showLoading();
-                    }
-                });
-
+                // swal.fire({
+                //     title: 'Data Uploading.Please Wait ...',
+                //     allowEscapeKey: false,
+                //     allowOutsideClick: false,
+                //     onOpen: () => {
+                //         swal.showLoading();
+                //     }
+                // });
+                let URL="{{ route('notification.send')}}}";
                 let formData = new FormData($(this)[0]);
+                let clickBtn = $(".e-clicked").val();
+                if(clickBtn === "Submit Device" )
+                {
+                 URL="{{ route('target_wise_notification.send')}}";
+                }
 
-                $.ajax({
-                    url: '{{ route('notification.send')}}',
-                    type: 'POST',
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: formData,
-                    success: function (result) {
+                // $.ajax({
+                //     url: '{{ route('notification.send')}}',
+                //     type: 'POST',
+                //     cache: false,
+                //     contentType: false,
+                //     processData: false,
+                //     data: formData,
+                //     success: function (result) {
 
-                        if (result.success) {
-                            swal.fire({
-                                title: 'Notification sent Successfully!',
-                                type: 'success',
-                                timer: 900000,
-                                showConfirmButton: false
-                            });
+                //         if (result.success) {
+                //             swal.fire({
+                //                 title: 'Notification sent Successfully!',
+                //                 type: 'success',
+                //                 timer: 900000,
+                //                 showConfirmButton: false
+                //             });
 
-                            window.location.href = '{{route("notification.index")}}';
+                //             window.location.href = '{{route("notification.index")}}';
 
-                        } else {
-                            swal.close();
-                            swal.fire({
-                                title: result.message,
-                                type: 'error',
-                            });
-                        }
+                //         } else {
+                //             swal.close();
+                //             swal.fire({
+                //                 title: result.message,
+                //                 type: 'error',
+                //             });
+                //         }
 
-                    },
-                    error: function (data) {
-                        console.log(data);
-                        swal.fire({
-                            title: 'Failed to send Notifications',
-                            type: 'error',
-                        });
-                    }
-                });
+                //     },
+                //     error: function (data) {
+                //         console.log(data);
+                //         swal.fire({
+                //             title: 'Failed to send Notifications',
+                //             type: 'error',
+                //         });
+                //     }
+                // });
 
             });
         });

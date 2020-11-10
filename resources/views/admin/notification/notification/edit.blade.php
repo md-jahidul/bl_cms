@@ -342,8 +342,6 @@
         $(document).ready(function () {
             $("#lavel_id").empty();
             $('#lavel_id').html($('#navigate_action').find("option:selected").text());
-//  alert();
-
             initiateDropify('.dropify');
             $('#Example1').DataTable({
                 dom: 'Bfrtip',

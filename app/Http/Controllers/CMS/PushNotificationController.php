@@ -109,6 +109,69 @@ class PushNotificationController extends Controller
         }
     }
 
+
+
+
+    /**
+     * Target wise notification Send
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function targetWiseNotificationSend(Request $request)
+    {
+        $user_phone = [];
+        $notification_id = $request->input('id');
+        $category_id = $request->input('category_id');
+
+        try {
+
+            $reader = ReaderFactory::createFromType(Type::XLSX);
+            $path = $request->file('customer_file')->getRealPath();
+            $reader->open($path);
+
+            foreach ($reader->getSheetIterator() as $sheet) {
+                if ($sheet->getIndex() > 0) {
+                    break;
+                }
+
+                foreach ($sheet->getRowIterator() as $row) {
+                    $cells = $row->getCells();
+                    $number = $cells[0]->getValue();
+                    $user_phone [] = $number;
+
+                   // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
+
+                    if(count($user_phone) == 300){
+                        $notification = $this->getNotificationArray($request, $user_phone);
+                        NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+                            ->onQueue('notification');
+                        $user_phone = [];
+                    }
+                }
+            }
+            $reader->close();
+
+            if(!empty($user_phone)){
+                $notification = $this->getNotificationArray($request, $user_phone);
+                NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+                    ->onQueue('notification');
+            }
+
+            Log::info('Success: Notification sending from excel');
+            return [
+                'success' => true,
+                'message' => 'Notification Sent'
+            ];
+        } catch (\Exception $e) {
+            Log::info('Error:'.$e->getMessage());
+            return [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
+        }
+    }
+
     /**
      * @param Request $request
      * @param array $user_phone
