@@ -214,6 +214,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-8">
                     <div class="row">
                         <div class="col-md-8">
@@ -271,6 +272,48 @@
                             <th>OTP</th>
                             <th>Source</th>
                             <th>Version</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+
+        <br/>
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="col-md-12" style="padding: 10px">
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5 class="mb-1 mt-2 text-bold-600">Recent OTP and Login Logs</h5>
+                    </div>
+
+                    <div class="col-md-4 mt-2">
+                        <input type='date'
+                               class="form-control datetime"
+                               id="date_otp_login"
+                               value="{{ $current_date }}"
+                               min="{{ $date_limit }}"
+                               max="{{ $current_date }}"
+                               name="date" >
+                    </div>
+                  </div>
+                </div>
+
+                <hr>
+                <div class="col-md-12" style="background-color: white; padding: 10px;">
+                    <table class="table table-bordered" id="otp_login_table">
+                        <thead class="alert-warning text-white">
+                        <tr>
+                            <th>Request Time</th>
+                            <th>number</th>
+                            <th>response</th>
+                            <th>message</th>
                             <th>Status</th>
                         </tr>
                         </thead>
@@ -612,6 +655,7 @@
                 getLastLogin(number);
                 getUsageDetails(number);
                 getOtpData(number);
+                getOtpLoginData(number);
                 getProductLog(number);
                 getContactRestoreLogsData(number);
 
@@ -980,10 +1024,6 @@
                 });
             }
 
-            // $(document).on('input', '#logDate', function (e) {
-            //     e.preventDefault();
-            //     $('#productLog').DataTable().ajax.reload();
-            // });
             $(document).on('input', '#date', function (e) {
                 e.preventDefault();
                 $('#audit_log_table').DataTable().ajax.reload();
@@ -997,6 +1037,11 @@
             $(document).on('input', '#date_otp', function (e) {
                 e.preventDefault();
                 $('#otp_log_table').DataTable().ajax.reload();
+            });
+
+            $(document).on('input', '#date_otp_login', function (e) {
+                e.preventDefault();
+                $('#otp_login_table').DataTable().ajax.reload();
             });
 
             $(document).on('input', '#search-contact-restore-log', function (e) {

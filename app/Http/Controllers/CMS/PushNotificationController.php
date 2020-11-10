@@ -12,28 +12,38 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
+use App\Models\NotificationDraft;
+use App\Models\Customer;
+use App\Services\CustomerService;
+use App\Traits\CrudTrait;
+use Illuminate\Support\Facades\DB;
 /**
  * Class PushNotificationController
  * @package App\Http\Controllers\CMS
  */
 class PushNotificationController extends Controller
 {
-
+    use CrudTrait;
 
     /**
      * @var NotificationService
      */
     protected $notificationService;
 
+     /**
+     * @var CustomerService
+     */
+    protected $customerService;
+
 
     /**
      * PushNotificationController constructor.
      * @param NotificationService $notificationService
      */
-    public function __construct(NotificationService $notificationService)
+    public function __construct(NotificationService $notificationServicen,CustomerService $customerService)
     {
-        $this->notificationService = $notificationService;
+        $this->notificationService = $notificationServicen;
+        $this->customerService = $customerService;
         $this->middleware('auth');
     }
 
@@ -57,6 +67,7 @@ class PushNotificationController extends Controller
      */
     public function sendNotification(Request $request)
     {
+
         $user_phone = [];
         $notification_id = $request->input('id');
         $category_id = $request->input('category_id');
@@ -108,6 +119,75 @@ class PushNotificationController extends Controller
             ];
         }
     }
+
+
+
+
+    /**
+     * Target wise notification Send
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function targetWiseNotificationSend(Request $request)
+    {
+        $user_phone = [];
+        $notification_id = $request->input('id');
+        $category_id = $request->input('category_id');
+
+        try {
+
+            $reader = ReaderFactory::createFromType(Type::XLSX);
+            $path = $request->file('customer_file')->getRealPath();
+            $reader->open($path);
+
+            foreach ($reader->getSheetIterator() as $sheet) {
+                if ($sheet->getIndex() > 0) {
+                    break;
+                }
+
+                foreach ($sheet->getRowIterator() as $row) {
+                    $cells = $row->getCells();
+                    $number = $cells[0]->getValue();
+                    $user_phone [] = $number;
+
+                   // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
+
+                    if(count($user_phone) == 300){
+                        $notification= $this->customerService->getUserList($request, $user_phone,$notification_id);
+                        // $notification = $this->getNotificationArray($request, $user_phone);
+                        NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+                            ->onQueue('notification');
+                        $user_phone = [];
+                    }
+                }
+            }
+            $reader->close();
+
+            if(!empty($user_phone)){
+
+                $notification= $this->customerService->getUserList($request, $user_phone,$notification_id);
+            //   dd($notification);
+                // $notification = $this->prepareDataForSendNotification($request, $customar,$notification_id);
+                // $notification = $this->getNotificationArray($request, $user_phone);
+                NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+                    ->onQueue('notification');
+            }
+
+            Log::info('Success: Notification sending from excel');
+            return [
+                'success' => true,
+                'message' => 'Notification Sent'
+            ];
+        } catch (\Exception $e) {
+            Log::info('Error:'.$e->getMessage());
+            return [
+                'success' => false,
+                'message' => $e->getMessage()
+            ];
+        }
+    }
+
 
     /**
      * @param Request $request
