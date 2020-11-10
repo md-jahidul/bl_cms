@@ -188,7 +188,7 @@
                             @if(isset($notification))
                                 @if(!empty($notification->external_url))
                                     <div class="form-group other-info-div">
-                                        <label>Redirect URL</label>
+                                        <label id="lavel_id">Redirect URL</label>
                                         <input type="text" name="external_url" class="form-control" required
                                     value="{{$notification->external_url}}">
                                         <div class="help-block"></div>
@@ -340,6 +340,10 @@
             }
 
         $(document).ready(function () {
+            $("#lavel_id").empty();
+            $('#lavel_id').html($('#navigate_action').find("option:selected").text());
+//  alert();
+
             initiateDropify('.dropify');
             $('#Example1').DataTable({
                 dom: 'Bfrtip',
@@ -350,5 +354,71 @@
             });
         });
 
+        var dial_content = "";
+            var redirect_content = "";
+            var purchase_content = "";
+            var url_html;
+            var product_html;
+            var parse_data;
+            let dial_html, other_attributes = '';
+            var js_data ="<?php echo $notification->navigate_action; ?>"; //<?php echo isset($search_content) ? json_encode($search_content->other_contents) : null; ?>;
+
+            if (js_data) {
+                other_attributes =js_data; //JSON.parse(js_data);
+                if (other_attributes) {
+                    type =js_data; //other_attributes.type;
+                    if(type == 'dial'){
+                        dial_content = js_data; //other_attributes.content;
+                    }else if(type == 'url'){
+                        redirect_content =js_data; // other_attributes.content;
+                    }else{
+                        purchase_content =js_data; /// other_attributes.content;
+                    }
+                }
+            }
+            // add dial number
+            dial_html = ` <div class="form-group other-info-div">
+                                        <label>Dial Number</label>
+                                        <input type="text" name="external_url" class="form-control" value="${dial_content}" placeholder="Enter Valid Number" required>
+                                        <div class="help-block"></div>
+                                    </div>`;
+
+            url_html = ` <div class="form-group other-info-div">
+                                        <label>Redirect External URL</label>
+                                        <input type="text" name="external_url" class="form-control" value="${redirect_content}" placeholder="Enter Valid URL" required>
+                                        <div class="help-block"></div>
+                                    </div>`;
+
+            product_html = ` <div class="form-group other-info-div">
+                                        <label>Select a product</label>
+                                        <select class="product-list form-control" name="external_url">
+                                            <option value="${purchase_content}" selected="selected">${purchase_content}</option>
+                                         </select>
+                                        <div class="help-block"></div>
+                                    </div>`;
+        $('#navigate_action').on('change', function () {
+                let action = $(this).val();
+                if (action == 'DIAL') {
+                    $("#append_div").html(dial_html);
+                }else if(action == 'URL') {
+                    $("#append_div").html(url_html);
+                } else if (action == 'PURCHASE') {
+                    $("#append_div").html(product_html);
+                    $(".product-list").select2({
+                        placeholder: "Select a product",
+                        ajax: {
+                            url: "{{ route('myblslider.active-products') }}",
+                            processResults: function (data) {
+                                // Transforms the top-level key of the response object from 'items' to 'results'
+                                return {
+                                    results: data
+                                };
+                            }
+                        }
+                    });
+                }  else {
+                    $(".other-info-div").remove();
+                }
+            });
     </script>
 @endpush

@@ -377,7 +377,7 @@
                 }  else {
                     $(".other-info-div").remove();
                 }
-            })
+            });
         });
       $(function () {
             $('.delete').click(function () {
