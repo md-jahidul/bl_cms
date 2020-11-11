@@ -74,7 +74,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
 
                             <div class="form-group">
                                 <label for="cta_name" class="required">
@@ -91,9 +91,9 @@
                                     <small class="text-danger"> @error('cta_action') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
                             <div class="form-group">
                                 <label for="cta_action" class="required">
                                     CTA Action :
@@ -108,9 +108,9 @@
                                     <small class="text-danger"> @error('cta_action') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
                             <div class="form-group">
                                 <label for="category_id" class="required">
                                     Notification type :
@@ -125,16 +125,16 @@
                                     <small class="text-danger"> @error('notification_type') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="device_type">
-                                    Target Device :
+                                <label for="device_type" class="required">
+                                    Target OS :
                                 </label>
                                 <div class="controls">
-                                    <select name="device_type" id="device_type"  class="form-control">
-                                    <option value="">Select Devices</option>
+                                    <select name="device_type" id="device_type"  class="form-control" required>
+                                    {{-- <option value="">Select OS</option> --}}
                                     <option value="all">All</option>
                                     <option value="ios">IOS</option>
                                     <option value="android">Android</option>
@@ -151,7 +151,7 @@
                                 </label>
                                 <div class="controls">
                                     <select name="customer_type" id="customer_type" required class="form-control">
-                                    <option value="">Select Customer Type</option>
+                                    {{-- <option value="">Select Customer Type</option> --}}
                                     <option value="all">All</option>
                                     <option value="prepaid">Prepaid</option>
                                     <option value="postpaid">Postpaid</option>

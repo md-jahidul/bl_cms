@@ -32,7 +32,7 @@ class CustomerService
     }
 
 
-    public function getUserList(Request $request, array $user_phone,$notification_id){
+    public function getCustomerList(Request $request, array $user_phone,$notification_id){
      return   $selectedNumber= $this->customerRepository->getCustomerList($request,$user_phone,$notification_id);
 
    }
