@@ -49,6 +49,16 @@
                             <label class="radio-inline"><input type="radio" name="optradio">Option 2</label>
                         </div>--}}
 
+
+
+
+                        <div class="form-group col-md-8">
+                            <label for="message">Image</label>
+                            <img class="" src="{{ asset($notification->image) }}" alt="Slider Image"
+                                 height="100" width="200"/>
+                        </div>
+
+
                         <div class="form-group col-md-8">
                             <div class="form-group {{ $errors->has('is_active') ? ' error' : '' }}">
                                 <label for="is_active" style="margin-right: 10px; padding: 5px" >Select Type</label>
