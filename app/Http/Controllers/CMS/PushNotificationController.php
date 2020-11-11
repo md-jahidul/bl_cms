@@ -166,12 +166,14 @@ class PushNotificationController extends Controller
 
             if(!empty($user_phone)){
 
-                $notification= $this->customerService->getUserList($request, $user_phone,$notification_id);
-            //   dd($notification);
-                // $notification = $this->prepareDataForSendNotification($request, $customar,$notification_id);
+                $customar= $this->customerService->getUserList($request, $user_phone,$notification_id);
+            //   dd($customar);
+                $notification = $this->prepareDataForSendNotification($request, $customar,$notification_id);
+            //    dd($notification);
                 // $notification = $this->getNotificationArray($request, $user_phone);
-                NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+               NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
                     ->onQueue('notification');
+
             }
 
             Log::info('Success: Notification sending from excel');
@@ -187,6 +189,25 @@ class PushNotificationController extends Controller
             ];
         }
     }
+
+public function prepareDataForSendNotification(Request $request,array $customar,$notification_id){
+    return [
+        'title' => $request->input('title'),
+        'body' => $request->input('message'),
+        'category_slug' => $request->input('category_slug'),
+        'category_name' => $request->input('category_name'),
+        "sending_from" => "cms",
+        "send_to_type" => "INDIVIDUALS",
+        "recipients" => $customar,
+        "is_interactive" => "NO",
+        "data" => [
+            "cid" => "1",
+            "url" => "test.com",
+            "component" => "offer",
+        ]
+    ];
+
+}
 
 
     /**
