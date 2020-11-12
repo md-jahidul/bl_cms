@@ -293,10 +293,17 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('partner-offers/{partner}/details/update', 'AssetLite\PartnerOfferController@offerDetailsUpdate')
         ->name('offer.details-update');
 
-    // About Pages ================================
-    Route::get('about-page/{slug}', 'AssetLite\PriyojonController@aboutPageView')->name('about-page');
-    Route::put('about-page/update', 'AssetLite\PriyojonController@aboutPageUpdate')
-        ->name('about-page.update');
+    // LMS About Pages ================================
+    Route::get('about-page/{slug}', 'AssetLite\LmsAboutPageController@index')->name('about-page');
+    Route::put('about-page/update', 'AssetLite\PriyojonController@aboutPageUpdate')->name('about-page.update');
+
+//    Route::get('ethics-compliance', 'AssetLite\LmsAboutPageController@index');
+//    Route::post('ethics/update-page-info', 'AssetLite\LmsAboutPageController@updatePageInfo');
+    Route::post('lms/benefit-save/{slug}', 'AssetLite\LmsAboutPageController@saveBenefit');
+    Route::get('about-page/benefit-edit/{id}', 'AssetLite\LmsAboutPageController@benefitEdit');
+//    Route::get('about-page/sort-benefit-file', 'AssetLite\LmsAboutPageController@sortFiles');
+    Route::get('about-page/benefit-status-change/{id}', 'AssetLite\LmsAboutPageController@chanbgeStatus');
+    Route::get('about-page/benefit-delete/{slug}/{id}', 'AssetLite\LmsAboutPageController@fileDelete');
 
 
     // Dynamic Pages ================================
