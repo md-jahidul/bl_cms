@@ -128,27 +128,4 @@ class PriyojonController extends Controller
         $this->priyojonService->deleteMenu($id);
         return url("priyojon/$parentId/child-menu");
     }
-
-    /**
-     * @param $slug
-     * @return Factory|View
-     */
-    public function aboutPageView($slug)
-    {
-        $details = $this->aboutPageService->findAboutDetail($slug);
-
-//        dd($details);
-        return view('admin.about-pages.about_page', compact('slug', 'details'));
-    }
-
-    /**
-     * @param Request $request
-     * @return RedirectResponse|Redirector
-     */
-    public function aboutPageUpdate(Request $request)
-    {
-        $response = $this->aboutPageService->updateAboutPage($request->all());
-        Session::flash('message', $response->getContent());
-        return redirect(route('about-page', $request->slug));
-    }
 }
