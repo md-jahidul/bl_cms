@@ -316,6 +316,13 @@
                         <i class="la la-exclamation-circle"></i>About Priyojon
                     </a>
                 </li>
+                <li class="{{ is_active_url('lms-about-page/banner-image') }}">
+                    <a class="menu-item" href="{{ url('lms-about-page/banner-image') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-exclamation-circle"></i>About Page Banner
+                    </a>
+                </li>
+
                 <li class="{{ is_active_url('about-page/reward_points')}}">
                     <a class="menu-item" href="{{ url('about-page/reward_points') }}"
                        data-i18n="nav.templates.vert.classic_menu">
