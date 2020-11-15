@@ -35,8 +35,8 @@ class LmsAboutBannerController extends Controller
     public function viewBannerImage()
     {
         $images = $this->lmsAboutBannerService->findAll();
-        $aboutLoyalty = $images[0];
-        $aboutReward = $images[1];
+        $aboutLoyalty = isset($images[0]) ? $images[0] : null;
+        $aboutReward = isset($images[1]) ? $images[1] : null;
         return view('admin.loyalty.banner-image.index', compact('aboutLoyalty', 'aboutReward'));
     }
 
