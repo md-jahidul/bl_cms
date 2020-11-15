@@ -126,6 +126,8 @@ class PushNotificationController extends Controller
      */
     public function targetWiseNotificationSend(Request $request)
     {
+
+
         $user_phone = [];
         $notification_id = $request->input('id');
         $category_id = $request->input('category_id');
@@ -162,7 +164,9 @@ class PushNotificationController extends Controller
             if (!empty($user_phone)) {
 
                 $customar = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
+                // dd($customar);
                 $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
+                dd($notification);
                 // $notification = $this->getNotificationArray($request, $user_phone);
                 NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
                     ->onQueue('notification');
@@ -199,7 +203,7 @@ class PushNotificationController extends Controller
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $PURCHASE = "$notificationInfo->external_url";
         }
-
+        $category_id = !empty($request->input('category_id'))?$request->input('category_id'):1;
         return [
             'title' => $request->input('title'),
             'body' => $request->input('message'),
@@ -210,7 +214,7 @@ class PushNotificationController extends Controller
             "recipients" => $customar,
             "is_interactive" => "Yes",
             "data" => [
-                "cid" => "1",
+                "cid" => "$category_id",
                 "url" => $url,
                 "component" => "offer",
                 'purchase' => $PURCHASE,
