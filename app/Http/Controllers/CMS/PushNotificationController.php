@@ -166,7 +166,7 @@ class PushNotificationController extends Controller
                 $customar = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
                 // dd($customar);
                 $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
-                dd($notification);
+                // dd($notification);
                 // $notification = $this->getNotificationArray($request, $user_phone);
                 NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
                     ->onQueue('notification');
