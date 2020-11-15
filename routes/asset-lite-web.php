@@ -297,6 +297,10 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('about-page/{slug}', 'AssetLite\LmsAboutPageController@index')->name('about-page');
     Route::put('about-page/update', 'AssetLite\PriyojonController@aboutPageUpdate')->name('about-page.update');
 
+    // LMS About Pages Banner Image ================================
+    Route::get('lms-about-page/banner-image', 'AssetLite\LmsAboutBannerController@viewBannerImage');
+    Route::post('about-page/banner-image/upload', 'AssetLite\LmsAboutBannerController@bannerUpload');
+
 //    Route::get('ethics-compliance', 'AssetLite\LmsAboutPageController@index');
 //    Route::post('ethics/update-page-info', 'AssetLite\LmsAboutPageController@updatePageInfo');
     Route::post('lms/benefit-save/{slug}', 'AssetLite\LmsAboutPageController@saveBenefit');
