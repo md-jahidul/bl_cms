@@ -126,11 +126,9 @@ class PushNotificationController extends Controller
      */
     public function targetWiseNotificationSend(Request $request)
     {
-
-
         $user_phone = [];
         $notification_id = $request->input('id');
-        $category_id = $request->input('category_id');
+        // $category_id = $request->input('category_id');
 
         try {
 
@@ -147,7 +145,6 @@ class PushNotificationController extends Controller
                     $cells = $row->getCells();
                     $number = $cells[0]->getValue();
                     $user_phone[] = $number;
-
                     // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
 
                     if (count($user_phone) == 300) {
@@ -164,9 +161,7 @@ class PushNotificationController extends Controller
             if (!empty($user_phone)) {
 
                 $customar = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
-                // dd($customar);
                 $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
-                // dd($notification);
                 // $notification = $this->getNotificationArray($request, $user_phone);
                 NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
                     ->onQueue('notification');
