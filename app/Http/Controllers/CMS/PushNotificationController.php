@@ -128,7 +128,7 @@ class PushNotificationController extends Controller
     {
         $user_phone = [];
         $notification_id = $request->input('id');
-        $category_id = $request->input('category_id');
+        // $category_id = $request->input('category_id');
 
         try {
 
@@ -145,7 +145,6 @@ class PushNotificationController extends Controller
                     $cells = $row->getCells();
                     $number = $cells[0]->getValue();
                     $user_phone[] = $number;
-
                     // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
 
                     if (count($user_phone) == 300) {
@@ -199,7 +198,7 @@ class PushNotificationController extends Controller
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $PURCHASE = "$notificationInfo->external_url";
         }
-
+        $category_id = !empty($request->input('category_id'))?$request->input('category_id'):1;
         return [
             'title' => $request->input('title'),
             'body' => $request->input('message'),
@@ -210,7 +209,7 @@ class PushNotificationController extends Controller
             "recipients" => $customar,
             "is_interactive" => "Yes",
             "data" => [
-                "cid" => "1",
+                "cid" => "$category_id",
                 "url" => $url,
                 "component" => "offer",
                 'purchase' => $PURCHASE,

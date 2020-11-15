@@ -33,12 +33,8 @@ class CustomerRepository extends BaseRepository
      */
     public function getCustomerList(Request $request, array $user_phone, $notification_id)
     {
-
-        $this->model::where('phone', '01409900160')->update(['device_type' => 'android', 'number_type' => 'prepaid']);
-
         $notificationInfo = NotificationDraft::find($notification_id);
         $sql = $this->model::whereIn('phone', $user_phone);
-
         if (!empty($notificationInfo->customer_type) && $notificationInfo->customer_type!=='all') {
             $sql->where('number_type', $notificationInfo->customer_type);
         }
