@@ -162,6 +162,7 @@ class PushNotificationController extends Controller
 
                 $customar = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
                 $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
+            //  dd($notification);
                 // $notification = $this->getNotificationArray($request, $user_phone);
                 NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
                     ->onQueue('notification');
@@ -189,12 +190,12 @@ class PushNotificationController extends Controller
     {
 
         $notificationInfo = NotificationDraft::find($notification_id);
-        $url = '';
+        $url = null;
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'URL') {
             $url = "$notificationInfo->external_url";
         }
 
-        $PURCHASE ='';
+        $PURCHASE =null;
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $PURCHASE = "$notificationInfo->external_url";
         }
@@ -210,12 +211,15 @@ class PushNotificationController extends Controller
             "is_interactive" => "Yes",
             "data" => [
                 "cid" => "$category_id",
-                "url" => $url,
-                "component" => "offer",
-                'purchase' => $PURCHASE,
-                'navigation_action' => "$notificationInfo->navigate_action",
+                "component" => "offer"
             ],
         ];
+
+        // "cid" => "$category_id",
+        //         // "url" => "$url",
+        //         "component" => "offer",
+        //         // 'purchase' => "$PURCHASE",
+        //         'navigation_action' => "$notificationInfo->navigate_action",
 
     }
 
