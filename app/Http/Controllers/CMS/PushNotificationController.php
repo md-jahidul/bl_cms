@@ -211,9 +211,9 @@ class PushNotificationController extends Controller
             "is_interactive" => "Yes",
             "data" => [
                 "cid" => "$category_id",
-                "url" => "$url",
+                // "url" => "$url",
                 "component" => "offer",
-                'purchase' => "$PURCHASE",
+                // 'purchase' => "$PURCHASE",
                 'navigation_action' => "$notificationInfo->navigate_action",
             ],
         ];
