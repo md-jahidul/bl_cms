@@ -189,12 +189,12 @@ class PushNotificationController extends Controller
     {
 
         $notificationInfo = NotificationDraft::find($notification_id);
-        $url = null;
+        $url = '';
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'URL') {
             $url = "$notificationInfo->external_url";
         }
 
-        $PURCHASE = null;
+        $PURCHASE ='';
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $PURCHASE = "$notificationInfo->external_url";
         }
@@ -213,7 +213,7 @@ class PushNotificationController extends Controller
                 "url" => $url,
                 "component" => "offer",
                 'purchase' => $PURCHASE,
-                'navigation_action' => $notificationInfo->navigate_action,
+                'navigation_action' => "$notificationInfo->navigate_action",
             ],
         ];
 
