@@ -43,8 +43,11 @@
                 @csrf
                 <div class="card">
                     <div class="card-header">
-                        <div class="col-md-6 float-left">
+                        <div class="col-md-8 float-left">
                             <h3 class="card-title" id="striped-row-layout-card-center pt-2"><i class="la la-th-list"></i> <strong>Lead Request Details</strong></h3>
+                        </div>
+                        <div class="col-md-1 float-right">
+                            <a href="{{ URL("download-pdf/$requestInfo->id") }}" role="button" class="btn-sm btn-info border-0"><i class="la la-download" aria-hidden="true"></i></a>
                         </div>
                     </div>
                     <hr class="mb-0 mt-0">
@@ -69,7 +72,7 @@
                                                         <td>
                                                             <a href="{{ url("download/file") }}" class="text-warning">
                                                                 <input type="hidden" name="file_path" value="{{ $subValue }}">
-                                                                <button type="submit" class="btn btn-sm btn-outline-warning"><i class="la la-download"></i> Download File</button>
+                                                                <button type="submit" class="btn btn-sm btn-outline-warning"><i class="la la-download"></i> {{ $subValue }}</button>
                                                             </a>
                                                         </td>
                                                     @endif

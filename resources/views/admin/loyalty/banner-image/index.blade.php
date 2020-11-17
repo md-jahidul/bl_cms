@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 @section('title', 'Press News Event')
-@section('card_name', 'Loyalty and Reword Point Page Banner')
+@section('card_name', 'Banner Images')
 @section('breadcrumb')
     <li class="breadcrumb-item "> List</li>
 @endsection
 @section('action')
-    <a href="{{ url("press-news-event/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
-        Add New
-    </a>
+{{--    <a href="{{ url("press-news-event/create") }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
+{{--        Add New--}}
+{{--    </a>--}}
 @endsection
 @section('content')
     <!-- Fixed sections -->
@@ -15,7 +15,7 @@
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
-                    <h4 class="menu-title"><strong>Press Release Banner Image</strong></h4>
+                    <h4 class="menu-title"><strong>Loyalty Banner Image</strong></h4>
                     <hr>
                     <div class="card-body card-dashboard">
                         <form role="form"
@@ -62,7 +62,7 @@
                                 </div>
 
                                 <div class="col-md-12 mt-1"></div>
-                                <h4><strong>News Event Banner Image</strong></h4>
+                                <h4><strong>Reword Point Banner Image</strong></h4>
                                 <div class="form-actions col-md-12 mt-0"></div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('reward_banner_image_url') ? ' error' : '' }}">
