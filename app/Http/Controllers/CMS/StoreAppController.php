@@ -2,7 +2,6 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\NotificationRequest;
 use App\Services\StoreAppService;
 use App\Services\StoreCategoryService;
 use App\Services\StoreService;
@@ -67,7 +66,6 @@ class StoreAppController extends Controller
     public function index()
     {
         $appStores = $this->storeAppService->findAll();
-        // dd($appStores);
         $category =  $this->storeCategoryService->findAll();
         return view('admin.store.app.index')
             ->with('category', $category)

@@ -276,6 +276,10 @@
                         <i class="la la-feed"></i>Najat Content Config</a>
 
                 </li>
+                <li class="{{ is_active_url('mybl/settings/lodge/complaints')}}">
+                    <a class="menu-item" href="{{ route('lodge_complaints') }}">
+                        <i class="la la-cog"></i>Lodge Complaints</a>
+                </li>
 
             </ul>
         </li>
@@ -395,6 +399,11 @@
     @endif
 
     @endif
+
+    <li class="{{ is_active_url('developer/api/debug') }}">
+        <a class="menu-item" href="{{ route('support-message') }}">
+            <i class="la la-code-fork"></i>Support Messages</a>
+    </li>
     {{--------------------------------------------------------------------------------------------------------------------}}
     {{---------------------------------------------------------My-BL App End----------------------------------------------}}
     {{--------------------------------------------------------------------------------------------------------------------}}

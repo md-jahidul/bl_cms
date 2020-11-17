@@ -102,6 +102,11 @@
                                                 @if(strtolower($category->name_en) == "all")
                                                     @continue
                                                 @endif
+
+                                                @if($category->id == 2)
+                                                    @continue
+                                                @endif
+
                                                 <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"") }}
                                                         @elseif(isset($store) && ($category->id == $store->category_id)) selected  @endif
                                                 value="{{$category->id}}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{$category->name_en}}</option>
@@ -136,26 +141,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                           {{-- <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="category_id">
-                                        Sub Category :
-                                    </label>
-                                    <div class="controls">
-                                        <select name="sub_category_id" id="sub_category_id" class=" sub_category_select form-control @error('sub_category_id') is-invalid @enderror">
-                                            <option value="0">Select SubCategory</option>
-                                            @foreach ($subCategories as $subCategory)
-                                                <option @if(old("category_id")) {{ (old("category_id") == $subCategory->id ? "selected":"0") }}
-                                                        @elseif(isset($store) && ($subCategory->id == $store->sub_category_id)) selected  @endif
-                                                value="{{$subCategory->id}}" {{ (old("category_id") == $subCategory->id ? "selected":"0") }}>{{$subCategory->name_en}}</option>
-                                            @endforeach
-                                        </select>
-                                        <div class="help-block"></div>
-                                        <small class="text-danger"> @error('category_id') {{ $message }} @enderror </small>
-                                    </div>
-                                </div>
-                            </div>--}}
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -201,8 +186,6 @@
                                                     <option value="{{$app->id}}">  {{$app->title}} </option>
                                                 @endif
 
-
-
                                             @endforeach
                                         </select>
                                         <div class="help-block"></div>
@@ -224,7 +207,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title" class="required">Button Action Type:</label>
                                     <select required class="form-control" value="" name="btn_action_type" id="btn_action_type">
@@ -241,7 +224,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title">Button Action (iOS):</label>
                                     <input value="@if(isset($store)){{$store->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
@@ -253,7 +236,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title">Button Action (Android):</label>
                                     <input value="@if(isset($store)){{$store->btn_action_android}} @elseif(old("btn_action_android")) {{old("btn_action_android")}} @endif"
@@ -264,7 +247,6 @@
                                     <small class="text-danger"> @error('btn_action_android') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="title">Video:</label>
@@ -276,6 +258,8 @@
                                     <small class="text-danger"> @error('video_link') {{ $message }} @enderror </small>
                                 </div>
                             </div>
+
+
 
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -347,6 +331,7 @@
                                     </select>
                                 </div>
                             </div>
+
 
 {{--                            <div class="col-md-4">--}}
 {{--                                <div class="form-group">--}}

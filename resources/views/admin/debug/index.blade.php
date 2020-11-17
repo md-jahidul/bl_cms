@@ -493,7 +493,55 @@
                 </div>
             </div>
         </div>
-
+        {{--Contact restore logs--}}
+        <div class="row mt-3">
+            <div class="col-md-8">
+                <div>
+                    <h5 class="mb-1 mt-2 text-bold-600">Contact Restore Logs</h5>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <input type='date'
+                       class="form-control datetime"
+                       id="search-contact-restore-log"
+                       value="{{ $current_date }}"
+                       min="{{ $last_date }}"
+                       max="{{ $current_date }}"
+                       name="search_contact_log" >
+            </div>
+            <div class="col-md-12">
+                <hr/>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="card">
+                                <div class="card-content  table-responsive">
+                                    <div class="card-body">
+                                        <table class="table table-bordered table-striped" id="contact_restore_logs_table">
+                                            <thead class="text-center alert-warning text-white">
+                                            <tr>
+                                                <th>Contact backup id</th>
+                                                <th>Message</th>
+                                                <th>Date time</th>
+                                                <th>Platform</th>
+                                                <th>Device os</th>
+                                                <th>Device model</th>
+                                                <th>Mobile number</th>
+                                                <th>Total number to be restore</th>
+                                                <th>Total restore</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 @stop
 
@@ -506,6 +554,7 @@
 
     <script>
         $(function () {
+            $.fn.dataTable.ext.errMode = 'none';
             $(document).on('click', '#search_btn', function (e) {
                 let number;
                 let pattern;
@@ -531,6 +580,7 @@
                 getUsageDetails(number);
                 getOtpData(number);
                 getProductLog(number);
+                getContactRestoreLogsData(number);
 
             });
 
@@ -906,6 +956,91 @@
                 e.preventDefault();
                 $('#otp_log_table').DataTable().ajax.reload();
             });
+
+            $(document).on('input', '#search-contact-restore-log', function (e) {
+                e.preventDefault();
+                $('#contact_restore_logs_table').DataTable().ajax.reload();
+            });
+
+            function getContactRestoreLogsData(number) {
+
+                $('#contact_restore_logs_table').DataTable().destroy();
+
+                $("#contact_restore_logs_table").dataTable({
+                    scrollX: true,
+                    processing: true,
+                    searching: false,
+                    serverSide: true,
+                    ordering: false,
+                    autoWidth: false,
+                    pageLength: 10,
+                    lengthChange: false,
+                    ajax: {
+                        url: "/developer/api/debug/contact-restore-logs/" + number,
+                        data: {
+                            date: function () {
+                                return $("#search-contact-restore-log").val();
+                            }
+                        }
+                    },
+                    columns: [
+                        {
+                            name: 'contact_backup_id',
+                            render: function (data, type, row) {
+                                return row.contact_backup_id;
+                            }
+                        },
+                        {
+                            name: 'message',
+                            render: function (data, type, row) {
+                                return row.message;
+                            }
+                        },
+                        {
+                            name: 'date_time',
+                            render: function (data, type, row) {
+                                return row.date_time;
+                            }
+                        },
+                        {
+                            name: 'platform',
+                            render: function (data, type, row) {
+                                return row.platform;
+                            }
+                        },
+                        {
+                            name: 'device_os',
+                            render: function (data, type, row) {
+                                return row.device_os;
+                            }
+                        },
+                        {
+                            name: 'device_model',
+                            render: function (data, type, row) {
+                                return row.device_model;
+                            }
+                        },
+                        {
+                            name: 'mobile_number',
+                            render: function (data, type, row) {
+                                return row.mobile_number;
+                            }
+                        },
+                        {
+                            name: 'total_number_to_be_restore',
+                            render: function (data, type, row) {
+                                return row.total_number_to_be_restore;
+                            }
+                        },
+                        {
+                            name: 'total_restore',
+                            render: function (data, type, row) {
+                                return row.total_restore;
+                            }
+                        },
+                    ]
+                });
+            }
         })
     </script>
 @endpush

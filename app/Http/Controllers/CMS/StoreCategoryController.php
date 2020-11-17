@@ -30,7 +30,7 @@ class StoreCategoryController extends Controller
      */
     public function index()
     {
-        $storeCategories = $this->storeCategoryService->findAll();
+        $storeCategories = $this->storeCategoryService->getStoreCategoryList();
         return view('admin.store.category.index')->with('storeCategories', $storeCategories);
     }
 
@@ -110,4 +110,15 @@ class StoreCategoryController extends Controller
         session()->flash('error', $response->getContent());
         return url('storeCategory');
     }
+
+
+    /**
+     * @param Request $request
+     */
+    public function myblCategorySortable(Request $request)
+    {
+        $this->storeCategoryService->tableSortable($request);
+    }
+
+
 }

@@ -37,8 +37,8 @@
                             <tr>
                                 <td>{{$feed->id}}</td>
                                 <td>{{$feed->type}}</td>
-                                <td>{{$feed->category->title}}</td>
-                                <td>{{$feed->title}}</td>
+                                <td>{{(isset($feed->category->title)?$feed->category->title:'')}}</td>
+                                <td>{{(isset($feed->title)?$feed->title:'')}}</td>
                                 <td>{{$feed->start_date}}</td>
                                 <td>{{$feed->end_date}}</td>
                                 <td>{{$feed->status == 1 ? 'Active' : 'Inactive'}}</td>

@@ -18,6 +18,7 @@ class MyBlAppLaunchPopup extends Model
         'content',
         'other_info',
         'created_by',
-        'status'
+        'status',
+        'product_code'
     ];
 }

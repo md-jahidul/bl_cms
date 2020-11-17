@@ -96,6 +96,10 @@
                                                 @if(strtolower($category->name_en) == "all")
                                                     @continue
                                                 @endif
+                                                {{--id = 2 most popular--}}
+                                                @if($category->id == 2)
+                                                    @continue
+                                                @endif
 
                                                 <option @if(old("category_id")) {{ (old("category_id") == $category->id ? "selected":"0") }}
                                                         @elseif(isset($appStore) && ($category->id == $appStore->category_id)) selected  @endif
@@ -183,8 +187,8 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Button Action (iOS):</label>
-                                    <input required
+                                    <label for="title" class="">Button Action (iOS):</label>
+                                    <input
                                            value="@if(isset($appStore)){{$appStore->btn_action_ios}} @elseif(old("btn_action_ios")) {{old("btn_action_ios")}} @endif"
                                            type="text" name="btn_action_ios" class="form-control @error('btn_action_ios') is-invalid @enderror"
                                            id="btn_action_ios" placeholder="Enter Button Text">
@@ -196,8 +200,8 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="title" class="required">Button Action (Android):</label>
-                                    <input required
+                                    <label for="title" class="">Button Action (Android):</label>
+                                    <input
                                            value="@if(isset($appStore)){{$appStore->btn_action_android}} @elseif(old("btn_action_android")) {{old("btn_action_android")}} @endif"
                                            type="text" name="btn_action_android" class="form-control @error('btn_action_android') is-invalid @enderror"
                                            id="btn_action_android" placeholder="Enter Button Text">
@@ -223,6 +227,20 @@
                                             InActive
                                         </option>
                                     </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="title">Description:</label>
+                                    <textarea
+                                        class="form-control @error('description') is-invalid @enderror"
+                                        placeholder="Enter body description....." id="description" name="description" rows="3">
+                                        @if(isset($appStore)){{$appStore->description}} @elseif(old("description")) {{old("description")}} @endif
+                                    </textarea>
+                                    <div class="help-block"></div>
+                                    <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
                                 </div>
                             </div>
 
@@ -309,18 +327,7 @@
                                 </div>
                             </div> -->
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="title">Description:</label>
-                                    <textarea
-                                        class="form-control @error('description') is-invalid @enderror"
-                                        placeholder="Enter body description....." id="description" name="description" rows="3">
-                                        @if(isset($appStore)){{$appStore->description}} @elseif(old("description")) {{old("description")}} @endif
-                                    </textarea>
-                                    <div class="help-block"></div>
-                                    <small class="text-danger"> @error('description') {{ $message }} @enderror </small>
-                                </div>
-                            </div>
+
 
                             <div class="col-md-12">
                                 <button type="submit" style="float: right" class="btn btn-success round px-2">
