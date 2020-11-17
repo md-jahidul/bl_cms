@@ -1114,4 +1114,12 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('corporate/contact-us/more-details/{id}', 'AssetLite\CorporateRespContactUsController@showCustomerDetails')
         ->name('contact-us.more_details');
 
+    // Dynamic Routes
+    Route::get('dynamic/routes', 'AssetLite\DynamicRouteController@index')
+        ->name('dynamic-routes.list');
+    Route::get('dynamic/routes/edit/{id}', 'AssetLite\DynamicRouteController@edit')
+        ->name('dynamic-routes.edit');
+    Route::put('dynamic/routes/update/{id}', 'AssetLite\DynamicRouteController@update')
+        ->name('dynamic-routes.update');
+
 });
