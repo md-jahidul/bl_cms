@@ -295,7 +295,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 
     // LMS About Pages ================================
     Route::get('about-page/{slug}', 'AssetLite\LmsAboutPageController@index')->name('about-page');
-    Route::put('about-page/update', 'AssetLite\PriyojonController@aboutPageUpdate')->name('about-page.update');
+    Route::put('about-page/update', 'AssetLite\LmsAboutPageController@aboutPageUpdate')->name('about-page.update');
 
     // LMS About Pages Banner Image ================================
     Route::get('lms-about-page/banner-image', 'AssetLite\LmsAboutBannerController@viewBannerImage');
