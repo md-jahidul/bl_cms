@@ -53,9 +53,9 @@
 
 
                         <div class="form-group col-md-8">
-                            <label for="message">Image</label>
-                            <img class="" src="{{ asset($notification->image) }}" alt="Slider Image"
-                                 height="100" width="200"/>
+                            <label for="message">Image</label> <br/>
+                            <img class="" src="{{ asset($notification->image) }}" alt="Image"
+                                 height="200" width="400"/>
                         </div>
 
 
