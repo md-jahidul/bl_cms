@@ -5,18 +5,18 @@
 | Web Routes for MY BL
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
+| Here is where you can register web Routes for your application. These
+| Routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin']], function () {
 
     //------ shortcuts -----------//
 
-    // route::resource('short_cuts','CMS\ShortCutController');
-    // route::resource('UserShortcut','CMS\UserShortcutController');
+    // Route::resource('short_cuts','CMS\ShortCutController');
+    // Route::resource('UserShortcut','CMS\UserShortcutController');
 
     //shortcuts
     Route::put('shortcuts/SerialUpdate/{id}', 'CMS\UserShortcutController@serialUpdate')->name('serial.update');
@@ -32,20 +32,23 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     //------ shortcuts -----------//
 
-
     // Banner
-    route::resource('banner', 'CMS\BannerController');
+    Route::resource('banner', 'CMS\BannerController');
     Route::get('banner/destroy/{id}', 'CMS\BannerController@destroy');
 
     // welcomeInfo
-    route::get('welcomeInfo', 'CMS\WelcomeInfoController@index')->name('welcomeInfo.index');
-    route::post('welcomeInfo', 'CMS\WelcomeInfoController@store')->name('welcomeInfo.store');
-    route::post('welcomeInfo/update/{id}', 'CMS\WelcomeInfoController@update')->name('welcomeInfo.update');
+    Route::get('welcomeInfo', 'CMS\WelcomeInfoController@index')->name('welcomeInfo.index');
+    Route::post('welcomeInfo', 'CMS\WelcomeInfoController@store')->name('welcomeInfo.store');
+    Route::post('welcomeInfo/update/{id}', 'CMS\WelcomeInfoController@update')->name('welcomeInfo.update');
 
     //settings
-    route::resource('setting', 'CMS\SettingController');
+    Route::resource('setting', 'CMS\SettingController');
     Route::get('setting_limit/store', 'CMS\SettingController@Addlimit');
     Route::get('setting/destroy/{id}', 'CMS\SettingController@destroy')->name('setting.destroy');
+
+    // Logde a Complain
+    Route::get('mybl/settings/lodge/complaints', 'CMS\SettingController@lodgeComplain')->name('lodge_complaints');
+    Route::Post('mybl/settings/lodge/complain/store', 'CMS\SettingController@sotreLodgeComplain')->name('store_lodge_complaints');
 
 
     //App Version
@@ -55,7 +58,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     //OTP config
     Route::resource('otp-config', 'CMS\OtpController');
     Route::get('otp-config/destroy/{id}', 'CMS\OtpController@destroy');
-
 
     //------ Slider -----------//
 
@@ -85,73 +87,69 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get(
         'myblslider/images/get-active-products',
         'CMS\MyblSliderImageController@getMyblProducts'
-    )->name('myblslider.active-products');//getMyblProducts
+    )->name('myblslider.active-products'); //getMyblProducts
 
     Route::get('myblslider/destroy/{id}', 'CMS\MyblSliderController@destroy');
     //Route::get('myblslider/edit/{slider-other-attr}','CMS\MyblSliderController@edit')->name('slider-other-attr.edit');
     // Slider
 
     // Slider Image
-    /*route::resource('myblsliderImage','CMS\MyblSliderImageController');*/
+    /*Route::resource('myblsliderImage','CMS\MyblSliderImageController');*/
     Route::get('myblslider/{id}/images', 'CMS\MyblSliderImageController@index');
-    route::get('myblsliderImage/addImage/update-position', 'CMS\MyblSliderImageController@updatePosition');
+    Route::get('myblsliderImage/addImage/update-position', 'CMS\MyblSliderImageController@updatePosition');
     Route::get('myblslider/addImage/{sliderId}', 'CMS\MyblSliderImageController@index')->name('myblsliderImage.index');
     // Slider Image
 
-
     // minute
-    route::resource('minuteOffer', 'CMS\MinuteOfferController');
+    Route::resource('minuteOffer', 'CMS\MinuteOfferController');
     Route::get('minuteOffer/destroy/{id}', 'CMS\MinuteOfferController@destroy');
 
     // sms offer
-    route::resource('smsOffer', 'CMS\SmsOfferController');
+    Route::resource('smsOffer', 'CMS\SmsOfferController');
     Route::get('smsOffer/destroy/{id}', 'CMS\SmsOfferController@destroy');
 
     // internet
-    route::resource('internetOffer', 'CMS\InternetOfferController');
+    Route::resource('internetOffer', 'CMS\InternetOfferController');
     Route::get('internetOffer/destroy/{id}', 'CMS\InternetOfferController@destroy');
 
     // Mixed Bundle
-    route::resource('mixedBundleOffer', 'CMS\MixedBundleOfferController');
+    Route::resource('mixedBundleOffer', 'CMS\MixedBundleOfferController');
     Route::get('mixedBundleOffer/destroy/{id}', 'CMS\MixedBundleOfferController@destroy');
 
     // Near By Offer
-    route::resource('nearByOffer', 'CMS\NearbyOfferController');
+    Route::resource('nearByOffer', 'CMS\NearbyOfferController');
     Route::get('nearByOffer/destroy/{id}', 'CMS\NearbyOfferController@destroy');
 
     // Near By Offer
-    route::resource('nearByOffer', 'CMS\NearbyOfferController');
+    Route::resource('nearByOffer', 'CMS\NearbyOfferController');
     Route::get('nearByOffer/destroy/{id}', 'CMS\NearbyOfferController@destroy');
 
-
     // Amar Offer
-    route::resource('amarOffer', 'CMS\AmarOfferController');
+    Route::resource('amarOffer', 'CMS\AmarOfferController');
     Route::get('amarOffer/destroy/{id}', 'CMS\AmarOfferController@destroy');
 
-
     // ussd code
-    route::resource('ussd', 'CMS\UssdController');
+    Route::resource('ussd', 'CMS\UssdController');
     Route::get('ussd/destroy/{id}', 'CMS\UssdController@destroy');
 
     // help center
-    route::resource('helpCenter', 'CMS\HelpCenterController');
+    Route::resource('helpCenter', 'CMS\HelpCenterController');
     Route::get('helpCenter/destroy/{id}', 'CMS\HelpCenterController@destroy');
     Route::get('help_Center/update-position', 'CMS\HelpCenterController@changeSequece');
 
     // contextual cards
-    route::resource('contextualcard', 'CMS\ContextualCardController');
+    Route::resource('contextualcard', 'CMS\ContextualCardController');
     Route::get('card/destroy/{id}', 'CMS\ContextualCardController@destroy');
 
     // Notification categorys
-    route::resource('notificationCategory', 'CMS\NotificationCategoryController');
+    Route::resource('notificationCategory', 'CMS\NotificationCategoryController');
     Route::get('notificationCategory/destroy/{id}', 'CMS\NotificationCategoryController@destroy');
 
     // Notification
-    route::resource('notification', 'CMS\NotificationController');
+    Route::resource('notification', 'CMS\NotificationController');
     Route::get('notification/destroy/{id}', 'CMS\NotificationController@destroy');
     Route::get('notification/all/{id}', 'CMS\NotificationController@showAll')->name('notification.show-all');
     Route::get('notification-report', 'CMS\NotificationController@getNotificationReport')->name('notification.report');
-
 
     // Push Notification
     Route::post('push-notification', 'CMS\PushNotificationController@sendNotification')->name('notification.send');
@@ -160,44 +158,45 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         'CMS\PushNotificationController@sendNotificationToAll'
     )->name('notification.send-all');
 
-
     // Store category
-    route::resource('storeCategory', 'CMS\StoreCategoryController');
+    Route::resource('storeCategory', 'CMS\StoreCategoryController');
     Route::get('storeCategory/destroy/{id}', 'CMS\StoreCategoryController@destroy');
+    Route::get('myblCategory-sortable', 'CMS\StoreCategoryController@myblCategorySortable')->name('myblCategory.sort');
+
+
+
+    // Support Messages
+    Route::get('support-message', 'CMS\SupportMessageRatingController@index')->name('support-message');
+    Route::post('support-message', 'CMS\SupportMessageRatingController@index')->name('support.message.list');
 
 
     // Store sub-category
-    route::resource('subStore', 'CMS\StoreSubCategoryController');
+    Route::resource('subStore', 'CMS\StoreSubCategoryController');
     Route::get('subStore/destroy/{id}', 'CMS\StoreSubCategoryController@destroy');
     Route::get('subStore/subcategory-find/{id}', 'CMS\StoreSubCategoryController@getSubCategoryByCatId');
 
     // Store
-    route::resource('myblStore', 'CMS\StoreController');
+    Route::resource('myblStore', 'CMS\StoreController');
     Route::get('myblStore/destroy/{id}', 'CMS\StoreController@destroy');
     Route::get('myblStore-sortable', 'CMS\StoreController@myblStoreSortable')->name('myblStore.sort');
 
     // App
-    route::resource('appStore', 'CMS\StoreAppController');
+    Route::resource('appStore', 'CMS\StoreAppController');
     Route::get('appStore/destroy/{id}', 'CMS\StoreAppController@destroy');
     Route::get('appStore-sortable', 'CMS\StoreAppController@appStoreSortable')->name('appStore.sort');
 
     // Store App Slider Image
     Route::get('appslider/{id}/images', 'CMS\StoreAppSliderImageController@index');
-    route::get('appsliderImage/addImage/update-position', 'CMS\StoreAppSliderImageController@updatePosition');
+    Route::get('appsliderImage/addImage/update-position', 'CMS\StoreAppSliderImageController@updatePosition');
     Route::get('appslider/addImage/{sliderId}', 'CMS\StoreAppSliderImageController@index')->name('appsliderImage.index');
 
-
     Route::get('appslider/{id}/images', 'CMS\StoreAppSliderImageController@index')->name('appslider.images.index');
-    Route::get('appslider/{id}/images/create',  'CMS\StoreAppSliderImageController@create')->name('appslider.images.create');
+    Route::get('appslider/{id}/images/create', 'CMS\StoreAppSliderImageController@create')->name('appslider.images.create');
     Route::post('appslider/images/store', 'CMS\StoreAppSliderImageController@store')->name('appslider.images.store');
     Route::get('appslider/images/{id}/edit', 'CMS\StoreAppSliderImageController@edit')->name('appslider.images.edit');
     Route::put('appslider/images/{id}/update', 'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
     Route::put('appslider/images/{id}/update', 'CMS\StoreAppSliderImageController@update')->name('appslider.images.update');
     Route::delete('appslider/images/{id}/delete', 'CMS\StoreAppSliderImageController@destroy')->name('appslider.images.destroy');
-
-
-
-
 
     // terms and conditions
     Route::get('terms-conditions', 'CMS\TermsAndConditionsController@show')->name('terms-conditions.show');
@@ -221,7 +220,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('faq/questions/{id}', 'CMS\FaqQuestionsController@show')->name('faq.questions.show');
     Route::patch('faq/questions/{id}/update', 'CMS\FaqQuestionsController@update')->name('faq.questions.update');
     Route::delete('faq/questions/delete', 'CMS\FaqQuestionsController@delete')->name('faq.questions.delete');
-
 
     Route::get('mybl/core-product', 'CMS\MyblProductEntryController@index')->name('mybl.product.index');
     Route::post(
@@ -270,8 +268,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::delete('mybl-search/{search_content}', 'CMS\Search\InAppSearchContentController@destroy')
         ->name('mybl-search-content.delete');
 
-
-
     Route::get('app-launch/create', 'CMS\AppLaunchPopupController@create')->name('app-launch.new');
     Route::post('app-launch/store', 'CMS\AppLaunchPopupController@store')->name('app-launch.store');
     Route::get('app-launch', 'CMS\AppLaunchPopupController@index')->name('app-launch.index');
@@ -317,7 +313,6 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
         ->name('mixed-bundle-offer.filter.sort.save');
 
     Route::get('/test/test', 'CMS\MixedBundleFilterController@getPriceFilter');
-
 
     Route::get('internet-pack/filter/create', 'CMS\InternetPackFilterController@create')
         ->name('internet-pack.filter.create');
@@ -388,10 +383,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('sms-pack/filter/sort/save', 'CMS\SmsPackFilterController@saveSortFilter')
         ->name('sms.filter.sort.save');
 
-
     Route::get('mybl/settings/najat', 'CMS\NajatContentsSettingsController@index')->name('mybl.settings.najat.index');
     Route::post('mybl/settings/najat', 'CMS\NajatContentsSettingsController@store')->name('mybl.settings.najat.store');
-
 
     /*
      *  API Debug For Developer
@@ -424,19 +417,18 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::post('mybl/learn-priyojon', 'CMS\LearnPriyojonContentController@store')->name('learn-priyojon.store');
 
     // Migrate Plan
-    route::resource('migrate-plan', 'CMS\MigratePlanController');
+    Route::resource('migrate-plan', 'CMS\MigratePlanController');
     Route::get('migrate-plan/destroy/{id}', 'CMS\MigratePlanController@destroy');
 
     /*
-     *  Feed routes
+     *  Feed Routes
      */
-    Route::namespace('CMS')->prefix('feeds')->name('feeds.')->group(function () {
+    Route::namespace ('CMS')->prefix('feeds')->name('feeds.')->group(function () {
         Route::resource('/', 'FeedController')->parameters(['' => 'feed'])->except('show');
         // Category resource
         Route::resource('categories', 'FeedCategoryController')->except('show');
         Route::get('categories/update-position', 'FeedCategoryController@updatePosition')->name('categories.update_position');
     });
-
 
 });
 
