@@ -145,6 +145,7 @@ class ProductController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'url_slug' => 'required|regex:/^\S*$/u|unique:products,url_slug',
+            'url_slug_bn' => 'required|regex:/^\S*$/u|unique:products,url_slug_bn'
         ]);
         if ($validator->fails()) {
             Session::flash('error', $validator->messages()->first());
