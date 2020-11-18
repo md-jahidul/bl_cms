@@ -415,6 +415,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('mybl/learn-priyojon', 'CMS\LearnPriyojonContentController@show')->name('learn-priyojon.show');
     Route::post('mybl/learn-priyojon', 'CMS\LearnPriyojonContentController@store')->name('learn-priyojon.store');
+    Route::GET('mybl/priyojon-base-image-list', 'CMS\PriyojonBaseImageController@index')->name('priyojon-base-image-list');
+    Route::GET('mybl/priyojon-base-image-create', 'CMS\PriyojonBaseImageController@create')->name('priyojon-base-image.create');
+
+
 
     // Migrate Plan
     Route::resource('migrate-plan', 'CMS\MigratePlanController');

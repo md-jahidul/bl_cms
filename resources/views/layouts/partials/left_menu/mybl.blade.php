@@ -342,6 +342,13 @@
                         <i class="la la-file"></i>Learn Priyojon
                     </a>
                 </li>
+                <li class="{{ is_active_url('mybl/priyojon-base-image') }}">
+                    <a class="menu-item" href="{{ route('priyojon-base-image-list') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-file"></i>Priyojon Base Images
+                    </a>
+                </li>
+
             </ul>
         </li>
     @endif
