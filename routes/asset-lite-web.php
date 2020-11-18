@@ -1120,4 +1120,12 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('referral-list', 'AssetLite\ReferralListController@index');
 //>>>>>>> 6e682c417ebd1276da26dffa0366bc5148ee3bab
 
+    // Dynamic Routes
+    Route::get('dynamic/routes', 'AssetLite\DynamicRouteController@index')
+        ->name('dynamic-routes.list');
+    Route::get('dynamic/routes/edit/{id}', 'AssetLite\DynamicRouteController@edit')
+        ->name('dynamic-routes.edit');
+    Route::put('dynamic/routes/update/{id}', 'AssetLite\DynamicRouteController@update')
+        ->name('dynamic-routes.update');
+
 });
