@@ -17,7 +17,7 @@ class CreateFrontEndDynamicRoutesTable extends Migration
             $table->bigIncrements('id');
             $table->string('code')->nullable();
             $table->string('url')->nullable();
-            $table->string('slug')->nullable();
+            $table->string('key')->nullable();
             $table->boolean('exact')->default(true);
             $table->json('children')->nullable();
             $table->integer('created_by')->nullable();
