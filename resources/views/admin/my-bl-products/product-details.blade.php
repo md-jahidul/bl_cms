@@ -151,7 +151,7 @@
                                             <select
                                                 class="form-control"
                                                 name="offer_section_slug" required>
-                                                <option value=""> Please Select Data Section</option>
+                                                <option value="">Please Select Data Section</option>
                                                 @foreach($internet_categories as $category)
                                                     <option value="{{ $category->slug }}"
                                                             @if($category->slug == $details->offer_section_slug) selected @endif>
@@ -179,7 +179,20 @@
                                         <label for="show_in_home">Show in Home</label>
                                     </fieldset>
                                 </div>
-                                <div class="col-md-4 icheck_minimal skin mt-2">
+                                <div class="col-md-2">
+                                    <label>Visibility (show/hide in app)</label>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <input type="radio" name="is_visible" value="1" {{$details->is_visible ? 'checked' : ''}}>
+                                            <label class="small">Show</label>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <input type="radio" name="is_visible" value="0" {{$details->is_visible ? '' : 'checked'}}>
+                                            <label class="small">Hide</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-2 icheck_minimal skin mt-2">
                                     <fieldset>
                                         <input type="checkbox" id="is_rate_cutter_offer" value="1"
                                                name="is_rate_cutter_offer"
