@@ -19,12 +19,14 @@ class FrontendUrlContainerSeeder extends Seeder
                 "code" => 'Prepaid',
                 "exact" => true,
                 "url" => 'en/prepaid/:section',
+                "slug" => 'prepaid',
                 "children" => [],
             ],
             [
                 "code" => 'Prepaid',
                 "exact" => true,
                 "url" => 'bn/প্রিপেইড/:section',
+                "slug" => 'prepaid',
                 "children" => [],
             ],
         ];
