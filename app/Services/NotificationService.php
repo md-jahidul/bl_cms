@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notification;
 use Carbon\Carbon;
 use App\Http\Requests\NotificationRequest;
 use App\Traits\FileTrait;
+use Illuminate\Support\Facades\File;
 
 class NotificationService
 {
@@ -46,13 +47,15 @@ class NotificationService
     public function storeNotification(NotificationRequest $request)
     {
         $data = $request->all();
+
         $date_range_array = explode('-', $request['display_period']);
         $data['starts_at'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
             ->toDateTimeString();
         $data['expires_at'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
             ->toDateTimeString();
         unset($data['display_period']);
-        if ($request->hasFile('image')) {
+
+       /* if ($request->hasFile('image')) {
             $file = $request->image;
             $path = $file->storeAs(
                 'notification/images',
@@ -62,7 +65,14 @@ class NotificationService
             $data['image'] = $path;
         } else {
             $data['image'] = null;
+        }*/
+
+        if (isset($data['image'])) {
+            $data['image'] = 'storage/' . $data['image']->store('notification');
+
         }
+
+
         $this->save($data);
         return new Response("Notification has been successfully created");
     }
@@ -77,7 +87,7 @@ class NotificationService
         $data = $request->all();
         $notification = $this->findOne($id);
 
-        if ($request->hasFile('image')) {
+       /* if ($request->hasFile('image')) {
             $file = $request->image;
             $path = $file->storeAs(
                 'notification/images',
@@ -87,7 +97,17 @@ class NotificationService
             $data['image'] = $path;
         } else {
             unset($data['image']);
+        }*/
+
+        if (isset($data['image'])) {
+            $data['image'] = 'storage/' . $data['image']->store('notification');
+
+            if (File::exists($notification->image)) {
+                unlink($notification->image);
+            }
+
         }
+
         $date_range_array = explode('-', $request['display_period']);
         $data['starts_at'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
             ->toDateTimeString();

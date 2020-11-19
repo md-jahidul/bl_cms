@@ -207,23 +207,19 @@
                                 <label for="image" class="required">Upload image :</label>
                                 @if (isset($notification))
                                     <input type="file"
-                                        id="icon"
-                                        name="image"
-                                        {{-- data-height="70" --}}
-                                        {{-- data-allowed-formats="square" --}}
-                                        data-allowed-file-extensions="jpeg png jpg"
-                                        data-default-file="{{ url('storage/' .$notification->image) }}"
-                                        class="dropify"/>
+                                         id="image"
+                                         name="image"
+                                         class="dropify"
+                                         data-default-file="{{ asset($notification->image) }}"
+                                        />
                                 @else
                                     <input type="file"
-                                        id="icon"
+                                        id="image"
                                         name="image"
                                         class="dropify"
-                                        {{-- data-allowed-formats="square" --}}
-                                        data-allowed-file-extensions="jpeg png jpg"
-                                        {{-- data-height="70" --}}
                                         />
                                 @endif
+
                                 <div class="help-block">
                                     <small class="text-danger"> @error('image') {{ $message }} @enderror </small>
                                     {{-- <small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small> --}}

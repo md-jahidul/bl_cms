@@ -31,6 +31,9 @@
                             <input type="hidden"  name="category_id" id="category_id" value="{{$notification->NotificationCategory->id}}">
                             <input type="hidden"  name="category_slug" id="category_slug" value="{{$notification->NotificationCategory->slug}}">
                             <input type="hidden"  name="category_name" id="category_name" value="{{$notification->NotificationCategory->name}}">
+                            <input type="hidden"  name="image_url" id="image_url" value="{{asset($notification->image)}}">
+
+
 
                         </div>
                         <div class="form-group col-md-8">
@@ -48,6 +51,16 @@
                             <label class="radio-inline"><input type="radio" name="optradio" checked>Option 1</label>
                             <label class="radio-inline"><input type="radio" name="optradio">Option 2</label>
                         </div>--}}
+
+
+
+
+                        <div class="form-group col-md-8">
+                            <label for="message">Image</label> <br/>
+                            <img class="" src="{{ asset($notification->image) }}" alt="Image"
+                                 height="200" width="400"/>
+                        </div>
+
 
                         <div class="form-group col-md-8">
                             <div class="form-group {{ $errors->has('is_active') ? ' error' : '' }}">
