@@ -1,9 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'Route Edit')
-@section('card_name', 'Route Edit')
+@section('title', 'Route Create')
+@section('card_name', 'Route Create')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="">Route List</a></li>
-    <li class="breadcrumb-item">Route Edit</li>
+    <li class="breadcrumb-item">Route Create</li>
 @endsection
 @section('action')
     <a href="{{ route("dynamic-routes.index") }}" class="btn btn-warning  btn-glow px-2"><i class="la la-list"></i> Cancel </a>
@@ -14,11 +14,12 @@
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
                     <div class="card-body card-dashboard">
-                        <form role="form" action="{{ route("dynamic-routes.update", $route->id) }}" method="POST" novalidate>
+                        <form role="form" action="{{ route("dynamic-routes.store") }}" method="POST" novalidate>
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('code') ? ' error' : '' }}">
-                                    <label for="code">Container Name</label>
-                                    <input type="text" id="code" name="code" class="form-control" value="{{ $route->code }}">
+                                    <label for="code" class="required">Container Name</label>
+                                    <input type="text" id="code" class="form-control" name="code" placeholder="Enter front-end container name"
+                                           required data-validation-required-message="Enter front-end container name">
                                     <small class="text-primary">Example: Prepaid or PrepaidDetails</small>
                                     <div class="help-block"></div>
                                     @if ($errors->has('code'))
@@ -28,9 +29,8 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }}">
                                     <label for="code">Key</label>
-                                    <input type="text" name="key" class="form-control" value="{{ $route->key }}"
-                                           required data-validation-required-message="Enter key"
-                                           placeholder="Enter key">
+                                    <input type="text" name="key" class="form-control"
+                                           required data-validation-required-message="Enter key">
                                     <small class="text-primary">Example: prepaid, prepaid_details</small>
                                     <div class="help-block"></div>
                                     @if ($errors->has('key'))
@@ -39,11 +39,23 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">
-                                    <label for="url" class="required">URL</label>
-                                    <input type="text" name="url" id="url" class="form-control" placeholder="Enter URL"
-                                           value="{{ $route->url }}" required data-validation-required-message="Enter url">
+                                    <label for="url" class="required">English URL</label>
+                                    <input type="text" name="url[]" id="en_url" class="form-control" placeholder="Enter english URL"
+                                           required data-validation-required-message="Enter url">
                                     <small class="text-danger">Example plain URL: /en/prepaid </small><br>
                                     <small class="text-danger">Example pattern URL: /en/prepaid/:section </small>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">
+                                    <label for="url" class="required">Bangla URL</label>
+                                    <input type="text" name="url[]" id="bn_url" class="form-control" placeholder="Enter bangla URL"
+                                           required data-validation-required-message="Enter url">
+                                    <small class="text-danger">Example plain URL: /bn/prepaid </small><br>
+                                    <small class="text-danger">Example pattern URL: /bn/prepaid/:section </small>
                                     <div class="help-block"></div>
                                     @if ($errors->has('url'))
                                         <div class="help-block">  {{ $errors->first('url') }}</div>
@@ -59,7 +71,6 @@
                                 </div>
                             </div>
                             @csrf
-                            @method('PUT')
                         </form>
                     </div>
                 </div>
@@ -90,7 +101,12 @@
             {
                 return Text.toLowerCase().replace(/\s/g, '');
             }
-            $("#url").keyup(function(){
+            $("#en_url").keyup(function(){
+                var text = $(this).val();
+                var data = convertToSlug(text);
+                $(this).val(data);
+            });
+            $("#bn_url").keyup(function(){
                 var text = $(this).val();
                 var data = convertToSlug(text);
                 $(this).val(data);
