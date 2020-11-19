@@ -1121,11 +1121,15 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
 //>>>>>>> 6e682c417ebd1276da26dffa0366bc5148ee3bab
 
     // Dynamic Routes
-    Route::get('dynamic/routes', 'AssetLite\DynamicRouteController@index')
-        ->name('dynamic-routes.list');
-    Route::get('dynamic/routes/edit/{id}', 'AssetLite\DynamicRouteController@edit')
-        ->name('dynamic-routes.edit');
-    Route::put('dynamic/routes/update/{id}', 'AssetLite\DynamicRouteController@update')
-        ->name('dynamic-routes.update');
+    Route::resource('dynamic-routes', 'AssetLite\DynamicRouteController');
+//    Route::get('dynamic/routes/create', 'AssetLite\DynamicRouteController@create')
+//        ->name('dynamic-routes.create');
+//    Route::get('dynamic/routes/store', 'AssetLite\DynamicRouteController@store')
+//        ->name('dynamic-routes.store');
+//
+//    Route::get('dynamic/routes/edit/{id}', 'AssetLite\DynamicRouteController@edit')
+//        ->name('dynamic-routes.edit');
+//    Route::put('dynamic/routes/update/{id}', 'AssetLite\DynamicRouteController@update')
+//        ->name('dynamic-routes.update');
 
 });

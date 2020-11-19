@@ -32,6 +32,20 @@ class DynamicRouteService
     }
 
     /**
+     * @param $data
+     * @return ResponseFactory|Response
+     */
+    public function saveRoute($data)
+    {
+        foreach ($data['url'] as $item) {
+            $data['code'] = str_replace(' ', '', $data['code']);
+            $data['url'] = $item;
+            $this->save($data);
+        }
+        return Response('Route add successfully');
+    }
+
+    /**
      * @param $request
      * @param $aboutUs
      * @return ResponseFactory|Response

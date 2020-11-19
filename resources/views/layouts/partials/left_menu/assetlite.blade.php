@@ -722,8 +722,8 @@
 
 
 {{--    @if( auth()->user()->can_view('LeadManagement') )--}}
-        <li class="{{ is_active_url(route('dynamic-routes.list')) }}">
-            <a class="menu-item" href="{{ route('dynamic-routes.list') }}"
+        <li class="{{ is_active_url(route('dynamic-routes.index')) }}">
+            <a class="menu-item" href="{{ route('dynamic-routes.index') }}"
                data-i18n="nav.templates.vert.classic_menu"><i
                     class="la la-list"></i> Dynamic Routes</a>
         </li>

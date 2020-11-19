@@ -51,6 +51,28 @@ class DynamicRouteController extends Controller
     }
 
     /**
+     * @return Factory|View
+     */
+    public function create()
+    {
+        return view('admin.dynamic-route.create');
+    }
+
+    /**
+     * @param Request $request
+     * @return Application|Factory|RedirectResponse|Redirector|View
+     */
+    public function store(Request $request)
+    {
+        $response = $this->dynamicRouteService->saveRoute($request->all());
+        if ($response) {
+            session()->flash('success', $response->getContent());
+            return redirect(route('dynamic-routes.index'));
+        }
+        session()->flash('message', "Failed! Please try again");
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param $id
@@ -72,10 +94,9 @@ class DynamicRouteController extends Controller
     public function update(Request $request, $id)
     {
         $response = $this->dynamicRouteService->updateRoute($request, $id);
-
         if ($response) {
              session()->flash('success', $response->getContent());
-             return redirect(route('dynamic-routes.list'));
+             return redirect(route('dynamic-routes.index'));
         }
         session()->flash('message', "Failed! Please try again");
     }
