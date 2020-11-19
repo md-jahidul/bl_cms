@@ -183,12 +183,21 @@ class NotificationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getTargetWiseNotificationReport(Request $request){
-        $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
         $notifications = $this->notificationService->getNotificationListReport();
-dd($notifications);
-        // $notifications = $this->notificationService->findAll('', '', $orderBy);
-
         return view('admin.notification.target-wise-notification.list')
         ->with('notifications', $notifications);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getTargetWiseNotificationReportDetails(Request $request,$title)
+    {
+
+        $notifications = $this->notificationService->getNotificationTargetwiseReport($title);
+        return view('admin.notification.target-wise-notification.details')
+            ->with('notifications', $notifications);
     }
 }

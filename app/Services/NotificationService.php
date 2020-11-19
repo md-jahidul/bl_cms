@@ -153,6 +153,17 @@ class NotificationService
      */
     public function getNotificationListReport()
     {
-        return $this->NotificationDraftRepository->getNotificationReport();
+        $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
+        return $result=$this->notificationDraftRepository->findAll('', '', $orderBy);
+    }
+
+    /**
+     * Notification target wise Report
+     *
+     * @return mixed
+     */
+    public function getNotificationTargetwiseReport($title)
+    {
+        return $this->notificationRepository->getNotificationTargetReport($title);
     }
 }

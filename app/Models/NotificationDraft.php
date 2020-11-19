@@ -61,7 +61,11 @@ class NotificationDraft extends Model
     }
 
     public function getNotification(){
-        return $this->belongsTo(Notification::class, 'title', 'title')->withDefault();
+        return $this->hasMany(Notification::class, 'title', 'title');
+    }
+
+    public function getNotificationSuccessfullySend(){
+        return $this->hasMany(Notification::class, 'title', 'title')->where('status','SUCCESSFUL');
     }
 
 
