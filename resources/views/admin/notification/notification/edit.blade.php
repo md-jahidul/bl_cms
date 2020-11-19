@@ -9,7 +9,7 @@
 <div class="card mb-0 px-1" style="box-shadow:none;">
     <div class="card-content">
         <div class="card-body">
-            <form novalidate class="form" method="post" action="{{route('notification.update',$notification->id)}}" enctype="multipart/form-data">
+            <form novalidate class="form" method="post" action="{{route('notification.update',$notification->id)}}"  enctype="multipart/form-data">
                 @csrf
                 @method('put')
 
@@ -72,7 +72,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
 
                             <div class="form-group">
                                 <label for="cta_name" class="required">
@@ -89,9 +89,9 @@
                                     <small class="text-danger"> @error('cta_name') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
                             <div class="form-group">
                                 <label for="cta_action" class="required">
                                     CTA Action :
@@ -106,9 +106,9 @@
                                     <small class="text-danger"> @error('cta_action') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
                             <div class="form-group">
                                 <label for="category_id" class="required">
                                     Notification type :
@@ -123,16 +123,16 @@
                                     <small class="text-danger"> @error('notification_type') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="device_type">
-                                    Target Device :
+                                <label for="device_type" class="required">
+                                    Target OS :
                                 </label>
                                 <div class="controls">
-                                    <select name="device_type" id="device_type" class="form-control">
-                                    <option value="">Select Devices</option>
+                                    <select name="device_type" id="device_type" class="form-control" required>
+                                    {{-- <option value="">Select Devices</option> --}}
                                     <option value="all" @if($notification->device_type=='all') selected @endif>All</option>
                                     <option value="ios" @if($notification->device_type=='ios') selected @endif>IOS</option>
                                     <option value="android" @if($notification->device_type=='android') selected @endif>Android</option>
