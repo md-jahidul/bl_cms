@@ -184,7 +184,7 @@ return [
 
         'BenSampo\Enum\EnumServiceProvider',
 
-        Maatwebsite\Excel\ExcelServiceProvider::class
+//        Maatwebsite\Excel\ExcelServiceProvider::class
 
 
     ],
@@ -244,7 +244,7 @@ return [
         'Helper' => App\Helpers\Helper::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
 
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+//        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
 
     ],
