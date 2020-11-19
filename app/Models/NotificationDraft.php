@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Notification;
 
 class NotificationDraft extends Model
 {
@@ -57,6 +58,10 @@ class NotificationDraft extends Model
             'notification_id',
             'user_id'
         )->withTimestamps();
+    }
+
+    public function getNotification(){
+        return $this->belongsTo(Notification::class, 'title', 'title')->withDefault();
     }
 
 

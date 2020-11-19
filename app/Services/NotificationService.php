@@ -145,4 +145,14 @@ class NotificationService
     {
         return $this->notificationRepository->getNotificationReport();
     }
+
+     /**
+     * Notification Report
+     *
+     * @return mixed
+     */
+    public function getNotificationListReport()
+    {
+        return $this->NotificationDraftRepository->getNotificationReport();
+    }
 }
