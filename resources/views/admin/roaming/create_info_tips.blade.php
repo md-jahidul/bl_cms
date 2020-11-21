@@ -106,45 +106,41 @@
                                     </small>
                                 </div>
 
-                                <div class="col-md-4 col-xs-12">
+                                <div class="col-md-6 col-xs-12">
                                     <label>Banner Photo Name<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
                                     <small class="text-info">
                                         <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
                                         <strong>Note: </strong> Don't need MIME type like jpg,png
                                     </small>
-
-                                    <br>
-                                    <br>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
                                     <label> Alt Text</label>
                                     <input type="text" class="form-control"  name="alt_text" placeholder="Alt Text">
-
-                                    <br>
-                                    <label> URL <span class="text-danger">*</span></label>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label> URL EN<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" required name="url_slug" placeholder="URL">
                                     <small class="text-info">
-                                        <strong>i.e:</strong> Buy-tickets-on-discount (no spaces)<br>
+                                        <strong>i.e:</strong> Buy-tickets-on-discount (no spaces and slash)<br>
                                     </small>
-
-                                    <br>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label> URL BN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required name="url_slug_bn" placeholder="URL">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> বাংলালিংক-প্রিপেইড-রোমিং (no spaces and slash)<br>
+                                    </small>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
                                     <label class="mr-1">
                                         <input type="radio" checked name="status" value="1" class="status_active"> Active
                                     </label>
-
-
                                     <label><input type="radio" name="status" value="0" class="status_inactive"> Inactive</label>
                                 </div>
-
-
-
-
                             </div>
-
-
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
