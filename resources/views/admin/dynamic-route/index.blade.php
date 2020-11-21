@@ -6,9 +6,9 @@
 <li class="breadcrumb-item active">Dynamic Route List</li>
 @endsection
 @section('action')
-{{--<a href="{{ url('dynamic-r/create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>--}}
-{{--    Add Page--}}
-{{--</a>--}}
+<a href="{{ route('dynamic-routes.create') }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
+    Add Route
+</a>
 @endsection
 @section('content')
 <section>
@@ -23,6 +23,7 @@
                                     <tr>
                                         <th width="3%">#</th>
                                         <th width="20%">Container Name</th>
+                                        <th width="20%">Key</th>
                                         <th width="20%">Url Slug</th>
                                         <th class="text-center" width="8%">Action</th>
                                     </tr>
@@ -32,6 +33,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->code }}</td>
+                                        <td>{{ $item->key }}</td>
                                         <td>{{ $item->url }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('dynamic-routes.edit', $item->id) }}" role="button" class="btn-sm btn-outline-info border-0">

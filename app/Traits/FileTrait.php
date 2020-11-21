@@ -52,18 +52,18 @@ trait FileTrait {
     protected function rename($path, $fileName, $directoryPath) {
         return $path;
 
-//        $oldImg = env('UPLOAD_BASE_PATH') . "/" . $path;
-//
-//        $pathToArray = explode('/', $path);
-//        $imgName = end($pathToArray);
-//        $mimeArray = explode('.', $imgName);
-//        $mime = end($mimeArray);
-//
-//        $newName = $directoryPath . "/" . $fileName . "." . $mime;
-//        $newPath = env('UPLOAD_BASE_PATH') . "/" . $newName;
-//
-//        @rename($oldImg, $newPath);
-//        return $newName;
+        $oldImg = env('UPLOAD_BASE_PATH') . "/" . $path;
+
+        $pathToArray = explode('/', $path);
+        $imgName = end($pathToArray);
+        $mimeArray = explode('.', $imgName);
+        $mime = end($mimeArray);
+
+        $newName = $directoryPath . "/" . $fileName . "." . $mime;
+        $newPath = env('UPLOAD_BASE_PATH') . "/" . $newName;
+
+        @rename($oldImg, $newPath);
+        return $newName;
     }
 
     /**
