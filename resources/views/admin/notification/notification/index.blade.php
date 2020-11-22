@@ -36,9 +36,11 @@
                     <tr>
                         <th width="5%">ID</th>
                         <th width="12%">Title</th>
-                        <th width="30%">Body</th>
+                        <th width="25%">Body</th>
                         <th width="10%">Category</th>
-                        <th width="15%">Action</th>
+                        <th>Start Date</th>
+                        <th>Expire Date</th>
+                        <th width="20%">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -48,11 +50,13 @@
                                 <td width="12%">{{$notification->title}}</td>
                                 <td width="30%">{{$notification->body}}</td>
                                 <td width="10%">{{$notification->NotificationCategory->name}}</td>
-                                <td width="15%">
-                                    <div class="row">
+                                <td>{{!empty($notification->expires_at)?date('d-m-Y h:i:s a', strtotime($notification->starts_at)):''}}</td>
+                                <td>{{!empty($notification->expires_at)?date('d-m-Y h:i:s a', strtotime($notification->expires_at)):''}}</td>
+                                <td width="20%">
+                                    <div class="row" style="padding-right: 5px;">
 
                                         <div class="col-md-2 m-1">
-                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notification.edit',$notification->id)}}" class="btn-pancil btn btn-outline-success" >
+                                            <a role="button" data-toggle="tooltip" data-original-title="Edit Slider Information" data-placement="left" href="{{route('notification.edit',$notification->id)}}" class="btn-pancil btn btn-outline-success btn-sm" >
                                                 <i class="la la-pencil"></i>
                                             </a>
                                         </div>
@@ -65,7 +69,7 @@
                                                 data-id=""
                                                 href="{{route('notification.show',$notification->id)}}"
                                                 data-placement="right"
-                                                class="showButton btn btn-outline-info"
+                                                class="showButton btn btn-outline-info btn-sm"
                                                 onclick=""><i class="la la-paper-plane"></i></a>
                                         </div>
 
@@ -74,7 +78,7 @@
                                                 data-id=""
                                                 href="{{route('notification.show-all',$notification->id)}}"
                                                 data-placement="right"
-                                                class="showButton btn btn-outline-info"
+                                                class="showButton btn btn-outline-info btn-sm"
                                                 onclick=""><i class="la la-adn"></i></a>
                                         </div>
 
@@ -217,7 +221,8 @@
                 paging: true,
                 searching: true,
                 "bDestroy": true,
-                "pageLength": 10
+                "pageLength": 10,
+                "order": [[ 0, "desc" ]]
             });
         });
 
