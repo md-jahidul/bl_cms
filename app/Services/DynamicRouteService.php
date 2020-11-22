@@ -54,6 +54,7 @@ class DynamicRouteService
     {
         $data = $request->all();
         $route = $this->findOne($id);
+        $data['code'] = str_replace(' ', '', $data['code']);
         $route->update($data);
         return Response('Updated successfully');
     }
