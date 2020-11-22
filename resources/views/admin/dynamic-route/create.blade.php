@@ -86,16 +86,16 @@
 @push('page-js')
     <script>
         $(function () {
-            $('#code').keyup(function (){
-                let enURL = $(this).val()
-                let data = toPascal(enURL)
-                $(this).val(data)
-            })
+            // $('#code').keyup(function (){
+            //     let enURL = $(this).val()
+            //     let data = toPascal(enURL)
+            //     $(this).val(data)
+            // })
             // Container Name
-            function toPascal(str) {
-                return str.replace(/\w+/g,
-                    function(w){return w[0].toUpperCase() + w.slice(1).toLowerCase();});
-            }
+            // function toPascal(str) {
+            //     return str.replace(/\w+/g,
+            //         function(w){return w[0].toUpperCase() + w.slice(1).toLowerCase();});
+            // }
 
             function convertToSlug(Text)
             {

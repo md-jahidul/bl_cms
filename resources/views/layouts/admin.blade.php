@@ -63,6 +63,9 @@
     {{--SummerNote Editor CSS--}}
     <link href="{{ asset('app-assets/vendors/js/editors/summernote/summernote-lite.min.css') }}" rel="stylesheet">
 
+    {{--  dropify  --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+
     {{--Summernote Table Colore Modify--}}
     <style>
         .note-editor.note-frame.fullscreen .note-editable {
@@ -148,6 +151,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <!-- END PAGE LEVEL JS-->
+
+<!-- Dropify -->
+<script src="{{asset('app-assets/vendors/js/dropify/dropify.min.js')}}" type="text/javascript"></script>
 
 <script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
 
