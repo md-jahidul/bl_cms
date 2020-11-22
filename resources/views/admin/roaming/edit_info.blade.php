@@ -115,49 +115,42 @@
                                     </small>
                                 </div>
 
-                                <div class="col-md-4 col-xs-12">
+                                <div class="col-md-6 col-xs-12">
                                     <label>Banner Photo Name<span class="text-danger">*</span></label>
-                                    <input type="hidden" name="banner_name_old" value="{{$info->banner_name}}">
-                                    <input type="text" value="{{$info->banner_name}}" class="form-control" required name="banner_name" placeholder="Photo Name">
+                                    <input type="hidden" value="{{ $info->banner_name }}" name="banner_name_old">
+                                    <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name" value="{{ $info->banner_name }}">
                                     <small class="text-info">
                                         <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
                                         <strong>Note: </strong> Don't need MIME type like jpg,png
                                     </small>
-
-                                    <br>
-                                    <br>
-                                    <label> Alt Text</label>
-                                    <input type="text" value="{{$info->alt_text}}" class="form-control"  name="alt_text" placeholder="Alt Text">
-
-                                    <br>
-                                    <label> URL <span class="text-danger">*</span></label>
-                                    <input type="text" value="{{$info->url_slug}}" class="form-control" required name="url_slug" placeholder="URL">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> Buy-tickets-on-discount (no spaces)<br>
-                                    </small>
-
-                                    <br>
-                                    <label class="mr-1">
-                                        <input type="radio" @if($info->status == 1) checked @endif name="status" value="1" class="status_active"> Active
-                                    </label>
-
-
-                                    <label><input type="radio" @if($info->status == 0) checked @endif name="status" value="0" class="status_inactive"> Inactive</label>
                                 </div>
-
-
-
-
+                                <div class="col-md-6 col-xs-12">
+                                    <label> Alt Text</label>
+                                    <input type="text" class="form-control" value="{{ $info->alt_text }}"  name="alt_text" placeholder="Alt Text">
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label> URL EN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required value="{{ $info->url_slug }}" name="url_slug" placeholder="URL">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> Buy-tickets-on-discount (no spaces and slash)<br>
+                                    </small>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label> URL BN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required  value="{{ $info->url_slug_bn }}" name="url_slug_bn" placeholder="URL">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> বাংলালিংক-প্রিপেইড-রোমিং (no spaces and slash)<br>
+                                    </small>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label class="mr-1">
+                                        <input type="radio" checked name="status" value="1" class="status_active"> Active
+                                    </label>
+                                    <label><input type="radio" name="status" value="0" class="status_inactive"> Inactive</label>
+                                </div>
                             </div>
-
-
-
                         </div>
-
-
-
                     </div>
-
                 </div>
             </div>
         </div>
