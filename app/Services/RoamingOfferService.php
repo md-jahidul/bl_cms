@@ -112,15 +112,6 @@ class RoamingOfferService {
     public function saveOffer($request) {
         try {
 
-            $request->validate([
-                'name_en' => 'required',
-                'name_bn' => 'required',
-                'card_text_en' => 'required',
-                'card_text_bn' => 'required',
-                'url_slug' => 'required|regex:/^\S*$/u',
-                'banner_name' => 'required|regex:/^\S*$/u',
-            ]);
-
             //file upload in storege
             $webPath = "";
             if ($request['banner_web'] != "") {
@@ -190,16 +181,7 @@ class RoamingOfferService {
      */
     public function updateOffer($request) {
         try {
-
-            $request->validate([
-                'name_en' => 'required',
-                'name_bn' => 'required',
-                'card_text_en' => 'required',
-                'card_text_bn' => 'required',
-                'url_slug' => 'required|regex:/^\S*$/u',
-                'banner_name' => 'required|regex:/^\S*$/u',
-            ]);
-
+           
             //file upload in storege
             $seoNameWeb = $request['old_web'];
             if ($request['banner_web'] != "") {

@@ -56,18 +56,9 @@ class RoamingInfoService {
      * update roaming category
      * @return Response
      */
-    public function saveInfo($request) {
+    public function saveInfo($request) 
+    {
         try {
-
-            $request->validate([
-                'name_en' => 'required',
-                'name_bn' => 'required',
-                'card_text_en' => 'required',
-                'card_text_bn' => 'required',
-                'url_slug' => 'required|regex:/^\S*$/u',
-                'banner_name' => 'required|regex:/^\S*$/u',
-            ]);
-
             //file upload in storege
             $webPath = "";
             if ($request['banner_web'] != "") {
@@ -134,18 +125,9 @@ class RoamingInfoService {
      * update info
      * @return Response
      */
-    public function updateInfo($request) {
+    public function updateInfo($request) 
+    {
         try {
-
-            $request->validate([
-                'name_en' => 'required',
-                'name_bn' => 'required',
-                'card_text_en' => 'required',
-                'card_text_bn' => 'required',
-                'url_slug' => 'required|regex:/^\S*$/u',
-                'banner_name' => 'required|regex:/^\S*$/u',
-            ]);
-
             //file upload in storege
             $seoNameWeb = $request['old_web'];
             if ($request['banner_web'] != "") {

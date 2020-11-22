@@ -118,27 +118,39 @@
                                     </small>
                                 </div>
 
-                                <div class="col-md-4 col-xs-12">
+                                <div class="col-md-6 col-xs-12 mb-1">
                                     <label>Banner Photo Name<span class="text-danger">*</span></label>
                                     <input type="hidden" name="banner_name_old" value="{{$offer->banner_name}}">
-                                    <input type="text" value="{{$offer->banner_name}}" class="form-control" required name="banner_name" placeholder="Photo Name">
+                                    <input type="text" class="form-control banner_name" required name="banner_name"
+                                        placeholder="Photo Name" value="{{ $offer->banner_name }}">
                                     <small class="text-info">
                                         <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
                                         <strong>Note: </strong> Don't need MIME type like jpg,png
                                     </small>
+                                </div>
 
-                                    <br>
-                                    <br>
+                                <div class="col-md-6 col-xs-12">
                                     <label> Alt Text</label>
-                                    <input type="text" value="{{$offer->alt_text}}" class="form-control"  name="alt_text" placeholder="Alt Text">
+                                    <input type="text" class="form-control" name="alt_text" placeholder="Alt Text" value="{{ $offer->alt_text }}">
+                                </div>
 
-                                    <br>
-                                    <label> URL <span class="text-danger">*</span></label>
-                                    <input type="text" value="{{$offer->url_slug}}" class="form-control" required name="url_slug" placeholder="URL">
+                                <div class="col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }} col-xs-12  mb-1">
+                                    <label> URL EN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="url_slug" placeholder="URL" value="{{ $offer->url_slug }}">
                                     <small class="text-info">
-                                        <strong>i.e:</strong> Buy-tickets-on-discount (no spaces)<br>
+                                        <strong>i.e:</strong> Buy-tickets-on-discount (no spaces and slash)<br>
                                     </small>
+                                </div>
 
+                                <div class="col-md-6 col-xs-12">
+                                    <label> URL BN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" required name="url_slug_bn" placeholder="URL" value="{{ $offer->url_slug_bn }}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> বাংলালিংক-প্রিপেইড-রোমিং (no spaces and slash)<br>
+                                    </small>
+                                </div>
+
+                                <div class="col-md-4 col-xs-12">
                                     <br>
                                     <label class="mr-1">
                                         <input type="radio" @if($offer->status == 1) checked @endif name="status" value="1" class="status_active"> Active
