@@ -25,7 +25,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$notification->title}}">
+                            <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$notification->title}}" readonly>
                             <input type="hidden"  name="id" id="id" value="{{$notification->id}}">
                             <input type="hidden"  name="category_id" id="category_id" value="{{$notification->NotificationCategory->id}}">
                             <input type="hidden"  name="category_slug" id="category_slug" value="{{$notification->NotificationCategory->slug}}">

@@ -82,7 +82,7 @@
                 <span class="menu-title" data-i18n="nav.templates.main">Notification</span></a>
             <ul class="menu-content">
                 {{--page--}}
-                <li class="{{ is_active_url('notificationCategory') }}{{ is_active_url('notificationCategory/create') }}">
+            <li class="{{ is_active_url('notificationCategory') }}{{ is_active_url('notificationCategory/create') }}">
                     <a class="menu-item" href="{{ route('notificationCategory.index') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-server"></i>Category List
