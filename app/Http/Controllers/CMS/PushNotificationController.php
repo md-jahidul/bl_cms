@@ -283,6 +283,7 @@ class PushNotificationController extends Controller
                 "send_to_type" => "INDIVIDUALS" ,
                 "recipients" => $user_phone,
                 "is_interactive" => "NO",
+                "mutable_content" => true,
                 "data" => [
                     "cid" => "1",
                     "url" => "test.com",
@@ -300,6 +301,7 @@ class PushNotificationController extends Controller
                 'category_name' => $request->input('category_name'),
                 "send_to_type" => "ALL",
                 "is_interactive" => "NO",
+                "mutable_content" => true,
                 "data" => [
                     "cid" => "1",
                     "url" => "test.com",
