@@ -72,14 +72,41 @@
                                 </div> -->
 
                                 <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">
-                                    <label for="url" class="required">URL</label>
-                                    <input type="text" name="url"  class="form-control" placeholder="Enter URL"
+                                    <label for="url" class="required">Redirect URL English</label>
+                                    <input type="text" name="url" class="form-control slug-convert" placeholder="Enter URL"
                                            value="{{ old("url") ? old("url") : '' }}" required data-validation-required-message="Enter header menu url">
                                     <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>
                                     <div class="help-block"></div>
                                     @if ($errors->has('url'))
                                         <div class="help-block">  {{ $errors->first('url') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('url_bn') ? ' error' : '' }}">
+                                    <label for="url_bn" class="required">Redirect URL Bangla</label>
+                                    <input type="text" name="url_bn"  class="form-control" placeholder="Enter URL in Bangla"
+                                           value="{{ old("url_bn") ? old("url_bn") : '' }}" required data-validation-required-message="Enter URL in Bangla">
+                                    <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url_bn'))
+                                        <div class="help-block">  {{ $errors->first('url_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6 mt-2">
+                                    <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
+                                        <label for="title" class="required mr-1">Status:</label>
+
+                                        <input type="radio" name="status" value="1" id="input-radio-15" checked>
+                                        <label for="input-radio-15" class="mr-1">Active</label>
+
+                                        <input type="radio" name="status" value="0" id="input-radio-16">
+                                        <label for="input-radio-16">Inactive</label>
+
+                                        @if ($errors->has('status'))
+                                            <div class="help-block">  {{ $errors->first('status') }}</div>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <div class="col-md-2 mt-1">
@@ -99,22 +126,6 @@
                                                 <option value="{{ $dynamicPage->url_slug }}">{{ $dynamicPage->page_name_en }}</option>
                                             @endforeach
                                         </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 float-left">
-                                    <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
-                                        <label for="title" class="required mr-1">Status:</label>
-
-                                        <input type="radio" name="status" value="1" id="input-radio-15" checked>
-                                        <label for="input-radio-15" class="mr-1">Active</label>
-
-                                        <input type="radio" name="status" value="0" id="input-radio-16">
-                                        <label for="input-radio-16">Inactive</label>
-
-                                        @if ($errors->has('status'))
-                                            <div class="help-block">  {{ $errors->first('status') }}</div>
-                                        @endif
                                     </div>
                                 </div>
 
@@ -140,18 +151,19 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
-<script>
-    $(function () {
-        var dynamicPage = $('#dynamic_page_dropdown');
-        $('#is_dynamic_page').click(function () {
-            if($(this).prop("checked") == true){
-                dynamicPage.removeClass('d-none');
-            }else{
-                dynamicPage.addClass('d-none')
-            }
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
+    <script>
+        $(function () {
+            var dynamicPage = $('#dynamic_page_dropdown');
+            $('#is_dynamic_page').click(function () {
+                if($(this).prop("checked") == true){
+                    dynamicPage.removeClass('d-none');
+                }else{
+                    dynamicPage.addClass('d-none')
+                }
+            })
         })
-    })
-</script>
+    </script>
 @endpush
 
 
