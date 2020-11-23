@@ -134,7 +134,7 @@
 
                                     <div class="col-md-6 {{ $errors->has('url_slug') ? ' error' : '' }} col-xs-12  mb-1">
                                         <label> URL EN<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="url_slug" placeholder="URL">
+                                        <input type="text" class="form-control slug-convert" name="url_slug" placeholder="URL">
                                         <small class="text-info">
                                             <strong>i.e:</strong> Buy-tickets-on-discount (no spaces and slash)<br>
                                         </small>
@@ -142,7 +142,7 @@
 
                                     <div class="col-md-6 col-xs-12">
                                         <label> URL BN<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" required name="url_slug_bn" placeholder="URL">
+                                        <input type="text" class="form-control slug-convert" required name="url_slug_bn" placeholder="URL">
                                         <small class="text-info">
                                             <strong>i.e:</strong> বাংলালিংক-প্রিপেইড-রোমিং (no spaces and slash)<br>
                                         </small>
@@ -191,6 +191,7 @@
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
 
 
     <script>
