@@ -186,4 +186,24 @@ class NotificationService
     {
         return $this->notificationRepository->getNotificationTargetReport($title);
     }
+
+    /**
+     * @param string|null $category_id
+     * @return array
+     */
+    public function getMuteUserPhoneList($category_id)
+    {
+       return $this->notificationRepository->getMuteUserPhoneList($category_id);
+    }
+
+
+    /**
+     * @param $user_phone_num
+     * @param array $mute_user_phone
+     * @return mixed
+     */
+    public function removeMuteUserFromList($user_phone_num, array $mute_user_phone)
+    {
+        return $this->notificationRepository->removeMuteUserFromList($user_phone_num, $mute_user_phone);
+    }
 }

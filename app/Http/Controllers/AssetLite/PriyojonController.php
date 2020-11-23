@@ -60,7 +60,7 @@ class PriyojonController extends Controller
             $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
         $menu_items = $this->priyojonItems;
-        return view('admin.config.priyojon.index', compact('priyojons', 'parent_id', 'menu_items'));
+        return view('admin.loyalty-header.index', compact('priyojons', 'parent_id', 'menu_items'));
     }
 
 
@@ -77,7 +77,7 @@ class PriyojonController extends Controller
             $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
         $menu_items = $this->priyojonItems;
-        return view('admin.config.priyojon.edit', compact('priyojonLanding', 'menu_items'));
+        return view('admin.loyalty-header.edit', compact('priyojonLanding', 'menu_items'));
     }
 
     /**
