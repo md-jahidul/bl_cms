@@ -15,6 +15,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AppServiceProductRequest;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
@@ -95,7 +96,7 @@ class AppServiceProductController extends Controller
      * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(AppServiceProductRequest $request)
     {
         $response = $this->appServiceProductService->storeAppServiceProduct($request->all());
         Session::flash('message', $response->getContent());
@@ -143,7 +144,7 @@ class AppServiceProductController extends Controller
      * @param int $id
      * @return RedirectResponse|Redirector
      */
-    public function update(Request $request, $id)
+    public function update(AppServiceProductRequest $request, $id)
     {
 //        dd($request->all());
 
