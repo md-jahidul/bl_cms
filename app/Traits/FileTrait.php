@@ -25,6 +25,14 @@ trait FileTrait {
         $path = $file->store(
                 $directoryPath, $this->disk
         );
+
+//        $path = $file->storeAs(
+//            $directoryPath,
+//            $fileName,
+//            $this->disk
+//        );
+//        return $path;
+
 //        $path = $file->storeAs(
 //                $directoryPath, $fileName, $this->disk
 //        );
@@ -37,7 +45,6 @@ trait FileTrait {
 ////            }
 //            return $renamedPath;
 //        }
-
 
         return $path;
     }
