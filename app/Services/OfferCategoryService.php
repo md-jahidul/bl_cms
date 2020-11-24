@@ -75,6 +75,7 @@ class OfferCategoryService
     public function updateOfferCategory($data, $id)
     {
         try {
+
             $status = true;
             $update = [];
 
@@ -97,7 +98,6 @@ class OfferCategoryService
 //                $data['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/offer_image');
 //            }
 
-
             if (!empty($data['banner_image_url'])) {
                 //delete old web photo
                 if ($data['old_web_img'] != "") {
@@ -107,7 +107,6 @@ class OfferCategoryService
                 $update['banner_image_url'] = $this->upload($data['banner_image_url'], 'assetlite/images/banner/offer_image', $photoName);
                 $status = $update['banner_image_url'];
             }
-
 
             if (!empty($data['banner_image_mobile'])) {
                 //delete old web photo
@@ -120,24 +119,20 @@ class OfferCategoryService
             }
 
             //only rename
-            if ($data['old_banner_name_en'] != $data['banner_name']) {
-                if (empty($data['banner_image_url']) && $data['old_web_img'] != "") {
-                    $fileName = $data['banner_name'] . '-web';
-                    $directoryPath = 'assetlite/images/banner/offer_image';
-                    $update['banner_image_url'] = $this->rename($data['old_web_img'], $fileName, $directoryPath);
-                    $status = $update['banner_image_url'];
-
-                    dd($update);
-                }
-                if (empty($data['banner_image_mobile']) && $data['old_mob_img'] != "") {
-                    $fileName = $data['banner_name'] . '-mobile';
-                    $directoryPath = 'assetlite/images/banner/offer_image';
-                    $update['banner_image_mobile'] = $this->rename($data['old_mob_img'], $fileName, $directoryPath);
-                    $status = $update['banner_image_mobile'];
-                }
-            }
-
-
+//            if ($data['old_banner_name'] != $data['banner_name']) {
+//                if (empty($data['banner_image_url']) && $data['old_web_img'] != "") {
+//                    $fileName = $data['banner_name'] . '-web';
+//                    $directoryPath = 'assetlite/images/banner/offer_image';
+//                    $update['banner_image_url'] = $this->rename($data['old_web_img'], $fileName, $directoryPath);
+//                    $status = $update['banner_image_url'];
+//                }
+//                if (empty($data['banner_image_mobile']) && $data['old_mob_img'] != "") {
+//                    $fileName = $data['banner_name'] . '-mobile';
+//                    $directoryPath = 'assetlite/images/banner/offer_image';
+//                    $update['banner_image_mobile'] = $this->rename($data['old_mob_img'], $fileName, $directoryPath);
+//                    $status = $update['banner_image_mobile'];
+//                }
+//            }
 
             if (!empty($data['alias'])) {
                 $data['alias'] = str_replace(" ", "_", strtolower($data['name']));

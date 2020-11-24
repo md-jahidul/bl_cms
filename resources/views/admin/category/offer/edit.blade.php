@@ -109,9 +109,11 @@
 
                             <div class="form-group col-md-3 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                 <label>Banner Photo Name Bn</label>
-                                <input type="hidden" name="old_banner_name_bn" value="{{ $offer->other_attributes['banner_name_bn'] }}">
+                                <input type="hidden" name="old_banner_name_bn"
+                                       value="{{ isset($offer->other_attributes['banner_name_bn']) ? $offer->other_attributes['banner_name_bn'] : null }}">
                                 <input type="text" class="form-control" name="other_attributes[banner_name_bn]" id="banner_name_bn"
-                                       value="{{ $offer->other_attributes['banner_name_bn'] }}" placeholder="Photo Name">
+                                       value="{{ isset($offer->other_attributes['banner_name_bn']) ? $offer->other_attributes['banner_name_bn'] : null }}"
+                                       placeholder="Photo Name">
                                 <small class="text-info">
                                     <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>
                                     <strong>Note: </strong> Don't need MIME type like jpg,png
