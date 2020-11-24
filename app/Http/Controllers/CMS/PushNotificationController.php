@@ -375,37 +375,4 @@ class PushNotificationController extends Controller
         }
     }
 
-    public function notificationCheck($id =2)
-    {
-        $notification = NotificationSchedule::where('id', $id)->first();
-
-        $draft = $notification->notificationCategory;
-        dd($draft, $notification);
-
-        $file = $this->getPath($notification->file_name);
-
-        //dd($file);
-
-        $reader = ReaderFactory::createFromType(Type::XLSX);
-        //$path = $request->file('customer_file')->getRealPath();
-        $reader->open($file);
-
-        foreach ($reader->getSheetIterator() as $sheet) {
-            if ($sheet->getIndex() > 0) {
-                break;
-            }
-
-            foreach ($sheet->getRowIterator() as $row) {
-                $cells = $row->getCells();
-                $number = $cells[0]->getValue();
-                $user_phone[] = $number;
-                // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
-                echo $number; echo "<br>";
-            }
-        }
-
-        $reader->close();
-
-
-    }
 }
