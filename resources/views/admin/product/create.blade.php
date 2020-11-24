@@ -113,10 +113,10 @@
                                     @include('layouts.partials.products.bundle')
                                 </slot>
 
+                                <slot id="voice" data-offer-type="voice" style="display: none">
+                                    @include('layouts.partials.products.voice')
+                                </slot>
                                 @if(strtolower($type) == 'prepaid')
-                                    <slot id="voice" data-offer-type="voice" style="display: none">
-                                        @include('layouts.partials.products.voice')
-                                    </slot>
                                     <slot id="call_rate" data-offer-type="call_rate" style="display: none">
                                         @include('layouts.partials.products.call_rate')
                                     </slot>
