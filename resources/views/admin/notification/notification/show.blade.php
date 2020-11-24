@@ -194,7 +194,7 @@
 
                         if (result.success) {
                             swal.fire({
-                                title: 'Notification sent Successfully!',
+                                title: result.message,
                                 type: 'success',
                                 timer: 900000,
                                 showConfirmButton: false

@@ -15,7 +15,8 @@ class CreateNotificationSchedulesTable extends Migration
     {
         Schema::create('notification_schedules', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('notification_id');
+            $table->integer('notification_draft_id');
+            $table->integer('notification_category_id');
             $table->string('title');
             $table->text('message');
             $table->string('file_name');

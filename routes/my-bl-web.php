@@ -146,6 +146,8 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     Route::get('notificationCategory/destroy/{id}', 'CMS\NotificationCategoryController@destroy');
 
     // Notification
+    Route::get('test-notification', 'CMS\PushNotificationController@notificationCheck');
+
     Route::resource('notification', 'CMS\NotificationController');
     Route::get('notification/destroy/{id}', 'CMS\NotificationController@destroy');
     Route::get('notification/all/{id}', 'CMS\NotificationController@showAll')->name('notification.show-all');
