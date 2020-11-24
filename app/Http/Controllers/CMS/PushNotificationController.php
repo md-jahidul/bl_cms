@@ -4,17 +4,18 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\NotificationSend;
-use App\Models\Customer;
 use App\Models\NotificationDraft;
+use App\Models\NotificationSchedule;
 use App\Services\CustomerService;
 use App\Services\NotificationService;
 use App\Services\PushNotificationService;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 /**
  * Class PushNotificationController
@@ -23,6 +24,7 @@ use Illuminate\Support\Str;
 class PushNotificationController extends Controller
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var NotificationService
@@ -37,10 +39,11 @@ class PushNotificationController extends Controller
     /**
      * PushNotificationController constructor.
      * @param NotificationService $notificationService
+     * @param CustomerService $customerService
      */
-    public function __construct(NotificationService $notificationServicen, CustomerService $customerService)
+    public function __construct(NotificationService $notificationService, CustomerService $customerService)
     {
-        $this->notificationService = $notificationServicen;
+        $this->notificationService = $notificationService;
         $this->customerService = $customerService;
         $this->middleware('auth');
     }
@@ -55,6 +58,40 @@ class PushNotificationController extends Controller
         );
 
         return $path;
+    }
+
+
+    public function sendScheduledNotification(Request $request)
+    {
+        try {
+            $scheduleArr = explode('-', $request->schedule_time);
+            $uploadedFile = $this->upload($request->customer_file, 'notification-scheduler-files');
+
+            $notificationSchedule = new NotificationSchedule();
+
+            $notificationSchedule->notification_draft_id = $request->id;
+            $notificationSchedule->notification_category_id = $request->category_id;
+            $notificationSchedule->title = $request->title;
+            $notificationSchedule->message = $request->message;
+            $notificationSchedule->file_name = $uploadedFile;
+            $notificationSchedule->start = Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s');
+            $notificationSchedule->end = Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s');
+            $notificationSchedule->status = 'active';
+
+            $notificationSchedule->save();
+
+            return [
+                'success' => true,
+                'message' => 'Notification Schedule Stored'
+            ];
+
+        } catch (\Exception $e) {
+            Log::info('Error:' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
     }
 
     /**
