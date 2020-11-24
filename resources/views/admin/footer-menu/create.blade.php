@@ -83,10 +83,9 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('url_bn') ? ' error' : '' }}">
-                                    <label for="url_bn" class="required">Redirect URL Bangla</label>
-                                    <input type="text" name="url_bn"  class="form-control" placeholder="Enter URL in Bangla"
-                                           value="{{ old("url_bn") ? old("url_bn") : '' }}" required data-validation-required-message="Enter URL in Bangla">
-                                    <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>
+                                    <label for="url_bn">Redirect URL Bangla</label>
+                                    <input type="text" name="url_bn"  class="form-control slug-convert" placeholder="Enter URL in Bangla"
+                                           value="{{ old("url_bn") ? old("url_bn") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('url_bn'))
                                         <div class="help-block">  {{ $errors->first('url_bn') }}</div>
