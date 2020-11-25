@@ -102,7 +102,6 @@ class PushNotificationController extends Controller
      */
     public function sendNotification(Request $request)
     {
-
         $user_phone = [];
         $notification_id = $request->input('id');
         $category_id = $request->input('category_id');
@@ -241,7 +240,11 @@ class PushNotificationController extends Controller
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $PURCHASE = "$notificationInfo->external_url";
         }
+
         $category_id = !empty($request->input('category_id'))?$request->input('category_id'):1;
+
+        $image_url = env('NOTIFICATION_HOST') . "/" .$request->input('image_url') ?? null;
+
         return [
             'title' => $request->input('title'),
             'body' => $request->input('message'),
@@ -251,9 +254,11 @@ class PushNotificationController extends Controller
             "send_to_type" => "INDIVIDUALS",
             "recipients" => $customar,
             "is_interactive" => "Yes",
+            "mutable_content" => true,
             "data" => [
                 "cid" => "$category_id",
                 "url" => "test.com",
+                "image_url" => $image_url,
                 "component" => "offer"
             ],
         ];
@@ -273,6 +278,8 @@ class PushNotificationController extends Controller
      */
     public function getNotificationArray(Request $request, array $user_phone): array
     {
+        $image_url = env('NOTIFICATION_HOST') . "/" .$request->input('image_url') ?? null;
+
         return [
             'title' => $request->input('title'),
             'body' => $request->input('message'),
@@ -282,9 +289,11 @@ class PushNotificationController extends Controller
             "send_to_type" => "INDIVIDUALS",
             "recipients" => $user_phone,
             "is_interactive" => "NO",
+            "mutable_content" => true,
             "data" => [
                 "cid" => "1",
                 "url" => "test.com",
+                "image_url" => $image_url,
                 "component" => "offer",
             ],
         ];
@@ -302,7 +311,7 @@ class PushNotificationController extends Controller
         $notification_id = $request->input('id');
         $category_id = $request->input('category_id');
         $is_all = $request->input('is_active');
-        $image_url = $request->input('image_url');
+        $image_url = env('NOTIFICATION_HOST') . "/" .$request->input('image_url') ?? null;
 
         try {
 
