@@ -82,6 +82,7 @@ class OfferCategoryService
             $update['name_en'] = $data['name_en'];
             $update['name_bn'] = $data['name_bn'];
             $update['url_slug'] = $data['url_slug'];
+            $update['url_slug_bn'] = $data['url_slug_bn'];
             $update['schema_markup'] = $data['schema_markup'];
             $update['page_header'] = $data['page_header'];
             $update['page_header_bn'] = $data['page_header_bn'];
