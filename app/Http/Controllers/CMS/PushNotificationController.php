@@ -102,7 +102,6 @@ class PushNotificationController extends Controller
      */
     public function sendNotification(Request $request)
     {
-
         $user_phone = [];
         $notification_id = $request->input('id');
         $category_id = $request->input('category_id');
@@ -255,6 +254,7 @@ class PushNotificationController extends Controller
             "send_to_type" => "INDIVIDUALS",
             "recipients" => $customar,
             "is_interactive" => "Yes",
+            "mutable_content" => true,
             "data" => [
                 "cid" => "$category_id",
                 "url" => "test.com",
@@ -289,6 +289,7 @@ class PushNotificationController extends Controller
             "send_to_type" => "INDIVIDUALS",
             "recipients" => $user_phone,
             "is_interactive" => "NO",
+            "mutable_content" => true,
             "data" => [
                 "cid" => "1",
                 "url" => "test.com",
