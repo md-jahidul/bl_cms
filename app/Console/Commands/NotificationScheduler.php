@@ -111,7 +111,7 @@ class NotificationScheduler extends Command
     {
         return [
             'title' => $activeSchedule->title,
-            'body' => $activeSchedule->body,
+            'body' => $activeSchedule->message,
             'category_slug' => $category->slug,
             'category_name' => $category->name,
             "sending_from" => "cms",
