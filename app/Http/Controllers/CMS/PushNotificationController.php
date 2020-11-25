@@ -4,17 +4,18 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\NotificationSend;
-use App\Models\Customer;
 use App\Models\NotificationDraft;
+use App\Models\NotificationSchedule;
 use App\Services\CustomerService;
 use App\Services\NotificationService;
 use App\Services\PushNotificationService;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 /**
  * Class PushNotificationController
@@ -23,6 +24,7 @@ use Illuminate\Support\Str;
 class PushNotificationController extends Controller
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var NotificationService
@@ -37,10 +39,11 @@ class PushNotificationController extends Controller
     /**
      * PushNotificationController constructor.
      * @param NotificationService $notificationService
+     * @param CustomerService $customerService
      */
-    public function __construct(NotificationService $notificationServicen, CustomerService $customerService)
+    public function __construct(NotificationService $notificationService, CustomerService $customerService)
     {
-        $this->notificationService = $notificationServicen;
+        $this->notificationService = $notificationService;
         $this->customerService = $customerService;
         $this->middleware('auth');
     }
@@ -57,6 +60,40 @@ class PushNotificationController extends Controller
         return $path;
     }
 
+
+    public function sendScheduledNotification(Request $request)
+    {
+        try {
+            $scheduleArr = explode('-', $request->schedule_time);
+            $uploadedFile = $this->upload($request->customer_file, 'notification-scheduler-files');
+
+            $notificationSchedule = new NotificationSchedule();
+
+            $notificationSchedule->notification_draft_id = $request->id;
+            $notificationSchedule->notification_category_id = $request->category_id;
+            $notificationSchedule->title = $request->title;
+            $notificationSchedule->message = $request->message;
+            $notificationSchedule->file_name = $uploadedFile;
+            $notificationSchedule->start = Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s');
+            $notificationSchedule->end = Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s');
+            $notificationSchedule->status = 'active';
+
+            $notificationSchedule->save();
+
+            return [
+                'success' => true,
+                'message' => 'Notification Schedule Stored'
+            ];
+
+        } catch (\Exception $e) {
+            Log::info('Error:' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
+    }
+
     /**
      * Send Notification
      *
@@ -65,10 +102,11 @@ class PushNotificationController extends Controller
      */
     public function sendNotification(Request $request)
     {
-
         $user_phone = [];
         $notification_id = $request->input('id');
         $category_id = $request->input('category_id');
+
+        $mute_user_phone = $this->notificationService->getMuteUserPhoneList($category_id);
 
         try {
 
@@ -84,9 +122,12 @@ class PushNotificationController extends Controller
                 foreach ($sheet->getRowIterator() as $row) {
                     $cells = $row->getCells();
                     $number = $cells[0]->getValue();
-                    $user_phone [] = $number;
+                   // $user_phone [] = $number;
+                    $user_phone_num [] = $number;
 
                    // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
+
+                    $user_phone  = $this->notificationService->removeMuteUserFromList($user_phone_num, $mute_user_phone);
 
                     if(count($user_phone) == 300){
                         $notification = $this->getNotificationArray($request, $user_phone);
@@ -199,7 +240,11 @@ class PushNotificationController extends Controller
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $PURCHASE = "$notificationInfo->external_url";
         }
+
         $category_id = !empty($request->input('category_id'))?$request->input('category_id'):1;
+
+        $image_url = env('NOTIFICATION_HOST') . "/" .$request->input('image_url') ?? null;
+
         return [
             'title' => $request->input('title'),
             'body' => $request->input('message'),
@@ -209,9 +254,11 @@ class PushNotificationController extends Controller
             "send_to_type" => "INDIVIDUALS",
             "recipients" => $customar,
             "is_interactive" => "Yes",
+            "mutable_content" => true,
             "data" => [
                 "cid" => "$category_id",
                 "url" => "test.com",
+                "image_url" => $image_url,
                 "component" => "offer"
             ],
         ];
@@ -231,6 +278,8 @@ class PushNotificationController extends Controller
      */
     public function getNotificationArray(Request $request, array $user_phone): array
     {
+        $image_url = env('NOTIFICATION_HOST') . "/" .$request->input('image_url') ?? null;
+
         return [
             'title' => $request->input('title'),
             'body' => $request->input('message'),
@@ -240,9 +289,11 @@ class PushNotificationController extends Controller
             "send_to_type" => "INDIVIDUALS",
             "recipients" => $user_phone,
             "is_interactive" => "NO",
+            "mutable_content" => true,
             "data" => [
                 "cid" => "1",
                 "url" => "test.com",
+                "image_url" => $image_url,
                 "component" => "offer",
             ],
         ];
@@ -260,7 +311,7 @@ class PushNotificationController extends Controller
         $notification_id = $request->input('id');
         $category_id = $request->input('category_id');
         $is_all = $request->input('is_active');
-        $image_url = $request->input('image_url');
+        $image_url = env('NOTIFICATION_HOST') . "/" .$request->input('image_url') ?? null;
 
         try {
 
@@ -278,6 +329,7 @@ class PushNotificationController extends Controller
                 "send_to_type" => "INDIVIDUALS" ,
                 "recipients" => $user_phone,
                 "is_interactive" => "NO",
+                "mutable_content" => true,
                 "data" => [
                     "cid" => "1",
                     "url" => "test.com",
@@ -295,6 +347,7 @@ class PushNotificationController extends Controller
                 'category_name' => $request->input('category_name'),
                 "send_to_type" => "ALL",
                 "is_interactive" => "NO",
+                "mutable_content" => true,
                 "data" => [
                     "cid" => "1",
                     "url" => "test.com",

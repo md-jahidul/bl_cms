@@ -390,7 +390,8 @@ class ProductCoreService
                 'offer_section' => ucfirst($item->offer_section_title),
                 'show_in_home' => ($item->show_in_home) ? 'Yes' : 'No',
                 'media' => ($item->media) ? 'Yes' : 'No',
-                'status' => $item->details->status
+                'status' => $item->details->status,
+                'is_visible' => $item->is_visible ? 'Shown' : 'Hidden'
             ];
         });
 
@@ -754,6 +755,7 @@ class ProductCoreService
         $data['tag'] = $request->tag;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
+        $data['is_visible'] = $request->is_visible;
 
         try {
             DB::beginTransaction();
@@ -772,6 +774,7 @@ class ProductCoreService
             unset($data_request['is_rate_cutter_offer']);
             unset($data_request['offer_section_slug']);
             unset($data_request['offer_section_title']);
+            unset($data_request['is_visible']);
 
             if (isset($data_request['data_volume'])) {
                 $data_request['data_volume'] = substr(
