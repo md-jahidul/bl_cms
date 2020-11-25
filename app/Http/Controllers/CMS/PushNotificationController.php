@@ -167,6 +167,7 @@ class PushNotificationController extends Controller
                 NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
                     ->onQueue('notification');
 
+
             }
 
             Log::info('Success: Notification sending from excel');
@@ -210,9 +211,11 @@ class PushNotificationController extends Controller
             "recipients" => $customar,
             "is_interactive" => "Yes",
             "data" => [
-                "cid" => "$category_id",
-                "url" => "test.com",
-                "component" => "offer"
+               "cid" => "$category_id",
+                "url" => "$url",
+                "component" => "offer",
+                'purchase' => "$PURCHASE",
+                'navigation_action' => "$notificationInfo->navigate_action"
             ],
         ];
 
