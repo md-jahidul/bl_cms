@@ -37,21 +37,21 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-3 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                <label> URL (url slug) English<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{$offer->url_slug}}" required name="url_slug"
+                            <div class="form-group col-md-3 {{ $errors->has('url_slug') ? ' error' : '' }}">
+                                <label> URL English<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control slug-convert" value="{{$offer->url_slug}}" required name="url_slug"
                                        id="url_en" placeholder="URL">
                                 <small class="text-info">
-                                    <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
+                                    <strong>i.e:</strong> bundles (no spaces and slash)<br>
                                 </small>
                             </div>
 
-                            <div class="form-group col-md-3 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                <label> URL (url slug) Bangla<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{ isset($offer->other_attributes['url_slug_bn']) ? $offer->other_attributes['url_slug_bn'] : '' }}"
-                                       id="url_bn" required name="other_attributes[url_slug_bn]" placeholder="URL">
+                            <div class="form-group col-md-3 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                <label> URL Bangla<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control slug-convert" value="{{ isset($offer->url_slug_bn) ? $offer->url_slug_bn : '' }}"
+                                       id="url_bn" required name="url_slug_bn" placeholder="URL">
                                 <small class="text-info">
-                                    <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
+                                    <strong>i.e:</strong> বান্ডেল (no spaces and slash)<br>
                                 </small>
                             </div>
 
@@ -168,6 +168,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
     <script>
         //show dropify for  photo
         $('.dropify').dropify({
@@ -179,35 +180,6 @@
             }
         });
 
-        function convertToSlug(Text)
-        {
-            return Text
-                .toLowerCase()
-                .replace(/ /g,'-')
-                .replace(/[^\w-]+/g,'')
-                ;
-        }
-        $("#banner_name_en").keyup(function(){
-            var text = $(this).val();
-            var data = convertToSlug(text);
-            $(this).val(data);
-        });
-        $("#banner_name_bn").keyup(function(){
-            var text = $(this).val();
-            var data = convertToSlug(text);
-            $(this).val(data);
-        });
-
-        $("#url_en").keyup(function(){
-            var text = $(this).val();
-            var data = convertToSlug(text);
-            $(this).val(data);
-        });
-        $("#url_bn").keyup(function(){
-            var text = $(this).val();
-            var data = convertToSlug(text);
-            $(this).val(data);
-        });
     </script>
 @endpush
 
