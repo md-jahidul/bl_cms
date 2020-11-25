@@ -260,8 +260,8 @@ class PushNotificationController extends Controller
         $notification_id = $request->input('id');
         $category_id = $request->input('category_id');
         $is_all = $request->input('is_active');
-        $image_url = $request->input('image_url');
-
+        $image_url = env('NOTIFICATION_HOST') . "/" .$request->input('image_url') ?? null;
+        
         try {
 
         if ($request->filled('user_phone')) {
