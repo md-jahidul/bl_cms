@@ -84,7 +84,7 @@ class NotificationScheduler extends Command
                 }
                 $reader->close();
 
-                if (!empty($user_phone)) {
+                if (count($user_phone)) {
                     $notification = $this->getNotificationArray($activeSchedule, $category, $user_phone);
                     NotificationSend::dispatch($notification, $notification_id, $user_phone, $notificationService)
                         ->onQueue('notification');
@@ -111,7 +111,7 @@ class NotificationScheduler extends Command
     {
         return [
             'title' => $activeSchedule->title,
-            'body' => $activeSchedule->body,
+            'body' => $activeSchedule->message,
             'category_slug' => $category->slug,
             'category_name' => $category->name,
             "sending_from" => "cms",
@@ -120,7 +120,7 @@ class NotificationScheduler extends Command
             "is_interactive" => "NO",
             "data" => [
                 "cid" => "1",
-                "url" => "banglalink.net",
+                "url" => "test.com",
                 "component" => "offer",
             ],
         ];

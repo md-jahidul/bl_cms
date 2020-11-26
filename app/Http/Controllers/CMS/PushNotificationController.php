@@ -200,13 +200,12 @@ class PushNotificationController extends Controller
             $reader->close();
 
             if (!empty($user_phone)) {
-
                 $customar = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
                 $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
-            //  dd($notification);
                 // $notification = $this->getNotificationArray($request, $user_phone);
                 NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
                     ->onQueue('notification');
+
 
             }
 
@@ -229,21 +228,28 @@ class PushNotificationController extends Controller
 
     public function prepareDataForSendNotification(Request $request, array $customar, $notification_id)
     {
-
         $notificationInfo = NotificationDraft::find($notification_id);
-        $url = null;
+
+        $url = "test.com";
+
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'URL') {
             $url = "$notificationInfo->external_url";
         }
 
-        $PURCHASE =null;
+        $product_code = "0000";
+
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
-            $PURCHASE = "$notificationInfo->external_url";
+            $product_code = "$notificationInfo->external_url";
         }
+
 
         $category_id = !empty($request->input('category_id'))?$request->input('category_id'):1;
 
-        $image_url = env('NOTIFICATION_HOST') . "/" .$request->input('image_url') ?? null;
+        if ($request->has('image_url')) {
+            $image_url = env('NOTIFICATION_HOST') . "/" . $request->input('image_url') ?? null;
+        } else{
+            $image_url = null;
+        }
 
         return [
             'title' => $request->input('title'),
@@ -256,18 +262,15 @@ class PushNotificationController extends Controller
             "is_interactive" => "Yes",
             "mutable_content" => true,
             "data" => [
-                "cid" => "$category_id",
-                "url" => "test.com",
+               "cid" => "$category_id",
+                "url" => "$url",
                 "image_url" => $image_url,
-                "component" => "offer"
+                "component" => "offer",
+                'product_code' => "$product_code",
+                'navigation_action' => "$notificationInfo->navigate_action"
+
             ],
         ];
-
-        // "cid" => "$category_id",
-        //         // "url" => "$url",
-        //         "component" => "offer",
-        //         // 'purchase' => "$PURCHASE",
-        //         'navigation_action' => "$notificationInfo->navigate_action",
 
     }
 
@@ -278,7 +281,31 @@ class PushNotificationController extends Controller
      */
     public function getNotificationArray(Request $request, array $user_phone): array
     {
-        $image_url = env('NOTIFICATION_HOST') . "/" .$request->input('image_url') ?? null;
+
+        $notification_id = $request->input('id');
+
+        $notificationInfo = NotificationDraft::find($notification_id);
+
+        $url = "test.com";
+
+        if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'URL') {
+            $url = "$notificationInfo->external_url";
+        }
+
+        $product_code = "0000";
+
+        if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
+            $product_code = "$notificationInfo->external_url";
+        }
+
+        $category_id = !empty($request->input('category_id'))?$request->input('category_id'):1;
+
+
+        if ($request->has('image_url')) {
+            $image_url = env('NOTIFICATION_HOST') . "/" . $request->input('image_url') ?? null;
+        } else{
+            $image_url = null;
+        }
 
         return [
             'title' => $request->input('title'),
@@ -291,10 +318,12 @@ class PushNotificationController extends Controller
             "is_interactive" => "NO",
             "mutable_content" => true,
             "data" => [
-                "cid" => "1",
-                "url" => "test.com",
+                "cid" => "$category_id",
+                "url" => "$url",
                 "image_url" => $image_url,
                 "component" => "offer",
+                'product_code' => "$product_code",
+                'navigation_action' => "$notificationInfo->navigate_action"
             ],
         ];
     }
@@ -311,7 +340,27 @@ class PushNotificationController extends Controller
         $notification_id = $request->input('id');
         $category_id = $request->input('category_id');
         $is_all = $request->input('is_active');
-        $image_url = env('NOTIFICATION_HOST') . "/" .$request->input('image_url') ?? null;
+
+        $notificationInfo = NotificationDraft::find($notification_id);
+
+        $url = "test.com";
+
+        if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'URL') {
+            $url = "$notificationInfo->external_url";
+        }
+
+        $product_code = "0000";
+
+        if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
+            $product_code = "$notificationInfo->external_url";
+        }
+        
+
+        if ($request->has('image_url')) {
+            $image_url = env('NOTIFICATION_HOST') . "/" . $request->input('image_url') ?? null;
+        } else{
+            $image_url = null;
+        }
 
         try {
 
@@ -331,10 +380,12 @@ class PushNotificationController extends Controller
                 "is_interactive" => "NO",
                 "mutable_content" => true,
                 "data" => [
-                    "cid" => "1",
-                    "url" => "test.com",
+                    "cid" => "$category_id",
+                    "url" => "$url",
                     "image_url" => $image_url,
                     "component" => "offer",
+                    'product_code' => "$product_code",
+                    'navigation_action' => "$notificationInfo->navigate_action"
                 ]
 
             ];
@@ -349,10 +400,12 @@ class PushNotificationController extends Controller
                 "is_interactive" => "NO",
                 "mutable_content" => true,
                 "data" => [
-                    "cid" => "1",
-                    "url" => "test.com",
+                    "cid" => "$category_id",
+                    "url" => "$url",
                     "image_url" => $image_url,
                     "component" => "offer",
+                    'product_code' => "$product_code",
+                    'navigation_action' => "$notificationInfo->navigate_action"
                 ]
 
             ];
@@ -366,6 +419,7 @@ class PushNotificationController extends Controller
          session()->flash('success', "Notification has been sent successfully");
 
          return redirect(route('notification.index'));*/
+
 
          $response = PushNotificationService::sendNotification($notification);
 
