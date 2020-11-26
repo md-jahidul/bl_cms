@@ -1,13 +1,30 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\CMS;
 
 use App\ProductDeepLink;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use App\Http\Controllers\Controller;
+use App\Services\ProductDeepLinkService;
 
 class ProductDeepLinkController extends Controller
 {
+
+    /**
+     * @var ProductDeepLinkService
+     */
+    protected $productDeepLinkService;
+
+
+    /**
+     * PushNotificationController constructor.
+     * @param ProductDeepLinkService $productDeepLinkService
+     */
+    public function __construct(ProductDeepLinkService $productDeepLinkService)
+    {
+        $this->productDeepLinkService = $productDeepLinkService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +32,7 @@ class ProductDeepLinkController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -23,9 +40,9 @@ class ProductDeepLinkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($product_code)
     {
-
+       return $this->productDeepLinkService->createDeepLink($product_code);
     }
 
     /**

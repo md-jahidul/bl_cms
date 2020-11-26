@@ -17,10 +17,10 @@ class CreateProductDeepLinksTable extends Migration
             $table->bigIncrements('id');
             $table->string('product_code')->nullable(false);
             $table->string('deep_link')->nullable(false);
-            $table->integer('total_view')->nullable(false);
-            $table->integer('total_buy')->nullable(false);
-            $table->integer('total_cancel')->nullable(false);
-            $table->integer('buy_attempt')->nullable(false);
+            $table->integer('total_view')->nullable(false)->default(0);
+            $table->integer('total_buy')->nullable(false)->default(0);
+            $table->integer('total_cancel')->nullable(false)->default(0);
+            $table->integer('buy_attempt')->nullable(false)->default(0);
             $table->timestamps();
         });
     }
