@@ -242,6 +242,7 @@ class PushNotificationController extends Controller
             $product_code = "$notificationInfo->external_url";
         }
 
+
         $category_id = !empty($request->input('category_id'))?$request->input('category_id'):1;
 
         if ($request->has('image_url')) {
@@ -353,7 +354,7 @@ class PushNotificationController extends Controller
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $product_code = "$notificationInfo->external_url";
         }
-
+        
 
         if ($request->has('image_url')) {
             $image_url = env('NOTIFICATION_HOST') . "/" . $request->input('image_url') ?? null;
