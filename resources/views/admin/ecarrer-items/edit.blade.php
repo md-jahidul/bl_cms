@@ -11,7 +11,7 @@
 
 @php
 
-if( 
+if(
 $parent_categories['category'] == 'programs_photogallery'
 ){
 $hide_title = true;
