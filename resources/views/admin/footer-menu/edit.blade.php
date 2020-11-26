@@ -70,6 +70,7 @@
                                         <input type="checkbox" name="external_site" value="1" id="external_site" @if($footerMenu->external_site == 1) {{ 'checked' }} @endif>
                                     </div>
                                 </div> -->
+
                                 @if($footerMenu->parent_id > 0)
                                     <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">
                                         <label for="url" class="required">URL</label>
@@ -81,32 +82,19 @@
                                             <div class="help-block">  {{ $errors->first('url') }}</div>
                                         @endif
                                     </div>
-                                    <div class="col-md-2 mt-1">
-                                        <label></label>
-                                        <div class="form-group">
-                                            <label for="is_dynamic_page" class="mr-1">Is Dynamic Page:</label>
-                                            <input type="checkbox" name="is_dynamic_page" value="1" id="is_dynamic_page"
-                                                {{ $footerMenu->is_dynamic_page ? 'checked' : '' }}>
-                                        </div>
-                                    </div>
 
-                                    <div class="col-md-4 {{ $footerMenu->is_dynamic_page ? '' : 'd-none' }}" id="dynamic_page_dropdown">
-                                        <label>Page Select</label>
-                                        <div class="form-group">
-                                            <select class="form-control" name="dynamic_page_slug">
-                                                <option value="">--Select Page--</option>
-                                                @foreach($dynamicPages as $dynamicPage)
-                                                    <option value="{{ $dynamicPage->url_slug }}"
-                                                        {{ $dynamicPage->url_slug == $footerMenu->dynamic_page_slug ? "selected" : '' }}
-                                                    >{{ $dynamicPage->page_name_en }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                    <div class="form-group col-md-6 {{ $errors->has('url_bn') ? ' error' : '' }}">
+                                        <label for="url_bn">Redirect URL Bangla</label>
+                                        <input type="text" name="url_bn" class="form-control slug-convert" placeholder="Enter URL in Bangla"
+                                               value="{{ $footerMenu->url_bn }}">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('url_bn'))
+                                            <div class="help-block">  {{ $errors->first('url_bn') }}</div>
+                                        @endif
                                     </div>
                                 @endif
 
-
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="title" class="required mr-1">Status:</label>
 
@@ -115,6 +103,29 @@
 
                                         <input type="radio" name="status" value="0" id="input-radio-16" @if($footerMenu->status == 0) {{ 'checked' }} @endif>
                                         <label for="input-radio-16">Inactive</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 mt-1">
+                                    <label></label>
+                                    <div class="form-group">
+                                        <label for="is_dynamic_page" class="mr-1">Is Dynamic Page:</label>
+                                        <input type="checkbox" name="is_dynamic_page" value="1" id="is_dynamic_page"
+                                            {{ $footerMenu->is_dynamic_page ? 'checked' : '' }}>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 {{ $footerMenu->is_dynamic_page ? '' : 'd-none' }}" id="dynamic_page_dropdown">
+                                    <label>Page Select</label>
+                                    <div class="form-group">
+                                        <select class="form-control" name="dynamic_page_slug">
+                                            <option value="">--Select Page--</option>
+                                            @foreach($dynamicPages as $dynamicPage)
+                                                <option value="{{ $dynamicPage->url_slug }}"
+                                                    {{ $dynamicPage->url_slug == $footerMenu->dynamic_page_slug ? "selected" : '' }}
+                                                >{{ $dynamicPage->page_name_en }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 

@@ -113,6 +113,7 @@ class RoamingOfferRepository extends BaseRepository {
             $offer->banner_mobile = $mobilePath;
             $offer->alt_text = $request->alt_text;
             $offer->url_slug = $request->url_slug;
+            $offer->url_slug_bn = $request->url_slug_bn;
             $offer->page_header = $request->html_header;
             $offer->page_header_bn = $request->page_header_bn;
             $offer->schema_markup = $request->schema_markup;
