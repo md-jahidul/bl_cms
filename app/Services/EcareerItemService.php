@@ -174,6 +174,7 @@ class EcareerItemService
 
                     if( isset($data['call_to_action_url_'.$i]) ){
                         $buttons['link'] = $data['call_to_action_url_'.$i];
+                        $buttons['external_site'] = strpos($data['call_to_action_url_'.$i], 'http') !== false ? 1 : 0;
                     }
 
                     if( !empty($buttons) ){
@@ -195,9 +196,7 @@ class EcareerItemService
             $data['additional_info'] = json_encode($data['additional_info']);
         }
 
-
         $ecarrer_item->update($data);
-
         return Response('Item updated successfully');
     }
 
@@ -226,10 +225,10 @@ class EcareerItemService
         $photoName = $item->image;
         $item['image'] = "";
         $item->update();
-        
-         
+
+
         $this->deleteFile($photoName);
-        
+
          $response = [
                 'success' => 1,
                 'message' => "Photo is deleted!"
