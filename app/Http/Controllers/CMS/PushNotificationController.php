@@ -230,14 +230,14 @@ class PushNotificationController extends Controller
     {
         $notificationInfo = NotificationDraft::find($notification_id);
 
-        $url = null;
+        $url = "test.com";
 
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'URL') {
             $url = "$notificationInfo->external_url";
         }
 
-        $product_code =null;
-        
+        $product_code = "0000";
+
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $product_code = "$notificationInfo->external_url";
         }
@@ -285,13 +285,13 @@ class PushNotificationController extends Controller
 
         $notificationInfo = NotificationDraft::find($notification_id);
 
-        $url = null;
+        $url = "test.com";
 
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'URL') {
             $url = "$notificationInfo->external_url";
         }
 
-        $product_code =null;
+        $product_code = "0000";
 
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $product_code = "$notificationInfo->external_url";
@@ -342,13 +342,13 @@ class PushNotificationController extends Controller
 
         $notificationInfo = NotificationDraft::find($notification_id);
 
-        $url = null;
+        $url = "test.com";
 
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'URL') {
             $url = "$notificationInfo->external_url";
         }
 
-        $product_code =null;
+        $product_code = "0000";
 
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $product_code = "$notificationInfo->external_url";
@@ -418,6 +418,7 @@ class PushNotificationController extends Controller
          session()->flash('success', "Notification has been sent successfully");
 
          return redirect(route('notification.index'));*/
+
 
          $response = PushNotificationService::sendNotification($notification);
 
