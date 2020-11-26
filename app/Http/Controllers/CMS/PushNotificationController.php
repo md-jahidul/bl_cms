@@ -200,13 +200,12 @@ class PushNotificationController extends Controller
             $reader->close();
 
             if (!empty($user_phone)) {
-
                 $customar = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
                 $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
-            //  dd($notification);
                 // $notification = $this->getNotificationArray($request, $user_phone);
                 NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
                     ->onQueue('notification');
+
 
             }
 
@@ -236,9 +235,9 @@ class PushNotificationController extends Controller
             $url = "$notificationInfo->external_url";
         }
 
-        $PURCHASE =null;
+        $product_code =null;
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
-            $PURCHASE = "$notificationInfo->external_url";
+            $product_code = "$notificationInfo->external_url";
         }
 
         $category_id = !empty($request->input('category_id'))?$request->input('category_id'):1;
@@ -256,18 +255,15 @@ class PushNotificationController extends Controller
             "is_interactive" => "Yes",
             "mutable_content" => true,
             "data" => [
-                "cid" => "$category_id",
-                "url" => "test.com",
+               "cid" => "$category_id",
+                "url" => "$url",
                 "image_url" => $image_url,
-                "component" => "offer"
+                "component" => "offer",
+                'product_code' => "$product_code",
+                'navigation_action' => "$notificationInfo->navigate_action"
+
             ],
         ];
-
-        // "cid" => "$category_id",
-        //         // "url" => "$url",
-        //         "component" => "offer",
-        //         // 'purchase' => "$PURCHASE",
-        //         'navigation_action' => "$notificationInfo->navigate_action",
 
     }
 
