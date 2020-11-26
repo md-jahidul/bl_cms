@@ -100,4 +100,9 @@ trait FileTrait {
         return Storage::disk($this->disk)->delete($filePath);
     }
 
+    public function getPath($fileName)
+    {
+        return Storage::disk($this->disk)->path($fileName);
+    }
+
 }

@@ -50,7 +50,7 @@
                                 <td width="12%">{{$notification->title}}</td>
                                 <td width="30%">{{$notification->body}}</td>
                                 <td width="10%">{{$notification->NotificationCategory->name}}</td>
-                                <td>{{!empty($notification->expires_at)?date('d-m-Y h:i:s a', strtotime($notification->start_at)):''}}</td>
+                                <td>{{!empty($notification->expires_at)?date('d-m-Y h:i:s a', strtotime($notification->starts_at)):''}}</td>
                                 <td>{{!empty($notification->expires_at)?date('d-m-Y h:i:s a', strtotime($notification->expires_at)):''}}</td>
                                 <td width="20%">
                                     <div class="row" style="padding-right: 5px;">

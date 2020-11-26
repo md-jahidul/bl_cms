@@ -8,6 +8,7 @@ use App\Services\NotificationCategoryService;
 use App\Services\NotificationService;
 use App\Http\Requests\NotificationRequest;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
@@ -51,7 +52,7 @@ class NotificationController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     * @author ahasan habib <habib.cst@gmail.com>
+     * @author ahsan habib <habib.cst@gmail.com>
      */
     public function index()
     {
@@ -173,6 +174,30 @@ class NotificationController extends Controller
         $notifications = $this->notificationService->getNotificationReport();
 
         return view('admin.notification.notification.list')
+            ->with('notifications', $notifications);
+    }
+
+    /**
+     * Display push notification defult report.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getTargetWiseNotificationReport(Request $request){
+        $notifications = $this->notificationService->getNotificationListReport();
+        return view('admin.notification.target-wise-notification.list')
+        ->with('notifications', $notifications);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getTargetWiseNotificationReportDetails(Request $request,$title)
+    {
+
+        $notifications = $this->notificationService->getNotificationTargetwiseReport($title);
+        return view('admin.notification.target-wise-notification.details')
             ->with('notifications', $notifications);
     }
 }

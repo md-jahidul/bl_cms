@@ -71,4 +71,51 @@ class NotificationRepository extends BaseRepository
             ->join('customers', 'customers.id', '=', 'notification_user.user_id')
             ->get()->toArray();
     }
+
+    /**
+     * Notification target wise report
+     *
+     * @return mixed
+     */
+    public function getNotificationTargetReport($title)
+    {
+
+      return Notification::join('notification_user', 'notifications.id', '=','notification_user.notification_id')
+            ->join('customers', 'customers.id', '=', 'notification_user.user_id')
+            ->where('notifications.title',$title)
+            ->get()->toArray();
+    }
+
+    /**
+     * @param $category_id
+     * @return array
+     */
+    public function getMuteUserPhoneList($category_id)
+    {
+        $user_ids = UserMuteNotificationCategory::where('category_id', $category_id)
+            ->select('user_id')
+            ->get()
+            ->toArray();
+
+        $phone_list = Customer::whereIn('id', $user_ids)
+            ->select('phone')
+            ->get()->toArray();
+
+        $mute_user_phone = array_map(function ($phone) {
+            return $phone['phone'];
+        }, $phone_list);
+
+        return $mute_user_phone;
+    }
+
+
+    /**
+     * @param $user_phone
+     * @param array $mute_user_phone
+     * @return array
+     */
+    public function removeMuteUserFromList($user_phone, array $mute_user_phone)
+    {
+        return array_diff($user_phone, $mute_user_phone);
+    }
 }

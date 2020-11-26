@@ -74,7 +74,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
 
                             <div class="form-group">
                                 <label for="cta_name" class="required">
@@ -91,9 +91,9 @@
                                     <small class="text-danger"> @error('cta_action') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
                             <div class="form-group">
                                 <label for="cta_action" class="required">
                                     CTA Action :
@@ -108,9 +108,9 @@
                                     <small class="text-danger"> @error('cta_action') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
                             <div class="form-group">
                                 <label for="category_id" class="required">
                                     Notification type :
@@ -125,16 +125,17 @@
                                     <small class="text-danger"> @error('notification_type') {{ $message }} @enderror </small>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="device_type">
-                                    Target Device :
+                                <label for="device_type" class="required">
+                                    Target OS :
                                 </label>
                                 <div class="controls">
-                                    <select name="device_type" id="device_type"  class="form-control">
-                                    <option value="">Select Devices</option>
+                                    <select name="device_type" id="device_type"  class="form-control" required>
+                                    {{-- <option value="">Select OS</option> --}}
+                                    <option value="all">All</option>
                                     <option value="ios">IOS</option>
                                     <option value="android">Android</option>
                                     </select>
@@ -150,7 +151,8 @@
                                 </label>
                                 <div class="controls">
                                     <select name="customer_type" id="customer_type" required class="form-control">
-                                    <option value="">Select Customer Type</option>
+                                    {{-- <option value="">Select Customer Type</option> --}}
+                                    <option value="all">All</option>
                                     <option value="prepaid">Prepaid</option>
                                     <option value="postpaid">Postpaid</option>
                                     </select>
@@ -161,24 +163,7 @@
                         </div>
 
 {{-- ================================================= --}}
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="image">Upload image :</label>
-                                    <input type="file"
-                                        id="icon"
-                                        name="image"
-                                        class="dropify"
-                                        {{-- data-allowed-formats="square" --}}
-                                        data-allowed-file-extensions="jpeg png jpg"
-                                        {{-- data-height="70" --}}
-                                        />
-                                <div class="help-block">
-                                    <small class="text-danger"> @error('image') {{ $message }} @enderror </small>
-                                    {{-- <small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small> --}}
-                                </div>
-                                <small id="massage"></small>
-                            </div>
-                        </div>
+
 
                         <div class="col-md-4" id="action_div">
                             @php
@@ -219,7 +204,30 @@
                         </div>
 
 {{-- ========================================================= --}}
-                        <div class="col-md-12">
+                    </div>
+                    <div class="row">
+                        {{-- <div class="col-md-12 d-inline"> --}}
+
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="image">Upload image :</label>
+                                        <input type="file"
+                                            id="icon"
+                                            name="image"
+                                            class="dropify"
+                                            {{-- data-allowed-formats="square" --}}
+                                            data-allowed-file-extensions="jpeg png jpg"
+                                            {{-- data-height="70" --}}
+                                            />
+                                    <div class="help-block">
+                                        <small class="text-danger"> @error('image') {{ $message }} @enderror </small>
+                                        {{-- <small class="text-info"> Shortcut icon should be in 1:1 aspect ratio</small> --}}
+                                    </div>
+                                    <small id="massage"></small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7">
                             <div class="form-group">
                                 <label for="body" class="required">Body :</label>
                                 <textarea
@@ -229,7 +237,9 @@
                                 <div class="help-block"></div>
                                 <small class="text-danger"> @error('body') {{ $message }} @enderror </small>
                             </div>
-                        </div>
+                            </div>
+
+                        {{-- </div> --}}
 
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-success round px-2">
@@ -280,6 +290,8 @@
             });
 
            var content = "";
+           var dial_content = "";
+           var purchase_content = "";
             var url_html;
             var parse_data;
             let dial_html, other_info = '';
@@ -319,6 +331,22 @@
                 })
             })
 
+            dial_html = ` <div class="form-group other-info-div">
+                                        <label>Dial Number</label>
+                                        <input type="text" name="other_attributes" class="form-control" value="${dial_content}" placeholder="Enter Valid Number" required>
+                                        <div class="help-block"></div>
+                                    </div>`;
+
+
+
+            product_html = ` <div class="form-group other-info-div">
+                                        <label>Select a product</label>
+                                        <select class="product-list form-control" name="external_url">
+                                            <option value="${purchase_content}" selected="selected">${purchase_content}</option>
+                                         </select>
+                                        <div class="help-block"></div>
+                                    </div>`;
+
             url_html = ` <div class="form-group other-info-div">
                                         <label>Redirect External URL</label>
                                         <input type="text" name="external_url" class="form-control" value="${content}" placeholder="Enter Valid URL" required>
@@ -328,12 +356,28 @@
 
             $('#navigate_action').on('change', function () {
                 let action = $(this).val();
-                if (action == 'URL') {
+                if (action == 'DIAL') {
+                    $("#append_div").html(dial_html);
+                }else if(action == 'URL') {
                     $("#append_div").html(url_html);
-                } else {
+                } else if (action == 'PURCHASE') {
+                    $("#append_div").html(product_html);
+                    $(".product-list").select2({
+                        placeholder: "Select a product",
+                        ajax: {
+                            url: "{{ route('myblslider.active-products') }}",
+                            processResults: function (data) {
+                                // Transforms the top-level key of the response object from 'items' to 'results'
+                                return {
+                                    results: data
+                                };
+                            }
+                        }
+                    });
+                }  else {
                     $(".other-info-div").remove();
                 }
-            })
+            });
         });
       $(function () {
             $('.delete').click(function () {

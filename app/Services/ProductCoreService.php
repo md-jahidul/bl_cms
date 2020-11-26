@@ -12,6 +12,7 @@ use App\Models\ProductDetail;
 use App\Repositories\ProductCoreRepository;
 use App\Repositories\SearchDataRepository;
 use App\Repositories\TagCategoryRepository;
+use App\Repositories\ProductDeepLinkRepository;
 use App\Traits\CrudTrait;
 use Box\Spout\Common\Entity\Style\Color;
 use Box\Spout\Common\Type;
@@ -30,6 +31,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
+use App\Models\ProductDeepLink;
 
 /**
  * Class ProductCoreService
@@ -45,6 +47,7 @@ class ProductCoreService
     protected $productCoreRepository;
     protected $searchRepository;
     protected $tagRepository;
+    protected $productDeepLinkRepository;
 
     /**
      * @var array
@@ -56,15 +59,18 @@ class ProductCoreService
      * @param  ProductCoreRepository  $productCoreRepository
      * @param  SearchDataRepository  $searchRepository
      * @param  TagCategoryRepository  $tagRepository
+     * @param ProductDeepLinkRepository $productDeepLinkRepository
      */
     public function __construct(
         ProductCoreRepository $productCoreRepository,
         SearchDataRepository $searchRepository,
-        TagCategoryRepository $tagRepository
+        TagCategoryRepository $tagRepository,
+        ProductDeepLinkRepository $productDeepLinkRepository
     ) {
         $this->productCoreRepository = $productCoreRepository;
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
+        $this->productDeepLinkRepository=$productDeepLinkRepository;
         $this->setActionRepository($productCoreRepository);
     }
 
@@ -378,6 +384,7 @@ class ProductCoreService
         ];
 
         $items->each(function ($item) use (&$response) {
+            $link=$this->productDeepLinkRepository->findOneProductLink($item->product_code);
             $response['data'][] = [
                 'product_code' => $item->product_code,
                 'renew_product_code' => $item->details->renew_product_code,
@@ -390,10 +397,10 @@ class ProductCoreService
                 'offer_section' => ucfirst($item->offer_section_title),
                 'show_in_home' => ($item->show_in_home) ? 'Yes' : 'No',
                 'media' => ($item->media) ? 'Yes' : 'No',
-                'status' => $item->details->status
+                'status' => $item->details->status,
+                'deep_link'=>!empty($link->deep_link)?$link->deep_link:null,
             ];
         });
-
         return $response;
     }
 
@@ -754,6 +761,7 @@ class ProductCoreService
         $data['tag'] = $request->tag;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
+        $data['is_visible'] = $request->is_visible;
 
         try {
             DB::beginTransaction();
@@ -772,6 +780,7 @@ class ProductCoreService
             unset($data_request['is_rate_cutter_offer']);
             unset($data_request['offer_section_slug']);
             unset($data_request['offer_section_title']);
+            unset($data_request['is_visible']);
 
             if (isset($data_request['data_volume'])) {
                 $data_request['data_volume'] = substr(

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Notification;
 
 class NotificationDraft extends Model
 {
@@ -24,9 +25,9 @@ class NotificationDraft extends Model
         'category_id',
         'title',
         'body',
-        'cta_name',
-        'cta_action',
-        'notification_type',
+        // 'cta_name',
+        // 'cta_action',
+        // 'notification_type',
         'device_type',
         'customer_type',
         'navigate_action',
@@ -57,6 +58,14 @@ class NotificationDraft extends Model
             'notification_id',
             'user_id'
         )->withTimestamps();
+    }
+
+    public function getNotification(){
+        return $this->hasMany(Notification::class, 'title', 'title');
+    }
+
+    public function getNotificationSuccessfullySend(){
+        return $this->hasMany(Notification::class, 'title', 'title')->where('status','SUCCESSFUL');
     }
 
 

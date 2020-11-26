@@ -25,16 +25,23 @@
                         @csrf
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$notification->title}}">
+                            <input type="text" class="form-control col-md-12" name="title" id="title" value="{{$notification->title}}" readonly>
                             <input type="hidden"  name="id" id="id" value="{{$notification->id}}">
                             <input type="hidden"  name="category_id" id="category_id" value="{{$notification->NotificationCategory->id}}">
                             <input type="hidden"  name="category_slug" id="category_slug" value="{{$notification->NotificationCategory->slug}}">
                             <input type="hidden"  name="category_name" id="category_name" value="{{$notification->NotificationCategory->name}}">
+                            <input type="hidden"  name="image_url" id="image_url" value="{{$notification->image}}">
 
                         </div>
                         <div class="form-group">
                             <label for="message">Message</label>
                             <textarea class="form-control col-md-12" name="message" id="message"> {{$notification->body}}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Image</label> <br/>
+                            <img class="" src="{{ asset($notification->image) }}" alt="Image"
+                                 height="200" width="400"/>
                         </div>
 
                         <div class="form-group">
@@ -45,9 +52,29 @@
 
                         </div>
 
+                        <div class="from-group">
+                            <input type="checkbox" name="is_scheduled" id="is_scheduled">
+                            <label>Notification Schedule</label>
+                            <div class='input-group'>
+                                <input type='text' disabled
+                                       class="form-control datetime"
+                                       value="{{ old("display_period") ? old("display_period") : '' }}"
+                                       name="schedule_time"
+                                       id="schedule_time"/>
+                                @if($errors->has('display_period'))
+                                    <p class="text-left">
+                                        <small class="danger text-muted">{{ $errors->first('display_period') }}</small>
+                                    </p>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="col-md-12" >
+                            <div class="form-group float-right" style="margin-top:15px; margin-left: 10px;">
+                                <input class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit" name="submit" value="Submit Device" id="submitDevice" onclick="return selectMethord('submitDevice');">
+                            </div>
                             <div class="form-group float-right" style="margin-top:15px;">
-                                <button class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit">Submit</button>
+                                <input class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit" name="submit" value="Submit" id="submit"  onclick="return selectMethord('submit');">
                             </div>
                         </div>
                     </form>
@@ -61,8 +88,11 @@
 
 
 @push('style')
+    <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('app-assets/css/plugins/pickers/daterange/daterange.css') }}">
+
     <link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css"
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
     <style>
 
@@ -77,12 +107,52 @@
 
 
 @push('page-js')
+
+    <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
+
     <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 
 
     <script>
+
+        var date;
+        // Date & Time
+        date = new Date();
+        date.setDate(date.getDate());
+        $('.datetime').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 5,
+            minDate: date,
+            locale: {
+                format: 'YYYY/MM/DD h:mm A'
+            }
+        });
+
+        $('#is_scheduled').change(function () {
+
+            if ($(this).is(':checked')) {
+                $('#schedule_time').removeAttr('disabled');
+            } else {
+                $('#schedule_time').attr('disabled', 'true');
+            }
+
+            //alert($(this).is(':checked'))
+        })
+
+
+        function selectMethord(buttonId){
+            if(buttonId == 'submitDevice'){
+                $('#'+buttonId).addClass('e-clicked')
+                $("#submit").removeClass('e-clicked');
+            }else{
+                $('#'+buttonId).addClass('e-clicked')
+                $("#submitDevice").removeClass('e-clicked');
+            }
+            return true;
+        }
         $(function () {
             $('#user-multiple-selected').multiselect({
                     includeSelectAllOption: true
@@ -100,8 +170,8 @@
 
             /* file handled  */
             $('#sendNotificationForm').submit(function (e) {
-                e.preventDefault();
 
+                e.preventDefault();
                 swal.fire({
                     title: 'Data Uploading.Please Wait ...',
                     allowEscapeKey: false,
@@ -110,11 +180,18 @@
                         swal.showLoading();
                     }
                 });
-
+                let URL="{{ route('notification.send') }}";
                 let formData = new FormData($(this)[0]);
-
+                let clickBtn = $(".e-clicked").val();
+                if(clickBtn === "Submit Device" )
+                {
+                 URL="{{ route('target_wise_notification.send')}}";
+                }
+                if ($('#is_scheduled').is(':checked')) {
+                    URL = "{{route('notification-schedule.send')}}";
+                }
                 $.ajax({
-                    url: '{{ route('notification.send')}}',
+                    url: URL,
                     type: 'POST',
                     cache: false,
                     contentType: false,
@@ -124,7 +201,7 @@
 
                         if (result.success) {
                             swal.fire({
-                                title: 'Notification sent Successfully!',
+                                title: result.message,
                                 type: 'success',
                                 timer: 900000,
                                 showConfirmButton: false
