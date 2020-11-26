@@ -26,15 +26,11 @@ class AppServiceProductRequest extends FormRequest
         if ($this->method() == "PUT") {
             $id = $this->route()->parameters();
             return [
-                'app_service_tab_id' => 'required',
-                'app_service_cat_id' => 'required',
                 'url_slug' => 'required|unique:app_service_products,url_slug,' . $id['app_service_product'],
                 'url_slug_bn' => 'required|unique:app_service_products,url_slug_bn,' . $id['app_service_product']
             ];
         } else {
             return [
-                'app_service_tab_id' => 'required',
-                'app_service_cat_id' => 'required',
                 'url_slug' => 'required|unique:app_service_products,url_slug',
                 'url_slug_bn' => 'required|unique:app_service_products,url_slug_bn'
             ];
