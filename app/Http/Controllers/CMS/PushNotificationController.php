@@ -190,17 +190,18 @@ class PushNotificationController extends Controller
     {
         $notificationInfo = NotificationDraft::find($notification_id);
 
-        $url = null;
+        $url = "test.com";
 
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'URL') {
             $url = "$notificationInfo->external_url";
         }
 
-        $product_code =null;
-        
+        $product_code = "0000";
+
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $product_code = "$notificationInfo->external_url";
         }
+
 
         $category_id = !empty($request->input('category_id'))?$request->input('category_id'):1;
 
@@ -245,13 +246,13 @@ class PushNotificationController extends Controller
 
         $notificationInfo = NotificationDraft::find($notification_id);
 
-        $url = null;
+        $url = "test.com";
 
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'URL') {
             $url = "$notificationInfo->external_url";
         }
 
-        $product_code =null;
+        $product_code = "0000";
 
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $product_code = "$notificationInfo->external_url";
@@ -302,18 +303,18 @@ class PushNotificationController extends Controller
 
         $notificationInfo = NotificationDraft::find($notification_id);
 
-        $url = null;
+        $url = "test.com";
 
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'URL') {
             $url = "$notificationInfo->external_url";
         }
 
-        $product_code =null;
+        $product_code = "0000";
 
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $product_code = "$notificationInfo->external_url";
         }
-
+        
 
         if ($request->has('image_url')) {
             $image_url = env('NOTIFICATION_HOST') . "/" . $request->input('image_url') ?? null;
