@@ -38,11 +38,19 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-4 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                    <label> URL (url slug) <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" value="{{$appServiceTab->url_slug}}" required name="url_slug" placeholder="URL">
+                                <div class="form-group col-md-4 {{ $errors->has('url_slug') ? ' error' : '' }}">
+                                    <label> URL English <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control slug-convert" value="{{$appServiceTab->url_slug}}" required name="url_slug" placeholder="URL">
                                     <small class="text-info">
-                                        <strong>i.e:</strong> app-and-service-title (no spaces)<br>
+                                        <strong>i.e:</strong> apps (no spaces and slash)<br>
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                    <label> URL Bangla <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control slug-convert" value="{{$appServiceTab->url_slug_bn}}" required name="url_slug_bn" placeholder="URL">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> অ্যাপ (no spaces and slash)<br>
                                     </small>
                                 </div>
 
@@ -159,7 +167,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
-
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
 @endpush
 
 
