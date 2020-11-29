@@ -71,4 +71,18 @@ class NotificationRepository extends BaseRepository
             ->join('customers', 'customers.id', '=', 'notification_user.user_id')
             ->get()->toArray();
     }
+
+    /**
+     * Notification target wise report
+     *
+     * @return mixed
+     */
+    public function getNotificationTargetReport($title)
+    {
+
+      return Notification::join('notification_user', 'notifications.id', '=','notification_user.notification_id')
+            ->join('customers', 'customers.id', '=', 'notification_user.user_id')
+            ->where('notifications.title',$title)
+            ->get()->toArray();
+    }
 }
