@@ -11,6 +11,7 @@ use App\Services\CustomerService;
 use App\Services\NotificationService;
 use App\Services\PushNotificationService;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Carbon\Carbon;
@@ -25,6 +26,7 @@ use Illuminate\Support\Str;
 class PushNotificationController extends Controller
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var NotificationService

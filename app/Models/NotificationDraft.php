@@ -59,5 +59,10 @@ class NotificationDraft extends Model
         )->withTimestamps();
     }
 
+    public function schedule()
+    {
+        return $this->hasOne(NotificationSchedule::class);
+    }
+
 
 }
