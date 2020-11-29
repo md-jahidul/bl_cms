@@ -54,14 +54,24 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-12 {{ $errors->has('url') ? ' error' : '' }}">
-                                    <label for="url" class="required">URL</label>
+                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">
+                                    <label for="url" class="required">Redirect URL English</label>
                                     <input type="text" name="url"  class="form-control" placeholder="Enter URL"
                                            value="{{ $menu->url }}" required data-validation-required-message="Enter footer menu url">
                                     <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>
                                     <div class="help-block"></div>
                                     @if ($errors->has('url'))
                                         <div class="help-block">  {{ $errors->first('url') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('url_bn') ? ' error' : '' }}">
+                                    <label for="url_bn">Redirect URL Bangla</label>
+                                    <input type="text" name="url_bn" class="form-control" placeholder="Enter URL in Bangla"
+                                           value="{{ $menu->url_bn }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('url_bn'))
+                                        <div class="help-block">  {{ $errors->first('url_bn') }}</div>
                                     @endif
                                 </div>
 
@@ -108,7 +118,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
-
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
 @endpush
 
 
