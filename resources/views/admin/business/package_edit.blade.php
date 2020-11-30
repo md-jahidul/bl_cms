@@ -56,11 +56,33 @@
 
                             <div class="form-group">
 
-                                <label>URL Slug <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required name="url_slug" value="{{ $package->url_slug }}">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> roaming-rates (no spaces)<br>
-                                </small>
+                                <div class="mb-1">
+                                    <label>URL Slug EN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control slug-convert" required name="url_slug" placeholder="URL EN"
+                                           value="{{ $package->url_slug }}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> banglalink-corporate-postpaid (no spaces and slash)<br>
+                                    </small>
+                                    @if ($errors->has('url_slug'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('url_slug') }}
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div>
+                                    <label>URL Slug BN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control slug-convert" required name="url_slug_bn" placeholder="URL BN"
+                                           value="{{ $package->url_slug_bn }}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> বাংলালিংক-কর্পোরেট-পোস্টপেইড (no spaces and slash)<br>
+                                    </small>
+                                    @if ($errors->has('url_slug_bn'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('url_slug_bn') }}
+                                        </div>
+                                    @endif
+                                </div>
 
                                 <hr>
 
