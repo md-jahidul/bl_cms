@@ -16,7 +16,7 @@ class AddUrlSlugBnAndOtherFieldAtBuisnessPackagesTable extends Migration
         Schema::table('business_packages', function(Blueprint $table) {
             if(!Schema::hasColumn('business_packages', 'url_slug_bn')) {
                 $table->string('url_slug_bn')->after('url_slug')->nullable();
-                $table->string('card_banner_name_web_en')->after('card_banner_web')->nullable();
+                $table->string('card_banner_name_web_en')->after('name_bn')->nullable();
                 $table->string('card_banner_name_web_bn')->after('card_banner_name_web_en')->nullable();
                 $table->string('card_banner_name_mobile_en')->after('card_banner_name_web_bn')->nullable();
                 $table->string('card_banner_name_mobile_bn')->after('card_banner_name_mobile_en')->nullable();
