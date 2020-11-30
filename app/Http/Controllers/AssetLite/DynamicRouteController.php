@@ -27,15 +27,22 @@ class DynamicRouteController extends Controller
      * @var DynamicRouteService
      */
     private $dynamicRouteService;
+    /**
+     * @var DynamicPageService
+     */
+    private $dynamicPageService;
 
     /**
      * DynamicRouteService constructor.
      * @param DynamicRouteService $dynamicRouteService
+     * @param DynamicPageService $dynamicPageService
      */
     public function __construct(
-        DynamicRouteService $dynamicRouteService
+        DynamicRouteService $dynamicRouteService,
+        DynamicPageService $dynamicPageService
     ) {
         $this->dynamicRouteService = $dynamicRouteService;
+        $this->dynamicPageService = $dynamicPageService;
     }
 
 
@@ -46,7 +53,8 @@ class DynamicRouteController extends Controller
      */
     public function index()
     {
-        $routes = $this->dynamicRouteService->findAll();
+        $routes = FrontEndDynamicRoute::latest()->get();
+//        $routes = $this->dynamicRouteService->findAll();
         return view('admin.dynamic-route.index', compact('routes'));
     }
 
@@ -55,7 +63,8 @@ class DynamicRouteController extends Controller
      */
     public function create()
     {
-        return view('admin.dynamic-route.create');
+        $dynamicPages = $this->dynamicPageService->findAll();
+        return view('admin.dynamic-route.create', compact('dynamicPages'));
     }
 
     /**

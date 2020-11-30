@@ -119,6 +119,7 @@ class BusinessPackageRepository extends BaseRepository
 
         $package->banner_name = $request->banner_name;
         $package->url_slug = $request->url_slug;
+        $package->url_slug_bn = $request->url_slug_bn;
         $package->schema_markup = $request->schema_markup;
         $package->page_header = $request->page_header;
         $package->page_header_bn = $request->page_header_bn;
@@ -169,6 +170,7 @@ class BusinessPackageRepository extends BaseRepository
         $package->alt_text = $request->alt_text;
         $package->banner_name = $request->banner_name;
         $package->url_slug = $request->url_slug;
+        $package->url_slug_bn = $request->url_slug_bn;
         $package->schema_markup = $request->schema_markup;
         $package->page_header = $request->page_header;
         $package->page_header_bn = $request->page_header_bn;

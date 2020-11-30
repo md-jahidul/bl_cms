@@ -11,13 +11,13 @@
 @section('content')
 <section>
     <form method="POST" action="{{ url('business-internet-update')}}" class="form home_news_form" enctype="multipart/form-data">
-
+        @csrf
+        @method('PUT')
         <div class="card">
             <div class="card-content collapse show">
                 <div class="card-body card-dashboard">
 
                     <div class="row">
-                        @csrf
 
                         <div class="col-md-4 col-xs-12">
 
@@ -281,7 +281,7 @@
 
                         </div>
 
-                        <div class="col-md-4 col-xs-12">
+                        <div class="col-md-6 col-xs-12">
 
                            <div class="form-group">
                                 <label>Alt Text</label>
@@ -289,7 +289,7 @@
                             </div>
 
                         </div>
-                        <div class="col-md-4 col-xs-12">
+                        <div class="col-md-6 col-xs-12">
 
                             <label>Banner Photo Name<span class="text-danger">*</span></label>
                             <input type="hidden" name="old_banner_name" value="{{$internet->banner_name}}">
@@ -303,15 +303,36 @@
                         </div>
 
 
-                         <div class="col-md-4 col-xs-12">
+                         <div class="col-md-12 col-xs-12">
 
-                            <div class="form-group">
+                            <div class="form-group row">
 
-                                <label>URL Slug <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" required name="url_slug" value="{{$internet->url_slug}}" placeholder="URL">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> 5gb-hot-offer (no spaces)<br>
-                                </small>
+                                <div class="col-md-6">
+                                    <label>URL Slug EN <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control slug-convert" required name="url_slug" placeholder="URL EN"
+                                           value="{{$internet->url_slug}}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> banglalink-corporate-postpaid (no spaces and slash) <br>
+                                    </small>
+                                    @if ($errors->has('url_slug'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('url_slug') }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="col-md-6">
+                                    <label>URL Slug BN <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control slug-convert" required name="url_slug_bn" placeholder="URL EN"
+                                           value="{{$internet->url_slug_bn}}">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> বাংলালিংক-কর্পোরেট-পোস্টপেইড (no spaces and slash) <br>
+                                    </small>
+                                    @if ($errors->has('url_slug_bn'))
+                                        <div class="help-block text-danger">
+                                            {{ $errors->first('url_slug_bn') }}
+                                        </div>
+                                    @endif
+                                </div>
 
                             </div>
 
@@ -380,7 +401,7 @@
 
 @endpush
 @push('page-js')
-
+<script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 

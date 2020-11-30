@@ -75,10 +75,17 @@
                                 <input type="text" class="form-control name_bn" required name="name_bn" placeholder="Name BN">
                             </div>
                             <div class="col-md-3 col-xs-12">
-                                <label>URL <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control page_url" required name="page_url" placeholder="URL">
+                                <label>URL EN <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control page_url slug-convert" required name="page_url" placeholder="URL">
                                 <small class="text-info">
-                                    <strong>i.e:</strong> roaming-rates (no spaces)<br>
+                                    <strong>i.e:</strong> Offer (no spaces and slash)<br>
+                                </small>
+                            </div>
+                            <div class="col-md-3 col-xs-12">
+                                <label>URL BN <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control page_url_bn slug-convert" required name="page_url_bn" placeholder="URL">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> অফার (no spaces and slash)<br>
                                 </small>
                             </div>
 
@@ -176,6 +183,7 @@
 </div>
 
 @push('page-js')
+<script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
 
 <script>
     $(function () {
@@ -238,6 +246,7 @@
                     $('.old_web').val(result.banner_web);
                     $('.old_mobile').val(result.banner_mobile);
                     $('.page_url').val(result.url_slug);
+                    $('.page_url_bn').val(result.url_slug_bn);
                     $('.banner_name').val(result.banner_name);
                     $('.html_header').val(result.page_header);
                     $('.page_header_bn').val(result.page_header_bn);

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddRedirectUrlFieldInFooterTable extends Migration
+class AddBanglaUrlInHederMenuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class AddRedirectUrlFieldInFooterTable extends Migration
      */
     public function up()
     {
-        Schema::table('footer_menus', function (Blueprint $table) {
+        Schema::table('menus', function (Blueprint $table) {
             $table->string('url')->nullable()->change();
+            $table->string('code')->nullable()->change();
             $table->string('url_bn')->nullable()->after('url');
+            $table->tinyInteger('is_dynamic_page')->default(0)->after('url_bn');
         });
     }
 
@@ -26,8 +28,9 @@ class AddRedirectUrlFieldInFooterTable extends Migration
      */
     public function down()
     {
-        Schema::table('footer_menus', function (Blueprint $table) {
+        Schema::table('menus', function (Blueprint $table) {
             $table->dropColumn('url_bn');
+            $table->dropColumn('is_dynamic_page');
         });
     }
 }

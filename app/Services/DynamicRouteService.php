@@ -31,15 +31,21 @@ class DynamicRouteService
         $this->setActionRepository($dynamicRouteRepository);
     }
 
+    public function findLangWiseRoute()
+    {
+        return $this->dynamicRouteRepository->findByProperties(['lang_type' => 'en'], ['key', 'url']);
+    }
+
     /**
      * @param $data
      * @return ResponseFactory|Response
      */
     public function saveRoute($data)
     {
-        foreach ($data['url'] as $item) {
+        foreach ($data['url'] as $index => $item) {
             $data['code'] = str_replace(' ', '', $data['code']);
             $data['url'] = $item;
+            $data['lang_type'] = ($index == 0) ? 'en' : 'bn';
             $this->save($data);
         }
         return Response('Route add successfully');
@@ -47,7 +53,7 @@ class DynamicRouteService
 
     /**
      * @param $request
-     * @param $aboutUs
+     * @param $id
      * @return ResponseFactory|Response
      */
     public function updateRoute($request, $id)
