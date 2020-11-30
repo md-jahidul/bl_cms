@@ -134,6 +134,8 @@ class PushNotificationController extends Controller
         $notification_data = $request->all();
         $notificationInfo = NotificationDraft::find($notification_id);
 
+        $mute_user_phone = $this->notificationService->getMuteUserPhoneList($category_id);
+
         try {
             $reader = ReaderFactory::createFromType(Type::XLSX);
             $path = $request->file('customer_file')->getRealPath();
@@ -147,9 +149,11 @@ class PushNotificationController extends Controller
                 foreach ($sheet->getRowIterator() as $row) {
                     $cells = $row->getCells();
                     $number = $cells[0]->getValue();
-                    $user_phone [] = $number;
-
+                    // $user_phone [] = $number;
+                    $user_phone_num [] = $number;
                     // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
+
+                    $user_phone  = $this->notificationService->removeMuteUserFromList($user_phone_num, $mute_user_phone);
 
                     if (count($user_phone) == 300) {
                         list($customer, $notification) = $this->checkTargetwise($request, $notificationInfo, $user_phone, $notification_id, $notification_data);
