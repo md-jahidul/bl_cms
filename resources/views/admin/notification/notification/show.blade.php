@@ -72,9 +72,9 @@
                         </div>
 
                         <div class="col-md-12" >
-                            <div class="form-group float-right" style="margin-top:15px; margin-left: 10px;">
-                                <input class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit" name="submit" value="Submit Device" id="submitDevice" onclick="return selectMethord('submitDevice');">
-                            </div>
+                           {{-- <div class="form-group float-right" style="margin-top:15px; margin-left: 10px;">
+                                <input class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit" name="submit" value="Target wise Submit" id="submitDevice" onclick="return selectMethord('submitDevice');">
+                            </div>--}}
                             <div class="form-group float-right" style="margin-top:15px;">
                                 <input class="btn btn-success" style="width:100%;padding:7.5px 12px" type="submit" name="submit" value="Submit" id="submit"  onclick="return selectMethord('submit');">
                             </div>
