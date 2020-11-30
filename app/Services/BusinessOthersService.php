@@ -86,26 +86,11 @@ class BusinessOthersService {
     public function saveService($request) {
         try {
 
-            $request->validate([
-                'type' => 'required',
-                'name_en' => 'required',
-                'name_bn' => 'required',
-                'short_details_en' => 'required',
-                'short_details_bn' => 'required',
-                'banner_photo' => 'required|mimes:jpg,jpeg,png',
-                'icon' => 'required|mimes:jpg,jpeg,png',
-                'url_slug' => 'required|regex:/^\S*$/u',
-                'banner_name' => 'required|regex:/^\S*$/u',
-                'details_banner_name' => 'required|regex:/^\S*$/u',
-            ]);
-
-
             //file upload in storege
 
             $directoryPath = 'assetlite/images/business-images';
 
 
-            //icon upload
             $iconPath = "";
             if ($request['icon'] != "") {
                 $iconPath = $this->upload($request['icon'], $directoryPath);
@@ -145,7 +130,7 @@ class BusinessOthersService {
 
 
 
-            //save data in database 
+            //save data in database
             $serviceId = $this->otherRepo->saveService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request);
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
             $parentTypes = $types[$request->type];
@@ -812,19 +797,6 @@ class BusinessOthersService {
     public function updateService($request) {
         try {
 
-
-
-            $request->validate([
-                'type' => 'required',
-                'name_en' => 'required',
-                'name_bn' => 'required',
-                'short_details_en' => 'required',
-                'short_details_bn' => 'required',
-                'url_slug' => 'required|regex:/^\S*$/u',
-                'banner_name' => 'required|regex:/^\S*$/u',
-                'details_banner_name' => 'required|regex:/^\S*$/u',
-            ]);
-
             //banner file replace in storege
             $directoryPath = 'assetlite/images/business-images/';
 
@@ -898,7 +870,7 @@ class BusinessOthersService {
                 }
             }
 
-            //save data in database 
+            //save data in database
             $this->otherRepo->updateService($photoWeb, $photoMob, $bannerWeb, $bannerMob, $iconPath, $request);
 
             $types = array("business-solution" => 2, "iot" => 3, "others" => 4);
