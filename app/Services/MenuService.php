@@ -40,14 +40,14 @@ class MenuService
      */
     public function storeMenu($data)
     {
-        request()->validate([
-            'url' => 'required|regex:/^\S*$/u|unique:menus',
-            'url_bn' => 'required|regex:/^\S*$/u|unique:menus',
-        ]);
+//        request()->validate([
+//            'url' => 'required|regex:/^\S*$/u|unique:menus',
+//            'url_bn' => 'required|regex:/^\S*$/u|unique:menus',
+//        ]);
 
         $menu_count = count($this->menuRepository->getChildMenus($data['parent_id']));
         $data['display_order'] = ++$menu_count;
-        $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
+        $data['external_site'] = isset($data['external_site']) ? 1 : 0;
         $this->save($data);
         return new Response('Menu added successfully');
     }
