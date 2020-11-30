@@ -14,6 +14,7 @@ class AddBanglaUrlInHederMenuTable extends Migration
     public function up()
     {
         Schema::table('menus', function (Blueprint $table) {
+            $table->string('url')->nullable()->change();
             $table->string('url_bn')->nullable()->after('url');
             $table->tinyInteger('is_dynamic_page')->default(0)->after('url_bn');
         });

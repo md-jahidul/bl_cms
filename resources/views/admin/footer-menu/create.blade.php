@@ -55,7 +55,7 @@
                                 </div>
 
                                 <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }}" id="pageDynamic">
-                                    <label for="code">Pages</label>
+                                    <label for="code">Page URL</label>
                                     <select class="form-control" name="code">
                                         <option>---Select Page---</option>
                                         @foreach($dynamicRoutes as $route)
@@ -72,7 +72,7 @@
                                     <label></label>
                                     <div class="form-group">
                                         <label for="external_link">Is External Menu:</label>
-                                        <input type="checkbox" name="is_dynamic_page" value="1" id="external_link">
+                                        <input type="checkbox" name="external_site" value="1" id="external_link">
                                     </div>
                                 </div>
 

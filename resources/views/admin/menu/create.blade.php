@@ -24,15 +24,6 @@
                         <form role="form" action="{{ route('menu.store') }}" method="POST" novalidate>
                             <div class="row">
                                 <input type="hidden" name="parent_id" value="{{ $parent_id }}">
-                                <div class="form-group col-md-12 {{ $errors->has('name') ? ' error' : '' }}">
-                                    <label for="title" class="required">Page Name</label>
-                                    <input type="text" name="code"  class="form-control" placeholder="Enter title" readonly
-                                           value="DynamicPage" required data-validation-required-message="Enter footer menu title">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('name'))
-                                        <div class="help-block">  {{ $errors->first('name') }}</div>
-                                    @endif
-                                </div>
                                 <div class="form-group col-md-6 {{ $errors->has('en_label_text') ? ' error' : '' }}">
                                     <label for="title" class="required">English Label</label>
                                     <input type="text" name="en_label_text"  class="form-control" placeholder="Enter english label"
@@ -53,34 +44,37 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('url') ? ' error' : '' }}">
-                                    <label for="url" class="required">Redirect URL English</label>
-                                    <input type="text" name="url" class="form-control slug-convert" placeholder="Enter URL"
-                                           value="{{ old("url") ? old("url") : '' }}" required data-validation-required-message="Enter header menu url">
-                                    <p class="hints"> ( For internal link only path, e.g. /offers And for external full path e.g.  https://eshop.banglalink.net/ )</p>
+                                <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }}" id="pageDynamic">
+                                    <label for="code">Page URL</label>
+                                    <select class="form-control" name="code">
+                                        <option>---Select Page---</option>
+                                        @foreach($dynamicRoutes as $route)
+                                            <option value="{{ $route->key }}">{{ $route->url }}</option>
+                                        @endforeach
+                                    </select>
                                     <div class="help-block"></div>
-                                    @if ($errors->has('url'))
-                                        <div class="help-block">  {{ $errors->first('url') }}</div>
+                                    @if ($errors->has('key'))
+                                        <div class="help-block">  {{ $errors->first('key') }}</div>
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('url_bn') ? ' error' : '' }}">
-                                    <label for="url_bn">Redirect URL Bangla</label>
-                                    <input type="text" name="url_bn"  class="form-control slug-convert" placeholder="Enter URL in Bangla"
-                                           value="{{ old("url_bn") ? old("url_bn") : '' }}">
-                                    <div class="help-block"></div>
-                                    @if ($errors->has('url_bn'))
-                                        <div class="help-block">  {{ $errors->first('url_bn') }}</div>
-                                    @endif
-                                </div>
-
-
-                                <!-- <div class="col-md-12">
+                                <div class="col-md-2 mt-1">
+                                    <label></label>
                                     <div class="form-group">
-                                        <label for="external_site" class="mr-1">External Site</label>
-                                        <input type="checkbox" name="external_site" value="1" id="external_site">
+                                        <label for="external_link">Is External Menu:</label>
+                                        <input type="checkbox" name="external_site" value="1" id="external_link">
                                     </div>
-                                </div> -->
+                                </div>
+
+                                <div class="form-group col-md-4 {{ $errors->has('external_site') ? ' error' : '' }} d-none" id="externalLink">
+                                    <label for="url" class="required">External URL</label>
+                                    <input type="text" name="external_site" class="form-control slug-convert" placeholder="Enter URL"
+                                           value="{{ old("external_site") ? old("external_site") : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('external_site'))
+                                        <div class="help-block">  {{ $errors->first('external_site') }}</div>
+                                    @endif
+                                </div>
 
                                 <div class="col-md-6 float-left">
                                     <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
@@ -120,7 +114,18 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
-
+    <script>
+        $(function () {
+            var externalLink = $('#externalLink');
+            $('#external_link').click(function () {
+                if($(this).prop("checked") == true){
+                    externalLink.removeClass('d-none');
+                }else{
+                    externalLink.addClass('d-none')
+                }
+            })
+        })
+    </script>
 @endpush
 
 
