@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Jobs\NotificationSend;
 use App\Models\Customer;
 use App\Models\NotificationDraft;
+use App\Models\NotificationSchedule;
 use App\Services\CustomerService;
 use App\Services\NotificationService;
 use App\Services\PushNotificationService;
 use App\Traits\CrudTrait;
+use App\Traits\FileTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -23,6 +26,7 @@ use Illuminate\Support\Str;
 class PushNotificationController extends Controller
 {
     use CrudTrait;
+    use FileTrait;
 
     /**
      * @var NotificationService
@@ -38,9 +42,9 @@ class PushNotificationController extends Controller
      * PushNotificationController constructor.
      * @param NotificationService $notificationService
      */
-    public function __construct(NotificationService $notificationServicen, CustomerService $customerService)
+    public function __construct(NotificationService $notificationService, CustomerService $customerService)
     {
-        $this->notificationService = $notificationServicen;
+        $this->notificationService = $notificationService;
         $this->customerService = $customerService;
         $this->middleware('auth');
     }
@@ -58,6 +62,56 @@ class PushNotificationController extends Controller
     }
 
     /**
+     * Method that saves file of user base and stores schedule data in the database
+     * @param Request $request
+     * @return array
+     */
+    public function sendScheduledNotification(Request $request)
+    {
+        try {
+            $scheduleArr = explode('-', $request->schedule_time);
+            $uploadedFile = $this->upload($request->customer_file, 'notification-scheduler-files');
+
+            $checkScheduleExists = NotificationSchedule::where('notification_draft_id', $request->id)->first();
+            if ($checkScheduleExists) {
+                $data = [
+                    'title' => $request->title,
+                    'message' => $request->message,
+                    'file_name' => $uploadedFile,
+                    'start' => Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s'),
+                    'end' => Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s'),
+                    'status' => 'active'
+                ];
+                NotificationSchedule::where('notification_draft_id', $request->id)->update($data);
+            } else {
+                $notificationSchedule = new NotificationSchedule();
+
+                $notificationSchedule->notification_draft_id = $request->id;
+                $notificationSchedule->notification_category_id = $request->category_id;
+                $notificationSchedule->title = $request->title;
+                $notificationSchedule->message = $request->message;
+                $notificationSchedule->file_name = $uploadedFile;
+                $notificationSchedule->start = Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s');
+                $notificationSchedule->end = Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s');
+                $notificationSchedule->status = 'active';
+
+                $notificationSchedule->save();
+            }
+
+            return [
+                'success' => true,
+                'message' => 'Notification Schedule Stored'
+            ];
+        } catch (\Exception $e) {
+            Log::info('Error:' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
      * Send Notification
      *
      * @param Request $request
@@ -65,14 +119,12 @@ class PushNotificationController extends Controller
      */
     public function sendNotification(Request $request)
     {
-
         $user_phone = [];
         $notification_id = $request->input('id');
         $category_id = $request->input('category_id');
 
 
         try {
-
             $reader = ReaderFactory::createFromType(Type::XLSX);
             $path = $request->file('customer_file')->getRealPath();
             $reader->open($path);
@@ -87,11 +139,12 @@ class PushNotificationController extends Controller
                     $number = $cells[0]->getValue();
                     $user_phone [] = $number;
 
-                   // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
+                    // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
 
-                    if(count($user_phone) == 300){
+                    if (count($user_phone) == 300) {
                         $notification = $this->getNotificationArray($request, $user_phone);
-                        NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+                        NotificationSend::dispatch($notification, $notification_id, $user_phone,
+                            $this->notificationService)
                             ->onQueue('notification');
                         $user_phone = [];
                     }
@@ -111,7 +164,7 @@ class PushNotificationController extends Controller
                 'message' => 'Notification Sent'
             ];
         } catch (\Exception $e) {
-            Log::info('Error:'.$e->getMessage());
+            Log::info('Error:' . $e->getMessage());
             return [
                 'success' => false,
                 'message' => $e->getMessage(),
@@ -132,7 +185,6 @@ class PushNotificationController extends Controller
         // $category_id = $request->input('category_id');
 
         try {
-
             $reader = ReaderFactory::createFromType(Type::XLSX);
             $path = $request->file('customer_file')->getRealPath();
             $reader->open($path);
@@ -151,7 +203,8 @@ class PushNotificationController extends Controller
                     if (count($user_phone) == 300) {
                         $customar = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
                         $notification = $this->prepareDataForSendNotification($request, $customar, $notification_id);
-                        NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+                        NotificationSend::dispatch($notification, $notification_id, $user_phone,
+                            $this->notificationService)
                             ->onQueue('notification');
                         $user_phone = [];
                     }
@@ -182,12 +235,14 @@ class PushNotificationController extends Controller
             ];
         }
     }
+
     /**
      * This function only prepare data formated
      */
 
     public function prepareDataForSendNotification(Request $request, array $customar, $notification_id)
     {
+
         $notificationInfo = NotificationDraft::find($notification_id);
 
         $url = "test.com";
@@ -314,7 +369,7 @@ class PushNotificationController extends Controller
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $product_code = "$notificationInfo->external_url";
         }
-        
+
 
         if ($request->has('image_url')) {
             $image_url = env('NOTIFICATION_HOST') . "/" . $request->input('image_url') ?? null;

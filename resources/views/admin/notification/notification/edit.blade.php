@@ -53,24 +53,26 @@
                                 </div>
                             </div>
                         </div>
-                        @php $date="$notification->starts_at.'-'.$notification->expires_at"; @endphp
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="start_date" class="required">Time Period</label>
-                                <div class='input-group'>
-                                    <input type='text'
-                                           class="form-control datetime"
-                                value="{{$date}}"
-                                           name="display_period"
-                                           id="display_period"/>
-                                    @if($errors->has('display_period'))
-                                        <p class="text-left">
-                                            <small class="danger text-muted">{{ $errors->first('display_period') }}</small>
-                                        </p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
+{{--                        @php $date = $notification->starts_at .'-'. $notification->expires_at; @endphp--}}
+{{--                        <input name="display_period" type="hidden" value="{{$date}}">--}}
+{{--                       --}}
+{{--                        <div class="col-md-4">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label for="start_date" class="required">Time Period</label>--}}
+{{--                                <div class='input-group'>--}}
+{{--                                    <input type='text'--}}
+{{--                                           class="form-control datetime"--}}
+{{--                                value="{{$date}}"--}}
+{{--                                           name="display_period"--}}
+{{--                                           id="display_period"/>--}}
+{{--                                    @if($errors->has('display_period'))--}}
+{{--                                        <p class="text-left">--}}
+{{--                                            <small class="danger text-muted">{{ $errors->first('display_period') }}</small>--}}
+{{--                                        </p>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
                         {{-- <div class="col-md-4">
 

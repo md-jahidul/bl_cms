@@ -47,6 +47,7 @@
             <th>Recharge Product Code</th>
             <th>Description</th>
             <th>Show in Home</th>
+            <th>Visibility</th>
             <th>Attached Image</th>
             <th class="filter_data">Actions</th>
         </tr>
@@ -137,6 +138,12 @@
                         name: 'show_in_home',
                         render: function (data, type, row) {
                             return row.show_in_home;
+                        }
+                    },
+                    {
+                        name: 'is_visible',
+                        render: function (data, type, row) {
+                            return   row.is_visible == 'Shown' ? "<span class='badge badge-success'>Shown</span>" : "<span class='badge badge-warning'>Hidden</span>";
                         }
                     },
                     {

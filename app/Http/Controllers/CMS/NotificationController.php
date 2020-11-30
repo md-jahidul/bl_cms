@@ -92,16 +92,19 @@ class NotificationController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function show($id)
     {
-        $notification = $this->notificationService->findOne($id, 'NotificationCategory');
+        $notification = $this->notificationService->findOne($id, ['NotificationCategory', 'schedule']);
+        $schedule = $notification ? $notification->schedule : null;
+        $scheduleStatus = $schedule ? $schedule->status : 'none';
         $users = $this->userService->getUserListForNotification();
 
-        return view('admin.notification.notification.show')
-            ->with('notification', $notification)
-            ->with('users', $users);
+        return view(
+            'admin.notification.notification.show',
+            compact('notification', 'users', 'schedule', 'scheduleStatus')
+        );
     }
 
 
