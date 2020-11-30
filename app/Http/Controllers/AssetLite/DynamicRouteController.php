@@ -53,7 +53,8 @@ class DynamicRouteController extends Controller
      */
     public function index()
     {
-        $routes = $this->dynamicRouteService->findAll();
+        $routes = FrontEndDynamicRoute::latest()->get();
+//        $routes = $this->dynamicRouteService->findAll();
         return view('admin.dynamic-route.index', compact('routes'));
     }
 
