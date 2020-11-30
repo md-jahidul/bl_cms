@@ -108,12 +108,13 @@ class NotificationService
 
         }
 
-        $date_range_array = explode('-', $request['display_period']);
-        $data['starts_at'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
-            ->toDateTimeString();
-        $data['expires_at'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
-            ->toDateTimeString();
+//        $date_range_array = explode('-', $request['display_period']);
+//        $data['starts_at'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
+//            ->toDateTimeString();
+//        $data['expires_at'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
+//            ->toDateTimeString();
         unset($data['display_period']);
+        $data['starts_at'] = $data['expires_at'] = Carbon::now()->format('Y-m-d H:i:s');
 
         $notification->update($data);
         return Response('Notification has been successfully updated');

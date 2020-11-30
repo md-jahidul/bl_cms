@@ -68,5 +68,10 @@ class NotificationDraft extends Model
         return $this->hasMany(Notification::class, 'title', 'title')->where('status','SUCCESSFUL');
     }
 
+    public function schedule()
+    {
+        return $this->hasOne(NotificationSchedule::class);
+    }
+
 
 }
