@@ -36,14 +36,6 @@ class PushNotificationController extends Controller
      * @var CustomerService
      */
     protected $customerService;
-    /**
-     * @var NotificationScheduleRepository
-     */
-    private $notificationSchedulerRepository;
-    /**
-     * @var NotificationScheduleRepository
-     */
-    private $notificationScheduleRepository;
 
     /**
      * PushNotificationController constructor.
