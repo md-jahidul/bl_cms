@@ -24,7 +24,7 @@ class BusinessPackageRequest extends FormRequest
      */
     public function rules(Request $request)
     {
-        if ($this->method() == "PUT" || $this->method() == "POST") {
+        if ($this->method() == "PUT") {
             $id = (int) $request->package_id;
             return [
                 'name_en' => 'required',

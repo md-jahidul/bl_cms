@@ -21,6 +21,7 @@
                         <div class="col-md-6 col-xs-12">
 
                             @csrf
+                            @method('PUT')
 
                             <input type="hidden" value="{{$package->id}}" name="package_id">
 
@@ -326,7 +327,7 @@
 
 @endpush
 @push('page-js')
-
+<script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
 
