@@ -152,16 +152,11 @@ class PushNotificationController extends Controller
                     // $user_phone  = $this->notificationService->checkMuteOfferForUser($category_id, $user_phone_num);
 
                     if (count($user_phone) == 300) {
+                        list($customer, $notification) = $this->checkTargetwise($request, $notificationInfo, $user_phone, $notification_id, $notification_data);
 
-                        if( $notificationInfo->device_type !=  "all" ||  $notificationInfo->customer_type != "all") {
-                          $user_phone = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
-                        }
-
-                        $notification =  $this->pushNotificationSendService->getNotificationArray($notification_data, $user_phone, $notificationInfo);
-
-                        NotificationSend::dispatch($notification, $notification_id, $user_phone,
-                            $this->notificationService)
+                        NotificationSend::dispatch($notification, $notification_id, $customer, $this->notificationService)
                             ->onQueue('notification');
+
                         $user_phone = [];
                     }
                 }
@@ -169,13 +164,9 @@ class PushNotificationController extends Controller
             $reader->close();
 
             if (!empty($user_phone)) {
+                list($customer, $notification) = $this->checkTargetwise($request, $notificationInfo, $user_phone, $notification_id, $notification_data);
 
-                if( $notificationInfo->device_type !=  "all" ||  $notificationInfo->customer_type != "all") {
-                    $user_phone = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
-                }
-
-                $notification =$this->pushNotificationSendService->getNotificationArray($notification_data, $user_phone, $notificationInfo);
-                NotificationSend::dispatch($notification, $notification_id, $user_phone, $this->notificationService)
+                NotificationSend::dispatch($notification, $notification_id, $customer, $this->notificationService)
                     ->onQueue('notification');
             }
 
@@ -416,6 +407,26 @@ class PushNotificationController extends Controller
         } catch (\Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param $notificationInfo
+     * @param array $user_phone
+     * @param $notification_id
+     * @param array $notification_data
+     * @return array
+     */
+    public function checkTargetwise(Request $request, $notificationInfo, array $user_phone, $notification_id, array $notification_data): array
+    {
+        if ($notificationInfo->device_type != "all" || $notificationInfo->customer_type != "all") {
+            $customer = $this->customerService->getCustomerList($request, $user_phone, $notification_id);
+            $notification = $this->pushNotificationSendService->getNotificationArray($notification_data, $customer, $notificationInfo);
+        } else {
+            $customer = $user_phone;
+            $notification = $this->pushNotificationSendService->getNotificationArray($notification_data, $user_phone, $notificationInfo);
+        }
+        return array($customer, $notification);
     }
 
 }
