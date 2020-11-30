@@ -196,6 +196,12 @@
                                     'Deep link generated successfully .<br><br> Link :  '+result.short_link,
                                     'success',
                                 );
+                                }else{
+                                    Swal.fire(
+                                    'Oops!',
+                                    'Something went wrong please try again ',
+                                    'error',
+                                );
                                 }
                                 setTimeout(redirect, 2000)
                                 function redirect() {

@@ -398,7 +398,8 @@ class ProductCoreService
                 'show_in_home' => ($item->show_in_home) ? 'Yes' : 'No',
                 'media' => ($item->media) ? 'Yes' : 'No',
                 'status' => $item->details->status,
-                'deep_link'=>!empty($link->deep_link)?$link->deep_link:null,
+                'is_visible' => $item->is_visible ? 'Shown' : 'Hidden',
+                'deep_link'=>!empty($link->deep_link)?$link->deep_link:null
             ];
         });
         return $response;
