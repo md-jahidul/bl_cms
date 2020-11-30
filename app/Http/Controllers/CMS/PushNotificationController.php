@@ -16,6 +16,7 @@ use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 /**
  * Class PushNotificationController
@@ -35,11 +36,18 @@ class PushNotificationController extends Controller
      * @var CustomerService
      */
     protected $customerService;
+    /**
+     * @var NotificationScheduleRepository
+     */
+    private $notificationSchedulerRepository;
+    /**
+     * @var NotificationScheduleRepository
+     */
+    private $notificationScheduleRepository;
 
     /**
      * PushNotificationController constructor.
      * @param NotificationService $notificationService
-     * @param CustomerService $customerService
      */
     public function __construct(NotificationService $notificationService, CustomerService $customerService)
     {
@@ -60,31 +68,47 @@ class PushNotificationController extends Controller
         return $path;
     }
 
-
+    /**
+     * Method that saves file of user base and stores schedule data in the database
+     * @param Request $request
+     * @return array
+     */
     public function sendScheduledNotification(Request $request)
     {
         try {
             $scheduleArr = explode('-', $request->schedule_time);
             $uploadedFile = $this->upload($request->customer_file, 'notification-scheduler-files');
 
-            $notificationSchedule = new NotificationSchedule();
+            $checkScheduleExists = NotificationSchedule::where('notification_draft_id', $request->id)->first();
+            if ($checkScheduleExists) {
+                $data = [
+                    'title' => $request->title,
+                    'message' => $request->message,
+                    'file_name' => $uploadedFile,
+                    'start' => Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s'),
+                    'end' => Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s'),
+                    'status' => 'active'
+                ];
+                NotificationSchedule::where('notification_draft_id', $request->id)->update($data);
+            } else {
+                $notificationSchedule = new NotificationSchedule();
 
-            $notificationSchedule->notification_draft_id = $request->id;
-            $notificationSchedule->notification_category_id = $request->category_id;
-            $notificationSchedule->title = $request->title;
-            $notificationSchedule->message = $request->message;
-            $notificationSchedule->file_name = $uploadedFile;
-            $notificationSchedule->start = Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s');
-            $notificationSchedule->end = Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s');
-            $notificationSchedule->status = 'active';
+                $notificationSchedule->notification_draft_id = $request->id;
+                $notificationSchedule->notification_category_id = $request->category_id;
+                $notificationSchedule->title = $request->title;
+                $notificationSchedule->message = $request->message;
+                $notificationSchedule->file_name = $uploadedFile;
+                $notificationSchedule->start = Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s');
+                $notificationSchedule->end = Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s');
+                $notificationSchedule->status = 'active';
 
-            $notificationSchedule->save();
+                $notificationSchedule->save();
+            }
 
             return [
                 'success' => true,
                 'message' => 'Notification Schedule Stored'
             ];
-
         } catch (\Exception $e) {
             Log::info('Error:' . $e->getMessage());
             return [
@@ -109,7 +133,6 @@ class PushNotificationController extends Controller
         $mute_user_phone = $this->notificationService->getMuteUserPhoneList($category_id);
 
         try {
-
             $reader = ReaderFactory::createFromType(Type::XLSX);
             $path = $request->file('customer_file')->getRealPath();
             $reader->open($path);
@@ -172,7 +195,6 @@ class PushNotificationController extends Controller
         // $category_id = $request->input('category_id');
 
         try {
-
             $reader = ReaderFactory::createFromType(Type::XLSX);
             $path = $request->file('customer_file')->getRealPath();
             $reader->open($path);
@@ -205,8 +227,6 @@ class PushNotificationController extends Controller
                 // $notification = $this->getNotificationArray($request, $user_phone);
                 NotificationSend::dispatch($notification, $notification_id, $customar, $this->notificationService)
                     ->onQueue('notification');
-
-
             }
 
             Log::info('Success: Notification sending from excel');
@@ -222,6 +242,7 @@ class PushNotificationController extends Controller
             ];
         }
     }
+
     /**
      * This function only prepare data formated
      */
@@ -262,7 +283,7 @@ class PushNotificationController extends Controller
             "is_interactive" => "Yes",
             "mutable_content" => true,
             "data" => [
-               "cid" => "$category_id",
+                "cid" => "$category_id",
                 "url" => "$url",
                 "image_url" => $image_url,
                 "component" => "offer",
@@ -354,7 +375,7 @@ class PushNotificationController extends Controller
         if (!empty($notificationInfo->navigate_action) && $notificationInfo->navigate_action == 'PURCHASE') {
             $product_code = "$notificationInfo->external_url";
         }
-        
+
 
         if ($request->has('image_url')) {
             $image_url = env('NOTIFICATION_HOST') . "/" . $request->input('image_url') ?? null;
