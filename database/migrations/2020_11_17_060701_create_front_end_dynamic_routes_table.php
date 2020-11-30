@@ -19,7 +19,7 @@ class CreateFrontEndDynamicRoutesTable extends Migration
             $table->string('url')->nullable();
             $table->string('key')->nullable();
             $table->tinyInteger('is_dynamic_page')->default(0);
-            $table->string('dynamic_page_slug')->nullable();
+            $table->string('lang_type')->nullable()->comment('en, bn');
             $table->boolean('exact')->default(true);
             $table->json('children')->nullable();
             $table->integer('created_by')->nullable();

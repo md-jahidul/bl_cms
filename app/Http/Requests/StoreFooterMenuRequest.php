@@ -26,7 +26,7 @@ class StoreFooterMenuRequest extends FormRequest
         return [
             'en_label_text' => 'required',
             'bn_label_text' => 'required',
-            'url' => 'required|regex:/^\S*$/u|unique:footer_menus,url,' . $this->id,
+//            'url' => 'required|regex:/^\S*$/u|unique:footer_menus,url,' . $this->id,
             'status' => 'required',
         ];
     }

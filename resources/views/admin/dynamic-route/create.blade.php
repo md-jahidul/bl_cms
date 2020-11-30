@@ -18,8 +18,7 @@
                             <div class="row">
                                 <div class="form-group col-md-6 {{ $errors->has('code') ? ' error' : '' }}">
                                     <label for="code" class="required">Container Name</label>
-                                    <input type="text" id="code" class="form-control" name="code" placeholder="Enter front-end container name"
-                                           required data-validation-required-message="Enter front-end container name">
+                                    <input type="text" id="code" class="form-control" name="code" placeholder="Enter front-end container name">
                                     <small class="text-primary">Example: Prepaid or PrepaidDetails</small>
                                     <div class="help-block"></div>
                                     @if ($errors->has('code'))
@@ -27,11 +26,24 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }}" id="keyDynamic">
                                     <label for="code">Key</label>
-                                    <input type="text" name="key" class="form-control"
-                                           required data-validation-required-message="Enter key">
+                                    <input type="text" name="key" class="form-control">
                                     <small class="text-primary">Example: prepaid, prepaid_details</small>
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('key'))
+                                        <div class="help-block">  {{ $errors->first('key') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }} d-none" id="pageDynamic">
+                                    <label for="code">Pages</label>
+                                    <select class="form-control" name="key">
+                                        <option>---Select Page---</option>
+                                        @foreach($dynamicPages as $page)
+                                            <option value="{{ $page->url_slug }}">{{ $page->page_name_en }}</option>
+                                        @endforeach
+                                    </select>
                                     <div class="help-block"></div>
                                     @if ($errors->has('key'))
                                         <div class="help-block">  {{ $errors->first('key') }}</div>
@@ -60,6 +72,13 @@
                                     @if ($errors->has('url'))
                                         <div class="help-block">  {{ $errors->first('url') }}</div>
                                     @endif
+                                </div>
+
+                                <div class="col-md-6 pr-0">
+                                    <div class="form-group">
+                                        <label for="dynamic-route" class="mr-1 cursor-pointer">Is Dynamic Route:</label>
+                                        <input type="checkbox" name="is_dynamic_page" class="cursor-pointer" value="1" id="dynamic-route">
+                                    </div>
                                 </div>
 
                                 <div class="form-actions col-md-12 ">
@@ -111,6 +130,25 @@
                 var data = convertToSlug(text);
                 $(this).val(data);
             });
+
+
+            let checkDynamic = $('#dynamic-route');
+            let keyDynamic = $('#keyDynamic');
+            let pageDynamic = $('#pageDynamic');
+            let code = $('#code');
+            $(checkDynamic).click(function () {
+                if ($(checkDynamic).prop("checked")) {
+                    pageDynamic.removeClass('d-none')
+                    keyDynamic.addClass('d-none')
+                    code.val('DynamicPage')
+                    code.attr('readonly', 'readonly')
+                } else {
+                    keyDynamic.removeClass('d-none')
+                    pageDynamic.addClass('d-none')
+                    code.val('')
+                    code.removeAttr('readonly')
+                }
+            })
         })
     </script>
 @endpush
