@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use App\Jobs\NotificationSend;
 use App\Models\NotificationSchedule;
+use App\Services\CustomerService;
 use App\Services\NotificationService;
+use App\Services\PushNotificationSendService;
 use App\Traits\FileTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
@@ -43,10 +45,15 @@ class NotificationScheduler extends Command
      * Execute the console command.
      *
      * @param NotificationService $notificationService
+     * @param PushNotificationSendService $pushNotificationSendService
+     * @param CustomerService $customerService
      * @return mixed
      */
-    public function handle(NotificationService $notificationService)
-    {
+    public function handle(
+        NotificationService $notificationService,
+        PushNotificationSendService $pushNotificationSendService,
+        CustomerService $customerService
+    ) {
         try {
             $user_phone = [];
             $currentTime = Carbon::now()->format('Y-m-d H:i:s');
@@ -58,10 +65,19 @@ class NotificationScheduler extends Command
             if (!is_null($activeSchedule)) {
                 $notification_id = $activeSchedule->notification_id;
                 $category = $activeSchedule->notificationCategory;
+                $notificationDraft = $activeSchedule->notificationDraft;
                 $path = $this->getPath($activeSchedule->file_name);
                 $reader = ReaderFactory::createFromType(Type::XLSX);
 
                 $reader->open($path);
+
+                $notificationData = [
+                    'title' => $activeSchedule->title,
+                    'body' => $activeSchedule->message,
+                    'category_id' => $category->id,
+                    'category_slug' => $category->slug,
+                    'category_name' => $category->name,
+                ];
 
                 foreach ($reader->getSheetIterator() as $sheet) {
                     if ($sheet->getIndex() > 0) {
@@ -74,6 +90,15 @@ class NotificationScheduler extends Command
                         $user_phone [] = $number;
 
                         if (count($user_phone) == 300) {
+                            if( $notificationDraft->device_type !=  "all" ||  $notificationDraft->customer_type != "all") {
+                                $user_phone = $customerService->getCustomerList([], $user_phone, $notification_id);
+                            }
+
+                            $notification =  $pushNotificationSendService->getNotificationArray(
+                                $notificationData,
+                                $user_phone,
+                                $notificationDraft
+                            );
                             $notification = $this->getNotificationArray($activeSchedule, $category, $user_phone);
                             NotificationSend::dispatch($notification, $notification_id, $user_phone,
                                 $notificationService)
@@ -85,6 +110,15 @@ class NotificationScheduler extends Command
                 $reader->close();
 
                 if (!empty($user_phone)) {
+                    if( $notificationDraft->device_type !=  "all" ||  $notificationDraft->customer_type != "all") {
+                        $user_phone = $customerService->getCustomerList([], $user_phone, $notification_id);
+                    }
+
+                    $notification =  $pushNotificationSendService->getNotificationArray(
+                        $notificationData,
+                        $user_phone,
+                        $notificationDraft
+                    );
                     $notification = $this->getNotificationArray($activeSchedule, $category, $user_phone);
                     NotificationSend::dispatch($notification, $notification_id, $user_phone, $notificationService)
                         ->onQueue('notification');
