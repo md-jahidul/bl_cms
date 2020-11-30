@@ -7,16 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class FooterMenu extends Model
 {
     protected $fillable = [
-                    'parent_id',
-                    'en_label_text',
-                    'bn_label_text',
-                    'code', 'url',
-                    'status',
-                    'external_site',
-                    'display_order',
-                    'is_dynamic_page',
-                    'dynamic_page_slug'
-                 ];
+        'parent_id',
+        'en_label_text',
+        'bn_label_text',
+        'code', 'url',
+        'url_bn',
+        'status',
+        'external_site',
+        'display_order',
+        'is_dynamic_page',
+        'dynamic_page_slug'
+    ];
 
     public function parent()
     {

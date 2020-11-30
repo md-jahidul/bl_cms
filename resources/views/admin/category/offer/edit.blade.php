@@ -18,8 +18,7 @@
                         @csrf
                         {{method_field('PUT')}}
                         <div class="row">
-
-                            <div class="form-group col-md-4 {{ $errors->has('name_en') ? ' error' : '' }}">
+                            <div class="form-group col-md-3 {{ $errors->has('name_en') ? ' error' : '' }}">
                                 <label for="name_en" class="required">Name (English)</label>
                                 <input type="text" name="name_en"  class="form-control" placeholder="Enter duration name in english"
                                        value="{{ $offer->name_en }}" required data-validation-required-message="Enter duration name in english">
@@ -28,7 +27,7 @@
                                 <div class="help-block">  {{ $errors->first('name_en') }}</div>
                                 @endif
                             </div>
-                            <div class="form-group col-md-4 {{ $errors->has('name_bn') ? ' error' : '' }}">
+                            <div class="form-group col-md-3 {{ $errors->has('name_bn') ? ' error' : '' }}">
                                 <label for="name_bn" class="required">Name (Bangla)</label>
                                 <input type="text" name="name_bn"  class="form-control" placeholder="Enter duration name in bangla"
                                        value="{{ $offer->name_bn }}" required data-validation-required-message="Enter duration name in bangla">
@@ -38,52 +37,47 @@
                                 @endif
                             </div>
 
-
-                            <div class="form-group col-md-4 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                <label> URL (url slug) <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{$offer->url_slug}}" required name="url_slug" placeholder="URL">
+                            <div class="form-group col-md-3 {{ $errors->has('url_slug') ? ' error' : '' }}">
+                                <label> URL English<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control slug-convert" value="{{$offer->url_slug}}" required name="url_slug"
+                                       id="url_en" placeholder="URL">
                                 <small class="text-info">
-                                    <strong>i.e:</strong> 1000Min-15GB-1000SMS (no spaces)<br>
+                                    <strong>i.e:</strong> bundles (no spaces and slash)<br>
                                 </small>
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
-                                <span>Banner image (Web)</span>
+                            <div class="form-group col-md-3 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                <label> URL Bangla<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control slug-convert" value="{{ isset($offer->url_slug_bn) ? $offer->url_slug_bn : '' }}"
+                                       id="url_bn" required name="url_slug_bn" placeholder="URL">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> বান্ডেল (no spaces and slash)<br>
+                                </small>
+                            </div>
 
-                                <div class="custom-file">
-
+                            <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
+                                <label for="inputGroupFile01">Banner image (Web)</label>
                                     <input type="hidden" name="old_web_img" value="{{ $offer->banner_image_url }}">
-
-                                    <input type="file" name="banner_image_url" class="custom-file-input" id="image">
-                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                </div>
-
+                                    <input type="file" name="banner_image_url" class="form-control dropify" id="image" data-height="90"
+                                           data-default-file="{{ config('filesystems.file_base_url') . $offer->banner_image_url }}">
                                 <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                @if( !empty($offer->banner_image_url) )
-                                <img src="{{ config('filesystems.file_base_url') . $offer->banner_image_url }}" style="width:100%;margin-top:10px;">
+                                <div class="help-block"></div>
+                                @if ($errors->has('thumbnail_image'))
+                                    <div class="help-block">  {{ $errors->first('thumbnail_image') }}</div>
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
-                                <span>Banner image (Mobile)</span>
-
-                                <div class="custom-file">
-                                    <input type="hidden" name="old_mob_img" value="{{ $offer->banner_image_mobile }}">
-
-                                    <input type="file" name="banner_image_mobile" class="custom-file-input">
-                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                </div>
+                            <div class="form-group col-md-6 {{ $errors->has('banner_image_mobile') ? ' error' : '' }}">
+                                <label>Banner image (Mobile)</label>
+                                <input type="hidden" name="old_mob_img" value="{{ $offer->banner_image_mobile }}">
+                                <input type="file" name="banner_image_mobile" class="custom-file-input dropify" data-height="90"
+                                       data-default-file="{{ config('filesystems.file_base_url') . $offer->banner_image_mobile }}">
                                 <span class="text-primary">Please given file type (.png, .jpg)</span>
-
-                                @if( !empty($offer->banner_image_url) )
-                                <img src="{{ config('filesystems.file_base_url') . $offer->banner_image_mobile }}" style="width:100%;margin-top:10px;">
-                                @endif
-
+                                <div class="help-block"></div>
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
-                                <label for="banner_alt_text">Alt Text</label>
+                            <div class="form-group col-md-3 {{ $errors->has('banner_alt_text') ? ' error' : '' }}">
+                                <label for="banner_alt_text">Alt Text English</label>
                                 <input type="text" name="banner_alt_text"  class="form-control" placeholder="Enter image alter text"
                                        value="{{ $offer->banner_alt_text }}">
                                 <div class="help-block"></div>
@@ -92,21 +86,39 @@
                                 @endif
                             </div>
 
+                            <div class="form-group col-md-3 {{ $errors->has('banner_alt_text_bn') ? ' error' : '' }}">
+                                <label for="banner_alt_text_bn">Alt Text Bangla</label>
+                                <input type="text" name="banner_alt_text_bn"  class="form-control" placeholder="Enter image alter text"
+                                       value="{{ $offer->banner_alt_text_bn }}">
+                                <div class="help-block"></div>
+                                @if ($errors->has('banner_alt_text_bn'))
+                                    <div class="help-block">  {{ $errors->first('banner_alt_text_bn') }}</div>
+                                @endif
+                            </div>
 
-
-
-
-                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Banner Photo Name</label>
-                                <input type="hidden" name="old_banner_name" value="{{$offer->banner_name}}">
-                                <input type="text" class="form-control" name="banner_name" value="{{$offer->banner_name}}" placeholder="Photo Name">
+                            <div class="form-group col-md-3 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Banner Photo Name En</label>
+                                <input type="hidden" name="old_banner_name_en" value="{{$offer->banner_name}}">
+                                <input type="text" class="form-control" name="banner_name" value="{{$offer->banner_name}}"
+                                       placeholder="Photo Name" id="banner_name_en">
                                 <small class="text-info">
                                     <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>
                                     <strong>Note: </strong> Don't need MIME type like jpg,png
                                 </small>
-
                             </div>
 
+                            <div class="form-group col-md-3 {{ $errors->has('alt_text') ? ' error' : '' }}">
+                                <label>Banner Photo Name Bn</label>
+                                <input type="hidden" name="old_banner_name_bn"
+                                       value="{{ isset($offer->other_attributes['banner_name_bn']) ? $offer->other_attributes['banner_name_bn'] : null }}">
+                                <input type="text" class="form-control" name="other_attributes[banner_name_bn]" id="banner_name_bn"
+                                       value="{{ isset($offer->other_attributes['banner_name_bn']) ? $offer->other_attributes['banner_name_bn'] : null }}"
+                                       placeholder="Photo Name">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>
+                                    <strong>Note: </strong> Don't need MIME type like jpg,png
+                                </small>
+                            </div>
 
 
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
@@ -153,10 +165,22 @@
 </section>
 @stop
 @push('page-css')
-<link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
+    <script>
+        //show dropify for  photo
+        $('.dropify').dropify({
+            messages: {
+                'default': 'Browse for File/Photo',
+                'replace': 'Click to replace',
+                'remove': 'Remove',
+                'error': 'Choose correct file format'
+            }
+        });
 
+    </script>
 @endpush
 
 

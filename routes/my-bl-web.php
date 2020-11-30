@@ -251,6 +251,10 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
 
     Route::get('core-product/test', 'ProductEntryController@test');
 
+      //Deep link
+      Route::get('mybl-products-deep-link-create/{product_code}', 'CMS\ProductDeepLinkController@create')->name('mybl-products-deep-link-create');
+
+
     /*
      *  Recharge prefill amounts
      */

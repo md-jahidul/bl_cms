@@ -289,6 +289,13 @@
                         <span class="menu-title" data-i18n="nav.templates.main">Easy Payment Card</span>
                     </a>
                 </li>
+
+                <li class="{{ is_active_url('referral-list') }} nav-item">
+                    <a href="{{ url('referral-list') }}">
+                        <i class="la la-credit-card"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Referral List</span>
+                    </a>
+                </li>
             </ul>
         </li>
     @endif
@@ -316,6 +323,13 @@
                         <i class="la la-exclamation-circle"></i>About Priyojon
                     </a>
                 </li>
+                <li class="{{ is_active_url('lms-about-page/banner-image') }}">
+                    <a class="menu-item" href="{{ url('lms-about-page/banner-image') }}"
+                       data-i18n="nav.templates.vert.classic_menu">
+                        <i class="la la-exclamation-circle"></i>About Page Banner
+                    </a>
+                </li>
+
                 <li class="{{ is_active_url('about-page/reward_points')}}">
                     <a class="menu-item" href="{{ url('about-page/reward_points') }}"
                        data-i18n="nav.templates.vert.classic_menu">
@@ -659,6 +673,61 @@
             </ul>
         </li>
     @endif
+
+    @if( auth()->user()->can_view('CorporateRespSection') )
+        <li class="nav-item"><a href="#"><i class="la la-briefcase"></i>
+                <span class="menu-title" data-i18n="nav.templates.main">Corporate Responsibility</span></a>
+            <ul class="menu-content">
+                <li class="{{ is_active_url('corporate-resp-section') }}">
+                    <a class="menu-item" href="{{ url('corporate-resp-section') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-list"></i>Section</a>
+                </li>
+                <li class="{{ is_active_url(route('cr-strategy-section.index')) }}">
+                    <a class="menu-item" href="{{ route('cr-strategy-section.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-list"></i> CR Strategy</a>
+                </li>
+                <li class="{{ is_active_url(route('initiative-tab.index')) }}">
+                    <a class="menu-item" href="{{ route('initiative-tab.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                            class="la la-list"></i> Initiative</a>
+                </li>
+
+                <li class="{{ is_active_url(route('case-study-section.index')) }}">
+                    <a class="menu-item" href="{{ route('case-study-section.index') }}"
+                       data-i18n="nav.templates.vert.classic_menu"><i
+                       class="la la-list"></i> Case Study and Report</a>
+                </li>
+
+                <li class="nav-item"><a href="#"><i class="la la-book"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Contact Us</span></a>
+                    <ul class="menu-content">
+                        <li class="{{ is_active_url(route('contact-us-page-info.index')) }} nav-item">
+                            <a href="{{ route('contact-us-page-info.index') }}"><i class="la la-pagelines"></i>
+                                <span class="menu-title" data-i18n="nav.templates.main">Page Content</span>
+                            </a>
+                        </li>
+                        <li class="{{ is_active_url(route('contact-us-info.list')) }} nav-item">
+                            <a href="{{ route('contact-us-info.list') }}"><i class="la la-book"></i>
+                                <span class="menu-title" data-i18n="nav.templates.main">Customer Contact Info</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </li>
+    @endif
+
+
+{{--    @if( auth()->user()->can_view('LeadManagement') )--}}
+        <li class="{{ is_active_url(route('dynamic-routes.index')) }}">
+            <a class="menu-item" href="{{ route('dynamic-routes.index') }}"
+               data-i18n="nav.templates.vert.classic_menu"><i
+                    class="la la-list"></i> Dynamic Routes</a>
+        </li>
+{{--    @endif--}}
 
 
     <hr>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Repositories\AlReferralInfoRepository;
 use App\Repositories\AppServiceCategoryRepository;
 use App\Repositories\AppServiceTabRepository;
 use App\Services\AppServiceCategoryService;
@@ -14,6 +15,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AppServiceProductRequest;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Session;
@@ -42,6 +44,10 @@ class AppServiceProductController extends Controller
      * @var $tagCategoryService
      */
     private $tagCategoryService;
+    /**
+     * @var AlReferralInfoRepository
+     */
+    private $alReferralInfoRepository;
 
 
     public function __construct(
@@ -49,13 +55,15 @@ class AppServiceProductController extends Controller
         AppServiceCategoryRepository $appServiceCategoryRepository,
         AppServiceProductService $appServiceProductService,
         AppServiceVendorApiService $appServiceVendorApiService,
-        TagCategoryService $tagCategoryService
+        TagCategoryService $tagCategoryService,
+        AlReferralInfoRepository $alReferralInfoRepository
     ) {
         $this->appServiceCategoryRepository = $appServiceCategoryRepository;
         $this->appServiceTabRepository = $appServiceTabRepository;
         $this->appServiceProductService = $appServiceProductService;
         $this->appServiceVendorApiService = $appServiceVendorApiService;
         $this->tagCategoryService = $tagCategoryService;
+        $this->alReferralInfoRepository = $alReferralInfoRepository;
     }
 
     /**
@@ -88,24 +96,13 @@ class AppServiceProductController extends Controller
      * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(AppServiceProductRequest $request)
     {
-//        dd($request->all());
         $response = $this->appServiceProductService->storeAppServiceProduct($request->all());
         Session::flash('message', $response->getContent());
         return redirect(route('app-service-product.index'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -121,6 +118,8 @@ class AppServiceProductController extends Controller
             $q->select('id', 'name_en', 'alias');
         }]);
 
+        $referralInfo = $this->alReferralInfoRepository->findOneByProperties(['app_id' => $id]);
+
         $appServiceCategory = $this->appServiceCategoryRepository
             ->findByProperties(
                 ['app_service_tab_id' => $appServiceProduct->app_service_tab_id],
@@ -133,7 +132,8 @@ class AppServiceProductController extends Controller
             'appServiceTabs',
             'appServiceProduct',
             'appServiceCategory',
-            'vasVendorList'
+            'vasVendorList',
+            'referralInfo'
         ));
     }
 
@@ -144,7 +144,7 @@ class AppServiceProductController extends Controller
      * @param int $id
      * @return RedirectResponse|Redirector
      */
-    public function update(Request $request, $id)
+    public function update(AppServiceProductRequest $request, $id)
     {
 //        dd($request->all());
 

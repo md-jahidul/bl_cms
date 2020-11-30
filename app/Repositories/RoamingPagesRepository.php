@@ -39,6 +39,11 @@ class RoamingPagesRepository extends BaseRepository {
                 $page->title_bn = $request->title_bn;
                 $page->short_description_en = $request->short_description_en;
                 $page->short_description_bn = $request->short_description_bn;
+                $page->url_slug_en = $request->url_slug_en;
+                $page->url_slug_bn = $request->url_slug_bn;
+                $page->page_header_en = $request->page_header_en;
+                $page->page_header_bn = $request->page_header_bn;
+                $page->schema_markup = $request->schema_markup;
                 $page->save();
             }
 

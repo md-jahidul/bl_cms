@@ -8,7 +8,7 @@ class OfferCategory extends Model
 {
 
     protected $fillable = ['name_en', 'name_bn', 'banner_image_url',
-        'banner_alt_text', 'banner_image_mobile', 'url_slug',
+        'banner_alt_text', 'banner_image_mobile', 'url_slug', 'url_slug_bn',
         'page_header', 'page_header_bn', 'banner_name',
         'schema_markup', 'other_attributes', 'created_by', 'updated_by'];
 
