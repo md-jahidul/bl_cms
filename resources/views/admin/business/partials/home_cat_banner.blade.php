@@ -57,97 +57,100 @@
                     <form method="POST" action="{{ url('business/update-category') }}" class="form" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden"  class="cat_id" name="cat_id">
-                        <div class="form-group row">
-                            <div class="col-md-4 col-xs-12">
-                                <label>Name (EN) <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control name_en" required name="name_en" placeholder="Name EN">
-                            </div>
-                            <div class="col-md-4 col-xs-12">
-                                <label>Name (BN) <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control name_bn" required name="name_bn" placeholder="Name BN">
-                            </div>
-                            <div class="col-md-4 col-xs-12">
-                                <label>URL Slug <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control page_url" required name="url_slug" placeholder="URL">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> roaming-rates (no spaces)<br>
-                                </small>
-                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6 col-xs-12 mb-1">
+                                    <label>Name (EN) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control name_en" required name="name_en" placeholder="Name EN">
+                                </div>
+                                <div class="col-md-6 col-xs-12 mb-1">
+                                    <label>Name (BN) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control name_bn" required name="name_bn" placeholder="Name BN">
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label>URL Slug EN <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control page_url" required name="url_slug" placeholder="URL EN">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> packages (no spaces and slash)<br>
+                                    </small>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <label>URL Slug BN <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control page_url_bn" required name="url_slug_bn" placeholder="URL BN">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> প্যাকেজ (no spaces and slash)<br>
+                                    </small>
+                                </div>
 
-                        </div>
-
-
-                        <div class="form-group row">
-
-                            <div class="col-md-4 col-xs-12">
-                                <label>Banner (Web)</label>
-                                <input type="file" class="" name="banner_web" data-height="70"
-                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-
-                                <input type="hidden" class="old_web_img" name="old_web_img">
-
-                                <p class="banner_web"></p>
-                            </div>
-                            <div class="col-md-4 col-xs-12">
-                                <label>Banner (Mobile)</label>
-                                <input type="file" class="" name="banner_mobile" data-height="70"
-                                       data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
-
-                                <input type="hidden" class="old_mob_img" name="old_mob_img">
-
-
-                                <p class="banner_mobile"></p>
                             </div>
 
-                            <div class="col-md-4 col-xs-12">
-                                <label>Banner Photo Name<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
+                            <div class="form-group row">
 
-                                <input type="hidden" class="old_banner_name" name="old_banner_name">
+                                <div class="col-md-4 col-xs-12">
+                                    <label>Banner (Web)</label>
+                                    <input type="file" class="" name="banner_web" data-height="70"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
-                                <small class="text-info">
-                                    <strong>i.e:</strong> package-banner (no spaces)<br>
-                                </small>
+                                    <input type="hidden" class="old_web_img" name="old_web_img">
+
+                                    <p class="banner_web"></p>
+                                </div>
+                                <div class="col-md-4 col-xs-12">
+                                    <label>Banner (Mobile)</label>
+                                    <input type="file" class="" name="banner_mobile" data-height="70"
+                                           data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
+
+                                    <input type="hidden" class="old_mob_img" name="old_mob_img">
+
+
+                                    <p class="banner_mobile"></p>
+                                </div>
+
+                                <div class="col-md-4 col-xs-12">
+                                    <label>Banner Photo Name<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
+
+                                    <input type="hidden" class="old_banner_name" name="old_banner_name">
+
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> package-banner (no spaces)<br>
+                                    </small>
+                                </div>
+
+
                             </div>
 
+                            <div class="form-group row">
 
-                        </div>
+                                <div class="col-md-4 col-xs-12">
+                                    <label>Alt Text</label>
+                                    <input type="text" class="form-control alt_text" name="alt_text" placeholder="Alt Text">
+                                </div>
 
-                        <div class="form-group row">
+                                <div class="col-md-8 col-xs-12">
+                                    <label>Schema Markup</label>
+                                    <textarea class="form-control schema_markup" rows="7" name="schema_markup"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> JSON-LD (Recommended by Google)
+                                    </small>
+                                </div>
 
-                            <div class="col-md-4 col-xs-12">
-                                <label>Alt Text</label>
-                                <input type="text" class="form-control alt_text" name="alt_text" placeholder="Alt Text">
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Page Header (HTML)</label>
+                                    <textarea class="form-control html_header" rows="7" name="page_header"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
+                                <div class="col-md-6 col-xs-12">
+                                    <label>Page Header Bangla (HTML)</label>
+                                    <textarea class="form-control html_header_bn" rows="7" name="page_header_bn"></textarea>
+                                    <small class="text-info">
+                                        <strong>Note: </strong> Title, meta, canonical and other tags
+                                    </small>
+                                </div>
+
                             </div>
-
-                            <div class="col-md-8 col-xs-12">
-                                <label>Schema Markup</label>
-                                <textarea class="form-control schema_markup" rows="7" name="schema_markup"></textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> JSON-LD (Recommended by Google)
-                                </small>
-                            </div>
-
-                            <div class="col-md-6 col-xs-12">
-                                <label>Page Header (HTML)</label>
-                                <textarea class="form-control html_header" rows="7" name="page_header"></textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> Title, meta, canonical and other tags
-                                </small>
-                            </div>
-
-                            <div class="col-md-6 col-xs-12">
-                                <label>Page Header Bangla (HTML)</label>
-                                <textarea class="form-control html_header_bn" rows="7" name="page_header_bn"></textarea>
-                                <small class="text-info">
-                                    <strong>Note: </strong> Title, meta, canonical and other tags
-                                </small>
-                            </div>
-
-                        </div>
-
-
-
 
                         <input type="hidden" class="old_web" name="old_web">
                         <input type="hidden" class="old_mobile" name="old_mobile">
@@ -310,6 +313,7 @@
                     $('.old_web_img').val(result.banner_photo);
                     $('.old_mob_img').val(result.banner_image_mobile);
                     $('.page_url').val(result.url_slug);
+                    $('.page_url_bn').val(result.url_slug_bn);
                     $('.banner_name').val(result.banner_name);
                     $('.old_banner_name').val(result.banner_name);
                     $('.html_header').val(result.page_header);

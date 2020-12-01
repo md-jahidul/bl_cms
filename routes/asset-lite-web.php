@@ -468,7 +468,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::post('business-package/save', 'AssetLite\BusinessPackageController@store')->name('business.package.save');
 
     Route::get('business-package-edit/{packageId}', 'AssetLite\BusinessPackageController@edit');
-    Route::post('business-package/update', 'AssetLite\BusinessPackageController@update')->name('business.package.update');
+    Route::put('business-package/update', 'AssetLite\BusinessPackageController@update')->name('business.package.update');
     Route::get('business-package-delete/{packageId}', 'AssetLite\BusinessPackageController@delete');
 
     //__Category Internet Package
@@ -476,7 +476,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('business-internet-create', 'AssetLite\BusinessInternetController@internetCreate');
     Route::post('business-internet-save', 'AssetLite\BusinessInternetController@saveInternetPackage');
     Route::get('business-internet-edit/{internetId}', 'AssetLite\BusinessInternetController@internetEdit');
-    Route::post('business-internet-update', 'AssetLite\BusinessInternetController@updateInternetPackage');
+    Route::put('business-internet-update', 'AssetLite\BusinessInternetController@updateInternetPackage');
     Route::post('business-internet-package-list', 'AssetLite\BusinessInternetController@internetPackageList')->name("business.internet.list.ajax");
     Route::post('business-internet-excel', 'AssetLite\BusinessInternetController@uploadInternetExcel')
         ->name('business.internet.excel.save');
@@ -493,7 +493,7 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('business-others-sort-change', 'AssetLite\BusinessOthersController@sortChange');
     Route::get('business-others-service-delete/{serviceId}', 'AssetLite\BusinessOthersController@deleteService');
     Route::get('business-others-service-edit/{serviceId}/{type?}', 'AssetLite\BusinessOthersController@edit');
-    Route::post('business-others-update', 'AssetLite\BusinessOthersController@update')->name("business.other.update");
+    Route::put('business-others-update', 'AssetLite\BusinessOthersController@update')->name("business.other.update");
 
     Route::get('business-others-components/{serviceId}', 'AssetLite\BusinessOthersController@addComponent');
     Route::post('business-others-save', 'AssetLite\BusinessOthersController@saveService')->name("business.other.save");

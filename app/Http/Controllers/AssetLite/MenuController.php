@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Requests\StoreMenuRequest;
 use App\Models\Menu;
+use App\Services\DynamicRouteService;
 use App\Services\MenuService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,14 +23,22 @@ MenuController extends Controller
      * @var array $menuItems
      */
     protected $menuItems = [];
+    /**
+     * @var DynamicRouteService
+     */
+    private $dynamicRouteService;
 
     /**
      * MenuController constructor.
      * @param MenuService $menuService
+     * @param DynamicRouteService $dynamicRouteService
      */
-    public function __construct(MenuService $menuService)
-    {
+    public function __construct(
+        MenuService $menuService,
+        DynamicRouteService $dynamicRouteService
+    ) {
         $this->menuService = $menuService;
+        $this->dynamicRouteService = $dynamicRouteService;
         $this->middleware('auth');
     }
 
@@ -65,6 +74,7 @@ MenuController extends Controller
      */
     public function create($parent_id = 0)
     {
+        $dynamicRoutes = $this->dynamicRouteService->findLangWiseRoute();
         $this->menuItems[] = ['en_label_text' => 'Create'];
         $menu_id = $parent_id;
         while ($menu_id != 0) {
@@ -72,7 +82,7 @@ MenuController extends Controller
         }
 
         $menu_items = $this->menuItems;
-        return view('admin.menu.create', compact('parent_id', 'menu_items'));
+        return view('admin.menu.create', compact('parent_id', 'menu_items', 'dynamicRoutes'));
     }
 
     /**

@@ -42,9 +42,10 @@ class FooterMenuService
      */
     public function storeFooterMenu($data)
     {
+//        dd($data);
         $menu_count = count($this->footerMenuRepository->getChildMenus($data['parent_id']));
         $data['display_order'] = ++$menu_count;
-        $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
+        $data['external_site'] = ($data['external_site']) ? 1 : 0;
         $this->save($data);
         return new Response('Footer menu added successfully');
     }

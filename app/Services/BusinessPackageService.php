@@ -71,18 +71,6 @@ class BusinessPackageService {
     public function savePackage($request) {
         try {
 
-            $request->validate([
-                'name_en' => 'required',
-                'name_bn' => 'required',
-                'short_details_en' => 'required',
-                'short_details_bn' => 'required',
-                'banner_photo' => 'required|mimes:jpg,jpeg,png',
-                'url_slug' => 'required|regex:/^\S*$/u',
-                'banner_name' => 'required|regex:/^\S*$/u',
-            ]);
-
-
-
             //file upload in storege
             $directoryPath = 'assetlite/images/business-images';
 
@@ -189,15 +177,6 @@ class BusinessPackageService {
      */
     public function updatePackage($data) {
         try {
-
-            $data->validate([
-                'name_en' => 'required',
-                'name_bn' => 'required',
-                'short_details_en' => 'required',
-                'short_details_bn' => 'required',
-                'url_slug' => 'required|regex:/^\S*$/u',
-                'banner_name' => 'required|regex:/^\S*$/u',
-            ]);
 
             $directoryPath = 'assetlite/images/business-images';
 
