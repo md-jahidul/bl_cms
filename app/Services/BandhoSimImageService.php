@@ -12,6 +12,7 @@ namespace App\Services;
 use App\Repositories\BandhoSimImageRepository;
 use App\Traits\CrudTrait;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 
 class BandhoSimImageService
 {
@@ -35,7 +36,10 @@ class BandhoSimImageService
      */
     public function storeBandhoSimImage($data)
     {
-        $data['image_url'] = $data['image']->store('bandhosimimage');
+        if (isset($data['image'])) {
+            $data['image_url'] = 'storage/' . $data['image']->store('bandhosimimage');
+         }
+
         $this->save($data);
         return new Response("Bandho sime image has been successfully created");
     }
@@ -47,14 +51,15 @@ class BandhoSimImageService
      */
     public function updateBandhoSimImage($data, $banner)
     {
-
         if (isset($data->image)) {
             $data = $data->all();
-            $data['image_url'] =$data['image']->store('bandhosimimage');
-            // unlink($banner->image_url);
+            $data['image_url'] = 'storage/' . $data['image']->store('bandhosimimage');
+
+            if (File::exists($banner->image_url)) {
+                unlink($banner->image_url);
+            }
             $banner->update($data);
         } else {
-            dd($data);
             $data['id']=1;
             $data->image_url = $banner->image_url;
             $banner->update($data);
