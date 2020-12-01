@@ -200,6 +200,8 @@ class NotificationController extends Controller
     {
 
         $notifications = $this->notificationService->getNotificationTargetwiseReport($title);
+    //    dd($notifications);
+
         return view('admin.notification.target-wise-notification.details')
             ->with('notifications', $notifications);
     }

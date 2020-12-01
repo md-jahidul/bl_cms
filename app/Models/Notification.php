@@ -23,7 +23,8 @@ class Notification extends Model
     protected $fillable = [
         'category_id',
         'title',
-        'body'
+        'body',
+        'created_at'
     ];
 
 
