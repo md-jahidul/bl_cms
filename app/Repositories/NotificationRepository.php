@@ -84,6 +84,7 @@ class NotificationRepository extends BaseRepository
             ->join('customers', 'customers.id', '=', 'notification_user.user_id')
             ->where('notifications.title',$title)
             ->select('mobile','status','title','body','notifications.created_at')
+            ->orderBy('notifications.created_at','desc')
             ->get()->toArray();
     }
 

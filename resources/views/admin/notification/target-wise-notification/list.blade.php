@@ -24,10 +24,11 @@
                     <tbody>
                         @foreach ($notifications as $notification)
                         @php
+                        $id=1;
                             $send = (array) $notification->getNotification;
                         @endphp
                             <tr>
-                                <td width="5%">{{$notification->id}}</td>
+                                <td width="5%">{{$id++}}</td>
                                 <td width="12%">{{$notification->title}}</td>
                                 <td width="30%">{{$notification->body}}</td>
                                 <td width="10%"><i class="la la-android" style="color: blue !important"></i> &nbsp;{{$notification->device_type}}</td>
