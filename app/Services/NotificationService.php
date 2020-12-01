@@ -170,7 +170,7 @@ class NotificationService
      */
     public function getNotificationListReport()
     {
-        $orderBy = ['column' => "starts_at", 'direction' => 'desc'];
+        $orderBy = ['column' => "id", 'direction' => 'desc'];
         return $result=$this->notificationDraftRepository->findAll('', '', $orderBy);
     }
 
