@@ -81,6 +81,22 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-6 mt-2">
+                                    <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
+                                        <label for="title" class="required mr-1">Status:</label>
+
+                                        <input type="radio" name="status" value="1" id="input-radio-15" checked>
+                                        <label for="input-radio-15" class="mr-1">Active</label>
+
+                                        <input type="radio" name="status" value="0" id="input-radio-16">
+                                        <label for="input-radio-16">Inactive</label>
+
+                                        @if ($errors->has('status'))
+                                            <div class="help-block">  {{ $errors->first('status') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+
                                 <div class="form-actions col-md-12 ">
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary"><i
