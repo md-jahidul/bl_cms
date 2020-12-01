@@ -22,9 +22,12 @@
                     </tr>
                     </thead>
                     <tbody>
+                        @php
+                         $id=1;
+                        @endphp
                         @foreach ($notifications as $notification)
                         @php
-                        $id=1;
+
                             $send = (array) $notification->getNotification;
                         @endphp
                             <tr>
@@ -82,7 +85,7 @@
                 searching: true,
                 "bDestroy": true,
                 "pageLength": 10,
-                "order": [[ 4, "desc" ]]
+                // "order": [[ ]]
             });
         });
 
