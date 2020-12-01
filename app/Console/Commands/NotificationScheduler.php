@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use App\Jobs\NotificationSend;
 use App\Models\NotificationSchedule;
+use App\Services\CustomerService;
 use App\Services\NotificationService;
+use App\Services\PushNotificationSendService;
 use App\Traits\FileTrait;
 use Box\Spout\Common\Type;
 use Box\Spout\Reader\Common\Creator\ReaderFactory;
@@ -43,10 +45,15 @@ class NotificationScheduler extends Command
      * Execute the console command.
      *
      * @param NotificationService $notificationService
+     * @param PushNotificationSendService $pushNotificationSendService
+     * @param CustomerService $customerService
      * @return mixed
      */
-    public function handle(NotificationService $notificationService)
-    {
+    public function handle(
+        NotificationService $notificationService,
+        PushNotificationSendService $pushNotificationSendService,
+        CustomerService $customerService
+    ) {
         try {
             $user_phone = [];
             $currentTime = Carbon::now()->format('Y-m-d H:i:s');
@@ -58,10 +65,24 @@ class NotificationScheduler extends Command
             if (!is_null($activeSchedule)) {
                 $notification_id = $activeSchedule->notification_id;
                 $category = $activeSchedule->notificationCategory;
+                $notificationDraft = $activeSchedule->notificationDraft;
+                $checkCustomer = false;
+                if( $notificationDraft->device_type !=  "all" ||  $notificationDraft->customer_type != "all") {
+                    $checkCustomer = true;
+                }
                 $path = $this->getPath($activeSchedule->file_name);
                 $reader = ReaderFactory::createFromType(Type::XLSX);
 
                 $reader->open($path);
+
+                $notificationData = [
+                    'title' => $activeSchedule->title,
+                    'message' => $activeSchedule->message,
+                    'category_id' => $category->id,
+                    'category_slug' => $category->slug,
+                    'category_name' => $category->name,
+                    'image_url' => $notificationDraft->image
+                ];
 
                 foreach ($reader->getSheetIterator() as $sheet) {
                     if ($sheet->getIndex() > 0) {
@@ -74,7 +95,16 @@ class NotificationScheduler extends Command
                         $user_phone [] = $number;
 
                         if (count($user_phone) == 300) {
-                            $notification = $this->getNotificationArray($activeSchedule, $category, $user_phone);
+                            if($checkCustomer) {
+                                $user_phone = $customerService->getCustomerList([], $user_phone, $notification_id);
+                            }
+
+                            $notification =  $pushNotificationSendService->getNotificationArray(
+                                $notificationData,
+                                $user_phone,
+                                $notificationDraft
+                            );
+                            //$notification = $this->getNotificationArray($activeSchedule, $category, $user_phone);
                             NotificationSend::dispatch($notification, $notification_id, $user_phone,
                                 $notificationService)
                                 ->onQueue('notification');
@@ -84,8 +114,17 @@ class NotificationScheduler extends Command
                 }
                 $reader->close();
 
-                if (count($user_phone)) {
-                    $notification = $this->getNotificationArray($activeSchedule, $category, $user_phone);
+                if (!empty($user_phone)) {
+                    if($checkCustomer) {
+                        $user_phone = $customerService->getCustomerList([], $user_phone, $notification_id);
+                    }
+
+                    $notification =  $pushNotificationSendService->getNotificationArray(
+                        $notificationData,
+                        $user_phone,
+                        $notificationDraft
+                    );
+                    //$notification = $this->getNotificationArray($activeSchedule, $category, $user_phone);
                     NotificationSend::dispatch($notification, $notification_id, $user_phone, $notificationService)
                         ->onQueue('notification');
                 }
@@ -95,7 +134,7 @@ class NotificationScheduler extends Command
                 Log::info('Success: Notification sending from excel');
                 return [
                     'success' => true,
-                    'message' => 'Scheduled Notification Sent Successfully'
+                    'message' => 'Notification Sent'
                 ];
             }
         } catch (\Exception $e) {
@@ -107,22 +146,4 @@ class NotificationScheduler extends Command
         }
     }
 
-    public function getNotificationArray($activeSchedule, $category, array $userPhones): array
-    {
-        return [
-            'title' => $activeSchedule->title,
-            'body' => $activeSchedule->message,
-            'category_slug' => $category->slug,
-            'category_name' => $category->name,
-            "sending_from" => "cms",
-            "send_to_type" => "INDIVIDUALS",
-            "recipients" => $userPhones,
-            "is_interactive" => "NO",
-            "data" => [
-                "cid" => "1",
-                "url" => "test.com",
-                "component" => "offer",
-            ],
-        ];
-    }
 }

@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Repositories\CustomerRepository;
-use Illuminate\Http\Request;
 use App\Traits\CrudTrait;
 use App\Models\NotificationDraft;
 use Illuminate\Support\Facades\DB;
@@ -32,7 +31,7 @@ class CustomerService
     }
 
 
-    public function getCustomerList(Request $request, array $user_phone,$notification_id){
+    public function getCustomerList($request, array $user_phone,$notification_id){
      return   $selectedNumber= $this->customerRepository->getCustomerList($request,$user_phone,$notification_id);
 
    }
