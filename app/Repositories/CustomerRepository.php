@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Customer;
 use App\Models\NotificationDraft;
-use Illuminate\Http\Request;
 
 /**
  * Class CustomerRepository
@@ -31,7 +30,7 @@ class CustomerRepository extends BaseRepository
      * @param $request
      * @return mixed
      */
-    public function getCustomerList(Request $request, array $user_phone, $notification_id)
+    public function getCustomerList($request, array $user_phone, $notification_id)
     {
         $notificationInfo = NotificationDraft::find($notification_id);
         $sql = $this->model::whereIn('phone', $user_phone);
