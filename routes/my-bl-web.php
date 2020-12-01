@@ -416,7 +416,7 @@ Route::group(['middleware' => ['appAdmin', 'authorize', 'auth', 'CheckFistLogin'
     */
     Route::resource('bandhosimimage', 'CMS\BandhoSimImageController');
     Route::get('bandhosim/index', 'CMS\BandhoSimImageController@index')->name('bandhosim.index');
-    // Route::post('mybl/settings/bandhosimimage/Store', 'CMS\BandhoSimImageController@store')->name('mybl.settings.bandho.sim.image.store');
+    Route::post('mybl/settings/bandhosimimage/Store', 'CMS\BandhoSimImageController@store')->name('mybl.settings.bandho.sim.image.store');
     Route::post('mybl/settings/bandhosimimage/update/{id}', 'CMS\BandhoSimImageController@update')->name('mybl.settings.bandho.sim.image.update');
 
     /*
