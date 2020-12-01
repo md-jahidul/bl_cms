@@ -94,15 +94,15 @@
                         <i class="la la-comment-o"></i>Notification List</a>
                 </li>
 
-                <li class="{{ is_active_url('notification-report')}}">
+                {{-- <li class="{{ is_active_url('notification-report')}}">
                     <a class="menu-item" href="{{ url('notification-report') }}"
                        data-i18n="nav.templates.vert.classic_menu">
                         <i class="la la-comment-o"></i>Notification Report</a>
-                </li>
+                </li> --}}
                 <li class="{{ is_active_url('target-wise-notification-report') }}">
                     <a class="menu-item" href="{{ route('target-wise-notification-report.report') }}"
                        data-i18n="nav.templates.vert.classic_menu">
-                        <i class="la la-comment-o"></i>Target wise N.Report</a>
+                        <i class="la la-comment-o"></i>Notification Report</a>
                 </li>
 
             </ul>

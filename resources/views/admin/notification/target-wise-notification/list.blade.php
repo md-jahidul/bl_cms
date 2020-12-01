@@ -17,7 +17,7 @@
                         <th width="25%">Body</th>
                         <th width="10%">Platform</th>
                         <th>Start / Send</th>
-                        <th>Sends</th>
+                        <th>Sends <br> <Small>Total > Send</Small></th>
                         <th width="10%">Action</th>
                     </tr>
                     </thead>
@@ -32,7 +32,7 @@
                                 <td width="30%">{{$notification->body}}</td>
                                 <td width="10%"><i class="la la-android" style="color: blue !important"></i> &nbsp;{{$notification->device_type}}</td>
                                 <td>{{!empty($notification->starts_at)?date('d-M-Y h:i a', strtotime($notification->starts_at)):''}}</td>
-                                <td>{{$notification->getNotificationSuccessfullySend->count()}}&nbsp;<&nbsp;{{$notification->getNotification->count()}}</td>
+                                <td style="text-align: center">{{$notification->getNotification->count()}}&nbsp;>&nbsp;{{$notification->getNotificationSuccessfullySend->count()}}</td>
                                 <td width="10%">
                                     <div class="row" style="padding-right: 5px;">
                                         <div class="col-md-2 m-1">
@@ -81,7 +81,7 @@
                 searching: true,
                 "bDestroy": true,
                 "pageLength": 10,
-                "order": [[ 0, "desc" ]]
+                "order": [[ 4, "desc" ]]
             });
         });
 
