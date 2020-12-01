@@ -42,10 +42,9 @@ class FooterMenuService
      */
     public function storeFooterMenu($data)
     {
-//        dd($data);
         $menu_count = count($this->footerMenuRepository->getChildMenus($data['parent_id']));
         $data['display_order'] = ++$menu_count;
-        $data['external_site'] = ($data['external_site']) ? 1 : 0;
+        $data['external_site'] = isset($data['external_site']) ? 1 : 0;
         $this->save($data);
         return new Response('Footer menu added successfully');
     }
@@ -68,8 +67,7 @@ class FooterMenuService
     public function updateFooterMenu($data)
     {
         $footerMenu = $this->findOne($data['id']);
-        $data['external_site'] = strpos($data['url'], 'http') !== false ? 1 : 0;
-        $data['is_dynamic_page'] = isset($data['is_dynamic_page']) ? 1 : 0;
+        $data['external_site'] = isset($data['external_site']) ? 1 : 0;
         $footerMenu->update($data);
         return Response('Footer menu updated successfully');
     }

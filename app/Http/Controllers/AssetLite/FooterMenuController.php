@@ -122,7 +122,7 @@ class FooterMenuController extends Controller
     public function edit($id)
     {
         $footerMenu = $this->footerMenuService->findOrFail($id);
-        $dynamicPages = $this->dynamicPageService->findAll();
+        $dynamicRoutes = $this->dynamicRouteService->findLangWiseRoute();
         $this->footerMenuItems[] = ['en_label_text' => $footerMenu->en_label_text];
 
         $footer_menu_id = $footerMenu->parent_id;
@@ -130,7 +130,7 @@ class FooterMenuController extends Controller
             $footer_menu_id = $this->getBreadcrumbInfo($footer_menu_id);
         }
         $footer_menu_items = $this->footerMenuItems;
-        return view('admin.footer-menu.edit', compact('footerMenu', 'footer_menu_items', 'dynamicPages'));
+        return view('admin.footer-menu.edit', compact('footerMenu', 'footer_menu_items', 'dynamicRoutes'));
     }
 
     /**
