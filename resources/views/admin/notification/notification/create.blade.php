@@ -168,6 +168,7 @@
                         <div class="col-md-4" id="action_div">
                             @php
                                 $actionList = Helper::navigationActionList();
+                                unset($actionList['AMAR_OFFER']);
                             @endphp
 
                             <div class="form-group">
