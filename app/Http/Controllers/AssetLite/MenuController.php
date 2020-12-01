@@ -115,18 +115,15 @@ MenuController extends Controller
      */
     public function edit($id)
     {
+        $dynamicRoutes = $this->dynamicRouteService->findLangWiseRoute();
         $menu = $this->menuService->findOrFail($id);
-
-
         $this->menuItems[] = ['en_label_text' => $menu->en_label_text];
-
         $menu_id = $menu->parent_id;
         while ($menu_id != 0) {
             $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
-
         $menu_items = $this->menuItems;
-        return view('admin.menu.edit', compact('menu', 'menu_items'));
+        return view('admin.menu.edit', compact('menu', 'menu_items', 'dynamicRoutes'));
     }
 
     /**
