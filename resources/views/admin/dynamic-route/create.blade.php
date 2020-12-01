@@ -38,7 +38,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }} d-none" id="pageDynamic">
                                     <label for="code">Pages</label>
-                                    <select class="form-control" name="key">
+                                    <select class="form-control" name="dynamic_page_key">
                                         <option>---Select Page---</option>
                                         @foreach($dynamicPages as $page)
                                             <option value="{{ $page->url_slug }}">{{ $page->page_name_en }}</option>
