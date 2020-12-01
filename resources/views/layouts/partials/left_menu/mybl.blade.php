@@ -286,6 +286,10 @@
                     <a class="menu-item" href="{{ route('lodge_complaints') }}">
                         <i class="la la-cog"></i>Lodge Complaints</a>
                 </li>
+                <li class="{{ is_active_url('mybl/settings/bandho/sim/list')}}">
+                    <a class="menu-item" href="{{ route('bandhosim.index') }}">
+                        <i class="la la-cog"></i>Bandho sim image</a>
+                </li>
 
             </ul>
         </li>
