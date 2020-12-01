@@ -66,6 +66,10 @@ class NotificationScheduler extends Command
                 $notification_id = $activeSchedule->notification_id;
                 $category = $activeSchedule->notificationCategory;
                 $notificationDraft = $activeSchedule->notificationDraft;
+                $checkCustomer = false;
+                if( $notificationDraft->device_type !=  "all" ||  $notificationDraft->customer_type != "all") {
+                    $checkCustomer = true;
+                }
                 $path = $this->getPath($activeSchedule->file_name);
                 $reader = ReaderFactory::createFromType(Type::XLSX);
 
@@ -73,10 +77,11 @@ class NotificationScheduler extends Command
 
                 $notificationData = [
                     'title' => $activeSchedule->title,
-                    'body' => $activeSchedule->message,
+                    'message' => $activeSchedule->message,
                     'category_id' => $category->id,
                     'category_slug' => $category->slug,
                     'category_name' => $category->name,
+                    'image_url' => $notificationDraft->image
                 ];
 
                 foreach ($reader->getSheetIterator() as $sheet) {
@@ -90,7 +95,7 @@ class NotificationScheduler extends Command
                         $user_phone [] = $number;
 
                         if (count($user_phone) == 300) {
-                            if( $notificationDraft->device_type !=  "all" ||  $notificationDraft->customer_type != "all") {
+                            if($checkCustomer) {
                                 $user_phone = $customerService->getCustomerList([], $user_phone, $notification_id);
                             }
 
@@ -99,7 +104,7 @@ class NotificationScheduler extends Command
                                 $user_phone,
                                 $notificationDraft
                             );
-                            $notification = $this->getNotificationArray($activeSchedule, $category, $user_phone);
+                            //$notification = $this->getNotificationArray($activeSchedule, $category, $user_phone);
                             NotificationSend::dispatch($notification, $notification_id, $user_phone,
                                 $notificationService)
                                 ->onQueue('notification');
@@ -110,7 +115,7 @@ class NotificationScheduler extends Command
                 $reader->close();
 
                 if (!empty($user_phone)) {
-                    if( $notificationDraft->device_type !=  "all" ||  $notificationDraft->customer_type != "all") {
+                    if($checkCustomer) {
                         $user_phone = $customerService->getCustomerList([], $user_phone, $notification_id);
                     }
 
@@ -119,7 +124,7 @@ class NotificationScheduler extends Command
                         $user_phone,
                         $notificationDraft
                     );
-                    $notification = $this->getNotificationArray($activeSchedule, $category, $user_phone);
+                    //$notification = $this->getNotificationArray($activeSchedule, $category, $user_phone);
                     NotificationSend::dispatch($notification, $notification_id, $user_phone, $notificationService)
                         ->onQueue('notification');
                 }
@@ -141,22 +146,4 @@ class NotificationScheduler extends Command
         }
     }
 
-    public function getNotificationArray($activeSchedule, $category, array $userPhones): array
-    {
-        return [
-            'title' => $activeSchedule->title,
-            'body' => $activeSchedule->message,
-            'category_slug' => $category->slug,
-            'category_name' => $category->name,
-            "sending_from" => "cms",
-            "send_to_type" => "INDIVIDUALS",
-            "recipients" => $userPhones,
-            "is_interactive" => "NO",
-            "data" => [
-                "cid" => "1",
-                "url" => "banglalink.net",
-                "component" => "offer",
-            ],
-        ];
-    }
 }
