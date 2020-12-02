@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\NotificationSchedule;
 use App\Repositories\NotificationDraftRepository;
 use App\Repositories\NotificationRepository;
 use App\Traits\CrudTrait;
@@ -11,9 +12,12 @@ use Carbon\Carbon;
 use App\Http\Requests\NotificationRequest;
 use App\Traits\FileTrait;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class PushNotificationSendService
 {
+
+    use FileTrait;
 
     /**
      * @var NotificationRepository
@@ -31,9 +35,10 @@ class PushNotificationSendService
      * @param NotificationDraftRepository $notificationDraftRepository
      * @param NotificationRepository $notificationRepository
      */
-    public function __construct(NotificationDraftRepository $notificationDraftRepository,
-                                NotificationRepository $notificationRepository)
-    {
+    public function __construct(
+        NotificationDraftRepository $notificationDraftRepository,
+        NotificationRepository $notificationRepository
+    ) {
         $this->notificationDraftRepository = $notificationDraftRepository;
         $this->notificationRepository = $notificationRepository;
     }
@@ -45,7 +50,7 @@ class PushNotificationSendService
      * @param $notificationInfo
      * @return array
      */
-    public function getNotificationArray( array $data, array $user_phone, $notificationInfo): array
+    public function getNotificationArray(array $data, array $user_phone, $notificationInfo): array
     {
         $url = "test.com";
 
@@ -59,12 +64,12 @@ class PushNotificationSendService
             $product_code = "$notificationInfo->external_url";
         }
 
-        $category_id = !empty($data['category_id'])?$data['category_id']:1;
+        $category_id = !empty($data['category_id']) ? $data['category_id'] : 1;
 
 
         if (isset($data['image_url'])) {
             $image_url = env('NOTIFICATION_HOST') . "/" . $data['image_url'] ?? null;
-        } else{
+        } else {
             $image_url = null;
         }
 
@@ -87,6 +92,52 @@ class PushNotificationSendService
                 'navigation_action' => "$notificationInfo->navigate_action"
             ],
         ];
+    }
+
+    public function storeScheduledNotification(array $data)
+    {
+        try {
+            $scheduleArr = explode('-', $data['schedule_time']);
+            $uploadedFile = $this->upload($data['customer_file'], 'notification-scheduler-files');
+            $notificationDraftId = $data['id'];
+
+            $checkScheduleExists = NotificationSchedule::where('notification_draft_id', $notificationDraftId)->first();
+            if ($checkScheduleExists) {
+                $data = [
+                    'title' => $data['title'],
+                    'message' => $data['message'],
+                    'file_name' => $uploadedFile,
+                    'start' => Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s'),
+                    'end' => Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s'),
+                    'status' => 'active'
+                ];
+                NotificationSchedule::where('notification_draft_id', $notificationDraftId)->update($data);
+            } else {
+                $notificationSchedule = new NotificationSchedule();
+
+                $notificationSchedule->notification_draft_id = $notificationDraftId;
+                $notificationSchedule->notification_category_id = $data['category_id'];
+                $notificationSchedule->title = $data['title'];
+                $notificationSchedule->message = $data['message'];
+                $notificationSchedule->file_name = $uploadedFile;
+                $notificationSchedule->start = Carbon::parse(trim($scheduleArr[0]))->format('Y-m-d H:i:s');
+                $notificationSchedule->end = Carbon::parse(trim($scheduleArr[1]))->format('Y-m-d H:i:s');
+                $notificationSchedule->status = 'active';
+
+                $notificationSchedule->save();
+            }
+
+            return [
+                'success' => true,
+                'message' => 'Notification Schedule Stored'
+            ];
+        } catch (\Exception $e) {
+            Log::info('Error:' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
     }
 
 }

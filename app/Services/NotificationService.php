@@ -48,11 +48,7 @@ class NotificationService
     {
         $data = $request->all();
 
-        $date_range_array = explode('-', $request['display_period']);
-        $data['starts_at'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
-            ->toDateTimeString();
-        $data['expires_at'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
-            ->toDateTimeString();
+        $data['starts_at'] = $data['expires_at'] = Carbon::now()->format('Y-m-d H:i:s');
         unset($data['display_period']);
 
        /* if ($request->hasFile('image')) {
