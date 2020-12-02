@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\Http\Requests\NotificationRequest;
 use App\Traits\FileTrait;
 use Illuminate\Support\Facades\File;
+use App\Models\MyBlProduct;
 
 class NotificationService
 {
@@ -202,5 +203,33 @@ class NotificationService
     public function removeMuteUserFromList($user_phone_num, array $mute_user_phone)
     {
         return $this->notificationRepository->removeMuteUserFromList($user_phone_num, $mute_user_phone);
+    }
+
+    public function getActiveProducts($request)
+    {
+        $builder = new MyBlProduct();
+        $builder = $builder->where('status', 1);
+
+
+        $products = $builder->whereHas(
+            'details',
+            function ($q) use ($request) {
+
+                if($request->has('productCode') && !empty($request->input('productCode'))){
+                    $productCode=trim($request->input('productCode'));
+                      $q->where('product_code','like',"$productCode%");
+                  }
+                  $q->whereIn('content_type', ['data','voice','sms','mix']);
+            }
+        )->get();
+        $data = [];
+        foreach ($products as $product) {
+            $data [] = [
+                'id'    => $product->details->product_code,
+                'text' =>  $product->details->product_code .' (' . strtoupper($product->details->content_type) . ') ' . $product->details->commercial_name_en
+            ];
+        }
+
+        return $data;
     }
 }

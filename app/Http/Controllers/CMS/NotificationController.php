@@ -205,4 +205,8 @@ class NotificationController extends Controller
         return view('admin.notification.target-wise-notification.details')
             ->with('notifications', $notifications);
     }
+
+    public function getProductList(Request $request){
+        return $this->notificationService->getActiveProducts($request);
+    }
 }
