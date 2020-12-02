@@ -30,8 +30,8 @@
                                 <div class="help-block">  {{ $errors->first('title_en') }}</div>
                                 @endif
                             </div>
-                            
-                            
+
+
                             <div class="form-group col-md-4 {{ $errors->has('title_bn') ? ' error' : '' }}">
                                 <label for="title_bn" class="required1">Title (Bangla)</label>
                                 <input type="text" name="title_bn"  class="form-control" placeholder="Enter title (bangla)"
@@ -56,9 +56,17 @@
 
 
 
-                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Page Header (HTML)</label>
+                            <div class="form-group col-md-4 {{ $errors->has('page_header') ? ' error' : '' }}">
+                                <label>Page Header EN (HTML)</label>
                                 <textarea class="form-control" rows="7" name="page_header">{{$sections->page_header}}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
+                                <label>Page Header BN (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header_bn">{{$sections->page_header_bn}}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>
@@ -72,24 +80,42 @@
                                 </small>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-12">
                                 <label for="alt_text"></label>
-                                <div class="form-group">
+                                <div class="form-group row">
+                                    <div class="col-md-4">
+                                        <label> URL EN <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control slug-convert" value="{{$sections->route_slug}}" required name="route_slug" placeholder="URL">
+                                        <small class="text-info">
+                                            <strong>i.e:</strong> Strategic-Assistant-Program (no spaces)<br>
+                                        </small>
+                                        @if($errors->has('route_slug'))
+                                            <div class="help-block text-danger">
+                                                {{ $errors->first('route_slug') }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label> URL BN <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control slug-convert" value="{{$sections->route_slug_bn}}" required name="route_slug_bn" placeholder="URL">
+                                        <small class="text-info">
+                                            <strong>i.e:</strong> Strategic-Assistant-Program (no spaces)<br>
+                                        </small>
+                                        @if($errors->has('route_slug_bn'))
+                                            <div class="help-block text-danger">
+                                                {{ $errors->first('route_slug_bn') }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-4 mt-2">
+                                        <label for="title" class="required mr-1">Status:</label>
 
+                                        <input type="radio" name="is_active" value="1" id="input-radio-15" @if( $sections->is_active == 1 ) checked @endif>
+                                        <label for="input-radio-15" class="mr-1">Active</label>
 
-                                    <label> URL <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" value="{{$sections->route_slug}}" required name="route_slug" placeholder="URL">
-                                    <small class="text-info">
-                                        <strong>i.e:</strong> Strategic-Assistant-Program (no spaces)<br>
-                                    </small>
-                                    <br>
-                                    <label for="title" class="required mr-1">Status:</label>
-
-                                    <input type="radio" name="is_active" value="1" id="input-radio-15" @if( $sections->is_active == 1 ) checked @endif>
-                                           <label for="input-radio-15" class="mr-1">Active</label>
-
-                                    <input type="radio" name="is_active" value="0" id="input-radio-16" @if( $sections->is_active == 0 ) checked @endif>
-                                           <label for="input-radio-16">Inactive</label>
+                                        <input type="radio" name="is_active" value="0" id="input-radio-16" @if( $sections->is_active == 0 ) checked @endif>
+                                        <label for="input-radio-16">Inactive</label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -117,7 +143,7 @@
 
 @push('page-js')
 
-
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}" type="text/javascript"></script>
 
 @endpush
 

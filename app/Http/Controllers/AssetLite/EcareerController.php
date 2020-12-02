@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\EcareerPortalRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\EcareerService;
@@ -560,23 +561,7 @@ class EcareerController extends Controller {
      * @param  [type]  $id      [description]
      * @return [type]           [description]
      */
-    public function topbannerUpdate(Request $request, $id) {
-
-        $image_upload_size = ConfigController::adminImageUploadSize();
-        $image_upload_type = ConfigController::adminImageUploadType();
-
-        # Check Image upload validation
-        $validator = Validator::make($request->all(), [
-                    // 'title_en' => 'required',
-                    // 'slug' => 'required',
-                    'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
-                    'route_slug' => 'required|regex:/^\S*$/u',
-                    'image_url' => 'nullable|mimes:' . $image_upload_type . '|max:' . $image_upload_size // 2M
-        ]);
-        if ($validator->fails()) {
-            Session::flash('error', $validator->messages()->first());
-            return redirect('life-at-banglalink/topbanner');
-        }
+    public function topbannerUpdate(EcareerPortalRequest $request, $id) {
 
         $response = $this->ecarrerService->updateMainSection($request->except(['slug']), $id);
 
@@ -1619,24 +1604,7 @@ class EcareerController extends Controller {
      * @param  [type]  $id      [description]
      * @return [type]           [description]
      */
-    public function tabTitleUpdate(Request $request, $id) {
-
-        $image_upload_size = ConfigController::adminImageUploadSize();
-        $image_upload_type = ConfigController::adminImageUploadType();
-
-        # Check Image upload validation
-        $validator = Validator::make($request->all(), [
-                    // 'title_en' => 'required',
-                    // 'slug' => 'required',
-                    'route_slug' => 'required|regex:/^\S*$/u',
-                    'image_url' => 'nullable|mimes:' . $image_upload_type . '|max:' . $image_upload_size // 2M
-        ]);
-        if ($validator->fails()) {
-            Session::flash('error', $validator->messages()->first());
-            return redirect('programs/tab-title');
-        }
-
-
+    public function tabTitleUpdate(EcareerPortalRequest $request, $id) {
 
         $this->ecarrerService->updateSubSection($request->except(['slug']), $id);
 
