@@ -16,7 +16,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-10">
-
+                        <b>Notification Titel : @if(isset($notifications[0])) {{$notifications[0]['title']}} @endif</b>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                                 <td width="10%">{{$notification['mobile']}}</td>
                                 <td width="12%">{{$notification['title']}}</td>
                                 <td width="30%">{{$notification['body']}}</td>
-                                <td width="10%">{{!empty($notification->created_at)?date('d-M-Y h:i a', strtotime($notification->created_at)):''}}</td>
+                                <td width="10%">{{!empty($notification['created_at'])?date('d-M-Y h:i a', strtotime($notification['created_at'])):''}}</td>
                                 <td width="10%">{{$notification['status']}}</td>
                             </tr>
                         @endforeach
