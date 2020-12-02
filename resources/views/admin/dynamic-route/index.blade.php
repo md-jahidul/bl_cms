@@ -32,7 +32,7 @@
                                     @foreach($routes as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->code }}</td>
+                                        <td>{{ $item->code }} {!! $item->status == 0 ? '<span class="text-danger"> ( Inactive )</span>' : '' !!}</td>
                                         <td>{{ $item->key }}</td>
                                         <td>{{ $item->url }}</td>
                                         <td class="text-center">

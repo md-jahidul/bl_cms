@@ -14,6 +14,7 @@ class AddRedirectUrlFieldInFooterTable extends Migration
     public function up()
     {
         Schema::table('footer_menus', function (Blueprint $table) {
+            $table->string('code')->nullable()->change();
             $table->string('url')->nullable()->change();
             $table->string('url_bn')->nullable()->after('url');
         });

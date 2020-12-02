@@ -57,7 +57,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }}" id="pageDynamic">
                                     <label for="code">Page URL</label>
                                     <select class="form-control" name="code">
-                                        <option>---Select Page---</option>
+                                        <option value="">---Select Page---</option>
                                         @foreach($dynamicRoutes as $route)
                                             <option value="{{ $route->key }}">{{ $route->url }}</option>
                                         @endforeach
@@ -76,13 +76,13 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-4 {{ $errors->has('external_site') ? ' error' : '' }} d-none" id="externalLink">
+                                <div class="form-group col-md-4 {{ $errors->has('url') ? ' error' : '' }} d-none" id="externalLink">
                                     <label for="url" class="required">External URL</label>
-                                    <input type="text" name="external_site" class="form-control slug-convert" placeholder="Enter URL"
-                                           value="{{ old("external_site") ? old("external_site") : '' }}">
+                                    <input type="text" name="url" class="form-control" placeholder="Enter URL"
+                                           value="{{ old("url") ? old("url") : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('external_site'))
-                                        <div class="help-block">  {{ $errors->first('external_site') }}</div>
+                                    @if ($errors->has('url'))
+                                        <div class="help-block">  {{ $errors->first('url') }}</div>
                                     @endif
                                 </div>
 
@@ -131,14 +131,20 @@
     <script>
         $(function () {
             var externalLink = $('#externalLink');
+            var pageDynamic = $('#pageDynamic');
+
             $('#external_link').click(function () {
                 if($(this).prop("checked") == true){
                     externalLink.removeClass('d-none');
+                    pageDynamic.addClass('d-none');
                 }else{
+                    pageDynamic.removeClass('d-none')
                     externalLink.addClass('d-none')
                 }
             })
+
         })
+
     </script>
 @endpush
 

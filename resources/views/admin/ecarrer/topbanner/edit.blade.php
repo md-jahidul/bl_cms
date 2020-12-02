@@ -59,10 +59,10 @@
                             <div class="form-group col-md-4 {{ $errors->has('image_url') ? ' error' : '' }}">
                                 <label for="alt_text" class="required">Banner Image (Web)</label>
                                 <div class="custom-file">
-                                    
+
                                     <input type="hidden" name="old_web_img" value="{{$sections->image}}">
-                                    
-                                    
+
+
                                     <input type="file" class="dropify" name="image_url" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
@@ -82,9 +82,9 @@
                             <div class="form-group col-md-4 {{ $errors->has('image_url') ? ' error' : '' }}">
                                 <label for="alt_text" class="required">Banner Image (Mobile)</label>
                                 <div class="custom-file">
-                                    
+
                                     <input type="hidden" name="old_mob_img" value="{{$sections->image_mobile}}">
-                                    
+
                                     <input type="file" class="dropify" name="image_url_mobile" data-height="70"
                                            data-allowed-file-extensions='["jpg", "jpeg", "png"]'>
 
@@ -114,8 +114,16 @@
                             </div>
 
                             <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Page Header (HTML)</label>
+                                <label>Page Header EN (HTML)</label>
                                 <textarea class="form-control" rows="7" name="page_header">{{$sections->page_header}}</textarea>
+                                <small class="text-info">
+                                    <strong>Note: </strong> Title, meta, canonical and other tags
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-4 {{ $errors->has('page_header_bn') ? ' error' : '' }}">
+                                <label>Page Header BN (HTML)</label>
+                                <textarea class="form-control" rows="7" name="page_header_bn">{{$sections->page_header_bn}}</textarea>
                                 <small class="text-info">
                                     <strong>Note: </strong> Title, meta, canonical and other tags
                                 </small>
@@ -129,52 +137,66 @@
                                 </small>
                             </div>
 
-                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Banner Photo Name</label>
-                                <input type="hidden" name="old_banner_name" value="{{$sections->banner_name}}">
-                                <input type="text" class="form-control" name="banner_name" value="{{$sections->banner_name}}" placeholder="Photo Name">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
-                                    <strong>Note: </strong> Don't need MIME type like jpg,png
-                                </small>
-
-                                <br>
-
-
-                                <br>
-                                <label> URL (route slug) <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{$sections->route_slug}}" required name="route_slug" placeholder="URL">
-                                <small class="text-info">
-                                    <strong>i.e:</strong> Buy-tickets-on-discount (no spaces)<br>
-                                </small>
-
-                                <br>
-                                <label for="title" class="required mr-1">Status:</label>
-
-                                <input type="radio" name="is_active" value="1" id="input-radio-15" @if( $sections->is_active == 1 ) checked @endif>
-                                       <label for="input-radio-15" class="mr-1">Active</label>
-
-                                <input type="radio" name="is_active" value="0" id="input-radio-16" @if( $sections->is_active == 0 ) checked @endif>
-                                       <label for="input-radio-16">Inactive</label>
+                            <div class="form-group col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                        <label>Banner Photo Name</label>
+                                        <input type="hidden" name="old_banner_name" value="{{$sections->banner_name}}">
+                                        <input type="text" class="form-control" name="banner_name"
+                                               value="{{$sections->banner_name}}" placeholder="Photo Name">
+                                        <small class="text-info">
+                                            <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
+                                            <strong>Note: </strong> Don't need MIME type like jpg,png
+                                        </small>
+                                    </div>
+                                    <div class="col-md-4 {{ $errors->has('route_slug') ? ' error' : '' }}">
+                                        <label> URL EN (route slug) <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control slug-convert"
+                                               value="{{$sections->route_slug}}" required name="route_slug"
+                                               placeholder="URL">
+                                        <small class="text-info">
+                                            <strong>i.e:</strong> life-at-banglalink (no spaces and slash)<br>
+                                        </small>
+                                        @if($errors->has('route_slug'))
+                                            <div class="help-block text-danger">
+                                                {{ $errors->first('route_slug') }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-4 {{ $errors->has('route_slug_bn') ? ' error' : '' }}">
+                                        <label> URL BN (route slug) <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control slug-convert"
+                                               value="{{$sections->route_slug_bn}}" required name="route_slug_bn"
+                                               placeholder="URL">
+                                        <small class="text-info">
+                                            <strong>i.e:</strong> লাইফ-এট-বাংলালিংক (no spaces and slash)<br>
+                                        </small>
+                                        @if($errors->has('route_slug_bn'))
+                                            <div class="help-block text-danger">
+                                                {{ $errors->first('route_slug_bn') }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
+                            <br>
+                            <label for="title" class="required mr-1">Status:</label>
 
+                            <input type="radio" name="is_active" value="1" id="input-radio-15" @if( $sections->is_active == 1 ) checked @endif>
+                            <label for="input-radio-15" class="mr-1">Active</label>
 
-
-
-
-
+                            <input type="radio" name="is_active" value="0" id="input-radio-16" @if( $sections->is_active == 0 ) checked @endif>
+                            <label for="input-radio-16">Inactive</label>
 
                             <div class="form-actions col-md-12 ">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-primary"><i class="la la-check-square-o"></i> SAVE
                                     </button>
-
                                 </div>
                             </div>
                         </div>
                         <input type="hidden" name="id" value="{{ $sections->id }}"/>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -187,7 +209,8 @@
 
 @endpush
 @push('page-js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    <script src="{{ asset('app-assets/js/scripts/slug-convert/convert-url-slug.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 
 
 <script>
