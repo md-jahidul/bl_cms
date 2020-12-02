@@ -157,6 +157,11 @@
                                         <small class="text-info">
                                             <strong>i.e:</strong> life-at-banglalink (no spaces and slash)<br>
                                         </small>
+                                        @if($errors->has('route_slug'))
+                                            <div class="help-block text-danger">
+                                                {{ $errors->first('route_slug') }}
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="col-md-4 {{ $errors->has('route_slug_bn') ? ' error' : '' }}">
                                         <label> URL BN (route slug) <span class="text-danger">*</span></label>
@@ -166,6 +171,11 @@
                                         <small class="text-info">
                                             <strong>i.e:</strong> লাইফ-এট-বাংলালিংক (no spaces and slash)<br>
                                         </small>
+                                        @if($errors->has('route_slug_bn'))
+                                            <div class="help-block text-danger">
+                                                {{ $errors->first('route_slug_bn') }}
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

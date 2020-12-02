@@ -277,8 +277,10 @@ class EcareerService {
             $update['title_en'] = $data['title_en'];
             $update['title_bn'] = $data['title_bn'];
             $update['page_header'] = $data['page_header'];
+            $update['page_header_bn'] = $data['page_header_bn'];
             $update['schema_markup'] = $data['schema_markup'];
             $update['route_slug'] = $data['route_slug'];
+            $update['route_slug_bn'] = $data['route_slug_bn'];
             $update['is_active'] = $data['is_active'];
 
             $this->ecarrerPortalRepository->updateMainSection($update, $id);
