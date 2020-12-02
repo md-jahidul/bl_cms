@@ -10,6 +10,7 @@ use App\Models\ProductCore;
 use App\Models\ProductCoreHistory;
 use App\Models\ProductDetail;
 use App\Repositories\ProductCoreRepository;
+use App\Repositories\ProductDeepLinkRepository;
 use App\Repositories\SearchDataRepository;
 use App\Repositories\TagCategoryRepository;
 use App\Traits\CrudTrait;
