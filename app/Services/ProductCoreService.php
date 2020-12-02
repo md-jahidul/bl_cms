@@ -56,15 +56,18 @@ class ProductCoreService
      * @param  ProductCoreRepository  $productCoreRepository
      * @param  SearchDataRepository  $searchRepository
      * @param  TagCategoryRepository  $tagRepository
+     * @param ProductDeepLinkRepository $productDeepLinkRepository
      */
     public function __construct(
         ProductCoreRepository $productCoreRepository,
         SearchDataRepository $searchRepository,
-        TagCategoryRepository $tagRepository
+        TagCategoryRepository $tagRepository,
+        ProductDeepLinkRepository $productDeepLinkRepository
     ) {
         $this->productCoreRepository = $productCoreRepository;
         $this->searchRepository = $searchRepository;
         $this->tagRepository = $tagRepository;
+        $this->productDeepLinkRepository=$productDeepLinkRepository;
         $this->setActionRepository($productCoreRepository);
     }
 
@@ -378,6 +381,7 @@ class ProductCoreService
         ];
 
         $items->each(function ($item) use (&$response) {
+            $link=$this->productDeepLinkRepository->findOneProductLink($item->product_code);
             $response['data'][] = [
                 'product_code' => $item->product_code,
                 'renew_product_code' => $item->details->renew_product_code,
@@ -391,10 +395,10 @@ class ProductCoreService
                 'show_in_home' => ($item->show_in_home) ? 'Yes' : 'No',
                 'media' => ($item->media) ? 'Yes' : 'No',
                 'status' => $item->details->status,
+                'deep_link'=>!empty($link->deep_link)?$link->deep_link:null,
                 'is_visible' => $item->is_visible ? 'Shown' : 'Hidden'
             ];
         });
-
         return $response;
     }
 
