@@ -38,7 +38,7 @@
 
                                 <div class="form-group col-md-6 {{ $errors->has('key') ? ' error' : '' }} d-none" id="pageDynamic">
                                     <label for="code">Pages</label>
-                                    <select class="form-control" name="key">
+                                    <select class="form-control" name="dynamic_page_key">
                                         <option>---Select Page---</option>
                                         @foreach($dynamicPages as $page)
                                             <option value="{{ $page->url_slug }}">{{ $page->page_name_en }}</option>
@@ -78,6 +78,22 @@
                                     <div class="form-group">
                                         <label for="dynamic-route" class="mr-1 cursor-pointer">Is Dynamic Route:</label>
                                         <input type="checkbox" name="is_dynamic_page" class="cursor-pointer" value="1" id="dynamic-route">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mt-2">
+                                    <div class="form-group {{ $errors->has('status') ? ' error' : '' }}">
+                                        <label for="title" class="required mr-1">Status:</label>
+
+                                        <input type="radio" name="status" value="1" id="input-radio-15" checked>
+                                        <label for="input-radio-15" class="mr-1">Active</label>
+
+                                        <input type="radio" name="status" value="0" id="input-radio-16">
+                                        <label for="input-radio-16">Inactive</label>
+
+                                        @if ($errors->has('status'))
+                                            <div class="help-block">  {{ $errors->first('status') }}</div>
+                                        @endif
                                     </div>
                                 </div>
 

@@ -22,6 +22,7 @@ class CreateFrontEndDynamicRoutesTable extends Migration
             $table->string('lang_type')->nullable()->comment('en, bn');
             $table->boolean('exact')->default(true);
             $table->json('children')->nullable();
+            $table->tinyInteger('status')->default(0);
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->timestamps();

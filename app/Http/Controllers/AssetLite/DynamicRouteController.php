@@ -89,8 +89,10 @@ class DynamicRouteController extends Controller
      */
     public function edit($id)
     {
+        $dynamicPages = $this->dynamicPageService->findAll();
         $route = $this->dynamicRouteService->findOne($id);
-        return view('admin.dynamic-route.edit', compact('route'));
+//        dd($dynamicPages);
+        return view('admin.dynamic-route.edit', compact('route', 'dynamicPages'));
     }
 
     /**

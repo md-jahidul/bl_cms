@@ -42,6 +42,9 @@ class DynamicRouteService
      */
     public function saveRoute($data)
     {
+        $data['key'] = isset($data['is_dynamic_page']) ? $data['dynamic_page_key'] : $data['key'];
+        $data['is_dynamic_page'] = isset($data['is_dynamic_page']) ? 1 : 0;
+        unset($data['dynamic_page_key']);
         foreach ($data['url'] as $index => $item) {
             $data['code'] = str_replace(' ', '', $data['code']);
             $data['url'] = $item;
@@ -61,6 +64,9 @@ class DynamicRouteService
         $data = $request->all();
         $route = $this->findOne($id);
         $data['code'] = str_replace(' ', '', $data['code']);
+        $data['key'] = isset($data['is_dynamic_page']) ? $data['dynamic_page_key'] : $data['key'];
+        $data['is_dynamic_page'] = isset($data['is_dynamic_page']) ? 1 : 0;
+        unset($data['dynamic_page_key']);
         $route->update($data);
         return Response('Updated successfully');
     }
