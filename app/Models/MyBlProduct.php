@@ -24,4 +24,5 @@ class MyBlProduct extends Model
     {
         return $this->belongsTo(ProductCore::class, 'product_code', 'product_code');
     }
+
 }

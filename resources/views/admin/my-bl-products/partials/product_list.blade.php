@@ -37,6 +37,7 @@
     </div>
 </div>
 <div class="col-md-12 mt-3">
+
     <table class="table table-striped table-bordered dataTable"
            id="product_list" role="grid">
         <thead>
@@ -47,7 +48,9 @@
             <th>Recharge Product Code</th>
             <th>Description</th>
             <th>Show in Home</th>
+            <th>Visibility</th>
             <th>Attached Image</th>
+            <th>Deep Link</th>
             <th class="filter_data">Actions</th>
         </tr>
         </thead>
@@ -55,13 +58,15 @@
         </tbody>
     </table>
 </div>
-
+<link rel="stylesheet" href="{{asset('plugins')}}/sweetalert2/sweetalert2.min.css">
 @push('page-js')
     {{--    <script src="{{asset('app-assets')}}/vendors/js/tables/datatable/datatables.min.js" type="text/javascript">
         </script>--}}
-
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.12/clipboard.min.js"></script>
+        <script src="{{asset('plugins')}}/sweetalert2/sweetalert2.min.js"></script>
     <script>
         $(function () {
+            new Clipboard('.copy-text');
             $("#product_list").dataTable({
                 scrollX: true,
                 processing: true,
@@ -117,15 +122,6 @@
                             return row.recharge_product_code;
                         }
                     },
-
-/*                    {
-                        name: 'name',
-                        width: '150px',
-                        render: function (data, type, row) {
-                            return row.name;
-                        }
-                    },*/
-
                     {
                         name: 'description',
                         render: function (data, type, row) {
@@ -140,9 +136,30 @@
                         }
                     },
                     {
+                        name: 'is_visible',
+                        render: function (data, type, row) {
+                            return   row.is_visible == 'Shown' ? "<span class='badge badge-success'>Shown</span>" : "<span class='badge badge-warning'>Hidden</span>";
+                        }
+                    },
+                    {
                         name: 'Attached Image',
                         render: function (data, type, row) {
                             return row.media;
+                        }
+                    },
+                    {
+                        name: 'name',
+                        width: '150px',
+                        render: function (data, type, row) {
+                            // return row.deep_link;
+                            if(row.deep_link==null){
+                             return `<div class="btn-group" role="group" aria-label="Basic example">
+                            <button class="btn btn-sm btn-icon btn-outline-success edit" onclick="deepLinkCreate('` + row.product_code + `');"><i class="la icon-link"></i></button>
+                          </div>`
+                            }else{
+                                return `<button class="btn btn-sm btn-success" id="` + row.deep_link + `" onclick="copyDeepLinkCreate('` + row.deep_link + `');" class="copy-text" href="#">copy</button>`;
+
+                            }
                         }
                     },
                     {
@@ -166,6 +183,47 @@
                 $('#product_list').DataTable().ajax.reload();
             });
         });
+
+        function deepLinkCreate(productCode){
+                    $.ajax({
+                            url: "{{ url('mybl-products-deep-link-create') }}/"+productCode,
+                            methods: "get",
+                            success: function (result) {
+                                console.log(result.status_code);
+                                if(result.status_code===200){
+                                Swal.fire(
+                                    'Generated!',
+                                    'Deep link generated successfully .<br><br> Link :  '+result.short_link,
+                                    'success',
+                                );
+                                }else{
+                                    Swal.fire(
+                                    'Oops!',
+                                    'Something went wrong please try again ',
+                                    'error',
+                                );
+                                }
+                                setTimeout(redirect, 2000)
+                                function redirect() {
+                                    $('#product_list').DataTable().ajax.reload();
+                                }
+                            }
+                        });
+            }
+
+        function copyDeepLinkCreate(deeplink){
+            const str = document.getElementById(deeplink).id;
+            const el = document.createElement('textarea');
+            el.value = str;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+        }
     </script>
 
 @endpush

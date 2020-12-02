@@ -51,8 +51,8 @@ class MyblProductEntryController extends Controller
 
         foreach ($codes as $code) {
             $data ['results'][] = [
-              'id'   => $code,
-              'text' => $code,
+                'id' => $code,
+                'text' => $code,
             ];
         }
 
@@ -75,6 +75,10 @@ class MyblProductEntryController extends Controller
 
         return view('admin.my-bl-products.product-details', compact('details', 'internet_categories'));
     }
+
+    /**
+     * @return Factory|View
+     */
     public function index()
     {
         return view('admin.my-bl-products.mybl_product_entry');
