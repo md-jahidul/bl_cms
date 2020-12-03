@@ -30,7 +30,7 @@
                                         <td>{{ $data->referral_code }}</td>
                                         <td>{{ $data->apps->name_en }}</td>
                                         <td class="text-center">
-                                            <span class="badge badge-info badge-pill">{{ $data->share_count }}</span>
+                                            <span class="badge badge-secondary badge-pill">{{ $data->share_count }}</span>
                                         </td>
                                     </tr>
                             @endforeach
