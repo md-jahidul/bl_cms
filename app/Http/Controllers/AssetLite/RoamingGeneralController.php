@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RoamingCategoriesRequest;
 use App\Services\RoamingGeneralService;
 use Illuminate\Http\Request;
 use Session;
@@ -53,7 +54,7 @@ class RoamingGeneralController extends Controller {
      * @return JsonResponse
      * @Dev Bulbul Mahmud Nito || 20/03/2020
      */
-    public function updateCategory(Request $request) {
+    public function updateCategory(RoamingCategoriesRequest $request) {
 
         $response = $this->generalService->updateCategory($request);
 
