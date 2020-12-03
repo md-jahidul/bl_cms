@@ -24,8 +24,10 @@ class ProductDeepLinkService
         $this->firebaseDeepLinkService=$firebaseDeepLinkService;
     }
 
-
-
+    /**
+     * @param $product_code
+     * @return array
+     */
     public function createDeepLink($product_code){
 
         $product = MyBlProduct::where('product_code', $product_code)->first();
@@ -37,7 +39,7 @@ class ProductDeepLinkService
               "domainUriPrefix"=>env('DOMAINURIPREFIX'),
               "link"=>"https://banglalink.net/product/$product_code",
               "androidInfo"=> [
-                "androidPackageName"=>"com.arena.banglalinkmela.app.qa"
+                "androidPackageName"=>"com.arena.banglalinkmela.app"
               ],
               "iosInfo"=>[
                 "iosBundleId"=>"com.Banglalink.My-Banglalink"
