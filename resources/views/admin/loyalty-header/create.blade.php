@@ -53,6 +53,24 @@
                                         @endif
                                     </div>
 
+                                    <div class="form-group col-md-6 {{ $errors->has('url_slug_en') ? ' error' : '' }}">
+                                        <label for="url_slug_en" class="required">Url Slug EN</label>
+                                        <input type="text" name="url_slug_en"  class="form-control" placeholder="Enter Url Slug EN">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('url_slug_en'))
+                                            <div class="help-block">  {{ $errors->first('url_slug_en') }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group col-md-6 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
+                                        <label for="url" class="required priyojonLanding">Url Slug BN</label>
+                                        <input type="text" name="url_slug_bn"  class="form-control" placeholder="Enter Url Slug BN">
+                                        <div class="help-block"></div>
+                                        @if ($errors->has('url_slug_bn'))
+                                            <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
+                                        @endif
+                                    </div>
+
                                     <div class="col-md-6">
                                         <label></label>
                                         <div class="form-group">

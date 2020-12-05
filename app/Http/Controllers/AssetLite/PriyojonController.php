@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AssetLite;
 
+use App\Http\Requests\PriyojonRequest;
 use App\Models\Priyojon;
 use App\Services\AboutPageService;
 use App\Services\PriyojonService;
@@ -70,6 +71,7 @@ class PriyojonController extends Controller
             $menu_id = $this->getBreadcrumbInfo($menu_id);
         }
         $menu_items = $this->priyojonItems;
+       
         return view('admin.loyalty-header.create', compact('menu_items', 'parent_id'));
     }
 
@@ -78,7 +80,7 @@ class PriyojonController extends Controller
      * @param $id
      * @return RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(PriyojonRequest $request)
     {
         $parentId =  $request->parent_id;
         $response = $this->priyojonService->storePriyojon($request->all());
@@ -107,7 +109,7 @@ class PriyojonController extends Controller
      * @param $id
      * @return RedirectResponse|Redirector
      */
-    public function update(Request $request, $id)
+    public function update(PriyojonRequest $request, $id)
     {
         $parentId =  $request->parent_id;
         $response = $this->priyojonService->updatePriyojon($request->all(), $id);

@@ -44,6 +44,9 @@
                                 <small class="text-info">
                                     <strong>i.e:</strong> bundles (no spaces and slash)<br>
                                 </small>
+                                @if ($errors->has('url_slug'))
+                                    <div class="help-block">  {{ $errors->first('url_slug') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group col-md-3 {{ $errors->has('url_slug_bn') ? ' error' : '' }}">
@@ -53,6 +56,10 @@
                                 <small class="text-info">
                                     <strong>i.e:</strong> বান্ডেল (no spaces and slash)<br>
                                 </small>
+                                @if ($errors->has('url_slug_bn'))
+                                    <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
+                                    <div class="help-block">  {{ $errors->first('url_slug_bn') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group col-md-6 {{ $errors->has('banner_image_url') ? ' error' : '' }}">
@@ -96,28 +103,58 @@
                                 @endif
                             </div>
 
-                            <div class="form-group col-md-3 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Banner Photo Name En</label>
+                            <div class="form-group col-md-3 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                <label>Banner Name Web En <span class="text-danger">*</span></label>
                                 <input type="hidden" name="old_banner_name_en" value="{{$offer->banner_name}}">
-                                <input type="text" class="form-control" name="banner_name" value="{{$offer->banner_name}}"
-                                       placeholder="Photo Name" id="banner_name_en">
+                                <input type="text" class="form-control" required name="banner_name" value="{{$offer->banner_name}}"
+                                       placeholder="Enter English Web Banner Name" id="banner_name_en">
                                 <small class="text-info">
                                     <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>
                                     <strong>Note: </strong> Don't need MIME type like jpg,png
                                 </small>
+                                @if ($errors->has('banner_name'))
+                                    <div class="help-block">  {{ $errors->first('banner_name') }}</div>
+                                @endif
                             </div>
 
-                            <div class="form-group col-md-3 {{ $errors->has('alt_text') ? ' error' : '' }}">
-                                <label>Banner Photo Name Bn</label>
-                                <input type="hidden" name="old_banner_name_bn"
-                                       value="{{ isset($offer->other_attributes['banner_name_bn']) ? $offer->other_attributes['banner_name_bn'] : null }}">
-                                <input type="text" class="form-control" name="other_attributes[banner_name_bn]" id="banner_name_bn"
-                                       value="{{ isset($offer->other_attributes['banner_name_bn']) ? $offer->other_attributes['banner_name_bn'] : null }}"
-                                       placeholder="Photo Name">
+                            <div class="form-group col-md-3 {{ $errors->has('banner_name_web_bn') ? ' error' : '' }}">
+                                <label>Banner Name Web Bn<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="banner_name_web_bn"
+                                       value="{{$offer->banner_name_web_bn}}" required
+                                       placeholder="Enter Bangeli Web Banner Name">
                                 <small class="text-info">
                                     <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>
                                     <strong>Note: </strong> Don't need MIME type like jpg,png
                                 </small>
+                                @if ($errors->has('banner_name_web_bn'))
+                                    <div class="help-block">  {{ $errors->first('banner_name_web_bn') }}</div>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-4 {{ $errors->has('banner_name_mobile_en') ? ' error' : '' }}">
+                                <label>Banner Name Mobile En<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="banner_name_mobile_en"
+                                       value="{{$offer->banner_name_mobile_en}}" required
+                                       placeholder="Enter English Mobile Banner Name">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>
+                                    <strong>Note: </strong> Don't need MIME type like jpg,png
+                                </small>
+                                @if ($errors->has('banner_name_mobile_en'))
+                                    <div class="help-block">  {{ $errors->first('banner_name_mobile_en') }}</div>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-4 {{ $errors->has('banner_name_mobile_bn') ? ' error' : '' }}">
+                                <label>Banner Name Mobile Bn<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="banner_name_mobile_bn" required
+                                       value="{{ $offer->banner_name_mobile_bn }}"
+                                       placeholder="Enter Mobile Web Banner Name">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> prepaid-internet-banner (no spaces)<br>
+                                    <strong>Note: </strong> Don't need MIME type like jpg,png
+                                </small>
+                                @if ($errors->has('banner_name_mobile_bn'))
+                                    <div class="help-block">  {{ $errors->first('banner_name_mobile_bn') }}</div>
+                                @endif
                             </div>
 
 
