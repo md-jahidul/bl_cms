@@ -9,7 +9,8 @@
     <div class="card card-info mt-0" style="box-shadow: 0px 0px">
         <div class="card-content">
             <div class="card-body card-dashboard">
-                <table class="table table-striped table-bordered alt-pagination no-footer dataTable" id="Example1" role="grid" aria-describedby="Example1_info" style="">
+                {{-- alt-pagination no-footer dataTable --}}
+                <table class="table table-striped table-bordered" id="Example11" role="grid" aria-describedby="Example1_info" style="">
                     <thead>
                     <tr>
                         <th width="5%">ID</th>
@@ -22,38 +23,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @php
-                         $id=1;
-                        @endphp
-                        @foreach ($notifications as $notification)
-                        @php
 
-                            $send = (array) $notification->getNotification;
-                        @endphp
-                            <tr>
-                                <td width="5%">{{$id++}}</td>
-                                <td width="12%">{{$notification->title}}</td>
-                                <td width="30%">{{$notification->body}}</td>
-                                <td width="10%"><i class="la la-android" style="color: blue !important"></i> &nbsp;{{$notification->device_type}}</td>
-                                <td>{{!empty($notification->starts_at)?date('d-M-Y h:i a', strtotime($notification->starts_at)):''}}</td>
-                                <td style="text-align: center">{{$notification->getNotification->count()}}&nbsp;>&nbsp;{{$notification->getNotificationSuccessfullySend->count()}}</td>
-                                <td width="10%">
-                                    <div class="row" style="padding-right: 5px;">
-                                        <div class="col-md-2 m-1">
-                                            <a  role="button"
-                                                data-id=""
-                                                href="{{route('target-wise-notification-report.report-details',$notification->title)}}"
-                                                data-placement="right"
-                                                class="showButton btn btn-outline-info btn-sm"
-                                                onclick="" ><i class="la la-magic" ></i></a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            @php
-                            $send = array();
-                        @endphp
-                       @endforeach
                     </tbody>
                 </table>
             </div>
@@ -78,15 +48,69 @@
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
-            $('#Example1').DataTable({
-                // dom: 'Bfrtip',
-                // buttons: [],
-                // paging: true,
-                searching: true,
-                "bDestroy": true,
-                "pageLength": 10,
-                // "order": [[ ]]
+
+            $("#Example11").dataTable({
+                processing: true,
+                serverSide: true,
+                autoWidth: false,
+                pageLength: 10,
+                ajax: {
+                    url: '{{ route('target-wise-notification-report.report') }}',
+                    type: 'GET',
+                },
+                columns: [
+                    {
+                        name: 'sl',
+                        width: '30px',
+                        render: function () {
+                            return null;
+                        }
+                    },
+
+                    {
+                        name: 'titel',
+                        render: function (data, type, row) {
+                            return row.titel;
+                        }
+                    },
+                    {
+                        name: 'body',
+                        render: function (data, type, row) {
+                            return row.body;
+                        }
+                    },
+                    {
+                        name: 'device_type',
+                        render: function (data, type, row) {
+                            return `<i class="la la-android" style="color: blue !important"></i> &nbsp;`+ row.device_type;
+                        }
+                    },
+                    {
+                        name: 'starts_at',
+                        render: function (data, type, row) {
+                            return row.starts_at;
+                        }
+                    },{
+                        name: 'sends',
+                        render: function (data, type, row) {
+                            return row.sends;
+                        }
+                    },
+                    {
+                        name: 'action',
+                        render: function (data, type, row) {
+                            let viewUrl="{{url('target-wise-notification-report-details')}}/"+row.titel;
+                           return  `<a  role="button" data-id="" href="`+viewUrl+`" data-placement="right" class="showButton btn btn-outline-info btn-sm"
+                                                onclick="" ><i class="la la-magic" ></i></a>`;
+                        }
+                    }
+                ],
+                "fnCreatedRow": function (row, data, index) {
+                    $('td', row).eq(0).html(index + 1);
+                }
+
             });
+
         });
 
     </script>

@@ -186,10 +186,18 @@ class NotificationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getTargetWiseNotificationReport(Request $request){
-        $notifications = $this->notificationService->getNotificationListReport();
-        return view('admin.notification.target-wise-notification.list')
-        ->with('notifications', $notifications);
+
+
+        if ($request->has('draw')){
+            return $this->notificationService->getNotificationListReport($request);
+        }
+
+        if ($request->isMethod('get')) {
+            return view('admin.notification.target-wise-notification.list');
+        }
     }
+
+
 
     /**
      * Display a listing of the resource.

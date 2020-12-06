@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\Http\Requests\NotificationRequest;
 use App\Traits\FileTrait;
 use Illuminate\Support\Facades\File;
+use App\Models\NotificationDraft;
 use App\Models\MyBlProduct;
 
 class NotificationService
@@ -168,11 +169,49 @@ class NotificationService
      * Notification Report
      *
      * @return mixed
+     * Ahsan Habib
      */
-    public function getNotificationListReport()
+    public function getNotificationListReport($request)
     {
-        $orderBy = ['column' => "id", 'direction' => 'desc'];
-        return $result=$this->notificationDraftRepository->findAll('', '', $orderBy);
+        $draw = $request->get('draw');
+        $start = $request->get('start');
+        $length =$request->get('length');
+
+        $builder = new NotificationDraft();
+        $builder->orderBy('id', 'desc');
+
+        if($request->has('search') && !empty($request->get('search'))){
+            $input=$request->get('search');
+
+            if(!empty($input['value'])){
+                $titel=$input['value'];
+                $all_items_count = $builder->where('notification_drafts.title','LIKE', "%{$titel}%")->count();
+                $items = $builder->where('notification_drafts.title','LIKE', "%{$titel}%")->skip($start)->take($length)->get();
+            }else{
+
+                $all_items_count = $builder->count();
+                $items = $builder->skip($start)->take($length)->get();
+            }
+        }
+        $response = [
+            'draw' => $draw,
+            'recordsTotal' => $all_items_count,
+            'recordsFiltered' => $all_items_count,
+            'data' => []
+        ];
+        $items->each(function ($item) use (&$response) {
+            $starts_at=(!empty($item->starts_at))?date('d-M-Y h:i a', strtotime($item->starts_at)):'';
+            $countSend=$item->getNotification->count().' > '.$item->getNotificationSuccessfullySend->count();
+            $device_type=(!empty($item->device_type))?$item->device_type:'All';
+            $response['data'][] = [
+                'titel' => $item->title,
+                'body' => $item->body,
+                'device_type' => ucwords($device_type),
+                'starts_at' => $starts_at,
+                'sends' => $countSend,
+            ];
+        });
+        return $response;
     }
 
     /**
@@ -184,6 +223,7 @@ class NotificationService
     {
         return $this->notificationRepository->getNotificationTargetReport($title);
     }
+
 
     /**
      * @param string|null $category_id
