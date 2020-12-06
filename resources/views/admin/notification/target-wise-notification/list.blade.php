@@ -48,6 +48,7 @@
     <script src="{{asset('app-assets')}}/js/scripts/tables/datatables/datatable-advanced.js" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
+
             $("#Example11").dataTable({
                 processing: true,
                 serverSide: true,
@@ -82,7 +83,6 @@
                         name: 'device_type',
                         render: function (data, type, row) {
                             return `<i class="la la-android" style="color: blue !important"></i> &nbsp;`+ row.device_type;
-                            // return row.device_type;
                         }
                     },
                     {
@@ -99,7 +99,9 @@
                     {
                         name: 'action',
                         render: function (data, type, row) {
-                            return row.body;
+                            let viewUrl="{{url('target-wise-notification-report-details')}}/"+row.titel;
+                           return  `<a  role="button" data-id="" href="`+viewUrl+`" data-placement="right" class="showButton btn btn-outline-info btn-sm"
+                                                onclick="" ><i class="la la-magic" ></i></a>`;
                         }
                     }
                 ],
