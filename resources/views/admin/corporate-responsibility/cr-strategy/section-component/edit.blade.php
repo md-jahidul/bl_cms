@@ -61,7 +61,7 @@
                                 <div class="form-group col-md-6 {{ $errors->has('thumbnail_image') ? ' error' : '' }}">
                                     <label for="thumbnail_image">Thumbnail Image</label>
                                     <input type="file" name="other_attributes[thumbnail_image]" class="form-control dropify" data-height="90" placeholder="DD-MM-YYYY"
-                                          data-default-file="{{ config('filesystems.file_base_url') . $component->other_attributes['thumbnail_image'] }}"
+                                          data-default-file="{{ isset($component->other_attributes['thumbnail_image']) ? config('filesystems.file_base_url') . $component->other_attributes['thumbnail_image'] : '' }}"
                                            value="{{ old("thumbnail_image") ? old("thumbnail_image") : '' }}">
                                     <div class="help-block"></div>
                                     @if ($errors->has('thumbnail_image'))
