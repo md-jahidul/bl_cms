@@ -131,6 +131,7 @@ class MyblProductEntryController extends Controller
      * @param UpdateMyblProductRequest $request
      * @param $product_code
      * @return RedirectResponse
+     * @throws \Exception
      */
     public function updateMyblProducts(UpdateMyblProductRequest $request, $product_code)
     {

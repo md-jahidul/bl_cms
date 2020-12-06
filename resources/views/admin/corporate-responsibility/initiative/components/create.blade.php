@@ -470,7 +470,6 @@
 
             $(document).on('click', '.remove-image', function (event) {
                 var rowId = $(event.target).attr('data-id');
-                alert(rowId)
                 $('.'+rowId).remove();
             });
         })

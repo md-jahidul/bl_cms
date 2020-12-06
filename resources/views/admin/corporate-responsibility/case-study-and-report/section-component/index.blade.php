@@ -6,7 +6,7 @@
     <li class="breadcrumb-item ">Component List</li>
 @endsection
 @section('action')
-    @if($count == 0)
+    @if($section->section_type == "top_image_button_text" || $count == 0)
         <a href="{{ route("case-study-component.create", $section->id) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
             Add New
         </a>
@@ -35,7 +35,7 @@
                                     <td width="3%">{{ $loop->iteration }}</td>
                                     <td>{{ $data->title_en }} {!! $data->status == 0 ? '<span class="danger pl-1"><strong> ( Inactive )</strong></span>' : '' !!}</td>
                                     <td><img src="{{ isset($data->other_attributes['thumbnail_image']) ? config('filesystems.file_base_url') . $data->other_attributes['thumbnail_image'] : '' }}" height="100" width="270"></td>
-                                    <td>{{ $data->details_en }}</td>
+                                    <td>{!! $data->details_en !!}</td>
                                     <td>
                                         <a href="{{ route("case-study-details.index", $data->id) }}" role="button" class="btn btn-warning">Details</a>
                                     </td>

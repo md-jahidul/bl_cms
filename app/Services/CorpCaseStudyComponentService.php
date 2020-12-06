@@ -10,6 +10,7 @@
 namespace App\Services;
 
 use App\Repositories\CorpCaseStudyComponentRepository;
+use App\Repositories\CorporateCaseStudySectionRepository;
 use App\Traits\CrudTrait;
 use App\Traits\FileTrait;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -24,14 +25,22 @@ class CorpCaseStudyComponentService
      * @var CorpCaseStudyComponentRepository
      */
     private $corpCaseStudyComponentRepo;
+    /**
+     * @var CorporateCaseStudySectionRepository
+     */
+    private $caseStudySectionRepository;
 
     /**
      * DigitalServicesService constructor.
      * @param CorpCaseStudyComponentRepository $corpCaseStudyComponentRepository
+     * @param CorporateCaseStudySectionRepository $caseStudySectionRepository
      */
-    public function __construct(CorpCaseStudyComponentRepository $corpCaseStudyComponentRepository)
-    {
+    public function __construct(
+        CorpCaseStudyComponentRepository $corpCaseStudyComponentRepository,
+        CorporateCaseStudySectionRepository $caseStudySectionRepository
+    ) {
         $this->corpCaseStudyComponentRepo = $corpCaseStudyComponentRepository;
+        $this->caseStudySectionRepository = $caseStudySectionRepository;
         $this->setActionRepository($corpCaseStudyComponentRepository);
     }
 
@@ -51,7 +60,10 @@ class CorpCaseStudyComponentService
     {
         $components = $this->getSectionWiseComponent($sectionId);
 
-        if (count($components) != 0) {
+        $section = $this->caseStudySectionRepository->findOne($sectionId);
+
+
+        if ($section->section_type !== "top_image_button_text" && count($components) != 0) {
             return new Response("Component already exists. This is a single component section");
         }
 
