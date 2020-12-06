@@ -90,12 +90,51 @@
                             </div>
 
                             <div class="col-md-3 col-xs-12">
-                                <label>Banner Photo Name<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
+                                <label>Banner Name Web EN<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control banner_name slug-convert" required name="banner_name" placeholder="Enter Web English Name">
                                 <small class="text-info">
                                     <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
                                     <strong>Note: </strong> Don't need MIME type like jpg,png
                                 </small>
+                                @if($errors->has('banner_name'))
+                                    <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-3 col-xs-12">
+                                <label>Banner Name Web BN<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control banner_name_web_bn slug-convert" required name="banner_name_web_bn" placeholder="Enter Web Bengali Name">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
+                                    <strong>Note: </strong> Don't need MIME type like jpg,png
+                                </small>
+                                @if($errors->has('banner_name_web_bn'))
+                                    <div class="help-block text-danger">{{ $errors->first('banner_name_web_bn') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-3 col-xs-12">
+                                <label>Banner Name Mobile EN<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control banner_name_mobile_en slug-convert" required name="banner_name_mobile_en" placeholder="Enter Mobile English Name">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
+                                    <strong>Note: </strong> Don't need MIME type like jpg,png
+                                </small>
+                                @if($errors->has('banner_name_mobile_en'))
+                                    <div class="help-block text-danger">{{ $errors->first('banner_name_mobile_en') }}</div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-3 col-xs-12">
+                                <label>Banner Name Mobile BN<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control banner_name_mobile_bn slug-convert" required name="banner_name_mobile_bn" placeholder="Enter Mobile Bengali Name">
+                                <small class="text-info">
+                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
+                                    <strong>Note: </strong> Don't need MIME type like jpg,png
+                                </small>
+                                @if($errors->has('banner_name_mobile_bn'))
+                                    <div class="help-block text-danger">{{ $errors->first('banner_name_mobile_bn') }}</div>
+                                @endif
                             </div>
 
                         </div>
@@ -123,17 +162,11 @@
                                 <input type="text" class="form-control alt_text" name="alt_text" placeholder="Alt Text">
                             </div>
 
-
                             <div class="col-md-3 col-xs-12">
-                                <label class="display-block">&nbsp;</label>
-
-                                <label class="mr-1">
-                                    <input type="radio" name="status" value="1" class="status_active"> Active
-                                </label>
-
-
-                                <label><input type="radio" name="status" value="0" class="status_inactive"> Inactive</label>
+                                <label>Alt Text BN</label>
+                                <input type="text" class="form-control alt_text_bn" name="alt_text_bn" placeholder="Alt Text BN">
                             </div>
+
 
                         </div>
 
@@ -160,6 +193,15 @@
                                 <small class="text-info">
                                     <strong>Note: </strong> JSON-LD (Recommended by Google)
                                 </small>
+                            </div>
+                            <div class="col-md-3 col-xs-12">
+                                <label class="display-block">&nbsp;</label>
+
+                                <label class="mr-1">
+                                    <input type="radio" name="status" value="1" class="status_active"> Active
+                                </label>
+
+                                <label><input type="radio" name="status" value="0" class="status_inactive"> Inactive</label>
                             </div>
                         </div>
 
@@ -243,11 +285,15 @@
                     $('.name_en').val(result.name_en);
                     $('.name_bn').val(result.name_bn);
                     $('.alt_text').val(result.alt_text);
+                    $('.alt_text_bn').val(result.alt_text_bn);
                     $('.old_web').val(result.banner_web);
                     $('.old_mobile').val(result.banner_mobile);
                     $('.page_url').val(result.url_slug);
                     $('.page_url_bn').val(result.url_slug_bn);
                     $('.banner_name').val(result.banner_name);
+                    $('.banner_name_web_bn').val(result.banner_name_web_bn);
+                    $('.banner_name_mobile_en').val(result.banner_name_mobile_en);
+                    $('.banner_name_mobile_bn').val(result.banner_name_mobile_bn);
                     $('.html_header').val(result.page_header);
                     $('.page_header_bn').val(result.page_header_bn);
                     $('.schema_markup').val(result.schema_markup);

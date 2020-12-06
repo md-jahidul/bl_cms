@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AssetLite;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OfferCategoryRequest;
 use App\Models\OfferCategory;
 use App\Models\SimCategory;
 use Illuminate\Contracts\View\Factory;
@@ -123,23 +124,8 @@ class OfferCategoryController extends Controller
      * @param \App\Models\OfferCategory $offerCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(OfferCategoryRequest $request, $id)
     {
-        //$offer = OfferCategory::findOrFail($id);
-
-        $image_upload_size = ConfigController::adminImageUploadSize();
-        $image_upload_type = ConfigController::adminImageUploadType();
-
-        # Check Image upload validation
-        $validator = Validator::make($request->all(), [
-            'banner_name' => !empty($request->banner_name) ? 'regex:/^\S*$/u' : '',
-            'url_slug' => 'required|regex:/^\S*$/u|unique:offer_categories,url_slug,' . $id,
-            'banner_image_url' => 'mimes:' . $image_upload_type . '|max:' . $image_upload_size // 2M
-        ]);
-        if ($validator->fails()) {
-            Session::flash('error', $validator->messages()->first());
-            return redirect('offer-categories');
-        }
         $response = $this->offerCategoryService->updateOfferCategory($request->all(), $id);
 
         if ($response['success'] == 1) {

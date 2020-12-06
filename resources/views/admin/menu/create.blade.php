@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-4 {{ $errors->has('url') ? ' error' : '' }} d-none" id="externalLink">
+                                <div class="form-group col-md-10 {{ $errors->has('url') ? ' error' : '' }} d-none" id="externalLink">
                                     <label for="url" class="required">External URL</label>
                                     <input type="text" name="url" class="form-control slug-convert" placeholder="Enter URL"
                                            value="{{ old("url") ? old("url") : '' }}">
@@ -114,16 +114,33 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/plugins/forms/validation/form-validation.css') }}">
 @endpush
 @push('page-js')
+{{--    <script>--}}
+{{--        $(function () {--}}
+{{--            var externalLink = $('#externalLink');--}}
+{{--            $('#external_link').click(function () {--}}
+{{--                if($(this).prop("checked") == true){--}}
+{{--                    externalLink.removeClass('d-none');--}}
+{{--                }else{--}}
+{{--                    externalLink.addClass('d-none')--}}
+{{--                }--}}
+{{--            })--}}
+{{--        })--}}
+{{--    </script>--}}
     <script>
         $(function () {
             var externalLink = $('#externalLink');
+            var pageDynamic = $('#pageDynamic');
+
             $('#external_link').click(function () {
                 if($(this).prop("checked") == true){
                     externalLink.removeClass('d-none');
+                    pageDynamic.addClass('d-none');
                 }else{
+                    pageDynamic.removeClass('d-none')
                     externalLink.addClass('d-none')
                 }
             })
+
         })
     </script>
 @endpush

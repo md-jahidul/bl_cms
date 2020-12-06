@@ -75,7 +75,6 @@ class OfferCategoryService
     public function updateOfferCategory($data, $id)
     {
         try {
-
             $status = true;
             $update = [];
 
@@ -87,8 +86,11 @@ class OfferCategoryService
             $update['page_header'] = $data['page_header'];
             $update['page_header_bn'] = $data['page_header_bn'];
             $update['banner_name'] = $data['banner_name'];
+            $update['banner_name_web_bn'] = $data['banner_name_web_bn'];
+            $update['banner_name_mobile_en'] = $data['banner_name_mobile_en'];
+            $update['banner_name_mobile_bn'] = $data['banner_name_mobile_bn'];
             $update['banner_alt_text'] = $data['banner_alt_text'];
-            $update['other_attributes'] = $data['other_attributes'];
+            $update['banner_alt_text_bn'] = $data['banner_alt_text_bn'];
             $update['updated_by'] = Auth::id();
 
             $offerCategory = $this->findOne($id);
@@ -139,11 +141,9 @@ class OfferCategoryService
                 $data['alias'] = str_replace(" ", "_", strtolower($data['name']));
             }
 
-//            dd($update);
-
             if ($status != false) {
 
-                $category = $this->offerCategoryRepository->saveCategory($update, $id);
+                $this->offerCategoryRepository->saveCategory($update, $id);
                 $this->_updateSearchCategorySlug($id);
 
                 $response = [
