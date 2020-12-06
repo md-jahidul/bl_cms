@@ -6,7 +6,7 @@
     <li class="breadcrumb-item ">Component List</li>
 @endsection
 @section('action')
-    @if($count == 0)
+    @if($section->section_type == "top_image_button_text" || $count == 0)
         <a href="{{ route("case-study-component.create", $section->id) }}" class="btn btn-primary  round btn-glow px-2"><i class="la la-plus"></i>
             Add New
         </a>
