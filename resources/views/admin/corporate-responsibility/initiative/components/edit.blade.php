@@ -124,6 +124,7 @@
                                                 @endif
                                             @endif
                                         @endforeach
+                                        <slot id="multiple_items"></slot>
                                     @endif
 
                                     {{--Batch Component--}}
@@ -385,6 +386,8 @@
                     '   <button type="button" class="btn-sm btn-danger remove-image mt-2" data-id="option-'+total_option+'" ><i data-id="option-'+total_option+'" class="la la-trash"></i></button>\n' +
                     '</div>';
 
+
+
                 if (
                     componentVal == "icon_box" || componentVal == "winners" ||
                     componentVal == "news_event" || componentVal == "mentors_component"
@@ -395,6 +398,9 @@
                     input += multipleTitle;
                 }
 
+                console.log(input)
+
+                // $("#"+componentVal).append(input);
                 $("#multiple_items").append(input);
                 dropify();
                 summerNoteEditor();
