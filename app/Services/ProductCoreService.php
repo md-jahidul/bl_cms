@@ -20,6 +20,7 @@ use Box\Spout\Reader\Common\Creator\ReaderFactory;
 use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Box\Spout\Writer\Common\Creator\WriterFactory;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -56,9 +57,9 @@ class ProductCoreService
 
     /**
      * ProductCoreService constructor.
-     * @param  ProductCoreRepository  $productCoreRepository
-     * @param  SearchDataRepository  $searchRepository
-     * @param  TagCategoryRepository  $tagRepository
+     * @param ProductCoreRepository $productCoreRepository
+     * @param SearchDataRepository $searchRepository
+     * @param TagCategoryRepository $tagRepository
      * @param ProductDeepLinkRepository $productDeepLinkRepository
      */
     public function __construct(
@@ -131,8 +132,10 @@ class ProductCoreService
         if (empty($productCode)) {
             $data['name'] = $data['name_en'];
             $data['product_code'] = str_replace(' ', '', strtoupper($data['product_code']));
-            $data['recharge_product_code'] = isset($data['recharge_product_code']) ? str_replace(' ', '', strtoupper($data['recharge_product_code'])) : null;
-            $data['renew_product_code'] = isset($data['renew_product_code']) ? str_replace(' ', '', strtoupper($data['renew_product_code'])) : null;
+            $data['recharge_product_code'] = isset($data['recharge_product_code']) ? str_replace(' ', '',
+                strtoupper($data['recharge_product_code'])) : null;
+            $data['renew_product_code'] = isset($data['renew_product_code']) ? str_replace(' ', '',
+                strtoupper($data['renew_product_code'])) : null;
             $data['commercial_name_en'] = $data['name_en'];
             $data['commercial_name_bn'] = $data['name_bn'];
             $data['content_type'] = $this->getType($data['offer_category_id']);
@@ -160,8 +163,10 @@ class ProductCoreService
         if (!$product) {
             $data['name'] = $data['name_en'];
             $data['product_code'] = strtoupper($id);
-            $data['recharge_product_code'] = isset($data['recharge_product_code']) ? str_replace(' ', '', strtoupper($data['recharge_product_code'])) : null;
-            $data['renew_product_code'] = isset($data['renew_product_code']) ? str_replace(' ', '', strtoupper($data['renew_product_code'])) : null;
+            $data['recharge_product_code'] = isset($data['recharge_product_code']) ? str_replace(' ', '',
+                strtoupper($data['recharge_product_code'])) : null;
+            $data['renew_product_code'] = isset($data['renew_product_code']) ? str_replace(' ', '',
+                strtoupper($data['renew_product_code'])) : null;
             $data['commercial_name_en'] = $data['name_en'];
             $data['commercial_name_bn'] = $data['name_bn'];
             $data['content_type'] = $this->getType($data['offer_category_id']);
@@ -211,6 +216,7 @@ class ProductCoreService
                                     $core_data [$field] = $sim_type;
                                     break;
                                 case 'status':
+                                case 'is_visible':
                                 case "is_rate_cutter_offer":
                                 case "show_recharge_offer":
                                     $type = strtolower($cells [$index]->getValue());
@@ -278,6 +284,17 @@ class ProductCoreService
                                     $mybl_data[$field] = $tag;
                                     break;
 
+                                case "show_from":
+                                case "hide_from":
+                                    if (!empty($cells[$index]->getValue())) {
+                                        $time = Carbon::createFromFormat('d-m-Y h:i A',
+                                            $cells[$index]->getValue())->format('Y-m-d H:i:s');
+                                    } else {
+                                        $time = null;
+                                    }
+                                    $mybl_data[$field] = $time;
+                                    break;
+
                                 default:
                                     $core_data [$field] = ($cells [$index]->getValue() != '') ?
                                         $cells [$index]->getValue() : null;
@@ -306,7 +323,8 @@ class ProductCoreService
                                 'product_code' => $product_code
                             ], $mybl_data);
                         } catch (Exception $e) {
-                            dd($e->getMessage());
+                            Log::info('Error:' . $e->getMessage());
+                            //dd($e->getMessage());
                             continue;
                         }
                     }
@@ -323,7 +341,7 @@ class ProductCoreService
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      * @return array
      */
     public function getMyblProducts(Request $request)
@@ -384,6 +402,8 @@ class ProductCoreService
         ];
 
         $items->each(function ($item) use (&$response) {
+            $activeSchedule = $item->scheduleStatus() ? config('productMapping.mybl.product_schedule_statuses.'
+                . $item->scheduleStatus()) : 'Shown';
             $link=$this->productDeepLinkRepository->findOneProductLink($item->product_code);
             $response['data'][] = [
                 'product_code' => $item->product_code,
@@ -398,7 +418,9 @@ class ProductCoreService
                 'show_in_home' => ($item->show_in_home) ? 'Yes' : 'No',
                 'media' => ($item->media) ? 'Yes' : 'No',
                 'status' => $item->details->status,
-                'is_visible' => $item->is_visible ? 'Shown' : 'Hidden',
+                'is_visible' => $item->is_visible ? $activeSchedule : 'Hidden',
+                'show_from' => $item->show_from ? Carbon::parse($item->show_from)->format('d-m-Y h:i A') : '',
+                'hide_from' => $item->hide_from ? Carbon::parse($item->hide_from)->format('d-m-Y h:i A') : '',
                 'deep_link'=>!empty($link->deep_link)?$link->deep_link:null
             ];
         });
@@ -618,7 +640,7 @@ class ProductCoreService
 
                             AlCoreProduct::updateOrCreate([
                                 'product_code' => $product_code
-                                    ], $core_data);
+                            ], $core_data);
 
 
                             if ($assetLiteProduct['offer_category_id']) {
@@ -626,12 +648,12 @@ class ProductCoreService
                                 $assetLiteProduct['url_slug'] = "";
                                 if (!empty($assetLiteProduct['name_en'])) {
                                     $urlSlug = str_replace(" ", "-", $assetLiteProduct['name_en']);
-                                    $assetLiteProduct['url_slug']  = $urlSlug;
+                                    $assetLiteProduct['url_slug'] = $urlSlug;
                                 }
 
                                 $product = Product::updateOrCreate([
-                                            'product_code' => $product_code
-                                                ], $assetLiteProduct);
+                                    'product_code' => $product_code
+                                ], $assetLiteProduct);
 
                                 $this->_saveSearchData($product);
 
@@ -657,7 +679,7 @@ class ProductCoreService
         }
     }
 
-     //save Search Data
+    //save Search Data
     private function _saveSearchData($product)
     {
         $productId = $product->id;
@@ -708,7 +730,6 @@ class ProductCoreService
     }
 
 
-
     /**
      *  Product search by Code
      *
@@ -734,7 +755,7 @@ class ProductCoreService
     /**
      * Update my-bl products
      *
-     * @param  Request  $request
+     * @param Request $request
      * @param $product_code
      * @return RedirectResponse
      * @throws Exception
@@ -762,6 +783,8 @@ class ProductCoreService
         $data['tag'] = $request->tag;
         $data['show_in_home'] = isset($request->show_in_app) ? true : false;
         $data['is_rate_cutter_offer'] = isset($request->is_rate_cutter_offer) ? true : false;
+        $data['show_from'] = $request->show_from ? Carbon::parse($request->show_from)->format('Y-m-d H:i:s') : null;
+        $data['hide_from'] = $request->hide_from ? Carbon::parse($request->hide_from)->format('Y-m-d H:i:s') : null;
         $data['is_visible'] = $request->is_visible;
 
         try {
@@ -781,6 +804,8 @@ class ProductCoreService
             unset($data_request['is_rate_cutter_offer']);
             unset($data_request['offer_section_slug']);
             unset($data_request['offer_section_title']);
+            unset($data_request['show_from']);
+            unset($data_request['hide_from']);
             unset($data_request['is_visible']);
 
             if (isset($data_request['data_volume'])) {
@@ -870,7 +895,7 @@ class ProductCoreService
             return str_replace('_', ' ', ucwords($val));
         }, array_keys($header));
 
-       // array_pop($headers);
+        // array_pop($headers);
 
 
         $row = WriterEntityFactory::createRowFromArray(array_values($headers), $header_style);
@@ -906,7 +931,10 @@ class ProductCoreService
                 $insert_data[23] = $product->tag;
                 $insert_data[24] = $product->details->call_rate;
                 $insert_data[25] = $product->details->call_rate_unit;
-                $insert_data[26] = ($product->status) ? 'Yes' : 'No';
+                $insert_data[26] = ($product->is_visible) ? 'Yes' : 'No';
+                $insert_data[27] = is_null($product->show_from) ? '' : Carbon::parse($product->show_from)->format('d-m-Y h:i A');
+                $insert_data[28] = is_null($product->hide_from) ? '' : Carbon::parse($product->hide_from)->format('d-m-Y h:i A');
+                $insert_data[29] = ($product->status) ? 'Yes' : 'No';
 
                 $row = WriterEntityFactory::createRowFromArray($insert_data, $data_style);
 
