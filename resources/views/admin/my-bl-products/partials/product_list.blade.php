@@ -37,19 +37,20 @@
     </div>
 </div>
 <div class="col-md-12 mt-3">
-
     <table class="table table-striped table-bordered dataTable"
            id="product_list" role="grid">
         <thead>
         <tr>
             <th>Sl.</th>
             <th>Product Code</th>
-            <th>Renew Product Code</th>
-            <th>Recharge Product Code</th>
+            <th>Renew Prod. Code</th>
+            <th>Recharge Prod. Code</th>
             <th>Description</th>
             <th>Show in Home</th>
             <th>Visibility</th>
-            <th>Attached Image</th>
+            <th>Show From</th>
+            <th>Hide From</th>
+            <th>Has Image</th>
             <th>Deep Link</th>
             <th class="filter_data">Actions</th>
         </tr>
@@ -105,7 +106,8 @@
                     {
                         name: 'product_code',
                         render: function (data, type, row) {
-                            return row.product_code;
+                            let detail_question_url = "{{ URL('mybl/products/') }}" + "/" + row.product_code;
+                            return '<a href="' + detail_question_url + '">' + row.product_code + '</a>';
                         }
                     },
 
@@ -122,6 +124,7 @@
                             return row.recharge_product_code;
                         }
                     },
+
                     {
                         name: 'description',
                         render: function (data, type, row) {
@@ -138,7 +141,40 @@
                     {
                         name: 'is_visible',
                         render: function (data, type, row) {
-                            return   row.is_visible == 'Shown' ? "<span class='badge badge-success'>Shown</span>" : "<span class='badge badge-warning'>Hidden</span>";
+                            let visibility = '';
+                            switch (row.is_visible) {
+                                case 'Shown':
+                                case 'Active Schedule':
+                                case 'To be Hidden':
+                                    visibility = "<span class='badge badge-success'>" + row.is_visible + "</span>";
+                                    break;
+
+                                case 'Completed Schedule':
+                                case 'Hidden':
+                                    visibility = "<span class='badge badge-danger'>" + row.is_visible + "</span>";
+                                    break;
+
+                                case 'To be Shown':
+                                    visibility = "<span class='badge badge-warning'>" + row.is_visible + "</span>";
+                                    break;
+
+                                default:
+                                    visibility = "<span class='badge badge-info'>" + row.is_visible + "</span>";
+                                    break;
+                            }
+                            return visibility;
+                        }
+                    },
+                    {
+                        name: 'show_from',
+                        render: function (data, type, row) {
+                            return   row.show_from;
+                        }
+                    },
+                    {
+                        name: 'hide_from',
+                        render: function (data, type, row) {
+                            return   row.hide_from;
                         }
                     },
                     {
