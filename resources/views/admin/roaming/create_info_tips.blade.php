@@ -26,11 +26,17 @@
                                 <div class="col-md-3 col-xs-12">
                                   <label> Name (EN) <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" required name="name_en" placeholder="Name EN">
+                                    @if($errors->has('name_en'))
+                                        <div class="help-block text-danger">{{ $errors->first('name_en') }}</div>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-3 col-xs-12">
                                     <label>Name (BN) <span class="text-danger">*</span></label>
                                     <input type="text"  class="form-control" required name="name_bn" placeholder="Name BN">
+                                    @if($errors->has('name_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('name_bn') }}</div>
+                                    @endif
                                 </div>
                                 <div class="col-md-3 col-xs-12">
                                     <label> Card Text (EN) <span class="text-danger">*</span></label>
@@ -38,6 +44,9 @@
                                     <small class="text-info">
                                         <strong>Note:</strong> It'll show in card list (in accordion list)
                                     </small>
+                                    @if($errors->has('card_text_en'))
+                                        <div class="help-block text-danger">{{ $errors->first('card_text_en') }}</div>
+                                    @endif
                                 </div>
                                 <div class="col-md-3 col-xs-12">
                                     <label>Card Text (BN) <span class="text-danger">*</span></label>
@@ -45,6 +54,9 @@
                                     <small class="text-info">
                                         <strong>Note:</strong> It'll show in card list (in accordion list)
                                     </small>
+                                    @if($errors->has('card_text_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('card_text_bn') }}</div>
+                                    @endif
                                 </div>
 
                             </div>
@@ -106,17 +118,65 @@
                                     </small>
                                 </div>
 
-                                <div class="col-md-6 col-xs-12">
-                                    <label>Banner Photo Name<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control banner_name" required name="banner_name" placeholder="Photo Name">
+                                <div class="col-md-6 col-xs-12 mb-1">
+                                    <label>Banner Web Name EN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control banner_name" required name="banner_name"
+                                           placeholder="Banner Mobile Name BN">
                                     <small class="text-info">
                                         <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
                                         <strong>Note: </strong> Don't need MIME type like jpg,png
                                     </small>
+                                    @if($errors->has('banner_name'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name') }}</div>
+                                    @endif
                                 </div>
-                                <div class="col-md-6 col-xs-12">
-                                    <label> Alt Text</label>
-                                    <input type="text" class="form-control"  name="alt_text" placeholder="Alt Text">
+
+                                <div class="col-md-6 col-xs-12 mb-1">
+                                    <label>Banner Web Name BN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control banner_name" required name="banner_name_web_bn"
+                                           placeholder="Banner Web Name BN">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> রোমিং-সম্পর্কে (no spaces)<br>
+                                        <strong>Note: </strong> Don't need MIME type like jpg,png
+                                    </small>
+                                    @if($errors->has('banner_name_web_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_web_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6 col-xs-12 mb-1">
+                                    <label>Banner Mobile Name EN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control banner_name" required name="banner_name_mobile_en"
+                                           placeholder="Banner Mobile Name BN">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> about-roaming-banner (no spaces)<br>
+                                        <strong>Note: </strong> Don't need MIME type like jpg,png
+                                    </small>
+                                    @if($errors->has('banner_name_mobile_en'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_mobile_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6 col-xs-12 mb-1">
+                                    <label>Banner Mobile Name BN<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control banner_name" required name="banner_name_mobile_bn"
+                                           placeholder="Banner Mobile Name EN">
+                                    <small class="text-info">
+                                        <strong>i.e:</strong> রোমিং-সম্পর্কে (no spaces)<br>
+                                        <strong>Note: </strong> Don't need MIME type like jpg,png
+                                    </small>
+                                    @if($errors->has('banner_name_mobile_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('banner_name_mobile_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-6 col-xs-12 mb-1">
+                                    <label> Alt Text EN</label>
+                                    <input type="text" class="form-control" name="alt_text" placeholder="Alt Text">
+                                </div>
+                                <div class="col-md-6 col-xs-12 mb-1">
+                                    <label> Alt Text BN</label>
+                                    <input type="text" class="form-control" name="alt_text_bn" placeholder="Alt Text BN">
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <label> URL EN<span class="text-danger">*</span></label>
@@ -124,6 +184,9 @@
                                     <small class="text-info">
                                         <strong>i.e:</strong> Buy-tickets-on-discount (no spaces and slash)<br>
                                     </small>
+                                    @if($errors->has('url_slug'))
+                                        <div class="help-block text-danger">{{ $errors->first('url_slug') }}</div>
+                                    @endif
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <label> URL BN<span class="text-danger">*</span></label>
@@ -131,6 +194,9 @@
                                     <small class="text-info">
                                         <strong>i.e:</strong> বাংলালিংক-প্রিপেইড-রোমিং (no spaces and slash)<br>
                                     </small>
+                                    @if($errors->has('url_slug_bn'))
+                                        <div class="help-block text-danger">{{ $errors->first('url_slug_bn') }}</div>
+                                    @endif
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <label class="mr-1">
