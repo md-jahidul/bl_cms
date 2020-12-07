@@ -49,10 +49,32 @@
     @endif
 </div>
 
+{{--{{ dd($multipleItem) }}--}}
+
+{{--@php--}}
+{{--if(isset($multipleItem['faq_key'])) {--}}
+{{--        function checkFAQCat() use ($multipleItem['faq_key']){--}}
+{{--        $faqKey = $multipleItem['faq_key'];--}}
+{{--        if ($faqKey == "cr_digigeek_meetup"){--}}
+{{--            return true;--}}
+{{--        }elseif ($faqKey == "cr_it_incubator"){--}}
+{{--            return true;--}}
+{{--        }elseif ($faqKey == "cr_national_hackathon"){--}}
+{{--            return true;--}}
+{{--        }--}}
+{{--        return false;--}}
+{{--    }--}}
+{{--}--}}
+{{--@endphp--}}
+
 <div class="form-group col-md-4 {{ $errors->has('faq_btn_url') ? ' error' : '' }}">
-    <label for="faq_btn_url" >URL</label>
-    <input type="text" name="multiple_attributes[faq_btn_url]"  class="form-control" placeholder="Enter company name bangla"
-           value="{{ isset($multipleItem['faq_btn_url']) ? $multipleItem['faq_btn_url'] : '' }}">
+    <label for="faq_btn_url" >Select FAQ Category</label>
+    <select class="form-control" name="multiple_attributes[faq_key]">
+        <option value="">---Select Type----</option>
+        <option value="cr_digigeek_meetup" {{ isset($multipleItem['faq_key']) && $multipleItem['faq_key'] ==  "cr_digigeek_meetup" ? 'selected' : '' }}>CR Digigeek meetup</option>
+        <option value="cr_it_incubator" {{ isset($multipleItem['faq_key']) && $multipleItem['faq_key'] ==  "cr_it_incubator" ? 'selected' : '' }}>CR IT incubator</option>
+        <option value="cr_national_hackathon" {{ isset($multipleItem['faq_key']) && $multipleItem['faq_key'] ==  "cr_national_hackathon" ? 'selected' : '' }}>CR National Hackathon</option>
+    </select>
     <div class="help-block"></div>
     @if ($errors->has('faq_btn_url'))
         <div class="help-block">  {{ $errors->first('faq_btn_url') }}</div>
