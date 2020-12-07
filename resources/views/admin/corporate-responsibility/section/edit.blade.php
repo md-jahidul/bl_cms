@@ -95,7 +95,7 @@
 
 
 
-                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">
+{{--                            <div class="form-group col-md-4 {{ $errors->has('alt_text') ? ' error' : '' }}">--}}
 {{--                                <label>Banner Photo Name</label>--}}
 {{--                                <input type="hidden" name="old_banner_name" value="{{$section->banner_name}}">--}}
 {{--                                <input type="text" class="form-control" name="banner_name" value="{{$section->banner_name}}" placeholder="Photo Name">--}}
@@ -103,20 +103,20 @@
 {{--                                    <strong>i.e:</strong> about-roaming-banner (no spaces)<br>--}}
 {{--                                    <strong>Note: </strong> Don't need MIME type like jpg,png--}}
 {{--                                </small>--}}
-                                <br>
-                                <br>
+{{--                                <br>--}}
+{{--                                <br>--}}
 {{--                                <label> URL (route slug) <span class="text-danger">*</span></label>--}}
 {{--                                <input type="text" class="form-control" value="{{$section->route_slug}}" required name="route_slug" placeholder="URL">--}}
 {{--                                <small class="text-info">--}}
 {{--                                    <strong>i.e:</strong> Buy-tickets-on-discount (no spaces)<br>--}}
 {{--                                </small>--}}
-                                <br>
-                                <label for="title" class="required mr-1">Status:</label>
-                                <input type="radio" name="status" value="1" id="input-radio-15" @if( $section->status == 1 ) checked @endif>
-                                       <label for="input-radio-15" class="mr-1">Active</label>
-                                <input type="radio" name="status" value="0" id="input-radio-16" @if( $section->status == 0 ) checked @endif>
-                                       <label for="input-radio-16">Inactive</label>
-                            </div>
+{{--                                <br>--}}
+{{--                                <label for="title" class="required mr-1">Status:</label>--}}
+{{--                                <input type="radio" name="status" value="1" id="input-radio-15" @if( $section->status == 1 ) checked @endif>--}}
+{{--                                       <label for="input-radio-15" class="mr-1">Active</label>--}}
+{{--                                <input type="radio" name="status" value="0" id="input-radio-16" @if( $section->status == 0 ) checked @endif>--}}
+{{--                                       <label for="input-radio-16">Inactive</label>--}}
+{{--                            </div>--}}
 
                             <div class="form-actions col-md-12 ">
                                 <div class="pull-right">
