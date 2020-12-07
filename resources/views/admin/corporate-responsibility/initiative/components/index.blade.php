@@ -27,6 +27,7 @@
                         </thead>
                         <tbody id="sortable">
                             @foreach($components as $list)
+{{--                                {{ dd($list->component_order) }}--}}
                                 <tr data-index="{{ $list->id }}" data-position="{{ $list->component_order }}">
                                     <td><i class="icon-cursor-move icons"></i></td>
                                     <td>{{ ucwords(str_replace('_', ' ', $list->component_type)) }} {!! $list->status == 0 ? '<span class="inactive"> ( Inactive )</span>' : '' !!}</td>
@@ -61,7 +62,7 @@
 @push('page-js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
     <script type="text/javascript">
-        var auto_save_url = "{{ url('corporate/cr-strategy-details-sort') }}";
+        var auto_save_url = "{{ url('corporate/initiative-tab-component-sort') }}";
         $(function () {
             $('.dropify').dropify({
                 messages: {
