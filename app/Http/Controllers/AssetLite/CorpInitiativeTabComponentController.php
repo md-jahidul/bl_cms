@@ -64,6 +64,7 @@ class CorpInitiativeTabComponentController extends Controller
 
     public function componentStore(Request $request, $tabId)
     {
+//        dd($request->all());
         $response = $this->initiativeTabComponentService->componentStore($request->all(), $tabId);
         Session::flash('success', $response->content());
         return redirect(route('initiative_component.index', [$tabId]));
