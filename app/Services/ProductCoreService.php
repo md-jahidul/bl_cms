@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\AlCoreProduct;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
-use App\Models\MyBLProductTab;
+use App\Models\MyBlProductTab;
 use App\Models\Product;
 use App\Models\ProductCore;
 use App\Models\ProductCoreHistory;
@@ -311,7 +311,7 @@ class ProductCoreService
                                 'product_code' => $product_code
                             ], $mybl_data);
 
-                            MyBLProductTab::updateOrCreate([
+                            MyBlProductTab::updateOrCreate([
                                 'product_code' => $product_code
                             ], $mybl_data_tab);
 
