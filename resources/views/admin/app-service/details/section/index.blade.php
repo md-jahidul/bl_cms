@@ -157,6 +157,7 @@ function matchRelatedProduct($id, $relatedProductIds)
                                     <label for="mobileImg">Banner Image (Desktop)</label>
                                     <div class="custom-file">
                                         <input type="hidden" name="old_web_img" value="{{ isset($fixedSectionData['image']) ? $fixedSectionData['image'] : '' }}">
+                                        <input type="hidden" name="app_service_product_details_id" value="{{ isset($fixedSectionData['id']) ? $fixedSectionData['id'] : '' }}">
                                         <input type="file" name="image" class="custom-file-input image_with_preview">
                                         <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                     </div>
@@ -206,6 +207,51 @@ function matchRelatedProduct($id, $relatedProductIds)
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
+                                    <label for="banner_name" class="required">Banner Name Web EN</label>
+                                    <input type="hidden" name="old_banner_name" value="{{ isset($fixedSectionData['banner_name']) ? $fixedSectionData['banner_name'] : '' }}">
+                                    <input type="text" name="banner_name" required id="banner_name" class="form-control"
+                                           placeholder="Enter offer name in English"
+                                           value="{{ isset($fixedSectionData['banner_name']) ? $fixedSectionData['banner_name'] : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name'))
+                                        <div class="help-block">{{ $errors->first('banner_name') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name_web_bn') ? ' error' : '' }}">
+                                    <label for="banner_name" class="required">Banner Name Web BN</label>
+                                    <input type="text" name="banner_name_web_bn" required id="banner_name_web_bn" class="form-control"
+                                           placeholder="Enter offer name in English"
+                                           value="{{ isset($fixedSectionData['banner_name_web_bn']) ? $fixedSectionData['banner_name_web_bn'] : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name_web_bn'))
+                                        <div class="help-block">{{ $errors->first('banner_name_web_bn') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name_mobile_en') ? ' error' : '' }}">
+                                    <label class="required">Banner Name Mobile EN</label>
+                                    <input type="text" name="banner_name_mobile_en" required id="banner_name_mobile_en" class="form-control"
+                                           placeholder="Enter offer name in English"
+                                           value="{{ isset($fixedSectionData['banner_name_mobile_en']) ? $fixedSectionData['banner_name_mobile_en'] : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name_mobile_en'))
+                                        <div class="help-block">{{ $errors->first('banner_name_mobile_en') }}</div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-md-6 {{ $errors->has('banner_name_mobile_bn') ? ' error' : '' }}">
+                                    <label class="required">Banner Name Mobile BN</label>
+                                    <input type="text" name="banner_name_mobile_bn" required id="banner_name_mobile_bn" class="form-control"
+                                           placeholder="Enter offer name in English"
+                                           value="{{ isset($fixedSectionData['banner_name_mobile_bn']) ? $fixedSectionData['banner_name_mobile_bn'] : '' }}">
+                                    <div class="help-block"></div>
+                                    @if ($errors->has('banner_name_mobile_bn'))
+                                        <div class="help-block">{{ $errors->first('banner_name_mobile_bn') }}</div>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-md-6 {{ $errors->has('alt_text') ? ' error' : '' }}">
                                     <label for="alt_text">Alt Text</label>
                                     <input type="text" name="alt_text" id="alt_text" class="form-control"
@@ -216,15 +262,13 @@ function matchRelatedProduct($id, $relatedProductIds)
                                     @endif
                                 </div>
 
-                                <div class="form-group col-md-6 {{ $errors->has('banner_name') ? ' error' : '' }}">
-                                    <label for="banner_name">Banner Name</label>
-                                    <input type="hidden" name="old_banner_name" value="{{ isset($fixedSectionData['banner_name']) ? $fixedSectionData['banner_name'] : '' }}">
-                                    <input type="text" name="banner_name" id="banner_name" class="form-control"
-                                           placeholder="Enter offer name in English"
-                                           value="{{ isset($fixedSectionData['banner_name']) ? $fixedSectionData['banner_name'] : '' }}">
+                                <div class="form-group col-md-6 {{ $errors->has('alt_text_bn') ? ' error' : '' }}">
+                                    <label for="alt_text_bn">Alt Text BN</label>
+                                    <input type="text" name="alt_text_bn" id="alt_text_bn" class="form-control"
+                                           placeholder="Enter alt text bn" value="{{ isset($fixedSectionData['alt_text_bn']) ? $fixedSectionData['alt_text_bn'] : '' }}">
                                     <div class="help-block"></div>
-                                    @if ($errors->has('banner_name'))
-                                        <div class="help-block">{{ $errors->first('banner_name') }}</div>
+                                    @if ($errors->has('alt_text_bn'))
+                                        <div class="help-block">{{ $errors->first('alt_text_bn') }}</div>
                                     @endif
                                 </div>
 
