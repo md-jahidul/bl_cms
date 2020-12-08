@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\AlCoreProduct;
 use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
+use App\Models\MyBLProductTab;
 use App\Models\Product;
 use App\Models\ProductCore;
 use App\Models\ProductCoreHistory;
@@ -187,6 +188,8 @@ class ProductCoreService
                 foreach ($sheet->getRowIterator() as $row) {
                     $core_data = [];
                     $mybl_data = [];
+                    $mybl_data_tab = [];
+
                     if ($row_number != 1) {
                         $cells = $row->getCells();
                         foreach ($config as $field => $index) {
@@ -269,6 +272,10 @@ class ProductCoreService
                                     if ($title != '') {
                                         $mybl_data[$field] = $title;
                                         $mybl_data['offer_section_slug'] = str_replace(' ', '_', strtolower($title));
+
+                                        $mybl_data_tab[$field] = $title;
+                                        $mybl_data_tab['offer_section_slug'] = str_replace(' ', '_', strtolower($title));
+
                                     }
                                     break;
                                 case "tag":
@@ -303,6 +310,11 @@ class ProductCoreService
                             MyBlProduct::updateOrCreate([
                                 'product_code' => $product_code
                             ], $mybl_data);
+
+                            MyBLProductTab::updateOrCreate([
+                                'product_code' => $product_code
+                            ], $mybl_data_tab);
+
                         } catch (Exception $e) {
                             dd($e->getMessage());
                             continue;

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MyBLProductTab extends Model
+class MyBlProductTab extends Model
 {
     /**
      * The attributes that aren't mass assignable.
@@ -12,6 +12,4 @@ class MyBLProductTab extends Model
      * @var array
      */
     protected $guarded = ['id'];
-
-    
 }
