@@ -23,17 +23,14 @@ class AppServiceProductRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->method() == "PUT") {
-            $id = $this->route()->parameters();
-            return [
-                'url_slug' => 'required|unique:app_service_products,url_slug,' . $id['app_service_product'],
-                'url_slug_bn' => 'required|unique:app_service_products,url_slug_bn,' . $id['app_service_product']
-            ];
-        } else {
-            return [
-                'url_slug' => 'required|unique:app_service_products,url_slug',
-                'url_slug_bn' => 'required|unique:app_service_products,url_slug_bn'
-            ];
-        }
+        $id = $this->route()->parameters() ? $this->route()->parameters()['app_service_product'] : '';
+        return [
+            'product_img_web_en' => 'required|unique:app_service_products,product_img_web_en,' . $id,
+            'product_img_web_bn' => 'required|unique:app_service_products,product_img_web_bn,' . $id,
+            'product_img_mobile_en' => 'required|unique:app_service_products,product_img_mobile_en,' . $id,
+            'product_img_mobile_bn' => 'required|unique:app_service_products,product_img_mobile_bn,' . $id,
+            'url_slug' => 'required|unique:app_service_products,url_slug,' . $id,
+            'url_slug_bn' => 'required|unique:app_service_products,url_slug_bn,' . $id
+        ];
     }
 }
