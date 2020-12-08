@@ -32,7 +32,7 @@ class ProductDeepLinkController extends Controller
      */
     public function index()
     {
-
+        return view('admin.product-deep-link-report.list');
     }
 
     /**
@@ -46,14 +46,12 @@ class ProductDeepLinkController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return array
      */
-    public function store(Request $request)
+    public function data(Request $request): array
     {
-        //
+        return $this->productDeepLinkService->getProductDeepLinkListReport($request);
     }
 
     /**
@@ -67,37 +65,5 @@ class ProductDeepLinkController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ProductDeepLink  $productDeepLink
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ProductDeepLink $productDeepLink)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ProductDeepLink  $productDeepLink
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ProductDeepLink $productDeepLink)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ProductDeepLink  $productDeepLink
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ProductDeepLink $productDeepLink)
-    {
-        //
-    }
 }
