@@ -1100,4 +1100,6 @@ Route::middleware('authorize', 'auth', 'CheckFistLogin')->group(function () {
     Route::get('corporate/contact-us/more-details/{id}', 'AssetLite\CorporateRespContactUsController@showCustomerDetails')
         ->name('contact-us.more_details');
 
+    // Referral List
+    Route::get('referral-list', 'AssetLite\ReferralListController@index');
 });

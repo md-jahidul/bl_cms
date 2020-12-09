@@ -289,6 +289,13 @@
                         <span class="menu-title" data-i18n="nav.templates.main">Easy Payment Card</span>
                     </a>
                 </li>
+
+                <li class="{{ is_active_url('referral-list') }} nav-item">
+                    <a href="{{ url('referral-list') }}">
+                        <i class="la la-credit-card"></i>
+                        <span class="menu-title" data-i18n="nav.templates.main">Referral List</span>
+                    </a>
+                </li>
             </ul>
         </li>
     @endif
