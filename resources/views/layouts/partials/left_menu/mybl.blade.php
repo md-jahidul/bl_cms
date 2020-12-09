@@ -66,7 +66,7 @@
                 </li>
                 <li class="{{ is_active_match(route('recurring-schedule-hours.index'))}}">
                     <a class="menu-item" href="{{ route('recurring-schedule-hours.index') }}">
-                        <i class="ft-alert-triangle"></i>Recurring Hours</a>
+                        <i class="ft-clock"></i>Recurring Hours</a>
                 </li>
             </ul>
         </li>

@@ -26,6 +26,7 @@
                                         <input class="form-control"
                                                name="title"
                                                id="title"
+                                               maxlength="20"
                                                value="{{ old("title") ? old("title") : '' }}"
                                                required>
                                         @if($errors->has('title'))
@@ -39,9 +40,9 @@
                                     <div class="form-group">
                                         <label for="type" class="required">Popup Type</label>
                                         <select id="type" name="type" class="form-control" required>
-                                            <option value="image">Image </option>
+                                            <option value="image">Image</option>
                                             <option value="html">HTML Content</option>
-                                            <option value="purchase">Purchase </option>
+                                            <option value="purchase">Purchase</option>
                                         </select>
                                         @if($errors->has('type'))
                                             <p class="text-left">
@@ -69,7 +70,131 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-8" id="content_div">
+
+                                <!-- Recurring schedule -->
+                                <div class="col-md-4">
+                                    <label class="form-label">Recurring Schedule<span class="red">*</span></label>
+
+                                    <div class="">
+                                        <ul class="list list-inline">
+                                            <li class="list-inline-item">
+                                                <input type="radio" name="recurring_type" id="none" value="none"
+                                                       checked>
+                                                <label for="none" class="small">None</label>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <input id="daily" type="radio" name="recurring_type" value="daily">
+                                                <label for="daily" class="small">Daily</label>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <input id="weekly" type="radio" name="recurring_type" value="weekly">
+                                                <label for="weekly" class="small">Weekly</label>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <input id="monthly" type="radio" name="recurring_type" value="monthly">
+                                                <label for="monthly" class="small">Monthly</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="row">
+                                        <!-- Regular time period (When recurring type is none) -->
+                                        <div class="col-md-12">
+                                            <div class="form-group" id="time_period">
+                                                <label class="small">Time Period</label>
+                                                <div class='input-group'>
+                                                    <input type='text'
+                                                           class="form-control datetime"
+                                                           value="{{ old("display_period") ? old("display_period") : '' }}"
+                                                           name="display_period"
+                                                           id="display_period"/>
+                                                    @if($errors->has('display_period'))
+                                                        <p class="text-left">
+                                                            <small
+                                                                class="danger text-muted">{{ $errors->first('display_period') }}</small>
+                                                        </p>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Weekday Picker -->
+                                        <div class="col-md-12">
+                                            <div class="weekDays-selector" id="weekday_selector" style="display: none">
+                                                <input name="weekdays[]" value="sun" type="checkbox" id="weekday-sun"
+                                                       class="weekday"/>
+                                                <label for="weekday-sun">SU</label>
+                                                <input name="weekdays[]" value="mon" type="checkbox" id="weekday-mon"
+                                                       class="weekday"/>
+                                                <label for="weekday-mon">MO</label>
+                                                <input name="weekdays[]" value="tue" type="checkbox" id="weekday-tue"
+                                                       class="weekday"/>
+                                                <label for="weekday-tue">TU</label>
+                                                <input name="weekdays[]" value="wed" type="checkbox" id="weekday-wed"
+                                                       class="weekday"/>
+                                                <label for="weekday-wed">WE</label>
+                                                <input name="weekdays[]" value="thu" type="checkbox" id="weekday-thu"
+                                                       class="weekday"/>
+                                                <label for="weekday-thu">TH</label>
+                                                <input name="weekdays[]" value="fri" type="checkbox" id="weekday-fri"
+                                                       class="weekday"/>
+                                                <label for="weekday-fri">FR</label>
+                                                <input name="weekdays[]" value="sat" type="checkbox" id="weekday-sat"
+                                                       class="weekday"/>
+                                                <label for="weekday-sat">SA</label>
+                                            </div>
+                                            <br>
+                                        </div>
+
+                                        <!-- Month dates slector -->
+                                        <div class="col-md-12" id="dates" style="display: none">
+                                            <div class="form-group">
+                                                <select name="month_dates[]" id="month_dates" class="form-control"
+                                                        multiple>
+                                                    @for($i = 1; $i < 32; $i++)
+                                                        <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Time slot/hour selector -->
+                                        <div class="col-md-12" id="time_slot" style="display: none">
+                                            <div class="form-group">
+                                                <select class="form-control" name="time_ranges[]" id="time_range" multiple>
+                                                    <option value=""></option>
+                                                    @foreach($hourSlots as $slot)
+                                                        <option value="{{$slot}}">{{$slot}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group skin skin-flat">
+                                        <label class="control-label required">Connection Type</label>
+                                        <ul class="list list-group">
+                                            <li class="list-inline-item">
+                                                <input type="radio" name="connection_type" value="all" checked>
+                                                <label class="control-label small">All</label>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <input type="radio" name="connection_type" value="prepaid">
+                                                <label class="control-label small">Prepaid</label>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <input type="radio" name="connection_type" value="postpaid">
+                                                <label class="control-label small">Postpaid</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6" id="content_div">
                                     <div class="form-group">
                                         <label class="required">Image</label>
                                         <input type="file"
@@ -87,81 +212,6 @@
                                     @endif
                                 </div>
 
-                                <div class="col-md-4">
-                                    <label class="form-label">Recurring Schedule<span class="red">*</span></label>
-
-                                    <div class="skin skin-flat">
-                                        <ul class="list list-inline">
-                                            <li class="list-inline-item">
-                                                <input type="radio" name="recurring_type" value="none" checked>
-                                                <label class="small">None</label>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <input type="radio" name="recurring_type" value="daily">
-                                                <label class="small">Daily</label>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <input type="radio" name="recurring_type" value="weekly">
-                                                <label class="small">Weekly</label>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <input type="radio" name="recurring_type" value="monthly">
-                                                <label class="small">Monthly</label>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <!-- Recurring type none (Regular time period) -->
-                                    <div class="form-group" id="time_period">
-                                        <label class="small">Time Period</label>
-                                        <div class='input-group'>
-                                            <input type='text'
-                                                   class="form-control datetime"
-                                                   value="{{ old("display_period") ? old("display_period") : '' }}"
-                                                   name="display_period"
-                                                   id="display_period"/>
-                                            @if($errors->has('display_period'))
-                                                <p class="text-left">
-                                                    <small class="danger text-muted">{{ $errors->first('display_period') }}</small>
-                                                </p>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group" id="time_slot">
-                                        <select class="form-control" id="time_range" multiple>
-                                            <option value=""></option>
-                                            @foreach($hourSlots as $slot)
-                                                <option value="{{$slot}}">{{$slot}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <!-- Weekday Picker -->
-                                    <div class="weekDays-selector" id="weekday_selector">
-                                        <input name="weekdays[]" type="checkbox" id="weekday-mon" class="weekday" />
-                                        <label  for="weekday-mon">MO</label>
-                                        <input name="weekdays[]" type="checkbox" id="weekday-tue" class="weekday" />
-                                        <label for="weekday-tue">TU</label>
-                                        <input name="weekdays[]" type="checkbox" id="weekday-wed" class="weekday" />
-                                        <label for="weekday-wed">WE</label>
-                                        <input name="weekdays[]" type="checkbox" id="weekday-thu" class="weekday" />
-                                        <label for="weekday-thu">TH</label>
-                                        <input name="weekdays[]" type="checkbox" id="weekday-fri" class="weekday" />
-                                        <label for="weekday-fri">FR</label>
-                                        <input name="weekdays[]" type="checkbox" id="weekday-sat" class="weekday" />
-                                        <label for="weekday-sat">SA</label>
-                                        <input name="weekdays[]" type="checkbox" id="weekday-sun" class="weekday" />
-                                        <label for="weekday-sun">SU</label>
-                                    </div>
-
-                                    <div class="form-group" id="dates">
-                                        <select name="month_dates" id="month_dates" class="form-control" multiple>
-                                            @for($i = 1; $i < 32; $i++)
-                                                <option value="{{$i}}">{{$i}}</option>
-                                            @endfor
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="card-footer">
@@ -188,6 +238,7 @@
 @endpush
 
 @push('page-js')
+    <script src="{{ asset('app-assets/js/recurring-schedule/recurring.js')}}"></script>
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('app-assets/vendors/js/pickers/daterange/daterangepicker.js')}}"></script>
@@ -289,9 +340,9 @@
                 if (action == 'image') {
                     initiateImage();
                     $('#productCode').removeClass('show').addClass('hidden');
-                }else if(action == 'purchase'){
+                } else if (action == 'purchase') {
                     initiatePurchaseImage();
-                    $(".select2").css({"min-width": "250px"});
+                    $(".select2").css({"min-width": "400px"});
                     $('#productCode').removeClass('hidden').addClass('show');
                     $("#productCode").html(product_html);
                     $(".product-list").select2({
@@ -317,13 +368,12 @@
             });
 
             $("#month_dates").select2({
-                placeholder: 'Choose dates of month'
+                placeholder: 'Choose dates'
             });
 
             $("#time_range").select2({
-                placeholder: 'Choose time slots'
+                placeholder: 'Time slots'
             });
-
         })
     </script>
 @endpush

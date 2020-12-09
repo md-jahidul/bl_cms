@@ -13,6 +13,8 @@ class MyBlAppLaunchPopup extends Model
     protected $fillable = [
         'type',
         'title',
+        'connection_type',
+        'recurring_type',
         'start_date',
         'end_date',
         'content',

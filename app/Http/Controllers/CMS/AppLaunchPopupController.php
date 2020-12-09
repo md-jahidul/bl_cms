@@ -5,14 +5,10 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Requests\AppLaunchPopupStoreRequest;
 use App\Http\Requests\AppLaunchPopupUpdateRequest;
 use App\Models\MyBlAppLaunchPopup;
-use App\Services\AppLaunchService;
+use App\Services\AppLaunchPopupService;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-use App\Models\MyBlInternetOffersCategory;
 use App\Models\MyBlProduct;
-use App\Models\ProductCore;
 use App\Services\ProductCoreService;
 
 /**
@@ -22,80 +18,41 @@ use App\Services\ProductCoreService;
 class AppLaunchPopupController extends Controller
 {
     /**
-     * @var AppLaunchService
+     * @var AppLaunchPopupService
      */
-    private $appLaunchService;
+    private $appLaunchPopupService;
 
     /**
      * AppLaunchPopupController constructor.
      * @param ProductCoreService $service
-     * @param AppLaunchService $appLaunchService
+     * @param AppLaunchPopupService $appLaunchPopupService
      */
-    public function __construct(ProductCoreService $service, AppLaunchService $appLaunchService)
-    {
+    public function __construct(ProductCoreService $service, AppLaunchPopupService $appLaunchPopupService) {
         $this->middleware('auth');
         $this->service = $service;
-        $this->appLaunchService = $appLaunchService;
+        $this->appLaunchPopupService = $appLaunchPopupService;
     }
 
     public function create()
     {
         $productList = $this->getActiveProducts();//ProductCore::where('status', 1)->pluck('name','product_code')->toArray();
-        $hourSlots = $this->appLaunchService->getHourSlots();
+        $hourSlots = $this->appLaunchPopupService->getHourSlots();
 
         return view('admin.app-launch-popup.create', compact('productList', 'hourSlots'));
     }
 
+    /**
+     * @param AppLaunchPopupStoreRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(AppLaunchPopupStoreRequest $request)
     {
-        $type = $request->type;
-        if ($type == 'image') {
-            if (!$request->hasFile('content_data')) {
-                return redirect()->back()->with('error', 'Image is required');
-            }
-            // upload the image
-            $file = $request->content_data;
-            $path = $file->storeAs(
-                'app-launch-popup/images',
-                strtotime(now()) . '.' . $file->getClientOriginalExtension(),
-                'public'
-            );
-
-            $data['content'] = $path;
-        } elseif ($type == 'purchase') {
-            if (!$request->hasFile('content_data')) {
-                return redirect()->back()->with('error', 'Image is required');
-            }
-            // upload the image
-            $file = $request->content_data;
-            $path = $file->storeAs(
-                'app-launch-popup/images',
-                strtotime(now()) . '.' . $file->getClientOriginalExtension(),
-                'public'
-            );
-
-            $data['content'] = $path;
+        //dd($request->all());
+        if ($this->appLaunchPopupService->store($request->all())) {
+            return redirect()->back()->with('success', 'Popup added successfully.');
         } else {
-            $data['content'] = $request->input('content_data');
+            return redirect()->back()->with('error', 'Error! Popup not saved.');
         }
-
-        // start date end date
-        $date_range_array = explode('-', $request->input('display_period'));
-        $data['start_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[0]))
-            ->toDateTimeString();
-        $data['end_date'] = Carbon::createFromFormat('Y/m/d h:i A', trim($date_range_array[1]))
-            ->toDateTimeString();
-
-        $data['type'] = $type;
-        $data['title'] = $request->title;
-        if (isset($request->product_code)) {
-            $data['product_code'] = $request->product_code;
-        }
-        $data['created_by'] = auth()->id();
-
-        MyBlAppLaunchPopup::create($data);
-
-        return redirect()->back()->with('success', 'Successfully Saved');
     }
 
     public function index()
