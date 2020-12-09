@@ -39,9 +39,9 @@
                                     <div class="form-group">
                                         <label for="type" class="required">Popup Type</label>
                                         <select id="type" name="type" class="form-control" required>
-                                            <option value="image"> Image </option>
-                                            <option value="html"> HTML Content</option>
-                                            <option value="purchase"> Purchase </option>
+                                            <option value="image">Image </option>
+                                            <option value="html">HTML Content</option>
+                                            <option value="purchase">Purchase </option>
                                         </select>
                                         @if($errors->has('type'))
                                             <p class="text-left">
@@ -50,9 +50,69 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+
+                                <div class="col-md-4 hidden" id="productCode">
+                                    {{-- <div class="form-group " >
+                                        <label for="type" class="required col-md-12" style="padding:0px">Product Code</label>
+                                        {!!Form::select('product_code',$productList, null, ['class' => 'form-control select2 col-md-12'])!!}
+                                        @if($errors->has('product_code'))
+                                            <p class="text-left">
+                                                <small class="danger text-muted">{{ $errors->first('product_code') }}</small>
+                                            </p>
+                                        @endif
+                                    </div> --}}
+                                </div>
+                                {{--                                <div class="col-md-4">--}}
+                                {{--                                    --}}
+                                {{--                                </div>--}}
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-8" id="content_div">
                                     <div class="form-group">
-                                        <label for="start_date" class="required">Time Period</label>
+                                        <label class="required">Image</label>
+                                        <input type="file"
+                                               required
+                                               name="content_data"
+                                               data-max-file-size="2M"
+                                               data-allowed-formats="portrait square"
+                                               data-allowed-file-extensions="jpeg png jpg"
+                                               class="dropify"/>
+                                    </div>
+                                    @if($errors->has('content_div'))
+                                        <p class="text-left">
+                                            <small class="danger text-muted">{{ $errors->first('content_div') }}</small>
+                                        </p>
+                                    @endif
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label">Recurring Schedule<span class="red">*</span></label>
+
+                                    <div class="skin skin-flat">
+                                        <ul class="list list-inline">
+                                            <li class="list-inline-item">
+                                                <input type="radio" name="recurring_type" value="none" checked>
+                                                <label class="small">None</label>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <input type="radio" name="recurring_type" value="daily">
+                                                <label class="small">Daily</label>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <input type="radio" name="recurring_type" value="weekly">
+                                                <label class="small">Weekly</label>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <input type="radio" name="recurring_type" value="monthly">
+                                                <label class="small">Monthly</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- Recurring type none (Regular time period) -->
+                                    <div class="form-group" id="time_period">
+                                        <label class="small">Time Period</label>
                                         <div class='input-group'>
                                             <input type='text'
                                                    class="form-control datetime"
@@ -66,44 +126,48 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-8" id="content_div">
-                                    <div class="form-group">
-                                        <label class="required">Image</label>
-                                        <input type="file"
-                                               required
-                                               name="content_data"
-                                               data-max-file-size="2M"
-                                               data-allowed-formats="portrait square"
-                                               data-allowed-file-extensions="jpeg png jpg"
-                                               class="dropify"/>
+
+                                    <div class="form-group" id="time_slot">
+                                        <select class="form-control" id="time_range" multiple>
+                                            <option value=""></option>
+                                            @foreach($hourSlots as $slot)
+                                                <option value="{{$slot}}">{{$slot}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <!-- Weekday Picker -->
+                                    <div class="weekDays-selector" id="weekday_selector">
+                                        <input name="weekdays[]" type="checkbox" id="weekday-mon" class="weekday" />
+                                        <label  for="weekday-mon">MO</label>
+                                        <input name="weekdays[]" type="checkbox" id="weekday-tue" class="weekday" />
+                                        <label for="weekday-tue">TU</label>
+                                        <input name="weekdays[]" type="checkbox" id="weekday-wed" class="weekday" />
+                                        <label for="weekday-wed">WE</label>
+                                        <input name="weekdays[]" type="checkbox" id="weekday-thu" class="weekday" />
+                                        <label for="weekday-thu">TH</label>
+                                        <input name="weekdays[]" type="checkbox" id="weekday-fri" class="weekday" />
+                                        <label for="weekday-fri">FR</label>
+                                        <input name="weekdays[]" type="checkbox" id="weekday-sat" class="weekday" />
+                                        <label for="weekday-sat">SA</label>
+                                        <input name="weekdays[]" type="checkbox" id="weekday-sun" class="weekday" />
+                                        <label for="weekday-sun">SU</label>
+                                    </div>
+
+                                    <div class="form-group" id="dates">
+                                        <select name="month_dates" id="month_dates" class="form-control" multiple>
+                                            @for($i = 1; $i < 32; $i++)
+                                                <option value="{{$i}}">{{$i}}</option>
+                                            @endfor
+                                        </select>
                                     </div>
                                 </div>
-                                @if($errors->has('content_div'))
-                                    <p class="text-left">
-                                        <small class="danger text-muted">{{ $errors->first('content_div') }}</small>
-                                    </p>
-                                @endif
+                            </div>
 
-                                <div class="col-md-4 hidden" id="productCode">
-                                    {{-- <div class="form-group " >
-                                        <label for="type" class="required col-md-12" style="padding:0px">Product Code</label>
-                                        {!!Form::select('product_code',$productList, null, ['class' => 'form-control select2 col-md-12'])!!}
-                                        @if($errors->has('product_code'))
-                                            <p class="text-left">
-                                                <small class="danger text-muted">{{ $errors->first('product_code') }}</small>
-                                            </p>
-                                        @endif
-                                    </div> --}}
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-info btn-block mt-2">
-                                            <i class="ft-save"></i> Save
-                                        </button>
-                                    </div>
-                                </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-success mt-2">
+                                    <i class="ft-save"></i> Save
+                                </button>
                             </div>
 
                         </form>
@@ -117,10 +181,12 @@
 
 @push('page-css')
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/summernote.css') }}">
+    <link rel="stylesheet" href="{{ asset('app-assets/css/weekday-picker.css') }}">
     <link rel="stylesheet" href="{{ asset('app-assets/vendors/css/pickers/daterange/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('app-assets/css/plugins/pickers/daterange/daterange.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
 @endpush
+
 @push('page-js')
     <script src="{{ asset('app-assets/vendors/js/editors/summernote/summernote.js') }}" type="text/javascript"></script>
     <script src="{{ asset('theme/vendors/js/pickers/dateTime/moment.min.js') }}" type="text/javascript"></script>
@@ -225,9 +291,9 @@
                     $('#productCode').removeClass('show').addClass('hidden');
                 }else if(action == 'purchase'){
                     initiatePurchaseImage();
-                    $(".select2").css({"min-width": "250px","max-width": "300px"});
-                  $('#productCode').removeClass('hidden').addClass('show');
-                  $("#productCode").html(product_html);
+                    $(".select2").css({"min-width": "250px"});
+                    $('#productCode').removeClass('hidden').addClass('show');
+                    $("#productCode").html(product_html);
                     $(".product-list").select2({
                         placeholder: "Select a product",
                         ajax: {
@@ -247,8 +313,16 @@
             });
 
             $('#select2').select2({
-            placeholder: "Please select a product code"
-             });
+                placeholder: "Please select a product code"
+            });
+
+            $("#month_dates").select2({
+                placeholder: 'Choose dates of month'
+            });
+
+            $("#time_range").select2({
+                placeholder: 'Choose time slots'
+            });
 
         })
     </script>
