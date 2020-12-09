@@ -97,7 +97,7 @@ class ProductDeepLinkService
             'data' => []
         ];
         $items->each(function ($item) use (&$response) {
-            $created_at=date('d-M-Y h:i a', strtotime($item->created_at));
+            $created_at=date('d-M-Y', strtotime($item->created_at));
               $response['data'][] = [
                 'product_code' => $item->product_code,
                 'deep_link' => $item->deep_link,

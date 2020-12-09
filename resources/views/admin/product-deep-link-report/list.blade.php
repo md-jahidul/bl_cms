@@ -14,12 +14,12 @@
                     <tr>
                         <th width="5%">ID</th>
                         <th width="10%">Product Code</th>
-                        <th width="15%">Deeplink</th>
+{{--                        <th width="15%">Deeplink</th>--}}
                         <th width="8%">Total View</th>
                         <th width="8%">Total Buy</th>
                         <th width="8%">Total Attempt</th>
                         <th width="8%">Total Cancel</th>
-                        <th width="10%">Date</th>
+                        <th width="15%">Date</th>
                         <th width="10%">action</th>
                     </tr>
                     </thead>
@@ -72,12 +72,12 @@
                             return row.product_code;
                         }
                     },
-                    {
-                        name: 'deep_link',
-                        render: function (data, type, row) {
-                            return row.deep_link;
-                        }
-                    },
+                    // {
+                    //     name: 'deep_link',
+                    //     render: function (data, type, row) {
+                    //         return row.deep_link;
+                    //     }
+                    // },
                     {
                         name: 'total_view',
                         render: function (data, type, row) {
