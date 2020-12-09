@@ -13,7 +13,6 @@ use App\Repositories\ProductCoreRepository;
 use App\Repositories\ProductDeepLinkRepository;
 use App\Repositories\SearchDataRepository;
 use App\Repositories\TagCategoryRepository;
-use App\Repositories\ProductDeepLinkRepository;
 use App\Traits\CrudTrait;
 use Box\Spout\Common\Entity\Style\Color;
 use Box\Spout\Common\Type;
