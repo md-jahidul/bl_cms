@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DropMobileImageNameAtOfferCategoriesTable extends Migration
+class DropMobileImageNameAtRoamingCagegoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class DropMobileImageNameAtOfferCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::table('offer_categories', function(Blueprint $table) {
-            if(Schema::hasColumn('offer_categories', 'banner_name_mobile_en')) {
+        Schema::table('roaming_cagegories', function(Blueprint $table) {
+            if (Schema::hasColumn('roaming_cagegories', 'banner_name_mobile_en')) {
                 $table->dropColumn(['banner_name_mobile_en', 'banner_name_mobile_bn']);
             }
 
-            if(Schema::hasColumn('offer_categories', 'banner_name_web_bn')) {
+            if (Schema::hasColumn('romaing_cagegories', 'banner_name_web_bn')) {
                 $table->renameColumn('banner_name_web_bn', 'banner_name_bn');
             }
         });
@@ -31,8 +31,8 @@ class DropMobileImageNameAtOfferCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::table('offer_categories', function(Blueprint $table) {
-            if(!Schema::hasColumn('offer_categories', 'banner_name_mobile_en')) {
+        Schema::table('roaming_cagegories', function(Blueprint $table) {
+            if (!Schema::hasColumn('roaming_cagegories', 'banner_name_mobile_en')) {
                 $table->string('banner_name_mobile_en')->nullable();
                 $table->string('banner_name_mobile_bn')->nullable();
             }
