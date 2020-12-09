@@ -14,10 +14,8 @@ class AddBannerNameForBothLanguageAtRoamingOtherOfferTable extends Migration
     public function up()
     {
         Schema::table('roaming_other_offer', function(Blueprint $table) {
-            if(!Schema::hasColumn('roaming_other_offer', 'banner_name_web_bn')) {
-                $table->string('banner_name_web_bn')->after('banner_name')->nullable();
-                $table->string('banner_name_mobile_en')->after('banner_name_web_bn')->nullable();
-                $table->string('banner_name_mobile_bn')->after('banner_name_mobile_en')->nullable();
+            if(!Schema::hasColumn('roaming_other_offer', 'banner_name_bn')) {
+                $table->string('banner_name_bn')->after('banner_name')->nullable();
             }
         });
     }
@@ -30,10 +28,8 @@ class AddBannerNameForBothLanguageAtRoamingOtherOfferTable extends Migration
     public function down()
     {
         Schema::table('roaming_other_offer', function(Blueprint $table) {
-            if(Schema::hasColumn('roaming_other_offer', 'banner_name_web_bn')) {
-                $table->dropColumn('banner_name_web_bn');
-                $table->dropColumn('banner_name_mobile_en');
-                $table->dropColumn('banner_name_mobile_bn');
+            if(Schema::hasColumn('roaming_other_offer', 'banner_name_bn')) {
+                $table->dropColumn('banner_name_bn');
             }
         });
     }

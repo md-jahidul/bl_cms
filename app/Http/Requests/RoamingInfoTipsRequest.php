@@ -30,9 +30,7 @@ class RoamingInfoTipsRequest extends FormRequest
             'card_text_en' => 'required',
             'card_text_bn' => 'required',
             'banner_name' => 'required|regex:/^\S*$/u|unique:roaming_info_tips,banner_name,' . $request->info_id,
-            'banner_name_web_bn' => 'required|regex:/^\S*$/u|unique:roaming_info_tips,banner_name_web_bn,' . $request->info_id,
-            'banner_name_mobile_en' => 'required|regex:/^\S*$/u|unique:roaming_info_tips,banner_name_mobile_en,' . $request->info_id,
-            'banner_name_mobile_bn' => 'required|regex:/^\S*$/u|unique:roaming_info_tips,banner_name_mobile_bn,' . $request->info_id,
+            'banner_name_bn' => 'required|regex:/^\S*$/u|unique:roaming_info_tips,banner_name_bn,' . $request->info_id,
             'url_slug' => 'required|regex:/^\S*$/u|unique:roaming_info_tips,url_slug,' . $request->info_id,
             'url_slug_bn' => 'required|regex:/^\S*$/u|unique:roaming_info_tips,url_slug_bn,' . $request->info_id,
         ];
